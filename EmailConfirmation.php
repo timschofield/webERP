@@ -10,7 +10,7 @@ $BookMark = '';
 if (!isset($_GET['TransNo']) or $_GET['TransNo']==''){
 	$Title = __('Select Order To Print');
 	include('includes/header.php');
-	echo '<div class = "centre">
+	echo '<div class="centre">
 			<br />
 			<br />
 			<br />';
@@ -18,12 +18,12 @@ if (!isset($_GET['TransNo']) or $_GET['TransNo']==''){
 	echo '<br />
 			<br />
 			<br />
-			<table class = "table_index">
+			<table class="table_index">
 			<tr>
-				<td class = "menu_group_item">
+				<td class="menu_group_item">
 					<ul>
-						<li><a href = "'. $RootPath . '/SelectSalesOrder.php">' . __('Outstanding Sales Orders') . '</a></li>
-						<li><a href = "'. $RootPath . '/SelectCompletedOrder.php">' . __('Completed Sales Orders') . '</a></li>
+						<li><a href="'. $RootPath . '/SelectSalesOrder.php">' . __('Outstanding Sales Orders') . '</a></li>
+						<li><a href="'. $RootPath . '/SelectCompletedOrder.php">' . __('Completed Sales Orders') . '</a></li>
 					</ul>
 				</td>
 			</tr>
@@ -83,7 +83,7 @@ $Result = DB_query($SQL, $ErrMsg);
 if (DB_num_rows($Result) == 0){
 	$Title = __('Print Packing Slip Error');
 	include('includes/header.php');
-	 echo '<div class = "centre">
+	 echo '<div class="centre">
 			<br />
 			<br />
 			<br />';
@@ -91,12 +91,12 @@ if (DB_num_rows($Result) == 0){
 	echo '<br />
 			<br />
 			<br />
-			<table class = "table_index">
+			<table class="table_index">
 			<tr>
-				<td class = "menu_group_item">
+				<td class="menu_group_item">
 				<ul>
-	                <li><a href = "'. $RootPath . '/SelectSalesOrder.php">' . __('Outstanding Sales Orders') . '</a></li>
-	                <li><a href = "'. $RootPath . '/SelectCompletedOrder.php">' . __('Completed Sales Orders') . '</a></li>
+	                <li><a href="'. $RootPath . '/SelectSalesOrder.php">' . __('Outstanding Sales Orders') . '</a></li>
+	                <li><a href="'. $RootPath . '/SelectCompletedOrder.php">' . __('Completed Sales Orders') . '</a></li>
 				</ul>
 				</td>
 			</tr>
@@ -118,19 +118,19 @@ if (DB_num_rows($Result) == 0){
 		$Title = __('Print Packing Slip Error');
 		include('includes/header.php');
 		prnMsg( __('The packing slip for order number') . ' ' . $_GET['TransNo'] . ' ' . __('has previously been printed') . ' ' . __('It was printed on'). ' ' . ConvertSQLDate($MyRow['datepackingslipprinted']) . '<br />' . __('This check is there to ensure that duplicate packing slips are not produced and dispatched more than once to the customer'), 'warn' );
-		echo '<p><a href = "' . $RootPath . '/PrintCustOrder.php?TransNo = ' . $_GET['TransNo'] . '&Reprint = OK">'
-		. __('Do a Re-Print') . ' (' . __('On Pre-Printed Stationery') . ') ' . __('Even Though Previously Printed') . '</a></p><p><a href = "' . $RootPath. '/PrintCustOrder_generic.php?TransNo = ' . $_GET['TransNo'] . '&Reprint = OK">' .  __('Do a Re-Print') . ' (' . __('Plain paper') . ' - ' . __('A4') . ' ' . __('landscape') . ') ' . __('Even Though Previously Printed'). '</a></p>';
+		echo '<p><a href="' . $RootPath . '/PrintCustOrder.php?TransNo=' . $_GET['TransNo'] . '&Reprint=OK">'
+		. __('Do a Re-Print') . ' (' . __('On Pre-Printed Stationery') . ') ' . __('Even Though Previously Printed') . '</a></p><p><a href="' . $RootPath. '/PrintCustOrder_generic.php?TransNo=' . $_GET['TransNo'] . '&Reprint=OK">' .  __('Do a Re-Print') . ' (' . __('Plain paper') . ' - ' . __('A4') . ' ' . __('landscape') . ') ' . __('Even Though Previously Printed'). '</a></p>';
 
 		echo '<br />
 				<br />
 				<br />';
 		echo  __('Or select another Order Number to Print');
-		echo '<table class = "table_index">
+		echo '<table class="table_index">
 				<tr>
-					<td class = "menu_group_item">
+					<td class="menu_group_item">
 					<ul>
-						<li><a href = "'. $RootPath . '/SelectSalesOrder.php">' . __('Outstanding Sales Orders') . '</a></li>
-						<li><a href = "'. $RootPath . '/SelectCompletedOrder.php">' . __('Completed Sales Orders') . '</a></li>
+						<li><a href="'. $RootPath . '/SelectSalesOrder.php">' . __('Outstanding Sales Orders') . '</a></li>
+						<li><a href="'. $RootPath . '/SelectCompletedOrder.php">' . __('Completed Sales Orders') . '</a></li>
 					</ul>
 					</td>
 				</tr>
@@ -287,7 +287,7 @@ echo '<html>
 	<body>
 	<table width = "60%">
 		<tr>
-			<td align = "center" colspan = "4"><img src = "' . $RootPath . '/' . $_SESSION['LogoFile'] . '" alt = "Logo" width = "500" height = "100" align = "center" border = "0" /></td>
+			<td align = "center" colspan = "4"><img src="' . $RootPath . '/' . $_SESSION['LogoFile'] . '" alt = "Logo" width = "500" height = "100" align = "center" border = "0" /></td>
 	   	</tr>
 		<tr>
 			<td align = "center" colspan = "4"><h2>' . __('Order Acknowledgement') . '</h2></td>

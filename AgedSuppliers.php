@@ -262,7 +262,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])
 		$HTML .= '</tbody>
 				</table>
 				<div class = "centre">
-					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" /></form>
+					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -285,7 +285,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])
 	} else {
 		$Title = __('Aged Creditor Analysis');
 		include('includes/header.php');
-		echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title = "' . __('Aged Creditor Analysis') . '" alt = "" />' . ' ' . __('Aged Creditor Analysis') . '</p>';
+		echo '<p class = "page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . __('Aged Creditor Analysis') . '" alt="" />' . ' ' . __('Aged Creditor Analysis') . '</p>';
 		echo $HTML;
 		include('includes/footer.php');
 	}
@@ -294,7 +294,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])
 	$Title = __('Aged Supplier Analysis');
 	include('includes/header.php');
 
-	echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title = "' . __('Search') . '" alt = "" />' . ' ' . $Title . '</p><br />';
+	echo '<p class = "page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
 
 	if (!isset($_POST['FromCriteria']) or !isset($_POST['ToCriteria'])) {
 

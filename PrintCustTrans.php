@@ -323,7 +323,7 @@ if (isset($PrintPDF)
 			$HTML .= '<table class = "table1">
 					<tr>
 						<td>
-						<img class = "logo" src = "' . $_SESSION['LogoFile'] . '" alt = "" style = "height:50px;" />';
+						<img class="logo" src="' . $_SESSION['LogoFile'] . '" alt="" style = "height:50px;" />';
 			if ($InvOrCredit == "Invoice") {
 	$HTML .= '<h2>
 							' . __("TAX INVOICE") . ' ' . __("Number") . ' ' . $FromTransNo .
@@ -582,7 +582,7 @@ if (isset($_GET['View']) and $_GET['View'] == 'Yes') {
 	include('includes/header.php');
 	/// @todo give different message based on $Success
 	echo '<div class = "centre">
-			<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" /></form>
+			<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick="window.close()" /></form>
 		</div>';
 	include('includes/footer.php');
 
@@ -613,7 +613,7 @@ if (isset($_GET['View']) and $_GET['View'] == 'Yes') {
 		echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method = "post">';
 		echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
-		echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/printer.png" title = "' . __('Print') . '" alt = "" />' . ' ' . __('Print Invoices or Credit Notes (Landscape Mode)') . '</p>';
+		echo '<p class = "page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . __('Print') . '" alt="" />' . ' ' . __('Print Invoices or Credit Notes (Landscape Mode)') . '</p>';
 
 		echo '<fieldset>
 				<legend>', __('Print Criteria'), '</legend>

@@ -27,8 +27,8 @@ $Result = DB_query($SQL);
 if (DB_num_rows($Result) == 0) {
 	prnMsg(__('There are no templates stored in the database.'), 'warn');
 } else {
-	echo '<p class = "page_title_text" >
-			<img class = "page_title_icon" src = "', $RootPath, '/css/', $_SESSION['Theme'], '/images/gl.png" title = "" alt = "" />', ' ', __('Maintain journal templates'), '
+	echo '<p class="page_title_text" >
+			<img class="page_title_icon" src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/gl.png" title="" alt="" />', ' ', __('Maintain journal templates'), '
 		</p>';
 
 	echo '<table>
@@ -47,11 +47,11 @@ if (DB_num_rows($Result) == 0) {
 } else {
 			$JournalType = __('Reversing');
 		}
-		echo '<tr class = "striped_row">
+		echo '<tr class="striped_row">
 				<td>', $MyRow['templateid'], '</td>
 				<td>', $MyRow['templatedescription'], '</td>
 				<td>', $JournalType, '</td>
-				<td class = "noPrint"><a href = "', basename(__FILE__), '?delete = ', urlencode($MyRow['templateid']), '" onclick = "return MakeConfirm(\'' . __('Are you sure you wish to delete this template?') . '\', \'Confirm Delete\', this);">', __('Delete'), '</a></td>
+				<td class="noPrint"><a href="', basename(__FILE__), '?delete=', urlencode($MyRow['templateid']), '" onclick="return MakeConfirm(\'' . __('Are you sure you wish to delete this template?') . '\', \'Confirm Delete\', this);">', __('Delete'), '</a></td>
 			</tr>';
 	}
 

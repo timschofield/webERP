@@ -43,7 +43,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$Title = __('Customer Balances') . ' - ' . __('Problem Report');
 		include('includes/header.php');
 		prnMsg(__('The customer details listing has no clients to report on'),'warn');
-		echo '<br /><a href = "' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 		include('includes/footer.php');
 		exit();
 	}
@@ -60,7 +60,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	<meta name = "Creator" content = "webERP https://www.weberp.org">
 	</head>
 	<body>
-	<div class = "centre" id = "ReportHeader">
+	<div class="centre" id="ReportHeader">
 	' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 	' . __('Customer Balances For Customers between') . ' ' . $_POST['FromCriteria'] .  ' ' . __('and') . ' ' . $_POST['ToCriteria'] . ' ' . __('as at') . ' ' . $PeriodEndDate . '<br />
 	' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
@@ -89,36 +89,36 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			$DisplayFXBalance = locale_number_format($DebtorBalances['fxbalance'] - $DebtorBalances['fxafterdatetrans'],$DebtorBalances['decimalplaces']);
 
 			$TotBal += $Balance;
-			$HTML .= '<tr class = "striped_row">
+			$HTML .= '<tr class="striped_row">
 			<td>' . $DebtorBalances['debtorno'] . ' - ' . html_entity_decode($DebtorBalances['name'],ENT_QUOTES,'UTF-8') . '</td>
-			<td class = "number">' . $DisplayBalance . '</td>
-			<td class = "number">' . $DisplayFXBalance . '</td>
-			<td class = "number">' . $DebtorBalances['currency'] . '</td>
+			<td class="number">' . $DisplayBalance . '</td>
+			<td class="number">' . $DisplayFXBalance . '</td>
+			<td class="number">' . $DebtorBalances['currency'] . '</td>
 			</tr>';
 		}
 		} /*end customer aged analysis while loop */
 
 		$DisplayTotBalance = locale_number_format($TotBal,$_SESSION['CompanyRecord']['decimalplaces']);
 
-		$HTML .= '<tr class = "total_row">
+		$HTML .= '<tr class="total_row">
 		<td>' . __('Total balances') . '</td>
-		<td class = "number">' . $DisplayTotBalance . '</td>
+		<td class="number">' . $DisplayTotBalance . '</td>
 		<td colspan = "2"></td>
 		</tr>';
 
 		if (isset($_POST['PrintPDF'])) {
 			$HTML .= '</tbody>
-			<div class = "footer fixed-section">
-			<div class = "right">
-			<span class = "page-number">Page </span>
+			<div class="footer fixed-section">
+			<div class="right">
+			<span class="page-number">Page </span>
 			</div>
 			</div>
 			</table>';
 		} else {
 			$HTML .= '</tbody>
 			</table>
-			<div class = "centre">
-			<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" /></form>
+			<div class="centre">
+			<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick="window.close()" /></form>
 			</div>';
 		}
 		$HTML .= '</body>
@@ -141,7 +141,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		} else {
 			$Title = __('Debtor Balances');
 			include('includes/header.php');
-			echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title = "' . $Title . '" alt = "" />' . ' ' . $Title . '</p>';
+			echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
 			echo $HTML;
 			include('includes/footer.php');
 		}
@@ -154,26 +154,26 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$BookMark = 'PriorMonthDebtors';
 
 	include('includes/header.php');
-	echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/customer.png" title = "' . __('Search') .
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . __('Search') .
 	'" alt = "" />' . ' ' . $Title . '</p>';
 
 	if (!isset($_POST['FromCriteria']) or !isset($_POST['ToCriteria'])) {
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-		echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post" target = "_blank">';
+		echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post" target="_blank">';
 		echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 		echo '<fieldset>
 		<legend>', __('Report Criteria'), '</legend>';
 		echo '<field>
 		<label for = "FromCriteria">' . __('From Customer Code') .':</label>
-		<input tabindex = "1" type = "text" maxlength = "10" size = "8" name = "FromCriteria" required = "required" data-type = "no-illegal-chars" title = "" value = "1" />
+		<input tabindex = "1" type = "text" maxlength = "10" size = "8" name = "FromCriteria" required = "required" data-type = "no-illegal-chars" title="" value = "1" />
 		<fieldhelp>' . __('Enter a portion of the code of first customer to report') . '</fieldhelp>
 		</field>
 		<field>
 		<label for = "ToCriteria">' . __('To Customer Code') . ':</label>
-		<input tabindex = "2" type = "text" maxlength = "10" size = "8" name = "ToCriteria" required = "required" data-type = "no-illegal-chars" title = "" value = "zzzzzz" />
+		<input tabindex = "2" type = "text" maxlength = "10" size = "8" name = "ToCriteria" required = "required" data-type = "no-illegal-chars" title="" value = "zzzzzz" />
 		<fieldhelp>' . __('Enter a portion of the code of last customer to report') . '</fieldhelp>
 		</field>
 		<field>
@@ -193,9 +193,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	echo '</select>
 	</field>
 	</fieldset>
-	<div class = "centre">
-	<input type = "submit" name = "PrintPDF" title = "Produce PDF Report" value = "' . __('Print PDF') . '" />
-	<input type = "submit" name = "View" title = "View Report" value = "' . __('View') . '" />
+	<div class="centre">
+	<input type = "submit" name = "PrintPDF" title="Produce PDF Report" value = "' . __('Print PDF') . '" />
+	<input type = "submit" name = "View" title="View Report" value = "' . __('View') . '" />
 	</div>
 	</form>';
 

@@ -8,7 +8,7 @@ $BookMark = 'Departments';
 
 include('includes/header.php');
 
-echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title = "' .
+echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' .
 		__('Departments') . '" alt = "" />' . ' ' . $Title . '</p>';
 
 if ( isset($_GET['SelectedDepartmentID']) )
@@ -165,7 +165,7 @@ if (isset($_POST['Submit'])) {
 	$ErrMsg = __('There are no departments created');
 	$Result = DB_query($SQL, $ErrMsg);
 
-	echo '<table class = "selection">
+	echo '<table class="selection">
 			<tr>
 				<th>' . __('Department Name') . '</th>
 				<th>' . __('Authoriser') . '</th>
@@ -173,11 +173,11 @@ if (isset($_POST['Submit'])) {
 
 	while ($MyRow = DB_fetch_array($Result)) {
 
-		echo '<tr class = "striped_row">
+		echo '<tr class="striped_row">
 				<td>' . $MyRow['description'] . '</td>
 				<td>' . $MyRow['authoriser'] . '</td>
-				<td><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedDepartmentID = ' . $MyRow['departmentid'] . '">' . __('Edit') . '</a></td>
-				<td><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedDepartmentID = ' . $MyRow['departmentid'] . '&amp;delete = 1" onclick = "return confirm(\'' . __('Are you sure you wish to delete this department?') . '\');">'  . __('Delete')  . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedDepartmentID=' . $MyRow['departmentid'] . '">' . __('Edit') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedDepartmentID=' . $MyRow['departmentid'] . '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this department?') . '\');">'  . __('Delete')  . '</a></td>
 			</tr>';
 
 	} //END while LIST LOOP
@@ -186,8 +186,8 @@ if (isset($_POST['Submit'])) {
 
 
 if (isset($SelectedDepartmentID)) {
-	echo '<div class = "centre">
-			<a href = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . __('View all Departments') . '</a>
+	echo '<div class="centre">
+			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . __('View all Departments') . '</a>
 		</div>';
 }
 
@@ -196,7 +196,7 @@ echo '<br />';
 if (! isset($_GET['delete'])) {
 
 	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') .  '">';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedDepartmentID)) {
 		//editing an existing section
@@ -218,7 +218,7 @@ if (! isset($_GET['delete'])) {
 			$_POST['DepartmentName']  = $MyRow['description'];
 			$AuthoriserID			= $MyRow['authoriser'];
 
-			echo '<input type = "hidden" name = "SelectedDepartmentID" value = "' . $_POST['DepartmentID'] . '" />';
+			echo '<input type = "hidden" name="SelectedDepartmentID" value = "' . $_POST['DepartmentID'] . '" />';
 			echo '<fieldset>
 					<legend>', __('Edit Department Details'), '</legend>';
 		}
@@ -230,12 +230,12 @@ if (! isset($_GET['delete'])) {
 	}
 	echo '<field>
 			<label for = "DepartmentName">' . __('Department Name') . ':' . '</label>
-			<input type = "text" name = "DepartmentName" size = "50" required = "required" title = "" maxlength = "100" value = "' . $_POST['DepartmentName'] . '" />
+			<input type = "text" name="DepartmentName" size = "50" required = "required" title="" maxlength = "100" value = "' . $_POST['DepartmentName'] . '" />
 			<fieldhelp>' .__('The department name is required') . '</fieldhelp>
 		</field>
 		<field>
 			<label for = "Authoriser">' . __('Authoriser') . '</label>
-			<select name = "Authoriser">';
+			<select name="Authoriser">';
 	$UserSQL = "SELECT userid FROM www_users";
 	$Userresult = DB_query($UserSQL);
 	while ($MyRow = DB_fetch_array($Userresult)) {
@@ -248,8 +248,8 @@ if (! isset($_GET['delete'])) {
 	echo '</select>
 		</field>
 		</fieldset>
-		<div class = "centre">
-			<input type = "submit" name = "Submit" value = "' . __('Enter Information') . '" />
+		<div class="centre">
+			<input type = "submit" name="Submit" value = "' . __('Enter Information') . '" />
         </div>
 		</form>';
 

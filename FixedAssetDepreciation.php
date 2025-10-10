@@ -118,11 +118,11 @@ while ($AssetRow = DB_fetch_array($AssetsResult)) {
 	if ($AssetCategoryDescription != $AssetRow['categorydescription'] or $AssetCategoryDescription =='0') {
 	if ($AssetCategoryDescription != '0'){ //then print totals
 			echo '<tr><th colspan = "3" align = "right">' . __('Total for') . ' ' . $AssetCategoryDescription . ' </th>
-					<th class = "number">' . locale_number_format($TotalCategoryCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
-					<th class = "number">' . locale_number_format($TotalCategoryAccumDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
-					<th class = "number">' . locale_number_format(($TotalCategoryCost-$TotalCategoryAccumDepn),$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+					<th class="number">' . locale_number_format($TotalCategoryCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+					<th class="number">' . locale_number_format($TotalCategoryAccumDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+					<th class="number">' . locale_number_format(($TotalCategoryCost-$TotalCategoryAccumDepn),$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
 					<th colspan = "2"></th>
-					<th class = "number">' . locale_number_format($TotalCategoryDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+					<th class="number">' . locale_number_format($TotalCategoryDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
 					</tr>';
 			$RowCounter = 0;
 }
@@ -156,16 +156,16 @@ while ($AssetRow = DB_fetch_array($AssetsResult)) {
 		$RowCounter = 0;
 }
 
-	echo '<tr class = "striped_row">
+	echo '<tr class="striped_row">
 		<td>' . $AssetRow['assetid'] . '</td>
 		<td>' . $AssetRow['description'] . '</td>
 		<td>' . ConvertSQLDate($AssetRow['datepurchased']) . '</td>
-		<td class = "number">' . locale_number_format($AssetRow['costtotal'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-		<td class = "number">' . locale_number_format($AssetRow['depnbfwd'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-		<td class = "number">' . locale_number_format($AssetRow['costtotal']-$AssetRow['depnbfwd'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		<td class="number">' . locale_number_format($AssetRow['costtotal'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		<td class="number">' . locale_number_format($AssetRow['depnbfwd'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		<td class="number">' . locale_number_format($AssetRow['costtotal']-$AssetRow['depnbfwd'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		<td align = "center">' . $DepreciationType . '</td>
-		<td class = "number">' . $AssetRow['depnrate']  . '</td>
-		<td class = "number">' . locale_number_format($NewDepreciation ,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		<td class="number">' . $AssetRow['depnrate']  . '</td>
+		<td class="number">' . locale_number_format($NewDepreciation ,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 	</tr>';
 	$TotalCategoryCost += $AssetRow['costtotal'];
 	$TotalCategoryAccumDepn += $AssetRow['depnbfwd'];
@@ -242,19 +242,19 @@ while ($AssetRow = DB_fetch_array($AssetsResult)) {
 } //end loop around the assets to calculate depreciation for
 echo '<tr>
 		<th colspan = "3" align = "right">' . __('Total for') . ' ' . $AssetCategoryDescription . ' </th>
-		<th class = "number">' . locale_number_format($TotalCategoryCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
-		<th class = "number">' . locale_number_format($TotalCategoryAccumDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
-		<th class = "number">' . locale_number_format(($TotalCategoryCost-$TotalCategoryAccumDepn),$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+		<th class="number">' . locale_number_format($TotalCategoryCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+		<th class="number">' . locale_number_format($TotalCategoryAccumDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+		<th class="number">' . locale_number_format(($TotalCategoryCost-$TotalCategoryAccumDepn),$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
 		<th colspan = "2"></th>
-		<th class = "number">' . locale_number_format($TotalCategoryDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+		<th class="number">' . locale_number_format($TotalCategoryDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
 	</tr>
 	<tr>
 		<th colspan = "3" align = "right">' . __('GRAND Total') . ' </th>
-		<th class = "number">' . locale_number_format($TotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
-		<th class = "number">' . locale_number_format($TotalAccumDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
-		<th class = "number">' . locale_number_format(($TotalCost-$TotalAccumDepn),$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+		<th class="number">' . locale_number_format($TotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+		<th class="number">' . locale_number_format($TotalAccumDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+		<th class="number">' . locale_number_format(($TotalCost-$TotalAccumDepn),$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
 		<th colspan = "2"></th>
-		<th class = "number">' . locale_number_format($TotalDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
+		<th class="number">' . locale_number_format($TotalDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
 	</tr>';
 
 echo '</table>
@@ -265,9 +265,9 @@ if (isset($_POST['CommitDepreciation']) and $InputError == false){
 	DB_Txn_Commit();
 	prnMsg(__('Depreciation') . ' ' . $TransNo . ' ' . __('has been successfully entered'),'success');
 	unset($_POST['ProcessDate']);
-	echo '<br /><a href = "' . $RootPath . '/index.php">' .__('Return to main menu') . '</a>';
+	echo '<br /><a href="' . $RootPath . '/index.php">' .__('Return to main menu') . '</a>';
 } else {
-	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post" id = "form">';
+	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post" id="form">';
 	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 	echo '<fieldset>
 			<legend>', __('Select Criteria'), '</legend>';
@@ -281,7 +281,7 @@ if (isset($_POST['CommitDepreciation']) and $InputError == false){
 				<fieldtext>' . $_POST['ProcessDate'] . '</fieldtext>';
 	}
 	echo '</fieldset>
-		<div class = "centre">
+		<div class="centre">
 			<input type = "submit" name = "CommitDepreciation" value = "'.__('Commit Depreciation').'" />
 		</div>
 	</form>';

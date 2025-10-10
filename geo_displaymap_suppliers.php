@@ -28,7 +28,7 @@ $ExtraHeadContent = '<style>
         padding: 0px;
     }
 </style>
-<script src = "https://' . $Map_Host . '/maps/api/js?key = ' . $Api_Key . '&sensor = false"></script>
+<script src = "https://' . $Map_Host . '/maps/api/js?key =' . $Api_Key . '&sensor = false"></script>
 <script>
 //<![CDATA[
 
@@ -104,8 +104,8 @@ include('includes/header.php');
 
 ?>
 <p>
-<?php echo '<div class = "centre" id = "map" style = "width: ' . $Map_Width . 'px; height: ' . $Map_Height . 'px"></div>'; ?>
+<?php echo '<div class="centre" id="map" style="width: ' . $Map_Width . 'px; height: ' . $Map_Height . 'px"></div>'; ?>
 </p>
 <?php
-	echo '<div class = "centre"><a href = "' . $RootPath . '/GeocodeSetup.php">' . __('Go to Geocode Setup') . '</a></div></p>';
+	echo '<div class="centre"><a href="' . $RootPath . '/GeocodeSetup.php">' . __('Go to Geocode Setup') . '</a></div></p>';
 	include('includes/footer.php');

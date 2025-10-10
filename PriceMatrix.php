@@ -15,7 +15,7 @@ if (isset($_POST['EndDate'])){$_POST['EndDate'] = ConvertSQLDate($_POST['EndDate
 $Errors = array();
 $i = 1;
 
-echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title = "' . __('Search') . '" alt = "" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['submit'])) {
 
@@ -220,26 +220,26 @@ while ($MyRow = DB_fetch_array($Result)){
 			}
 			echo '<field>
 			<label for = "StartDate">'. __('Price Effective From Date') . ':</label>
-			<input type = "date" name = "StartDate" required = "required" size = "11" maxlength = "10" title = "" value = "' . FormatDateForSQL($_POST['StartDate']) . '" />
+			<input type = "date" name = "StartDate" required = "required" size = "11" maxlength = "10" title="" value = "' . FormatDateForSQL($_POST['StartDate']) . '" />
 			<fieldhelp>' . __('Enter the date from which this price should take effect.') . '</fieldhelp>
 			</field>';
 
 			echo '<field>
 			<label for = "EndDate">' . __('Price Effective To Date') . ':</label>
-			<input type = "date" name = "EndDate" size = "11" maxlength = "10" title = "" value = "' . FormatDateForSQL($_POST['EndDate']) . '" />
+			<input type = "date" name = "EndDate" size = "11" maxlength = "10" title="" value = "' . FormatDateForSQL($_POST['EndDate']) . '" />
 			<fieldhelp>' . __('Enter the date to which this price should be in effect to, or leave empty if the price should continue indefinitely') . '</fieldhelp>
 			</field>';
 
 			echo '<field>
 			<label for = "QuantityBreak">' . __('Quantity Break') . '</label>
-			<input class = "integer' . (in_array('QuantityBreak',$Errors) ? ' inputerror' : '') . '" tabindex = "3" required = "required" type = "number" name = "QuantityBreak" size = "10" value = "'. $_POST['QuantityBreak'].'" maxlength = "10" />
+			<input class="integer' . (in_array('QuantityBreak',$Errors) ? ' inputerror' : '') . '" tabindex ="3" required = "required" type = "number" name = "QuantityBreak" size = "10" value = "'. $_POST['QuantityBreak'].'" maxlength = "10" />
 			</field>
 			<field>
 			<label for = "Price">' . __('Price') . ' :</label>
-			<input class = "number' . (in_array('Price',$Errors) ? ' inputerror' : '') . '" tabindex = "4" type = "text" required = "required" name = "Price" value = "'.$_POST['Price'].'" title = "' . __('The price to apply to orders where the quantity exceeds the specified quantity') . '" size = "5" maxlength = "5" />
+			<input class="number' . (in_array('Price',$Errors) ? ' inputerror' : '') . '" tabindex ="4" type = "text" required = "required" name = "Price" value = "'.$_POST['Price'].'" title="' . __('The price to apply to orders where the quantity exceeds the specified quantity') . '" size = "5" maxlength = "5" />
 			</field>
 			</fieldset>
-			<div class = "centre">
+			<div class="centre">
 			<input tabindex = "5" type = "submit" name = "submit" value = "' . __('Enter Information') . '" />
 			</div>';
 
@@ -266,7 +266,7 @@ while ($MyRow = DB_fetch_array($Result)){
 			$Result = DB_query($SQL);
 
 			if (DB_num_rows($Result) > 0) {
-				echo '<table class = "selection">';
+				echo '<table class="selection">';
 				echo '<tr>
 				<th>' . __('Currency') . '</th>
 				<th>' . __('Sales Type') . '</th>
@@ -278,28 +278,28 @@ while ($MyRow = DB_fetch_array($Result)){
 				</tr>';
 
 				while ($MyRow = DB_fetch_array($Result)) {
-					$DeleteURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete = yes&amp;SalesType = ' . $MyRow['salestype'] . '&amp;StockID = ' . $MyRow['stockid'] . '&amp;QuantityBreak = ' . $MyRow['quantitybreak'].'&amp;Price = ' . $MyRow['price'] . '&amp;currabrev = ' . $MyRow['currabrev'].'&amp;StartDate = '.$MyRow['startdate'].'&amp;EndDate = '.$MyRow['enddate'];
-					$EditURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Edit = yes&amp;StockID = ' . $MyRow['stockid'] . '&amp;TypeAbbrev = ' . $MyRow['salestype'] . '&amp;CurrAbrev = ' . $MyRow['currabrev'] . '&amp;Price = ' . locale_number_format($MyRow['price'], $MyRow['currdecimalplaces']) . '&amp;StartDate = ' . $MyRow['startdate'] . '&amp;EndDate = ' . $MyRow['enddate'].'&amp;QuantityBreak = ' . $MyRow['quantitybreak'];
+					$DeleteURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete =yes&amp;SalesType =' . $MyRow['salestype'] . '&amp;StockID =' . $MyRow['stockid'] . '&amp;QuantityBreak =' . $MyRow['quantitybreak'].'&amp;Price =' . $MyRow['price'] . '&amp;currabrev =' . $MyRow['currabrev'].'&amp;StartDate ='.$MyRow['startdate'].'&amp;EndDate ='.$MyRow['enddate'];
+					$EditURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Edit =yes&amp;StockID =' . $MyRow['stockid'] . '&amp;TypeAbbrev =' . $MyRow['salestype'] . '&amp;CurrAbrev =' . $MyRow['currabrev'] . '&amp;Price =' . locale_number_format($MyRow['price'], $MyRow['currdecimalplaces']) . '&amp;StartDate =' . $MyRow['startdate'] . '&amp;EndDate =' . $MyRow['enddate'].'&amp;QuantityBreak =' . $MyRow['quantitybreak'];
 
 					if (in_array(5, $_SESSION['AllowedPageSecurityTokens'])){
-						echo '<tr class = "striped_row">
+						echo '<tr class="striped_row">
 						<td>', $MyRow['currency'], '</td>
 						<td>', $MyRow['sales_type'], '</td>
 						<td>', ConvertSQLDate($MyRow['startdate']), '</td>
 						<td>', ConvertSQLDate($MyRow['enddate']), '</td>
-						<td class = "number">', $MyRow['quantitybreak'], '</td>
-						<td class = "number">', locale_number_format($MyRow['price'], $MyRow['currdecimalplaces']), '</td>
-						<td><a href = "', $DeleteURL, '" onclick = "return confirm(\'' . __('Are you sure you wish to delete this discount matrix record?') . '\');">' . __('Delete') . '</a></td>
-						<td><a href = "', $EditURL, '">'.__('Edit').'</a></td>
+						<td class="number">', $MyRow['quantitybreak'], '</td>
+						<td class="number">', locale_number_format($MyRow['price'], $MyRow['currdecimalplaces']), '</td>
+						<td><a href="', $DeleteURL, '" onclick="return confirm(\'' . __('Are you sure you wish to delete this discount matrix record?') . '\');">' . __('Delete') . '</a></td>
+						<td><a href="', $EditURL, '">'.__('Edit').'</a></td>
 						</tr>';
 					} else {
-						echo '<tr class = "striped_row">
+						echo '<tr class="striped_row">
 						<td>', $MyRow['currency'], '</td>
 						<td>', $MyRow['sales_type'], '</td>
 						<td>', ConvertSQLDate($MyRow['startdate']), '</td>
 						<td>', ConvertSQLDate($MyRow['enddate']), '</td>
-						<td class = "number">', $MyRow['quantitybreak'], '</td>
-						<td class = "number">', locale_number_format($MyRow['price'], $MyRow['currdecimalplaces']), '</td>
+						<td class="number">', $MyRow['quantitybreak'], '</td>
+						<td class="number">', locale_number_format($MyRow['price'], $MyRow['currdecimalplaces']), '</td>
 						</tr>';
 
 					}

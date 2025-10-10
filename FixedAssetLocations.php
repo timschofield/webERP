@@ -7,8 +7,8 @@ $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetLocations';
 include('includes/header.php');
 
-echo '<p class = "page_title_text">
-		<img src = "'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title = "' . __('Search') . '" alt = "" />' . ' ' . $Title.'
+echo '<p class="page_title_text">
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title.'
 	</p>';
 
 if (isset($_POST['submit']) and !isset($_POST['delete'])) {
@@ -91,12 +91,12 @@ $SQL = 'SELECT * FROM fixedassetlocations';
 $Result = DB_query($SQL);
 
 if (DB_num_rows($Result) > 0) {
-	echo '<table class = "selection">
+	echo '<table class="selection">
 		<thead>
 		<tr>
-			<th class = "SortedColumn">' . __('Location ID') . '</th>
-			<th class = "SortedColumn">' . __('Location Description') . '</th>
-			<th class = "SortedColumn">' . __('Parent Location') . '</th>
+			<th class="SortedColumn">' . __('Location ID') . '</th>
+			<th class="SortedColumn">' . __('Location Description') . '</th>
+			<th class="SortedColumn">' . __('Parent Location') . '</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -113,14 +113,14 @@ if (DB_num_rows($Result) > 0) {
 } else {
 			echo '<td>', __('No Parent Location'), '</td>';
 		}
-		echo '<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedLocation = ', urlencode($MyRow['locationid']), '">', __('Edit'), '</a></td></tr>';
+		echo '<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedLocation=', urlencode($MyRow['locationid']), '">', __('Edit'), '</a></td></tr>';
 	}
 
 	echo '</tbody></table>';
 }
 
-	echo '<form id = "LocationForm" method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">';
-    echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<form id="LocationForm" method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">';
+    echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 	echo '<fieldset>';
 if (isset($_GET['SelectedLocation'])) {
@@ -128,27 +128,27 @@ if (isset($_GET['SelectedLocation'])) {
 
 	echo '<field>
 			<label for = "LocationID">' . __('Location ID') . '</label>
-			<input type = "hidden" name = "LocationID" value = "'.$LocationID.'" />
+			<input type = "hidden" name="LocationID" value = "'.$LocationID.'" />
 			<fieldtext>' . $LocationID . '</fieldtext>
 		</field>';
 } else {
 	echo '<legend>', __('Create Asset Location'), '</legend>
 			<field>
 				<label for = "LocationID">' . __('Location ID') . '</label>
-				<input type = "text" name = "LocationID" required = "required" title = "" data-type = "no-illegal-chars" size = "6" value = "'.$LocationID.'" />
+				<input type = "text" name="LocationID" required = "required" title="" data-type = "no-illegal-chars" size = "6" value = "'.$LocationID.'" />
 				<fieldhelp>' . __('Enter the location code of the fixed asset location. Up to six alpha-numeric characters') . '</fieldhelp>
 		</field>';
 }
 
 echo '<field>
 		<label for = "LocationDescription">' . __('Location Description') . '</label>
-		<input type = "text" name = "LocationDescription" required = "required" title = "" size = "20" value = "'.$LocationDescription.'" />
+		<input type = "text" name="LocationDescription" required = "required" title="" size = "20" value = "'.$LocationDescription.'" />
 		<fieldhelp>' . __('Enter the fixed asset location description. Up to 20 characters') . '</fieldhelp>
 	</field>';
 
 echo '<field>
 		<label for = "ParentLocationID">' . __('Parent Location') . '</label>
-		<select name = "ParentLocationID">';
+		<select name="ParentLocationID">';
 
 $SQL = "SELECT locationid, locationdescription FROM fixedassetlocations";
 $Result = DB_query($SQL);
@@ -167,13 +167,13 @@ echo '</select>
 	</field>
 </fieldset>';
 
-echo '<div class = "centre">';
+echo '<div class="centre">';
 if (isset($_GET['SelectedLocation'])) {
-	echo '<input type = "submit" name = "update" value = "' . __('Update Information') . '" />
+	echo '<input type = "submit" name="update" value = "' . __('Update Information') . '" />
 		<br /><br />
-		<input type = "reset" name = "delete" value = "' . __('Delete This Location') . '" />';
+		<input type = "reset" name="delete" value = "' . __('Delete This Location') . '" />';
 } else {
-	echo '<input type = "submit" name = "submit" value = "' . __('Enter Information') . '" />';
+	echo '<input type = "submit" name="submit" value = "' . __('Enter Information') . '" />';
 }
 echo '</div>
 	</form>';

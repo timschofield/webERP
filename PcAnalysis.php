@@ -201,7 +201,7 @@ if (isset($_POST['submit'])) {
 	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class = "page_title_text">
-			<img src = "' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title = "' . __('Excel file for Petty Cash Expenses Analysis') . '" alt = "" />' . ' ' . __('Excel file for Petty Cash Expenses Analysis') . '
+			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . __('Excel file for Petty Cash Expenses Analysis') . '" alt="" />' . ' ' . __('Excel file for Petty Cash Expenses Analysis') . '
 		</p>';
 
 	echo '<fieldset>

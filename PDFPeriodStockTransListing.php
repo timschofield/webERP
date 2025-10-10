@@ -163,7 +163,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '</tbody>
 				</table>
 				<div class = "centre">
-					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" /></form>
+					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -185,7 +185,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	else {
 		$Title = __('Inventory Planning Report');
 		include ('includes/header.php');
-		echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title = "' . __('Inventory') . '" alt = "" />' . ' ' . __('Inventory Planning Report') . '</p>';
+		echo '<p class = "page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Inventory') . '" alt="" />' . ' ' . __('Inventory Planning Report') . '</p>';
 		echo $HTML;
 		include ('includes/footer.php');
 	}
@@ -197,7 +197,7 @@ else {
 	include ('includes/header.php');
 
 	echo '<div class = "centre">
-			<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title = "' . $Title . '" alt = "" />' . ' ' . __('Stock Transaction Listing') . '</p>
+			<p class = "page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . __('Stock Transaction Listing') . '</p>
 		</div>';
 
 	if ($InputError == 1) {

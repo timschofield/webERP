@@ -15,7 +15,7 @@ if (!isset($_POST['DoUpgrade'])) {
 
 	if (!isset($_SESSION['VersionNumber'])){
 		prnMsg(__('The webERP code is version')  . ' ' . $Version . ' ' . __('and the database version is not actually recorded at this version'),'info');
-		echo '<table class = "selection">
+		echo '<table class="selection">
 			<tr>
 				<td>' . __('Select the version you are upgrading from:') . '</td>
 				<td><select name = "OldVersion" >
@@ -35,8 +35,8 @@ if (!isset($_POST['DoUpgrade'])) {
 				</select></td>
 			</tr>
 		</table>';
-		prnMsg(__('This script will perform any modifications to the database required to allow the additional functionality in later scripts.') . '<br /><a target = "_blank" href = "' . $RootPath . '/BackupDatabase.php">' .__('Click to do a database backup now before proceeding!') . '</a>','info');
-		echo '<div class = "centre">
+		prnMsg(__('This script will perform any modifications to the database required to allow the additional functionality in later scripts.') . '<br /><a target="_blank" href="' . $RootPath . '/BackupDatabase.php">' .__('Click to do a database backup now before proceeding!') . '</a>','info');
+		echo '<div class="centre">
 					<input type = "submit" name = "DoUpgrade" value = "' . __('Perform Database Upgrade') . '" />
 				</div>';
 	} else {
@@ -46,10 +46,10 @@ if (!isset($_POST['DoUpgrade'])) {
 		if (strcmp($Version,$_SESSION['VersionNumber']) == 0){
 			prnMsg(__('The database is up to date, there are no upgrades to perform'),'info');
 		} else {
-			prnMsg(__('This script will perform any modifications to the database required to allow the additional functionality in later scripts.') . '<br />' . __('The webERP code is version')  . ' ' . $Version . ' ' . __('and the database version is') . ' ' . $_SESSION['VersionNumber'] . '<br /><a target = "_blank" href = "' . $RootPath . '/BackupDatabase.php">' .__('Click to do a database backup now before proceeding!') . '</a>','info');
+			prnMsg(__('This script will perform any modifications to the database required to allow the additional functionality in later scripts.') . '<br />' . __('The webERP code is version')  . ' ' . $Version . ' ' . __('and the database version is') . ' ' . $_SESSION['VersionNumber'] . '<br /><a target="_blank" href="' . $RootPath . '/BackupDatabase.php">' .__('Click to do a database backup now before proceeding!') . '</a>','info');
 
 			echo '<input type = "hidden" name = "OldVersion" value = "' . $_SESSION['VersionNumber'] . '" />';
-			echo '<div class = "centre">
+			echo '<div class="centre">
 					<input type = "submit" name = "DoUpgrade" value = "' . __('Perform Database Upgrade') . '" />
 				</div>';
 		}
@@ -252,37 +252,37 @@ if (isset($_POST['DoUpgrade'])) {
 					echo '<tr><td>' . $SQL . '</td>';
 					switch (DB_error_no()) {
 						case 0:
-							echo '<td style = "background-color:green">' . __('Success') . '</td></tr>';
+							echo '<td style="background-color:green">' . __('Success') . '</td></tr>';
 							break;
 						case 1025:
-							echo '<td style = "background-color:yellow">' . __('Note').' - '. __('Foreign Key already removed') . '</td></tr>';
+							echo '<td style="background-color:yellow">' . __('Note').' - '. __('Foreign Key already removed') . '</td></tr>';
 							break;
 						case 1050:
-							echo '<td style = "background-color:yellow">' . __('Note').' - '. __('Table has already been created') . '</td></tr>';
+							echo '<td style="background-color:yellow">' . __('Note').' - '. __('Table has already been created') . '</td></tr>';
 							break;
 						case 1054:
-							echo '<td style = "background-color:yellow">' . __('Note').' - '. __('Column has already been changed') . '</td></tr>';
+							echo '<td style="background-color:yellow">' . __('Note').' - '. __('Column has already been changed') . '</td></tr>';
 							break;
 						case 1060:
-							echo '<td style = "background-color:yellow">' . __('Note').' - '. __('Column has already been created') . '</td></tr>';
+							echo '<td style="background-color:yellow">' . __('Note').' - '. __('Column has already been created') . '</td></tr>';
 							break;
 						case 1061:
-							echo '<td style = "background-color:yellow">' . __('Note').' - '. __('Index already exists') . '</td></tr>';
+							echo '<td style="background-color:yellow">' . __('Note').' - '. __('Index already exists') . '</td></tr>';
 							break;
 						case 1062:
-							echo '<td style = "background-color:yellow">' . __('Note').' - '. __('Entry has already been done') . '</td></tr>';
+							echo '<td style="background-color:yellow">' . __('Note').' - '. __('Entry has already been done') . '</td></tr>';
 							break;
 						case 1064:
-							echo '<td style = "background-color:red">' . __('Note').' - '.  __('SQL syntax error. The SQL error message is'). ' ' . DB_error_msg() . '</td></tr>';
+							echo '<td style="background-color:red">' . __('Note').' - '.  __('SQL syntax error. The SQL error message is'). ' ' . DB_error_msg() . '</td></tr>';
 							break;
 						case 1068:
-							echo '<td style = "background-color:yellow">' . __('Note').' - '. __('Primary key already exists') . '</td></tr>';
+							echo '<td style="background-color:yellow">' . __('Note').' - '. __('Primary key already exists') . '</td></tr>';
 							break;
 						case 1091:
-							echo '<td style = "background-color:yellow">' . __('Note').' - '. __('Index already dropped previously') . '</td></tr>';
+							echo '<td style="background-color:yellow">' . __('Note').' - '. __('Index already dropped previously') . '</td></tr>';
 							break;
 						default:
-							echo '<td style = "background-color:red">' . __('Failure').' - '. 	__('Error number').' - '.DB_error_no() .' ' . DB_error_msg() . '</td></tr>';
+							echo '<td style="background-color:red">' . __('Failure').' - '. 	__('Error number').' - '.DB_error_no() .' ' . DB_error_msg() . '</td></tr>';
 							break;
 					}
 					$SQL = '';

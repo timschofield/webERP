@@ -11,7 +11,7 @@ echo '<html lang = "' . str_replace('_', '-', substr($Language, 0, 5)) . '">
 		<head>
 			<title>', $Title, '</title>
 			<meta http-equiv = "Content-Type" content = "text/html; charset = utf-8" />
-			<meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+			<meta name="viewport" content = "width = device-width, initial-scale = 1.0">
 			<link rel = "icon" href = "' . $RootPath. '/favicon.ico" type = "image/x-icon" />
 			<script async src = "' . $RootPath. '/javascripts/DBUpgrade.js"></script>';
 
@@ -28,8 +28,8 @@ echo '<link rel = "stylesheet" href = "' . $RootPath . '/css/dbupgrade.css" type
 
 // Fix: Check if CompanyRecord['coyname'] is set before using stripslashes
 $CompanyName = isset($_SESSION['CompanyRecord']['coyname']) ? stripslashes($_SESSION['CompanyRecord']['coyname']) : '';
-echo '<div class = "title_bar" id = "title_bar">', $Title, ' - ', $CompanyName, '
-	<img src = "', $RootPath, '/css/', $_SESSION['Theme'], '/images/user.png" class = "TitleIcon" id = "TitleIcon" title = "" alt = "" /></div>';
+echo '<div class="title_bar" id="title_bar">', $Title, ' - ', $CompanyName, '
+	<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/user.png" class="TitleIcon" id="TitleIcon" title="" alt="" /></div>';
 
 //include('includes/header.php');
 
@@ -58,15 +58,15 @@ function updateDBNo($NewNumber, $Description = '') {
 
 include('includes/UpgradeDB_' . $DBType . '.php');
 
-echo '<div class = "page_title_text">
-	<img src = "' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title = "' . __('Search') . '" alt = "" />' . ' ' . $Title, '
+echo '<div class="page_title_text">
+	<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title, '
 </div>';
 
 if (!isset($_POST['continue'])) {
 	echo '<form method = "post" action = "' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 
-	echo '<div class = "page_help_text">' . __('You have the following database updates which are required.') . '<br />' . __('Please ensure that you have taken a backup of your current database before continuing.') . '</div><br />';
+	echo '<div class="page_help_text">' . __('You have the following database updates which are required.') . '<br />' . __('Please ensure that you have taken a backup of your current database before continuing.') . '</div><br />';
 	echo '<table>
 		<tr>
 			<th></th>
@@ -85,19 +85,19 @@ if (!isset($_POST['continue'])) {
 			$pattern = "/^.*$pattern.*\$/m";
 			if (preg_match_all($pattern, $Contents, $Matches) and (implode("\n", $Matches[0]) != "UpdateDBNo(basename(__FILE__, '.php'));")) {
 				echo '<tr>
-					<td><span class = "expand_icon" id = "expand_icon', $x, '"></span></td>
+					<td><span class="expand_icon" id="expand_icon', $x, '"></span></td>
 					<td>', $UpdateNumber, '</td>
 					<td>', substr(substr(implode("\n", $Matches[0]), 42), 0, -4), '</td>
 				</tr>';
 			} else {
 				echo '<tr>
-					<td><div class = "expand_icon" id = "expand_icon', $x, '"></div></td>
+					<td><div class="expand_icon" id="expand_icon', $x, '"></div></td>
 					<td>', $UpdateNumber, '</td>
 					<td>', __('No descriptrion can be found for this update'), '</td>
 				</tr>';
 			}
 			echo '<tr>
-				<td class = "collapsed_row" id = "collapsed_row', $x, '" colspan = "3">';
+				<td class="collapsed_row" id="collapsed_row', $x, '" colspan = "3">';
 			foreach ($Lines as $Line) {
 				if ($Line != '?>' and substr($Line, 0, 8) != 'UpdateDB' and $Line != '<?php') {
 					echo $Line, '<br />';
@@ -111,8 +111,8 @@ if (!isset($_POST['continue'])) {
 
 	echo '</table>';
 
-	echo '<div class = "centre">
-		<button type = "submit" name = "continue">' . __('Continue With Updates') . '</button>
+	echo '<div class="centre">
+		<button type = "submit" name="continue">' . __('Continue With Updates') . '</button>
 	</div>';
 	echo '</form></div>';
 } else {
@@ -137,16 +137,16 @@ if (!isset($_POST['continue'])) {
 	}
 	echo '<table>
 		<tr>
-			<th colspan = "4" class = "header"><b>', __('Database Updates Have Been Run'), '</b></th>
+			<th colspan = "4" class="header"><b>', __('Database Updates Have Been Run'), '</b></th>
 		</tr>
 		<tr>
-			<td class = "fail_line">', $_SESSION['Updates']['Errors'], ' ', __('updates have errors in them'), '</td>
+			<td class="fail_line">', $_SESSION['Updates']['Errors'], ' ', __('updates have errors in them'), '</td>
 		</tr>
 		<tr>
-			<td class = "warn_line">', $_SESSION['Updates']['Warnings'], ' ', __('updates have not been done as the update was unnecessary on this database'), '</td>
+			<td class="warn_line">', $_SESSION['Updates']['Warnings'], ' ', __('updates have not been done as the update was unnecessary on this database'), '</td>
 		</tr>
 		<tr>
-			<td class = "success_line">', $_SESSION['Updates']['Successes'], ' ', __('updates have succeeded'), '</td>
+			<td class="success_line">', $_SESSION['Updates']['Successes'], ' ', __('updates have succeeded'), '</td>
 		</tr>';
 	if ($_SESSION['Updates']['Errors'] > 0) {
 	$SizeOfErrorMessages = sizeOf($_SESSION['Updates']['Messages']);
@@ -160,8 +160,8 @@ if (!isset($_POST['continue'])) {
 	include('includes/GetConfig.php');
 	$ForceConfigReload = false;
 
-	echo '<div class = "centre">
-		<a href = "' . $RootPath . '/Logout.php" title = "' . __('Log out of') . ' ' . 'webERP" alt = "">
+	echo '<div class="centre">
+		<a href="' . $RootPath . '/Logout.php" title="' . __('Log out of') . ' ' . 'webERP" alt="">
 			', __('You need to logout and log back in for these changes to take affect'), '
 		</a>
 	</div>';

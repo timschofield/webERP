@@ -18,7 +18,7 @@ if (empty($_GET['identifier'])) {
 
 if (!isset($_SESSION['Adjustment'.$identifier])) {
 	/* This page can only be called when a stock adjustment is pending */
-	echo '<div class = "centre"><a href = "' . $RootPath . '/StockAdjustments.php?NewAdjustment = Yes">' .  __('Enter A Stock Adjustment'). '</a><br />';
+	echo '<div class="centre"><a href="' . $RootPath . '/StockAdjustments.php?NewAdjustment=Yes">' .  __('Enter A Stock Adjustment'). '</a><br />';
 	prnMsg( __('This page can only be opened if a stock adjustment for a controlled item has been entered') . '<br />','error');
 	echo '</div>';
 	include('includes/footer.php');
@@ -35,16 +35,16 @@ $LineItem = $_SESSION['Adjustment'.$identifier];
 
 //Make sure this item is really controlled
 if ( $LineItem->Controlled != 1 ) {
-	echo '<a href = "' . $RootPath . '/StockAdjustments.php?NewAdjustment = Yes">' . __('Enter A Stock Adjustment') . '</a>';
+	echo '<a href="' . $RootPath . '/StockAdjustments.php?NewAdjustment=Yes">' . __('Enter A Stock Adjustment') . '</a>';
 	prnMsg('<br />' .  __('Notice') . ' - ' . __('The adjusted item must be defined as controlled to require input of the batch numbers or serial numbers being adjusted'),'error');
 	include('includes/footer.php');
 	exit();
 }
 
 /*****  get the page going now... *****/
-echo '<div class = "centre">';
+echo '<div class="centre">';
 
-echo '<br /><a href = "'.$RootPath.'/StockAdjustments.php?identifier = '.$identifier.'">' . __('Back to Adjustment Screen') . '</a>';
+echo '<br /><a href="'.$RootPath.'/StockAdjustments.php?identifier='.$identifier.'">' . __('Back to Adjustment Screen') . '</a>';
 
 echo '<br /><b>' .  __('Adjustment of controlled item').' ' . $LineItem->StockID  . ' - ' . $LineItem->ItemDescription ;
 

@@ -202,7 +202,7 @@ if (isset($_POST['PlacePO'])) { /*user hit button to place PO for selected order
 			$SupplierID = '';
 
 			if (IsEmailAddress($_SESSION['UserEmail'])) {
-				$UserDetails  = ' <a href = "mailto:' . $_SESSION['UserEmail'] . '">' . $_SESSION['UsersRealName']. '</a>';
+				$UserDetails  = ' <a href="mailto:' . $_SESSION['UserEmail'] . '">' . $_SESSION['UsersRealName']. '</a>';
 			} else {
 				$UserDetails  = ' ' . $_SESSION['UsersRealName'] . ' ';
 			}
@@ -427,17 +427,17 @@ if (isset($_POST['PlacePO'])) { /*user hit button to place PO for selected order
 
 /*To the sales order selection form */
 
-echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/sales.png" title = "' . __('Sales') . '" alt = "" />' . ' ' . __('Outstanding Sales Orders') . '</p> ';
+echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . __('Sales') . '" alt="" />' . ' ' . __('Outstanding Sales Orders') . '</p> ';
 
 echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post">';
-echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
 if (isset($_POST['ResetPart'])) {
 	 unset($SelectedStockItem);
 }
 
-echo '<div class = "centre">';
+echo '<div class="centre">';
 
 if (isset($_GET['OrderNumber'])) {
 	$OrderNumber = $_GET['OrderNumber'];
@@ -465,10 +465,10 @@ if (isset($OrderNumber) and $OrderNumber != '') {
 } else {
 	if (isset($SelectedCustomer)) {
 		echo __('For customer') . ': ' . $SelectedCustomer . ' ' . __('and') . ' ';
-		echo '<input type = "hidden" name = "SelectedCustomer" value = "' . $SelectedCustomer . '" />';
+		echo '<input type="hidden" name="SelectedCustomer" value="' . $SelectedCustomer . '" />';
 	}
 	if (isset($SelectedStockItem)) {
-		 echo __('for the part') . ': ' . $SelectedStockItem . ' ' . __('and') . ' <input type = "hidden" name = "SelectedStockItem" value = "' . $SelectedStockItem . '" />';
+		 echo __('for the part') . ': ' . $SelectedStockItem . ' ' . __('and') . ' <input type="hidden" name="SelectedStockItem" value="' . $SelectedStockItem . '" />';
 	}
 }
 
@@ -494,14 +494,14 @@ if (!isset($StockID)) {
 	if (!isset($OrderNumber) or $OrderNumber == '') {
 
 		echo '<fieldset>
-				<legend class = "search">', __('Search Criteria'), '</legend>
+				<legend class="search">', __('Search Criteria'), '</legend>
 				<field>
 					<label for = "OrderNumber">' . __('Order number') . ': </label>
-					<input type = "text" name = "OrderNumber" maxlength = "8" size = "9" />
+					<input type="text" name="OrderNumber" maxlength = "8" size = "9" />
 				</field>
 				<field>
 				<label for = "StockLocation">' . __('From Stock Location') . ':</label>
-				<select name = "StockLocation"> ';
+				<select name="StockLocation"> ';
 
 		$SQL = "SELECT locationname,
 						locations.loccode
@@ -515,14 +515,14 @@ if (!isset($StockID)) {
 		while ($MyRow = DB_fetch_array($ResultStkLocs)) {
 			if (isset($_POST['StockLocation'])) {
 				if ($MyRow['loccode'] == $_POST['StockLocation']) {
-	echo '<option selected = "selected" value = "' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+	echo '<option selected = "selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 } else {
-					 echo '<option value = "' . $MyRow['loccode'] . '">' . $MyRow['locationname']. '</option>';
+					 echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname']. '</option>';
 				}
 			} elseif ($MyRow['loccode'] == $_SESSION['UserStockLocation']) {
-	echo '<option selected = "selected" value = "' . $MyRow['loccode'] . '">' . $MyRow['locationname']. '</option>';
+	echo '<option selected = "selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname']. '</option>';
 } else {
-				 echo '<option value = "' . $MyRow['loccode'] . '">' . $MyRow['locationname']. '</option>';
+				 echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname']. '</option>';
 			}
 		}
 
@@ -531,20 +531,20 @@ if (!isset($StockID)) {
 
 		echo '<field>
 				<label for = "Quotations">', __('Search in'), '</label>
-				<select name = "Quotations">';
+				<select name="Quotations">';
 
 		if ( $_POST['Quotations'] == 'Quotes_Only' ) {
-	echo '<option selected = "selected" value = "Quotes_Only">' . __('Quotations Only') . '</option>';
-			echo '<option value = "Orders_Only">' . __('Orders Only')  . '</option>';
-			echo '<option value = "Overdue_Only">' . __('Overdue Only') . '</option>';
+	echo '<option selected = "selected" value="Quotes_Only">' . __('Quotations Only') . '</option>';
+			echo '<option value="Orders_Only">' . __('Orders Only')  . '</option>';
+			echo '<option value="Overdue_Only">' . __('Overdue Only') . '</option>';
 } elseif ( $_POST['Quotations'] == 'Overdue_Only' ) {
-	echo '<option selected = "selected" value = "Overdue_Only">' . __('Overdue Only') . '</option>';
-			echo '<option value = "Quotes_Only">' . __('Quotations Only') . '</option>';
-			echo '<option value = "Orders_Only">' . __('Orders Only') . '</option>';
+	echo '<option selected = "selected" value="Overdue_Only">' . __('Overdue Only') . '</option>';
+			echo '<option value="Quotes_Only">' . __('Quotations Only') . '</option>';
+			echo '<option value="Orders_Only">' . __('Orders Only') . '</option>';
 } else {
-			echo '<option selected = "selected" value = "Orders_Only">' . __('Orders Only') . '</option>';
-			echo '<option value = "Quotes_Only">' . __('Quotations Only') . '</option>';
-			echo '<option value = "Overdue_Only">' . __('Overdue Only') . '</option>';
+			echo '<option selected = "selected" value="Orders_Only">' . __('Orders Only') . '</option>';
+			echo '<option value="Quotes_Only">' . __('Quotations Only') . '</option>';
+			echo '<option value="Overdue_Only">' . __('Overdue Only') . '</option>';
 		}
 
 		if (!isset($_POST['DueDateFrom'])) {
@@ -569,29 +569,29 @@ if (!isset($StockID)) {
 
 		echo '<field>
 				<label for = "CustomerRef">' . __('Customer Ref') . '</label>
-				<input type = "text" name = "CustomerRef" value = "' . $_POST['CustomerRef'] . '" size = "12" />
+				<input type="text" name="CustomerRef" value="' . $_POST['CustomerRef'] . '" size = "12" />
 			</field>
 			<field>
 				<label for"DueDateFrom">' . __('Due Date From') . '</label>
-				<input type = "date" name = "DueDateFrom" value = "' . FormatDateForSQL($_POST['DueDateFrom']) . '" size = "10" />
+				<input type="date" name="DueDateFrom" value="' . FormatDateForSQL($_POST['DueDateFrom']) . '" size = "10" />
 			</field>
 			<field>
 				<label for = "DueDateTo">' . __('Due Date To') . '</label>
-				<input type = "date" name = "DueDateTo" value = "' . FormatDateForSQL($_POST['DueDateTo']) . '" size = "10" />
+				<input type="date" name="DueDateTo" value="' . FormatDateForSQL($_POST['DueDateTo']) . '" size = "10" />
 			</field>
 			<field>
 				<label for = "OrderDateFrom">' . __('Order Date From') . '</label>
-				<input type = "date" name = "OrderDateFrom" value = "' . FormatDateForSQL($_POST['OrderDateFrom']) . '" size = "10" />
+				<input type="date" name="OrderDateFrom" value="' . FormatDateForSQL($_POST['OrderDateFrom']) . '" size = "10" />
 			</field>
 			<field>
 				<label for = "OrderDateTo">' . __('Order Date To') . '</label>
-				<input type = "date" name = "OrderDateTo" value = "' . FormatDateForSQL($_POST['OrderDateTo']) . '" size = "10" />
+				<input type="date" name="OrderDateTo" value="' . FormatDateForSQL($_POST['OrderDateTo']) . '" size = "10" />
 			</field>
 		</fieldset>
-		<div class = "centre">
-			<input type = "submit" name = "SearchOrders" value = "' . __('Search') . '" />
-			<input type = "reset" name = "Reset" value = "' . __('Reset') . '" />
-			<a href = "' . $RootPath . '/SelectOrderItems.php?NewOrder = Yes">' . __('Add Sales Order') . '</a>
+		<div class="centre">
+			<input type="submit" name="SearchOrders" value="' . __('Search') . '" />
+			<input type="reset" name="Reset" value="' . __('Reset') . '" />
+			<a href="' . $RootPath . '/SelectOrderItems.php?=NewOrder=Yes">' . __('Add Sales Order') . '</a>
 		</div>';
 	}
 
@@ -610,17 +610,17 @@ if (!isset($StockID)) {
 	}
 
 	echo '<fieldset>
-			<legend class = "search">' . __('To search for sales orders for a specific part use the part selection facilities below') . '</legend>
+			<legend class="search">' . __('To search for sales orders for a specific part use the part selection facilities below') . '</legend>
 			<field>
 			<label for = "StockCat">' . __('Select a stock category') . ':</label>
-			<select name = "StockCat">';
-		echo '<option value = "All">' . __('All') . '</option>';
+			<select name="StockCat">';
+		echo '<option value="All">' . __('All') . '</option>';
 
 	while ($MyRow1 = DB_fetch_array($Result1)) {
 		if (isset($_POST['StockCat']) and $_POST['StockCat'] == $MyRow1['categoryid']) {
-			echo '<option selected = "selected" value = "'. $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
+			echo '<option selected = "selected" value="'. $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 		} else {
-			echo '<option value = "'. $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
+			echo '<option value="'. $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 		}
 	}
 
@@ -628,27 +628,27 @@ if (!isset($StockID)) {
 		</field>
 		<field>
 			<label for = "Keywords">' . __('Enter text extract(s) in the description') . ':</label>
-			<input type = "text" name = "Keywords" size = "20" maxlength = "25" />
+			<input type="text" name="Keywords" size = "20" maxlength = "25" />
 		</field>
 		<field>
 			<label for = "StockCode">' . '<b>' . __('or') . ' </b>' . __('Enter extract of the Stock Code') . ':</label>
-			<input type = "text" name = "StockCode" size = "15" maxlength = "18"  value = "' . $_POST['StockCode'] . '" />
+			<input type="text" name="StockCode" size = "15" maxlength = "18"  value="' . $_POST['StockCode'] . '" />
 		</field>
 	</fieldset>';
-	echo '<div class = "centre">
-			<input type = "submit" name = "SearchParts" value = "' . __('Search Parts Now') . '" />
-			<input type = "reset" name = "ResetPart" value = "' . __('Show All') . '" />
+	echo '<div class="centre">
+			<input type="submit" name="SearchParts" value="' . __('Search Parts Now') . '" />
+			<input type="reset" name="ResetPart" value="' . __('Show All') . '" />
 		</div>';
 
 if (isset($StockItemsResult)
 	and DB_num_rows($StockItemsResult) > 1) {
 
-	echo '<table cellpadding = "2" class = "selection">
+	echo '<table cellpadding = "2" class="selection">
 		<thead>
 			<tr>
-			<th class = "SortedColumn" >' . __('Code') . '</th>
-			<th class = "SortedColumn" >' . __('Description') . '</th>
-			<th class = "SortedColumn" >' . __('On Hand') . '</th>
+			<th class="SortedColumn" >' . __('Code') . '</th>
+			<th class="SortedColumn" >' . __('Description') . '</th>
+			<th class="SortedColumn" >' . __('On Hand') . '</th>
 			<th>' . __('Units') . '</th>
 			</tr>
 		</thead>
@@ -656,10 +656,10 @@ if (isset($StockItemsResult)
 
 	while ($MyRow = DB_fetch_array($StockItemsResult)) {
 
-		echo '<tr class = "striped_row">
-				<td><input type = "submit" name = "SelectedStockItem" value = "', $MyRow['stockid'], '" /></td>
+		echo '<tr class="striped_row">
+				<td><input type="submit" name="SelectedStockItem" value="', $MyRow['stockid'], '" /></td>
 				<td>', $MyRow['description'], '</td>
-				<td class = "number">', locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']), '</td>
+				<td class="number">', locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']), '</td>
 				<td>', $MyRow['units'], '</td>
 			</tr>';
 //end of page full new headings if
@@ -895,7 +895,7 @@ if (isset($StockItemsResult)
 
 		$AuthRow = DB_fetch_array($AuthResult);
 
-		echo '<table cellpadding = "2" width = "95%" class = "selection">';
+		echo '<table cellpadding = "2" width="95%" class="selection">';
 		if (is_null($AuthRow)) {
 			$canCreate = 1;
 		} else {
@@ -913,19 +913,19 @@ if (isset($StockItemsResult)
 
 		if ( $_POST['Quotations'] == 'Orders_Only' or $_POST['Quotations'] == 'Overdue_Only' ) {
 	echo '<tr>
-								<th class = "SortedColumn" >' . __('Modify') . '</th>
+								<th class="SortedColumn" >' . __('Modify') . '</th>
 								<th>' . __('Acknowledge') . '</th>
 								' . $PrintPickLabel . '
 								<th>' . __('Invoice') . '</th>
 								<th>' . __('Dispatch Note') . '</th>
 								<th>' . __('Labels') . '</th>
-								<th class = "SortedColumn" >' . __('Customer') . '</th>
-								<th class = "SortedColumn" >' . __('Branch') . '</th>
-								<th class = "SortedColumn" >' . __('Cust Order') . ' #</th>
-								<th class = "SortedColumn" >' . __('Order Date') . '</th>
-								<th class = "SortedColumn" >' . __('Req Del Date') . '</th>
-								<th class = "SortedColumn" >' . __('Delivery To') . '</th>
-								<th class = "SortedColumn" >' . __('Order Total') . '<br />' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>';
+								<th class="SortedColumn" >' . __('Customer') . '</th>
+								<th class="SortedColumn" >' . __('Branch') . '</th>
+								<th class="SortedColumn" >' . __('Cust Order') . ' #</th>
+								<th class="SortedColumn" >' . __('Order Date') . '</th>
+								<th class="SortedColumn" >' . __('Req Del Date') . '</th>
+								<th class="SortedColumn" >' . __('Delivery To') . '</th>
+								<th class="SortedColumn" >' . __('Order Total') . '<br />' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>';
 
 			if ($canCreate == 0) { //If cancreate == 0 then this means the user can create orders hmmm!!
 				echo '<th>' . __('Place PO') . '</th>';
@@ -934,15 +934,15 @@ if (isset($StockItemsResult)
 			echo '</tr>';
 		} else {  /* displaying only quotations */
 			echo '<tr>
-								<th class = "SortedColumn">' . __('Modify') . '</th>
+								<th class="SortedColumn">' . __('Modify') . '</th>
 								<th>' . __('Print Quote') . '</th>
-								<th class = "SortedColumn" >' . __('Customer') . '</th>
-								<th class = "SortedColumn" >' . __('Branch') . '</th>
-								<th class = "SortedColumn" >' . __('Cust Ref') . ' #</th>
-								<th class = "SortedColumn" >' . __('Quote Date') . '</th>
-								<th class = "SortedColumn" >' . __('Req Del Date') . '</th>
-								<th class = "SortedColumn" >' . __('Delivery To') . '</th>
-								<th class = "SortedColumn" >' . __('Quote Total') .  '<br />' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>
+								<th class="SortedColumn" >' . __('Customer') . '</th>
+								<th class="SortedColumn" >' . __('Branch') . '</th>
+								<th class="SortedColumn" >' . __('Cust Ref') . ' #</th>
+								<th class="SortedColumn" >' . __('Quote Date') . '</th>
+								<th class="SortedColumn" >' . __('Req Del Date') . '</th>
+								<th class="SortedColumn" >' . __('Delivery To') . '</th>
+								<th class="SortedColumn" >' . __('Quote Total') .  '<br />' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>
 							</tr>';
 		}
 
@@ -953,39 +953,39 @@ if (isset($StockItemsResult)
 
 		while ($MyRow = DB_fetch_array($SalesOrdersResult)) {
 			if (isset($MyRow['orderno'])) {
-				$ModifyPage = $RootPath . '/SelectOrderItems.php?ModifyOrderNumber = ' . urlencode((string) $MyRow['orderno']);
-				$Confirm_Invoice = $RootPath . '/ConfirmDispatch_Invoice.php?OrderNumber = ' . urlencode((string) $MyRow['orderno']);
+				$ModifyPage = $RootPath . '/SelectOrderItems.php?=ModifyOrderNumber=' . urlencode((string) $MyRow['orderno']);
+				$Confirm_Invoice = $RootPath . '/ConfirmDispatch_Invoice.php?=OrderNumber=' . urlencode((string) $MyRow['orderno']);
 				$PrintPickList = '';
 				$PrintPickLabel = '';
-				$PrintDummyFlag = '<input type = "hidden" name = "dummy" value = "%s" />';
+				$PrintDummyFlag = '<input type="hidden" name="dummy" value="%s" />';
 				if ($_SESSION['RequirePickingNote'] == 1) {
-	$PrintPickList = $RootPath . '/GeneratePickingList.php?TransNo = ' . urlencode((string) $MyRow['orderno']);
+	$PrintPickList = $RootPath . '/GeneratePickingList.php?=TransNo=' . urlencode((string) $MyRow['orderno']);
 					if (isset($MyRow['prid']) and $MyRow['prid'] > '') {
-						$PrintPickLabel = '<td><a href = "' . $RootPath . '/GeneratePickingList.php?TransNo = ' . urlencode((string) $MyRow['orderno']) . '" target = "_blank">' . str_pad($MyRow['prid'], 10, '0', STR_PAD_LEFT) . '</a></td>';
+						$PrintPickLabel = '<td><a href="' . $RootPath . '/GeneratePickingList.php?=TransNo=' . urlencode((string) $MyRow['orderno']) . '" target="_blank">' . str_pad($MyRow['prid'], 10, '0', STR_PAD_LEFT) . '</a></td>';
 } else {
-						$PrintPickLabel = '<td><a href = "' . $RootPath . '/GeneratePickingList.php?TransNo = ' . urlencode((string) $MyRow['orderno']) . '" target = "_blank">' . __('Pick') . '</a></td>';
+						$PrintPickLabel = '<td><a href="' . $RootPath . '/GeneratePickingList.php?=TransNo=' . urlencode((string) $MyRow['orderno']) . '" target="_blank">' . __('Pick') . '</a></td>';
 					}
 					$PrintDummyFlag = '';
 				}
 
 				if ($_SESSION['PackNoteFormat'] == 1) {
 	/*Laser printed A4 default */
-					$PrintDispatchNote = $RootPath . '/PrintCustOrder_generic.php?TransNo = ' . urlencode((string) $MyRow['orderno']);
+					$PrintDispatchNote = $RootPath . '/PrintCustOrder_generic.php?=TransNo=' . urlencode((string) $MyRow['orderno']);
 } else { /*pre-printed stationery default */
-					$PrintDispatchNote = $RootPath . '/PrintCustOrder.php?TransNo = ' . urlencode((string) $MyRow['orderno']);
+					$PrintDispatchNote = $RootPath . '/PrintCustOrder.php?=TransNo=' . urlencode((string) $MyRow['orderno']);
 				}
-				$PrintQuotation = $RootPath . '/PDFQuotation.php?QuotationNo = ' . urlencode((string) $MyRow['orderno']) . '&orientation = landscape';
-				$PrintQuotationPortrait = $RootPath . '/PDFQuotation.php?QuotationNo = ' . urlencode((string) $MyRow['orderno']) . '&orientation = portrait';
+				$PrintQuotation = $RootPath . '/PDFQuotation.php?=QuotationNo=' . urlencode((string) $MyRow['orderno']) . '&orientation=landscape';
+				$PrintQuotationPortrait = $RootPath . '/PDFQuotation.php?=QuotationNo=' . urlencode((string) $MyRow['orderno']) . '&orientation=portrait';
 				$FormatedDelDate = isset($MyRow['deliverydate']) && $MyRow['deliverydate'] != '' ? ConvertSQLDate($MyRow['deliverydate']) : '';
 				$FormatedOrderDate = isset($MyRow['orddate']) && $MyRow['orddate'] != '' ? ConvertSQLDate($MyRow['orddate']) : '';
 				$FormatedOrderValue = locale_number_format($MyRow['ordervalue'],$_SESSION['CompanyRecord']['decimalplaces']);
 				if ($MyRow['customerref'] !== '') {
-	$CustomerRef = '<a href = "' . $RootPath . '/SelectCompletedOrder.php?CustomerRef = ' . urlencode((string) $MyRow['customerref']) . '" target = "_blank">' . $MyRow['customerref'] . '</a>';
+	$CustomerRef = '<a href="' . $RootPath . '/SelectCompletedOrder.php?=CustomerRef=' . urlencode((string) $MyRow['customerref']) . '" target="_blank">' . $MyRow['customerref'] . '</a>';
 } else {
 					$CustomerRef = '';
 				}
 				$OrdersTotal += $MyRow['ordervalue'];
-				$PrintAck = $RootPath . '/PDFAck.php?AcknowledgementNo = ' . urlencode((string) $MyRow['orderno']);
+				$PrintAck = $RootPath . '/PDFAck.php?=AcknowledgementNo=' . urlencode((string) $MyRow['orderno']);
 
 				if (!isset($PricesSecurity) or !in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens'])) {
 					$FormatedOrderValue = '---------';
@@ -997,27 +997,27 @@ if (isset($StockItemsResult)
 				$PrintText = __('Reprint');
 				}
 
-				$PrintLabels = $RootPath . '/PDFShipLabel.php?Type = Sales&ORD = ' . urlencode((string) $MyRow['orderno']);
+				$PrintLabels = $RootPath . '/PDFShipLabel.php?=Type=Sales&ORD=' . urlencode((string) $MyRow['orderno']);
 
 				if ($_POST['Quotations'] == 'Orders_Only' or $_POST['Quotations'] == 'Overdue_Only') {
-	echo '<tr class = "striped_row">
-								<td class = "number"><a href = "', $ModifyPage, '">', $MyRow['orderno'], '</a></td>
-								<td><a href = "', $PrintAck, '" target = "_blank">', __('Acknowledge'), '</a>', $PrintDummyFlag, '</td>
+	echo '<tr class="striped_row">
+								<td class="number"><a href="', $ModifyPage, '">', $MyRow['orderno'], '</a></td>
+								<td><a href="', $PrintAck, '" target="_blank">', __('Acknowledge'), '</a>', $PrintDummyFlag, '</td>
 								', $PrintPickLabel, '
-								<td><a href = "', $Confirm_Invoice, '">', __('Invoice'), '</a></td>
-								<td><a href = "', $PrintDispatchNote, '" target = "_blank"><img width = "16px" src = "', $RootPath, '/css/', $Theme, '/images/pdf.png" title = "', __('Click for PDF'), '" alt = "" /> ', $PrintText, ' </a></td>
-								<td><a href = "', $PrintLabels, '" target = "_blank">', __('Labels'), '</a></td>
+								<td><a href="', $Confirm_Invoice, '">', __('Invoice'), '</a></td>
+								<td><a href="', $PrintDispatchNote, '" target="_blank"><img width="16px" src="', $RootPath, '/css/', $Theme, '/images/pdf.png" title="', __('Click for PDF'), '" alt="" /> ', $PrintText, ' </a></td>
+								<td><a href="', $PrintLabels, '" target="_blank">', __('Labels'), '</a></td>
 								<td>', $MyRow['name'], '</td>
 								<td>', $MyRow['brname'], '</td>
 								<td>', $CustomerRef, '</td>
-								<td class = "date">', $FormatedOrderDate, '</td>
-								<td class = "date">', $FormatedDelDate, '</td>
+								<td class="date">', $FormatedOrderDate, '</td>
+								<td class="date">', $FormatedDelDate, '</td>
 								<td>', isset($MyRow['deliverto']) ? html_entity_decode($MyRow['deliverto'], ENT_QUOTES, 'UTF-8') : '', '</td>
-								<td class = "number">', $FormatedOrderValue, '</td>
-								<td class = "centre">';
+								<td class="number">', $FormatedOrderValue, '</td>
+								<td class="centre">';
 				/*Check authority to create POs if user has authority then show the check boxes to select sales orders to place POs for otherwise don't provide this option */
 					if ($canCreate == 0 and $MyRow['poplaced'] == 0) { //cancreate == 0 if the user can create POs and not already placed
-						echo '<input type = "checkbox" name = "PlacePO_[]" value = "', $MyRow['orderno'], '"/>';
+						echo '<input type="checkbox" name="PlacePO_[]" value="', $MyRow['orderno'], '"/>';
 } else {  /*User is not authorised to create POs so don't even show the option */
 						echo '&nbsp;';
 					}
@@ -1025,16 +1025,16 @@ if (isset($StockItemsResult)
 							</tr>';
 
 				} else { /*must be quotes only */
-					echo '<tr class = "striped_row">
-							<td><a href = "', $ModifyPage, '">', $MyRow['orderno'], '</a></td>
-							<td><a href = "', $PrintQuotation, '" target = "_blank">' . __('Landscape') . '</a>&nbsp;&nbsp;<a target = "_blank" href = "', $PrintQuotationPortrait, '">' . __('Portrait') . '</a></td>
+					echo '<tr class="striped_row">
+							<td><a href="', $ModifyPage, '">', $MyRow['orderno'], '</a></td>
+							<td><a href="', $PrintQuotation, '" target="_blank">' . __('Landscape') . '</a>&nbsp;&nbsp;<a target="_blank" href="', $PrintQuotationPortrait, '">' . __('Portrait') . '</a></td>
 							<td>', $MyRow['name'], '</td>
 							<td>', $MyRow['brname'], '</td>
 							<td>', $MyRow['customerref'], '</td>
 							<td>', $FormatedOrderDate, '</td>
 							<td>', $FormatedDelDate, '</td>
 							<td>', isset($MyRow['deliverto']) ? html_entity_decode($MyRow['deliverto'], ENT_QUOTES, 'UTF-8') : '', '</td>
-							<td class = "number">', $FormatedOrderValue, '</td>
+							<td class="number">', $FormatedOrderValue, '</td>
 						</tr>';
 				}
 			}
@@ -1043,7 +1043,7 @@ if (isset($StockItemsResult)
 		echo '</tbody>
 			<tfoot>
 				<tr>
-					<td colspan = "', ($PrintPickLabel <> '' ? '8' : '10'), '" class = "number"><b>';
+					<td colspan="', ($PrintPickLabel <> '' ? '8' : '10'), '" class="number"><b>';
 
 		if ($_POST['Quotations'] == 'Orders_Only') {
 	echo __('Total Order(s) Value in');
@@ -1055,12 +1055,12 @@ if (isset($StockItemsResult)
 		}
 
 		echo ' ' . $_SESSION['CompanyRecord']['currencydefault'] . ':</b></td>
-			<td class = "number"><b>' . locale_number_format($OrdersTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>';
+			<td class="number"><b>' . locale_number_format($OrdersTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>';
 
 		if ($_POST['Quotations'] == 'Orders_Only' and $canCreate == 0) {
 	//cancreate == 0 means can create POs
 			echo '<td>
-					<input type = "submit" name = "PlacePO" value = "' . __('Place') . " " . __('PO') . '" onclick = "return confirm(\'' . __('This will create purchase orders for all the items on the checked sales orders above, based on the preferred supplier purchasing data held in the system. Are You Absolutely Sure?') . '\');" />
+					<input type="submit" name="PlacePO" value="' . __('Place') . " " . __('PO') . '" onclick="return confirm(\'' . __('This will create purchase orders for all the items on the checked sales orders above, based on the preferred supplier purchasing data held in the system. Are You Absolutely Sure?') . '\');" />
 				</td>';
 }
 

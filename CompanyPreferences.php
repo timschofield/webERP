@@ -106,7 +106,7 @@ if (isset($_POST['submit'])) {
 
 } /* end of if submit */
 
-	echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title = "' . __('Search') .
+	echo '<p class = "page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') .
 		'" alt = "" />' . ' ' . $Title . '</p>';
 
 echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
@@ -180,68 +180,68 @@ if ($InputError !=  1) {
 
 echo '<field>
 		<label for = "CoyName">' . __('Name') . ' (' . __('to appear on reports') . '):</label>
-		<input '.(in_array('CoyName',$Errors) ?  'class = "inputerror"' : '' ) .' tabindex = "1" type = "text" autofocus = "autofocus" required = "required" name = "CoyName" value = "' . stripslashes($_POST['CoyName']) . '" title = "" size = "52" maxlength = "50" />
+		<input '.(in_array('CoyName',$Errors) ?  'class ="inputerror"' : '' ) .' tabindex = "1" type = "text" autofocus = "autofocus" required = "required" name = "CoyName" value = "' . stripslashes($_POST['CoyName']) . '" title = "" size = "52" maxlength = "50" />
 		<fieldhelp>' . __('Enter the name of the business. This will appear on all reports and at the top of each screen. ') . '</fieldhelp>
 	</field>';
 
 echo '<field>
 		<label for = "CoyNumber">' . __('Official Company Number') . ':</label>
-		<input '.(in_array('CoyNumber',$Errors) ?  'class = "inputerror"' : '' ) .' tabindex = "2" type = "text" name = "CompanyNumber" value = "' . $_POST['CompanyNumber'] . '" size = "22" maxlength = "20" />
+		<input '.(in_array('CoyNumber',$Errors) ?  'class ="inputerror"' : '' ) .' tabindex = "2" type = "text" name = "CompanyNumber" value = "' . $_POST['CompanyNumber'] . '" size = "22" maxlength = "20" />
 	</field>';
 
 echo '<field>
 		<label for = "TaxRef">' . __('Tax Authority Reference') . ':</label>
-		<input '.(in_array('TaxRef',$Errors) ?  'class = "inputerror"' : '' ) .' tabindex = "3" type = "text" name = "GSTNo" value = "' . $_POST['GSTNo'] . '" size = "22" maxlength = "20" />
+		<input '.(in_array('TaxRef',$Errors) ?  'class ="inputerror"' : '' ) .' tabindex = "3" type = "text" name = "GSTNo" value = "' . $_POST['GSTNo'] . '" size = "22" maxlength = "20" />
 	</field>';
 
 echo '<field>
 		<label for = "RegOffice1">' . __('Address Line 1') . ':</label>
-		<input '.(in_array('RegOffice1',$Errors) ?  'class = "inputerror"' : '' ) .' tabindex = "4" type = "text" name = "RegOffice1" title = "" required = "required" size = "42" maxlength = "40" value = "' . stripslashes($_POST['RegOffice1']) . '" />
+		<input '.(in_array('RegOffice1',$Errors) ?  'class ="inputerror"' : '' ) .' tabindex = "4" type = "text" name = "RegOffice1" title = "" required = "required" size = "42" maxlength = "40" value = "' . stripslashes($_POST['RegOffice1']) . '" />
 		<fieldhelp>' . __('Enter the first line of the company registered office. This will appear on invoices and statements.') . '</fieldhelp>
 	</field>';
 
 echo '<field>
 		<label for = "RegOffice2">' . __('Address Line 2') . ':</label>
-		<input '.(in_array('RegOffice2',$Errors) ?  'class = "inputerror"' : '' ) .' tabindex = "5" type = "text" name = "RegOffice2" title = "" size = "42" maxlength = "40" value = "' . stripslashes($_POST['RegOffice2']) . '" />
+		<input '.(in_array('RegOffice2',$Errors) ?  'class ="inputerror"' : '' ) .' tabindex = "5" type = "text" name = "RegOffice2" title = "" size = "42" maxlength = "40" value = "' . stripslashes($_POST['RegOffice2']) . '" />
 		<fieldhelp>' . __('Enter the second line of the company registered office. This will appear on invoices and statements.') . '</fieldhelp>
 	</field>';
 
 echo '<field>
 		<label for = "RegOffice3">' . __('Address Line 3') . ':</label>
-		<input '.(in_array('RegOffice3',$Errors) ?  'class = "inputerror"' : '' ) .' tabindex = "6" type = "text" name = "RegOffice3" title = "" size = "42" maxlength = "40" value = "' . stripslashes($_POST['RegOffice3']) . '" />
+		<input '.(in_array('RegOffice3',$Errors) ?  'class ="inputerror"' : '' ) .' tabindex = "6" type = "text" name = "RegOffice3" title = "" size = "42" maxlength = "40" value = "' . stripslashes($_POST['RegOffice3']) . '" />
 		<fieldhelp>' . __('Enter the third line of the company registered office. This will appear on invoices and statements.') . '</fieldhelp>
 	</field>';
 
 echo '<field>
 		<label for = "RegOffice4">' . __('Address Line 4') . ':</label>
-		<input '.(in_array('RegOffice4',$Errors) ?  'class = "inputerror"' : '' ) .' tabindex = "7" type = "text" name = "RegOffice4" title = "" size = "42" maxlength = "40" value = "' . stripslashes($_POST['RegOffice4']) . '" />
+		<input '.(in_array('RegOffice4',$Errors) ?  'class ="inputerror"' : '' ) .' tabindex = "7" type = "text" name = "RegOffice4" title = "" size = "42" maxlength = "40" value = "' . stripslashes($_POST['RegOffice4']) . '" />
 		<fieldhelp>' . __('Enter the fourth line of the company registered office. This will appear on invoices and statements.') . '</fieldhelp>
 </field>';
 
 echo '<field>
 		<label for = "RegOffice5">' . __('Address Line 5') . ':</label>
-		<input '.(in_array('RegOffice5',$Errors) ?  'class = "inputerror"' : '' ) .' tabindex = "8" type = "text" name = "RegOffice5" size = "22" maxlength = "20" value = "' . stripslashes($_POST['RegOffice5']) . '" />
+		<input '.(in_array('RegOffice5',$Errors) ?  'class ="inputerror"' : '' ) .' tabindex = "8" type = "text" name = "RegOffice5" size = "22" maxlength = "20" value = "' . stripslashes($_POST['RegOffice5']) . '" />
 	</field>';
 
 echo '<field>
 		<label for = "RegOffice6">' . __('Address Line 6') . ':</label>
-		<input '.(in_array('RegOffice6',$Errors) ?  'class = "inputerror"' : '' ) .' tabindex = "9" type = "text" name = "RegOffice6" size = "17" maxlength = "15" value = "' . stripslashes($_POST['RegOffice6']) . '" />
+		<input '.(in_array('RegOffice6',$Errors) ?  'class ="inputerror"' : '' ) .' tabindex = "9" type = "text" name = "RegOffice6" size = "17" maxlength = "15" value = "' . stripslashes($_POST['RegOffice6']) . '" />
 	</field>';
 
 echo '<field>
 		<label for = "Telephone">' . __('Telephone Number') . ':</label>
-		<input ', (in_array('Telephone',$Errors) ?  'class = "inputerror"' : '' ), ' maxlength = "25" name = "Telephone" required = "required" size = "26" tabindex = "10" type = "tel" title = "" value = "', $_POST['Telephone'], '" />
+		<input ', (in_array('Telephone',$Errors) ?  'class ="inputerror"' : '' ), ' maxlength = "25" name = "Telephone" required = "required" size = "26" tabindex = "10" type = "tel" title = "" value = "', $_POST['Telephone'], '" />
 		<fieldhelp>', __('Enter the main telephone number of the company registered office. This will appear on invoices and statements.'), '</fieldhelp>
 	</field>';
 
 echo '<field>
 		<label for = "Fax">' . __('Facsimile Number') . ':</label>
-		<input ', (in_array('Fax',$Errors) ?  'class = "inputerror"' : '' ), ' maxlength = "25" name = "Fax" size = "26" tabindex = "11" type = "tel" value = "', $_POST['Fax'], '" />
+		<input ', (in_array('Fax',$Errors) ?  'class ="inputerror"' : '' ), ' maxlength = "25" name = "Fax" size = "26" tabindex = "11" type = "tel" value = "', $_POST['Fax'], '" />
 	</field>';
 
 echo '<field>
 		<label for = "Email">' . __('Email Address') . ':</label>
-		<input '.(in_array('Email',$Errors) ?  'class = "inputerror"' : '' ) .' tabindex = "12" type = "email" name = "Email" title = "" required = "required" placeholder = "accounts@example.com" size = "50" maxlength = "55" value = "' . $_POST['Email'] . '" />
+		<input '.(in_array('Email',$Errors) ?  'class ="inputerror"' : '' ) .' tabindex = "12" type = "email" name = "Email" title = "" required = "required" placeholder = "accounts@example.com" size = "50" maxlength = "55" value = "' . $_POST['Email'] . '" />
 		<fieldhelp>' . __('Enter the main company email address. This will appear on invoices and statements.') . '</fieldhelp>
 	</field>';
 

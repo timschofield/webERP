@@ -50,11 +50,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '<link href = "css/reports.css" rel = "stylesheet" type = "text/css" />';
 	}
 
-	$HTML .= '<meta name = "author" content = "WebERP " . $Version">
-					<meta name = "Creator" content = "webERP https://www.weberp.org">
+	$HTML .= '<meta name="author" content = "WebERP " . $Version">
+					<meta name="Creator" content = "webERP https://www.weberp.org">
 				</head>
 				<body>
-				<div class = "centre" id = "ReportHeader">
+				<div class="centre" id="ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 					' . __('Sales Report') . '<br />
 					' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
@@ -111,15 +111,15 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				if ($CustomerId != '') {// If not the first line.
 					$HTML .= '<tr>
 							<td colspan = "3">&nbsp;</td>
-							<td class = "number">' . locale_number_format($CustomerOvAmount, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-							<td class = "number">' . locale_number_format($CustomerOvTax, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-							<td class = "number">' . locale_number_format($CustomerOvAmount+$CustomerOvTax, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-							<td class = "number">' . locale_number_format($CustomerGlAmount, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-							<td class = "number">' . locale_number_format($CustomerGlTax, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-							<td class = "number">' . locale_number_format($CustomerGlAmount+$CustomerGlTax, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td class="number">' . locale_number_format($CustomerOvAmount, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td class="number">' . locale_number_format($CustomerOvTax, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td class="number">' . locale_number_format($CustomerOvAmount+$CustomerOvTax, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td class="number">' . locale_number_format($CustomerGlAmount, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td class="number">' . locale_number_format($CustomerGlTax, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td class="number">' . locale_number_format($CustomerGlAmount+$CustomerGlTax, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 						</tr>';
 }
-				$HTML .= '<tr><td class = "text" colspan = "9"><a href = "' . $RootPath . '/CustomerInquiry.php?CustomerID = ' . $MyRow['debtorno'] . '">' . $MyRow['debtorno'] . ' - ' . $MyRow['name'] . '</a> - ' . $MyRow['currcode'] . ' ' . $CurrencyName[$MyRow['currcode']] . '</td></tr>';
+				$HTML .= '<tr><td class="text" colspan = "9"><a href="' . $RootPath . '/CustomerInquiry.php?CustomerID=' . $MyRow['debtorno'] . '">' . $MyRow['debtorno'] . ' - ' . $MyRow['name'] . '</a> - ' . $MyRow['currcode'] . ' ' . $CurrencyName[$MyRow['currcode']] . '</td></tr>';
 				$TotalGlAmount += $CustomerGlAmount;
 				$TotalGlTax += $CustomerGlTax;
 				$CustomerId = $MyRow['debtorno'];
@@ -131,16 +131,16 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 			$GlAmount = $MyRow['ovamount']/$MyRow['rate'];
 			$GlTax = $MyRow['ovgst']/$MyRow['rate'];
-			$HTML .= '<tr class = "striped_row">
-						<td class = "centre">' . $MyRow['trandate'] . '</td>
-						<td class = "number">' . $MyRow['transno'] . '</td>
-						<td class = "text">' . $MyRow['reference'] . '</td>
-						<td class = "number">' . locale_number_format($MyRow['ovamount'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-						<td class = "number">' . locale_number_format($MyRow['ovgst'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-						<td class = "number"><a href = "' . $RootPath . '/CustWhereAlloc.php?TransType = 10&TransNo = ' . $MyRow['transno'] . '&amp;ScriptFrom = SalesReport" target = "_blank" title = "' . __('Click to view where allocated') . '">' . locale_number_format($MyRow['ovamount']+$MyRow['ovgst'], $_SESSION['CompanyRecord']['decimalplaces']) . '</a></td>
-						<td class = "number">' . locale_number_format($GlAmount, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-						<td class = "number">' .	locale_number_format($GlTax, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-						<td class = "number"><a href = "' . $RootPath . '/GLTransInquiry.php?TypeID = 10&amp;TransNo = ' . $MyRow['transno'] . '&amp;ScriptFrom = SalesReport" target = "_blank" title = "' . __('Click to view the GL entries') . '">' . locale_number_format($GlAmount+$GlTax, $_SESSION['CompanyRecord']['decimalplaces']) . '</a></td>
+			$HTML .= '<tr class="striped_row">
+						<td class="centre">' . $MyRow['trandate'] . '</td>
+						<td class="number">' . $MyRow['transno'] . '</td>
+						<td class="text">' . $MyRow['reference'] . '</td>
+						<td class="number">' . locale_number_format($MyRow['ovamount'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class="number">' . locale_number_format($MyRow['ovgst'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class="number"><a href="' . $RootPath . '/CustWhereAlloc.php?TransType=10&TransNo=' . $MyRow['transno'] . '&amp;ScriptFrom=SalesReport" target="_blank" title="' . __('Click to view where allocated') . '">' . locale_number_format($MyRow['ovamount']+$MyRow['ovgst'], $_SESSION['CompanyRecord']['decimalplaces']) . '</a></td>
+						<td class="number">' . locale_number_format($GlAmount, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class="number">' .	locale_number_format($GlTax, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class="number"><a href="' . $RootPath . '/GLTransInquiry.php?TypeID=10&amp;TransNo=' . $MyRow['transno'] . '&amp;ScriptFrom=SalesReport" target="_blank" title="' . __('Click to view the GL entries') . '">' . locale_number_format($GlAmount+$GlTax, $_SESSION['CompanyRecord']['decimalplaces']) . '</a></td>
 				</tr>';
 			$CustomerOvAmount += $MyRow['ovamount'];
 			$CustomerOvTax += $MyRow['ovgst'];
@@ -149,14 +149,14 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		}
 
 		// Prints last customer total:
-		$HTML .= '<tr class = "total_row">
+		$HTML .= '<tr class="total_row">
 					<td colspan = "3">' . __('Total for') . ' ' . $MyRow['name'] . '</td>
-					<td class = "number">' . locale_number_format($CustomerOvAmount, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-					<td class = "number">' . locale_number_format($CustomerOvTax, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-					<td class = "number">' . locale_number_format($CustomerOvAmount+$CustomerOvTax, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-					<td class = "number">' . locale_number_format($CustomerGlAmount, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-					<td class = "number">' . locale_number_format($CustomerGlTax, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-					<td class = "number">' . locale_number_format($CustomerGlAmount+$CustomerGlTax, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($CustomerOvAmount, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($CustomerOvTax, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($CustomerOvAmount+$CustomerOvTax, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($CustomerGlAmount, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($CustomerGlTax, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($CustomerGlAmount+$CustomerGlTax, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				</tr>';
 
 		$TotalGlAmount += $CustomerGlAmount;
@@ -186,42 +186,42 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				ORDER BY debtortrans.debtorno, debtortrans.trandate";
 		$Result = DB_query($SQL);
 		foreach ($Result as $MyRow) {
-			$HTML .= '<tr class = "striped_row">
-						<td class = "text">' . $MyRow['debtorno'] . '</td>
-						<td class = "text"><a href = "' . $RootPath . '/CustomerInquiry.php?CustomerID = ' . $MyRow['debtorno'] . '">' . $MyRow['name'] . '</a></td>
-						<td class = "text">' . $MyRow['currcode'] . '</td>
-						<td class = "number">' . locale_number_format($MyRow['CustomerOvAmount'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-						<td class = "number">' . locale_number_format($MyRow['CustomerOvTax'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-						<td class = "number">' . locale_number_format($MyRow['CustomerOvAmount']+$MyRow['CustomerOvTax'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-						<td class = "number">' . locale_number_format($MyRow['CustomerGlAmount'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-						<td class = "number">' . locale_number_format($MyRow['CustomerGlTax'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-						<td class = "number">' . locale_number_format($MyRow['CustomerGlAmount']+$MyRow['CustomerGlTax'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			$HTML .= '<tr class="striped_row">
+						<td class="text">' . $MyRow['debtorno'] . '</td>
+						<td class="text"><a href="' . $RootPath . '/CustomerInquiry.php?CustomerID=' . $MyRow['debtorno'] . '">' . $MyRow['name'] . '</a></td>
+						<td class="text">' . $MyRow['currcode'] . '</td>
+						<td class="number">' . locale_number_format($MyRow['CustomerOvAmount'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class="number">' . locale_number_format($MyRow['CustomerOvTax'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class="number">' . locale_number_format($MyRow['CustomerOvAmount']+$MyRow['CustomerOvTax'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class="number">' . locale_number_format($MyRow['CustomerGlAmount'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class="number">' . locale_number_format($MyRow['CustomerGlTax'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class="number">' . locale_number_format($MyRow['CustomerGlAmount']+$MyRow['CustomerGlTax'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 					</tr>';
 			$TotalGlAmount += $MyRow['CustomerGlAmount'];
 			$TotalGlTax += $MyRow['CustomerGlTax'];
 		}
 	}
 	// Prints all debtors total:
-	$HTML .= '<tr class = "total_row">
-				<td class = "text" colspan = "6">&nbsp;</td>
-				<td class = "number">' . locale_number_format($TotalGlAmount, $_SESSION['CompanyRecord']['decimalplaces']). '</td>
-				<td class = "number">' . locale_number_format($TotalGlTax, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td class = "number">' . locale_number_format($TotalGlAmount+$TotalGlTax, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+	$HTML .= '<tr class="total_row">
+				<td class="text" colspan = "6">&nbsp;</td>
+				<td class="number">' . locale_number_format($TotalGlAmount, $_SESSION['CompanyRecord']['decimalplaces']). '</td>
+				<td class="number">' . locale_number_format($TotalGlTax, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($TotalGlAmount+$TotalGlTax, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			</tr>';
 	$HTML .= '</tbody></table>';
 	if (isset($_POST['PrintPDF'])) {
 		$HTML .= '</tbody>
-				<div class = "footer fixed-section">
-					<div class = "right">
-						<span class = "page-number">Page </span>
+				<div class="footer fixed-section">
+					<div class="right">
+						<span class="page-number">Page </span>
 					</div>
 				</div>
 			</table>';
 	} else {
 		$HTML .= '</tbody>
 				</table>
-				<div class = "centre">
-					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" /></form>
+				<div class="centre">
+					<form><input type = "submit" name="close" value = "' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -244,8 +244,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	} else {
 		$Title = __('Sales Report');
 		include('includes/header.php');
-		echo '<p class = "page_title_text">
-				<img src = "' . $RootPath . '/css/' . $Theme . '/images/sales.png" title = "' . __('Sales Report') . '" alt = "" />' . ' ' . __('Sales Report') . '
+		echo '<p class="page_title_text">
+				<img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . __('Sales Report') . '" alt="" />' . ' ' . __('Sales Report') . '
 			</p>';
 		echo $HTML;
 		include('includes/footer.php');
@@ -253,14 +253,14 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 } else {
 	include('includes/header.php');
 	// If PeriodFrom or PeriodTo are not set or it is a NewReport, shows a parameters input form:
-	echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/gl.png" title = "', // Icon image.
+	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/gl.png" title="', // Icon image.
 		$Title, '" /> ', // Icon title.
 		$Title, '</p>';// Page title.
 	fShowPageHelp(// Shows the page help text if $_SESSION['ShowFieldHelp'] is true or is not set
 		__('Shows a report of sales to customers for the range of selected dates.'));// Function fShowPageHelp() in ~/includes/MiscFunctions.php
 	echo // Shows a form to input the report parameters:
-		'<form action = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method = "post" target = "_blank">',
-		'<input name = "FormID" type = "hidden" value = "', $_SESSION['FormID'], '" />', // Input table:
+		'<form action = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method = "post" target="_blank">',
+		'<input name="FormID" type = "hidden" value = "', $_SESSION['FormID'], '" />', // Input table:
 		'<fieldset>', // Content of the header and footer of the input table:
 		'<legend>', __('Report Parameters'), '</legend>',
 	// Content of the body of the input table:
@@ -270,7 +270,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	if (!isset($_POST['PeriodFrom'])) {
 		$_POST['PeriodFrom'] = date($_SESSION['DefaultDateFormat'], strtotime("-1 year", time()));// One year before current date.
 	}
-	echo '<input type = "date" id = "PeriodFrom" maxlength = "10" name = "PeriodFrom" required = "required" size = "11" value = "', FormatDateForSQL($_POST['PeriodFrom']), '" />',
+	echo '<input type = "date" id="PeriodFrom" maxlength = "10" name="PeriodFrom" required = "required" size = "11" value = "', FormatDateForSQL($_POST['PeriodFrom']), '" />',
 		'<fieldhelp>', __('Select the beginning of the reporting period'), '</fieldhelp>
 			</field>',
 			// Select period to:
@@ -279,19 +279,19 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	if (!isset($_POST['PeriodTo'])) {
 		$_POST['PeriodTo'] = date($_SESSION['DefaultDateFormat']);
 	}
-	echo '<input type = "date" id = "PeriodTo" maxlength = "10" name = "PeriodTo" required = "required" size = "11" value = "', FormatDateForSQL($_POST['PeriodTo']), '" />',
+	echo '<input type = "date" id="PeriodTo" maxlength = "10" name="PeriodTo" required = "required" size = "11" value = "', FormatDateForSQL($_POST['PeriodTo']), '" />',
 		'<fieldhelp>', __('Select the end of the reporting period'), '</fieldhelp>
 		</field>',
 	// Select to show or not sales invoices:
 			'<field>',
 			 	'<label for = "ShowDetails">', __('Show details'), '</label>',
-			 	'<input id = "ShowDetails" name = "ShowDetails" type = "checkbox" />', // If $_POST['ShowDetails'] is set and it is true, shows this input checked.
+			 	'<input id="ShowDetails" name="ShowDetails" type = "checkbox" />', // If $_POST['ShowDetails'] is set and it is true, shows this input checked.
 				'<fieldhelp>', __('Check this box to show sales invoices'), '</fieldhelp>
 			</field>',
 		 '</fieldset>
-			<div class = "centre">
-				<input type = "submit" name = "PrintPDF" title = "PDF" value = "' . __('Print PDF') . '" />
-				<input type = "submit" name = "View" title = "View" value = "' . __('View') . '" />
+			<div class="centre">
+				<input type = "submit" name="PrintPDF" title="PDF" value = "' . __('Print PDF') . '" />
+				<input type = "submit" name="View" title="View" value = "' . __('View') . '" />
 			</div>';
 	include('includes/footer.php');
 }

@@ -13,10 +13,10 @@ if (isset($_GET['StockID'])){
 }
 
 if (isset($_POST['ShowGraphUsage'])) {
-	echo '<meta http-equiv = "Refresh" content = "0; url = ' . $RootPath . '/StockUsageGraph.php?StockLocation = ' . $_POST['StockLocation']  . '&amp;StockID = ' . $StockID . '">';
+	echo '<meta http-equiv = "Refresh" content = "0; url = ' . $RootPath . '/StockUsageGraph.php?StockLocation=' . $_POST['StockLocation']  . '&amp;StockID=' . $StockID . '">';
 	prnMsg(__('You should automatically be forwarded to the usage graph') .
 			'. ' . __('If this does not happen') .' (' . __('if the browser does not support META Refresh') . ') ' .
-			'<a href = "' . $RootPath . '/StockUsageGraph.php?StockLocation = ' . $_POST['StockLocation'] .'&amp;StockID = ' . $StockID . '">' . __('click here') . '</a> ' . __('to continue'),'info');
+			'<a href="' . $RootPath . '/StockUsageGraph.php?StockLocation=' . $_POST['StockLocation'] .'&amp;StockID=' . $StockID . '">' . __('click here') . '</a> ' . __('to continue'),'info');
 	exit();
 }
 
@@ -24,8 +24,8 @@ $ViewTopic = 'Inventory';
 $BookMark = '';
 include('includes/header.php');
 
-echo '<p class = "page_title_text">
-		<img src = "'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title = "' . __('Dispatch') .
+echo '<p class="page_title_text">
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Dispatch') .
 		'" alt = "" />' . ' ' . $Title . '
 	</p>';
 
@@ -40,7 +40,7 @@ $MyRow = DB_fetch_row($Result);
 $DecimalPlaces = $MyRow[3];
 
 echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post">';
-echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 echo '<fieldset>';
 
 $Its_A_KitSet_Assembly_Or_Dummy =false;
@@ -61,13 +61,13 @@ if ($MyRow[2]=='K'
 
 echo '<field>
 		<label for = "StockID">' . __('Stock Code') . ':</label>
-		<input type = "text" pattern = "(?!^\s+$)[^%]{1,20}" title = "" required = "required" name = "StockID" size = "21" maxlength = "20" value = "' . $StockID . '" />
+		<input type = "text" pattern = "(?!^\s+$)[^%]{1,20}" title="" required = "required" name="StockID" size = "21" maxlength = "20" value = "' . $StockID . '" />
 		<fieldhelp>'.__('The input should not be blank or percentage mark').'</fieldhelp>
 	</field>';
 
 echo '<field>
 		<label for = "StockLocation">', __('From Stock Location') . ':</label>
-		<select name = "StockLocation">';
+		<select name="StockLocation">';
 
 $SQL = "SELECT locations.loccode, locationname FROM locations
 			INNER JOIN locationusers ON locationusers.loccode = locations.loccode and locationusers.userid = '" .  $_SESSION['UserID'] . "' and locationusers.canview = 1";
@@ -96,9 +96,9 @@ if (isset($_POST['StockLocation'])){
 echo '</select>
 	</fieldset>';
 
-echo '<div class = "centre">
-		<input type = "submit" name = "ShowUsage" value = "' . __('Show Stock Usage') . '" />
-		<input type = "submit" name = "ShowGraphUsage" value = "' . __('Show Graph Of Stock Usage') . '" />
+echo '<div class="centre">
+		<input type = "submit" name="ShowUsage" value = "' . __('Show Stock Usage') . '" />
+		<input type = "submit" name="ShowGraphUsage" value = "' . __('Show Graph Of Stock Usage') . '" />
 	</div>';
 
 
@@ -142,11 +142,11 @@ if (isset($_POST['ShowUsage'])){
 	$ErrMsg = __('The stock usage for the selected criteria could not be retrieved');
 	$MovtsResult = DB_query($SQL, $ErrMsg);
 
-	echo '<table class = "selection">
+	echo '<table class="selection">
 			<thead>
 				<tr>
 					<th>' . __('Month') . '</th>
-					<th class = "SortedColumn">' . __('Usage') . '</th>
+					<th class="SortedColumn">' . __('Usage') . '</th>
 				</tr>
 			</thead>
 			<tbody>';
@@ -160,16 +160,16 @@ if (isset($_POST['ShowUsage'])){
 
 		$TotalUsage += $MyRow['qtyused'];
 		$PeriodsCounter++;
-		echo '<tr class = "striped_row">
+		echo '<tr class="striped_row">
 				<td>', $DisplayDate, '</td>
-				<td class = "number">', locale_number_format($MyRow['qtyused'],$DecimalPlaces), '</td>
+				<td class="number">', locale_number_format($MyRow['qtyused'],$DecimalPlaces), '</td>
 			</tr>';
 	} //end of while loop
 
 	echo '</tbody></table>';
 
 	if ($TotalUsage>0 and $PeriodsCounter>0) {
-	echo '<table class = "selection"><tr>
+	echo '<table class="selection"><tr>
 				<th colspan = "2">' . __('Average Usage per month is') . ' ' . locale_number_format($TotalUsage/$PeriodsCounter) . '</th>
 			</tr></table>';
 }
@@ -177,18 +177,18 @@ if (isset($_POST['ShowUsage'])){
 } /* end if Show Usage is clicked */
 
 
-echo '<div class = "centre">';
-echo '<a href = "' . $RootPath . '/StockStatus.php?StockID = ' . $StockID . '">' . __('Show Stock Status')  . '</a>';
+echo '<div class="centre">';
+echo '<a href="' . $RootPath . '/StockStatus.php?StockID=' . $StockID . '">' . __('Show Stock Status')  . '</a>';
 if (isset($_POST['StockLocation'])) {
 	echo '<br />
-		<a href = "' . $RootPath . '/StockMovements.php?StockID = ' . $StockID . '&amp;StockLocation = ' . $_POST['StockLocation'] . '">' . __('Show Stock Movements') . '</a>';
+		<a href="' . $RootPath . '/StockMovements.php?StockID=' . $StockID . '&amp;StockLocation=' . $_POST['StockLocation'] . '">' . __('Show Stock Movements') . '</a>';
 	echo '<br />
-		<a href = "' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem = ' . $StockID . '&amp;StockLocation = ' . $_POST['StockLocation'] . '">' . __('Search Outstanding Sales Orders') . '</a>';
+		<a href="' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '&amp;StockLocation=' . $_POST['StockLocation'] . '">' . __('Search Outstanding Sales Orders') . '</a>';
 }
 echo '<br />
-	<a href = "' . $RootPath . '/SelectCompletedOrder.php?SelectedStockItem = ' . $StockID . '">' . __('Search Completed Sales Orders') . '</a>';
+	<a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . __('Search Completed Sales Orders') . '</a>';
 echo '<br />
-	<a href = "' . $RootPath . '/PO_SelectOSPurchOrder.php?SelectedStockItem = ' . $StockID . '">' . __('Search Outstanding Purchase Orders') . '</a>';
+	<a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?SelectedStockItem=' . $StockID . '">' . __('Search Outstanding Purchase Orders') . '</a>';
 
 echo '</div>
 	</form>';

@@ -79,7 +79,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCust']) and $_POST['FromCust
 	if (DB_Num_Rows($StatementResults) == 0) {
 		$Title = __('Print Statements') . ' - ' . __('No Customers Found');
 		require ('includes/header.php');
-		echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/printer.png" title = "' . __('Print') . '" alt = "" />' . ' ' . __('Print Customer Account Statements') . '</p>';
+		echo '<p class = "page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" title="' . __('Print') . '" alt="" />' . ' ' . __('Print Customer Account Statements') . '</p>';
 		prnMsg(__('There were no Customers matching your selection of ') . $_POST['FromCust'] . ' - ' . $_POST['ToCust'] . '.', 'error');
 		include ('includes/footer.php');
 		exit();
@@ -134,7 +134,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCust']) and $_POST['FromCust
 		if (($_POST['EmailOrPrint'] == 'print' and count($RecipientArray) == 0) or ($_POST['EmailOrPrint'] == 'email' and count($RecipientArray) > 0)) {
 
 			// Header
-			$HTML .= '<div class = "company"><img class = "logo" src = "' . $_SESSION['LogoFile'] . '" /></div>';
+			$HTML .= '<div class = "company"><img class="logo" src="' . $_SESSION['LogoFile'] . '" /></div>';
 			$HTML .= '<div class = "company">' . $_SESSION['CompanyRecord']['coyname'] . '</div>';
 			$HTML .= '<div class = "header">' . __('Customer Statement') . '</div>';
 			$HTML .= '<div class = "small">' . __('For customer') . ': ' . $StmtHeader['name'] . ' (' . $StmtHeader['debtorno'] . ')</div>';
@@ -378,7 +378,7 @@ else { // The option to print PDF was not hit
 
 	$Title = __('Select Statements to Print');
 	include ('includes/header.php');
-	echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/printer.png" title = "' . __('Print') . '" alt = "" />' . ' ' . __('Print Customer Account Statements') . '</p>';
+	echo '<p class = "page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" title="' . __('Print') . '" alt="" />' . ' ' . __('Print Customer Account Statements') . '</p>';
 	if (!isset($_POST['FromCust']) or $_POST['FromCust'] == '') {
 		echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target = "_blank">';
 		echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';

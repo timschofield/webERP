@@ -8,7 +8,7 @@ if (!DB_table_exists('mrprequirements')) {
 	$Title = 'MRP error';
 	include ('includes/header.php');
 	echo '<br />';
-	prnMsg(__('The MRP calculation must be run before you can run this report') . '<br />' . __('To run the MRP calculation click') . ' ' . '<a href = "' . $RootPath . '/MRP.php">' . __('here') . '</a>', 'error');
+	prnMsg(__('The MRP calculation must be run before you can run this report') . '<br />' . __('To run the MRP calculation click') . ' ' . '<a href="' . $RootPath . '/MRP.php">' . __('here') . '</a>', 'error');
 	include ('includes/footer.php');
 	exit();
 }
@@ -35,7 +35,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$Title = __('MRP Reschedules') . ' - ' . __('Problem Report');
 		include ('includes/header.php');
 		prnMsg(__('No MRP reschedule retrieved'), 'warn');
-		echo '<br /><a href = "' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 		include ('includes/footer.php');
 		exit();
 	}
@@ -56,7 +56,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		</style>
 	</head>
 	<body>
-		<div class = "page-title">' . $_SESSION['CompanyRecord']['coyname'] . '</div>
+		<div class="page-title">' . $_SESSION['CompanyRecord']['coyname'] . '</div>
 		<div>' . __('MRP Reschedule Report') . '</div>
 		<div>' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '</div>
 		<div>' . __('Selection:') . ' ' . $_POST['Selection'] . '</div>
@@ -96,14 +96,14 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$i++;
 
 		$HTML .= '
-			<tr class = "' . $rowClass . '">
+			<tr class="' . $rowClass . '">
 				<td>' . htmlspecialchars($MyRow['part']) . '</td>
 				<td>' . htmlspecialchars($MyRow['description']) . '</td>
-				<td class = "right">' . htmlspecialchars($MyRow['orderno']) . '</td>
-				<td class = "right">' . htmlspecialchars($MyRow['ordertype']) . '</td>
-				<td class = "right">' . locale_number_format($MyRow['supplyquantity'], $MyRow['decimalplaces']) . '</td>
-				<td class = "right">' . $FormatedDueDate . '</td>
-				<td class = "right">' . $FormatedMRPDate . '</td>
+				<td class="right">' . htmlspecialchars($MyRow['orderno']) . '</td>
+				<td class="right">' . htmlspecialchars($MyRow['ordertype']) . '</td>
+				<td class="right">' . locale_number_format($MyRow['supplyquantity'], $MyRow['decimalplaces']) . '</td>
+				<td class="right">' . $FormatedDueDate . '</td>
+				<td class="right">' . $FormatedMRPDate . '</td>
 			</tr>
 		';
 	}
@@ -112,9 +112,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$HTML .= '</table>';
 	if (isset($_POST['PrintPDF']) or isset($_POST['Email'])) {
 		$HTML .= '</tbody>
-				<div class = "footer fixed-section">
-					<div class = "right">
-						<span class = "page-number">Page </span>
+				<div class="footer fixed-section">
+					<div class="right">
+						<span class="page-number">Page </span>
 					</div>
 				</div>
 			</table>';
@@ -122,8 +122,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	else {
 		$HTML .= '</tbody>
 				</table>
-				<div class = "centre">
-					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" /></form>
+				<div class="centre">
+					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -145,7 +145,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	else {
 		$Title = __('MRP Reschedules');
 		include ('includes/header.php');
-		echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title = "' . __('MRP Reschedules') . '" alt = "" />' . ' ' . __('MRP Reschedules') . '</p>';
+		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('MRP Reschedules') . '" alt="" />' . ' ' . __('MRP Reschedules') . '</p>';
 		echo $HTML;
 		include ('includes/footer.php');
 	}
@@ -156,11 +156,11 @@ else { // The option to print PDF was not hit so display form
 	$BookMark = '';
 	include ('includes/header.php');
 
-	echo '<p class = "page_title_text">
-			<img src = "' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title = "' . __('Stock') . '" alt = "" />' . ' ' . $Title . '
+	echo '<p class="page_title_text">
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Stock') . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
-	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target = "_blank">
+	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target="_blank">
 		<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />
 		<fieldset>
 		<legend>' . __('Report Criteria') . '</legend>
@@ -180,9 +180,9 @@ else { // The option to print PDF was not hit so display form
 			</select>
 		</field>
 		</fieldset>
-		<div class = "centre">
-			<input type = "submit" name = "PrintPDF" title = "Produce PDF Report" value = "' . __('Print PDF') . '" />
-			<input type = "submit" name = "View" title = "View Report" value = "' . __('View') . '" />
+		<div class="centre">
+			<input type = "submit" name = "PrintPDF" title="Produce PDF Report" value = "' . __('Print PDF') . '" />
+			<input type = "submit" name = "View" title="View Report" value = "' . __('View') . '" />
 		</div>
 		</form>';
 

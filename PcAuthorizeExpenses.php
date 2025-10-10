@@ -38,8 +38,8 @@ if (isset($_POST['Go'])) {
 }
 }
 
-echo '<p class = "page_title_text">
-			<img src = "', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title = "', __('Petty Cash'), '" alt = "" />', $Title, '
+echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', __('Petty Cash'), '" alt="" />', $Title, '
 		</p>';
 
 
@@ -53,7 +53,7 @@ if (isset($SelectedTabs)) {
 }
 if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) or isset($_POST['GO'])) {
 	echo '<form method = "post" action = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">';
-	echo '<input type = "hidden" name = "FormID" value = "', $_SESSION['FormID'], '" />';
+	echo '<input type = "hidden" name="FormID" value = "', $_SESSION['FormID'], '" />';
 	if (!isset($Days)) {
 		$Days = 30;
 	}
@@ -63,9 +63,9 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	echo '<fieldset>
 			<field>
 				<label for = "SelectedTabs">', __('Detail of tab expenses for the last '), ':</label>
-				<input type = "hidden" name = "SelectedTabs" value = "', $SelectedTabs, '" />
-				<input type = "text" class = "number" name = "Days" value = "', $Days, '" maxlength = "3" size = "4" />', __('Days'), '
-				<input type = "submit" name = "Go" value = "', __('Go'), '" />
+				<input type = "hidden" name="SelectedTabs" value = "', $SelectedTabs, '" />
+				<input type = "text" class="number" name="Days" value = "', $Days, '" maxlength = "3" size = "4" />', __('Days'), '
+				<input type = "submit" name="Go" value = "', __('Go'), '" />
 			</field>
 		</fieldset>';
 	$SQL = "SELECT pcashdetails.counterindex,
@@ -91,19 +91,19 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 				and pcashdetails.codeexpense<>'ASSIGNCASH'
 			ORDER BY pcashdetails.date, pcashdetails.counterindex ASC";
 	$Result = DB_query($SQL);
-	echo '<table class = "selection">
+	echo '<table class="selection">
 			<thead>
 				<tr>
-					<th class = "SortedColumn">', __('Date of Expense'), '</th>
-					<th class = "SortedColumn">', __('Expense Code'), '</th>
-					<th class = "SortedColumn">', __('Gross Amount'), '</th>
+					<th class="SortedColumn">', __('Date of Expense'), '</th>
+					<th class="SortedColumn">', __('Expense Code'), '</th>
+					<th class="SortedColumn">', __('Gross Amount'), '</th>
 					<th>', __('Tax'), '</th>
 					<th>', __('Tax Group'), '</th>
 					<th>', __('Tag'), '</th>
 					<th>', __('Business Purpose'), '</th>
 					<th>', __('Notes'), '</th>
 					<th>', __('Receipt Attachment'), '</th>
-					<th class = "SortedColumn">', __('Date Authorised'), '</th>
+					<th class="SortedColumn">', __('Date Authorised'), '</th>
 				</tr>
 			</thead>
 			<tbody>';
@@ -289,16 +289,16 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 				$ReceiptExt = $ReceiptRow['extension'];
 				$ReceiptFileName = $ReceiptHash . '.' . $ReceiptExt;
 				$ReceiptPath = $ReceiptDir . $ReceiptFileName;
-				$ReceiptText = '<a href = "' . $ReceiptPath . '" download = "ExpenseReceipt-' . mb_strtolower($SelectedTabs) . '-[' . $MyRow['date'] . ']-[' . $MyRow['counterindex'] . ']">' . __('Download attachment') . '</a>';
+				$ReceiptText = '<a href="' . $ReceiptPath . '" download="ExpenseReceipt-' . mb_strtolower($SelectedTabs) . '-[' . $MyRow['date'] . ']-[' . $MyRow['counterindex'] . ']">' . __('Download attachment') . '</a>';
 			} else {
 				$ReceiptText = __('No attachment');
 			}
 
-		echo '<tr class = "striped_row">
-				<td class = "date">', ConvertSQLDate($MyRow['date']), '</td>
+		echo '<tr class="striped_row">
+				<td class="date">', ConvertSQLDate($MyRow['date']), '</td>
 				<td>', $ExpenseCodeDes, '</td>
-				<td class = "number">', locale_number_format($MyRow['amount'], $CurrDecimalPlaces), '</td>
-				<td class = "number">', $TaxesTaxAmount, '</td>
+				<td class="number">', locale_number_format($MyRow['amount'], $CurrDecimalPlaces), '</td>
+				<td class="number">', $TaxesTaxAmount, '</td>
 				<td>', $TaxesDescription, '</td>
 				<td>', $TagDescription, '</td>
 				<td>', $MyRow['purpose'], '</td>
@@ -311,19 +311,19 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			if (($MyRow['authorized'] != '1000-01-01') and ($MyRow['authorized'] != '0000-00-00')) {
 				echo '<td>', ConvertSQLDate($MyRow['authorized']);
 			} else {
-				echo '<td><input type = "checkbox" name = "', $MyRow['counterindex'], '" />';
+				echo '<td><input type = "checkbox" name="', $MyRow['counterindex'], '" />';
 			}
 		}
-		echo '<input type = "hidden" name = "SelectedIndex" value = "', $MyRow['counterindex'], '" />
+		echo '<input type = "hidden" name="SelectedIndex" value = "', $MyRow['counterindex'], '" />
 			</td>
 		</tr>';
 	} //end of looping
 	$CurrentBalance = PettyCashTabCurrentBalance($SelectedTabs);
 	echo '</tbody>
 		<tfoot>
-			<tr class = "total_row">
-				<td colspan = "2" class = "number">', __('Current balance'), ':</td>
-				<td class = "number">', locale_number_format($CurrentBalance, $CurrDecimalPlaces), '</td>
+			<tr class="total_row">
+				<td colspan = "2" class="number">', __('Current balance'), ':</td>
+				<td class="number">', locale_number_format($CurrentBalance, $CurrDecimalPlaces), '</td>
 				<td colspan = "7"></td>
 			</tr>
 		</tfoot>';
@@ -336,14 +336,14 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	}
 
 	echo '</table>';
-	echo '<div class = "centre">
-			<input type = "submit" name = "Submit" value = "', __('Update'), '" />
+	echo '<div class="centre">
+			<input type = "submit" name="Submit" value = "', __('Update'), '" />
 		</div>
 	</form>';
 } else {
 	/*The option to submit was not hit so display form */
 	echo '<form method = "post" action = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">';
-	echo '<input type = "hidden" name = "FormID" value = "', $_SESSION['FormID'], '" />';
+	echo '<input type = "hidden" name="FormID" value = "', $_SESSION['FormID'], '" />';
 	echo '<fieldset>'; //Main table
 	$SQL = "SELECT tabcode
 		FROM pctabs
@@ -352,7 +352,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	$Result = DB_query($SQL);
 	echo '<field>
 			<td>', __('Authorise expenses on petty cash tab'), ':</td>
-			<td><select required = "required" name = "SelectedTabs">';
+			<td><select required = "required" name="SelectedTabs">';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['SelectTabs']) and $MyRow['tabcode'] == $_POST['SelectTabs']) {
 			echo '<option selected = "selected" value = "', $MyRow['tabcode'], '">', $MyRow['tabcode'], '</option>';
@@ -364,9 +364,9 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 		</field>';
 	echo '</fieldset>'; // close main table
 	DB_free_result($Result);
-	echo '<div class = "centre">
-			<input type = "submit" name = "Process" value = "', __('Accept'), '" />
-			<input type = "reset" name = "Cancel" value = "', __('Cancel'), '" />
+	echo '<div class="centre">
+			<input type = "submit" name="Process" value = "', __('Accept'), '" />
+			<input type = "reset" name="Cancel" value = "', __('Cancel'), '" />
 		</div>';
 	echo '</form>';
 }

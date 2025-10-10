@@ -7,7 +7,7 @@ $ViewTopic = 'SecuritySchema';
 $BookMark = 'PageSecurity';
 include('includes/header.php');
 
-echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/security.png" title = "' . __('Page Security Levels') . '" alt = "" />' . ' ' . $Title . '</p><br />';
+echo '<p class = "page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/security.png" title="' . __('Page Security Levels') . '" alt="" />' . ' ' . $Title . '</p><br />';
 
 if ($AllowDemoMode) {
 	prnMsg(__('The the system is in demo mode and the security model administration is disabled'), 'warn');

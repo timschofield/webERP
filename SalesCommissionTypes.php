@@ -7,8 +7,8 @@ $ViewTopic = 'SalesCommission';
 $BookMark = 'SalesCommission';
 include('includes/header.php');
 
-echo '<p class = "page_title_text">
-		<img src = "', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title = "', __('Search'), '" alt = "" />', ' ', $Title, '
+echo '<p class="page_title_text">
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', __('Search'), '" alt="" />', ' ', $Title, '
 	</p>';
 
 if (isset($_GET['SelectedTypeID'])) {
@@ -154,7 +154,7 @@ if (!isset($SelectedTypeID)) {
 		echo '<table>
 				<thead>
 					<tr>
-						<th class = "SortedColumn">', __('Calculation Method'), '</th>
+						<th class="SortedColumn">', __('Calculation Method'), '</th>
 						<th colspan = "2"></th>
 					</tr>
 				</thead>';
@@ -162,10 +162,10 @@ if (!isset($SelectedTypeID)) {
 
 		while ($MyRow = DB_fetch_row($Result)) {
 
-			echo '<tr class = "striped_row">
+			echo '<tr class="striped_row">
 					<td>', $MyRow[1], '</td>
-					<td><a href = "', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedTypeID = ', urlencode($MyRow[0]), '">', __('Edit'), '</a></td>
-					<td><a href = "', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedTypeID = ', urlencode($MyRow[0]), '&amp;delete = 1" onclick = "return MakeConfirm(\'', __('Are you sure you wish to delete this calculation method?'), '\', \'Confirm Delete\', this);">', __('Delete'), '</a></td>
+					<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedTypeID=', urlencode($MyRow[0]), '">', __('Edit'), '</a></td>
+					<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedTypeID=', urlencode($MyRow[0]), '&amp;delete=1" onclick="return MakeConfirm(\'', __('Are you sure you wish to delete this calculation method?'), '\', \'Confirm Delete\', this);">', __('Delete'), '</a></td>
 				</tr>';
 
 		} //END while LIST LOOP
@@ -176,15 +176,15 @@ if (!isset($SelectedTypeID)) {
 
 
 if (isset($SelectedTypeID)) {
-	echo '<div class = "centre">
-			<a href = "', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">', __('Review Commission Calculation Methods'), '</a>
+	echo '<div class="centre">
+			<a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">', __('Review Commission Calculation Methods'), '</a>
 		</div>';
 }
 
 if (!isset($_GET['delete'])) {
 
 	echo '<form method = "post" action = "', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
-	echo '<input type = "hidden" name = "FormID" value = "', $_SESSION['FormID'], '" />';
+	echo '<input type = "hidden" name="FormID" value = "', $_SESSION['FormID'], '" />';
 
 	if (isset($SelectedTypeID)) {
 		//editing an existing section
@@ -203,7 +203,7 @@ if (!isset($_GET['delete'])) {
 			$_POST['CommissionTypeID'] = $MyRow['commissiontypeid'];
 			$_POST['CommissionTypeName'] = $MyRow['commissiontypename'];
 
-			echo '<input type = "hidden" name = "SelectedTypeID" value = "', $_POST['CommissionTypeID'], '" />';
+			echo '<input type = "hidden" name="SelectedTypeID" value = "', $_POST['CommissionTypeID'], '" />';
 			echo '<fieldset>
 					<legend>', __('Edit Calculation Method'), ' - ', $_POST['CommissionTypeName'], '</legend>';
 		}
@@ -215,13 +215,13 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<field>
 			<label for = "CommissionTypeName">', __('Commission Calculation Method'), ':</label>
-			<input type = "text" name = "CommissionTypeName" size = "35" required = "required" autofocus = "autofocus" maxlength = "55" value = "', $_POST['CommissionTypeName'], '" />
+			<input type = "text" name="CommissionTypeName" size = "35" required = "required" autofocus = "autofocus" maxlength = "55" value = "', $_POST['CommissionTypeName'], '" />
 			<fieldhelp>', __('The name of the commission calculation algorithm'), '</fieldhelp>
 		</field>';
 	echo '</fieldset>';
 
-	echo '<div class = "centre">
-			<input type = "submit" name = "Submit" value = "', __('Enter Information'), '" />
+	echo '<div class="centre">
+			<input type = "submit" name="Submit" value = "', __('Enter Information'), '" />
 		</div>';
 
 	echo '</form>';

@@ -111,11 +111,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '<link href = "css/reports.css" rel = "stylesheet" type = "text/css" />';
 	}
 
-	$HTML .= '<meta name = "author" content = "WebERP " . $Version">
-				<meta name = "Creator" content = "webERP https://www.weberp.org">
+	$HTML .= '<meta name="author" content = "WebERP " . $Version">
+				<meta name="Creator" content = "webERP https://www.weberp.org">
 				</head>
 				<body>
-				<div class = "centre" id = "ReportHeader">
+				<div class="centre" id="ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 					' . __('No Sales Report') . '<br />
 					' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
@@ -124,7 +124,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					' . __('Stock Category') . ' - ' . $_POST['StockCat'] . '<br />
 				</div>';
 
-	$HTML .= '<table class = "selection">';
+	$HTML .= '<table class="selection">';
 
 	$HTML .= '<tr>
 				<th>' . __('No') . '</th>
@@ -146,25 +146,25 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$QOHRow = DB_fetch_row($QOHResult);
 		$QOH = $QOHRow[0];
 
-		$CodeLink = '<a href = "' . $RootPath . '/SelectProduct.php?StockID = ' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
+		$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 		if ($_POST['Location'][0] == 'All') {
-	$HTML .= '<tr class = "striped_row">
-						<td class = "number">' . $i . '</td>
+	$HTML .= '<tr class="striped_row">
+						<td class="number">' . $i . '</td>
 						<td>' . __('All') . '</td>
 						<td>' . $CodeLink . '</td>
 						<td>' . $MyRow['description'] . '</td>
-						<td class = "number">' . $QOH . '</td>
-						<td class = "number">' . $QOH . '</td>
+						<td class="number">' . $QOH . '</td>
+						<td class="number">' . $QOH . '</td>
 						<td>' . $MyRow['units'] . '</td>
 					</tr>';
 } else {
-			$HTML .= '<tr class = "striped_row">
-						<td class = "number">' . $i . '</td>
+			$HTML .= '<tr class="striped_row">
+						<td class="number">' . $i . '</td>
 						<td>' . $MyRow['locationname'] . '</td>
 						<td>' . $CodeLink . '</td>
 						<td>' . $MyRow['description'] . '</td>
-						<td class = "number">' . $MyRow['quantity'] . '</td>
-						<td class = "number">' . $QOH . '</td>
+						<td class="number">' . $MyRow['quantity'] . '</td>
+						<td class="number">' . $QOH . '</td>
 						<td>' . $MyRow['units'] . '</td>
 					</tr>';
 		}
@@ -178,8 +178,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	} else {
 		$HTML .= '</tbody>
 				</table>
-				<div class = "centre">
-					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" /></form>
+				<div class="centre">
+					<form><input type = "submit" name="close" value = "' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -202,8 +202,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	} else {
 		$Title = __('No Sales Items');
 		include('includes/header.php');
-		echo '<p class = "page_title_text">
-				<img src = "' . $RootPath . '/css/' . $Theme . '/images/sales.png" title = "' . __('No Sales Items List') . '" alt = "" />' . ' ' . __('Top Sales Items List') . '
+		echo '<p class="page_title_text">
+				<img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . __('No Sales Items List') . '" alt="" />' . ' ' . __('Top Sales Items List') . '
 			</p>';
 		echo $HTML;
 		include('includes/footer.php');
@@ -214,18 +214,18 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$BookMark = '';
 	include('includes/header.php');
 
-	echo '<div class = "centre"><p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/sales.png" title = "' . __('No Sales Items') . '" alt = "" />' . ' ' . __('No Sales Items') . '</p></div>';
-	echo '<div class = "page_help_text">'
+	echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . __('No Sales Items') . '" alt="" />' . ' ' . __('No Sales Items') . '</p></div>';
+	echo '<div class="page_help_text">'
 	. __('List of items with stock available during the last X days at the selected locations but did not sell any quantity during these X days.'). '<br />' .  __('This list gets the no selling items, items at the location just wasting space, or need a price reduction, etc.') . '<br />' .  __('Stock available during the last X days means there was a stock movement that produced that item into that location before that day, and no other positive stock movement has been created afterwards.  No sell any quantity means, there is no sales order for that item from that location.')  . '</div>';
-	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?name = "SelectCustomer" method = "post" target = "_blank">';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?name ="SelectCustomer" method = "post" target="_blank">';
+	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 	echo '<fieldset>
 			<legend>', __('Inquiry Criteria'), '</legend>';
 
 	//select location
 	echo '<field>
 			 <label for = "Location">' . __('Select Location') . ':</label>
-			<select name = "Location[]" multiple = "multiple">
+			<select name="Location[]" multiple = "multiple">
 				<option value = "All" selected = "selected">' . __('All') . '</option>';
 	$SQL = "SELECT 	locations.loccode,locationname
 			FROM 	locations
@@ -247,7 +247,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	//to view list of customer
 	echo '<field>
 			<label for = "Customers">' . __('Select Customer Type') . ':</label>
-			<select name = "Customers">';
+			<select name="Customers">';
 
 	$SQL = "SELECT typename,
 					typeid
@@ -267,7 +267,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$Result1 = DB_query($SQL);
 	echo '<field>
 			<label for = "StockCat">' . __('In Stock Category') . ':</label>
-			<select name = "StockCat">';
+			<select name="StockCat">';
 	if (!isset($_POST['StockCat'])){
 		$_POST['StockCat']='All';
 	}
@@ -289,13 +289,13 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	//View number of days
 	echo '<field>
 			<label for = "NumberOfDays">' . __('Number Of Days') . ':</label>
-			<input class = "integer" tabindex = "3" type = "text" required = "required" title = "" name = "NumberOfDays" size = "8" maxlength = "8" value = "30" />
+			<input class="integer" tabindex = "3" type = "text" required = "required" title="" name="NumberOfDays" size = "8" maxlength = "8" value = "30" />
 			<fieldhelp>' . __('Enter the number of days to examine the sales for') . '</fieldhelp>
 		 </field>
 	</fieldset>
-	<div class = "centre">
-		<input type = "submit" name = "PrintPDF" title = "PDF" value = "' . __('Print PDF') . '" />
-		<input type = "submit" name = "View" title = "View" value = "' . __('View') . '" />
+	<div class="centre">
+		<input type = "submit" name="PrintPDF" title="PDF" value = "' . __('Print PDF') . '" />
+		<input type = "submit" name="View" title="View" value = "' . __('View') . '" />
 	</div>
 	</form>';
 	include('includes/footer.php');

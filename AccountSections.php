@@ -162,32 +162,32 @@ if (!isset($_GET['SelectedSectionID']) and !isset($_POST['SelectedSectionID'])) 
 	$ErrMsg = __('Could not get account group sections because');
 	$Result = DB_query($SQL, $ErrMsg);
 
-	echo '<p class = "page_title_text"><img alt = "" class = "noPrint" src = "', $RootPath, '/css/', $Theme,
-		'/images/maintenance.png" title = "', // Icon image.
+	echo '<p class="page_title_text"><img alt="" class="noPrint" src="', $RootPath, '/css/', $Theme,
+		'/images/maintenance.png" title="', // Icon image.
 		__('Account Sections'), '" /> ', // Icon title.
 		__('Account Sections'), '</p>';// Page title.
 
-	echo '<table class = "selection">
+	echo '<table class="selection">
 		<thead>
 			<tr>
-				<th class = "SortedColumn">', __('Section Number'), '</th>
-				<th class = "SortedColumn">', __('Section Description'), '</th>
-				<th class = "noPrint" colspan = "2">&nbsp;</th>
+				<th class="SortedColumn">', __('Section Number'), '</th>
+				<th class="SortedColumn">', __('Section Description'), '</th>
+				<th class="noPrint" colspan = "2">&nbsp;</th>
 			</tr>
 		</thead>
 		<tbody>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
 
-		echo '<tr class = "striped_row">
-				<td class = "number">', $MyRow['sectionid'], '</td>
-				<td class = "text">', $MyRow['sectionname'], '</td>
-				<td class = "noPrint"><a href = "', htmlspecialchars($_SERVER['PHP_SELF'].'?SelectedSectionID = '.urlencode($MyRow['sectionid']), ENT_QUOTES, 'UTF-8'), '">', __('Edit'), '</a></td>
-				<td class = "noPrint">';
+		echo '<tr class="striped_row">
+				<td class="number">', $MyRow['sectionid'], '</td>
+				<td class="text">', $MyRow['sectionname'], '</td>
+				<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'].'?SelectedSectionID='.urlencode($MyRow['sectionid']), ENT_QUOTES, 'UTF-8'), '">', __('Edit'), '</a></td>
+				<td class="noPrint">';
 		if ( $MyRow['sectionid'] == '1' or $MyRow['sectionid'] == '2' ) {
 	echo '<b>', __('Restricted'), '</b>';
 } else {
-			echo '<a href = "', htmlspecialchars($_SERVER['PHP_SELF'].'?SelectedSectionID = '.urlencode($MyRow['sectionid']).'&delete = 1', ENT_QUOTES, 'UTF-8'), '">', __('Delete'), '</a>';
+			echo '<a href="', htmlspecialchars($_SERVER['PHP_SELF'].'?SelectedSectionID='.urlencode($MyRow['sectionid']).'&delete=1', ENT_QUOTES, 'UTF-8'), '">', __('Delete'), '</a>';
 		}
 		echo '</td>
 			</tr>';
@@ -198,12 +198,12 @@ if (!isset($_GET['SelectedSectionID']) and !isset($_POST['SelectedSectionID'])) 
 
 
 if (isset($_POST['SelectedSectionID']) or isset($_GET['SelectedSectionID'])) {
-	echo '<a class = "toplink" href = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . __('Review Account Sections') . '</a>';
+	echo '<a class="toplink" href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . __('Review Account Sections') . '</a>';
 }
 
 if (! isset($_GET['delete'])) {
 
-	echo '<form action = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" id = "AccountSections" method = "post">',
+	echo '<form action = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" id="AccountSections" method = "post">',
 		'<input name = "FormID" type = "hidden" value = "', $_SESSION['FormID'], '" />';
 
 	if (isset($_GET['SelectedSectionID'])) {
@@ -250,7 +250,7 @@ if (! isset($_GET['delete'])) {
 				<field>
 					<label for = "SectionID">', __('Section Number'), ':</label>
 					<input autofocus = "autofocus" ',
-						( in_array('SectionID',$Errors) ? 'class = "inputerror number"' : 'class = "number" ' ),
+						( in_array('SectionID',$Errors) ? 'class ="inputerror number"' : 'class = "number" ' ),
 						'maxlength = "4" name = "SectionID" required = "required" size = "4" tabindex = "1" type = "text" value = "', $_POST['SectionID'], '" />
 					<fieldhelp>', __('Enter a unique integer identifier for this section'), '</fieldhelp>
 				</field>';
@@ -258,14 +258,14 @@ if (! isset($_GET['delete'])) {
 	echo	'<field>
 				<label for = "SectionName">', __('Section Description'), ':</label>
 				<input ',
-					( in_array('SectionName',$Errors) ? 'class = "inputerror text" ' : 'class = "text" ' ),
+					( in_array('SectionName',$Errors) ? 'class ="inputerror text" ' : 'class = "text" ' ),
 					'maxlength = "30" name = "SectionName" required = "required" size = "30" tabindex = "2" type = "text" value = "', $_POST['SectionName'], '" />
 				<fieldhelp>', __('Enter a description for this section'), '</fieldhelp>
 			</field>';
 
 	echo '</fieldset>';
 
-	echo '<div class = "centre">
+	echo '<div class="centre">
 			<input name = "submit" tabindex = "3" type = "submit" value = "', __('Enter Information'), '" />
 		</div>
 	</form>';

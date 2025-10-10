@@ -124,7 +124,7 @@ if (isset($WO) && isset($StockId) && $WO != '') {
 		include('includes/header.php');
 		prnMsg(__('There were no items with ready to produce'), 'info');
 		prnMsg($SQL);
-		echo '<br /><a href = "' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 		include('includes/footer.php');
 		exit();
 	}
@@ -132,8 +132,8 @@ if (isset($WO) && isset($StockId) && $WO != '') {
 
 function PrintHeaderHTML($CompanyName, $ReportDate, $WO, $StockId, $Description, $Qty, $UOM, $DecimalPlaces) {
 	return '
-	<h2 style = "margin-bottom:0;">' . htmlspecialchars($CompanyName) . '</h2>
-	<p style = "margin-top:0;">
+	<h2 style="margin-bottom:0;">' . htmlspecialchars($CompanyName) . '</h2>
+	<p style="margin-top:0;">
 	' . __('Printed') . ': ' . htmlspecialchars($ReportDate) . '
 	<br />
 	' . __('Work Order Item Production Slip') . '
@@ -150,29 +150,29 @@ function PrintHeaderHTML($CompanyName, $ReportDate, $WO, $StockId, $Description,
 function PrintFooterSlipHTML($ProductionNotes, $Column1, $Column2, $Column3) {
 	return '
 	<h3>' . htmlspecialchars($ProductionNotes) . ':</h3>
-	<div style = "height:80px;border:1px solid #000;margin-bottom:20px;"></div>
-	<table width = "100%" border = "0" cellspacing = "0" cellpadding = "8" style = "margin-top:30px;">
+	<div style="height:80px;border:1px solid #000;margin-bottom:20px;"></div>
+	<table width = "100%" border = "0" cellspacing = "0" cellpadding = "8" style="margin-top:30px;">
 	<tr>
 	<td valign = "top" width = "33%">
 	<strong>' . htmlspecialchars($Column1) . ':</strong><br />
-	<br />' . __('Name') . ': <span style = "border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
-	<br />' . __('Date') . ': <span style = "border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
-	<br />' . __('Hour') . ': <span style = "border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
-	<br />' . __('Signature') . ': <span style = "border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span>
+	<br />' . __('Name') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
+	<br />' . __('Date') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
+	<br />' . __('Hour') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
+	<br />' . __('Signature') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span>
 	</td>
 	<td valign = "top" width = "33%">
 	<strong>' . htmlspecialchars($Column2) . ':</strong><br />
-	<br />' . __('Name') . ': <span style = "border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
-	<br />' . __('Date') . ': <span style = "border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
-	<br />' . __('Hour') . ': <span style = "border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
-	<br />' . __('Signature') . ': <span style = "border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span>
+	<br />' . __('Name') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
+	<br />' . __('Date') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
+	<br />' . __('Hour') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
+	<br />' . __('Signature') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span>
 	</td>
 	<td valign = "top" width = "33%">
 	<strong>' . htmlspecialchars($Column3) . ':</strong><br />
-	<br />' . __('Name') . ': <span style = "border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
-	<br />' . __('Date') . ': <span style = "border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
-	<br />' . __('Hour') . ': <span style = "border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
-	<br />' . __('Signature') . ': <span style = "border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span>
+	<br />' . __('Name') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
+	<br />' . __('Date') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
+	<br />' . __('Hour') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
+	<br />' . __('Signature') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span>
 	</td>
 	</tr>
 	</table>

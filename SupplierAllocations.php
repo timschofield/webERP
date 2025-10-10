@@ -23,8 +23,8 @@ $ViewTopic = 'ARTransactions';// Filename in ManualContents.php's TOC./* RChacon
 $BookMark = 'SupplierAllocations';
 include('includes/header.php');
 
-echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme,
-	'/images/transactions.png" title = "', // Icon image.
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/transactions.png" title="', // Icon image.
 	__('Supplier Allocations'), '" /> ', // Icon title.
 	__('Supplier Allocations'), '</p>';// Page title.
 
@@ -254,11 +254,11 @@ for allocating to  */
 
 echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post">';
 echo '<div>';
-echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 if (isset($_POST['SupplierID'])){
  	$_GET['SupplierID'] = $_POST['SupplierID'];
-	echo '<input type = "hidden" name = "SupplierID" value = "' . $_POST['SupplierID'] . '" />';
+	echo '<input type = "hidden" name="SupplierID" value = "' . $_POST['SupplierID'] . '" />';
 }
 
 if (isset($_GET['AllocTrans'])){
@@ -406,12 +406,12 @@ if (isset($_GET['AllocTrans'])){
 
 if (isset($_POST['AllocTrans'])){
 
-	echo '<input type = "hidden" name = "AllocTrans" value = "' . $_POST['AllocTrans'] . '" />';
+	echo '<input type = "hidden" name="AllocTrans" value = "' . $_POST['AllocTrans'] . '" />';
 
 	/*Show the transaction being allocated and the potential trans it could be allocated to
         and those where there is already an existing allocation */
 
-        echo '<div class = "centre">
+        echo '<div class="centre">
 				<font color = "blue">' . __('Allocation of supplier') . ' ' .
         		 $_SESSION['Alloc']->TransTypeName . ' ' . __('number') . ' ' .
         		 $_SESSION['Alloc']->TransNo . ' ' . __('from') . ' ' .
@@ -430,16 +430,16 @@ if (isset($_POST['AllocTrans'])){
 
     /*Now display the potential and existing allocations put into the array above */
 
-		echo '<table class = "selection">
+		echo '<table class="selection">
 			<thead>
 				<tr>
-							<th class = "SortedColumn">' . __('Type') . '</th>
-				 			<th class = "SortedColumn">' . __('Trans') . '<br />' . __('Number') . '</th>
-							<th class = "SortedColumn">' . __('Trans')  . '<br />' . __('Date') . '</th>
-							<th class = "SortedColumn">' . __('Supp') . '<br />' . __('Ref') . '</th>
-							<th class = "SortedColumn">' . __('Total') . '<br />' . __('Amount')  . '</th>
-							<th class = "SortedColumn">' . __('Yet to') . '<br />' . __('Allocate') . '</th>
-							<th class = "SortedColumn">' . __('This') . '<br />' . __('Allocation') . '</th>
+							<th class="SortedColumn">' . __('Type') . '</th>
+				 			<th class="SortedColumn">' . __('Trans') . '<br />' . __('Number') . '</th>
+							<th class="SortedColumn">' . __('Trans')  . '<br />' . __('Date') . '</th>
+							<th class="SortedColumn">' . __('Supp') . '<br />' . __('Ref') . '</th>
+							<th class="SortedColumn">' . __('Total') . '<br />' . __('Amount')  . '</th>
+							<th class="SortedColumn">' . __('Yet to') . '<br />' . __('Allocate') . '</th>
+							<th class="SortedColumn">' . __('This') . '<br />' . __('Allocation') . '</th>
 				</tr>
 			</thead>
 			<tbody>';
@@ -451,19 +451,19 @@ if (isset($_POST['AllocTrans'])){
 
 	    $YetToAlloc = ($AllocnItem->TransAmount - $AllocnItem->PrevAlloc);
 
-	    echo '<tr class = "striped_row">
+	    echo '<tr class="striped_row">
 			<td>' . $AllocnItem->TransType . '</td>
-			<td class = "number">' . $AllocnItem->TypeNo . '</td>
-			<td class = "date">' . $AllocnItem->TransDate . '</td>
+			<td class="number">' . $AllocnItem->TypeNo . '</td>
+			<td class="date">' . $AllocnItem->TransDate . '</td>
 			<td>' . $AllocnItem->SuppRef . '</td>
-			<td class = "number">' . locale_number_format($AllocnItem->TransAmount,$_SESSION['Alloc']->CurrDecimalPlaces) . '</td>
-			<td class = "number">' . locale_number_format($YetToAlloc,$_SESSION['Alloc']->CurrDecimalPlaces) . '<input type = "hidden" name = "YetToAlloc' . $Counter . '" value = "' . $YetToAlloc . '" /></td>';
+			<td class="number">' . locale_number_format($AllocnItem->TransAmount,$_SESSION['Alloc']->CurrDecimalPlaces) . '</td>
+			<td class="number">' . locale_number_format($YetToAlloc,$_SESSION['Alloc']->CurrDecimalPlaces) . '<input type = "hidden" name="YetToAlloc' . $Counter . '" value = "' . $YetToAlloc . '" /></td>';
 		 if (ABS($AllocnItem->AllocAmt-$YetToAlloc) < 0.01){
-			echo '<td class = "number"><input type = "checkbox" name = "All' .  $Counter . '" checked = "checked" />';
+			echo '<td class="number"><input type = "checkbox" name="All' .  $Counter . '" checked = "checked" />';
 	    } else {
-	    	echo '<td class = "number"><input type = "checkbox" name = "All' .  $Counter . '" />';
+	    	echo '<td class="number"><input type = "checkbox" name="All' .  $Counter . '" />';
 	    }
-		echo '<input type = "text" class = "number" name = "Amt' . $Counter .'" maxlength = "12" size = "13" value = "' . locale_number_format($AllocnItem->AllocAmt,$_SESSION['Alloc']->CurrDecimalPlaces) . '" /><input type = "hidden" name = "AllocID' . $Counter .'" value = "' . $AllocnItem->ID . '" /></td></tr>';
+		echo '<input type = "text" class="number" name="Amt' . $Counter .'" maxlength = "12" size = "13" value = "' . locale_number_format($AllocnItem->AllocAmt,$_SESSION['Alloc']->CurrDecimalPlaces) . '" /><input type = "hidden" name="AllocID' . $Counter .'" value = "' . $AllocnItem->ID . '" /></td></tr>';
 
 	    $TotalAllocated = $TotalAllocated + $AllocnItem->AllocAmt;
 	    $Counter++;
@@ -472,22 +472,22 @@ if (isset($_POST['AllocTrans'])){
    echo '</tbody>
 		<tfoot>
 			<tr>
-			<td colspan = "5" class = "number"><b><u>' . __('Total Allocated') . ':</u></b></td>
-			<td class = "number"><b><u>' .  locale_number_format($TotalAllocated,$_SESSION['Alloc']->CurrDecimalPlaces) . '</u></b></td>
+			<td colspan = "5" class="number"><b><u>' . __('Total Allocated') . ':</u></b></td>
+			<td class="number"><b><u>' .  locale_number_format($TotalAllocated,$_SESSION['Alloc']->CurrDecimalPlaces) . '</u></b></td>
 			</tr>
 			<tr>
-			<td colspan = "5" class = "number"><b>' . __('Left to allocate') . '</b></td>
-			<td class = "number"><b>' . locale_number_format(-$_SESSION['Alloc']->TransAmt - $TotalAllocated,$_SESSION['Alloc']->CurrDecimalPlaces) . '</b></td>
+			<td colspan = "5" class="number"><b>' . __('Left to allocate') . '</b></td>
+			<td class="number"><b>' . locale_number_format(-$_SESSION['Alloc']->TransAmt - $TotalAllocated,$_SESSION['Alloc']->CurrDecimalPlaces) . '</b></td>
 		</tr>
 		</tfoot>
 		</table>';
 
-   echo '<div class = "centre">
-			<input type = "hidden" name = "TotalNumberOfAllocs" value = "' . $Counter . '" />
+   echo '<div class="centre">
+			<input type = "hidden" name="TotalNumberOfAllocs" value = "' . $Counter . '" />
 			<br />
-			<input type = "submit" name = "RefreshAllocTotal" value = "' . __('Recalculate Total To Allocate') . '" />
-			<input type = "submit" name = "UpdateDatabase" value = "' . __('Process Allocations') . '" />
-			<input type = "reset" name = "Cancel" value = "' . __('Cancel') . '" />
+			<input type = "submit" name="RefreshAllocTotal" value = "' . __('Recalculate Total To Allocate') . '" />
+			<input type = "submit" name="UpdateDatabase" value = "' . __('Process Allocations') . '" />
+			<input type = "reset" name="Cancel" value = "' . __('Cancel') . '" />
 		</div>';
 
 } elseif (isset($_GET['SupplierID'])){
@@ -495,7 +495,7 @@ if (isset($_POST['AllocTrans'])){
   /*page called with a supplier code  so show the transactions to allocate
   specific to the supplier selected */
 
-  echo '<input type = "hidden" name = "SupplierID" value = "' . $_GET['SupplierID'] . '" />';
+  echo '<input type = "hidden" name="SupplierID" value = "' . $_GET['SupplierID'] . '" />';
 
   /*Clear any previous allocation records */
 
@@ -530,16 +530,16 @@ if (isset($_POST['AllocTrans'])){
 	include('includes/footer.php');
 	exit();
   }
-  echo '<table class = "selection">';
+  echo '<table class="selection">';
 
 	echo '<thead>
 			<tr>
-				<th class = "SortedColumn">' . __('Trans Type')  . '</th>
-				<th class = "SortedColumn">' . __('Supplier') . '</th>
-				<th class = "SortedColumn">' . __('Number') . '</th>
-				<th class = "SortedColumn">' . __('Date') .  '</th>
-				<th class = "SortedColumn">' . __('Total') . '</th>
-				<th class = "SortedColumn">' . __('To Alloc') . '</th>
+				<th class="SortedColumn">' . __('Trans Type')  . '</th>
+				<th class="SortedColumn">' . __('Supplier') . '</th>
+				<th class="SortedColumn">' . __('Number') . '</th>
+				<th class="SortedColumn">' . __('Date') .  '</th>
+				<th class="SortedColumn">' . __('Total') . '</th>
+				<th class="SortedColumn">' . __('To Alloc') . '</th>
 			</tr>
 		</thead>
 	<tbody>';
@@ -550,14 +550,14 @@ if (isset($_POST['AllocTrans'])){
 
   while ($MyRow = DB_fetch_array($Result)) {
 
-	echo '<tr class = "striped_row">
+	echo '<tr class="striped_row">
 			<td>', __($MyRow['typename']), '</td>
 			<td>', $MyRow['suppname'], '</td>
 			<td>', $MyRow['transno'], '</td>
-			<td class = "date">', ConvertSQLDate($MyRow['trandate']), '</td>
-			<td class = "number">', locale_number_format($MyRow['total'],$MyRow['currdecimalplaces']), '</td>
-			<td class = "number">', locale_number_format($MyRow['total']-$MyRow['alloc'], $MyRow['currdecimalplaces']), '</td>
-			<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?AllocTrans = ', $MyRow['id'], '">' . __('Allocate')  . '</a></td>
+			<td class="date">', ConvertSQLDate($MyRow['trandate']), '</td>
+			<td class="number">', locale_number_format($MyRow['total'],$MyRow['currdecimalplaces']), '</td>
+			<td class="number">', locale_number_format($MyRow['total']-$MyRow['alloc'], $MyRow['currdecimalplaces']), '</td>
+			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?AllocTrans=', $MyRow['id'], '">' . __('Allocate')  . '</a></td>
 		</tr>';
 
   }
@@ -593,17 +593,17 @@ if (isset($_POST['AllocTrans'])){
 
   $Result = DB_query($SQL);
 
-  echo '<table class = "selection">';
+  echo '<table class="selection">';
 
   echo '<thead>
 			<tr>
-				<th class = "SortedColumn">' . __('Trans Type') . '</th>
-				<th class = "SortedColumn">' . __('Supplier') . '</th>
-		 		<th class = "SortedColumn">' . __('Number') . '</th>
-		  		<th class = "SortedColumn">' . __('Date') . '</th>
-		  		<th class = "SortedColumn">' . __('Total') . '</th>
-		  		<th class = "SortedColumn">' . __('To Alloc') . '</th>
-				<th class = "SortedColumn">' . __('More Info') . '</th>
+				<th class="SortedColumn">' . __('Trans Type') . '</th>
+				<th class="SortedColumn">' . __('Supplier') . '</th>
+		 		<th class="SortedColumn">' . __('Number') . '</th>
+		  		<th class="SortedColumn">' . __('Date') . '</th>
+		  		<th class="SortedColumn">' . __('Total') . '</th>
+		  		<th class="SortedColumn">' . __('To Alloc') . '</th>
+				<th class="SortedColumn">' . __('More Info') . '</th>
 			</tr>
 		</thead>';
 
@@ -612,14 +612,14 @@ if (isset($_POST['AllocTrans'])){
   $RowCounter = 0;
   while ($MyRow = DB_fetch_array($Result)) {
 
-	echo '<tr class = "striped_row">
+	echo '<tr class="striped_row">
 			<td>', __($MyRow['typename']), '</td>
 			<td>', $MyRow['suppname'], '</td>
 			<td>', $MyRow['transno'], '</td>
-			<td class = "date">', ConvertSQLDate($MyRow['trandate']), '</td>
-			<td class = "number">', locale_number_format($MyRow['total'],$MyRow['currdecimalplaces']), '</td>
-			<td class = "number">', locale_number_format($MyRow['total']-$MyRow['alloc'],$MyRow['currdecimalplaces']), '</td>
-			<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?AllocTrans = ', $MyRow['id'], '">' . __('Allocate') . '</a></td>
+			<td class="date">', ConvertSQLDate($MyRow['trandate']), '</td>
+			<td class="number">', locale_number_format($MyRow['total'],$MyRow['currdecimalplaces']), '</td>
+			<td class="number">', locale_number_format($MyRow['total']-$MyRow['alloc'],$MyRow['currdecimalplaces']), '</td>
+			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?AllocTrans=', $MyRow['id'], '">' . __('Allocate') . '</a></td>
 		</tr>';
 
   }  //END while LIST LOOP

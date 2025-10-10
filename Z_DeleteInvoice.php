@@ -5,7 +5,7 @@
  *
  * STRONGLY RECOMMEND not USING THIS - CREDIT THE INVOICE and RE INVOICE
  *
- * This page must be called directly using path/Z_DeleteInvoice.php?InvoiceNo = ?????    !!
+ * This page must be called directly using path/Z_DeleteInvoice.php?InvoiceNo =?????    !!
  */
 
 require(__DIR__ . '/includes/session.php');
@@ -16,7 +16,7 @@ $BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
 
 if (!isset($_GET['InvoiceNo'])){
-	prnMsg(__('This page must be called with the InvoiceNo to delete Z_DeleteInvoice.php?InvoiceNo = XX') . '. ' . __('This page should not be run by non-system administrators'),'info');
+	prnMsg(__('This page must be called with the InvoiceNo to delete Z_DeleteInvoice.php?InvoiceNo =XX') . '. ' . __('This page should not be run by non-system administrators'),'info');
 	include('includes/footer.php');
 	exit();
 }

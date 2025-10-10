@@ -12,7 +12,7 @@ if (empty($_POST['DoUpgrade'])){
 
 	echo '<p><form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
-	echo '<div class = "centre"?><input type = "submit" name = DoUpgrade value = "' . __('Perform Upgrade') . '" /></div>';
+	echo '<div class = "centre"?><input type ="submit" name = DoUpgrade value = "' . __('Perform Upgrade') . '" /></div>';
 	echo '</form>';
 }
 

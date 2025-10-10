@@ -53,7 +53,7 @@ and mb_strlen($_POST['ToCriteria']) >= 1) {
 		$Title = __('Supplier Balances - Problem Report');
 		include('includes/header.php');
 		prnMsg(__('There are no supplier balances to list'), 'error');
-		echo '<br /><a href = "' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 		include('includes/footer.php');
 		exit();
 	}
@@ -63,7 +63,7 @@ and mb_strlen($_POST['ToCriteria']) >= 1) {
 	<meta name = "Creator" content = "webERP https://www.weberp.org">
 	</head>
 	<body>
-	<div class = "centre" id = "ReportHeader">
+	<div class="centre" id="ReportHeader">
 	' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 	' . __('Supplier Balance Listing') . '<br />
 	' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
@@ -91,11 +91,11 @@ and mb_strlen($_POST['ToCriteria']) >= 1) {
 
 			$TotBal += $Balance;
 
-			$HTML .= '<tr class = "striped_row">
-			<td class = "left">' . $SupplierBalances['supplierid'] . ' - ' . $SupplierBalances['suppname'] . '</td>
-			<td class = "number">' . $DisplayBalance . '</td>
-			<td class = "number">' . $DisplayFXBalance . '</td>
-			<td class = "left">' . $SupplierBalances['currency'] . '</td>
+			$HTML .= '<tr class="striped_row">
+			<td class="left">' . $SupplierBalances['supplierid'] . ' - ' . $SupplierBalances['suppname'] . '</td>
+			<td class="number">' . $DisplayBalance . '</td>
+			<td class="number">' . $DisplayFXBalance . '</td>
+			<td class="left">' . $SupplierBalances['currency'] . '</td>
 			</tr>';
 		}
 		} // end while
@@ -103,26 +103,26 @@ and mb_strlen($_POST['ToCriteria']) >= 1) {
 		$DisplayTotBalance = locale_number_format($TotBal, $_SESSION['CompanyRecord']['decimalplaces']);
 
 	// Total row
-		$HTML .= '<tr class = "total_row">
-		<td class = "left"><strong>' . __('Total') . '</strong></td>
-		<td class = "number"><strong>' . $DisplayTotBalance . '</strong></td>
+		$HTML .= '<tr class="total_row">
+		<td class="left"><strong>' . __('Total') . '</strong></td>
+		<td class="number"><strong>' . $DisplayTotBalance . '</strong></td>
 		<td></td>
 		<td></td>
 		</tr>';
 
 		if (isset($_POST['PrintPDF'])) {
 			$HTML .= '</tbody>
-			<div class = "footer fixed-section">
-			<div class = "right">
-			<span class = "page-number">Page </span>
+			<div class="footer fixed-section">
+			<div class="right">
+			<span class="page-number">Page </span>
 			</div>
 			</div>
 			</table>';
 		} else {
 			$HTML .= '</tbody>
 			</table>
-			<div class = "centre">
-			<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" /></form>
+			<div class="centre">
+			<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick="window.close()" /></form>
 			</div>';
 		}
 		$HTML .= '</body>
@@ -145,7 +145,7 @@ and mb_strlen($_POST['ToCriteria']) >= 1) {
 		else {
 			$Title = __('Supplier Balances At A Period End');
 			include ('includes/header.php');
-			echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title = "' . __('Suppliers') . '" alt = "" />' . ' ' . __('Supplier Balances At A Period End') . '</p>';
+			echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . __('Suppliers') . '" alt="" />' . ' ' . __('Supplier Balances At A Period End') . '</p>';
 			echo $HTML;
 			include ('includes/footer.php');
 		}
@@ -157,7 +157,7 @@ and mb_strlen($_POST['ToCriteria']) >= 1) {
 	$BookMark = '';
 	include('includes/header.php');
 
-	echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title = "' .
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' .
 	__('Supplier Allocations') . '" alt = "" />' . ' ' . $Title . '</p>';
 	if (!isset($_POST['FromCriteria'])) {
 		$_POST['FromCriteria'] = '1';
@@ -166,7 +166,7 @@ and mb_strlen($_POST['ToCriteria']) >= 1) {
 		$_POST['ToCriteria'] = 'zzzzzz';
 	}
 
-	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target = "_blank">';
+	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target="_blank">';
 	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 	echo '<fieldset>
@@ -198,9 +198,9 @@ and mb_strlen($_POST['ToCriteria']) >= 1) {
 	</field>';
 
 	echo '</fieldset>
-	<div class = "centre">
+	<div class="centre">
 	<input type = "submit" name = "PrintPDF" value = "' . __('Print PDF') . '" />
-	<input type = "submit" name = "View" title = "View Report" value = "' . __('View') . '" />
+	<input type = "submit" name = "View" title="View Report" value = "' . __('View') . '" />
 	</div>';
 	echo '</form>';
 	include('includes/footer.php');

@@ -337,8 +337,8 @@ if (isset($_GET['AllocTrans'])) {
 }
 
 
-echo '<p class = "page_title_text">
-		<img src = "'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title = "' . __('Allocate Receipt') . '" alt = "" />' . ' ' . __('Allocate Receipts') . '
+echo '<p class="page_title_text">
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . __('Allocate Receipt') . '" alt="" />' . ' ' . __('Allocate Receipts') . '
 	</p>';
 
 $TableHeader = '<tr>
@@ -359,12 +359,12 @@ if (isset($_POST['AllocTrans'])) {
 	*/
 	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post">
 		<div>
-		<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />
-		<input type = "hidden" name = "AllocTrans" value = "' . $_POST['AllocTrans'] . '" />
-		<table class = "selection">
+		<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />
+		<input type = "hidden" name="AllocTrans" value = "' . $_POST['AllocTrans'] . '" />
+		<table class="selection">
 		<tr>
 			<th colspan = "7">
-			<div class = "centre">
+			<div class="centre">
 				<b>' . $_SESSION['Alloc']->DebtorNo . ' - ' . $_SESSION['Alloc']->CustomerName . '</b>
 			</div>';
 
@@ -398,22 +398,22 @@ if (isset($_POST['AllocTrans'])) {
 			$CurTrans = "&nbsp;";
 		}
 
-		echo '<tr class = "striped_row">
+		echo '<tr class="striped_row">
 			<td>' . __($AllocnItem->TransType) . '</td>
-			<td class = "number">' . $AllocnItem->TypeNo . '</td>
+			<td class="number">' . $AllocnItem->TypeNo . '</td>
 			<td>' . $AllocnItem->TransDate . '</td>
-			<td class = "number">' . locale_number_format($AllocnItem->TransAmount,$_SESSION['Alloc']->CurrDecimalPlaces) . '</td>
-			<td class = "number">' . locale_number_format($YetToAlloc,$_SESSION['Alloc']->CurrDecimalPlaces) . '</td>';
+			<td class="number">' . locale_number_format($AllocnItem->TransAmount,$_SESSION['Alloc']->CurrDecimalPlaces) . '</td>
+			<td class="number">' . locale_number_format($YetToAlloc,$_SESSION['Alloc']->CurrDecimalPlaces) . '</td>';
 		$j++;
 
 		if ($AllocnItem->TransAmount < 0) {
 	$Balance+=$YetToAlloc;
 				echo '<td>' . $CurTrans  . '</td>
-						<td class = "number">' . locale_number_format($Balance,$_SESSION['Alloc']->CurrDecimalPlaces) . '</td>
+						<td class="number">' . locale_number_format($Balance,$_SESSION['Alloc']->CurrDecimalPlaces) . '</td>
 					</tr>';
 } else {
-				echo '<td class = "number"><input type = "hidden" name = "YetToAlloc' . $Counter . '" value = "' . round($YetToAlloc,$_SESSION['Alloc']->CurrDecimalPlaces) . '" />';
-				echo '<input tabindex = "' . $j .'" type = "checkbox" title = "' . __('Check this box to allocate the entire amount of this transaction. Just enter the amount without ticking this check box for a partial allocation') . '" name = "All' .  $Counter . '"';// NewText: __('Check this box to allocate the entire amount of this transaction. Just enter the amount without ticking this check box for a partial allocation')
+				echo '<td class="number"><input type = "hidden" name="YetToAlloc' . $Counter . '" value = "' . round($YetToAlloc,$_SESSION['Alloc']->CurrDecimalPlaces) . '" />';
+				echo '<input tabindex = "' . $j .'" type = "checkbox" title="' . __('Check this box to allocate the entire amount of this transaction. Just enter the amount without ticking this check box for a partial allocation') . '" name="All' .  $Counter . '"';// NewText: __('Check this box to allocate the entire amount of this transaction. Just enter the amount without ticking this check box for a partial allocation')
 
 				if (ABS($AllocnItem->AllocAmt-$YetToAlloc) < 0.01) {
 						echo ' checked = "checked" />';
@@ -422,9 +422,9 @@ if (isset($_POST['AllocTrans'])) {
 				}
 				$Balance += $YetToAlloc-$AllocnItem->AllocAmt;
 				$j++;
-				echo '<input tabindex = "' . $j . '" type = "text" class = "number" ' . ($j == 1 ? 'autofocus = "autofocus"' :'') . ' name = "Amt' . $Counter .'" title = "' . __('Enter the amount of this transaction to be allocated. Nothing should be entered here if the entire transaction is to be allocated, use the check box') . '" maxlength = "12" size = "13" value = "' . locale_number_format(round($AllocnItem->AllocAmt,$_SESSION['Alloc']->CurrDecimalPlaces),$_SESSION['Alloc']->CurrDecimalPlaces) . '" />
-					<input type = "hidden" name = "AllocID' . $Counter . '" value = "' . $AllocnItem->ID . '" ></td>
-					<td class = "number">' . locale_number_format($Balance,$_SESSION['Alloc']->CurrDecimalPlaces) . '</td>
+				echo '<input tabindex = "' . $j . '" type = "text" class="number" ' . ($j == 1 ? 'autofocus ="autofocus"' :'') . ' name="Amt' . $Counter .'" title="' . __('Enter the amount of this transaction to be allocated. Nothing should be entered here if the entire transaction is to be allocated, use the check box') . '" maxlength = "12" size = "13" value = "' . locale_number_format(round($AllocnItem->AllocAmt,$_SESSION['Alloc']->CurrDecimalPlaces),$_SESSION['Alloc']->CurrDecimalPlaces) . '" />
+					<input type = "hidden" name="AllocID' . $Counter . '" value = "' . $AllocnItem->ID . '" ></td>
+					<td class="number">' . locale_number_format($Balance,$_SESSION['Alloc']->CurrDecimalPlaces) . '</td>
 				</tr>';
 		}
 		$TotalAllocated += round($AllocnItem->AllocAmt,$_SESSION['Alloc']->CurrDecimalPlaces);
@@ -432,22 +432,22 @@ if (isset($_POST['AllocTrans'])) {
 	}
 
 	echo '<tr>
-			<td colspan = "5" class = "number"><b>' . __('Total Allocated').':</b></td>
-			<td class = "number"><b>' . locale_number_format($TotalAllocated,$_SESSION['Alloc']->CurrDecimalPlaces) . '</b></td>';
+			<td colspan = "5" class="number"><b>' . __('Total Allocated').':</b></td>
+			<td class="number"><b>' . locale_number_format($TotalAllocated,$_SESSION['Alloc']->CurrDecimalPlaces) . '</b></td>';
 	$j++;
 	echo '<td colspan = "2">
-			<input tabindex = "'.$j.'" type = "submit" name = "RefreshAllocTotal" value = "' . __('Recalculate Total To Allocate') . '" /></td>
+			<input tabindex = "'.$j.'" type = "submit" name="RefreshAllocTotal" value = "' . __('Recalculate Total To Allocate') . '" /></td>
         </tr>
 		<tr>
-			<td colspan = "5" class = "number"><b>' . __('Left to allocate') . '</b></td>
-			<td class = "number"><b>' . locale_number_format(-$_SESSION['Alloc']->TransAmt-$TotalAllocated,$_SESSION['Alloc']->CurrDecimalPlaces) . '</b></td>
+			<td colspan = "5" class="number"><b>' . __('Left to allocate') . '</b></td>
+			<td class="number"><b>' . locale_number_format(-$_SESSION['Alloc']->TransAmt-$TotalAllocated,$_SESSION['Alloc']->CurrDecimalPlaces) . '</b></td>
 		</tr>
 		</table>
 		<br />
-		<input type = "hidden" name = "TotalNumberOfAllocs" value = "' . $Counter . '" />
-		<div class = "centre">
-			<input tabindex = "' . $j . '" type = "submit" name = "UpdateDatabase" value = "' . __('Process Allocations') . '" />
-			<input tabindex = "' . $j . '" type = "submit" name = "Cancel" value = "' . __('Cancel') . '" />
+		<input type = "hidden" name="TotalNumberOfAllocs" value = "' . $Counter . '" />
+		<div class="centre">
+			<input tabindex = "' . $j . '" type = "submit" name="UpdateDatabase" value = "' . __('Process Allocations') . '" />
+			<input tabindex = "' . $j . '" type = "submit" name="Cancel" value = "' . __('Cancel') . '" />
 		</div>
         </div>
         </form>';
@@ -493,20 +493,20 @@ if (isset($_POST['AllocTrans'])) {
 		include('includes/footer.php');
 		exit();
 	}
-	 echo '<table class = "selection">';
+	 echo '<table class="selection">';
 	echo $TableHeader;
 
 	while ($MyRow = DB_fetch_array($Result)) {
-		echo '<tr class = "striped_row">
+		echo '<tr class="striped_row">
 				<td>' . __($MyRow['typename']) . '</td>
 				<td>' . $MyRow['name'] . '</td>
 				<td>' . $MyRow['debtorno'] . '</td>
 				<td>' . $MyRow['transno'] . '</td>
 				<td>' . ConvertSQLDate($MyRow['trandate']) . '</td>
-				<td class = "number">' . locale_number_format($MyRow['total'],$MyRow['currdecimalplaces']) . '</td>
-				<td class = "number">' . locale_number_format($MyRow['total']-$MyRow['alloc'],$MyRow['currdecimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($MyRow['total'],$MyRow['currdecimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($MyRow['total']-$MyRow['alloc'],$MyRow['currdecimalplaces']) . '</td>
 				<td>' . $MyRow['currcode'] . '</td>
-				<td><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'). '?AllocTrans = ' . $MyRow['id'] . '">' . __('Allocate') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'). '?AllocTrans=' . $MyRow['id'] . '">' . __('Allocate') . '</a></td>
 			</tr>';
 	}
 	echo '</table>';
@@ -553,17 +553,17 @@ if (isset($_POST['AllocTrans'])) {
 	else {
 	$CurrentTransaction = 1;
 	$CurrentDebtor = '';
-	echo '<table class = "selection">';
+	echo '<table class="selection">';
 	echo $TableHeader;
 
 	while ($MyRow = DB_fetch_array($Result)) {
 
-		$AllocateLink = '<a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'). '?AllocTrans = ' . $MyRow['id'] . '">' . __('Allocate') . '</a>';
+		$AllocateLink = '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'). '?AllocTrans=' . $MyRow['id'] . '">' . __('Allocate') . '</a>';
 
 		if ( $CurrentDebtor !=  $MyRow['debtorno'] ) {
 	if ( $CurrentTransaction > 1 ) {
-				echo '<tr class = "striped_row">
-						<td colspan = "7" class = "number"><b>' . locale_number_format($Balance,$CurrDecimalPlaces)  . '</b></td>
+				echo '<tr class="striped_row">
+						<td colspan = "7" class="number"><b>' . locale_number_format($Balance,$CurrDecimalPlaces)  . '</b></td>
 						<td><b>' . $CurrCode . '</b></td>
 						<td><b>' . __('Balance') . '</b></td>
 					</tr>';
@@ -588,14 +588,14 @@ if (isset($_POST['AllocTrans'])) {
 			$AllocateLink = '&nbsp;';
 		}
 
-		echo '<tr class = "striped_row">
+		echo '<tr class="striped_row">
 				<td>' . __($MyRow['typename']) . '</td>
 				<td>' . $MyRow['name'] . '</td>
 				<td>' . $MyRow['debtorno'] . '</td>
 				<td>' . $MyRow['transno'] . '</td>
 				<td>' . ConvertSQLDate($MyRow['trandate']) . '</td>
-				<td class = "number">' . locale_number_format($MyRow['total'],$CurrDecimalPlaces) . '</td>
-				<td class = "number">' . locale_number_format($MyRow['total']-$MyRow['alloc'],$CurrDecimalPlaces) . '</td>
+				<td class="number">' . locale_number_format($MyRow['total'],$CurrDecimalPlaces) . '</td>
+				<td class="number">' . locale_number_format($MyRow['total']-$MyRow['alloc'],$CurrDecimalPlaces) . '</td>
 				<td>' . $CurrCode . '</td>
 				<td>' . $AllocateLink . '</td>
 			</tr>';
@@ -606,8 +606,8 @@ if (isset($_POST['AllocTrans'])) {
 		$Balance = 0;
 	}
 
-		echo '<tr class = "striped_row">
-				<td colspan = "7" class = "number"><b>' . locale_number_format($Balance,$CurrDecimalPlaces)  . '</b></td>
+		echo '<tr class="striped_row">
+				<td colspan = "7" class="number"><b>' . locale_number_format($Balance,$CurrDecimalPlaces)  . '</b></td>
 				<td><b>' . $CurrCode . '</b></td>
 				<td><b>' . __('Balance') . '</b></td>
 			</tr>

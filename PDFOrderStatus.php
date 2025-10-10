@@ -207,7 +207,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<body>';
 
 	if (isset($_POST['PrintPDF'])) {
-		$HTML .= '<img class = "logo" src = ' . $_SESSION['LogoFile'] . ' /><br />';
+		$HTML .= '<img class="logo" src = ' . $_SESSION['LogoFile'] . ' /><br />';
 	}
 
 	$HTML .= '<div class = "centre" id = "ReportHeader">
@@ -287,7 +287,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '</tbody>
 				</table>
 				<div class = "centre">
-					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" /></form>
+					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -308,7 +308,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	} else {
 		$Title = __('Order Status Report');
 		include('includes/header.php');
-		echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title = "' . __('Order Status Report') . '" alt = "" />' . ' ' . $Title . '</p>';
+		echo '<p class = "page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . __('Order Status Report') . '" alt="" />' . ' ' . $Title . '</p>';
 		echo $HTML;
 		include('includes/footer.php');
 	}
@@ -319,7 +319,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$BookMark = '';
 	include('includes/header.php');
 
-	echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title = "' . $Title . '" alt = "" />' . ' ' . __('Order Status Report') . '</p>';
+	echo '<p class = "page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . __('Order Status Report') . '</p>';
 
 	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" target = "_blank">';
 	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';

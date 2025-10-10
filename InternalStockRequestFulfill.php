@@ -10,7 +10,7 @@ include('includes/header.php');
 include('includes/SQL_CommonFunctions.php');
 include('includes/GLFunctions.php');
 
-echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title = "' . __('Contract') . '" alt = "" />' . __('Fulfill Stock Requests') . '</p>';
+echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Contract') . '" alt="" />' . __('Fulfill Stock Requests') . '</p>';
 
 if (isset($_POST['UpdateAll'])) {
 	foreach ($_POST as $key => $Value) {
@@ -229,7 +229,7 @@ if (!isset($_POST['Location'])) {
 	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 	echo '<div>';
 	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
-	echo '<table class = "selection">
+	echo '<table class="selection">
 			<tr>
 				<td>' . __('Choose a location to issue requests from') . '</td>
 				<td><select name = "Location">';
@@ -261,7 +261,7 @@ if (!isset($_POST['Location'])) {
 	}
 	echo '</select></td></tr>';
 	echo '</table><br />';
-	echo '<div class = "centre"><input type = "submit" name = "EnterAdjustment" value = "' . __('Show Requests') . '" /></div>';
+	echo '<div class="centre"><input type = "submit" name = "EnterAdjustment" value = "' . __('Show Requests') . '" /></div>';
 	echo '</div>
 		  </form>';
 	include('includes/footer.php');
@@ -293,7 +293,7 @@ if (isset($_POST['Location'])) {
 	if (DB_num_rows($Result) == 0) {
 		prnMsg(__('There are no outstanding authorised requests for this location') , 'info');
 		echo '<br />';
-		echo '<div class = "centre"><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . __('Select another location') . '</a></div>';
+		echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . __('Select another location') . '</a></div>';
 		include('includes/footer.php');
 		exit();
 	}
@@ -301,7 +301,7 @@ if (isset($_POST['Location'])) {
 	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 	echo '<div>';
 	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
-	echo '<table class = "selection">
+	echo '<table class="selection">
 			<tr>
 				<th>' . __('Request Number') . '</th>
 				<th>' . __('Department') . '</th>
@@ -316,7 +316,7 @@ if (isset($_POST['Location'])) {
 				<td>' . $MyRow['dispatchid'] . '</td>
 				<td>' . $MyRow['description'] . '</td>
 				<td>' . $MyRow['locationname'] . '</td>
-				<td class = "centre">' . ConvertSQLDate($MyRow['despatchdate']) . '</td>
+				<td class="centre">' . ConvertSQLDate($MyRow['despatchdate']) . '</td>
 				<td>' . $MyRow['narrative'] . '</td>
 			</tr>';
 		$LineSQL = "SELECT stockrequestitems.dispatchitemsid,
@@ -338,7 +338,7 @@ if (isset($_POST['Location'])) {
 		echo '<tr>
 				<td></td>
 				<td colspan = "5" align = "left">
-					<table class = "selection" align = "left">
+					<table class="selection" align = "left">
 					<tr>
 						<th>' . __('Product') . '</th>
 						<th>' . __('Quantity') . '<br />' . __('Required') . '</th>
@@ -352,16 +352,16 @@ if (isset($_POST['Location'])) {
 		while ($LineRow = DB_fetch_array($LineResult)) {
 			echo '<tr>
 					<td>' . $LineRow['description'] . '</td>
-					<td class = "number">' . locale_number_format($LineRow['quantity'] - $LineRow['qtydelivered'], $LineRow['decimalplaces']) . '</td>
-					<td class = "number"><input type = "text" class = "number" name = "' . $LineRow['dispatchid'] . 'Qty' . $LineRow['dispatchitemsid'] . '" value = "' . locale_number_format($LineRow['quantity'] - $LineRow['qtydelivered'], $LineRow['decimalplaces']) . '" size = "11" maxlength = "10" /></td>
+					<td class="number">' . locale_number_format($LineRow['quantity'] - $LineRow['qtydelivered'], $LineRow['decimalplaces']) . '</td>
+					<td class="number"><input type = "text" class="number" name = "' . $LineRow['dispatchid'] . 'Qty' . $LineRow['dispatchitemsid'] . '" value = "' . locale_number_format($LineRow['quantity'] - $LineRow['qtydelivered'], $LineRow['decimalplaces']) . '" size = "11" maxlength = "10" /></td>
 					<td>' . $LineRow['uom'] . '</td>';
 			if ($LineRow['controlled'] == 1) {
-	echo '<td class = "number"><input type = "text" name = "' . $LineRow['dispatchid'] . 'Ser' . $LineRow['dispatchitemsid'] . '" size = "21" maxlength = "30" /></td>';
+	echo '<td class="number"><input type = "text" name = "' . $LineRow['dispatchid'] . 'Ser' . $LineRow['dispatchitemsid'] . '" size = "21" maxlength = "30" /></td>';
 }
 			else {
 				echo '<td>' . __('Stock item is not controlled') . '</td>';
 			}
-			echo '<td class = "centre"><input type = "checkbox" name = "' . $LineRow['dispatchid'] . 'Completed' . $LineRow['dispatchitemsid'] . '" /></td>';
+			echo '<td class="centre"><input type = "checkbox" name = "' . $LineRow['dispatchid'] . 'Completed' . $LineRow['dispatchitemsid'] . '" /></td>';
 
 			//Select the tag
 			$SQLTag = "SELECT tagref,
@@ -381,16 +381,16 @@ if (isset($_POST['Location'])) {
 			echo '</select></td>';
 			// End select tag
 			echo '</tr>';
-			echo '<input type = "hidden" class = "number" name = "' . $LineRow['dispatchid'] . 'StockID' . $LineRow['dispatchitemsid'] . '" value = "' . $LineRow['stockid'] . '" />';
-			echo '<input type = "hidden" class = "number" name = "' . $LineRow['dispatchid'] . 'Location' . $LineRow['dispatchitemsid'] . '" value = "' . $_POST['Location'] . '" />';
-			echo '<input type = "hidden" class = "number" name = "' . $LineRow['dispatchid'] . 'RequestedQuantity' . $LineRow['dispatchitemsid'] . '" value = "' . locale_number_format($LineRow['quantity'] - $LineRow['qtydelivered'], $LineRow['decimalplaces']) . '" />';
-			echo '<input type = "hidden" class = "number" name = "' . $LineRow['dispatchid'] . 'Department' . $LineRow['dispatchitemsid'] . '" value = "' . $MyRow['description'] . '" />';
-			echo '<input type = "hidden" class = "number" name = "' . $LineRow['dispatchid'] . 'Controlled' . $LineRow['dispatchitemsid'] . '" value = "' . $LineRow['controlled'] . '" />';
+			echo '<input type = "hidden" class="number" name = "' . $LineRow['dispatchid'] . 'StockID' . $LineRow['dispatchitemsid'] . '" value = "' . $LineRow['stockid'] . '" />';
+			echo '<input type = "hidden" class="number" name = "' . $LineRow['dispatchid'] . 'Location' . $LineRow['dispatchitemsid'] . '" value = "' . $_POST['Location'] . '" />';
+			echo '<input type = "hidden" class="number" name = "' . $LineRow['dispatchid'] . 'RequestedQuantity' . $LineRow['dispatchitemsid'] . '" value = "' . locale_number_format($LineRow['quantity'] - $LineRow['qtydelivered'], $LineRow['decimalplaces']) . '" />';
+			echo '<input type = "hidden" class="number" name = "' . $LineRow['dispatchid'] . 'Department' . $LineRow['dispatchitemsid'] . '" value = "' . $MyRow['description'] . '" />';
+			echo '<input type = "hidden" class="number" name = "' . $LineRow['dispatchid'] . 'Controlled' . $LineRow['dispatchitemsid'] . '" value = "' . $LineRow['controlled'] . '" />';
 		} // end while order line detail
 		echo '</table></td></tr>';
 	} //end while header loop
 	echo '</table>';
-	echo '<div class = "centre"><input type = "submit" name = "UpdateAll" value = "' . __('Update') . '" /></div>
+	echo '<div class="centre"><input type = "submit" name = "UpdateAll" value = "' . __('Update') . '" /></div>
 		</div>
 	</form>';
 }

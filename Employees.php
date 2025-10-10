@@ -9,8 +9,8 @@ $ViewTopic = 'Labour';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'Employees';// Anchor's id in the manual's html document.
 include('includes/header.php');
 
-echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme,
-	'/images/user.png" title = "',// Icon image.
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/user.png" title="',// Icon image.
 	__('Employee'), '" /> ',// Icon title.
 	__('Employee Maintenance'), '</p>';// Page title.
 
@@ -143,31 +143,31 @@ or deletion of the records*/
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) > 0) {
-		echo '<table class = "selection">
+		echo '<table class="selection">
 			<thead>
 			<tr>
-				<th class = "SortedColumn">', __('ID'), '</th>
-				<th class = "SortedColumn">', __('First name'), '</th>
-				<th class = "SortedColumn">', __('Surname'), '</th>
-				<th class = "SortedColumn">', __('Type'), '</th>
-				<th class = "SortedColumn">', __('Manager'), '</th>
-				<th class = "SortedColumn">', __('Email'), '</th>
-				<th class = "noPrint" colspan = "2">&nbsp;</th>
+				<th class="SortedColumn">', __('ID'), '</th>
+				<th class="SortedColumn">', __('First name'), '</th>
+				<th class="SortedColumn">', __('Surname'), '</th>
+				<th class="SortedColumn">', __('Type'), '</th>
+				<th class="SortedColumn">', __('Manager'), '</th>
+				<th class="SortedColumn">', __('Email'), '</th>
+				<th class="noPrint" colspan = "2">&nbsp;</th>
 				</tr>
 			</thead>
 			<tbody>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
 
-		echo '<tr class = "striped_row">
+		echo '<tr class="striped_row">
 				<td>', $MyRow['id'], '</td>
 				<td>', $MyRow['firstname'], '</td>
 				<td>', $MyRow['surname'], '</td>
 				<td>', $MyRow['stockid'], '</td>
 				<td>', $MyRow['managerfirstname'] . ' ' . $MyRow['managersurname'], '</td>
-				<td><a href = "mailto:', $MyRow['email'], '">', $MyRow['email'], '</a></td>
-				<td class = "noPrint"><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedEmployee = ', $MyRow['id'], '">' . __('Edit') . '</a></td>
-				<td class = "noPrint"><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedEmployee = ', $MyRow['id'], '&amp;delete = 1" onclick = "return confirm(\'' . __('Are you sure you wish to remove this employee?') . '\');">' . __('Delete') . '</a></td>
+				<td><a href="mailto:', $MyRow['email'], '">', $MyRow['email'], '</a></td>
+				<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedEmployee=', $MyRow['id'], '">' . __('Edit') . '</a></td>
+				<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedEmployee=', $MyRow['id'], '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to remove this employee?') . '\');">' . __('Delete') . '</a></td>
 			</tr>';
 		}
 		//END while LIST LOOP
@@ -181,14 +181,14 @@ or deletion of the records*/
 
 echo '<br />';
 if (isset($SelectedEmployee)) {
-	echo '<a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Review Employees') . '</a>';
+	echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Review Employees') . '</a>';
 }
 echo '<br />';
 
 if (!isset($_GET['delete'])) {
 
 	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
-		<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+		<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedEmployee)) {
 		//editing an existing Location
@@ -215,7 +215,7 @@ if (!isset($_GET['delete'])) {
 		$_POST['UserID'] = $MyRow['userid'];
 		$_POST['Email'] = $MyRow['email'];
 
-		echo '<input type = "hidden" name = "SelectedEmployee" value = "' . $SelectedEmployee . '" />';
+		echo '<input type = "hidden" name="SelectedEmployee" value = "' . $SelectedEmployee . '" />';
 
 		echo '<fieldset>';
 		echo '<legend>' . __('Amend Employee details') . '</legend>';
@@ -254,18 +254,18 @@ if (!isset($_GET['delete'])) {
 
 	echo '<field>
 			<label for = "FirstName">' . __('First Name') . ':' . '</label>
-			<input type = "text" name = "FirstName" required = "required" value = "' . $_POST['FirstName'] . '" title = "" size = "21" maxlength = "20" />
+			<input type = "text" name="FirstName" required = "required" value = "' . $_POST['FirstName'] . '" title="" size = "21" maxlength = "20" />
 			<fieldhelp>' . __('Enter the employee\'s first name') . '</fieldhelp>
 		</field>
 		<field>
 			<label for = "Surname">' . __('Surname') . ':' . '</label>
-			<input type = "text" name = "Surname" required = "required" value = "'. $_POST['Surname'] . '" title = "" namesize = "21" maxlength = "20" />
+			<input type = "text" name="Surname" required = "required" value = "'. $_POST['Surname'] . '" title="" namesize = "21" maxlength = "20" />
 			<fieldhelp>' . __('Enter the employee\'s surname') . '</fieldhelp>
 		</field>
 
 		<field>
 			<label for = "StockID">' . __('Labour Type') . ':</label>
-			<select name = "StockID" />';
+			<select name="StockID" />';
 
 	$LabourTypeItemsResult = DB_query("SELECT stockid, description FROM
 										stockmaster INNER JOIN stockcategory
@@ -284,17 +284,17 @@ if (!isset($_GET['delete'])) {
 		</field>
 		<field>
 			<label for = "Email">', __('Email'), ':</label>
-			<input id = "Email" maxlength = "55" name = "Email" size = "31" type = "email" value = "', $_POST['Email'], '" />
+			<input id="Email" maxlength = "55" name="Email" size = "31" type = "email" value = "', $_POST['Email'], '" />
 			<fieldhelp>', __('The email address should be an email format such as adm@weberp.org'), '</fieldhelp>
 		</field>
 		<field>
 			<label for = "NormalHours">' . __('Normal Weekly Hours') . ':' . '</label>
-			<input class = "number" type = "text" name = "NormalHours" value = "' , $_POST['NormalHours'] , '" title = "" size = "3" maxlength = "2" />
+			<input class="number" type = "text" name="NormalHours" value = "' , $_POST['NormalHours'] , '" title="" size = "3" maxlength = "2" />
 			<fieldhelp>' , __('Enter the employee\'s normal hours per week') , '</fieldhelp>
 		</field>
 		<field>
 			<label for = "Manager">' , __('Manager') , ':' , '</label>
-			<select name = "Manager" />';
+			<select name="Manager" />';
 
 	$ManagersResult = DB_query("SELECT id, CONCAT(firstname, ' ', surname) as managername
 								FROM employees
@@ -318,7 +318,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<field>
 			<label for = "UserID">' , __('webERP User') , ':' , '</label>
-			<select name = "UserID" title = ""/>';
+			<select name="UserID" title=""/>';
 	if ($_POST['UserID']=='') {
 	echo '<option selected = "selected" value = "">' , __('Not a webERP User') , '</option>';
 } else {
@@ -337,8 +337,8 @@ if (!isset($_GET['delete'])) {
 	</field>';
 
 	echo '</fieldset>
-		<div class = "centre">
-			<input type = "submit" name = "submit" value = "' , __('Enter Information') , '" />
+		<div class="centre">
+			<input type = "submit" name="submit" value = "' , __('Enter Information') , '" />
 		</div>
 		</form>';
 

@@ -132,21 +132,21 @@ if (!isset($SelectedArea)) {
 				FROM areas";
 	$Result = DB_query($SQL);
 
-	echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title = "' . __('Search') . '" alt = "" />' . ' ' . $Title . '</p><br />';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
 
-	echo '<table class = "selection">
+	echo '<table class="selection">
 			<tr>
 				<th>' . __('Area Code') . '</th>
 				<th>' . __('Area Name') . '</th>
 			</tr>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
-		echo '<tr class = "striped_row">
+		echo '<tr class="striped_row">
 				<td>' . $MyRow['areacode'] . '</td>
 				<td>' . $MyRow['areadescription'] . '</td>
-				<td><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedArea = ' . $MyRow['areacode'] . '">' . __('Edit') . '</a></td>
-				<td><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedArea = ' . $MyRow['areacode'] . '&amp;delete = yes">' . __('Delete') . '</a></td>
-				<td><a href = "' . $RootPath . '/SelectCustomer.php?Area = ' . $MyRow['areacode'] . '">' . __('View Customers from this Area') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedArea=' . $MyRow['areacode'] . '">' . __('Edit') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedArea=' . $MyRow['areacode'] . '&amp;delete=yes">' . __('Delete') . '</a></td>
+				<td><a href="' . $RootPath . '/SelectCustomer.php?Area=' . $MyRow['areacode'] . '">' . __('View Customers from this Area') . '</a></td>
 			</tr>';
 	}
 	//END while LIST LOOP
@@ -156,14 +156,14 @@ if (!isset($SelectedArea)) {
 //end of ifs and buts!
 
 if (isset($SelectedArea)) {
-	echo '<div class = "centre"><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . __('Review Areas Defined') . '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . __('Review Areas Defined') . '</a></div>';
 }
 
 
 if (!isset($_GET['delete'])) {
 
 	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedArea)) {
 		//editing an existing area
@@ -179,8 +179,8 @@ if (!isset($_GET['delete'])) {
 		$_POST['AreaCode'] = $MyRow['areacode'];
 		$_POST['AreaDescription']  = $MyRow['areadescription'];
 
-		echo '<input type = "hidden" name = "SelectedArea" value = "' . $SelectedArea . '" />';
-		echo '<input type = "hidden" name = "AreaCode" value = "' .$_POST['AreaCode'] . '" />';
+		echo '<input type = "hidden" name="SelectedArea" value = "' . $SelectedArea . '" />';
+		echo '<input type = "hidden" name="AreaCode" value = "' .$_POST['AreaCode'] . '" />';
 		echo '<fieldset>
 				<legend>', __('Edit existing Sales Area details'), '</legend>
 				<field>
@@ -199,20 +199,20 @@ if (!isset($_GET['delete'])) {
 				<legend>', __('Create New Sales Area details'), '</legend>
 			<field>
 				<label for = "AreaCode">' . __('Area Code') . ':</label>
-				<input tabindex = "1" ' . (in_array('AreaCode',$Errors) ? 'class = "inputerror"' : '' ) .' type = "text" name = "AreaCode" required = "required" autofocus = "autofocus" value = "' . $_POST['AreaCode'] . '" size = "3" maxlength = "3" title = "" />
+				<input tabindex = "1" ' . (in_array('AreaCode',$Errors) ? 'class ="inputerror"' : '' ) .' type = "text" name="AreaCode" required = "required" autofocus = "autofocus" value = "' . $_POST['AreaCode'] . '" size = "3" maxlength = "3" title="" />
 				<fieldhelp>' . __('Enter the sales area code - up to 3 characters are allowed') . '</fieldhelp>
 			</field>';
 	}
 
 	echo '<field>
 			<label for = "AreaDescription">' . __('Area Name') . ':</label>
-			<input tabindex = "2" ' . (in_array('AreaDescription',$Errors) ?  'class = "inputerror"' : '' ) .'  type = "text" required = "required" name = "AreaDescription" value = "' . $_POST['AreaDescription'] .'" size = "26" maxlength = "25" title = "" />
+			<input tabindex = "2" ' . (in_array('AreaDescription',$Errors) ?  'class ="inputerror"' : '' ) .'  type = "text" required = "required" name="AreaDescription" value = "' . $_POST['AreaDescription'] .'" size = "26" maxlength = "25" title="" />
 			<fieldhelp>' . __('Enter the description of the sales area') . '</fieldhelp>
 		</field>';
 
 	echo '</fieldset>
-				<div class = "centre">
-					<input tabindex = "3" type = "submit" name = "submit" value = "' . __('Enter Information') .'" />
+				<div class="centre">
+					<input tabindex = "3" type = "submit" name="submit" value = "' . __('Enter Information') .'" />
 				</div>
 	</form>';
 

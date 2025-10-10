@@ -28,8 +28,8 @@ if (empty($_GET['identifier'])) {
 
 if (!isset($_GET['OrderNumber']) and !isset($_SESSION['ProcessingOrder'])) {
 	/* This page can only be called with an order number for invoicing*/
-	echo '<div class = "centre">
-			<a href = "' . $RootPath . '/SelectSalesOrder.php">' . __('Select a sales order to invoice') . '</a>
+	echo '<div class="centre">
+			<a href="' . $RootPath . '/SelectSalesOrder.php">' . __('Select a sales order to invoice') . '</a>
 		</div>
 		<br />';
 	prnMsg(__('This page can only be opened if an order has been selected Please select an order first from the delivery details screen click on Confirm for invoicing'), 'error');
@@ -297,33 +297,33 @@ if ($_SESSION['Items' . $identifier]->SpecialInstructions) {
 	prnMsg($_SESSION['Items' . $identifier]->SpecialInstructions, 'warn');
 }
 
-echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/inventory.png" title = "', // Icon image.
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/inventory.png" title="', // Icon image.
 __('Confirm Dispatch and Invoice'), '" /> ', // Icon title.
 __('Confirm Dispatch and Invoice'), '</p>', // Page title.
-'<table class = "selection">
+'<table class="selection">
 		<tr>
 			<td>', __('Customer Code'), '</td>
-			<td class = "text">', $_SESSION['Items' . $identifier]->DebtorNo, '</td>
+			<td class="text">', $_SESSION['Items' . $identifier]->DebtorNo, '</td>
 		</tr>
 		<tr>
 			<td>', __('Customer Name'), '</td>
-			<td class = "text">', $_SESSION['Items' . $identifier]->CustomerName, '</td>
+			<td class="text">', $_SESSION['Items' . $identifier]->CustomerName, '</td>
 		</tr>
 		<tr>
 			<td>', __('Invoice amounts stated in'), '</td>
-			<td class = "text">', $_SESSION['Items' . $identifier]->DefaultCurrency, ' - ', $CurrencyName[$_SESSION['Items' . $identifier]->DefaultCurrency], '</td>
+			<td class="text">', $_SESSION['Items' . $identifier]->DefaultCurrency, ' - ', $CurrencyName[$_SESSION['Items' . $identifier]->DefaultCurrency], '</td>
 		</tr>
 	</table>
 	<br />';
 
-echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier = ' . urlencode($identifier) . '" method = "post">';
+echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . urlencode($identifier) . '" method = "post">';
 echo '<div>';
-echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 /***************************************************************
 	Line Item Display
 ***************************************************************/
-echo '<table class = "selection">
+echo '<table class="selection">
 	<thead>
 	<tr>
 		<th>' . __('Item Code') . '</th>
@@ -355,10 +355,10 @@ $j = 0; // Used for autofocus on first field.
 foreach ($_SESSION['Items' . $identifier]->LineItems as $LnItm) {
 	if ($LnItm->QOHatLoc < $LnItm->Quantity and ($LnItm->MBflag == 'B' or $LnItm->MBflag == 'M')) {
 		/*There is a stock deficiency in the stock location selected */
-		$RowStarter = '<tr style = "background:#FF0000;color:#FFC0CB">'; //rows show red where stock deficiency
+		$RowStarter = '<tr style="background:#FF0000;color:#FFC0CB">'; //rows show red where stock deficiency
 
 	} else {
-		$RowStarter = '<tr class = "striped_row">';
+		$RowStarter = '<tr class="striped_row">';
 	}
 	if (sizeOf($LnItm->SerialItems) > 0) {
 		$_SESSION['Items' . $identifier]->LineItems[$LnItm->LineNumber]->QtyDispatched = 0; //initialise QtyDispatched
@@ -379,30 +379,30 @@ foreach ($_SESSION['Items' . $identifier]->LineItems as $LnItm) {
 
 	echo $RowStarter;
 	echo '<td>' . $LnItm->StockID . '</td>
-		<td class = "text" title = "' . $LnItm->LongDescription . '">' . $LnItm->ItemDescription . '</td>
-		<td class = "number">' . locale_number_format($LnItm->Quantity, $LnItm->DecimalPlaces) . '</td>
-		<td class = "text">' . $LnItm->Units . '</td>
-		<td class = "number">' . locale_number_format($LnItm->QtyInv, $LnItm->DecimalPlaces) . '</td>';
+		<td class="text" title="' . $LnItm->LongDescription . '">' . $LnItm->ItemDescription . '</td>
+		<td class="number">' . locale_number_format($LnItm->Quantity, $LnItm->DecimalPlaces) . '</td>
+		<td class="text">' . $LnItm->Units . '</td>
+		<td class="number">' . locale_number_format($LnItm->QtyInv, $LnItm->DecimalPlaces) . '</td>';
 
 	if ($LnItm->Controlled == 1) {
 	if (isset($_POST['ProcessInvoice'])) {
-			echo '<td class = "number">' . locale_number_format($LnItm->QtyDispatched, $LnItm->DecimalPlaces) . '</td>';
+			echo '<td class="number">' . locale_number_format($LnItm->QtyDispatched, $LnItm->DecimalPlaces) . '</td>';
 } else {
-			echo '<td class = "number"><input type = "hidden" name = "' . $LnItm->LineNumber . '_QtyDispatched" required = "required" maxlength = "11"  value = "' . $LnItm->QtyDispatched . '" /><a href = "' . $RootPath . '/ConfirmDispatchControlled_Invoice.php?identifier = ' . urlencode($identifier) . '&LineNo = ' . urlencode($LnItm->LineNumber) . '">' . locale_number_format($LnItm->QtyDispatched, $LnItm->DecimalPlaces) . '</a></td>';
+			echo '<td class="number"><input type = "hidden" name="' . $LnItm->LineNumber . '_QtyDispatched" required = "required" maxlength = "11"  value = "' . $LnItm->QtyDispatched . '" /><a href="' . $RootPath . '/ConfirmDispatchControlled_Invoice.php?identifier=' . urlencode($identifier) . '&LineNo=' . urlencode($LnItm->LineNumber) . '">' . locale_number_format($LnItm->QtyDispatched, $LnItm->DecimalPlaces) . '</a></td>';
 		}
 	} else {
 		if (isset($_POST['ProcessInvoice'])) {
-			echo '<td class = "number">', locale_number_format($LnItm->QtyDispatched, $LnItm->DecimalPlaces), '</td>';
+			echo '<td class="number">', locale_number_format($LnItm->QtyDispatched, $LnItm->DecimalPlaces), '</td>';
 		} else {
-			echo '<td class = "number"><input ', (++$j == 1 ? 'autofocus = "autofocus" ' : ''), 'class = "number" maxlength = "12" name = "', $LnItm->LineNumber, '_QtyDispatched" required = "required" title = "', __('Enter the quantity to charge the customer for, that has been dispatched'), '" type = "text" size = "12" value = "', locale_number_format($LnItm->QtyDispatched, $LnItm->DecimalPlaces), '" /></td>';
+			echo '<td class="number"><input ', (++$j == 1 ? 'autofocus ="autofocus" ' : ''), 'class = "number" maxlength = "12" name="', $LnItm->LineNumber, '_QtyDispatched" required = "required" title="', __('Enter the quantity to charge the customer for, that has been dispatched'), '" type = "text" size = "12" value = "', locale_number_format($LnItm->QtyDispatched, $LnItm->DecimalPlaces), '" /></td>';
 		}
 	}
 	$DisplayDiscountPercent = locale_number_format($LnItm->DiscountPercent * 100, 2) . '%';
 	$DisplayLineNetTotal = locale_number_format($LineTotal, $_SESSION['Items' . $identifier]->CurrDecimalPlaces);
 	$DisplayPrice = locale_number_format($LnItm->Price, $_SESSION['Items' . $identifier]->CurrDecimalPlaces);
-	echo '<td class = "number">' . $DisplayPrice . '</td>
-		<td class = "number">' . $DisplayDiscountPercent . '</td>
-		<td class = "number">' . $DisplayLineNetTotal . '</td>';
+	echo '<td class="number">' . $DisplayPrice . '</td>
+		<td class="number">' . $DisplayDiscountPercent . '</td>
+		<td class="number">' . $DisplayLineNetTotal . '</td>';
 
 	/*Need to list the taxes applicable to this line */
 	echo '<td>';
@@ -415,7 +415,7 @@ foreach ($_SESSION['Items' . $identifier]->LineItems as $LnItm) {
 		$i++;
 	}
 	echo '</td>
-		<td class = "number">';
+		<td class="number">';
 
 	$i = 1; // initialise the number of taxes iterated through
 	$TaxLineTotal = 0; //initialise tax total for the line
@@ -431,7 +431,7 @@ foreach ($_SESSION['Items' . $identifier]->LineItems as $LnItm) {
 		if (isset($_POST['ProcessInvoice'])) {
 			echo $Tax->TaxRate * 100;
 		} else {
-			echo '<input type = "text" class = "number" required = "required" title = "' . __('Enter the tax rate applicable as a number') . '" name = "' . $LnItm->LineNumber . $i . '_TaxRate" maxlength = "4" size = "4" value = "' . $Tax->TaxRate * 100 . '" />';
+			echo '<input type = "text" class="number" required = "required" title="' . __('Enter the tax rate applicable as a number') . '" name="' . $LnItm->LineNumber . $i . '_TaxRate" maxlength = "4" size = "4" value = "' . $Tax->TaxRate * 100 . '" />';
 		}
 		$i++;
 		if ($Tax->TaxOnTax == 1) {
@@ -451,12 +451,12 @@ foreach ($_SESSION['Items' . $identifier]->LineItems as $LnItm) {
 
 	$DisplayGrossLineTotal = locale_number_format($LineTotal + $TaxLineTotal, $_SESSION['Items' . $identifier]->CurrDecimalPlaces);
 
-	echo '<td class = "number">' . $DisplayTaxAmount . '</td>
-			<td class = "number">' . $DisplayGrossLineTotal . '</td>';
+	echo '<td class="number">' . $DisplayTaxAmount . '</td>
+			<td class="number">' . $DisplayGrossLineTotal . '</td>';
 
 	if ($LnItm->Controlled == 1) {
 	if (!isset($_POST['ProcessInvoice'])) {
-			echo '<td><a href = "' . $RootPath . '/ConfirmDispatchControlled_Invoice.php?identifier = ' . urlencode($identifier) . '&LineNo = ' . urlencode($LnItm->LineNumber) . '">';
+			echo '<td><a href="' . $RootPath . '/ConfirmDispatchControlled_Invoice.php?identifier=' . urlencode($identifier) . '&LineNo=' . urlencode($LnItm->LineNumber) . '">';
 			if ($LnItm->Serialised == 1) {
 				echo __('Enter Serial Numbers');
 } else { /*Just batch/roll/lot control */
@@ -501,7 +501,7 @@ if (!isset($_SESSION['Items' . $identifier]->FreightCost) or $_SESSION['Items' .
 				$BestShipper = $ShipperReturned[0];
 			} else {
 				prnMsg(__('There are no shippers defined') . '. ' . __('Please use the link below to set up shipping freight companies, the system expects the shipping company to be selected or a default freight company to be used'), 'error');
-				echo '<a href = "' . $RootPath . 'Shippers.php">' . __('Enter') . '/' . __('Amend Freight Companies') . '</a>';
+				echo '<a href="' . $RootPath . 'Shippers.php">' . __('Enter') . '/' . __('Amend Freight Companies') . '</a>';
 			}
 		}
 	}
@@ -512,29 +512,29 @@ if (isset($_POST['ChargeFreightCost']) and !is_numeric(filter_number_format($_PO
 }
 
 echo '<tr>
-	<td class = "number" colspan = "2">', __('Order Freight Cost'), '</td>
-	<td class = "number">', locale_number_format($_SESSION['Old_FreightCost'], $_SESSION['Items' . $identifier]->CurrDecimalPlaces), '</td>';
+	<td class="number" colspan = "2">', __('Order Freight Cost'), '</td>
+	<td class="number">', locale_number_format($_SESSION['Old_FreightCost'], $_SESSION['Items' . $identifier]->CurrDecimalPlaces), '</td>';
 
 if ($_SESSION['DoFreightCalc'] == true) {
-	echo '<td class = "number" colspan = "2">', __('Recalculated Freight Cost'), '</td>
-		<td class = "number">', locale_number_format($FreightCost, $_SESSION['Items' . $identifier]->CurrDecimalPlaces), '</td>';
+	echo '<td class="number" colspan = "2">', __('Recalculated Freight Cost'), '</td>
+		<td class="number">', locale_number_format($FreightCost, $_SESSION['Items' . $identifier]->CurrDecimalPlaces), '</td>';
 } else {
-	//	echo '<td colspan = "1"></td>';// Should be?:	echo '<td colspan = "3">&nbsp;</td>';
+	//	echo '<td colspan = "1"></td>';// Should be?:	echo '<td colspan ="3">&nbsp;</td>';
 
 }
 if (!isset($_POST['ChargeFreightCost'])) {
 	$_POST['ChargeFreightCost'] = 0;
 }
-echo '<td class = "number" colspan = "2">', __('Charge Freight Cost ex Tax'), '</td>';
+echo '<td class="number" colspan = "2">', __('Charge Freight Cost ex Tax'), '</td>';
 if ($_SESSION['Items' . $identifier]->Any_Already_Delivered() == 1 and (!isset($_SESSION['Items' . $identifier]->FreightCost) or $_POST['ChargeFreightCost'] == 0)) {
 
-	echo '<td><input class = "number" maxlength = "12" name = "ChargeFreightCost" required = "required" size = "10" type = "text" value = "0" /></td>';
+	echo '<td><input class="number" maxlength = "12" name="ChargeFreightCost" required = "required" size = "10" type = "text" value = "0" /></td>';
 	$_SESSION['Items' . $identifier]->FreightCost = 0;
 } else {
 	if (isset($_POST['ProcessInvoice'])) {
-		echo '<td class = "number">' . locale_number_format($_SESSION['Items' . $identifier]->FreightCost, $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '</td>';
+		echo '<td class="number">' . locale_number_format($_SESSION['Items' . $identifier]->FreightCost, $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '</td>';
 	} else {
-		echo '<td class = "number"><input class = "number" maxlength = "12" name = "ChargeFreightCost" size = "10" type = "text" value = "' . locale_number_format($_SESSION['Items' . $identifier]->FreightCost, $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '" /></td>';
+		echo '<td class="number"><input class="number" maxlength = "12" name="ChargeFreightCost" size = "10" type = "text" value = "' . locale_number_format($_SESSION['Items' . $identifier]->FreightCost, $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '" /></td>';
 	}
 	$_POST['ChargeFreightCost'] = locale_number_format($_SESSION['Items' . $identifier]->FreightCost, $_SESSION['Items' . $identifier]->CurrDecimalPlaces);
 }
@@ -551,7 +551,7 @@ foreach ($_SESSION['Items' . $identifier]->FreightTaxes as $FreightTaxLine) {
 	$i++;
 }
 
-echo '</td><td class = "number">';
+echo '</td><td class="number">';
 
 $i = 0;
 foreach ($_SESSION['Items' . $identifier]->FreightTaxes as $FreightTaxLine) {
@@ -562,7 +562,7 @@ foreach ($_SESSION['Items' . $identifier]->FreightTaxes as $FreightTaxLine) {
 	if (isset($_POST['ProcessInvoice'])) {
 		echo $FreightTaxLine->TaxRate * 100;
 	} else {
-		echo '<input class = "number" maxlength = "4" name = "FreightTaxRate' . $FreightTaxLine->TaxCalculationOrder . '" size = "4" type = "text" value = "' . locale_number_format($FreightTaxLine->TaxRate * 100, $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '" />';
+		echo '<input class="number" maxlength = "4" name="FreightTaxRate' . $FreightTaxLine->TaxCalculationOrder . '" size = "4" type = "text" value = "' . locale_number_format($FreightTaxLine->TaxRate * 100, $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '" />';
 	}
 
 	if ($FreightTaxLine->TaxOnTax == 1) {
@@ -577,8 +577,8 @@ foreach ($_SESSION['Items' . $identifier]->FreightTaxes as $FreightTaxLine) {
 }
 echo '</td>';
 
-echo '<td class = "number">' . locale_number_format($FreightTaxTotal, $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '</td>
-	<td class = "number">' . locale_number_format($FreightTaxTotal + filter_number_format($_POST['ChargeFreightCost']), $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '</td>
+echo '<td class="number">' . locale_number_format($FreightTaxTotal, $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '</td>
+	<td class="number">' . locale_number_format($FreightTaxTotal + filter_number_format($_POST['ChargeFreightCost']), $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '</td>
 	</tr>';
 
 $TaxTotal+= $FreightTaxTotal;
@@ -586,11 +586,11 @@ $TaxTotal+= $FreightTaxTotal;
 $DisplaySubTotal = locale_number_format(($_SESSION['Items' . $identifier]->total + filter_number_format($_POST['ChargeFreightCost'])), $_SESSION['Items' . $identifier]->CurrDecimalPlaces);
 
 echo '<tr>
-	<td colspan = "8" class = "number">' . __('Invoice Totals') . '</td>
-	<td class = "number"><hr /><b>' . $DisplaySubTotal . '</b><hr /></td>
+	<td colspan = "8" class="number">' . __('Invoice Totals') . '</td>
+	<td class="number"><hr /><b>' . $DisplaySubTotal . '</b><hr /></td>
 	<td colspan = "2"></td>
-	<td class = "number"><hr /><b>' . locale_number_format($TaxTotal, $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '</b><hr /></td>
-	<td class = "number"><hr /><b>' . locale_number_format($TaxTotal + ($_SESSION['Items' . $identifier]->total + $_POST['ChargeFreightCost']), $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '</b><hr /></td>
+	<td class="number"><hr /><b>' . locale_number_format($TaxTotal, $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '</b><hr /></td>
+	<td class="number"><hr /><b>' . locale_number_format($TaxTotal + ($_SESSION['Items' . $identifier]->total + $_POST['ChargeFreightCost']), $_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '</b><hr /></td>
 </tr>';
 
 if (!isset($_POST['DispatchDate']) or !Is_Date($_POST['DispatchDate'])) {
@@ -674,8 +674,8 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 		if ($NegativesFound) {
 	echo '</div>';
 			echo '</form>';
-			echo '<div class = "centre">
-					<input type = "submit" name = "Update" value = "' . __('Update') . '" /></div>';
+			echo '<div class="centre">
+					<input type = "submit" name="Update" value = "' . __('Update') . '" /></div>';
 			include('includes/footer.php');
 			exit();
 }
@@ -744,7 +744,7 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 
 			echo '<br />';
 
-			echo '<div class = "centre"><a href = "' . $RootPath . '/SelectSalesOrder.php">' . __('Select a sales order for confirming deliveries and invoicing') . '</a></div>';
+			echo '<div class="centre"><a href="' . $RootPath . '/SelectSalesOrder.php">' . __('Select a sales order for confirming deliveries and invoicing') . '</a></div>';
 
 			unset($_SESSION['Items' . $identifier]->LineItems);
 			unset($_SESSION['Items' . $identifier]);
@@ -1717,15 +1717,15 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 
 	prnMsg(__('Invoice number') . ' ' . $InvoiceNo . ' ' . __('processed'), 'success');
 
-	echo '<br /><div class = "centre">';
+	echo '<br /><div class="centre">';
 
 	if ($_SESSION['InvoicePortraitFormat'] == 0) {
-	echo '<img src = "' . $RootPath . '/css/' . $Theme . '/images/printer.png" title = "' . __('Print') . '" alt = "" />' . ' ' . '<a target = "_blank" href = "' . $RootPath . '/PrintCustTrans.php?FromTransNo = ' . $InvoiceNo . '&amp;InvOrCredit = Invoice&amp;PrintPDF = True&orientation = landscape">' . __('Print this invoice') . ' (' . __('Landscape') . ')</a><br /><br />';
+	echo '<img src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" title="' . __('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="' . $RootPath . '/PrintCustTrans.php?FromTransNo=' . $InvoiceNo . '&amp;InvOrCredit=Invoice&amp;PrintPDF=True&orientation=landscape">' . __('Print this invoice') . ' (' . __('Landscape') . ')</a><br /><br />';
 } else {
-		echo '<img src = "' . $RootPath . '/css/' . $Theme . '/images/printer.png" title = "' . __('Print') . '" alt = "" />' . ' ' . '<a target = "_blank" href = "' . $RootPath . '/PrintCustTrans.php?FromTransNo = ' . $InvoiceNo . '&amp;InvOrCredit = Invoice&amp;PrintPDF = True&orientation = portrait">' . __('Print this invoice') . ' (' . __('Portrait') . ')</a><br /><br />';
+		echo '<img src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" title="' . __('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="' . $RootPath . '/PrintCustTrans.php?FromTransNo=' . $InvoiceNo . '&amp;InvOrCredit=Invoice&amp;PrintPDF=True&orientation=portrait">' . __('Print this invoice') . ' (' . __('Portrait') . ')</a><br /><br />';
 	}
-	echo '<a href = "' . $RootPath . '/SelectSalesOrder.php">' . __('Select another order for invoicing') . '</a><br /><br />';
-	echo '<a href = "' . $RootPath . '/SelectOrderItems.php?NewOrder = Yes">' . __('Sales Order Entry') . '</a></div><br />';
+	echo '<a href="' . $RootPath . '/SelectSalesOrder.php">' . __('Select another order for invoicing') . '</a><br /><br />';
+	echo '<a href="' . $RootPath . '/SelectOrderItems.php?NewOrder=Yes">' . __('Sales Order Entry') . '</a></div><br />';
 	/*end of process invoice */
 
 } else { /*Process Invoice not set so allow input of invoice data */
@@ -1753,25 +1753,25 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 
 	echo '<field>
 			<label for = "DispatchDate">', __('Date On Invoice'), ':</label>
-			<input required = "required" autofocus = "autofocus" maxlength = "10" size = "15" name = "DispatchDate" value = "', FormatDateForSQL($DefaultDispatchDate), '" id = "datepicker" type = "date" />
+			<input required = "required" autofocus = "autofocus" maxlength = "10" size = "15" name="DispatchDate" value = "', FormatDateForSQL($DefaultDispatchDate), '" id="datepicker" type = "date" />
 			<fieldhelp>', __('The date the goods/services were sent. This is the date that will appear as the invoice date.'), '</fieldhelp>
 		</field>';
 
 	echo '<field>
 			<label for = "Consignment">', __('Consignment Note Ref'), ':</label>
-			<input type = "text" maxlength = "20" size = "20" name = "Consignment" value = "', $_POST['Consignment'], '" />
+			<input type = "text" maxlength = "20" size = "20" name="Consignment" value = "', $_POST['Consignment'], '" />
 			<fieldhelp>', __('The consignment reference for this delivery.'), '</fieldhelp>
 		</field>';
 
 	echo '<field>
 			<label for = "Packages">', __('No Of Packages in Delivery'), ':</label>
-			<input type = "text" maxlength = "6" size = "6" class = "number" name = "Packages" value = "', $_POST['Packages'], '" />
+			<input type = "text" maxlength = "6" size = "6" class="number" name="Packages" value = "', $_POST['Packages'], '" />
 			<fieldhelp>', __('The number of packages in this delivery.'), '</fieldhelp>
 		</field>';
 
 	echo '<field>
 			<label for = "BOPolicy">', __('Action For Balance'), ':</label>
-			<select required = "required" name = "BOPolicy">
+			<select required = "required" name="BOPolicy">
 				<option selected = "selected" value = "BO">', __('Automatically put balance on back order'), '</option>
 				<option value = "CAN">', __('Cancel any quantities not delivered'), '</option>
 			</select>
@@ -1780,22 +1780,22 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 
 	echo '<field>
 			<label for = "InvoiceText">', __('Invoice Text'), ':</label>
-			<textarea spellcheck = "true" name = "InvoiceText" cols = "31" rows = "5">', reverse_escape($_POST['InvoiceText']), '</textarea>
+			<textarea spellcheck = "true" name="InvoiceText" cols = "31" rows = "5">', reverse_escape($_POST['InvoiceText']), '</textarea>
 			<fieldhelp>', __('Any text that should appear on the invoice. This text will be visible to the customer.'), '</fieldhelp>
 		</field>';
 
 	echo '<field>
 			<label for = "InternalComments">', __('Internal Comments'), ':</label>
-			<textarea spellcheck = "true" name = "InternalComments" pattern = ".{0,20}" cols = "31" rows = "5">', reverse_escape($_SESSION['Items' . $identifier]->InternalComments), '</textarea>
+			<textarea spellcheck = "true" name="InternalComments" pattern = ".{0,20}" cols = "31" rows = "5">', reverse_escape($_SESSION['Items' . $identifier]->InternalComments), '</textarea>
 			<fieldhelp>', __('Any internal text for this invoice. This text will not be visible to the customer.'), '</fieldhelp>
 		</field>';
 
 	echo '</fieldset>';
-	echo '<div class = "centre">
-			<input name = "Update" type = "submit" value = "', __('Update'), '" />
-			<input name = "ProcessInvoice" type = "submit" value = "', __('Process Invoice'), '" />
+	echo '<div class="centre">
+			<input name="Update" type = "submit" value = "', __('Update'), '" />
+			<input name="ProcessInvoice" type = "submit" value = "', __('Process Invoice'), '" />
 		</div>
-		<input type = "hidden" name = "ShipVia" value = "' . $_SESSION['Items' . $identifier]->ShipVia . '" />';
+		<input type = "hidden" name="ShipVia" value = "' . $_SESSION['Items' . $identifier]->ShipVia . '" />';
 }
 
 echo '</div>';

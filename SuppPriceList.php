@@ -194,7 +194,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 		$HTML .= '</tbody>
 				</table>
 				<div class = "centre">
-					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" /></form>
+					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 
@@ -247,13 +247,13 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 		$Title = __('Send Report By Email');
 		include('includes/header.php');
 		echo '<div class = "centre">
-				<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" /></form>
+				<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick="window.close()" /></form>
 			</div>';
 		include('includes/footer.php');
 	} else {
 		$Title = __('View supplier price');
 		include('includes/header.php');
-		echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title = "' . __('Purchase') . '" alt = "" />
+		echo '<p class = "page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Purchase') . '" alt="" />
 		'. __('Supplier Price List').'</p>';
 		echo $HTML;
 		include('includes/footer.php');
@@ -266,7 +266,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 	$BookMark = '';
 	include('includes/header.php');
 	echo '<p class = "page_title_text">
-			<img src = "'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title = "' . __('Purchase') . '" alt = "" />' . ' ' . __('Supplier Price List') . '
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Purchase') . '" alt="" />' . ' ' . __('Supplier Price List') . '
 		</p>';
 	echo '<div class = "page_help_text">' . __('View the Price List from supplier') . '</div>';
 

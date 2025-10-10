@@ -7,8 +7,8 @@ $ViewTopic = 'Tax';
 $BookMark = 'TaxAuthorities';
 include('includes/header.php');
 
-echo '<p class = "page_title_text"><img alt = "" src = "' . $RootPath . '/css/' . $Theme .
-		'/images/maintenance.png" title = "' .
+echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
+		'/images/maintenance.png" title="' .
 		__('Tax Authorities Maintenance') . '" />' . ' ' .
 		__('Tax Authorities Maintenance') . '</p>';
 
@@ -139,35 +139,35 @@ if (!isset($SelectedTaxAuthID)) {
 	$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR and SEEK ASSISTANCE') . ': ' . __('The defined tax authorities could not be retrieved because');
 	$Result = DB_query($SQL, $ErrMsg);
 
-	echo '<table class = "selection">
+	echo '<table class="selection">
 		<thead>
 			<tr>
-				<th class = "SortedColumn" >' . __('ID') . '</th>
-				<th class = "SortedColumn" >' . __('Tax Authority') . '</th>
-				<th class = "SortedColumn" >' . __('Input Tax') . '<br />' . __('GL Account') . '</th>
-				<th class = "SortedColumn" >' . __('Output Tax') . '<br />' . __('GL Account') . '</th>
-				<th class = "SortedColumn" >' . __('Bank') . '</th>
-				<th class = "SortedColumn" >' . __('Bank Account') . '</th>
-				<th class = "SortedColumn" >' . __('Bank Act Type') . '</th>
-				<th class = "SortedColumn" >' . __('Bank Swift') . '</th>
+				<th class="SortedColumn" >' . __('ID') . '</th>
+				<th class="SortedColumn" >' . __('Tax Authority') . '</th>
+				<th class="SortedColumn" >' . __('Input Tax') . '<br />' . __('GL Account') . '</th>
+				<th class="SortedColumn" >' . __('Output Tax') . '<br />' . __('GL Account') . '</th>
+				<th class="SortedColumn" >' . __('Bank') . '</th>
+				<th class="SortedColumn" >' . __('Bank Account') . '</th>
+				<th class="SortedColumn" >' . __('Bank Act Type') . '</th>
+				<th class="SortedColumn" >' . __('Bank Swift') . '</th>
 				<th colspan = "4">&nbsp;</th>
 			</tr>
 		</thead>
 		<tbody>';
 
 	while ($MyRow = DB_fetch_row($Result)) {
-		echo  '<tr class = "striped_row">
-				<td class = "number">', $MyRow[0], '</td>
+		echo  '<tr class="striped_row">
+				<td class="number">', $MyRow[0], '</td>
 				<td>', $MyRow[1], '</td>
-				<td class = "number">', $MyRow[3], '</td>
-				<td class = "number">', $MyRow[2], '</td>
+				<td class="number">', $MyRow[3], '</td>
+				<td class="number">', $MyRow[2], '</td>
 				<td>', $MyRow[4], '</td>
 				<td>', $MyRow[5], '</td>
 				<td>', $MyRow[6], '</td>
 				<td>', $MyRow[7], '</td>
-				<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTaxAuthID = ', $MyRow[0], '">' . __('Edit') . '</a></td>
-				<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTaxAuthID = ', $MyRow[0], '&amp;delete = yes" onclick = "return confirm(\'' . __('Are you sure you wish to delete this tax authority?') . '\');">' . __('Delete') . '</a></td>
-				<td><a href = "', $RootPath . '/TaxAuthorityRates.php?TaxAuthority = ', $MyRow[0], '">' . __('Edit Rates') . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTaxAuthID=', $MyRow[0], '">' . __('Edit') . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTaxAuthID=', $MyRow[0], '&amp;delete=yes" onclick="return confirm(\'' . __('Are you sure you wish to delete this tax authority?') . '\');">' . __('Delete') . '</a></td>
+				<td><a href="', $RootPath . '/TaxAuthorityRates.php?TaxAuthority=', $MyRow[0], '">' . __('Edit Rates') . '</a></td>
 			</tr>';
 
 	}
@@ -179,14 +179,14 @@ if (!isset($SelectedTaxAuthID)) {
 }
 
 if (isset($SelectedTaxAuthID)) {
-	echo '<div class = "centre">
-			<a href = "' .  htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">' . __('Review all defined tax authority records') . '</a>
+	echo '<div class="centre">
+			<a href="' .  htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">' . __('Review all defined tax authority records') . '</a>
 		</div>';
 }
 
 
 echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedTaxAuthID)) {
 	//editing an existing tax authority
@@ -213,7 +213,7 @@ if (isset($SelectedTaxAuthID)) {
 	$_POST['BankSwift']	= $MyRow['bankswift'];
 
 
-	echo '<input type = "hidden" name = "SelectedTaxAuthID" value = "' . $SelectedTaxAuthID . '" />';
+	echo '<input type = "hidden" name="SelectedTaxAuthID" value = "' . $SelectedTaxAuthID . '" />';
 
 	echo '<fieldset>
 			<legend>', __('Edit Tax Authority Details'), '</legend>';
@@ -238,13 +238,13 @@ $Result = DB_query($SQL);
 
 echo '<field>
 		<label for = "Description">' . __('Tax Type Description') . ':</label>
-		<input type = "text" pattern = "(?!^ +$)[^><+-]+" title = "" placeholder = "'.__('Within 20 characters').'" required = "required" name = "Description" size = "21" maxlength = "20" value = "' . $_POST['Description'] . '" />
+		<input type = "text" pattern = "(?!^ +$)[^><+-]+" title="" placeholder = "'.__('Within 20 characters').'" required = "required" name="Description" size = "21" maxlength = "20" value = "' . $_POST['Description'] . '" />
 		<fieldhelp>'.__('No illegal characters allowed and should not be blank').'</fieldhelp>
 	</field>';
 
 echo '<field>
 		<label for = "PurchTaxGLCode">' . __('Input tax GL Account') . ':</label>
-		<select name = "PurchTaxGLCode">';
+		<select name="PurchTaxGLCode">';
 while ($MyRow = DB_fetch_array($Result)) {
 	if (isset($_POST['PurchTaxGLCode']) and $MyRow['accountcode']==$_POST['PurchTaxGLCode']) {
 		echo '<option selected = "selected" value = "';
@@ -260,7 +260,7 @@ DB_data_seek($Result,0);
 
 echo '<field>
 		<label for = "TaxGLCode">' . __('Output tax GL Account') . ':</label>
-		<select name = "TaxGLCode">';
+		<select name="TaxGLCode">';
 while ($MyRow = DB_fetch_array($Result)) {
 	if (isset($_POST['TaxGLCode']) and $MyRow['accountcode']==$_POST['TaxGLCode']) {
 		echo '<option selected = "selected" value = "';
@@ -286,31 +286,31 @@ echo '</select>
 
 echo '<field>
 		<label for = "Bank">' . __('Bank Name') . ':</label>
-		<input type = "text" name = "Bank" size = "41" maxlength = "40" value = "' . $_POST['Bank'] . '" placeholder = "'.__('Not more than 40 chacraters').'" />
+		<input type = "text" name="Bank" size = "41" maxlength = "40" value = "' . $_POST['Bank'] . '" placeholder = "'.__('Not more than 40 chacraters').'" />
 	</field>
 	<field>
 		<label for = "BankAccType">' . __('Bank Account Type') . ':</label>
-		<input type = "text" name = "BankAccType" size = "15" maxlength = "20" value = "' . $_POST['BankAccType'] . '" placeholder = "'.__('No more than 20 characters').'" />
+		<input type = "text" name="BankAccType" size = "15" maxlength = "20" value = "' . $_POST['BankAccType'] . '" placeholder = "'.__('No more than 20 characters').'" />
 	</field>
 	<field>
 		<label for = "BankAcc">' . __('Bank Account') . ':</label>
-		<input type = "text" name = "BankAcc" size = "21" maxlength = "20" value = "' . $_POST['BankAcc'] . '" placeholder = "'.__('No more than 20 characters').'" />
+		<input type = "text" name="BankAcc" size = "21" maxlength = "20" value = "' . $_POST['BankAcc'] . '" placeholder = "'.__('No more than 20 characters').'" />
 	</field>
 	<field>
 		<label for = "BankSwift">' . __('Bank Swift No') . ':</label>
-		<input type = "text" name = "BankSwift" size = "15" maxlength = "14" value = "' . $_POST['BankSwift'] . '" placeholder = "'.__('No more than 15 characters').'" />
+		<input type = "text" name="BankSwift" size = "15" maxlength = "14" value = "' . $_POST['BankSwift'] . '" placeholder = "'.__('No more than 15 characters').'" />
 	</field>
 	</fieldset>';
 
-echo '<div class = "centre">
-		<input type = "submit" name = "submit" value = "' . __('Enter Information') . '" />
+echo '<div class="centre">
+		<input type = "submit" name="submit" value = "' . __('Enter Information') . '" />
 	</div>
 </form>';
 
-echo '<div class = "centre">
-		<a href = "' . $RootPath . '/TaxGroups.php">' . __('Tax Group Maintenance') .  '</a><br />
-		<a href = "' . $RootPath . '/TaxProvinces.php">' . __('Dispatch Tax Province Maintenance') .  '</a><br />
-		<a href = "' . $RootPath . '/TaxCategories.php">' . __('Tax Category Maintenance') .  '</a>
+echo '<div class="centre">
+		<a href="' . $RootPath . '/TaxGroups.php">' . __('Tax Group Maintenance') .  '</a><br />
+		<a href="' . $RootPath . '/TaxProvinces.php">' . __('Dispatch Tax Province Maintenance') .  '</a><br />
+		<a href="' . $RootPath . '/TaxCategories.php">' . __('Tax Category Maintenance') .  '</a>
 	</div>';
 
 include('includes/footer.php');

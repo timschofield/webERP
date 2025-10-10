@@ -8,7 +8,7 @@ $BookMark = '';// Anchor's id in the manual's html document.
 include('includes/header.php');
 
 echo '<p class = "page_title_text">
-<img src = "'.$RootPath.'/css/'.$Theme.'/images/user.png" title = "' . __('Logged In Users') . '" alt = "" />' . ' ' . $Title .
+<img src="'.$RootPath.'/css/'.$Theme.'/images/user.png" title="' . __('Logged In Users') . '" alt="" />' . ' ' . $Title .
 '</p>';
 
 $SQL = "SELECT sessionid,

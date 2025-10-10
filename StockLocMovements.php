@@ -10,17 +10,17 @@ include('includes/header.php');
 if (isset($_POST['BeforeDate'])){$_POST['BeforeDate'] = ConvertSQLDate($_POST['BeforeDate']);}
 if (isset($_POST['AfterDate'])){$_POST['AfterDate'] = ConvertSQLDate($_POST['AfterDate']);}
 
-echo '<p class = "page_title_text">
-		<img src = "', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title = "', __('Search'), '" alt = "" />', ' ', $Title, '
+echo '<p class="page_title_text">
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', __('Search'), '" alt="" />', ' ', $Title, '
 	</p>';
 
 echo '<form action = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method = "post">
-	<input type = "hidden" name = "FormID" value = "', $_SESSION['FormID'], '" />
+	<input type = "hidden" name="FormID" value = "', $_SESSION['FormID'], '" />
 	<fieldset>
 		<legend>', __('Inquiry Criteria'), '</legend>
 		<field>
 			<label for = "StockLocation">', __('From Stock Location'), ':</label>
-			<select required = "required" name = "StockLocation">';
+			<select required = "required" name="StockLocation">';
 
 $SQL = "SELECT locationname,
 				locations.loccode
@@ -65,16 +65,16 @@ if (!isset($_POST['AfterDate']) or !Is_date($_POST['AfterDate'])) {
 }
 echo '<field>
 		<label for = "BeforeDate">', __('Show Movements before'), ':</label>
-		<input type = "date" name = "BeforeDate" size = "11" required = "required" maxlength = "10" value = "', FormatDateForSQL($_POST['BeforeDate']), '" />
+		<input type = "date" name="BeforeDate" size = "11" required = "required" maxlength = "10" value = "', FormatDateForSQL($_POST['BeforeDate']), '" />
 	</field>';
 
 echo '<field>
 		<label for = "AfterDate">', __('But after'), ':</label>
-		<input type = "date" name = "AfterDate" size = "11" required = "required" maxlength = "10" value = "', FormatDateForSQL($_POST['AfterDate']), '" />
+		<input type = "date" name="AfterDate" size = "11" required = "required" maxlength = "10" value = "', FormatDateForSQL($_POST['AfterDate']), '" />
 	 </field>
 	 </fieldset>
-	<div class = "centre">
-		<input type = "submit" name = "ShowMoves" value = "', __('Show Stock Movements'), '" />
+	<div class="centre">
+		<input type = "submit" name="ShowMoves" value = "', __('Show Stock Movements'), '" />
 	</div>';
 
 if ($_POST['StockLocation'] == 'All') {
@@ -114,7 +114,7 @@ $ErrMsg = __('The stock movements for the selected criteria could not be retriev
 $MovtsResult = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($MovtsResult) > 0) {
-	echo '<table cellpadding = "5" cellspacing = "4" class = "selection">
+	echo '<table cellpadding = "5" cellspacing = "4" class="selection">
 			<tr>
 				<th>', __('Item Code'), '</th>
 				<th>', __('Type'), '</th>
@@ -145,17 +145,17 @@ if (DB_num_rows($MovtsResult) > 0) {
 			}
 		}
 
-		echo '<tr class = "striped_row">
-				<td><a target = "_blank" href = "', $RootPath, '/StockStatus.php?StockID = ', mb_strtoupper(urlencode($MyRow['stockid'])), '">', mb_strtoupper($MyRow['stockid']), '</a></td>
+		echo '<tr class="striped_row">
+				<td><a target="_blank" href="', $RootPath, '/StockStatus.php?StockID=', mb_strtoupper(urlencode($MyRow['stockid'])), '">', mb_strtoupper($MyRow['stockid']), '</a></td>
 				<td>', $MyRow['typename'], '</td>
 				<td>', $MyRow['transno'], '</td>
 				<td>', $DisplayTranDate, '</td>
 				<td>', $MyRow['debtorno'], '</td>
-				<td class = "number">', locale_number_format($MyRow['qty'], $MyRow['decimalplaces']), '</td>
+				<td class="number">', locale_number_format($MyRow['qty'], $MyRow['decimalplaces']), '</td>
 				<td>', $MyRow['reference'], '</td>
-				<td class = "number">', locale_number_format($MyRow['price'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
-				<td class = "number">', locale_number_format($MyRow['discountpercent'] * 100, 2), '%</td>
-				<td class = "number">', locale_number_format($MyRow['newqoh'], $MyRow['decimalplaces']), '</td>
+				<td class="number">', locale_number_format($MyRow['price'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+				<td class="number">', locale_number_format($MyRow['discountpercent'] * 100, 2), '%</td>
+				<td class="number">', locale_number_format($MyRow['newqoh'], $MyRow['decimalplaces']), '</td>
 				<td>', $SerialText, '</td>
 			</tr>';
 	}

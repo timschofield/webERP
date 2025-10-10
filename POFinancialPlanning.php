@@ -52,9 +52,9 @@ function submit($Country, $Currency, $RootPath, $Title) {
 	$ResultSuppliers = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($ResultSuppliers) != 0){
 
-		echo '<p class = "page_title_text" align = "center"><strong>' . $Title . '</strong></p>';
+		echo '<p class="page_title_text" align = "center"><strong>' . $Title . '</strong></p>';
 		echo '<div>
-			<table class = "selection">';
+			<table class="selection">';
 		$TableHeader = '<thead>
 						<tr>
 							<th>' . __('Code') . '</th>
@@ -77,17 +77,17 @@ function submit($Country, $Currency, $RootPath, $Title) {
 		while ($mySupplier = DB_fetch_array($ResultSuppliers)) {
 			echo $TableHeader;
 
-			echo '<tr class = "striped_row">
+			echo '<tr class="striped_row">
 					<td>' . $mySupplier['supplierid'] . '</td>
 					<td>' . $mySupplier['suppname'] . '</td>
-					<td class = "number"></td>
+					<td class="number"></td>
 					<td></td>
 					<td></td>
-					<td class = "number"></td>
-					<td class = "number"></td>
-					<td class = "number">' . locale_number_format($mySupplier['balance'],$mySupplier['decimalplaces']) . ' ' . $mySupplier['currcode'] . '</td>
-					<td class = "number"></td>
-					<td class = "number"></td>
+					<td class="number"></td>
+					<td class="number"></td>
+					<td class="number">' . locale_number_format($mySupplier['balance'],$mySupplier['decimalplaces']) . ' ' . $mySupplier['currcode'] . '</td>
+					<td class="number"></td>
+					<td class="number"></td>
 				</tr>';
 
 			// Get the PO's for this supplier
@@ -115,36 +115,36 @@ function submit($Country, $Currency, $RootPath, $Title) {
 				$TotalSupplierOwnCurrency += $myPOs['ordervalue'];
 				$OrderValueFuntionalCurrency = $myPOs['ordervalue'] / $mySupplier['rate'];
 				$TotalSupplierFunctionalCurrency += $OrderValueFuntionalCurrency;
-				$CodeLink = '<a href = "' . $RootPath . '/PO_OrderDetails.php?OrderNo = ' . $myPOs['orderno'] . '">' . $myPOs['orderno'] . '</a>';
+				$CodeLink = '<a href="' . $RootPath . '/PO_OrderDetails.php?OrderNo=' . $myPOs['orderno'] . '">' . $myPOs['orderno'] . '</a>';
 
-				echo '<tr class = "striped_row">
+				echo '<tr class="striped_row">
 						<td></td>
 						<td></td>
-						<td class = "number">' . $CodeLink . '</td>
+						<td class="number">' . $CodeLink . '</td>
 						<td>' . ConvertSQLDate($myPOs['orddate']) . '</td>
 						<td>' . ConvertSQLDate($myPOs['deliverydate']) . '</td>
-						<td class = "number">' . locale_number_format($myPOs['ordervalue'],$mySupplier['decimalplaces']) . ' ' . $mySupplier['currcode'] . '</td>
-						<td class = "number">' . locale_number_format($OrderValueFuntionalCurrency,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-						<td class = "number"></td>
-						<td class = "number"></td>
-						<td class = "number"></td>
+						<td class="number">' . locale_number_format($myPOs['ordervalue'],$mySupplier['decimalplaces']) . ' ' . $mySupplier['currcode'] . '</td>
+						<td class="number">' . locale_number_format($OrderValueFuntionalCurrency,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class="number"></td>
+						<td class="number"></td>
+						<td class="number"></td>
 					</tr>';
 			}
 			$PendingSupplierOwnCurrency = $TotalSupplierOwnCurrency + $mySupplier['balance'];
 			$PendingSupplierFunctionalCurrency = $PendingSupplierOwnCurrency / $mySupplier['rate'];
 			$TotalValueOrders += $TotalSupplierFunctionalCurrency;
 			$TotalValuePending += $PendingSupplierFunctionalCurrency;
-			echo '<tr class = "striped_row">
+			echo '<tr class="striped_row">
 					<td></td>
 					<td></td>
-					<td class = "number"></td>
+					<td class="number"></td>
 					<td></td>
 					<td>' . __('Total Supplier') . '</td>
-					<td class = "number">' . locale_number_format($TotalSupplierOwnCurrency,$mySupplier['decimalplaces']) . ' ' . $mySupplier['currcode'] . '</td>
-					<td class = "number">' . locale_number_format($TotalSupplierFunctionalCurrency,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-					<td class = "number">' . locale_number_format($mySupplier['balance'],$mySupplier['decimalplaces']) . ' ' . $mySupplier['currcode'] . '</td>
-					<td class = "number">' . locale_number_format($PendingSupplierOwnCurrency,$mySupplier['decimalplaces']) . ' ' . $mySupplier['currcode'] . '</td>
-					<td class = "number">' . locale_number_format($PendingSupplierFunctionalCurrency,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($TotalSupplierOwnCurrency,$mySupplier['decimalplaces']) . ' ' . $mySupplier['currcode'] . '</td>
+					<td class="number">' . locale_number_format($TotalSupplierFunctionalCurrency,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($mySupplier['balance'],$mySupplier['decimalplaces']) . ' ' . $mySupplier['currcode'] . '</td>
+					<td class="number">' . locale_number_format($PendingSupplierOwnCurrency,$mySupplier['decimalplaces']) . ' ' . $mySupplier['currcode'] . '</td>
+					<td class="number">' . locale_number_format($PendingSupplierFunctionalCurrency,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				</tr>
 				</tbody>';
 		}
@@ -164,14 +164,14 @@ function submit($Country, $Currency, $RootPath, $Title) {
 		echo '<tr>
 				<td></td>
 				<td></td>
-				<td class = "number"></td>
+				<td class="number"></td>
 				<td></td>
 				<td></td>
-				<td class = "number">' . __('Total All Suppliers') . '</td>
-				<td class = "number">' . locale_number_format($TotalValueOrders,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td class = "number">' . locale_number_format($TotalValueOrders-$TotalValuePending,$_SESSION['CompanyRecord']['decimalplaces']) . ' ' . $_SESSION['CompanyRecord']['currencydefault'] . '</td>
-				<td class = "number"></td>
-				<td class = "number">' . locale_number_format($TotalValuePending,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . __('Total All Suppliers') . '</td>
+				<td class="number">' . locale_number_format($TotalValueOrders,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($TotalValueOrders-$TotalValuePending,$_SESSION['CompanyRecord']['decimalplaces']) . ' ' . $_SESSION['CompanyRecord']['currencydefault'] . '</td>
+				<td class="number"></td>
+				<td class="number">' . locale_number_format($TotalValuePending,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			</tr>
 			</tfooter>
 			</table>
@@ -190,16 +190,16 @@ function display($Title)
           <div>
 			<br/>
 			<br/>';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 
-	echo '<p class = "page_title_text" align = "center"><strong>' . $Title . '</strong></p>';
+	echo '<p class="page_title_text" align = "center"><strong>' . $Title . '</strong></p>';
 
 	echo '<fieldset>
           <legend>' . "Financial Planning Options" . '</legend>';
 
 	echo '<field>
 			<label for = "Country">' .  __('For Suppliers in Country')  . ':</label>
-			<select name = "Country">';
+			<select name="Country">';
 	$SQL = "SELECT DISTINCT(address6) as country
 			FROM suppliers
 			ORDER BY address6";
@@ -213,7 +213,7 @@ function display($Title)
 
 	echo '<field>
 			<label for = "Currency">' .  __('Using Currency')  . ':</label>
-			<select name = "Currency">';
+			<select name="Currency">';
 	$SQL = "SELECT currabrev,
 				currency
 			FROM currencies
@@ -226,7 +226,7 @@ function display($Title)
 	echo '</select>
 		</field>
 		</fieldset>';
-	echo '<div class = "centre"><input type = "submit" name = "submit" value = "' . __('Show POs financial status') . '" />
+	echo '<div class="centre"><input type = "submit" name="submit" value = "' . __('Show POs financial status') . '" />
 		</div>
 		</form>';
 

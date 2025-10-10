@@ -1,6 +1,6 @@
 <?php
 
-/* Functions as described in https://www.weberp.org/forum/showthread.php?tid = 171 */
+/* Functions as described in https://www.weberp.org/forum/showthread.php?tid=171 */
 
 require(__DIR__ . '/includes/session.php');
 
@@ -9,7 +9,7 @@ $ViewTopic = 'Inventory';
 $BookMark = 'InventoryRequests';
 include('includes/header.php');
 
-echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title = "' . __('Payment Entry')
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . __('Payment Entry')
 	. '" alt = "" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['SelectedType'])){
@@ -106,13 +106,13 @@ if (isset($_POST['submit'])) {
 if (!isset($SelectedRole)){
 
 	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 	echo '<fieldset>
 			<legend>', __('Select a User Role'), '</legend>'; //Main table
 
 	echo '<field>
 			<label for = "SelectedRole">' . __('Select User Role') . ':</label>
-			<select name = "SelectedRole">';
+			<select name="SelectedRole">';
 
 	$SQL = "SELECT secroleid,
 					secrolename
@@ -136,9 +136,9 @@ if (!isset($SelectedRole)){
    	echo '</Fieldset>'; // close main table
     DB_free_result($Result);
 
-	echo '<div class = "centre">
-			<input type = "submit" name = "Process" value = "' . __('Accept') . '" />
-			<input type = "reset" name = "Cancel" value = "' . __('Cancel') . '" />
+	echo '<div class="centre">
+			<input type = "submit" name="Process" value = "' . __('Accept') . '" />
+			<input type = "reset" name="Cancel" value = "' . __('Cancel') . '" />
 		</div>';
 
 	echo '</form>';
@@ -149,9 +149,9 @@ if (!isset($SelectedRole)){
 if (isset($_POST['process'])or isset($SelectedRole)) {
 
 	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 
-	echo '<input type = "hidden" name = "SelectedRole" value = "' . $SelectedRole . '" />';
+	echo '<input type = "hidden" name="SelectedRole" value = "' . $SelectedRole . '" />';
 
 	$SQL = "SELECT internalstockcatrole.categoryid,
 					stockcategory.categorydescription
@@ -162,7 +162,7 @@ if (isset($_POST['process'])or isset($SelectedRole)) {
 
 	$Result = DB_query($SQL);
 
-	echo '<table class = "selection">';
+	echo '<table class="selection">';
 	echo '<tr><th colspan = "3">' . __('Internal Stock Categories Allowed to user role') . ' ' .$SelectedRole. '</th></tr>';
 	echo '<tr>
 			<th>' . __('Category Code') . '</th>
@@ -172,10 +172,10 @@ if (isset($_POST['process'])or isset($SelectedRole)) {
 
 while ($MyRow = DB_fetch_array($Result)) {
 
-	echo '<tr class = "striped_row">
+	echo '<tr class="striped_row">
 			<td>', $MyRow['categoryid'], '</td>
 			<td>', $MyRow['categorydescription'], '</td>
-			<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedType = ', $MyRow['categoryid'], '&amp;delete = yes&amp;SelectedRole = ' . $SelectedRole . '" onclick = "return confirm(\'' . __('Are you sure you wish to delete this internal stock category code?') . '\');">' . __('Delete') . '</a></td>
+			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedType=', $MyRow['categoryid'], '&amp;delete=yes&amp;SelectedRole=' . $SelectedRole . '" onclick="return confirm(\'' . __('Are you sure you wish to delete this internal stock category code?') . '\');">' . __('Delete') . '</a></td>
 			</tr>';
 	}
 	//END while LIST LOOP
@@ -189,7 +189,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 
 		echo '<field>
 				<label for = "SelectedCategory">' . __('Select Stock Category Code') . ':</label>
-				<select name = "SelectedCategory">';
+				<select name="SelectedCategory">';
 
 		$SQL = "SELECT categoryid,
 						categorydescription
@@ -215,9 +215,9 @@ while ($MyRow = DB_fetch_array($Result)) {
 	   	echo '</fieldset>'; // close main table
         DB_free_result($Result);
 
-		echo '<div class = "centre">
-				<input type = "submit" name = "submit" value = "' . __('Accept') . '" />
-				<input type = "reset" name = "Cancel" value = "' . __('Cancel') . '" />
+		echo '<div class="centre">
+				<input type = "submit" name="submit" value = "' . __('Accept') . '" />
+				<input type = "reset" name="Cancel" value = "' . __('Cancel') . '" />
 			</div>';
 
 		echo '</form>';

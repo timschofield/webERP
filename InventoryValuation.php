@@ -64,7 +64,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['Spreadsheet']) or isset($_POST['V
 		$Title = __('Print Inventory Valuation Error');
 		include('includes/header.php');
 		prnMsg(__('There were no items with any value to print out for the location specified'),'info');
-		echo '<br /><a href = "' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 		include('includes/footer.php');
 		exit();
 	}
@@ -82,7 +82,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['Spreadsheet']) or isset($_POST['V
 				<meta name = "Creator" content = "webERP https://www.weberp.org">
 				</head>
 				<body>
-					<div class = "centre" id = "ReportHeader">
+					<div class="centre" id="ReportHeader">
 						' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 						' . __('Inventory Valuation Report') . '<br />
 						' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
@@ -104,7 +104,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['Spreadsheet']) or isset($_POST['V
 				<meta name = "Creator" content = "webERP https://www.weberp.org">
 				</head>
 				<body>
-					<div class = "centre" id = "ReportHeader">
+					<div class="centre" id="ReportHeader">
 						' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 						' . __('Inventory Valuation Report') . '<br />
 						' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
@@ -131,7 +131,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['Spreadsheet']) or isset($_POST['V
 	if ($Category != ''){ /*Then it's not the first time round */
 
 				/* need to print the total of previous category */
-				$HTML .= '<tr class = "total_row">';
+				$HTML .= '<tr class="total_row">';
 				$DisplayCatTotQty = locale_number_format($CatTot_Qty,2);
 				$DisplayCatTotVal = locale_number_format($CatTot_Val,$_SESSION['CompanyRecord']['decimalplaces']);
 				if ($_POST['DetailedReport']=='Yes'){
@@ -139,18 +139,18 @@ if (isset($_POST['PrintPDF']) or isset($_POST['Spreadsheet']) or isset($_POST['V
 					/* need to print the total of previous category */
 					$DisplayCatTotVal = locale_number_format($CatTot_Val, 2);
 					$HTML .= '<td colspan = "2">' . __('Total for') . ' ' . $Category . " - " . $CategoryName . '</td>
-								<td class = "number">' . $DisplayCatTotQty . '</td>
+								<td class="number">' . $DisplayCatTotQty . '</td>
 								<td></td>';
 
 					$CatTot_Qty = 0;
 					$CatTot_Val = 0;
 					$HTML .= '<td></td>
-								<td class = "number">' . $DisplayCatTotVal . '</td>
+								<td class="number">' . $DisplayCatTotVal . '</td>
 							</tr>';
 } else {
 					$HTML .= '<td>' .  $Category . " - " . $CategoryName . '</td>
-							<td class = "number">' . $DisplayCatTotQty . '</td>
-							<td class = "number">' . $DisplayCatTotVal . '</td>
+							<td class="number">' . $DisplayCatTotQty . '</td>
+							<td class="number">' . $DisplayCatTotVal . '</td>
 							</tr>';
 				}
 
@@ -170,13 +170,13 @@ if (isset($_POST['PrintPDF']) or isset($_POST['Spreadsheet']) or isset($_POST['V
 			$DisplayQtyOnHand = locale_number_format($InventoryValn['qtyonhand'],$InventoryValn['decimalplaces']);
 			$DisplayItemTotal = locale_number_format($InventoryValn['itemtotal'],$_SESSION['CompanyRecord']['decimalplaces']);
 
-			$HTML .= '<tr class = "striped_row">
+			$HTML .= '<tr class="striped_row">
 						<td>' . $InventoryValn['stockid'] . '</td>
 						<td>' . $InventoryValn['description'] . '</td>
-						<td class = "number">' . $DisplayQtyOnHand . '</td>
-						<td class = "number">' . $DisplayUnitCost . '</td>
-						<td class = "number">' . $InventoryValn['units'] . '</td>
-						<td class = "number">' . $DisplayItemTotal . '</td>
+						<td class="number">' . $DisplayQtyOnHand . '</td>
+						<td class="number">' . $DisplayUnitCost . '</td>
+						<td class="number">' . $InventoryValn['units'] . '</td>
+						<td class="number">' . $DisplayItemTotal . '</td>
 					</tr>';
 }
 		$Tot_Val += $InventoryValn['itemtotal'];
@@ -189,47 +189,47 @@ if (isset($_POST['PrintPDF']) or isset($_POST['Spreadsheet']) or isset($_POST['V
 	$DisplayCatTotVal = locale_number_format($CatTot_Val,$_SESSION['CompanyRecord']['decimalplaces']);
 	$DisplayCatTotQty = locale_number_format($CatTot_Qty,2);
 
-	$HTML .= '<tr class = "total_row">';
+	$HTML .= '<tr class="total_row">';
 	if ($_POST['DetailedReport']=='Yes') {
 	$HTML .= '<td colspan = "2">' . __('Total for') . ' ' . $Category . ' - ' . $CategoryName . '</td>';
-		$HTML .= '<td class = "number">' . $DisplayCatTotQty . '</td>
+		$HTML .= '<td class="number">' . $DisplayCatTotQty . '</td>
 					<td colspan = "2"></td>
-					<td class = "number">' . $DisplayCatTotVal . '</td>
+					<td class="number">' . $DisplayCatTotVal . '</td>
 				</tr>';
 } else {
 		$HTML .= '<td>' .  $Category . " - " . $CategoryName . '</td>
-				<td class = "number">' . $DisplayCatTotQty . '</td>
-				<td class = "number">' . $DisplayCatTotVal . '</td>
+				<td class="number">' . $DisplayCatTotQty . '</td>
+				<td class="number">' . $DisplayCatTotVal . '</td>
 			</tr>';
 	}
 
 /*Print out the grand totals */
 	$DisplayTotalVal = locale_number_format($Tot_Val,$_SESSION['CompanyRecord']['decimalplaces']);
 	if ($_POST['DetailedReport']=='Yes') {
-	$HTML .= '<tr class = "total_row">
-					<td class = "number" colspan = "5">' . __('Grand Total Value') . '</td>
-					<td class = "number">' . $DisplayTotalVal . '</td>
+	$HTML .= '<tr class="total_row">
+					<td class="number" colspan = "5">' . __('Grand Total Value') . '</td>
+					<td class="number">' . $DisplayTotalVal . '</td>
 				</tr>';
 } else {
-		$HTML .= '<tr class = "total_row">
-					<td class = "number" colspan = "2">' . __('Grand Total Value') . '</td>
-					<td class = "number">' . $DisplayTotalVal . '</td>
+		$HTML .= '<tr class="total_row">
+					<td class="number" colspan = "2">' . __('Grand Total Value') . '</td>
+					<td class="number">' . $DisplayTotalVal . '</td>
 				</tr>';
 	}
 
 	if (isset($_POST['PrintPDF']) or isset($_POST['Email'])) {
 		$HTML .= '</tbody>
-				<div class = "footer fixed-section">
-					<div class = "right">
-						<span class = "page-number">Page </span>
+				<div class="footer fixed-section">
+					<div class="right">
+						<span class="page-number">Page </span>
 					</div>
 				</div>
 			</table>';
 	} else {
 		$HTML .= '</tbody>
 				</table>
-				<div class = "centre">
-					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" /></form>
+				<div class="centre">
+					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -264,7 +264,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['Spreadsheet']) or isset($_POST['V
 	} else {
 		$Title = __('Inventory Valuation Report');
 		include('includes/header.php');
-		echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title = "' . __('Inventory') . '" alt = "" />' . ' ' . $Title . '</p>';
+		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
 		echo $HTML;
 		include('includes/footer.php');
 	}
@@ -276,11 +276,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['Spreadsheet']) or isset($_POST['V
 	$BookMark = 'InventoryValuation';
 	include('includes/header.php');
 
-	echo '<p class = "page_title_text">
-			<img src = "'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title = "' . __('Inventory') . '" alt = "" />' . ' ' . $Title . '
+	echo '<p class="page_title_text">
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Inventory') . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
-	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post" target = "_blank">
+	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post" target="_blank">
 		<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 		echo '<fieldset>
@@ -329,10 +329,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['Spreadsheet']) or isset($_POST['V
 			</select>
 		</field>
 		</fieldset>
-		<div class = "centre">
-				<input type = "submit" name = "PrintPDF" title = "Produce PDF Report" value = "' . __('Print PDF') . '" />
-				<input type = "submit" name = "View" title = "View Report" value = "' . __('View') . '" />
-				<input type = "submit" name = "Spreadsheet" title = "Spreadsheet" value = "' . __('Spreadsheet') . '" />
+		<div class="centre">
+				<input type = "submit" name = "PrintPDF" title="Produce PDF Report" value = "' . __('Print PDF') . '" />
+				<input type = "submit" name = "View" title="View Report" value = "' . __('View') . '" />
+				<input type = "submit" name = "Spreadsheet" title="Spreadsheet" value = "' . __('Spreadsheet') . '" />
 		</div>';
 	echo '</form>';
 

@@ -9,8 +9,8 @@ $ViewTopic = 'GeneralLedger';
 $BookMark = 'UserBankAccounts';
 include('includes/header.php');
 
-echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme,
-	'/images/money_add.png" title = "',// Icon image.
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/money_add.png" title="',// Icon image.
 	__('User Authorised Bank Accounts'), '" /> ',// Icon title.
 	__('Bank Account Users'), '</p>';// Page title.
 
@@ -96,12 +96,12 @@ if (!isset($SelectedUser)) {
 	/* It could still be the second time the page has been run and a record has been selected for modification - SelectedBankAccount will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters
 	then none of the above are true. These will call the same page again and allow update/input or deletion of the records*/
 	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />
+	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />
 			<fieldset>
 			<legend>', __('User Selection'), '</legend>
 			<field>
 				<label for = "SelectedUser">' . __('Select User') . ':</label>
-				<select name = "SelectedUser">';
+				<select name="SelectedUser">';
 
 	$Result = DB_query("SELECT userid,
 								realname
@@ -125,9 +125,9 @@ if (!isset($SelectedUser)) {
 	echo '</fieldset>'; // close main table
 	DB_free_result($Result);
 
-	echo '<div class = "centre">
-			<input type = "submit" name = "Process" value = "' . __('Accept') . '" />
-			<input type = "reset" name = "Cancel" value = "' . __('Cancel') . '" />
+	echo '<div class="centre">
+			<input type = "submit" name="Process" value = "' . __('Accept') . '" />
+			<input type = "reset" name="Cancel" value = "' . __('Cancel') . '" />
 		</div>';
 
 	echo '</form>';
@@ -144,8 +144,8 @@ if (isset($_POST['process']) or isset($SelectedUser)) {
 	$SelectedUserName = $MyRow['realname'];
 
 	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">
-		<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />
-		<input type = "hidden" name = "SelectedUser" value = "' . $SelectedUser . '" />';
+		<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />
+		<input type = "hidden" name="SelectedUser" value = "' . $SelectedUser . '" />';
 
 	$SQL = "SELECT bankaccountusers.accountcode,
 					bankaccounts.bankaccountname
@@ -156,14 +156,14 @@ if (isset($_POST['process']) or isset($SelectedUser)) {
 
 	$Result = DB_query($SQL);
 
-	echo '<table class = "selection">';
+	echo '<table class="selection">';
 	echo '<thead>
 			<tr>
 				<th colspan = "6">' . __('Authorised bank accounts for User') . ': ' . $SelectedUserName . '</th>
 			</tr>';
 	echo '<tr>
-				<th class = "SortedColumn">' . __('Code') . '</th>
-				<th class = "SortedColumn">' . __('Name') . '</th>
+				<th class="SortedColumn">' . __('Code') . '</th>
+				<th class="SortedColumn">' . __('Name') . '</th>
 				<th></th>
 			</tr>
 		</thead>';
@@ -171,10 +171,10 @@ if (isset($_POST['process']) or isset($SelectedUser)) {
 	echo '<tbody>';
 	while ($MyRow = DB_fetch_array($Result)) {
 
-		echo '<tr class = "striped_row">
+		echo '<tr class="striped_row">
 				<td>', $MyRow['accountcode'], '</td>
 				<td>', $MyRow['bankaccountname'], '</td>
-				<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedBankAccount = ', $MyRow['accountcode'], '&amp;delete = yes&amp;SelectedUser = ' . $SelectedUser . '" onclick = "return confirm(\'' . __('Are you sure you wish to un-authorise this bank account?') . '\');">' . __('Un-authorise') . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedBankAccount=', $MyRow['accountcode'], '&amp;delete=yes&amp;SelectedUser=' . $SelectedUser . '" onclick="return confirm(\'' . __('Are you sure you wish to un-authorise this bank account?') . '\');">' . __('Un-authorise') . '</a></td>
 			</tr>';
 	}
 	//END while LIST LOOP
@@ -189,7 +189,7 @@ if (isset($_POST['process']) or isset($SelectedUser)) {
 
 		echo '<field>
 				<label for = "SelectedBankAccount">' . __('Select Bank Account') . ':</label>
-				<select name = "SelectedBankAccount">';
+				<select name="SelectedBankAccount">';
 
 		$Result = DB_query("SELECT
 								accountcode,
@@ -208,7 +208,7 @@ if (isset($_POST['process']) or isset($SelectedUser)) {
 		while ($MyRow = DB_fetch_array($Result)) {
 			// Lists bank accounts order by bankaccountname
 			echo '<option',
-				((isset($_POST['SelectedBankAccount']) and $MyRow['accountcode'] == $_POST['SelectedBankAccount']) ? ' selected = "selected"' : '' ),
+				((isset($_POST['SelectedBankAccount']) and $MyRow['accountcode'] == $_POST['SelectedBankAccount']) ? ' selected ="selected"' : '' ),
 				' value = "', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', $MyRow['bankaccountname'], ' - ', $MyRow['currcode'], '</option>';
 		}// End while loop
 
@@ -217,9 +217,9 @@ if (isset($_POST['process']) or isset($SelectedUser)) {
 			</fieldset>'; // close main table
 		DB_free_result($Result);
 
-		echo '<div class = "centre">
-				<input type = "submit" name = "submit" value = "' . __('Accept') . '" />
-				<input type = "reset" name = "Cancel" value = "' . __('Cancel') . '" />
+		echo '<div class="centre">
+				<input type = "submit" name="submit" value = "' . __('Accept') . '" />
+				<input type = "reset" name="Cancel" value = "' . __('Cancel') . '" />
 			</div>
 			</form>';
 

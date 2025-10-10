@@ -7,14 +7,14 @@ $ViewTopic = "SpecialUtilities";
 $BookMark = "Z_poEditLangModule";
 include('includes/header.php');
 
-echo '<p class = "page_title_text"><img alt = "" src = "' . $RootPath . '/css/' . $Theme .
-		'/images/maintenance.png" title = "' .
+echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
+		'/images/maintenance.png" title="' .
 		__('Edit a Language File Module') . '" />' . ' ' .
 		__('Edit a Language File Module') . '</p>';
 
 /* Your webserver user MUST have read/write access to here,	otherwise you'll be wasting your time */
 
-echo '<br />&nbsp;<a href = "' . $RootPath . '/Z_poAdmin.php">' . __('Back to the translation menu') . '</a>';
+echo '<br />&nbsp;<a href="' . $RootPath . '/Z_poAdmin.php">' . __('Back to the translation menu') . '</a>';
 echo '<br /><br />&nbsp;' . __('Utility to edit a language file module');
 echo '<br />&nbsp;' . __('Current language is') . ' ' . $_SESSION['Language'];
 echo '<br /><br />&nbsp;' . __('To change language click on the user name at the top left, change to language desired and click Modify');
@@ -130,7 +130,7 @@ if (isset($_POST['module'])) {
 /* stick it on the screen */
 
     echo '<br />&nbsp;' . __('When finished modifying you must click on Modify at the bottom in order to save changes');
-		echo '<div class = "centre">';
+		echo '<div class="centre">';
 		echo '<br />';
 		prnMsg(__('Your existing translation file (messages.po) will be saved as messages.po.old') . '<br />', 'info', __('PLEASE NOTE'));
 		echo '<br />';
@@ -178,7 +178,7 @@ if (isset($_POST['module'])) {
 
 		echo '</td></tr>';
 		echo '</table>';
-		echo '<br /><div class = "centre">';
+		echo '<br /><div class="centre">';
 		echo '<input type = "submit" name = "submit" value = "' . __('Modify') . '" />&nbsp;&nbsp;';
 		echo '<input type = "hidden" name = "module" value = "' . $_POST['module'] . '" />';
 
@@ -242,7 +242,7 @@ else
 
 	echo '</tr></table>';
 	echo '<br />';
-	echo '<div class = "centre">
+	echo '<div class="centre">
 			<input type = "submit" name = "proceed" value = "' . __('Proceed') . '" />&nbsp;&nbsp;
 			<br />
 			<br />

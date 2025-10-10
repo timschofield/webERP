@@ -11,7 +11,7 @@ include('includes/SQL_CommonFunctions.php');
 include('includes/GLFunctions.php');
 
 echo '<p class = "page_title_text" >
-		<img src = "', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title = "', $Title, '" alt = "" />', ' ', $Title, '
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', $Title, '" alt="" />', ' ', $Title, '
 	</p>';
 
 if (isset($_POST['Add'])) {

@@ -9,7 +9,7 @@ $ViewTopic = 'GettingStarted';
 $BookMark = 'UserSettings';
 include('includes/header.php');
 
-echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme,
+echo '<p class = "page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/user.png" title = "', // Icon image.
 	$Title, '" /> ', // Icon title.
 	$Title, '</p>'; // Page title.
@@ -186,13 +186,13 @@ echo '</select>
 
 echo '<field>
 		<label for = "Password">', __('New Password'), ':</label>
-		<input name = "Password" pattern = "(?!^', $_SESSION['UserID'], '$).{5,}" placeholder = "', __('More than 5 characters'), '" size = "20" title = "', __('Must be more than 5 characters and cannot be as same as userid'), '" type = "password" value = "', $_POST['Password'], '" />
+		<input name = "Password" pattern = "(?!^', $_SESSION['UserID'], '$).{5,}" placeholder ="', __('More than 5 characters'), '" size = "20" title = "', __('Must be more than 5 characters and cannot be as same as userid'), '" type = "password" value = "', $_POST['Password'], '" />
 		<fieldhelp>', __('If you leave the password boxes empty your password will not change'), '</fieldhelp>
 	</field>';
 
 echo '<field>
 		<label for = "PasswordCheck">', __('Confirm Password'), ':</label>
-		<input name = "PasswordCheck" pattern = "(?!^', $_SESSION['UserID'], '$).{5,}" placeholder = "', __('More than 5 characters'), '" size = "20" title = "', __('Must be more than 5 characters and cannot be as same as userid'), '" type = "password" value = "', $_POST['PasswordCheck'], '" />
+		<input name = "PasswordCheck" pattern = "(?!^', $_SESSION['UserID'], '$).{5,}" placeholder ="', __('More than 5 characters'), '" size = "20" title = "', __('Must be more than 5 characters and cannot be as same as userid'), '" type = "password" value = "', $_POST['PasswordCheck'], '" />
 		<fieldhelp>', __('Confirm the password you entered above'), '</fieldhelp>
 	</field>';
 

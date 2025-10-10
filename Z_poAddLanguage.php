@@ -19,14 +19,14 @@ $ViewTopic = "SpecialUtilities";
 $BookMark = "Z_poAddLanguage";// Anchor's id in the manual's html document.
 include('includes/header.php');
 
-echo '<p class = "page_title_text"><img alt = "" src = "' . $RootPath . '/css/' . $Theme .
-'/images/maintenance.png" title = "' .
+echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
+'/images/maintenance.png" title="' .
 __('Add a New Language to the System') . '" />' . ' ' .
 __('Add a New Language to the System') . '</p>';
 
 /* Your webserver user MUST have read/write access to here,	otherwise you'll be wasting your time */
 
-echo '<br />&nbsp;<a href = "' . $RootPath . '/Z_poAdmin.php">' . __('Back to the translation menu') . '</a>';
+echo '<br />&nbsp;<a href="' . $RootPath . '/Z_poAdmin.php">' . __('Back to the translation menu') . '</a>';
 echo '<br /><br />&nbsp;' . __('Utility to create a new language file');
 echo '<br />&nbsp;' . __('Current language is') . ' ' . $_SESSION['Language'];
 
@@ -46,7 +46,7 @@ if (isset($_POST['submit']) and isset($_POST['NewLanguage'])) {
 
 		$_POST['NewLanguage'] = mb_substr($_POST['NewLanguage'],0,3) . mb_strtoupper(mb_substr($_POST['NewLanguage'],3,2));
 
-		echo '<div class = "centre">';
+		echo '<div class="centre">';
 		echo '<br />';
 		echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 		echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
@@ -80,7 +80,7 @@ if (isset($_POST['submit']) and isset($_POST['NewLanguage'])) {
 }
 
 
-echo '<div class = "centre">';
+echo '<div class="centre">';
 echo '<br />';
 prnMsg(__('This utility will create a new language and a new language translation file for it from the system default') . '<br /><br />' .
 __('If the language already exists then you cannot recreate it'), 'info', __('PLEASE NOTE'));

@@ -3,7 +3,7 @@
 /* need to allow this script to run from Cron or windows scheduler */
 //$AllowAnyone = true;
 
-/* Get this puppy to run from cron (cd webERP && php -f RecurringSalesOrdersProcess.php "weberpdemo") or direct URL (RecurringSalesOrdersProcess.php?Database = weberpdemo) */
+/* Get this puppy to run from cron (cd webERP && php -f RecurringSalesOrdersProcess.php "weberpdemo") or direct URL (RecurringSalesOrdersProcess.php?Database =weberpdemo) */
 if (isset($_GET['Database'])) {
 	/// @todo make this safer, by eg. defining a whitelist of accessible databases...
 	$_SESSION['DatabaseName'] = $_GET['Database'];

@@ -11,9 +11,9 @@ function stripcomma($str) { //because we're using comma as a delimiter
 	return str_replace(',', '', $str);
 }
 
-echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title = "' . __('Inventory') .'" alt = "" /><b>' . $Title. '</b></p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Inventory') .'" alt="" /><b>' . $Title. '</b></p>';
 
-echo '<div class = "centre">' . __('Making a comma separated values file of the current stock quantities') . '</div>';
+echo '<div class="centre">' . __('Making a comma separated values file of the current stock quantities') . '</div>';
 
 $ErrMsg = __('The SQL to get the stock quantities failed with the message');
 
@@ -45,6 +45,6 @@ while ($MyRow = DB_fetch_row($Result)){
 
 fclose($fp);
 
-echo '<br /><div class = "centre"><a href = "' . $RootPath . '/' . $_SESSION['reports_dir'] . '/StockQties.csv ">' . __('click here') . '</a> ' . __('to view the file') . '</div>';
+echo '<br /><div class="centre"><a href="' . $RootPath . '/' . $_SESSION['reports_dir'] . '/StockQties.csv ">' . __('click here') . '</a> ' . __('to view the file') . '</div>';
 
 include('includes/footer.php');

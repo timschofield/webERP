@@ -11,7 +11,7 @@ $ViewTopic = 'Shipments';
 $BookMark = '';
 include('includes/header.php');
 
-echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title = "' .
+echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' .
 __('Supplier') . '" alt = "" />' . ' ' . __('Open Shipments for').' ' . $_GET['SupplierName']. '.</p>';
 
 if (!isset($_GET['SupplierID']) or !isset($_GET['SupplierName'])){
@@ -36,7 +36,7 @@ if (DB_num_rows($ShiptsResult) == 0){
 }
 /*show a table of the shipments returned by the SQL */
 
-echo '<table cellpadding = "2" class = "selection">';
+echo '<table cellpadding = "2" class="selection">';
 echo '<tr>
 <th>' .  __('Reference'). '</th>
 <th>' .  __('Vessel'). '</th>
@@ -46,8 +46,8 @@ $j = 1;
 
 while ($MyRow = DB_fetch_array($ShiptsResult)) {
 
-	echo '<tr class = "striped_row">
-	<td><a href = "'.$RootPath.'/Shipments.php?SelectedShipment = '.$MyRow['shiptref'].'">' . $MyRow['shiptref'] . '</a></td>
+	echo '<tr class="striped_row">
+	<td><a href="'.$RootPath.'/Shipments.php?SelectedShipment='.$MyRow['shiptref'].'">' . $MyRow['shiptref'] . '</a></td>
 	<td>' . $MyRow['vessel'] . '</td>
 	<td>' . ConvertSQLDate($MyRow['eta']) . '</td>
 	</tr>';

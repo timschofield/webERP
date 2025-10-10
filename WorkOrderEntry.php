@@ -20,8 +20,8 @@ if (isset($_POST['RequiredBy'])) {
 	$_POST['RequiredBy'] = ConvertSQLDate($_POST['RequiredBy']);
 }
 
-echo '<p class = "page_title_text">
-		<img src = "', $RootPath, '/css/', $_SESSION['Theme'], '/images/transactions.png" title = "', __('Search'), '" alt = "" />', ' ', $Title, '
+echo '<p class="page_title_text">
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/transactions.png" title="', __('Search'), '" alt="" />', ' ', $Title, '
 	</p>';
 
 /*unique session identifier to ensure that there is no conflict with other order entry sessions on the same machine  */
@@ -79,7 +79,7 @@ if (isset($_POST['AddToOrder'])) {
 
 	if (is_null($LocRow['loccode']) or $LocRow['loccode'] == '') {
 		prnMsg(__('Your security settings do not allow you to create or update new Work Order at this location') . ' ' . $_SESSION['WorkOrder' . $Identifier]->LocationCode, 'error');
-		echo '<br /><a href = "' . $RootPath . '/SelectWorkOrder.php">' . __('Select an existing work order') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/SelectWorkOrder.php">' . __('Select an existing work order') . '</a>';
 		include('includes/footer.php');
 		exit();
 	}
@@ -273,7 +273,7 @@ if (isset($_POST['delete'])) {
 		DB_Txn_Commit();
 		prnMsg(__('The work order has been cancelled'), 'success');
 
-		echo '<p><a href = "' . $RootPath . '/SelectWorkOrder.php">' . __('Select an existing outstanding work order') . '</a></p>';
+		echo '<p><a href="' . $RootPath . '/SelectWorkOrder.php">' . __('Select an existing outstanding work order') . '</a></p>';
 		unset($_POST['WO']);
 		for ($i = 1;  $i <= $_POST['NumberOfOutputs'];  $i++) {
 			unset($_POST['OutputItem' . $i]);
@@ -362,9 +362,9 @@ if (isset($_POST['WO']) and $_POST['WO'] != __('Not yet allocated')) {
 	}
 }
 
-echo '<form method = "post" action = "' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?identifier = ', urlencode($Identifier), '" name = "form1">';
-echo '<input type = "hidden" name = "FormID" value = "', $_SESSION['FormID'], '" />';
-echo '<input type = "hidden" name = "WO" value = "', $_SESSION['WorkOrder' . $Identifier]->OrderNumber, '" />';
+echo '<form method = "post" action = "' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?identifier=', urlencode($Identifier), '" name="form1">';
+echo '<input type = "hidden" name="FormID" value = "', $_SESSION['FormID'], '" />';
+echo '<input type = "hidden" name="WO" value = "', $_SESSION['WorkOrder' . $Identifier]->OrderNumber, '" />';
 
 echo '<fieldset>
 		<legend>', __('Work Order Header Information'), '</legend>';
@@ -372,18 +372,18 @@ echo '<fieldset>
 if ($_SESSION['WorkOrder' . $Identifier]->OrderNumber === 0) {
 	echo '<field>
 			<label for = "WO">', __('Work Order Reference'), ':</label>
-			<div class = "fieldtext">', __('Not Yet Allocated'), '</div>
+			<div class="fieldtext">', __('Not Yet Allocated'), '</div>
 		</field>';
 } else {
 	echo '<field>
 			<label for = "WO">', __('Work Order Reference'), ':</label>
-			<div class = "fieldtext">', $_SESSION['WorkOrder' . $Identifier]->OrderNumber, '</div>
+			<div class="fieldtext">', $_SESSION['WorkOrder' . $Identifier]->OrderNumber, '</div>
 		</field>';
 }
 
 echo '<field>
 		<label for = "StockLocation">', __('Factory Location'), ':</label>
-		<select name = "StockLocation" autofocus = "autofocus" onChange = "ReloadForm(form1.submit)">';
+		<select name="StockLocation" autofocus = "autofocus" onChange = "ReloadForm(form1.submit)">';
 $LocResult = DB_query("SELECT locations.loccode,locationname
 						FROM locations
 						INNER JOIN locationusers
@@ -403,32 +403,32 @@ echo '</select>
 
 echo '<field>
 		<label for = "StartDate">', __('Start Date'), ':</label>
-		<input name = "StartDate" size = "12" maxlength = "12" value = "', FormatDateForSQL($_SESSION['WorkOrder' . $Identifier]->StartDate), '" type = "date" />
+		<input name="StartDate" size = "12" maxlength = "12" value = "', FormatDateForSQL($_SESSION['WorkOrder' . $Identifier]->StartDate), '" type = "date" />
 		<fieldhelp>', __('The date manufacturing is planned to start.'), '</fieldhelp>
 	</field>';
 
 echo '<field>
 		<label for = "RequiredBy">', __('Required By'), ':</label>
-		<input name = "RequiredBy" size = "12" maxlength = "12" value = "', FormatDateForSQL($_SESSION['WorkOrder' . $Identifier]->RequiredBy), '" type = "date" />
+		<input name="RequiredBy" size = "12" maxlength = "12" value = "', FormatDateForSQL($_SESSION['WorkOrder' . $Identifier]->RequiredBy), '" type = "date" />
 		<fieldhelp>', __('The date manufacturing should be completed by.'), '</fieldhelp>
 	</field>';
 
 echo '<field>
 		<label for = "Reference">', __('Reference'), ':</label>
-		<input type = "text" name = "Reference"  value = "', $_SESSION['WorkOrder' . $Identifier]->Reference, '" size = "12" maxlength = "40" />
+		<input type = "text" name="Reference"  value = "', $_SESSION['WorkOrder' . $Identifier]->Reference, '" size = "12" maxlength = "40" />
 		<fieldhelp>', __('An internal reference for this work order.'), '</fieldhelp>
 	</field>';
 
 echo '<field>
 		<label for = "Remark">', __('Comments'), ':</label>
-		<textarea spellcheck = "true" name = "Remark" >', $_SESSION['WorkOrder' . $Identifier]->Remark, '</textarea>
+		<textarea spellcheck = "true" name="Remark" >', $_SESSION['WorkOrder' . $Identifier]->Remark, '</textarea>
 		<fieldhelp>', __('Any comments to appear on this work order.'), '</fieldhelp>
 	</field>';
 
 if (isset($WOItemsResult)) {
 	echo '<field>
 			<label>', __('Accumulated Costs'), ':</label>
-			<div class = "fieldtext">', locale_number_format($MyRow['costissued'], $_SESSION['CompanyRecord']['decimalplaces']), '</div>
+			<div class="fieldtext">', locale_number_format($MyRow['costissued'], $_SESSION['CompanyRecord']['decimalplaces']), '</div>
 		</field>';
 }
 echo '</fieldset>';
@@ -453,28 +453,28 @@ if (isset($_SESSION['WorkOrder' . $Identifier]->NumberOfItems) and $_SESSION['Wo
 							WHERE stockid = '" . $WorkOrderItem->StockId . "'";
 		$DescriptionResult = DB_query($DescriptionSQL);
 		$DescriptionRow = DB_fetch_array($DescriptionResult);
-		echo '<input type = "hidden" name = "OutputStockId', $i, '" value = "', $WorkOrderItem->StockId, '" />';
-		echo '<tr class = "striped_row">
+		echo '<input type = "hidden" name="OutputStockId', $i, '" value = "', $WorkOrderItem->StockId, '" />';
+		echo '<tr class="striped_row">
 				<td>', $WorkOrderItem->StockId, ' - ', $DescriptionRow['description'], '</td>
-				<td><textarea spellcheck = "true" style = "width:96%" rows = "2" cols = "50" name = "WOComments', $i, '" >', $WorkOrderItem->Comments, '</textarea></td>';
+				<td><textarea spellcheck = "true" style="width:96%" rows = "2" cols = "50" name="WOComments', $i, '" >', $WorkOrderItem->Comments, '</textarea></td>';
 
 		if ($WorkOrderItem->Controlled == 1 and $_SESSION['DefineControlledOnWOEntry'] == 1) {
-	echo '<td class = "number">', locale_number_format($WorkOrderItem->QuantityRequired, $WorkOrderItem->DecimalPlaces), '
-					<input type = "hidden" required = "required" class = "number" name = "OutputQty', $i, '" value = "', locale_number_format($WorkOrderItem->QuantityRequired, $WorkOrderItem->DecimalPlaces), '" size = "8" maxlength = "10" title = "', __('The input format must be positive numeric'), '" />
+	echo '<td class="number">', locale_number_format($WorkOrderItem->QuantityRequired, $WorkOrderItem->DecimalPlaces), '
+					<input type = "hidden" required = "required" class="number" name="OutputQty', $i, '" value = "', locale_number_format($WorkOrderItem->QuantityRequired, $WorkOrderItem->DecimalPlaces), '" size = "8" maxlength = "10" title="', __('The input format must be positive numeric'), '" />
 				</td>';
 } else {
-			echo '<td class = "number">
-					<input type = "text" required = "required" class = "number" name = "OutputQty', $i, '" value = "', locale_number_format($WorkOrderItem->QuantityRequired, $WorkOrderItem->DecimalPlaces), '" size = "8" maxlength = "10" title = "', __('The input format must be positive numeric'), '" />
+			echo '<td class="number">
+					<input type = "text" required = "required" class="number" name="OutputQty', $i, '" value = "', locale_number_format($WorkOrderItem->QuantityRequired, $WorkOrderItem->DecimalPlaces), '" size = "8" maxlength = "10" title="', __('The input format must be positive numeric'), '" />
 				</td>';
 		}
 
-		echo '<td class = "number">', locale_number_format($WorkOrderItem->QuantityReceived, $WorkOrderItem->DecimalPlaces), '</td>';
+		echo '<td class="number">', locale_number_format($WorkOrderItem->QuantityReceived, $WorkOrderItem->DecimalPlaces), '</td>';
 
-		echo '<td class = "number">', locale_number_format(($WorkOrderItem->QuantityRequired - $WorkOrderItem->QuantityReceived), $WorkOrderItem->DecimalPlaces), '</td>';
+		echo '<td class="number">', locale_number_format(($WorkOrderItem->QuantityRequired - $WorkOrderItem->QuantityReceived), $WorkOrderItem->DecimalPlaces), '</td>';
 
 		if (isset($_POST['Controlled' . $i]) and $_POST['Controlled' . $i] == 1) {
 			echo '<td>
-					<input type = "text" name = "NextLotSNRef', $i, '" value = "', $WorkOrderItem->NextLotSerialNumbers, '" />
+					<input type = "text" name="NextLotSNRef', $i, '" value = "', $WorkOrderItem->NextLotSerialNumbers, '" />
 				</td>';
 			if ($_SESSION['DefineControlledOnWOEntry'] == 1) {
 	if ($WorkOrderItem->Serialised == 1) {
@@ -483,7 +483,7 @@ if (isset($_SESSION['WorkOrder' . $Identifier]->NumberOfItems) and $_SESSION['Wo
 					$LotOrSN = __('Batches');
 				}
 				echo '<td>
-						<a href = "', $RootPath, '/WOSerialNos.php?WO = ', urlencode($_POST['WO']), '&StockID = ', urlencode($WorkOrderItem->StockId), '&Description = ', urlencode($DescriptionRow['description']), '&Serialised = ', urlencode($WorkOrderItem->Serialised), '&NextSerialNo = ', urlencode($WorkOrderItem->NextLotSerialNumbers), '">', $LotOrSN, '</a>
+						<a href="', $RootPath, '/WOSerialNos.php?WO=', urlencode($_POST['WO']), '&StockID=', urlencode($WorkOrderItem->StockId), '&Description=', urlencode($DescriptionRow['description']), '&Serialised=', urlencode($WorkOrderItem->Serialised), '&NextSerialNo=', urlencode($WorkOrderItem->NextLotSerialNumbers), '">', $LotOrSN, '</a>
 					</td>';
 			}
 		} else {
@@ -500,9 +500,9 @@ if (isset($_SESSION['WorkOrder' . $Identifier]->NumberOfItems) and $_SESSION['Wo
 	echo '</table>';
 }
 
-echo '<div class = "centre">
-		<input type = "submit" name = "Save" value = "', __('Save'), '" />
-		<input type = "submit" name = "delete" value = "', __('Cancel This Work Order'), '" />
+echo '<div class="centre">
+		<input type = "submit" name="Save" value = "', __('Save'), '" />
+		<input type = "submit" name="delete" value = "', __('Cancel This Work Order'), '" />
 	</div>';
 
 if (isset($_POST['Search']) or isset($_POST['Prev']) or isset($_POST['Next'])) {
@@ -581,11 +581,11 @@ if ($_SESSION['WorkOrder' . $Identifier]->OrderNumber != 0) {
 	$Result1 = DB_query($SQL);
 
 	echo '<fieldset>
-			<legend class = "search">', __('Select Stock Items'), '</legend>';
+			<legend class="search">', __('Select Stock Items'), '</legend>';
 
 	echo '<field>
 			<label for = "StockCat">', __('Select a stock category'), ':</label>
-			<select name = "StockCat">';
+			<select name="StockCat">';
 
 	if (!isset($_POST['StockCat'])) {
 		echo '<option selected = "selected" value = "All">', __('All'), '</option>';
@@ -617,18 +617,18 @@ if ($_SESSION['WorkOrder' . $Identifier]->OrderNumber != 0) {
 
 	echo '<field>
 			<label for = "Keywords">', __('Enter text extracts in the'), ' <b>', __('description'), '</b>:</label>
-			<input type = "text" name = "Keywords" size = "20" maxlength = "25" value = "', $_POST['Keywords'], '" />
+			<input type = "text" name="Keywords" size = "20" maxlength = "25" value = "', $_POST['Keywords'], '" />
 		</field>';
 
-	echo '<div style = "padding-bottom:8px;"><font size = "3"><b>', __('or'), ' </b></font></div>';
+	echo '<div style="padding-bottom:8px;"><font size = "3"><b>', __('or'), ' </b></font></div>';
 
 	echo '<field>
 			<label for = "StockCode">', __('Enter extract of the'), ' <b>', __('Stock Code'), '</b>:</label>
-			<input type = "text" name = "StockCode" autofocus = "autofocus" size = "15" maxlength = "18" value = "', $_POST['StockCode'], '" />
+			<input type = "text" name="StockCode" autofocus = "autofocus" size = "15" maxlength = "18" value = "', $_POST['StockCode'], '" />
 		</field>
 		</fieldset>
-		<div class = "centre">
-			<input type = "submit" name = "Search" value = "', __('Search Now'), '" />
+		<div class="centre">
+			<input type = "submit" name="Search" value = "', __('Search Now'), '" />
 		</div>';
 }
 
@@ -640,10 +640,10 @@ if (isset($SearchResult)) {
 
 		echo '<thead>
 				<tr>
-					<th class = "SortedColumn">', __('Code'), '</th>
-					<th class = "SortedColumn">', __('Description'), '</th>
+					<th class="SortedColumn">', __('Code'), '</th>
+					<th class="SortedColumn">', __('Description'), '</th>
 					<th>', __('Units'), '</th>
-					<th colspan = "2"><input type = "submit" name = "AddToOrder" value = "', __('Add to Work Order'), '" /></th>
+					<th colspan = "2"><input type = "submit" name="AddToOrder" value = "', __('Add to Work Order'), '" /></th>
 				</tr>
 			</thead>';
 		$j = 1;
@@ -663,13 +663,13 @@ if (isset($SearchResult)) {
 
 				$ImageSource = GetImageLink($ImageFile, $MyRow['stockid'], 100, 100, "", "");
 
-				echo '<tr class = "striped_row">
+				echo '<tr class="striped_row">
 						<td>', $MyRow['stockid'], '</td>
 						<td>', $MyRow['description'], '</td>
 						<td>', $MyRow['units'], '</td>
 						<td>', $ImageSource, '</td>
-						<input type = "hidden" value = "', $MyRow['stockid'], '" name = "StockID', $j, '"" />', '
-						<td><input type = "text" size = "10" class = "number" value = "0" name = "Quantity', $j, '" />', '</td>
+						<input type = "hidden" value = "', $MyRow['stockid'], '" name="StockID', $j, '"" />', '
+						<td><input type = "text" size = "10" class="number" value = "0" name="Quantity', $j, '" />', '</td>
 					</tr>';
 
 				++$j;

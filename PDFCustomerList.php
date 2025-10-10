@@ -230,7 +230,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	  $Title = __('Customer List') . ' - ' . __('Problem Report') . '....';
 	  include('includes/header.php');
 	  prnMsg( __('This report has no output because there were no customers retrieved'), 'error' );
-	  echo '<br /><a href = "' .$RootPath .'/index.php">' .  __('Back to the menu'). '</a>';
+	  echo '<br /><a href="' .$RootPath .'/index.php">' .  __('Back to the menu'). '</a>';
 	  include('includes/footer.php');
 	  exit();
 	}
@@ -293,7 +293,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		}
 	}
 
-	$HTML .= '<div class = "centre" id = "ReportHeader">
+	$HTML .= '<div class="centre" id="ReportHeader">
 				' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 				' . $Heading . '<br />
 				' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
@@ -348,7 +348,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		}
 
 		if ($PrintThisCustomer) {
-	$HTML .='<tr class = "striped_row">';
+	$HTML .='<tr class="striped_row">';
 			if ($Area != $Customers['area']) {
 				$HTML .= '<th colspan = "3">' . __('Customers in') . ' ' . $Customers['areadescription'] . '<br />';
 				$Area = $Customers['area'];
@@ -367,7 +367,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 }
 			}
 
-			$HTML .= '<tr class = "striped_row">
+			$HTML .= '<tr class="striped_row">
 						<td>' . $Customers['debtorno'] . '</td>
 						<td>' . $CustomerDetails . '</td>
 						<td>' . $Customers['branchcode'] . '<br />
@@ -400,17 +400,17 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	if (isset($_POST['PrintPDF'])) {
 		$HTML .= '</tbody>
-				<div class = "footer fixed-section">
-					<div class = "right">
-						<span class = "page-number">Page </span>
+				<div class="footer fixed-section">
+					<div class="right">
+						<span class="page-number">Page </span>
 					</div>
 				</div>
 			</table>';
 	} else {
 		$HTML .= '</tbody>
 				</table>
-				<div class = "centre">
-					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" /></form>
+				<div class="centre">
+					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -433,7 +433,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	} else {
 		$Title = __('Customer Details Listing');
 		include('includes/header.php');
-		echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/bank.png" title = "' . __('Receipts') . '" alt = "" />' . ' ' . __('Create PDF Customer Details Listing') . '</p>';
+		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/bank.png" title="' . __('Receipts') . '" alt="" />' . ' ' . __('Create PDF Customer Details Listing') . '</p>';
 		echo $HTML;
 		include('includes/footer.php');
 	}
@@ -442,10 +442,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	$Title = __('Customer Details Listing');
 	include('includes/header.php');
-	echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/customer.png" title = "' .
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' .
 		 $Title . '" alt = "" />' . ' ' . $Title . '</p>';
 
-	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post" target = "_blank">';
+	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post" target="_blank">';
 	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
     echo '<fieldset>
 			<legend>', __('Report Criteria'), '</legend>';
@@ -486,7 +486,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<option value = "LessThan">' .  __('Sales Less Than') . '</option>
 			</select>';
 
-	echo '<input type = "text" class = "number" name = "ActivityAmount" size = "8" maxlength = "8" value = "0" />
+	echo '<input type = "text" class="number" name = "ActivityAmount" size = "8" maxlength = "8" value = "0" />
 		</field>';
 
 	$DefaultActivitySince = date($_SESSION['DefaultDateFormat'], mktime(0,0,0,date('m')-6,0,date('y')));
@@ -496,9 +496,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		</field>';
 
 	echo '</fieldset>
-			<div class = "centre">
-				<input type = "submit" name = "PrintPDF" title = "PDF" value = "' . __('Print PDF') . '" />
-				<input type = "submit" name = "View" title = "View" value = "' . __('View') . '" />
+			<div class="centre">
+				<input type = "submit" name = "PrintPDF" title="PDF" value = "' . __('Print PDF') . '" />
+				<input type = "submit" name = "View" title="View" value = "' . __('View') . '" />
 			</div>';
     echo '</form>';
 

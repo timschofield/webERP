@@ -23,7 +23,7 @@ $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLAccounts';
 include('includes/header.php');
 
-echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/transactions.png" title = "', // Icon image.
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/transactions.png" title="', // Icon image.
 	$Title, '" /> ', // Icon title.
 	$Title, '</p>';// Page title.
 
@@ -214,11 +214,11 @@ if (isset($_POST['submit'])) {
 
 if (!isset($_GET['delete'])) {
 
-	echo '<form method = "post" id = "GLAccounts" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<form method = "post" id="GLAccounts" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedAccount)) {// Edit an existing account.
-		echo '<input type = "hidden" name = "SelectedAccount" value = "' . $SelectedAccount . '" />';
+		echo '<input type = "hidden" name="SelectedAccount" value = "' . $SelectedAccount . '" />';
 		$SQL = "SELECT accountcode, accountname, group_, cashflowsactivity FROM chartmaster WHERE accountcode = '" . $SelectedAccount ."'";
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_array($Result);
@@ -240,12 +240,12 @@ if (!isset($_GET['delete'])) {
 
 	echo '<field>
 			<label for = "AccountCode">', __('Account Code'), ':</label>
-			<input ', (empty($_POST['AccountCode']) ? 'autofocus = "autofocus" ' : 'disabled = "disabled" '), 'data-type = "no-illegal-chars" maxlength = "20" name = "AccountCode" required = "required" size = "20" title = "" type = "text" value = "', $_POST['AccountCode'], '" />
+			<input ', (empty($_POST['AccountCode']) ? 'autofocus ="autofocus" ' : 'disabled = "disabled" '), 'data-type = "no-illegal-chars" maxlength = "20" name="AccountCode" required = "required" size = "20" title="" type = "text" value = "', $_POST['AccountCode'], '" />
 			<fieldhelp>', __('Enter up to 20 alpha-numeric characters for the general ledger account code'), '</fieldhelp>
 		</field>
 		<field>
 			<label for = "AccountName">' . __('Account Name') . ':</label>
-			<input ', (empty($_POST['AccountCode']) ? '' : 'autofocus = "autofocus" '), 'maxlength = "50" name = "AccountName" required = "required" size = "51" title = "" type = "text" value = "', $_POST['AccountName'], '" />
+			<input ', (empty($_POST['AccountCode']) ? '' : 'autofocus ="autofocus" '), 'maxlength = "50" name="AccountName" required = "required" size = "51" title="" type = "text" value = "', $_POST['AccountName'], '" />
 			<fieldhelp>' . __('Enter up to 50 alpha-numeric characters for the general ledger account name') . '</fieldhelp>
 		</field>';
 
@@ -254,7 +254,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<field>
 			<label for = "Group">' . __('Account Group') . ':</label>
-			<select required = "required" name = "Group">';
+			<select required = "required" name="Group">';
 	while ($MyRow = DB_fetch_array($Result)) {
 		echo '<option';
 		if (isset($_POST['Group']) and $MyRow[0]==$_POST['Group']) {
@@ -267,18 +267,18 @@ if (!isset($_GET['delete'])) {
 
 	echo '<field>
 			<label for = "CashFlowsActivity">', __('Cash Flows Activity'), ':</label>
-			<select id = "CashFlowsActivity" name = "CashFlowsActivity" required = "required">
-				<option value = "0"', ($_POST['CashFlowsActivity'] == 0 ? ' selected = "selected"' : ''), '>', __('No effect on cash flow'), '</option>
-				<option value = "1"', ($_POST['CashFlowsActivity'] == 1 ? ' selected = "selected"' : ''), '>', __('Operating activity'), '</option>
-				<option value = "2"', ($_POST['CashFlowsActivity'] == 2 ? ' selected = "selected"' : ''), '>', __('Investing activity'), '</option>
-				<option value = "3"', ($_POST['CashFlowsActivity'] == 3 ? ' selected = "selected"' : ''), '>', __('Financing activity'), '</option>
-				<option value = "4"', ($_POST['CashFlowsActivity'] == 4 ? ' selected = "selected"' : ''), '>', __('Cash or cash equivalent'), '</option>
+			<select id="CashFlowsActivity" name="CashFlowsActivity" required = "required">
+				<option value = "0"', ($_POST['CashFlowsActivity'] == 0 ? ' selected ="selected"' : ''), '>', __('No effect on cash flow'), '</option>
+				<option value = "1"', ($_POST['CashFlowsActivity'] == 1 ? ' selected ="selected"' : ''), '>', __('Operating activity'), '</option>
+				<option value = "2"', ($_POST['CashFlowsActivity'] == 2 ? ' selected ="selected"' : ''), '>', __('Investing activity'), '</option>
+				<option value = "3"', ($_POST['CashFlowsActivity'] == 3 ? ' selected ="selected"' : ''), '>', __('Financing activity'), '</option>
+				<option value = "4"', ($_POST['CashFlowsActivity'] == 4 ? ' selected ="selected"' : ''), '>', __('Cash or cash equivalent'), '</option>
 			</select>
 		</field>
 	</fieldset>';
 
-	echo '<div class = "centre">
-			<input type = "submit" name = "submit" value = "'. __('Enter Information') . '" />
+	echo '<div class="centre">
+			<input type = "submit" name="submit" value = "'. __('Enter Information') . '" />
 		</div>
 		</form>';
 
@@ -292,15 +292,15 @@ links to delete or edit each. These will call the same page again and allow upda
 or deletion of the records*/
 
 	echo '<br />
-		<table class = "selection">
+		<table class="selection">
 		<thead>
 			<tr>
-				<th class = "SortedColumn">', __('Account Code'), '</th>
-				<th class = "SortedColumn">', __('Account Name'), '</th>
-				<th class = "SortedColumn">', __('Account Group'), '</th>
-				<th class = "SortedColumn">', __('P/L or B/S'), '</th>
-				<th class = "SortedColumn">', __('Cash Flows Activity'), '</th>
-				<th class = "noPrint" colspan = "2">&nbsp;</th>
+				<th class="SortedColumn">', __('Account Code'), '</th>
+				<th class="SortedColumn">', __('Account Name'), '</th>
+				<th class="SortedColumn">', __('Account Group'), '</th>
+				<th class="SortedColumn">', __('P/L or B/S'), '</th>
+				<th class="SortedColumn">', __('Cash Flows Activity'), '</th>
+				<th class="noPrint" colspan = "2">&nbsp;</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -318,14 +318,14 @@ or deletion of the records*/
 	$Result = DB_query($SQL, $ErrMsg);
 
 	while ($MyRow = DB_fetch_array($Result)) {
-		echo '<tr class = "striped_row">
-				<td class = "text">', $MyRow['accountcode'], '</td>
-				<td class = "text">', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8'), '</td>
-				<td class = "text">', $MyRow['group_'], '</td>
-				<td class = "text">', $MyRow['acttype'], '</td>
-				<td class = "text">', CashFlowsActivityName($MyRow['cashflowsactivity']), '</td>
-				<td class = "noPrint"><a href = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?', '&amp;SelectedAccount = ', $MyRow['accountcode'], '">', __('Edit'), '</a></td>
-				<td class = "noPrint"><a href = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?', '&amp;SelectedAccount = ', $MyRow['accountcode'], '&amp;delete = 1" onclick = "return confirm(\'', __('Are you sure you wish to delete this account? Additional checks will be performed in any event to ensure data integrity is not compromised.'), '\');">', __('Delete'), '</a></td>
+		echo '<tr class="striped_row">
+				<td class="text">', $MyRow['accountcode'], '</td>
+				<td class="text">', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8'), '</td>
+				<td class="text">', $MyRow['group_'], '</td>
+				<td class="text">', $MyRow['acttype'], '</td>
+				<td class="text">', CashFlowsActivityName($MyRow['cashflowsactivity']), '</td>
+				<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?', '&amp;SelectedAccount=', $MyRow['accountcode'], '">', __('Edit'), '</a></td>
+				<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?', '&amp;SelectedAccount=', $MyRow['accountcode'], '&amp;delete=1" onclick="return confirm(\'', __('Are you sure you wish to delete this account? Additional checks will be performed in any event to ensure data integrity is not compromised.'), '\');">', __('Delete'), '</a></td>
 			</tr>';
 	}// END foreach ($Result as $MyRow).
 
@@ -337,7 +337,7 @@ or deletion of the records*/
 echo '<br />';
 
 if (isset($SelectedAccount)) {
-	echo '<div class = "centre"><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Show All Accounts') . '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Show All Accounts') . '</a></div>';
 }
 
 include('includes/footer.php');

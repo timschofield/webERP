@@ -21,14 +21,14 @@ if (isset($_POST['DebtorNo'])) {
 } elseif (isset($_GET['DebtorNo'])) {
 	$DebtorNo = $_GET['DebtorNo'];
 }
-echo '<a class = "noPrint toplink" href = "' . $RootPath . '/Customers.php?DebtorNo = ' . $DebtorNo . '">' . __('Back to Customers') . '</a><br />';
+echo '<a class="noPrint toplink" href="' . $RootPath . '/Customers.php?DebtorNo=' . $DebtorNo . '">' . __('Back to Customers') . '</a><br />';
 $SQLname = "SELECT name FROM debtorsmaster WHERE debtorno = '" . $DebtorNo . "'";
 $Result = DB_query($SQLname);
 $Row = DB_fetch_array($Result);
 if (!isset($_GET['Id'])) {
-	echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title = "' . __('Search') . '" alt = "" />' . ' ' . __('Contacts for Customer') . ': <b>' . htmlspecialchars($Row['name'], ENT_QUOTES, 'UTF-8') . '</b></p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . __('Contacts for Customer') . ': <b>' . htmlspecialchars($Row['name'], ENT_QUOTES, 'UTF-8') . '</b></p>';
 } else {
-	echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title = "' . __('Search') . '" alt = "" />' . ' ' . __('Edit contact for'). ': <b>' . htmlspecialchars($Row['name'], ENT_QUOTES, 'UTF-8') . '</b></p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . __('Edit contact for'). ': <b>' . htmlspecialchars($Row['name'], ENT_QUOTES, 'UTF-8') . '</b></p>';
 }
 if ( isset($_POST['submit']) ) {
 
@@ -127,27 +127,27 @@ if (!isset($Id)) {
 			//echo '<br />' . $SQL;
 
 	if (DB_num_rows($Result) > 0) {
-		echo '<table class = "selection">';
+		echo '<table class="selection">';
 		echo '<tr>
-				<th class = "text">', __('Name'), '</th>
-				<th class = "text">', __('Role'), '</th>
-				<th class = "text">', __('Phone No'), '</th>
-				<th class = "text">', __('Email'), '</th>
-				<th class = "text">', __('Statement'), '</th>
-				<th class = "text">', __('Notes'), '</th>
-				<th class = "noPrint" colspan = "2">&nbsp;</th>
+				<th class="text">', __('Name'), '</th>
+				<th class="text">', __('Role'), '</th>
+				<th class="text">', __('Phone No'), '</th>
+				<th class="text">', __('Email'), '</th>
+				<th class="text">', __('Statement'), '</th>
+				<th class="text">', __('Notes'), '</th>
+				<th class="noPrint" colspan = "2">&nbsp;</th>
 			</tr>';
 
 		while ($MyRow = DB_fetch_array($Result)) {
-			echo '<tr class = "striped_row">
-					<td class = "text">', $MyRow['contactname'], '</td>
-					<td class = "text">', $MyRow['role'], '</td>
-					<td class = "text">', $MyRow['phoneno'], '</td>
-					<td class = "text"><a href = "mailto:', $MyRow['email'], '">', $MyRow['email'], '</a></td>
-					<td class = "text">', ($MyRow['statement']==0) ? __('No') : __('Yes'), '</td>
-					<td class = "text">', $MyRow['notes'], '</td>
-					<td class = "noPrint"><a href = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Id = ', $MyRow['contid'], '&amp;DebtorNo = ', $MyRow['debtorno'], '">' . __('Edit') . '</a></td>
-					<td class = "noPrint"><a href = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Id = ', $MyRow['contid'], '&amp;DebtorNo = ', $MyRow['debtorno'], '&amp;delete = 1" onclick = "return confirm(\'' . __('Are you sure you wish to delete this contact?') . '\');">' . __('Delete'). '</a></td>
+			echo '<tr class="striped_row">
+					<td class="text">', $MyRow['contactname'], '</td>
+					<td class="text">', $MyRow['role'], '</td>
+					<td class="text">', $MyRow['phoneno'], '</td>
+					<td class="text"><a href="mailto:', $MyRow['email'], '">', $MyRow['email'], '</a></td>
+					<td class="text">', ($MyRow['statement']==0) ? __('No') : __('Yes'), '</td>
+					<td class="text">', $MyRow['notes'], '</td>
+					<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Id=', $MyRow['contid'], '&amp;DebtorNo=', $MyRow['debtorno'], '">' . __('Edit') . '</a></td>
+					<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Id=', $MyRow['contid'], '&amp;DebtorNo=', $MyRow['debtorno'], '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this contact?') . '\');">' . __('Delete'). '</a></td>
 				</tr>';
 
 		}
@@ -156,14 +156,14 @@ if (!isset($Id)) {
 	echo '</table><br />';
 }
 if (isset($Id)) {
-	echo '<div class = "centre"><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?DebtorNo = '.$DebtorNo .'">' . __('Review all contacts for this Customer') . '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?DebtorNo='.$DebtorNo .'">' . __('Review all contacts for this Customer') . '</a></div>';
 }
 
 if (!isset($_GET['delete'])) {
 
-	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?DebtorNo = '.$DebtorNo.'">',
+	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?DebtorNo='.$DebtorNo.'">',
 		'<div>',
-		'<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+		'<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 	if (isset($Id)) {// Edit Customer Contact Details.
 		$SQL = "SELECT contid,
@@ -186,9 +186,9 @@ if (!isset($_GET['delete'])) {
 		$_POST['ContactPhone']  = $MyRow['phoneno'];
 		$_POST['ContactEmail'] = $MyRow['email'];
 		$_POST['ContactNotes'] = $MyRow['notes'];
-		echo '<input type = "hidden" name = "Id" value = "'. $Id .'" />
-			<input type = "hidden" name = "Con_ID" value = "' . $_POST['Con_ID'] . '" />
-			<input type = "hidden" name = "DebtorNo" value = "' . $DebtorNo . '" />';
+		echo '<input type = "hidden" name="Id" value = "'. $Id .'" />
+			<input type = "hidden" name="Con_ID" value = "' . $_POST['Con_ID'] . '" />
+			<input type = "hidden" name="DebtorNo" value = "' . $DebtorNo . '" />';
 
 		echo '<fieldset>
 				<legend>', __('Edit Customer Contact Details'), '</legend>';
@@ -204,7 +204,7 @@ if (!isset($_GET['delete'])) {
 	// Contact name:
 	echo '<field>
 			<label for = "ContactName">', __('Contact Name'), ':</label>
-			<input maxlength = "40" name = "ContactName" autofocus = "autofocus" required = "required" size = "35" type = "text" ';
+			<input maxlength = "40" name="ContactName" autofocus = "autofocus" required = "required" size = "35" type = "text" ';
 				if (isset($_POST['ContactName'])) {
 					echo 'value = "', $_POST['ContactName'], '" ';
 				}
@@ -214,7 +214,7 @@ if (!isset($_GET['delete'])) {
 	// Role:
 	echo '<field>
 			<label for = "ContactRole">', __('Role'), ':</label>
-			<input maxlength = "40" name = "ContactRole" size = "35" type = "text" ';
+			<input maxlength = "40" name="ContactRole" size = "35" type = "text" ';
 				if (isset($_POST['ContactRole'])) {
 					echo 'value = "', $_POST['ContactRole'], '" ';
 				}
@@ -224,7 +224,7 @@ if (!isset($_GET['delete'])) {
 	// Phone:
 	echo '<field>
 			<label for = "ContactPhone">', __('Phone'), ':</label>
-			<input maxlength = "40" name = "ContactPhone" size = "35" type = "tel" ';
+			<input maxlength = "40" name="ContactPhone" size = "35" type = "tel" ';
 				if (isset($_POST['ContactPhone'])) {
 					echo 'value = "', $_POST['ContactPhone'], '" ';
 				}
@@ -234,7 +234,7 @@ if (!isset($_GET['delete'])) {
 	// Email:
 	echo '<field>
 			<label for = "ContactEmail">', __('Email'), ':</label>
-			<input maxlength = "55" name = "ContactEmail" size = "55" type = "email" ';
+			<input maxlength = "55" name="ContactEmail" size = "55" type = "email" ';
 				if (isset($_POST['ContactEmail'])) {
 					echo 'value = "', $_POST['ContactEmail'], '" ';
 				}
@@ -243,7 +243,7 @@ if (!isset($_GET['delete'])) {
 		</field>';
 	echo '<field>
 			<label for = "StatementAddress">', __('Send Statement'), ':</label>
-			<select name = "StatementAddress" title = "" >';
+			<select name="StatementAddress" title="" >';
 				if (!isset($_POST['StatementAddress'])) {
 					echo '<option selected = "selected" value = "0">', __('No') , '</option>
 							<option value = "1">', __('Yes') , '</option>';
@@ -262,7 +262,7 @@ if (!isset($_GET['delete'])) {
 	// Notes:
 	echo '<field>
 			<label for = "ContactNotes">', __('Notes'), '</label>
-			<textarea cols = "40" name = "ContactNotes" rows = "3">',
+			<textarea cols = "40" name="ContactNotes" rows = "3">',
 				( isset($_POST['ContactNotes']) ? $_POST['ContactNotes'] : '' ),
 				'</textarea>
 			<fieldhelp>', __('Any notes on this customer contact'), '</fieldhelp>
@@ -270,8 +270,8 @@ if (!isset($_GET['delete'])) {
 
 	echo '</fieldset>';
 
-	echo '<div class ="centre">
-			<input name = "submit" type = "submit" value = "', __('Enter Information'), '" />
+	echo '<div class="centre">
+			<input name="submit" type = "submit" value = "', __('Enter Information'), '" />
 		</div>
 	</form>';
 

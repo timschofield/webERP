@@ -196,11 +196,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 								<td></td>
 							</tr>';
 }
-					$HTML .= '<tr class = "total_row">
+					$HTML .= '<tr class="total_row">
 							<td colspan = "2"><I>' . $ParentGroups[$Level] . '</I></td>
-							<td class = "number">' . locale_number_format($GroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td class="number">' . locale_number_format($GroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 							<td></td>
-							<td class = "number">' . locale_number_format($LYGroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td class="number">' . locale_number_format($LYGroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 							<td></td>
 						</tr>';
 					$GroupTotal[$Level] = 0;
@@ -219,11 +219,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 						</tr>';
 }
 
-				$HTML .= '<tr class = "total_row">
+				$HTML .= '<tr class="total_row">
 						<td colspan = "2">' . $ParentGroups[$Level] . '</td>
-						<td class = "number">' . locale_number_format($GroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class="number">' . locale_number_format($GroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 						<td></td>
-						<td class = "number">' . locale_number_format($LYGroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class="number">' . locale_number_format($LYGroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 						<td></td>
 					</tr>';
 
@@ -252,11 +252,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 						</tr>';
 				}
 
-				$HTML .= '<tr class = "total_row">
+				$HTML .= '<tr class="total_row">
 						<td colspan = "3"><h2>' . $Sections[$Section] . '</h2></td>
-						<td class = "number">' . locale_number_format($SectionBalance, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class="number">' . locale_number_format($SectionBalance, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 						<td></td>
-						<td class = "number">' . locale_number_format($SectionBalanceLY, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class="number">' . locale_number_format($SectionBalanceLY, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 					</tr>';
 				++$j;
 			}
@@ -300,27 +300,27 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 		if ($_POST['ShowDetail'] == 'Detailed') {
 	if (isset($_POST['ShowZeroBalance'])) {
-				$ActEnquiryURL = '<a href = "' . $RootPath . '/GLAccountInquiry.php?FromPeriod = ' . urlencode(FYStartPeriod($_POST['PeriodTo'])) . '&ToPeriod = ' . urlencode($_POST['PeriodTo']) . '&amp;Account = ' . urlencode($MyRow['accountcode']) . '">' . $MyRow['accountcode'] . '</a>';
+				$ActEnquiryURL = '<a href="' . $RootPath . '/GLAccountInquiry.php?FromPeriod=' . urlencode(FYStartPeriod($_POST['PeriodTo'])) . '&ToPeriod=' . urlencode($_POST['PeriodTo']) . '&amp;Account=' . urlencode($MyRow['accountcode']) . '">' . $MyRow['accountcode'] . '</a>';
 
-				$HTML .= '<tr class = "striped_row">
+				$HTML .= '<tr class="striped_row">
 						<td>' . $ActEnquiryURL . '</td>
 						<td>' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</td>
-						<td class = "number">' . locale_number_format($AccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class="number">' . locale_number_format($AccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 						<td></td>
-						<td class = "number">' . locale_number_format($LYAccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class="number">' . locale_number_format($LYAccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 						<td></td>
 					</tr>';
 				++$j;
 } elseif (round($AccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) != 0
 			or round($LYAccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) != 0) {
-				$ActEnquiryURL = '<a href = "' . $RootPath . '/GLAccountInquiry.php?FromPeriod = ' . urlencode(FYStartPeriod($_POST['PeriodTo'])) . '&ToPeriod = ' . urlencode($_POST['PeriodTo']) . '&amp;Account = ' . urlencode($MyRow['accountcode']) . '">' . $MyRow['accountcode'] . '</a>';
+				$ActEnquiryURL = '<a href="' . $RootPath . '/GLAccountInquiry.php?FromPeriod=' . urlencode(FYStartPeriod($_POST['PeriodTo'])) . '&ToPeriod=' . urlencode($_POST['PeriodTo']) . '&amp;Account=' . urlencode($MyRow['accountcode']) . '">' . $MyRow['accountcode'] . '</a>';
 
-				$HTML .= '<tr class = "striped_row">
+				$HTML .= '<tr class="striped_row">
 						<td>' . $ActEnquiryURL . '</td>
 						<td>' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</td>
-						<td class = "number">' . locale_number_format($AccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class="number">' . locale_number_format($AccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 						<td></td>
-						<td class = "number">' . locale_number_format($LYAccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class="number">' . locale_number_format($LYAccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 						<td></td>
 					</tr>';
 				++$j;
@@ -340,11 +340,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					<td></td>
 				</tr>';
 }
-		$HTML .= '<tr class = "total_row">
+		$HTML .= '<tr class="total_row">
 				<td colspan = "2"><I>' . $ParentGroups[$Level] . '</I></td>
-				<td class = "number">' . locale_number_format($GroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($GroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td></td>
-				<td class = "number">' . locale_number_format($LYGroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($LYGroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td></td>
 			</tr>';
 		$Level--;
@@ -359,11 +359,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			</tr>';
 }
 
-	$HTML .= '<tr class = "total_row">
+	$HTML .= '<tr class="total_row">
 			<td colspan = "2">' . $ParentGroups[$Level] . '</td>
-			<td class = "number">' . locale_number_format($GroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($GroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			<td></td>
-			<td class = "number">' . locale_number_format($LYGroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($LYGroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			<td></td>
 		</tr>';
 
@@ -384,11 +384,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			</tr>';
 	}
 
-	$HTML .= '<tr class = "total_row">
+	$HTML .= '<tr class="total_row">
 			<td colspan = "3"><h2>' . $Sections[$Section] . '</h2></td>
-			<td class = "number">' . locale_number_format($SectionBalance, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($SectionBalance, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			<td></td>
-			<td class = "number">' . locale_number_format($SectionBalanceLY, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($SectionBalanceLY, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		</tr>';
 
 	$Section = $SectionInAccounts;
@@ -406,11 +406,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			<td><hr /></td>
 		</tr>';
 
-	$HTML .= '<tr class = "total_row">
+	$HTML .= '<tr class="total_row">
 			<td colspan = "3"><h2>' . __('Check Total') . '</h2></td>
-			<td class = "number">' . locale_number_format($CheckTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($CheckTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			<td></td>
-			<td class = "number">' . locale_number_format($LYCheckTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($LYCheckTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		</tr>';
 
 	$HTML .= '<tr>
@@ -440,7 +440,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$Title = __('General Ledger Balance Sheet');
 		include('includes/header.php');
 
-		echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/gl.png" title = "', // Icon image.
+		echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/gl.png" title="', // Icon image.
 			$Title2, '" /> ', // Icon title.
 			// Page title as IAS1 numerals 10 and 51:
 			$Title, '<br />', // Page title, reporting statement.
@@ -450,12 +450,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 		echo $HTML;
 		echo // Shows a form to select an action after the report was shown:
-		'<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target = "_blank">',
-		'<input name = "FormID" type = "hidden" value = "' . $_SESSION['FormID'] . '" />',
+		'<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target="_blank">',
+		'<input name="FormID" type = "hidden" value = "' . $_SESSION['FormID'] . '" />',
 		// Resend report parameters:
-		'<input name = "PeriodTo" type = "hidden" value = "' . $_POST['PeriodTo'] . '" />',
-		'<div class = "centre">
-			<input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" />
+		'<input name="PeriodTo" type = "hidden" value = "' . $_POST['PeriodTo'] . '" />',
+		'<div class="centre">
+			<input type = "submit" name="close" value = "' . __('Close') . '" onclick="window.close()" />
 		</div>' .
 		'</form>';
 		include('includes/footer.php');
@@ -472,7 +472,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	if (!isset($_POST['ShowDetail'])) {
 		$_POST['ShowDetail'] = 'Detailed';
 	}
-	echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/printer.png" title = "', // Icon image.
+	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" title="', // Icon image.
 		$Title2, '" /> ', // Icon title.
 		$Title, '</p>'; // Page title.
 	fShowPageHelp(// Shows the page help text if $_SESSION['ShowFieldHelp'] is true or is not set
@@ -480,14 +480,14 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		__('The balance sheet has three parts: assets, liabilities and ownership equity. The main categories of assets are listed first and are followed by the liabilities. The difference between the assets and the liabilities is known as equity or the net assets or the net worth or capital of the company and according to the accounting equation, net worth must equal assets minus liabilities.') . '<br />' .
 		__('webERP is an accrual based system (not a cash based system). Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.'));// Function fShowPageHelp() in ~/includes/MiscFunctions.php
 	echo // Shows a form to input the report parameters:
-		'<form action = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method = "post" target = "_blank">',
-		'<input name = "FormID" type = "hidden" value = "', $_SESSION['FormID'], '" />',
+		'<form action = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method = "post" target="_blank">',
+		'<input name="FormID" type = "hidden" value = "', $_SESSION['FormID'], '" />',
 		// Input table:
 		'<fieldset>
 			<legend>', __('Report Criteria'), '</legend>
 			<field>
 				<label for = "PeriodTo">' . __('Select the balance date') . ':</label>
-				<select name = "PeriodTo" required = "required">';
+				<select name="PeriodTo" required = "required">';
 
 		$PeriodSQL = "SELECT periodno
 						FROM periods
@@ -503,7 +503,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	while ($MyRow = DB_fetch_array($Periods)) {
 		echo
 			'<option',
-			(($MyRow['periodno'] == $PeriodNo) ? ' selected = "selected"' : ''),
+			(($MyRow['periodno'] == $PeriodNo) ? ' selected ="selected"' : ''),
 			' value = "', $MyRow['periodno'], '">', ConvertSQLDate($MyRow['lastdate_in_period']), '</option>';
 	}
 	echo '</select>
@@ -511,7 +511,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	echo '<field>
 			<label for = "ShowDetail">', __('Detail or summary'), '</label>
-			<select name = "ShowDetail" required = "required" title = "" >';
+			<select name="ShowDetail" required = "required" title="" >';
 	if ($_POST['ShowDetail'] == 'Summary') {
 	echo	'<option selected = "selected" value = "Summary">', __('Summary'), '</option>
 				<option value = "Detailed">', __('All Accounts'), '</option>';
@@ -526,14 +526,14 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	// Show accounts with zero balance:
 	echo '<field>
 			<label for = "ShowZeroBalance">', __('Show accounts with zero balance'), '</label>
-			<input', ($_POST['ShowZeroBalance'] ? ' checked = "checked"' : ''), ' id = "ShowZeroBalance" name = "ShowZeroBalance" type = "checkbox" />
+			<input', ($_POST['ShowZeroBalance'] ? ' checked ="checked"' : ''), ' id="ShowZeroBalance" name="ShowZeroBalance" type = "checkbox" />
 	 		<fieldhelp>', __('Check this box to show all accounts including those with zero balance'), '</fieldhelp>
 		 </field>',
 		'</fieldset>';
 
-	echo '<div class = "centre">
-			<input type = "submit" name = "PrintPDF" title = "PDF" value = "'.__('PDF Balance Sheet').'" />
-			<input type = "submit" name = "View" title = "View" value = "' . __('Show Balance Sheet') .'" />
+	echo '<div class="centre">
+			<input type = "submit" name="PrintPDF" title="PDF" value = "'.__('PDF Balance Sheet').'" />
+			<input type = "submit" name="View" title="View" value = "' . __('Show Balance Sheet') .'" />
 		</div>',
 		'</form>';
 

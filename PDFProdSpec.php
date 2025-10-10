@@ -48,12 +48,12 @@ if (isset($SelectedProdSpec) and $SelectedProdSpec != '') {
 	if (DB_num_rows($Result) == 0) {
 		$Title = __('Print Product Specification Error');
 		include ('includes/header.php');
-		echo '<div class = "centre">';
+		echo '<div class="centre">';
 		prnMsg(__('Unable to Locate Specification') . ' : ' . $_SelectedProdSpec . ' ', 'error');
-		echo '<table class = "table_index">
+		echo '<table class="table_index">
 			<tr>
-				<td class = "menu_group_item">
-					<ul><li><a href = "' . $RootPath . '/PDFProdSpec.php">' . __('Product Specifications') . '</a></li></ul>
+				<td class="menu_group_item">
+					<ul><li><a href="' . $RootPath . '/PDFProdSpec.php">' . __('Product Specifications') . '</a></li></ul>
 				</td>
 			</tr>
 			</table>
@@ -120,10 +120,10 @@ if (isset($SelectedProdSpec) and $SelectedProdSpec != '') {
 		$RowsBySection[$Group][] = $MyRow;
 	}
 
-	$HTML .= '<div class = "title">' . __('Product Specification') . '</div>';
-	$HTML .= '<div class = "subtitle">' . htmlspecialchars($Spec, ENT_QUOTES, 'UTF-8') . '</div>';
+	$HTML .= '<div class="title">' . __('Product Specification') . '</div>';
+	$HTML .= '<div class="subtitle">' . htmlspecialchars($Spec, ENT_QUOTES, 'UTF-8') . '</div>';
 	if ($SpecDesc) {
-	$HTML .= '<div style = "text-align:center; margin-bottom: 14px;">' . htmlspecialchars($SpecDesc, ENT_QUOTES, 'UTF-8') . '</div>';
+	$HTML .= '<div style="text-align:center; margin-bottom: 14px;">' . htmlspecialchars($SpecDesc, ENT_QUOTES, 'UTF-8') . '</div>';
 }
 
 	// Loop through sections/groups
@@ -131,8 +131,8 @@ if (isset($SelectedProdSpec) and $SelectedProdSpec != '') {
 		list($Groupname, $numcols, $headertitle, $trailertext, $Cols, $labels, $Align) = $Section;
 		if (empty($RowsBySection[$Groupname])) continue;
 
-		$HTML .= '<table class = "table">';
-		$HTML .= '<tr><td colspan = "' . count($labels) . '" class = "sectiontitle">' . htmlspecialchars($headertitle, ENT_QUOTES, 'UTF-8') . '</td></tr>';
+		$HTML .= '<table class="table">';
+		$HTML .= '<tr><td colspan = "' . count($labels) . '" class="sectiontitle">' . htmlspecialchars($headertitle, ENT_QUOTES, 'UTF-8') . '</td></tr>';
 		$HTML .= '<tr>';
 		foreach ($labels as $colLabel) {
 			$HTML .= '<th>' . htmlspecialchars($colLabel, ENT_QUOTES, 'UTF-8') . '</th>';
@@ -173,12 +173,12 @@ if (isset($SelectedProdSpec) and $SelectedProdSpec != '') {
 					default:
 						$DispValue = '';
 				}
-				$HTML .= '<td style = "text-align: ' . $Align[$x] . ';">' . htmlspecialchars($DispValue, ENT_QUOTES, 'UTF-8') . '</td>';
+				$HTML .= '<td style="text-align: ' . $Align[$x] . ';">' . htmlspecialchars($DispValue, ENT_QUOTES, 'UTF-8') . '</td>';
 			}
 			$HTML .= '</tr>';
 		}
 		if ($trailertext) {
-	$HTML .= '<tr><td colspan = "' . count($labels) . '" class = "trailer">' . htmlspecialchars($trailertext, ENT_QUOTES, 'UTF-8') . '</td></tr>';
+	$HTML .= '<tr><td colspan = "' . count($labels) . '" class="trailer">' . htmlspecialchars($trailertext, ENT_QUOTES, 'UTF-8') . '</td></tr>';
 }
 		$HTML .= '</table>';
 	}
@@ -191,7 +191,7 @@ if (isset($SelectedProdSpec) and $SelectedProdSpec != '') {
 	if ($MyRow && isset($MyRow[0]) && $MyRow[0]) {
 		$Disclaimer = $MyRow[0];
 	}
-	$HTML .= '<div class = "disclaimer">' . htmlspecialchars($Disclaimer, ENT_QUOTES, 'UTF-8') . '</div>';
+	$HTML .= '<div class="disclaimer">' . htmlspecialchars($Disclaimer, ENT_QUOTES, 'UTF-8') . '</div>';
 
 	$HTML .= '</body>';
 	$HTML .= '</html>';
@@ -213,7 +213,7 @@ else {
 	$ViewTopic = 'QualityAssurance';
 	$BookMark = '';
 	include ('includes/header.php');
-	echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/printer.png" title = "' . __('Print') . '" alt = "" />' . ' ' . $Title . '</p>';
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" title="' . __('Print') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post">';
 	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
@@ -226,12 +226,12 @@ else {
 			</field>
 		</fieldset>';
 
-	echo '<div class = "centre">
+	echo '<div class="centre">
 			<input type = "submit" name = "PickSpec" value = "' . __('Submit') . '" />
 		</div>
 	</form>';
 
-	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target = "_blank">';
+	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target="_blank">';
 	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 	echo '<fieldset>
@@ -252,7 +252,7 @@ else {
 	echo '</field>
 		</fieldset>';
 
-	echo '<div class = "centre">
+	echo '<div class="centre">
 			<input type = "submit" name = "PickSpec" value = "' . __('Submit') . '" />
 		</div>
 		</form>';

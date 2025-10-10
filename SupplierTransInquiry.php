@@ -11,7 +11,7 @@ if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromD
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
 
 echo '<p class = "page_title_text">
-		<img src = "'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title = "' . __('Search') .
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . __('Search') .
 	'" alt = "" />' . ' ' . $Title . '
 	</p>';
 

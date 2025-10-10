@@ -68,27 +68,27 @@ if ($NoOfGRNs > 0) {
 			$GetStockMoveResult = DB_query($SQL, __('Could not retrieve the stock movement reference number which is required in order to retrieve details of the serial items that came in with this GRN'));
 			while ($SerialStockMoves = DB_fetch_array($GetStockMoveResult)) {
 				$HTML .= '
-					<div style = "page-break-after:always; font-family:Arial, sans-serif;">
-						<img src = "' . $_SESSION['LogoFile'] . '" style = "position:absolute; left:' . $FormDesign->logo->x . 'px; top:' . $FormDesign->logo->y . 'px; width:' . $FormDesign->logo->width . 'px; height:' . $FormDesign->logo->height . 'px;" />
-						<div style = "position:absolute; left:' . $FormDesign->ItemNbr->x . 'px; top:' . $FormDesign->ItemNbr->y . 'px; font-size:' . $FormDesign->ItemNbr->FontSize . 'pt;">
+					<div style="page-break-after:always; font-family:Arial, sans-serif;">
+						<img src="' . $_SESSION['LogoFile'] . '" style="position:absolute; left:' . $FormDesign->logo->x . 'px; top:' . $FormDesign->logo->y . 'px; width:' . $FormDesign->logo->width . 'px; height:' . $FormDesign->logo->height . 'px;" />
+						<div style="position:absolute; left:' . $FormDesign->ItemNbr->x . 'px; top:' . $FormDesign->ItemNbr->y . 'px; font-size:' . $FormDesign->ItemNbr->FontSize . 'pt;">
 							Item: ' . htmlspecialchars($MyRow['itemcode']) . '
 						</div>
-						<div style = "position:absolute; left:' . $FormDesign->ItemDesc->x . 'px; top:' . $FormDesign->ItemDesc->y . 'px; font-size:' . $FormDesign->ItemDesc->FontSize . 'pt;">
+						<div style="position:absolute; left:' . $FormDesign->ItemDesc->x . 'px; top:' . $FormDesign->ItemDesc->y . 'px; font-size:' . $FormDesign->ItemDesc->FontSize . 'pt;">
 							Description: ' . htmlspecialchars($MyRow['itemdescription']) . '
 						</div>
-						<div style = "position:absolute; left:' . $FormDesign->SupplierName->x . 'px; top:' . $FormDesign->SupplierName->y . 'px; font-size:' . $FormDesign->SupplierName->FontSize . 'pt;">
+						<div style="position:absolute; left:' . $FormDesign->SupplierName->x . 'px; top:' . $FormDesign->SupplierName->y . 'px; font-size:' . $FormDesign->SupplierName->FontSize . 'pt;">
 							Supplier: ' . htmlspecialchars($SuppRow['suppname']) . '
 						</div>
-						<div style = "position:absolute; left:' . $FormDesign->SupplierLot->x . 'px; top:' . $FormDesign->SupplierLot->y . 'px; font-size:' . $FormDesign->SupplierLot->FontSize . 'pt;">
+						<div style="position:absolute; left:' . $FormDesign->SupplierLot->x . 'px; top:' . $FormDesign->SupplierLot->y . 'px; font-size:' . $FormDesign->SupplierLot->FontSize . 'pt;">
 							Supplier Lot: ' . htmlspecialchars($SerialStockMoves['serialno']) . '
 						</div>
-						<div style = "position:absolute; left:' . $FormDesign->Lot->x . 'px; top:' . $FormDesign->Lot->y . 'px; font-size:' . $FormDesign->Lot->FontSize . 'pt;">
+						<div style="position:absolute; left:' . $FormDesign->Lot->x . 'px; top:' . $FormDesign->Lot->y . 'px; font-size:' . $FormDesign->Lot->FontSize . 'pt;">
 							Lot: ' . htmlspecialchars($SerialStockMoves['serialno']) . '
 						</div>
-						<div style = "position:absolute; left:' . $FormDesign->ReceiptDate->x . 'px; top:' . $FormDesign->ReceiptDate->y . 'px; font-size:' . $FormDesign->ReceiptDate->FontSize . 'pt;">
+						<div style="position:absolute; left:' . $FormDesign->ReceiptDate->x . 'px; top:' . $FormDesign->ReceiptDate->y . 'px; font-size:' . $FormDesign->ReceiptDate->FontSize . 'pt;">
 							Receipt Date: ' . htmlspecialchars($MyRow['deliverydate']) . '
 						</div>
-						<div style = "position:absolute; left:' . $FormDesign->OrderNumber->x . 'px; top:' . $FormDesign->OrderNumber->y . 'px; font-size:' . $FormDesign->OrderNumber->FontSize . 'pt;">
+						<div style="position:absolute; left:' . $FormDesign->OrderNumber->x . 'px; top:' . $FormDesign->OrderNumber->y . 'px; font-size:' . $FormDesign->OrderNumber->FontSize . 'pt;">
 							P/O: ' . htmlspecialchars($MyRow['orderno']) . '
 						</div>
 					</div>
@@ -97,21 +97,21 @@ if ($NoOfGRNs > 0) {
 		}
 		else {
 			$HTML .= '
-				<div style = "page-break-after:always; font-family:Arial, sans-serif;">
-					<img src = "' . $_SESSION['LogoFile'] . '" style = "position:absolute; left:' . $FormDesign->logo->x . 'px; top:' . $FormDesign->logo->y . 'px; width:' . $FormDesign->logo->width . 'px; height:' . $FormDesign->logo->height . 'px;" />
-					<div style = "position:absolute; left:' . $FormDesign->ItemNbr->x . 'px; top:' . $FormDesign->ItemNbr->y . 'px; font-size:' . $FormDesign->ItemNbr->FontSize . 'pt;">
+				<div style="page-break-after:always; font-family:Arial, sans-serif;">
+					<img src="' . $_SESSION['LogoFile'] . '" style="position:absolute; left:' . $FormDesign->logo->x . 'px; top:' . $FormDesign->logo->y . 'px; width:' . $FormDesign->logo->width . 'px; height:' . $FormDesign->logo->height . 'px;" />
+					<div style="position:absolute; left:' . $FormDesign->ItemNbr->x . 'px; top:' . $FormDesign->ItemNbr->y . 'px; font-size:' . $FormDesign->ItemNbr->FontSize . 'pt;">
 						Item: ' . htmlspecialchars($MyRow['itemcode']) . '
 					</div>
-					<div style = "position:absolute; left:' . $FormDesign->ItemDesc->x . 'px; top:' . $FormDesign->ItemDesc->y . 'px; font-size:' . $FormDesign->ItemDesc->FontSize . 'pt;">
+					<div style="position:absolute; left:' . $FormDesign->ItemDesc->x . 'px; top:' . $FormDesign->ItemDesc->y . 'px; font-size:' . $FormDesign->ItemDesc->FontSize . 'pt;">
 						Description: ' . htmlspecialchars($MyRow['itemdescription']) . '
 					</div>
-					<div style = "position:absolute; left:' . $FormDesign->SupplierName->x . 'px; top:' . $FormDesign->SupplierName->y . 'px; font-size:' . $FormDesign->SupplierName->FontSize . 'pt;">
+					<div style="position:absolute; left:' . $FormDesign->SupplierName->x . 'px; top:' . $FormDesign->SupplierName->y . 'px; font-size:' . $FormDesign->SupplierName->FontSize . 'pt;">
 						Supplier: ' . htmlspecialchars($SuppRow['suppname']) . '
 					</div>
-					<div style = "position:absolute; left:' . $FormDesign->ReceiptDate->x . 'px; top:' . $FormDesign->ReceiptDate->y . 'px; font-size:' . $FormDesign->ReceiptDate->FontSize . 'pt;">
+					<div style="position:absolute; left:' . $FormDesign->ReceiptDate->x . 'px; top:' . $FormDesign->ReceiptDate->y . 'px; font-size:' . $FormDesign->ReceiptDate->FontSize . 'pt;">
 						Receipt Date: ' . htmlspecialchars(ConvertSQLDate($MyRow['deliverydate'])) . '
 					</div>
-					<div style = "position:absolute; left:' . $FormDesign->OrderNumber->x . 'px; top:' . $FormDesign->OrderNumber->y . 'px; font-size:' . $FormDesign->OrderNumber->FontSize . 'pt;">
+					<div style="position:absolute; left:' . $FormDesign->OrderNumber->x . 'px; top:' . $FormDesign->OrderNumber->y . 'px; font-size:' . $FormDesign->OrderNumber->FontSize . 'pt;">
 						P/O: ' . htmlspecialchars($MyRow['orderno']) . '
 					</div>
 				</div>';
@@ -136,7 +136,7 @@ else {
 	$Title = __('GRN Error');
 	include ('includes/header.php');
 	prnMsg(__('There were no GRNs to print'), 'warn');
-	echo '<br /><a href = "' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
+	echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 	include ('includes/footer.php');
 }
 

@@ -47,11 +47,11 @@ if (isset($_POST['StockID']) && !empty($_POST['StockID']) && !isset($_POST['Upda
 	}
 }
 
-echo '<a href = "' . $RootPath . '/SelectProduct.php" class = "toplink">' . __('Back to Items') . '</a>
-	<p class = "page_title_text">
-		<img src = "'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title = "' . __('Stock') . '" alt = "" />' . ' ' . $Title . '
+echo '<a href="' . $RootPath . '/SelectProduct.php" class="toplink">' . __('Back to Items') . '</a>
+	<p class="page_title_text">
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Stock') . '" alt="" />' . ' ' . $Title . '
 	</p>';
-echo '<div class = "page_help_text">' . __('Cloning will create a new item with the same properties, image, cost, purchasing and pricing data as the selected item. Item image and general item details can be changed below prior to cloning.') . '.</div><br />';
+echo '<div class="page_help_text">' . __('Cloning will create a new item with the same properties, image, cost, purchasing and pricing data as the selected item. Item image and general item details can be changed below prior to cloning.') . '.</div><br />';
 
 $SupportedImgExt = array('png','jpg','jpeg');
 
@@ -102,7 +102,7 @@ if (!empty($_POST['OldStockID'])) { //only show this if there is a valid call to
 		  @unlink($FileName);
 		if ($UploadTheFile == 'Yes') {
 	$Result  =  move_uploaded_file($_FILES['ItemPicture']['tmp_name'], $FileName);
-			$Message = ($Result)?__('File url')  . '<a href = "' . $FileName .'">' .  $FileName . '</a>' : __('Something is wrong with uploading a file');
+			$Message = ($Result)?__('File url')  . '<a href="' . $FileName .'">' .  $FileName . '</a>' : __('Something is wrong with uploading a file');
 }
 	} elseif (!empty($_POST['StockID']) and ($_POST['StockID'] != $_POST['OldStockID']) and file_exists($_SESSION['part_pics_dir'] . '/' . $_POST['OldStockID'] . '-TEMP' . '.' . $Ext) )  {
 		//rename the temp one to the new name
@@ -519,7 +519,7 @@ if (isset($_POST['submit'])) {
 
 					//finish up
 					if (DB_error_no() ==0) {
-						prnMsg( __('New cloned Item') .' ' . '<a href = "' . $RootPath . '/SelectProduct.php?StockID = ' . $_POST['StockID'] . '">' . $_POST['StockID'] . '</a> '. __('has been added to the database') .
+						prnMsg( __('New cloned Item') .' ' . '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $_POST['StockID'] . '">' . $_POST['StockID'] . '</a> '. __('has been added to the database') .
 							'<br />' . __('We also attempted to setup item purchase data and pricing.'));
 
 							if (isset($NoPricingData))
@@ -527,14 +527,14 @@ if (isset($_POST['submit'])) {
 								prnMsg(__('There is no pricing data to clone. Use the following link to add pricing.'));
 							}
 
-							prnMsg('<br />' . '<a target = "_blank" href = "' . $RootPath . '/Prices.php?Item = ' . $_POST['StockID'] . '">' . __('Review Item Prices') . '</a> ','success');
+							prnMsg('<br />' . '<a target="_blank" href="' . $RootPath . '/Prices.php?Item=' . $_POST['StockID'] . '">' . __('Review Item Prices') . '</a> ','success');
 
 							if ($NoPurchasingData == 1) {
 	prnMsg(__('There is no purchasing data to clone .Use the following link to add purchasing data.'));
 }
-							prnMsg('<br />' . '<a target = "_blank" href = "' . $RootPath . '/PurchData.php?StockID = ' . $_POST['StockID'] . '">' . __('Review Item Purchase Data.') . '</a> ','success') .
+							prnMsg('<br />' . '<a target="_blank" href="' . $RootPath . '/PurchData.php?StockID=' . $_POST['StockID'] . '">' . __('Review Item Purchase Data.') . '</a> ','success') .
 							prnMsg(__('Costing was updated for this cloned item.').
-							'<br />' . '<a target = "_blank" href = "' . $RootPath . '/StockCostUpdate.php?StockID = ' . $_POST['StockID'] . '">' . __('Review Item Cost') . '</a>', 'success');
+							'<br />' . '<a target="_blank" href="' . $RootPath . '/StockCostUpdate.php?StockID=' . $_POST['StockID'] . '">' . __('Review Item Cost') . '</a>', 'success');
 
 						echo '<br />';
 						unset($_POST['Description']);
@@ -579,9 +579,9 @@ $SQL = "SELECT description FROM stockmaster WHERE stockid = '" . $_POST['OldStoc
 $Result = DB_query($SQL);
 $MyRow = DB_fetch_array($Result);
 
-echo '<form name = "ItemForm" enctype = "multipart/form-data" method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
-echo '<input type = "hidden" name = "New" value = "'.$_POST['New'].'" />';
+echo '<form name="ItemForm" enctype = "multipart/form-data" method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<input type = "hidden" name="New" value = "'.$_POST['New'].'" />';
 
 echo '<fieldset>
 		<legend>', __('Clone'), ' ', $MyRow['description'], ' - ', $_POST['OldStockID'], '</legend>';
@@ -591,13 +591,13 @@ if (empty($_POST['StockID']) || ($_POST['StockID'] == $_POST['OldStockID']) || i
 /*If the page was called without $StockID or empty $StockID  then a new cloned stock item is to be entered. Show a form with a part Code field,
   otherwise show form for editing with only a hidden OldStockID field. */
 
-		$StockIDStyle =  !empty($_POST['StockID'])  && ($_POST['StockID'] != $_POST['OldStockID'])? '' : ' style = "color:red;border: 2px solid red;background-color:#fddbdb;" ';
+		$StockIDStyle =  !empty($_POST['StockID'])  && ($_POST['StockID'] != $_POST['OldStockID'])? '' : ' style="color:red;border: 2px solid red;background-color:#fddbdb;" ';
 		$StockID =  !empty($_POST['StockID'])? $_POST['StockID']:$_POST['OldStockID'];
 		echo '<field>
 				<label for = "StockID">'. __('Cloned Item Code'). ':</label>
-				<input type = "text" ' . (in_array('StockID',$Errors) ?  'class = "inputerror"' : '' ) .'"  "'.$StockIDStyle.'" data-type = "no-illegal-chars" autofocus = "autofocus" required = "required" value = "' . $StockID . '" name = "StockID" size = "21" maxlength = "20" />
+				<input type = "text" ' . (in_array('StockID',$Errors) ?  'class ="inputerror"' : '' ) .'"  "'.$StockIDStyle.'" data-type = "no-illegal-chars" autofocus = "autofocus" required = "required" value = "' . $StockID . '" name="StockID" size = "21" maxlength = "20" />
 				<fieldhelp>'. __('Enter a unique item code for the new item.') .'</fieldhelp>
-				<input type = "hidden" name = "OldStockID" value = "'.$_POST['OldStockID'].'" />
+				<input type = "hidden" name="OldStockID" value = "'.$_POST['OldStockID'].'" />
 			</field>';
 
 }
@@ -677,7 +677,7 @@ if ( (!isset($_POST['UpdateCategories']) and ($InputError != 1))  or $_POST['New
 	}
 	echo '<field>
 			<label for = "Description">' . __('Part Description') . ' (' . __('short') . '):</label>
-			<input ' . (in_array('Description',$Errors) ?  'class = "inputerror"' : '' ) .' type = "text" name = "Description" size = "52" maxlength = "50" value = "' . $Description . '" />
+			<input ' . (in_array('Description',$Errors) ?  'class ="inputerror"' : '' ) .' type = "text" name="Description" size = "52" maxlength = "50" value = "' . $Description . '" />
 		</field>';
 
 	foreach ($ItemDescriptionLanguagesArray as $LanguageId) {
@@ -690,8 +690,8 @@ if ( (!isset($_POST['UpdateCategories']) and ($InputError != 1))  or $_POST['New
 }
 			echo '<field>
 					<label for = "'. $PostVariableName . '">' . $LanguagesArray[$LanguageId]['LanguageName'] . ' ' . __('Description') . ':</label>
-					<input type = "text" name = "'. $PostVariableName . '" size = "52" maxlength = "50" value = "' . $_POST[$PostVariableName] . '" />
-					<input type = "hidden" name = "' . $LongDescriptionTranslated . '" value = "' . $_POST['LongDescription_' . str_replace('.','_',$LanguageId)] . '" />
+					<input type = "text" name="'. $PostVariableName . '" size = "52" maxlength = "50" value = "' . $_POST[$PostVariableName] . '" />
+					<input type = "hidden" name="' . $LongDescriptionTranslated . '" value = "' . $_POST['LongDescription_' . str_replace('.','_',$LanguageId)] . '" />
 				</field>';
 		}
 	}
@@ -703,14 +703,14 @@ if ( (!isset($_POST['UpdateCategories']) and ($InputError != 1))  or $_POST['New
 	}
 	echo '<field>
 			<label for = "LongDescription">' . __('Part Description') . ' (' . __('long') . '):</label>
-			<textarea ' . (in_array('LongDescription',$Errors) ?  'class = "texterror"' : '' ) .'  name = "LongDescription" cols = "40" rows = "3">' . stripslashes($LongDescription) . '</textarea>
+			<textarea ' . (in_array('LongDescription',$Errors) ?  'class ="texterror"' : '' ) .'  name="LongDescription" cols = "40" rows = "3">' . stripslashes($LongDescription) . '</textarea>
 		</field>
 		<field>
 			<label for = "ItemPicture">'. __('Image File (.jpg)') . ':</label>
-			<input type = "file" id = "ItemPicture" name = "ItemPicture" />
+			<input type = "file" id="ItemPicture" name="ItemPicture" />
 		<field>
 			<label for = "ClearImage">', ('Clear Image').'</label>
-			<input type = "checkbox" name = "ClearImage" id = "ClearImage" value = "1" />
+			<input type = "checkbox" name="ClearImage" id="ClearImage" value = "1" />
 		</field>';
 
 	// if this is the first time displaying the form, there will only be a picture with the OldStockID name, if any, else there can be a $_POST['OldStockID'].'-TEMP'. '.jpg' file if one was uploaded
@@ -721,15 +721,15 @@ if ( (!isset($_POST['UpdateCategories']) and ($InputError != 1))  or $_POST['New
 	}
 
 	if (extension_loaded('gd') && function_exists ('gd_info') && isset ($tempfile) ) {
-		$StockImgLink = '<img src = "GetStockImage.php?automake = 1&amp;textcolor = FFFFFF&amp;bgcolor = CCCCCC'.
-			'&amp;StockID = '.urlencode($TempID).
-			'&amp;text = '.
-			'&amp;width = 100'.
-			'&amp;height = 100'.
+		$StockImgLink = '<img src="GetStockImage.php?automake =1&amp;textcolor =FFFFFF&amp;bgcolor =CCCCCC'.
+			'&amp;StockID ='.urlencode($TempID).
+			'&amp;text ='.
+			'&amp;width =100'.
+			'&amp;height =100'.
 			'" alt = "" />';
 	} else {
 		if ( !empty($TempID) and file_exists($_SESSION['part_pics_dir'] . '/' .$TempID.'.' . $Ext) ) {
-			$StockImgLink = '<img src = "' . $_SESSION['part_pics_dir'] . '/' . $TempID . '.' . $Ext . '" height = "100" width = "100" />';
+			$StockImgLink = '<img src="' . $_SESSION['part_pics_dir'] . '/' . $TempID . '.' . $Ext . '" height = "100" width = "100" />';
 			if (isset($_POST['ClearImage']) ) {
 				//workaround for many variations of permission issues that could cause unlink fail
 				@unlink($_SESSION['part_pics_dir'] . '/' .$TempID.'.' . $Ext);
@@ -743,7 +743,7 @@ if ( (!isset($_POST['UpdateCategories']) and ($InputError != 1))  or $_POST['New
 			if (!copy($_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'.' . $Ext, $_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'-TEMP' . '.' . $Ext)) {
 				$StockImgLink = __('No Image');
 			} else {
-				$StockImgLink = '<img src = "' . $_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'-TEMP' . '.' . $Ext . '" height = "100" width = "100" />';
+				$StockImgLink = '<img src="' . $_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'-TEMP' . '.' . $Ext . '" height = "100" width = "100" />';
 			}
 		} else {
 			$StockImgLink = __('No Image');
@@ -757,7 +757,7 @@ if ( (!isset($_POST['UpdateCategories']) and ($InputError != 1))  or $_POST['New
 
 	echo '<field>
 			<label for = "CategoryID">' . __('Category') . ':</label>
-			<select name = "CategoryID" onchange = "ReloadForm(ItemForm.UpdateCategories)">';
+			<select name="CategoryID" onchange = "ReloadForm(ItemForm.UpdateCategories)">';
 
 	$SQL = "SELECT categoryid, categorydescription FROM stockcategory";
 	$ErrMsg = __('The stock categories could not be retrieved because');
@@ -776,7 +776,7 @@ if ( (!isset($_POST['UpdateCategories']) and ($InputError != 1))  or $_POST['New
 		$_POST['CategoryID']=$Category;
 	}
 
-	echo '</select><a target = "_blank" href = "'. $RootPath . '/StockCategories.php">' . __('Add or Modify Stock Categories') . '</a>
+	echo '</select><a target="_blank" href="'. $RootPath . '/StockCategories.php">' . __('Add or Modify Stock Categories') . '</a>
 		</field>';
 
 	if (!isset($_POST['EOQ']) or $_POST['EOQ']==''){
@@ -817,27 +817,27 @@ if ( (!isset($_POST['UpdateCategories']) and ($InputError != 1))  or $_POST['New
 
 	echo '<field>
 			<label for = "EOQ">' . __('Economic Order Quantity') . ':</label>
-			<input ' . (in_array('EOQ',$Errors) ?  'class = "inputerror"' : '' ) .'   type = "text" class = "number" name = "EOQ" size = "12" maxlength = "10" value = "' . locale_number_format($_POST['EOQ'],'Variable') . '" />
+			<input ' . (in_array('EOQ',$Errors) ?  'class ="inputerror"' : '' ) .'   type = "text" class="number" name="EOQ" size = "12" maxlength = "10" value = "' . locale_number_format($_POST['EOQ'],'Variable') . '" />
 		</field>';
 
 	echo '<field>
 			<label for = "Volume">' . __('Packaged Volume (metres cubed)') . ':</label>
-			<input ' . (in_array('Volume',$Errors) ?  'class = "inputerror"' : '' ) .'   type = "text" class = "number" name = "Volume" size = "12" maxlength = "10" value = "' . locale_number_format($_POST['Volume'],'Variable') . '" />
+			<input ' . (in_array('Volume',$Errors) ?  'class ="inputerror"' : '' ) .'   type = "text" class="number" name="Volume" size = "12" maxlength = "10" value = "' . locale_number_format($_POST['Volume'],'Variable') . '" />
 		</field>';
 
 	echo '<field>
 			<label for = "GrossWeight">' . __('Packaged Gross Weight (KGs)') . ':</label>
-			<td><input ' . (in_array('GrossWeight',$Errors) ?  'class = "inputerror"' : '' ) .'   type = "text" class = "number" name = "GrossWeight" size = "12" maxlength = "10" value = "' . locale_number_format($_POST['GrossWeight'],'Variable') . '" />
+			<td><input ' . (in_array('GrossWeight',$Errors) ?  'class ="inputerror"' : '' ) .'   type = "text" class="number" name="GrossWeight" size = "12" maxlength = "10" value = "' . locale_number_format($_POST['GrossWeight'],'Variable') . '" />
 		</field>';
 
 	echo '<field>
 			<label for = "NetWeight">' . __('Net Weight (KGs)') . ':</label>
-			<input ' . (in_array('NetWeight',$Errors) ?  'class = "inputerror"' : '' ) .'   type = "text" class = "number" name = "NetWeight" size = "12" maxlength = "10" value = "' . locale_number_format($_POST['NetWeight'],'Variable') . '" />
+			<input ' . (in_array('NetWeight',$Errors) ?  'class ="inputerror"' : '' ) .'   type = "text" class="number" name="NetWeight" size = "12" maxlength = "10" value = "' . locale_number_format($_POST['NetWeight'],'Variable') . '" />
 		</field>';
 
 		echo '<field>
 				<label for = "Description">' . __('Units of Measure') . ':</label>
-				<select ' . (in_array('Description',$Errors) ?  'class = "selecterror"' : '' ) .'  name = "Units">';
+				<select ' . (in_array('Description',$Errors) ?  'class ="selecterror"' : '' ) .'  name="Units">';
 
 	$SQL = "SELECT unitname FROM unitsofmeasure ORDER by unitname";
 	$UOMResult = DB_query($SQL);
@@ -858,7 +858,7 @@ if ( (!isset($_POST['UpdateCategories']) and ($InputError != 1))  or $_POST['New
 
 	echo '<field>
 			<label for = "MBFlag">' . __('Assembly, Kit, Manufactured or Service/Labour') . ':</label>
-			<select name = "MBFlag">';
+			<select name="MBFlag">';
 	if ($_POST['MBFlag']=='A') {
 	echo '<option selected = "selected" value = "A">' . __('Assembly') . '</option>';
 } else {
@@ -896,7 +896,7 @@ if ( (!isset($_POST['UpdateCategories']) and ($InputError != 1))  or $_POST['New
 
 	echo '<field>
 			<label for = "Discontinued">' . __('Current or Obsolete') . ':</label>
-			<select name = "Discontinued">';
+			<select name="Discontinued">';
 
 	if ($_POST['Discontinued']==0) {
 	echo '<option selected = "selected" value = "0">' . __('Current') . '</option>';
@@ -913,7 +913,7 @@ if ( (!isset($_POST['UpdateCategories']) and ($InputError != 1))  or $_POST['New
 
 	echo '<field>
 			<label for = "Controlled">' . __('Batch, Serial or Lot Control') . ':</label>
-			<select name = "Controlled">';
+			<select name="Controlled">';
 
 	if ($_POST['Controlled']==0) {
 	echo '<option selected = "selected" value = "0">' . __('No Control') . '</option>';
@@ -930,7 +930,7 @@ if ( (!isset($_POST['UpdateCategories']) and ($InputError != 1))  or $_POST['New
 
 	echo '<field>
 			<label for = "Serialised">' . __('Serialised') . ':</label>
-			<select ' . (in_array('Serialised',$Errors) ?  'class = "selecterror"' : '' ) .'  name = "Serialised">';
+			<select ' . (in_array('Serialised',$Errors) ?  'class ="selecterror"' : '' ) .'  name="Serialised">';
 
 	if ($_POST['Serialised']==0) {
 	echo '<option selected = "selected" value = "0">' . __('No'). '</option>';
@@ -949,14 +949,14 @@ if ( (!isset($_POST['UpdateCategories']) and ($InputError != 1))  or $_POST['New
 	if ($_POST['Serialised']==1 and $_POST['MBFlag']=='M') {
 	echo '<field>
 				<td>' . __('Next Serial No (>0 for auto numbering)') . ':</td>
-				<td><input ' . (in_array('NextSerialNo',$Errors) ?  'class = "inputerror"' : '' ) .' type = "text" name = "NextSerialNo" size = "15" maxlength = "15" value = "' . $_POST['NextSerialNo'] . '" /></td></field>';
+				<td><input ' . (in_array('NextSerialNo',$Errors) ?  'class ="inputerror"' : '' ) .' type = "text" name="NextSerialNo" size = "15" maxlength = "15" value = "' . $_POST['NextSerialNo'] . '" /></td></field>';
 } else {
-		echo '<field><td><input type = "hidden" name = "NextSerialNo" value = "0" /></td></field>';
+		echo '<field><td><input type = "hidden" name="NextSerialNo" value = "0" /></td></field>';
 	}
 
 	echo '<field>
 			<label for = "Perishable">' . __('Perishable') . ':</label>
-			<select name = "Perishable">';
+			<select name="Perishable">';
 
 	if (!isset($_POST['Perishable']) or  $_POST['Perishable']==0){
 			echo '<option selected = "selected" value = "0">' . __('No'). '</option>';
@@ -973,7 +973,7 @@ if ( (!isset($_POST['UpdateCategories']) and ($InputError != 1))  or $_POST['New
 
 	echo '<field>
 			<label for = "DecimalPlaces">' . __('Decimal Places for display Quantity') . ':</label>
-			<input type = "text" class = "number" name = "DecimalPlaces" size = "1" maxlength = "1" value = "' . $_POST['DecimalPlaces'] . '" />
+			<input type = "text" class="number" name="DecimalPlaces" size = "1" maxlength = "1" value = "' . $_POST['DecimalPlaces'] . '" />
 		</field>';
 
 	if (isset($_POST['BarCode'])) {
@@ -983,7 +983,7 @@ if ( (!isset($_POST['UpdateCategories']) and ($InputError != 1))  or $_POST['New
 	}
 	echo '<field>
 			<label for = "BarCode">' . __('Bar Code') . ':</label>
-			<input ' . (in_array('BarCode',$Errors) ?  'class = "inputerror"' : '' ) .'  type = "text" name = "BarCode" size = "22" maxlength = "20" value = "' . $BarCode . '" />
+			<input ' . (in_array('BarCode',$Errors) ?  'class ="inputerror"' : '' ) .'  type = "text" name="BarCode" size = "22" maxlength = "20" value = "' . $BarCode . '" />
 		</field>';
 
 	if (isset($_POST['DiscountCategory'])) {
@@ -993,12 +993,12 @@ if ( (!isset($_POST['UpdateCategories']) and ($InputError != 1))  or $_POST['New
 	}
 	echo '<field>
 			<label for = "DiscountCategory">' . __('Discount Category') . ':</label>
-			<input type = "text" name = "DiscountCategory" size = "2" maxlength = "2" value = "' . $DiscountCategory . '" />
+			<input type = "text" name="DiscountCategory" size = "2" maxlength = "2" value = "' . $DiscountCategory . '" />
 		</field>';
 
 	echo '<field>
 			<label for = "TaxCat">' . __('Tax Category') . ':</label>
-			<select name = "TaxCat">';
+			<select name="TaxCat">';
 	$SQL = "SELECT taxcatid, taxcatname FROM taxcategories ORDER BY taxcatname";
 	$Result = DB_query($SQL);
 
@@ -1019,16 +1019,16 @@ if ( (!isset($_POST['UpdateCategories']) and ($InputError != 1))  or $_POST['New
 
 	echo '<field>
 			<label for = "Pansize">' . __('Pan Size') . ':</label>
-			<input type = "text" class = "number" name = "Pansize" size = "6" maxlength = "6" value = "' . locale_number_format($_POST['Pansize'],0) . '" />
+			<input type = "text" class="number" name="Pansize" size = "6" maxlength = "6" value = "' . locale_number_format($_POST['Pansize'],0) . '" />
 		</field>
 		 <field>
 			<label for = "ShrinkFactor">' . __('Shrinkage Factor') . ':</label>
-			<input type = "text" class = "number" name = "ShrinkFactor" size = "6" maxlength = "6" value = "' . locale_number_format($_POST['ShrinkFactor'],0) . '" />
+			<input type = "text" class="number" name="ShrinkFactor" size = "6" maxlength = "6" value = "' . locale_number_format($_POST['ShrinkFactor'],0) . '" />
 		</field>';
 
 	echo '</fieldset>';
 
-	echo '<div class = "centre">';
+	echo '<div class="centre">';
 
 	if (!isset($_POST['CategoryID'])) {
 		$_POST['CategoryID'] = '';
@@ -1052,7 +1052,7 @@ if ( (!isset($_POST['UpdateCategories']) and ($InputError != 1))  or $_POST['New
 
 	if (DB_num_rows($PropertiesResult)>0) {
 	echo '<br />
-		<table class = "selection">';
+		<table class="selection">';
 		echo '<tr>
 				<th colspan = "2">' . __('Item Category Properties') . '</th>
 			</tr>';
@@ -1071,26 +1071,26 @@ if ( (!isset($_POST['UpdateCategories']) and ($InputError != 1))  or $_POST['New
 			}
 			echo '<tr>
 					<td>';
-					echo '<input type = "hidden" name = "PropID' . $PropertyCounter . '" value = "' .$PropertyRow['stkcatpropid'] .'" />';
-					echo '<input type = "hidden" name = "PropNumeric' . $PropertyCounter . '" value = "' .$PropertyRow['numericvalue'] .'" />';
+					echo '<input type = "hidden" name="PropID' . $PropertyCounter . '" value = "' .$PropertyRow['stkcatpropid'] .'" />';
+					echo '<input type = "hidden" name="PropNumeric' . $PropertyCounter . '" value = "' .$PropertyRow['numericvalue'] .'" />';
 					echo $PropertyRow['label'] . '</td>
 
 					<td>';
 			switch ($PropertyRow['controltype']) {
 				case 0: //textbox
 					if ($PropertyRow['numericvalue']==1) {
-	echo '<input type = "hidden" name = "PropMin' . $PropertyCounter . '" value = "' . $PropertyRow['minimumvalue'] . '" />';
-						echo '<input type = "hidden" name = "PropMax' . $PropertyCounter . '" value = "' . $PropertyRow['maximumvalue'] . '" />';
+	echo '<input type = "hidden" name="PropMin' . $PropertyCounter . '" value = "' . $PropertyRow['minimumvalue'] . '" />';
+						echo '<input type = "hidden" name="PropMax' . $PropertyCounter . '" value = "' . $PropertyRow['maximumvalue'] . '" />';
 
-						echo '<input type = "text" class = "number" name = "PropValue' . $PropertyCounter . '" size = "20" maxlength = "100" value = "' . locale_number_format($PropertyValue,'Variable') . '" />';
+						echo '<input type = "text" class="number" name="PropValue' . $PropertyCounter . '" size = "20" maxlength = "100" value = "' . locale_number_format($PropertyValue,'Variable') . '" />';
 						echo __('A number between') . ' ' . locale_number_format($PropertyRow['minimumvalue'],'Variable') . ' ' . __('and') . ' ' . locale_number_format($PropertyRow['maximumvalue'],'Variable') . ' ' . __('is expected');
 } else {
-						echo '<input type = "text" name = "PropValue' . $PropertyCounter . '" size = "20" maxlength = "100" value = "' . $PropertyValue . '" />';
+						echo '<input type = "text" name="PropValue' . $PropertyCounter . '" size = "20" maxlength = "100" value = "' . $PropertyValue . '" />';
 					}
 					break;
 				case 1: //select box
 					$OptionValues = explode(',',$PropertyRow['defaultvalue']);
-					echo '<select name = "PropValue' . $PropertyCounter . '">';
+					echo '<select name="PropValue' . $PropertyCounter . '">';
 					foreach ($OptionValues as $PropertyOptionValue){
 						if ($PropertyOptionValue == $PropertyValue) {
 	echo '<option selected = "selected" value = "' . $PropertyOptionValue . '">' . $PropertyOptionValue . '</option>';
@@ -1101,14 +1101,14 @@ if ( (!isset($_POST['UpdateCategories']) and ($InputError != 1))  or $_POST['New
 					echo '</select>';
 					break;
 				case 2: //checkbox
-					echo '<input type = "checkbox" name = "PropValue' . $PropertyCounter . '"';
+					echo '<input type = "checkbox" name="PropValue' . $PropertyCounter . '"';
 					if ($PropertyValue == 1) {
 	echo 'checked';
 }
 					echo ' />';
 					break;
 			} //end switch
-			echo '<input type = "hidden" name = "PropType' . $PropertyCounter .'" value = "' . $PropertyRow['controltype'] . '" />';
+			echo '<input type = "hidden" name="PropType' . $PropertyCounter .'" value = "' . $PropertyRow['controltype'] . '" />';
 			echo '</td></tr>';
 			$PropertyCounter++;
 
@@ -1116,10 +1116,10 @@ if ( (!isset($_POST['UpdateCategories']) and ($InputError != 1))  or $_POST['New
 	   unset($StockID);
 		echo '</fieldset>';
 	}
-	echo '<input type = "hidden" name = "PropertyCounter" value = "' . $PropertyCounter . '" />';
+	echo '<input type = "hidden" name="PropertyCounter" value = "' . $PropertyCounter . '" />';
 
-	echo '<input type = "submit" name = "submit" value = "' . __('Insert New Item') . '" />';
-	echo '<input type = "submit" name = "UpdateCategories" style = "visibility:hidden;width:1px" value = "' . __('Categories') . '" />';
+	echo '<input type = "submit" name="submit" value = "' . __('Insert New Item') . '" />';
+	echo '<input type = "submit" name="UpdateCategories" style="visibility:hidden;width:1px" value = "' . __('Categories') . '" />';
 
 //}
 echo '</div>

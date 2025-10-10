@@ -15,8 +15,8 @@ if (isset($_GET['SelectedReason'])){
 
 $Errors = array();
 $InputError = 0;
-echo '<p class = "page_title_text">
-		<img src = "'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title = "' . __('Search') . '" alt = "" />' . ' ' . $Title.'
+echo '<p class="page_title_text">
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title.'
 	</p>
 	<br />';
 
@@ -145,7 +145,7 @@ or deletion of the records*/
 	$SQL = "SELECT reasoncode, reasondescription, dissallowinvoices FROM holdreasons";
 	$Result = DB_query($SQL);
 
-	echo '<table class = "selection">
+	echo '<table class="selection">
 		<tr>
 			<th>' .  __('Status Code')  . '</th>
 			<th>' .  __('Description')  . '</th>
@@ -161,12 +161,12 @@ or deletion of the records*/
 			$DissallowText = '<b>' .  __('NO INVOICING')  . '</b>';
 		}
 
-		echo '<tr class = "striped_row">
+		echo '<tr class="striped_row">
 				<td>', $MyRow['reasoncode'], '</td>
 				<td>', $MyRow['reasondescription'], '</td>
 				<td>', $DissallowText, '</td>
-				<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedReason = ', $MyRow['reasoncode'], '">' . __('Edit') . '</a></td>
-				<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedReason = ', $MyRow['reasoncode'], '&amp;delete = 1" onclick = "return confirm(\'' . __('Are you sure you wish to delete this credit status record?') . '\');">' .  __('Delete')  . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedReason=', $MyRow['reasoncode'], '">' . __('Edit') . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedReason=', $MyRow['reasoncode'], '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this credit status record?') . '\');">' .  __('Delete')  . '</a></td>
 			</tr>';
 
 	} //END while LIST LOOP
@@ -175,15 +175,15 @@ or deletion of the records*/
 } //end of ifs and buts!
 
 if (isset($SelectedReason)) {
-	echo '<div class = "centre">
-			<a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Show Defined Credit Status Codes') . '</a>
+	echo '<div class="centre">
+			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Show Defined Credit Status Codes') . '</a>
 		</div>';
 }
 
 if (!isset($_GET['delete'])) {
 
 	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedReason) and ($InputError !=  1)) {
 		//editing an existing status code
@@ -201,8 +201,8 @@ if (!isset($_GET['delete'])) {
 		$_POST['ReasonDescription']  = $MyRow['reasondescription'];
 		$_POST['DisallowInvoices']  = $MyRow['dissallowinvoices'];
 
-		echo '<input type = "hidden" name = "SelectedReason" value = "' . $SelectedReason . '" />';
-		echo '<input type = "hidden" name = "ReasonCode" value = "' . $_POST['ReasonCode'] . '" />';
+		echo '<input type = "hidden" name="SelectedReason" value = "' . $SelectedReason . '" />';
+		echo '<input type = "hidden" name="ReasonCode" value = "' . $_POST['ReasonCode'] . '" />';
 		echo '<fieldset>
 				<legend>', __('Edit Credit Status'), '</legend>
 				<field>
@@ -218,7 +218,7 @@ if (!isset($_GET['delete'])) {
 				<legend>', __('Create Credit Status'), '</legend>
 				<field>
 					<label for = "ReasonCode">' .  __('Status Code') .':</label>
-					<input ' . (in_array('ReasonCode',$Errors) ? 'class = "integer inputerror"' : 'class = "integer"' ) . ' tabindex = "1" type = "text" name = "ReasonCode" required = "required" value = "'. $_POST['ReasonCode'] .'" size = "3" maxlength = "2" />
+					<input ' . (in_array('ReasonCode',$Errors) ? 'class ="integer inputerror"' : 'class = "integer"' ) . ' tabindex = "1" type = "text" name="ReasonCode" required = "required" value = "'. $_POST['ReasonCode'] .'" size = "3" maxlength = "2" />
 				</field>';
 	}
 
@@ -227,21 +227,21 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<field>
 			<label for = "ReasonDescription">' .  __('Description') .':</label>
-			<input ' . (in_array('ReasonDescription',$Errors) ? 'class = "inputerror"' : '' ) .
-			 ' tabindex = "2" type = "text" name = "ReasonDescription" required = "required" value = "'. $_POST['ReasonDescription'] .'" size = "28" maxlength = "30" />
+			<input ' . (in_array('ReasonDescription',$Errors) ? 'class ="inputerror"' : '' ) .
+			 ' tabindex = "2" type = "text" name="ReasonDescription" required = "required" value = "'. $_POST['ReasonDescription'] .'" size = "28" maxlength = "30" />
 		</field>
 		<field>
 			<label for = "DisallowInvoices">' .  __('Disallow Invoices') . '</label>';
 	if (isset($_POST['DisallowInvoices']) and $_POST['DisallowInvoices']==1) {
-		echo '<input tabindex = "3" type = "checkbox" checked = "checked" name = "DisallowInvoices" />
+		echo '<input tabindex = "3" type = "checkbox" checked = "checked" name="DisallowInvoices" />
 			</field>';
 	} else {
-		echo '<input tabindex = "3" type = "checkbox" name = "DisallowInvoices" />
+		echo '<input tabindex = "3" type = "checkbox" name="DisallowInvoices" />
 			</field>';
 	}
 	echo '</fieldset>
-			<div class = "centre">
-				<input tabindex = "4" type = "submit" name = "submit" value = "' . __('Enter Information') . '" />
+			<div class="centre">
+				<input tabindex = "4" type = "submit" name="submit" value = "' . __('Enter Information') . '" />
             </div>
 			</form>';
 } //end if record deleted no point displaying form to add record

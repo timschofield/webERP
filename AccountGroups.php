@@ -38,7 +38,7 @@ if (isset($_POST['MoveGroup'])) {
 	$SQL = "UPDATE chartmaster SET group_ = '" . $_POST['DestinyAccountGroup'] . "' WHERE group_ = '" . $_POST['OriginalAccountGroup'] . "'";
 	$ErrMsg = __('An error occurred in moving the account group');
 	$Result = DB_query($SQL, $ErrMsg);
-	echo '<div class = "centre"><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . __('Review Account Groups') . '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . __('Review Account Groups') . '</a></div>';
 	prnMsg( __('All accounts in the account group:') . ' ' . $_POST['OriginalAccountGroup'] . ' ' . __('have been changed to the account group:') . ' ' . $_POST['DestinyAccountGroup'],'success');
 }
 
@@ -189,14 +189,14 @@ if (isset($_POST['submit'])) {
 	if ($MyRow['total_groups']>0) {
 	prnMsg( __('Cannot delete this account group because general ledger accounts have been created using this group'),'warn');
 		echo '<br />' . __('There are') . ' ' . $MyRow['total_groups'] . ' ' . __('general ledger accounts that refer to this account group');
-		echo '<br /><form method = "post" id = "AccountGroups" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+		echo '<br /><form method = "post" id="AccountGroups" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 
-		echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
-		echo '<table class = "selection">';
-		echo '<input type = "hidden" name = "OriginalAccountGroup" value = "' . $_GET['SelectedAccountGroup'] . '" />';
+		echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+		echo '<table class="selection">';
+		echo '<input type = "hidden" name="OriginalAccountGroup" value = "' . $_GET['SelectedAccountGroup'] . '" />';
 		echo '<tr>
 				<td>' . __('Parent Group') . ':' . '</td>
-				<td><select tabindex = "2" ' . (in_array('ParentGroupName',$Errors) ? 'class = "selecterror"' : '' ) . ' name = "DestinyAccountGroup">';
+				<td><select tabindex = "2" ' . (in_array('ParentGroupName',$Errors) ? 'class ="selecterror"' : '' ) . ' name="DestinyAccountGroup">';
 
 		$SQL = "SELECT groupname FROM accountgroups";
 		$GroupResult = DB_query($SQL, $ErrMsg);
@@ -211,7 +211,7 @@ if (isset($_POST['submit'])) {
 		echo '</select>';
 		echo '</td></tr>';
 		echo '<tr>
-				<td colspan = "2"><div class = "centre"><input tabindex = "6" type = "submit" name = "MoveGroup" value = "' . __('Move Group') . '" /></div></td>
+				<td colspan = "2"><div class="centre"><input tabindex = "6" type = "submit" name="MoveGroup" value = "' . __('Move Group') . '" /></div></td>
 			</tr>
 			</table>';
 
@@ -253,17 +253,17 @@ if (!isset($_GET['SelectedAccountGroup']) and !isset($_POST['SelectedAccountGrou
 
 	$ErrMsg = __('Could not get account groups because');
 	$Result = DB_query($SQL, $ErrMsg);
-	echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" alt = "" title = "' . $Title . '" />' . ' ' . $Title . '</p><br />';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" alt="" title="' . $Title . '" />' . ' ' . $Title . '</p><br />';
 
-	echo '<table class = "selection">
+	echo '<table class="selection">
 			<thead>
 			<tr>
-				<th class = "SortedColumn">' . __('Group Name') . '</th>
-				<th class = "SortedColumn">' . __('Section') . '</th>
-				<th class = "SortedColumn">' . __('Sequence In TB') . '</th>
-				<th class = "SortedColumn">' . __('Profit and Loss') . '</th>
-				<th class = "SortedColumn">' . __('Parent Group') . '</th>
-				<th class = "noPrint" colspan = "2">&nbsp;</th>
+				<th class="SortedColumn">' . __('Group Name') . '</th>
+				<th class="SortedColumn">' . __('Section') . '</th>
+				<th class="SortedColumn">' . __('Sequence In TB') . '</th>
+				<th class="SortedColumn">' . __('Profit and Loss') . '</th>
+				<th class="SortedColumn">' . __('Parent Group') . '</th>
+				<th class="noPrint" colspan = "2">&nbsp;</th>
 				</tr>
 			</thead>
 			<tbody>';
@@ -282,14 +282,14 @@ if (!isset($_GET['SelectedAccountGroup']) and !isset($_POST['SelectedAccountGrou
 			break;
 		} //end of switch statement
 
-		echo '<tr class = "striped_row">
+		echo '<tr class="striped_row">
 			<td>' . htmlspecialchars($MyRow['groupname'], ENT_QUOTES,'UTF-8') . '</td>
 			<td>' . $MyRow['sectionname'] . '</td>
-			<td class = "number">' . $MyRow['sequenceintb'] . '</td>
+			<td class="number">' . $MyRow['sequenceintb'] . '</td>
 			<td>' . $PandLText . '</td>
 			<td>' . $MyRow['parentgroupname'] . '</td>';
-		echo '<td class = "noPrint"><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedAccountGroup = ' . urlencode($MyRow['groupname']), ENT_QUOTES,'UTF-8') . '">' . __('Edit') . '</a></td>';
-		echo '<td class = "noPrint"><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedAccountGroup = ' . urlencode($MyRow['groupname']), ENT_QUOTES,'UTF-8') . '&amp;delete = 1" onclick = "return confirm(\'' . __('Are you sure you wish to delete this account group?') . '\');">' . __('Delete') . '</a></td></tr>';
+		echo '<td class="noPrint"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedAccountGroup=' . urlencode($MyRow['groupname']), ENT_QUOTES,'UTF-8') . '">' . __('Edit') . '</a></td>';
+		echo '<td class="noPrint"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedAccountGroup=' . urlencode($MyRow['groupname']), ENT_QUOTES,'UTF-8') . '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this account group?') . '\');">' . __('Delete') . '</a></td></tr>';
 
 	} //END while LIST LOOP
 	echo '</tbody>
@@ -298,13 +298,13 @@ if (!isset($_GET['SelectedAccountGroup']) and !isset($_POST['SelectedAccountGrou
 
 
 if (isset($_POST['SelectedAccountGroup']) or isset($_GET['SelectedAccountGroup'])) {
-	echo '<a class = "toplink" href = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . __('Review Account Groups') . '</a>';
+	echo '<a class="toplink" href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . __('Review Account Groups') . '</a>';
 }
 
 if (!isset($_GET['delete'])) {
 
-	echo '<form method = "post" id = "AccountGroups" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<form method = "post" id="AccountGroups" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 	if (isset($_GET['SelectedAccountGroup'])) {
 		//editing an existing account group
@@ -334,7 +334,7 @@ if (!isset($_GET['delete'])) {
 
 		echo '<fieldset>
 				<legend>', __('Edit Account Group Details'), '</legend>
-				<input name = "SelectedAccountGroup" type = "hidden" value = "', $_GET['SelectedAccountGroup'], '" />';
+				<input name="SelectedAccountGroup" type = "hidden" value = "', $_GET['SelectedAccountGroup'], '" />';
 
 	} elseif (!isset($_POST['MoveGroup'])) { //end of if $_POST['SelectedAccountGroup'] only do the else when a new record is being entered
 
@@ -356,20 +356,20 @@ if (!isset($_GET['delete'])) {
 
 		echo '<fieldset>
 				<legend>', __('New Account Group Details'), '</legend>
-				<input name = "SelectedAccountGroup" type = "hidden" value = "', $_POST['SelectedAccountGroup'], '" />';
+				<input name="SelectedAccountGroup" type = "hidden" value = "', $_POST['SelectedAccountGroup'], '" />';
 	}
 	echo '<field>
 			<label for = "GroupName">', __('Account Group Name'), ':</label>
-			<input autofocus = "autofocus" data-type = "no-illegal-chars" maxlength = "30" minlength = "3" name = "GroupName" required = "required" size = "30" tabindex = "1" type = "text" value = "' . $_POST['GroupName'] . '" title = "' . __('A unique name for the account group must be entered - at least 3 characters long and less than 30 characters long. Only alpha numeric characters can be used.') . '" />
+			<input autofocus = "autofocus" data-type = "no-illegal-chars" maxlength = "30" minlength = "3" name="GroupName" required = "required" size = "30" tabindex = "1" type = "text" value = "' . $_POST['GroupName'] . '" title="' . __('A unique name for the account group must be entered - at least 3 characters long and less than 30 characters long. Only alpha numeric characters can be used.') . '" />
 			<fieldhelp>' . __('Enter the account group name') . '</fieldhelp>
 		</field>
 		<field>
 			<label for = "ParentGroupName">', __('Parent Group'), ':</label>
 			<select ',
-				( in_array('ParentGroupName',$Errors) ? 'class = "selecterror" ' : '' ),
+				( in_array('ParentGroupName',$Errors) ? 'class ="selecterror" ' : '' ),
 				'name = "ParentGroupName" tabindex = "2">';
 	echo '<option ',
-		( !isset($_POST['ParentGroupName']) ? 'selected = "selected" ' : '' ),
+		( !isset($_POST['ParentGroupName']) ? 'selected ="selected" ' : '' ),
 		'value = "">', __('Top Level Group'), '</option>';
 
 	$SQL = "SELECT groupname FROM accountgroups";
@@ -388,7 +388,7 @@ if (!isset($_GET['delete'])) {
 	echo '<field>
 			<label for = "SectionInAccounts">', __('Section In Accounts'), ':</label>
 			<select ',
-				( in_array('SectionInAccounts',$Errors) ? 'class = "selecterror" ' : '' ),
+				( in_array('SectionInAccounts',$Errors) ? 'class ="selecterror" ' : '' ),
 				'name = "SectionInAccounts" tabindex = "3">';
 
 	$SQL = "SELECT sectionid, sectionname FROM accountsection ORDER BY sectionid";
@@ -406,7 +406,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<field>
 			<label for = "PandL">', __('Profit and Loss'), ':</label>
-			<select name = "PandL" tabindex = "4" title = "">';
+			<select name="PandL" tabindex = "4" title="">';
 	if ($_POST['PandL']!=0 ) {
 	echo '<option value = "0">', __('No'), '</option>',
 			'<option selected = "selected" value = "1">', __('Yes'), '</option>';
@@ -420,20 +420,20 @@ if (!isset($_GET['delete'])) {
 
 	echo '<field>
 			<label for = "SequenceInTB">', __('Sequence In TB'), ':</label>
-			<input class = "number" maxlength = "4" name = "SequenceInTB" required = "required" tabindex = "5" type = "text" value = "', $_POST['SequenceInTB'], '" title = "" />
+			<input class="number" maxlength = "4" name="SequenceInTB" required = "required" tabindex = "5" type = "text" value = "', $_POST['SequenceInTB'], '" title="" />
 			<fieldhelp>', __('Enter the sequence number that this account group and its child general ledger accounts should display in the trial balance'), '</fieldhelp>
 		</field>';
 
 	echo '</fieldset>';
 	if (isset($_GET['SelectedAccountGroup'])) {
-		echo '<div class = "centre">
-				<input type = "submit" name = "submit" value = "', __('Update'), '" />
-				<input type = "reset" name = "reset" value = "', __('Return'), '" />
+		echo '<div class="centre">
+				<input type = "submit" name="submit" value = "', __('Update'), '" />
+				<input type = "reset" name="reset" value = "', __('Return'), '" />
 			</div>';
 	} else {
-		echo '<div class = "centre">
-				<input type = "submit" name = "submit" value = "', __('Insert'), '" />
-				<input type = "reset" name = "reset" value = "', __('Return'), '" />
+		echo '<div class="centre">
+				<input type = "submit" name="submit" value = "', __('Insert'), '" />
+				<input type = "reset" name="reset" value = "', __('Return'), '" />
 			</div>';
 	}
 	echo '</form>';

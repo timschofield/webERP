@@ -58,11 +58,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '<link href = "css/reports.css" rel = "stylesheet" type = "text/css" />';
 	}
 
-	$HTML .= '<meta name = "author" content = "WebERP " . $Version">
-				<meta name = "Creator" content = "webERP https://www.weberp.org">
+	$HTML .= '<meta name="author" content = "WebERP " . $Version">
+				<meta name="Creator" content = "webERP https://www.weberp.org">
 				</head>
 				<body>
-				<div class = "centre" id = "ReportHeader">
+				<div class="centre" id="ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 					' . __('Top sales items list') . '<br />
 					' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
@@ -71,18 +71,18 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					' . __('Stock Category') . ' - ' . $_POST['StockCat'] . '<br />
 				</div>';
 
-	$HTML .= '<table class = "selection">
+	$HTML .= '<table class="selection">
 				<thead>
 					<tr>
 						<th>' . __('#') . '</th>
-						<th class = "SortedColumn">' . __('Code') . '</th>
-						<th class = "SortedColumn">' . __('Description') . '</th>
-						<th class = "SortedColumn">' . __('Total Invoiced') . '</th>
-						<th class = "SortedColumn">' . __('Units') . '</th>
-						<th class = "SortedColumn">' . __('Value Sales') . '</th>
-						<th class = "SortedColumn">' . __('On Hand') . '</th>
-						<th class = "SortedColumn">' . __('On Order') . '</th>
-						<th class = "SortedColumn">' . __('Stock (Days)') . '</th>
+						<th class="SortedColumn">' . __('Code') . '</th>
+						<th class="SortedColumn">' . __('Description') . '</th>
+						<th class="SortedColumn">' . __('Total Invoiced') . '</th>
+						<th class="SortedColumn">' . __('Units') . '</th>
+						<th class="SortedColumn">' . __('Value Sales') . '</th>
+						<th class="SortedColumn">' . __('On Hand') . '</th>
+						<th class="SortedColumn">' . __('On Order') . '</th>
+						<th class="SortedColumn">' . __('Stock (Days)') . '</th>
 					</tr>
 		</thead>
 		<tbody>';
@@ -117,19 +117,19 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			$DaysOfStock = 0;
 		}
 		if ($DaysOfStock < $_POST['MaxDaysOfStock']) {
-	$CodeLink = '<a href = "' . $RootPath . '/SelectProduct.php?StockID = ' . $MyRow['stkcode'] . '">' . $MyRow['stkcode'] . '</a>';
+	$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stkcode'] . '">' . $MyRow['stkcode'] . '</a>';
 			$QOH = is_numeric($QOH)?locale_number_format($QOH,$MyRow['decimalplaces']):$QOH;
 			$QOO = is_numeric($QOO)?locale_number_format($QOO,$MyRow['decimalplaces']):$QOO;
-			$HTML .= '<tr class = "striped_row">
-						<td class = "number">' . $i . '</td>
+			$HTML .= '<tr class="striped_row">
+						<td class="number">' . $i . '</td>
 						<td>' . $CodeLink . '</td>
 						<td>' . $MyRow['description'] . '</td>
-						<td class = "number">' . locale_number_format($MyRow['totalinvoiced'],$MyRow['decimalplaces']) . '</td>
+						<td class="number">' . locale_number_format($MyRow['totalinvoiced'],$MyRow['decimalplaces']) . '</td>
 						<td>' . $MyRow['units'] . '</td>
-						<td class = "number">' . locale_number_format($MyRow['valuesales'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-						<td class = "number">' . $QOH . '</td>
-						<td class = "number">' . $QOO . '</td>
-						<td class = "number">' . locale_number_format($DaysOfStock, 0) . '</td>
+						<td class="number">' . locale_number_format($MyRow['valuesales'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class="number">' . $QOH . '</td>
+						<td class="number">' . $QOO . '</td>
+						<td class="number">' . locale_number_format($DaysOfStock, 0) . '</td>
 					</tr>';
 }
 		$i++;
@@ -137,17 +137,17 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	if (isset($_POST['PrintPDF'])) {
 		$HTML .= '</tbody>
-				<div class = "footer fixed-section">
-					<div class = "right">
-						<span class = "page-number">Page </span>
+				<div class="footer fixed-section">
+					<div class="right">
+						<span class="page-number">Page </span>
 					</div>
 				</div>
 			</table>';
 	} else {
 		$HTML .= '</tbody>
 				</table>
-				<div class = "centre">
-					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" /></form>
+				<div class="centre">
+					<form><input type = "submit" name="close" value = "' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -170,8 +170,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	} else {
 		$Title = __('Top Sales Items List');
 		include('includes/header.php');
-		echo '<p class = "page_title_text">
-				<img src = "' . $RootPath . '/css/' . $Theme . '/images/sales.png" title = "' . __('Top Sales Items List') . '" alt = "" />' . ' ' . __('Top Sales Items List') . '
+		echo '<p class="page_title_text">
+				<img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . __('Top Sales Items List') . '" alt="" />' . ' ' . __('Top Sales Items List') . '
 			</p>';
 		echo $HTML;
 		include('includes/footer.php');
@@ -182,17 +182,17 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$BookMark = '';
 	include('includes/header.php');
 
-	echo '<p class = "page_title_text">
-			<img src = "' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title = "' . __('Top Sales Order Search') . '" alt = "" />' . ' ' . __('Top Sales Order Search') . '
+	echo '<p class="page_title_text">
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . __('Top Sales Order Search') . '" alt="" />' . ' ' . __('Top Sales Order Search') . '
 		</p>';
-	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post" target = "_blank">';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post" target="_blank">';
+	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 	echo '<fieldset>
 			<legend>', __('Report Criteria'), '</legend>';
 	//to view store location
 	echo '<field>
 			<label for = "Location">' . __('Select Location') . ':  </label>
-			<select name = "Location">';
+			<select name="Location">';
 	$SQL = "SELECT locations.loccode,
 					locationname
 			FROM locations
@@ -207,7 +207,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	//to view list of customer
 	echo '<field>
 			<label for = "Customers">' . __('Select Customer Type') . ':</label>
-			<select name = "Customers">';
+			<select name="Customers">';
 
 	$SQL = "SELECT typename,
 					typeid
@@ -230,7 +230,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	echo '<field>
 			<label for = "StockCat">' . __('In Stock Category') . ' </label>
-			<select name = "StockCat">';
+			<select name="StockCat">';
 	if (!isset($_POST['StockCat'])){
 		$_POST['StockCat']='All';
 	}
@@ -252,7 +252,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	//view order by list to display
 	echo '<field>
 			<label for = "Sequence">' . __('Select Order By ') . ':</label>
-			<select name = "Sequence">
+			<select name="Sequence">
 				<option value = "totalinvoiced">' . __('Total Pieces') . '</option>
 				<option value = "valuesales">' . __('Value of Sales') . '</option>
 			</select>
@@ -261,27 +261,27 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	//View number of days
 	echo '<field>
 			<label for = "NumberOfDays">' . __('Number Of Days') . ':</label>
-			<input class = "integer" required = "required" pattern = "(?!^0*$)(\d+)" title = "" tabindex = "3" type = "text" name = "NumberOfDays" size = "8" maxlength = "8" value = "30" />
+			<input class="integer" required = "required" pattern = "(?!^0*$)(\d+)" title="" tabindex = "3" type = "text" name="NumberOfDays" size = "8" maxlength = "8" value = "30" />
 			<fieldhelp>'.__('The input must be positive integer').'</fieldhelp>
 		 </field>';
 
 	//Stock in days less than
 	echo '<field>
 			<label for = "MaxDaysOfStock">' . __('With less than') . ':</label>
-			<input class = "integer" required = "required" pattern = "(?!^0*$)(\d+)" title = "" tabindex = "4" type = "text" name = "MaxDaysOfStock" size = "8" maxlength = "8" value = "99999" />
+			<input class="integer" required = "required" pattern = "(?!^0*$)(\d+)" title="" tabindex = "4" type = "text" name="MaxDaysOfStock" size = "8" maxlength = "8" value = "99999" />
 			<fieldhelp>'.__('The input must be positive integer').'</fieldhelp>
 			' . ' ' . __('Days of Stock (QOH + QOO) Available') . '
 		 </field>';
 	//view number of NumberOfTopItems items
 	echo '<field>
 			<label for = "NumberOfTopItems">' . __('Number Of Top Items') . ':</label>
-			<input class = "integer" required = "required" pattern = "(?!^0*$)(\d+)" title = "" tabindex = "4" type = "text" name = "NumberOfTopItems" size = "8" maxlength = "8" value = "100" />
+			<input class="integer" required = "required" pattern = "(?!^0*$)(\d+)" title="" tabindex = "4" type = "text" name="NumberOfTopItems" size = "8" maxlength = "8" value = "100" />
 			<fieldhelp>'.__('The input must be positive integer').'</fieldhelp>
 		 </field>
 	</fieldset>
-	<div class = "centre">
-			<input type = "submit" name = "PrintPDF" title = "PDF" value = "' . __('Print PDF') . '" />
-			<input type = "submit" name = "View" title = "View" value = "' . __('View') . '" />
+	<div class="centre">
+			<input type = "submit" name="PrintPDF" title="PDF" value = "' . __('Print PDF') . '" />
+			<input type = "submit" name="View" title="View" value = "' . __('View') . '" />
 		</div>
 	</form>';
 include('includes/footer.php');

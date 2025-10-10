@@ -11,8 +11,8 @@ include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.php');
 
-echo '<p class = "page_title_text"><img alt = "" src = "' . $RootPath . '/css/' . $Theme .
-		'/images/descending.png" title = "' .
+echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
+		'/images/descending.png" title="' .
 		__('Import Fixed Assets from .csv file') . '" />' . ' ' .
 		__('Import Fixed Assets from .csv file') . '</p>';
 
@@ -294,16 +294,16 @@ if (isset($_FILES['SelectedAssetFile']['name'])) { //start file processing
 
 } else { //show file upload form
 
-	echo '<a href = "' . $RootPath . '/Z_ImportFixedAssets.php?gettemplate = 1">' . __('Get Import Template') . '</a>';
+	echo '<a href="' . $RootPath . '/Z_ImportFixedAssets.php?gettemplate=1">' . __('Get Import Template') . '</a>';
 	echo '<form enctype = "multipart/form-data" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post">';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 
-	echo '<input type = "hidden" name = "MAX_FILE_SIZE" value = "1000000" />';
+	echo '<input type = "hidden" name="MAX_FILE_SIZE" value = "1000000" />';
 	echo '<fieldset>
 			<legend>', __('Import Details'), '</legend>
 			<field>
 				<label>' . __('Select Date to Upload B/Fwd Assets To:') . '</label>
-				<select name = "DateToEnter">';
+				<select name="DateToEnter">';
 	$PeriodsResult = DB_query("SELECT lastdate_in_period FROM periods ORDER BY periodno");
 	while ($PeriodRow = DB_fetch_row($PeriodsResult)){
 		echo '<option value = "' . $PeriodRow[0] . '">' . ConvertSQLDate($PeriodRow[0]) . '</option>';
@@ -312,10 +312,10 @@ if (isset($_FILES['SelectedAssetFile']['name'])) { //start file processing
 		</field>';
 	echo '<field>
 			<label>' . __('Fixed Assets Upload file:') . '</label>
-			<input name = "SelectedAssetFile" type = "file" />
+			<input name="SelectedAssetFile" type = "file" />
 		</field>
 	</fieldset>
-	<div class = "centre">
+	<div class="centre">
 		<input type = "submit" value = "' . __('Send File') . '" />
 	</div>
 	</form>';

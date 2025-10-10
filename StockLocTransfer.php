@@ -208,7 +208,7 @@ if (isset($_POST['Submit']) and $InputError == false){
 	DB_Txn_Commit();
 
 	prnMsg( __('The inventory transfer records have been created successfully'),'success');
-	echo '<p><a href = "'.$RootPath.'/PDFStockLocTransfer.php?TransferNo = ' . $_POST['Trf_ID'] . '" target = "_blank">' .  __('Print the Transfer Docket'). '</a></p>';
+	echo '<p><a href="'.$RootPath.'/PDFStockLocTransfer.php?TransferNo=' . $_POST['Trf_ID'] . '" target="_blank">' .  __('Print the Transfer Docket'). '</a></p>';
 	include('includes/footer.php');
 
 } else {
@@ -231,15 +231,15 @@ if (isset($_POST['Submit']) and $InputError == false){
 
 	}
 
-	echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title = "' . __('Dispatch') . '" alt = "" />' . ' ' . $Title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . __('Dispatch') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form enctype = "multipart/form-data" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post">';
     echo '<div>';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 
-	echo '<table class = "selection">';
+	echo '<table class="selection">';
 	echo '<tr>
-			<th colspan = "4"><input type = "hidden" name = "Trf_ID" value = "' . $Trf_ID . '" /><h3>' .  __('Inventory Location Transfer Shipment Reference').' # '. $Trf_ID. '</h3></th>
+			<th colspan = "4"><input type = "hidden" name="Trf_ID" value = "' . $Trf_ID . '" /><h3>' .  __('Inventory Location Transfer Shipment Reference').' # '. $Trf_ID. '</h3></th>
 		</tr>';
 
 	$SQL = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode = locations.loccode and locationusers.userid = '" .  $_SESSION['UserID'] . "' and locationusers.canupd = 1 ORDER BY locationname";
@@ -247,7 +247,7 @@ if (isset($_POST['Submit']) and $InputError == false){
 
 	echo '<tr>
 			<td>' . __('From Stock Location') . ':</td>
-			<td><select name = "FromStockLocation">';
+			<td><select name="FromStockLocation">';
 
 	while ($MyRow = DB_fetch_array($ResultStkLocs)){
 		if (isset($_POST['FromStockLocation'])){
@@ -267,7 +267,7 @@ if (isset($_POST['Submit']) and $InputError == false){
 
 	DB_data_seek($ResultStkLocs,0); //go back to the start of the locations result
 	echo '<td>' . __('To Stock Location').':</td>
-			<td><select name = "ToStockLocation">';
+			<td><select name="ToStockLocation">';
 	while ($MyRow = DB_fetch_array($ResultStkLocs)){
 		if (isset($_POST['ToStockLocation'])){
 			if ($MyRow['loccode'] == $_POST['ToStockLocation']) {
@@ -286,15 +286,15 @@ if (isset($_POST['Submit']) and $InputError == false){
 
 	echo '<tr>
 			<td>' . __('Upload CSV file of Transfer Items and Quantites') . ':</td>
-			<td><input name = "SelectedTransferFile" type = "file" /></td>
+			<td><input name="SelectedTransferFile" type = "file" /></td>
 		  </tr>
 		  </table>
 		  <br />
-		  <table class = "selection">
+		  <table class="selection">
 			<tr>
 				<th>' .  __('Item Code'). '</th>
 				<th>' .  __('Quantity'). '</th>
-				<th>' . __('Clear All') . ':<input type = "checkbox" name = "ClearAll" /></th>
+				<th>' . __('Clear All') . ':<input type = "checkbox" name="ClearAll" /></th>
 			</tr>';
 
 	$j = 0; /* row counter for reindexing */
@@ -309,9 +309,9 @@ if (isset($_POST['Submit']) and $InputError == false){
 }
 
 			echo '<tr>
-					<td><input type = "text" name = "StockID' . $j .'" size = "21"  maxlength = "20" value = "' . $_POST['StockID' . $i] . '" /></td>
-					<td><input type = "text" name = "StockQTY' . $j .'" size = "10" maxlength = "10" class = "number" value = "' . locale_number_format($_POST['StockQTY' . $i],'Variable') . '" /></td>
-					<td>' . __('Delete') . '<input type = "checkbox" name = "Delete' . $j .'" /></td>
+					<td><input type = "text" name="StockID' . $j .'" size = "21"  maxlength = "20" value = "' . $_POST['StockID' . $i] . '" /></td>
+					<td><input type = "text" name="StockQTY' . $j .'" size = "10" maxlength = "10" class="number" value = "' . locale_number_format($_POST['StockQTY' . $i],'Variable') . '" /></td>
+					<td>' . __('Delete') . '<input type = "checkbox" name="Delete' . $j .'" /></td>
 				</tr>';
 			$j++;
 		}
@@ -329,18 +329,18 @@ if (isset($_POST['Submit']) and $InputError == false){
 			$_POST['StockQTY' . $j]=0;
 		}
 		echo '<tr>
-				<td><input type = "text" name = "StockID' . $j .'" ' . ($j == 0 or $j == $z-9 ? 'autofocus = "autofocus"' : '') . ' size = "21"  maxlength = "20" value = "' . $_POST['StockID' . $j] . '" /></td>
-				<td><input type = "text" name = "StockQTY' . $j .'" size = "10" maxlength = "10" class = "number" value = "' . locale_number_format($_POST['StockQTY' . $j]) . '" /></td>
+				<td><input type = "text" name="StockID' . $j .'" ' . ($j == 0 or $j == $z-9 ? 'autofocus ="autofocus"' : '') . ' size = "21"  maxlength = "20" value = "' . $_POST['StockID' . $j] . '" /></td>
+				<td><input type = "text" name="StockQTY' . $j .'" size = "10" maxlength = "10" class="number" value = "' . locale_number_format($_POST['StockQTY' . $j]) . '" /></td>
 			</tr>';
 		$j++;
 	}
 
 	echo '</table>
 		<br />
-		<div class = "centre">
-		<input type = "hidden" name = "LinesCounter" value = "'. $j .'" />
-		<input type = "submit" name = "EnterMoreItems" value = "'. __('Add More Items'). '" />
-		<input type = "submit" name = "Submit" value = "'. __('Create Transfer Shipment'). '" />
+		<div class="centre">
+		<input type = "hidden" name="LinesCounter" value = "'. $j .'" />
+		<input type = "submit" name="EnterMoreItems" value = "'. __('Add More Items'). '" />
+		<input type = "submit" name="Submit" value = "'. __('Create Transfer Shipment'). '" />
 		<br />
 		</div>
 		</div>

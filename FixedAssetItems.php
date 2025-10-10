@@ -10,9 +10,9 @@ include('includes/header.php');
 include('includes/SQL_CommonFunctions.php');
 include('includes/ImageFunctions.php');
 
-echo '<a href = "' . $RootPath . '/SelectAsset.php">' . __('Back to Select') . '</a><br />' . "\n";
+echo '<a href="' . $RootPath . '/SelectAsset.php">' . __('Back to Select') . '</a><br />' . "\n";
 
-echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title = "' .
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' .
 		__('Fixed Asset Items') . '" alt = "" />' . ' ' . $Title . '</p>';
 
 /* If this form is called with the AssetID then it is assumed that the asset is to be modified  */
@@ -59,7 +59,7 @@ if (isset($_FILES['ItemPicture']) and $_FILES['ItemPicture']['name'] !='') {
 
 	if ($UploadTheFile == 'Yes') {
 	$Result  =  move_uploaded_file($_FILES['ItemPicture']['tmp_name'], $FileName);
-		$Message = ($Result)?__('File url')  . '<a href = "' . $FileName .'">' .  $FileName . '</a>' : __('Something is wrong with uploading a file');
+		$Message = ($Result)?__('File url')  . '<a href="' . $FileName .'">' .  $FileName . '</a>' : __('Something is wrong with uploading a file');
 }
  /* EOR Add Image upload for New Item  - by Ori */
 }
@@ -384,7 +384,7 @@ if (isset($_POST['submit'])) {
 } /* end if delete asset */
 DB_Txn_Commit();
 
-echo '<form id = "AssetForm" enctype = "multipart/form-data" method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<form id="AssetForm" enctype = "multipart/form-data" method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 echo '<fieldset>';
 
@@ -468,7 +468,7 @@ if (isset($_POST['Description'])) {
 
 echo '<field>
 		<label for = "Description">' . __('Asset Description') . ' (' . __('short') . '):</label>
-		<input ' . (in_array('Description',$Errors) ?  'class = "inputerror"' : '' ) .' type = "text" required = "required" title = "" name = "Description" size = "52" maxlength = "50" value = "' . $Description . '" />
+		<input ' . (in_array('Description',$Errors) ?  'class ="inputerror"' : '' ) .' type = "text" required = "required" title="" name = "Description" size = "52" maxlength = "50" value = "' . $Description . '" />
 		<fieldhelp>' . __('Enter the description of the item. Up to 50 characters can be used.') . '</fieldhelp>
 	</field>';
 
@@ -479,7 +479,7 @@ if (isset($_POST['LongDescription'])) {
 }
 echo '<field>
 		<label for = "LongDescription">' . __('Asset Description') . ' (' . __('long') . '):</label>
-		<textarea ' . (in_array('LongDescription',$Errors) ?  'class = "texterror"' : '' ) .'  name = "LongDescription" required = "required" title = "" cols = "40" rows = "4">' . stripslashes($LongDescription) . '</textarea>
+		<textarea ' . (in_array('LongDescription',$Errors) ?  'class ="texterror"' : '' ) .'  name = "LongDescription" required = "required" title="" cols = "40" rows = "4">' . stripslashes($LongDescription) . '</textarea>
 		<fieldhelp>' . __('Enter the lond description of the asset including specs etc. Up to 255 characters are allowed.') . '</fieldhelp>
 	</field>';
 
@@ -487,11 +487,11 @@ if (!isset($New) ) { //ie not new at all!
 
 	echo '<field>
 			<label for = "ItemPicture">' .  __('Image File (' . implode(", ", $SupportedImgExt) . ')') . ':</label>
-			<input type = "file" id = "ItemPicture" name = "ItemPicture" />
+			<input type = "file" id="ItemPicture" name = "ItemPicture" />
 		</field>
 		<field>
 			<label for"ClearImage">'.__('Clear Image').'</label>
-			<input type = "checkbox" name = "ClearImage" id = "ClearImage" value = "1" > ';
+			<input type = "checkbox" name = "ClearImage" id="ClearImage" value = "1" > ';
     $Glob = (glob($_SESSION['part_pics_dir'] . '/ASSET_' . $AssetID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
 	$ImageFile = reset($Glob);
 	$AssetImgLink = GetImageLink($ImageFile, 'ASSET_' . $AssetID, 64, 64, "", "");
@@ -535,7 +535,7 @@ while ($MyRow = DB_fetch_array($Result)){
 	}
 	$Category = $MyRow['categoryid'];
 }
-echo '</select><a target = "_blank" href = "'. $RootPath . '/FixedAssetCategories.php">' . ' ' . __('Add or Modify Asset Categories') . '</a></field>';
+echo '</select><a target="_blank" href="'. $RootPath . '/FixedAssetCategories.php">' . ' ' . __('Add or Modify Asset Categories') . '</a></field>';
 if (!isset($_POST['AssetCategoryID'])) {
 	$_POST['AssetCategoryID']=$Category;
 }
@@ -563,16 +563,16 @@ while ($MyRow = DB_fetch_array($Result)){
 	}
 }
 echo '</select>
-	<a target = "_blank" href = "'. $RootPath . '/FixedAssetLocations.php">' . ' ' . __('Add Asset Location') . '</a>
+	<a target="_blank" href="'. $RootPath . '/FixedAssetLocations.php">' . ' ' . __('Add Asset Location') . '</a>
 	</field>';
 
 echo '<field>
 		<label for = "BarCode">' . __('Bar Code') . ':</label>
-		<input ' . (in_array('BarCode',$Errors) ?  'class = "inputerror"' : '' ) .'  type = "text" name = "BarCode" size = "22" maxlength = "20" value = "' . $_POST['BarCode'] . '" />
+		<input ' . (in_array('BarCode',$Errors) ?  'class ="inputerror"' : '' ) .'  type = "text" name = "BarCode" size = "22" maxlength = "20" value = "' . $_POST['BarCode'] . '" />
 	</field>
 	<field>
 		<label for = "SerialNo">' . __('Serial Number') . ':</label>
-		<input ' . (in_array('SerialNo',$Errors) ?  'class = "inputerror"' : '' ) .'  type = "text" name = "SerialNo" size = "32" maxlength = "30" value = "' . $_POST['SerialNo'] . '" />
+		<input ' . (in_array('SerialNo',$Errors) ?  'class ="inputerror"' : '' ) .'  type = "text" name = "SerialNo" size = "32" maxlength = "30" value = "' . $_POST['SerialNo'] . '" />
 	</field>
 	<field>
 		<label for = "DepnType">' . __('Depreciation Type') . ':</label>
@@ -595,7 +595,7 @@ echo '</select>
 
 echo '<field>
 		<label for = "DepnRate">' . __('Depreciation Rate') . ':</label>
-		<input ' . (in_array('DepnRate',$Errors) ?  'class = "inputerror number"' : 'class = "number"' ) .'  type = "text" name = "DepnRate" size = "4" maxlength = "4" value = "' . $_POST['DepnRate'] . '" />%
+		<input ' . (in_array('DepnRate',$Errors) ?  'class ="inputerror number"' : 'class = "number"' ) .'  type = "text" name = "DepnRate" size = "4" maxlength = "4" value = "' . $_POST['DepnRate'] . '" />%
 	</field>
 	</fieldset>';
 
@@ -606,29 +606,29 @@ if (isset($AssetRow)){
 		</tr>
 		<tr>
 			<td>' . __('Accumulated Costs') . ':</td>
-			<td class = "number">' . locale_number_format($AssetRow['cost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($AssetRow['cost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		</tr>
 		<tr>
 			<td>' . __('Accumulated Depreciation') . ':</td>
-			<td class = "number">' . locale_number_format($AssetRow['accumdepn'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($AssetRow['accumdepn'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		</tr>';
 	if ($AssetRow['disposaldate'] != '1000-01-01') {
 	echo'<tr>
 			<td>' . __('Net Book Value at disposal date') . ':</td>
-			<td class = "number">' . locale_number_format($AssetRow['cost']-$AssetRow['accumdepn'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($AssetRow['cost']-$AssetRow['accumdepn'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		</tr>';
 		echo'<tr>
 			<td>' . __('Disposal Proceeds') . ':</td>
-			<td class = "number">' . locale_number_format($AssetRow['disposalproceeds'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($AssetRow['disposalproceeds'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		</tr>';
 		echo'<tr>
 			<td>' . __('P/L after disposal') . ':</td>
-			<td class = "number">' . locale_number_format(-$AssetRow['cost']+$AssetRow['accumdepn']+$AssetRow['disposalproceeds'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format(-$AssetRow['cost']+$AssetRow['accumdepn']+$AssetRow['disposalproceeds'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		</tr>';
 }else{
 		echo'<tr>
 			<td>' . __('Net Book Value') . ':</td>
-			<td class = "number">' . locale_number_format($AssetRow['cost']-$AssetRow['accumdepn'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($AssetRow['cost']-$AssetRow['accumdepn'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		</tr>';
 	}
 	/*Get the last period depreciation (depn is transtype =44) was posted for */
@@ -654,14 +654,14 @@ if (isset($AssetRow)){
 }
 
 if (isset($New)) {
-	echo '<div class = "centre">
+	echo '<div class="centre">
 			<input type = "submit" name = "submit" value = "' . __('Insert New Fixed Asset') . '" />';
 } else {
-	echo '<div class = "centre">
+	echo '<div class="centre">
 			<input type = "submit" name = "submit" value = "' . __('Update') . '" />
 		</div>';
-	echo '<div class = "centre">
-			<input type = "reset" name = "delete" value = "' . __('Delete This Asset') . '" onclick = "return confirm(\'' . __('Are You Sure? Only assets with a zero book value can be deleted.') . '\');" />';
+	echo '<div class="centre">
+			<input type = "reset" name = "delete" value = "' . __('Delete This Asset') . '" onclick="return confirm(\'' . __('Are You Sure? Only assets with a zero book value can be deleted.') . '\');" />';
 }
 
 echo '</div>

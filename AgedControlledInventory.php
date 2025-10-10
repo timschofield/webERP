@@ -11,7 +11,7 @@ $BookMark = 'AgedControlled';
 include('includes/header.php');
 
 echo '<p class = "page_title_text">
-<img src = "', $RootPath, '/css/', $Theme, '/images/inventory.png" title = "', __('Inventory'), '" alt = "" /><b>', $Title, '</b>
+<img src="', $RootPath, '/css/', $Theme, '/images/inventory.png" title="', __('Inventory'), '" alt="" /><b>', $Title, '</b>
 </p>';
 
 $SQL = "SELECT stockserialitems.stockid,

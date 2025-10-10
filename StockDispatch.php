@@ -129,7 +129,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		echo '<br />';
 		prnMsg(__('The stock dispatch did not have any items to list'), 'warn');
 		echo '<br />
-			<a href = "' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
+			<a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 		include ('includes/footer.php');
 		exit();
 	}
@@ -154,7 +154,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					<meta name = "Creator" content = "webERP https://www.weberp.org">
 				</head>
 				<body>
-				<div class = "centre" id = "ReportHeader">
+				<div class="centre" id="ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 					' . __('Stock Dispatch') . ' ' . htmlspecialchars($_POST['ReportType']) . '<br />
 					' . __('From') . ' ' . $FromLocation . '<br />
@@ -240,27 +240,27 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			// Description/Image/Price
 			if ($Template == 'simple') {
 	$HTML .= '<td>' . htmlspecialchars($MyRow['description']) . '</td>';
-				$HTML .= '<td class = "number">' . locale_number_format($MyRow['fromquantity'], $MyRow['decimalplaces']) . '</td>';
-				$HTML .= '<td class = "number">' . locale_number_format($MyRow['quantity'], $MyRow['decimalplaces']) . '</td>';
-				$HTML .= '<td class = "number">' . locale_number_format($ShipQty, $MyRow['decimalplaces']) . '</td>';
-				$HTML .= '<td class = "number">_________</td>';
+				$HTML .= '<td class="number">' . locale_number_format($MyRow['fromquantity'], $MyRow['decimalplaces']) . '</td>';
+				$HTML .= '<td class="number">' . locale_number_format($MyRow['quantity'], $MyRow['decimalplaces']) . '</td>';
+				$HTML .= '<td class="number">' . locale_number_format($ShipQty, $MyRow['decimalplaces']) . '</td>';
+				$HTML .= '<td class="number">_________</td>';
 }
 			elseif ($Template == 'standard') {
 	$HTML .= '<td>' . htmlspecialchars($MyRow['description']) . '</td>';
-				$HTML .= '<td class = "number">' . locale_number_format($MyRow['fromquantity'] - $InTransitQuantityAtFrom, $MyRow['decimalplaces']) . '</td>';
-				$HTML .= '<td class = "number">' . locale_number_format($MyRow['quantity'] + $InTransitQuantityAtTo, $MyRow['decimalplaces']) . '</td>';
-				$HTML .= '<td class = "number">' . locale_number_format($ShipQty, $MyRow['decimalplaces']) . '</td>';
-				$HTML .= '<td class = "number">_________</td>';
+				$HTML .= '<td class="number">' . locale_number_format($MyRow['fromquantity'] - $InTransitQuantityAtFrom, $MyRow['decimalplaces']) . '</td>';
+				$HTML .= '<td class="number">' . locale_number_format($MyRow['quantity'] + $InTransitQuantityAtTo, $MyRow['decimalplaces']) . '</td>';
+				$HTML .= '<td class="number">' . locale_number_format($ShipQty, $MyRow['decimalplaces']) . '</td>';
+				$HTML .= '<td class="number">_________</td>';
 }
 			else {
 				// full/fullprices
 				$ImgTag = getImageTag($MyRow['stockid']);
 				$Desc = $ImgTag . htmlspecialchars($MyRow['description']);
 				$HTML .= '<td>' . $Desc . '</td>';
-				$HTML .= '<td class = "number">' . locale_number_format($MyRow['fromquantity'] - $InTransitQuantityAtFrom, $MyRow['decimalplaces']) . '</td>';
-				$HTML .= '<td class = "number">' . locale_number_format($MyRow['quantity'] + $InTransitQuantityAtTo, $MyRow['decimalplaces']) . '</td>';
-				$HTML .= '<td class = "number">' . locale_number_format($ShipQty, $MyRow['decimalplaces']) . '</td>';
-				$HTML .= '<td class = "number">_________</td>';
+				$HTML .= '<td class="number">' . locale_number_format($MyRow['fromquantity'] - $InTransitQuantityAtFrom, $MyRow['decimalplaces']) . '</td>';
+				$HTML .= '<td class="number">' . locale_number_format($MyRow['quantity'] + $InTransitQuantityAtTo, $MyRow['decimalplaces']) . '</td>';
+				$HTML .= '<td class="number">' . locale_number_format($ShipQty, $MyRow['decimalplaces']) . '</td>';
+				$HTML .= '<td class="number">_________</td>';
 				if ($Template == 'fullprices') {
 	$DefaultPrice = GetPrice($MyRow['stockid'], $ToCustomer, $ToBranch, $ShipQty, false);
 					$DiscountLine = $MyRow['discountcategory'] ? (' -> ' . __('Discount Category') . ':' . $MyRow['discountcategory']) : '';
@@ -278,7 +278,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	// Signatures section
 	$HTML .= '
-	<table class = "signatures">
+	<table class="signatures">
 	<tr>
 		<td><strong>' . __('Prepared By :') . '</strong></td>
 		<td><input type = "text" /></td>
@@ -322,9 +322,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	if (isset($_POST['PrintPDF'])) {
 		$HTML .= '</tbody>
-				<div class = "footer fixed-section">
-					<div class = "right">
-						<span class = "page-number">Page </span>
+				<div class="footer fixed-section">
+					<div class="right">
+						<span class="page-number">Page </span>
 					</div>
 				</div>
 			</table>';
@@ -332,8 +332,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	else {
 		$HTML .= '</tbody>
 				</table>
-				<div class = "centre">
-					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" /></form>
+				<div class="centre">
+					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -354,7 +354,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	else {
 		$Title = __('Inventory Planning Report');
 		include ('includes/header.php');
-		echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title = "' . __('Stock Dispatch Report') . '" alt = "" />' . ' ' . __('Stock Dispatch Report') . '</p>';
+		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Stock Dispatch Report') . '" alt="" />' . ' ' . __('Stock Dispatch Report') . '</p>';
 		echo $HTML;
 		include ('includes/footer.php');
 	}
@@ -366,14 +366,14 @@ else { /*The option to print PDF was not hit so display form */
 	$ViewTopic = 'Inventory';
 	$BookMark = '';
 	include ('includes/header.php');
-	echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title = "' . __('Inventory') . '" alt = "" />' . ' ' . __('Inventory Stock Dispatch Report') . '</p>';
-	echo '<div class = "page_help_text">' . __('Create a transfer batch of overstock from one location to another location that is below reorder level.') . '<br/>' . __('Quantity to ship is based on reorder level minus the quantity on hand at the To Location; if there is a') . '<br/>' . __('dispatch percentage entered, that needed quantity is inflated by the percentage entered.') . '<br/>' . __('Use Bulk Inventory Transfer - Receive to process the batch') . '</div>';
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Inventory') . '" alt="" />' . ' ' . __('Inventory Stock Dispatch Report') . '</p>';
+	echo '<div class="page_help_text">' . __('Create a transfer batch of overstock from one location to another location that is below reorder level.') . '<br/>' . __('Quantity to ship is based on reorder level minus the quantity on hand at the To Location; if there is a') . '<br/>' . __('dispatch percentage entered, that needed quantity is inflated by the percentage entered.') . '<br/>' . __('Use Bulk Inventory Transfer - Receive to process the batch') . '</div>';
 
 	$SQL = "SELECT defaultlocation FROM www_users WHERE userid = '" . $_SESSION['UserID'] . "'";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
 	$DefaultLocation = $MyRow['defaultlocation'];
-	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target = "_blank">';
+	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target="_blank">';
 	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 	$SQL = "SELECT locations.loccode,
 			locationname
@@ -387,7 +387,7 @@ else { /*The option to print PDF was not hit so display form */
 			<legend>', __('Report Criteria'), '</legend>
 		 <field>
 			<label for = "Percent">' . __('Dispatch Percent') . ':</label>
-			<input type ="text" name = "Percent" class = "number" size = "8" value = "0" />
+			<input type ="text" name = "Percent" class="number" size = "8" value = "0" />
 		 </field>';
 	echo '<field>
 			  <label for = "FromLocation">' . __('From Stock Location') . ':</label>
@@ -425,7 +425,7 @@ else { /*The option to print PDF was not hit so display form */
 	if (DB_num_rows($Result1) == 0) {
 		echo '</table>';
 		prnMsg(__('There are no stock categories currently defined please use the link below to set them up'), 'warn');
-		echo '<br /><a href = "' . $RootPath . '/StockCategories.php">' . __('Define Stock Categories') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . __('Define Stock Categories') . '</a>';
 		echo '</div>
 			  </form>';
 		include ('includes/footer.php');
@@ -482,9 +482,9 @@ else { /*The option to print PDF was not hit so display form */
 		</field>';
 
 	echo '</fieldset>
-		 <div class = "centre">
-			<input type = "submit" name = "PrintPDF" title = "Produce PDF Report" value = "' . __('Print PDF') . '" />
-			<input type = "submit" name = "View" title = "View Report" value = "' . __('View') . '" />
+		 <div class="centre">
+			<input type = "submit" name = "PrintPDF" title="Produce PDF Report" value = "' . __('Print PDF') . '" />
+			<input type = "submit" name = "View" title="View Report" value = "' . __('View') . '" />
 		 </div>';
 	echo '</form>';
 

@@ -204,7 +204,7 @@ if (isset($_POST['submit']) or isset($_POST['PrintPDF']) or isset($_POST['Spread
 		$HTML .= '</tbody>
 				</table>
 				<div class = "centre">
-					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" /></form>
+					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -241,7 +241,7 @@ if (isset($_POST['submit']) or isset($_POST['PrintPDF']) or isset($_POST['Spread
 	else {
 		$Title = __('Fixed Asset Register');
 		include('includes/header.php');
-		echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title = "' . __('Search') . '" alt = "" />' . ' ' . $Title . '</p>';
+		echo '<p class = "page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 		echo $HTML;
 		include('includes/footer.php');
 	}
@@ -253,7 +253,7 @@ else {
 	$BookMark = 'AssetRegister';
 
 	include('includes/header.php');
-	echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title = "' . __('Search') . '" alt = "" />' . ' ' . $Title . '</p>';
+	echo '<p class = "page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	$Result = DB_query('SELECT categoryid,categorydescription FROM fixedassetcategories');
 	echo '<form id = "RegisterForm" method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" target = "_blank">';

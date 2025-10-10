@@ -11,7 +11,7 @@ include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.php');
 
-echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/maintenance.png" title = "',// Icon image.
+echo '<p class = "page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/maintenance.png" title="',// Icon image.
 	__('Copy Authority of GL Accounts from one user to another'), '" /> ',// Icon title.
 	__('Copy Authority of GL Accounts from one user to another'), '</p>';// Page title.
 
@@ -86,8 +86,8 @@ echo '</select>
 	</field>';
 echo '</fieldset>
 		<div class = "centre">
-			<button name = "ProcessCopyAuthority" type = "submit" value = "', __('Process Copy of Authority'), '"><img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', __('Process'), '</button>', // "Process Copy of Authority" button.
-			'<button formaction = "' . $RootPath . '/index.php?Application = Utilities" type = "submit"><img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', __('Return'), '</button>', // "Return" button.
+			<button name = "ProcessCopyAuthority" type = "submit" value = "', __('Process Copy of Authority'), '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', __('Process'), '</button>', // "Process Copy of Authority" button.
+			'<button formaction = "' . $RootPath . '/index.php?Application =Utilities" type = "submit"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', __('Return'), '</button>', // "Return" button.
 		'</div>
 	</form>';
 

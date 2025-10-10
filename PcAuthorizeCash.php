@@ -38,7 +38,7 @@ if (isset($_POST['Go'])) {
 }
 
 echo '<p class = "page_title_text">
-			<img src = "', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title = "', __('Petty Cash'), '" alt = "" />', $Title, '
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', __('Petty Cash'), '" alt="" />', $Title, '
 		</p>';
 
 if (isset($SelectedTabs)) {

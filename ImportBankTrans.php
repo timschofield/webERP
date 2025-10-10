@@ -12,8 +12,8 @@ $ViewTopic = 'GeneralLedger';
 $BookMark = 'ImportBankTrans';
 include('includes/header.php');
 
-echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme,
-	'/images/bank.png" title = "', // Icon image.
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/bank.png" title="', // Icon image.
 	$Title, '" /> ', // Icon title.
 	$Title, '</p>';// Page title.
 
@@ -38,17 +38,17 @@ if (!isset($_FILES['ImportFile']) and !isset($_SESSION['Statement'])) {
 	$Result = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($Result) ==0) {
 		prnMsg(__('There are no bank accounts defined that are set up to allow importation of bank statement transactions. First define the file format used by your bank for statement exports.'),'error');
-		echo '<br /><a href = "' . $RootPath . '/BankAccounts.php>' . __('Setup Import Format for Bank Accounts') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/BankAccounts.php>' . __('Setup Import Format for Bank Accounts') . '</a>';
 		include('includes/footer.php');
 		exit();
 	}
-    echo '<form name = "ImportForm" enctype = "multipart/form-data" method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
-		<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />
+    echo '<form name="ImportForm" enctype = "multipart/form-data" method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
+		<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />
 		<fieldset>
 			<legend>', __('Import Details'), '</legend>
 			<field>
 				 <label for = "ImportFormat">' .  __('Bank Account to Import Transaction For') . '</label>
-	             <select name = "ImportFormat">';
+	             <select name="ImportFormat">';
 
 				while ($MyRow = DB_fetch_array($Result)) {
 					// Lists bank accounts order by bankaccountname
@@ -60,10 +60,10 @@ if (!isset($_FILES['ImportFile']) and !isset($_SESSION['Statement'])) {
 
 	echo ' <field>
 			 <label for = "ImportFile">' .  __('MT940 format Bank Statement File to import') . '</label>
-				<td><input type = "file" id = "ImportFile" autofocus = "autofocus" required = "required" title = "' . __('Select the file that contains the bank transactions in MT940 format') . '" name = "ImportFile"></td>
+				<td><input type = "file" id="ImportFile" autofocus = "autofocus" required = "required" title="' . __('Select the file that contains the bank transactions in MT940 format') . '" name="ImportFile"></td>
 		</field>
         </fieldset>
-        <div class = "centre"><input type = "submit" name = "Import" value = "Process"></div>
+        <div class="centre"><input type = "submit" name="Import" value = "Process"></div>
         </form>';
 
 } elseif (isset($_POST['Import'])) {
@@ -480,7 +480,7 @@ if (isset($_SESSION['Statement'])) {
 
 
 	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post" >';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 	if (!isset($_SESSION['Statement']->BankGLAccount)) {
 		$AllowImport = false;
 	} else {
@@ -488,34 +488,34 @@ if (isset($_SESSION['Statement'])) {
 	}
 	/* show the statement in any event - just don't have links to process transactions if not $AllowImport
 	*/
-	echo '<table class = "selection">
+	echo '<table class="selection">
 			<tr>
 				<th colspan = "5">' . __('Bank Statement No') . ' ' . $_SESSION['Statement']->StatementNumber . ' ' . __('for') . ' ' . $_SESSION['Statement']->BankAccountName  . ' ' . __('Number') . ' ' . $_SESSION['Statement']->AccountNumber . '</th>
 			</tr>
 			<tr>
 				<th colspan ="3">' . __('Opening Balance as at') . ' ' . $_SESSION['Statement']->OpeningDate . ' ' . __('in') . ' ' .$_SESSION['Statement']->CurrCode . '</th>';
 	if ($_SESSION['Statement']->OpeningBalance >=0) {
-	echo '<th class = "number">' . number_format($_SESSION['Statement']->OpeningBalance,$_SESSION['Statement']->CurrDecimalPlaces) . '</th><th></th></tr>';
+	echo '<th class="number">' . number_format($_SESSION['Statement']->OpeningBalance,$_SESSION['Statement']->CurrDecimalPlaces) . '</th><th></th></tr>';
 } else {
-		echo '<th></th><th class = "number">' . number_format($_SESSION['Statement']->OpeningBalance,$_SESSION['Statement']->CurrDecimalPlaces) . '</th></tr>';
+		echo '<th></th><th class="number">' . number_format($_SESSION['Statement']->OpeningBalance,$_SESSION['Statement']->CurrDecimalPlaces) . '</th></tr>';
 	}
 	for ($i = 1;  $i<=count($_SESSION['Trans']);  $i++) {
 
 		if ($_SESSION['Trans'][$i]->Amount >0) {
 	if ($_SESSION['Trans'][$i]->DebtorNo != ''
 				or $_SESSION['Trans'][$i]->GLTotal == $_SESSION['Trans'][$i]->Amount) {
-				echo '<tr style = "background-color: #FFFCCC;">';
+				echo '<tr style="background-color: #FFFCCC;">';
 } elseif ($_SESSION['Trans'][$i]->BankTransID != 0) {
-	echo '<tr style = "background-color: #FFF222;">';
+	echo '<tr style="background-color: #FFF222;">';
 } else {
 				echo '<tr>';
 			}
 		} else { //its a payment
 			if ($_SESSION['Trans'][$i]->SupplierID != ''
 				or $_SESSION['Trans'][$i]->GLTotal == $_SESSION['Trans'][$i]->Amount) {
-	echo '<tr style = "background-color: #FFFCCC;">';
+	echo '<tr style="background-color: #FFFCCC;">';
 } elseif ($_SESSION['Trans'][$i]->BankTransID != 0) {
-	echo '<tr style = "background-color: #FFF222;">';
+	echo '<tr style="background-color: #FFF222;">';
 } else {
 				echo '<tr>';
 			}
@@ -525,37 +525,37 @@ if (isset($_SESSION['Statement'])) {
 				<td>' . $_SESSION['Trans'][$i]->Description . '</td>';
 
 		if ($_SESSION['Trans'][$i]->Amount>=0) {
-	echo '<td class = "number">' . number_format($_SESSION['Trans'][$i]->Amount,$_SESSION['Statement']->CurrDecimalPlaces) . '</td><td></td>';
+	echo '<td class="number">' . number_format($_SESSION['Trans'][$i]->Amount,$_SESSION['Statement']->CurrDecimalPlaces) . '</td><td></td>';
 } else {
-			echo '<td></td><td class = "number">' . number_format($_SESSION['Trans'][$i]->Amount,$_SESSION['Statement']->CurrDecimalPlaces) . '</td>';
+			echo '<td></td><td class="number">' . number_format($_SESSION['Trans'][$i]->Amount,$_SESSION['Statement']->CurrDecimalPlaces) . '</td>';
 		}
 		if ($AllowImport == true) {
-	echo '<td><a href = "' . $RootPath . '/ImportBankTransAnalysis.php?TransID = ' . $i .'">' . __('Analysis')  . '</a></td>';
+	echo '<td><a href="' . $RootPath . '/ImportBankTransAnalysis.php?TransID=' . $i .'">' . __('Analysis')  . '</a></td>';
 }
 		echo '</tr>';
 	}
 	echo '<tr>
 			<th colspan = "3">' . __('Closing Balance as at') . ' ' . $_SESSION['Statement']->ClosingDate . ' ' . __('in') . ' ' .$_SESSION['Statement']->CurrCode . '</th>';
 	if ($_SESSION['Statement']->ClosingBalance>=0) {
-	echo '<th class = "number">' . number_format($_SESSION['Statement']->ClosingBalance,$_SESSION['Statement']->CurrDecimalPlaces) . '</th><th></th>
+	echo '<th class="number">' . number_format($_SESSION['Statement']->ClosingBalance,$_SESSION['Statement']->CurrDecimalPlaces) . '</th><th></th>
 			</tr>';
 } else {
-		echo '<th></th><th class = "number">' . number_format($_SESSION['Statement']->ClosingBalance,$_SESSION['Statement']->CurrDecimalPlaces) . '</th>
+		echo '<th></th><th class="number">' . number_format($_SESSION['Statement']->ClosingBalance,$_SESSION['Statement']->CurrDecimalPlaces) . '</th>
 			</tr>';
 	}
 	echo '</table>';
 	echo '<br />
-	<table class = "selection">';
+	<table class="selection">';
 	if ($_SESSION['Statement']->CurrCode != $_SESSION['CompanyRecord']['currencydefault']) {
 	echo '<tr>
 				<td>' . __('Exchange Rate to Use When Processing Transactions') . '</td>
-				<td><input type = "text" class = "number" required = "required" name = "ExchangeRate" value = "' . $_SESSION['Statement']->ExchangeRate . '" /></td>
+				<td><input type = "text" class="number" required = "required" name="ExchangeRate" value = "' . $_SESSION['Statement']->ExchangeRate . '" /></td>
 			</tr>';
 } else {
-		echo '<input type = "hidden" name = "ExchangeRate" value = "1" />';
+		echo '<input type = "hidden" name="ExchangeRate" value = "1" />';
 	}
 	echo '<tr>
-			<th colspan = "2"><input type = "submit" name = "ProcessBankTrans" value = "' . __('Process Bank Transactions') . '" onclick = "return confirm(\'' . __('This process will create bank transactions for ONLY THE ANALYSED transactions shown in yellow above together with the necessary general ledger journals and customer or supplier transactions. Are You Sure?') . '\');" /></th>
+			<th colspan = "2"><input type = "submit" name="ProcessBankTrans" value = "' . __('Process Bank Transactions') . '" onclick="return confirm(\'' . __('This process will create bank transactions for ONLY THE ANALYSED transactions shown in yellow above together with the necessary general ledger journals and customer or supplier transactions. Are You Sure?') . '\');" /></th>
 		</tr>
 		</table>';
 }

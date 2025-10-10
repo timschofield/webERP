@@ -73,10 +73,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '<link href = "css/reports.css" rel = "stylesheet" type = "text/css" />';
 	}
 
-	$HTML .= '<table cellpadding = "2" class = "selection">';
+	$HTML .= '<table cellpadding = "2" class="selection">';
 	$HTML .= '<tr>
 			<th colspan = "9">
-				<div class = "centre">
+				<div class="centre">
 					<h2><b>' . __('Statement of Income and Expenditure for Tag') . ' ' . $MyRow[0] . ' ' . __('during the') . ' ' . $NumberOfMonths . ' ' . __('months to') . ' ' . $PeriodToDate . '</b></h2>
 				</div>
 			</th>
@@ -141,13 +141,13 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 						$HTML .= '<tr>
 									<td colspan = "2"><h4><i>'. $ActGrpLabel . ' </i></h4></td>
 									<td></td>
-									<td class = "number">' . locale_number_format($GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+									<td class="number">' . locale_number_format($GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 								</tr>';
 }
 					else { /*Costs */
 						$HTML .= '<tr>
 									<td colspan = "2"><h4><i>' . $ActGrpLabel . ' </i></h4></td>
-									<td class = "number">' . locale_number_format(-$GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+									<td class="number">' . locale_number_format(-$GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 									<td></td>
 								</tr>';
 					}
@@ -174,13 +174,13 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					$HTML .= '<tr>
 								<td colspan = "2"><h4><i>' . $ActGrpLabel . ' </i></h4></td>
 								<td></td>
-								<td class = "number">' . locale_number_format(-$GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+								<td class="number">' . locale_number_format(-$GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 							</tr>';
 }
 				else { /*Costs */
 					$HTML .= '<tr>
 								<td colspan = "2"><h4><i>' . $ActGrpLabel . '</i></h4></td>
-								<td class = "number">' . locale_number_format(-$GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+								<td class="number">' . locale_number_format(-$GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 								<td></td>
 							</tr>';
 				}
@@ -203,7 +203,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					$HTML .= '<tr>
 								<td colspan = "2"><h2>' . $Sections[$Section] . '</h2></td>
 								<td></td>
-								<td class = "number">' . locale_number_format($SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+								<td class="number">' . locale_number_format($SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 							</tr>';
 }
 				else {
@@ -214,7 +214,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					$HTML .= '<tr>
 								<td colspan = "2"><h2>' . $Sections[$Section] . '</h2></td>
 								<td></td>
-								<td class = "number">' . locale_number_format($SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+								<td class="number">' . locale_number_format($SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 							</tr>';
 				}
 				if ($Section == 1) {
@@ -230,7 +230,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					$HTML .= '<tr>
 								<td colspan = "2"><h2>' . __('Gross Profit') . '</h2></td>
 								<td></td>
-								<td class = "number">' . locale_number_format($TotalIncome + $SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+								<td class="number">' . locale_number_format($TotalIncome + $SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 							</tr>';
 
 					if ($TotalIncome != 0) {
@@ -246,7 +246,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					$HTML .= '<tr>
 							<td colspan = "2"><h4><i>' . __('Gross Profit Percent') . '</i></h4></td>
 							<td></td>
-							<td class = "number"><i>' . locale_number_format($PrdGPPercent, 1) . '%</i></td>
+							<td class="number"><i>' . locale_number_format($PrdGPPercent, 1) . '%</i></td>
 						</tr>
 						<tr>
 							<td colspan = "6"> </td>
@@ -301,21 +301,21 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 		if ($_POST['Detail'] == __('Detailed')) {
 
-			$ActEnquiryURL = '<a href = "' . $RootPath . '/GLAccountInquiry.php?PeriodFrom = ' . urlencode($_POST['PeriodFrom']) . '&amp;PeriodTo = ' . urlencode($_POST['PeriodTo']) . '&amp;Account = ' . urlencode($MyRow['account']) . '&amp;Show = Yes">' . $MyRow['account'] . '</a>';
+			$ActEnquiryURL = '<a href="' . $RootPath . '/GLAccountInquiry.php?PeriodFrom=' . urlencode($_POST['PeriodFrom']) . '&amp;PeriodTo=' . urlencode($_POST['PeriodTo']) . '&amp;Account=' . urlencode($MyRow['account']) . '&amp;Show=Yes">' . $MyRow['account'] . '</a>';
 
 			if ($Section == 4) {
-	$HTML .= '<tr class = "striped_row">
+	$HTML .= '<tr class="striped_row">
 							<td>' . $ActEnquiryURL . '</td>
 							<td>' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</td>
 							<td></td>
-							<td class = "number">' . locale_number_format(-$AccountPeriodActual, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td class="number">' . locale_number_format(-$AccountPeriodActual, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 						</tr>';
 }
 			else {
-				$HTML .= '<tr class = "striped_row">
+				$HTML .= '<tr class="striped_row">
 							<td>' . $ActEnquiryURL . '</td>
 							<td>' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</td>
-							<td class = "number">' . locale_number_format(-$AccountPeriodActual, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td class="number">' . locale_number_format(-$AccountPeriodActual, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 						</tr>';
 			}
 		}
@@ -341,13 +341,13 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					$HTML .= '<tr>
 								<td colspan = "2"><h4><i>' . $ActGrpLabel . '</i></h4></td>
 								<td></td>
-								<td class = "number">' . locale_number_format(-$GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+								<td class="number">' . locale_number_format(-$GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 							</tr>';
 }
 				else { /*Costs */
 					$HTML .= '<tr>
 								<td colspan = "2"><h4><i>' . $ActGrpLabel . '</i></h4></td>
-								<td class = "number">' . locale_number_format($GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+								<td class="number">' . locale_number_format($GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 							</tr>';
 				}
 				$GrpPrdActual[$Level] = 0;
@@ -371,13 +371,13 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				$HTML .= '<tr>
 							<td colspan = "2"><h4><i>' . $ActGrpLabel . '</i></h4></td>
 							<td></td>
-							<td class = "number">' . locale_number_format(-$GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td class="number">' . locale_number_format(-$GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 						</tr>';
 }
 			else { /*Costs */
 				$HTML .= '<tr>
 							<td colspan = "2"><h4><i>' . $ActGrpLabel . ' </i></h4></td>
-							<td class = "number">' . locale_number_format($GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td class="number">' . locale_number_format($GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 							<td></td>
 						</tr>';
 			}
@@ -396,7 +396,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<tr>
 					<td colspan = "2"><h2>' . $Sections[$Section] . '</h2></td>
 					<td></td>
-					<td class = "number">' . locale_number_format($SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				</tr>';
 			$TotalIncome = $SectionPrdActual;
 }
@@ -408,7 +408,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					<tr>
 						<td colspan = "2"><h2>' . $Sections[$Section] . '</h2></td>
 						<td></td>
-						<td class = "number">' . locale_number_format(-$SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class="number">' . locale_number_format(-$SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 					</tr>';
 		}
 		if ($Section == 2) {
@@ -420,7 +420,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					<tr>
 						<td colspan = "2"><h2>' . __('Gross Profit') . '</h2></td>
 						<td></td>
-						<td class = "number">' . locale_number_format($TotalIncome - $SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class="number">' . locale_number_format($TotalIncome - $SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 					</tr>';
 
 			if ($TotalIncome != 0) {
@@ -435,7 +435,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					<tr>
 						<td colspan = "2"><h4><i>' . __('Gross Profit Percent') . '</i></h4></td>
 						<td></td>
-						<td class = "number"><i>' . locale_number_format($PrdGPPercent, 1) . '%</i></td>
+						<td class="number"><i>' . locale_number_format($PrdGPPercent, 1) . '%</i></td>
 						<td></td>
 					</tr>';
 		}
@@ -455,10 +455,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<td colspan = "2"></td>
 				<td colspan = "2"><hr /></td>
 			</tr>
-			<tr style = "background-color:#ffffff">
+			<tr style="background-color:#ffffff">
 				<td colspan = "2"><h2><b>' . __('Surplus') . ' - ' . __('Deficit') . '</b></h2></td>
 				<td>&nbsp;</td>
-				<td class = "number">' . locale_number_format($PeriodProfitLoss, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($PeriodProfitLoss, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			</tr>
 			<tr>
 				<td colspan = "2"></td>
@@ -469,17 +469,17 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	if (isset($_POST['PrintPDF'])) {
 		$HTML .= '</tbody>
-				<div class = "footer fixed-section">
-					<div class = "right">
-						<span class = "page-number">Page </span>
+				<div class="footer fixed-section">
+					<div class="right">
+						<span class="page-number">Page </span>
 					</div>
 				</div>
 			</table>';
 	} else {
 		$HTML .= '</tbody>
 				</table>
-				<div class = "centre">
-					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" /></form>
+				<div class="centre">
+					<form><input type = "submit" name="close" value = "' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -503,7 +503,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$Title = __('Income and Expenditure by Tag');
 		include('includes/header.php');
 
-		echo '<p class = "page_title_text"><img src = "' . $RootPath, '/css/', $Theme, '/images/printer.png" title = "' . __('Print') . '" alt = "" />' . ' ' . $Title . '</p>';
+		echo '<p class="page_title_text"><img src="' . $RootPath, '/css/', $Theme, '/images/printer.png" title="' . __('Print') . '" alt="" />' . ' ' . $Title . '</p>';
 		echo $HTML;
 		include('includes/footer.php');
 	}
@@ -511,10 +511,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	// If PeriodFrom or PeriodTo are not set or it is a NewReport, shows a parameters input form:
 	include('includes/header.php');
-	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" target = "_blank">';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
-	echo '<p class = "page_title_text">
-			<img src = "' . $RootPath, '/css/', $Theme, '/images/printer.png" title = "' . __('Print') . '" alt = "" />' . ' ' . $Title . '
+	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" target="_blank">';
+	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<p class="page_title_text">
+			<img src="' . $RootPath, '/css/', $Theme, '/images/printer.png" title="' . __('Print') . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
 	if (date('m') > $_SESSION['YearEnd']) {
@@ -533,7 +533,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			<legend>', __('Report Criteria') , '</legend>
 			<field>
 				<label for = "PeriodFrom">' . __('Select Period From') . ':</label>
-				<select name = "PeriodFrom">';
+				<select name="PeriodFrom">';
 
 	$SQL = "SELECT periodno,
 					lastdate_in_period
@@ -576,7 +576,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	echo '<field>
 			<label for = "PeriodTo">' . __('Select Period To') . ':</label>
-			<select name = "PeriodTo">';
+			<select name="PeriodTo">';
 
 	DB_data_seek($Periods, 0);
 
@@ -607,7 +607,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	//Select the tag
 	echo '<field>
 			<label for = "tag">' . __('Select tag') . '</label>
-			<select name = "tag">';
+			<select name="tag">';
 
 	$SQL = "SELECT tagref,
 				tagdescription
@@ -628,16 +628,16 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	// End select tag
 	echo '<field>
 			<label for = "ShowDetail">', __('Detail or summary') , '</label>
-			<select name = "Detail">
+			<select name="Detail">
 				<option selected = "selected" value = "Summary">' . __('Summary') . '</option>
 				<option selected = "selected" value = "Detailed">' . __('All Accounts') . '</option>
 			</select>
 		</field>
 	</fieldset>';
 
-	echo '<div class = "centre">
-				<input type = "submit" name = "PrintPDF" title = "PDF" value = "' . __('Print PDF') . '" />
-				<input type = "submit" name = "View" title = "View" value = "' . __('View') . '" />
+	echo '<div class="centre">
+				<input type = "submit" name="PrintPDF" title="PDF" value = "' . __('Print PDF') . '" />
+				<input type = "submit" name="View" title="View" value = "' . __('View') . '" />
 			</div>
 		</form>';
 

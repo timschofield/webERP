@@ -13,8 +13,8 @@ include('includes/SQL_CommonFunctions.php');
 
 $MaxHours = 15; // perhaps this should be a configuration option??
 
-echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme,
-	'/images/company.png" title = "',// Icon image.
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/company.png" title="',// Icon image.
 	__('Timesheets'), '" /> ',// Icon title.
 	__('Timesheet Entry'), '</p>';// Page title.
 
@@ -313,7 +313,7 @@ if (isset($_POST['SubmitForApproval'])) {
 		// Prepare email content
 		$EmailSubject = $EmployeeRow['firstname'] . ' ' . $EmployeeRow['surname'] . ' ' . __('timesheet submitted for the week ending') . ' ' . $_POST['WeekEnding'];
 		$EmailBody = '<p>' . $EmailSubject . '</p>';
-		$EmailBody .= '<p><a href = "' . $RootPath . '/Timesheets.php?SelectedEmployee = ' . $SelectedEmployee  . '&WeekEnding = ' . $_POST['WeekEnding'] . '">' . __('Review and approve this timesheet') . '</a></p>';
+		$EmailBody .= '<p><a href="' . $RootPath . '/Timesheets.php?SelectedEmployee=' . $SelectedEmployee  . '&WeekEnding=' . $_POST['WeekEnding'] . '">' . __('Review and approve this timesheet') . '</a></p>';
 
 		// Send email using SendEmailFromWebERP
 		$Result = SendEmailFromWebERP($_SESSION['CompanyRecord']['email'],
@@ -526,31 +526,31 @@ if (!isset($SelectedEmployee) and in_array(20, $_SESSION['AllowedPageSecurityTok
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) > 0) {
-		echo '<table class = "selection">
+		echo '<table class="selection">
 			<thead>
-			<tr class = "striped_row">
-				<th class = "SortedColumn">', __('ID'), '</th>
-				<th class = "SortedColumn">', __('First name'), '</th>
-				<th class = "SortedColumn">', __('Surname'), '</th>
-				<th class = "SortedColumn">', __('Type'), '</th>
-				<th class = "SortedColumn">', __('Manager'), '</th>
-				<th class = "SortedColumn">', __('Email'), '</th>
-				<th class = "noPrint" colspan = "2">&nbsp;</th>
+			<tr class="striped_row">
+				<th class="SortedColumn">', __('ID'), '</th>
+				<th class="SortedColumn">', __('First name'), '</th>
+				<th class="SortedColumn">', __('Surname'), '</th>
+				<th class="SortedColumn">', __('Type'), '</th>
+				<th class="SortedColumn">', __('Manager'), '</th>
+				<th class="SortedColumn">', __('Email'), '</th>
+				<th class="noPrint" colspan = "2">&nbsp;</th>
 				</tr>
 			</thead>
 			<tbody>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
 
-		echo '<tr class = "striped_row">
+		echo '<tr class="striped_row">
 				<td>', $MyRow['id'], '</td>
 				<td>', $MyRow['firstname'], '</td>
 				<td>', $MyRow['surname'], '</td>
 				<td>', $MyRow['stockid'], '</td>
 				<td>', $MyRow['managerfirstname'] . ' ' . $MyRow['managersurname'], '</td>
-				<td><a href = "mailto:', $MyRow['email'], '">', $MyRow['email'], '</a></td>
-				<td class = "noPrint"><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedEmployee = ', $MyRow['id'], '">' . __('Select') . '</a></td>
-				<td class = "noPrint"><a href = "' . $RootPath . '/Employees.php?SelectedEmployee = ', $MyRow['id'], '">' . __('Edit') . '</a></td>
+				<td><a href="mailto:', $MyRow['email'], '">', $MyRow['email'], '</a></td>
+				<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedEmployee=', $MyRow['id'], '">' . __('Select') . '</a></td>
+				<td class="noPrint"><a href="' . $RootPath . '/Employees.php?SelectedEmployee=', $MyRow['id'], '">' . __('Edit') . '</a></td>
 			</tr>';
 		}
 		//END while LIST LOOP
@@ -560,7 +560,7 @@ if (!isset($SelectedEmployee) and in_array(20, $_SESSION['AllowedPageSecurityTok
 	}
 	echo '<br />';
 } elseif (in_array(20, $_SESSION['AllowedPageSecurityTokens']) and isset($SelectedEmployee)) {
-	echo '<a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedEmployee = NewSelection">' . __('Select a different employee') . '</a>';
+	echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedEmployee=NewSelection">' . __('Select a different employee') . '</a>';
 } elseif (!isset($SelectedEmployee)) {
 	prnMsg(__('Only employees set up to enter timesheets can use this script - please see the timesheet administrator'),'info');
 }
@@ -571,14 +571,14 @@ if (isset($_GET['Delete'])) {
 }
 
 if (isset($SelectedEmployee)){
-	echo '<form id = "TimesheetForm" method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
+	echo '<form id="TimesheetForm" method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
 		<div>
-		<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />
-		<input type = "hidden" name = "SelectedEmployee" value = "' . $SelectedEmployee . '" />';
+		<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />
+		<input type = "hidden" name="SelectedEmployee" value = "' . $SelectedEmployee . '" />';
 
 	//Entry of Timesheets - populate the employee's details
 
-	echo '<h2>' . __('For') . ' ' . $EmployeeRow['firstname'] . ' ' . $EmployeeRow['surname'] . ' ' . __('For the week ending') . ': <select name = "WeekEnding" onChange = "ReloadForm(TimesheetForm.RefreshWeek)" >';
+	echo '<h2>' . __('For') . ' ' . $EmployeeRow['firstname'] . ' ' . $EmployeeRow['surname'] . ' ' . __('For the week ending') . ': <select name="WeekEnding" onChange = "ReloadForm(TimesheetForm.RefreshWeek)" >';
 
 	if (!isset($_POST['WeekEnding'])) {
 		echo '<option selected = "selected" value = "' . $LatestWeekEndingDate . '">' . $LatestWeekEndingDate . '</option>';
@@ -596,7 +596,7 @@ if (isset($SelectedEmployee)){
 		}
 	} //end for loop
 
-	echo '</select><input type = "submit" name = "RefreshWeek" value = "Refresh" /></h2>
+	echo '</select><input type = "submit" name="RefreshWeek" value = "Refresh" /></h2>
 			<hr />';
 
 	if ($_SESSION['LastDayOfWeek']==6) {
@@ -655,32 +655,32 @@ if (isset($SelectedEmployee)){
 				if ($TimesheetRow['status'] == 2) {
 	//the timesheet is already posted - no changes are now possible
 					$PostedRowNo++;
-					echo '<tr class = "striped_row">
+					echo '<tr class="striped_row">
 							<td>' . (($TimesheetRow['wo']=='0') ? __('Non-chargable') : $TimesheetRow['wo']) . '</td>
 							<td>' . $TimesheetRow['workcentrename'] . '</td>
-							<td class = "number">' . locale_number_format($TimesheetRow['day1'],$EmployeeRow['decimalplaces']) . '</td>
-							<td class = "number">' . locale_number_format($TimesheetRow['day2'],$EmployeeRow['decimalplaces']) . '</td>
-							<td class = "number">' . locale_number_format($TimesheetRow['day3'],$EmployeeRow['decimalplaces']) . '</td>
-							<td class = "number">' . locale_number_format($TimesheetRow['day4'],$EmployeeRow['decimalplaces']) . '</td>
-							<td class = "number">' . locale_number_format($TimesheetRow['day5'],$EmployeeRow['decimalplaces']) . '</td>
-							<td class = "number">' . locale_number_format($TimesheetRow['day6'],$EmployeeRow['decimalplaces']) . '</td>
-							<td class = "number">' . locale_number_format($TimesheetRow['day7'],$EmployeeRow['decimalplaces']) . '</td>
-							<td class = "number">' . locale_number_format(($TimesheetRow['day1']+$TimesheetRow['day2']+$TimesheetRow['day3']+$TimesheetRow['day4']+$TimesheetRow['day5']+$TimesheetRow['day6']+$TimesheetRow['day7']),$EmployeeRow['decimalplaces']) . '</td>
+							<td class="number">' . locale_number_format($TimesheetRow['day1'],$EmployeeRow['decimalplaces']) . '</td>
+							<td class="number">' . locale_number_format($TimesheetRow['day2'],$EmployeeRow['decimalplaces']) . '</td>
+							<td class="number">' . locale_number_format($TimesheetRow['day3'],$EmployeeRow['decimalplaces']) . '</td>
+							<td class="number">' . locale_number_format($TimesheetRow['day4'],$EmployeeRow['decimalplaces']) . '</td>
+							<td class="number">' . locale_number_format($TimesheetRow['day5'],$EmployeeRow['decimalplaces']) . '</td>
+							<td class="number">' . locale_number_format($TimesheetRow['day6'],$EmployeeRow['decimalplaces']) . '</td>
+							<td class="number">' . locale_number_format($TimesheetRow['day7'],$EmployeeRow['decimalplaces']) . '</td>
+							<td class="number">' . locale_number_format(($TimesheetRow['day1']+$TimesheetRow['day2']+$TimesheetRow['day3']+$TimesheetRow['day4']+$TimesheetRow['day5']+$TimesheetRow['day6']+$TimesheetRow['day7']),$EmployeeRow['decimalplaces']) . '</td>
 							<td>' . __('Posted') . '</td>
 						</tr>';
 } else { //yet to be posted so allow edits
-					echo '<tr class = "striped_row">
-							<td><input type = "hidden" name = "id_' . $EditableRowNo . '" value = "' . $TimesheetRow['id'] . '" />' .  (($TimesheetRow['wo']=='0') ? __('Non-chargable') : $TimesheetRow['wo']) . '</td>
+					echo '<tr class="striped_row">
+							<td><input type = "hidden" name="id_' . $EditableRowNo . '" value = "' . $TimesheetRow['id'] . '" />' .  (($TimesheetRow['wo']=='0') ? __('Non-chargable') : $TimesheetRow['wo']) . '</td>
 							<td>' .  $TimesheetRow['workcentrename'] . '</td>
-							<td><input type = "text" required = "required" class = "number" name = "Day1_' . $EditableRowNo . '" value = "' . locale_number_format($TimesheetRow['day1'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
-							<td><input type = "text" required = "required" class = "number" name = "Day2_' . $EditableRowNo . '" value = "' . locale_number_format($TimesheetRow['day2'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
-							<td><input type = "text" required = "required" class = "number" name = "Day3_' . $EditableRowNo . '" value = "' . locale_number_format($TimesheetRow['day3'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
-							<td><input type = "text" required = "required" class = "number" name = "Day4_' . $EditableRowNo . '" value = "' . locale_number_format($TimesheetRow['day4'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
-							<td><input type = "text" required = "required" class = "number" name = "Day5_' . $EditableRowNo . '" value = "' . locale_number_format($TimesheetRow['day5'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
-							<td><input type = "text" required = "required" class = "number" name = "Day6_' . $EditableRowNo . '" value = "' . locale_number_format($TimesheetRow['day6'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
-							<td><input type = "text" required = "required" class = "number" name = "Day7_' . $EditableRowNo . '" value = "' . locale_number_format($TimesheetRow['day7'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
-							<td class = "number">' . locale_number_format($TimesheetRow['day1']+$TimesheetRow['day2']+$TimesheetRow['day3']+$TimesheetRow['day4']+$TimesheetRow['day5']+$TimesheetRow['day6']+$TimesheetRow['day7'],$EmployeeRow['decimalplaces']) . '</td>
-							<td><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'] . '?Delete = ' . $TimesheetRow['id'] . '&SelectedEmployee = ' . $SelectedEmployee . '&WeekEnding = ' . $_POST['WeekEnding'], ENT_QUOTES,'UTF-8') . '" onclick = "return confirm(\'' . __('Are you sure you wish to delete this timesheet entry') . '\');">' . __('Delete')  . '</a></td>'
+							<td><input type = "text" required = "required" class="number" name="Day1_' . $EditableRowNo . '" value = "' . locale_number_format($TimesheetRow['day1'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
+							<td><input type = "text" required = "required" class="number" name="Day2_' . $EditableRowNo . '" value = "' . locale_number_format($TimesheetRow['day2'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
+							<td><input type = "text" required = "required" class="number" name="Day3_' . $EditableRowNo . '" value = "' . locale_number_format($TimesheetRow['day3'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
+							<td><input type = "text" required = "required" class="number" name="Day4_' . $EditableRowNo . '" value = "' . locale_number_format($TimesheetRow['day4'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
+							<td><input type = "text" required = "required" class="number" name="Day5_' . $EditableRowNo . '" value = "' . locale_number_format($TimesheetRow['day5'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
+							<td><input type = "text" required = "required" class="number" name="Day6_' . $EditableRowNo . '" value = "' . locale_number_format($TimesheetRow['day6'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
+							<td><input type = "text" required = "required" class="number" name="Day7_' . $EditableRowNo . '" value = "' . locale_number_format($TimesheetRow['day7'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
+							<td class="number">' . locale_number_format($TimesheetRow['day1']+$TimesheetRow['day2']+$TimesheetRow['day3']+$TimesheetRow['day4']+$TimesheetRow['day5']+$TimesheetRow['day6']+$TimesheetRow['day7'],$EmployeeRow['decimalplaces']) . '</td>
+							<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?Delete=' . $TimesheetRow['id'] . '&SelectedEmployee=' . $SelectedEmployee . '&WeekEnding=' . $_POST['WeekEnding'], ENT_QUOTES,'UTF-8') . '" onclick="return confirm(\'' . __('Are you sure you wish to delete this timesheet entry') . '\');">' . __('Delete')  . '</a></td>'
 							 . (($TimesheetRow['status']=='1') ? '<td>' . __('submitted') . '</td>' : '') .
 						'</tr>';
 						$EditableRowNo++; //increment the row number
@@ -697,7 +697,7 @@ if (isset($SelectedEmployee)){
 		} //end if there are previous entries
 
 		//Set up a form variable to tell us how many existing rows without going back to the DB
-		echo '<input type = "hidden" name = "Rows" value = "' . $EditableRowNo . '" />';
+		echo '<input type = "hidden" name="Rows" value = "' . $EditableRowNo . '" />';
 		if ($EditableRowNo+$PostedRowNo > 1) {
 	// it is worth displaying the totals - only if there are several lines
 			echo '<tr>
@@ -705,18 +705,18 @@ if (isset($SelectedEmployee)){
 				</tr>
 				<tr>
 					<td colspan = "2">' . __('TOTALS') . '</td>
-					<td class = "number">' . locale_number_format($Day1,$EmployeeRow['decimalplaces']) . '</td>
-					<td class = "number">' . locale_number_format($Day2,$EmployeeRow['decimalplaces']) . '</td>
-					<td class = "number">' . locale_number_format($Day3,$EmployeeRow['decimalplaces']) . '</td>
-					<td class = "number">' . locale_number_format($Day4,$EmployeeRow['decimalplaces']) . '</td>
-					<td class = "number">' . locale_number_format($Day5,$EmployeeRow['decimalplaces']) . '</td>
-					<td class = "number">' . locale_number_format($Day6,$EmployeeRow['decimalplaces']) . '</td>
-					<td class = "number">' . locale_number_format($Day7,$EmployeeRow['decimalplaces']) . '</td>
-					<td class = "number">' . locale_number_format($Day1+$Day2+$Day3+$Day4+$Day5+$Day6+$Day7,$EmployeeRow['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($Day1,$EmployeeRow['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($Day2,$EmployeeRow['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($Day3,$EmployeeRow['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($Day4,$EmployeeRow['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($Day5,$EmployeeRow['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($Day6,$EmployeeRow['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($Day7,$EmployeeRow['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($Day1+$Day2+$Day3+$Day4+$Day5+$Day6+$Day7,$EmployeeRow['decimalplaces']) . '</td>
 				</tr>';
 } // end of totals - only if multiple lines
 		echo '<tr>
-				<td><select name = "WO">';
+				<td><select name="WO">';
 
 		if (!isset($_POST['WO']) or $_POST['WO']=='0'){
 			echo '<option selected = "selected" value = "0">' . __('Non-chargable') . '</option>';
@@ -738,7 +738,7 @@ if (isset($SelectedEmployee)){
 			}
 		}
 		echo '</select></td>
-				<td><select name = "WorkCentre">';
+				<td><select name="WorkCentre">';
 		if (!isset($_POST['WorkCentre']) or $_POST['WorkCentre']=='0'){
 			echo '<option selected = "selected" value = "0">' . __('N/A') . '</option>';
 		} else {
@@ -770,29 +770,29 @@ if (isset($SelectedEmployee)){
 		}
 
 		echo '</select></td>
-			<td><input type = "text" required = "required" class = "number" name = "Day1" value = "' . locale_number_format($_POST['Day1'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
-			<td><input type = "text" required = "required" class = "number" name = "Day2" value = "' . locale_number_format($_POST['Day2'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
-			<td><input type = "text" required = "required" class = "number" name = "Day3" value = "' . locale_number_format($_POST['Day3'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
-			<td><input type = "text" required = "required" class = "number" name = "Day4" value = "' . locale_number_format($_POST['Day4'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
-			<td><input type = "text" required = "required" class = "number" name = "Day5" value = "' . locale_number_format($_POST['Day5'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
-			<td><input type = "text" required = "required" class = "number" name = "Day6" value = "' . locale_number_format($_POST['Day6'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
-			<td><input type = "text" required = "required" class = "number" name = "Day7" value = "' . locale_number_format($_POST['Day7'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
+			<td><input type = "text" required = "required" class="number" name="Day1" value = "' . locale_number_format($_POST['Day1'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
+			<td><input type = "text" required = "required" class="number" name="Day2" value = "' . locale_number_format($_POST['Day2'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
+			<td><input type = "text" required = "required" class="number" name="Day3" value = "' . locale_number_format($_POST['Day3'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
+			<td><input type = "text" required = "required" class="number" name="Day4" value = "' . locale_number_format($_POST['Day4'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
+			<td><input type = "text" required = "required" class="number" name="Day5" value = "' . locale_number_format($_POST['Day5'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
+			<td><input type = "text" required = "required" class="number" name="Day6" value = "' . locale_number_format($_POST['Day6'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
+			<td><input type = "text" required = "required" class="number" name="Day7" value = "' . locale_number_format($_POST['Day7'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
 			</tr>';
 	} //end of if isset($_POST['WeekEnding'])
 
 	echo '</table>
 		<br />
-		<div class = "centre">
-			<input type = "submit" name = "Enter" value = "' , __('Enter') , '" />';
+		<div class="centre">
+			<input type = "submit" name="Enter" value = "' , __('Enter') , '" />';
 
 	if (isset($SelectedEmployee) and $EditableRowNo>0){
-		echo '<input type = "submit" name = "SubmitForApproval" value = "' , __('Submit for Approval') , '" />';
+		echo '<input type = "submit" name="SubmitForApproval" value = "' , __('Submit for Approval') , '" />';
 	}
 
 	if (in_array(20, $_SESSION['AllowedPageSecurityTokens']) and isset($SelectedEmployee) and $EditableRowNo>0) { //a timesheet administrator
 		echo '<br />
 			<hr />
-			<input type = "submit" name = "ApproveTimesheet" value = "' , __('Approve') , '" />';
+			<input type = "submit" name="ApproveTimesheet" value = "' , __('Approve') , '" />';
 	}
 } //end if there is an employee selected - entering a timesheet
 

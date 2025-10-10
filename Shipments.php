@@ -19,14 +19,14 @@ if (isset($_GET['NewShipment']) and $_GET['NewShipment']=='Yes'){
 	unset($_SESSION['Shipment']);
 }
 
-echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title = "' . __('Search') .
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Search') .
 	'" alt = "" />' . ' ' . $Title . '</p>';
 
 if (!isset($_SESSION['SupplierID']) and !isset($_SESSION['Shipment']) and !isset($_GET['SelectedShipment'])){
 	prnMsg( __('To set up a shipment') . ', ' . __('the supplier must first be selected from the Select Supplier page'), 'error');
-	echo '<table class = "selection">
-			<tr><td class = "menu_group_item">
-			<li><a href = "'. $RootPath . '/SelectSupplier.php">' . __('Select the Supplier') . '</a></li>
+	echo '<table class="selection">
+			<tr><td class="menu_group_item">
+			<li><a href="'. $RootPath . '/SelectSupplier.php">' . __('Select the Supplier') . '</a></li>
 			</td></tr></table></div>';
 	include('includes/footer.php');
 	exit();
@@ -297,7 +297,7 @@ if (isset($_GET['Delete']) and $_SESSION['Shipment']->Closed == 0){ //shipment i
 }
 
 echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post">';
-echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 echo '<fieldset>
 		<legend>', __('Shipment Details'), '</legend>
@@ -312,11 +312,11 @@ echo '<fieldset>
 
 echo '<field>
 		<label for = "Vessel">' .  __('Vessel Name /Transport Agent'). ': </label>
-		<input type = "text" name = "Vessel" maxlength = "50" size = "50" value = "' . $_SESSION['Shipment']->Vessel . '" />
+		<input type = "text" name="Vessel" maxlength = "50" size = "50" value = "' . $_SESSION['Shipment']->Vessel . '" />
 	</field>
 	<field>
 		<label for = "VoyageRef">' . __('Voyage Ref / Consignment Note').': </label>
-		<input type = "text" name = "VoyageRef" maxlength = "20" size = "20" value = "' . $_SESSION['Shipment']->VoyageRef . '" />
+		<input type = "text" name="VoyageRef" maxlength = "20" size = "20" value = "' . $_SESSION['Shipment']->VoyageRef . '" />
 	</field>';
 
 if (isset($_SESSION['Shipment']->ETA)){
@@ -328,9 +328,9 @@ if (isset($_SESSION['Shipment']->ETA)){
 echo '<field>
 		<label for = "ETA">' .  __('Expected Arrival Date (ETA)'). ': </label>';
 if (isset($_SESSION['Shipment']->ETA)) {
-	echo '<input type = "date" name = "ETA"  maxlength = "10" size = "11" value = "' . $ETA . '" />';
+	echo '<input type = "date" name="ETA"  maxlength = "10" size = "11" value = "' . $ETA . '" />';
 } else {
-	echo '<input type = "date" name = "ETA" maxlength = "10" size = "11" value = "' . FormatDateForSQL(DateAdd(date($_SESSION['DefaultDateFormat']), 'm', 1)) . '" />';
+	echo '<input type = "date" name="ETA" maxlength = "10" size = "11" value = "' . FormatDateForSQL(DateAdd(date($_SESSION['DefaultDateFormat']), 'm', 1)) . '" />';
 }
 echo '<field>';
 
@@ -360,7 +360,7 @@ if (count($_SESSION['Shipment']->LineItems)>0){
 
 if (!isset($_SESSION['Shipment']->StockLocation)){
 
-	echo '<select name = "StockLocation">';
+	echo '<select name="StockLocation">';
 
 	$SQL = "SELECT loccode, locationname FROM locations";
 
@@ -391,7 +391,7 @@ if (!isset($_SESSION['Shipment']->StockLocation)){
 	$SQL = "SELECT locationname FROM locations WHERE loccode = '" . $_SESSION['Shipment']->StockLocation . "'";
 	$ResultStkLocs = DB_query($SQL);
 	$MyRow = DB_fetch_array($ResultStkLocs);
-	echo '<input type = "hidden" name = "StockLocation" value = "'.$_SESSION['Shipment']->StockLocation.'" />';
+	echo '<input type = "hidden" name="StockLocation" value = "'.$_SESSION['Shipment']->StockLocation.'" />';
  	echo '<fieldtext>', $MyRow['locationname'], '</fieldtext>';
 }
 
@@ -401,7 +401,7 @@ echo '</field>
 if (count($_SESSION['Shipment']->LineItems)>0){
 	/* Always display all shipment lines */
 
-	echo '<table class = "selection">';
+	echo '<table class="selection">';
 	echo '<tr><th colspan = "9"><h3>' .  __('Order Lines On This Shipment'). '</h3></th></tr>';
 
 	$TableHeader = '<tr>
@@ -429,22 +429,22 @@ if (count($_SESSION['Shipment']->LineItems)>0){
 }
 		$RowCounter++;
 
-		echo '<tr class = "striped_row">
+		echo '<tr class="striped_row">
 			<td>' . $LnItm->OrderNo . '</td>
-			<td>' .  $LnItm->StockID .' - '. $LnItm->ItemDescription. '</td><td class = "number">' . locale_number_format($LnItm->QuantityOrd,$LnItm->DecimalPlaces) . '</td>
+			<td>' .  $LnItm->StockID .' - '. $LnItm->ItemDescription. '</td><td class="number">' . locale_number_format($LnItm->QuantityOrd,$LnItm->DecimalPlaces) . '</td>
 			<td>' .  $LnItm->UOM  . '</td>
-			<td class = "number">' . locale_number_format($LnItm->QuantityRecd,$LnItm->DecimalPlaces) . '</td>
-			<td class = "number">' . locale_number_format($LnItm->QtyInvoiced,$LnItm->DecimalPlaces) . '</td>
-			<td class = "number">' . locale_number_format($LnItm->UnitPrice, $_SESSION['Shipment']->CurrDecimalPlaces) . '</td>
-			<td class = "number">' . locale_number_format($LnItm->StdCostUnit,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-			<td><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete = ' . $LnItm->PODetailItem . '">' .  __('Delete'). '</a></td>
+			<td class="number">' . locale_number_format($LnItm->QuantityRecd,$LnItm->DecimalPlaces) . '</td>
+			<td class="number">' . locale_number_format($LnItm->QtyInvoiced,$LnItm->DecimalPlaces) . '</td>
+			<td class="number">' . locale_number_format($LnItm->UnitPrice, $_SESSION['Shipment']->CurrDecimalPlaces) . '</td>
+			<td class="number">' . locale_number_format($LnItm->StdCostUnit,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $LnItm->PODetailItem . '">' .  __('Delete'). '</a></td>
 			</tr>';
 	}//for each line on the shipment
 	echo '</table>';
 }//there are lines on the shipment
 
-echo '<div class = "centre">
-			<input type = "submit" name = "Update" value = "'. __('Update Shipment Details') . '" />
+echo '<div class="centre">
+			<input type = "submit" name="Update" value = "'. __('Update Shipment Details') . '" />
 		</div>';
 
 if (!isset($_POST['StockLocation'])) {
@@ -476,7 +476,7 @@ $Result = DB_query($SQL);
 
 if (DB_num_rows($Result)>0){
 
-	echo '<table cellpadding = "2" class = "selection">';
+	echo '<table cellpadding = "2" class="selection">';
 	echo '<tr>
 			<th colspan = "7"><h3>' .  __('Possible Order Lines To Add To This Shipment') . '</h3></th>
 		</tr>';
@@ -504,14 +504,14 @@ if (DB_num_rows($Result)>0){
 }
 		$RowCounter++;
 
-		echo '<tr class = "striped_row">
+		echo '<tr class="striped_row">
 				<td>' . $MyRow['orderno'] . '</td>
 				<td>' . $MyRow['itemcode'] . ' - ' . $MyRow['itemdescription'] . '</td>
-				<td class = "number">' . locale_number_format($MyRow['quantityord'],$MyRow['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($MyRow['quantityord'],$MyRow['decimalplaces']) . '</td>
 				<td>' . $MyRow['units'] . '</td>
-				<td class = "number">' . locale_number_format($MyRow['quantityrecd'],$MyRow['decimalplaces']) . '</td>
-				<td class = "number">' . ConvertSQLDate($MyRow['deliverydate']) . '</td>
-				<td><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . 'Add = ' . $MyRow['podetailitem'] . '">' .  __('Add') . '</a></td>
+				<td class="number">' . locale_number_format($MyRow['quantityrecd'],$MyRow['decimalplaces']) . '</td>
+				<td class="number">' . ConvertSQLDate($MyRow['deliverydate']) . '</td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . 'Add=' . $MyRow['podetailitem'] . '">' .  __('Add') . '</a></td>
 			</tr>';
 
 	}

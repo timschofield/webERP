@@ -17,8 +17,8 @@ if ((isset($_GET['Type']) and $_GET['Type']=='Receipts')
 
 	$Type = 'Receipts';
 	$TypeName =__('Receipts');
-	echo '<p class = "page_title_text"><img alt = "" src = "'.$RootPath.'/css/'.$Theme.
-		'/images/bank.png" title = "' .
+	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+		'/images/bank.png" title="' .
 		__('Bank Matching') . '" /> ' .// Icon title.
 		__('Bank Account Matching - Receipts') . '</p>';// Page title.
 
@@ -27,8 +27,8 @@ if ((isset($_GET['Type']) and $_GET['Type']=='Receipts')
 
 	$Type = 'Payments';
 	$TypeName =__('Payments');
-	echo '<p class = "page_title_text"><img alt = "" src = "'.$RootPath.'/css/'.$Theme.
-		'/images/bank.png" title = "' .
+	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+		'/images/bank.png" title="' .
 		__('Bank Matching') . '" /> ' .// Icon title.
 		__('Bank Account Matching - Payments') . '</p>';// Page title.
 
@@ -91,18 +91,18 @@ if (isset($_POST['Update']) and $_POST['RowCounter']>1) {
 	$_POST['ShowTransactions'] = true;
 }
 
-echo '<div class = "page_help_text">' . __('Use this screen to match webERP Receipts and Payments to your Bank Statement.  Check your bank statement and click the check-box when you find the matching transaction.') . '</div>';
+echo '<div class="page_help_text">' . __('Use this screen to match webERP Receipts and Payments to your Bank Statement.  Check your bank statement and click the check-box when you find the matching transaction.') . '</div>';
 
 echo '<form action = "'. htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post">';
-echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 
-echo '<input type = "hidden" name = "Type" value = "' . $Type . '" />';
+echo '<input type = "hidden" name="Type" value = "' . $Type . '" />';
 
 echo '<fieldset>
 		<legend>', __('Select Criteria'), '</legend>
 		<field>
 			<label for = "BankAccount">' . __('Bank Account') . ':</label>
-			<select tabindex = "1" autofocus = "autofocus" name = "BankAccount">';
+			<select tabindex = "1" autofocus = "autofocus" name="BankAccount">';
 
 $SQL = "SELECT
 			bankaccounts.accountcode,
@@ -116,7 +116,7 @@ $ResultBankActs = DB_query($SQL);
 while ($MyRow = DB_fetch_array($ResultBankActs)) {
 	// Lists bank accounts order by bankaccountname
 	echo '<option',
-		((isset($_POST['BankAccount']) and $_POST['BankAccount'] == $MyRow['accountcode']) ? ' selected = "selected"' : '' ),
+		((isset($_POST['BankAccount']) and $_POST['BankAccount'] == $MyRow['accountcode']) ? ' selected ="selected"' : '' ),
 		' value = "', $MyRow['accountcode'], '">', $MyRow['bankaccountname'], ' - ', $MyRow['currcode'], '</option>';
 }
 echo '</select>
@@ -132,16 +132,16 @@ if (!isset($_POST['AfterDate']) or !Is_Date($_POST['AfterDate'])) {
 // Change to allow input of FROM DATE and then TO DATE, instead of previous back-to-front method, add datepicker
 echo '<field>
 		<label for = "AfterDate">' . __('Show') . ' ' . $TypeName . ' ' . __('from') . ':</label>
-		<input tabindex = "3" name = "AfterDate" type = "date" size = "12" maxlength = "10" required = "required" onchange = "isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value = "' . FormatDateForSQL($_POST['AfterDate']) . '" />
+		<input tabindex = "3" name="AfterDate" type = "date" size = "12" maxlength = "10" required = "required" onchange = "isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value = "' . FormatDateForSQL($_POST['AfterDate']) . '" />
 	</field>';
 
 echo '<field>
         <label for = "BeforeDate">' . __('to') . ':</label>
-		<input tabindex = "2" name = "BeforeDate" type = "date" size = "12" maxlength = "10" required = "required" onchange = "isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value = "' . FormatDateForSQL($_POST['BeforeDate']) . '" />
+		<input tabindex = "2" name="BeforeDate" type = "date" size = "12" maxlength = "10" required = "required" onchange = "isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value = "' . FormatDateForSQL($_POST['BeforeDate']) . '" />
 	</field>';
 echo '<field>
 		<label for = "Ostg_or_All">' . __('Choose outstanding') . ' ' . $TypeName . ' ' . __('only or all') . ' ' . $TypeName . ' ' . __('in the date range') . ':</label>
-		<select tabindex = "4" name = "Ostg_or_All">';
+		<select tabindex = "4" name="Ostg_or_All">';
 
 if ($_POST['Ostg_or_All']=='All') {
 	echo '<option selected = "selected" value = "All">' . __('Show all') . ' ' . $TypeName . ' ' . __('in the date range') . '</option>';
@@ -155,7 +155,7 @@ echo '</select>
 
 echo '<field>
 		<label for = "First20_or_All">' . __('Choose to display only the first 20 matching') . ' ' . $TypeName . ' ' . __('or all') . ' ' . $TypeName . ' ' . __('meeting the criteria') . ':</label>
-		<select tabindex = "5" name = "First20_or_All">';
+		<select tabindex = "5" name="First20_or_All">';
 if ($_POST['First20_or_All']=='All') {
 	echo '<option selected = "selected" value = "All">' . __('Show all') . ' ' . $TypeName . ' ' . __('in the date range') . '</option>';
 	echo '<option value = "First20">' . __('Show only the first 20') . ' ' . $TypeName . '</option>';
@@ -168,11 +168,11 @@ echo '</select>
 	</field>';
 
 echo '</fieldset>
-	<div class = "centre">
-		<input tabindex = "6" type = "submit" name = "ShowTransactions" value = "' . __('Show selected') . ' ' . $TypeName . '" />';
+	<div class="centre">
+		<input tabindex = "6" type = "submit" name="ShowTransactions" value = "' . __('Show selected') . ' ' . $TypeName . '" />';
 
 if (isset($_POST['BankAccount'])) {
-   echo '<p><a href = "' . $RootPath . '/BankReconciliation.php?Account = ' . $_POST['BankAccount'] . '">' . __('Show reconciliation') . '</a></p>';
+   echo '<p><a href="' . $RootPath . '/BankReconciliation.php?Account=' . $_POST['BankAccount'] . '">' . __('Show reconciliation') . '</a></p>';
 }
 
 $InputError = 0;
@@ -272,15 +272,15 @@ if ($InputError != 1
 	$ErrMsg = __('The payments with the selected criteria could not be retrieved because');
 	$PaymentsResult = DB_query($SQL, $ErrMsg);
 
-	echo '<table cellpadding = "2" class = "selection">
+	echo '<table cellpadding = "2" class="selection">
 			<thead>
 			<tr>
-				<th class = "SortedColumn">' .  __('Cheque No') . '</th>
-				<th class = "SortedColumn">' . __('Ref') . '</th>
-				<th class = "SortedColumn">' . __('Date') . '</th>
-				<th class = "SortedColumn">' . $TypeName . '</th>
-				<th class = "SortedColumn">' . __('Amount') . '</th>
-				<th class = "SortedColumn">' . __('Outstanding') . '</th>
+				<th class="SortedColumn">' .  __('Cheque No') . '</th>
+				<th class="SortedColumn">' . __('Ref') . '</th>
+				<th class="SortedColumn">' . __('Date') . '</th>
+				<th class="SortedColumn">' . $TypeName . '</th>
+				<th class="SortedColumn">' . __('Amount') . '</th>
+				<th class="SortedColumn">' . __('Outstanding') . '</th>
 				<th colspan = "3">' . __('Clear') . ' / ' . __('Unclear') . '</th>
 				</tr>
 			</thead>
@@ -294,25 +294,25 @@ if ($InputError != 1
 		$Outstanding = $MyRow['amt']- $MyRow['amountcleared'];
 		if (ABS($Outstanding)<0.009) { /*the payment is cleared dont show the check box*/
 
-			echo '<tr class = "striped_row">
+			echo '<tr class="striped_row">
 						<td>', $MyRow['ref'], '</td>
 						<td>', $MyRow['banktranstype'], '</td>
-						<td class = "date">', $DisplayTranDate, '</td>
-						<td class = "number">', locale_number_format($MyRow['amt'],$CurrDecimalPlaces), '</td>
-						<td class = "number">', locale_number_format($Outstanding,$CurrDecimalPlaces), '</td>
+						<td class="date">', $DisplayTranDate, '</td>
+						<td class="number">', locale_number_format($MyRow['amt'],$CurrDecimalPlaces), '</td>
+						<td class="number">', locale_number_format($Outstanding,$CurrDecimalPlaces), '</td>
 						<td colspan = "2">', __('Unclear'), '</td>
-						<td><input type = "checkbox" name = "Unclear_', $i, '" /><input type = "hidden" name = "BankTrans_', $i, '" value = "', $MyRow['banktransid'], '" /></td>
+						<td><input type = "checkbox" name="Unclear_', $i, '" /><input type = "hidden" name="BankTrans_', $i, '" value = "', $MyRow['banktransid'], '" /></td>
 					</tr>';
 
 		} else{
-			echo '<tr class = "striped_row">
+			echo '<tr class="striped_row">
 					<td>', $MyRow['ref'], '</td>
 					<td>', $MyRow['banktranstype'], '</td>
 					<td>', $DisplayTranDate, '</td>
-					<td class = "number">', locale_number_format($MyRow['amt'],$CurrDecimalPlaces), '</td>
-					<td class = "number">', locale_number_format($Outstanding,$CurrDecimalPlaces), '</td>
-					<td><input type = "checkbox" name = "Clear_', $i, '" /><input type = "hidden" name = "BankTrans_', $i, '" value = "', $MyRow['banktransid'], '" /></td>
-					<td colspan = "2"><input type = "text" maxlength = "15" size = "15" class = "number" name = "AmtClear_', $i, '" /></td>
+					<td class="number">', locale_number_format($MyRow['amt'],$CurrDecimalPlaces), '</td>
+					<td class="number">', locale_number_format($Outstanding,$CurrDecimalPlaces), '</td>
+					<td><input type = "checkbox" name="Clear_', $i, '" /><input type = "hidden" name="BankTrans_', $i, '" value = "', $MyRow['banktransid'], '" /></td>
+					<td colspan = "2"><input type = "text" maxlength = "15" size = "15" class="number" name="AmtClear_', $i, '" /></td>
 				</tr>';
 		}
 		$i++;
@@ -320,9 +320,9 @@ if ($InputError != 1
 	//end of while loop
 	echo '</tbody>
 		</table>
-			<div class = "centre">
-				<input type = "hidden" name = "RowCounter" value = "' . $i . '" />
-				<input type = "submit" name = "Update" value = "' . __('Update Matching') . '" />
+			<div class="centre">
+				<input type = "hidden" name="RowCounter" value = "' . $i . '" />
+				<input type = "submit" name="Update" value = "' . __('Update Matching') . '" />
 			</div>';
 }
 echo '</form>';
