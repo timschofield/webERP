@@ -11,10 +11,10 @@ $ToCriteria = 'zzzzzzzz'; /*Category To */
 $Location = 'All'; /* Location to report on */
 $DetailedReport = 'Yes'; /* Total by category or complete listing */
 
-$_POST['DetailedReport'] = $DetailedReport; /* so PDFInventoryValnPageHeader.php works too */
-$_POST['FromCriteria'] = $FromCriteria; /* so PDFInventoryValnPageHeader.php works too */
-$_POST['ToCriteria'] = $ToCriteria; /* so PDFInventoryValnPageHeader.php works too */
-$_POST['Location'] = $Location; /* so PDFInventoryValnPageHeader.php works too */
+$_POST['DetailedReport'] = $DetailedReport;
+$_POST['FromCriteria'] = $FromCriteria;
+$_POST['ToCriteria'] = $ToCriteria;
+$_POST['Location'] = $Location;
 
 $Recipients = GetMailList('InventoryValuationRecipients');
 
