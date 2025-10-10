@@ -9,16 +9,18 @@ include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.php');
 
-if (isset($_POST['NoteDate'])){$_POST['NoteDate'] = ConvertSQLDate($_POST['NoteDate']);}
+if (isset($_POST['NoteDate'])) {
+	$_POST['NoteDate'] = ConvertSQLDate($_POST['NoteDate']);
+}
 
-if (isset($_GET['Id'])){
+if (isset($_GET['Id'])) {
 	$Id = (int)$_GET['Id'];
-} else if (isset($_POST['Id'])){
+} elseif (isset($_POST['Id'])) {
 	$Id = (int)$_POST['Id'];
 }
-if (isset($_POST['DebtorNo'])){
+if (isset($_POST['DebtorNo'])) {
 	$DebtorNo = $_POST['DebtorNo'];
-} elseif (isset($_GET['DebtorNo'])){
+} elseif (isset($_GET['DebtorNo'])) {
 	$DebtorNo = $_GET['DebtorNo'];
 }
 
@@ -38,12 +40,12 @@ if ( isset($_POST['submit']) ) {
 	} elseif (mb_strlen($_POST['Note']) >200) {
 		$InputError = 1;
 		prnMsg( __('The contact\'s notes must be two hundred characters or less long'), 'error');
-	} elseif( trim($_POST['Note']) == '' ) {
+	} elseif (trim($_POST['Note']) == '') {
 		$InputError = 1;
 		prnMsg( __('The contact\'s notes may not be empty'), 'error');
 	}
 
-	if (isset($Id) and $InputError !=1) {
+	if (isset($Id) and $InputError != 1) {
 
 		$SQL = "UPDATE custnotes SET note='" . $_POST['Note'] . "',
 									date='" . FormatDateForSQL($_POST['NoteDate']) . "',
@@ -52,7 +54,7 @@ if ( isset($_POST['submit']) ) {
 				WHERE debtorno ='".$DebtorNo."'
 				AND noteid='".$Id."'";
 		$Msg = __('Customer Notes') . ' ' . $DebtorNo  . ' ' . __('has been updated');
-	} elseif ($InputError !=1) {
+	} elseif ($InputError != 1) {
 
 		$SQL = "INSERT INTO custnotes (debtorno,
 										href,
@@ -67,7 +69,7 @@ if ( isset($_POST['submit']) ) {
 		$Msg = __('The contact notes record has been added');
 	}
 
-	if ($InputError !=1) {
+	if ($InputError != 1) {
 		$Result = DB_query($SQL);
 				//echo '<br />' . $SQL;
 
@@ -85,7 +87,7 @@ if ( isset($_POST['submit']) ) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'SalesOrders'
 
-	$SQL="DELETE FROM custnotes
+	$SQL = "DELETE FROM custnotes
 			WHERE noteid='".$Id."'
 			AND debtorno='".$DebtorNo."'";
 	$Result = DB_query($SQL);
@@ -97,7 +99,7 @@ if ( isset($_POST['submit']) ) {
 }
 
 if (!isset($Id)) {
-	$SQLname="SELECT * FROM debtorsmaster
+	$SQLname = "SELECT * FROM debtorsmaster
 				WHERE debtorno='".$DebtorNo."'";
 	$Result = DB_query($SQLname);
 	$Row = DB_fetch_array($Result);
