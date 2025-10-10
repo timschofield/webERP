@@ -261,7 +261,7 @@ function Convert_CRLF($string, $Line_break=PHP_EOL)
 //&$YPos - return the updated value
 //         Coming in, YPos=prior line, so update it before we print anything, and don't update it if we don't print anything
 //Defaults come from addTextWrap
-function PrintDetail($PDF,$Text,$YLim,$XPos,&$YPos,$Width,$FontSize,$NPFunc=null,$NPInc=null,$Align='J',$border=0,$fill=0)
+function PrintDetail($pdf,$Text,$YLim,$XPos,&$YPos,$Width,$FontSize,$NPFunc=null,$NPInc=null,$Align='J',$border=0,$fill=0)
 {
 	$InitialExtraSpace=2;		//shift down slightly from above text
 
@@ -285,7 +285,7 @@ function PrintDetail($PDF,$Text,$YLim,$XPos,&$YPos,$Width,$FontSize,$NPFunc=null
 	}
 }
 
-function PrintOurCompanyInfo($PDF,$CompanyRecord,$XPos,$YPos)
+function PrintOurCompanyInfo($pdf,$CompanyRecord,$XPos,$YPos)
 {
 	$CompanyRecord = array_map('html_entity_decode', $CompanyRecord);
 
@@ -307,7 +307,7 @@ function PrintOurCompanyInfo($PDF,$CompanyRecord,$XPos,$YPos)
 }
 
 // Generically move down 82 units after printing this
-function PrintDeliverTo($PDF,$CompanyRecord,$Title,$XPos,$YPos)
+function PrintDeliverTo($pdf,$CompanyRecord,$Title,$XPos,$YPos)
 {
 	$CompanyRecord = array_map('html_entity_decode', $CompanyRecord);
 
@@ -332,7 +332,7 @@ function PrintDeliverTo($PDF,$CompanyRecord,$Title,$XPos,$YPos)
 }
 
 // Generically move down 82 units after printing this
-function PrintCompanyTo($PDF,$CompanyRecord,$Title,$XPos,$YPos)
+function PrintCompanyTo($pdf,$CompanyRecord,$Title,$XPos,$YPos)
 {
 	$CompanyRecord = array_map('html_entity_decode', $CompanyRecord);
 
