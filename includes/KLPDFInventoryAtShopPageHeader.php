@@ -1,7 +1,7 @@
 <?php
-/* $Id: KLPDFInventoryAtShopPageHeader.php $*/
 
-/*PDF page header for inventory valuation report */
+/*PDF page header for inventory at shop valuation report */
+
 if ($PageNumber>1){
 	$pdf->newPage();
 }
