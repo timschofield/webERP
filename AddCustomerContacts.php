@@ -11,18 +11,18 @@ include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.php');
 
-if (isset($_GET['Id'])){
+if (isset($_GET['Id'])) {
 	$Id = (int)$_GET['Id'];
-} else if (isset($_POST['Id'])){
+} elseif (isset($_POST['Id'])) {
 	$Id = (int)$_POST['Id'];
 }
-if (isset($_POST['DebtorNo'])){
+if (isset($_POST['DebtorNo'])) {
 	$DebtorNo = $_POST['DebtorNo'];
-} elseif (isset($_GET['DebtorNo'])){
+} elseif (isset($_GET['DebtorNo'])) {
 	$DebtorNo = $_GET['DebtorNo'];
 }
 echo '<a class="noPrint toplink" href="' . $RootPath . '/Customers.php?DebtorNo=' . $DebtorNo . '">' . __('Back to Customers') . '</a><br />';
-$SQLname="SELECT name FROM debtorsmaster WHERE debtorno='" . $DebtorNo . "'";
+$SQLname = "SELECT name FROM debtorsmaster WHERE debtorno='" . $DebtorNo . "'";
 $Result = DB_query($SQLname);
 $Row = DB_fetch_array($Result);
 if (!isset($_GET['Id'])) {
@@ -44,15 +44,15 @@ if ( isset($_POST['submit']) ) {
 	} elseif (mb_strlen($_POST['ContactName']) >40) {
 		$InputError = 1;
 		prnMsg( __('The contact name must be forty characters or less long'), 'error');
-	} elseif( trim($_POST['ContactName']) == '' ) {
+	} elseif (trim($_POST['ContactName']) == '') {
 		$InputError = 1;
 		prnMsg( __('The contact name may not be empty'), 'error');
-	} elseif (!IsEmailAddress($_POST['ContactEmail']) AND mb_strlen($_POST['ContactEmail'])>0){
+	} elseif (!IsEmailAddress($_POST['ContactEmail']) AND mb_strlen($_POST['ContactEmail']) > 0) {
 		$InputError = 1;
 		prnMsg( __('The contact email address is not a valid email address'), 'error');
 	}
 
-	if (isset($Id) AND ($Id AND $InputError !=1)) {
+	if (isset($Id) AND ($Id AND $InputError != 1)) {
 		$SQL = "UPDATE custcontacts SET contactname='" . $_POST['ContactName'] . "',
 										role='" . $_POST['ContactRole'] . "',
 										phoneno='" . $_POST['ContactPhone'] . "',
@@ -62,7 +62,7 @@ if ( isset($_POST['submit']) ) {
 					WHERE debtorno ='".$DebtorNo."'
 					AND contid='".$Id."'";
 		$Msg = __('Customer Contacts') . ' ' . $DebtorNo . ' ' . __('has been updated');
-	} elseif ($InputError !=1) {
+	} elseif ($InputError != 1) {
 
 		$SQL = "INSERT INTO custcontacts (debtorno,
 										contactname,
@@ -81,7 +81,7 @@ if ( isset($_POST['submit']) ) {
 		$Msg = __('The contact record has been added');
 	}
 
-	if ($InputError !=1) {
+	if ($InputError != 1) {
 		$Result = DB_query($SQL);
 				//echo '<br />' . $SQL;
 
@@ -99,7 +99,7 @@ if ( isset($_POST['submit']) ) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'SalesOrders'
 
-	$SQL="DELETE FROM custcontacts
+	$SQL = "DELETE FROM custcontacts
 			WHERE contid='" . $Id . "'
 			AND debtorno='" . $DebtorNo . "'";
 	$Result = DB_query($SQL);
@@ -206,7 +206,7 @@ if (!isset($_GET['delete'])) {
 	echo '<field>
 			<label for="ContactName">', __('Contact Name'), ':</label>
 			<input maxlength="40" name="ContactName" autofocus="autofocus" required="required" size="35" type="text" ';
-				if( isset($_POST['ContactName']) ) {
+				if (isset($_POST['ContactName'])) {
 					echo 'value="', $_POST['ContactName'], '" ';
 				}
 				echo '/>
@@ -216,36 +216,36 @@ if (!isset($_GET['delete'])) {
 	echo '<field>
 			<label for="ContactRole">', __('Role'), ':</label>
 			<input maxlength="40" name="ContactRole" size="35" type="text" ';
-				if( isset($_POST['ContactRole']) ) {
+				if (isset($_POST['ContactRole'])) {
 					echo 'value="', $_POST['ContactRole'], '" ';
 				}
 				echo '/>
-			<fieldhelp>', __('The job role that this contact has at the customer'), '</fiedhelp>
+			<fieldhelp>', __('The job role that this contact has at the customer'), '</fieldhelp>
 		</field>';
 	// Phone:
 	echo '<field>
 			<label for="ContactPhone">', __('Phone'), ':</label>
 			<input maxlength="40" name="ContactPhone" size="35" type="tel" ';
-				if( isset($_POST['ContactPhone']) ) {
+				if (isset($_POST['ContactPhone'])) {
 					echo 'value="', $_POST['ContactPhone'], '" ';
 				}
 				echo '/>
-			<fieldhelp>', __('A phone number for this contact'), '</fiedhelp>
+			<fieldhelp>', __('A phone number for this contact'), '</fieldhelp>
 		</field>';
 	// Email:
 	echo '<field>
 			<label for="ContactEmail">', __('Email'), ':</label>
 			<input maxlength="55" name="ContactEmail" size="55" type="email" ';
-				if( isset($_POST['ContactEmail']) ) {
+				if (isset($_POST['ContactEmail'])) {
 					echo 'value="', $_POST['ContactEmail'], '" ';
 				}
 				echo '/>
-			<fieldhelp>', __('An email address for this contact'), '</fiedhelp>
+			<fieldhelp>', __('An email address for this contact'), '</fieldhelp>
 		</field>';
 	echo '<field>
 			<label for="StatementAddress">', __('Send Statement'), ':</label>
 			<select name="StatementAddress" title="" >';
-				if( !isset($_POST['StatementAddress']) ) {
+				if (!isset($_POST['StatementAddress'])) {
 					echo '<option selected="selected" value="0">', __('No') , '</option>
 							<option value="1">', __('Yes') , '</option>';
 				} else {
