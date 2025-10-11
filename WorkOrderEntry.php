@@ -660,10 +660,13 @@ if (isset($SearchResult)) {
 
 	if (DB_num_rows($SearchResult) > 0) {
 
+		echo '<table cellpadding = "2">
+				<thead>';
+
 		// Add pagination navigation if there's more than one page
 		echo '<input type = "hidden" name="CurrPage" value = "', $_POST['CurrPage'], '" />';
 		if ($ListPageMax > 0) {
-			echo '<div class="centre">&nbsp;&nbsp;', ($_POST['CurrPage'] + 1), ' ', __('of'), ' ', ($ListPageMax + 1), ' ', __('pages'), '. ', __('Go to Page'), ': ';
+			echo '<tr><th colspan="5">&nbsp;&nbsp;', ($_POST['CurrPage'] + 1), ' ', __('of'), ' ', ($ListPageMax + 1), ' ', __('pages'), '. ', __('Go to Page'), ': ';
 			echo '<select name="PageSelect">';
 			$ListPage = 0;
 			while ($ListPage <= $ListPageMax) {
@@ -676,15 +679,13 @@ if (isset($SearchResult)) {
 			}
 			echo '</select>
 				<input type = "submit" name="Go" value = "', __('Go'), '" />
-				<input type = "submit" name="Previous" value = "', __('Previous'), '" />
-				<input type = "submit" name="Next" value = "', __('Next'), '" />';
-			echo '</div>';
+				<input type = "submit" class="previous_button" name="Previous" value = "', __('Previous'), '" />
+				<input type = "submit" class="next_button" name="Next" value = "', __('Next'), '" />';
+			echo '</th>
+				</tr>';
 		}
 
-		echo '<table cellpadding = "2">';
-
-		echo '<thead>
-				<tr>
+		echo '<tr>
 					<th class="SortedColumn">', __('Code'), '</th>
 					<th class="SortedColumn">', __('Description'), '</th>
 					<th>', __('Units'), '</th>
@@ -723,12 +724,10 @@ if (isset($SearchResult)) {
 		} //end of while loop
 
 	} //end if more than 1 row to show
-	echo '</tbody>
-		</table>';
 
 	// Add pagination navigation at the bottom if there's more than one page
 	if ($ListPageMax > 0) {
-		echo '<div class="centre">&nbsp;&nbsp;', ($_POST['CurrPage'] + 1), ' ', __('of'), ' ', ($ListPageMax + 1), ' ', __('pages'), '. ', __('Go to Page'), ': ';
+		echo '<tr><th colspan="5">&nbsp;&nbsp;', ($_POST['CurrPage'] + 1), ' ', __('of'), ' ', ($ListPageMax + 1), ' ', __('pages'), '. ', __('Go to Page'), ': ';
 		echo '<select name="PageSelect2">';
 		$ListPage = 0;
 		while ($ListPage <= $ListPageMax) {
@@ -741,10 +740,12 @@ if (isset($SearchResult)) {
 		}
 		echo '</select>
 			<input type = "submit" name="Go" value = "', __('Go'), '" />
-			<input type = "submit" name="Previous" value = "', __('Previous'), '" />
-			<input type = "submit" name="Next" value = "', __('Next'), '" />';
-		echo '</div>';
+			<input type = "submit" name="Previous" class="previous_button" value = "', __('Previous'), '" />
+			<input type = "submit" name="Next" class="next_button" value = "', __('Next'), '" />';
+		echo '</th></tr>';
 	}
+	echo '</tbody>
+		</table>';
 
 } //end if SearchResults to show
 echo '</form>';
