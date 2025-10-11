@@ -330,7 +330,8 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 									FROM worequirements INNER JOIN stockmaster
 									ON worequirements.stockid = stockmaster.stockid
 									WHERE wo = '" . $SelectedWO . "'
-									and worequirements.parentstockid = '" . $StockID . "'");
+									and worequirements.parentstockid = '" . $StockID . "'
+									ORDER BY worequirements.stockid");
 		$IssuedAlreadyResult = DB_query("SELECT stockid,
 											SUM(-qty) as total
 										FROM stockmoves
@@ -358,7 +359,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		$WOLine[$i]['item'] = $RequirementsRow['stockid'];
 		$WOLine[$i]['description'] = $RequirementsRow['description'];
 		$WOLine[$i]['controlled'] = $RequirementsRow['controlled'];
-		$WOLine[$i]['qtyreqd'] = $WOHeader['qtyreqd']*$RequirementsRow['qtypu'];
+		$WOLine[$i]['qtyreqd'] = $RequirementsRow['qtypu'];
 		$WOLine[$i]['issued'] = $Issued  ;
 		$WOLine[$i]['decimalplaces'] = $RequirementsRow['decimalplaces'];
 		$WOLine[$i]['units'] = $RequirementsRow['units'];
