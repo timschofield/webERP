@@ -505,7 +505,17 @@ echo '<div class="centre">
 		<input type = "submit" name="delete" value = "', __('Cancel This Work Order'), '" />
 	</div>';
 
-if (isset($_POST['Search']) or isset($_POST['Prev']) or isset($_POST['Next'])) {
+// Initialize CurrPage if not set
+if (!isset($_POST['CurrPage'])) {
+	$_POST['CurrPage'] = 0;
+}
+
+if (isset($_POST['Search']) or isset($_POST['Previous']) or isset($_POST['Next']) or isset($_POST['Go'])) {
+
+	// Reset to first page on new search
+	if (isset($_POST['Search'])) {
+		$_POST['CurrPage'] = 0;
+	}
 
 	if ($_POST['Keywords'] and $_POST['StockCode']) {
 	prnMsg(__('Stock description keywords have been used in preference to the Stock code extract entered'), 'warn');
@@ -544,24 +554,38 @@ if (isset($_POST['Search']) or isset($_POST['Prev']) or isset($_POST['Next'])) {
 	if ($ListCount > 0) {
 	$ListPageMax = ceil($ListCount / $_SESSION['DisplayRecordsMax']) - 1;
 } else {
-		$ListPageMax = 1;
+		$ListPageMax = 0;
 	}
 
+	// Handle pagination navigation
 	if (isset($_POST['Next'])) {
-		$Offset = $_POST['CurrPage'] + 1;
+		if ($_POST['CurrPage'] < $ListPageMax) {
+			$_POST['CurrPage'] = $_POST['CurrPage'] + 1;
+		}
 	}
-	if (isset($_POST['Prev'])) {
-		$Offset = $_POST['CurrPage'] - 1;
+	if (isset($_POST['Previous'])) {
+		if ($_POST['CurrPage'] > 0) {
+			$_POST['CurrPage'] = $_POST['CurrPage'] - 1;
+		}
 	}
-	if (!isset($Offset)) {
-		$Offset = 0;
+	if (isset($_POST['Go'])) {
+		// Handle both PageSelect dropdowns (top and bottom)
+		if (isset($_POST['PageSelect'])) {
+			$_POST['CurrPage'] = $_POST['PageSelect'];
+		} elseif (isset($_POST['PageSelect2'])) {
+			$_POST['CurrPage'] = $_POST['PageSelect2'];
+		}
 	}
+
+	$Offset = $_POST['CurrPage'];
 	if ($Offset < 0) {
 	$Offset = 0;
 }
 	if ($Offset > $ListPageMax) {
 	$Offset = $ListPageMax;
 }
+	$_POST['CurrPage'] = $Offset;
+
 	$SQL = $SQL . ' LIMIT ' . $_SESSION['DisplayRecordsMax'] . ' OFFSET ' . strval($_SESSION['DisplayRecordsMax'] * $Offset);
 
 	$ErrMsg = __('There is a problem selecting the part records to display because');
@@ -636,6 +660,27 @@ if (isset($SearchResult)) {
 
 	if (DB_num_rows($SearchResult) > 0) {
 
+		// Add pagination navigation if there's more than one page
+		echo '<input type = "hidden" name="CurrPage" value = "', $_POST['CurrPage'], '" />';
+		if ($ListPageMax > 0) {
+			echo '<div class="centre">&nbsp;&nbsp;', ($_POST['CurrPage'] + 1), ' ', __('of'), ' ', ($ListPageMax + 1), ' ', __('pages'), '. ', __('Go to Page'), ': ';
+			echo '<select name="PageSelect">';
+			$ListPage = 0;
+			while ($ListPage <= $ListPageMax) {
+				if ($ListPage == $_POST['CurrPage']) {
+					echo '<option value = "', $ListPage, '" selected = "selected">', ($ListPage + 1), '</option>';
+				} else {
+					echo '<option value = "', $ListPage, '">', ($ListPage + 1), '</option>';
+				}
+				$ListPage++;
+			}
+			echo '</select>
+				<input type = "submit" name="Go" value = "', __('Go'), '" />
+				<input type = "submit" name="Previous" value = "', __('Previous'), '" />
+				<input type = "submit" name="Next" value = "', __('Next'), '" />';
+			echo '</div>';
+		}
+
 		echo '<table cellpadding = "2">';
 
 		echo '<thead>
@@ -680,6 +725,26 @@ if (isset($SearchResult)) {
 	} //end if more than 1 row to show
 	echo '</tbody>
 		</table>';
+
+	// Add pagination navigation at the bottom if there's more than one page
+	if ($ListPageMax > 0) {
+		echo '<div class="centre">&nbsp;&nbsp;', ($_POST['CurrPage'] + 1), ' ', __('of'), ' ', ($ListPageMax + 1), ' ', __('pages'), '. ', __('Go to Page'), ': ';
+		echo '<select name="PageSelect2">';
+		$ListPage = 0;
+		while ($ListPage <= $ListPageMax) {
+			if ($ListPage == $_POST['CurrPage']) {
+				echo '<option value = "', $ListPage, '" selected = "selected">', ($ListPage + 1), '</option>';
+			} else {
+				echo '<option value = "', $ListPage, '">', ($ListPage + 1), '</option>';
+			}
+			$ListPage++;
+		}
+		echo '</select>
+			<input type = "submit" name="Go" value = "', __('Go'), '" />
+			<input type = "submit" name="Previous" value = "', __('Previous'), '" />
+			<input type = "submit" name="Next" value = "', __('Next'), '" />';
+		echo '</div>';
+	}
 
 } //end if SearchResults to show
 echo '</form>';
