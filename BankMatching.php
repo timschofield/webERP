@@ -123,10 +123,10 @@ echo '</select>
 	</field>';
 
 if (!isset($_POST['BeforeDate']) OR !Is_Date($_POST['BeforeDate'])) {
-	$_POST['BeforeDate'] = Date($_SESSION['DefaultDateFormat']);
+	$_POST['BeforeDate'] = date($_SESSION['DefaultDateFormat']);
 }
 if (!isset($_POST['AfterDate']) OR !Is_Date($_POST['AfterDate'])) {
-	$_POST['AfterDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-3,Date('d'),Date('y')));
+	$_POST['AfterDate'] = date($_SESSION['DefaultDateFormat'], mktime(0,0,0,date('m')-3,date('d'),date('y')));
 }
 
 // Change to allow input of FROM DATE and then TO DATE, instead of previous back-to-front method, add datepicker
@@ -189,9 +189,9 @@ if (!Is_Date($_POST['AfterDate'])) {
 		$_SESSION['DefaultDateFormat'],'error');
 }
 
-if ($InputError !=1
+if ($InputError != 1
 	AND isset($_POST['BankAccount'])
-	AND $_POST['BankAccount']!=''
+	AND $_POST['BankAccount']!= ''
 	AND isset($_POST['ShowTransactions'])) {
 
 	$SQLBeforeDate = FormatDateForSQL($_POST['BeforeDate']);
@@ -266,7 +266,7 @@ if ($InputError !=1
 						ORDER BY transdate";
 		}
 	}
-	if ($_POST['First20_or_All']!='All') {
+	if ($_POST['First20_or_All']!= 'All') {
 		$SQL = $SQL . " LIMIT 20";
 	}
 

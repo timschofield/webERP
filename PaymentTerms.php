@@ -68,7 +68,7 @@ if (isset($_POST['submit'])) {
 		$i++;
 	}
 
-	if (isset($SelectedTerms) AND $InputError !=1) {
+	if (isset($SelectedTerms) AND $InputError != 1) {
 
 		/*SelectedTerms could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 
@@ -87,7 +87,7 @@ if (isset($_POST['submit'])) {
 		}
 
 		$Msg = __('The payment terms definition record has been updated') . '.';
-	} else if ($InputError !=1) {
+	} elseif ($InputError != 1) {
 
 	/*Selected terms is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new payment terms form */
 
@@ -117,7 +117,7 @@ if (isset($_POST['submit'])) {
 
 		$Msg = __('The payment terms definition record has been added') . '.';
 	}
-	if ($InputError !=1){
+	if ($InputError != 1){
 		//run the SQL from either of the above possibilites
 		$Result = DB_query($SQL);
 		prnMsg($Msg,'success');
@@ -285,7 +285,7 @@ if (!isset($_GET['delete'])) {
 	echo '<field>
 			<label for="DayNumber">' . __('Days (Or Day In Following Month)').':</label>
 			<input type="text" ' . (in_array('DayNumber',$Errors) ? 'class="inputerror"' : '' ) .' name="DayNumber" required="required" class="integer"  size="4" maxlength="3" value="';
-	if ($DaysBeforeDue !=0) {
+	if ($DaysBeforeDue != 0) {
 		echo locale_number_format($DaysBeforeDue,0);
 	} else {
 		if (isset($DayInFollowingMonth)) {

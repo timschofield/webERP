@@ -58,7 +58,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	<body>
 		<div class="page-title">' . $_SESSION['CompanyRecord']['coyname'] . '</div>
 		<div>' . __('MRP Reschedule Report') . '</div>
-		<div>' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '</div>
+		<div>' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '</div>
 		<div>' . __('Selection:') . ' ' . $_POST['Selection'] . '</div>
 		<br>
 		<table>

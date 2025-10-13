@@ -74,12 +74,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 		$NumberMonthsHolding=$_POST['NumberMonthsHolding'];
 	}
 
-	$Period_0_Name = GetMonthText(date('m', mktime(0,0,0,Date('m'),Date('d'),Date('Y'))));
-	$Period_1_Name = GetMonthText(date('m', mktime(0,0,0,Date('m')-1,Date('d'),Date('Y'))));
-	$Period_2_Name = GetMonthText(date('m', mktime(0,0,0,Date('m')-2,Date('d'),Date('Y'))));
-	$Period_3_Name = GetMonthText(date('m', mktime(0,0,0,Date('m')-3,Date('d'),Date('Y'))));
-	$Period_4_Name = GetMonthText(date('m', mktime(0,0,0,Date('m')-4,Date('d'),Date('Y'))));
-	$Period_5_Name = GetMonthText(date('m', mktime(0,0,0,Date('m')-5,Date('d'),Date('Y'))));
+	$Period_0_Name = GetMonthText(date('m', mktime(0,0,0,date('m'),date('d'),date('Y'))));
+	$Period_1_Name = GetMonthText(date('m', mktime(0,0,0,date('m')-1,date('d'),date('Y'))));
+	$Period_2_Name = GetMonthText(date('m', mktime(0,0,0,date('m')-2,date('d'),date('Y'))));
+	$Period_3_Name = GetMonthText(date('m', mktime(0,0,0,date('m')-3,date('d'),date('Y'))));
+	$Period_4_Name = GetMonthText(date('m', mktime(0,0,0,date('m')-4,date('d'),date('Y'))));
+	$Period_5_Name = GetMonthText(date('m', mktime(0,0,0,date('m')-5,date('d'),date('Y'))));
 
 	$HTML .= '<meta name="author" content="WebERP " . $Version">
 					<meta name="Creator" content="webERP https://www.weberp.org">
@@ -88,7 +88,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 				<div class="centre" id="ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 					' . __('Inventory Planning Report') . '<br />
-					' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
 				</div>
 				<table>
 					<thead>
@@ -112,7 +112,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 
 	$Category = '';
 
-	$CurrentPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat']));
+	$CurrentPeriod = GetPeriod(date($_SESSION['DefaultDateFormat']));
 	$Period_1 = $CurrentPeriod -1;
 	$Period_2 = $CurrentPeriod -2;
 	$Period_3 = $CurrentPeriod -3;
@@ -294,11 +294,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 					stockmaster.stockid";
 	}
 	$InventoryResult = DB_query($SQL);
-	$CurrentPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat']));
+	$CurrentPeriod = GetPeriod(date($_SESSION['DefaultDateFormat']));
 	$Periods = array();
 	for ($i=0;$i<24;$i++) {
 		$Periods[$i]['Period'] = $CurrentPeriod - $i;
-		$Periods[$i]['Month'] = GetMonthText(Date('m',mktime(0,0,0,Date('m') - $i,Date('d'),Date('Y')))) .  ' ' . Date('Y',mktime(0,0,0,Date('m') - $i,Date('d'),Date('Y')));
+		$Periods[$i]['Month'] = GetMonthText(date('m',mktime(0,0,0,date('m') - $i,date('d'),date('Y')))) .  ' ' . date('Y',mktime(0,0,0,date('m') - $i,date('d'),date('Y')));
 	}
 	$SQLStarter = "SELECT stockmoves.stockid,";
 	for ($i=0;$i<24;$i++) {
@@ -359,7 +359,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 	}
 	header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 
-	$File = 'InventoryPlanning-' . Date('Y-m-d'). '.' . 'ods';
+	$File = 'InventoryPlanning-' . date('Y-m-d'). '.' . 'ods';
 
 	header('Content-Disposition: attachment;filename="' . $File . '"');
 	header('Cache-Control: max-age=0');

@@ -283,7 +283,7 @@ echo '<field>
 	</field>';
 
 if (!isset($_SESSION['SuppTrans']->TranDate)){
-	$_SESSION['SuppTrans']->TranDate= Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')-1,Date('y')));
+	$_SESSION['SuppTrans']->TranDate= date($_SESSION['DefaultDateFormat'], mktime(0,0,0,date('m'),date('d')-1,date('y')));
 }
 echo '<field>
 		<label style="color:red">' . __('Credit Note Date') . ') :</label>
@@ -652,7 +652,7 @@ then do the updates and inserts to process the credit note entered */
 	} elseif (!Is_Date($_SESSION['SuppTrans']->TranDate)){
 		$InputError = true;
 		prnMsg(__('The credit note as entered cannot be processed because the date entered is not in the format') . ' ' . $_SESSION['DefaultDateFormat'], 'error');
-	} elseif (DateDiff(Date($_SESSION['DefaultDateFormat']), $_SESSION['SuppTrans']->TranDate, 'd') < 0){
+	} elseif (DateDiff(date($_SESSION['DefaultDateFormat']), $_SESSION['SuppTrans']->TranDate, 'd') < 0){
 		$InputError = true;
 		prnMsg(__('The credit note as entered cannot be processed because the date is after today') . '. ' . __('Purchase credit notes are expected to have a date prior to or today'),'error');
 	}elseif ($_SESSION['SuppTrans']->ExRate <= 0){
@@ -1102,7 +1102,7 @@ then do the updates and inserts to process the credit note entered */
 					'" . $_SESSION['SuppTrans']->SuppReference . "',
 					'" . $SQLCreditNoteDate . "',
 					'" . FormatDateForSQL($_SESSION['SuppTrans']->DueDate) . "',
-					'" . Date('Y-m-d H-i-s') . "',
+					'" . date('Y-m-d H-i-s') . "',
 					'" . -$_SESSION['SuppTrans']->OvAmount . "',
 					'" . -$TaxTotal . "',
 					'" . $_SESSION['SuppTrans']->ExRate . "',

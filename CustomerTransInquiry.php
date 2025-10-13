@@ -45,10 +45,10 @@ echo '</select>
 	</field>';
 
 if (!isset($_POST['FromDate'])){
-	$_POST['FromDate']=Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,Date('m'),1,Date('Y')));
+	$_POST['FromDate']=date($_SESSION['DefaultDateFormat'], mktime(0,0,0,date('m'),1,date('Y')));
 }
 if (!isset($_POST['ToDate'])){
-	$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
+	$_POST['ToDate'] = date($_SESSION['DefaultDateFormat']);
 }
 echo '<field>
 		<label for="FromDate">' . __('From') . ':</label>
@@ -64,7 +64,7 @@ echo '<field>
     </div>
 	</form>';
 
-if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
+if (isset($_POST['ShowResults']) && $_POST['TransType'] !=  ''){
    $SQL_FromDate = FormatDateForSQL($_POST['FromDate']);
    $SQL_ToDate = FormatDateForSQL($_POST['ToDate']);
    $SQL = "SELECT transno,
@@ -86,7 +86,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 			WHERE ";
 
    $SQL = $SQL . "trandate >='" . $SQL_FromDate . "' AND trandate <= '" . $SQL_ToDate . "'";
-	if  ($_POST['TransType']!='All')  {
+	if  ($_POST['TransType']!= 'All')  {
 		$SQL .= " AND type = '" . $_POST['TransType']."'";
 	}
 	$SQL .=  " ORDER BY id";

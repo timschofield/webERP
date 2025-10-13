@@ -54,7 +54,7 @@ if (isset($_POST['PostExchangeDifference']) AND is_numeric(filter_number_format(
 		include('includes/SQL_CommonFunctions.php');
 		$ExDiffTransNo = GetNextTransNo(36);
 		/*Post the exchange difference to the last day of the month prior to current date*/
-		$PostingDate = Date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, Date('m'), 0, Date('Y')));
+		$PostingDate = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, date('m'), 0, date('Y')));
 		$PeriodNo = GetPeriod($PostingDate);
 		DB_Txn_Begin();
 
@@ -71,7 +71,7 @@ if (isset($_POST['PostExchangeDifference']) AND is_numeric(filter_number_format(
 									'" . $PeriodNo . "',
 									'" . $_SESSION['CompanyRecord']['exchangediffact'] . "',
 									'" . mb_substr($CurrencyRow['bankaccountname'] . ' ' . __('reconciliation on') . " " .
-										Date($_SESSION['DefaultDateFormat']), 0, 200) . "',
+										date($_SESSION['DefaultDateFormat']), 0, 200) . "',
 									'" . $ExchangeDifference . "')";
 
 		$ErrMsg = __('Cannot insert a GL entry for the exchange difference because');
@@ -88,7 +88,7 @@ if (isset($_POST['PostExchangeDifference']) AND is_numeric(filter_number_format(
 									'" . FormatDateForSQL($PostingDate) . "',
 									'" . $PeriodNo . "',
 									'" . $_POST['BankAccount'] . "',
-									'" . mb_substr($CurrencyRow['bankaccountname'] . ' ' . __('reconciliation on') . ' ' . Date($_SESSION['DefaultDateFormat']), 0, 200) . "',
+									'" . mb_substr($CurrencyRow['bankaccountname'] . ' ' . __('reconciliation on') . ' ' . date($_SESSION['DefaultDateFormat']), 0, 200) . "',
 									'" . (-$ExchangeDifference) . "')";
 
 		$Result = DB_query($SQL, $ErrMsg, '', true);
@@ -165,7 +165,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])) {
 
 	echo '<table class="selection">
 			<tr class="total_row">
-				<td colspan="6"><b>' . $CurrencyRow['bankaccountname'] . ' ' . __('Balance as at') . ' ' . Date($_SESSION['DefaultDateFormat']);
+				<td colspan="6"><b>' . $CurrencyRow['bankaccountname'] . ' ' . __('Balance as at') . ' ' . date($_SESSION['DefaultDateFormat']);
 
 	if ($_SESSION['CompanyRecord']['currencydefault'] != $CurrencyRow['currcode']) {
 		echo ' (' . $CurrencyRow['currcode'] . ' @ ' . $CurrencyRow['rate'] . ')';

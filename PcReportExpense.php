@@ -199,11 +199,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (!isset($_POST['FromDate'])){
-		$_POST['FromDate']=Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,Date('m'),1,Date('Y')));
+		$_POST['FromDate']=date($_SESSION['DefaultDateFormat'], mktime(0,0,0,date('m'),1,date('Y')));
 	}
 
 	if (!isset($_POST['ToDate'])){
-		$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
+		$_POST['ToDate'] = date($_SESSION['DefaultDateFormat']);
 	}
 
 	/*Show a form to allow input of criteria for Expenses to show */

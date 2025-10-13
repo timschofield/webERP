@@ -165,7 +165,7 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 		/*Now Get the next WO Issue transaction type 28 - function in SQL_CommonFunctions*/
 		$WOIssueNo = GetNextTransNo(28);
 
-		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat'])); //backdate
+		$PeriodNo = GetPeriod(date($_SESSION['DefaultDateFormat'])); //backdate
 		$SQLIssuedDate = FormatDateForSQL($_POST['IssuedDate']);
 		$StockGLCode = GetStockGLCode($_POST['IssueItem']);
 
@@ -474,7 +474,7 @@ elseif (isset($_POST['ProcessMultiple'])) {
 		DB_Txn_Begin();
 		/*Now Get the next WO Issue transaction type 28 - function in SQL_CommonFunctions*/
 		$WOIssueNo = GetNextTransNo(28);
-		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat'])); //backdate
+		$PeriodNo = GetPeriod(date($_SESSION['DefaultDateFormat'])); //backdate
 		$SQLIssuedDate = FormatDateForSQL($_POST['IssuedDate']);
 		foreach ($IssueItems as $key => $itm) {
 			$_POST['IssueItem'] = $itm['item'];
@@ -738,7 +738,7 @@ if (DB_num_rows($WOResult) == 0) {
 }
 
 if (!isset($_POST['IssuedDate'])) {
-	$_POST['IssuedDate'] = Date($_SESSION['DefaultDateFormat']);
+	$_POST['IssuedDate'] = date($_SESSION['DefaultDateFormat']);
 }
 $WORow = DB_fetch_array($WOResult);
 
@@ -783,7 +783,7 @@ while ($WORow = DB_fetch_array($WOResult)) {
 
 echo '<tr>
 		<td class="label">' . __('Date Material Issued') . ':</td>
-		<td><input name="IssuedDate" value="' . Date('Y-m-d') . '" type="date" maxlength="10" size="11" /></td>
+		<td><input name="IssuedDate" value="' . date('Y-m-d') . '" type="date" maxlength="10" size="11" /></td>
 		<td class="label">' . __('Issued From') . ':</td>
 		<td>';
 

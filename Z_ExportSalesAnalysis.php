@@ -154,9 +154,9 @@ if ((!$conn_id) || (!$login_result)) {
 }
 
 // upload the files
-$upload = ftp_put($conn_id, '/' . Date('Y-m-d') .'_Sales.csv', $SalesFileName, FTP_BINARY);
-$upload = ftp_put($conn_id, '/' . Date('Y-m-d') .'_Items.csv', $ItemsFileName, FTP_BINARY);
-$upload = ftp_put($conn_id, '/' . Date('Y-m-d') .'_Customers.csv', $CustomersFileName, FTP_BINARY);
+$upload = ftp_put($conn_id, '/' . date('Y-m-d') .'_Sales.csv', $SalesFileName, FTP_BINARY);
+$upload = ftp_put($conn_id, '/' . date('Y-m-d') .'_Items.csv', $ItemsFileName, FTP_BINARY);
+$upload = ftp_put($conn_id, '/' . date('Y-m-d') .'_Customers.csv', $CustomersFileName, FTP_BINARY);
 
 // check upload status
 if (!$upload) {

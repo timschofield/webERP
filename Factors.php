@@ -260,7 +260,7 @@ if (isset($_POST['Create'])) {
 			<input tabindex="12" type="submit" name="Submit" value="' . __('Insert New Factor') . '" />
         </div>
 		</form>';
-} else if (isset($_POST['Amend'])) {
+} elseif (isset($_POST['Amend'])) {
 	echo '<br />
 		<div class="centre">
 			<input tabindex="13" type="submit" name="Update" value="' . __('Update Factor') . '" />

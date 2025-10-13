@@ -289,7 +289,7 @@ if (isset($_POST['search']) OR isset($_POST['Next']) OR isset($_POST['Prev'])) {
 					AND stockmaster.controlled <> 1
 					AND stockmaster.discontinued=0
 					ORDER BY stockmaster.stockid";
-        	} else {
+			} else {
 			$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
 						stockmaster.longdescription,
@@ -379,7 +379,7 @@ if ($_SESSION['Items' . $identifier]->DefaultCurrency != $_SESSION['CompanyRecor
 		if (isset($_POST[$QuickEntryQty])) {
 			$NewItemQty = filter_number_format($_POST[$QuickEntryQty]);
 		}
-		$NewItemDue = Date($_SESSION['DefaultDateFormat']);
+		$NewItemDue = date($_SESSION['DefaultDateFormat']);
 		$NewPOLine = 0;
 
 
@@ -906,9 +906,9 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != '') {
 	 * GetPeriod() in includes/DateFunctions.php */
 
 		$CreditNoteNo = GetNextTransNo(11);
-		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
+		$PeriodNo = GetPeriod(date($_SESSION['DefaultDateFormat']));
 
-		$ReturnDate = Date('Y-m-d');
+		$ReturnDate = date('Y-m-d');
 
 	/*Now insert the DebtorTrans */
 
@@ -1736,7 +1736,7 @@ if (!isset($_POST['ProcessReturn'])) {
 		echo '<th>' . __('Item Code') . '</th>
 				<th>' . __('Quantity') . '</th>
 				</tr>';
-		$ReturnDate = Date($_SESSION['DefaultDateFormat']);
+		$ReturnDate = date($_SESSION['DefaultDateFormat']);
 		if (count($_SESSION['Items' . $identifier]->LineItems)==0) {
 			echo '<input type="hidden" name="CustRef" value="'.$_SESSION['Items' . $identifier]->CustRef.'" />
 			<input type="hidden" name="Comments" value="'.$_SESSION['Items' . $identifier]->Comments.'" />

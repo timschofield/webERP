@@ -19,7 +19,7 @@ $graph->SetDataType('text-data');
 
 if($_GET['StockLocation'] == 'All') {
     if (!empty($_SESSION['StockUsageShowZeroWithinPeriodRange'])) {
-        $CurrentPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat']));
+        $CurrentPeriod = GetPeriod(date($_SESSION['DefaultDateFormat']));
 
         $SQL = "SELECT periods.periodno,
                        periods.lastdate_in_period,
@@ -56,7 +56,7 @@ if($_GET['StockLocation'] == 'All') {
     }
 } else {
     if (!empty($_SESSION['StockUsageShowZeroWithinPeriodRange'])) {
-        $CurrentPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat']));
+        $CurrentPeriod = GetPeriod(date($_SESSION['DefaultDateFormat']));
 
         $SQL = "SELECT periods.periodno,
                        periods.lastdate_in_period,

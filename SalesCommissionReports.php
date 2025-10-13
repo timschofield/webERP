@@ -205,7 +205,7 @@ if (isset($_POST['Submit'])) {
 	</field>';
 
 	if (!isset($_POST['ToPeriod']) or $_POST['ToPeriod'] == '') {
-		$DefaultToPeriod = GetPeriod(date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, Date('m') + 1, 0, Date('Y'))));
+		$DefaultToPeriod = GetPeriod(date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, date('m') + 1, 0, date('Y'))));
 	} else {
 		$DefaultToPeriod = $_POST['ToPeriod'];
 	}

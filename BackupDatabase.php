@@ -35,7 +35,7 @@ if (isset($_GET['BackupFile'])) {
 	}
 } else {
 
-	$BackupFile = $PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/' . __('Backup') . '_' . Date('Y-m-d-H-i-s') . '.sql.gz';
+	$BackupFile = $PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/' . __('Backup') . '_' . date('Y-m-d-H-i-s') . '.sql.gz';
 	/// @todo add as well $DBPort
 	/// @todo use the same mysqldump options as in the build/dump_database?
 	/// @todo test for presence of gzip using `which` / `where.exe`. If not present, do not try to compress the dump

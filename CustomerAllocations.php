@@ -87,7 +87,7 @@ if (isset($_POST['UpdateDatabase'])) {
 		DB_Txn_Begin();
 		$AllAllocations = 0;
 		foreach ($_SESSION['Alloc']->Allocs as $AllocnItem) {
-			if ($AllocnItem->PrevAllocRecordID != 'NA') {
+			if ($AllocnItem->PrevAllocRecordID !=  'NA') {
 			// original allocation has changed so delete the old allocation record
 				$SQL = "DELETE FROM custallocns WHERE id = '" . $AllocnItem->PrevAllocRecordID . "'";
 				if( !$Result = DB_query($SQL) ) {
@@ -144,7 +144,7 @@ if (isset($_POST['UpdateDatabase'])) {
 		// If GLLink to debtors active post diff on exchange to GL
 		$MovtInDiffOnExch = -$_SESSION['Alloc']->PrevDiffOnExch - $TotalDiffOnExch;
 
-		if ($MovtInDiffOnExch !=0) {
+		if ($MovtInDiffOnExch != 0) {
 			if ($_SESSION['CompanyRecord']['gllink_debtors'] == 1) {
 				$PeriodNo = GetPeriod($_SESSION['Alloc']->TransDate);
 				$_SESSION['Alloc']->TransDate = FormatDateForSQL($_SESSION['Alloc']->TransDate);
@@ -237,7 +237,7 @@ if (isset($_GET['AllocTrans'])) {
 			ON debtorsmaster.currcode=currencies.currabrev
 			WHERE debtortrans.id='" . $_POST['AllocTrans'] . "'";
 
-	if ($_SESSION['SalesmanLogin'] != '') {
+	if ($_SESSION['SalesmanLogin'] !=  '') {
 		$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 	}
 
@@ -270,7 +270,7 @@ if (isset($_GET['AllocTrans'])) {
 			WHERE debtortrans.settled=0
 			AND debtorno='" . $_SESSION['Alloc']->DebtorNo . "'";
 
-	if ($_SESSION['SalesmanLogin'] != '') {
+	if ($_SESSION['SalesmanLogin'] !=  '') {
 		$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 	}
 
@@ -311,7 +311,7 @@ if (isset($_GET['AllocTrans'])) {
 			WHERE custallocns.transid_allocfrom='" . $_POST['AllocTrans'] . "'
 			AND debtorno='" . $_SESSION['Alloc']->DebtorNo . "'";
 
-	if ($_SESSION['SalesmanLogin'] != '') {
+	if ($_SESSION['SalesmanLogin'] !=  '') {
 		$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 	}
 
@@ -368,7 +368,7 @@ if (isset($_POST['AllocTrans'])) {
 				<b>' . $_SESSION['Alloc']->DebtorNo . ' - ' . $_SESSION['Alloc']->CustomerName . '</b>
 			</div>';
 
-	if ($_SESSION['Alloc']->TransExRate != 1) {
+	if ($_SESSION['Alloc']->TransExRate !=  1) {
 			echo '<br />' . __('Amount in customer currency') . ' <b>' . locale_number_format(-$_SESSION['Alloc']->TransAmt,$_SESSION['Alloc']->CurrDecimalPlaces) . '</b><i> (' .  __('converted into local currency at an exchange rate of'). ' ' . $_SESSION['Alloc']->TransExRate . ')</i>';
 	}
 	echo '</th>
@@ -392,7 +392,7 @@ if (isset($_POST['AllocTrans'])) {
 
 		if ( $AllocnItem->ID == $_POST['AllocTrans'] ) {
 			$CurTrans = __('Being allocated');
-		} else if ($AllocnItem->AllocAmt > 0) {
+		} elseif ($AllocnItem->AllocAmt > 0) {
 		} else {
 			$CurTrans = "&nbsp;";
 		}
@@ -479,7 +479,7 @@ if (isset($_POST['AllocTrans'])) {
 			AND (debtortrans.type=12 OR debtortrans.type=11)
 			AND debtortrans.settled=0";
 
-	if ($_SESSION['SalesmanLogin'] != '') {
+	if ($_SESSION['SalesmanLogin'] !=  '') {
 		$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 	}
 
@@ -537,7 +537,7 @@ if (isset($_POST['AllocTrans'])) {
 			AND debtortrans.settled=0
 			AND (debtortrans.ovamount<0 OR debtortrans.ovdiscount<0)";
 
-	if ($_SESSION['SalesmanLogin'] != '') {
+	if ($_SESSION['SalesmanLogin'] !=  '') {
 		$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 	}
 
@@ -559,7 +559,7 @@ if (isset($_POST['AllocTrans'])) {
 
 		$AllocateLink = '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'). '?AllocTrans=' . $MyRow['id'] . '">' . __('Allocate') . '</a>';
 
-		if ( $CurrentDebtor != $MyRow['debtorno'] ) {
+		if ( $CurrentDebtor !=  $MyRow['debtorno'] ) {
 			if ( $CurrentTransaction > 1 ) {
 				echo '<tr class="striped_row">
 						<td colspan="7" class="number"><b>' . locale_number_format($Balance,$CurrDecimalPlaces)  . '</b></td>

@@ -85,7 +85,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['Spreadsheet']) or isset($_POST['V
 					<div class="centre" id="ReportHeader">
 						' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 						' . __('Inventory Valuation Report') . '<br />
-						' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+						' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
 					</div>
 					<table>
 						<thead>
@@ -107,7 +107,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['Spreadsheet']) or isset($_POST['V
 					<div class="centre" id="ReportHeader">
 						' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 						' . __('Inventory Valuation Report') . '<br />
-						' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+						' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
 					</div>
 					<table>
 						<thead>
@@ -253,7 +253,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['Spreadsheet']) or isset($_POST['V
 	} elseif (isset($_POST['Spreadsheet'])) {
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 
-		$File = 'InventoryValuation-' . Date('Y-m-d'). '.' . 'ods';
+		$File = 'InventoryValuation-' . date('Y-m-d'). '.' . 'ods';
 
 		header('Content-Disposition: attachment;filename="' . $File . '"');
 		header('Cache-Control: max-age=0');

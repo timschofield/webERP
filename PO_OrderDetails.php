@@ -210,7 +210,7 @@ while ($MyRow=DB_fetch_array($LineItemsResult)) {
 	}
 	// if overdue and outstanding quantities, then highlight as so
 	if (($MyRow['quantityord'] - $MyRow['quantityrecd'] > 0)
-	  	AND Date1GreaterThanDate2(Date($_SESSION['DefaultDateFormat']), $DisplayReqdDate)){
+	  	AND Date1GreaterThanDate2(date($_SESSION['DefaultDateFormat']), $DisplayReqdDate)){
 		 	echo '<tr class="info_row">';
 	} else {
 		echo '<tr class="striped_row">';

@@ -106,7 +106,7 @@ echo '<div class="centre">
 /*HideMovt ==1 if the movement was only created for the purpose of a transaction but is not a physical movement eg. A price credit will create a movement record for the purposes of display on a credit note
 but there is no physical stock movement - it makes sense honest ??? */
 
-$CurrentPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat']));
+$CurrentPeriod = GetPeriod(date($_SESSION['DefaultDateFormat']));
 
 if (isset($_POST['ShowUsage'])){
 	if($_POST['StockLocation']=='All'){

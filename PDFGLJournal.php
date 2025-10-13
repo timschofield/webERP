@@ -7,7 +7,7 @@ use Dompdf\Dompdf;
 if (isset($_POST['JournalNo'])) {
 	$JournalNo = $_POST['JournalNo'];
 	$Type = $_POST['Type'];
-} else if (isset($_GET['JournalNo'])) {
+} elseif (isset($_GET['JournalNo'])) {
 	$JournalNo = $_GET['JournalNo'];
 	$Type = $_GET['Type'];
 } else {
@@ -16,7 +16,7 @@ if (isset($_POST['JournalNo'])) {
 
 if (isset($_GET['PDF'])) {
 	$_POST['PrintPDF'] = true;
-} else if (isset($_GET['View'])) {
+} elseif (isset($_GET['View'])) {
 	$_POST['View'] = true;
 }
 

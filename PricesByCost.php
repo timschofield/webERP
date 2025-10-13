@@ -94,7 +94,7 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 				$ResultUpdate = DB_query($SQLUpdate);
 				} else { //there is not a price already starting today so need to create one
 					//update the old price to have an end date of yesterday too
-					$SQLUpdate = "UPDATE prices	SET enddate = '" . FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1)) . "'
+					$SQLUpdate = "UPDATE prices	SET enddate = '" . FormatDateForSQL(DateAdd(date($_SESSION['DefaultDateFormat']),'d',-1)) . "'
 									WHERE stockid = '" . $_POST['StockID_' . $PriceCounter] . "'
 										AND prices.typeabbrev ='" . $_POST['SalesType'] . "'
 										AND prices.currabrev ='" . $_POST['CurrCode'] . "'

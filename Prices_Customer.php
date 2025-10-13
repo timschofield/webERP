@@ -83,7 +83,7 @@ if (isset($_POST['submit'])) {
 			$InputError =1;
 			$Msg = __('The end date is expected to be after the start date, enter an end date after the start date for this price');
 		}
-		if (Date1GreaterThanDate2(Date($_SESSION['DefaultDateFormat']),$_POST['EndDate']) AND $_POST['EndDate']!=''){
+		if (Date1GreaterThanDate2(date($_SESSION['DefaultDateFormat']),$_POST['EndDate']) AND $_POST['EndDate']!=''){
 			$InputError =1;
 			$Msg = __('The end date is expected to be after today. There is no point entering a new price where the effective date is before today!');
 		}
@@ -317,11 +317,11 @@ if (!isset($_POST['Price'])) {
 }
 
 if (!isset($_POST['StartDate'])){
-	$_POST['StartDate'] = Date($_SESSION['DefaultDateFormat']);
+	$_POST['StartDate'] = date($_SESSION['DefaultDateFormat']);
 }
 
 if (!isset($_POST['EndDate'])){
-	$_POST['EndDate'] = Date($_SESSION['DefaultDateFormat']);
+	$_POST['EndDate'] = date($_SESSION['DefaultDateFormat']);
 }
 
 $SQL = "SELECT branchcode,

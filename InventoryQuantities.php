@@ -25,7 +25,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 					' . __('Inventory Quantities Report') . '<br />
 					' . __('Category') . ' ' . $_POST['StockCat'] . ' ' . $CatDescription . '<br />
-					' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
 				</div>
 				<table>
 					<thead>

@@ -78,7 +78,7 @@ if (!isset($_GET['InvoiceNumber']) and !$_SESSION['ProcessingCredit']) {
 							WHERE debtortrans.transno = '" . intval($_GET['InvoiceNumber']) . "'
 							AND stockmoves.type=10";
 
-	if ($_SESSION['SalesmanLogin'] != '') {
+	if ($_SESSION['SalesmanLogin'] !=  '') {
 		$SQL.= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 	}
 	$ErrMsg = __('A credit cannot be produced for the selected invoice') . '. ' . __('The invoice details cannot be retrieved because');
@@ -492,7 +492,7 @@ if (!isset($_POST['ProcessCredit'])) {
 		</tr>
 		</table>';
 }
-$DefaultDispatchDate = Date($_SESSION['DefaultDateFormat']);
+$DefaultDispatchDate = date($_SESSION['DefaultDateFormat']);
 
 $OKToProcess = true;
 //Here we just validate if there is no credit qty available since the credit items not retrieve from salesorders, so following method is not 100% correct.
@@ -578,7 +578,7 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 			$Allocate_amount = $_SESSION['CreditItems' . $identifier]->total + $_SESSION['CreditItems' . $identifier]->FreightCost + $TaxTotal;
 			$SettledInvoice = 0;
 			$Settled = 1;
-		} else if ($MyRow[0] < ($_SESSION['CreditItems' . $identifier]->total + $_SESSION['CreditItems' . $identifier]->FreightCost + $TaxTotal)) {
+		} elseif ($MyRow[0] < ($_SESSION['CreditItems' . $identifier]->total + $_SESSION['CreditItems' . $identifier]->FreightCost + $TaxTotal)) {
 			/*the balance left to allocate is less than the credit note value */
 			$Allocate_amount = $MyRow[0];
 			$SettledInvoice = 1;
@@ -660,7 +660,7 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 	}
 
 	/*Now insert the allocation record if > 0 */
-	if ($Allocate_amount != 0) {
+	if ($Allocate_amount !=  0) {
 		$SQL = "INSERT INTO custallocns(amt,
 						transid_allocfrom,
 						transid_allocto,
@@ -732,7 +732,7 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 					$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('Location stock record could not be updated because');
 					$Result = DB_query($SQL, $ErrMsg, '', true);
 
-				} else if ($CreditLine->MBflag == 'A') { /* its an assembly */
+				} elseif ($CreditLine->MBflag == 'A') { /* its an assembly */
 					/*Need to get the BOM for this part and make stock moves for the components
 					 and of course update the Location stock balances */
 
@@ -1115,7 +1115,7 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 			}
 
 			$Commission = CalculateCommission($_SESSION['CreditItems' . $Identifier]->SalesPerson, $_SESSION['CreditItems' . $Identifier]->DebtorNo, $_SESSION['CreditItems' . $Identifier]->Branch, $CreditLine->StockID, $_SESSION['CreditItems' . $Identifier]->DefaultCurrency, ($CreditLine->QtyDispatched * $CreditLine->Price), $PeriodNo);
-			if ($Commission != 0) {
+			if ($Commission !=  0) {
 
 				$TransNo = GetNextTransNo(39);
 				$SQL = "INSERT INTO salescommissions (commissionno,
@@ -1344,7 +1344,7 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 
 			/* If GLLink_Stock then insert GLTrans to credit stock and debit cost of sales at standard cost*/
 
-			if ($_SESSION['CompanyRecord']['gllink_stock'] == 1 and ($CreditLine->StandardCost != 0 or (isset($StandardCost) and $StandardCost != 0)) and $_POST['CreditType'] != 'ReverseOverCharge') {
+			if ($_SESSION['CompanyRecord']['gllink_stock'] == 1 and ($CreditLine->StandardCost !=  0 or (isset($StandardCost) and $StandardCost !=  0)) and $_POST['CreditType'] !=  'ReverseOverCharge') {
 
 				/*first the cost of sales entry*/
 
@@ -1407,9 +1407,9 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The stock side or write off of the cost of sales GL posting could not be inserted because');
 				$Result = DB_query($SQL, $ErrMsg, '', true);
 
-			} /* end of if GL and stock integrated and standard cost !=0 */
+			} /* end of if GL and stock integrated and standard cost != 0 */
 
-			if ($_SESSION['CompanyRecord']['gllink_debtors'] == 1 and $CreditLine->Price != 0) {
+			if ($_SESSION['CompanyRecord']['gllink_debtors'] == 1 and $CreditLine->Price !=  0) {
 
 				//Post sales transaction to GL credit sales
 				$SalesGLAccounts = GetSalesGLAccount($Area, $CreditLine->StockID, $_SESSION['CreditItems' . $identifier]->DefaultSalesType);
@@ -1433,7 +1433,7 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The credit note GL posting could not be inserted because');
 				$Result = DB_query($SQL, $ErrMsg, '', true);
 
-				if ($CreditLine->DiscountPercent != 0) {
+				if ($CreditLine->DiscountPercent !=  0) {
 
 					$SQL = "INSERT INTO gltrans(type,
 								typeno,
@@ -1452,7 +1452,7 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 							)";
 					$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The credit note discount GL posting could not be inserted because');
 					$Result = DB_query($SQL, $ErrMsg, '', true);
-				} /*end of if discount !=0 */
+				} /*end of if discount != 0 */
 			} /*end of if sales integrated with debtors */
 		} /*Quantity dispatched is more than 0 */
 	} /*end of OrderLine loop */
@@ -1460,7 +1460,7 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 	if ($_SESSION['CompanyRecord']['gllink_debtors'] == 1) {
 
 		/*Post credit note transaction to GL credit debtors, debit freight re-charged and debit sales */
-		if (($_SESSION['CreditItems' . $identifier]->total + $_SESSION['CreditItems' . $identifier]->FreightCost + $TaxTotal) != 0) {
+		if (($_SESSION['CreditItems' . $identifier]->total + $_SESSION['CreditItems' . $identifier]->FreightCost + $TaxTotal) !=  0) {
 			$SQL = "INSERT INTO gltrans(type,
 							typeno,
 							trandate,
@@ -1483,7 +1483,7 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 
 		/*Could do with setting up a more flexible freight posting schema that looks at the sales type and area of the customer branch to determine where to post the freight recovery */
 
-		if (round($_SESSION['CreditItems' . $identifier]->FreightCost, $_SESSION['CreditItems' . $identifier]->CurrDecimalPlaces) != 0) {
+		if (round($_SESSION['CreditItems' . $identifier]->FreightCost, $_SESSION['CreditItems' . $identifier]->CurrDecimalPlaces) !=  0) {
 			$SQL = "INSERT INTO gltrans(type,
 							typeno,
 							trandate,
@@ -1505,7 +1505,7 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 		}
 
 		foreach ($TaxTotals as $TaxAuthID => $TaxAmount) {
-			if ($TaxAmount != 0) {
+			if ($TaxAmount !=  0) {
 				$SQL = "INSERT INTO gltrans(
 						type,
 						typeno,
@@ -1630,7 +1630,7 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 	echo '<tr>
 			<td>' . __('Sales person') . '</td>';
 
-	if ($_SESSION['SalesmanLogin'] != '') {
+	if ($_SESSION['SalesmanLogin'] !=  '') {
 		echo '<td>';
 		echo $_SESSION['UsersRealName'];
 		echo '</td>';

@@ -19,20 +19,20 @@ if (isset($_GET['KeyValue'])){
 }
 
 if (!isset($_POST['FromDate'])){
-	$_POST['FromDate']=Date(($_SESSION['DefaultDateFormat']), Mktime(0, 0, 0, Date('m'), Date('d')-180, Date('Y')));
+	$_POST['FromDate']=date(($_SESSION['DefaultDateFormat']), mktime(0, 0, 0, date('m'), date('d')-180, date('Y')));
 }
 if (!isset($_POST['ToDate'])){
-	$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
+	$_POST['ToDate'] = date($_SESSION['DefaultDateFormat']);
 }
 if (!Is_Date($_POST['FromDate'])) {
 	$InputError = 1;
 	prnMsg(__('Invalid From Date'),'error');
-	$_POST['FromDate']=Date(($_SESSION['DefaultDateFormat']), Mktime(0, 0, 0, Date('m'), Date('d')-180, Date('Y')));
+	$_POST['FromDate']=date(($_SESSION['DefaultDateFormat']), mktime(0, 0, 0, date('m'), date('d')-180, date('Y')));
 }
 if (!Is_Date($_POST['ToDate'])) {
 	$InputError = 1;
 	prnMsg(__('Invalid To Date'),'error');
-	$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
+	$_POST['ToDate'] = date($_SESSION['DefaultDateFormat']);
 }
 $FromDate = FormatDateForSQL($_POST['FromDate']);
 $ToDate = FormatDateForSQL($_POST['ToDate']);

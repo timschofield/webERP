@@ -70,7 +70,7 @@ if ((!isset($_GET['TransNo']) or $_GET['TransNo'] == '') and !isset($_POST['Tran
 /*retrieve the order details from the database to print */
 $ErrMsg = __('There was a problem retrieving the order header details from the database');
 
-if (!isset($_POST['TransDate']) and $_GET['TransNo'] != 'Preview') {
+if (!isset($_POST['TransDate']) and $_GET['TransNo'] !=  'Preview') {
 	$SQL = "SELECT salesorders.debtorno,
 					salesorders.orderno,
 					salesorders.customerref,
@@ -107,7 +107,7 @@ if (!isset($_POST['TransDate']) and $_GET['TransNo'] != 'Preview') {
 					AND salesorders.orderno='" . $_GET['TransNo'] . "'
 					AND salesorderdetails.completed=0
 				GROUP BY salesorders.orderno";
-} else if (isset($_POST['TransDate']) or (isset($_GET['TransNo']) and $_GET['TransNo'] != 'Preview')) {
+} elseif (isset($_POST['TransDate']) or (isset($_GET['TransNo']) and $_GET['TransNo'] !=  'Preview')) {
 	$SQL = "SELECT salesorders.debtorno,
 					salesorders.orderno,
 					salesorders.customerref,
@@ -148,11 +148,11 @@ if (!isset($_POST['TransDate']) and $_GET['TransNo'] != 'Preview') {
 				ORDER BY salesorders.deliverydate, salesorders.orderno";
 }
 
-if ($_SESSION['SalesmanLogin'] != '') {
+if ($_SESSION['SalesmanLogin'] !=  '') {
 	$SQL .= " AND salesorders.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 }
 
-if (isset($_POST['TransDate']) or (isset($_GET['TransNo']) and $_GET['TransNo'] != 'Preview')) {
+if (isset($_POST['TransDate']) or (isset($_GET['TransNo']) and $_GET['TransNo'] !=  'Preview')) {
 	$Result = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($Result) == 0) {

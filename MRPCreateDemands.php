@@ -54,7 +54,7 @@ if (isset($_POST['submit'])) {
 	}
 
 	$WhereLocation = " ";
-	if ($_POST['Location']!='All') {
+	if ($_POST['Location']!= 'All') {
 		$WhereLocation = " AND salesorders.fromstkloc ='" . $_POST['Location'] . "' ";
 	}
 
@@ -104,9 +104,9 @@ if (isset($_POST['submit'])) {
 	$FormatedDistdate = FormatDateForSQL($_POST['DistDate']);
 	if (mb_strpos($FormatedDistdate,"/")) {
 		list($yyyy,$mm,$dd) = explode("/",$FormatedDistdate);
-	} else if (mb_strpos($FormatedDistdate,"-")) {
+	} elseif (mb_strpos($FormatedDistdate,"-")) {
 		list($yyyy,$mm,$dd) = explode("-",$FormatedDistdate);
-	} else if (mb_strpos($FormatedDistdate,".")) {
+	} elseif (mb_strpos($FormatedDistdate,".")) {
 		list($yyyy,$mm,$dd) = explode(".",$FormatedDistdate);
 	}
 
@@ -122,7 +122,7 @@ if (isset($_POST['submit'])) {
 	$Resultdate = DB_query($CalendarSQL);
 	$MyRowdate=DB_fetch_array($Resultdate);
 	// If find date based on manufacturing calendar, change date in array
-	if ($MyRowdate[0] != 0){
+	if ($MyRowdate[0] !=  0){
 		$DateArray[0] = $MyRowdate[1];
 	}
 
@@ -148,7 +148,7 @@ if (isset($_POST['submit'])) {
 		$Resultdate = DB_query($CalendarSQL);
 		$MyRowdate=DB_fetch_array($Resultdate);
 		// If find date based on manufacturing calendar, change date in array
-		if ($MyRowdate[0] != 0){
+		if ($MyRowdate[0] !=  0){
 			$DateArray[$i] = $MyRowdate[1];
 		}
 		$Date = date('Y-m-d',$Date);

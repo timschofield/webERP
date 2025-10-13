@@ -103,17 +103,17 @@ if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch' . $identifier])){
 	}
 
 	if (!Is_Date($_POST['DateBanked'])){
-		$_POST['DateBanked'] = Date($_SESSION['DefaultDateFormat']);
+		$_POST['DateBanked'] = date($_SESSION['DefaultDateFormat']);
 	}
 	$_SESSION['ReceiptBatch' . $identifier]->DateBanked = $_POST['DateBanked'];
-	if (isset($_POST['ExRate']) AND $_POST['ExRate']!=''){
+	if (isset($_POST['ExRate']) AND $_POST['ExRate']!= ''){
 		if (is_numeric(filter_number_format($_POST['ExRate']))){
 			$_SESSION['ReceiptBatch' . $identifier]->ExRate = filter_number_format($_POST['ExRate']);
 		} else {
 			prnMsg(__('The exchange rate entered should be numeric'),'warn');
 		}
 	}
-	if (isset($_POST['FunctionalExRate']) AND $_POST['FunctionalExRate']!=''){
+	if (isset($_POST['FunctionalExRate']) AND $_POST['FunctionalExRate']!= ''){
 		if (is_numeric(filter_number_format($_POST['FunctionalExRate']))){
 			$_SESSION['ReceiptBatch' . $identifier]->FunctionalExRate=filter_number_format($_POST['FunctionalExRate']); //ex rate between receipt currency and account currency
 		} else {
@@ -129,7 +129,7 @@ if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch' . $identifier])){
 		$_POST['Currency']=$_SESSION['CompanyRecord']['currencydefault'];
 	}
 
-	if ($_SESSION['ReceiptBatch' . $identifier]->Currency!=$_POST['Currency']){
+	if ($_SESSION['ReceiptBatch' . $identifier]->Currency!= $_POST['Currency']){
 
 		$_SESSION['ReceiptBatch' . $identifier]->Currency=$_POST['Currency']; //receipt currency
 		/*Now customer receipts entered using the previous currency need to be ditched
@@ -160,7 +160,7 @@ if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch' . $identifier])){
 		$SuggestedFunctionalExRate = $MyRow['rate'];
 		$_SESSION['ReceiptBatch' . $identifier]->CurrDecimalPlaces = $MyRow['decimalplaces'];
 
-	} //end else account currency != functional currency
+	} //end else account currency !=  functional currency
 
 	if ($_POST['Currency']==$_SESSION['ReceiptBatch' . $identifier]->AccountCurrency){
 		$_SESSION['ReceiptBatch' . $identifier]->ExRate = 1; //ex rate between receipt currency and account currency
@@ -333,7 +333,7 @@ if (isset($_POST['CommitBatch'])){
 			$CustomerReceiptCounter += 1;
 		}
 
-		if ($ReceiptItem->GLCode !=''){ //so its a GL receipt
+		if ($ReceiptItem->GLCode != ''){ //so its a GL receipt
 			if ($_SESSION['CompanyRecord']['gllink_debtors']==1){ /* then enter a GLTrans record */
 				 $SQL = "INSERT INTO gltrans (type,
 								 			typeno,
@@ -525,7 +525,7 @@ if (isset($_POST['CommitBatch'])){
 
 	if ($_SESSION['CompanyRecord']['gllink_debtors']==1){ /* then enter GLTrans records for discount, bank and debtors */
 
-		if ($BatchReceiptsTotal!=0){
+		if ($BatchReceiptsTotal!= 0){
 			/* Bank account entry first */
 			$SQL="INSERT INTO gltrans (type,
 										typeno,
@@ -548,7 +548,7 @@ if (isset($_POST['CommitBatch'])){
 
 
 		}
-		if ($BatchDebtorTotal!=0){
+		if ($BatchDebtorTotal!= 0){
 			/* Now Credit Debtors account with receipts + discounts */
 			$SQL="INSERT INTO gltrans ( type,
 										typeno,
@@ -571,7 +571,7 @@ if (isset($_POST['CommitBatch'])){
 
 		} //end if there are some customer deposits in this batch
 
-		if ($BatchDiscount!=0){
+		if ($BatchDiscount!= 0){
 			/* Now Debit Discount account with discounts allowed*/
 			$SQL="INSERT INTO gltrans ( type,
 										typeno,
@@ -651,7 +651,7 @@ if (isset($_POST['Search'])){
 					AND debtorsmaster.currcode= '" . $_SESSION['ReceiptBatch' . $identifier]->Currency . "'";
 		}
 	}
-		if ($_SESSION['SalesmanLogin'] != '') {
+		if ($_SESSION['SalesmanLogin'] !=  '') {
 			$SQL .= " AND EXISTS (
 						SELECT *
 						FROM 	custbranch
@@ -725,7 +725,7 @@ customer record returned by the search - this record is then auto selected */
 			INNER JOIN debtortrans
 			ON debtorsmaster.debtorno = debtortrans.debtorno
 			WHERE debtorsmaster.debtorno = '" . $_POST['CustomerID'] . "'";
-	if ($_SESSION['SalesmanLogin'] != '') {
+	if ($_SESSION['SalesmanLogin'] !=  '') {
 		$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 	}
 	$SQL .= " GROUP BY debtorsmaster.name,
@@ -842,7 +842,7 @@ if (DB_num_rows($AccountsResults)==0){
 }
 
 if ($_SESSION['ReceiptBatch' . $identifier]->DateBanked == '' or !Is_Date($_SESSION['ReceiptBatch' . $identifier]->DateBanked)){
-	$_SESSION['ReceiptBatch' . $identifier]->DateBanked = Date($_SESSION['DefaultDateFormat']);
+	$_SESSION['ReceiptBatch' . $identifier]->DateBanked = date($_SESSION['DefaultDateFormat']);
 }
 
 echo '<field>
@@ -882,10 +882,10 @@ if (!isset($_SESSION['ReceiptBatch' . $identifier]->ExRate)){
 if (!isset($_SESSION['ReceiptBatch' . $identifier]->FunctionalExRate)){
 	$_SESSION['ReceiptBatch' . $identifier]->FunctionalExRate=1;
 }
-if ($_SESSION['ReceiptBatch' . $identifier]->AccountCurrency != $_SESSION['ReceiptBatch' . $identifier]->Currency AND isset($_SESSION['ReceiptBatch' . $identifier]->AccountCurrency)) {
+if ($_SESSION['ReceiptBatch' . $identifier]->AccountCurrency !=  $_SESSION['ReceiptBatch' . $identifier]->Currency AND isset($_SESSION['ReceiptBatch' . $identifier]->AccountCurrency)) {
 	if($_SESSION['ReceiptBatch' . $identifier]->ExRate==1 AND isset($SuggestedExRate)) {
 		$_SESSION['ReceiptBatch' . $identifier]->ExRate = $SuggestedExRate;
-	} elseif($_POST['Currency'] != $_POST['PreviousCurrency'] AND isset($SuggestedExRate)) {//the user has changed the currency, then we should revise suggested rate
+	} elseif($_POST['Currency'] !=  $_POST['PreviousCurrency'] AND isset($SuggestedExRate)) {//the user has changed the currency, then we should revise suggested rate
 		$_SESSION['ReceiptBatch' . $identifier]->ExRate = $SuggestedExRate;
 	}
 
@@ -901,7 +901,7 @@ if ($_SESSION['ReceiptBatch' . $identifier]->AccountCurrency != $_SESSION['Recei
 		</field>';
 }
 
-if($_SESSION['ReceiptBatch' . $identifier]->AccountCurrency != $_SESSION['CompanyRecord']['currencydefault'] AND isset($_SESSION['ReceiptBatch' . $identifier]->AccountCurrency)) {
+if($_SESSION['ReceiptBatch' . $identifier]->AccountCurrency !=  $_SESSION['CompanyRecord']['currencydefault'] AND isset($_SESSION['ReceiptBatch' . $identifier]->AccountCurrency)) {
 
 	if($_SESSION['ReceiptBatch' . $identifier]->FunctionalExRate==1 AND isset($SuggestedFunctionalExRate)) {
 		$_SESSION['ReceiptBatch' . $identifier]->FunctionalExRate = $SuggestedFunctionalExRate;
@@ -1058,7 +1058,7 @@ then set out the customers account summary */
 
 
 if (isset($_SESSION['CustomerRecord' . $identifier])
-		AND $_SESSION['CustomerRecord' . $identifier]['currcode'] != $_SESSION['ReceiptBatch' . $identifier]->Currency){
+		AND $_SESSION['CustomerRecord' . $identifier]['currcode'] !=  $_SESSION['ReceiptBatch' . $identifier]->Currency){
 	prnMsg(__('The selected customer does not trade in the currency of the receipt being entered - either the currency of the receipt needs to be changed or a different customer selected'),'warn');
 	unset($_SESSION['CustomerRecord' . $identifier]);
 }
@@ -1066,13 +1066,13 @@ if (isset($_SESSION['CustomerRecord' . $identifier])
 
 if (isset($_SESSION['CustomerRecord' . $identifier])
 		AND isset($_POST['CustomerID'])
-		AND $_POST['CustomerID']!=''
+		AND $_POST['CustomerID']!= ''
 		AND isset($_SESSION['ReceiptBatch' . $identifier])){
 /*a customer is selected  */
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . __('Customer') . '" alt="" />' . ' ' . $_SESSION['CustomerRecord' . $identifier]['name'] . ' - (' . __('All amounts stated in') . ' ' . $_SESSION['CustomerRecord' . $identifier]['currency'] . ')' . __('Terms') . ': ' . $_SESSION['CustomerRecord' . $identifier]['terms'] . '<br/>' . __('Credit Limit') . ': ' . locale_number_format($_SESSION['CustomerRecord'.$identifier]['creditlimit'],0) . '  ' . __('Credit Status') . ': ' . $_SESSION['CustomerRecord'.$identifier]['reasondescription'];
 
-	if ($_SESSION['CustomerRecord' . $identifier]['dissallowinvoices']!=0){
+	if ($_SESSION['CustomerRecord' . $identifier]['dissallowinvoices']!= 0){
 	   echo '<br />
 			<font color="red" size="4"><b>' . __('ACCOUNT ON HOLD') . '</font></b>
 			<br/>';
@@ -1177,7 +1177,7 @@ the fields for entry of receipt amt, disc, payee details, narrative */
 
 if (((isset($_SESSION['CustomerRecord' . $identifier])
 		AND isset($_POST['CustomerID'])
-		AND $_POST['CustomerID']!='')
+		AND $_POST['CustomerID']!= '')
 			OR isset($_POST['GLEntry']))
 		AND isset($_SESSION['ReceiptBatch' . $identifier])){
 

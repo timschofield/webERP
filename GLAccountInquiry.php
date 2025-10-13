@@ -55,7 +55,7 @@ echo '<div class="noPrint">'; // Begin input of criteria div.
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 /*Dates in SQL format for the last day of last month*/
-$DefaultPeriodDate = Date('Y-m-d', Mktime(0, 0, 0, Date('m') , 0, Date('Y')));
+$DefaultPeriodDate = date('Y-m-d', mktime(0, 0, 0, date('m') , 0, date('Y')));
 
 /*Show a form to allow input of criteria for TB to show */
 echo '<fieldset>

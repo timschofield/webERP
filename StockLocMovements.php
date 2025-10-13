@@ -58,10 +58,10 @@ echo '</select>
 	</field>';
 
 if (!isset($_POST['BeforeDate']) or !Is_date($_POST['BeforeDate'])) {
-	$_POST['BeforeDate'] = Date($_SESSION['DefaultDateFormat']);
+	$_POST['BeforeDate'] = date($_SESSION['DefaultDateFormat']);
 }
 if (!isset($_POST['AfterDate']) or !Is_date($_POST['AfterDate'])) {
-	$_POST['AfterDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m') - 1, Date('d'), Date('y')));
+	$_POST['AfterDate'] = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, date('m') - 1, date('d'), date('y')));
 }
 echo '<field>
 		<label for="BeforeDate">', __('Show Movements before'), ':</label>

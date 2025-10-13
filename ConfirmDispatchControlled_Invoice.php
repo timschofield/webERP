@@ -50,7 +50,7 @@ $LineItem = &$_SESSION['Items'.$identifier]->LineItems[$LineNo];
 
 
 //Make sure this item is really controlled
-if ( $LineItem->Controlled != 1 ){
+if ( $LineItem->Controlled !=  1 ){
 	echo '<div class="centre"><a href="' . $RootPath . '/ConfirmDispatch_Invoice.php">' .  __('Back to the Sales Order'). '</a></div>';
 	echo '<br />';
 	prnMsg( __('The line item must be defined as controlled to require input of the batch numbers or serial numbers being sold'),'error');

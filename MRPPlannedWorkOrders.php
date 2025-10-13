@@ -118,7 +118,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	$HTML .= '<div class="company">' . $_SESSION['CompanyRecord']['coyname'] . '</div>';
 	$HTML .= '<div class="report-title">' . __('MRP Planned Work Orders Report') . $ReportDate . '</div>';
-	$HTML .= '<div>' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '</div>';
+	$HTML .= '<div>' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '</div>';
 
 	$HTML .= '<table>';
 	$HTML .= '<tr>
@@ -215,7 +215,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		</html>';
 
 	// Create PDF with DomPDF
-	$pdf_file = $_SESSION['DatabaseName'] . '_MRP_Planned_Work_Orders_' . Date('Y-m-d') . '.pdf';
+	$pdf_file = $_SESSION['DatabaseName'] . '_MRP_Planned_Work_Orders_' . date('Y-m-d') . '.pdf';
 	if (isset($_POST['PrintPDF'])) {
 		$dompdf = new Dompdf(['chroot' => __DIR__]);
 		$dompdf->loadHtml($HTML);

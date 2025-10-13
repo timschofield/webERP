@@ -116,7 +116,7 @@ echo '<a href="'. $RootPath . '/SelectContract.php">' .  __('Back to Contract Se
 $SupportedImgExt = array('png','jpg','jpeg');
 
 //attempting to upload the drawing image file
-if (isset($_FILES['Drawing']) AND $_FILES['Drawing']['name'] !='' AND $_SESSION['Contract'.$identifier]->ContractRef!='') {
+if (isset($_FILES['Drawing']) AND $_FILES['Drawing']['name'] != '' AND $_SESSION['Contract'.$identifier]->ContractRef!= '') {
 
 	$Result = $_FILES['Drawing']['error'];
 	$ImgExt = pathinfo($_FILES['Drawing']['name'], PATHINFO_EXTENSION);
@@ -178,9 +178,9 @@ if (isset($_GET['ModifyContractRef'])){
 if (isset($_POST['CancelContract'])) {
 /*The cancel button on the header screen - to delete the contract */
 	$OK_to_delete = true; //assume this in the first instance
-	if(!isset($_SESSION['ExistingContract']) OR $_SESSION['ExistingContract']!=0) {
+	if(!isset($_SESSION['ExistingContract']) OR $_SESSION['ExistingContract']!= 0) {
 		/* need to check that not already ordered by the customer - status = 100  */
-		if($_SESSION['Contract'.$identifier]->Status==2){
+		if ($_SESSION['Contract'.$identifier]->Status==2) {
 			$OK_to_delete = false;
 			prnMsg( __('The contract has already been ordered by the customer the order must also be deleted first before the contract can be deleted'),'warn');
 		}
@@ -264,7 +264,7 @@ if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){
 		prnMsg(__('The date the contract is required to be completed by must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
 		$InputError =true;
 	}
-	if (Date1GreaterThanDate2(Date($_SESSION['DefaultDateFormat']),$_POST['RequiredDate']) AND $_POST['RequiredDate']!=''){
+	if (Date1GreaterThanDate2(date($_SESSION['DefaultDateFormat']),$_POST['RequiredDate']) AND $_POST['RequiredDate']!= ''){
 		prnMsg(__('The date that the contract is to be completed by is expected to be a date in the future. Make the required date a date after today before proceeding.'),'error');
 		$InputError =true;
 	}
@@ -315,12 +315,12 @@ if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result)==1){ // then we have an existing contract with this contractref
 		$ExistingContract = DB_fetch_array($Result);
-		if ($ExistingContract['debtorno'] != $_SESSION['Contract'.$identifier]->DebtorNo){
+		if ($ExistingContract['debtorno'] !=  $_SESSION['Contract'.$identifier]->DebtorNo){
 			prnMsg(__('The contract reference cannot be the same as a previously created contract for another customer. Please modify the contract reference before continuing'),'error');
 			$InputError=true;
 		}
 
-		if($ExistingContract['status']<=1 AND ! $InputError){
+		if ($ExistingContract['status']<=1 AND ! $InputError) {
 			//then we can accept any changes at all do an update on the whole lot
 			$SQL = "UPDATE contracts SET categoryid = '" . $_POST['CategoryID'] ."',
 										requireddate = '" . FormatDateForSQL($_POST['RequiredDate']) . "',
@@ -560,7 +560,7 @@ if(isset($_POST['CreateQuotation']) AND !$InputError){
 											'" . $_SESSION['Contract'.$identifier]->DebtorNo  . "',
 											'" . $_SESSION['Contract'.$identifier]->BranchCode . "',
 											'". $_SESSION['Contract'.$identifier]->CustomerRef ."',
-											'" . Date('Y-m-d H:i') . "',
+											'" . date('Y-m-d H:i') . "',
 											'" . $CustomerDetailsRow['salestype'] . "',
 											'" . $CustomerDetailsRow['defaultshipvia'] ."',
 											'". $CustomerDetailsRow['brname'] . "',
@@ -613,10 +613,10 @@ if(isset($_POST['CreateQuotation']) AND !$InputError){
 
 if (isset($_POST['SearchCustomers'])){
 
-	if (($_POST['CustKeywords']!='') AND (($_POST['CustCode']!='') OR ($_POST['CustPhone']!=''))) {
+	if (($_POST['CustKeywords']!= '') AND (($_POST['CustCode']!= '') OR ($_POST['CustPhone']!= ''))) {
 		prnMsg( __('Customer Branch Name keywords have been used in preference to the Customer Branch Code or Branch Phone Number entered'), 'warn');
 	}
-	if (($_POST['CustCode']!='') AND ($_POST['CustPhone']!='')) {
+	if (($_POST['CustCode']!= '') AND ($_POST['CustPhone']!= '')) {
 		prnMsg(__('Customer Branch Code has been used in preference to the Customer Branch Phone Number entered'), 'warn');
 	}
 	if (mb_strlen($_POST['CustKeywords'])>0) {
@@ -788,7 +788,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 
 		$LastCustomer='';
 		while ($MyRow=DB_fetch_array($Result_CustSelect)) {
-			if ($LastCustomer != $MyRow['name']) {
+			if ($LastCustomer !=  $MyRow['name']) {
 				echo '<tr class="striped_row"><td>' .  $MyRow['name']  . '</td>';
 			} else {
 				echo '<tr class="striped_row"><td></td>';
@@ -820,7 +820,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 	echo '<p class="page_title_text">
 			<img src="'.$RootPath.'/css/'.$Theme.'/images/contract.png" title="' . __('Contract') . '" alt="" /> ' . $_SESSION['Contract'.$identifier]->CustomerName;
 
-	if ($_SESSION['CompanyRecord']['currencydefault'] != $_SESSION['Contract'.$identifier]->CurrCode){
+	if ($_SESSION['CompanyRecord']['currencydefault'] !=  $_SESSION['Contract'.$identifier]->CurrCode){
 		echo ' - ' . __('All amounts stated in') . ' ' . $_SESSION['Contract'.$identifier]->CurrCode . '<br />';
 	}
 	if ($_SESSION['ExistingContract']) {
@@ -952,7 +952,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 			<input class="number" type="text" name="Margin" size="6" required="required" maxlength="6" value="', locale_number_format($_SESSION['Contract' . $identifier]->Margin, 2), '" />
 		</field>';
 
-	if ($_SESSION['CompanyRecord']['currencydefault'] != $_SESSION['Contract' . $identifier]->CurrCode) {
+	if ($_SESSION['CompanyRecord']['currencydefault'] !=  $_SESSION['Contract' . $identifier]->CurrCode) {
 		echo '<field>
 				<label for="ExRate">', $_SESSION['Contract' . $identifier]->CurrCode, ' ', __('Exchange Rate'), ':</label>
 				<input class="number" type="text" name="ExRate" size="10" required="required" maxlength="10" value="', locale_number_format($_SESSION['Contract' . $identifier]->ExRate, 'Variable'), '" />
@@ -986,7 +986,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 				<td><a href="' . $RootPath . '/SelectSalesOrder.php?OrderNumber=' . urlencode($_SESSION['Contract' . $identifier]->OrderNo) . '&amp;Quotations=Quotes_Only">' . $_SESSION['Contract' . $identifier]->OrderNo . '</a></td>
 			</field>';
 	}
-	if ($_SESSION['Contract' . $identifier]->Status != 2 and isset($_SESSION['Contract' . $identifier]->WO)) {
+	if ($_SESSION['Contract' . $identifier]->Status !=  2 and isset($_SESSION['Contract' . $identifier]->WO)) {
 		echo '<field>
 				<td>' . __('Contract Work Order Ref') . ':</td>
 				<td>' . $_SESSION['Contract' . $identifier]->WO . '</td>
@@ -1003,7 +1003,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 							<th colspan="6">' . __('Stock Items Required') . '</th>
 						</tr>';
 	$ContractBOMCost = 0;
-	if (count($_SESSION['Contract'.$identifier]->ContractBOM)!=0){
+	if (count($_SESSION['Contract'.$identifier]->ContractBOM)!= 0){
 		echo '<tr>
 				<th>' . __('Item Code') . '</th>
 				<th>' . __('Item Description') . '</th>
@@ -1040,7 +1040,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 					<th colspan="4">' . __('Other Requirements') . '</th>
 				</tr>';
 	$ContractReqtsCost = 0;
-	if (count($_SESSION['Contract'.$identifier]->ContractReqts)!=0){
+	if (count($_SESSION['Contract'.$identifier]->ContractReqts)!= 0){
 		echo '<tr>
 				<th>' . __('Requirement') . '</th>
 				<th>' . __('Quantity') . '</th>
@@ -1080,18 +1080,18 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 	echo '<div class="centre">
 			<input type="submit" name="EnterContractBOM" value="' . __('Enter Items Required') . '" />
 			<input type="submit" name="EnterContractRequirements" value="' . __('Enter Other Requirements') .'" />';
-	if($_SESSION['Contract'.$identifier]->Status==0){ // not yet quoted
+	if ($_SESSION['Contract'.$identifier]->Status==0) { // not yet quoted
 		echo '<input type="submit" name="CommitContract" value="' . __('Commit Changes') .'" />';
-	} elseif($_SESSION['Contract'.$identifier]->Status==1){ //quoted but not yet ordered
+	} elseif ($_SESSION['Contract'.$identifier]->Status==1) { //quoted but not yet ordered
 		echo '<input type="submit" name="CommitContract" value="' . __('Update Quotation') .'" />';
 	}
-	if($_SESSION['Contract'.$identifier]->Status==0){ //not yet quoted
+	if ($_SESSION['Contract'.$identifier]->Status==0) { //not yet quoted
 		echo ' <input type="submit" name="CreateQuotation" value="' . __('Create Quotation') .'" />
 			</div>';
 	} else {
 		echo '</div>';
 	}
-	if ($_SESSION['Contract'.$identifier]->Status!=2) {
+	if ($_SESSION['Contract'.$identifier]->Status!= 2) {
 		echo '<div class="centre">
 				 <br />
 				 <input type="reset" name="CancelContract" value="' . __('Cancel and Delete Contract') . '" />

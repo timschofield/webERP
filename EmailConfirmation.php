@@ -244,15 +244,15 @@ if($_GET['POLine'] == 1){
 			$DisplayQty = locale_number_format($MyRow2['quantity'],0);
 			$DisplayPrevDel = locale_number_format($MyRow2['qtyinvoiced'],0);
 			$DisplayQtySupplied = locale_number_format($MyRow2['quantity'] - $MyRow2['qtyinvoiced'],0);
-         		$StkCode[$i] = $MyRow2['stkcode'];
-         		$DscCode[$i] = $MyRow2['description'];
-         		$QtyCode[$i] = $DisplayQty ;
-         		$POLine[$i]  = $MyRow2['poline'];
-        		if($MyRow2['itemdue'] =='') {
-         			$ItemDue[$i] = date('M d, Y',strtotime($DeliveryDate));
-        		} else {
-        			$ItemDue[$i] = date('M d, Y',strtotime($MyRow2['itemdue']));
-        		}
+		 		$StkCode[$i] = $MyRow2['stkcode'];
+		 		$DscCode[$i] = $MyRow2['description'];
+		 		$QtyCode[$i] = $DisplayQty ;
+		 		$POLine[$i]  = $MyRow2['poline'];
+				if($MyRow2['itemdue'] =='') {
+		 			$ItemDue[$i] = date('M d, Y',strtotime($DeliveryDate));
+				} else {
+					$ItemDue[$i] = date('M d, Y',strtotime($MyRow2['itemdue']));
+				}
 			$MailMessage .= '<tr>';
 			if($_GET['POLine'] == 1){
 				$MailMessage .= '<td align="right">' . $POLine[$i] . '</td>';

@@ -664,7 +664,7 @@ function PrintHeader($pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Mar
 
 	$pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,__('MRP Report'));
 	$pdf->addTextWrap($Page_Width-$Right_Margin-110,$YPos,160,$FontSize,__('Printed') . ': ' .
-		 Date($_SESSION['DefaultDateFormat']) . '   ' . __('Page') . ' ' . $PageNumber,'left');
+		 date($_SESSION['DefaultDateFormat']) . '   ' . __('Page') . ' ' . $PageNumber,'left');
 
 	$YPos -=(2*$LineHeight);
 

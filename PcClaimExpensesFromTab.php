@@ -639,7 +639,7 @@ if (!isset($SelectedTabs)) {
 			echo '<input type="hidden" name="Days" value="', $Days, '" />';
 		} //end of Get Edit
 		if (!isset($_POST['Date'])) {
-			$_POST['Date'] = Date($_SESSION['DefaultDateFormat']);
+			$_POST['Date'] = date($_SESSION['DefaultDateFormat']);
 		}
 		echo '<fieldset>';
 		if (isset($_GET['SelectedIndex'])) {

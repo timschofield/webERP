@@ -270,7 +270,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 	$HTML .= $_SESSION['CompanyRecord']['regoffice4'] . '<br />';
 	$HTML .= $_SESSION['CompanyRecord']['regoffice5'] . '<br />';
 	$HTML .= $_SESSION['CompanyRecord']['regoffice6'] . '<br />';
-	$HTML .= __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />';
+	$HTML .= __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />';
 	$HTML .= '</div>';
 	$HTML .= '</td>';
 	$HTML .= '<td style="width:50%;background:transparent"><div class="centre" id="ReportHeader" style="float:right">';

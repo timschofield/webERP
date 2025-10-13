@@ -36,7 +36,7 @@ if (isset($_POST['submit'])) {
 		$i++;
 	}
 
-	if ($InputError !=1) {
+	if ($InputError != 1) {
 
 		$CompanyFileHandler = fopen($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/Companies.php', 'w');
 		$Contents = "<?php\n\n";
@@ -115,7 +115,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 echo '<fieldset>
 		<legend>', __('Company Profile Settings'), '</legend>';
 
-if ($InputError != 1) {
+if ($InputError !=  1) {
 	$SQL = "SELECT coyname,
 					gstno,
 					companynumber,

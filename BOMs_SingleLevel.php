@@ -23,7 +23,7 @@ function display_children($Parent, $Level, &$BOMTree) {
 
 		while ($Row = DB_fetch_array($CResult)) {
 			//echo '<br />Parent: ' . $Parent . ' Level: ' . $Level . ' row[component]: ' . $Row['component']  . '<br />';
-			if ($Parent != $Row['component']) {
+			if ($Parent !=  $Row['component']) {
 				// indent and display the title of this child
 				$BOMTree[$i]['Level'] = $Level; 		// Level
 				if ($Level > 15) {
@@ -48,7 +48,7 @@ ie the BOM is recursive otherwise false ie 0 */
 	$ErrMsg = __('An error occurred in retrieving the components of the BOM during the check for recursion');
 	$Result = DB_query($SQL, $ErrMsg);
 
-	if (DB_num_rows($Result)!=0) {
+	if (DB_num_rows($Result)!= 0) {
 		while ($MyRow=DB_fetch_array($Result)){
 			if ($MyRow['component']==$UltimateParent){
 				return 1;
@@ -116,7 +116,7 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level) {
 				$DrillLink = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?';
 				$DrillID=$MyRow['component'];
 			}
-			if ($ParentMBflag!='M' AND $ParentMBflag!='G'){
+			if ($ParentMBflag!= 'M' AND $ParentMBflag!= 'G'){
 				$AutoIssue = __('N/A');
 			} elseif ($MyRow['controlled']==0 AND $MyRow['autoissue']==1){//autoissue and not controlled
 				$AutoIssue = __('Yes');
@@ -277,7 +277,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			$EffectiveToSQL = FormatDateForSQL($_POST['EffectiveTo']);
 		}
 
-		if (isset($SelectedParent) AND isset($SelectedComponent) AND $InputError != 1) {
+		if (isset($SelectedParent) AND isset($SelectedComponent) AND $InputError !=  1) {
 
 
 			$SQL = "UPDATE bom SET sequence='" . $_POST['Sequence'] . "',
@@ -296,7 +296,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			$Msg = __('Details for') . ' - ' . $SelectedComponent . ' ' . __('have been updated') . '.';
 			UpdateCost($SelectedComponent);
 
-		} elseif ($InputError !=1 AND ! isset($SelectedComponent) AND isset($SelectedParent)) {
+		} elseif ($InputError != 1 AND ! isset($SelectedComponent) AND isset($SelectedParent)) {
 
 		/*Selected component is null cos no item selected on first time round so must be adding a record must be Submitting new entries in the new component form */
 
@@ -357,7 +357,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 		} //end of if no input errors
 
-		if ($Msg != '') {prnMsg($Msg,'success');}
+		if ($Msg !=  '') {prnMsg($Msg,'success');}
 
 	} elseif (isset($_GET['delete']) AND isset($SelectedComponent) AND isset($SelectedParent)) {
 
@@ -574,7 +574,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
         echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-		if (isset($_GET['SelectedComponent']) AND $InputError !=1) {
+		if (isset($_GET['SelectedComponent']) AND $InputError != 1) {
 		//editing a selected component from the link to the line item
 
 			$SQL = "SELECT sequence,
@@ -634,11 +634,11 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 						FROM stockmaster INNER JOIN stockcategory
 							ON stockmaster.categoryid = stockcategory.categoryid
 						WHERE ((stockcategory.stocktype='L' AND stockmaster.mbflag ='D')
-						OR stockmaster.mbflag !='D')
-						AND stockmaster.mbflag !='K'
-						AND stockmaster.mbflag !='A'
+						OR stockmaster.mbflag != 'D')
+						AND stockmaster.mbflag != 'K'
+						AND stockmaster.mbflag != 'A'
 						AND stockmaster.controlled = 0
-						AND stockmaster.stockid != '".$SelectedParent."'
+						AND stockmaster.stockid !=  '".$SelectedParent."'
 						ORDER BY stockmaster.stockid";
 
 			} else { /*Its either a normal manufac item, phantom, kitset - controlled items ok */
@@ -647,10 +647,10 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 						FROM stockmaster INNER JOIN stockcategory
 							ON stockmaster.categoryid = stockcategory.categoryid
 						WHERE ((stockcategory.stocktype='L' AND stockmaster.mbflag ='D')
-						OR stockmaster.mbflag !='D')
-						AND stockmaster.mbflag !='K'
-						AND stockmaster.mbflag !='A'
-						AND stockmaster.stockid != '".$SelectedParent."'
+						OR stockmaster.mbflag != 'D')
+						AND stockmaster.mbflag != 'K'
+						AND stockmaster.mbflag != 'A'
+						AND stockmaster.stockid !=  '".$SelectedParent."'
 						ORDER BY stockmaster.stockid";
 			}
 
@@ -740,10 +740,10 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			</tr>';
 
 		if (!isset($_POST['EffectiveTo']) OR $_POST['EffectiveTo']=='') {
-			$_POST['EffectiveTo'] = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m'),Date('d'),(Date('y')+20)));
+			$_POST['EffectiveTo'] = date($_SESSION['DefaultDateFormat'],mktime(0,0,0,date('m'),date('d'),(date('y')+20)));
 		}
 		if (!isset($_POST['EffectiveAfter']) OR $_POST['EffectiveAfter']=='') {
-			$_POST['EffectiveAfter'] = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m'),Date('d')-1,Date('y')));
+			$_POST['EffectiveAfter'] = date($_SESSION['DefaultDateFormat'],mktime(0,0,0,date('m'),date('d')-1,date('y')));
 		}
 
 		echo '<tr>

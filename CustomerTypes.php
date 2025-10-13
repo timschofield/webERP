@@ -57,14 +57,14 @@ if (isset($_POST['submit'])) {
 		$i++;
 	}
 
-	if (isset($SelectedType) AND $InputError !=1) {
+	if (isset($SelectedType) AND $InputError != 1) {
 
 		$SQL = "UPDATE debtortype
 			SET typename = '" . $_POST['TypeName'] . "'
 			WHERE typeid = '" .$SelectedType."'";
 
 		$Msg = __('The customer type') . ' ' . $SelectedType . ' ' .  __('has been updated');
-	} elseif ( $InputError !=1 ) {
+	} elseif ( $InputError != 1 ) {
 
 		// First check the type is not being duplicated
 
@@ -96,7 +96,7 @@ if (isset($_POST['submit'])) {
 		}
 	}
 
-	if ( $InputError !=1) {
+	if ( $InputError != 1) {
 	//run the SQL from either of the above possibilites
 		$Result = DB_query($SQL);
 
@@ -215,7 +215,7 @@ if (! isset($_GET['delete'])) {
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	// The user wish to EDIT an existing type
-	if ( isset($SelectedType) AND $SelectedType!='' ) {
+	if ( isset($SelectedType) AND $SelectedType!= '' ) {
 
 		$SQL = "SELECT typeid,
 			       typename

@@ -98,7 +98,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					' . __('Banked into') . ': ' . $BankActName . ' - ' . __('Account Number') . ': ' . $BankActNumber . '<br />
 					' . __('Reference') . ': ' . $BankingReference . '<br />
 					' . __('Currency') . ': ' . $Currency . '<br />
-					' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
 				</div>
 				<table>
 					<thead>

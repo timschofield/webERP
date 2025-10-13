@@ -13,7 +13,7 @@ include('includes/CountriesArray.php');
 
 if (isset($_GET['DebtorNo'])) {
 	$DebtorNo = mb_strtoupper($_GET['DebtorNo']);
-} else if (isset($_POST['DebtorNo'])){
+} elseif (isset($_POST['DebtorNo'])){
 	$DebtorNo = mb_strtoupper($_POST['DebtorNo']);
 }
 
@@ -28,7 +28,7 @@ if (!isset($DebtorNo)) {
 
 if (isset($_GET['SelectedBranch'])){
 	$SelectedBranch = mb_strtoupper($_GET['SelectedBranch']);
-} else if (isset($_POST['SelectedBranch'])){
+} elseif (isset($_POST['SelectedBranch'])){
 	$SelectedBranch = mb_strtoupper($_POST['SelectedBranch']);
 }
 
@@ -47,7 +47,7 @@ if (isset($_POST['submit'])) {
 
 	$_POST['BranchCode'] = mb_strtoupper($_POST['BranchCode']);
 
-	if ($_SESSION['SalesmanLogin'] != '') {
+	if ($_SESSION['SalesmanLogin'] !=  '') {
 		$_POST['Salesman'] = $_SESSION['SalesmanLogin'];
 	}
 	if (ContainsIllegalCharacters($_POST['BranchCode']) OR mb_strstr($_POST['BranchCode'],' ')) {
@@ -128,7 +128,7 @@ if (isset($_POST['submit'])) {
 			}
 		}
 	}
-	if (isset($SelectedBranch) AND $InputError !=1) {
+	if (isset($SelectedBranch) AND $InputError != 1) {
 
 		/*SelectedBranch could also exist if submit had not been clicked this code would not run in this case cos submit is false of course see the 	delete code below*/
 
@@ -163,13 +163,13 @@ if (isset($_POST['submit'])) {
 						deliverblind='" . $_POST['DeliverBlind'] . "'
 					WHERE branchcode = '".$SelectedBranch."' AND debtorno='".$DebtorNo."'";
 
-		if ($_SESSION['SalesmanLogin'] != '') {
+		if ($_SESSION['SalesmanLogin'] !=  '') {
 			$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
 		}
 
 		$Msg = $_POST['BrName'] . ' '.__('branch has been updated.');
 
-	} else if ($InputError !=1) {
+	} elseif ($InputError != 1) {
 
 	/*Selected branch is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new Customer Branches form */
 
@@ -278,7 +278,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['DeliverBlind']);
 		unset($SelectedBranch);
 	}
-} else if (isset($_GET['delete'])) {
+} elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'DebtorTrans'
@@ -341,7 +341,7 @@ if (isset($_POST['submit'])) {
 							prnMsg(__('Cannot delete this branch because it is the only branch defined for this customer.'),'warn');
 						} else {
 							$SQL="DELETE FROM custbranch WHERE branchcode='" . $SelectedBranch . "' AND debtorno='" . $DebtorNo . "'";
-							if ($_SESSION['SalesmanLogin'] != '') {
+							if ($_SESSION['SalesmanLogin'] !=  '') {
 								$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
 							}
 							$ErrMsg = __('The branch record could not be deleted') . ' - ' . __('the SQL server returned the following message');
@@ -382,7 +382,7 @@ if (!isset($SelectedBranch)){
 				ON custbranch.taxgroupid=taxgroups.taxgroupid
 				WHERE custbranch.debtorno = '".$DebtorNo."'";
 
-	if ($_SESSION['SalesmanLogin'] != '') {
+	if ($_SESSION['SalesmanLogin'] !=  '') {
 		$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
 	}
 
@@ -513,7 +513,7 @@ if (!isset($_GET['delete'])) {
 					WHERE branchcode='".$SelectedBranch."'
 					AND debtorno='".$DebtorNo."'";
 
-		if ($_SESSION['SalesmanLogin'] != '') {
+		if ($_SESSION['SalesmanLogin'] !=  '') {
 			$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
 		}
 
@@ -704,7 +704,7 @@ if (!isset($_GET['delete'])) {
 	echo '<input ' .(in_array('FwdDate',$Errors) ? 'class="inputerror"' : '' ) .' tabindex="12" class="integer" name="FwdDate" size="4" maxlength="2" value="'. $_POST['FwdDate'].'" />
 		</field>';
 
-	if ($_SESSION['SalesmanLogin'] != '') {
+	if ($_SESSION['SalesmanLogin'] !=  '') {
 		echo '<field>
 				<label for="Salesman">' . __('Salesperson').':</label>
 				<fieldtext>', $_SESSION['UsersRealName'], '</fieldtext>

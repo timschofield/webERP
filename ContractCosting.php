@@ -238,7 +238,7 @@ if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status
 	$Variance =  ($OtherReqtsBudget+$ContractBOMBudget)-($OtherReqtsActual+$ContractBOMActual);
 
 	$ContractCloseNo = GetNextTransNo( 32 );
-	$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
+	$PeriodNo = GetPeriod(date($_SESSION['DefaultDateFormat']));
 
 	DB_Txn_Begin();
 
@@ -370,7 +370,7 @@ if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status
 				$StkMoveNo = DB_Last_Insert_ID('stockmoves','stkmoveno');
 
 				/* If GLLink_Stock then insert GLTrans to debit the GL Code  and credit GRN Suspense account at standard cost*/
-				if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND ($OtherReqtsBudget+$ContractBOMBudget)!=0){
+				if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND ($OtherReqtsBudget+$ContractBOMBudget)!= 0){
 				/*GL integration with stock is activated so need the GL journals to make it so */
 				/*first the debit the finished stock of the item received from the WO
 				  the appropriate account was already retrieved into the $StockGLCode variable as the Processing code is kicked off
@@ -413,7 +413,7 @@ if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status
 					$ErrMsg =   __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The WIP credit on receipt of finished items from a work order GL posting could not be inserted because');
 					$Result = DB_query($SQL, $ErrMsg, '',true);
 
-				} /* end of if GL and stock integrated and standard cost !=0 */
+				} /* end of if GL and stock integrated and standard cost != 0 */
 
 				//update the wo with the new qtyrecd
 				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' .__('Could not update the work order item record with the total quantity received because');

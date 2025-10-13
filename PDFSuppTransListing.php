@@ -83,7 +83,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 					' . __('Transaction type') . ': ' . $TransactionType . '<br />
 					' . __('Date of Transactions') .': ' . $_POST['Date'] . '<br />
-					' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
 				</div>
 				<table>
 					<thead>
@@ -184,7 +184,7 @@ else { /*The option to print PDF was not hit */
 			<legend>', __('Report Criteria'), '</legend>
 			<field>
 				<label for="Date">' . __('Enter the date for which the transactions are to be listed') . ':</label>
-				<input name="Date" maxlength="10" size="11" type="date" value="' . Date('Y-m-d') . '" />
+				<input name="Date" maxlength="10" size="11" type="date" value="' . date('Y-m-d') . '" />
 			</field>';
 
 	echo '<field>

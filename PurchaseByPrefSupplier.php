@@ -91,7 +91,7 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 						$PurchItems[$StockID]['SuppliersPartNo'] = $PurchRow['suppliers_partno'];
 						$LeadTime = $PurchRow['leadtime'];
 						/* Work out the delivery date based on today + lead time  */
-						$PurchItems[$StockID]['DeliveryDate'] = DateAdd(Date($_SESSION['DefaultDateFormat']),'d',$LeadTime);
+						$PurchItems[$StockID]['DeliveryDate'] = DateAdd(date($_SESSION['DefaultDateFormat']),'d',$LeadTime);
 					} else { // no purchasing data setup
 						$PurchItems[$StockID]['Price'] = 0;
 						$PurchItems[$StockID]['ConversionFactor'] = 1;
@@ -99,7 +99,7 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 						$PurchItems[$StockID]['UnitOfMeasure'] = $ItemRow['units'];
 						$PurchItems[$StockID]['SuppliersPartNo'] = 'each';
 						$LeadTime = 1;
-						$PurchItems[$StockID]['DeliveryDate'] = Date($_SESSION['DefaultDateFormat']);
+						$PurchItems[$StockID]['DeliveryDate'] = date($_SESSION['DefaultDateFormat']);
 					}
 					$OrderValue += $PurchItems[$StockID]['Quantity']*$PurchItems[$StockID]['Price'];
 				} else { //item could not be found
@@ -242,10 +242,10 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 								'" . $SupplierRow['telephone']. "',
 								'" . $LocnRow['contact'] . "',
 								CURRENT_DATE,
-								'" . Date('Y-m-d',mktime(0,0,0,Date('m'),Date('d')+1,Date('Y'))) . "',
+								'" . date('Y-m-d',mktime(0,0,0,date('m'),date('d')+1,date('Y'))) . "',
 								'" . $Status . "',
 								'" . htmlspecialchars($StatusComment,ENT_QUOTES,'UTF-8') . "',
-								'" . Date('Y-m-d',mktime(0,0,0,Date('m'),Date('d')+1,Date('Y'))) . "',
+								'" . date('Y-m-d',mktime(0,0,0,date('m'),date('d')+1,date('Y'))) . "',
 								'" . $SupplierRow['paymentterms'] . "',
 								'" . $AllowPrintPO . "' )";
 
@@ -417,15 +417,15 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 
 	while ($ItemRow = DB_fetch_array($ItemsResult)){
 
-		$SQL = "SELECT SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m')-2, date('d'), date('Y'))) . "' AND
-							trandate<='" . Date('Y-m-d',mktime(0,0,0, date('m')-1, date('d'), date('Y'))) . "') THEN -qty ELSE 0 END) AS previousmonth,
-					SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m')-1, date('d'), date('Y'))) . "' AND
+		$SQL = "SELECT SUM(CASE WHEN (trandate>='" . date('Y-m-d',mktime(0,0,0, date('m')-2, date('d'), date('Y'))) . "' AND
+							trandate<='" . date('Y-m-d',mktime(0,0,0, date('m')-1, date('d'), date('Y'))) . "') THEN -qty ELSE 0 END) AS previousmonth,
+					SUM(CASE WHEN (trandate>='" . date('Y-m-d',mktime(0,0,0, date('m')-1, date('d'), date('Y'))) . "' AND
 							trandate<= CURRENT_DATE) THEN -qty ELSE 0 END) AS lastmonth,
-					SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m'), date('d')-(3*7), date('Y'))) . "' AND
-							trandate<='" . Date('Y-m-d',mktime(0,0,0, date('m'), date('d')-(2*7), date('Y'))) . "') THEN -qty ELSE 0 END) AS wk3,
-					SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m'), date('d')-(2*7), date('Y'))) . "' AND
-							trandate<='" . Date('Y-m-d',mktime(0,0,0, date('m'), date('d')-7, date('Y'))) . "') THEN -qty ELSE 0 END) AS wk2,
-					SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m'), date('d')-7, date('Y'))) . "' AND
+					SUM(CASE WHEN (trandate>='" . date('Y-m-d',mktime(0,0,0, date('m'), date('d')-(3*7), date('Y'))) . "' AND
+							trandate<='" . date('Y-m-d',mktime(0,0,0, date('m'), date('d')-(2*7), date('Y'))) . "') THEN -qty ELSE 0 END) AS wk3,
+					SUM(CASE WHEN (trandate>='" . date('Y-m-d',mktime(0,0,0, date('m'), date('d')-(2*7), date('Y'))) . "' AND
+							trandate<='" . date('Y-m-d',mktime(0,0,0, date('m'), date('d')-7, date('Y'))) . "') THEN -qty ELSE 0 END) AS wk2,
+					SUM(CASE WHEN (trandate>='" . date('Y-m-d',mktime(0,0,0, date('m'), date('d')-7, date('Y'))) . "' AND
 							trandate<= CURRENT_DATE) THEN -qty ELSE 0 END) AS wk1
 				FROM stockmoves
 				WHERE stockid='" . $ItemRow['stockid'] . "'

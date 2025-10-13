@@ -55,7 +55,7 @@ if (isset($_POST['submit'])) {
 			$InputError = 1;
 			prnMsg(__('The password entered must be at least 5 characters long'),'error');
 		}
-	} elseif (mb_strstr($_POST['Password'],$_POST['UserID'])!= false){
+	} elseif (mb_strstr($_POST['Password'],$_POST['UserID'])!=  false){
 		$InputError = 1;
 		prnMsg(__('The password cannot contain the user id'),'error');
 	} elseif ((mb_strlen($_SESSION['CustomerID'])>0) AND (mb_strlen($_POST['BranchCode'])==0)) {
@@ -63,7 +63,7 @@ if (isset($_POST['submit'])) {
 		prnMsg(__('If you enter a Customer Code you must also enter a Branch Code valid for this Customer'),'error');
 	}
 
-	if ((mb_strlen($_POST['BranchCode'])>0) AND ($InputError !=1)) {
+	if ((mb_strlen($_POST['BranchCode'])>0) AND ($InputError != 1)) {
 		// check that the entered branch is valid for the customer code
 		$SQL = "SELECT defaultlocation
 				FROM custbranch
@@ -81,7 +81,7 @@ if (isset($_POST['submit'])) {
 			$InventoryLocation = $MyRow[0];
 	}
 
-	if ($InputError !=1) {
+	if ($InputError != 1) {
 
 		$SQL = "INSERT INTO www_users (userid,
 										realname,
@@ -245,13 +245,13 @@ echo '<field>
 
 $ThemeDirectory = dir('css/');
 
-while (false != ($ThemeName = $ThemeDirectory->read())){
+while (false !=  ($ThemeName = $ThemeDirectory->read())){
 
-	if (is_dir('css/' . $ThemeName) AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != '.svn'){
+	if (is_dir('css/' . $ThemeName) AND $ThemeName !=  '.' AND $ThemeName !=  '..' AND $ThemeName !=  '.svn'){
 
 		if (isset($_POST['Theme']) and $_POST['Theme'] == $ThemeName){
 			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName  . '</option>';
-		} else if (!isset($_POST['Theme']) and ($Theme==$ThemeName)) {
+		} elseif (!isset($_POST['Theme']) and ($Theme==$ThemeName)) {
 			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName  . '</option>';
 		} else {
 			echo '<option value="' . $ThemeName . '">' . $ThemeName  . '</option>';

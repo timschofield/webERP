@@ -12,7 +12,7 @@ include('includes/StockFunctions.php');
 //check if input already
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	// everything below here to view NumberOfTopItems items sale on selected location
-	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -filter_number_format($_POST['NumberOfDays'])));
+	$FromDate = FormatDateForSQL(DateAdd(date($_SESSION['DefaultDateFormat']),'d', -filter_number_format($_POST['NumberOfDays'])));
 
 	$SQL = "SELECT 	salesorderdetails.stkcode,
 					SUM(salesorderdetails.qtyinvoiced) AS totalinvoiced,
@@ -65,7 +65,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<div class="centre" id="ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 					' . __('Top sales items list') . '<br />
-					' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
 					' . __('Location') . ' - ' . $_POST['Location'] . '<br />
 					' . __('Customers') . ' - ' . $_POST['Customers'] . '<br />
 					' . __('Stock Category') . ' - ' . $_POST['StockCat'] . '<br />

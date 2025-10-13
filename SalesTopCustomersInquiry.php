@@ -58,8 +58,8 @@ echo	' onchange="ReloadForm(form1.ShowSales)" />
 if ($_POST['DateRange']=='Custom'){
 	if (!isset($_POST['FromDate'])){
 		unset($_POST['ShowSales']);
-		$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat'],mktime(1,1,1,Date('m')-12,Date('d')+1,Date('Y')));
-		$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
+		$_POST['FromDate'] = date($_SESSION['DefaultDateFormat'],mktime(1,1,1,date('m')-12,date('d')+1,date('Y')));
+		$_POST['ToDate'] = date($_SESSION['DefaultDateFormat']);
 	}
 	echo '<field>
 			<label for="FromDate">' . __('Date From') . ':</label>

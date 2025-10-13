@@ -46,18 +46,18 @@ if (isset($_POST['submit'])) {
 		prnMsg( __('The discount percentage must be a number less than 1'),'error');
 		$Errors[$i] = 'DiscountPercent';
 		$i++;
-	} else if (filter_number_format($_POST['DiscountPercent'])>1) {
+	} elseif (filter_number_format($_POST['DiscountPercent'])>1) {
 		$InputError = 1;
 		prnMsg( __('The discount percentage must be a number less than 1'),'error');
 		$Errors[$i] = 'DiscountPercent';
 		$i++;
-	} else if (filter_number_format($_POST['DiscountPercent'])<0) {
+	} elseif (filter_number_format($_POST['DiscountPercent'])<0) {
 		$InputError = 1;
 		prnMsg( __('The discount percentage must be either zero or less than 1'),'error');
 		$Errors[$i] = 'DiscountPercent';
 		$i++;
 	}
-	if (isset($_POST['SelectedPaymentID']) AND $InputError !=1) {
+	if (isset($_POST['SelectedPaymentID']) AND $InputError != 1) {
 
 		/*SelectedPaymentID could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 		// Check the name does not clash
@@ -75,7 +75,7 @@ if (isset($_POST['submit'])) {
 			$SQL = "SELECT paymentname FROM paymentmethods
 					WHERE paymentid = '" . $SelectedPaymentID . "'";
 			$Result = DB_query($SQL);
-			if ( DB_num_rows($Result) != 0 ) {
+			if ( DB_num_rows($Result) !=  0 ) {
 				$MyRow = DB_fetch_row($Result);
 				$OldName = $MyRow[0];
 				$SQL = "UPDATE paymentmethods
@@ -94,7 +94,7 @@ if (isset($_POST['submit'])) {
 		}
 		$Msg = __('Record Updated');
 		$ErrMsg = __('Could not update payment method');
-	} elseif ($InputError !=1) {
+	} elseif ($InputError != 1) {
 		/*SelectedPaymentID is null cos no item selected on first time round so must be adding a record*/
 		$SQL = "SELECT count(*) FROM paymentmethods
 				WHERE paymentname LIKE'".$_POST['MethodName'] ."'";
@@ -121,7 +121,7 @@ if (isset($_POST['submit'])) {
 		$ErrMsg = __('Could not insert the new payment method');
 	}
 
-	if ($InputError!=1){
+	if ($InputError!= 1){
 		$Result = DB_query($SQL, $ErrMsg);
 		prnMsg($Msg,'success');
 		echo '<br />';

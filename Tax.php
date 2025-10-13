@@ -29,7 +29,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 				<div class="centre" id="ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 					' . $ReportTitle . '<br />
-					' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
 					' . __('For Periods') . ' - ' . $_POST['NoOfPeriods'] . ' ' . __('months to') . ' ' . $PeriodEnd . '<br />
 				</div>';
 
@@ -117,15 +117,15 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 		$Date_Array = explode('-', $PeriodEnd);
 	}
 	if ($_SESSION['DefaultDateFormat'] == 'd/m/Y') {
-		$StartDateSQL = Date('Y-m-d', mktime(0, 0, 0, (int)$Date_Array[1] - $_POST['NoOfPeriods'] + 1, 1, (int)$Date_Array[2]));
+		$StartDateSQL = date('Y-m-d', mktime(0, 0, 0, (int)$Date_Array[1] - $_POST['NoOfPeriods'] + 1, 1, (int)$Date_Array[2]));
 	} elseif ($_SESSION['DefaultDateFormat'] == 'm/d/Y') {
-		$StartDateSQL = Date('Y-m-d', mktime(0, 0, 0, (int)$Date_Array[0] - $_POST['NoOfPeriods'] + 1, 1, (int)$Date_Array[2]));
+		$StartDateSQL = date('Y-m-d', mktime(0, 0, 0, (int)$Date_Array[0] - $_POST['NoOfPeriods'] + 1, 1, (int)$Date_Array[2]));
 	} elseif ($_SESSION['DefaultDateFormat'] == 'Y/m/d') {
-		$StartDateSQL = Date('Y-m-d', mktime(0, 0, 0, (int)$Date_Array[1] - $_POST['NoOfPeriods'] + 1, 1, (int)$Date_Array[0]));
+		$StartDateSQL = date('Y-m-d', mktime(0, 0, 0, (int)$Date_Array[1] - $_POST['NoOfPeriods'] + 1, 1, (int)$Date_Array[0]));
 	} elseif ($_SESSION['DefaultDateFormat'] == 'd.m.Y') {
-		$StartDateSQL = Date('Y-m-d', mktime(0, 0, 0, (int)$Date_Array[1] - $_POST['NoOfPeriods'] + 1, 1, (int)$Date_Array[2]));
+		$StartDateSQL = date('Y-m-d', mktime(0, 0, 0, (int)$Date_Array[1] - $_POST['NoOfPeriods'] + 1, 1, (int)$Date_Array[2]));
 	} elseif ($_SESSION['DefaultDateFormat'] == 'Y-m-d') {
-		$StartDateSQL = Date('Y-m-d', mktime(0, 0, 0, (int)$Date_Array[1] - $_POST['NoOfPeriods'] + 1, 1, (int)$Date_Array[0]));
+		$StartDateSQL = date('Y-m-d', mktime(0, 0, 0, (int)$Date_Array[1] - $_POST['NoOfPeriods'] + 1, 1, (int)$Date_Array[0]));
 	}
 
 	$SQL = "SELECT supptrans.trandate,
@@ -402,7 +402,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 	echo '<field>
 			<label for="ToPeriod">' . __('Return To') . ':</label>
 			<select name="ToPeriod">';
-	$DefaultPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m'), 0, Date('Y'))));
+	$DefaultPeriod = GetPeriod(date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, date('m'), 0, date('Y'))));
 	$SQL = "SELECT periodno,
 					lastdate_in_period
 				FROM periods";

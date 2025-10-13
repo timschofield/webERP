@@ -143,7 +143,7 @@ if($NewTransfer) {
 										$_POST['StockLocationTo'],
 										'',
 										$StockLocationToAccount,
-										Date($_SESSION['DefaultDateFormat'])
+										date($_SESSION['DefaultDateFormat'])
 										);
 	$_SESSION['Transfer']->StockLocationTo = $_POST['StockLocationTo'];
 	$Result = DB_query("SELECT description,
@@ -257,8 +257,8 @@ if(isset($_POST['EnterTransfer']) ) {
 /*All inputs must be sensible so make the stock movement records and update the locations stocks */
 
 		$TransferNumber = GetNextTransNo(16);
-		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
-		$SQLTransferDate = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
+		$PeriodNo = GetPeriod(date($_SESSION['DefaultDateFormat']));
+		$SQLTransferDate = FormatDateForSQL(date($_SESSION['DefaultDateFormat']));
 
 		DB_Txn_Begin();
 

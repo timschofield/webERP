@@ -17,7 +17,7 @@ if (isset($_POST['submit'])) {
 		$SQL = "SELECT pcexpenses.codeexpense,";
 
 		// Creation of periods SQL query
-		$PeriodToday=GetPeriod(Date($_SESSION['DefaultDateFormat']));
+		$PeriodToday=GetPeriod(date($_SESSION['DefaultDateFormat']));
 		$SQLPeriods = "SELECT periodno,
 						lastdate_in_period
 				FROM periods
@@ -162,7 +162,7 @@ if (isset($_POST['submit'])) {
 			// Redirect output to a client’s web browser (Excel2007)
 			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 
-			$File = 'PCExpensesAnalysis-' . Date('Y-m-d'). '.' . $_POST['Format'];
+			$File = 'PCExpensesAnalysis-' . date('Y-m-d'). '.' . $_POST['Format'];
 
 			header('Content-Disposition: attachment;filename="' . $File . '"');
 			/// @todo review caching headers

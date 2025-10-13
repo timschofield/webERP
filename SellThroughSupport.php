@@ -344,11 +344,11 @@ if (isset($SupplierID)) { //not selecting a supplier
 		$_POST['RebatePercent'] = 0;
 	}
 	if (!isset($_POST['EffectiveFrom'])) {
-		$_POST['EffectiveFrom'] = Date($_SESSION['DefaultDateFormat']);
+		$_POST['EffectiveFrom'] = date($_SESSION['DefaultDateFormat']);
 	}
 	if (!isset($_POST['EffectiveTo'])) {
 		/* Default EffectiveTo to the end of the month */
-		$_POST['EffectiveTo'] = Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,Date('m')+1,0,Date('y')));
+		$_POST['EffectiveTo'] = date($_SESSION['DefaultDateFormat'], mktime(0,0,0,date('m')+1,0,date('y')));
 	}
 	if (!isset($_POST['DebtorNo'])){
 		$_POST['DebtorNo']='';

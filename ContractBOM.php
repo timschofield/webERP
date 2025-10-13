@@ -23,7 +23,7 @@ $BookMark = 'AddToContract';
 include('includes/header.php');
 
 if (isset($_POST['UpdateLines']) OR isset($_POST['BackToHeader'])) {
-	if($_SESSION['Contract'.$identifier]->Status!=2){ //dont do anything if the customer has committed to the contract
+	if ($_SESSION['Contract'.$identifier]->Status!= 2) { //dont do anything if the customer has committed to the contract
 		foreach ($_SESSION['Contract'.$identifier]->ContractBOM as $ContractComponent) {
 			if (filter_number_format($_POST['Qty'.$ContractComponent->ComponentID])==0){
 				//this is the same as deleting the line - so delete it
@@ -60,10 +60,10 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 						stockmaster.units
 					FROM stockmaster INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
-					WHERE stockmaster.mbflag!='D'
-					AND stockmaster.mbflag!='A'
-					AND stockmaster.mbflag!='K'
-					and stockmaster.discontinued!=1
+					WHERE stockmaster.mbflag!= 'D'
+					AND stockmaster.mbflag!= 'A'
+					AND stockmaster.mbflag!= 'K'
+					and stockmaster.discontinued!= 1
 					AND stockmaster.description " . LIKE . " '$SearchString'
 					ORDER BY stockmaster.stockid";
 		} else {
@@ -72,10 +72,10 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 						stockmaster.units
 					FROM stockmaster INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
-					WHERE stockmaster.mbflag!='D'
-					AND stockmaster.mbflag!='A'
-					AND stockmaster.mbflag!='K'
-					and stockmaster.discontinued!=1
+					WHERE stockmaster.mbflag!= 'D'
+					AND stockmaster.mbflag!= 'A'
+					AND stockmaster.mbflag!= 'K'
+					and stockmaster.discontinued!= 1
 					AND stockmaster.description " . LIKE . " '$SearchString'
 					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
 					ORDER BY stockmaster.stockid";
@@ -91,10 +91,10 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 						stockmaster.units
 					FROM stockmaster INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
-					WHERE stockmaster.mbflag!='D'
-					AND stockmaster.mbflag!='A'
-					AND stockmaster.mbflag!='K'
-					AND stockmaster.discontinued!=1
+					WHERE stockmaster.mbflag!= 'D'
+					AND stockmaster.mbflag!= 'A'
+					AND stockmaster.mbflag!= 'K'
+					AND stockmaster.discontinued!= 1
 					AND stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
 					ORDER BY stockmaster.stockid";
 		} else {
@@ -103,10 +103,10 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 						stockmaster.units
 					FROM stockmaster INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
-					WHERE stockmaster.mbflag!='D'
-					AND stockmaster.mbflag!='A'
-					AND stockmaster.mbflag!='K'
-					AND stockmaster.discontinued!=1
+					WHERE stockmaster.mbflag!= 'D'
+					AND stockmaster.mbflag!= 'A'
+					AND stockmaster.mbflag!= 'K'
+					AND stockmaster.discontinued!= 1
 					AND stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
 					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
 					ORDER BY stockmaster.stockid";
@@ -119,10 +119,10 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 						stockmaster.units
 					FROM stockmaster INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
-					WHERE stockmaster.mbflag!='D'
-					AND stockmaster.mbflag!='A'
-					AND stockmaster.mbflag!='K'
-					AND stockmaster.discontinued!=1
+					WHERE stockmaster.mbflag!= 'D'
+					AND stockmaster.mbflag!= 'A'
+					AND stockmaster.mbflag!= 'K'
+					AND stockmaster.discontinued!= 1
 					ORDER BY stockmaster.stockid";
 		} else {
 			$SQL = "SELECT stockmaster.stockid,
@@ -130,10 +130,10 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 						stockmaster.units
 					FROM stockmaster INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
-					WHERE stockmaster.mbflag!='D'
-					AND stockmaster.mbflag!='A'
-					AND stockmaster.mbflag!='K'
-					AND stockmaster.discontinued!=1
+					WHERE stockmaster.mbflag!= 'D'
+					AND stockmaster.mbflag!= 'A'
+					AND stockmaster.mbflag!= 'K'
+					AND stockmaster.discontinued!= 1
 					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
 					ORDER BY stockmaster.stockid";
 		}
@@ -155,7 +155,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 
 
 if(isset($_GET['Delete'])){
-	if($_SESSION['Contract'.$identifier]->Status!=2){
+	if ($_SESSION['Contract'.$identifier]->Status!= 2) {
 		$_SESSION['Contract'.$identifier]->Remove_ContractComponent($_GET['Delete']);
 	} else {
 		prnMsg( __('The contract BOM cannot be altered because the customer has already placed the order'),'warn');
@@ -166,7 +166,7 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 	for ($i=0;$i < $_POST['CountOfItems'];$i++) {
 		$AlreadyOnThisBOM = 0;
 		if (filter_number_format($_POST['Qty'.$i])>0){
-			if (count($_SESSION['Contract'.$identifier]->ContractBOM)!=0){
+			if (count($_SESSION['Contract'.$identifier]->ContractBOM)!= 0){
 
 				foreach ($_SESSION['Contract'.$identifier]->ContractBOM AS $Component) {
 
@@ -179,7 +179,7 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 				} /* end of the foreach loop to look for preexisting items of the same code */
 			}
 
-			if ($AlreadyOnThisBOM!=1){
+			if ($AlreadyOnThisBOM!= 1){
 
 				$SQL = "SELECT stockmaster.description,
 								stockmaster.stockid,
