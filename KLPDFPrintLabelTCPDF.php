@@ -270,7 +270,7 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 		$CoreFileName = $CoreFileName . "-" . $_POST['StockCategory'];
 	}
 	
-	$FileName = $CoreFileName . '-' . Date('Y-m-d-H-i-s') . '.pdf';
+	$FileName = $CoreFileName . '-' . date('Y-m-d-H-i-s') . '.pdf';
 
 	$BarcodeStyle = array(
 			'position' => '',

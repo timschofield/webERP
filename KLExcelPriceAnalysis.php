@@ -124,10 +124,10 @@ function submit($ListCategories, $DaysTopSales) {
 			// Redirect output to a client's web browser
 			if ($_POST['Format'] == 'xlsx') {
 				header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-				$File = 'KL-PriceAnalysis-' . Date('Y-m-d'). '.xlsx';
+				$File = 'KL-PriceAnalysis-' . date('Y-m-d'). '.xlsx';
 			} else if ($_POST['Format'] == 'ods') {
 				header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
-				$File = 'KL-PriceAnalysis-' . Date('Y-m-d'). '.ods';
+				$File = 'KL-PriceAnalysis-' . date('Y-m-d'). '.ods';
 			}
 			header('Content-Disposition: attachment;filename="' . $File . '"');
 			header('Cache-Control: max-age=0');

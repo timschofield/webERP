@@ -1004,7 +1004,7 @@ function SetReorderLevel($Reason, $StockID, $loccode, $OldRL, $NewRL, $UpdateDB)
 						oldrl,
 						newrl)
 					VALUES 
-						('". Date('Y-m-d H-i-s') ."',
+						('". date('Y-m-d H-i-s') ."',
 						'". $Reason ."',
 						'". $loccode ."',
 						'". $StockID ."',

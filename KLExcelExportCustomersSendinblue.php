@@ -28,11 +28,11 @@ if (!isset($_POST['FromDate'])){
 		$MyRow = DB_fetch_array($Result);
 		$_POST['FromDate'] = ConvertSQLDate($MyRow['orddate']);
 	}else{
-		$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat']);
+		$_POST['FromDate'] = date($_SESSION['DefaultDateFormat']);
 	}
 }
 if (!isset($_POST['ToDate'])){
-	$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
+	$_POST['ToDate'] = date($_SESSION['DefaultDateFormat']);
 }
 if (!isset($_POST['Format'])) {
     $_POST['Format'] = 'xlsx';
@@ -134,7 +134,7 @@ function submit($CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 				$SpreadSheet->getActiveSheet()->setCellValue('D'.$i, $CountriesForRetail[$MyRow['country']]);
 				$SpreadSheet->getActiveSheet()->setCellValue('E'.$i, $MyRow['sex']);
 				
-				if (($MyRow['date_of_birth'] != '1000-01-01') AND ($MyRow['date_of_birth'] < Date('Y-m-d'))){
+				if (($MyRow['date_of_birth'] != '1000-01-01') AND ($MyRow['date_of_birth'] < date('Y-m-d'))){
 					$SpreadSheet->getActiveSheet()->setCellValue('F'.$i, $MyRow['date_of_birth']);
 				}
 				
@@ -176,10 +176,10 @@ function submit($CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 			// Redirect output to a client's web browser
 			if ($_POST['Format'] == 'xlsx') {
 				header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-				$File = 'KL-RetailCustomers-' . Date('Y-m-d'). '.xlsx';
+				$File = 'KL-RetailCustomers-' . date('Y-m-d'). '.xlsx';
 			} else if ($_POST['Format'] == 'ods') {
 				header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
-				$File = 'KL-RetailCustomers-' . Date('Y-m-d'). '.ods';
+				$File = 'KL-RetailCustomers-' . date('Y-m-d'). '.ods';
 			}
 			header('Content-Disposition: attachment;filename="' . $File . '"');
 			header('Cache-Control: max-age=0');

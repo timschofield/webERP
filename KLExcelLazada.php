@@ -69,7 +69,7 @@ function submit($TypeOfShop) {
 
 		$NameProductPrefix = $Brand . ' ';
 			
-		$Now = Date('Y-m-d H-i-s');
+		$Now = date('Y-m-d H-i-s');
 		
 		$SQL = "SELECT stockmaster.stockid,
 						stockmaster.categoryid,
@@ -294,10 +294,10 @@ function submit($TypeOfShop) {
 			// Redirect output to a client's web browser 
 			if ($_POST['Format'] == 'xlsx') {
 				header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-				$File ='LAZADA-' .  $NameOfShop . '-' . Date('Y-m-d-H-i-s'). '.xlsx';
+				$File ='LAZADA-' .  $NameOfShop . '-' . date('Y-m-d-H-i-s'). '.xlsx';
 			} else if ($_POST['Format'] == 'ods') {
 				header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
-				$File ='LAZADA-' .  $NameOfShop . '-' . Date('Y-m-d-H-i-s'). '.ods';
+				$File ='LAZADA-' .  $NameOfShop . '-' . date('Y-m-d-H-i-s'). '.ods';
 			}
 			header('Content-Disposition: attachment;filename="' . $File . '"');
 			header('Cache-Control: max-age=0');

@@ -38,7 +38,7 @@ function submit($ListCategories, $Location) {
 	//first off validate inputs sensible
 
 	if ($InputError == 0){
-		$Now = Date('Y-m-d H-i-s');
+		$Now = date('Y-m-d H-i-s');
 
 		$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
@@ -172,10 +172,10 @@ function submit($ListCategories, $Location) {
 			// Redirect output based on format
 			if ($_POST['Format'] == 'xlsx') {
 				header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-				$File ='Inventory-' .  $Location . '-' . Date('Y-m-d-H-i-s'). '.xlsx';
+				$File ='Inventory-' .  $Location . '-' . date('Y-m-d-H-i-s'). '.xlsx';
 			} else {
 				header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
-				$File ='Inventory-' .  $Location . '-' . Date('Y-m-d-H-i-s'). '.ods';
+				$File ='Inventory-' .  $Location . '-' . date('Y-m-d-H-i-s'). '.ods';
 			}
 			header('Content-Disposition: attachment;filename="' . $File . '"');
 			// If you're serving to IE 9, then the following may be needed

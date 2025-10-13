@@ -207,7 +207,7 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 		$EmailText .= "SQL = " . $SQL . "\n";
 	}else{
 		// Let's do the calculation for the available items for transfer and load them into TableResult array
-		$Now = Date('Y-m-d H-i-s');
+		$Now = date('Y-m-d H-i-s');
 		$EmailText .= "Models candidates to be included in transfer: " . DB_num_rows($Result) . "\n";
 		$NumModelsInThisStockDispatch = 0;
 		$NumPcsInThisStockDispatch = 0;
@@ -436,7 +436,7 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 													$ToLocCode, $ToLocation, $CategoryDescription, $Strategy);
 				}
 				/*Print out the grand totals */
-				$Subject = 'Transfer-' . Date('Y-m-d') . '-' . $FromLocCode . '-' . $ToLocCode;
+				$Subject = 'Transfer-' . date('Y-m-d') . '-' . $FromLocCode . '-' . $ToLocCode;
 				$FileName = $Subject . '.pdf';
 				$PathFileName = $_SESSION['reports_dir'] . '/' . $FileName;
 				$pdf->Output($PathFileName, 'F');
@@ -531,7 +531,7 @@ function PrintHeaderSmartStockDispatch(&$pdf, &$YPos, &$PageNumber, $Page_Height
 	$pdf->setFont('', '');
 
 	$pdf->addTextWrap($Page_Width - $Right_Margin - 150, $YPos, 160, $FontSize, __('Printed') . ': ' .
-		 Date($_SESSION['DefaultDateFormat']) . '   ' . __('Page') . ' ' . $PageNumber, 'left');
+		 date($_SESSION['DefaultDateFormat']) . '   ' . __('Page') . ' ' . $PageNumber, 'left');
 	$YPos -= $LineHeight;
 	$pdf->addTextWrap($Left_Margin, $YPos, 50, $FontSize, __('Transfer'));
 	$pdf->addTextWrap(95, $YPos, 50, $FontSize, $Trf_ID);

@@ -234,11 +234,11 @@ function submit($TypeOfShop, $TypeOfFile) {
 			$SpreadSheet->setActiveSheetIndex(0);
 
 			if ($TypeOfFile == "FullUpdate"){
-				$File = 'AC-FULL-' .  $NameOfShop . '-' . Date('Y-m-d-H-i-s');
+				$File = 'AC-FULL-' .  $NameOfShop . '-' . date('Y-m-d-H-i-s');
 			} elseif ($TypeOfFile == "QOHOnly"){
-				$File = 'AC-QOH-' .  $NameOfShop . '-' . Date('Y-m-d-H-i-s');
+				$File = 'AC-QOH-' .  $NameOfShop . '-' . date('Y-m-d-H-i-s');
 			} elseif ($TypeOfFile == "PricesOnly"){
-				$File = 'AC-PRICE-' .  $NameOfShop . '-' . Date('Y-m-d-H-i-s');
+				$File = 'AC-PRICE-' .  $NameOfShop . '-' . date('Y-m-d-H-i-s');
 			}
 
 			// Redirect output to a client's web browser

@@ -14,10 +14,10 @@ if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate'])
 // Sets default date range for current month
 if (!isset($_POST['FromDate'])){
 	// RICARD KL Modification. From date should be today as default
-	$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat']);
+	$_POST['FromDate'] = date($_SESSION['DefaultDateFormat']);
 }
 if (!isset($_POST['ToDate'])){
-	$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
+	$_POST['ToDate'] = date($_SESSION['DefaultDateFormat']);
 }
 
 if (isset($_POST['PartNumber'])){

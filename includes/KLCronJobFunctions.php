@@ -325,7 +325,7 @@ function KL_DailyOptimizationDatabase($TablesPerDay, $ShowMessages, $EmailText =
 function PurgeKLTable($TableName,$DateField, $ShowMessages, $EmailText){
 	if ($_SESSION['MonthsAuditTrail'] > 0){
 		 $SQL = "DELETE FROM " . $TableName . "
-				WHERE  " . $DateField . " <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'
+				WHERE  " . $DateField . " <= '" . date('Y-m-d', mktime(0,0,0, date('m')-$_SESSION['MonthsAuditTrail'])) . "'
 					AND " . $DateField .  " != '1000-01-01'";
 		$ErrMsg ='Could not purge table ' . $TableName . ' because';
 		DB_query($SQL,$ErrMsg);
@@ -699,7 +699,7 @@ function CleanListToPrint($List){
 **************************************************************************************************************/
 function PurgeAuditTrailTable($ShowMessages, $EmailText){
 	$SQL = "DELETE FROM audittrail
-			WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0, 0, 0, Date('m') - $_SESSION['MonthsAuditTrail'])) . "'";
+			WHERE  transactiondate <= '" . date('Y-m-d', mktime(0, 0, 0, date('m') - $_SESSION['MonthsAuditTrail'])) . "'";
 	DB_query($SQL);
 	$Text = "Purge Audit Trail table in webERP";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
@@ -717,7 +717,7 @@ function PurgeAuditTrailTable($ShowMessages, $EmailText){
 **************************************************************************************************************/
 function PurgeAuditScriptsTable($ShowMessages, $EmailText){
 	$SQL = "DELETE FROM auditscripts
-			WHERE  executiondate <= '" . Date('Y-m-d', mktime(0, 0, 0, Date('m') - $_SESSION['MonthsAuditTrail'])) . "'";
+			WHERE  executiondate <= '" . date('Y-m-d', mktime(0, 0, 0, date('m') - $_SESSION['MonthsAuditTrail'])) . "'";
 	DB_query($SQL);
 	$Text = "Purge Audit Script table";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);

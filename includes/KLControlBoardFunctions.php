@@ -3708,8 +3708,8 @@ function PettyCashToBeAuthorized($AuthorizationType){
 
 function RegularTransfersToShopNotReceived($PreparationTime, $LimitTime, $RootPath){
 
-	$StartDate = Date('Y-m-d');
-	$StartTime = Date('H:i:s');
+	$StartDate = date('Y-m-d');
+	$StartTime = date('H:i:s');
 
 	if ($StartTime >= $LimitTime){
 		$SQL = "SELECT DISTINCT loctransfers.reference,
@@ -3728,7 +3728,7 @@ function RegularTransfersToShopNotReceived($PreparationTime, $LimitTime, $RootPa
 		$Result = DB_query($SQL);
 
 		if (DB_num_rows($Result) != 0){
-			$TableTitleText = 'Transfers to Shops prepared before ' . Date($_SESSION['DefaultDateFormat']) . 
+			$TableTitleText = 'Transfers to Shops prepared before ' . date($_SESSION['DefaultDateFormat']) . 
 																		' at ' . $PreparationTime . ' but not received by SPG before ' . $LimitTime;
 			ShowTableTitle($TableTitleText);
 			echo '<div>';
