@@ -3571,22 +3571,22 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = __('This function takes a stock item code and returns an array of key/value pairs.') .
+$Description = __('This function takes an order number and returns an array of key/value pairs.') .
 	__('The keys represent the database field names, and the values are the value of that field.');
-$Parameter[0]['name'] = __('Stock ID');
-$Parameter[0]['description'] = __('The StockID code to identify the item in the database.');
+$Parameter[0]['name'] = __('Order No');
+$Parameter[0]['description'] = __('The Order No to identify the order in the database.');
 $Parameter[1]['name'] = __('User name');
 $Parameter[1]['description'] = __('A valid weberp username. This user should have security access to this data.');
 $Parameter[2]['name'] = __('User password');
 $Parameter[2]['description'] = __('The weberp password associated with this user name. ');
-$ReturnValue = __('If successful this function returns a set of key/value pairs containing the details of this stock item. ')
-	. __('The key will be identical with field name from the stockmaster table. All fields will be in the set regardless of whether the value was set.') . '<p>'
+$ReturnValue = __('If successful this function returns a set of key/value pairs containing the details of this order. ')
+	. __('The key will be identical with field name from the salesorders table. All fields will be in the set regardless of whether the value was set.') . '<p>'
 	. __('Otherwise an array of error codes is returned. ');
 
-$GetStockItem_sig = array(
+$GetSalesOrderHeaderDetail_sig = array(
 	array(Value::$xmlrpcStruct, Value::$xmlrpcString),
 	array(Value::$xmlrpcStruct, Value::$xmlrpcString, Value::$xmlrpcString, Value::$xmlrpcString));
-$GetStockItem_doc = apiBuildDocHTML($Description, $Parameter, $ReturnValue);
+$GetSalesOrderHeaderDetail_doc = apiBuildDocHTML($Description, $Parameter, $ReturnValue);
 
 function xmlrpc_GetSalesOrderHeaderDetail($request)
 {
