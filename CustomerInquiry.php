@@ -88,8 +88,7 @@ $SQL = "SELECT debtorsmaster.name,
 			THEN debtortrans.balance else 0 END
 		else
 			case WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate),paymentterms.dayinfollowingmonth)) >= " . $_SESSION['PastDueDays1'] . "
-			THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount
-			- debtortrans.alloc else 0 END
+			THEN debtortrans.balance ELSE 0 END
 		END) as overdue1,
 		SUM(case WHEN (paymentterms.daysbeforedue > 0) THEN
 			case WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue
