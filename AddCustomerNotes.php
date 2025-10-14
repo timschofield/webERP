@@ -9,16 +9,18 @@ include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.php');
 
-if (isset($_POST['NoteDate'])){$_POST['NoteDate'] = ConvertSQLDate($_POST['NoteDate']);}
+if (isset($_POST['NoteDate'])) {
+	$_POST['NoteDate'] = ConvertSQLDate($_POST['NoteDate']);
+}
 
-if (isset($_GET['Id'])){
+if (isset($_GET['Id'])) {
 	$Id = (int)$_GET['Id'];
-} else if (isset($_POST['Id'])){
+} elseif (isset($_POST['Id'])) {
 	$Id = (int)$_POST['Id'];
 }
-if (isset($_POST['DebtorNo'])){
+if (isset($_POST['DebtorNo'])) {
 	$DebtorNo = $_POST['DebtorNo'];
-} elseif (isset($_GET['DebtorNo'])){
+} elseif (isset($_GET['DebtorNo'])) {
 	$DebtorNo = $_GET['DebtorNo'];
 }
 
@@ -38,23 +40,22 @@ if ( isset($_POST['submit']) ) {
 	} elseif (mb_strlen($_POST['Note']) >200) {
 		$InputError = 1;
 		prnMsg( __('The contact\'s notes must be two hundred characters or less long'), 'error');
-	} elseif( trim($_POST['Note']) == '' ) {
+	} elseif (trim($_POST['Note']) == '') {
 		$InputError = 1;
 		prnMsg( __('The contact\'s notes may not be empty'), 'error');
 	}
 
-	if (isset($Id) and $InputError !=1) {
+	if (isset($Id) and $InputError != 1) {
 
-		$SQL = "UPDATE custnotes SET note='" . $_POST['Note'] . "',
-									date='" . FormatDateForSQL($_POST['NoteDate']) . "',
-									href='" . $_POST['Href'] . "',
-									priority='" . $_POST['Priority'] . "'
+		$SQL = "UPDATE custnotes SET note = '" . $_POST['Note'] . "',
+									date = '" . FormatDateForSQL($_POST['NoteDate']) . "',
+									href = '" . $_POST['Href'] . "',
+									priority = '" . $_POST['Priority'] . "'
 				WHERE debtorno ='".$DebtorNo."'
-				AND noteid='".$Id."'";
+				and noteid = '".$Id."'";
 		$Msg = __('Customer Notes') . ' ' . $DebtorNo  . ' ' . __('has been updated');
-	} elseif ($InputError !=1) {
-
-		$SQL = "INSERT INTO custnotes (debtorno,
+	} elseif ($InputError != 1) {
+	$SQL = "INSERT INTO custnotes (debtorno,
 										href,
 										note,
 										date,
@@ -65,10 +66,10 @@ if ( isset($_POST['submit']) ) {
 						'" . FormatDateForSQL($_POST['NoteDate']) . "',
 						'" . $_POST['Priority'] . "')";
 		$Msg = __('The contact notes record has been added');
-	}
+}
 
-	if ($InputError !=1) {
-		$Result = DB_query($SQL);
+	if ($InputError != 1) {
+	$Result = DB_query($SQL);
 				//echo '<br />' . $SQL;
 
 		echo '<br />';
@@ -79,15 +80,15 @@ if ( isset($_POST['submit']) ) {
 		unset($_POST['NoteDate']);
 		unset($_POST['Href']);
 		unset($_POST['Priority']);
-	}
+}
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
-// PREVENT DELETES IF DEPENDENT RECORDS IN 'SalesOrders'
+// PREVENT DELETES if DEPENDENT RECORDS IN 'SalesOrders'
 
-	$SQL="DELETE FROM custnotes
-			WHERE noteid='".$Id."'
-			AND debtorno='".$DebtorNo."'";
+	$SQL = "DELETE FROM custnotes
+			WHERE noteid = '".$Id."'
+			and debtorno = '".$DebtorNo."'";
 	$Result = DB_query($SQL);
 
 	echo '<br />';
@@ -97,8 +98,8 @@ if ( isset($_POST['submit']) ) {
 }
 
 if (!isset($Id)) {
-	$SQLname="SELECT * FROM debtorsmaster
-				WHERE debtorno='".$DebtorNo."'";
+	$SQLname = "SELECT * FROM debtorsmaster
+				WHERE debtorno = '".$DebtorNo."'";
 	$Result = DB_query($SQLname);
 	$Row = DB_fetch_array($Result);
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . __('Notes for Customer').': <b>' .$Row['name'] . '</b></p>';
@@ -110,7 +111,7 @@ if (!isset($Id)) {
 					date,
 					priority
 				FROM custnotes
-				WHERE debtorno='".$DebtorNo."'
+				WHERE debtorno = '".$DebtorNo."'
 				ORDER BY date DESC";
 	$Result = DB_query($SQL);
 
@@ -120,7 +121,7 @@ if (!isset($Id)) {
 			<th>' . __('Note') . '</th>
 			<th>' . __('WWW') . '</th>
 			<th>' . __('Priority') . '</th>
-			<th colspan="2"></th>
+			<th colspan = "2"></th>
 		</tr>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -134,7 +135,7 @@ if (!isset($Id)) {
 			</tr>';
 
 	}
-	//END WHILE LIST LOOP
+	//END while LIST LOOP
 	echo '</table>';
 }
 if (isset($Id)) {
@@ -145,8 +146,8 @@ if (isset($Id)) {
 
 if (!isset($_GET['delete'])) {
 
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?DebtorNo=' . $DebtorNo . '">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?DebtorNo =' . $DebtorNo . '">';
+	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 	if (isset($Id)) {
 		//editing an existing
@@ -158,8 +159,8 @@ if (!isset($_GET['delete'])) {
 						date,
 						priority
 					FROM custnotes
-					WHERE noteid='".$Id."'
-						AND debtorno='".$DebtorNo."'";
+					WHERE noteid = '".$Id."'
+						and debtorno = '".$DebtorNo."'";
 
 		$Result = DB_query($SQL);
 
@@ -171,13 +172,13 @@ if (!isset($_GET['delete'])) {
 		$_POST['NoteDate']  = $MyRow['date'];
 		$_POST['Priority']  = $MyRow['priority'];
 		$_POST['debtorno']  = $MyRow['debtorno'];
-		echo '<input type="hidden" name="Id" value="'. $Id .'" />';
-		echo '<input type="hidden" name="Con_ID" value="' . $_POST['Noteid'] . '" />';
-		echo '<input type="hidden" name="DebtorNo" value="' . $_POST['debtorno'] . '" />';
+		echo '<input type = "hidden" name="Id" value = "'. $Id .'" />';
+		echo '<input type = "hidden" name="Con_ID" value = "' . $_POST['Noteid'] . '" />';
+		echo '<input type = "hidden" name="DebtorNo" value = "' . $_POST['debtorno'] . '" />';
 		echo '<fieldset>
 				<legend>', __('Edit existing customer note'), '</legend>
 				<field>
-					<label for="Noteid">' .  __('Note ID').':</label>
+					<label for = "Noteid">' .  __('Note ID').':</label>
 					<fieldtext>' . $_POST['Noteid'] . '</fieldtext>
 				</field>';
 	} else {
@@ -186,52 +187,52 @@ if (!isset($_GET['delete'])) {
 	}
 
 	echo '<field>
-			<label for="Note">' . __('Contact Note'). '</label>';
+			<label for = "Note">' . __('Contact Note'). '</label>';
 	if (isset($_POST['Note'])) {
-		echo '<textarea name="Note" autofocus="autofocus" required="required" rows="3" cols="32">' .$_POST['Note'] . '</textarea>
+		echo '<textarea name="Note" autofocus = "autofocus" required = "required" rows = "3" cols = "32">' .$_POST['Note'] . '</textarea>
 			<fieldhelp>', __('Write the customer note here'), '</fieldhelp>
 		</field>';
 	} else {
-		echo '<textarea name="Note" autofocus="autofocus" required="required" rows="3" cols="32"></textarea>
+		echo '<textarea name="Note" autofocus = "autofocus" required = "required" rows = "3" cols = "32"></textarea>
 			<fieldhelp>', __('Write the customer note here'), '</fieldhelp>
 		</field>';
 	}
 	echo '<field>
-			<label for="Href">' .  __('WWW') . '</label>';
+			<label for = "Href">' .  __('WWW') . '</label>';
 	if (isset($_POST['Href'])) {
-		echo '<input type="url" name="Href" value="'.$_POST['Href'].'" size="35" maxlength="100" />
+		echo '<input type = "url" name="Href" value = "'.$_POST['Href'].'" size = "35" maxlength = "100" />
 			<fieldhelp>', __('Any website associated with this note'), '</fieldhelp>
 		</field>';
 	} else {
-		echo '<input type="url" name="Href" size="35" maxlength="100" />
+		echo '<input type = "url" name="Href" size = "35" maxlength = "100" />
 			<fieldhelp>', __('Any website associated with this note'), '</fieldhelp>
 		</field>';
 	}
 	echo '<field>
-			<label for="NoteDate">' . __('Date') . '</label>';
+			<label for = "NoteDate">' . __('Date') . '</label>';
 	if (isset($_POST['NoteDate'])) {
-		echo '<input type="date" required name="NoteDate"  value="' . FormatDateForSQL($_POST['NoteDate']) . '" size="11" maxlength="10" />
+		echo '<input type = "date" required name="NoteDate"  value = "' . FormatDateForSQL($_POST['NoteDate']) . '" size = "11" maxlength = "10" />
 			<fieldhelp>', __('The date of this note'), '</fieldhelp>
 		</field>';
 	} else {
-		echo '<input type="date" required name="NoteDate" value="' . date('Y-m-d') . '" size="11" maxlength="10" />
+		echo '<input type = "date" required name="NoteDate" value = "' . date('Y-m-d') . '" size = "11" maxlength = "10" />
 			<fieldhelp>', __('The date of this note'), '</fieldhelp>
 		</field>';
 	}
 	echo '<field>
-			<label for="Priority">' .  __('Priority'). '</label>';
+			<label for = "Priority">' .  __('Priority'). '</label>';
 	if (isset($_POST['Priority'])) {
-		echo '<input type="text" class="number" required="required" name="Priority" class="number" value="' . $_POST['Priority']. '" size="1" maxlength="3" />
+		echo '<input type = "text" class="number" required = "required" name="Priority" class="number" value = "' . $_POST['Priority']. '" size = "1" maxlength = "3" />
 			<fieldhelp>', __('The priority level for this note, between 1 and 9'), '</fieldhelp>
 		</field>';
 	} else {
-		echo '<input type="text" class="number" required="required"  name="Priority" value="1"  size="1" maxlength="3"/>
+		echo '<input type = "text" class="number" required = "required"  name="Priority" value = "1"  size = "1" maxlength = "3"/>
 			<fieldhelp>', __('The priority level for this note, between 1 and 9'), '</fieldhelp>
 		</field>';
 	}
 	echo '</fieldset>';
 	echo '<div class="centre">
-			<input type="submit" name="submit" value="'.__('Enter Information').'" />
+			<input type = "submit" name="submit" value = "'.__('Enter Information').'" />
 		</div>
 	</form>';
 

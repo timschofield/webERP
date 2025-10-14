@@ -696,7 +696,7 @@ function SetAutoIncStart($Table, $Field, $StartNumber) {
 	$GetLargestResult = DB_query($GetLargestSQL);
 	$LargestRow = DB_fetch_array($GetLargestResult);
 	if ($LargestRow['highest'] > $StartNumber) {
-		OutputResult(__('Cannot update the auto increment field in table') . ' ' . $Table . '<br />' . $SQL, 'error');
+		OutputResult(__('You are trying to set the auto increment number below the current number'), 'warn');
 	} else {
 		$Response = executeSQL("ALTER TABLE " . $Table . " AUTO_INCREMENT = " . $StartNumber, false);
 		OutputResult(__('The auto increment field in table') . ' ' . $Table . __('has been updated'), 'success');

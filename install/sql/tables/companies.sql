@@ -27,4 +27,4 @@ CREATE TABLE `companies` (
   `gllink_stock` tinyint(1) DEFAULT '1',
   `freightact` varchar(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`coycode`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

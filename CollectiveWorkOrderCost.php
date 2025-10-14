@@ -27,9 +27,9 @@ if (isset($_POST['Submit'])) {//users have selected the WO to calculate and subm
 		foreach ($_POST as $Key=>$Value) {
 			if (substr($Key,0,3) == 'WO_'){
 				if ($i>0) $WOSelected .=",";
-				if($Value == 'on'){
-					$WOSelected .= substr($Key,3);
-				}
+				if ($Value == 'on') {
+	$WOSelected .= substr($Key,3);
+}
 				$i++;
 			}
 		}
@@ -47,7 +47,7 @@ if (isset($_POST['Submit'])) {//users have selected the WO to calculate and subm
 				FROM stockmoves INNER JOIN stockmaster
 				ON stockmoves.stockid=stockmaster.stockid
 				WHERE stockmoves.type=28
-				AND reference IN (" . $WOSelected . ")
+				and reference IN (" . $WOSelected . ")
 				ORDER BY reference";
 			$ErrMsg = __('Failed to retrieve wo cost data');
 		       	$Result = DB_query($SQL, $ErrMsg);
@@ -121,7 +121,7 @@ if (isset($_POST['ResetPart'])){
 	 unset($SelectedStockItem);
 }
 
-if (isset($SelectedWO) AND $SelectedWO!='') {
+if (isset($SelectedWO) and $SelectedWO!= '') {
 	$SelectedWO = trim($SelectedWO);
 	if (!is_numeric($SelectedWO)){
 		  prnMsg(__('The work order number entered MUST be numeric'),'warn');
@@ -135,31 +135,30 @@ if (isset($SelectedWO) AND $SelectedWO!='') {
 
 if (isset($_POST['SearchParts'])){
 
-	if ($_POST['Keywords'] AND $_POST['StockCode']) {
-		echo __('Stock description keywords have been used in preference to the Stock code extract entered');
-	}
+	if ($_POST['Keywords'] and $_POST['StockCode']) {
+	echo __('Stock description keywords have been used in preference to the Stock code extract entered');
+}
 	if ($_POST['Keywords']) {
-		//insert wildcard characters in spaces
+	//insert wildcard characters in spaces
 		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 
 		$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
 						stockmaster.decimalplaces,
-						SUM(locstock.quantity) AS qoh,
+						SUM(locstock.quantity) as qoh,
 						stockmaster.units
 					FROM stockmaster,
 						locstock
 					WHERE stockmaster.stockid=locstock.stockid
-					AND stockmaster.description " . LIKE . " '" . $SearchString . "'
-					AND stockmaster.categoryid='" . $_POST['StockCat']. "'
-					AND stockmaster.mbflag='M'
+					and stockmaster.description " . LIKE . " '" . $SearchString . "'
+					and stockmaster.categoryid='" . $_POST['StockCat']. "'
+					and stockmaster.mbflag='M'
 					GROUP BY stockmaster.stockid,
 						stockmaster.description,
 						stockmaster.decimalplaces,
 						stockmaster.units
 					ORDER BY stockmaster.stockid";
-
-	 } elseif (isset($_POST['StockCode'])){
+} elseif (isset($_POST['StockCode'])){
 		$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
 						stockmaster.decimalplaces,
@@ -168,16 +167,16 @@ if (isset($_POST['SearchParts'])){
 					FROM stockmaster,
 						locstock
 					WHERE stockmaster.stockid=locstock.stockid
-					AND stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
-					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
-					AND stockmaster.mbflag='M'
+					and stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
+					and stockmaster.categoryid='" . $_POST['StockCat'] . "'
+					and stockmaster.mbflag='M'
 					GROUP BY stockmaster.stockid,
 						stockmaster.description,
 						stockmaster.decimalplaces,
 						stockmaster.units
 					ORDER BY stockmaster.stockid";
 
-	 } elseif (!isset($_POST['StockCode']) AND !isset($_POST['Keywords'])) {
+	 } elseif (!isset($_POST['StockCode']) and !isset($_POST['Keywords'])) {
 		$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
 						stockmaster.decimalplaces,
@@ -186,8 +185,8 @@ if (isset($_POST['SearchParts'])){
 					FROM stockmaster,
 						locstock
 					WHERE stockmaster.stockid=locstock.stockid
-					AND stockmaster.categoryid='" . $_POST['StockCat'] ."'
-					AND stockmaster.mbflag='M'
+					and stockmaster.categoryid='" . $_POST['StockCat'] ."'
+					and stockmaster.mbflag='M'
 					GROUP BY stockmaster.stockid,
 						stockmaster.description,
 						stockmaster.decimalplaces,
@@ -209,7 +208,7 @@ if (!isset($StockID)) {
 
 	 /* Not appropriate really to restrict search by date since may miss older
 	 ouststanding orders
-	$OrdersAfterDate = Date('d/m/Y',Mktime(0,0,0,Date('m')-2,Date('d'),Date('Y')));
+	$OrdersAfterDate = date('d/m/Y',mktime(0,0,0,date('m')-2,date('d'),date('Y')));
 	 */
 
 	if (!isset($SelectedWO) or ($SelectedWO=='')){
@@ -225,7 +224,7 @@ if (!isset($StockID)) {
 				</field>';
 		}
 		echo '<field>
-				<label for="WO">', '<b>' . __('AND') . ' </b>' . __('Work Order number') . ':</label>
+				<label for="WO">', '<b>' . __('and') . ' </b>' . __('Work Order number') . ':</label>
 				<input type="text" name="WO" autofocus="autofocus" maxlength="8" size="9" />&nbsp;
 			</field>';
 
@@ -238,8 +237,8 @@ if (!isset($StockID)) {
 					FROM locations
 					INNER JOIN locationusers
 						ON locationusers.loccode=locations.loccode
-						AND locationusers.userid='" . $_SESSION['UserID'] . "'
-						AND locationusers.canview=1
+						and locationusers.userid='" . $_SESSION['UserID'] . "'
+						and locationusers.canview=1
 					WHERE locations.usedforwo = 1";
 
 		$ResultStkLocs = DB_query($SQL);
@@ -247,13 +246,13 @@ if (!isset($StockID)) {
 		while ($MyRow = DB_fetch_array($ResultStkLocs)) {
 			if (isset($_POST['StockLocation'])) {
 				if ($MyRow['loccode'] == $_POST['StockLocation']) {
-					echo '<option selected="selected" value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
-				} else {
+	echo '<option selected="selected" value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
+} else {
 					echo '<option value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
 				}
 			} elseif ($MyRow['loccode'] == $_SESSION['UserStockLocation']) {
-				echo '<option selected="selected" value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
-			} else {
+	echo '<option selected="selected" value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
+} else {
 				echo '<option value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
 			}
 		}
@@ -272,18 +271,18 @@ if (!isset($StockID)) {
 		}
 
 		if ($_POST['ClosedOrOpen'] == 'Closed_Only') {
-			echo '<option selected="selected" value="Closed_Only">', __('Closed Work Orders Only'), '</option>';
+	echo '<option selected="selected" value="Closed_Only">', __('Closed Work Orders Only'), '</option>';
 			echo '<option value="Open_Only">', __('Open Work Orders Only'), '</option>';
 			echo '<option value="All">', __('All'), '</option>';
-		} elseif ($_POST['ClosedOrOpen'] == 'Open_Only') {
-			echo '<option value="Closed_Only">', __('Closed Work Orders Only'), '</option>';
+} elseif ($_POST['ClosedOrOpen'] == 'Open_Only') {
+	echo '<option value="Closed_Only">', __('Closed Work Orders Only'), '</option>';
 			echo '<option selected="selected" value="Open_Only">', __('Open Work Orders Only'), '</option>';
 			echo '<option value="All">', __('All'), '</option>';
-		} elseif ($_POST['ClosedOrOpen'] == 'All') {
-			echo '<option value="Closed_Only">', __('Closed Work Orders Only'), '</option>';
+} elseif ($_POST['ClosedOrOpen'] == 'All') {
+	echo '<option value="Closed_Only">', __('Closed Work Orders Only'), '</option>';
 			echo '<option value="Open_Only">', __('Open Work Orders Only'), '</option>';
 			echo '<option selected="selected" value="All">', __('All'), '</option>';
-		} else {
+} else {
 			echo '<option value="Closed_Only">', __('Closed Work Orders Only'), '</option>';
 			echo '<option value="Open_Only">', __('Open Work Orders Only'), '</option>';
 			echo '<option selected="selected" value="All">', __('All'), '</option>';
@@ -293,10 +292,10 @@ if (!isset($StockID)) {
 			</field>';
 
 		if (!isset($_POST['DateFrom'])) {
-			$_POST['DateFrom'] = Date($_SESSION['DefaultDateFormat']);
+			$_POST['DateFrom'] = date($_SESSION['DefaultDateFormat']);
 		}
 		if (!isset($_POST['DateTo'])) {
-			$_POST['DateTo'] = Date($_SESSION['DefaultDateFormat']);
+			$_POST['DateTo'] = date($_SESSION['DefaultDateFormat']);
 		}
 
 		echo '<field>
@@ -341,7 +340,7 @@ if (!isset($StockID)) {
 		</field>';
 
 	echo '<field>
-			<label for="StockCode">', ' ', __('OR'), ' ', __('Enter extract of the Stock Code'), ':</label>
+			<label for="StockCode">', ' ', __('or'), ' ', __('Enter extract of the Stock Code'), ':</label>
 	  		<input type="text" name="StockCode" size="15" maxlength="18" />
 	  	</field>
 	  </fieldset>';
@@ -383,25 +382,25 @@ if (!isset($StockID)) {
 
 		//figure out the SQL required from the inputs available
 		if (isset($_POST['ClosedOrOpen']) and $_POST['ClosedOrOpen']=='Open_Only'){
-			$ClosedOrOpen = ' AND workorders.closed=0';
-		} elseif(isset($_POST['ClosedOrOpen']) AND $_POST['ClosedOrOpen'] == 'Closed_Only') {
-			$ClosedOrOpen = ' AND workorders.closed=1';
+			$ClosedOrOpen = ' and workorders.closed=0';
+		} elseif(isset($_POST['ClosedOrOpen']) and $_POST['ClosedOrOpen'] == 'Closed_Only') {
+			$ClosedOrOpen = ' and workorders.closed=1';
 		} else {
 			$ClosedOrOpen = '';
 		}
 		//start date and end date
 		if (!empty($_POST['DateFrom'])) {
-			$StartDateFrom = " AND workorders.startdate>='" . FormatDateForSQL($_POST['DateFrom']) . "'";
+			$StartDateFrom = " and workorders.startdate>='" . FormatDateForSQL($_POST['DateFrom']) . "'";
 		} else {
 			$StartDateFrom = "";
 		}
 		if (!empty($_POST['DateTo'])) {
-			$StartDateTo = " AND workorders.startdate<='" . FormatDateForSQL($_POST['DateTo']) . "'";
+			$StartDateTo = " and workorders.startdate<='" . FormatDateForSQL($_POST['DateTo']) . "'";
 		} else {
 			$StartDateTo = "";
 		}
 
-		if (isset($SelectedWO) AND $SelectedWO !='') {
+		if (isset($SelectedWO) and $SelectedWO != '') {
 				$SQL = "SELECT workorders.wo,
 								woitems.stockid,
 								stockmaster.description,
@@ -413,9 +412,9 @@ if (!isset($StockID)) {
 						FROM workorders
 						INNER JOIN woitems ON workorders.wo=woitems.wo
 						INNER JOIN stockmaster ON woitems.stockid=stockmaster.stockid
-						INNER JOIN locationusers ON locationusers.loccode=workorders.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
+						INNER JOIN locationusers ON locationusers.loccode=workorders.loccode and locationusers.userid='" .  $_SESSION['UserID'] . "' and locationusers.canview=1
 						WHERE 1=1 " . $ClosedOrOpen . $StartDateFrom . $StartDateTo . "
-						AND workorders.wo='". $SelectedWO ."'
+						and workorders.wo='". $SelectedWO ."'
 						ORDER BY workorders.wo,
 								woitems.stockid";
 		} else {
@@ -433,10 +432,10 @@ if (!isset($StockID)) {
 							FROM workorders
 							INNER JOIN woitems ON workorders.wo=woitems.wo
 							INNER JOIN stockmaster ON woitems.stockid=stockmaster.stockid
-							INNER JOIN locationusers ON locationusers.loccode=workorders.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
+							INNER JOIN locationusers ON locationusers.loccode=workorders.loccode and locationusers.userid='" .  $_SESSION['UserID'] . "' and locationusers.canview=1
 							WHERE 1=1 " . $ClosedOrOpen . $StartDateFrom . $StartDateTo . "
-							AND woitems.stockid='". $SelectedStockItem ."'
-							AND workorders.loccode='" . $_POST['StockLocation'] . "'
+							and woitems.stockid='". $SelectedStockItem ."'
+							and workorders.loccode='" . $_POST['StockLocation'] . "'
 							ORDER BY workorders.wo,
 								 woitems.stockid";
 				} else {
@@ -450,10 +449,10 @@ if (!isset($StockID)) {
 									workorders.startdate
 							FROM workorders
 							INNER JOIN woitems ON workorders.wo=woitems.wo
-							INNER JOIN locationusers ON locationusers.loccode=workorders.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
+							INNER JOIN locationusers ON locationusers.loccode=workorders.loccode and locationusers.userid='" .  $_SESSION['UserID'] . "' and locationusers.canview=1
 							INNER JOIN stockmaster ON woitems.stockid=stockmaster.stockid
 							WHERE  1 " . $ClosedOrOpen . $StartDateFrom . $StartDateTo ."
-							AND workorders.loccode='" . $_POST['StockLocation'] . "'
+							and workorders.loccode='" . $_POST['StockLocation'] . "'
 							ORDER BY workorders.wo,
 									 woitems.stockid";
 				}

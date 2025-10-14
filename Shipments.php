@@ -20,9 +20,9 @@ if (isset($_GET['NewShipment']) and $_GET['NewShipment']=='Yes'){
 }
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Search') .
-	'" alt="" />' . ' ' . $Title . '</p>';
+	'" alt = "" />' . ' ' . $Title . '</p>';
 
-if (!isset($_SESSION['SupplierID']) AND !isset($_SESSION['Shipment']) AND !isset($_GET['SelectedShipment'])){
+if (!isset($_SESSION['SupplierID']) and !isset($_SESSION['Shipment']) and !isset($_GET['SelectedShipment'])){
 	prnMsg( __('To set up a shipment') . ', ' . __('the supplier must first be selected from the Select Supplier page'), 'error');
 	echo '<table class="selection">
 			<tr><td class="menu_group_item">
@@ -57,22 +57,22 @@ if (isset($_GET['SelectedShipment'])){
 	$ErrMsg = __('Shipment').' '. $_GET['SelectedShipment'] . ' ' . __('cannot be retrieved because a database error occurred');
 	$GetShiptHdrResult = DB_query($ShipmentHeaderSQL, $ErrMsg);
 
-	if (DB_num_rows($GetShiptHdrResult)==0) {
+	if (DB_num_rows($GetShiptHdrResult) == 0) {
 		prnMsg( __('Unable to locate Shipment') . ' '. $_GET['SelectedShipment'] . ' ' . __('in the database'), 'error');
 		include('includes/footer.php');
 		exit();
 	}
 
-	if (DB_num_rows($GetShiptHdrResult)==1) {
+	if (DB_num_rows($GetShiptHdrResult) == 1) {
 
 		$MyRow = DB_fetch_array($GetShiptHdrResult);
 
-		if ($MyRow['closed']==1){
-			prnMsg( __('Shipment No.') .' '. $_GET['SelectedShipment'] .': '.
+		if ($MyRow['closed']==1) {
+	prnMsg( __('Shipment No.') .' '. $_GET['SelectedShipment'] .': '.
 				__('The selected shipment is already closed and no further modifications to the shipment are possible'), 'error');
 			include('includes/footer.php');
 			exit();
-		}
+}
 		$_SESSION['Shipment']->ShiptRef = $_GET['SelectedShipment'];
 		$_SESSION['Shipment']->SupplierID = $MyRow['supplierid'];
 		$_SESSION['Shipment']->SupplierName = $MyRow['suppname'];
@@ -98,14 +98,14 @@ if (isset($_GET['SelectedShipment'])){
 									stockmaster.actualcost as stdcost,
 									purchorders.intostocklocation
 							FROM purchorderdetails INNER JOIN stockmaster
-								ON purchorderdetails.itemcode=stockmaster.stockid
+								ON purchorderdetails.itemcode = stockmaster.stockid
 							INNER JOIN purchorders
-								ON purchorderdetails.orderno=purchorders.orderno
-							WHERE purchorderdetails.shiptref='" . $_GET['SelectedShipment'] . "'";
+								ON purchorderdetails.orderno = purchorders.orderno
+							WHERE purchorderdetails.shiptref = '" . $_GET['SelectedShipment'] . "'";
 		$ErrMsg = __('The lines on the shipment cannot be retrieved because'). ' - ' . DB_error_msg();
 			$LineItemsResult = DB_query($LineItemsSQL, $ErrMsg);
 
-		if (DB_num_rows($GetShiptHdrResult)==0) {
+		if (DB_num_rows($GetShiptHdrResult) == 0) {
 			prnMsg( __('Unable to locate lines for Shipment') . ' '. $_GET['SelectedShipment'] . ' ' . __('in the database'), 'error');
 			include('includes/footer.php');
 			exit();
@@ -113,11 +113,11 @@ if (isset($_GET['SelectedShipment'])){
 
 		if (DB_num_rows($LineItemsResult) > 0) {
 
-			while ($MyRow=DB_fetch_array($LineItemsResult)) {
+			while ($MyRow = DB_fetch_array($LineItemsResult)) {
 
-				if ($MyRow['stdcostunit']==0){
-					$StandardCost =$MyRow['stdcost'];
-				} else {
+				if ($MyRow['stdcostunit']==0) {
+	$StandardCost =$MyRow['stdcost'];
+} else {
 					$StandardCost =$MyRow['stdcostunit'];
 				}
 
@@ -136,7 +136,7 @@ if (isset($_GET['SelectedShipment'])){
 		   } /* line Shipment from shipment details */
 
 		   DB_data_Seek($LineItemsResult,0);
-		   $MyRow=DB_fetch_array($LineItemsResult);
+		   $MyRow = DB_fetch_array($LineItemsResult);
 		   $_SESSION['Shipment']->StockLocation = $MyRow['intostocklocation'];
 
 		} //end of checks on returned data set
@@ -150,10 +150,10 @@ if (!isset($_SESSION['Shipment'])){
 
 	$SQL = "SELECT suppname,
 					currcode,
-					decimalplaces AS currdecimalplaces
+					decimalplaces as currdecimalplaces
 		FROM suppliers INNER JOIN currencies
-		ON suppliers.currcode=currencies.currabrev
-		WHERE supplierid='" . $_SESSION['SupplierID'] . "'";
+		ON suppliers.currcode = currencies.currabrev
+		WHERE supplierid = '" . $_SESSION['SupplierID'] . "'";
 
 	$ErrMsg = __('The supplier details for the shipment could not be retrieved because');
 	$Result = DB_query($SQL, $ErrMsg);
@@ -167,17 +167,17 @@ if (!isset($_SESSION['Shipment'])){
 }
 
 if (isset($_POST['Update'])
-	OR (isset($_GET['Add'])
-	AND $_SESSION['Shipment']->Closed==0)) { //user hit the update button
+	or (isset($_GET['Add'])
+	and $_SESSION['Shipment']->Closed == 0)) { //user hit the update button
 
 	$InputError = 0;
 	if (isset($_POST['Update'])){
 
 		if (!Is_Date($_POST['ETA'])){
-			$InputError=1;
+			$InputError = 1;
 			prnMsg( __('The date of expected arrival of the shipment must be entered in the format') . ' ' .$_SESSION['DefaultDateFormat'], 'error');
-		} elseif (Date1GreaterThanDate2($_POST['ETA'],Date($_SESSION['DefaultDateFormat']))==0){
-			$InputError=1;
+		} elseif (Date1GreaterThanDate2($_POST['ETA'],date($_SESSION['DefaultDateFormat'])) == 0){
+			$InputError = 1;
 			prnMsg( __('An expected arrival of the shipment must be a date after today'), 'error');
 		} else {
 			$_SESSION['Shipment']->ETA = FormatDateForSQL($_POST['ETA']);
@@ -189,25 +189,25 @@ if (isset($_POST['Update'])
 		if (mb_strlen($_POST['VoyageRef'])<2){
 			prnMsg( __('A reference to the voyage (or HAWB in the case of air-freight) of more than 2 characters is expected'), 'error');
 		}
-	} elseif(mb_strlen($_SESSION['Shipment']->Vessel)<2
-			OR mb_strlen($_SESSION['Shipment']->VoyageRef)<2){
+	} elseif (mb_strlen($_SESSION['Shipment']->Vessel)<2
+			or mb_strlen($_SESSION['Shipment']->VoyageRef)<2){
 		prnMsg(__('Cannot add purchase order lines to the shipment unless the shipment is first initiated - hit update to setup the shipment first'),'info');
 		$InputError = 1;
 	}
-	if ($InputError==0 AND !isset($_GET['Add'])){ //don't update vessel and voyage on adding a new PO line to the shipment
+	if ($InputError == 0 and !isset($_GET['Add'])){ //don't update vessel and voyage on adding a new PO line to the shipment
 		$_SESSION['Shipment']->Vessel = $_POST['Vessel'];
 		$_SESSION['Shipment']->VoyageRef = $_POST['VoyageRef'];
 	}
 /*The user hit the update the shipment button and there are some lines on the shipment*/
 
-	if ($InputError == 0 AND (isset($_SESSION['Shipment']) OR isset($_GET['Add']))){
+	if ($InputError == 0 and (isset($_SESSION['Shipment']) or isset($_GET['Add']))){
 
 		$SQL = "SELECT shiptref FROM shipments WHERE shiptref =" . $_SESSION['Shipment']->ShiptRef;
 		$Result = DB_query($SQL);
-		if (DB_num_rows($Result)==1){
-			$SQL = "UPDATE shipments SET vessel='" . $_SESSION['Shipment']->Vessel . "',
-										voyageref='".  $_SESSION['Shipment']->VoyageRef . "',
-										eta='" .  $_SESSION['Shipment']->ETA . "'
+		if (DB_num_rows($Result) == 1){
+			$SQL = "UPDATE shipments SET vessel = '" . $_SESSION['Shipment']->Vessel . "',
+										voyageref = '".  $_SESSION['Shipment']->VoyageRef . "',
+										eta = '" .  $_SESSION['Shipment']->ETA . "'
 					WHERE shiptref ='" .  $_SESSION['Shipment']->ShiptRef . "'";
 
 		} else {
@@ -230,11 +230,11 @@ if (isset($_POST['Update'])
 		/*now check that the delivery date of all PODetails are the same as the ETA as the shipment */
 		foreach ($_SESSION['Shipment']->LineItems as $LnItm) {
 
-			if (DateDiff(ConvertSQLDate($LnItm->DelDate),ConvertSQLDate($_SESSION['Shipment']->ETA),'d')!=0){
+			if (DateDiff(ConvertSQLDate($LnItm->DelDate),ConvertSQLDate($_SESSION['Shipment']->ETA),'d') != 0){
 
 				$SQL = "UPDATE purchorderdetails
 						SET deliverydate ='" . $_SESSION['Shipment']->ETA . "'
-						WHERE podetailitem='" . $LnItm->PODetailItem . "'";
+						WHERE podetailitem = '" . $LnItm->PODetailItem . "'";
 
 				$Result = DB_query($SQL);
 
@@ -248,8 +248,8 @@ if (isset($_POST['Update'])
 } //user hit Update
 
 if (isset($_GET['Add'])
-	AND $_SESSION['Shipment']->Closed==0
-	AND $InputError==0){
+	and $_SESSION['Shipment']->Closed == 0
+	and $InputError == 0){
 
 	$SQL = "SELECT purchorderdetails.orderno,
 					purchorderdetails.itemcode,
@@ -264,17 +264,17 @@ if (isset($_GET['Add'])
 					stockmaster.decimalplaces,
 					purchorderdetails.qtyinvoiced
 			FROM purchorderdetails INNER JOIN stockmaster
-			ON purchorderdetails.itemcode=stockmaster.stockid
-			WHERE purchorderdetails.podetailitem='" . $_GET['Add'] . "'";
+			ON purchorderdetails.itemcode = stockmaster.stockid
+			WHERE purchorderdetails.podetailitem = '" . $_GET['Add'] . "'";
 
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
 
 /*The variable StdCostUnit gets set when the item is first received and stored for all future transactions with this purchase order line - subsequent changes to the standard cost will not therefore stuff up variances resulting from the line which may have several entries in GL for each delivery drop if it has already been set from a delivery then use it otherwise use the current system standard */
 
-	if ($MyRow['stdcostunit']==0){
-		$StandardCost = $MyRow['stdcost'];
-	}else {
+	if ($MyRow['stdcostunit']==0) {
+	$StandardCost = $MyRow['stdcost'];
+}else {
 		$StandardCost = $MyRow['stdcostunit'];
 	}
 
@@ -292,17 +292,17 @@ if (isset($_GET['Add'])
 											$MyRow['decimalplaces']);
 }
 
-if (isset($_GET['Delete']) AND $_SESSION['Shipment']->Closed==0){ //shipment is open and user hit delete on a line
+if (isset($_GET['Delete']) and $_SESSION['Shipment']->Closed == 0){ //shipment is open and user hit delete on a line
 	$_SESSION['Shipment']->Remove_From_Shipment($_GET['Delete']);
 }
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post">';
+echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 echo '<fieldset>
 		<legend>', __('Shipment Details'), '</legend>
 		<field>
-			<label for="ShiptRef">' .  __('Shipment').': </label>
+			<label for = "ShiptRef">' .  __('Shipment').': </label>
 			<fieldtext>' . $_SESSION['Shipment']->ShiptRef . '</fieldtext>
 		</field>
 		<field>
@@ -311,12 +311,12 @@ echo '<fieldset>
 		</field>';
 
 echo '<field>
-		<label for="Vessel">' .  __('Vessel Name /Transport Agent'). ': </label>
-		<input type="text" name="Vessel" maxlength="50" size="50" value="' . $_SESSION['Shipment']->Vessel . '" />
+		<label for = "Vessel">' .  __('Vessel Name /Transport Agent'). ': </label>
+		<input type = "text" name="Vessel" maxlength = "50" size = "50" value = "' . $_SESSION['Shipment']->Vessel . '" />
 	</field>
 	<field>
-		<label for="VoyageRef">' . __('Voyage Ref / Consignment Note').': </label>
-		<input type="text" name="VoyageRef" maxlength="20" size="20" value="' . $_SESSION['Shipment']->VoyageRef . '" />
+		<label for = "VoyageRef">' . __('Voyage Ref / Consignment Note').': </label>
+		<input type = "text" name="VoyageRef" maxlength = "20" size = "20" value = "' . $_SESSION['Shipment']->VoyageRef . '" />
 	</field>';
 
 if (isset($_SESSION['Shipment']->ETA)){
@@ -326,16 +326,16 @@ if (isset($_SESSION['Shipment']->ETA)){
 }
 
 echo '<field>
-		<label for="ETA">' .  __('Expected Arrival Date (ETA)'). ': </label>';
+		<label for = "ETA">' .  __('Expected Arrival Date (ETA)'). ': </label>';
 if (isset($_SESSION['Shipment']->ETA)) {
-	echo '<input type="date" name="ETA"  maxlength="10" size="11" value="' . $ETA . '" />';
+	echo '<input type = "date" name="ETA"  maxlength = "10" size = "11" value = "' . $ETA . '" />';
 } else {
-	echo '<input type="date" name="ETA" maxlength="10" size="11" value="' . FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'm', 1)) . '" />';
+	echo '<input type = "date" name="ETA" maxlength = "10" size = "11" value = "' . FormatDateForSQL(DateAdd(date($_SESSION['DefaultDateFormat']), 'm', 1)) . '" />';
 }
 echo '<field>';
 
 echo '<field>
-		<label for="StockLocation">' .  __('Into Stock Location').':</label>';
+		<label for = "StockLocation">' .  __('Into Stock Location').':</label>';
 
 if (count($_SESSION['Shipment']->LineItems)>0){
 
@@ -343,7 +343,7 @@ if (count($_SESSION['Shipment']->LineItems)>0){
 
 		$SQL = "SELECT purchorders.intostocklocation
 				FROM purchorders INNER JOIN purchorderdetails
-				ON purchorders.orderno=purchorderdetails.orderno AND podetailitem = '" . key($_SESSION['Shipment']->LineItems) . "'";
+				ON purchorders.orderno = purchorderdetails.orderno and podetailitem = '" . key($_SESSION['Shipment']->LineItems) . "'";
 
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_row($Result);
@@ -366,18 +366,18 @@ if (!isset($_SESSION['Shipment']->StockLocation)){
 
 	$ResultStkLocs = DB_query($SQL);
 
-	while ($MyRow=DB_fetch_array($ResultStkLocs)){
+	while ($MyRow = DB_fetch_array($ResultStkLocs)){
 
 		if (isset($_POST['StockLocation'])){
-			if ($MyRow['loccode'] == $_POST['StockLocation']){
-				echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
-			} else {
-				echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+			if ($MyRow['loccode'] == $_POST['StockLocation']) {
+	echo '<option selected = "selected" value = "' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+} else {
+				echo '<option value = "' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 			}
-		} elseif ($MyRow['loccode']==$_SESSION['UserStockLocation']){
-			echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
-		} else {
-			echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+		} elseif ($MyRow['loccode']==$_SESSION['UserStockLocation']) {
+	echo '<option selected = "selected" value = "' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+} else {
+			echo '<option value = "' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 		}
 	}
 
@@ -388,10 +388,10 @@ if (!isset($_SESSION['Shipment']->StockLocation)){
 	echo '</select>';
 
 } else {
-	$SQL = "SELECT locationname FROM locations WHERE loccode='" . $_SESSION['Shipment']->StockLocation . "'";
+	$SQL = "SELECT locationname FROM locations WHERE loccode = '" . $_SESSION['Shipment']->StockLocation . "'";
 	$ResultStkLocs = DB_query($SQL);
-	$MyRow=DB_fetch_array($ResultStkLocs);
-	echo '<input type="hidden" name="StockLocation" value="'.$_SESSION['Shipment']->StockLocation.'" />';
+	$MyRow = DB_fetch_array($ResultStkLocs);
+	echo '<input type = "hidden" name="StockLocation" value = "'.$_SESSION['Shipment']->StockLocation.'" />';
  	echo '<fieldtext>', $MyRow['locationname'], '</fieldtext>';
 }
 
@@ -402,7 +402,7 @@ if (count($_SESSION['Shipment']->LineItems)>0){
 	/* Always display all shipment lines */
 
 	echo '<table class="selection">';
-	echo '<tr><th colspan="9"><h3>' .  __('Order Lines On This Shipment'). '</h3></th></tr>';
+	echo '<tr><th colspan = "9"><h3>' .  __('Order Lines On This Shipment'). '</h3></th></tr>';
 
 	$TableHeader = '<tr>
 						<th>' .  __('Order'). '</th>
@@ -423,10 +423,10 @@ if (count($_SESSION['Shipment']->LineItems)>0){
 
 	foreach ($_SESSION['Shipment']->LineItems as $LnItm) {
 
-		if ($RowCounter==15){
-			echo $TableHeader;
+		if ($RowCounter == 15) {
+	echo $TableHeader;
 			$RowCounter =0;
-		}
+}
 		$RowCounter++;
 
 		echo '<tr class="striped_row">
@@ -444,7 +444,7 @@ if (count($_SESSION['Shipment']->LineItems)>0){
 }//there are lines on the shipment
 
 echo '<div class="centre">
-			<input type="submit" name="Update" value="'. __('Update Shipment Details') . '" />
+			<input type = "submit" name="Update" value = "'. __('Update Shipment Details') . '" />
 		</div>';
 
 if (!isset($_POST['StockLocation'])) {
@@ -462,23 +462,23 @@ $SQL = "SELECT purchorderdetails.podetailitem,
 				stockmaster.units,
 				stockmaster.decimalplaces
 			FROM purchorderdetails INNER JOIN purchorders
-				ON purchorderdetails.orderno=purchorders.orderno
+				ON purchorderdetails.orderno = purchorders.orderno
 				INNER JOIN stockmaster
-			ON purchorderdetails.itemcode=stockmaster.stockid
-			WHERE qtyinvoiced=0
-			AND purchorders.status <> 'Cancelled'
-			AND purchorders.status <> 'Rejected'
-			AND purchorders.supplierno ='" . $_SESSION['Shipment']->SupplierID . "'
-			AND purchorderdetails.shiptref=0
-			AND purchorders.intostocklocation='" . $_POST['StockLocation'] . "'";
+			ON purchorderdetails.itemcode = stockmaster.stockid
+			WHERE qtyinvoiced = 0
+			and purchorders.status <> 'Cancelled'
+			and purchorders.status <> 'Rejected'
+			and purchorders.supplierno ='" . $_SESSION['Shipment']->SupplierID . "'
+			and purchorderdetails.shiptref = 0
+			and purchorders.intostocklocation = '" . $_POST['StockLocation'] . "'";
 
 $Result = DB_query($SQL);
 
 if (DB_num_rows($Result)>0){
 
-	echo '<table cellpadding="2" class="selection">';
+	echo '<table cellpadding = "2" class="selection">';
 	echo '<tr>
-			<th colspan="7"><h3>' .  __('Possible Order Lines To Add To This Shipment') . '</h3></th>
+			<th colspan = "7"><h3>' .  __('Possible Order Lines To Add To This Shipment') . '</h3></th>
 		</tr>';
 
 	$TableHeader = '<tr>
@@ -496,12 +496,12 @@ if (DB_num_rows($Result)>0){
 
 	$RowCounter =0;
 
-	while ($MyRow=DB_fetch_array($Result)){
+	while ($MyRow = DB_fetch_array($Result)){
 
-		if ($RowCounter==15){
-			echo $TableHeader;
+		if ($RowCounter == 15) {
+	echo $TableHeader;
 			$RowCounter =0;
-		}
+}
 		$RowCounter++;
 
 		echo '<tr class="striped_row">

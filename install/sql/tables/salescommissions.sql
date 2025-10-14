@@ -11,4 +11,4 @@ CREATE TABLE `salescommissions` (
   PRIMARY KEY (`type`,`transno`),
   KEY `salespersoncode` (`salespersoncode`),
   KEY `paid` (`paid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

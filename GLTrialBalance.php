@@ -47,22 +47,22 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 	if (isset($_POST['PrintPDF'])) {
 		$HTML .= '<html>
 					<head>';
-		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
+		$HTML .= '<link href = "css/reports.css" rel = "stylesheet" type = "text/css" />';
 	}
 
-	$HTML .= '<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
-	$HTML .= '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	$HTML .= '<input type="hidden" name="PeriodFrom" value="' . $_POST['PeriodFrom'] . '" />';
-	$HTML .= '<input type="hidden" name="PeriodTo" value="' . $_POST['PeriodTo'] . '" />';
+	$HTML .= '<form method = "post" action = "' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
+	$HTML .= '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+	$HTML .= '<input type = "hidden" name="PeriodFrom" value = "' . $_POST['PeriodFrom'] . '" />';
+	$HTML .= '<input type = "hidden" name="PeriodTo" value = "' . $_POST['PeriodTo'] . '" />';
 
-	$HTML .= '<meta name="author" content="WebERP " . $Version">
-					<meta name="Creator" content="webERP https://www.weberp.org">
+	$HTML .= '<meta name="author" content = "WebERP " . $Version">
+					<meta name="Creator" content = "webERP https://www.weberp.org">
 				</head>
 				<body>
 				<table>
 					<thead>
 						<tr>
-							<th colspan="6">
+							<th colspan = "6">
 								<b>' . __('Trial Balance for the month of ') . $PeriodToDate . __(' and for the ') . $NumberOfMonths . __(' months to ') . $PeriodToDate . '</b>
 							</th>
 						</tr>
@@ -81,9 +81,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 	$BookMark = 'TrialBalance';
 
 	if ($_POST['Period'] != '') {
-		$_POST['PeriodFrom'] = ReportPeriod($_POST['Period'], 'From');
+	$_POST['PeriodFrom'] = ReportPeriod($_POST['Period'], 'From');
 		$_POST['PeriodTo'] = ReportPeriod($_POST['Period'], 'To');
-	}
+}
 
 	$NumberOfMonths = $_POST['PeriodTo'] - $_POST['PeriodFrom'] + 1;
 
@@ -91,9 +91,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 
 	/* Firstly get the account totals for this period */
 	$ThisMonthSQL = "SELECT account,
-							SUM(amount) AS monthtotal
+							SUM(amount) as monthtotal
 						FROM gltotals
-						WHERE period='" . $_POST['PeriodTo'] . "'
+						WHERE period = '" . $_POST['PeriodTo'] . "'
 						GROUP BY account";
 	$ThisMonthResult = DB_query($ThisMonthSQL);
 	$ThisMonthArray = array();
@@ -104,15 +104,15 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 
 	/* Then get this periods cumulative P&L accounts */
 	$ThisPeriodPLSQL = "SELECT account,
-								SUM(amount) AS periodtotal
+								SUM(amount) as periodtotal
 						FROM gltotals
 						INNER JOIN chartmaster
-							ON gltotals.account=chartmaster.accountcode
+							ON gltotals.account = chartmaster.accountcode
 						INNER JOIN accountgroups
-							ON chartmaster.group_=accountgroups.groupname
+							ON chartmaster.group_ = accountgroups.groupname
 						WHERE period<='" . $_POST['PeriodTo'] . "'
-							AND period>='" . $_POST['PeriodFrom'] . "'
-							AND pandl=1
+							and period>='" . $_POST['PeriodFrom'] . "'
+							and pandl = 1
 						GROUP BY account";
 	$ThisPeriodPLResult = DB_query($ThisPeriodPLSQL);
 	$ThisPeriodArray = array();
@@ -123,14 +123,14 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 
 	/* Then get this periods cumulative BS accounts */
 	$ThisPeriodBSSQL = "SELECT account,
-								SUM(amount) AS periodtotal
+								SUM(amount) as periodtotal
 						FROM gltotals
 						INNER JOIN chartmaster
-							ON gltotals.account=chartmaster.accountcode
+							ON gltotals.account = chartmaster.accountcode
 						INNER JOIN accountgroups
-							ON chartmaster.group_=accountgroups.groupname
+							ON chartmaster.group_ = accountgroups.groupname
 						WHERE period<='" . $_POST['PeriodTo'] . "'
-							AND pandl=0
+							and pandl = 0
 						GROUP BY account";
 	$ThisPeriodBSResult = DB_query($ThisPeriodBSSQL);
 
@@ -139,14 +139,14 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 	}
 
 	/* Get the retained earnings amount */
-	$RetainedEarningsSQL = "SELECT SUM(amount) AS retainedearnings
+	$RetainedEarningsSQL = "SELECT SUM(amount) as retainedearnings
 							FROM gltotals
 							INNER JOIN chartmaster
-								ON gltotals.account=chartmaster.accountcode
+								ON gltotals.account = chartmaster.accountcode
 							INNER JOIN accountgroups
-								ON chartmaster.group_=accountgroups.groupname
+								ON chartmaster.group_ = accountgroups.groupname
 							WHERE period<'" . $_POST['PeriodFrom'] . "'
-								AND pandl=1";
+								and pandl = 1";
 	$RetainedEarningsResult = DB_query($RetainedEarningsSQL);
 	$RetainedEarningsRow = DB_fetch_array($RetainedEarningsResult);
 
@@ -158,11 +158,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 					pandl
 			FROM chartmaster
 			INNER JOIN glaccountusers
-				ON glaccountusers.accountcode=chartmaster.accountcode
-				AND glaccountusers.userid='" . $_SESSION['UserID'] . "'
-				AND glaccountusers.canview=1
+				ON glaccountusers.accountcode = chartmaster.accountcode
+				and glaccountusers.userid = '" . $_SESSION['UserID'] . "'
+				and glaccountusers.canview = 1
 			INNER JOIN accountgroups
-				ON accountgroups.groupname=chartmaster.group_
+				ON accountgroups.groupname = chartmaster.group_
 			ORDER BY groupname,
 					accountcode";
 	$AccountListResult = DB_query($SQL);
@@ -173,29 +173,29 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 			</tr>';
 	$HTML .= '<tr class="total_row">
 				<td>' . $AccountListRow['group_'] . '</td>
-				<td colspan="6"></td>
+				<td colspan = "6"></td>
 			</tr>';
 
 	$LastGroup = $AccountListRow['group_'];
 	$LastGroupName = $AccountListRow['group_'];
 
-	$SQL = "SELECT amount AS monthbudget
+	$SQL = "SELECT amount as monthbudget
 			FROM glbudgetdetails
-			WHERE account='" . $AccountListRow['accountcode'] . "'
-				AND period='" . $_POST['PeriodTo'] . "'
-				AND headerid='" . $_POST['SelectedBudget'] . "'";
+			WHERE account = '" . $AccountListRow['accountcode'] . "'
+				and period = '" . $_POST['PeriodTo'] . "'
+				and headerid = '" . $_POST['SelectedBudget'] . "'";
 	$MonthBudgetResult = DB_query($SQL);
 	$MonthBudgetRow = DB_fetch_array($MonthBudgetResult);
 	if (!isset($MonthBudgetRow['monthbudget'])) {
 		$MonthBudgetRow['monthbudget'] = 0;
 	}
 
-	$SQL = "SELECT SUM(amount) AS periodbudget
+	$SQL = "SELECT SUM(amount) as periodbudget
 			FROM glbudgetdetails
-			WHERE account='" . $AccountListRow['accountcode'] . "'
-				AND period>='" . $_POST['PeriodFrom'] . "'
-				AND period<='" . $_POST['PeriodTo'] . "'
-				AND headerid='" . $_POST['SelectedBudget'] . "'";
+			WHERE account = '" . $AccountListRow['accountcode'] . "'
+				and period>='" . $_POST['PeriodFrom'] . "'
+				and period<='" . $_POST['PeriodTo'] . "'
+				and headerid = '" . $_POST['SelectedBudget'] . "'";
 	$PeriodBudgetResult = DB_query($SQL);
 	$PeriodBudgetRow = DB_fetch_array($PeriodBudgetResult);
 	if (!isset($PeriodBudgetRow['periodbudget'])) {
@@ -234,11 +234,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 			$ThisPeriodArray[$AccountListRow['accountcode']] = 0;
 		}
 		if ($_SESSION['CompanyRecord']['retainedearnings'] == $AccountListRow['accountcode']) {
-			$ThisMonthArray[$AccountListRow['accountcode']] = 0;
+	$ThisMonthArray[$AccountListRow['accountcode']] = 0;
 			$ThisPeriodArray[$AccountListRow['accountcode']] = $RetainedEarningsRow['retainedearnings'];
-		}
+}
 		if ($AccountListRow['group_'] != $LastGroup) {
-			$HTML .= '<tr>
+	$HTML .= '<tr>
 						<td></td>
 					</tr>';
 			$HTML .= '<tr class="total_row">
@@ -258,7 +258,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 					</tr>';
 			$HTML .= '<tr class="total_row">
 						<td>' . $AccountListRow['group_'] . '</td>
-						<td colspan="6"></td>
+						<td colspan = "6"></td>
 					</tr>';
 
 			$LastGroup = $AccountListRow['group_'];
@@ -271,26 +271,25 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 			$MonthBudgetGroupTotal = 0;
 			$PeriodActualGroupTotal = 0;
 			$PeriodBudgetGroupTotal = 0;
+}
 
-		}
-
-		$SQL = "SELECT amount AS monthbudget
+		$SQL = "SELECT amount as monthbudget
 				FROM glbudgetdetails
-				WHERE account='" . $AccountListRow['accountcode'] . "'
-					AND period='" . $_POST['PeriodTo'] . "'
-					AND headerid='" . $_POST['SelectedBudget'] . "'";
+				WHERE account = '" . $AccountListRow['accountcode'] . "'
+					and period = '" . $_POST['PeriodTo'] . "'
+					and headerid = '" . $_POST['SelectedBudget'] . "'";
 		$MonthBudgetResult = DB_query($SQL);
 		$MonthBudgetRow = DB_fetch_array($MonthBudgetResult);
 		if (!isset($MonthBudgetRow['monthbudget'])) {
 			$MonthBudgetRow['monthbudget'] = 0;
 		}
 
-		$SQL = "SELECT SUM(amount) AS periodbudget
+		$SQL = "SELECT SUM(amount) as periodbudget
 				FROM glbudgetdetails
-				WHERE account='" . $AccountListRow['accountcode'] . "'
-					AND period>='" . $_POST['PeriodFrom'] . "'
-					AND period<='" . $_POST['PeriodTo'] . "'
-					AND headerid='" . $_POST['SelectedBudget'] . "'";
+				WHERE account = '" . $AccountListRow['accountcode'] . "'
+					and period>='" . $_POST['PeriodFrom'] . "'
+					and period<='" . $_POST['PeriodTo'] . "'
+					and headerid = '" . $_POST['SelectedBudget'] . "'";
 		$PeriodBudgetResult = DB_query($SQL);
 		$PeriodBudgetRow = DB_fetch_array($PeriodBudgetResult);
 		if (!isset($PeriodBudgetRow['periodbudget'])) {
@@ -358,7 +357,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 		$HTML .= '</tbody>
 				</table>
 				<div class="centre">
-					<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
+					<form><input type = "submit" name="close" value = "' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -382,10 +381,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 	} elseif (isset($_POST['Spreadsheet'])) {
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 
-		$File = 'GLTrialBalance-' . Date('Y-m-d'). '.' . 'ods';
+		$File = 'GLTrialBalance-' . date('Y-m-d'). '.' . 'ods';
 
-		header('Content-Disposition: attachment;filename="' . $File . '"');
-		header('Cache-Control: max-age=0');
+		header('Content-Disposition: attachment;filename = "' . $File . '"');
+		header('Cache-Control: max-age = 0');
 		$reader = new \PhpOffice\PhpSpreadsheet\Reader\Html();
 		$spreadsheet = $reader->loadFromString($HTML);
 
@@ -408,18 +407,18 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 	$BookMark = 'TrialBalance';
 	include('includes/header.php');
 	echo '<p class="page_title_text">
-			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/gl.png" title="', __('Trial Balance'), '" alt="', __('Print'), '" />', ' ', __('Trial Balance Report'), '
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/gl.png" title="', __('Trial Balance'), '" alt = "', __('Print'), '" />', ' ', __('Trial Balance Report'), '
 		</p>';
-	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" target="_blank">';
-	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+	echo '<form method = "post" action = "', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" target="_blank">';
+	echo '<input type = "hidden" name="FormID" value = "', $_SESSION['FormID'], '" />';
 
-	if (Date('m') > $_SESSION['YearEnd']) {
+	if (date('m') > $_SESSION['YearEnd']) {
 		/*Dates in SQL format */
-		$DefaultFromDate = Date('Y-m-d', Mktime(0, 0, 0, $_SESSION['YearEnd'] + 2, 0, Date('Y')));
-		$FromDate = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, $_SESSION['YearEnd'] + 2, 0, Date('Y')));
+		$DefaultFromDate = date('Y-m-d', mktime(0, 0, 0, $_SESSION['YearEnd'] + 2, 0, date('Y')));
+		$FromDate = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $_SESSION['YearEnd'] + 2, 0, date('Y')));
 	} else {
-		$DefaultFromDate = Date('Y-m-d', Mktime(0, 0, 0, $_SESSION['YearEnd'] + 2, 0, Date('Y') - 1));
-		$FromDate = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, $_SESSION['YearEnd'] + 2, 0, Date('Y') - 1));
+		$DefaultFromDate = date('Y-m-d', mktime(0, 0, 0, $_SESSION['YearEnd'] + 2, 0, date('Y') - 1));
+		$FromDate = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $_SESSION['YearEnd'] + 2, 0, date('Y') - 1));
 	}
 	/*GetPeriod function creates periods if need be the return value is not used */
 	$NotUsedPeriodNo = GetPeriod($FromDate);
@@ -428,8 +427,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 	echo '<fieldset>
 			<legend>', __('Input criteria for Trial Balance'), '</legend>
 			<field>
-				<label for="PeriodFrom">', __('Select Period From'), ':</label>
-				<select name="PeriodFrom" autofocus="autofocus">';
+				<label for = "PeriodFrom">', __('Select Period From'), ':</label>
+				<select name="PeriodFrom" autofocus = "autofocus">';
 	$NextYear = date('Y-m-d', strtotime('+1 Year'));
 	$SQL = "SELECT periodno,
 					lastdate_in_period
@@ -441,15 +440,15 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 	while ($MyRow = DB_fetch_array($Periods)) {
 		if (isset($_POST['PeriodFrom']) and $_POST['PeriodFrom'] != '') {
 			if ($_POST['PeriodFrom'] == $MyRow['periodno']) {
-				echo '<option selected="selected" value="', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
-			} else {
-				echo '<option value="', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
+	echo '<option selected = "selected" value = "', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
+} else {
+				echo '<option value = "', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
 			}
 		} else {
 			if ($MyRow['lastdate_in_period'] == $DefaultFromDate) {
-				echo '<option selected="selected" value="', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
-			} else {
-				echo '<option value="', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
+	echo '<option selected = "selected" value = "', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
+} else {
+				echo '<option value = "', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
 			}
 		}
 	}
@@ -458,13 +457,13 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 	</field>';
 
 	if (!isset($_POST['PeriodTo']) or $_POST['PeriodTo'] == '') {
-		$DefaultPeriodTo = GetPeriod(date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, Date('m') + 1, 0, Date('Y'))));
+		$DefaultPeriodTo = GetPeriod(date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, date('m') + 1, 0, date('Y'))));
 	} else {
 		$DefaultPeriodTo = $_POST['PeriodTo'];
 	}
 
 	echo '<field>
-			<label for="PeriodTo">', __('Select Period To'), ':</label>
+			<label for = "PeriodTo">', __('Select Period To'), ':</label>
 			<select name="PeriodTo">';
 
 	DB_data_seek($Periods, 0);
@@ -472,8 +471,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 	while ($MyRow = DB_fetch_array($Periods)) {
 
 		if ($MyRow['periodno'] == $DefaultPeriodTo) {
-			echo '<option selected="selected" value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
-		} else {
+	echo '<option selected = "selected" value = "' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
+} else {
 			echo '<option value ="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 		}
 	}
@@ -481,14 +480,14 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 		<fieldhelp>', __('Select the end period for this report'), '</fieldhelp>
 	</field>';
 
-	echo '<h3>', __('OR'), '</h3>';
+	echo '<h3>', __('or'), '</h3>';
 
 	if (!isset($_POST['Period'])) {
 		$_POST['Period'] = '';
 	}
 
 	echo '<field>
-			<label for="Period">', __('Select Period'), ':</label>
+			<label for = "Period">', __('Select Period'), ':</label>
 			', ReportPeriodList($_POST['Period'], array('l', 't')), '
 			<fieldhelp>', __('Select a predefined period from this list. If a selection is made here it will override anything selected in the From and To options above.'), '</fieldhelp>
 		</field>';
@@ -499,16 +498,16 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 				FROM glbudgetheaders";
 	$Result = DB_query($SQL);
 	echo '<field>
-			<label for="SelectedBudget">', __('Budget To Show Comparisons With'), '</label>
+			<label for = "SelectedBudget">', __('Budget To Show Comparisons With'), '</label>
 			<select name="SelectedBudget">';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (!isset($_POST['SelectedBudget']) and $MyRow['current'] == 1) {
 			$_POST['SelectedBudget'] = $MyRow['id'];
 		}
 		if ($MyRow['id'] == $_POST['SelectedBudget']) {
-			echo '<option selected="selected" value="', $MyRow['id'], '">', $MyRow['name'], '</option>';
-		} else {
-			echo '<option value="', $MyRow['id'], '">', $MyRow['name'], '</option>';
+	echo '<option selected = "selected" value = "', $MyRow['id'], '">', $MyRow['name'], '</option>';
+} else {
+			echo '<option value = "', $MyRow['id'], '">', $MyRow['name'], '</option>';
 		}
 	}
 	echo '<fieldhelp>', __('Select the budget to make comparisons with.'), '</fieldhelp>
@@ -518,9 +517,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 	echo '</fieldset>';
 
 	echo '<div class="centre">
-				<input type="submit" name="PrintPDF" title="Produce PDF Report" value="' . __('Print PDF') . '" />
-				<input type="submit" name="View" title="View Report" value="' . __('View') . '" />
-				<input type="submit" name="Spreadsheet" title="Spreadsheet" value="' . __('Spreadsheet') . '" />
+				<input type = "submit" name="PrintPDF" title="Produce PDF Report" value = "' . __('Print PDF') . '" />
+				<input type = "submit" name="View" title="View Report" value = "' . __('View') . '" />
+				<input type = "submit" name="Spreadsheet" title="Spreadsheet" value = "' . __('Spreadsheet') . '" />
 		</div>';
 
 	echo '</form>';

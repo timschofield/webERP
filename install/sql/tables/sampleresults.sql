@@ -18,4 +18,4 @@ CREATE TABLE `sampleresults` (
   KEY `sampleid` (`sampleid`),
   KEY `testid` (`testid`),
   CONSTRAINT `sampleresults_ibfk_1` FOREIGN KEY (`testid`) REFERENCES `qatests` (`testid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

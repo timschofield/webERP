@@ -14,7 +14,7 @@ if (isset($_GET['SelectedSalesPerson'])) {
 	exit();
 }
 
-$SQL = "SELECT salesmanname FROM salesman WHERE salesmancode='" . $SelectedSalesPerson . "'";
+$SQL = "SELECT salesmanname FROM salesman WHERE salesmancode = '" . $SelectedSalesPerson . "'";
 $Result = DB_query($SQL);
 $MyRow = DB_fetch_array($Result);
 $SalesPersonName = $MyRow['salesmanname'];
@@ -39,19 +39,19 @@ if (isset($_POST['Submit'])) {
 	if (isset($_POST['New'])) {
 		$CheckSQL = "SELECT salespersoncode
 						FROM salescommissionrates
-						WHERE salespersoncode='" . $SelectedSalesPerson . "'
-							AND categoryid='" . $_POST['CategoryID'] . "'
-							AND area='" . $_POST['Area'] . "'
-							AND startfrom='" . $_POST['StartFrom'] . "'
-							AND daysactive='" . $_POST['DaysActive'] . "'
-							AND currency='" . $_POST['Currency'] . "'";
+						WHERE salespersoncode = '" . $SelectedSalesPerson . "'
+							and categoryid = '" . $_POST['CategoryID'] . "'
+							and area = '" . $_POST['Area'] . "'
+							and startfrom = '" . $_POST['StartFrom'] . "'
+							and daysactive = '" . $_POST['DaysActive'] . "'
+							and currency = '" . $_POST['Currency'] . "'";
 		$CheckResult = DB_query($CheckSQL);
 		if (DB_num_rows($CheckResult) > 0) {
 			prnMsg(__('A record already exists for this category, area, currency, start from amount, and salesperson'), 'error');
 			$InputError = 1;
 		}
 		if ($InputError == 0) {
-			$InsertSQL = "INSERT INTO salescommissionrates (salespersoncode,
+	$InsertSQL = "INSERT INTO salescommissionrates (salespersoncode,
 															categoryid,
 															area,
 															startfrom,
@@ -70,23 +70,23 @@ if (isset($_POST['Submit'])) {
 			$InsertResult = DB_query($InsertSQL);
 			if (DB_error_no() == 0) {
 				prnMsg(__('Commission record was correctly saved'), 'success');
-			} else {
+} else {
 				prnMsg(__('There was an error saving the commission record'), 'error');
 			}
 		}
 	} else {
 		if ($InputError == 0) {
-			$UpdateSQL = "UPDATE salescommissionrates SET rate='" . filter_number_format($_POST['Rate']) . "'
-													WHERE salespersoncode='" . $SelectedSalesPerson . "'
-														AND categoryid='" . $_POST['CategoryID'] . "'
-														AND area='" . $_POST['Area'] . "'
-														AND startfrom='" . $_POST['StartFrom'] . "'
-														AND daysactive='" . $_POST['DaysActive'] . "'
-														AND currency='" . $_POST['Currency'] . "'";
+	$UpdateSQL = "UPDATE salescommissionrates SET rate = '" . filter_number_format($_POST['Rate']) . "'
+													WHERE salespersoncode = '" . $SelectedSalesPerson . "'
+														and categoryid = '" . $_POST['CategoryID'] . "'
+														and area = '" . $_POST['Area'] . "'
+														and startfrom = '" . $_POST['StartFrom'] . "'
+														and daysactive = '" . $_POST['DaysActive'] . "'
+														and currency = '" . $_POST['Currency'] . "'";
 			$UpdateResult = DB_query($UpdateSQL);
 			if (DB_error_no() == 0) {
 				prnMsg(__('Commission record was correctly saved'), 'success');
-			} else {
+} else {
 				prnMsg(__('There was an error saving the commission record'), 'error');
 			}
 		}
@@ -95,12 +95,12 @@ if (isset($_POST['Submit'])) {
 
 if (isset($_GET['Delete'])) {
 	$DeleteSQL = "DELETE FROM salescommissionrates
-					WHERE salespersoncode='" . $SelectedSalesPerson . "'
-						AND categoryid='" . $_GET['SelectedCategory'] . "'
-						AND area='" . $_GET['Area'] . "'
-						AND startfrom='" . $_GET['StartFrom'] . "'
-						AND daysactive='" . $_GET['DaysActive'] . "'
-						AND currency='" . $_GET['Currency'] . "'";
+					WHERE salespersoncode = '" . $SelectedSalesPerson . "'
+						and categoryid = '" . $_GET['SelectedCategory'] . "'
+						and area = '" . $_GET['Area'] . "'
+						and startfrom = '" . $_GET['StartFrom'] . "'
+						and daysactive = '" . $_GET['DaysActive'] . "'
+						and currency = '" . $_GET['Currency'] . "'";
 	$DeleteResult = DB_query($DeleteSQL);
 	if (DB_error_no() == 0) {
 		prnMsg(__('Commission record was correctly deleted'), 'success');
@@ -119,12 +119,12 @@ $SQL = "SELECT  salescommissionrates.categoryid,
 				salescommissionrates.daysactive,
 				salescommissionrates.rate,
 				salescommissionrates.currency,
-				currencies.currency AS currencyname,
+				currencies.currency as currencyname,
 				currencies.decimalplaces
 			FROM salescommissionrates
 			INNER JOIN currencies
-				ON currencies.currabrev=salescommissionrates.currency
-			WHERE salescommissionrates.salespersoncode='" . $SelectedSalesPerson . "'
+				ON currencies.currabrev = salescommissionrates.currency
+			WHERE salescommissionrates.salespersoncode = '" . $SelectedSalesPerson . "'
 			ORDER BY categoryid, startfrom";
 $Result = DB_query($SQL);
 
@@ -138,22 +138,22 @@ if (DB_num_rows($Result) > 0) {
 					<th class="SortedColumn">', __('Starting Level'), '</th>
 					<th class="SortedColumn">', __('After Days Active'), '</th>
 					<th class="SortedColumn">', __('Commission Rate (%)'), '</th>
-					<th colspan="2"></th>
+					<th colspan = "2"></th>
 				</tr>';
 
 	echo '<tbody>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($MyRow['categoryid'] == 'ALL') {
-			$CategoryRow['categorydescription'] = __('All Categories');
-		} else {
-			$CategorySQL = "SELECT categorydescription FROM stockcategory WHERE categoryid='" . $MyRow['categoryid'] . "'";
+	$CategoryRow['categorydescription'] = __('All Categories');
+} else {
+			$CategorySQL = "SELECT categorydescription FROM stockcategory WHERE categoryid = '" . $MyRow['categoryid'] . "'";
 			$CategoryResult = DB_query($CategorySQL);
 			$CategoryRow = DB_fetch_array($CategoryResult);
 		}
 		if ($MyRow['area'] == 'ALL') {
-			$AreaRow['areadescription'] = __('All Areas');
-		} else {
-			$AreaSQL = "SELECT areadescription FROM areas WHERE areacode='" . $MyRow['area'] . "'";
+	$AreaRow['areadescription'] = __('All Areas');
+} else {
+			$AreaSQL = "SELECT areadescription FROM areas WHERE areacode = '" . $MyRow['area'] . "'";
 			$AreaResult = DB_query($AreaSQL);
 			$AreaRow = DB_fetch_array($AreaResult);
 		}
@@ -173,21 +173,21 @@ if (DB_num_rows($Result) > 0) {
 		</table>';
 }
 
-echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
-echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+echo '<form method = "post" action = "', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
+echo '<input type = "hidden" name="FormID" value = "', $_SESSION['FormID'], '" />';
 
 if (isset($_GET['Edit'])) {
 	$SQL = "SELECT  salescommissionrates.rate,
-					currencies.currency AS currencyname
+					currencies.currency as currencyname
 				FROM salescommissionrates
 				INNER JOIN currencies
-					ON currencies.currabrev=salescommissionrates.currency
-				WHERE salescommissionrates.salespersoncode='" . $SelectedSalesPerson . "'
-					AND categoryid='" . $_GET['SelectedCategory'] . "'
-					AND area='" . $_GET['Area'] . "'
-					AND salescommissionrates.currency='" . $_GET['Currency'] . "'
-					AND daysactive='" . $_GET['DaysActive'] . "'
-					AND startfrom='" . $_GET['StartFrom'] . "'";
+					ON currencies.currabrev = salescommissionrates.currency
+				WHERE salescommissionrates.salespersoncode = '" . $SelectedSalesPerson . "'
+					and categoryid = '" . $_GET['SelectedCategory'] . "'
+					and area = '" . $_GET['Area'] . "'
+					and salescommissionrates.currency = '" . $_GET['Currency'] . "'
+					and daysactive = '" . $_GET['DaysActive'] . "'
+					and startfrom = '" . $_GET['StartFrom'] . "'";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
 
@@ -199,47 +199,47 @@ if (isset($_GET['Edit'])) {
 	$_POST['Rate'] = $MyRow['rate'];
 
 	if ($_POST['CategoryID'] == 'ALL') {
-		$CategoryRow['categorydescription'] = __('All Categories');
-	} else {
-		$CategorySQL = "SELECT categorydescription FROM stockcategory WHERE categoryid='" . $_POST['CategoryID'] . "'";
+	$CategoryRow['categorydescription'] = __('All Categories');
+} else {
+		$CategorySQL = "SELECT categorydescription FROM stockcategory WHERE categoryid = '" . $_POST['CategoryID'] . "'";
 		$CategoryResult = DB_query($CategorySQL);
 		$CategoryRow = DB_fetch_array($CategoryResult);
 	}
 
 	if ($_POST['Area'] == 'ALL') {
-		$AreaRow['areadescription'] = __('All Areas');
-	} else {
-		$AreaSQL = "SELECT areadescription FROM areas WHERE areacode='" . $_POST['Area'] . "'";
+	$AreaRow['areadescription'] = __('All Areas');
+} else {
+		$AreaSQL = "SELECT areadescription FROM areas WHERE areacode = '" . $_POST['Area'] . "'";
 		$AreaResult = DB_query($AreaSQL);
 		$AreaRow = DB_fetch_array($AreaResult);
 	}
 
-	echo '<input type="hidden" name="SelectedSalesPerson" value="', $SelectedSalesPerson, '" />';
-	echo '<input type="hidden" name="Currency" value="', $_GET['Currency'], '" />';
-	echo '<input type="hidden" name="StartFrom" value="', $_GET['StartFrom'], '" />';
-	echo '<input type="hidden" name="DaysActive" value="', $_GET['DaysActive'], '" />';
-	echo '<input type="hidden" name="CategoryID" value="', $_POST['CategoryID'], '" />';
-	echo '<input type="hidden" name="Area" value="', $_POST['Area'], '" />';
+	echo '<input type = "hidden" name="SelectedSalesPerson" value = "', $SelectedSalesPerson, '" />';
+	echo '<input type = "hidden" name="Currency" value = "', $_GET['Currency'], '" />';
+	echo '<input type = "hidden" name="StartFrom" value = "', $_GET['StartFrom'], '" />';
+	echo '<input type = "hidden" name="DaysActive" value = "', $_GET['DaysActive'], '" />';
+	echo '<input type = "hidden" name="CategoryID" value = "', $_POST['CategoryID'], '" />';
+	echo '<input type = "hidden" name="Area" value = "', $_POST['Area'], '" />';
 	echo '<fieldset>
 			<legend>', __('Edit Commission Details'), '</legend>
 			<field>
-				<label for="CategoryID">', __('Stock Category'), '</label>
+				<label for = "CategoryID">', __('Stock Category'), '</label>
 				<div class="fieldtext">', $_GET['SelectedCategory'], ' - ', $CategoryRow['categorydescription'], '</div>
 			</field>
 			<field>
-				<label for="Area">', __('Sales Area'), '</label>
+				<label for = "Area">', __('Sales Area'), '</label>
 				<div class="fieldtext">', $_GET['Area'], ' - ', $AreaRow['areadescription'], '</div>
 			</field>
 			<field>
-				<label for="Currency">', __('Currency'), '</label>
+				<label for = "Currency">', __('Currency'), '</label>
 				<div class="fieldtext">', $_GET['Currency'], ' - ', $MyRow['currencyname'], '</div>
 			</field>
 			<field>
-				<label for="StartFrom">', __('Start From Value'), '</label>
+				<label for = "StartFrom">', __('Start From Value'), '</label>
 				<div class="fieldtext">', $_GET['StartFrom'], '</div>
 			</field>
 			<field>
-				<label for="DaysActive">', __('Below Number of Active Days'), '</label>
+				<label for = "DaysActive">', __('Below Number of Active Days'), '</label>
 				<div class="fieldtext">', $_GET['DaysActive'], '</div>
 			</field>';
 } else {
@@ -248,23 +248,23 @@ if (isset($_GET['Edit'])) {
 	$_POST['StartFrom'] = 0;
 	$_POST['Rate'] = 0;
 
-	echo '<input type="hidden" name="SelectedSalesPerson" value="', $SelectedSalesPerson, '" />';
-	echo '<input type="hidden" name="New" value="Yes" />';
+	echo '<input type = "hidden" name="SelectedSalesPerson" value = "', $SelectedSalesPerson, '" />';
+	echo '<input type = "hidden" name="New" value = "Yes" />';
 	echo '<fieldset>
 			<legend>', __('Create Commission Details'), '</legend>';
 
 	$SQL = "SELECT categoryid, categorydescription FROM stockcategory";
 	$Result = DB_query($SQL);
 	echo '<field>
-			<label for="CategoryID">', __('Stock Category'), '</label>
-			<select name="CategoryID" autofocus="autofocus" required="required">
-				<option value=""></option>
-				<option value="ALL">', __('All Categories'), '</option>';
+			<label for = "CategoryID">', __('Stock Category'), '</label>
+			<select name="CategoryID" autofocus = "autofocus" required = "required">
+				<option value = ""></option>
+				<option value = "ALL">', __('All Categories'), '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($MyRow['categoryid'] == $_POST['CategoryID']) {
-			echo '<option selected="selected" value="', $MyRow['categoryid'], '">', $MyRow['categorydescription'], ' (', $MyRow['categoryid'], ')</option>';
-		} else {
-			echo '<option value="', $MyRow['categoryid'], '">', $MyRow['categorydescription'], ' (', $MyRow['categoryid'], ')</option>';
+	echo '<option selected = "selected" value = "', $MyRow['categoryid'], '">', $MyRow['categorydescription'], ' (', $MyRow['categoryid'], ')</option>';
+} else {
+			echo '<option value = "', $MyRow['categoryid'], '">', $MyRow['categorydescription'], ' (', $MyRow['categoryid'], ')</option>';
 		}
 	}
 	echo '</select>
@@ -274,14 +274,14 @@ if (isset($_GET['Edit'])) {
 	$SQL = "SELECT areacode, areadescription FROM areas";
 	$Result = DB_query($SQL);
 	echo '<field>
-			<label for="Area">', __('Sales Area'), '</label>
-			<select name="Area" required="required">
-				<option value="ALL">', __('All Areas'), '</option>';
+			<label for = "Area">', __('Sales Area'), '</label>
+			<select name="Area" required = "required">
+				<option value = "ALL">', __('All Areas'), '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($MyRow['areacode'] == $_POST['Area'] or $MyRow['areacode'] == $SalesPersonArea) {
-			echo '<option selected="selected" value="', $MyRow['areacode'], '">', $MyRow['areadescription'], ' (', $MyRow['areacode'], ')</option>';
-		} else {
-			echo '<option value="', $MyRow['areacode'], '">', $MyRow['areadescription'], ' (', $MyRow['areacode'], ')</option>';
+	echo '<option selected = "selected" value = "', $MyRow['areacode'], '">', $MyRow['areadescription'], ' (', $MyRow['areacode'], ')</option>';
+} else {
+			echo '<option value = "', $MyRow['areacode'], '">', $MyRow['areadescription'], ' (', $MyRow['areacode'], ')</option>';
 		}
 	}
 	echo '</select>
@@ -291,13 +291,13 @@ if (isset($_GET['Edit'])) {
 	$SQL = "SELECT currabrev, currency FROM currencies";
 	$Result = DB_query($SQL);
 	echo '<field>
-			<label for="Currency">', __('Currency'), '</label>
-			<select name="Currency" required="required">';
+			<label for = "Currency">', __('Currency'), '</label>
+			<select name="Currency" required = "required">';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($MyRow['currabrev'] == $_POST['Currency']) {
-			echo '<option selected="selected" value="', $MyRow['currabrev'], '">', $MyRow['currency'], ' (', $MyRow['currabrev'], ')</option>';
-		} else {
-			echo '<option value="', $MyRow['currabrev'], '">', $MyRow['currency'], ' (', $MyRow['currabrev'], ')</option>';
+	echo '<option selected = "selected" value = "', $MyRow['currabrev'], '">', $MyRow['currency'], ' (', $MyRow['currabrev'], ')</option>';
+} else {
+			echo '<option value = "', $MyRow['currabrev'], '">', $MyRow['currency'], ' (', $MyRow['currabrev'], ')</option>';
 		}
 	}
 	echo '</select>
@@ -305,28 +305,28 @@ if (isset($_GET['Edit'])) {
 	</field>';
 
 	echo '<field>
-			<label for="StartFrom">', __('Start From Value'), '</label>
-			<input type="text" class="number" requited="required" name="StartFrom" value="0.0" />
+			<label for = "StartFrom">', __('Start From Value'), '</label>
+			<input type = "text" class="number" requited = "required" name="StartFrom" value = "0.0" />
 			<fieldhelp>', __('The value at which this commission rate kicks in.'), '</fieldhelp>
 		</field>';
 
 	echo '<field>
-			<label for="DaysActive">', __('Below Number of Active Days'), '</label>
-			<input type="text" class="number" requited="required" name="DaysActive" size="3" value="0" />
+			<label for = "DaysActive">', __('Below Number of Active Days'), '</label>
+			<input type = "text" class="number" requited = "required" name="DaysActive" size = "3" value = "0" />
 			<fieldhelp>', __('This commission can apply for just a certain number of days after the customer has become active. Choose zero if the rate always applies.'), '</fieldhelp>
 		</field>';
 }
 
 echo '<field>
-		<label for="Rate">', __('Commission Rate'), '</label>
-		<input type="text" class="number" requited="required" name="Rate" value="', $_POST['Rate'], '" /> %
+		<label for = "Rate">', __('Commission Rate'), '</label>
+		<input type = "text" class="number" requited = "required" name="Rate" value = "', $_POST['Rate'], '" /> %
 		<fieldhelp>', __('The percentage commission to be applied for this record.'), '</fieldhelp>
 	</field>';
 
 echo '</fieldset>';
 
 echo '<div class="centre">
-		<input type="submit" name="Submit" value="Save" />
+		<input type = "submit" name="Submit" value = "Save" />
 	</div>';
 
 echo '</form>';

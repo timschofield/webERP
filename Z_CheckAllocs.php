@@ -13,12 +13,12 @@ include('includes/header.php');
 $SQL = "SELECT debtortrans.id,
 		debtortrans.debtorno,
 		debtortrans.transno,
-		ovamount+ovgst AS totamt,
-		SUM(custallocns.Amt) AS totalalloc,
+		ovamount+ovgst as totamt,
+		SUM(custallocns.Amt) as totalalloc,
 		debtortrans.alloc
 	FROM debtortrans INNER JOIN custallocns
-	ON debtortrans.id=custallocns.transid_allocto
-	WHERE debtortrans.type=10
+	ON debtortrans.id = custallocns.transid_allocto
+	WHERE debtortrans.type = 10
 	GROUP BY debtortrans.ID,
 		debtortrans.type,
 		ovamount+ovgst,
@@ -27,7 +27,7 @@ $SQL = "SELECT debtortrans.id,
 
 $Result = DB_query($SQL);
 
-if (DB_num_rows($Result)==0){
+if (DB_num_rows($Result) == 0){
 	prnMsg(__('There are no inconsistencies with allocations') . ' - ' . __('all is well'),'info');
 }
 
@@ -45,21 +45,21 @@ while ($MyRow = DB_fetch_array($Result)){
 				debtortrans.debtorno,
 				reference,
 				debtortrans.rate,
-				ovamount+ovgst+ovfreight+ovdiscount AS totalamt,
+				ovamount+ovgst+ovfreight+ovdiscount as totalamt,
 				custallocns.amt,
-				decimalplaces AS currdecimalplaces
+				decimalplaces as currdecimalplaces
 			FROM debtortrans INNER JOIN custallocns
-			ON debtortrans.id=custallocns.transid_allocfrom
+			ON debtortrans.id = custallocns.transid_allocfrom
 			INNER JOIN debtorsmaster ON
-			debtortrans.debtorno=debtorsmaster.debtorno
+			debtortrans.debtorno = debtorsmaster.debtorno
 			INNER JOIN currencies ON
-			debtorsmaster.currcode=currencies.currabrev
-			WHERE custallocns.transid_allocto='" . $AllocToID . "'";
+			debtorsmaster.currcode = currencies.currabrev
+			WHERE custallocns.transid_allocto = '" . $AllocToID . "'";
 
 	$ErrMsg = __('The customer transactions for the selected criteria could not be retrieved because');
 	$TransResult = DB_query($SQL, $ErrMsg);
 
-	echo '<table class="selection">';
+	echo '<table class = "selection">';
 
 	$Tableheader = '<tr>
 				<th>' . __('Type') . '</th>
@@ -73,34 +73,34 @@ while ($MyRow = DB_fetch_array($Result)){
 	$RowCounter = 1;
 	$AllocsTotal = 0;
 
-	while ($MyRow1=DB_fetch_array($TransResult)) {
+	while ($MyRow1 = DB_fetch_array($TransResult)) {
 
-		if ($MyRow1['type']==11){
-			$TransType = __('Credit Note');
-		} else {
+		if ($MyRow1['type']==11) {
+	$TransType = __('Credit Note');
+} else {
 			$TransType = __('Receipt');
 		}
 		$CurrDecimalPlaces = $MyRow1['currdecimalplaces'];
 
-		echo '<tr class="striped_row">
+		echo '<tr class = "striped_row">
 				<td>', $TransType, '</td>
 				<td>', $MyRow1['transno'], '</td>
 				<td>', $MyRow1['reference'], '</td>
 				<td>', locale_number_format($MyRow1['exrate'],4), '</td>
-				<td class="number">', locale_number_format($MyRow1['totalamt'],$CurrDecimalPlaces), '</td>
-				<td class="number">', locale_number_format($MyRow1['amt'],$CurrDecimalPlaces), '</td>
+				<td class = "number">', locale_number_format($MyRow1['totalamt'],$CurrDecimalPlaces), '</td>
+				<td class = "number">', locale_number_format($MyRow1['amt'],$CurrDecimalPlaces), '</td>
 			</tr>';
 
 		$RowCounter++;
-		if ($RowCounter == 12){
-			$RowCounter=1;
+		if ($RowCounter == 12) {
+	$RowCounter = 1;
 			echo $Tableheader;
-		}
+}
 		//end of page full new headings if
 		$AllocsTotal +=$MyRow1['amt'];
 	}
 	//end of while loop
-	echo '<tr><td colspan="6" class="number">' . locale_number_format($AllocsTotal,$CurrDecimalPlaces) . '</td></tr>';
+	echo '<tr><td colspan = "6" class = "number">' . locale_number_format($AllocsTotal,$CurrDecimalPlaces) . '</td></tr>';
 	echo '</table>
 		<br />';
 }

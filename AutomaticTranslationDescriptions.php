@@ -15,7 +15,7 @@ if (!function_exists("curl_init")) {
 
 include('includes/TranslationFunctions.php');
 
-$SourceLanguage=mb_substr($_SESSION['Language'],0,2);
+$SourceLanguage = mb_substr($_SESSION['Language'],0,2);
 
 // Select items and classify them
 $SQL = "SELECT stockmaster.stockid,
@@ -26,16 +26,16 @@ $SQL = "SELECT stockmaster.stockid,
 				longdescriptiontranslation
 		FROM stockmaster, stockdescriptiontranslations
 		WHERE stockmaster.stockid = stockdescriptiontranslations.stockid
-			AND stockmaster.discontinued = 0
-			AND (descriptiontranslation = ''
-				OR longdescriptiontranslation = '')
+			and stockmaster.discontinued = 0
+			and (descriptiontranslation = ''
+				or longdescriptiontranslation = '')
 		ORDER BY stockmaster.stockid,
 				language_id";
 $Result = DB_query($SQL);
 
-if(DB_num_rows($Result) != 0) {
-	echo '<p class="page_title_text"><strong>' . __('Description Automatic Translation for empty translations') . '</strong></p>';
-	echo '<table class="selection">';
+if (DB_num_rows($Result) !=  0) {
+	echo '<p class = "page_title_text"><strong>' . __('Description Automatic Translation for empty translations') . '</strong></p>';
+	echo '<table class = "selection">';
 	$TableHeader = '<tr>
 						<th>' . __('#') . '</th>
 						<th>' . __('Code') . '</th>
@@ -47,52 +47,52 @@ if(DB_num_rows($Result) != 0) {
 	$i = 0;
 	while ($MyRow = DB_fetch_array($Result)) {
 
-		if ($MyRow['descriptiontranslation'] == ''){
-			$TargetLanguage=mb_substr($MyRow['language_id'],0,2);
+		if ($MyRow['descriptiontranslation'] == '') {
+	$TargetLanguage = mb_substr($MyRow['language_id'],0,2);
 			$TranslatedText = translate_via_google_translator($MyRow['description'],$TargetLanguage,$SourceLanguage);
 
 			$SQL = "UPDATE stockdescriptiontranslations " .
-					"SET descriptiontranslation='" . $TranslatedText . "', " .
-						"needsrevision= '1' " .
-					"WHERE stockid='" . $MyRow['stockid'] . "' AND (language_id='" . $MyRow['language_id'] . "')";
+					"SET descriptiontranslation = '" . $TranslatedText . "', " .
+						"needsrevision =  '1' " .
+					"WHERE stockid = '" . $MyRow['stockid'] . "' and (language_id = '" . $MyRow['language_id'] . "')";
 			$Update = DB_query($SQL, $ErrMsg, '', true);
 
 			$i++;
-			echo '<tr class="striped_row">
-					<td class="number">', $i, '</td>
+			echo '<tr class = "striped_row">
+					<td class = "number">', $i, '</td>
 					<td>', $MyRow['stockid'], '</td>
 					<td>', $MyRow['description'], '</td>
 					<td>', $MyRow['language_id'], '</td>
 					<td>', $TranslatedText, '</td>
 				</tr>';
-		}
-		if ($MyRow['longdescriptiontranslation'] == ''){
-			$TargetLanguage=mb_substr($MyRow['language_id'],0,2);
+}
+		if ($MyRow['longdescriptiontranslation'] == '') {
+	$TargetLanguage = mb_substr($MyRow['language_id'],0,2);
 			$TranslatedText = translate_via_google_translator($MyRow['longdescription'],$TargetLanguage,$SourceLanguage);
 
 			$SQL = "UPDATE stockdescriptiontranslations " .
-					"SET longdescriptiontranslation='" . $TranslatedText . "', " .
-						"needsrevision= '1' " .
-					"WHERE stockid='" . $MyRow['stockid'] . "' AND (language_id='" . $MyRow['language_id'] . "')";
+					"SET longdescriptiontranslation = '" . $TranslatedText . "', " .
+						"needsrevision =  '1' " .
+					"WHERE stockid = '" . $MyRow['stockid'] . "' and (language_id = '" . $MyRow['language_id'] . "')";
 					echo $SQL;
 			$Update = DB_query($SQL, $ErrMsg, '', true);
 
 			$i++;
-			echo '<tr class="striped_row">
-					<td class="number">', $i, '</td>
+			echo '<tr class = "striped_row">
+					<td class = "number">', $i, '</td>
 					<td>', $MyRow['stockid'], '</td>
 					<td>', $MyRow['longdescription'], '</td>
 					<td>', $MyRow['language_id'], '</td>
 					<td>', $TranslatedText, '</td>
 				</tr>';
-		}
+}
 	}
 	echo '</table>';
 	prnMsg(__('Number of translated descriptions via Google API') . ': ' . locale_number_format($i));
 } else {
 
-echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
-		'/images/maintenance.png" title="' .
+echo '<p class = "page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
+		'/images/maintenance.png" title = "' .
 		__('No item descriptions were automatically translated') . '" />' . ' ' .
 		__('No item descriptions were automatically translated') . '</p>';
 

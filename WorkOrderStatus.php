@@ -39,9 +39,9 @@ $WOResult = DB_query("SELECT workorders.loccode,
 						ON workorders.wo=woitems.wo
 						INNER JOIN stockmaster
 						ON woitems.stockid=stockmaster.stockid
-						INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
+						INNER JOIN locationusers ON locationusers.loccode=locations.loccode and locationusers.userid='" .  $_SESSION['UserID'] . "' and locationusers.canview=1
 						WHERE woitems.stockid='" . $StockID . "'
-						AND woitems.wo ='" . $SelectedWO . "'",
+						and woitems.wo ='" . $SelectedWO . "'",
 						$ErrMsg);
 
 if (DB_num_rows($WOResult)==0){
@@ -108,23 +108,23 @@ echo '<table cellpadding="2" class="selection">
 									FROM worequirements INNER JOIN stockmaster
 									ON worequirements.stockid=stockmaster.stockid
 									WHERE wo='" . $SelectedWO . "'
-									AND worequirements.parentstockid='" . $StockID . "'");
+									and worequirements.parentstockid='" . $StockID . "'");
 		$IssuedAlreadyResult = DB_query("SELECT stockid,
-						SUM(-qty) AS total
+						SUM(-qty) as total
 					FROM stockmoves
 					WHERE stockmoves.type=28
-					AND reference='".$SelectedWO."'
+					and reference='".$SelectedWO."'
 					GROUP BY stockid");
 	while ($IssuedRow = DB_fetch_array($IssuedAlreadyResult)){
 		$IssuedAlreadyRow[$IssuedRow['stockid']] = $IssuedRow['total'];
 	}
 
 	while ($RequirementsRow = DB_fetch_array($RequirmentsResult)){
-		if ($RequirementsRow['autoissue']==0){
-			echo '<tr>
+		if ($RequirementsRow['autoissue']==0) {
+	echo '<tr>
 					<td>' . __('Manual Issue') . '</td>
 					<td>' . $RequirementsRow['stockid'] . ' - ' . $RequirementsRow['description'] . '</td>';
-		} else {
+} else {
 			echo '<tr>
 					<td class="notavailable">' . __('Auto Issue') . '</td>
 					<td class="notavailable">' .$RequirementsRow['stockid'] . ' - ' . $RequirementsRow['description']  . '</td>';
@@ -139,7 +139,7 @@ echo '<table cellpadding="2" class="selection">
 			<td class="number">'.locale_number_format($Issued,$RequirementsRow['decimalplaces']).'</td></tr>';
 	}
 	/* Now do any additional issues of items not in the BOM */
-	if(isset($IssuedAlreadyRow) AND count($IssuedAlreadyRow)>0){
+	if(isset($IssuedAlreadyRow) and count($IssuedAlreadyRow)>0){
 		$AdditionalStocks = implode("','",array_keys($IssuedAlreadyRow));
 		$RequirementsSQL = "SELECT stockid,
 						description,

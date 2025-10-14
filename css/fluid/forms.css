@@ -200,22 +200,22 @@ cursor: pointer;
 transition-duration:0.5s;
 }
 form input[type="submit"].previous_button {
-background:#F6F5F4 url(images/previous.png) center left 2%/24px no-repeat;
+background:#556699 url(images/previous.png) center left 2%/24px no-repeat;
 padding-right:16px;
 padding-left:32px;
 }
 form input[type="submit"].previous_button:hover {
-background:#CAE7F1 url(images/previous.png) center left 2%/24px no-repeat;
+background:#556699 url(images/previous.png) center left 2%/24px no-repeat;
 padding-right:16px;
 padding-left:32px;
 }
 form input[type="submit"].next_button {
-background:#F6F5F4 url(images/next.png) center right 2%/24px no-repeat;
+background:#556699 url(images/next.png) center right 2%/24px no-repeat;
 padding-right:32px;
 padding-left:16px;
 }
 form input[type="submit"].next_button:hover {
-background:#CAE7F1 url(images/next.png) center right 2%/24px no-repeat;
+background:#556699 url(images/next.png) center right 2%/24px no-repeat;
 padding-right:32px;
 padding-left:16px;
 }

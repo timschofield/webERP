@@ -41,10 +41,10 @@ if (isset($_FILES['SelectedAssetFile']['name'])) { //start file processing
 
 /*
 	if ($_FILES['SelectedAssetFile']['type'] != 'text/csv') {
-		prnMsg(__('File has type') . ' ' . $_FILES['SelectedAssetFile']['type'] . ', ' . __('but only "text/csv" is allowed.'),'error');
+	prnMsg(__('File has type') . ' ' . $_FILES['SelectedAssetFile']['type'] . ', ' . __('but only "text/csv" is allowed.'),'error');
 		include('includes/footer.php');
 		exit();
-	}
+}
 */
 	// get file handle
 	$FileHandle = fopen($_FILES['SelectedAssetFile']['tmp_name'], 'r');
@@ -93,7 +93,7 @@ if (isset($_FILES['SelectedAssetFile']['name'])) { //start file processing
 		}
 
 		// cleanup the data (csv files often import with empty strings and such)
-		for ($i=0; $i<count($MyRow);$i++) {
+		for ($i = 0;  $i<count($MyRow); $i++) {
 			$MyRow[$i] = trim($MyRow[$i]);
 			switch ($i) {
 				case 0:
@@ -124,59 +124,59 @@ if (isset($_FILES['SelectedAssetFile']['name'])) { //start file processing
 					$DepnType = mb_strtoupper($MyRow[$i]);
 					break;
 				case 9:
-					$DepnRate= $MyRow[$i];
+					$DepnRate =  $MyRow[$i];
 					break;
 				case 10:
-					$DatePurchased= $MyRow[$i];
+					$DatePurchased =  $MyRow[$i];
 					break;
 			} //end switch
 		} //end loop around fields from import
 
-		if (mb_strlen($Description)==0 OR mb_strlen($Description)>50){
+		if (mb_strlen($Description) == 0 or mb_strlen($Description)>50){
 			prnMsg('The description of the asset is expected to be more than 3 characters long and less than 50 characters long','error');
 			echo '<br />' . __('Row:') . $Row . ' - ' . __('Invalid Description:') . ' ' . $Description;
-			$InputError=true;
+			$InputError = true;
 		}
 		if (!is_numeric($DepnRate)){
 			prnMsg(__('The depreciation rate is expected to be numeric'),'error');
 			echo '<br />' . __('Row:') . $Row . ' - ' . __('Invalid Depreciation Rate:') . ' ' . $DepnRate;
-			$InputError=true;
-		}elseif ($DepnRate<0 OR $DepnRate>100){
-			prnMsg(__('The depreciation rate is expected to be a number between 0 and 100'),'error');
+			$InputError = true;
+		}elseif ($DepnRate<0 or $DepnRate>100) {
+	prnMsg(__('The depreciation rate is expected to be a number between 0 and 100'),'error');
 			echo '<br />' .  __('Row:') . $Row . ' - ' .__('Invalid Depreciation Rate:') . ' ' . $DepnRate;
-			$InputError=true;
-		}
+			$InputError = true;
+}
 		if (!is_numeric($AccumDepn)){
 			prnMsg(__('The accumulated depreciation is expected to be numeric'),'error');
 			echo '<br />' . __('Row:') . $Row . ' - ' . __('Invalid Accumulated Depreciation:') . ' ' . $AccumDepn;
-			$InputError=true;
-		} elseif ($AccumDepn<0){
-			 prnMsg(__('The accumulated depreciation is expected to be either zero or a positive number'),'error');
+			$InputError = true;
+		} elseif ($AccumDepn<0) {
+	prnMsg(__('The accumulated depreciation is expected to be either zero or a positive number'),'error');
 			echo '<br />' . __('Row:') . $Row . ' - ' . __('Invalid Accumulated Depreciation:') . ' ' . $AccumDepn;
-			$InputError=true;
-		}
+			$InputError = true;
+}
 		if (!is_numeric($Cost)){
 			prnMsg(__('The cost is expected to be numeric'),'error');
 			echo '<br />' . __('Row:') . $Row . ' - ' . __('Invalid Cost:') . ' ' . $Cost;
-			$InputError=true;
-		} elseif ($Cost<=0){
-			 prnMsg(__('The cost is expected to be a positive number'),'error');
+			$InputError = true;
+		} elseif ($Cost<=0) {
+	prnMsg(__('The cost is expected to be a positive number'),'error');
 			echo '<br />' . __('Row:') . $Row . ' - ' . __('Invalid Cost:') . ' ' . $AccumDepn;
-			$InputError=true;
-		}
-		if ($DepnType !='SL' AND $DepnType!='DV'){
-			prnMsg(__('The depreciation type must be either SL - Straight Line or DV - Diminishing Value'),'error');
+			$InputError = true;
+}
+		if ($DepnType !='SL' and $DepnType != 'DV') {
+	prnMsg(__('The depreciation type must be either SL - Straight Line or DV - Diminishing Value'),'error');
 			echo '<br />' . __('Row:') . $Row . ' - ' . __('Invalid depreciation type:') . ' ' . $DepnType;
 			$InputError = true;
-		}
-		$Result = DB_query("SELECT categoryid FROM fixedassetcategories WHERE categoryid='" . $AssetCategoryID . "'");
-		if (DB_num_rows($Result)==0){
+}
+		$Result = DB_query("SELECT categoryid FROM fixedassetcategories WHERE categoryid = '" . $AssetCategoryID . "'");
+		if (DB_num_rows($Result) == 0){
 			$InputError = true;
 			prnMsg(__('The asset category code entered must be exist in the assetcategories table'),'error');
 			echo '<br />' . __('Row:') . $Row . ' - ' . __('Invalid asset category:') . ' ' . $AssetCategoryID;
 		}
-		$Result = DB_query("SELECT locationid FROM fixedassetlocations WHERE locationid='" . $AssetLocationCode . "'");
-		if (DB_num_rows($Result)==0){
+		$Result = DB_query("SELECT locationid FROM fixedassetlocations WHERE locationid = '" . $AssetLocationCode . "'");
+		if (DB_num_rows($Result) == 0){
 			$InputError = true;
 			prnMsg(__('The asset location code entered must be exist in the asset locations table'),'error');
 			echo '<br />' . __('Row:') . $Row . ' - ' . __('Invalid asset location code:') . ' ' . $AssetLocationCode;
@@ -186,13 +186,14 @@ if (isset($_FILES['SelectedAssetFile']['name'])) { //start file processing
 			prnMsg(__('The date purchased must be entered in the format:') . ' ' . $_SESSION['DefaultDateFormat'],'error');
 			echo '<br />' . __('Row:') . $Row . ' - ' . __('Invalid date format:') . ' ' . $DatePurchased;
 		}
-		if ($DepnType=='DV'){
-			$DepnType=1;
-		} else {
-			$DepnType=0;
+		if ($DepnType == 'DV') {
+	$DepnType = 1;
+} else {
+			$DepnType = 0;
 		}
 
-		if ($InputError == false){ //no errors
+		if ($InputError == false) {
+	//no errors
 
 			$TransNo = GetNextTransNo(49);
 			$PeriodNo = GetPeriod(ConvertSQLDate($_POST['DateToEnter']));
@@ -270,33 +271,34 @@ if (isset($_FILES['SelectedAssetFile']['name'])) { //start file processing
 
 				if (DB_error_no() ==0) {
 					prnMsg( __('Inserted the new asset:') . ' ' . $Description,'info');
-				}
+}
 			}
 		} // there were errors checking the row so no inserts
 		$Row++;
 	}
 
-	if ($InputError == 1) { //exited loop with errors so rollback
+	if ($InputError == 1) {
+	//exited loop with errors so rollback
 		prnMsg(__('Failed on row '. $Row. '. Batch import has been rolled back.'),'error');
 		DB_Txn_Rollback();
-	} else { //all good so commit data transaction
+} else { //all good so commit data transaction
 		DB_Txn_Commit();
 		prnMsg( __('Batch Import of') .' ' . $_FILES['SelectedAssetFile']['name']  . ' '. __('has been completed. All assets in the file have been committed to the database.'),'success');
 	}
 
 	fclose($FileHandle);
 
-} elseif ( isset($_POST['gettemplate']) OR isset($_GET['gettemplate']) ) { //download an import template
+} elseif ( isset($_POST['gettemplate']) or isset($_GET['gettemplate']) ) { //download an import template
 
 	echo '<br /><br /><br />"'. implode('","',$FieldNames). '"<br /><br /><br />';
 
 } else { //show file upload form
 
 	echo '<a href="' . $RootPath . '/Z_ImportFixedAssets.php?gettemplate=1">' . __('Get Import Template') . '</a>';
-	echo '<form enctype="multipart/form-data" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<form enctype = "multipart/form-data" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post">';
+	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 
-	echo '<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />';
+	echo '<input type = "hidden" name="MAX_FILE_SIZE" value = "1000000" />';
 	echo '<fieldset>
 			<legend>', __('Import Details'), '</legend>
 			<field>
@@ -304,17 +306,17 @@ if (isset($_FILES['SelectedAssetFile']['name'])) { //start file processing
 				<select name="DateToEnter">';
 	$PeriodsResult = DB_query("SELECT lastdate_in_period FROM periods ORDER BY periodno");
 	while ($PeriodRow = DB_fetch_row($PeriodsResult)){
-		echo '<option value="' . $PeriodRow[0] . '">' . ConvertSQLDate($PeriodRow[0]) . '</option>';
+		echo '<option value = "' . $PeriodRow[0] . '">' . ConvertSQLDate($PeriodRow[0]) . '</option>';
 	}
 	echo '</select>
 		</field>';
 	echo '<field>
 			<label>' . __('Fixed Assets Upload file:') . '</label>
-			<input name="SelectedAssetFile" type="file" />
+			<input name="SelectedAssetFile" type = "file" />
 		</field>
 	</fieldset>
 	<div class="centre">
-		<input type="submit" value="' . __('Send File') . '" />
+		<input type = "submit" value = "' . __('Send File') . '" />
 	</div>
 	</form>';
 

@@ -18,13 +18,13 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	// Find mrpsupplies records where the duedate is not the same as the mrpdate
 	$SelectType = " ";
 	if ($_POST['Selection'] != 'All') {
-		$SelectType = " AND ordertype = '" . $_POST['Selection'] . "'";
-	}
+	$SelectType = " and ordertype = '" . $_POST['Selection'] . "'";
+}
 	$SQL = "SELECT mrpsupplies.*,
 				   stockmaster.description,
 				   stockmaster.decimalplaces
 			FROM mrpsupplies,stockmaster
-			WHERE mrpsupplies.part = stockmaster.stockid AND duedate <> mrpdate
+			WHERE mrpsupplies.part = stockmaster.stockid and duedate <> mrpdate
 				$SelectType
 			ORDER BY mrpsupplies.part";
 
@@ -58,7 +58,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	<body>
 		<div class="page-title">' . $_SESSION['CompanyRecord']['coyname'] . '</div>
 		<div>' . __('MRP Reschedule Report') . '</div>
-		<div>' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '</div>
+		<div>' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '</div>
 		<div>' . __('Selection:') . ' ' . $_POST['Selection'] . '</div>
 		<br>
 		<table>
@@ -84,12 +84,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$FormatedDueDate = ConvertSQLDate($MyRow['duedate']);
 		$FormatedMRPDate = ConvertSQLDate($MyRow['mrpdate']);
 		if ($MyRow['mrpdate'] == '2050-12-31') {
-			$FormatedMRPDate = 'Cancel';
-		}
+	$FormatedMRPDate = 'Cancel';
+}
 
 		if ($Fill) {
-			$rowClass = ($i % 2 == 0) ? "" : "alt";
-		}
+	$rowClass = ($i % 2 == 0) ? "" : "alt";
+}
 		else {
 			$rowClass = "";
 		}
@@ -123,7 +123,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '</tbody>
 				</table>
 				<div class="centre">
-					<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
+					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -160,29 +160,29 @@ else { // The option to print PDF was not hit so display form
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Stock') . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" target="_blank">
-		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target="_blank">
+		<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />
 		<fieldset>
 		<legend>' . __('Report Criteria') . '</legend>
 		<field>
-			<label for="Fill">' . __('Print Option') . ':</label>
-			<select name="Fill">
-				<option selected="selected" value="yes">' . __('Print With Alternating Highlighted Lines') . '</option>
-				<option value="no">' . __('Plain Print') . '</option>
+			<label for = "Fill">' . __('Print Option') . ':</label>
+			<select name = "Fill">
+				<option selected = "selected" value = "yes">' . __('Print With Alternating Highlighted Lines') . '</option>
+				<option value = "no">' . __('Plain Print') . '</option>
 			</select>
 		</field>
 		<field>
-			<label for="Selection">' . __('Selection') . ':</label>
-			<select name="Selection">
-				<option selected="selected" value="All">' . __('All') . '</option>
-				<option value="WO">' . __('Work Orders Only') . '</option>
-				<option value="PO">' . __('Purchase Orders Only') . '</option>
+			<label for = "Selection">' . __('Selection') . ':</label>
+			<select name = "Selection">
+				<option selected = "selected" value = "All">' . __('All') . '</option>
+				<option value = "WO">' . __('Work Orders Only') . '</option>
+				<option value = "PO">' . __('Purchase Orders Only') . '</option>
 			</select>
 		</field>
 		</fieldset>
 		<div class="centre">
-			<input type="submit" name="PrintPDF" title="Produce PDF Report" value="' . __('Print PDF') . '" />
-			<input type="submit" name="View" title="View Report" value="' . __('View') . '" />
+			<input type = "submit" name = "PrintPDF" title="Produce PDF Report" value = "' . __('Print PDF') . '" />
+			<input type = "submit" name = "View" title="View Report" value = "' . __('View') . '" />
 		</div>
 		</form>';
 

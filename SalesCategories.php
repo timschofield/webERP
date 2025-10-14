@@ -11,7 +11,7 @@ include('includes/ImageFunctions.php');
 
 if (isset($_GET['SelectedCategory'])) {
 	$SelectedCategory = mb_strtoupper($_GET['SelectedCategory']);
-} else if (isset($_POST['SelectedCategory'])) {
+} elseif (isset($_POST['SelectedCategory'])) {
 	$SelectedCategory = mb_strtoupper($_POST['SelectedCategory']);
 }
 
@@ -26,7 +26,7 @@ echo '<p class="page_title_text">
 	</p>';
 
 if (isset($_GET['AddFeature'])) {
-	$SQL = "UPDATE salescatprod SET featured=1 WHERE salescatid='" . $SelectedCategory . "' AND stockid='" . $_GET['StockID'] . "'";
+	$SQL = "UPDATE salescatprod SET featured = 1 WHERE salescatid = '" . $SelectedCategory . "' and stockid = '" . $_GET['StockID'] . "'";
 	$Result = DB_query($SQL);
 	if (DB_error_no($Result) == 0) {
 		prnMsg(__('The item has been successfully added to the featured list'), 'success');
@@ -35,7 +35,7 @@ if (isset($_GET['AddFeature'])) {
 }
 
 if (isset($_GET['RemoveFeature'])) {
-	$SQL = "UPDATE salescatprod SET featured=0 WHERE salescatid='" . $SelectedCategory . "' AND stockid='" . $_GET['StockID'] . "'";
+	$SQL = "UPDATE salescatprod SET featured = 0 WHERE salescatid = '" . $SelectedCategory . "' and stockid = '" . $_GET['StockID'] . "'";
 	$Result = DB_query($SQL);
 	if (DB_error_no($Result) == 0) {
 		prnMsg(__('The item has been successfully removed from the featured list'), 'success');
@@ -44,7 +44,7 @@ if (isset($_GET['RemoveFeature'])) {
 }
 
 if (isset($_GET['DelStockID'])) {
-	$SQL = "DELETE FROM salescatprod WHERE salescatid='" . $SelectedCategory . "' AND stockid='" . $_GET['DelStockID'] . "'";
+	$SQL = "DELETE FROM salescatprod WHERE salescatid = '" . $SelectedCategory . "' and stockid = '" . $_GET['DelStockID'] . "'";
 	$Result = DB_query($SQL);
 	if (DB_error_no($Result) == 0) {
 		prnMsg(__('The item has been successfully removed from this category'), 'success');
@@ -79,26 +79,26 @@ if (isset($_POST['AddItems'])) {
 if (isset($_POST['Search']) or isset($_POST['Prev']) or isset($_POST['Next'])) {
 
 	if ($_POST['Keywords'] and $_POST['StockCode']) {
-		prnMsg(__('Stock description keywords have been used in preference to the Stock code extract entered'), 'warn');
-	}
+	prnMsg(__('Stock description keywords have been used in preference to the Stock code extract entered'), 'warn');
+}
 	//insert wildcard characters in spaces
 	$_POST['Keywords'] = mb_strtoupper($_POST['Keywords']);
 	$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 	$SearchCode = '%' . $_POST['StockCode'] . '%';
 
 	if ($_POST['StockCat'] == 'All') {
-		$_POST['StockCat'] = '%';
-	}
+	$_POST['StockCat'] = '%';
+}
 	$SQL = "SELECT  stockmaster.stockid,
 					description,
 					stockmaster.units
 				FROM stockmaster
 				INNER JOIN stockcategory
-					ON stockmaster.categoryid=stockcategory.categoryid
+					ON stockmaster.categoryid = stockcategory.categoryid
 				WHERE stockmaster.description " . LIKE . " '" . $SearchString . "'
-					AND stockmaster.categoryid " . LIKE . " '" . $_POST['StockCat'] . "'
-					AND stockmaster.stockid " . LIKE . " '" . $SearchCode . "'
-					AND stockmaster.discontinued=0
+					and stockmaster.categoryid " . LIKE . " '" . $_POST['StockCat'] . "'
+					and stockmaster.stockid " . LIKE . " '" . $SearchCode . "'
+					and stockmaster.discontinued = 0
 				ORDER BY stockmaster.stockid";
 
 	$ErrMsg = __('There was an error retrieving the stock item details');
@@ -109,8 +109,8 @@ if (isset($_POST['Search']) or isset($_POST['Prev']) or isset($_POST['Next'])) {
 	unset($SearchResult);
 	$ListCount = $MyRow[0];
 	if ($ListCount > 0) {
-		$ListPageMax = ceil($ListCount / $_SESSION['DisplayRecordsMax']) - 1;
-	} else {
+	$ListPageMax = ceil($ListCount / $_SESSION['DisplayRecordsMax']) - 1;
+} else {
 		$ListPageMax = 1;
 	}
 
@@ -124,11 +124,11 @@ if (isset($_POST['Search']) or isset($_POST['Prev']) or isset($_POST['Next'])) {
 		$Offset = 0;
 	}
 	if ($Offset < 0) {
-		$Offset = 0;
-	}
+	$Offset = 0;
+}
 	if ($Offset > $ListPageMax) {
-		$Offset = $ListPageMax;
-	}
+	$Offset = $ListPageMax;
+}
 	$SQL = $SQL . ' LIMIT ' . $_SESSION['DisplayRecordsMax'] . ' OFFSET ' . strval($_SESSION['DisplayRecordsMax'] * $Offset);
 
 	$ErrMsg = __('There is a problem selecting the part records to display because');
@@ -141,29 +141,29 @@ if (isset($_POST['Search']) or isset($_POST['Prev']) or isset($_POST['Next'])) {
 } //end of if search
 if (isset($SearchResult)) {
 
-	echo '<form enctype="multipart/form-data" method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
-	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+	echo '<form enctype = "multipart/form-data" method = "post" action = "', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
+	echo '<input type = "hidden" name="FormID" value = "', $_SESSION['FormID'], '" />';
 
 	if (DB_num_rows($SearchResult) > 0) {
-		$SQL = "SELECT salescatname FROM salescat WHERE salescatid='" . $SelectedCategory . "'";
+		$SQL = "SELECT salescatname FROM salescat WHERE salescatid = '" . $SelectedCategory . "'";
 		$Result = DB_query($SQL);
 		$NameRow = DB_fetch_array($Result);
-		echo '<input type="hidden" name="SelectedCategory" value="', $SelectedCategory, '" />
-				<table cellpadding="2">
+		echo '<input type = "hidden" name="SelectedCategory" value = "', $SelectedCategory, '" />
+				<table cellpadding = "2">
 				<thead>
 					<tr>
-						<th colspan="6">', __('Add items to sales category'), ' ', $NameRow['salescatname'], '(', $SelectedCategory, ')</th>
+						<th colspan = "6">', __('Add items to sales category'), ' ', $NameRow['salescatname'], '(', $SelectedCategory, ')</th>
 					</tr>
 					<tr>
 						<th class="SortedColumn">', __('Code'), '</th>
 						<th class="SortedColumn">', __('Description'), '</th>
 						<th>', __('Units'), '</th>
-						<th colspan="2">', __('Add to Sales Category'), '</th>
+						<th colspan = "2">', __('Add to Sales Category'), '</th>
 						<th>', __('Manuafacturer'), '</th>
 					</tr>
 			</thead>';
 
-		$SQL = "SELECT stockid FROM salescatprod WHERE salescatid='" . $SelectedCategory . "'";
+		$SQL = "SELECT stockid FROM salescatprod WHERE salescatid = '" . $SelectedCategory . "'";
 		$CountResult = DB_query($SQL);
 		$ItemCodes = array();
 		while ($CountRow = DB_fetch_array($CountResult)) {
@@ -184,12 +184,12 @@ if (isset($SearchResult)) {
 						<td>', $MyRow['description'], '</td>
 						<td>', $MyRow['units'], '</td>
 						<td>', $ImageSource, '</td>
-						<td><input type="checkbox" value="0" name="StockID_', $MyRow['stockid'], '" /></td>
+						<td><input type = "checkbox" value = "0" name="StockID_', $MyRow['stockid'], '" /></td>
 						<td><select name="Brand_', $MyRow['stockid'], '">
-							<option value="">', __('Select Brand'), '</option>';
+							<option value = "">', __('Select Brand'), '</option>';
 				$BrandResult = DB_query("SELECT manufacturers_id, manufacturers_name FROM manufacturers");
 				while ($MyRow = DB_fetch_array($BrandResult)) {
-					echo '<option value="', $MyRow['manufacturers_id'], '">', $MyRow['manufacturers_name'], '</option>';
+					echo '<option value = "', $MyRow['manufacturers_id'], '">', $MyRow['manufacturers_name'], '</option>';
 				}
 
 				echo '</select>
@@ -204,7 +204,7 @@ if (isset($SearchResult)) {
 		</table>';
 
 	echo '<div class="centre">
-			<input type="submit" name="AddItems", value="', __('Add items to category'), '" />
+			<input type = "submit" name="AddItems", value = "', __('Add items to category'), '" />
 		</div>';
 
 	include('includes/footer.php');
@@ -235,8 +235,7 @@ if (isset($_POST['SubmitCategory'])) {
 							WHERE salescatid = '" . $SelectedCategory . "'";
 		$Msg = __('The Sales category record has been updated');
 	} elseif ($InputError != 1) {
-
-		/*Selected category is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new stock category form */
+	/*Selected category is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new stock category form */
 
 		$SQL = "INSERT INTO salescat (salescatname,
 									  parentcatid,
@@ -246,13 +245,13 @@ if (isset($_POST['SubmitCategory'])) {
 									  '" . $_POST['ParentCategory'] . "',
 									  '" . $_POST['Active'] . "')";
 		$Msg = __('A new Sales category record has been added');
-	}
+}
 
 	if ($InputError != 1) {
-		//run the SQL from either of the above possibilites
+	//run the SQL from either of the above possibilites
 		$Result = DB_query($SQL);
 		prnMsg($Msg, 'success');
-	}
+}
 
 	unset($SelectedCategory);
 	unset($_POST['SalesCatName']);
@@ -288,12 +287,12 @@ if (!isset($_GET['Select'])) {
 		$ImageFile = reset($ImageFileArray);
 		$CatImgLink = GetImageLink($ImageFile, 'SALESCAT_' . $MyRow['salescatid'], 64, 64, "", "");
 		if ($MyRow['active'] == 1) {
-			$Active = __('Yes');
-		} else {
+	$Active = __('Yes');
+} else {
 			$Active = __('No');
 		}
 
-		$SQL = "SELECT salescatname FROM salescat WHERE salescatid='" . $MyRow['parentcatid'] . "'";
+		$SQL = "SELECT salescatname FROM salescat WHERE salescatid = '" . $MyRow['parentcatid'] . "'";
 		$ParentResult = DB_query($SQL);
 		$ParentRow = DB_fetch_array($ParentResult);
 		if (!isset($ParentRow['salescatname']) or $ParentRow['salescatname'] == '') {
@@ -310,12 +309,12 @@ if (!isset($_GET['Select'])) {
 					<td>', $CatImgLink, '</td>
 				</tr>';
 	}
-	//END WHILE LIST LOOP
+	//END while LIST LOOP
 	echo '</tbody>';
 	echo '</table>';
 
-	echo '<form enctype="multipart/form-data" method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
-	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+	echo '<form enctype = "multipart/form-data" method = "post" action = "', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
+	echo '<input type = "hidden" name="FormID" value = "', $_SESSION['FormID'], '" />';
 
 	if (isset($_GET['Edit'])) {
 		//editing an existing stock category
@@ -324,7 +323,7 @@ if (!isset($_GET['Select'])) {
 						salescatname,
 						active
 					FROM salescat
-					WHERE salescatid='" . $SelectedCategory . "'";
+					WHERE salescatid = '" . $SelectedCategory . "'";
 
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_array($Result);
@@ -334,8 +333,8 @@ if (!isset($_GET['Select'])) {
 		$_POST['SalesCatName'] = $MyRow['salescatname'];
 		$_POST['Active'] = $MyRow['active'];
 
-		echo '<input type="hidden" name="SelectedCategory" value="', $SelectedCategory, '" />';
-		echo '<input type="hidden" name="ParentCategory" value="', $MyRow['parentcatid'], '" />';
+		echo '<input type = "hidden" name="SelectedCategory" value = "', $SelectedCategory, '" />';
+		echo '<input type = "hidden" name="ParentCategory" value = "', $MyRow['parentcatid'], '" />';
 		echo '<fieldset>
 				<legend>', __('Edit Sales Category'), '</legend>';
 
@@ -350,63 +349,63 @@ if (!isset($_GET['Select'])) {
 				<legend>', __('New Sales Category'), '</legend>';
 	}
 	echo '<field>
-			<label for="SalesCatName">', __('Category Name'), ':</label>
-			<input type="text" name="SalesCatName" size="20" required="required" autofocus="autofocus" maxlength="50" value="', $_POST['SalesCatName'], '" />
+			<label for = "SalesCatName">', __('Category Name'), ':</label>
+			<input type = "text" name="SalesCatName" size = "20" required = "required" autofocus = "autofocus" maxlength = "50" value = "', $_POST['SalesCatName'], '" />
 		</field>';
 
 	$SQL = "SELECT salescatid, salescatname FROM salescat";
 	$Result = DB_query($SQL);
 
 	echo '<field>
-			<label for="ParentCategory">', __('Parent Category'), '</label>
+			<label for = "ParentCategory">', __('Parent Category'), '</label>
 			<select name="ParentCategory">';
-	if ($_POST['ParentCategory']==0){
-		echo '<option value="0" selected="selected">', __('No parent'), '</option>';
-	} else {
-		echo '<option value="0">', __('No parent'), '</option>';
+	if ($_POST['ParentCategory']==0) {
+	echo '<option value = "0" selected = "selected">', __('No parent'), '</option>';
+} else {
+		echo '<option value = "0">', __('No parent'), '</option>';
 	}
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($MyRow['salescatid'] == $_POST['ParentCategory']) {
-			echo '<option value="', $MyRow['salescatid'], '" selected="selected">', $MyRow['salescatname'], '</option>';
-		} else {
-			echo '<option value="', $MyRow['salescatid'], '">', $MyRow['salescatname'], '</option>';
+	echo '<option value = "', $MyRow['salescatid'], '" selected = "selected">', $MyRow['salescatname'], '</option>';
+} else {
+			echo '<option value = "', $MyRow['salescatid'], '">', $MyRow['salescatname'], '</option>';
 		}
 	}
 	echo '</select>
 	</field>';
 
 	echo '<field>
-			<label for="Active">', __('Is the category in active use?'), ':</label>
+			<label for = "Active">', __('Is the category in active use?'), ':</label>
 			<select name="Active">';
 	if (isset($_POST['Active']) and $_POST['Active'] == '1') {
-		echo '<option selected="selected" value="1">', __('Yes'), '</option>';
-		echo '<option value="0">', __('No'), '</option>';
+		echo '<option selected = "selected" value = "1">', __('Yes'), '</option>';
+		echo '<option value = "0">', __('No'), '</option>';
 	} else {
-		echo '<option selected="selected" value="0">', __('No'), '</option>';
-		echo '<option value="1">', __('Yes'), '</option>';
+		echo '<option selected = "selected" value = "0">', __('No'), '</option>';
+		echo '<option value = "1">', __('Yes'), '</option>';
 	}
 	echo '</select>
 		</field>';
 
 	echo '<field>
-			<label for="CategoryPicture">', __('Image File (' . implode(", ", $SupportedImgExt) . ')'), ':</label>
-			<input type="file" id="CategoryPicture" name="CategoryPicture" />
+			<label for = "CategoryPicture">', __('Image File (' . implode(", ", $SupportedImgExt) . ')'), ':</label>
+			<input type = "file" id="CategoryPicture" name="CategoryPicture" />
 		</field>
 		<field>
-			<label for="ClearImage">', __('Clear Image'), '</label>
-			<input type="checkbox" name="ClearImage" id="ClearImage" value="1" >
+			<label for = "ClearImage">', __('Clear Image'), '</label>
+			<input type = "checkbox" name="ClearImage" id="ClearImage" value = "1" >
 		</field>';
 
 	echo '</fieldset>';
 
 	echo '<div class="centre">
-				<input type="submit" name="SubmitCategory" value="', __('Enter Information'), '" />
+				<input type = "submit" name="SubmitCategory" value = "', __('Enter Information'), '" />
 			</div>
 		</form>';
 
 } else {
 
-	$SQL = "SELECT salescatname FROM salescat WHERE salescatid='" . $SelectedCategory . "'";
+	$SQL = "SELECT salescatname FROM salescat WHERE salescatid = '" . $SelectedCategory . "'";
 	$Result = DB_query($SQL);
 	$NameRow = DB_fetch_array($Result);
 
@@ -416,19 +415,19 @@ if (!isset($_GET['Select'])) {
 					manufacturers_name
 				FROM salescatprod
 				INNER JOIN stockmaster
-					ON salescatprod.stockid=stockmaster.stockid
+					ON salescatprod.stockid = stockmaster.stockid
 				INNER JOIN manufacturers
-					ON salescatprod.manufacturers_id=manufacturers.manufacturers_id
-				WHERE salescatprod.salescatid=" . $SelectedCategory . "
+					ON salescatprod.manufacturers_id = manufacturers.manufacturers_id
+				WHERE salescatprod.salescatid = " . $SelectedCategory . "
 				ORDER BY salescatprod.stockid";
 
 	$Result = DB_query($SQL);
 	if ($Result) {
-		if (DB_num_rows($Result)) {
+	if (DB_num_rows($Result)) {
 			echo '<table>
 					<thead>
 						<tr>
-							<th colspan="6">', __('Inventory items for'), ' ', $NameRow['salescatname'], ' (', $SelectedCategory, ')</th>
+							<th colspan = "6">', __('Inventory items for'), ' ', $NameRow['salescatname'], ' (', $SelectedCategory, ')</th>
 						</tr>
 						<tr>
 							<th class="SortedColumn">', __('Item'), '</th>
@@ -451,7 +450,7 @@ if (!isset($_GET['Select'])) {
 				if ($MyRow['featured'] == 1) {
 					echo __('Yes'), '</td>
 						<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?RemoveFeature=Yes&amp;SelectedCategory=', urlencode($SelectedCategory), '&amp;StockID=', urlencode($MyRow['stockid']), '">', __('Cancel Feature'), '</a></td>';
-				} else {
+} else {
 					echo __('No'), '</td>
 						<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?AddFeature=Yes&amp;SelectedCategory=', urlencode($SelectedCategory), '&amp;StockID=', urlencode($MyRow['stockid']), '">', __('Make Featured'), '</a></td>';
 				}
@@ -467,34 +466,34 @@ if (!isset($_GET['Select'])) {
 	$SQL = "SELECT categoryid,
 					categorydescription
 				FROM stockcategory
-				WHERE stocktype='F' OR stocktype='M'
+				WHERE stocktype = 'F' or stocktype = 'M'
 				ORDER BY categorydescription";
 	$Result1 = DB_query($SQL);
 
-	echo '<form enctype="multipart/form-data" method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
-	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
-	echo '<input type="hidden" name="SelectedCategory" value="', $SelectedCategory, '" />';
+	echo '<form enctype = "multipart/form-data" method = "post" action = "', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
+	echo '<input type = "hidden" name="FormID" value = "', $_SESSION['FormID'], '" />';
+	echo '<input type = "hidden" name="SelectedCategory" value = "', $SelectedCategory, '" />';
 
 	echo '<table>
-			<th colspan="5">', __('Select Stock Items'), '</th>';
+			<th colspan = "5">', __('Select Stock Items'), '</th>';
 
 	echo '<tr>
 			<td>', __('Select a stock category'), ':</td>
 			<td><select name="StockCat">';
 
 	if (!isset($_POST['StockCat'])) {
-		echo '<option selected="selected" value="All">', __('All'), '</option>';
+		echo '<option selected = "selected" value = "All">', __('All'), '</option>';
 		$_POST['StockCat'] = 'All';
 	} else {
-		echo '<option value="All">', __('All'), '</option>';
+		echo '<option value = "All">', __('All'), '</option>';
 	}
 
 	while ($MyRow1 = DB_fetch_array($Result1)) {
 
 		if ($_POST['StockCat'] == $MyRow1['categoryid']) {
-			echo '<option selected="selected" value=', $MyRow1['categoryid'], '>', $MyRow1['categorydescription'], '</option>';
-		} else {
-			echo '<option value=', $MyRow1['categoryid'], '>', $MyRow1['categorydescription'], '</option>';
+	echo '<option selected = "selected" value = ', $MyRow1['categoryid'], '>', $MyRow1['categorydescription'], '</option>';
+} else {
+			echo '<option value = ', $MyRow1['categoryid'], '>', $MyRow1['categorydescription'], '</option>';
 		}
 	}
 
@@ -512,18 +511,18 @@ if (!isset($_GET['Select'])) {
 
 	echo '<tr>
 			<td>', __('Enter text extracts in the'), ' <b>', __('description'), '</b>:</td>
-			<td><input type="text" name="Keywords" size="20" maxlength="25" value="', $_POST['Keywords'], '" /></td>
+			<td><input type = "text" name="Keywords" size = "20" maxlength = "25" value = "', $_POST['Keywords'], '" /></td>
 		</tr>';
 
-	echo '<div style="padding-bottom:8px;"><font size="3"><b>', __('OR'), ' </b></font></div>';
+	echo '<div style="padding-bottom:8px;"><font size = "3"><b>', __('or'), ' </b></font></div>';
 
 	echo '<tr>
 			<td>', __('Enter extract of the'), ' <b>', __('Stock Code'), '</b>:</td>
-			<td><input type="text" name="StockCode" autofocus="autofocus" size="15" maxlength="18" value="', $_POST['StockCode'], '" /></td>
+			<td><input type = "text" name="StockCode" autofocus = "autofocus" size = "15" maxlength = "18" value = "', $_POST['StockCode'], '" /></td>
 		</tr>
 		</table>
 		<div class="centre">
-			<input type="submit" name="Search" value="', __('Search Now'), '" />
+			<input type = "submit" name="Search" value = "', __('Search Now'), '" />
 		</div>
 	</form>';
 }

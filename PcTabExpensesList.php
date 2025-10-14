@@ -11,7 +11,7 @@ if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate'])
 
 if (isset($_POST['submit'])) {
 
-	$TabToShow= $_POST['Tabs'];
+	$TabToShow =  $_POST['Tabs'];
 	$FromDate = $_POST['FromDate'];
 	$ToDate = $_POST['ToDate'];
 
@@ -20,8 +20,8 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 
-	if ($InputError == 0){
-		// Search absic PC Tab information
+	if ($InputError == 0) {
+	// Search absic PC Tab information
 		$SQL = "SELECT pctabs.tabcode,
 					   pctabs.usercode,
 					   pctabs.typetabcode,
@@ -35,15 +35,15 @@ if (isset($_POST['submit'])) {
 		$Result = DB_query($SQL);
 		$MyTab = DB_fetch_array($Result);
 
-		$SQL = "SELECT decimalplaces FROM currencies WHERE currabrev='" . $MyTab['currency'] . "'";
+		$SQL = "SELECT decimalplaces FROM currencies WHERE currabrev = '" . $MyTab['currency'] . "'";
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_array($Result);
 		$CurrDecimalPlaces = $MyRow['decimalplaces'];
 
-		$SQL = "SELECT SUM(pcashdetails.amount) AS previous
+		$SQL = "SELECT SUM(pcashdetails.amount) as previous
 				FROM  pcashdetails
 				WHERE pcashdetails.tabcode = '" . $TabToShow . "'
-					AND pcashdetails.date < '" . FormatDateForSQL($FromDate) . "'";
+					and pcashdetails.date < '" . FormatDateForSQL($FromDate) . "'";
 		$Result = DB_query($SQL);
 		$MyPreviousBalance = DB_fetch_array($Result);
 
@@ -59,13 +59,13 @@ if (isset($_POST['submit'])) {
 						receipt
 				FROM  pcashdetails
 				WHERE pcashdetails.tabcode = '" . $TabToShow . "'
-					AND pcashdetails.date >= '" . FormatDateForSQL($FromDate) . "'
-					AND pcashdetails.date <= '" . FormatDateForSQL($ToDate) . "'
+					and pcashdetails.date >= '" . FormatDateForSQL($FromDate) . "'
+					and pcashdetails.date <= '" . FormatDateForSQL($ToDate) . "'
 				ORDER BY pcashdetails.date,
 					pcashdetails.counterindex";
 		$Result = DB_query($SQL);
 
-		if (DB_num_rows($Result) != 0){
+		if (DB_num_rows($Result) !=  0){
 
 			// Create new PHPExcel object
 			$SpreadSheet = new Spreadsheet();
@@ -138,10 +138,10 @@ if (isset($_POST['submit'])) {
 							FROM pcexpenses
 							WHERE codeexpense = '" . $MyRow['codeexpense'] . "'";
 				$ResultDes = DB_query($SQLDes);
-				$Description=DB_fetch_array($ResultDes);
+				$Description = DB_fetch_array($ResultDes);
 				if (!isset($Description[0])) {
 						$ExpenseCodeDes = 'ASSIGNCASH';
-				} else {
+} else {
 						$ExpenseCodeDes = $MyRow['codeexpense'] . ' - ' . $Description[0];
 				}
 
@@ -157,7 +157,7 @@ if (isset($_POST['submit'])) {
 									taxrate,
 									amount
 								FROM pcashdetailtaxes
-								WHERE pccashdetail='" . $MyRow['counterindex'] . "'";
+								WHERE pccashdetail = '" . $MyRow['counterindex'] . "'";
 				$TaxResult = DB_query($TaxSQL);
 				while ($MyTaxRow = DB_fetch_array($TaxResult)) {
 					$TaxesDescription .= $MyTaxRow['description'];
@@ -170,7 +170,7 @@ if (isset($_POST['submit'])) {
 				$ReceiptSQL = "SELECT hashfile,
 										extension
 										FROM pcreceipts
-										WHERE pccashdetail='" . $MyRow['counterindex'] . "'";
+										WHERE pccashdetail = '" . $MyRow['counterindex'] . "'";
 				$ReceiptResult = DB_query($ReceiptSQL);
 				$ReceiptRow = DB_fetch_array($ReceiptResult);
 				if (DB_num_rows($ReceiptResult) > 0) { //If receipt exists in database
@@ -181,14 +181,14 @@ if (isset($_POST['submit'])) {
 					$ReceiptText = __('Open Attachment');
 					$ReceiptURL = htmlspecialchars($_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/' . $ReceiptPath, ENT_QUOTES, 'UTF-8');
 				} elseif ($ExpenseCodeDes == 'ASSIGNCASH') {
-				$ReceiptText = '';
-				} else {
+	$ReceiptText = '';
+} else {
 				$ReceiptText = __('No attachment');
 				}
 
 				if ($MyRow['authorized'] == '1000-01-01') {
-					$AuthorisedDate = __('Unauthorised');
-				} else {
+	$AuthorisedDate = __('Unauthorised');
+} else {
 					$AuthorisedDate = ConvertSQLDate($MyRow['authorized']);
 				}
 
@@ -214,7 +214,7 @@ if (isset($_POST['submit'])) {
 			$SpreadSheet->getActiveSheet()->freezePane('A11');
 
 			// Auto Size columns
-			foreach(range('A','K') as $ColumnID) {
+			foreach (range('A','K') as $ColumnID) {
 				$SpreadSheet->getActiveSheet()->getColumnDimension($ColumnID)
 					->setAutoSize(true);
 			}
@@ -227,9 +227,9 @@ if (isset($_POST['submit'])) {
 			// Redirect output to a client’s web browser (Excel2007)
 			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 			$File = 'ExpensesList-' . $TabToShow. '.' . $_POST['Format'];
-			header('Content-Disposition: attachment;filename="' . $File . '"');
+			header('Content-Disposition: attachment;filename = "' . $File . '"');
 			/// @todo review caching headers
-			header('Cache-Control: max-age=0');
+			header('Cache-Control: max-age = 0');
 			// If you're serving to IE over SSL, then the following may be needed
 			header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
 			header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
@@ -238,12 +238,12 @@ if (isset($_POST['submit'])) {
 
 
 			if ($_POST['Format'] == 'xlsx') {
-				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($SpreadSheet);
+	$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($SpreadSheet);
 				$objWriter->save('php://output');
-			} else if ($_POST['Format'] == 'ods') {
-				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($SpreadSheet);
+} elseif ($_POST['Format'] == 'ods') {
+	$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($SpreadSheet);
 				$objWriter->save('php://output');
-			}
+}
 
 		} else {
 			$Title = __('Excel file for Petty Cash Tab Expenses List');
@@ -258,27 +258,27 @@ if (isset($_POST['submit'])) {
 	$BookMark = 'top';// Anchor's id in the manual's html document.
 	include('includes/header.php');
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post">';
+	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
-	echo '<p class="page_title_text">
+	echo '<p class = "page_title_text">
 			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . __('Excel file for Petty Cash Tab Expenses List') . '" alt="" />' . ' ' . __('Excel file for Petty Cash Tab Expenses List') . '
 		</p>';
 
 	# Sets default date range for current month
 	if (!isset($_POST['FromDate'])){
-		$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,Date('m'),1,Date('Y')));
+		$_POST['FromDate'] = date($_SESSION['DefaultDateFormat'], mktime(0,0,0,date('m'),1,date('Y')));
 	}
 	if (!isset($_POST['ToDate'])){
-		$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
+		$_POST['ToDate'] = date($_SESSION['DefaultDateFormat']);
 	}
 
 	echo '<fieldset>
 			<legend>', __('Select Criteria'), '</legend>';
 
 	echo '<field>
-			<label for="Tabs">' . __('For Petty Cash Tab') . ':</label>
-			<select name="Tabs">';
+			<label for = "Tabs">' . __('For Petty Cash Tab') . ':</label>
+			<select name = "Tabs">';
 
 	$SQL = "SELECT tabcode
 			FROM pctabs
@@ -286,29 +286,29 @@ if (isset($_POST['submit'])) {
 	$CatResult = DB_query($SQL);
 
 	while ($MyRow = DB_fetch_array($CatResult)){
-		echo '<option value="' . $MyRow['tabcode'] . '">' . $MyRow['tabcode'] . '</option>';
+		echo '<option value = "' . $MyRow['tabcode'] . '">' . $MyRow['tabcode'] . '</option>';
 	}
 	echo '</select>
 		</field>';
 
 	echo '<field>
 			<label>' . __('Date Range') . ':</label>
-			<input type="date" name="FromDate" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['FromDate']) . '" />
-				' . __('To') . ':<input type="date" name="ToDate" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['ToDate']) . '" />
+			<input type = "date" name = "FromDate" size = "11" maxlength = "10" value = "' . FormatDateForSQL($_POST['FromDate']) . '" />
+				' . __('To') . ':<input type = "date" name = "ToDate" size = "11" maxlength = "10" value = "' . FormatDateForSQL($_POST['ToDate']) . '" />
 		</field>';
 
 	echo '<field>
-			<label for="Format">', __('Output Format'), '</label>
-			<select name="Format">
-				<option value="xlsx">', __('Excel Format (.xlsx)'), '</option>
-				<option value="ods" selected="selected">', __('Open Document Format (.ods)'), '</option>
+			<label for = "Format">', __('Output Format'), '</label>
+			<select name = "Format">
+				<option value = "xlsx">', __('Excel Format (.xlsx)'), '</option>
+				<option value = "ods" selected = "selected">', __('Open Document Format (.ods)'), '</option>
 			</select>
 		</field>';
 
 	echo '</fieldset>';
 
-	echo '<div class="centre">
-			<input type="submit" name="submit" value="' . __('Create Petty Cash Tab Expenses List Excel File') . '" />
+	echo '<div class = "centre">
+			<input type = "submit" name = "submit" value = "' . __('Create Petty Cash Tab Expenses List Excel File') . '" />
 		</div>';
 
 	echo '</form>';
@@ -322,7 +322,7 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 
 } // End of function display()
 
-function beginning_of_month($Date){
+function beginning_of_month($Date) {
 	$Date2 = explode("-",$Date);
 	$M = $Date2[1];
 	$Y = $Date2[0];

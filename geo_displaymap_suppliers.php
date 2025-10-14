@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 /// @todo do we need these functions?
 include('includes/SQL_CommonFunctions.php');
 
-$SQL="SELECT * FROM geocode_param";
+$SQL = "SELECT * FROM geocode_param";
 $ErrMsg = __('An error occurred in retrieving the currency information');
 $Result = DB_query($SQL, $ErrMsg);
 $MyRow = DB_fetch_array($Result);
@@ -19,7 +19,7 @@ $Map_Width = $MyRow['map_width'];
 $Map_Host = $MyRow['map_host'];
 
 $Title = __('Geocoded Supplier Report');
-$BodyOnLoad='load();';
+$BodyOnLoad = 'load();';
 $ExtraHeadContent = '<style>
     html, body, #map-canvas {
         height: 100%;
@@ -28,7 +28,7 @@ $ExtraHeadContent = '<style>
         padding: 0px;
     }
 </style>
-<script src="https://' . $Map_Host . '/maps/api/js?key=' . $Api_Key . '&sensor=false"></script>
+<script src = "https://' . $Map_Host . '/maps/api/js?key =' . $Api_Key . '&sensor = false"></script>
 <script>
 //<![CDATA[
 
@@ -53,7 +53,7 @@ function load() {
         downloadUrl("geocode_genxml_suppliers.php", function(data) {
             var xml = data.responseXML;
             var markers = xml.documentElement.getElementsByTagName("marker");
-            for (var i = 0; i < markers.length; i++) {
+            for (var i = 0;  i < markers.length;  i++) {
                 var name = markers[i].getAttribute("name");
                 var address = markers[i].getAttribute("address");
                 var type = markers[i].getAttribute("type");
@@ -86,9 +86,9 @@ function downloadUrl(url, callback) {
 
 	request.onreadystatechange = function() {
 		if (request.readyState == 4) {
-			request.onreadystatechange = doNothing;
+	request.onreadystatechange = doNothing;
 			callback(request, request.status);
-		}
+}
 	}
 
 	request.open("GET", url, true);

@@ -29,7 +29,7 @@ if (isset($_GET['LineNo'])) {
 	exit();
 }
 
-if (!isset($_SESSION['Items' . $identifier]) OR !isset($_SESSION['ProcessingPick'])) {
+if (!isset($_SESSION['Items' . $identifier]) or !isset($_SESSION['ProcessingPick'])) {
 	/* This page can only be called with a sales order number to invoice */
 	echo '<div class="centre">
 			<a href="' . $RootPath . '/SelectPickingLists.php">' . __('Select a a pick List to maintain') . '</a>

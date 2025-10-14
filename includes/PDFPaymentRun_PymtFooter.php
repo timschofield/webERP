@@ -77,17 +77,22 @@ if (isset($_POST['PrintPDFAndProcess'])){
 
 	/*Do the inserts for the payment transaction into the BankTrans table*/
 	$SQL="INSERT INTO banktrans (bankact,
+					type,
+					transno,
 					ref,
 					exrate,
 					transdate,
 					banktranstype,
-					amount) ";
-   	$SQL = $SQL .  "VALUES ( " . $_POST['BankAccount'] . ",
-				'" . $PaytReference . " " . $SupplierID . "',
-				" . filter_number_format($_POST['ExRate']) . ",
-				'" . FormatDateForSQL($_POST['AmountsDueBy']) . "',
-				'" . $_POST['PaytType'] . "',
-				" .  -$AccumBalance . ")";
+					amount
+				) VALUES ( " . $_POST['BankAccount'] . ",
+					'22',
+					'" . $SuppPaymentNo . "',
+					'" . $PaytReference . " " . $SupplierID . "',
+					" . filter_number_format($_POST['ExRate']) . ",
+					'" . FormatDateForSQL($_POST['AmountsDueBy']) . "',
+					'" . $_POST['PaytType'] . "',
+					" .  -$AccumBalance . "
+				)";
 	$ErrMsg = __('None of the payments will be processed because the bank account payment record for') . ' ' . $SupplierName . ' ' . __('could not be inserted');
 	$ProcessResult = DB_query($SQL, $ErrMsg, '', true);
 

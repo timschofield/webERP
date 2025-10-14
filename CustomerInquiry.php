@@ -25,27 +25,27 @@ if (!isset($_GET['CustomerID']) and !isset($_SESSION['CustomerID'])) {
 	$CustomerID = $_SESSION['CustomerID'];
 }
 //Check if the users have proper authority
-if ($_SESSION['SalesmanLogin'] != '') {
+if ($_SESSION['SalesmanLogin'] !=  '') {
 	$ViewAllowed = false;
 	$SQL = "SELECT salesman FROM custbranch WHERE debtorno = '" . $CustomerID . "'";
 	$ErrMsg = __('Failed to retrieve sales data');
 	$Result = DB_query($SQL, $ErrMsg);
-	if(DB_num_rows($Result)>0) {
-		while($MyRow = DB_fetch_array($Result)) {
+	if (DB_num_rows($Result)>0) {
+		while ($MyRow = DB_fetch_array($Result)) {
 			if ($_SESSION['SalesmanLogin'] == $MyRow['salesman']){
 				$ViewAllowed = true;
-			}
+}
 		}
 	} else {
 		prnMsg(__('There is no salesman data set for this debtor'),'error');
 		include('includes/footer.php');
 		exit();
 	}
-	if (!$ViewAllowed){
-		prnMsg(__('You have no authority to review this data'),'error');
+	if (!$ViewAllowed) {
+	prnMsg(__('You have no authority to review this data'),'error');
 		include('includes/footer.php');
 		exit();
-	}
+}
 }
 
 
@@ -54,9 +54,9 @@ if (isset($_GET['Status'])) {
 		$_POST['Status'] = $_GET['Status'];
 	}
 } elseif (isset($_POST['Status'])) {
-	if($_POST['Status'] == '' or $_POST['Status'] == 1 or $_POST['Status'] == 0) {
-		$Status = $_POST['Status'];
-	} else {
+	if ($_POST['Status'] == '' or $_POST['Status'] == 1 or $_POST['Status'] == 0) {
+	$Status = $_POST['Status'];
+} else {
 		prnMsg(__('The balance status should be all or zero balance or not zero balance'), 'error');
 		exit();
 	}
@@ -65,7 +65,7 @@ if (isset($_GET['Status'])) {
 }
 
 if (!isset($_POST['TransAfterDate'])) {
-	$_POST['TransAfterDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m') - $_SESSION['NumberOfMonthMustBeShown'], Date('d'), Date('Y')));
+	$_POST['TransAfterDate'] = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, date('m') - $_SESSION['NumberOfMonthMustBeShown'], date('d'), date('Y')));
 }
 
 $SQL = "SELECT debtorsmaster.name,
@@ -75,38 +75,38 @@ $SQL = "SELECT debtorsmaster.name,
 		debtorsmaster.creditlimit,
 		holdreasons.dissallowinvoices,
 		holdreasons.reasondescription,
-		SUM(debtortrans.balance) AS balance,
-		SUM(CASE WHEN (paymentterms.daysbeforedue > 0) THEN
-			CASE WHEN (TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate)) >= paymentterms.daysbeforedue
-			THEN debtortrans.balance ELSE 0 END
-		ELSE
-			CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate),paymentterms.dayinfollowingmonth)) >= 0 THEN debtortrans.balance ELSE 0 END
-		END) AS due,
-		SUM(CASE WHEN (paymentterms.daysbeforedue > 0) THEN
-			CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue
-			AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays1'] . ")
-			THEN debtortrans.balance ELSE 0 END
-		ELSE
-			CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate),paymentterms.dayinfollowingmonth)) >= " . $_SESSION['PastDueDays1'] . "
+		SUM(debtortrans.balance) as balance,
+		SUM(case WHEN (paymentterms.daysbeforedue > 0) THEN
+			case WHEN (TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate)) >= paymentterms.daysbeforedue
+			THEN debtortrans.balance else 0 END
+		else
+			case WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate),paymentterms.dayinfollowingmonth)) >= 0 THEN debtortrans.balance else 0 END
+		END) as due,
+		SUM(case WHEN (paymentterms.daysbeforedue > 0) THEN
+			case WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue
+			and TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays1'] . ")
+			THEN debtortrans.balance else 0 END
+		else
+			case WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate),paymentterms.dayinfollowingmonth)) >= " . $_SESSION['PastDueDays1'] . "
 			THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount
-			- debtortrans.alloc ELSE 0 END
-		END) AS overdue1,
-		SUM(CASE WHEN (paymentterms.daysbeforedue > 0) THEN
-			CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue
-			AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays2'] . ") THEN debtortrans.balance ELSE 0 END
-		ELSE
-			CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate),paymentterms.dayinfollowingmonth)) >= " . $_SESSION['PastDueDays2'] . " THEN debtortrans.balance ELSE 0 END
-		END) AS overdue2
+			- debtortrans.alloc else 0 END
+		END) as overdue1,
+		SUM(case WHEN (paymentterms.daysbeforedue > 0) THEN
+			case WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue
+			and TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays2'] . ") THEN debtortrans.balance else 0 END
+		else
+			case WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate),paymentterms.dayinfollowingmonth)) >= " . $_SESSION['PastDueDays2'] . " THEN debtortrans.balance else 0 END
+		END) as overdue2
 		FROM debtorsmaster,
 	 			paymentterms,
 	 			holdreasons,
 	 			currencies,
 	 			debtortrans
 		WHERE  debtorsmaster.paymentterms = paymentterms.termsindicator
-	 		AND debtorsmaster.currcode = currencies.currabrev
-	 		AND debtorsmaster.holdreason = holdreasons.reasoncode
-	 		AND debtorsmaster.debtorno = '" . $CustomerID . "'
-	 		AND debtorsmaster.debtorno = debtortrans.debtorno
+	 		and debtorsmaster.currcode = currencies.currabrev
+	 		and debtorsmaster.holdreason = holdreasons.reasoncode
+	 		and debtorsmaster.debtorno = '" . $CustomerID . "'
+	 		and debtorsmaster.debtorno = debtortrans.debtorno
 			GROUP BY debtorsmaster.name,
 			currencies.currency,
 			paymentterms.terms,
@@ -121,7 +121,7 @@ $CustomerResult = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($CustomerResult) == 0) {
 
-	/*Because there is no balance - so just retrieve the header information about the customer - the choice is do one query to get the balance and transactions for those customers who have a balance and two queries for those who don't have a balance OR always do two queries - I opted for the former */
+	/*Because there is no balance - so just retrieve the header information about the customer - the choice is do one query to get the balance and transactions for those customers who have a balance and two queries for those who don't have a balance or always do two queries - I opted for the former */
 
 	$NIL_BALANCE = true;
 
@@ -165,11 +165,11 @@ echo '<p class="page_title_text">
 		<img src="', $RootPath, '/css/', $Theme, '/images/customer.png" title="', __('Customer'), '" alt="" />', __('Customer'), ': ', stripslashes($CustomerID), ' - ', $CustomerRecord['name'], '<br />', __('All amounts stated in'), ': ', $CustomerRecord['currency'], '<br />', __('Terms'), ': ', $CustomerRecord['terms'], '<br />', __('Credit Limit'), ': ', locale_number_format($CustomerRecord['creditlimit'], 0), '<br />', __('Credit Status'), ': ', $CustomerRecord['reasondescription'], '
 	</p>';
 
-if ($CustomerRecord['dissallowinvoices'] != 0) {
-	echo '<br /><font color="red" size="4"><b>', __('ACCOUNT ON HOLD'), '</font></b><br />';
+if ($CustomerRecord['dissallowinvoices'] !=  0) {
+	echo '<br /><font color = "red" size = "4"><b>', __('ACCOUNT ON HOLD'), '</font></b><br />';
 }
 
-echo '<table class="selection" width="70%">
+echo '<table class="selection" width = "70%">
 	<tr>
 		<th style="width:20%">', __('Total Balance'), '</th>
 		<th style="width:20%">', __('Current'), '</th>
@@ -187,29 +187,29 @@ echo '<tr>
 	</tr>
 </table>';
 
-echo '<div class="centre"><form onSubmit="return VerifyForm(this);" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post" class="noPrint">
-		<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
-echo __('Show all transactions after'), ':<input required="required" type="date" name="TransAfterDate" value="', FormatDateForSQL($_POST['TransAfterDate']), '" maxlength="10" size="11" />';
+echo '<div class="centre"><form onSubmit = "return VerifyForm(this);" action = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method = "post" class="noPrint">
+		<input type = "hidden" name="FormID" value = "', $_SESSION['FormID'], '" />';
+echo __('Show all transactions after'), ':<input required = "required" type = "date" name="TransAfterDate" value = "', FormatDateForSQL($_POST['TransAfterDate']), '" maxlength = "10" size = "11" />';
 
 echo '<select name="Status">';
 if ($_POST['Status'] == '') {
-	echo '<option value="" selected="selected">', __('All'), '</option>';
-	echo '<option value="1">', __('Invoices not fully allocated'), '</option>';
-	echo '<option value="0">', __('Invoices fully allocated'), '</option>';
+	echo '<option value = "" selected = "selected">', __('All'), '</option>';
+	echo '<option value = "1">', __('Invoices not fully allocated'), '</option>';
+	echo '<option value = "0">', __('Invoices fully allocated'), '</option>';
 } else {
 	if ($_POST['Status'] == 0) {
-		echo '<option value="">', __('All'), '</option>';
-		echo '<option value="1">', __('Invoices not fully allocated'), '</option>';
-		echo '<option selected="selected" value="0">', __('Invoices fully allocated'), '</option>';
-	} elseif ($_POST['Status'] == 1) {
-		echo '<option value="" selected="selected">', __('All'), '</option>';
-		echo '<option selected="selected" value="1">', __('Invoices not fully allocated'), '</option>';
-		echo '<option value="0">', __('Invoices fully allocated'), '</option>';
-	}
+	echo '<option value = "">', __('All'), '</option>';
+		echo '<option value = "1">', __('Invoices not fully allocated'), '</option>';
+		echo '<option selected = "selected" value = "0">', __('Invoices fully allocated'), '</option>';
+} elseif ($_POST['Status'] == 1) {
+	echo '<option value = "" selected = "selected">', __('All'), '</option>';
+		echo '<option selected = "selected" value = "1">', __('Invoices not fully allocated'), '</option>';
+		echo '<option value = "0">', __('Invoices fully allocated'), '</option>';
+}
 }
 
 echo '</select>';
-echo '<input class="noPrint" name="Refresh Inquiry" type="submit" value="', __('Refresh Inquiry'), '" />
+echo '<input class="noPrint" name="Refresh Inquiry" type = "submit" value = "', __('Refresh Inquiry'), '" />
 	</form></div>';
 
 $DateAfterCriteria = FormatDateForSQL($_POST['TransAfterDate']);
@@ -225,15 +225,15 @@ $SQL = "SELECT systypes.typename,
 				debtortrans.order_,
 				salesorders.customerref,
 				debtortrans.rate,
-				(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount) AS totalamount,
-				debtortrans.alloc AS allocated
+				(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount) as totalamount,
+				debtortrans.alloc as allocated
 			FROM debtortrans
 			INNER JOIN systypes
 				ON debtortrans.type = systypes.typeid
 			LEFT JOIN salesorders
-				ON salesorders.orderno=debtortrans.order_
+				ON salesorders.orderno = debtortrans.order_
 			WHERE debtortrans.debtorno = '" . $CustomerID . "'
-				AND debtortrans.trandate >= '" . $DateAfterCriteria . "'
+				and debtortrans.trandate >= '" . $DateAfterCriteria . "'
 				ORDER BY debtortrans.trandate,
 					debtortrans.id";
 
@@ -272,9 +272,10 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 
 	$FormatedTranDate = ConvertSQLDate($MyRow['trandate']);
 
-	if ($_SESSION['InvoicePortraitFormat'] == 1) { //Invoice/credits in portrait
+	if ($_SESSION['InvoicePortraitFormat'] == 1) {
+	//Invoice/credits in portrait
 		$Orientation = 'portrait';
-	} else { //produce pdfs in landscape
+} else { //produce pdfs in landscape
 		$Orientation = 'landscape';
 	}
 
@@ -373,7 +374,7 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 		}
 
 	} elseif ($MyRow['type'] == 10) {
-		/* Show transactions where:
+	/* Show transactions where:
 		 * - Is invoice
 		 * - User cannot raise credits
 		 * - User cannot view GL transactions
@@ -409,9 +410,8 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 				</td>
 				<td class="noPrint">&nbsp;</td>
 			</tr>';
-
-	} elseif ($MyRow['type'] == 11) {
-		/* Show transactions where:
+} elseif ($MyRow['type'] == 11) {
+	/* Show transactions where:
 		 * - Is credit note
 		 * - User can view GL transactions
 		 */
@@ -457,8 +457,7 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 						</a>
 					</td>
 				</tr>';
-
-		} else {
+} else {
 			/* Show transactions where:
 			* - Is credit note
 			* - User cannot view GL transactions
@@ -502,7 +501,7 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 
 		}
 	} elseif ($MyRow['type'] == 12 and $MyRow['totalamount'] < 0) {
-		/* Show transactions where:
+	/* Show transactions where:
 		 * - Is receipt
 		 * - User can view GL transactions
 		 */
@@ -534,8 +533,7 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 						</a>
 					</td>
 				</tr>';
-
-		} else { //no permission for GLTrans Inquiries
+} else { //no permission for GLTrans Inquiries
 		/* Show transactions where:
 		 * - Is credit note
 		 * - User cannot view GL transactions
@@ -565,7 +563,7 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 
 		}
 	} elseif ($MyRow['type'] == 12 and $MyRow['totalamount'] > 0) {
-		if ($_SESSION['CompanyRecord']['gllink_debtors'] == 1 and in_array($_SESSION['PageSecurityArray']['GLTransInquiry.php'], $_SESSION['AllowedPageSecurityTokens'])) {
+	if ($_SESSION['CompanyRecord']['gllink_debtors'] == 1 and in_array($_SESSION['PageSecurityArray']['GLTransInquiry.php'], $_SESSION['AllowedPageSecurityTokens'])) {
 			/* Show transactions where:
 			* - Is a negative receipt
 			* - User can view GL transactions
@@ -592,8 +590,7 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 						</a>
 					</td>
 				</tr>';
-
-		} else {
+} else {
 			/* Show transactions where:
 			* - Is a negative receipt
 			* - User cannot view GL transactions

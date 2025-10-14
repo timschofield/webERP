@@ -26,9 +26,9 @@ function stripcomma($str) { //because we're using comma as a delimiter
 	return str_replace(',', '', $str);
 }
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Export Sales Analysis Files') .'" alt="" /><b>' . $Title. '</b></p>';
+echo '<p class = "page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Export Sales Analysis Files') .'" alt="" /><b>' . $Title. '</b></p>';
 
-echo '<div class="centre">' . __('Making a comma separated values file of the stock items') . '</div>';
+echo '<div class = "centre">' . __('Making a comma separated values file of the stock items') . '</div>';
 
 $ErrMsg = __('The SQL to get the stock items failed with the message');
 
@@ -45,8 +45,7 @@ unlink($ItemsFileName);
 
 $fp = fopen($ItemsFileName,'w');
 
-if ($fp==false){
-
+if ($fp == false) {
 	prnMsg(__('Could not open or create the file under') . ' ' . $ItemsFileName,'error');
 	include('includes/footer.php');
 	exit();
@@ -62,11 +61,11 @@ while ($MyRow = DB_fetch_row($Result)){
 fclose($fp);
 //Now the customers
 
-echo '<div class="centre">' . __('Making a comma separated values file of the customers') . '</div>';
+echo '<div class = "centre">' . __('Making a comma separated values file of the customers') . '</div>';
 
 $ErrMsg = __('The SQL to get the customers failed with the message');
 
-$SQL = "SELECT debtorsmaster.debtorno, debtorsmaster.name, custbranch.branchcode, brname, salestype, area, salesman FROM debtorsmaster INNER JOIN custbranch ON debtorsmaster.debtorno=custbranch.debtorno";
+$SQL = "SELECT debtorsmaster.debtorno, debtorsmaster.name, custbranch.branchcode, brname, salestype, area, salesman FROM debtorsmaster INNER JOIN custbranch ON debtorsmaster.debtorno = custbranch.debtorno";
 $Result = DB_query($SQL, $ErrMsg);
 
 $CustomersFileName = $_SESSION['reports_dir'] . '/Customers.csv';
@@ -75,8 +74,7 @@ unlink($CustomersFileName);
 
 $fp = fopen($CustomersFileName,'w');
 
-if ($fp==false){
-
+if ($fp == false) {
 	prnMsg(__('Could not open or create the file under') . ' ' . $CustomersFileName,'error');
 	include('includes/footer.php');
 	exit();
@@ -93,7 +91,7 @@ fclose($fp);
 
 //Now the sales analysis invoice & credit note lines
 
-echo '<div class="centre">' . __('Making a comma separated values file of the sales lines') . '</div>';
+echo '<div class = "centre">' . __('Making a comma separated values file of the sales lines') . '</div>';
 
 $ErrMsg = __('The SQL to get the sales data failed with the message');
 
@@ -107,10 +105,10 @@ $SQL = "SELECT 	stockmoves.debtorno,
 				transno
 			FROM stockmoves
 			INNER JOIN custbranch
-			ON stockmoves.debtorno=custbranch.debtorno
-				AND stockmoves.branchcode=custbranch.branchcode
-			WHERE (stockmoves.type=10 OR stockmoves.type=11)
-			AND show_on_inv_crds=1";
+			ON stockmoves.debtorno = custbranch.debtorno
+				and stockmoves.branchcode = custbranch.branchcode
+			WHERE (stockmoves.type = 10 or stockmoves.type = 11)
+			and show_on_inv_crds = 1";
 
 $Result = DB_query($SQL, $ErrMsg);
 
@@ -120,8 +118,7 @@ unlink($SalesFileName);
 
 $fp = fopen($SalesFileName,'w');
 
-if ($fp==false){
-
+if ($fp == false) {
 	prnMsg(__('Could not open or create the file under') . ' ' . $SalesFileName,'error');
 	include('includes/footer.php');
 	exit();
@@ -154,13 +151,13 @@ if ((!$conn_id) || (!$login_result)) {
 }
 
 // upload the files
-$upload = ftp_put($conn_id, '/' . Date('Y-m-d') .'_Sales.csv', $SalesFileName, FTP_BINARY);
-$upload = ftp_put($conn_id, '/' . Date('Y-m-d') .'_Items.csv', $ItemsFileName, FTP_BINARY);
-$upload = ftp_put($conn_id, '/' . Date('Y-m-d') .'_Customers.csv', $CustomersFileName, FTP_BINARY);
+$upload = ftp_put($conn_id, '/' . date('Y-m-d') .'_Sales.csv', $SalesFileName, FTP_BINARY);
+$upload = ftp_put($conn_id, '/' . date('Y-m-d') .'_Items.csv', $ItemsFileName, FTP_BINARY);
+$upload = ftp_put($conn_id, '/' . date('Y-m-d') .'_Customers.csv', $CustomersFileName, FTP_BINARY);
 
 // check upload status
 if (!$upload) {
-    echo "FTP upload has failed!";
+	echo "FTP upload has failed!";
 } else {
     echo "Uploaded $Source_file to $ftp_server as $destination_file";
 }

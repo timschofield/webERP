@@ -50,6 +50,11 @@ $DBType = 'mysqli';
 $DBUser = 'weberp_db_user';
 $DBPassword = 'weberp_db_pwd';
 
+// The DB character set.
+// For mysql/mariadb, utf8mb4 is preferred. If your database version does not support it, you can, depending on the
+// specific version, use the 'utf8' alias for 'utf8mb3'
+$DBCharset = 'utf8mb4';
+
 // Login company selection
 //
 // If allowing selection of the company in the login window is not desired (e.g. in a hosted environment and seeing other
@@ -131,7 +136,7 @@ $Debug = 0; // No debug information will be shown. Recommended for production en
 // END OF USER CONFIGURABLE VARIABLES
 
 if (isset($DirectoryLevelsDeep)) {
-	for ($i = 0; $i < $DirectoryLevelsDeep; $i++) {
+	for ($i = 0;  $i < $DirectoryLevelsDeep;  $i++) {
 		$RootPath = mb_substr($RootPath, 0, strrpos($RootPath,'/'));
 	}
 }

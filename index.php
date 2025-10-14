@@ -10,7 +10,7 @@ include('includes/MainMenuLinksArray.php');
 /// @todo this is better left handled to be done in session.php, which can send an http redirect instead
 if (isset($_SESSION['FirstLogIn']) and $_SESSION['FirstLogIn'] == '1' and isset($_SESSION['DatabaseName'])) {
 	$_SESSION['FirstRun'] = true;
-	echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/InitialScripts.php">';
+	echo '<meta http-equiv = "refresh" content = "0; url = ' . $RootPath . '/InitialScripts.php">';
 	exit();
 } else {
 	$_SESSION['FirstRun'] = false;
@@ -21,7 +21,7 @@ if (isset($_POST['CompanyNameField'])) {
 }
 
 $Title = __('Main Menu');
-$SQL = "SELECT value FROM session_data WHERE userid='" . $_SESSION['UserID'] . "' AND field='module'";
+$SQL = "SELECT value FROM session_data WHERE userid = '" . $_SESSION['UserID'] . "' and field = 'module'";
 $Result = DB_query($SQL);
 $MyRow = DB_fetch_array($Result);
 $_SESSION['Module'] = $MyRow['value'];
@@ -37,7 +37,7 @@ if (isset($_GET['Application']) and ($_GET['Application'] != '')) {
 
 include('includes/header.php');
 
-if (isset($SupplierLogin) AND $SupplierLogin==1){
+if (isset($SupplierLogin) and $SupplierLogin == 1) {
 	echo '<section class="MainBody clearfix">';
 	echo '<form class="centre" style="width:30%">
 			<fieldset>
@@ -64,7 +64,7 @@ if (isset($SupplierLogin) AND $SupplierLogin==1){
 	</section>';
 	include('includes/footer.php');
 	exit;
-} elseif (isset($CustomerLogin) AND $CustomerLogin==1){
+} elseif (isset($CustomerLogin) and $CustomerLogin == 1) {
 	echo '<section class="MainBody clearfix">';
 	echo '<form class="centre" style="width:30%">
 			<fieldset>
@@ -110,7 +110,6 @@ while ($i < count($ModuleLink)) {
 			echo '<li class="ModuleSelected">';
 		} else {
 			echo '<li class="ModuleUnSelected">';
-
 		}
 		echo '<a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?Application=', urlencode($ModuleLink[$i]), '">', $ModuleList[$i], '</a></li>';
 	}
@@ -248,7 +247,7 @@ function GetRptLinks($GroupID) {
 		}
 	}
 	$RptLinks = '';
-	for ($Def = 1;$Def >= 0;$Def--) {
+	for ($Def = 1;  $Def >= 0;  $Def--) {
 		$RptLinks.= '<li class="CustomMenuList">';
 		$RptLinks.= '<b>' . $Title[$Def] . '</b>';
 		$RptLinks.= '</li>';
@@ -268,14 +267,14 @@ function GetRptLinks($GroupID) {
 			foreach ($_SESSION['ReportList'] as $Report) {
 				$Group = explode(':', $Report['groupname']); // break into main group and form group array
 				if ($NoForms and $Group[0] == $GroupID and $Report['reporttype'] == 'frm' and $Report['defaultreport'] == $Def) {
-					$RptLinks.= '<li class="menu_group_item">';
-					$RptLinks.= '<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/folders.gif" width="16" height="13" alt="" />&nbsp; ';
+	$RptLinks.= '<li class="menu_group_item">';
+					$RptLinks.= '<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/folders.gif" width = "16" height = "13" alt="" />&nbsp; ';
 					$RptLinks.= '<p><a href="' . $RootPath . '/reportwriter/FormMaker.php?id=' . urlencode($Report['groupname']) . '">';
 					$RptLinks.= $_SESSION['FormGroups'][$Report['groupname']] . '</a></p>';
 					$RptLinks.= '</li>';
 					$NoForms = false;
 					$NoEntries = false;
-				}
+}
 			}
 		}
 		if ($NoEntries) $RptLinks.= '<li class="menu_group_item">' . __('There are no reports to show!') . '</li>';

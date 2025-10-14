@@ -7,7 +7,7 @@ use Dompdf\Dompdf;
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 	// Get period end date
 	$PeriodEnd = ConvertSQLDate(EndDateSQLFromPeriodNo($_POST['ToPeriod']));
-	$Result = DB_query("SELECT description FROM taxauthorities WHERE taxid='" . $_POST['TaxAuthority'] . "'");
+	$Result = DB_query("SELECT description FROM taxauthorities WHERE taxid = '" . $_POST['TaxAuthority'] . "'");
 	$TaxAuthDescription = DB_fetch_row($Result);
 	$TaxAuthorityName = $TaxAuthDescription[0];
 
@@ -19,17 +19,17 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 	if (isset($_POST['PrintPDF']) or isset($_POST['Email'])) {
 		$HTML .= '<html>
 					<head>';
-		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
+		$HTML .= '<link href = "css/reports.css" rel = "stylesheet" type = "text/css" />';
 	}
 
-	$HTML .= '<meta name="author" content="WebERP " . $Version">
-					<meta name="Creator" content="webERP https://www.weberp.org">
+	$HTML .= '<meta name = "author" content = "WebERP " . $Version">
+					<meta name = "Creator" content = "webERP https://www.weberp.org">
 				</head>
 				<body>
 				<div class="centre" id="ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 					' . $ReportTitle . '<br />
-					' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
 					' . __('For Periods') . ' - ' . $_POST['NoOfPeriods'] . ' ' . __('months to') . ' ' . $PeriodEnd . '<br />
 				</div>';
 
@@ -41,19 +41,19 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 					debtortrans.debtorno,
 					debtorsmaster.name,
 					debtortrans.branchcode,
-					(debtortrans.ovamount+debtortrans.ovfreight)/debtortrans.rate AS netamount,
-					debtortranstaxes.taxamount AS tax
+					(debtortrans.ovamount+debtortrans.ovfreight)/debtortrans.rate as netamount,
+					debtortranstaxes.taxamount as tax
 				FROM debtortrans
 				INNER JOIN debtorsmaster
-					ON debtortrans.debtorno=debtorsmaster.debtorno
+					ON debtortrans.debtorno = debtorsmaster.debtorno
 				INNER JOIN systypes
-					ON debtortrans.type=systypes.typeid
+					ON debtortrans.type = systypes.typeid
 				INNER JOIN debtortranstaxes
 					ON debtortrans.id = debtortranstaxes.debtortransid
 				WHERE debtortrans.prd >= '" . ($_POST['ToPeriod'] - $_POST['NoOfPeriods'] + 1) . "'
-					AND debtortrans.prd <= '" . $_POST['ToPeriod'] . "'
-					AND (debtortrans.type=10 OR debtortrans.type=11)
-					AND debtortranstaxes.taxauthid = '" . $_POST['TaxAuthority'] . "'
+					and debtortrans.prd <= '" . $_POST['ToPeriod'] . "'
+					and (debtortrans.type = 10 or debtortrans.type = 11)
+					and debtortranstaxes.taxauthid = '" . $_POST['TaxAuthority'] . "'
 				ORDER BY debtortrans.id";
 
 	$ErrMsg = __('The accounts receivable transaction details could not be retrieved');
@@ -64,10 +64,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 	$SalesTax = 0;
 
 	if ($_POST['DetailOrSummary'] == 'Detail') {
-		$HTML .= '<table>
+	$HTML .= '<table>
 			<thead>
 				<tr>
-					<th colspan="7"><h3>' . __('Tax on Sales') . '</h3></th>
+					<th colspan = "7"><h3>' . __('Tax on Sales') . '</h3></th>
 				</tr>
 				<tr>
 					<th>' . __('Date') . '</th>
@@ -93,9 +93,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 			$SalesCount++;
 			$SalesNet += $DebtorTransRow['netamount'];
 			$SalesTax += $DebtorTransRow['tax'];
-		}
+}
 		$HTML .= '<tr class="total_row">
-					<td colspan="5"><strong>' . __('Total Outputs') . ':</strong></td>
+					<td colspan = "5"><strong>' . __('Total Outputs') . ':</strong></td>
 					<td>' . __('Net') . ': ' . locale_number_format($SalesNet, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 					<td>' . __('Tax') . ': ' . locale_number_format($SalesTax, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				</tr>';
@@ -117,16 +117,16 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 		$Date_Array = explode('-', $PeriodEnd);
 	}
 	if ($_SESSION['DefaultDateFormat'] == 'd/m/Y') {
-		$StartDateSQL = Date('Y-m-d', mktime(0, 0, 0, (int)$Date_Array[1] - $_POST['NoOfPeriods'] + 1, 1, (int)$Date_Array[2]));
-	} elseif ($_SESSION['DefaultDateFormat'] == 'm/d/Y') {
-		$StartDateSQL = Date('Y-m-d', mktime(0, 0, 0, (int)$Date_Array[0] - $_POST['NoOfPeriods'] + 1, 1, (int)$Date_Array[2]));
-	} elseif ($_SESSION['DefaultDateFormat'] == 'Y/m/d') {
-		$StartDateSQL = Date('Y-m-d', mktime(0, 0, 0, (int)$Date_Array[1] - $_POST['NoOfPeriods'] + 1, 1, (int)$Date_Array[0]));
-	} elseif ($_SESSION['DefaultDateFormat'] == 'd.m.Y') {
-		$StartDateSQL = Date('Y-m-d', mktime(0, 0, 0, (int)$Date_Array[1] - $_POST['NoOfPeriods'] + 1, 1, (int)$Date_Array[2]));
-	} elseif ($_SESSION['DefaultDateFormat'] == 'Y-m-d') {
-		$StartDateSQL = Date('Y-m-d', mktime(0, 0, 0, (int)$Date_Array[1] - $_POST['NoOfPeriods'] + 1, 1, (int)$Date_Array[0]));
-	}
+	$StartDateSQL = date('Y-m-d', mktime(0, 0, 0, (int)$Date_Array[1] - $_POST['NoOfPeriods'] + 1, 1, (int)$Date_Array[2]));
+} elseif ($_SESSION['DefaultDateFormat'] == 'm/d/Y') {
+	$StartDateSQL = date('Y-m-d', mktime(0, 0, 0, (int)$Date_Array[0] - $_POST['NoOfPeriods'] + 1, 1, (int)$Date_Array[2]));
+} elseif ($_SESSION['DefaultDateFormat'] == 'Y/m/d') {
+	$StartDateSQL = date('Y-m-d', mktime(0, 0, 0, (int)$Date_Array[1] - $_POST['NoOfPeriods'] + 1, 1, (int)$Date_Array[0]));
+} elseif ($_SESSION['DefaultDateFormat'] == 'd.m.Y') {
+	$StartDateSQL = date('Y-m-d', mktime(0, 0, 0, (int)$Date_Array[1] - $_POST['NoOfPeriods'] + 1, 1, (int)$Date_Array[2]));
+} elseif ($_SESSION['DefaultDateFormat'] == 'Y-m-d') {
+	$StartDateSQL = date('Y-m-d', mktime(0, 0, 0, (int)$Date_Array[1] - $_POST['NoOfPeriods'] + 1, 1, (int)$Date_Array[0]));
+}
 
 	$SQL = "SELECT supptrans.trandate,
 					supptrans.type,
@@ -134,19 +134,19 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 					supptrans.transno,
 					suppliers.suppname,
 					supptrans.suppreference,
-					supptrans.ovamount/supptrans.rate AS netamount,
-					supptranstaxes.taxamount/supptrans.rate AS taxamt
+					supptrans.ovamount/supptrans.rate as netamount,
+					supptranstaxes.taxamount/supptrans.rate as taxamt
 				FROM supptrans
 				INNER JOIN suppliers
-					ON supptrans.supplierno=suppliers.supplierid
+					ON supptrans.supplierno = suppliers.supplierid
 				INNER JOIN systypes
-					ON supptrans.type=systypes.typeid
+					ON supptrans.type = systypes.typeid
 				INNER JOIN supptranstaxes
 					ON supptrans.id = supptranstaxes.supptransid
 				WHERE supptrans.trandate >= '" . $StartDateSQL . "'
-					AND supptrans.trandate <= '" . FormatDateForSQL($PeriodEnd) . "'
-					AND (supptrans.type=20 OR supptrans.type=21)
-					AND supptranstaxes.taxauthid = '" . $_POST['TaxAuthority'] . "'
+					and supptrans.trandate <= '" . FormatDateForSQL($PeriodEnd) . "'
+					and (supptrans.type = 20 or supptrans.type = 21)
+					and supptranstaxes.taxauthid = '" . $_POST['TaxAuthority'] . "'
 				ORDER BY supptrans.id";
 
 	$ErrMsg = __('The accounts payable transaction details could not be retrieved');
@@ -156,11 +156,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 	$PurchasesNet = 0;
 	$PurchasesTax = 0;
 	if ($_POST['DetailOrSummary'] == 'Detail') {
-		$HTML .= '';
+	$HTML .= '';
 		$HTML .= '<table>
 					<thead>
 						<tr>
-							<th colspan="7">' . '<h3>' . __('Tax on Purchases') . '</h3></th>
+							<th colspan = "7">' . '<h3>' . __('Tax on Purchases') . '</h3></th>
 						</tr>
 						<tr>
 							<th>' . __('Date') . '</th>
@@ -186,7 +186,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 			$PurchasesCount++;
 			$PurchasesNet += $SuppTransRow['netamount'];
 			$PurchasesTax += $SuppTransRow['taxamt'];
-		}
+}
 		$HTML .= '</tbody></table>';
 	} else {
 		while ($SuppTransRow = DB_fetch_array($SuppTransResult)) {
@@ -197,22 +197,22 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 	}
 
 	// Petty Cash
-	$PettyCashSQL = "SELECT pcashdetails.date AS trandate,
-							pcashdetailtaxes.pccashdetail AS transno,
-							pcashdetailtaxes.description AS suppreference,
-							pcashdetails.amount AS gross,
-							pcashdetailtaxes.amount AS taxamt,
-							www_users.realname AS suppname
+	$PettyCashSQL = "SELECT pcashdetails.date as trandate,
+							pcashdetailtaxes.pccashdetail as transno,
+							pcashdetailtaxes.description as suppreference,
+							pcashdetails.amount as gross,
+							pcashdetailtaxes.amount as taxamt,
+							www_users.realname as suppname
 						FROM pcashdetails
 						INNER JOIN pcashdetailtaxes
-							ON pcashdetails.counterindex=pcashdetailtaxes.pccashdetail
+							ON pcashdetails.counterindex = pcashdetailtaxes.pccashdetail
 						INNER JOIN pctabs
 							ON pcashdetails.tabcode = pctabs.tabcode
 						INNER JOIN www_users
-							ON pctabs.usercode=www_users.userid
+							ON pctabs.usercode = www_users.userid
 						WHERE pcashdetails.date >= '" . $StartDateSQL . "'
-							AND pcashdetails.date <= '" . FormatDateForSQL($PeriodEnd) . "'
-							AND pcashdetailtaxes.taxauthid = '" . $_POST['TaxAuthority'] . "'
+							and pcashdetails.date <= '" . FormatDateForSQL($PeriodEnd) . "'
+							and pcashdetailtaxes.taxauthid = '" . $_POST['TaxAuthority'] . "'
 						ORDER BY pcashdetailtaxes.counterindex";
 	$ErrMsg = __('The petty cash transaction details could not be retrieved');
 	$PettyCashResult = DB_query($PettyCashSQL, $ErrMsg, '', false);
@@ -221,10 +221,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 	$PettyCashNet = 0;
 	$PettyCashTax = 0;
 	if ($_POST['DetailOrSummary'] == 'Detail') {
-		$HTML .= '<table>
+	$HTML .= '<table>
 					<thead>
 						<tr>
-							<th colspan="7"><h3>' . __('Tax on Petty Cash Expenses') . '</h3></th>
+							<th colspan = "7"><h3>' . __('Tax on Petty Cash Expenses') . '</h3></th>
 						</tr>
 						<tr>
 							<th>' . __('Date') . '</th>
@@ -238,7 +238,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 					</thead>
 					<tbody>';
 		while ($PettyCashRow = DB_fetch_array($PettyCashResult)) {
-			$TotalTaxSQL = "SELECT SUM(-amount) totaltax FROM pcashdetailtaxes WHERE pccashdetail='" . $PettyCashRow['transno'] . "'";
+			$TotalTaxSQL = "SELECT SUM(-amount) totaltax FROM pcashdetailtaxes WHERE pccashdetail = '" . $PettyCashRow['transno'] . "'";
 			$TotalTaxResult = DB_query($TotalTaxSQL);
 			$TotalTaxRow = DB_fetch_array($TotalTaxResult);
 			$NetAmount = ((-$PettyCashRow['gross']) - $TotalTaxRow['totaltax']);
@@ -254,11 +254,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 			$PettyCashCount++;
 			$PettyCashNet += $NetAmount;
 			$PettyCashTax += (-$PettyCashRow['taxamt']);
-		}
+}
 		$HTML .= '</tbody></table>';
 	} else {
 		while ($PettyCashRow = DB_fetch_array($PettyCashResult)) {
-			$TotalTaxSQL = "SELECT SUM(-amount) totaltax FROM pcashdetailtaxes WHERE pccashdetail='" . $PettyCashRow['transno'] . "'";
+			$TotalTaxSQL = "SELECT SUM(-amount) totaltax FROM pcashdetailtaxes WHERE pccashdetail = '" . $PettyCashRow['transno'] . "'";
 			$TotalTaxResult = DB_query($TotalTaxSQL);
 			$TotalTaxRow = DB_fetch_array($TotalTaxResult);
 			$NetAmount = ((-$PettyCashRow['gross']) - $TotalTaxRow['totaltax']);
@@ -272,7 +272,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 	$HTML .= '<table>
 				<thead>
 					<tr>
-						<th colspan="5"><h3>' . __('Summary') . '</h3></th>
+						<th colspan = "5"><h3>' . __('Summary') . '</h3></th>
 					</tr>
 					<tr>
 						<th>' . __('Transactions') . '</th>
@@ -331,20 +331,20 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 		$HTML .= '</tbody>
 				</table>
 				<div class="centre">
-					<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
+					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
 		</html>';
 
 	if ($SalesCount + $PurchasesCount + $PettyCashCount == 0) {
-		$Title = __('Taxation Reporting Error');
+	$Title = __('Taxation Reporting Error');
 		include('includes/header.php');
 		prnMsg(__('There are no tax entries to list'), 'info');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 		include('includes/footer.php');
 		exit();
-	} else {
+} else {
 		if (isset($_POST['PrintPDF'])) {
 			$dompdf = new Dompdf(['chroot' => __DIR__]);
 			$dompdf->loadHtml($HTML);
@@ -374,35 +374,35 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 	$BookMark = 'Tax';
 	include('includes/header.php');
 	echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_delete.png" title="' . __('Tax Report') . '" />' . ' ' . __('Tax Reporting') . '</p>';
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" target="_blank">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target="_blank">';
+	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 	echo '<fieldset>
 			<legend>', __('Report Criteria'), '</legend>';
 	echo '<field>
-			<label for="TaxAuthority">' . __('Tax Authority To Report On:') . ':</label>
-			<select name="TaxAuthority">';
+			<label for = "TaxAuthority">' . __('Tax Authority To Report On:') . ':</label>
+			<select name = "TaxAuthority">';
 	$Result = DB_query("SELECT taxid, description FROM taxauthorities");
 	while ($MyRow = DB_fetch_array($Result)) {
-		echo '<option value="' . $MyRow['taxid'] . '">' . $MyRow['description'] . '</option>';
+		echo '<option value = "' . $MyRow['taxid'] . '">' . $MyRow['description'] . '</option>';
 	}
 	echo '</select>
 		</field>';
 	echo '<field>
-			<label for="NoOfPeriods">' . __('Return Covering') . ':</label>
-			<select name="NoOfPeriods">' . '
-				<option selected="selected" value="1">' . __('One Month') . '</option>' . '
-				<option value="2">' . __('2 Months') . '</option>' . '
-				<option value="3">' . __('3 Months') . '</option>' . '
-				<option value="6">' . __('6 Months') . '</option>' . '
-				<option value="12">' . __('12 Months') . '</option>' . '
-				<option value="24">' . __('24 Months') . '</option>' . '
-				<option value="48">' . __('48 Months') . '</option>' . '
+			<label for = "NoOfPeriods">' . __('Return Covering') . ':</label>
+			<select name = "NoOfPeriods">' . '
+				<option selected = "selected" value = "1">' . __('One Month') . '</option>' . '
+				<option value = "2">' . __('2 Months') . '</option>' . '
+				<option value = "3">' . __('3 Months') . '</option>' . '
+				<option value = "6">' . __('6 Months') . '</option>' . '
+				<option value = "12">' . __('12 Months') . '</option>' . '
+				<option value = "24">' . __('24 Months') . '</option>' . '
+				<option value = "48">' . __('48 Months') . '</option>' . '
 			</select>
 		</field>';
 	echo '<field>
-			<label for="ToPeriod">' . __('Return To') . ':</label>
-			<select name="ToPeriod">';
-	$DefaultPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m'), 0, Date('Y'))));
+			<label for = "ToPeriod">' . __('Return To') . ':</label>
+			<select name = "ToPeriod">';
+	$DefaultPeriod = GetPeriod(date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, date('m'), 0, date('Y'))));
 	$SQL = "SELECT periodno,
 					lastdate_in_period
 				FROM periods";
@@ -410,24 +410,24 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 	$Periods = DB_query($SQL, $ErrMsg);
 	while ($MyRow = DB_fetch_array($Periods)) {
 		if ($MyRow['periodno'] == $DefaultPeriod) {
-			echo '<option selected="selected" value="' . $MyRow['periodno'] . '">' . ConvertSQLDate($MyRow['lastdate_in_period']) . '</option>';
-		} else {
-			echo '<option value="' . $MyRow['periodno'] . '">' . ConvertSQLDate($MyRow['lastdate_in_period']) . '</option>';
+	echo '<option selected = "selected" value = "' . $MyRow['periodno'] . '">' . ConvertSQLDate($MyRow['lastdate_in_period']) . '</option>';
+} else {
+			echo '<option value = "' . $MyRow['periodno'] . '">' . ConvertSQLDate($MyRow['lastdate_in_period']) . '</option>';
 		}
 	}
 	echo '</select>
 		</field>';
 	echo '<field>
-			<label for="DetailOrSummary">' . __('Detail Or Summary Only') . ':</label>
-			<select name="DetailOrSummary">
-				<option value="Detail">' . __('Detail and Summary') . '</option>
-				<option selected="selected" value="Summary">' . __('Summary Only') . '</option>
+			<label for = "DetailOrSummary">' . __('Detail Or Summary Only') . ':</label>
+			<select name = "DetailOrSummary">
+				<option value = "Detail">' . __('Detail and Summary') . '</option>
+				<option selected = "selected" value = "Summary">' . __('Summary Only') . '</option>
 			</select>
 		</field>
 		</fieldset>
 		<div class="centre">
-			<input type="submit" name="PrintPDF" title="Produce PDF Report" value="' . __('Print PDF') . '" />
-			<input type="submit" name="View" title="View Report" value="' . __('View') . '" />
+			<input type = "submit" name = "PrintPDF" title="Produce PDF Report" value = "' . __('Print PDF') . '" />
+			<input type = "submit" name = "View" title="View Report" value = "' . __('View') . '" />
 		</div>
 		</form>';
 	include('includes/footer.php');

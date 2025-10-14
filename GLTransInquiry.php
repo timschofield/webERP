@@ -37,7 +37,7 @@ if (!isset($_GET['TypeID']) or !isset($_GET['TransNo'])) {
 
 		echo '<table class="selection">'; //Main table
 		echo '<tr>
-				<th colspan="6"><h2><b>' . __($TransName) . ' ' . $_GET['TransNo'] . '</b></h2></th>
+				<th colspan = "6"><h2><b>' . __($TransName) . ' ' . $_GET['TransNo'] . '</b></h2></th>
 			</tr>
 			<tr>
 				<th>' . __('Period') . '</th>
@@ -61,9 +61,9 @@ if (!isset($_GET['TypeID']) or !isset($_GET['TransNo'])) {
 				INNER JOIN chartmaster
 					ON gltrans.account = chartmaster.accountcode
 				INNER JOIN periods
-					ON periods.periodno=gltrans.periodno
-				WHERE gltrans.type= '" . $_GET['TypeID'] . "'
-					AND gltrans.typeno = '" . $_GET['TransNo'] . "'
+					ON periods.periodno = gltrans.periodno
+				WHERE gltrans.type =  '" . $_GET['TypeID'] . "'
+					and gltrans.typeno = '" . $_GET['TransNo'] . "'
 				ORDER BY gltrans.counterindex";
 		$TransResult = DB_query($SQL);
 
@@ -76,60 +76,58 @@ if (!isset($_GET['TypeID']) or !isset($_GET['TransNo'])) {
 			$DetailResult = false;
 
 			if ($TransRow['amount'] > 0) {
-				$DebitAmount = locale_number_format($TransRow['amount'], $_SESSION['CompanyRecord']['decimalplaces']);
+	$DebitAmount = locale_number_format($TransRow['amount'], $_SESSION['CompanyRecord']['decimalplaces']);
 				$DebitTotal+= $TransRow['amount'];
 				$CreditAmount = '&nbsp;';
-			} else {
+} else {
 				$CreditAmount = locale_number_format(-$TransRow['amount'], $_SESSION['CompanyRecord']['decimalplaces']);
 				$CreditTotal+= $TransRow['amount'];
 				$DebitAmount = '&nbsp;';
 			}
 			if ($TransRow['account'] == $_SESSION['CompanyRecord']['debtorsact'] and $AnalysisCompleted == 'Not Yet') {
-				$URL = $RootPath . '/CustomerInquiry.php?CustomerID=';
-				$FromDate = '&amp;TransAfterDate=' . urlencode($TranDate);
+	$URL = $RootPath . '/CustomerInquiry.php?CustomerID =';
+				$FromDate = '&amp;TransAfterDate =' . urlencode($TranDate);
 
-				$DetailSQL = "SELECT debtortrans.debtorno AS otherpartycode,
+				$DetailSQL = "SELECT debtortrans.debtorno as otherpartycode,
 										debtortrans.ovamount,
 										debtortrans.ovgst,
 										debtortrans.ovfreight,
 										debtortrans.rate,
 										debtortrans.ovdiscount,
-										debtorsmaster.name AS otherparty
+										debtorsmaster.name as otherparty
 									FROM debtortrans INNER JOIN debtorsmaster
 									ON debtortrans.debtorno = debtorsmaster.debtorno
 									WHERE debtortrans.type = '" . $TransRow['type'] . "'
-									AND debtortrans.transno = '" . $_GET['TransNo'] . "'";
+									and debtortrans.transno = '" . $_GET['TransNo'] . "'";
 				$DetailResult = DB_query($DetailSQL);
+} elseif ($TransRow['account'] == $_SESSION['CompanyRecord']['creditorsact'] and $AnalysisCompleted == 'Not Yet') {
+	$URL = $RootPath . '/SupplierInquiry.php?SupplierID =';
+				$FromDate = '&amp;FromDate =' . urlencode($TranDate);
 
-			} elseif ($TransRow['account'] == $_SESSION['CompanyRecord']['creditorsact'] and $AnalysisCompleted == 'Not Yet') {
-				$URL = $RootPath . '/SupplierInquiry.php?SupplierID=';
-				$FromDate = '&amp;FromDate=' . urlencode($TranDate);
-
-				$DetailSQL = "SELECT supptrans.supplierno AS otherpartycode,
+				$DetailSQL = "SELECT supptrans.supplierno as otherpartycode,
 										supptrans.ovamount,
 										supptrans.ovgst,
 										supptrans.rate,
-										suppliers.suppname AS otherparty
+										suppliers.suppname as otherparty
 									FROM supptrans INNER JOIN suppliers
 									ON supptrans.supplierno = suppliers.supplierid
 									WHERE supptrans.type = '" . $TransRow['type'] . "'
-									AND supptrans.transno = '" . $_GET['TransNo'] . "'";
+									and supptrans.transno = '" . $_GET['TransNo'] . "'";
 				$DetailResult = DB_query($DetailSQL);
-
-			} else {
+} else {
 				// if user is allowed to see the account we show it, other wise we show "OTHERS ACCOUNTS"
 				$CheckSql = "SELECT count(*)
 								 FROM glaccountusers
-								 WHERE accountcode= '" . $TransRow['account'] . "'
-									 AND userid = '" . $_SESSION['UserID'] . "'
-									 AND canview = '1'";
+								 WHERE accountcode =  '" . $TransRow['account'] . "'
+									 and userid = '" . $_SESSION['UserID'] . "'
+									 and canview = '1'";
 				$CheckResult = DB_query($CheckSql);
 				$CheckRow = DB_fetch_row($CheckResult);
 
 				if ($CheckRow[0] > 0) {
-					$AccountName = $TransRow['accountname'];
-					$URL = $RootPath . '/GLAccountInquiry.php?Account=' . urlencode($TransRow['account']);
-				} else {
+	$AccountName = $TransRow['accountname'];
+					$URL = $RootPath . '/GLAccountInquiry.php?Account =' . urlencode($TransRow['account']);
+} else {
 					$AccountName = __('Other GL Accounts');
 					$URL = "";
 				}
@@ -143,10 +141,10 @@ if (!isset($_GET['TypeID']) or !isset($_GET['TransNo'])) {
 							<td>' . $TranDate . '</td>';
 
 				if ($URL == "") {
-					// User is not allowed to see this GL account, don't show the details
+	// User is not allowed to see this GL account, don't show the details
 					echo '	<td>' . $AccountName . '</td>
 								<td>' . $AccountName . '</td>';
-				} else {
+} else {
 					echo '	<td><a href="' . $URL . '">' . $AccountName . '</a></td>
 								<td>' . $TransRow['narrative'] . '</td>';
 				}
@@ -157,21 +155,20 @@ if (!isset($_GET['TypeID']) or !isset($_GET['TransNo'])) {
 			}
 
 			if ($DetailResult and $AnalysisCompleted == 'Not Yet') {
-
-				while ($DetailRow = DB_fetch_array($DetailResult)) {
+	while ($DetailRow = DB_fetch_array($DetailResult)) {
 					if ($TransRow['amount'] > 0) {
 						if ($TransRow['account'] == $_SESSION['CompanyRecord']['debtorsact']) {
 							$Debit = locale_number_format(($DetailRow['ovamount'] + $DetailRow['ovgst'] + $DetailRow['ovfreight']) / $DetailRow['rate'], $_SESSION['CompanyRecord']['decimalplaces']);
 							$Credit = '&nbsp;';
-						} else {
+} else {
 							$Debit = locale_number_format(-($DetailRow['ovamount'] + $DetailRow['ovgst']) / $DetailRow['rate'], $_SESSION['CompanyRecord']['decimalplaces']);
 							$Credit = '&nbsp;';
 						}
 					} else {
 						if ($TransRow['account'] == $_SESSION['CompanyRecord']['debtorsact']) {
-							$Credit = locale_number_format(-($DetailRow['ovamount'] + $DetailRow['ovgst'] + $DetailRow['ovfreight'] + $DetailRow['ovdiscount']) / $DetailRow['rate'], $_SESSION['CompanyRecord']['decimalplaces']);
+	$Credit = locale_number_format(-($DetailRow['ovamount'] + $DetailRow['ovgst'] + $DetailRow['ovfreight'] + $DetailRow['ovdiscount']) / $DetailRow['rate'], $_SESSION['CompanyRecord']['decimalplaces']);
 							$Debit = '&nbsp;';
-						} else {
+} else {
 							$Credit = locale_number_format(($DetailRow['ovamount'] + $DetailRow['ovgst']) / $DetailRow['rate'], $_SESSION['CompanyRecord']['decimalplaces']);
 							$Debit = '&nbsp;';
 						}
@@ -193,7 +190,7 @@ if (!isset($_GET['TypeID']) or !isset($_GET['TransNo'])) {
 		DB_free_result($TransResult);
 
 		echo '<tr style="background-color:#FFFFFF">
-				<td class="number" colspan="4"><b>' . __('Total') . '</b></td>
+				<td class="number" colspan = "4"><b>' . __('Total') . '</b></td>
 				<td class="number"><b>' . locale_number_format(($DebitTotal), $_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
 				<td class="number"><b>' . locale_number_format((-$CreditTotal), $_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
 			</tr>
