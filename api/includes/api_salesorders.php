@@ -588,11 +588,33 @@ function ModifySalesOrderLine($OrderLine, $user, $password) {
 	return $Errors;
 }
 
-/** This function gets all orders ID  and returns an associative array containing
-   the database record for these Order. If the Order Header ID doesn't exist
+/** This function takes a order no and returns an associative array containing
+   the database record for that order. If the order number doesn't exist
    then it returns an $Errors array.
 */
-function GetSalesOrderList($user, $password) {
+function GetSalesOrderHeaderDetail($OrderNo, $user, $password) {
+	$Errors = array();
+	$db = db($user, $password);
+	if (gettype($db)=='integer') {
+		$Errors[0]=NoAuthorisation;
+		return $Errors;
+	}
+	$Errors = VerifyOrderHeaderExists($OrderNo, sizeof($Errors), $Errors);
+	if (sizeof($Errors)!=0) {
+		return $Errors;
+	}
+	$SQL="SELECT * FROM salesorders WHERE orderno='".$OrderNo."'";
+	$Result = DB_query($SQL);
+	if (sizeof($Errors)==0) {
+		$Errors[0]=0;
+		$Errors[1]=DB_fetch_array($Result);
+		return $Errors;
+	} else {
+		return $Errors;
+	}
+}
+/*
+function GetSalesOrderHeader($user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
 	if (gettype($db)=='integer') {
@@ -616,6 +638,7 @@ function GetSalesOrderList($user, $password) {
 	$Errors[1]=$SalesTypeList;
 	return $Errors;
 }
+	*/
 
 /** This function takes a field name, and a string, and then returns an
    array of orders that fulfill this criteria.
