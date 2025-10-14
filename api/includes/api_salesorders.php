@@ -697,7 +697,7 @@ function GetSalesOrderHeader($OrderNo, $user, $password) {
 				LEFT OUTER JOIN pickreq
 					ON pickreq.orderno = salesorders.orderno
 					and pickreq.closed = 0
-				WHERE salesorderdetails.completed = 0 and orderno='".$OrderNo."'";
+				WHERE salesorderdetails.completed = 0 and salesorders.orderno='".$OrderNo."'";
 	$Result = api_DB_Query($SQL);
 	if (sizeof($Errors)==0) {
 		return DB_fetch_array($Result);
