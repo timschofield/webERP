@@ -672,7 +672,32 @@ function GetSalesOrderHeader($OrderNo, $user, $password) {
 	if (sizeof($Errors)!=0) {
 		return $Errors;
 	}
-	$SQL="SELECT * FROM salesorders WHERE orderno='".$OrderNo."'";
+	//$SQL="SELECT * FROM salesorders WHERE orderno='".$OrderNo."'";
+		$SQL = "SELECT salesorders.orderno,
+					debtorsmaster.name,
+					custbranch.brname,
+					salesorders.customerref,
+					salesorders.orddate,
+					salesorders.deliverydate,
+					salesorders.deliverto,
+					salesorders.printedpackingslip,
+					salesorders.poplaced,
+					SUM(salesorderdetails.unitprice*(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*(1-salesorderdetails.discountpercent)/currencies.rate) as ordervalue,
+					pickreq.prid
+				FROM salesorders
+				INNER JOIN salesorderdetails
+					ON salesorders.orderno = salesorderdetails.orderno
+				INNER JOIN debtorsmaster
+					ON salesorders.debtorno = debtorsmaster.debtorno
+				INNER JOIN custbranch
+					ON debtorsmaster.debtorno = custbranch.debtorno
+					and salesorders.branchcode = custbranch.branchcode
+				INNER JOIN currencies
+					ON debtorsmaster.currcode = currencies.currabrev
+				LEFT OUTER JOIN pickreq
+					ON pickreq.orderno = salesorders.orderno
+					and pickreq.closed = 0
+				WHERE salesorderdetails.completed = 0 and orderno='".$OrderNo."'";
 	$Result = api_DB_Query($SQL);
 	if (sizeof($Errors)==0) {
 		return DB_fetch_array($Result);
