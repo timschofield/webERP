@@ -39,7 +39,7 @@ function ob_file_callback($buffer)
  */
 function apiBuildDocHTML($description, $parameters, $Return)
 {
-	$doc = '<tr><td><b><u>' . __('Description') . '</u></b></td><td colspan=2>' . $description . '</td></tr>
+	$doc = '<table><tr><td><b><u>' . __('Description') . '</u></b></td><td colspan=2>' . $description . '</td></tr>
 			<tr><td valign="top"><b><u>' . __('Parameters') . '</u></b></td>';
 	for ($ii = 0; $ii < sizeof($parameters); $ii++) {
 		$doc .= '<tr><td valign="top">' . $parameters[$ii]['name'] . '</td><td>' .
