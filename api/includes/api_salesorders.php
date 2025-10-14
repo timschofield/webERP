@@ -617,6 +617,27 @@ function GetSalesOrderList($user, $password) {
 	return $Errors;
 }
 
+/** This function takes a field name, and a string, and then returns an
+   array of orders that fulfill this criteria.
+*/
+function SearchOrderHeader($Field, $Criteria, $user, $password) {
+	$Errors = array();
+	$db = db($user, $password);
+	if (gettype($db)=='integer') {
+		$Errors[0]=NoAuthorisation;
+		return $Errors;
+	}
+	$SQL='SELECT orderno
+		FROM salesorders
+		WHERE '.$Field." LIKE '%".$Criteria."%'";
+	$Result = DB_query($SQL);
+	$OrderList = array(0);	    // First element: no errors
+	while ($MyRow=DB_fetch_array($Result)) {
+		$DebtorList[]=$MyRow[0];
+	}
+	return $OrderList;
+}
+
 /** This function takes a Order Header ID  and returns an associative array containing
    the database record for that Order. If the Order Header ID doesn't exist
    then it returns an $Errors array.

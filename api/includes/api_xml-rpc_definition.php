@@ -3493,31 +3493,75 @@ unset($ReturnValue);
 //=============================
 
 //======Search Orders List=====
-$Description = __('This function returns one search Orders.');
-$Parameter[0]['name'] = __('User name');
-$Parameter[0]['description'] = __('A valid weberp username. This user should have security access  to this data.');
-$Parameter[1]['name'] = __('User password');
-$Parameter[1]['description'] = __('The weberp password associated with this user name. ');
-$ReturnValue = __('This function returns an array of orders codes. ')
+/*
+	$Description = __('This function returns one search Orders.');
+	$Parameter[0]['name'] = __('User name');
+	$Parameter[0]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[1]['name'] = __('User password');
+	$Parameter[1]['description'] = __('The weberp password associated with this user name. ');
+	$ReturnValue = __('This function returns an array of orders codes. ')
+		. __('If the first element is zero then the function was successful. ')
+		. __('Otherwise an array of error codes is returned and no insertion takes place. ');
+
+	$SearchSalesOrder_sig = array(
+		array(Value::$xmlrpcArray),
+		array(Value::$xmlrpcArray, Value::$xmlrpcString, Value::$xmlrpcString));
+	$SearchSalesOrder_doc = apiBuildDocHTML($Description, $Parameter, $ReturnValue);
+
+	function xmlrpc_SearchSalesOrderHeader($request)
+	{
+		ob_start('ob_file_callback');
+		$encoder = new Encoder();
+		if ($request->getNumParams() == 3) {
+			$rtn = new Response($encoder->encode(GetSalesOrderHeader(
+				$request->getParam(0)->scalarval(),
+				$request->getParam(1)->scalarval(),
+				$request->getParam(2)->scalarval())));
+		} else {
+			$rtn = new Response($encoder->encode(GetSalesOrderHeader($request->getParam(0)->scalarval(),'', '')));
+		}
+		ob_end_flush();
+		return $rtn;
+	}
+
+	unset($Description);
+	unset($Parameter);
+	unset($ReturnValue);
+*/
+//=======
+$Description = __('This function is used to retrieve the details of an orderr from the webERP database.');
+$Parameter[0]['name'] = __('Field Name');
+$Parameter[0]['description'] = __('The name of a database field to search on. ')
+	. __('The field names can be found ') . '<a href="../../Z_DescribeTable.php?table=salesorders">' . __('here ') . '</a>'
+	. __('and are case sensitive. ');
+$Parameter[1]['name'] = __('Search Criteria');
+$Parameter[1]['description'] = __('A (partial) string to match in the above Field Name.');
+$Parameter[2]['name'] = __('User name');
+$Parameter[2]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[3]['name'] = __('User password');
+$Parameter[3]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of order IDs, which may be integers or strings. ')
 	. __('If the first element is zero then the function was successful. ')
 	. __('Otherwise an array of error codes is returned and no insertion takes place. ');
 
-$SearchSalesOrder_sig = array(
-	array(Value::$xmlrpcArray),
-	array(Value::$xmlrpcArray, Value::$xmlrpcString, Value::$xmlrpcString));
-$SearchSalesOrder_doc = apiBuildDocHTML($Description, $Parameter, $ReturnValue);
+$SearchOrders_sig = array(
+	array(Value::$xmlrpcArray, Value::$xmlrpcString, Value::$xmlrpcString),
+	array(Value::$xmlrpcArray, Value::$xmlrpcString, Value::$xmlrpcString, Value::$xmlrpcString, Value::$xmlrpcString));
+$SearchOrders_doc = apiBuildDocHTML($Description, $Parameter, $ReturnValue);
 
-function xmlrpc_SearchSalesOrderHeader($request)
+function xmlrpc_SearchOrders($request)
 {
 	ob_start('ob_file_callback');
 	$encoder = new Encoder();
-	if ($request->getNumParams() == 3) {
-		$rtn = new Response($encoder->encode(GetSalesOrderHeader(
+	if ($request->getNumParams() == 4) {
+		$rtn = new Response($encoder->encode(SearchOrders(
 			$request->getParam(0)->scalarval(),
 			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			$request->getParam(2)->scalarval(),
+			$request->getParam(3)->scalarval())));
 	} else {
-		$rtn = new Response($encoder->encode(GetSalesOrderHeader($request->getParam(0)->scalarval(),'', '')));
+		$rtn = new Response($encoder->encode(SearchOrders($request->getParam(0)->scalarval(),
+			$request->getParam(1)->scalarval(), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -3934,6 +3978,10 @@ return array(
 		"docstring" => $SearchSalesOrder_doc),
 	"weberp.xmlrpc_GetSalesOrderList" => array(
 		"function" => "xmlrpc_GetSalesOrderList",
+		"signature" => $GetSalesTypeList_sig,
+		"docstring" => $GetSalesTypeList_doc),
+	"weberp.xmlrpc_SearchOrders" => array(
+		"function" => "xmlrpc_SearchOrders",
 		"signature" => $GetSalesTypeList_sig,
 		"docstring" => $GetSalesTypeList_doc),
 );
