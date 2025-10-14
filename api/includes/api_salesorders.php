@@ -613,8 +613,8 @@ function GetSalesOrderHeaderDetail($OrderNo, $user, $password) {
 		return $Errors;
 	}
 }
-/*
-function GetSalesOrderHeader($user, $password) {
+
+function GetSalesOrderList($user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
 	if (gettype($db)=='integer') {
@@ -638,7 +638,6 @@ function GetSalesOrderHeader($user, $password) {
 	$Errors[1]=$SalesTypeList;
 	return $Errors;
 }
-	*/
 
 /** This function takes a field name, and a string, and then returns an
    array of orders that fulfill this criteria.

@@ -4019,8 +4019,8 @@ return array(
 	// 	"docstring" => $SearchSalesOrder_doc),
 	"weberp.xmlrpc_GetSalesOrderList" => array(
 		"function" => "xmlrpc_GetSalesOrderList",
-		"signature" => $GetSalesTypeList_sig,
-		"docstring" => $GetSalesTypeList_doc),
+		"signature" => $GetSalesOrderList_sig,
+		"docstring" => $GetSalesOrderList_doc),
 	"weberp.xmlrpc_SearchOrders" => array(
 		"function" => "xmlrpc_SearchOrders",
 		"signature" => $SearchOrders_sig,
