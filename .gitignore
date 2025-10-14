@@ -2,7 +2,6 @@
 /nbproject/
 # As well as Jetbrains stuff
 /.idea/
-*.DS_Store
 # And VSCode
 /.vscode/launch.json
 # And random assorted tooling files
