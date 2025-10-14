@@ -3972,10 +3972,10 @@ return array(
 		"function" => "xmlrpc_GetErrorMessages",
 		"signature" => $GetErrorMessages_sig,
 		"docstring" => $GetErrorMessages_doc),
-	"weberp.xmlrpc_SearchSalesOrderHeader" => array(
-		"function" => "xmlrpc_SearchSalesOrderHeader",
-		"signature" => $SearchSalesOrder_sig,
-		"docstring" => $SearchSalesOrder_doc),
+	// "weberp.xmlrpc_SearchSalesOrderHeader" => array(
+	// 	"function" => "xmlrpc_SearchSalesOrderHeader",
+	// 	"signature" => $SearchSalesOrder_sig,
+	// 	"docstring" => $SearchSalesOrder_doc),
 	"weberp.xmlrpc_GetSalesOrderList" => array(
 		"function" => "xmlrpc_GetSalesOrderList",
 		"signature" => $GetSalesTypeList_sig,
