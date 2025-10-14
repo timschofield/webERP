@@ -710,7 +710,7 @@ function GetSalesOrderValue($OrderNo, $user, $password) {
    the database record for that Order. If the Order Header ID doesn't exist
    then it returns an $Errors array.
 */
-function GetSalesOrderHeaderDetails($OrderNo, $user, $password) {
+function GetSalesInvoiceHeader($OrderNo, $user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
 	if (gettype($db)=='integer') {
@@ -831,10 +831,47 @@ function GetSalesOrderLineDetails($OrderNo, $user, $password) {
 	}
 }
 
+/** This function takes a Order Number and returns an associative array containing
+   the database record for that Order. If the Order Header ID doesn't exist
+   then it returns an $Errors array.
+*/
+function GetSalesInvoiceTax($OrderNo, $OrderLineNo,$user, $password) {
+	$Errors = array();
+	$db = db($user, $password);
+	if (gettype($db)=='integer') {
+		$Errors[0]=NoAuthorisation;
+		return $Errors;
+	}
+	$Errors=VerifyOrderHeaderExists($OrderNo, sizeof($Errors), $Errors);
+	if (sizeof($Errors)!=0) {
+		return $Errors;
+	}
+	$SQL = "SELECT pickreqdetails.qtypicked,
+										pickserialdetails.stockid,
+										serialno,
+										moveqty
+									FROM pickreq
+									INNER JOIN pickreqdetails
+										ON pickreqdetails.prid = pickreq.prid
+									LEFT OUTER JOIN pickserialdetails
+										ON pickserialdetails.detailno = pickreqdetails.detailno
+									WHERE pickreq.orderno ='" . $OrderNo . "'
+										and pickreq.closed = 0
+										and pickreqdetails.orderlineno = '" . $OrderLineNo . "'";
+
+	$Result = api_DB_Query($SQL);
+	if (sizeof($Errors)==0) {
+		return DB_fetch_array($Result);
+	} else {
+		return $Errors;
+	}
+}
+
 /** This function takes a Item ID  and returns an associative array containing
    the database record qunatity on hand. If the ItemCode doesn't exist
    then it returns an $Errors array.
 */
+/*
 function GetSalesOrderLineQOH($StkCode, $user, $password) {
 
 	$Errors = array();
@@ -856,6 +893,7 @@ function GetSalesOrderLineQOH($StkCode, $user, $password) {
 		return $Errors;
 	}
 }
+*/
 
 /** This function takes a Order Header ID  and returns an associative array containing
    the database record for that Order. If the Order Header ID doesn't exist
