@@ -953,7 +953,7 @@ if (isset($StockItemsResult)
 
 		while ($MyRow = DB_fetch_array($SalesOrdersResult)) {
 			if (isset($MyRow['orderno'])) {
-				$ModifyPage = $RootPath . '/SelectOrderItems.php?=ModifyOrderNumber=' . urlencode((string) $MyRow['orderno']);
+				$ModifyPage = $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . urlencode((string) $MyRow['orderno']);
 				$Confirm_Invoice = $RootPath . '/ConfirmDispatch_Invoice.php?=OrderNumber=' . urlencode((string) $MyRow['orderno']);
 				$PrintPickList = '';
 				$PrintPickLabel = '';
