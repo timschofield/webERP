@@ -588,6 +588,26 @@ function ModifySalesOrderLine($OrderLine, $user, $password) {
 	return $Errors;
 }
 
+function GetSalesOrderList($user, $password) {
+	$Errors = array();
+	$db = db($user, $password);
+	if (gettype($db)=='integer') {
+		$Errors[0]=NoAuthorisation;
+		return $Errors;
+	}
+	$SQL = "SELECT * FROM salesorders";
+	$Result = DB_query($SQL);
+	$SalesTypeList = array();
+	$i=0;
+	while ($MyRow=DB_fetch_array($Result)) {
+		$SalesTypeList[$i]=$MyRow[0];
+		$i++;
+	}
+	$Errors[0]=0;
+	$Errors[1]=$SalesTypeList;
+	return $Errors;
+}
+
 /** This function takes a Order Header ID  and returns an associative array containing
    the database record for that Order. If the Order Header ID doesn't exist
    then it returns an $Errors array.

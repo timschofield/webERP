@@ -3477,11 +3477,11 @@ function xmlrpc_GetSalesOrderList($request)
 	ob_start('ob_file_callback');
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 2) {
-		$rtn = new Response($encoder->encode(GetSalesOrderHeader(
+		$rtn = new Response($encoder->encode(GetSalesOrderList(
 			$request->getParam(0)->scalarval(),
 			$request->getParam(1)->scalarval())));
 	} else {
-		$rtn = new Response($encoder->encode(GetSalesOrderHeader('', '')));
+		$rtn = new Response($encoder->encode(GetSalesOrderList('', '')));
 	}
 	ob_end_flush();
 	return $rtn;
