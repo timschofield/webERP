@@ -622,10 +622,7 @@ function GetSalesOrderList($user, $password) {
 		return $Errors;
 	}
 	$SQL = "SELECT orderno, 
-				   orddate, 
-				   debtorno, 
-				   branchcode, 
-				   quotedate  
+				   orddate  
 			FROM salesorders ORDER BY orddate DESC;";
 	$Result = DB_query($SQL);
 	$SalesTypeList = array();
