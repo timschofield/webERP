@@ -661,7 +661,7 @@ function SearchOrderHeader($Field, $Criteria, $user, $password) {
    the database record for that Order. If the Order Header ID doesn't exist
    then it returns an $Errors array.
 */
-function GetSalesOrderHeader($OrderNo, $user, $password) {
+function GetSalesOrderValue($OrderNo, $user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
 	if (gettype($db)=='integer') {
@@ -699,6 +699,157 @@ function GetSalesOrderHeader($OrderNo, $user, $password) {
 					and pickreq.closed = 0
 				WHERE salesorderdetails.completed = 0 and salesorders.orderno='".$OrderNo."'";
 	$Result = api_DB_Query($SQL);
+	if (sizeof($Errors)==0) {
+		return DB_fetch_array($Result);
+	} else {
+		return $Errors;
+	}
+}
+
+/** This function takes a Order Number and returns an associative array containing
+   the database record for that Order. If the Order Header ID doesn't exist
+   then it returns an $Errors array.
+*/
+function GetSalesOrderHeaderDetails($OrderNo, $user, $password) {
+	$Errors = array();
+	$db = db($user, $password);
+	if (gettype($db)=='integer') {
+		$Errors[0]=NoAuthorisation;
+		return $Errors;
+	}
+	$Errors=VerifyOrderHeaderExists($OrderNo, sizeof($Errors), $Errors);
+	if (sizeof($Errors)!=0) {
+		return $Errors;
+	}
+	$SQL = "SELECT salesorders.orderno,
+								salesorders.debtorno,
+								debtorsmaster.name,
+								salesorders.branchcode,
+								salesorders.customerref,
+								salesorders.comments,
+								salesorders.internalcomment,
+								salesorders.orddate,
+								salesorders.ordertype,
+								salesorders.shipvia,
+								salesorders.deliverto,
+								salesorders.deladd1,
+								salesorders.deladd2,
+								salesorders.deladd3,
+								salesorders.deladd4,
+								salesorders.deladd5,
+								salesorders.deladd6,
+								salesorders.contactphone,
+								salesorders.contactemail,
+								salesorders.salesperson,
+								salesorders.freightcost,
+								salesorders.deliverydate,
+								debtorsmaster.currcode,
+								salesorders.fromstkloc,
+								locations.taxprovinceid,
+								custbranch.taxgroupid,
+								currencies.rate as currency_rate,
+								currencies.decimalplaces,
+								custbranch.defaultshipvia,
+								custbranch.specialinstructions,
+								pickreq.consignment,
+								pickreq.packages
+						FROM salesorders
+						INNER JOIN debtorsmaster
+							ON salesorders.debtorno = debtorsmaster.debtorno
+						INNER JOIN custbranch
+							ON salesorders.branchcode = custbranch.branchcode
+							and salesorders.debtorno = custbranch.debtorno
+						INNER JOIN currencies
+							ON debtorsmaster.currcode = currencies.currabrev
+						INNER JOIN locations
+							ON locations.loccode = salesorders.fromstkloc
+						INNER JOIN locationusers
+							ON locationusers.loccode = salesorders.fromstkloc
+							and locationusers.userid = '".$user."'
+							and locationusers.canupd = 1
+						LEFT OUTER JOIN pickreq
+							ON pickreq.orderno = salesorders.orderno
+							and pickreq.closed = 0
+						WHERE salesorders.orderno = '".$OrderNo."'";
+
+	$Result = api_DB_Query($SQL);
+	if (sizeof($Errors)==0) {
+		return DB_fetch_array($Result);
+	} else {
+		return $Errors;
+	}
+}
+
+/** This function takes a Order Number and returns an associative array containing
+   the database record for that Order. If the Order Header ID doesn't exist
+   then it returns an $Errors array.
+*/
+function GetSalesOrderLineDetails($OrderNo, $user, $password) {
+	$Errors = array();
+	$db = db($user, $password);
+	if (gettype($db)=='integer') {
+		$Errors[0]=NoAuthorisation;
+		return $Errors;
+	}
+	$Errors=VerifyOrderHeaderExists($OrderNo, sizeof($Errors), $Errors);
+	if (sizeof($Errors)!=0) {
+		return $Errors;
+	}
+		$SQL = "SELECT stkcode,
+								stockmaster.description,
+								stockmaster.longdescription,
+								stockmaster.controlled,
+								stockmaster.serialised,
+								stockmaster.volume,
+								stockmaster.grossweight,
+								stockmaster.units,
+								stockmaster.decimalplaces,
+								stockmaster.mbflag,
+								stockmaster.taxcatid,
+								stockmaster.discountcategory,
+								salesorderdetails.unitprice,
+								salesorderdetails.quantity,
+								salesorderdetails.discountpercent,
+								salesorderdetails.actualdispatchdate,
+								salesorderdetails.qtyinvoiced,
+								salesorderdetails.narrative,
+								salesorderdetails.orderlineno,
+								salesorderdetails.poline,
+								salesorderdetails.itemdue,
+								stockmaster.actualcost as standardcost
+							FROM salesorderdetails INNER JOIN stockmaster
+							 	ON salesorderdetails.stkcode = stockmaster.stockid
+							WHERE salesorderdetails.orderno ='" . $OrderNo . "'
+							and salesorderdetails.quantity - salesorderdetails.qtyinvoiced >0
+							ORDER BY salesorderdetails.orderlineno";
+
+	$Result = api_DB_Query($SQL);
+	if (sizeof($Errors)==0) {
+		return DB_fetch_array($Result);
+	} else {
+		return $Errors;
+	}
+}
+
+/** This function takes a Item ID  and returns an associative array containing
+   the database record qunatity on hand. If the ItemCode doesn't exist
+   then it returns an $Errors array.
+*/
+function GetSalesOrderLineQOH($StkCode, $user, $password) {
+
+	$Errors = array();
+	$db = db($user, $password);
+	if (gettype($db)=='integer') {
+		$Errors[0]=NoAuthorisation;
+		return $Errors;
+	}
+	$Errors=VerifyStockCodeExists($StkCode, sizeof($Errors), $Errors);
+	if (sizeof($Errors)!=0) {
+		return $Errors;
+	}
+	//$SQL="SELECT * FROM salesorderdetails WHERE orderno='" . $OrderNo . "'";
+    $SQL = "SELECT quantity FROM locstock WHERE stockid = '" . $StkCode . "' and loccode = '" . $_SESSION['Items' . $identifier]->Location . "'";
+	$Result = api_DB_query($SQL);
 	if (sizeof($Errors)==0) {
 		return DB_fetch_array($Result);
 	} else {

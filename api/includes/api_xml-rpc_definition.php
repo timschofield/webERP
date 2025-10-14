@@ -3583,22 +3583,22 @@ $ReturnValue = __('If successful this function returns a set of key/value pairs 
 	. __('The key will be identical with field name from the salesorders table. All fields will be in the set regardless of whether the value was set.') . '<p>'
 	. __('Otherwise an array of error codes is returned. ');
 
-$GetSalesOrderHeaderDetail_sig = array(
+$GetSalesOrderValue_sig = array(
 	array(Value::$xmlrpcStruct, Value::$xmlrpcString),
 	array(Value::$xmlrpcStruct, Value::$xmlrpcString, Value::$xmlrpcString, Value::$xmlrpcString));
-$GetSalesOrderHeaderDetail_doc = apiBuildDocHTML($Description, $Parameter, $ReturnValue);
+$GetSalesOrderValue_doc = apiBuildDocHTML($Description, $Parameter, $ReturnValue);
 
-function xmlrpc_GetSalesOrderHeaderDetail($request)
+function xmlrpc_GetSalesOrderValue($request)
 {
 	ob_start('ob_file_callback');
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
-		$rtn = new Response($encoder->encode(GetSalesOrderHeaderDetail(
+		$rtn = new Response($encoder->encode(GetSalesOrderValue(
 			$request->getParam(0)->scalarval(),
 			$request->getParam(1)->scalarval(),
 			$request->getParam(2)->scalarval())));
 	} else {
-		$rtn = new Response($encoder->encode(GetSalesOrderHeaderDetail($request->getParam(0)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(GetSalesOrderValue($request->getParam(0)->scalarval(), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -4009,10 +4009,10 @@ return array(
 		"function" => "xmlrpc_GetErrorMessages",
 		"signature" => $GetErrorMessages_sig,
 		"docstring" => $GetErrorMessages_doc),
-	"weberp.xmlrpc_GetSalesOrderHeaderDetail" => array(
-		"function" => "xmlrpc_GetSalesOrderHeaderDetail",
-		"signature" => $GetSalesOrderHeaderDetail_sig,
-		"docstring" => $GetSalesOrderHeaderDetail_doc),
+	"weberp.xmlrpc_GetSalesOrderValue" => array(
+		"function" => "xmlrpc_GetSalesOrderValue",
+		"signature" => $GetSalesOrderValue_sig,
+		"docstring" => $GetSalesOrderValue_doc),
 	// "weberp.xmlrpc_SearchSalesOrderHeader" => array(
 	// 	"function" => "xmlrpc_SearchSalesOrderHeader",
 	// 	"signature" => $SearchSalesOrder_sig,
