@@ -3463,7 +3463,7 @@ $Parameter[0]['name'] = __('User name');
 $Parameter[0]['description'] = __('A valid weberp username. This user should have security access  to this data.');
 $Parameter[1]['name'] = __('User password');
 $Parameter[1]['description'] = __('The weberp password associated with this user name. ');
-$ReturnValue = __('This function returns an array of orders codes. ')
+$ReturnValue = __('This function returns an array of one order codes. ')
 	. __('If the first element is zero then the function was successful. ')
 	. __('Otherwise an array of error codes is returned and no insertion takes place. ');
 
@@ -3492,6 +3492,41 @@ unset($Parameter);
 unset($ReturnValue);
 //=============================
 
+//======Search Orders List=====
+$Description = __('This function returns one search Orders.');
+$Parameter[0]['name'] = __('User name');
+$Parameter[0]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[1]['name'] = __('User password');
+$Parameter[1]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of orders codes. ')
+	. __('If the first element is zero then the function was successful. ')
+	. __('Otherwise an array of error codes is returned and no insertion takes place. ');
+
+$SearchSalesOrder_sig = array(
+	array(Value::$xmlrpcArray),
+	array(Value::$xmlrpcArray, Value::$xmlrpcString, Value::$xmlrpcString));
+$SearchSalesOrder_doc = apiBuildDocHTML($Description, $Parameter, $ReturnValue);
+
+function xmlrpc_SearchSalesOrder($request)
+{
+	ob_start('ob_file_callback');
+	$encoder = new Encoder();
+	if ($request->getNumParams() == 3) {
+		$rtn = new Response($encoder->encode(GetSalesOrderHeader(
+			$request->getParam(0)->scalarval(),
+			$request->getParam(1)->scalarval(),
+			$request->getParam(2)->scalarval())));
+	} else {
+		$rtn = new Response($encoder->encode(GetSalesOrderHeader($request->getParam(0)->scalarval(),'', '')));
+	}
+	ob_end_flush();
+	return $rtn;
+}
+
+unset($Description);
+unset($Parameter);
+unset($ReturnValue);
+//=============================
 $Description = __('Returns (possibly translated) error text from error codes');
 $Parameter[0]['name'] = __('Error codes');
 $Parameter[0]['description'] = __('An array of error codes to change into text messages. ');
@@ -3893,6 +3928,10 @@ return array(
 		"function" => "xmlrpc_GetErrorMessages",
 		"signature" => $GetErrorMessages_sig,
 		"docstring" => $GetErrorMessages_doc),
+	"weberp.xmlrpc_SearchSalesOrder" => array(
+		"function" => "xmlrpc_SearchSalesOrder",
+		"signature" => $SearchSalesOrder_sig,
+		"docstring" => $SearchSalesOrder_doc),
 	"weberp.xmlrpc_GetSalesOrderList" => array(
 		"function" => "xmlrpc_GetSalesOrderList",
 		"signature" => $GetSalesTypeList_sig,

@@ -588,6 +588,10 @@ function ModifySalesOrderLine($OrderLine, $user, $password) {
 	return $Errors;
 }
 
+/** This function gets all orders ID  and returns an associative array containing
+   the database record for these Order. If the Order Header ID doesn't exist
+   then it returns an $Errors array.
+*/
 function GetSalesOrderList($user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
@@ -595,7 +599,12 @@ function GetSalesOrderList($user, $password) {
 		$Errors[0]=NoAuthorisation;
 		return $Errors;
 	}
-	$SQL = "SELECT * FROM salesorders";
+	$SQL = "SELECT orderno, 
+				   orddate, 
+				   debtorno, 
+				   branchcode, 
+				   quotedate  
+			FROM salesorders ORDER BY orddate DESC;";
 	$Result = DB_query($SQL);
 	$SalesTypeList = array();
 	$i=0;
