@@ -3507,7 +3507,7 @@ $SearchSalesOrder_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcString, Value::$xmlrpcString));
 $SearchSalesOrder_doc = apiBuildDocHTML($Description, $Parameter, $ReturnValue);
 
-function xmlrpc_SearchSalesOrder($request)
+function xmlrpc_SearchSalesOrderHeader($request)
 {
 	ob_start('ob_file_callback');
 	$encoder = new Encoder();
@@ -3928,8 +3928,8 @@ return array(
 		"function" => "xmlrpc_GetErrorMessages",
 		"signature" => $GetErrorMessages_sig,
 		"docstring" => $GetErrorMessages_doc),
-	"weberp.xmlrpc_SearchSalesOrder" => array(
-		"function" => "xmlrpc_SearchSalesOrder",
+	"weberp.xmlrpc_SearchSalesOrderHeader" => array(
+		"function" => "xmlrpc_SearchSalesOrderHeader",
 		"signature" => $SearchSalesOrder_sig,
 		"docstring" => $SearchSalesOrder_doc),
 	"weberp.xmlrpc_GetSalesOrderList" => array(
