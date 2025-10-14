@@ -3532,7 +3532,7 @@ unset($ReturnValue);
 $Description = __('This function is used to retrieve the details of an orderr from the webERP database.');
 $Parameter[0]['name'] = __('Field Name');
 $Parameter[0]['description'] = __('The name of a database field to search on. ')
-	. __('The field names can be found ') . '<a href="../../Z_DescribeTable.php?table=salesorders">' . __('here ') . '</a>'
+	. __('The field names can be found ') . '<a href="http://89.117.50.48/Z_DescribeTable.php?table=salesorders">' . __('here ') . '</a>'
 	. __('and are case sensitive. ');
 $Parameter[1]['name'] = __('Search Criteria');
 $Parameter[1]['description'] = __('A (partial) string to match in the above Field Name.');
