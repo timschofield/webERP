@@ -588,11 +588,80 @@ function ModifySalesOrderLine($OrderLine, $user, $password) {
 	return $Errors;
 }
 
+/** This function takes a order no and returns an associative array containing
+   the database record for that order. If the order number doesn't exist
+   then it returns an $Errors array.
+*/
+function GetSalesOrderHeaderDetail($OrderNo, $user, $password) {
+	$Errors = array();
+	$db = db($user, $password);
+	if (gettype($db)=='integer') {
+		$Errors[0]=NoAuthorisation;
+		return $Errors;
+	}
+	$Errors = VerifyOrderHeaderExists($OrderNo, sizeof($Errors), $Errors);
+	if (sizeof($Errors)!=0) {
+		return $Errors;
+	}
+	$SQL="SELECT * FROM salesorders WHERE orderno='".$OrderNo."'";
+	$Result = DB_query($SQL);
+	if (sizeof($Errors)==0) {
+		$Errors[0]=0;
+		$Errors[1]=DB_fetch_array($Result);
+		return $Errors;
+	} else {
+		return $Errors;
+	}
+}
+
+function GetSalesOrderList($user, $password) {
+	$Errors = array();
+	$db = db($user, $password);
+	if (gettype($db)=='integer') {
+		$Errors[0]=NoAuthorisation;
+		return $Errors;
+	}
+	$SQL = "SELECT orderno, 
+				   orddate  
+			FROM salesorders ORDER BY orddate DESC;";
+	$Result = DB_query($SQL);
+	$SalesTypeList = array();
+	$i=0;
+	while ($MyRow=DB_fetch_array($Result)) {
+		$SalesTypeList[$i]=$MyRow[0];
+		$i++;
+	}
+	$Errors[0]=0;
+	$Errors[1]=$SalesTypeList;
+	return $Errors;
+}
+
+/** This function takes a field name, and a string, and then returns an
+   array of orders that fulfill this criteria.
+*/
+function SearchOrderHeader($Field, $Criteria, $user, $password) {
+	$Errors = array();
+	$db = db($user, $password);
+	if (gettype($db)=='integer') {
+		$Errors[0]=NoAuthorisation;
+		return $Errors;
+	}
+	$SQL='SELECT orderno
+		FROM salesorders
+		WHERE '.$Field." LIKE '%".$Criteria."%'";
+	$Result = DB_query($SQL);
+	$OrderList = array(0);	    // First element: no errors
+	while ($MyRow=DB_fetch_array($Result)) {
+		$DebtorList[]=$MyRow[0];
+	}
+	return $OrderList;
+}
+
 /** This function takes a Order Header ID  and returns an associative array containing
    the database record for that Order. If the Order Header ID doesn't exist
    then it returns an $Errors array.
 */
-function GetSalesOrderHeader($OrderNo, $user, $password) {
+function GetSalesOrderValue($OrderNo, $user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
 	if (gettype($db)=='integer') {
@@ -603,7 +672,83 @@ function GetSalesOrderHeader($OrderNo, $user, $password) {
 	if (sizeof($Errors)!=0) {
 		return $Errors;
 	}
-	$SQL="SELECT * FROM salesorders WHERE orderno='".$OrderNo."'";
+	//$SQL="SELECT * FROM salesorders WHERE orderno='".$OrderNo."'";
+		$SQL = "SELECT salesorders.orderno,
+					debtorsmaster.name,
+					custbranch.brname,
+					salesorders.customerref,
+					salesorders.orddate,
+					salesorders.deliverydate,
+					salesorders.deliverto,
+					salesorders.printedpackingslip,
+					salesorders.poplaced,
+					SUM(salesorderdetails.unitprice*(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*(1-salesorderdetails.discountpercent)/currencies.rate) as ordervalue,
+					pickreq.prid
+				FROM salesorders
+				INNER JOIN salesorderdetails
+					ON salesorders.orderno = salesorderdetails.orderno
+				INNER JOIN debtorsmaster
+					ON salesorders.debtorno = debtorsmaster.debtorno
+				INNER JOIN custbranch
+					ON debtorsmaster.debtorno = custbranch.debtorno
+					and salesorders.branchcode = custbranch.branchcode
+				INNER JOIN currencies
+					ON debtorsmaster.currcode = currencies.currabrev
+				LEFT OUTER JOIN pickreq
+					ON pickreq.orderno = salesorders.orderno
+					and pickreq.closed = 0
+				WHERE salesorderdetails.completed = 0 and salesorders.orderno='".$OrderNo."'";
+	$Result = api_DB_Query($SQL);
+	if (sizeof($Errors)==0) {
+		return DB_fetch_array($Result);
+	} else {
+		return $Errors;
+	}
+}
+
+/** This function takes a Order Number and returns an associative array containing
+   the database record for that Order. If the Order Header ID doesn't exist
+   then it returns an $Errors array.
+*/
+function GetSalesOrderLineDetails($OrderNo, $user, $password) {
+	$Errors = array();
+	$db = db($user, $password);
+	if (gettype($db)=='integer') {
+		$Errors[0]=NoAuthorisation;
+		return $Errors;
+	}
+	$Errors=VerifyOrderHeaderExists($OrderNo, sizeof($Errors), $Errors);
+	if (sizeof($Errors)!=0) {
+		return $Errors;
+	}
+		$SQL = "SELECT stkcode,
+								stockmaster.description,
+								stockmaster.longdescription,
+								stockmaster.controlled,
+								stockmaster.serialised,
+								stockmaster.volume,
+								stockmaster.grossweight,
+								stockmaster.units,
+								stockmaster.decimalplaces,
+								stockmaster.mbflag,
+								stockmaster.taxcatid,
+								stockmaster.discountcategory,
+								salesorderdetails.unitprice,
+								salesorderdetails.quantity,
+								salesorderdetails.discountpercent,
+								salesorderdetails.actualdispatchdate,
+								salesorderdetails.qtyinvoiced,
+								salesorderdetails.narrative,
+								salesorderdetails.orderlineno,
+								salesorderdetails.poline,
+								salesorderdetails.itemdue,
+								stockmaster.actualcost as standardcost
+							FROM salesorderdetails INNER JOIN stockmaster
+							 	ON salesorderdetails.stkcode = stockmaster.stockid
+							WHERE salesorderdetails.orderno ='" . $OrderNo . "'
+							and salesorderdetails.quantity - salesorderdetails.qtyinvoiced >0
+							ORDER BY salesorderdetails.orderlineno";
+
 	$Result = api_DB_Query($SQL);
 	if (sizeof($Errors)==0) {
 		return DB_fetch_array($Result);
