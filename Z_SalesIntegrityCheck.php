@@ -10,7 +10,7 @@ $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
 
-echo '<div class="centre"><h3>' . __('Sales Integrity Check') . '</h3></div>';
+echo '<div class = "centre"><h3>' . __('Sales Integrity Check') . '</h3></div>';
 
 echo '<br /><br />' . __('Check every Invoice has a Sales Order') . '<br />';
 echo '<br /><br />' . __('Check every Invoice has a Tax Entry') . '<br />';
@@ -24,7 +24,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 
 	if ( DB_num_rows($Result2) == 0) {
 		echo '<br />' . __('Invoice '). ' '. $MyRow['transno'] . ' : ';
-		echo '<div style="color:red">' . __('No Sales Order') . '</div>';
+		echo '<div style = "color:red">' . __('No Sales Order') . '</div>';
 	}
 
 	$SQL3 = "SELECT debtortransid FROM debtortranstaxes WHERE debtortransid = '" . $MyRow['id'] . "'";
@@ -32,18 +32,18 @@ while ($MyRow = DB_fetch_array($Result)) {
 
 	if ( DB_num_rows($Result3) == 0) {
 		echo '<br />' .  __('Invoice '). ' ' . $MyRow['transno'] . ' : ';
-		echo '<div style="color:red">' . __('Has no Tax Entry') . '</div>';
+		echo '<div style = "color:red">' . __('Has no Tax Entry') . '</div>';
 	}
 
 	$SQL4 = "SELECT typeno
 				FROM gltrans
 				WHERE type = 10
-				AND typeno = '" . $MyRow['transno'] . "'";
+				and typeno = '" . $MyRow['transno'] . "'";
 	$Result4 = DB_query($SQL4);
 
 	if ( DB_num_rows($Result4) == 0) {
 		echo '<br />' . __('Invoice') . ' ' . $MyRow['transno'] . ' : ';
-		echo '<div style="color:red">' . __('has no GL Entry') . '</div>';
+		echo '<div style = "color:red">' . __('has no GL Entry') . '</div>';
 	}
 }
 
@@ -58,12 +58,12 @@ while ($MyRow = DB_fetch_array($Result)) {
 					trandate
 				FROM debtortrans
 				WHERE type = 10
-				AND transno = '" . $MyRow['typeno'] . "'";
+				and transno = '" . $MyRow['typeno'] . "'";
 	$Result2 = DB_query($SQL2);
 
 	if ( DB_num_rows($Result2) == 0) {
 			echo "<br />".__('GL Entry ') . $MyRow['counterindex'] . " : ";
-			echo ', <div style="color:red">' . __('Invoice ') . $MyRow['typeno'] . __(' could not be found') . '</div>';
+			echo ', <div style = "color:red">' . __('Invoice ') . $MyRow['typeno'] . __(' could not be found') . '</div>';
 	}
 }
 
@@ -72,7 +72,7 @@ $SQL = "SELECT typeno,
 				amount
 		FROM gltrans
 		WHERE type = 12
-		AND account = '" . $_SESSION['CompanyRecord']['debtorsact'] . "'";
+		and account = '" . $_SESSION['CompanyRecord']['debtorsact'] . "'";
 
 $Result = DB_query($SQL);
 
@@ -80,15 +80,15 @@ while ($MyRow = DB_fetch_array($Result)) {
 	$SQL2 = "SELECT SUM((ovamount+ovgst)/rate)
 			FROM debtortrans
 			WHERE type = 12
-			AND transno = '" . $MyRow['typeno'] . "'";
+			and transno = '" . $MyRow['typeno'] . "'";
 
 	$Result2 = DB_query($SQL2);
 	$MyRow2 = DB_fetch_row($Result2);
 
 	if ( $MyRow2[0] + $MyRow['amount'] == 0 ) {
-			echo '<br />' . __('Receipt') . ' ' . $MyRow['typeno'] . " : ";
-			echo '<div style="color:red">' . $MyRow['amount']. ' ' . __('in GL but found'). ' ' . $MyRow2[0] . ' ' . __('in debtorstrans') . '</div>';
-	}
+	echo '<br />' . __('Receipt') . ' ' . $MyRow['typeno'] . " : ";
+			echo '<div style = "color:red">' . $MyRow['amount']. ' ' . __('in GL but found'). ' ' . $MyRow2[0] . ' ' . __('in debtorstrans') . '</div>';
+}
 }
 
 echo '<br /><br />' . __('Check for orphan Receipts') . '<br />';
@@ -96,14 +96,14 @@ $SQL = "SELECT transno FROM debtortrans WHERE type = 12";
 $Result = DB_query($SQL);
 
 while ($MyRow = DB_fetch_array($Result)) {
-	$SQL2 = "SELECT amount FROM gltrans WHERE type = 12 AND typeno = '" . $MyRow['transno'] . "'";
+	$SQL2 = "SELECT amount FROM gltrans WHERE type = 12 and typeno = '" . $MyRow['transno'] . "'";
 	$Result2 = DB_query($SQL2);
 	$MyRow2 = DB_fetch_row($Result2);
 
 	if ( !$MyRow2[0] ) {
-		echo '<br />' . __('Receipt') . ' ' . $MyRow['transno'] . " : ";
-		echo '<div style="color:red">' . $MyRow['transno'] . ' ' .__('not found in GL')."</div>";
-	}
+	echo '<br />' . __('Receipt') . ' ' . $MyRow['transno'] . " : ";
+		echo '<div style = "color:red">' . $MyRow['transno'] . ' ' .__('not found in GL')."</div>";
+}
 }
 
 
@@ -117,13 +117,13 @@ while ($MyRow = DB_fetch_array($Result)) {
 					trandate
 				FROM debtortrans
 				WHERE type = 10
-				AND order_ = '" . $MyRow['orderno'] . "'";
+				and order_ = '" . $MyRow['orderno'] . "'";
 
 	$Result2 = DB_query($SQL2);
 
 	if ( DB_num_rows($Result2) == 0) {
 		echo '<br />' . __('Sales Order') . ' ' . $MyRow['orderno'] . ' : ';
-		echo '<div style="color:red">' . __('Has no Invoice') . '</div>';
+		echo '<div style = "color:red">' . __('Has no Invoice') . '</div>';
 	}
 }
 
@@ -138,10 +138,10 @@ while ($MyRow = DB_fetch_array($Result)) {
 
 	if ( DB_num_rows($Result2) == 0) {
 			echo '<br />' . __('Order Item') . ' ' . $MyRow['orderno'] . ' : ';
-			echo ', <div style="color:red">' . __('Has no Sales Order') . '</div>';
+			echo ', <div style = "color:red">' . __('Has no Sales Order') . '</div>';
 	}
 
-	$sumsql = "SELECT ROUND(SUM(qtyinvoiced * unitprice * (1 - discountpercent)), 3) AS InvoiceTotal
+	$sumsql = "SELECT ROUND(SUM(qtyinvoiced * unitprice * (1 - discountpercent)), 3) as InvoiceTotal
 				FROM salesorderdetails
 				WHERE orderno = '" . $MyRow['orderno'] . "'";
 	$sumresult = DB_query($sumsql);
@@ -152,18 +152,18 @@ while ($MyRow = DB_fetch_array($Result)) {
 							trandate,
 							settled,
 							rate,
-							SUM(ovamount) AS ovamount,
+							SUM(ovamount) as ovamount,
 							ovgst
 				 	FROM debtortrans WHERE order_ = '" . $MyRow['orderno'] . "'";
 		$invResult = DB_query($invSQL);
 
-		while( $invrow = DB_fetch_array($invResult) ) {
+		while ( $invrow = DB_fetch_array($invResult) ) {
 			// Ignore credit notes
 			if ( $invrow['type'] != 11 ) {
-					// Do an integrity check on sales order items
+	// Do an integrity check on sales order items
 					if ( $sumrow['InvoiceTotal'] != $invrow['ovamount'] ) {
-						echo '<br /><div style="color:red">' . __('Debtors trans') . ' ' . $invrow['ovamount'] . ' ' . __('differ from salesorderdetails') . ' ' . $sumrow['InvoiceTotal'] . '</div>';
-					}
+						echo '<br /><div style = "color:red">' . __('Debtors trans') . ' ' . $invrow['ovamount'] . ' ' . __('differ from salesorderdetails') . ' ' . $sumrow['InvoiceTotal'] . '</div>';
+}
 			}
 		}
 	}
@@ -179,14 +179,14 @@ while ($MyRow = DB_fetch_array($Result)) {
 					order_,
 					trandate
 				FROM debtortrans
-				WHERE type BETWEEN 10 AND 11
-				AND transno = '" . $MyRow['transno'] . "'";
+				WHERE type BETWEEN 10 and 11
+				and transno = '" . $MyRow['transno'] . "'";
 
 	$Result2 = DB_query($SQL2);
 
 	if ( DB_num_rows($Result2) == 0) {
 			echo '<br />' . __('Stock Move') . ' ' . $MyRow['stkmoveno'] . ' : ';
-			echo ', <div style="color:red">' . __('Has no Invoice') . '</div>';
+			echo ', <div style = "color:red">' . __('Has no Invoice') . '</div>';
 	}
 }
 
@@ -196,12 +196,12 @@ $SQL = "SELECT debtortransid FROM debtortranstaxes";
 $Result = DB_query($SQL);
 
 while ($MyRow = DB_fetch_array($Result)) {
-	$SQL2 = "SELECT id, transno, trandate FROM debtortrans WHERE type BETWEEN 10 AND 11 AND id = '" . $MyRow['debtortransid'] . "'";
+	$SQL2 = "SELECT id, transno, trandate FROM debtortrans WHERE type BETWEEN 10 and 11 and id = '" . $MyRow['debtortransid'] . "'";
 	$Result2 = DB_query($SQL2);
 
 	if ( DB_num_rows($Result2) == 0) {
 			echo '<br />' . __('Tax Entry') . ' ' . $MyRow['debtortransid'] . ' : ';
-			echo ', <div style="color:red">' . __('Has no Invoice') . '</div>';
+			echo ', <div style = "color:red">' . __('Has no Invoice') . '</div>';
 	}
 }
 

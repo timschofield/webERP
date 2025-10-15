@@ -48,12 +48,12 @@ if ($GRNNo == 'Preview') {
 				stockmaster.units,
 				stockmaster.decimalplaces
 			FROM grns INNER JOIN purchorderdetails
-			ON grns.podetailitem=purchorderdetails.podetailitem
+			ON grns.podetailitem = purchorderdetails.podetailitem
 			INNER JOIN purchorders on purchorders.orderno = purchorderdetails.orderno
-			INNER JOIN locationusers ON locationusers.loccode=purchorders.intostocklocation AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
+			INNER JOIN locationusers ON locationusers.loccode = purchorders.intostocklocation and locationusers.userid = '" .  $_SESSION['UserID'] . "' and locationusers.canview = 1
 			LEFT JOIN stockmaster
-			ON grns.itemcode=stockmaster.stockid
-			WHERE grnbatch='". $GRNNo ."'";
+			ON grns.itemcode = stockmaster.stockid
+			WHERE grnbatch = '". $GRNNo ."'";
 	$GRNResult = DB_query($SQL);
 	$NoOfGRNs = DB_num_rows($GRNResult);
 
@@ -63,7 +63,7 @@ if ($GRNNo == 'Preview') {
 	}
 
 	if ($NoOfGRNs > 0) {
-		$SQL = "SELECT suppliers.suppname,
+	$SQL = "SELECT suppliers.suppname,
 						suppliers.address1,
 						suppliers.address2 ,
 						suppliers.address3,
@@ -71,11 +71,11 @@ if ($GRNNo == 'Preview') {
 						suppliers.address5,
 						suppliers.address6
 				FROM grns INNER JOIN suppliers
-				ON grns.supplierid=suppliers.supplierid
-				WHERE grnbatch='". $GRNNo ."'";
+				ON grns.supplierid = suppliers.supplierid
+				WHERE grnbatch = '". $GRNNo ."'";
 		$SuppResult = DB_query($SQL, __('Could not get the supplier of the selected GRN'));
 		$SuppRow = DB_fetch_array($SuppResult);
-	}
+}
 }
 
 if ($NoOfGRNs > 0) {
@@ -84,7 +84,8 @@ if ($NoOfGRNs > 0) {
 	<html>
 	<head>
 	<style>
-		body { font-family: DejaVu Sans, sans-serif; font-size: 12px; }
+		body { font-family: DejaVu Sans, sans-serif; font-size: 12px;
+}
 		table { border-collapse: collapse; width: 100%; }
 		th, td { border: 1px solid #000; padding: 3px; text-align: left; }
 		.right { text-align: right; }
@@ -137,9 +138,9 @@ if ($NoOfGRNs > 0) {
 				<td>' . htmlspecialchars($MyRow['itemcode']) . '</td>
 				<td>' . htmlspecialchars($MyRow['itemdescription']) . '</td>
 				<td>' . htmlspecialchars($DeliveryDate) . '</td>
-				<td class="right">' . $SuppliersQuantity . '</td>
+				<td class = "right">' . $SuppliersQuantity . '</td>
 				<td>' . htmlspecialchars($MyRow['suppliersunit']) . '</td>
-				<td class="right">' . $OurUnitsQuantity . '</td>
+				<td class = "right">' . $OurUnitsQuantity . '</td>
 				<td>' . htmlspecialchars($MyRow['units']) . '</td>
 			</tr>
 		';
@@ -151,23 +152,23 @@ if ($NoOfGRNs > 0) {
 		$ControlledRow = DB_fetch_row($CheckControlledResult);
 
 		if ($ControlledRow[0] == 1) {
-			$SQL = "SELECT stockserialmoves.serialno,
+	$SQL = "SELECT stockserialmoves.serialno,
 							stockserialmoves.moveqty
 					FROM stockmoves INNER JOIN stockserialmoves
-					ON stockmoves.stkmoveno= stockserialmoves.stockmoveno
-					WHERE stockmoves.stockid='" . $MyRow['itemcode'] . "'
-					AND stockmoves.type =25
-					AND stockmoves.transno='" . $GRNNo . "'";
+					ON stockmoves.stkmoveno =  stockserialmoves.stockmoveno
+					WHERE stockmoves.stockid = '" . $MyRow['itemcode'] . "'
+					and stockmoves.type =25
+					and stockmoves.transno = '" . $GRNNo . "'";
 			$GetStockMoveResult = DB_query($SQL, __('Could not retrieve the stock movement reference number which is required in order to retrieve details of the serial items that came in with this GRN'));
 			while ($SerialStockMoves = DB_fetch_array($GetStockMoveResult)) {
 				$HTML .= '
 					<tr>
-						<td colspan="2">' . __('Lot/Serial:') . ' ' . htmlspecialchars($SerialStockMoves['serialno']) . '</td>
-						<td class="right">' . htmlspecialchars($SerialStockMoves['moveqty']) . '</td>
-						<td colspan="4"></td>
+						<td colspan = "2">' . __('Lot/Serial:') . ' ' . htmlspecialchars($SerialStockMoves['serialno']) . '</td>
+						<td class = "right">' . htmlspecialchars($SerialStockMoves['moveqty']) . '</td>
+						<td colspan = "4"></td>
 					</tr>
 				';
-			}
+}
 		}
 	}
 
@@ -206,6 +207,6 @@ if ($NoOfGRNs > 0) {
 	$Title = __('GRN Error');
 	include('includes/header.php');
 	prnMsg(__('There were no GRNs to print'),'warn');
-	echo '<br /><a href="'.$RootPath.'/index.php">' .  __('Back to the menu') . '</a>';
+	echo '<br /><a href = "'.$RootPath.'/index.php">' .  __('Back to the menu') . '</a>';
 	include('includes/footer.php');
 }

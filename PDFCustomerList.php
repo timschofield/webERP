@@ -13,21 +13,21 @@ if (isset($_POST['ActivitySince'])){$_POST['ActivitySince'] = ConvertSQLDate($_P
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
-	if($_POST['Activity']!='All') {
-		if(!is_numeric($_POST['ActivityAmount'])) {
+	if ($_POST['Activity']!='All') {
+	if (!is_numeric($_POST['ActivityAmount'])) {
 			$Title = __('Customer List') . ' - ' . __('Problem Report') . '....';
 			include('includes/header.php');
 			echo '<p />';
 			prnMsg( __('The activity amount is not numeric and you elected to print customer relative to a certain amount of activity') . ' - ' . __('this level of activity must be specified in the local currency') .'.', 'error');
 			include('includes/footer.php');
 			exit();
-		}
+}
 	}
 
 	/* Now figure out the customer data to report for the selections made */
 
-	if(in_array('All', $_POST['Areas'])) {
-		if(in_array('All', $_POST['SalesPeople'])) {
+	if (in_array('All', $_POST['Areas'])) {
+		if (in_array('All', $_POST['SalesPeople'])) {
 			$SQL = "SELECT debtorsmaster.debtorno,
 						debtorsmaster.name,
 						debtorsmaster.address1,
@@ -54,11 +54,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 						areas.areadescription,
 						salesman.salesmanname
 					FROM debtorsmaster INNER JOIN custbranch
-					ON debtorsmaster.debtorno=custbranch.debtorno
+					ON debtorsmaster.debtorno = custbranch.debtorno
 					INNER JOIN areas
 					ON custbranch.area = areas.areacode
 					INNER JOIN salesman
-					ON custbranch.salesman=salesman.salesmancode
+					ON custbranch.salesman = salesman.salesmancode
 					ORDER BY area,
 						salesman,
 						debtorsmaster.debtorno,
@@ -91,20 +91,20 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 						areas.areadescription,
 						salesman.salesmanname
 					FROM debtorsmaster INNER JOIN custbranch
-					ON debtorsmaster.debtorno=custbranch.debtorno
+					ON debtorsmaster.debtorno = custbranch.debtorno
 					INNER JOIN areas
 					ON custbranch.area = areas.areacode
 					INNER JOIN salesman
-					ON custbranch.salesman=salesman.salesmancode
+					ON custbranch.salesman = salesman.salesmancode
 					WHERE (";
 
-				$i=0;
+				$i = 0;
 				foreach ($_POST['SalesPeople'] as $Salesperson) {
-					if($i>0) {
-						$SQL .= " OR ";
-					}
+					if ($i>0) {
+	$SQL .= " or ";
+}
 					$i++;
-					$SQL .= "custbranch.salesman='" . $Salesperson ."'";
+					$SQL .= "custbranch.salesman = '" . $Salesperson ."'";
 				}
 
 				$SQL .=") ORDER BY area,
@@ -113,7 +113,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 						custbranch.branchcode";
 		} /*end if SalesPeople =='All' */
 	} else { /* not all sales areas has been selected so need to build the where clause */
-		if(in_array('All', $_POST['SalesPeople'])) {
+		if (in_array('All', $_POST['SalesPeople'])) {
 			$SQL = "SELECT debtorsmaster.debtorno,
 						debtorsmaster.name,
 						debtorsmaster.address1,
@@ -140,20 +140,20 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 						areas.areadescription,
 						salesman.salesmanname
 					FROM debtorsmaster INNER JOIN custbranch
-					ON debtorsmaster.debtorno=custbranch.debtorno
+					ON debtorsmaster.debtorno = custbranch.debtorno
 					INNER JOIN areas
 					ON custbranch.area = areas.areacode
 					INNER JOIN salesman
-					ON custbranch.salesman=salesman.salesmancode
+					ON custbranch.salesman = salesman.salesmancode
 					WHERE (";
 
-			$i=0;
+			$i = 0;
 			foreach ($_POST['Areas'] as $Area) {
-				if($i>0) {
-					$SQL .= " OR ";
-				}
+				if ($i>0) {
+	$SQL .= " or ";
+}
 				$i++;
-				$SQL .= "custbranch.area='" . $Area ."'";
+				$SQL .= "custbranch.area = '" . $Area ."'";
 			}
 
 			$SQL .= ") ORDER BY custbranch.area,
@@ -188,31 +188,31 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					areas.areadescription,
 					salesman.salesmanname
 				FROM debtorsmaster INNER JOIN custbranch
-				ON debtorsmaster.debtorno=custbranch.debtorno
+				ON debtorsmaster.debtorno = custbranch.debtorno
 				INNER JOIN areas
 				ON custbranch.area = areas.areacode
 				INNER JOIN salesman
-				ON custbranch.salesman=salesman.salesmancode
+				ON custbranch.salesman = salesman.salesmancode
 				WHERE (";
 
-			$i=0;
+			$i = 0;
 			foreach ($_POST['Areas'] as $Area) {
-				if($i>0) {
-					$SQL .= " OR ";
-				}
+				if ($i>0) {
+	$SQL .= " or ";
+}
 				$i++;
-				$SQL .= "custbranch.area='" . $Area ."'";
+				$SQL .= "custbranch.area = '" . $Area ."'";
 			}
 
-			$SQL .= ") AND (";
+			$SQL .= ") and (";
 
-			$i=0;
+			$i = 0;
 			foreach ($_POST['SalesPeople'] as $Salesperson) {
-				if($i>0) {
-					$SQL .= " OR ";
-				}
+				if ($i>0) {
+	$SQL .= " or ";
+}
 				$i++;
-				$SQL .= "custbranch.salesman='" . $Salesperson ."'";
+				$SQL .= "custbranch.salesman = '" . $Salesperson ."'";
 			}
 
 			$SQL .=") ORDER BY custbranch.area,
@@ -226,11 +226,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$ErrMsg = __('The customer List could not be retrieved');
 	$CustomersResult = DB_query($SQL, $ErrMsg);
 
-	if(DB_num_rows($CustomersResult) == 0) {
+	if (DB_num_rows($CustomersResult) == 0) {
 	  $Title = __('Customer List') . ' - ' . __('Problem Report') . '....';
 	  include('includes/header.php');
 	  prnMsg( __('This report has no output because there were no customers retrieved'), 'error' );
-	  echo '<br /><a href="' .$RootPath .'/index.php">' .  __('Back to the menu'). '</a>';
+	  echo '<br /><a href = "' .$RootPath .'/index.php">' .  __('Back to the menu'). '</a>';
 	  include('includes/footer.php');
 	  exit();
 	}
@@ -240,11 +240,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	if (isset($_POST['PrintPDF'])) {
 		$HTML .= '<html>
 					<head>';
-		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
+		$HTML .= '<link href = "css/reports.css" rel = "stylesheet" type = "text/css" />';
 	}
 
-	$HTML .= '<meta name="author" content="WebERP " . $Version">
-					<meta name="Creator" content="webERP https://www.weberp.org">
+	$HTML .= '<meta name = "author" content = "WebERP " . $Version">
+					<meta name = "Creator" content = "webERP https://www.weberp.org">
 				</head>
 				<body>';
 
@@ -253,16 +253,16 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	if (in_array('All', $_POST['Areas'])){
 		$Heading .= __('All Territories'). ' ';
 	} else {
-		if (count($_POST['Areas'])==1){
+		if (count($_POST['Areas']) == 1){
 			$Heading .= __('Territory') . ' ' . $_POST['Areas'][0];
 		} else {
 			$Heading .= __('Territories'). ' ';
 			$NoOfAreas = count($_POST['Areas']);
-			$i=1;
+			$i = 1;
 			foreach ($_POST['Areas'] as $Area){
-				if ($i==$NoOfAreas){
-					$Heading .= __('and') . ' ' . $Area . ' ';
-				} elseif ($i==($NoOfAreas-1)) {
+				if ($i == $NoOfAreas) {
+	$Heading .= __('and') . ' ' . $Area . ' ';
+} elseif ($i == ($NoOfAreas-1)) {
 					$Heading .= $Area . ' ';
 				} else {
 					$Heading .= $Area . ', ';
@@ -275,16 +275,16 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	if (in_array('All', $_POST['SalesPeople'])){
 		$Heading .= __('All Salespeople');
 	} else {
-		if (count($_POST['SalesPeople'])==1){
+		if (count($_POST['SalesPeople']) == 1){
 			$Heading .= __('only') .' ' . $_POST['SalesPeople'][0];
 		} else {
 			$Heading .= __('Salespeople') .' ';
 			$NoOfSalesfolk = count($_POST['SalesPeople']);
-			$i=1;
+			$i = 1;
 			foreach ($_POST['SalesPeople'] as $Salesperson){
-				if ($i==$NoOfSalesfolk){
-					$Heading .= __('and') . ' ' . $Salesperson . " ";
-				} elseif ($i==($NoOfSalesfolk-1)) {
+				if ($i == $NoOfSalesfolk) {
+	$Heading .= __('and') . ' ' . $Salesperson . " ";
+} elseif ($i == ($NoOfSalesfolk-1)) {
 					$Heading .= $Salesperson . " ";
 				} else {
 					$Heading .= $Salesperson . ", ";
@@ -293,7 +293,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		}
 	}
 
-	$HTML .= '<div class="centre" id="ReportHeader">
+	$HTML .= '<div class = "centre" id = "ReportHeader">
 				' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 				' . $Heading . '<br />
 				' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
@@ -311,36 +311,35 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<tbody>';
 
 	$Area ='';
-	$SalesPerson='';
+	$SalesPerson = '';
 
-	while($Customers = DB_fetch_array($CustomersResult)) {
+	while ($Customers = DB_fetch_array($CustomersResult)) {
 
-		if($_POST['Activity']!='All') {
-
-			/*Get the total turnover in local currency for the customer/branch
+		if ($_POST['Activity']!='All') {
+	/*Get the total turnover in local currency for the customer/branch
 			since the date entered */
 
-			$SQL = "SELECT SUM((ovamount+ovfreight+ovdiscount)/rate) AS turnover
+			$SQL = "SELECT SUM((ovamount+ovfreight+ovdiscount)/rate) as turnover
 					FROM debtortrans
-					WHERE debtorno='" . $Customers['debtorno'] . "'
-					AND branchcode='" . $Customers['branchcode'] . "'
-					AND (type=10 or type=11)
-					AND trandate >='" . FormatDateForSQL($_POST['ActivitySince']). "'";
+					WHERE debtorno = '" . $Customers['debtorno'] . "'
+					and branchcode = '" . $Customers['branchcode'] . "'
+					and (type = 10 or type = 11)
+					and trandate >='" . FormatDateForSQL($_POST['ActivitySince']). "'";
 			$ActivityResult = DB_query($SQL, __('Could not retrieve the activity of the branch because'), __('The failed SQL was'));
 
 			$ActivityRow = DB_fetch_row($ActivityResult);
 			$LocalCurrencyTurnover = $ActivityRow[0];
 
-			if($_POST['Activity'] =='GreaterThan') {
-				if($LocalCurrencyTurnover > $_POST['ActivityAmount']) {
+			if ($_POST['Activity'] =='GreaterThan') {
+				if ($LocalCurrencyTurnover > $_POST['ActivityAmount']) {
 					$PrintThisCustomer = true;
-				} else {
+} else {
 					$PrintThisCustomer = false;
 				}
-			} elseif($_POST['Activity'] =='LessThan') {
-				if($LocalCurrencyTurnover < $_POST['ActivityAmount']) {
+			} elseif ($_POST['Activity'] =='LessThan') {
+	if ($LocalCurrencyTurnover < $_POST['ActivityAmount']) {
 					$PrintThisCustomer = true;
-				} else {
+} else {
 					$PrintThisCustomer = false;
 				}
 			}
@@ -348,28 +347,27 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			$PrintThisCustomer = true;
 		}
 
-		if($PrintThisCustomer) {
-
-			$HTML .='<tr class="striped_row">';
-			if($Area!=$Customers['area']) {
-				$HTML .= '<th colspan="3">' . __('Customers in') . ' ' . $Customers['areadescription'] . '<br />';
+		if ($PrintThisCustomer) {
+	$HTML .='<tr class = "striped_row">';
+			if ($Area != $Customers['area']) {
+				$HTML .= '<th colspan = "3">' . __('Customers in') . ' ' . $Customers['areadescription'] . '<br />';
 				$Area = $Customers['area'];
-			}
+}
 
-			if($SalesPerson!=$Customers['salesman']) {
-				$HTML .= '' . __('Salesman') . ' ' . $Customers['salesmanname'] . '</th>';
+			if ($SalesPerson != $Customers['salesman']) {
+	$HTML .= '' . __('Salesman') . ' ' . $Customers['salesmanname'] . '</th>';
 				$SalesPerson = $Customers['salesman'];
-			}
+}
 			$HTML .= '</tr>';
 
 			$CustomerDetails = $Customers['name'];
-			for ($i = 1; $i<=6; $i++) {
+			for ($i = 1;  $i<=6;  $i++) {
 				if ($Customers['address' . $i] != '') {
-					$CustomerDetails .= '<br />' . $Customers['address' . $i];
-				}
+	$CustomerDetails .= '<br />' . $Customers['address' . $i];
+}
 			}
 
-			$HTML .= '<tr class="striped_row">
+			$HTML .= '<tr class = "striped_row">
 						<td>' . $Customers['debtorno'] . '</td>
 						<td>' . $CustomerDetails . '</td>
 						<td>' . $Customers['branchcode'] . '<br />
@@ -377,9 +375,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 						</td>';
 
 
-			if($_POST['Activity']!='All') {
-				$HTML .= '<td>' . __('Turnover') . ' - ' . locale_number_format($LocalCurrencyTurnover,0) . '</td>';
-			}
+			if ($_POST['Activity']!='All') {
+	$HTML .= '<td>' . __('Turnover') . ' - ' . locale_number_format($LocalCurrencyTurnover,0) . '</td>';
+}
 
 			$HTML .= '<td>' . $Customers['brname'] . '<br />
 						  ' . $Customers['contactname'] . '<br />
@@ -388,10 +386,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 						</td>';
 
 			$BranchAddress = $Customers['name'];
-			for ($i = 1; $i<=6; $i++) {
+			for ($i = 1;  $i<=6;  $i++) {
 				if ($Customers['braddress' . $i] != '') {
-					$BranchAddress .= '<br />' . $Customers['braddress' . $i];
-				}
+	$BranchAddress .= '<br />' . $Customers['braddress' . $i];
+}
 			}
 
 			$HTML .= '<td>' . $BranchAddress . '</td>
@@ -402,17 +400,17 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	if (isset($_POST['PrintPDF'])) {
 		$HTML .= '</tbody>
-				<div class="footer fixed-section">
-					<div class="right">
-						<span class="page-number">Page </span>
+				<div class = "footer fixed-section">
+					<div class = "right">
+						<span class = "page-number">Page </span>
 					</div>
 				</div>
 			</table>';
 	} else {
 		$HTML .= '</tbody>
 				</table>
-				<div class="centre">
-					<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
+				<div class = "centre">
+					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -435,7 +433,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	} else {
 		$Title = __('Customer Details Listing');
 		include('includes/header.php');
-		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/bank.png" title="' . __('Receipts') . '" alt="" />' . ' ' . __('Create PDF Customer Details Listing') . '</p>';
+		echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/bank.png" title = "' . __('Receipts') . '" alt = "" />' . ' ' . __('Create PDF Customer Details Listing') . '</p>';
 		echo $HTML;
 		include('includes/footer.php');
 	}
@@ -444,63 +442,63 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	$Title = __('Customer Details Listing');
 	include('includes/header.php');
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' .
-		 $Title . '" alt="" />' . ' ' . $Title . '</p>';
+	echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/customer.png" title = "' .
+		 $Title . '" alt = "" />' . ' ' . $Title . '</p>';
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" target="_blank">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post" target = "_blank">';
+	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
     echo '<fieldset>
 			<legend>', __('Report Criteria'), '</legend>';
 	echo '<field>
-			<label for="Areas">' . __('For Sales Areas') . ':</label>
-			<select name="Areas[]" multiple="multiple">';
+			<label for = "Areas">' . __('For Sales Areas') . ':</label>
+			<select name = "Areas[]" multiple = "multiple">';
 
-	$SQL="SELECT areacode, areadescription FROM areas";
+	$SQL = "SELECT areacode, areadescription FROM areas";
 	$AreasResult = DB_query($SQL);
 
-	echo '<option selected="selected" value="All">' . __('All Areas') . '</option>';
+	echo '<option selected = "selected" value = "All">' . __('All Areas') . '</option>';
 
-	while($MyRow = DB_fetch_array($AreasResult)) {
-		echo '<option value="' . $MyRow['areacode'] . '">' . $MyRow['areadescription'] . '</option>';
+	while ($MyRow = DB_fetch_array($AreasResult)) {
+		echo '<option value = "' . $MyRow['areacode'] . '">' . $MyRow['areadescription'] . '</option>';
 	}
 	echo '</select>
 		</field>';
 
 	echo '<field>
-			<label for="SalesPeople">' . __('For Salesperson:') . '</label>
-			<select name="SalesPeople[]" multiple="multiple">
-				<option selected="selected" value="All">' .  __('All Salespeople') . '</option>';
+			<label for = "SalesPeople">' . __('For Salesperson:') . '</label>
+			<select name = "SalesPeople[]" multiple = "multiple">
+				<option selected = "selected" value = "All">' .  __('All Salespeople') . '</option>';
 
 	$SQL = "SELECT salesmancode, salesmanname FROM salesman";
 	$SalesFolkResult = DB_query($SQL);
 
-	while($MyRow = DB_fetch_array($SalesFolkResult)) {
-		echo '<option value="' . $MyRow['salesmancode'] . '">' . $MyRow['salesmanname'] . '</option>';
+	while ($MyRow = DB_fetch_array($SalesFolkResult)) {
+		echo '<option value = "' . $MyRow['salesmancode'] . '">' . $MyRow['salesmanname'] . '</option>';
 	}
 	echo '</select>
 		</field>';
 
 	echo '<field>
-			<label for="Activity">' . __('Level Of Activity'). ':</label>
-			<select name="Activity">
-				<option selected="selected" value="All">' .  __('All customers') . '</option>
-				<option value="GreaterThan">' .  __('Sales Greater Than') . '</option>
-				<option value="LessThan">' .  __('Sales Less Than') . '</option>
+			<label for = "Activity">' . __('Level Of Activity'). ':</label>
+			<select name = "Activity">
+				<option selected = "selected" value = "All">' .  __('All customers') . '</option>
+				<option value = "GreaterThan">' .  __('Sales Greater Than') . '</option>
+				<option value = "LessThan">' .  __('Sales Less Than') . '</option>
 			</select>';
 
-	echo '<input type="text" class="number" name="ActivityAmount" size="8" maxlength="8" value="0" />
+	echo '<input type = "text" class = "number" name = "ActivityAmount" size = "8" maxlength = "8" value = "0" />
 		</field>';
 
 	$DefaultActivitySince = date($_SESSION['DefaultDateFormat'], mktime(0,0,0,date('m')-6,0,date('y')));
 	echo '<field>
-			<label for="ActivitySince">' . __('Activity Since'). ':</label>
-			<input type="date" name="ActivitySince" size="11" maxlength="10" value="' . FormatDateForSQL($DefaultActivitySince) . '" />
+			<label for = "ActivitySince">' . __('Activity Since'). ':</label>
+			<input type = "date" name = "ActivitySince" size = "11" maxlength = "10" value = "' . FormatDateForSQL($DefaultActivitySince) . '" />
 		</field>';
 
 	echo '</fieldset>
-			<div class="centre">
-				<input type="submit" name="PrintPDF" title="PDF" value="' . __('Print PDF') . '" />
-				<input type="submit" name="View" title="View" value="' . __('View') . '" />
+			<div class = "centre">
+				<input type = "submit" name = "PrintPDF" title = "PDF" value = "' . __('Print PDF') . '" />
+				<input type = "submit" name = "View" title = "View" value = "' . __('View') . '" />
 			</div>';
     echo '</form>';
 

@@ -7,14 +7,14 @@ $ViewTopic = "SpecialUtilities";
 $BookMark = "Z_poEditLangModule";
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
-		'/images/maintenance.png" title="' .
+echo '<p class = "page_title_text"><img alt = "" src = "' . $RootPath . '/css/' . $Theme .
+		'/images/maintenance.png" title = "' .
 		__('Edit a Language File Module') . '" />' . ' ' .
 		__('Edit a Language File Module') . '</p>';
 
 /* Your webserver user MUST have read/write access to here,	otherwise you'll be wasting your time */
 
-echo '<br />&nbsp;<a href="' . $RootPath . '/Z_poAdmin.php">' . __('Back to the translation menu') . '</a>';
+echo '<br />&nbsp;<a href = "' . $RootPath . '/Z_poAdmin.php">' . __('Back to the translation menu') . '</a>';
 echo '<br /><br />&nbsp;' . __('Utility to edit a language file module');
 echo '<br />&nbsp;' . __('Current language is') . ' ' . $_SESSION['Language'];
 echo '<br /><br />&nbsp;' . __('To change language click on the user name at the top left, change to language desired and click Modify');
@@ -67,20 +67,20 @@ if (isset($_POST['module'])) {
     // save the modifications
 
 		echo '<br /><table><tr><td>';
-		echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '>';
-		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+		echo '<form method = "post" action = ' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '>';
+		echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
     /* write the new language file */
 
 		prnMsg(__('Writing the language file') . '.....<br />', 'info', ' ');
 
-		for ($i=17; $i<=$LangFileEntries; $i++) {
+		for ($i = 17;  $i<=$LangFileEntries;  $i++) {
 			if (isset($_POST['msgstr_'.$i])) {
 				$LangFile[$i] = 'msgstr "' . $_POST['moduletext_'.$i] . '"' . "\n";
 			}
 		}
 		$fpOut = fopen($PathToNewLanguage, 'w');
-		for ($i=0; $i<=$LangFileEntries; $i++) {
+		for ($i = 0;  $i<=$LangFileEntries;  $i++) {
 			$Result = fputs($fpOut, $LangFile[$i]);
 		}
 		$Result = fclose($fpOut);
@@ -114,7 +114,7 @@ if (isset($_POST['module'])) {
 
 		$j = 1;
 		$AlsoIn = array();
-		for ($i=17; $i<=$LangFileEntries; $i++) {			/* start at line 18 to skip the header */
+		for ($i = 17;  $i<=$LangFileEntries;  $i++) {			/* start at line 18 to skip the header */
 			if (mb_substr($LangFile[$i], 0, 2) == '#:') {		/* it's a module reference */
 				$AlsoIn[$j] .= str_replace(' ','<br />', mb_substr($LangFile[$i],3)) . '<br />';
 			} elseif (mb_substr($LangFile[$i], 0 , 5) == 'msgid') {
@@ -130,19 +130,19 @@ if (isset($_POST['module'])) {
 /* stick it on the screen */
 
     echo '<br />&nbsp;' . __('When finished modifying you must click on Modify at the bottom in order to save changes');
-		echo '<div class="centre">';
+		echo '<div class = "centre">';
 		echo '<br />';
 		prnMsg(__('Your existing translation file (messages.po) will be saved as messages.po.old') . '<br />', 'info', __('PLEASE NOTE'));
 		echo '<br />';
-		echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '>
-				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+		echo '<form method = "post" action = ' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '>
+				<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />
 				</div>
 				<table>
 					<tr>
-						<th align="center">' . __('Language File for') . ' "' . $_POST['language'] . '"</th>
+						<th align = "center">' . __('Language File for') . ' "' . $_POST['language'] . '"</th>
 					</tr>
 					<tr>
-						<th align="center">' . __('Module') . ' "' . $_POST['module'] . '"</th>
+						<th align = "center">' . __('Module') . ' "' . $_POST['module'] . '"</th>
 					</tr>
 					<tr>
 						<td></td>
@@ -150,27 +150,26 @@ if (isset($_POST['module'])) {
 					<tr>
 						<td>';
 
-		echo '<table width="100%">';
+		echo '<table width = "100%">';
 		echo '<tr>';
 		echo '<th>' . __('Default text') . '</th>';
 		echo '<th>' . __('Translation') . '</th>';
 		echo '<th>' . __('Exists in') . '</th>';
 		echo '</tr>' . "\n";
 
-		for ($i=1; $i<=$TotalLines; $i++) {
+		for ($i = 1;  $i<=$TotalLines;  $i++) {
 
 			$b = mb_strpos($AlsoIn[$i], $_POST['module']);
 
 			if ($b === false) {
-/* skip it */
-
-			} else {
+	/* skip it */
+} else {
 				echo '<tr>';
-				echo '<td valign="top"><i>' . $DefaultText[$i] . '</i></td>';
-				echo '<td valign="top"><input type="text" size="60" name="moduletext_' . $Msgstr[$i] . '" value="' . $ModuleText[$i] . '" /></td>';
-				echo '<td valign="top">' . $AlsoIn[$i] . '<input type="hidden" name="msgstr_' . $Msgstr[$i] . '" value="' . $Msgstr[$i] . '" /></td>';
+				echo '<td valign = "top"><i>' . $DefaultText[$i] . '</i></td>';
+				echo '<td valign = "top"><input type = "text" size = "60" name = "moduletext_' . $Msgstr[$i] . '" value = "' . $ModuleText[$i] . '" /></td>';
+				echo '<td valign = "top">' . $AlsoIn[$i] . '<input type = "hidden" name = "msgstr_' . $Msgstr[$i] . '" value = "' . $Msgstr[$i] . '" /></td>';
 				echo '</tr>';
-				echo '<tr><th colspan="3"></th></tr>';
+				echo '<tr><th colspan = "3"></th></tr>';
 			}
 
 		}
@@ -179,9 +178,9 @@ if (isset($_POST['module'])) {
 
 		echo '</td></tr>';
 		echo '</table>';
-		echo '<br /><div class="centre">';
-		echo '<input type="submit" name="submit" value="' . __('Modify') . '" />&nbsp;&nbsp;';
-		echo '<input type="hidden" name="module" value="' . $_POST['module'] . '" />';
+		echo '<br /><div class = "centre">';
+		echo '<input type = "submit" name = "submit" value = "' . __('Modify') . '" />&nbsp;&nbsp;';
+		echo '<input type = "hidden" name = "module" value = "' . $_POST['module'] . '" />';
 
 		echo '</form>';
 		echo '</div>';
@@ -197,7 +196,7 @@ if (isset($_POST['module'])) {
 /* and check for the existence of the directory */
 
 	if ($Handle = opendir('.')) {
-    	$i=0;
+    	$i = 0;
     	while (false !== ($File = readdir($Handle))) {
         if ((mb_substr($File, 0, 1) != ".") && (!is_dir($File))) {
           $AvailableModules[$i] = $File;
@@ -229,25 +228,25 @@ else
 		<table>
 		<tr>
 			<td>';
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" >';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" >';
+	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 	echo '<table>';
 
 	echo '<tr><td>' . __('Select the module to edit') . '</td>';
-	echo '<td><select name="module">';
-	for ($i=0; $i<$NumberOfModules; $i++) {
+	echo '<td><select name = "module">';
+	for ($i = 0;  $i<$NumberOfModules;  $i++) {
 			echo '<option>' . $AvailableModules[$i] . '</option>';
 	}
 	echo '</select></td>';
 
 	echo '</tr></table>';
 	echo '<br />';
-	echo '<div class="centre">
-			<input type="submit" name="proceed" value="' . __('Proceed') . '" />&nbsp;&nbsp;
+	echo '<div class = "centre">
+			<input type = "submit" name = "proceed" value = "' . __('Proceed') . '" />&nbsp;&nbsp;
 			<br />
 			<br />
-			<input type="submit" name="ReMergePO" value="' . __('Refresh messages with latest strings') . '" />
+			<input type = "submit" name = "ReMergePO" value = "' . __('Refresh messages with latest strings') . '" />
 		</div>
 		</form>';
 	echo '</td></tr></table>';

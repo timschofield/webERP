@@ -13,9 +13,9 @@ include('includes/header.php');
 
 if (empty($_GET['identifier'])) {
 	/*unique session identifier to ensure that there is no conflict with other order entry sessions on the same machine  */
-	$identifier=date('U');
+	$identifier = date('U');
 } else {
-	$identifier=$_GET['identifier'];
+	$identifier = $_GET['identifier'];
 }
 
 if (isset($_GET['LineNo'])){
@@ -23,8 +23,8 @@ if (isset($_GET['LineNo'])){
 } elseif (isset($_POST['LineNo'])){
         $LineNo = (int)$_POST['LineNo'];
 } else {
-	echo '<div class="centre">
-			<a href="' . $RootPath . '/ConfirmDispatch_Invoice.php">' .  __('Select a line item to invoice') . '</a>
+	echo '<div class = "centre">
+			<a href = "' . $RootPath . '/ConfirmDispatch_Invoice.php">' .  __('Select a line item to invoice') . '</a>
 			<br />
 			<br />';
 	prnMsg( __('This page can only be opened if a line item on a sales order to be invoiced has been selected') . '. ' . __('Please do that first'),'error');
@@ -33,10 +33,10 @@ if (isset($_GET['LineNo'])){
 	exit();
 }
 
-if (!isset($_SESSION['Items'.$identifier]) OR !isset($_SESSION['ProcessingOrder'])) {
+if (!isset($_SESSION['Items'.$identifier]) or !isset($_SESSION['ProcessingOrder'])) {
 	/* This page can only be called with a sales order number to invoice */
-	echo '<div class="centre">
-			<a href="' . $RootPath . '/SelectSalesOrder.php">' .  __('Select a sales order to invoice') . '</a>
+	echo '<div class = "centre">
+			<a href = "' . $RootPath . '/SelectSalesOrder.php">' .  __('Select a sales order to invoice') . '</a>
 			<br />';
 	prnMsg( __('This page can only be opened if a sales order and line item has been selected Please do that first'),'error');
 	echo '</div>';
@@ -50,8 +50,8 @@ $LineItem = &$_SESSION['Items'.$identifier]->LineItems[$LineNo];
 
 
 //Make sure this item is really controlled
-if ( $LineItem->Controlled !=  1 ){
-	echo '<div class="centre"><a href="' . $RootPath . '/ConfirmDispatch_Invoice.php">' .  __('Back to the Sales Order'). '</a></div>';
+if ( $LineItem->Controlled !=  1 ) {
+	echo '<div class = "centre"><a href = "' . $RootPath . '/ConfirmDispatch_Invoice.php">' .  __('Back to the Sales Order'). '</a></div>';
 	echo '<br />';
 	prnMsg( __('The line item must be defined as controlled to require input of the batch numbers or serial numbers being sold'),'error');
 	include('includes/footer.php');
@@ -61,9 +61,9 @@ if ( $LineItem->Controlled !=  1 ){
 /********************************************
   Get the page going....
 ********************************************/
-echo '<div class="centre">';
+echo '<div class = "centre">';
 
-echo '<br /><a href="'. $RootPath. '/ConfirmDispatch_Invoice.php?identifier=' . $identifier . '">' .  __('Back to Confirmation of Dispatch') . '/' . __('Invoice'). '</a>';
+echo '<br /><a href = "'. $RootPath. '/ConfirmDispatch_Invoice.php?identifier = ' . $identifier . '">' .  __('Back to Confirmation of Dispatch') . '/' . __('Invoice'). '</a>';
 
 echo '<br /><b>' .  __('Dispatch of up to').' '. locale_number_format($LineItem->Quantity-$LineItem->QtyInv, $LineItem->DecimalPlaces). ' '. __('Controlled items').' ' . $LineItem->StockID  . ' - ' . $LineItem->ItemDescription . ' '. __('on order').' ' . $_SESSION['Items'.$identifier]->OrderNo . ' '. __('to'). ' ' . $_SESSION['Items'.$identifier]->CustomerName . '</b></div>';
 
@@ -79,8 +79,8 @@ if ($_SESSION['RequirePickingNote'] == 1) {
 	unset($OrderstoPick);
 }
 
-$InOutModifier=1;
-$ShowExisting=true;
+$InOutModifier = 1;
+$ShowExisting = true;
 
 include('includes/InputSerialItems.php');
 

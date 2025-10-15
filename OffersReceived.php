@@ -34,28 +34,28 @@ if (!isset($_POST['supplierid'])) {
 		LEFT JOIN suppliers
 			ON suppliers.supplierid = offers.supplierid
 		WHERE purchorderauth.userid = '" . $_SESSION['UserID'] . "'
-			AND offers.expirydate > CURRENT_DATE
-			AND purchorderauth.cancreate = 0";
+			and offers.expirydate > CURRENT_DATE
+			and purchorderauth.cancreate = 0";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) == 0) {
 		prnMsg(__('There are no offers outstanding that you are authorised to deal with'), 'information');
 	} else {
-		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . __('Select Supplier') . '" alt="" />' . ' ' . __('Select Supplier') . '</p>';
-		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+		echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title = "' . __('Select Supplier') . '" alt = "" />' . ' ' . __('Select Supplier') . '</p>';
+		echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+		echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 		echo '<fieldset>
 				<legend>', __('Supplier Selection'), '</legend>
 				<field>
-					<label for="supplierid">' . __('Select Supplier') . '</label>
-					<select name=supplierid>';
+					<label for = "supplierid">' . __('Select Supplier') . '</label>
+					<select name = supplierid>';
 		while ($MyRow = DB_fetch_array($Result)) {
-			echo '<option value="' . $MyRow['supplierid'] . '">' . $MyRow['suppname'] . '</option>';
+			echo '<option value = "' . $MyRow['supplierid'] . '">' . $MyRow['suppname'] . '</option>';
 		}
 		echo '</select>
 			</field>
 			</fieldset>
-			<div class="centre">
-				<input type="submit" name="select" value="' . __('Enter Information') . '" />
+			<div class = "centre">
+				<input type = "submit" name = "select" value = "' . __('Enter Information') . '" />
 			</div>
 			</form>';
 	}
@@ -74,7 +74,7 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 				offers.expirydate,
 				offers.currcode,
 				stockmaster.decimalplaces,
-				currencies.decimalplaces AS currdecimalplaces
+				currencies.decimalplaces as currdecimalplaces
 			FROM offers INNER JOIN purchorderauth
 				ON offers.currcode = purchorderauth.currabrev
 			INNER JOIN suppliers
@@ -84,20 +84,20 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 			LEFT JOIN stockmaster
 				ON stockmaster.stockid = offers.stockid
 			WHERE purchorderauth.userid = '" . $_SESSION['UserID'] . "'
-				AND offers.expirydate >= CURRENT_DATE
-				AND offers.supplierid = '" . $_POST['supplierid'] . "'
+				and offers.expirydate >= CURRENT_DATE
+				and offers.supplierid = '" . $_POST['supplierid'] . "'
 			ORDER BY offerid";
 	$Result = DB_query($SQL);
 
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 	echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
-	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . __('Supplier Offers') . '" alt="" />' . ' ' . __('Supplier Offers') . '
+	echo '<p class = "page_title_text">
+			<img src = "' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title = "' . __('Supplier Offers') . '" alt = "" />' . ' ' . __('Supplier Offers') . '
 		</p>';
 
-	echo '<table class="selection">
+	echo '<table class = "selection">
 			<tr>
 				<th>' . __('Offer ID') . '</th>
 				<th>' . __('Supplier') . '</th>
@@ -116,26 +116,26 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 	echo 'The result has rows ' . DB_num_rows($Result) . '<br/>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
-		echo '<tr class="striped_row">
+		echo '<tr class = "striped_row">
 			<td>' . $MyRow['offerid'] . '</td>
 			<td>' . $MyRow['suppname'] . '</td>
 			<td>' . $MyRow['description'] . '</td>
-			<td class="number">' . locale_number_format($MyRow['quantity'], $MyRow['decimalplaces']) . '</td>
+			<td class = "number">' . locale_number_format($MyRow['quantity'], $MyRow['decimalplaces']) . '</td>
 			<td>' . $MyRow['uom'] . '</td>
-			<td class="number">' . locale_number_format($MyRow['price'], $MyRow['currdecimalplaces']) . '</td>
-			<td class="number">' . locale_number_format($MyRow['price'] * $MyRow['quantity'], $MyRow['currdecimalplaces']) . '</td>
+			<td class = "number">' . locale_number_format($MyRow['price'], $MyRow['currdecimalplaces']) . '</td>
+			<td class = "number">' . locale_number_format($MyRow['price'] * $MyRow['quantity'], $MyRow['currdecimalplaces']) . '</td>
 			<td>' . $MyRow['currcode'] . '</td>
 			<td>' . $MyRow['expirydate'] . '</td>
-			<td><input type="radio" name="action' . $MyRow['offerid'] . '" value="1" /></td>
-			<td><input type="radio" name="action' . $MyRow['offerid'] . '" value="2" /></td>
-			<td><input type="radio" checked name="action' . $MyRow['offerid'] . '" value="3" /></td>
-			<td><input type="hidden" name="supplierid" value="' . $MyRow['supplierid'] . '" /></td>
+			<td><input type = "radio" name = "action' . $MyRow['offerid'] . '" value = "1" /></td>
+			<td><input type = "radio" name = "action' . $MyRow['offerid'] . '" value = "2" /></td>
+			<td><input type = "radio" checked name = "action' . $MyRow['offerid'] . '" value = "3" /></td>
+			<td><input type = "hidden" name = "supplierid" value = "' . $MyRow['supplierid'] . '" /></td>
 		</tr>';
 	}
 	echo '<tr>
-			<td colspan="12">
-				<div class="centre">
-					<input type="submit" name="submit" value="' . __('Enter Information') . '" />
+			<td colspan = "12">
+				<div class = "centre">
+					<input type = "submit" name = "submit" value = "' . __('Enter Information') . '" />
 				</div>
 			</td>
 		</tr>
@@ -243,11 +243,11 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 		$Result = SendEmailFromWebERP($From, $Recipients, $Subject, $MailText);
 
 		if ($Result) {
-			prnMsg(__('The accepted offers from') . ' ' . $SupplierName . ' ' . __('have been converted to purchase orders and an email sent to')
-				. ' ' . $Email . "\n" . __('Please review the order contents') . ' ' . '<a href="' . $RootPath .
-				'/PO_Header.php?ModifyOrderNumber=' . $OrderNo . '">' . __('here') . '</a>', 'success');
-		} else {
-			prnMsg(__('The accepted offers from') . ' ' . $SupplierName . ' ' . __('have been converted to purcharse orders but failed to mail, you can view the order contents') . ' ' . '<a href="' . $RootPath . '/PO_Header.php?ModifyOrderNumber=' . $OrderNo . '">' . __('here') . '</a>', 'warn');
+	prnMsg(__('The accepted offers from') . ' ' . $SupplierName . ' ' . __('have been converted to purchase orders and an email sent to')
+				. ' ' . $Email . "\n" . __('Please review the order contents') . ' ' . '<a href = "' . $RootPath .
+				'/PO_Header.php?ModifyOrderNumber = ' . $OrderNo . '">' . __('here') . '</a>', 'success');
+} else {
+			prnMsg(__('The accepted offers from') . ' ' . $SupplierName . ' ' . __('have been converted to purcharse orders but failed to mail, you can view the order contents') . ' ' . '<a href = "' . $RootPath . '/PO_Header.php?ModifyOrderNumber = ' . $OrderNo . '">' . __('here') . '</a>', 'warn');
 		}
 	}
 	if (sizeOf($RejectsArray) > 0) {
@@ -283,9 +283,9 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 		$Result = SendEmailFromWebERP($From, $Recipients, $Subject, $MailText);
 
 		if ($Result) {
-			prnMsg(__('The rejected offers from') . ' ' . $SupplierName . ' ' .
+	prnMsg(__('The rejected offers from') . ' ' . $SupplierName . ' ' .
 				__('have been removed from the system and an email sent to') . ' ' . $Email, 'success');
-		} else {
+} else {
 			prnMsg(__('The rejected offers from') . ' ' . $SupplierName . ' ' .
 				__('have been removed from the system and but no email was not sent to') . ' ' . $Email, 'warn');
 		}

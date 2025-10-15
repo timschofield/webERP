@@ -17,10 +17,10 @@ if (isset($_GET['StockID'])){
 	$StockID =trim(mb_strtoupper($_POST['StockID']));
 }
 
-echo '<a href="' . $RootPath . '/SelectProduct.php" class="toplink">' . __('Back to Items') . '</a><br />';
+echo '<a href = "' . $RootPath . '/SelectProduct.php" class = "toplink">' . __('Back to Items') . '</a><br />';
 
-echo '<p class="page_title_text">
-	 <img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . __('Inventory Adjustment') . '" alt="" />
+echo '<p class = "page_title_text">
+	 <img src = "'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title = "' . __('Inventory Adjustment') . '" alt = "" />
 	 ' . ' ' . $Title . '</p>';
 
 if (isset($_POST['UpdateData'])){
@@ -31,8 +31,8 @@ if (isset($_POST['UpdateData'])){
 					mbflag,
 					sum(quantity) as totalqoh
 			FROM stockmaster INNER JOIN locstock
-			ON stockmaster.stockid=locstock.stockid
-			WHERE stockmaster.stockid='".$StockID."'
+			ON stockmaster.stockid = locstock.stockid
+			WHERE stockmaster.stockid = '".$StockID."'
 			GROUP BY description,
 					units,
 					lastcost,
@@ -47,9 +47,9 @@ if (isset($_POST['UpdateData'])){
 	$_POST['QOH'] = $OldRow['totalqoh'];
 	$_POST['OldMaterialCost'] = $OldRow['materialcost'];
 	if ($OldRow['mbflag']=='M') {
-		$_POST['OldLabourCost'] = $OldRow['labourcost'];
+	$_POST['OldLabourCost'] = $OldRow['labourcost'];
 		$_POST['OldOverheadCost'] = $OldRow['overheadcost'];
-	} else {
+} else {
 		$_POST['OldLabourCost'] = 0;
 		$_POST['OldOverheadCost'] = 0;
 		$_POST['LabourCost'] = 0;
@@ -60,9 +60,9 @@ if (isset($_POST['UpdateData'])){
  	$OldCost = $_POST['OldMaterialCost'] + $_POST['OldLabourCost'] + $_POST['OldOverheadCost'];
    	$NewCost = filter_number_format($_POST['MaterialCost']) + filter_number_format($_POST['LabourCost']) + filter_number_format($_POST['OverheadCost']);
 
-	$Result = DB_query("SELECT * FROM stockmaster WHERE stockid='" . $StockID . "'");
+	$Result = DB_query("SELECT * FROM stockmaster WHERE stockid = '" . $StockID . "'");
 	$MyRow = DB_fetch_row($Result);
-	if (DB_num_rows($Result)==0) {
+	if (DB_num_rows($Result) == 0) {
 		prnMsg(__('The entered item code does not exist'),'error',__('Non-existent Item'));
 	} elseif (abs($NewCost - $OldCost) > pow(10,-($_SESSION['StandardCostDecimalPlaces']+1))){
 
@@ -70,12 +70,12 @@ if (isset($_POST['UpdateData'])){
 		ItemCostUpdateGL($StockID, $NewCost, $OldCost, $_POST['QOH']);
 
 		$SQL = "UPDATE stockmaster
-				SET	materialcost='" . filter_number_format($_POST['MaterialCost']) . "',
-					labourcost='" . filter_number_format($_POST['LabourCost']) . "',
-					overheadcost='" . filter_number_format($_POST['OverheadCost']) . "',
-					lastcost='" . $OldCost . "',
+				SET	materialcost = '" . filter_number_format($_POST['MaterialCost']) . "',
+					labourcost = '" . filter_number_format($_POST['LabourCost']) . "',
+					overheadcost = '" . filter_number_format($_POST['OverheadCost']) . "',
+					lastcost = '" . $OldCost . "',
 					lastcostupdate = CURRENT_DATE
-				WHERE stockid='" . $StockID . "'";
+				WHERE stockid = '" . $StockID . "'";
 
 		$ErrMsg = __('The cost details for the stock item could not be updated because');
 		$Result = DB_query($SQL, $ErrMsg, '', true);
@@ -100,10 +100,10 @@ $Result = DB_query("SELECT description,
 							lastcostupdate,
 							sum(quantity) as totalqoh
 						FROM stockmaster INNER JOIN locstock
-							ON stockmaster.stockid=locstock.stockid
+							ON stockmaster.stockid = locstock.stockid
 							INNER JOIN stockcategory
 							ON stockmaster.categoryid = stockcategory.categoryid
-						WHERE stockmaster.stockid='" . $StockID . "'
+						WHERE stockmaster.stockid = '" . $StockID . "'
 						GROUP BY description,
 							units,
 							lastcost,
@@ -118,14 +118,14 @@ $Result = DB_query("SELECT description,
 
 $MyRow = DB_fetch_array($Result);
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post">
+	<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />
 	<fieldset>
 		<legend>' . $StockID . ' - ' . $MyRow['description'] . '</legend>
 		<field>
-			<label for="StockID">' . __('Item Code') . ':</label>
-			<input type="text" name="StockID" value="' . $StockID . '"  maxlength="20" />
-			<input type="submit" name="Show" value="' . __('Show Cost Details') . '" />
+			<label for = "StockID">' . __('Item Code') . ':</label>
+			<input type = "text" name = "StockID" value = "' . $StockID . '"  maxlength = "20" />
+			<input type = "submit" name = "Show" value = "' . __('Show Cost Details') . '" />
 		</field>
 		<field>
 			<label>' .  __('Total Quantity On Hand') . ':</label>
@@ -136,28 +136,28 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 			<fieldtext>' . ConvertSQLDate($MyRow['lastcostupdate'])  . '</fieldtext>
 		</field>';
 
-if (($MyRow['mbflag']=='D' AND $MyRow['stocktype'] != 'L')
-							OR $MyRow['mbflag']=='A'
-							OR $MyRow['mbflag']=='K'){
+if (($MyRow['mbflag']=='D' and $MyRow['stocktype'] != 'L')
+							or $MyRow['mbflag']=='A'
+							or $MyRow['mbflag']=='K'){
 	echo '</div>
 		  </form>'; // Close the form
-   if ($MyRow['mbflag']=='D'){
-		echo '<br />' . $StockID .' ' . __('is a service item');
-   } else if ($MyRow['mbflag']=='A'){
-		echo '<br />' . $StockID  .' '  . __('is an assembly part');
-   } else if ($MyRow['mbflag']=='K'){
-		echo '<br />' . $StockID . ' ' . __('is a kit set part');
-   }
+   if ($MyRow['mbflag']=='D') {
+	echo '<br />' . $StockID .' ' . __('is a service item');
+} elseif ($MyRow['mbflag']=='A') {
+	echo '<br />' . $StockID  .' '  . __('is an assembly part');
+} elseif ($MyRow['mbflag']=='K') {
+	echo '<br />' . $StockID . ' ' . __('is a kit set part');
+}
    prnMsg(__('Cost information cannot be modified for kits assemblies or service items') . '. ' . __('Please select a different part'),'warn');
    include('includes/footer.php');
    exit();
 }
 
 echo '<field>';
-echo '<input type="hidden" name="OldMaterialCost" value="' . $MyRow['materialcost'] .'" />';
-echo '<input type="hidden" name="OldLabourCost" value="' . $MyRow['labourcost'] .'" />';
-echo '<input type="hidden" name="OldOverheadCost" value="' . $MyRow['overheadcost'] .'" />';
-echo '<input type="hidden" name="QOH" value="' . $MyRow['totalqoh'] .'" />';
+echo '<input type = "hidden" name = "OldMaterialCost" value = "' . $MyRow['materialcost'] .'" />';
+echo '<input type = "hidden" name = "OldLabourCost" value = "' . $MyRow['labourcost'] .'" />';
+echo '<input type = "hidden" name = "OldOverheadCost" value = "' . $MyRow['overheadcost'] .'" />';
+echo '<input type = "hidden" name = "QOH" value = "' . $MyRow['totalqoh'] .'" />';
 
 echo '<label>', __('Last Cost') .':</label>
 		<fieldtext>' . locale_number_format($MyRow['lastcost'],$_SESSION['StandardCostDecimalPlaces']) . '</fieldtext>
@@ -165,44 +165,44 @@ echo '<label>', __('Last Cost') .':</label>
 if (! in_array($_SESSION['PageSecurityArray']['CostUpdate'],$_SESSION['AllowedPageSecurityTokens'])){
 	echo '<field>
 			<td>' . __('Cost') . ':</td>
-			<td class="number">' . locale_number_format($MyRow['materialcost']+$MyRow['labourcost']+$MyRow['overheadcost'],$_SESSION['StandardCostDecimalPlaces']) . '</td>
+			<td class = "number">' . locale_number_format($MyRow['materialcost']+$MyRow['labourcost']+$MyRow['overheadcost'],$_SESSION['StandardCostDecimalPlaces']) . '</td>
 		</field>
 		</table>';
 } else {
 
-	if ($MyRow['mbflag']=='M'){
-		echo '<field>
-				<label for="MaterialCost">' . __('Standard Material Cost Per Unit') .':</label>
-				<input type="text" class="number" name="MaterialCost" value="' . locale_number_format($MyRow['materialcost'],$_SESSION['StandardCostDecimalPlaces']) . '" />
+	if ($MyRow['mbflag']=='M') {
+	echo '<field>
+				<label for = "MaterialCost">' . __('Standard Material Cost Per Unit') .':</label>
+				<input type = "text" class = "number" name = "MaterialCost" value = "' . locale_number_format($MyRow['materialcost'],$_SESSION['StandardCostDecimalPlaces']) . '" />
 			</field>
 			<field>
-				<label for="LabourCost">' . __('Standard Labour Cost Per Unit') . ':</label>
-				<input type="text" class="number" name="LabourCost" value="' . locale_number_format($MyRow['labourcost'],$_SESSION['StandardCostDecimalPlaces']) . '" />
+				<label for = "LabourCost">' . __('Standard Labour Cost Per Unit') . ':</label>
+				<input type = "text" class = "number" name = "LabourCost" value = "' . locale_number_format($MyRow['labourcost'],$_SESSION['StandardCostDecimalPlaces']) . '" />
 			</field>
 			<field>
-				<label for="OverheadCost">' . __('Standard Overhead Cost Per Unit') . ':</label>
-				<input type="text" class="number" name="OverheadCost" value="' . locale_number_format($MyRow['overheadcost'],$_SESSION['StandardCostDecimalPlaces']) . '" />
+				<label for = "OverheadCost">' . __('Standard Overhead Cost Per Unit') . ':</label>
+				<input type = "text" class = "number" name = "OverheadCost" value = "' . locale_number_format($MyRow['overheadcost'],$_SESSION['StandardCostDecimalPlaces']) . '" />
 			</field>';
-	} elseif ($MyRow['mbflag']=='B' OR  $MyRow['mbflag']=='D') {
-		echo '<field>
+} elseif ($MyRow['mbflag']=='B' or  $MyRow['mbflag']=='D') {
+	echo '<field>
 				<td>' . __('Standard Cost') .':</td>
-				<td class="number"><input type="text" class="number" name="MaterialCost" value="' . locale_number_format($MyRow['materialcost'],$_SESSION['StandardCostDecimalPlaces']) . '" /></td>
+				<td class = "number"><input type = "text" class = "number" name = "MaterialCost" value = "' . locale_number_format($MyRow['materialcost'],$_SESSION['StandardCostDecimalPlaces']) . '" /></td>
 			</field>';
-	} else 	{
-		echo '<field><td><input type="hidden" name="LabourCost" value="0" />';
-		echo '<input type="hidden" name="OverheadCost" value="0" /></td></field>';
+} else 	{
+		echo '<field><td><input type = "hidden" name = "LabourCost" value = "0" />';
+		echo '<input type = "hidden" name = "OverheadCost" value = "0" /></td></field>';
 	}
 	echo '</fieldset>
-   		  <div class="centre">
-				  <input type="submit" name="UpdateData" value="' . __('Update') . '" />
+   		  <div class = "centre">
+				  <input type = "submit" name = "UpdateData" value = "' . __('Update') . '" />
 			 </div>';
 }
-if ($MyRow['mbflag']!='D'){
-	echo '<div class="centre"><a href="' . $RootPath . '/StockStatus.php?StockID=' . $StockID . '">' . __('Show Stock Status') . '</a>';
-	echo '<br /><a href="' . $RootPath . '/StockMovements.php?StockID=' . $StockID . '">' . __('Show Stock Movements') . '</a>';
-	echo '<br /><a href="' . $RootPath . '/StockUsage.php?StockID=' . $StockID . '">' . __('Show Stock Usage')   . '</a>';
-	echo '<br /><a href="' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '">' . __('Search Outstanding Sales Orders') . '</a>';
-	echo '<br /><a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . __('Search Completed Sales Orders') . '</a></div>';
+if ($MyRow['mbflag']!='D') {
+	echo '<div class = "centre"><a href = "' . $RootPath . '/StockStatus.php?StockID = ' . $StockID . '">' . __('Show Stock Status') . '</a>';
+	echo '<br /><a href = "' . $RootPath . '/StockMovements.php?StockID = ' . $StockID . '">' . __('Show Stock Movements') . '</a>';
+	echo '<br /><a href = "' . $RootPath . '/StockUsage.php?StockID = ' . $StockID . '">' . __('Show Stock Usage')   . '</a>';
+	echo '<br /><a href = "' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem = ' . $StockID . '">' . __('Search Outstanding Sales Orders') . '</a>';
+	echo '<br /><a href = "' . $RootPath . '/SelectCompletedOrder.php?SelectedStockItem = ' . $StockID . '">' . __('Search Completed Sales Orders') . '</a></div>';
 }
 echo '</div>
 	  </form>';

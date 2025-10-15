@@ -19,9 +19,9 @@ if (isset($_POST['ChangeDate'])){
 	$ChangeDate =trim(mb_strtoupper($_GET['ChangeDate']));
 }
 
-echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' .
-			__('Inventory') . '" alt="" />' . ' ' . $Title . '
+echo '<p class = "page_title_text">
+		<img src = "'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title = "' .
+			__('Inventory') . '" alt = "" />' . ' ' . $Title . '
 	</p>';
 
 if (isset($_POST['submit'])) {
@@ -68,24 +68,24 @@ function submit(&$ChangeDate)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_S
 	$DateDiff = DateDiff($ConvertToDate,$ConvertFromDate,'d'); // Date1 minus Date2
 
 	if ($DateDiff < 1) {
-		$InputError = 1;
+	$InputError = 1;
 		prnMsg(__('To Date Must Be Greater Than From Date'),'error');
-	}
+}
 
 	 if ($InputError == 1) {
-		ShowInputForm($ChangeDate);
+	ShowInputForm($ChangeDate);
 		return;
-	 }
+}
 
-	$SQL = "DROP TABLE IF EXISTS mrpcalendar";
+	$SQL = "DROP TABLE if EXISTS mrpcalendar";
 	$Result = DB_query($SQL);
 
 	$SQL = "CREATE TABLE mrpcalendar (
-				calendardate date NOT NULL,
-				daynumber int(6) NOT NULL,
-				manufacturingflag smallint(6) NOT NULL default '1',
+				calendardate date not null,
+				daynumber int(6) not null,
+				manufacturingflag smallint(6) not null default '1',
 				INDEX (daynumber),
-				PRIMARY KEY (calendardate)) DEFAULT CHARSET=utf8";
+				PRIMARY KEY (calendardate)) default CHARSET = utf8";
 	$ErrMsg = __('The SQL to create passbom failed with the message');
 	$Result = DB_query($SQL, $ErrMsg);
 
@@ -99,7 +99,7 @@ function submit(&$ChangeDate)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_S
 						 $_POST['Thursday'],$_POST['Friday'],$_POST['Saturday']);
 
 	$CalDate = $ConvertFromDate;
-	for ($i = 0; $i <= $DateDiff; $i++) {
+	for ($i = 0;  $i <= $DateDiff;  $i++) {
 		 $DateAdd = FormatDateForSQL(DateAdd($CalDate,'d',$i));
 
 		 // If the check box for the calendar date's day of week was clicked, set the manufacturing flag to 0
@@ -107,8 +107,8 @@ function submit(&$ChangeDate)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_S
 		 $ManuFlag = 1;
 		 foreach ($ExcludeDays as $exday) {
 			 if ($exday == $DaysTextArray[$DayOfWeek]) {
-				 $ManuFlag = 0;
-			 }
+	$ManuFlag = 0;
+}
 		 }
 
 		 $SQL = "INSERT INTO mrpcalendar (
@@ -130,8 +130,8 @@ function submit(&$ChangeDate)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_S
 	$Result = DB_query($SQL, $ErrMsg);
 	while ($MyRow = DB_fetch_array($Result)) {
 		   if ($MyRow['manufacturingflag'] == "1") {
-			   $DayNumber++;
-		   }
+	$DayNumber++;
+}
 		   $CalDate = $MyRow['calendardate'];
 		   $SQL = "UPDATE mrpcalendar SET daynumber = '" . $DayNumber . "'
 					WHERE calendardate = '" . $CalDate . "'";
@@ -150,8 +150,8 @@ function update(&$ChangeDate)  //####UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_U
 
 	$InputError = 0;
 	$CalDate = FormatDateForSQL($ChangeDate);
-	$SQL="SELECT COUNT(*) FROM mrpcalendar
-		  WHERE calendardate='$CalDate'
+	$SQL = "SELECT COUNT(*) FROM mrpcalendar
+		  WHERE calendardate = '$CalDate'
 		  GROUP BY calendardate";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_row($Result);
@@ -161,17 +161,17 @@ function update(&$ChangeDate)  //####UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_U
 	}
 
 	 if ($InputError == 1) {
-		ShowInputForm($ChangeDate);
+	ShowInputForm($ChangeDate);
 		return;
-	 }
+}
 
-	$SQL="SELECT mrpcalendar.* FROM mrpcalendar WHERE calendardate='$CalDate'";
+	$SQL = "SELECT mrpcalendar.* FROM mrpcalendar WHERE calendardate = '$CalDate'";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_row($Result);
 	$NewManufacturingFlag = 0;
 	if ($MyRow[2] == 0) {
-		$NewManufacturingFlag = 1;
-	}
+	$NewManufacturingFlag = 1;
+}
 	$SQL = "UPDATE mrpcalendar SET manufacturingflag = '".$NewManufacturingFlag."'
 			WHERE calendardate = '".$CalDate."'";
 	$ErrMsg = __('Cannot update the MRP Calendar');
@@ -189,8 +189,8 @@ function update(&$ChangeDate)  //####UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_U
 	$Result = DB_query($SQL, $ErrMsg);
 	while ($MyRow = DB_fetch_array($Result)) {
 		   if ($MyRow['manufacturingflag'] == '1') {
-			   $DayNumber++;
-		   }
+	$DayNumber++;
+}
 		   $CalDate = $MyRow['calendardate'];
 		   $SQL = "UPDATE mrpcalendar SET daynumber = '" . $DayNumber . "'
 					WHERE calendardate = '" . $CalDate . "'";
@@ -211,13 +211,13 @@ function ShowDays()  {//####LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LIST
 				   DAYNAME(calendardate) as dayname
 			FROM mrpcalendar
 			WHERE calendardate >='" . $FromDate . "'
-			AND calendardate <='" . $ToDate . "'";
+			and calendardate <='" . $ToDate . "'";
 
 	$ErrMsg = __('The SQL to find the parts selected failed with the message');
 	$Result = DB_query($SQL, $ErrMsg);
 
-	echo '<table class="selection">
-			<thead style="position: -webkit-sticky; position: sticky; top: 0px; z-index: 100;">
+	echo '<table class = "selection">
+			<thead style = "position: -webkit-sticky; position: sticky; top: 0px; z-index: 100;">
 				<tr>
 					<th>' . __('Date') . '</th>
 					<th>' . __('Manufacturing Date') . '</th>
@@ -228,14 +228,14 @@ function ShowDays()  {//####LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LIST
 	while ($MyRow = DB_fetch_array($Result)) {
 		$flag = __('Yes');
 		if ($MyRow['manufacturingflag'] == 0) {
-			$flag = __('No');
-		}
-		echo '<tr class="striped_row">
+	$flag = __('No');
+}
+		echo '<tr class = "striped_row">
 				<td>', ConvertSQLDate($MyRow[0]), '</td>
 				<td>', __($MyRow[3]), '</td>
 				<td>', $flag, '</td>
 			</tr>';
-	} //END WHILE LIST LOOP
+	} //END while LIST LOOP
 
 	echo '</table>';
 	unset ($ChangeDate);
@@ -253,53 +253,53 @@ function ShowInputForm(&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DIS
 		$_POST['FromDate']=date($_SESSION['DefaultDateFormat']);
 		$_POST['ToDate']=date($_SESSION['DefaultDateFormat']);
 	}
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post">';
+	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 	echo '<fieldset>
 			<legend>', __('Create MRP Calendar'), '</legend>';
 
 	echo '<field>
-			<label for="FromDate">' . __('From Date') . ':</label>
-			<input type="date" name="FromDate" required="required" autofocus="autofocus" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['FromDate']) . '" />
+			<label for = "FromDate">' . __('From Date') . ':</label>
+			<input type = "date" name = "FromDate" required = "required" autofocus = "autofocus" size = "11" maxlength = "10" value = "' . FormatDateForSQL($_POST['FromDate']) . '" />
 		</field>
 		<field>
-			<label for="ToDate">' . __('To Date') . ':</label>
-			<input type="date" name="ToDate" required="required" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['ToDate']) . '" />
+			<label for = "ToDate">' . __('To Date') . ':</label>
+			<input type = "date" name = "ToDate" required = "required" size = "11" maxlength = "10" value = "' . FormatDateForSQL($_POST['ToDate']) . '" />
 		</field>
 		<h3>' . __('Exclude The Following Days') . '</h3>
 		<field>
-			<label for="Saturday">' . __('Saturday') . ':</label>
-			<input type="checkbox" name="Saturday" value="Saturday" />
+			<label for = "Saturday">' . __('Saturday') . ':</label>
+			<input type = "checkbox" name = "Saturday" value = "Saturday" />
 		</field>
 		<field>
-			<label for="Sunday">' . __('Sunday') . ':</label>
-			<input type="checkbox" name="Sunday" value="Sunday" />
+			<label for = "Sunday">' . __('Sunday') . ':</label>
+			<input type = "checkbox" name = "Sunday" value = "Sunday" />
 		</field>
 		<field>
-			<label for="Monday">' . __('Monday') . ':</label>
-			<input type="checkbox" name="Monday" value="Monday" />
+			<label for = "Monday">' . __('Monday') . ':</label>
+			<input type = "checkbox" name = "Monday" value = "Monday" />
 		</field>
 		<field>
-			<label for="Tuesday">' . __('Tuesday') . ':</label>
-			<input type="checkbox" name="Tuesday" value="Tuesday" />
+			<label for = "Tuesday">' . __('Tuesday') . ':</label>
+			<input type = "checkbox" name = "Tuesday" value = "Tuesday" />
 		</field>
 		 <field>
-			<label for="Wednesday">' . __('Wednesday') . ':</label>
-			<input type="checkbox" name="Wednesday" value="Wednesday" />
+			<label for = "Wednesday">' . __('Wednesday') . ':</label>
+			<input type = "checkbox" name = "Wednesday" value = "Wednesday" />
 		</field>
 		 <field>
-			<label for="Thursday">' . __('Thursday') . ':</label>
-			<input type="checkbox" name="Thursday" value="Thursday" />
+			<label for = "Thursday">' . __('Thursday') . ':</label>
+			<input type = "checkbox" name = "Thursday" value = "Thursday" />
 		</field>
 		 <field>
-			<label for="Friday">' . __('Friday') . ':</label>
-			<input type="checkbox" name="Friday" value="Friday" />
+			<label for = "Friday">' . __('Friday') . ':</label>
+			<input type = "checkbox" name = "Friday" value = "Friday" />
 		</field>
 		</fieldset>
-		<div class="centre">
-			<input type="submit" name="submit" value="' . __('Create Calendar') . '" />
-			<input type="submit" name="ListAll" value="' . __('List Date Range') . '" />
+		<div class = "centre">
+			<input type = "submit" name = "submit" value = "' . __('Create Calendar') . '" />
+			<input type = "submit" name = "ListAll" value = "' . __('List Date Range') . '" />
 		</div>';
 
 	if (!isset($_POST['ChangeDate'])) {
@@ -309,8 +309,8 @@ function ShowInputForm(&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DIS
 	echo '<fieldset>
 		<field>
 			<td>' . __('Change Date Status') . ':</td>
-			<td><input name="ChangeDate" type="date" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['ChangeDate']) . '" /></td>
-			<td><input type="submit" name="update" value="' . __('Update') . '" /></td>
+			<td><input name = "ChangeDate" type = "date" size = "11" maxlength = "10" value = "' . FormatDateForSQL($_POST['ChangeDate']) . '" /></td>
+			<td><input type = "submit" name = "update" value = "' . __('Update') . '" /></td>
 		</field>
 		</fieldset>
 		</form>';
