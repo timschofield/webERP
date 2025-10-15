@@ -8,6 +8,5 @@ CREATE TABLE `pickserialdetails` (
   KEY `detailno` (`detailno`),
   KEY `stockid` (`stockid`,`serialno`),
   KEY `serialno` (`serialno`),
-  CONSTRAINT `pickserialdetails_ibfk_1` FOREIGN KEY (`detailno`) REFERENCES `pickreqdetails` (`detailno`),
-  CONSTRAINT `pickserialdetails_ibfk_2` FOREIGN KEY (`stockid`, `serialno`) REFERENCES `stockserialitems` (`stockid`, `serialno`)
+  CONSTRAINT `pickserialdetails_ibfk_1` FOREIGN KEY (`detailno`) REFERENCES `pickreqdetails` (`detailno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
