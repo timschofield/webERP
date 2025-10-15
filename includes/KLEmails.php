@@ -418,7 +418,7 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 	/* Final formatting bits */
 	$EmailSubject  = trim($EmailSubject); // just for sure
 	$EmailText = $EmailText . "\n---\r\n"; // \r is needed for signature separating
-	$EmailText = $EmailText . 'Email sent by Kapal-Laut webERP at '.date('d/M/Y H:i:s').'';
+	$EmailText = $EmailText . 'Email sent by PTADU webERP at '.date('d/M/Y H:i:s').'';
 	
 	SendEmailFromWebERP('webmaster@kapal-laut.com', $EmailAddress, $EmailSubject, $EmailText, '', true);
 

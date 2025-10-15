@@ -317,7 +317,7 @@ define("MARKETPLACE_BLINK_SALES_CATEGORIES", '95');
 define("SALES_CATEGORIES_FOR_GOOGLE_PRODUCT_FEED", '31,32,33,34,36,37,50,38,35,43,44,45,46,47,48,49,51,52,53,54,55,56,40,41,49,42,39,67,71,72,73,74,76,80,89');
 
 define("GOOGLE_BRAND_KL", 'Kapal-Laut. Your Essential Jewellery');
-define("GOOGLE_BRAND_BLINK", 'Blink by Kapal-Laut');
+define("GOOGLE_BRAND_BLINK", 'Blink Fashion Jewellery');
 define("GOOGLE_BRAND_OUTLET", 'Outlet by Kapal-Laut');
 define("GOOGLE_GENDER", 'Female');
 define("GOOGLE_AGEGROUP", 'Adult');
@@ -390,7 +390,7 @@ define("OPENCART_PACKAGING_SET_IMAGE_PATH", 'catalog/KL/packaging_sets/');
 
 // META DATA
 define("META_STORE_NAME_KL", "Kapal-Laut Jewellery");
-define("META_STORE_NAME_BL", "Blink by Kapal-Laut");
+define("META_STORE_NAME_BL", "Blink Fashion Jewellery");
 define("META_STORE_NAME_OU", "Outlet by Kapal-Laut");
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -401,7 +401,7 @@ define("META_STORE_NAME_OU", "Outlet by Kapal-Laut");
 define("MAXIMUM_QOH_TO_SHOW_IN_MARKETPLACES",     10); // if we have more than X then, we will show QOH=X in marketplaces to avoid unneeded updates
 define("MINIMUM_QOH_TO_SHOW_ITEM_IN_MARKETPLACES", 3); // if we have less than X then we consider QOH = 0 for the marketplaces to avoid cancelled orders and bad reviews 
 
-define("MARKETPLACES_BRAND_BLINK", "Blink by Kapal-Laut");
+define("MARKETPLACES_BRAND_BLINK", "Blink Fashion Jewellery");
 define("MARKETPLACES_BRAND_KAPAL_LAUT", "Kapal-Laut Jewellery");
 
 ///////////////////////////////////////////////////////////////////////////////////////////////

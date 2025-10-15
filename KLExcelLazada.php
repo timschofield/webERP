@@ -64,7 +64,7 @@ function submit($TypeOfShop) {
 			$Brand = "Kapal-Laut. Your Essential Jewellery";
 		}else{
 			$NameOfShop = "Blink";
-			$Brand = "Blink by Kapal-Laut";
+			$Brand = "Blink Fashion Jewellery";
 		}
 
 		$NameProductPrefix = $Brand . ' ';
