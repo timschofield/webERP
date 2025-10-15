@@ -471,13 +471,13 @@ if (!isset($SelectedStockItem)) {
 						FROM stockcategory
 						ORDER BY categorydescription");
 
-   echo '<div class="centre">
+	echo '<div class="centre">
 			<input type = "submit" name = "SearchOrders" value = "' . __('Search Orders') . '" />
 		</div>';
-   echo '<div class="page_help_text">' . __('To search for sales orders for a specific part use the part selection facilities below') . '</div>';
-   echo '<fieldset>
+	echo '<div class="page_help_text">' . __('To search for sales orders for a specific part use the part selection facilities below') . '</div>';
+	echo '<fieldset>
 			<legend class="search">', __('Orders By Item Search'), '</legend>';
-   echo '<field>
+	echo '<field>
 			<label for = "StockCat">' . __('Select a stock category') . ':</label>
 			<select name = "StockCat">';
 

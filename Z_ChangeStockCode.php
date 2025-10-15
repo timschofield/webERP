@@ -203,10 +203,9 @@ if (isset($_POST['ProcessStockChange'])){
 		echo '<p>' . __('Stock Code') . ': ' . $_POST['OldStockID'] . ' ' . __('was successfully changed to') . ' : ' . $_POST['NewStockID'];
 
 		// If the current SelectedStockItem is the same as the OldStockID, it updates to the NewStockID:
-		if ($_SESSION['SelectedStockItem'] == $_POST['OldStockID']) {
-	$_SESSION['SelectedStockItem'] = $_POST['NewStockID'];
-}
-
+		if (isset($_SESSION['SelectedStockItem']) AND $_SESSION['SelectedStockItem'] == $_POST['OldStockID']) {
+			$_SESSION['SelectedStockItem'] = $_POST['NewStockID'];
+		}
 	} //only do the stuff above if  $InputError == 0
 }
 

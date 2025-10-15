@@ -402,7 +402,7 @@ if (!isset($SelectedTabs)) {
 	echo '<input type = "hidden" name="FormID" value = "', $_SESSION['FormID'], '" />';
 	echo '<fieldset>
 			<field>
-				<label for = "SelectedTabs">', __('Clain expenses on petty cash tab'), ':</label>
+				<label for = "SelectedTabs">', __('Claim expenses on petty cash tab'), ':</label>
 				<select required = "required" name="SelectedTabs">';
 	$SQL = "SELECT tabcode
 		FROM pctabs
