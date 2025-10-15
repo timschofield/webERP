@@ -45,7 +45,7 @@ switch($_POST['Action']) {
 		}
 		break;// END Update.
 	case 'Reset':
-		$Sql = "UPDATE `chartmaster` SET `cashflowsactivity`='-1';";
+		$Sql = "UPDATE chartmaster SET cashflowsactivity = '-1';";
 		$ErrMsg = __('Can not update chartmaster.cashflowsactivity because');
 		$Result = DB_query($Sql, $ErrMsg);
 		if ($Result) {
@@ -124,10 +124,10 @@ switch($_POST['Action']) {
 		$Criterion[$i++]['CashFlowsActivity'] = 0;
 
 		foreach ($Criterion as $Criteria) {
-			$Sql = "UPDATE `chartmaster`
-				SET `cashflowsactivity`=". $Criteria['CashFlowsActivity'] . "
-				WHERE `accountname` LIKE '%". addslashes(__($Criteria['AccountLike'])) . "%'
-				and `cashflowsactivity`=-1";// Uses cashflowsactivity = -1 to not overwrite.
+			$Sql = "UPDATE chartmaster
+				SET cashflowsactivity = ". $Criteria['CashFlowsActivity'] . "
+				WHERE accountname LIKE '%". addslashes(__($Criteria['AccountLike'])) . "%'
+				and cashflowsactivity = '-1'";// Uses cashflowsactivity = -1 to not overwrite.
 			$ErrMsg = __('Can not update chartmaster.cashflowsactivity. Error code:');
 			$Result = DB_query($Sql, $ErrMsg);
 			// RChacon: Count replacements.
