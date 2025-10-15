@@ -650,7 +650,7 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 and $_SESSION['ExistingOrder'.
 											 VALUES ('" . $WONo . "',
 													'" . $_SESSION['Items'.$identifier]->Location ."',
 													'" . $ContractRow['requireddate'] . "',
-													'" . date('Y-m-d'). "')",
+													CURRENT_DATE)",
 										$ErrMsg);
 			//Need to get the latest BOM to roll up cost but also add the contract other requirements
 			$CostResult = DB_query("SELECT SUM((actualcost)*contractbom.quantity) as cost

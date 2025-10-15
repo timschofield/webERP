@@ -251,8 +251,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCust']) and $_POST['FromCust
 							debtorsmaster.creditlimit,
 							holdreasons.dissallowinvoices,
 							holdreasons.reasondescription,
-							SUM(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
-							debtortrans.ovdiscount - debtortrans.alloc) as balance,
+							SUM(debtortrans.balance) AS balance,
 							SUM(case WHEN paymentterms.daysbeforedue > 0 THEN
 								case WHEN (TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate)) >=
 								paymentterms.daysbeforedue

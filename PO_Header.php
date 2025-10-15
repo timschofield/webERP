@@ -651,7 +651,27 @@ if ($_SESSION['RequireSupplierSelection'] == 1 or !isset($_SESSION['PO' . $ident
 			$PurchItemRow['leadtime'] = 1;
 		}
 		$_SESSION['PO' . $identifier]->Version = '1.0';
-		$_SESSION['PO' . $identifier]->add_to_order(1, $Purch_Item, $PurchItemRow['serialised'], $PurchItemRow['controlled'], $Qty * $PurchItemRow['conversionfactor'], $PurchItemRow['description'], $PurchItemRow['price'] / $PurchItemRow['conversionfactor'], $PurchItemRow['units'], $PurchItemRow['stockact'], $_SESSION['PO' . $identifier]->DeliveryDate, 0, 0, '', 0, 0, '', $PurchItemRow['decimalplaces'], $PurchItemRow['suppliersuom'], $PurchItemRow['conversionfactor'], $PurchItemRow['leadtime'], $PurchItemRow['suppliers_partno']);
+		$_SESSION['PO' . $identifier]->add_to_order(1,
+													$Purch_Item,
+													$PurchItemRow['serialised'],
+													$PurchItemRow['controlled'],
+													$Qty * $PurchItemRow['conversionfactor'],
+													$PurchItemRow['description'],
+													$PurchItemRow['price'] / $PurchItemRow['conversionfactor'],
+													$PurchItemRow['units'],
+													$PurchItemRow['stockact'],
+													$_SESSION['PO' . $identifier]->DeliveryDate,
+													0,
+													0,
+													'',
+													0,
+													0,
+													'',
+													$PurchItemRow['decimalplaces'],
+													$PurchItemRow['suppliersuom'],
+													$PurchItemRow['conversionfactor'],
+													$PurchItemRow['leadtime'],
+													$PurchItemRow['suppliers_partno']);
 
 		echo '<meta http-equiv = "refresh" content = "0; url = ' . $RootPath . '/PO_Items.php?identifier=' . $identifier . '">';
 	}
