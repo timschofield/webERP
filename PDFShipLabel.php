@@ -114,7 +114,7 @@ $options->set('isRemoteEnabled', true); // Enable for images/logos
 $dompdf = new Dompdf($options);
 
 $HTMLLabels = '';
-$HTMLLabels .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
+$HTMLLabels .= '<link href = "css/reports.css" rel = "stylesheet" type = "text/css" />';
 
 if ($SelectedORD == 'Preview') {
 	$NoOfLabels = 1;
@@ -131,7 +131,7 @@ if ($SelectedORD == 'Preview') {
 	$MyArray[1]['custitem'] = str_pad('', 30, 'x');
 } else {
 	if ($Type == "Sales") {
-		$OrderHeaderSQL = "SELECT debtorsmaster.name as deliverto,
+	$OrderHeaderSQL = "SELECT debtorsmaster.name as deliverto,
 								salesorderdetails.quantity as shipqty,
 								salesorderdetails.stkcode as stockid,
 								salesorders.branchcode,
@@ -151,16 +151,16 @@ if ($SelectedORD == 'Preview') {
 						INNER JOIN stockmaster
 							ON stockmaster.stockid = stkcode
 						INNER JOIN salesorders
-							ON salesorders.orderno=salesorderdetails.orderno
+							ON salesorders.orderno = salesorderdetails.orderno
 						INNER JOIN debtorsmaster
 							ON salesorders.debtorno = debtorsmaster.debtorno
 						INNER JOIN currencies
-							ON debtorsmaster.currcode=currencies.currabrev
+							ON debtorsmaster.currcode = currencies.currabrev
 						LEFT OUTER JOIN custitem
-							ON custitem.debtorno=debtorsmaster.debtorno
-							AND custitem.stockid=salesorderdetails.stkcode
+							ON custitem.debtorno = debtorsmaster.debtorno
+							and custitem.stockid = salesorderdetails.stkcode
 						WHERE salesorders.orderno = '" . $SelectedORD . "'";
-	} else {
+} else {
 		$OrderHeaderSQL = "SELECT loctransfers.reference as customerref,
 								loctransfers.stockid,
 								stockmaster.description,
@@ -179,12 +179,12 @@ if ($SelectedORD == 'Preview') {
 								stockmaster.decimalplaces
 							FROM loctransfers
 							INNER JOIN stockmaster
-								ON loctransfers.stockid=stockmaster.stockid
+								ON loctransfers.stockid = stockmaster.stockid
 							INNER JOIN locations
-								ON loctransfers.shiploc=locations.loccode
-							INNER JOIN locations AS locationsrec
+								ON loctransfers.shiploc = locations.loccode
+							INNER JOIN locations as locationsrec
 								ON loctransfers.recloc = locationsrec.loccode
-							WHERE loctransfers.reference='" . $SelectedORD . "'";
+							WHERE loctransfers.reference = '" . $SelectedORD . "'";
 	}
 
 	$ErrMsg = __('The order cannot be retrieved because');
@@ -200,16 +200,16 @@ if ($SelectedORD == 'Preview') {
 			$SQL = "SELECT value
 					FROM stockitemproperties
 					INNER JOIN stockcatproperties
-						ON stockcatproperties.stkcatpropid=stockitemproperties.stkcatpropid
-					WHERE stockid='" . $MyRow['stockid'] . "'
-						AND label='PackQty'";
+						ON stockcatproperties.stkcatpropid = stockitemproperties.stkcatpropid
+					WHERE stockid = '" . $MyRow['stockid'] . "'
+						and label = 'PackQty'";
 			$Result = DB_query($SQL, $ErrMsg);
 			if (DB_num_rows($Result) > 0) {
 				$PackQtyArray = DB_fetch_array($Result);
 				$QtyPerBox = $PackQtyArray['value'];
 				if ($QtyPerBox == 0) {
-					$QtyPerBox = 1;
-				}
+	$QtyPerBox = 1;
+}
 			} else {
 				$QtyPerBox = 1;
 			}
@@ -234,7 +234,7 @@ if ($SelectedORD == 'Preview') {
 				++$NoOfLabels;
 			}
 			if ($LeftOverQty > 0) {
-				$j = 1;
+	$j = 1;
 				while ($j <= $LabelsPerBox) {
 					$MyArray[$NoOfLabels]['deliverto'] = $MyRow['deliverto'];
 					$MyArray[$NoOfLabels]['deladd1'] = $MyRow['deladd1'];
@@ -248,7 +248,7 @@ if ($SelectedORD == 'Preview') {
 					$MyArray[$NoOfLabels]['custitem'] = $MyRow['cust_part'] . ' ' . $MyRow['cust_description'];
 					++$i;
 					++$j;
-				}
+}
 			}
 		}
 	}
@@ -256,7 +256,7 @@ if ($SelectedORD == 'Preview') {
 
 // Compose HTML for each label
 if (isset($NoOfLabels) && $NoOfLabels > 0) {
-	for ($i = 1; $i < $NoOfLabels; $i++) {
+	for ($i = 1;  $i < $NoOfLabels;  $i++) {
 		$companyAddress = $_SESSION['CompanyRecord']['regoffice1'];
 		$companyAddress2 = $_SESSION['CompanyRecord']['regoffice2'] ?? '';
 		$companyAddress3 = $_SESSION['CompanyRecord']['regoffice3'] ?? '';
@@ -312,10 +312,10 @@ if (isset($NoOfLabels) && $NoOfLabels > 0) {
 	$PDFFileName = $_SESSION['DatabaseName'] . '_FGLABEL_' . $SelectedORD . '_' . date('Y-m-d') . '.pdf';
 
 	if ($MakePDFThenDisplayIt) {
-		// Stream to browser
+	// Stream to browser
 		$dompdf->stream($PDFFileName, ['Attachment' => false]);
 		exit;
-	} else {
+} else {
 		// Save to file and email
 		$output = $dompdf->output();
 		$tmpFile = sys_get_temp_dir() . '/' . $PDFFileName;
@@ -332,8 +332,8 @@ if (isset($NoOfLabels) && $NoOfLabels > 0) {
 		$Title = __('Email a Work Order');
 		include('includes/header.php');
 		if ($Success == 1) {
-			prnMsg(__('Work Order') . ' ' . $SelectedORD . ' ' . __('has been emailed to') . ' ' . $_POST['EmailTo'] . ' ' . __('as directed'), 'success');
-		} else {
+	prnMsg(__('Work Order') . ' ' . $SelectedORD . ' ' . __('has been emailed to') . ' ' . $_POST['EmailTo'] . ' ' . __('as directed'), 'success');
+} else {
 			prnMsg(__('Emailing Work order') . ' ' . $SelectedORD . ' ' . __('to') . ' ' . $_POST['EmailTo'] . ' ' . __('failed'), 'error');
 		}
 		unlink($tmpFile);

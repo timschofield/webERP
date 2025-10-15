@@ -198,13 +198,13 @@ if (!isset($_GET['delete'])) {
 		$_POST['orderno'] = 0;
 	}
 	if (!isset($_POST['returndate'])) {
-		$_POST['returndate'] = Date($_SESSION['DefaultDateFormat']);
+		$_POST['returndate'] = date($_SESSION['DefaultDateFormat']);
 	}
 	if (!isset($_POST['oldinvoice'])) {
 		$_POST['oldinvoice'] = '';
 	}
 	if (!isset($_POST['oldinvoicedate'])) {
-		$_POST['oldinvoicedate'] = Date($_SESSION['DefaultDateFormat']);
+		$_POST['oldinvoicedate'] = date($_SESSION['DefaultDateFormat']);
 	}
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" >

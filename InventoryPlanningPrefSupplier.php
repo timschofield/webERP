@@ -30,7 +30,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	$ReportTitle = __('Preferred Supplier Inventory Plan');
 	$CompanyName = $_SESSION['CompanyRecord']['coyname'];
-	$PrintDate = Date($_SESSION['DefaultDateFormat']);
+	$PrintDate = date($_SESSION['DefaultDateFormat']);
 	$Location = $_POST['Location'];
 	$LocationText = ($Location == 'All') ? __('for all stock locations') : __('for stock at') . ' ' . $Location;
 	$NumberMonthsHolding = $_POST['NumberMonthsHolding'];
@@ -39,10 +39,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	if (isset($_POST['PrintPDF']) or isset($_POST['Email'])) {
 		$HTML .= '<html>
 					<head>';
-		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
+		$HTML .= '<link href = "css/reports.css" rel = "stylesheet" type = "text/css" />';
 	}
 
-	$HTML .= '<div class="centre" id="ReportHeader">
+	$HTML .= '<div class = "centre" id = "ReportHeader">
 				' . $CompanyName . '<br>' . $ReportTitle . ' ' . $LocationText . '<br>' . __('Printed') . ': ' . $PrintDate . '
 			</div>';
 
@@ -66,32 +66,32 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				locstock.stockid,
 				purchdata.supplierno,
 				suppliers.suppname,
-				purchdata.leadtime/30 AS monthsleadtime,
-				SUM(locstock.quantity) AS qoh
+				purchdata.leadtime/30 as monthsleadtime,
+				SUM(locstock.quantity) as qoh
 			FROM locstock
 				INNER JOIN locationusers
-					ON locationusers.loccode=locstock.loccode
-						AND locationusers.userid='" . $_SESSION['UserID'] . "' AND locationusers.canview=1,
+					ON locationusers.loccode = locstock.loccode
+						and locationusers.userid = '" . $_SESSION['UserID'] . "' and locationusers.canview = 1,
 				stockmaster,
 				purchdata,
 				suppliers
-			WHERE locstock.stockid=stockmaster.stockid
-			AND purchdata.supplierno=suppliers.supplierid
-			AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M')
-			AND purchdata.stockid=stockmaster.stockid
-			AND purchdata.preferred=1";
+			WHERE locstock.stockid = stockmaster.stockid
+			and purchdata.supplierno = suppliers.supplierid
+			and (stockmaster.mbflag = 'B' or stockmaster.mbflag = 'M')
+			and purchdata.stockid = stockmaster.stockid
+			and purchdata.preferred = 1";
 
 	if ($Location == 'All') {
-		$SQL .= " GROUP BY
+	$SQL .= " GROUP BY
 					purchdata.supplierno,
 					stockmaster.description,
 					stockmaster.eoq,
 					locstock.stockid
 				ORDER BY purchdata.supplierno,
 					stockmaster.stockid";
-	}
+}
 	else {
-		$SQL .= " AND locstock.loccode = '" . $Location . "'
+		$SQL .= " and locstock.loccode = '" . $Location . "'
 				ORDER BY purchdata.supplierno,
 				stockmaster.stockid";
 	}
@@ -100,7 +100,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$ListCount = DB_num_rows($InventoryResult);
 
 	$SupplierID = '';
-	$CurrentPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat']));
+	$CurrentPeriod = GetPeriod(date($_SESSION['DefaultDateFormat']));
 	$Period_1 = $CurrentPeriod - 1;
 	$Period_2 = $CurrentPeriod - 2;
 	$Period_3 = $CurrentPeriod - 3;
@@ -109,29 +109,29 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	while ($InventoryPlan = DB_fetch_array($InventoryResult)) {
 
 		if ($SupplierID != $InventoryPlan['supplierno']) {
-			if ($SupplierID != '') {
-				$HTML .= '<tr><td colspan="11"></td></tr>';
-			}
-			$HTML .= '<tr><th colspan="11" class="supplier-header">' . $InventoryPlan['supplierno'] . ' - ' . $InventoryPlan['suppname'] . '</th></tr>';
+	if ($SupplierID != '') {
+				$HTML .= '<tr><td colspan = "11"></td></tr>';
+}
+			$HTML .= '<tr><th colspan = "11" class = "supplier-header">' . $InventoryPlan['supplierno'] . ' - ' . $InventoryPlan['suppname'] . '</th></tr>';
 			$SupplierID = $InventoryPlan['supplierno'];
 		}
 
-		$SQL = "SELECT SUM(CASE WHEN (prd>='" . $Period_1 . "' OR prd<='" . $Period_4 . "') THEN -qty ELSE 0 END) AS 4mthtotal,
-					SUM(CASE WHEN prd='" . $Period_1 . "' THEN -qty ELSE 0 END) AS prd1,
-					SUM(CASE WHEN prd='" . $Period_2 . "' THEN -qty ELSE 0 END) AS prd2,
-					SUM(CASE WHEN prd='" . $Period_3 . "' THEN -qty ELSE 0 END) AS prd3,
-					SUM(CASE WHEN prd='" . $Period_4 . "' THEN -qty ELSE 0 END) AS prd4
+		$SQL = "SELECT SUM(case WHEN (prd>='" . $Period_1 . "' or prd<='" . $Period_4 . "') THEN -qty else 0 END) as 4mthtotal,
+					SUM(case WHEN prd = '" . $Period_1 . "' THEN -qty else 0 END) as prd1,
+					SUM(case WHEN prd = '" . $Period_2 . "' THEN -qty else 0 END) as prd2,
+					SUM(case WHEN prd = '" . $Period_3 . "' THEN -qty else 0 END) as prd3,
+					SUM(case WHEN prd = '" . $Period_4 . "' THEN -qty else 0 END) as prd4
 					FROM stockmoves
 					INNER JOIN locationusers
-						ON locationusers.loccode=stockmoves.loccode
-							AND locationusers.userid='" . $_SESSION['UserID'] . "'
-							AND locationusers.canview=1
-					WHERE stockid='" . $InventoryPlan['stockid'] . "'
-					AND (stockmoves.type=10 OR stockmoves.type=11)
-					AND stockmoves.hidemovt=0";
+						ON locationusers.loccode = stockmoves.loccode
+							and locationusers.userid = '" . $_SESSION['UserID'] . "'
+							and locationusers.canview = 1
+					WHERE stockid = '" . $InventoryPlan['stockid'] . "'
+					and (stockmoves.type = 10 or stockmoves.type = 11)
+					and stockmoves.hidemovt = 0";
 		if ($Location != 'All') {
-			$SQL .= "	AND stockmoves.loccode ='" . $Location . "'";
-		}
+	$SQL .= "	and stockmoves.loccode ='" . $Location . "'";
+}
 
 		$ErrMsg = __('The sales quantities could not be retrieved');
 		$SalesResult = DB_query($SQL, $ErrMsg);
@@ -155,26 +155,26 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$RequiredStockInSupplyChain = $AverageOfLast4Months * ($NumberMonthsHolding + $InventoryPlan['monthsleadtime']);
 		$SuggestedTopUpOrder = $RequiredStockInSupplyChain - $InventoryPlan['qoh'] + $TotalDemand - $QOO;
 
-		$HTML .= '<tr class="striped_row">
-					<td class="left">' . $InventoryPlan['stockid'] . '</td>
-					<td class="left">' . $InventoryPlan['description'] . '</td>
-					<td class="number">' . locale_number_format($AverageOfLast4Months, 1) . '</td>
-					<td class="number">' . locale_number_format($MaxMthSales, 0) . '</td>
-					<td class="number">' . locale_number_format($StandardDeviation, 2) . '</td>
-					<td class="number">' . locale_number_format($InventoryPlan['monthsleadtime'], 1) . '</td>
-					<td class="number">' . locale_number_format($RequiredStockInSupplyChain, 0) . '</td>
-					<td class="number">' . locale_number_format($InventoryPlan['qoh'], 0) . '</td>
-					<td class="number">' . locale_number_format($TotalDemand, 0) . '</td>
-					<td class="number">' . locale_number_format($QOO, 0) . '</td>
-					<td class="number">' . (($SuggestedTopUpOrder <= 0) ? __('Nil') : locale_number_format($SuggestedTopUpOrder, 0)) . '</td>
+		$HTML .= '<tr class = "striped_row">
+					<td class = "left">' . $InventoryPlan['stockid'] . '</td>
+					<td class = "left">' . $InventoryPlan['description'] . '</td>
+					<td class = "number">' . locale_number_format($AverageOfLast4Months, 1) . '</td>
+					<td class = "number">' . locale_number_format($MaxMthSales, 0) . '</td>
+					<td class = "number">' . locale_number_format($StandardDeviation, 2) . '</td>
+					<td class = "number">' . locale_number_format($InventoryPlan['monthsleadtime'], 1) . '</td>
+					<td class = "number">' . locale_number_format($RequiredStockInSupplyChain, 0) . '</td>
+					<td class = "number">' . locale_number_format($InventoryPlan['qoh'], 0) . '</td>
+					<td class = "number">' . locale_number_format($TotalDemand, 0) . '</td>
+					<td class = "number">' . locale_number_format($QOO, 0) . '</td>
+					<td class = "number">' . (($SuggestedTopUpOrder <= 0) ? __('Nil') : locale_number_format($SuggestedTopUpOrder, 0)) . '</td>
 				</tr>';
 	}
 
 	if (isset($_POST['PrintPDF'])) {
 		$HTML .= '</tbody>
-				<div class="footer fixed-section">
-					<div class="right">
-						<span class="page-number">Page </span>
+				<div class = "footer fixed-section">
+					<div class = "right">
+						<span class = "page-number">Page </span>
 					</div>
 				</div>
 			</table>';
@@ -182,16 +182,16 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	else {
 		$HTML .= '</tbody>
 				</table>
-				<div class="centre">
-					<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
+				<div class = "centre">
+					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
 		</html>';
 
 	if ($ListCount == 0) {
-		$HTML .= '<div style="color:red;font-weight:bold;">' . __('There were no items in the range and location specified') . '</div>';
-	}
+	$HTML .= '<div style = "color:red;font-weight:bold;">' . __('There were no items in the range and location specified') . '</div>';
+}
 
 	$HTML .= '</body></html>';
 
@@ -213,7 +213,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	else {
 		$Title = __('Inventory Planning Report');
 		include ('includes/header.php');
-		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Inventory') . '" alt="" />' . ' ' . __('Inventory Planning Report') . '</p>';
+		echo '<p class = "page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Inventory') . '" alt="" />' . ' ' . __('Inventory Planning Report') . '</p>';
 		echo $HTML;
 		include ('includes/footer.php');
 	}
@@ -226,61 +226,61 @@ else { /*The option to print PDF was not hit */
 	$BookMark = 'PlanningReport';
 	include ('includes/header.php');
 
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+	echo '<p class = "page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" target="_blank">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target = "_blank">';
+	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 	echo '<fieldset>
 			<legend>', __('Report Criteria') , '</legend>';
 
 	echo '<field>
-			<label for="Location">' . __('For Inventory in Location') . ':</label>
-			<select name="Location">';
+			<label for = "Location">' . __('For Inventory in Location') . ':</label>
+			<select name = "Location">';
 	$SQL = "SELECT locations.loccode, locationname FROM locations
-			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" . $_SESSION['UserID'] . "' AND locationusers.canview=1";
+			INNER JOIN locationusers ON locationusers.loccode = locations.loccode and locationusers.userid = '" . $_SESSION['UserID'] . "' and locationusers.canview = 1";
 	$LocnResult = DB_query($SQL);
 
-	echo '<option value="All">' . __('All Locations') . '</option>';
+	echo '<option value = "All">' . __('All Locations') . '</option>';
 
 	while ($MyRow = DB_fetch_array($LocnResult)) {
-		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+		echo '<option value = "' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	}
 	echo '</select>
 		</field>';
 
 	echo '<field>
-			<label for="NumberMonthsHolding">' . __('Months Buffer Stock to Hold') . ':</label>
-			<select name="NumberMonthsHolding">';
+			<label for = "NumberMonthsHolding">' . __('Months Buffer Stock to Hold') . ':</label>
+			<select name = "NumberMonthsHolding">';
 
 	if (!isset($_POST['NumberMonthsHolding'])) {
 		$_POST['NumberMonthsHolding'] = 1;
 	}
 	if ($_POST['NumberMonthsHolding'] == 0.5) {
-		echo '<option selected="selected" value="0.5">' . __('Two Weeks') . '</option>';
-	}
+	echo '<option selected = "selected" value = "0.5">' . __('Two Weeks') . '</option>';
+}
 	else {
-		echo '<option value="0.5">' . __('Two Weeks') . '</option>';
+		echo '<option value = "0.5">' . __('Two Weeks') . '</option>';
 	}
-	echo '<option ' . ($_POST['NumberMonthsHolding'] == 1 ? 'selected="selected" ' : '') . 'value="1">' . __('One Month') . '</option>';
+	echo '<option ' . ($_POST['NumberMonthsHolding'] == 1 ? 'selected ="selected" ' : '') . 'value = "1">' . __('One Month') . '</option>';
 	if ($_POST['NumberMonthsHolding'] == 1.5) {
-		echo '<option selected="selected" value="1.5">' . __('Six Weeks') . '</option>';
-	}
+	echo '<option selected = "selected" value = "1.5">' . __('Six Weeks') . '</option>';
+}
 	else {
-		echo '<option value="1.5">' . __('Six Weeks') . '</option>';
+		echo '<option value = "1.5">' . __('Six Weeks') . '</option>';
 	}
 	if ($_POST['NumberMonthsHolding'] == 2) {
-		echo '<option selected="selected" value="2">' . __('Two Months') . '</option>';
-	}
+	echo '<option selected = "selected" value = "2">' . __('Two Months') . '</option>';
+}
 	else {
-		echo '<option value="2">' . __('Two Months') . '</option>';
+		echo '<option value = "2">' . __('Two Months') . '</option>';
 	}
 	echo '</select>
 		</field>';
 
 	echo '</fieldset>
-			<div class="centre">
-				<input type="submit" name="PrintPDF" value="' . __('Print PDF') . '" />
-				<input type="submit" name="View" title="View Report" value="' . __('View') . '" />
+			<div class = "centre">
+				<input type = "submit" name = "PrintPDF" value = "' . __('Print PDF') . '" />
+				<input type = "submit" name = "View" title = "View Report" value = "' . __('View') . '" />
 			</div>';
 	echo '</form>';
 

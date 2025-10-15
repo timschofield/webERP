@@ -281,10 +281,10 @@ function submit($TypeOfFile) {
 			// Redirect output to a client web browser (Excel2007)
 			if ($_POST['Format'] == 'xlsx') {
 				header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-				$File = "FORSTOK" . '-' .  $TypeOfFile . '-' . Date('Y-m-d-H-i-s'). '.xlsx';
+				$File = "FORSTOK" . '-' .  $TypeOfFile . '-' . date('Y-m-d-H-i-s'). '.xlsx';
 			} else if ($_POST['Format'] == 'ods') {
 				header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
-				$File = "FORSTOK" . '-' .  $TypeOfFile . '-' . Date('Y-m-d-H-i-s'). '.ods';
+				$File = "FORSTOK" . '-' .  $TypeOfFile . '-' . date('Y-m-d-H-i-s'). '.ods';
 			}
 			header('Content-Disposition: attachment;filename="' . $File . '"');
 			header('Cache-Control: max-age=0');

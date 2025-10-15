@@ -48,7 +48,7 @@ if (!isset($_POST['ReturnedGoodsReason'])){
 	$_POST['ReturnedGoodsReason'] = 0;
 }
 if (!isset($_POST['ReturnDate'])){
-	$_POST['ReturnDate'] = Date($_SESSION['DefaultDateFormat']);
+	$_POST['ReturnDate'] = date($_SESSION['DefaultDateFormat']);
 }
 if (!isset($_POST['AmountVouchers'])){
 	$_POST['AmountVouchers'] = 0;

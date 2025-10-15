@@ -116,9 +116,9 @@ function checkSupplierExist($CodeSupplier) {
 function checkNewCode($Code) {
 	$tmp = str_replace(' ','',$Code);
 	if ($tmp != $Code) {
-		prnMsg('<br /><br />' . __('The New supplier code') . ': ' . $Code . ' ' .
+	prnMsg('<br /><br />' . __('The New supplier code') . ': ' . $Code . ' ' .
 				__('must be not empty nor with spaces'),'error');
 		return false;
-	}
+}
 	return true;
 }

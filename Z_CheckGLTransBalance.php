@@ -2,7 +2,7 @@
 
 require(__DIR__ . '/includes/session.php');
 
-$Title=__('Check Period Sales Ledger Control Account');
+$Title = __('Check Period Sales Ledger Control Account');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
@@ -24,10 +24,10 @@ $SQL = "SELECT gltrans.type,
 			systypes.typename,
 			gltrans.typeno,
 			periodno,
-			SUM(amount) AS nettot
+			SUM(amount) as nettot
 		FROM gltrans
 			INNER JOIN chartmaster ON
-			gltrans.account=chartmaster.accountcode
+			gltrans.account = chartmaster.accountcode
 			INNER JOIN systypes ON gltrans.type = systypes.typeid
 		GROUP BY gltrans.type,
 			systypes.typename,
@@ -43,10 +43,10 @@ $RowCounter =0;
 
 while ($OutOfWackRow = DB_fetch_array($OutOfWackResult)){
 
-	if ($RowCounter==18){
-		$RowCounter=0;
+	if ($RowCounter == 18) {
+	$RowCounter = 0;
 		echo $Header;
-	} else {
+} else {
 		$RowCounter++;
 	}
 	echo '<tr>

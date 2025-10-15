@@ -18,8 +18,8 @@ if (isset($_POST['FormID'])) {
 		$_POST['AutoDebtorNo'] = 1;
 	}
 	if ($_POST['AutoDebtorNo'] == 1) {
-		$_POST['UpdateIfExists'] = 0;
-	} else {
+	$_POST['UpdateIfExists'] = 0;
+} else {
 		if (!isset($_POST['UpdateIfExists'])) {
 			$_POST['UpdateIfExists'] = 0;
 		} else {
@@ -140,11 +140,11 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		//check for correct number of fields
 		$FieldCount = count($Filerow);
 		if ($FieldCount != $FieldTarget) {
-			prnMsg(__($FieldTarget . ' fields required, ' . $FieldCount . ' fields received'), 'error');
+	prnMsg(__($FieldTarget . ' fields required, ' . $FieldCount . ' fields received'), 'error');
 			fclose($FileHandle);
 			include('includes/footer.php');
 			exit();
-		}
+}
 
 		// cleanup the data (csv files often import with empty strings and such)
 		foreach ($Filerow as & $Value) {
@@ -184,8 +184,8 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		$_POST['typeid'] = $Filerow[30];
 
 		if ($_POST['AutoDebtorNo'] == 1) {
-			$_POST['DebtorNo'] = GetNextTransNo(500);
-		} else {
+	$_POST['DebtorNo'] = GetNextTransNo(500);
+} else {
 			$_POST['DebtorNo'] = mb_strtoupper($_POST['DebtorNo']);
 		}
 
@@ -318,16 +318,17 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		}
 
 		if ($InputError != 1) {
-			$SQL = "SELECT 1 FROM debtorsmaster WHERE debtorno='" . $_POST['DebtorNo'] . "' LIMIT 1";
+	$SQL = "SELECT 1 FROM debtorsmaster WHERE debtorno = '" . $_POST['DebtorNo'] . "' LIMIT 1";
 			$Result = DB_query($SQL);
 			$DebtorExists = (DB_num_rows($Result) > 0);
 			if ($DebtorExists and $_POST['UpdateIfExists'] != 1) {
 				$UpdatedNum++;
-			} else {
+} else {
 
 				$SQL_ClientSince = FormatDateForSQL($_POST['ClientSince']);
 
-				if ($DebtorExists) { //update
+				if ($DebtorExists) {
+	//update
 					$UpdatedNum++;
 					$SQL = "SELECT 1
 							  FROM debtortrans
@@ -337,7 +338,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 					$Curr = false;
 					if (DB_num_rows($Result) == 0) {
 						$Curr = true;
-					} else {
+} else {
 						$CurrSQL = "SELECT currcode
 							FROM debtorsmaster
 							where debtorno = '" . $_POST['DebtorNo'] . "'";
@@ -345,34 +346,34 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 						$CurrRow = DB_fetch_array($CurrResult);
 						$OldCurrency = $CurrRow[0];
 						if ($OldCurrency != $_POST['CurrCode']) {
-							prnMsg(__('The currency code cannot be updated as there are already transactions for this customer'), 'info');
-						}
+	prnMsg(__('The currency code cannot be updated as there are already transactions for this customer'), 'info');
+}
 					}
 
 					$SQL = "UPDATE debtorsmaster SET
-							name='" . $_POST['CustName'] . "',
-							address1='" . $_POST['Address1'] . "',
-							address2='" . $_POST['Address2'] . "',
-							address3='" . $_POST['Address3'] . "',
-							address4='" . $_POST['Address4'] . "',
-							address5='" . $_POST['Address5'] . "',
-							address6='" . $_POST['Address6'] . "',";
+							name = '" . $_POST['CustName'] . "',
+							address1 = '" . $_POST['Address1'] . "',
+							address2 = '" . $_POST['Address2'] . "',
+							address3 = '" . $_POST['Address3'] . "',
+							address4 = '" . $_POST['Address4'] . "',
+							address5 = '" . $_POST['Address5'] . "',
+							address6 = '" . $_POST['Address6'] . "',";
 
-					if ($Curr) $SQL.= "currcode='" . $_POST['CurrCode'] . "',";
+					if ($Curr) $SQL.= "currcode = '" . $_POST['CurrCode'] . "',";
 
-					$SQL.= "clientsince='" . $SQL_ClientSince . "',
-							holdreason='" . $_POST['HoldReason'] . "',
-							paymentterms='" . $_POST['PaymentTerms'] . "',
-							discount='" . filter_number_format($_POST['Discount']) / 100 . "',
-							discountcode='" . $_POST['DiscountCode'] . "',
-							pymtdiscount='" . filter_number_format($_POST['PymtDiscount']) / 100 . "',
-							creditlimit='" . filter_number_format($_POST['CreditLimit']) . "',
+					$SQL.= "clientsince = '" . $SQL_ClientSince . "',
+							holdreason = '" . $_POST['HoldReason'] . "',
+							paymentterms = '" . $_POST['PaymentTerms'] . "',
+							discount = '" . filter_number_format($_POST['Discount']) / 100 . "',
+							discountcode = '" . $_POST['DiscountCode'] . "',
+							pymtdiscount = '" . filter_number_format($_POST['PymtDiscount']) / 100 . "',
+							creditlimit = '" . filter_number_format($_POST['CreditLimit']) . "',
 							salestype = '" . $_POST['SalesType'] . "',
-							invaddrbranch='" . $_POST['InvAddrBranch'] . "',
-							taxref='" . $_POST['TaxRef'] . "',
-							customerpoline='" . $_POST['CustomerPOLine'] . "',
-							typeid='" . $_POST['typeid'] . "',
-							language_id='" . $_POST['LanguageID'] . "'
+							invaddrbranch = '" . $_POST['InvAddrBranch'] . "',
+							taxref = '" . $_POST['TaxRef'] . "',
+							customerpoline = '" . $_POST['CustomerPOLine'] . "',
+							typeid = '" . $_POST['typeid'] . "',
+							language_id = '" . $_POST['LanguageID'] . "'
 						  WHERE debtorno = '" . $_POST['DebtorNo'] . "'";
 
 					$ErrMsg = __('The customer could not be updated because');
@@ -457,11 +458,11 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 			$i++;
 		}
 		if ($_POST['FwdDate'] > 30) {
-			$InputError = 1;
+	$InputError = 1;
 			prnMsg(__('The date (in the month) after which invoices are charged to the following month should be a number less than 31'), 'error');
 			$Errors[$i] = 'FwdDate';
 			$i++;
-		}
+}
 		if (!is_numeric(filter_number_format($_POST['EstDeliveryDays']))) {
 			$InputError = 1;
 			prnMsg(__('The estimated delivery days is expected to be a number and a recognised number has not been entered'), 'error');
@@ -476,18 +477,17 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		}
 
 		if ($InputError != 1) {
-			if (DB_error_no() == 0) {
+	if (DB_error_no() == 0) {
 
 				$SQL = "SELECT 1
 				     FROM custbranch
-           			 WHERE debtorno='" . $_POST['DebtorNo'] . "' AND
-				           branchcode='" . $_POST['BranchCode'] . "' LIMIT 1";
+           			 WHERE debtorno = '" . $_POST['DebtorNo'] . "' and
+				           branchcode = '" . $_POST['BranchCode'] . "' LIMIT 1";
 				$Result = DB_query($SQL);
 				$BranchExists = (DB_num_rows($Result) > 0);
 				if ($BranchExists and $_POST['UpdateIfExists'] != 1) {
 					//do nothing
-
-				} else {
+} else {
 
 					if (!isset($_POST['EstDeliveryDays'])) {
 						$_POST['EstDeliveryDays'] = 1;
@@ -497,7 +497,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 						$Longitude = 0.0;
 					}
 					if ($BranchExists) {
-						$SQL = "UPDATE custbranch SET brname = '" . $_POST['BrName'] . "',
+	$SQL = "UPDATE custbranch SET brname = '" . $_POST['BrName'] . "',
 									braddress1 = '" . $_POST['BrAddress1'] . "',
 									braddress2 = '" . $_POST['BrAddress2'] . "',
 									braddress3 = '" . $_POST['BrAddress3'] . "',
@@ -507,28 +507,27 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 									lat = '" . $Latitude . "',
 									lng = '" . $Longitude . "',
 									specialinstructions = '" . $_POST['SpecialInstructions'] . "',
-									phoneno='" . $_POST['PhoneNo'] . "',
-									faxno='" . $_POST['FaxNo'] . "',
-									fwddate= '" . $_POST['FwdDate'] . "',
-									contactname='" . $_POST['ContactName'] . "',
-									salesman= '" . $_POST['Salesman'] . "',
-									area='" . $_POST['Area'] . "',
+									phoneno = '" . $_POST['PhoneNo'] . "',
+									faxno = '" . $_POST['FaxNo'] . "',
+									fwddate =  '" . $_POST['FwdDate'] . "',
+									contactname = '" . $_POST['ContactName'] . "',
+									salesman =  '" . $_POST['Salesman'] . "',
+									area = '" . $_POST['Area'] . "',
 									estdeliverydays ='" . filter_number_format($_POST['EstDeliveryDays']) . "',
-									email='" . $_POST['Email'] . "',
-									taxgroupid='" . $_POST['TaxGroup'] . "',
-									defaultlocation='" . $_POST['DefaultLocation'] . "',
+									email = '" . $_POST['Email'] . "',
+									taxgroupid = '" . $_POST['TaxGroup'] . "',
+									defaultlocation = '" . $_POST['DefaultLocation'] . "',
 									brpostaddr1 = '" . $_POST['BrPostAddr1'] . "',
 									brpostaddr2 = '" . $_POST['BrPostAddr2'] . "',
 									brpostaddr3 = '" . $_POST['BrPostAddr3'] . "',
 									brpostaddr4 = '" . $_POST['BrPostAddr4'] . "',
 									brpostaddr5 = '" . $_POST['BrPostAddr5'] . "',
-									disabletrans='" . $_POST['DisableTrans'] . "',
-									defaultshipvia='" . $_POST['DefaultShipVia'] . "',
-									custbranchcode='" . $_POST['CustBranchCode'] . "',
-									deliverblind='" . $_POST['DeliverBlind'] . "'
-								WHERE branchcode = '" . $_POST['BranchCode'] . "' AND debtorno='" . $_POST['DebtorNo'] . "'";
-
-					} else {
+									disabletrans = '" . $_POST['DisableTrans'] . "',
+									defaultshipvia = '" . $_POST['DefaultShipVia'] . "',
+									custbranchcode = '" . $_POST['CustBranchCode'] . "',
+									deliverblind = '" . $_POST['DeliverBlind'] . "'
+								WHERE branchcode = '" . $_POST['BranchCode'] . "' and debtorno = '" . $_POST['DebtorNo'] . "'";
+} else {
 
 						$SQL = "INSERT INTO custbranch (branchcode,
 										debtorno,
@@ -606,22 +605,24 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 		}
 
-		if ($InputError == 1) { //this row failed so exit loop
+		if ($InputError == 1) {
+	//this row failed so exit loop
 			break;
-		}
+}
 
 		$Row++;
 	}
 
-	if ($InputError == 1) { //exited loop with errors so rollback
+	if ($InputError == 1) {
+	//exited loop with errors so rollback
 		prnMsg(__('Failed on row ' . $Row . '. Batch import has been rolled back.'), 'error');
 		DB_Txn_Rollback();
-	} else { //all good so commit data transaction
+} else { //all good so commit data transaction
 		DB_Txn_Commit();
 		prnMsg(__('Batch Import of') . ' ' . $FileName . ' ' . __('has been completed. All transactions committed to the database.'), 'success');
 		if ($_POST['UpdateIfExists'] == 1) {
-			prnMsg(__('Updated:') . ' ' . $UpdatedNum . ' ' . __('Insert') . ':' . $InsertNum);
-		} else {
+	prnMsg(__('Updated:') . ' ' . $UpdatedNum . ' ' . __('Insert') . ':' . $InsertNum);
+} else {
 			prnMsg(__('Exist:') . ' ' . $UpdatedNum . ' ' . __('Insert') . ':' . $InsertNum);
 		}
 	}
@@ -635,15 +636,15 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	prnMsg(__('Please ensure that your csv file is encoded in UTF-8, otherwise the input data will not store correctly in database'), 'warn');
 
 	echo '<a href="' . $RootPath . '/Z_ImportDebtors.php?gettemplate=1">Get Import Template</a>';
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" enctype="multipart/form-data">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" enctype = "multipart/form-data">';
+	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 
-	echo '<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />' . __('Upload file') . ': <input name="userfile" type="file" />
-			<input type="submit" value="' . __('Send File') . '" />';
-	echo '<br/>', __('Create Debtor Codes Automatically'), ':<input type="checkbox" name="AutoDebtorNo" ';
-	if ($_POST['AutoDebtorNo'] == 1) echo 'checked="checked"';
+	echo '<input type = "hidden" name="MAX_FILE_SIZE" value = "1000000" />' . __('Upload file') . ': <input name="userfile" type = "file" />
+			<input type = "submit" value = "' . __('Send File') . '" />';
+	echo '<br/>', __('Create Debtor Codes Automatically'), ':<input type = "checkbox" name="AutoDebtorNo" ';
+	if ($_POST['AutoDebtorNo'] == 1) echo 'checked = "checked"';
 	echo '>';
-	echo '<br/>', __('Update if DebtorNo exists'), ':<input type="checkbox" name="UpdateIfExists">';
+	echo '<br/>', __('Update if DebtorNo exists'), ':<input type = "checkbox" name="UpdateIfExists">';
 	echo '</div>
 		</form>';
 

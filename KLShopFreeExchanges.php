@@ -62,7 +62,7 @@ if (isset($_POST['submit'])) {
 
 	if ($InputError !=1) {
 		DB_Txn_Begin();
-		$Now = Date('Y-m-d H-i-s');
+		$Now = date('Y-m-d H-i-s');
 		
 		$SQL = "INSERT INTO klfreeexchanges
 						(itemfrom,

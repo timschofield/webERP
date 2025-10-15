@@ -34,20 +34,20 @@ echo '<div class="page_help_text">' .
 		__('This shows how the payment to the supplier was allocated') . '<a href="' . $RootPath . '/SupplierInquiry.php?&amp;SupplierID=' . $SuppID . '">' . __('Back to supplier inquiry') . '</a>
 	</div>';
 
-$SQL= "SELECT supptrans.supplierno,
+$SQL =  "SELECT supptrans.supplierno,
 				supptrans.suppreference,
 				supptrans.trandate,
 				supptrans.alloc,
-				currencies.decimalplaces AS currdecimalplaces
+				currencies.decimalplaces as currdecimalplaces
 		FROM supptrans INNER JOIN suppliers
-		ON supptrans.supplierno=suppliers.supplierid
+		ON supptrans.supplierno = suppliers.supplierid
 		INNER JOIN currencies
-		ON suppliers.currcode=currencies.currabrev
+		ON suppliers.currcode = currencies.currabrev
 		WHERE supptrans.id IN (SELECT suppallocs.transid_allocfrom
 								FROM supptrans, suppallocs
 								WHERE supptrans.supplierno = '" . $SuppID . "'
-								AND supptrans.suppreference = '" . $InvID . "'
-								AND supptrans.id = suppallocs.transid_allocto)";
+								and supptrans.suppreference = '" . $InvID . "'
+								and supptrans.id = suppallocs.transid_allocto)";
 
 
 $Result = DB_query($SQL);
@@ -58,7 +58,7 @@ if (DB_num_rows($Result) == 0){
 	exit();
 }
 
-echo '<table cellpadding="2" width="80%" class="selection">';
+echo '<table cellpadding = "2" width = "80%" class="selection">';
 $TableHeader = '<tr>
 					<th>' . __('Supplier Number') . '<br />' . __('Reference') . '</th>
 					<th>' . __('Payment')  . '<br />' . __('Reference') . '</th>
@@ -68,7 +68,7 @@ $TableHeader = '<tr>
 
 echo $TableHeader;
 
-$j=1;
+$j = 1;
   while ($MyRow = DB_fetch_array($Result)) {
 
 	echo '<tr class="striped_row">
@@ -79,10 +79,10 @@ $j=1;
 		</tr>';
 
 		$j++;
-		if ($j == 18){
-			$j=1;
+		if ($j == 18) {
+	$j = 1;
 			echo $TableHeader;
-		}
+}
 
 }
   echo '</table>';

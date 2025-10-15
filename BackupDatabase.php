@@ -21,21 +21,21 @@ if (isset($_GET['BackupFile'])) {
 			$DeleteResult = unlink($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/' . $BackupFile);
 
 			if ($DeleteResult == true) {
-				prnMsg(__('Deleted') . ' companies/' . $_SESSION['DatabaseName'] . '/' . $BackupFile, 'info');
+	prnMsg(__('Deleted') . ' companies/' . $_SESSION['DatabaseName'] . '/' . $BackupFile, 'info');
 				$DeletedFiles = true;
-			} else {
+} else {
 				prnMsg(__('Unable to delete') . ' companies/' . $_SESSION['DatabaseName'] . '/' . $BackupFile, 'warn');
 			}
 		}
 	}
 	if ($DeletedFiles) {
-		prnMsg(__('All backup files on the server have been deleted'), 'success');
-	} else {
+	prnMsg(__('All backup files on the server have been deleted'), 'success');
+} else {
 		prnMsg(__('No backup files on the server were deleted'), 'info');
 	}
 } else {
 
-	$BackupFile = $PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/' . __('Backup') . '_' . Date('Y-m-d-H-i-s') . '.sql.gz';
+	$BackupFile = $PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/' . __('Backup') . '_' . date('Y-m-d-H-i-s') . '.sql.gz';
 	/// @todo add as well $DBPort
 	/// @todo use the same mysqldump options as in the build/dump_database?
 	/// @todo test for presence of gzip using `which` / `where.exe`. If not present, do not try to compress the dump

@@ -65,22 +65,22 @@ $SQL = "SELECT salesorders.customerref,
 				salesorders.branchcode,
 				locations.taxprovinceid,
 				locations.locationname,
-				currencies.decimalplaces AS currdecimalplaces
+				currencies.decimalplaces as currdecimalplaces
 			FROM salesorders INNER JOIN debtorsmaster
-			ON salesorders.debtorno=debtorsmaster.debtorno
+			ON salesorders.debtorno = debtorsmaster.debtorno
 			INNER JOIN shippers
-			ON salesorders.shipvia=shippers.shipper_id
+			ON salesorders.shipvia = shippers.shipper_id
 			INNER JOIN locations
-			ON salesorders.fromstkloc=locations.loccode
+			ON salesorders.fromstkloc = locations.loccode
 			INNER JOIN currencies
-			ON debtorsmaster.currcode=currencies.currabrev
-			WHERE salesorders.quotation=1
-			AND salesorders.orderno='" . $_GET['QuotationNo'] ."'";
+			ON debtorsmaster.currcode = currencies.currabrev
+			WHERE salesorders.quotation = 1
+			and salesorders.orderno = '" . $_GET['QuotationNo'] ."'";
 
 $Result = DB_query($SQL, $ErrMsg);
 
 //If there are no rows, there's a problem.
-if (DB_num_rows($Result)==0){
+if (DB_num_rows($Result) == 0){
 	$Title = __('Print Quotation Error');
 	include('includes/header.php');
 	echo '<div class="centre"><br /><br /><br />';
@@ -96,7 +96,7 @@ if (DB_num_rows($Result)==0){
 			</div><br /><br /><br />';
 	include('includes/footer.php');
 	exit();
-} elseif (DB_num_rows($Result)==1) {
+} elseif (DB_num_rows($Result) == 1) {
 	$MyRow = DB_fetch_array($Result);
 }
 
@@ -114,8 +114,8 @@ $SQL = "SELECT salesorderdetails.stkcode,
 		salesorderdetails.narrative,
 		stockmaster.decimalplaces
 	FROM salesorderdetails INNER JOIN stockmaster
-		ON salesorderdetails.stkcode=stockmaster.stockid
-	WHERE salesorderdetails.orderno='" . $_GET['QuotationNo'] . "'";
+		ON salesorderdetails.stkcode = stockmaster.stockid
+	WHERE salesorderdetails.orderno = '" . $_GET['QuotationNo'] . "'";
 
 $Result = DB_query($SQL, $ErrMsg);
 
@@ -135,7 +135,7 @@ $HTML = '
 	th, td { border: 1px solid #000; padding: 5px; }
 	th { background: #eee; }
 </style>';
-$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
+$HTML .= '<link href = "css/reports.css" rel = "stylesheet" type = "text/css" />';
 $HTML .= '<div><img class="logo" src="' . $_SESSION['LogoFile'] . '" /></div>';
 $HTML .= '<div><span class="label">' . $CompanyName . '</span></div>';
 
@@ -175,20 +175,20 @@ while ($MyRow2 = DB_fetch_array($Result)) {
 	$Branch = $MyRow['branchcode'];
 	$SQL3 = "SELECT taxgrouptaxes.taxauthid
 				FROM taxgrouptaxes INNER JOIN custbranch
-				ON taxgrouptaxes.taxgroupid=custbranch.taxgroupid
-				WHERE custbranch.branchcode='" .$Branch ."'";
-	$Result3=DB_query($SQL3, $ErrMsg);
+				ON taxgrouptaxes.taxgroupid = custbranch.taxgroupid
+				WHERE custbranch.branchcode = '" .$Branch ."'";
+	$Result3 = DB_query($SQL3, $ErrMsg);
 	$TaxAuth = 0;
-	while ($MyRow3=DB_fetch_array($Result3)){
+	while ($MyRow3 = DB_fetch_array($Result3)){
 		$TaxAuth = $MyRow3['taxauthid'];
 	}
 	$SQL4 = "SELECT * FROM taxauthrates
-				WHERE dispatchtaxprovince='" .$TaxProv ."'
-				AND taxcatid='" .$TaxCat ."'
-				AND taxauthority='" .$TaxAuth ."'";
-	$Result4=DB_query($SQL4, $ErrMsg);
+				WHERE dispatchtaxprovince = '" .$TaxProv ."'
+				and taxcatid = '" .$TaxCat ."'
+				and taxauthority = '" .$TaxAuth ."'";
+	$Result4 = DB_query($SQL4, $ErrMsg);
 	$TaxClass = 0;
-	while ($MyRow4=DB_fetch_array($Result4)){
+	while ($MyRow4 = DB_fetch_array($Result4)){
 		$TaxClass = 100 * $MyRow4['taxrate'];
 	}
 	$DisplayTaxClass = $TaxClass . '%';
@@ -215,7 +215,7 @@ while ($MyRow2 = DB_fetch_array($Result)) {
 
 $HTML .= '</table>';
 
-if ($ListCount == 0){
+if ($ListCount == 0) {
 	$Title = __('Print Quotation Error');
 	include('includes/header.php');
 	prnMsg(__('There were no items on the quotation') . '. ' . __('The quotation cannot be printed'),'info');

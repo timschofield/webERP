@@ -1,7 +1,7 @@
 <?php
-/* $Id: KLPDFInventoryAtShopPageHeader.php $*/
 
-/*PDF page header for inventory valuation report */
+/*PDF page header for inventory at shop valuation report */
+
 if ($PageNumber>1){
 	$pdf->newPage();
 }
@@ -13,7 +13,7 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['Compa
 $YPos -=$LineHeight;
 
 $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,__('Inventory Control at ') . ' ' . $_POST['Location'] . ' ' . __('location'));
-$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-120,$YPos,120,$FontSize,__('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '   ' . __('Page') . ' ' . $PageNumber);
+$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-120,$YPos,120,$FontSize,__('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '   ' . __('Page') . ' ' . $PageNumber);
 
 $YPos -=(2*$LineHeight);
 

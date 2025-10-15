@@ -8,6 +8,5 @@ CREATE TABLE `qasamples` (
   `comments` varchar(255) NOT NULL DEFAULT '',
   `cert` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`sampleid`),
-  KEY `prodspeckey` (`prodspeckey`,`lotkey`),
-  CONSTRAINT `qasamples_ibfk_1` FOREIGN KEY (`prodspeckey`) REFERENCES `prodspecs` (`keyval`)
+  KEY `prodspeckey` (`prodspeckey`,`lotkey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

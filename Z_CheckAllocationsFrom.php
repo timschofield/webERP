@@ -11,14 +11,14 @@ $SQL = "SELECT debtortrans.type,
 		debtortrans.transno,
 		debtortrans.ovamount,
 		debtortrans.alloc,
-		currencies.decimalplaces AS currdecimalplaces,
-		SUM(custallocns.amt) AS totallocfrom
+		currencies.decimalplaces as currdecimalplaces,
+		SUM(custallocns.amt) as totallocfrom
 	FROM debtortrans INNER JOIN custallocns
-	ON debtortrans.id=custallocns.transid_allocfrom
+	ON debtortrans.id = custallocns.transid_allocfrom
 	INNER JOIN debtorsmaster ON
-	debtortrans.debtorno=debtorsmaster.debtorno
+	debtortrans.debtorno = debtorsmaster.debtorno
 	INNER JOIN currencies ON
-	debtorsmaster.currcode=currencies.currabrev
+	debtorsmaster.currcode = currencies.currabrev
 	GROUP BY debtortrans.type,
 		debtortrans.transno,
 		debtortrans.ovamount,
@@ -39,25 +39,25 @@ if (DB_num_rows($Result)>0){
 			</tr>';
 
 	$RowCounter =0;
-	while ($MyRow=DB_fetch_array($Result)){
+	while ($MyRow = DB_fetch_array($Result)){
 
 
 		echo '<tr>
 				<td>', $MyRow['type'], '</td>
-				<td>', $MyRow['transno'], '<td class="number">', locale_number_format($MyRow['ovamount'],$MyRow['currdecimalplaces']), '</td>
-				<td class="number">', locale_number_format($MyRow['alloc'],$MyRow['currdecimalplaces']), '</td>
-				<td class="number">', locale_number_format($MyRow['totallocfrom'],$MyRow['currdecimalplaces']), '</td>
+				<td>', $MyRow['transno'], '<td class = "number">', locale_number_format($MyRow['ovamount'],$MyRow['currdecimalplaces']), '</td>
+				<td class = "number">', locale_number_format($MyRow['alloc'],$MyRow['currdecimalplaces']), '</td>
+				<td class = "number">', locale_number_format($MyRow['totallocfrom'],$MyRow['currdecimalplaces']), '</td>
 			</tr>';
 
 		$RowCounter++;
-		if ($RowCounter==20){
-			echo '<tr><td>' . __('Type') . '</td>
+		if ($RowCounter == 20) {
+	echo '<tr><td>' . __('Type') . '</td>
 				<td>' . __('Trans No') . '</td>
 				<td>' . __('Ov Amt') . '</td>
 				<td>' . __('Allocated') . '</td>
 				<td>' . __('Tot Allcns') . '</td></tr>';
-			$RowCounter=0;
-		}
+			$RowCounter = 0;
+}
 	}
 	echo '</table>';
 } else {

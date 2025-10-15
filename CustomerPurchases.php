@@ -10,9 +10,9 @@ $ViewTopic = 'ARInquiries';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'CustomerPurchases';// Anchor's id in the manual's html document.*/
 include('includes/header.php');
 
-if(isset($_GET['DebtorNo'])) {
+if (isset($_GET['DebtorNo'])) {
 	$DebtorNo = $_GET['DebtorNo'];// Set DebtorNo from $_GET['DebtorNo'].
-} elseif(isset($_POST['DebtorNo'])) {
+} elseif (isset($_POST['DebtorNo'])) {
 	$DebtorNo = $_POST['DebtorNo'];// Set DebtorNo from $_POST['DebtorNo'].
 } else {
 	prnMsg(__('This script must be called with a customer code.'), 'info');
@@ -24,7 +24,7 @@ $SQL = "SELECT debtorsmaster.name,
 				custbranch.brname
 		FROM debtorsmaster
 		INNER JOIN custbranch
-			ON debtorsmaster.debtorno=custbranch.debtorno
+			ON debtorsmaster.debtorno = custbranch.debtorno
 		WHERE debtorsmaster.debtorno = '" . $DebtorNo . "'";
 
 $ErrMsg = __('The customer details could not be retrieved by the SQL because');
@@ -51,19 +51,19 @@ $SQL = "SELECT stockmoves.stockid,
 			narrative
 		FROM stockmoves
 		INNER JOIN stockmaster
-			ON stockmaster.stockid=stockmoves.stockid
+			ON stockmaster.stockid = stockmoves.stockid
 		INNER JOIN systypes
-			ON stockmoves.type=systypes.typeid
+			ON stockmoves.type = systypes.typeid
 		INNER JOIN locations
-			ON stockmoves.loccode=locations.loccode
-		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
+			ON stockmoves.loccode = locations.loccode
+		INNER JOIN locationusers ON locationusers.loccode = locations.loccode and locationusers.userid = '" .  $_SESSION['UserID'] . "' and locationusers.canview = 1";
 
-$SQLWhere=" WHERE stockmoves.debtorno='" . $DebtorNo . "'";
+$SQLWhere = " WHERE stockmoves.debtorno = '" . $DebtorNo . "'";
 
 if ($_SESSION['SalesmanLogin'] != '') {
 	$SQL .= " INNER JOIN custbranch
-				ON stockmoves.branchcode=custbranch.branchcode";
-	$SQLWhere .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
+				ON stockmoves.branchcode = custbranch.branchcode";
+	$SQLWhere .= " and custbranch.salesman = '" . $_SESSION['SalesmanLogin'] . "'";
 }
 
 $SQL .= $SQLWhere . " ORDER BY trandate DESC";

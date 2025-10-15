@@ -30,7 +30,7 @@ $AuditSQL = "INSERT INTO auditscripts (executiondate,
 					secondsrunning,
 					userid,
 					scripttitle)
-			VALUES('" . Date('Y-m-d H:i:s') . "',
+			VALUES('" . date('Y-m-d H:i:s') . "',
 				'" . $runningtime . "',
 				'" . trim($_SESSION['UserID']) . "',
 				'" . DB_escape_string($ScriptTile) . "')";

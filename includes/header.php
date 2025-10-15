@@ -339,9 +339,9 @@ if (isset($_SESSION['AllowedPageSecurityTokens']) && is_array($_SESSION['Allowed
 		echo '<option value="', $RootPath, '/SelectSupplier.php">🏢 ', __('Suppliers'), '</option>';
 	}
 	
-	echo '<option value="https://ptadu.com/wiki/index.php">🌐 ', __('Intranet'), '</option>
-			<option value="https://kapal-laut.com">🛒 ', __('Online Shop'), '</option>
-			<option value="', $RootPath, '/Logout.php" onclick="return confirm(\'', __('Are you sure you wish to logout?'), '\');">🚪 ', __('Logout'), '</option>
+	echo '<option value="https://ptadu.com/wiki/index.php">🌐 ', __('Intranet'), '</option>';
+//	echo '<option value="https://kapal-laut.com">🛒 ', __('Online Shop'), '</option>';
+	echo '<option value="', $RootPath, '/Logout.php" onclick="return confirm(\'', __('Are you sure you wish to logout?'), '\');">🚪 ', __('Logout'), '</option>
 		</select>
 	</div>';
 
@@ -387,12 +387,13 @@ if (isset($_SESSION['AllowedPageSecurityTokens']) && is_array($_SESSION['Allowed
 	</div>';
 
 	// 4th - Online Shop
+	/* KL RICARD No show the Online Shop link as this has been moved to KL Intranet
 	echo '<div id="ActionIcon">
 		<a class="FontSize" data-title="', __('Online Shop'), '" href="https://kapal-laut.com">
 			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" alt="', __('Online Shop'), '" />', __('Online Shop'), '
 		</a>
 	</div>';
-
+	*/
 	echo '</div>'; // Close desktop container
 
 	/* KL RICARD No show the Manual Link

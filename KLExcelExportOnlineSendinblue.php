@@ -29,11 +29,11 @@ if (!isset($_POST['FromDate'])){
 		$MyRow = DB_fetch_array($Result);
 		$_POST['FromDate'] = ConvertSQLDate($MyRow['orddate']);
 	}else{
-		$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat']);
+		$_POST['FromDate'] = date($_SESSION['DefaultDateFormat']);
 	}
 }
 if (!isset($_POST['ToDate'])){
-	$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
+	$_POST['ToDate'] = date($_SESSION['DefaultDateFormat']);
 }
 
 if (isset($_POST['submit'])) {
@@ -179,10 +179,10 @@ function submit($CountriesForRetail, $TypeCustomers, $MarkExported, $FromDate, $
 			// Redirect output to a client's web browser
 			if ($_POST['Format'] == 'xlsx') {
 				header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-				$File = 'KL-webERPCustomers-' . Date('Y-m-d'). '.xlsx';
+				$File = 'KL-webERPCustomers-' . date('Y-m-d'). '.xlsx';
 			} else if ($_POST['Format'] == 'ods') {
 				header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
-				$File = 'KL-webERPCustomers-' . Date('Y-m-d'). '.ods';
+				$File = 'KL-webERPCustomers-' . date('Y-m-d'). '.ods';
 			}
 			header('Content-Disposition: attachment;filename="' . $File . '"');
 			header('Cache-Control: max-age=0');

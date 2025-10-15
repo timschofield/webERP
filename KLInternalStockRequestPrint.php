@@ -187,7 +187,7 @@ function GenerateReport($LocationForm) {
 
 			// Set Headers for ODS download
 			header('Content-Type: application/vnd.oasis.opendocument.spreadsheet'); // Correct mime type for ODS
-			$FileName = 'InternalStockRequest-' . Date('Y-m-d') . '.ods';
+			$FileName = 'InternalStockRequest-' . date('Y-m-d') . '.ods';
 			header('Content-Disposition: attachment;filename="' . $FileName . '"');
 			header('Cache-Control: max-age=0');
 

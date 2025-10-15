@@ -18,7 +18,7 @@ if (!isset($_POST['FromDate'])){
 	$_POST['FromDate'] = DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-365);
 }
 if (!isset($_POST['ToDate'])){
-	$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
+	$_POST['ToDate'] = date($_SESSION['DefaultDateFormat']);
 }
 
 if (!isset($_POST['KPICode'])){

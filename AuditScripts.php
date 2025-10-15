@@ -11,10 +11,10 @@ echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/
 	. __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (!isset($_POST['FromDate'])) {
-	$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat']);
+	$_POST['FromDate'] = date($_SESSION['DefaultDateFormat']);
 }
 if (!isset($_POST['ToDate'])) {
-	$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
+	$_POST['ToDate'] = date($_SESSION['DefaultDateFormat']);
 }
 
 if (isset($_POST['ContainingText'])) {

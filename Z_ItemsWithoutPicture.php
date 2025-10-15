@@ -12,8 +12,8 @@ $SQL = "SELECT stockmaster.stockid,
 			stockcategory.categorydescription
 		FROM stockmaster, stockcategory
 		WHERE stockmaster.categoryid = stockcategory.categoryid
-			AND stockmaster.discontinued = 0
-			AND stockcategory.stocktype != 'D'
+			and stockmaster.discontinued = 0
+			and stockcategory.stocktype != 'D'
 		ORDER BY stockcategory.categorydescription, stockmaster.stockid";
 $Result = DB_query($SQL);
 $PrintHeader = true;
@@ -27,9 +27,9 @@ if (DB_num_rows($Result) != 0){
 	while ($MyRow = DB_fetch_array($Result)) {
         $Glob = (glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
 		$ImageFile = reset($Glob);
-		if(!file_exists($ImageFile) ) {
-			if($PrintHeader){
-				$TableHeader = '<tr>
+		if (!file_exists($ImageFile) ) {
+			if ($PrintHeader) {
+	$TableHeader = '<tr>
 								<th>' . '#' . '</th>
 								<th>' . __('Category') . '</th>
 								<th>' . __('Item Code') . '</th>
@@ -37,7 +37,7 @@ if (DB_num_rows($Result) != 0){
 								</tr>';
 				echo $TableHeader;
 				$PrintHeader = false;
-			}
+}
 
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '" target="_blank">' . $MyRow['stockid'] . '</a>';
 			echo '<tr class="striped_row">

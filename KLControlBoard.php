@@ -249,10 +249,6 @@ if ($ProcessSection01){
 		TimeNeededForExecution("ItemsInWrongShops", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		ItemsInWrongShops("SHOPOU", $RootPath);
-		TimeNeededForExecution("ItemsInWrongShops", $StartTime, $KL_SystemAdmin);
-		$NumberOfTestExecuted++;
-		$StartTime = microtime(true);
 		ItemsInWrongShops("DEFECTIVE", $RootPath);
 		TimeNeededForExecution("ItemsInWrongShops", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
@@ -369,7 +365,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
 		PettyCashBalanceControl("IDR", "('111111209',
-												'111111309')", 1, $PeriodNow);
+										'111111309')", 1, $PeriodNow);
 		TimeNeededForExecution("PettyCashBalanceControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
@@ -382,7 +378,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
 		PettyCashBalanceControl("THB", "('111205030',
-												'111204030AD')", 1, $PeriodNow);
+										'111204030AD')", 1, $PeriodNow);
 		TimeNeededForExecution("PettyCashBalanceControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
@@ -478,7 +474,10 @@ if ($ProcessSection01){
 									'111259050AD')", "Total Banks PT ADU", 2000000000, 5000000000, $PeriodNow);
 		TimeNeededForExecution("BalanceListAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+	}
 
+	if ($KL_SystemAdmin
+		OR $KL_AdministrationLeader){
 		$StartTime = microtime(true);
 		BalanceListAccountControl("('111121121AD', 
 									'111121122AD', 
@@ -492,7 +491,9 @@ if ($ProcessSection01){
 									'111259050AD')", "Total PayPal PT ADU", -1, 75000000, $PeriodNow);
 		TimeNeededForExecution("BalanceListAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+	}
 
+	if ($KL_SystemAdmin){
 		$StartTime = microtime(true);
 		BalanceListAccountControl("('111121100SM',
 									'111121105SM',
@@ -652,11 +653,6 @@ if ($ProcessSection01){
 		ItemsInSetup("NeedPrice", "", $RootPath);
 		TimeNeededForExecution("ItemsInSetup", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
-		}
-
-	if ($KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector
-		OR $KL_PurchasingTeam){
 		$StartTime = microtime(true);
 		ItemsInSetup("WithReorderLevel", "SETKLA", $RootPath);
 		TimeNeededForExecution("ItemsInSetup", $StartTime, $KL_SystemAdmin);
@@ -669,6 +665,11 @@ if ($ProcessSection01){
 		ItemsInSetup("WithReorderLevel", "SETGEA", $RootPath);
 		TimeNeededForExecution("ItemsInSetup", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+	}
+	
+	if ($KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector
+		OR $KL_PurchasingTeam){
 		$StartTime = microtime(true);
 		ObsoleteComponentsInActiveBOM($RootPath);
 		TimeNeededForExecution("ObsoleteComponentsInActiveBOM", $StartTime, $KL_SystemAdmin);

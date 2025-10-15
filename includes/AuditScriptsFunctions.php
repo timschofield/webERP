@@ -28,7 +28,7 @@ function RecordRunningTime($Title, $UserName){
                         secondsrunning,
                         userid,
                         scripttitle)
-                VALUES('" . Date('Y-m-d H:i:s') . "',
+                VALUES('" . date('Y-m-d H:i:s') . "',
                     '" . $RunningTime . "',
                     '" . $UserName . "',
                     '" . DB_escape_string($TitleScriptRunning) . "')";

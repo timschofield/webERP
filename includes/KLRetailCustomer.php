@@ -7,8 +7,8 @@
 function RetailCustomerAnalysisBySex($NumDays, $ListShops){
 	if ($NumDays == -1){
 		// today only
-		$Yesterday  = Date('Y-m-d');
-		$StartDate  = Date('Y-m-d');
+		$Yesterday  = date('Y-m-d');
+		$StartDate  = date('Y-m-d');
 		$TableTitleText = __('Retail Customers By Sex during today ');
 	}else{
 		$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
@@ -106,8 +106,8 @@ function RetailCustomerAnalysisBySex($NumDays, $ListShops){
 function RetailCustomerAnalysisByCountry($NumDays, $TypeOfShops, $ShopArea, $MinimCustomersToShow, $CountriesForRetail){
 	if ($NumDays == -1){
 		// today only
-		$Yesterday  = Date('Y-m-d');
-		$StartDate  = Date('Y-m-d');
+		$Yesterday  = date('Y-m-d');
+		$StartDate  = date('Y-m-d');
 	}else{
 		$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 		$StartDate  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
@@ -314,8 +314,8 @@ function EmailHarvested($NumDays, $TypeOfShops){
 function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops){
 	if ($NumDays == -1){
 		// today only
-		$Yesterday  = Date('Y-m-d');
-		$StartDate  = Date('Y-m-d');
+		$Yesterday  = date('Y-m-d');
+		$StartDate  = date('Y-m-d');
 	}else{
 		$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 		$StartDate  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));

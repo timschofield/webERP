@@ -15,7 +15,7 @@ $SQL = "SELECT periodno ,
 $ErrMsg =  __('No periods were returned by the SQL because');
 $PeriodsResult = DB_query($SQL, $ErrMsg);
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '
+echo '<p class = "page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '
 		. $Title . '</p>';
 
 /*show a table of the orders returned by the SQL */
@@ -29,21 +29,21 @@ $TableHeader = '<tr><th>' . __('Period Number') . '</th>
 
 echo '<table><tr>';
 
-for ($i=0;$i<3;$i++) {
-	echo '<td valign="top">';
-	echo '<table cellpadding="2" class="selection">';
+for ($i = 0; $i<3; $i++) {
+	echo '<td valign = "top">';
+	echo '<table cellpadding = "2" class = "selection">';
 	echo $TableHeader;
-	$j=0;
+	$j = 0;
 
-	while ($MyRow=DB_fetch_array($PeriodsResult)){
-		echo '<tr class="striped_row">
+	while ($MyRow = DB_fetch_array($PeriodsResult)){
+		echo '<tr class = "striped_row">
 				<td>' . $MyRow['periodno'] . '</td>
 			  <td>' . ConvertSQLDate($MyRow['lastdate_in_period']) . '</td>
 			</tr>';
 		$j++;
-		if ($j==$PeriodsInTable){
-			break;
-		}
+		if ($j == $PeriodsInTable) {
+	break;
+}
 	}
 	echo '</table>';
 	echo '</td>';

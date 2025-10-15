@@ -39,10 +39,10 @@ if (isset($TransferItem)){ /*we are in a bulk transfer */
 }
 
 //Make sure this item is really controlled
-if ($LineItem->Controlled != 1 ){
+if ($LineItem->Controlled != 1 ) {
 	if (isset($TransferItem)){
 		echo '<div class="centre"><a href="' . $RootPath . '/StockLocTransferReceive.php>' . __('Receive A Stock Transfer') . '</a></div>';
-	} else {
+} else {
 		echo '<div class="centre"><a href="' . $RootPath . '/StockTransfers.php?NewTransfer=Yes">' . __('Enter A Stock Transfer') . '</a></div>';
 	}
 	prnMsg(__('Notice') . ' - ' . __('The transferred item must be defined as controlled to require input of the batch numbers or serial numbers being transferred'),'error');
@@ -64,19 +64,19 @@ if (isset($TransferItem)){
 }
 
 echo '<br />
-	<font size="2"><b>' .  __('Transfer of controlled item'). ' ' . $LineItem->StockID  . ' - ' . $LineItem->ItemDescription . '</b></font>
+	<font size = "2"><b>' .  __('Transfer of controlled item'). ' ' . $LineItem->StockID  . ' - ' . $LineItem->ItemDescription . '</b></font>
 	</div>';
 
 /** vars needed by InputSerialItem : **/
 $LocationOut = $_SESSION['Transfer']->StockLocationFrom;
 $ItemMustExist = true;
 $StockID = $LineItem->StockID;
-$InOutModifier=1;
+$InOutModifier = 1;
 $ShowExisting = true;
 if (isset($TransferItem)){
-	$LineNo=$TransferItem;
+	$LineNo = $TransferItem;
 } else {
-	$LineNo=0;
+	$LineNo = 0;
 }
 
 include('includes/InputSerialItems.php');

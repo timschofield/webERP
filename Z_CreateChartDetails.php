@@ -21,26 +21,26 @@ $CreateTo = $LastPeriodRow[0];
 
 /* First off see if there are any chartdetails missing create recordset of */
 
-$SQL = "SELECT chartmaster.accountcode, MIN(periods.periodno) AS startperiod
+$SQL = "SELECT chartmaster.accountcode, MIN(periods.periodno) as startperiod
 		FROM chartmaster CROSS JOIN periods
 			LEFT JOIN chartdetails ON chartmaster.accountcode = chartdetails.accountcode
-				AND periods.periodno = chartdetails.period
-		WHERE (periods.periodno BETWEEN '"  . $CreateFrom . "' AND '" . $CreateTo . "')
-		AND chartdetails.accountcode IS NULL
+				and periods.periodno = chartdetails.period
+		WHERE (periods.periodno BETWEEN '"  . $CreateFrom . "' and '" . $CreateTo . "')
+		and chartdetails.accountcode IS null
 		GROUP BY chartmaster.accountcode";
 
 $ChartDetailsNotSetUpResult = DB_query($SQL,__('Could not test to see that all chart detail records properly initiated'));
 
-if(DB_num_rows($ChartDetailsNotSetUpResult)>0){
+if (DB_num_rows($ChartDetailsNotSetUpResult)>0){
 
 	/*Now insert the chartdetails records that do not already exist */
 	$SQL = "INSERT INTO chartdetails (accountcode, period)
 			SELECT chartmaster.accountcode, periods.periodno
 		FROM chartmaster CROSS JOIN periods
 			LEFT JOIN chartdetails ON chartmaster.accountcode = chartdetails.accountcode
-				AND periods.periodno = chartdetails.period
-		WHERE (periods.periodno BETWEEN '"  . $CreateFrom . "' AND '" . $CreateTo . "')
-		AND chartdetails.accountcode IS NULL";
+				and periods.periodno = chartdetails.period
+		WHERE (periods.periodno BETWEEN '"  . $CreateFrom . "' and '" . $CreateTo . "')
+		and chartdetails.accountcode IS null";
 
 	$ErrMsg = __('Inserting new chart details records required failed because');
 	$InsChartDetailsRecords = DB_query($SQL, $ErrMsg);
@@ -57,26 +57,26 @@ if(DB_num_rows($ChartDetailsNotSetUpResult)>0){
 				period
 			FROM chartdetails
 			WHERE period >='" . ($AccountRow['period']-1) . "'
-			AND accountcode='" . $AccountRow['accountcode'] . "'
+			and accountcode = '" . $AccountRow['accountcode'] . "'
 			ORDER BY period";
 		$ChartDetails = DB_query($SQL);
 
 		DB_Txn_Begin();
 		$BFwd = '';
 		$BFwdBudget ='';
-		$CFwd=0;
-		$CFwdBudget=0;
+		$CFwd = 0;
+		$CFwdBudget = 0;
 		while ($MyRow = DB_fetch_array($ChartDetails)){
-			if ($BFwd =''){
-				$BFwd = $MyRow['bfwd'];
+			if ($BFwd ='') {
+	$BFwd = $MyRow['bfwd'];
 				$BFwdBudget = $MyRow['bfwdbudget'];
-			} else {
+} else {
 				$BFwd +=$MyRow['actual'];
 				$BFwdBudget += $MyRow['budget'];
 				$SQL = "UPDATE chartdetails SET bfwd ='" . $BFwd . "',
 							bfwdbudget ='" . $BFwdBudget . "'
 					WHERE accountcode = '" . $AccountRow['accountcode'] . "'
-					AND period ='" . ($MyRow['period']+1) . "'";
+					and period ='" . ($MyRow['period']+1) . "'";
 
 				$UpdChartDetails = DB_query($SQL, '', '', false, false);
 			}

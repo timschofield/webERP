@@ -661,7 +661,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 						'" . DB_escape_string($_SESSION['Items' . $identifier]->CustRef) . "',
 						'" . stripcslashes($_SESSION['Items' . $identifier]->Comments) . "',
 						CURRENT_DATE,
-						'" . Date("H:i:s") . "',
+						'" . date("H:i:s") . "',
 						'" . $_SESSION['Items' . $identifier]->DefaultSalesType . "',
 						'" . $_SESSION['Items' . $identifier]->ShipVia . "',
 						'" . "" . "',

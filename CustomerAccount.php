@@ -30,11 +30,11 @@ if ($_SESSION['SalesmanLogin'] != '') {
 	$SQL = "SELECT salesman FROM custbranch WHERE debtorno = '" . $CustomerID . "'";
 	$ErrMsg = __('Failed to retrieve sales data');
 	$Result = DB_query($SQL, $ErrMsg);
-	if(DB_num_rows($Result)>0) {
-		while($MyRow = DB_fetch_array($Result)) {
+	if (DB_num_rows($Result)>0) {
+		while ($MyRow = DB_fetch_array($Result)) {
 			if ($_SESSION['SalesmanLogin'] == $MyRow['salesman']) {
 				$ViewAllowed = true;
-			}
+}
 		}
 	} else {
 		prnMsg(__('There is no salesman data set for this customer'),'error');
@@ -42,15 +42,15 @@ if ($_SESSION['SalesmanLogin'] != '') {
 		exit();
 	}
 	if (!$ViewAllowed) {
-		prnMsg(__('You have no authority to review this customer account'),'error');
+	prnMsg(__('You have no authority to review this customer account'),'error');
 		include('includes/footer.php');
 		exit();
-	}
+}
 }
 
 
 if (!isset($_POST['TransAfterDate'])) {
-	$_POST['TransAfterDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m') - $_SESSION['NumberOfMonthMustBeShown'], Date('d'), Date('Y')));
+	$_POST['TransAfterDate'] = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, date('m') - $_SESSION['NumberOfMonthMustBeShown'], date('d'), date('Y')));
 }
 
 $Transactions = array();
@@ -67,30 +67,30 @@ if ($_SESSION['Show_Settled_LastMonth']==1) {
 						debtortrans.order_,
 						debtortrans.transno,
 						debtortrans.trandate,
-						debtortrans.ovamount+debtortrans.ovdiscount+debtortrans.ovfreight+debtortrans.ovgst AS totalamount,
+						debtortrans.ovamount+debtortrans.ovdiscount+debtortrans.ovfreight+debtortrans.ovgst as totalamount,
 						debtortrans.alloc,
-						debtortrans.balance AS balance,
+						debtortrans.balance as balance,
 						debtortrans.settled
 				FROM debtortrans INNER JOIN systypes
-					ON debtortrans.type=systypes.typeid
+					ON debtortrans.type = systypes.typeid
 				INNER JOIN custallocns
-					ON (debtortrans.id=custallocns.transid_allocfrom
-						OR debtortrans.id=custallocns.transid_allocto)
+					ON (debtortrans.id = custallocns.transid_allocfrom
+						or debtortrans.id = custallocns.transid_allocto)
 				WHERE custallocns.datealloc >='" . FormatDateForSQL($_POST['TransAfterDate']) . "'
-				AND debtortrans.debtorno='" . $CustomerID . "'
-				AND debtortrans.settled=1
+				and debtortrans.debtorno = '" . $CustomerID . "'
+				and debtortrans.settled = 1
 				ORDER BY debtortrans.id";
 
-	$SetldTrans=DB_query($SQL, $ErrMsg);
+	$SetldTrans = DB_query($SQL, $ErrMsg);
 	$NumberOfRecordsReturned = DB_num_rows($SetldTrans);
-	while ($MyRow=DB_fetch_array($SetldTrans)) {
+	while ($MyRow = DB_fetch_array($SetldTrans)) {
 		$Transactions[] =  $MyRow;
-	}
+}
 } else {
-	$NumberOfRecordsReturned=0;
+	$NumberOfRecordsReturned = 0;
 }
 
-/*now get all the outstanding transaction ie Settled=0 */
+/*now get all the outstanding transaction ie Settled = 0 */
 $ErrMsg =  __('There was a problem retrieving the outstanding transactions for') . ' ' .	$CustomerID . ' '. __('from the database') . '.';
 $SQL = "SELECT debtortrans.id,
 			debtortrans.type,
@@ -106,18 +106,18 @@ $SQL = "SELECT debtortrans.id,
 			debtortrans.balance as balance,
 			debtortrans.settled
 		FROM debtortrans INNER JOIN systypes
-			ON debtortrans.type=systypes.typeid
-		WHERE debtortrans.debtorno='" . $CustomerID . "'
-		AND debtortrans.settled=0";
+			ON debtortrans.type = systypes.typeid
+		WHERE debtortrans.debtorno = '" . $CustomerID . "'
+		and debtortrans.settled = 0";
 
 if ($_SESSION['SalesmanLogin'] != '') {
-	$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+	$SQL .= " and debtortrans.salesperson = '" . $_SESSION['SalesmanLogin'] . "'";
 }
 
 $SQL .= " ORDER BY debtortrans.id";
 
-$OstdgTrans=DB_query($SQL, $ErrMsg);
-while ($MyRow=DB_fetch_array($OstdgTrans)) {
+$OstdgTrans = DB_query($SQL, $ErrMsg);
+while ($MyRow = DB_fetch_array($OstdgTrans)) {
 	$Transactions[] =  $MyRow;
 }
 
@@ -136,41 +136,41 @@ $SQL = "SELECT debtorsmaster.name,
 			debtorsmaster.creditlimit,
 			holdreasons.dissallowinvoices,
 			holdreasons.reasondescription,
-			SUM(debtortrans.balance) AS balance,
-			SUM(CASE WHEN paymentterms.daysbeforedue > 0 THEN
-				CASE WHEN (TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate)) >=
+			SUM(debtortrans.balance) as balance,
+			SUM(case WHEN paymentterms.daysbeforedue > 0 THEN
+				case WHEN (TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate)) >=
 				paymentterms.daysbeforedue
 				THEN debtortrans.balance
-				ELSE 0 END
-			ELSE
-				CASE WHEN TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . interval('1', 'MONTH') . "), " . interval('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))','DAY') . ")) >= 0
+				else 0 END
+			else
+				case WHEN TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . interval('1', 'MONTH') . "), " . interval('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))','DAY') . ")) >= 0
 				THEN debtortrans.balance
-				ELSE 0 END
-			END) AS due,
-			Sum(CASE WHEN paymentterms.daysbeforedue > 0 THEN
-				CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue
-				AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >=
+				else 0 END
+			END) as due,
+			Sum(case WHEN paymentterms.daysbeforedue > 0 THEN
+				case WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue
+				and TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >=
 				(paymentterms.daysbeforedue + " . $_SESSION['PastDueDays1'] . ")
 				THEN debtortrans.balance
-				ELSE 0 END
-			ELSE
-				CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . interval('1','MONTH') . "), " . interval('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))','DAY') .")) >= " . $_SESSION['PastDueDays1'] . ")
+				else 0 END
+			else
+				case WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . interval('1','MONTH') . "), " . interval('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))','DAY') .")) >= " . $_SESSION['PastDueDays1'] . ")
 				THEN debtortrans.balance
-				ELSE 0 END
-			END) AS overdue1,
-			Sum(CASE WHEN paymentterms.daysbeforedue > 0 THEN
-				CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue
-				AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue +
+				else 0 END
+			END) as overdue1,
+			Sum(case WHEN paymentterms.daysbeforedue > 0 THEN
+				case WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue
+				and TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue +
 				" . $_SESSION['PastDueDays2'] . ")
 				THEN debtortrans.balance
-				ELSE 0 END
-			ELSE
-				CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . interval('1','MONTH') . "), " .
+				else 0 END
+			else
+				case WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . interval('1','MONTH') . "), " .
 				interval('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))','DAY') . "))
 				>= " . $_SESSION['PastDueDays2'] . ")
 				THEN debtortrans.balance
-				ELSE 0 END
-			END) AS overdue2
+				else 0 END
+			END) as overdue2
 		FROM debtorsmaster INNER JOIN paymentterms
 			ON debtorsmaster.paymentterms = paymentterms.termsindicator
 		INNER JOIN currencies
@@ -183,7 +183,7 @@ $SQL = "SELECT debtorsmaster.name,
 			debtorsmaster.debtorno = '" . $CustomerID . "'";
 
 if ($_SESSION['SalesmanLogin'] != '') {
-	$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+	$SQL .= " and debtortrans.salesperson = '" . $_SESSION['SalesmanLogin'] . "'";
 }
 
 $SQL .= " GROUP BY
@@ -212,17 +212,19 @@ echo '<div class="noPrint centre">
 		<a href="', $RootPath, '/SelectCustomer.php">', __('Back to Customer Screen'), '</a>
 	</div>';
 
-echo '<table width="100%">
-		<tr><th colspan="2">', __('Customer Statement For'), ': ', stripslashes($CustomerID), ' - ', $CustomerRecord['name'], '</th></tr>
-		<tr><td colspan="2">', $CustomerRecord['address1'], '</td></tr>';
-if($CustomerRecord['address2']!='') {// If not empty, output this line.
-	echo '<tr><td colspan="2">', $CustomerRecord['address2'], '</td></tr>';
+echo '<table width = "100%">
+		<tr><th colspan = "2">', __('Customer Statement For'), ': ', stripslashes($CustomerID), ' - ', $CustomerRecord['name'], '</th></tr>
+		<tr><td colspan = "2">', $CustomerRecord['address1'], '</td></tr>';
+if ($CustomerRecord['address2']!='') {
+	// If not empty, output this line.
+	echo '<tr><td colspan = "2">', $CustomerRecord['address2'], '</td></tr>';
 }
-if($CustomerRecord['address3']!='') {// If not empty, output this line.
-	echo '<tr><td colspan="2">', $CustomerRecord['address3'], '</td></tr>';
+if ($CustomerRecord['address3']!='') {
+	// If not empty, output this line.
+	echo '<tr><td colspan = "2">', $CustomerRecord['address3'], '</td></tr>';
 }
-echo '	<tr><td colspan="2">', $CustomerRecord['address4'], '</td></tr>
-		<tr><td colspan="2">', $CustomerRecord['address5'], ' ', $CustomerRecord['address6'], '</td></tr>
+echo '	<tr><td colspan = "2">', $CustomerRecord['address4'], '</td></tr>
+		<tr><td colspan = "2">', $CustomerRecord['address5'], ' ', $CustomerRecord['address6'], '</td></tr>
 		<tr><th>', __('All amounts stated in'), ':</th><td>', $CustomerRecord['currency'], '</td></tr>
 		<tr><th>', __('Terms'), ':</th><td>', $CustomerRecord['terms'], '</th></tr>
 		<tr><th>', __('Credit Limit'), ':</th><td>', locale_number_format($CustomerRecord['creditlimit'], 0), '</td></tr>
@@ -230,14 +232,14 @@ echo '	<tr><td colspan="2">', $CustomerRecord['address4'], '</td></tr>
 	</table>';
 
 if ($CustomerRecord['dissallowinvoices'] != 0) {
-	echo '<br /><b><font color="red" size="4">', __('ACCOUNT ON HOLD'), '</font></b><br />';
+	echo '<br /><b><font color = "red" size = "4">', __('ACCOUNT ON HOLD'), '</font></b><br />';
 }
-echo '<form onSubmit="return VerifyForm(this);" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post" class="centre noPrint">';
-echo '<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />';
+echo '<form onSubmit = "return VerifyForm(this);" action = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method = "post" class="centre noPrint">';
+echo '<input name="FormID" type = "hidden" value = "', $_SESSION['FormID'], '" />';
 
 echo __('Show all transactions after'), ':
-		<input type="date" maxlength="10" name="TransAfterDate" required="required" size="11" tabindex="1" value="', FormatDateForSQL($_POST['TransAfterDate']), '" />',
-		'<input name="Refresh Inquiry" tabindex="3" type="submit" value="', __('Refresh Inquiry'), '" />
+		<input type = "date" maxlength = "10" name="TransAfterDate" required = "required" size = "11" tabindex="1" value = "', FormatDateForSQL($_POST['TransAfterDate']), '" />',
+		'<input name="Refresh Inquiry" tabindex="3" type = "submit" value = "', __('Refresh Inquiry'), '" />
 	</form>';
 
 /* Show a table of the invoices returned by the SQL. */
@@ -256,29 +258,31 @@ echo '<br /><table class="selection">
 			<th>', __('Credits'), '</th>
 			<th>', __('Allocated'), '</th>
 			<th>', __('Balance'), '</th>
-			<th class="noPrint" colspan="4">&nbsp;</th>
+			<th class="noPrint" colspan = "4">&nbsp;</th>
 		</tr>
 	</thead><tbody>';
 
 $OutstandingOrSettled = '';
-if ($_SESSION['InvoicePortraitFormat'] == 1) { //Invoice/credits in portrait
+if ($_SESSION['InvoicePortraitFormat'] == 1) {
+	//Invoice/credits in portrait
 	$Orientation = 'portrait';
 } else { //produce pdfs in landscape
 	$Orientation = 'landscape';
 }
 foreach ($Transactions as $MyRow) {
 
-	if ($MyRow['settled']==1 AND $OutstandingOrSettled=='') {
-		echo '<tr><th colspan="11">', __('TRANSACTIONS SETTLED SINCE'), ' ', $_POST['TransAfterDate'], '</th><th class="noPrint" colspan="4">&nbsp;</th></tr>';
-		$OutstandingOrSettled='Settled';
-	} elseif (($OutstandingOrSettled=='Settled' OR $OutstandingOrSettled=='') AND $MyRow['settled']==0) {
-		echo '<tr><th colspan="11">', __('OUTSTANDING TRANSACTIONS'), ' ', $_POST['TransAfterDate'], '</th><th class="noPrint" colspan="4">&nbsp;</th></tr>';
-		$OutstandingOrSettled='Outstanding';
+	if ($MyRow['settled']==1 and $OutstandingOrSettled == '') {
+	echo '<tr><th colspan = "11">', __('TRANSACTIONS SETTLED SINCE'), ' ', $_POST['TransAfterDate'], '</th><th class="noPrint" colspan = "4">&nbsp;</th></tr>';
+		$OutstandingOrSettled = 'Settled';
+} elseif (($OutstandingOrSettled == 'Settled' or $OutstandingOrSettled == '') and $MyRow['settled']==0) {
+		echo '<tr><th colspan = "11">', __('OUTSTANDING TRANSACTIONS'), ' ', $_POST['TransAfterDate'], '</th><th class="noPrint" colspan = "4">&nbsp;</th></tr>';
+		$OutstandingOrSettled = 'Outstanding';
 	}
 
 	$FormatedTranDate = ConvertSQLDate($MyRow['trandate']);
 
-	if ($MyRow['type']==10) { //its an invoice
+	if ($MyRow['type']==10) {
+	//its an invoice
 		echo '<tr class="striped_row">
 			<td>', __($MyRow['typename']), '</td>
 			<td class="number">', $MyRow['transno'], '</td>
@@ -292,25 +296,24 @@ foreach ($Transactions as $MyRow) {
 			<td class="number">', locale_number_format($MyRow['alloc'], $CustomerRecord['decimalplaces']), '</td>
 			<td class="number">', locale_number_format($MyRow['balance'], $CustomerRecord['decimalplaces']), '</td>
 			<td class="noPrint">
-				<a href="', $RootPath, '/PrintCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice&View=Yes" title="', __('Click to preview the invoice'), '" target="_blank">
+				<a href="', $RootPath, '/PrintCustTrans.php?=FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice&View=Yes" title="', __('Click to preview the invoice'), '" target="_blank">
 					<img alt="" src="', $RootPath, '/css/', $Theme, '/images/preview.png" /> ',
 					__('HTML'), '
 				</a>
 			</td>
 			<td class="noPrint">
-				<a href="', $RootPath, '/PrintCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice&amp;PrintPDF=True&orientation=' . $Orientation . '" title="', __('Click for PDF'), '" target="_blank">
+				<a href="', $RootPath, '/PrintCustTrans.php?=FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice&amp;PrintPDF=True&orientation=' . $Orientation . '" title="', __('Click for PDF'), '" target="_blank">
 					<img alt="" src="', $RootPath, '/css/', $Theme, '/images/pdf.png" /> ',
 					__('PDF'), '
 				</a>
 			</td>
 			<td class="noPrint" title="', __('Click to email the invoice'), '">
-				<a href="', $RootPath, '/EmailCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/email.png" />', __('Email'), '</a>
+				<a href="', $RootPath, '/EmailCustTrans.php?=FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/email.png" />', __('Email'), '</a>
 			</td>
 			<td class="noPrint">&nbsp;</td>
 		</tr>';
-
-	} elseif ($MyRow['type'] == 11) {
-		echo '<tr class="striped_row">
+} elseif ($MyRow['type'] == 11) {
+	echo '<tr class="striped_row">
 				<td>', __($MyRow['typename']), '</td>
 				<td class="number">', $MyRow['transno'], '</td>
 				<td class="date">', ConvertSQLDate($MyRow['trandate']), '</td>
@@ -323,21 +326,20 @@ foreach ($Transactions as $MyRow) {
 				<td class="number">', locale_number_format($MyRow['alloc'], $CustomerRecord['decimalplaces']), '</td>
 				<td class="number">', locale_number_format($MyRow['balance'], $CustomerRecord['decimalplaces']), '</td>
 				<td class="noPrint" title="', __('Click to preview the credit note'), '">
-					<a href="', $RootPath, '/PrintCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Credit"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/preview.png" />', __('HTML'), '</a>
+					<a href="', $RootPath, '/PrintCustTrans.php?=FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Credit"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/preview.png" />', __('HTML'), '</a>
 				</td>
 				<td class="noPrint" title="', __('Click for PDF'), '">
-					<a href="', $RootPath, '/', $PrintCustomerTransactionScript, '?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Credit&amp;PrintPDF=True"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/pdf.png" />', __('PDF'), '</a>
+					<a href="', $RootPath, '/', $PrintCustomerTransactionScript, '?=FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Credit&amp;PrintPDF=True"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/pdf.png" />', __('PDF'), '</a>
 				</td>
 				<td class="noPrint" title="', __('Click to email the credit note'), '">
-					<a href="', $RootPath, '/EmailCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Credit"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/email.png" />', __('Email'), '</a>
+					<a href="', $RootPath, '/EmailCustTrans.php?=FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Credit"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/email.png" />', __('Email'), '</a>
 				</td>
 				<td class="noPrint" title="', __('Click to allocate funds'), '">
-					<a href="', $RootPath, '/CustomerAllocations.php?AllocTrans=', $MyRow['id'], '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/allocation.png" />', __('Allocation'), '</a>
+					<a href="', $RootPath, '/CustomerAllocations.php?=AllocTrans=', $MyRow['id'], '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/allocation.png" />', __('Allocation'), '</a>
 				</td>
 			</tr>';
-
-	} elseif ($MyRow['type'] == 12 and $MyRow['totalamount'] < 0) {
-		/* Show transactions where:
+} elseif ($MyRow['type'] == 12 and $MyRow['totalamount'] < 0) {
+	/* Show transactions where:
 		 * - Is receipt
 		 */
 		echo '<tr class="striped_row">
@@ -353,15 +355,14 @@ foreach ($Transactions as $MyRow) {
 				<td class="number">', locale_number_format($MyRow['alloc'], $CustomerRecord['decimalplaces']), '</td>
 				<td class="number">', locale_number_format($MyRow['balance'], $CustomerRecord['decimalplaces']), '</td>
 				<td class="noPrint" title="', __('Click to allocate funds'), '">
-					<a href="', $RootPath, '/CustomerAllocations.php?AllocTrans=', $MyRow['id'], '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/allocation.png" />', __('Allocation'), '</a>
+					<a href="', $RootPath, '/CustomerAllocations.php?=AllocTrans=', $MyRow['id'], '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/allocation.png" />', __('Allocation'), '</a>
 				</td>
 				<td class="noPrint">&nbsp;</td>
 				<td class="noPrint">&nbsp;</td>
 				<td class="noPrint">&nbsp;</td>
 			</tr>';
-
-	} elseif ($MyRow['type'] == 12 and $MyRow['totalamount'] > 0) {
-		/* Show transactions where:
+} elseif ($MyRow['type'] == 12 and $MyRow['totalamount'] > 0) {
+	/* Show transactions where:
 		* - Is a negative receipt
 		* - User cannot view GL transactions
 		*/
@@ -382,13 +383,13 @@ foreach ($Transactions as $MyRow) {
 				<td class="noPrint">&nbsp;</td>
 				<td class="noPrint">&nbsp;</td>
 			</tr>';
-	}
+}
 }
 //end of while loop
 
 echo '</tbody></table>
 	<br />
-	<table class="selection" width="70%">
+	<table class="selection" width = "70%">
 		<tr>
 			<th style="width:20%">', __('Total Balance'), '</th>
 			<th style="width:20%">', __('Current'), '</th>

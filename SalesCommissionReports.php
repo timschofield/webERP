@@ -14,9 +14,9 @@ echo '<p class="page_title_text">
 if (isset($_POST['Submit'])) {
 
 	if ($_POST['Period'] != '') {
-		$_POST['FromPeriod'] = ReportPeriod($_POST['Period'], 'From');
+	$_POST['FromPeriod'] = ReportPeriod($_POST['Period'], 'From');
 		$_POST['ToPeriod'] = ReportPeriod($_POST['Period'], 'To');
-	}
+}
 
 	$SQL = "SELECT salescommissions.commissionno,
 					salescommissions.type,
@@ -26,35 +26,35 @@ if (isset($_POST['Submit'])) {
 					salescommissions.paid,
 					salescommissions.amount,
 					salesman.salesmanname,
-					MONTHNAME(periods.lastdate_in_period) AS month,
-					YEAR(periods.lastdate_in_period) AS year,
+					MONTHNAME(periods.lastdate_in_period) as month,
+					YEAR(periods.lastdate_in_period) as year,
 					salescommissions.currency,
 					salescommissions.exrate,
 					stockmoves.debtorno,
-					stockmoves.type AS invcredit,
-					stockmoves.transno AS invcredno,
+					stockmoves.type as invcredit,
+					stockmoves.transno as invcredno,
 					debtorsmaster.name,
 					currencies.decimalplaces
 				FROM salescommissions
 				INNER JOIN gltrans
-					ON salescommissions.commissionno=gltrans.typeno
-					AND gltrans.type=39
+					ON salescommissions.commissionno = gltrans.typeno
+					and gltrans.type = 39
 				INNER JOIN salesman
-					ON salescommissions.salespersoncode=salesman.salesmancode
+					ON salescommissions.salespersoncode = salesman.salesmancode
 				INNER JOIN periods
-					ON periods.periodno=gltrans.periodno
+					ON periods.periodno = gltrans.periodno
 				INNER JOIN stockmoves
-					ON salescommissions.stkmoveno=stockmoves.stkmoveno
+					ON salescommissions.stkmoveno = stockmoves.stkmoveno
 				INNER JOIN debtorsmaster
-					ON stockmoves.debtorno=debtorsmaster.debtorno
+					ON stockmoves.debtorno = debtorsmaster.debtorno
 				INNER JOIN currencies
-					ON salescommissions.currency=currencies.currabrev
+					ON salescommissions.currency = currencies.currabrev
 				WHERE salescommissions.salespersoncode LIKE '" . $_POST['SalesPerson'] . "'
-					AND salescommissions.currency LIKE '" . $_POST['Currency'] . "'
-					AND salescommissions.paid LIKE '" . $_POST['PaidUnpaid'] . "'
-					AND gltrans.periodno>='" . $_POST['FromPeriod'] . "'
-					AND gltrans.periodno<='" . $_POST['ToPeriod'] . "'
-					AND gltrans.account='" . $_SESSION['CompanyRecord']['commissionsact'] . "'
+					and salescommissions.currency LIKE '" . $_POST['Currency'] . "'
+					and salescommissions.paid LIKE '" . $_POST['PaidUnpaid'] . "'
+					and gltrans.periodno>='" . $_POST['FromPeriod'] . "'
+					and gltrans.periodno<='" . $_POST['ToPeriod'] . "'
+					and gltrans.account = '" . $_SESSION['CompanyRecord']['commissionsact'] . "'
 				ORDER BY salescommissions.commissionno";
 	$Result = DB_query($SQL);
 
@@ -75,13 +75,13 @@ if (isset($_POST['Submit'])) {
 
 		while ($MyRow = DB_fetch_array($Result)) {
 			if ($MyRow['invcredit'] == 10) {
-				$Type = __('Invoice');
-			} else {
+	$Type = __('Invoice');
+} else {
 				$Type = __('Credit');
 			}
 			if ($MyRow['paid'] == 0) {
-				$Paid = __('No');
-			} else {
+	$Paid = __('No');
+} else {
 				$Paid = __('Yes');
 			}
 			echo '<tr class="striped_row">
@@ -126,22 +126,22 @@ if (isset($_POST['Submit'])) {
 		$_POST['ToPeriod'] = GetPeriod(date($_SESSION['DefaultDateFormat']));
 	}
 
-	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
-	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+	echo '<form method = "post" action = "', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
+	echo '<input type = "hidden" name = "FormID" value = "', $_SESSION['FormID'], '" />';
 
 	echo '<fieldset>
 			<legend>', __('Report Criteria'), '</legend>
 			<field>
-				<label for="SalesPerson">', __('Sales Person'), '</label>
-				<select name="SalesPerson" autofocus="autofocus">';
+				<label for = "SalesPerson">', __('Sales Person'), '</label>
+				<select name = "SalesPerson" autofocus = "autofocus">';
 
 	$SQL = "SELECT salesmancode,
 					salesmanname
 				FROM salesman";
 	$Result = DB_query($SQL);
-	echo '<option value="%%">', __('All Sales People'), '</option>';
+	echo '<option value = "%%">', __('All Sales People'), '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
-		echo '<option value="', $MyRow['salesmancode'], '">', $MyRow['salesmanname'], '</option>';
+		echo '<option value = "', $MyRow['salesmancode'], '">', $MyRow['salesmanname'], '</option>';
 	}
 	echo '</select>
 		<fieldhelp>', __('Select the sales person to report on.'), '</fieldhelp>
@@ -150,14 +150,14 @@ if (isset($_POST['Submit'])) {
 	$SQL = "SELECT currabrev, currency FROM currencies";
 	$Result = DB_query($SQL);
 	echo '<field>
-			<label for="Currency">', __('Currency'), '</label>
-			<select name="Currency" required="required">';
-	echo '<option value="%%">', __('All Currencies'), '</option>';
+			<label for = "Currency">', __('Currency'), '</label>
+			<select name = "Currency" required = "required">';
+	echo '<option value = "%%">', __('All Currencies'), '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($MyRow['currabrev'] == $_POST['Currency']) {
-			echo '<option selected="selected" value="', $MyRow['currabrev'], '">', $MyRow['currency'], ' (', $MyRow['currabrev'], ')</option>';
-		} else {
-			echo '<option value="', $MyRow['currabrev'], '">', $MyRow['currency'], ' (', $MyRow['currabrev'], ')</option>';
+	echo '<option selected = "selected" value = "', $MyRow['currabrev'], '">', $MyRow['currency'], ' (', $MyRow['currabrev'], ')</option>';
+} else {
+			echo '<option value = "', $MyRow['currabrev'], '">', $MyRow['currency'], ' (', $MyRow['currabrev'], ')</option>';
 		}
 	}
 	echo '</select>
@@ -165,18 +165,18 @@ if (isset($_POST['Submit'])) {
 	</field>';
 
 	echo '<field>
-			<label for="PaidUnpaid">', __('Show Paid or Unpaid Commissions'), '</label>
-			<select name="PaidUnpaid">
-				<option value="%%">', __('All Commissions'), '</option>
-				<option value="0">', __('Only Unpaid Commissions'), '</option>
-				<option value="1">', __('Only Paid Commissions'), '</option>
+			<label for = "PaidUnpaid">', __('Show Paid or Unpaid Commissions'), '</label>
+			<select name = "PaidUnpaid">
+				<option value = "%%">', __('All Commissions'), '</option>
+				<option value = "0">', __('Only Unpaid Commissions'), '</option>
+				<option value = "1">', __('Only Paid Commissions'), '</option>
 			</select>
 			<fieldhelp>', __('Filter commissions by whether they are paid or unpaid'), '</fieldhelp>
 		</field>';
 
 	echo '			<field>
-				<label for="FromPeriod">', __('Select Period From'), ':</label>
-				<select name="FromPeriod" autofocus="autofocus">';
+				<label for = "FromPeriod">', __('Select Period From'), ':</label>
+				<select name = "FromPeriod" autofocus = "autofocus">';
 	$NextYear = date('Y-m-d', strtotime('+1 Year'));
 	$SQL = "SELECT periodno,
 					lastdate_in_period
@@ -188,15 +188,15 @@ if (isset($_POST['Submit'])) {
 	while ($MyRow = DB_fetch_array($Periods)) {
 		if (isset($_POST['FromPeriod']) and $_POST['FromPeriod'] != '') {
 			if ($_POST['FromPeriod'] == $MyRow['periodno']) {
-				echo '<option selected="selected" value="', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
-			} else {
-				echo '<option value="', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
+	echo '<option selected = "selected" value = "', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
+} else {
+				echo '<option value = "', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
 			}
 		} else {
 			if ($MyRow['lastdate_in_period'] == $DefaultFromDate) {
-				echo '<option selected="selected" value="', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
-			} else {
-				echo '<option value="', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
+	echo '<option selected = "selected" value = "', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
+} else {
+				echo '<option value = "', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
 			}
 		}
 	}
@@ -205,22 +205,22 @@ if (isset($_POST['Submit'])) {
 	</field>';
 
 	if (!isset($_POST['ToPeriod']) or $_POST['ToPeriod'] == '') {
-		$DefaultToPeriod = GetPeriod(date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, Date('m') + 1, 0, Date('Y'))));
+		$DefaultToPeriod = GetPeriod(date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, date('m') + 1, 0, date('Y'))));
 	} else {
 		$DefaultToPeriod = $_POST['ToPeriod'];
 	}
 
 	echo '<field>
-			<label for="ToPeriod">', __('Select Period To'), ':</label>
-			<select name="ToPeriod">';
+			<label for = "ToPeriod">', __('Select Period To'), ':</label>
+			<select name = "ToPeriod">';
 
 	DB_data_seek($Periods, 0);
 
 	while ($MyRow = DB_fetch_array($Periods)) {
 
 		if ($MyRow['periodno'] == $DefaultToPeriod) {
-			echo '<option selected="selected" value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
-		} else {
+	echo '<option selected = "selected" value = "' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
+} else {
 			echo '<option value ="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 		}
 	}
@@ -233,7 +233,7 @@ if (isset($_POST['Submit'])) {
 	}
 
 	echo '<field>
-			<label for="Period">', '<b>' . __('OR') . ' </b>' . __('Select Period'), ':</label>
+			<label for = "Period">', '<b>' . __('or') . ' </b>' . __('Select Period'), ':</label>
 			', ReportPeriodList($_POST['Period'], array('l', 't')), '
 			<fieldhelp>', __('Select a predefined period from this list. If a selection is made here it will override anything selected in the From and To options above.'), '</fieldhelp>
 		</field>';
@@ -241,7 +241,7 @@ if (isset($_POST['Submit'])) {
 	echo '</fieldset>';
 
 	echo '<div class="centre">
-			<input type="submit" name="Submit" value="', __('View Report'), '" />
+			<input type = "submit" name = "Submit" value = "', __('View Report'), '" />
 		</div>';
 
 	echo '</form>';

@@ -1786,99 +1786,111 @@ function ItemsInSetup($Check, $Category, $RootPath){
 		}
 	}
 }
+
 function ItemsInWrongShops($ShopType, $RootPath){
 
-	if ($ShopType == "SHOPKL"){
-		$TableTitleText = 'Items not allowed on KL shops';
-		$Condition =  " AND NOT ((stockmaster.categoryid = 'TESTKA' AND locations.alltestitems > 0)
-							OR (stockmaster.categoryid = 'STABKA' AND locations.allstableitems > 0)
-							OR (stockmaster.categoryid = 'NOPOKA' AND locations.allnopoitems > 0)
-							OR (stockmaster.categoryid = 'DISC2A' AND locations.alldisc20items > 0)
-							OR (stockmaster.categoryid = 'DISC5A' AND locations.alldisc50items > 0)
-							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL . "
-							OR (stockmaster.categoryid = 'DISC2G' AND locations.alldisc20items > 0)
-							OR (stockmaster.categoryid = 'DISC5G' AND locations.alldisc50items > 0)
-							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_IN_SHOPS_NOT_FOR_SALE . "
-						) AND locations.typeloc = 'SHOPKL' ";
-	}elseif ($ShopType == "SHOPBL"){
-		$TableTitleText = 'Items not allowed on BLINK shops';
-		$Condition =  " AND NOT ((stockmaster.categoryid = 'TESTBA' AND locations.alltestitems > 0)
-							OR (stockmaster.categoryid = 'STABBA' AND locations.allstableitems > 0)
-							OR (stockmaster.categoryid = 'NOPOBA' AND locations.allnopoitems > 0)
-							OR (stockmaster.categoryid = 'DISC2B' AND locations.alldisc20items > 0)
-							OR (stockmaster.categoryid = 'DISC5B' AND locations.alldisc50items > 0)
-							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL . "
-							OR (stockmaster.categoryid = 'DISC2G' AND locations.alldisc20items > 0)
-							OR (stockmaster.categoryid = 'DISC5G' AND locations.alldisc50items > 0)
-							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_IN_SHOPS_NOT_FOR_SALE . "
-						) AND locations.typeloc = 'SHOPBL' ";
-	}elseif ($ShopType == "SHOPOU"){
-		$TableTitleText = 'KL or Blink full priced items on OUTLET shops';
-		$Condition =  " AND NOT (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . "
-							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL_INCLUDING_ALL_DISCOUNT . "
-							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_IN_SHOPS_NOT_FOR_SALE . "
-						) AND locations.typeloc = 'SHOPOU' ";
-	}elseif ($ShopType == "DEFECTIVE"){
-		$TableTitleText = 'Discounted -D items on KL or Blink shops';
-		$Condition =  " AND UPPER(RIGHT(stockmaster.stockid,2)) = '-D'
-						AND (locations.typeloc = 'SHOPKL' 
+    if ($ShopType == "SHOPKL"){
+        $TableTitleText = 'Items not allowed on KL shops';
+        // Optimization: Replaced complex "AND NOT ((... OR ...))" with simpler "AND NOT (...) AND NOT (...)" blocks.
+        $Condition =  " AND locations.typeloc = 'SHOPKL'
+						AND NOT (stockmaster.categoryid = 'TESTKA' AND locations.alltestitems > 0)
+						AND NOT (stockmaster.categoryid = 'STABKA' AND locations.allstableitems > 0)
+						AND NOT (stockmaster.categoryid = 'NOPOKA' AND locations.allnopoitems > 0)
+						AND NOT (stockmaster.categoryid = 'DISC2A' AND locations.alldisc20items > 0)
+						AND NOT (stockmaster.categoryid = 'DISC5A' AND locations.alldisc50items > 0)
+						AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_GENERAL . "
+						AND NOT (stockmaster.categoryid = 'DISC2G' AND locations.alldisc20items > 0)
+						AND NOT (stockmaster.categoryid = 'DISC5G' AND locations.alldisc50items > 0)
+						AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_IN_SHOPS_NOT_FOR_SALE;
+
+    }elseif ($ShopType == "SHOPBL"){
+        $TableTitleText = 'Items not allowed on BLINK shops';
+        // Optimization: Replaced complex "AND NOT ((... OR ...))" with simpler "AND NOT (...) AND NOT (...)" blocks.
+        $Condition =  " AND locations.typeloc = 'SHOPBL'
+						AND NOT (stockmaster.categoryid = 'TESTBA' AND locations.alltestitems > 0)
+						AND NOT (stockmaster.categoryid = 'STABBA' AND locations.allstableitems > 0)
+						AND NOT (stockmaster.categoryid = 'NOPOBA' AND locations.allnopoitems > 0)
+						AND NOT (stockmaster.categoryid = 'DISC2B' AND locations.alldisc20items > 0)
+						AND NOT (stockmaster.categoryid = 'DISC5B' AND locations.alldisc50items > 0)
+						AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_GENERAL . "
+						AND NOT (stockmaster.categoryid = 'DISC2G' AND locations.alldisc20items > 0)
+						AND NOT (stockmaster.categoryid = 'DISC5G' AND locations.alldisc50items > 0)
+						AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_IN_SHOPS_NOT_FOR_SALE;
+
+    }elseif ($ShopType == "SHOPOU"){
+        $TableTitleText = 'KL or Blink full priced items on OUTLET shops';
+        // Simplified boolean logic for consistency
+        $Condition =  " AND locations.typeloc = 'SHOPOU'
+						AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_OUTLET . "
+						AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_GENERAL_INCLUDING_ALL_DISCOUNT . "
+						AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_IN_SHOPS_NOT_FOR_SALE;
+
+    }elseif ($ShopType == "DEFECTIVE"){
+        $TableTitleText = 'Discounted -D items on KL or Blink shops';
+        $Condition =  " AND UPPER(RIGHT(stockmaster.stockid,2)) = '-D'
+						AND (locations.typeloc = 'SHOPKL'
 							OR locations.typeloc = 'SHOPBL')";
-	}else{
-		//error_
-		return;
-	}
-	
+    }else{
+        //error_
+        return;
+    }
+
+
+	// Refactored SQL using explicit INNER JOINs for improved clarity and query planning.
+	// By Gemini 2.5 2025-11-14
 	$SQL = "SELECT stockmaster.stockid,
-					stockcategory.categorydescription,
-					stockmaster.description,
-					locstock.loccode,
-					locstock.quantity,
-					locstock.reorderlevel
-			FROM stockmaster, locstock, locations, stockcategory
-			WHERE stockmaster.stockid = locstock.stockid 
-				AND locstock.loccode = locations.loccode
-				AND stockmaster.categoryid = stockcategory.categoryid
-				" .	$Condition . "
-				AND ( locstock.quantity > 0 OR locstock.reorderlevel > 0 )
+				stockcategory.categorydescription,
+				stockmaster.description,
+				locstock.loccode,
+				locstock.quantity,
+				locstock.reorderlevel
+			FROM stockmaster
+			INNER JOIN locstock
+				ON stockmaster.stockid = locstock.stockid
+			INNER JOIN locations
+				ON locstock.loccode = locations.loccode
+			INNER JOIN stockcategory
+				ON stockmaster.categoryid = stockcategory.categoryid
+			WHERE (locstock.quantity > 0 OR locstock.reorderlevel > 0) "
+				. $Condition . "
 			ORDER BY stockmaster.stockid";
-// EXPLAIN SQL 2014-05-31
-//	prnMsg($SQL);
+
 	$Result = DB_query($SQL);
-	if (DB_num_rows($Result) != 0){
-		ShowTableTitle($TableTitleText);
-		echo '<div>';
-		echo '<table class="selection">
-				<thead>
-					<tr>
-						<th class="SortedColumn">' . __('#') . '</th>
-						<th class="SortedColumn">' . __('Code') . '</th>
-						<th class="SortedColumn">' . __('Description') . '</th>
-						<th class="SortedColumn">' . __('Category') . '</th>
-						<th class="SortedColumn">' . __('Shop') . '</th>
-						<th class="SortedColumn">' . __('Quantity') . '</th>
-						<th class="SortedColumn">' . __('Reorder Level') . '</th>
-					</tr>
-				</thead>
-				<tbody>';
-		$i = 1;
-		while ($MyRow = DB_fetch_array($Result)) {
-			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
-			$CodeLinkRL = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['reorderlevel'] . '</a>';
-			echo '<tr class="striped_row">
-					<td class="number">' . $i . '</td>
-					<td>' . $CodeLink . '</td>
-					<td>' . $MyRow['description'] . '</td>
-					<td>' . $MyRow['categorydescription'] . '</td>
-					<td>' . $MyRow['loccode'] . '</td>
-					<td class="number">' . $MyRow['quantity'] . '</td>
-					<td class="number">' . $CodeLinkRL . '</td>
-					</tr>';
-			$i++;
-		}
-		echo '</tbody>
-			</table>
-			</div>';
-	}
+    if (DB_num_rows($Result) != 0){
+        ShowTableTitle($TableTitleText);
+        echo '<div>';
+        echo '<table class="selection">
+                <thead>
+                    <tr>
+                        <th class="SortedColumn">' . __('#') . '</th>
+                        <th class="SortedColumn">' . __('Code') . '</th>
+                        <th class="SortedColumn">' . __('Description') . '</th>
+                        <th class="SortedColumn">' . __('Category') . '</th>
+                        <th class="SortedColumn">' . __('Shop') . '</th>
+                        <th class="SortedColumn">' . __('Quantity') . '</th>
+                        <th class="SortedColumn">' . __('Reorder Level') . '</th>
+                    </tr>
+                </thead>
+                <tbody>';
+        $i = 1;
+        while ($MyRow = DB_fetch_array($Result)) {
+            $CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
+            $CodeLinkRL = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['reorderlevel'] . '</a>';
+            echo '<tr class="striped_row">
+                        <td class="number">' . $i . '</td>
+                        <td>' . $CodeLink . '</td>
+                        <td>' . $MyRow['description'] . '</td>
+                        <td>' . $MyRow['categorydescription'] . '</td>
+                        <td>' . $MyRow['loccode'] . '</td>
+                        <td class="number">' . $MyRow['quantity'] . '</td>
+                        <td class="number">' . $CodeLinkRL . '</td>
+                    </tr>';
+            $i++;
+        }
+        echo '</tbody>
+            </table>
+            </div>';
+    }
 }
 
 function ItemsMovingToDiscountDelayed($TypeDiscount, $NumDays, $RootPath){
@@ -3696,8 +3708,8 @@ function PettyCashToBeAuthorized($AuthorizationType){
 
 function RegularTransfersToShopNotReceived($PreparationTime, $LimitTime, $RootPath){
 
-	$StartDate = Date('Y-m-d');
-	$StartTime = Date('H:i:s');
+	$StartDate = date('Y-m-d');
+	$StartTime = date('H:i:s');
 
 	if ($StartTime >= $LimitTime){
 		$SQL = "SELECT DISTINCT loctransfers.reference,
@@ -3716,7 +3728,7 @@ function RegularTransfersToShopNotReceived($PreparationTime, $LimitTime, $RootPa
 		$Result = DB_query($SQL);
 
 		if (DB_num_rows($Result) != 0){
-			$TableTitleText = 'Transfers to Shops prepared before ' . Date($_SESSION['DefaultDateFormat']) . 
+			$TableTitleText = 'Transfers to Shops prepared before ' . date($_SESSION['DefaultDateFormat']) . 
 																		' at ' . $PreparationTime . ' but not received by SPG before ' . $LimitTime;
 			ShowTableTitle($TableTitleText);
 			echo '<div>';

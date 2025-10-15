@@ -11,12 +11,12 @@ include('includes/header.php');
 
 if (empty($_GET['identifier'])) {
 	if (empty($_POST['identifier'])){
-		$identifier=date('U');
+		$identifier = date('U');
 	} else {
-		$identifier=$_POST['identifier'];
+		$identifier = $_POST['identifier'];
 	}
 } else {
-	$identifier=$_GET['identifier'];
+	$identifier = $_GET['identifier'];
 }
 
 if (!isset($_SESSION['PO'.$identifier])) {
@@ -30,7 +30,7 @@ if (!isset($_SESSION['PO'.$identifier])) {
 	exit();
 }
 
-if (isset($_GET['LineNo']) AND $_GET['LineNo']>0){
+if (isset($_GET['LineNo']) and $_GET['LineNo']>0){
 	$LineNo = $_GET['LineNo'];
 } elseif (isset($_POST['LineNo'])){
 	$LineNo = $_POST['LineNo'];
@@ -46,7 +46,8 @@ if (isset($_GET['LineNo']) AND $_GET['LineNo']>0){
 global $LineItem;
 $LineItem = &$_SESSION['PO'.$identifier]->LineItems[$LineNo];
 
-if ($LineItem->Controlled !=1 ){ /*This page only relavent for controlled items */
+if ($LineItem->Controlled !=1 ) {
+	/*This page only relavent for controlled items */
 
 	echo '<div class="centre">
 			<a href="' . $RootPath . '/GoodsReceived.php">' . __('Back to the Purchase Order'). '</a>
@@ -70,11 +71,11 @@ echo '<div class="centre">
 $LocationOut = $_SESSION['PO'.$identifier]->Location;
 $ItemMustExist = false;
 $StockID = $LineItem->StockID;
-$InOutModifier=1;
+$InOutModifier = 1;
 $ShowExisting = false;
 include('includes/InputSerialItems.php');
 
-//echo '<br /><input type="submit" name=\'AddBatches\' value=\'Enter\' /><br />';
+//echo '<br /><input type = "submit" name = \'AddBatches\' value = \'Enter\' /><br />';
 
 /*TotalQuantity set inside this include file from the sum of the bundles
 of the item selected for dispatch */

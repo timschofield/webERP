@@ -9,11 +9,11 @@ include('includes/header.php');
 
 if (isset($_GET['delete'])) {
 	// Delete the lines
-	$SQL = "DELETE FROM jnltmpldetails WHERE templateid='" . $_GET['delete'] . "'";
+	$SQL = "DELETE FROM jnltmpldetails WHERE templateid = '" . $_GET['delete'] . "'";
 	$Result = DB_query($SQL);
 
 	// Delete the lines
-	$SQL = "DELETE FROM jnltmplheader WHERE templateid='" . $_GET['delete'] . "'";
+	$SQL = "DELETE FROM jnltmplheader WHERE templateid = '" . $_GET['delete'] . "'";
 	$Result = DB_query($SQL);
 
 	prnMsg(__('The GL journal template has been removed from the database'), 'success');
@@ -33,7 +33,7 @@ if (DB_num_rows($Result) == 0) {
 
 	echo '<table>
 			<tr>
-				<th colspan="4">', __('Available journal templates'), '</th>
+				<th colspan = "4">', __('Available journal templates'), '</th>
 			</tr>
 			<tr>
 				<th>', __('Template ID'), '</th>
@@ -43,8 +43,8 @@ if (DB_num_rows($Result) == 0) {
 
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($MyRow['journaltype'] == 0) {
-			$JournalType = __('Normal');
-		} else {
+	$JournalType = __('Normal');
+} else {
 			$JournalType = __('Reversing');
 		}
 		echo '<tr class="striped_row">

@@ -15,8 +15,8 @@ $ViewTopic = 'SpecialUtilities';
 $BookMark = 'Z_ChangeGLAccountCode';
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-	'/images/gl.png" title="',// Icon image.
+echo '<p class = "page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/gl.png" title = "',// Icon image.
 	__('Change A GL Account Code'), '" /> ',// Icon title.
 	__('Change A GL Account Code'), '</p>';// Page title.
 
@@ -26,7 +26,7 @@ include('includes/SQL_CommonFunctions.php');
 include('includes/KLGeneralFunctions.php');
 // RICARD KL END: Use the function ChangeGLAcoountCode
 
-if(isset($_POST['ProcessGLAccountCode'])) {
+if (isset($_POST['ProcessGLAccountCode'])) {
 
 	$InputError =0;
 
@@ -38,23 +38,23 @@ if(isset($_POST['ProcessGLAccountCode'])) {
 
 }
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">';
-echo '<div class="centre">';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method = "post">';
+echo '<div class = "centre">';
+echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 echo '<fieldset>
 	<legend>', __('General Ledger Code To Change'), '</legend>
 	<field>
 		<label>' . __('Existing GL Account Code') . ':</label>
-		<input type="text" name="OldAccountCode" size="20" maxlength="20" />
+		<input type = "text" name = "OldAccountCode" size = "20" maxlength = "20" />
 	</field>
 	<field>
 		<label>' . __('New GL Account Code') . ':</label>
-		<input type="text" name="NewAccountCode" size="20" maxlength="20" />
+		<input type = "text" name = "NewAccountCode" size = "20" maxlength = "20" />
 	</field>
 	</fieldset>
-	<div class="centre">
-		<input type="submit" name="ProcessGLAccountCode" value="' . __('Process') . '" />
+	<div class = "centre">
+		<input type = "submit" name = "ProcessGLAccountCode" value = "' . __('Process') . '" />
 	</div>
 	</form>';
 

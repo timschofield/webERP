@@ -15,19 +15,19 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' .
 	__('Inventory Adjustment') . '" alt="" />' . ' ' . $Title . '</p>';
 
-if (!isset($_POST['Action']) AND !isset($_GET['Action'])) {
+if (!isset($_POST['Action']) and !isset($_GET['Action'])) {
 	$_GET['Action'] = 'Enter';
 }
 if (isset($_POST['Action'])) {
 	$_GET['Action'] = $_POST['Action'];
 }
 
-if ($_GET['Action']!='View' AND $_GET['Action']!='Enter'){
+if ($_GET['Action']!='View' and $_GET['Action']!='Enter') {
 	$_GET['Action'] = 'Enter';
 }
 
 echo '<table class="selection"><tr>';
-if ($_GET['Action']=='View'){
+if ($_GET['Action']=='View') {
 	echo '<td><a href="' . $RootPath . '/StockCounts.php?&amp;Action=Enter">' . __('Resuming Entering Counts') . '</a> </td><td>' . __('Viewing Entered Counts') . '</td>';
 } else {
 	echo '<td>' . __('Entering Counts')  . '</td><td> <a href="' . $RootPath . '/StockCounts.php?&amp;Action=View">' . __('View Entered Counts') . '</a></td>';
@@ -63,7 +63,6 @@ if (isset($_GET['gettemplate'])) //download an import template
 }
 
 if ($_GET['Action'] == 'Enter') {
-
 	if (isset($_POST['EnterCounts'])){
 
 		$Added=0;
@@ -86,7 +85,7 @@ if ($_GET['Action'] == 'Enter') {
 				$MyRow=DB_fetch_array($KitResult);
 
 				$_POST[$StockID] = strtoupper($MyRow['stockid']);
-			}
+}
 
 			if (mb_strlen($_POST[$StockID])>0){
 				if (!is_numeric($_POST[$Quantity])){
@@ -99,8 +98,8 @@ if ($_GET['Action'] == 'Enter') {
 					$InputError = true;
 				}
 
-				if ($InputError==false){
-					$Added++;
+				if ($InputError==false) {
+	$Added++;
 					$SQL = "INSERT INTO stockcounts (stockid,
 									loccode,
 									qtycounted,
@@ -112,7 +111,7 @@ if ($_GET['Action'] == 'Enter') {
 
 					$ErrMsg = __('The stock count line number') . ' ' . $i . ' ' . __('could not be entered because');
 					$EnterResult = DB_query($SQL, $ErrMsg);
-				}
+}
 			}
 		} // end of loop
 		prnMsg($Added . __(' Stock Counts Entered'), 'success' );
@@ -164,12 +163,12 @@ if ($_GET['Action'] == 'Enter') {
 
 			//check for correct number of fields
 			$FieldCount = count($MyRow);
-			if ($FieldCount != $FieldTarget){
-				prnMsg(__($FieldTarget. ' fields required, '. $FieldCount. ' fields received'),'error');
+			if ($FieldCount != $FieldTarget) {
+	prnMsg(__($FieldTarget. ' fields required, '. $FieldCount. ' fields received'),'error');
 				fclose($FileHandle);
 				include('includes/footer.php');
 				exit();
-			}
+}
 
 			// cleanup the data (csv files often import with empty strings and such)
 			$StockID = mb_strtoupper($MyRow[0]);
@@ -195,13 +194,12 @@ if ($_GET['Action'] == 'Enter') {
 				prnMsg(__('The quantity counted must be numeric') ,'error');
 			}
 			else if ($MyRow[1] < 0) {
-				$InputError = 1;
+	$InputError = 1;
 				prnMsg(__('The quantity counted must be zero or a positive number'),'error');
-			}
+}
 
-			if ($InputError !=1){
-
-				//attempt to insert the stock item
+			if ($InputError !=1) {
+	//attempt to insert the stock item
 				$SQL = "INSERT INTO stockcounts (stockid,
 									loccode,
 									qtycounted,
@@ -217,19 +215,21 @@ if ($_GET['Action'] == 'Enter') {
 				if (DB_error_no() != 0) {
 					$InputError = 1;
 					prnMsg(__($EnterResult),'error');
-				}
+}
 			}
 
-			if ($InputError == 1) { //this row failed so exit loop
+			if ($InputError == 1) {
+	//this row failed so exit loop
 				break;
-			}
+}
 			$Row++;
 		}
 
-		if ($InputError == 1) { //exited loop with errors so rollback
+		if ($InputError == 1) {
+	//exited loop with errors so rollback
 			prnMsg(__('Failed on row '. $Row. '. Batch import has been rolled back.'),'error');
 			DB_Txn_Rollback();
-		} else { //all good so commit data transaction
+} else { //all good so commit data transaction
 			DB_Txn_Commit();
 			prnMsg( __('Batch Import of') .' ' . $FileName  . ' '. __('has been completed. All transactions committed to the database.'),'success');
 		}
@@ -252,12 +252,12 @@ if ($_GET['Action'] == 'Enter') {
 		echo '<tr>
 				<th colspan="3">' .__('Stock Check Counts at Location') . ':<select name="Location">';
 		$SQL = "SELECT locations.loccode, locationname FROM locations
-				INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
+				INNER JOIN locationusers ON locationusers.loccode=locations.loccode and locationusers.userid='" .  $_SESSION['UserID'] . "' and locationusers.canupd=1";
 		$Result = DB_query($SQL);
 
 		while ($MyRow=DB_fetch_array($Result)){
 
-			if (isset($_POST['Location']) AND $MyRow['loccode']==$_POST['Location']){
+			if (isset($_POST['Location']) and $MyRow['loccode']==$_POST['Location']){
 				echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 			} else {
 				echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
@@ -269,15 +269,15 @@ if ($_GET['Action'] == 'Enter') {
 
 		while ($MyRow=DB_fetch_array($CatsResult)){
 			if ($_POST['StkCat']==$MyRow['categoryid']) {
-				echo '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
-			} else {
+	echo '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
+} else {
 				echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
 			}
 		}
 		echo '</select></th></tr>';
 
 		echo '<tr>
-				<td></td><td>OR</td>
+				<td></td><td>or</td>
 			</tr>
 			<tr>
 				<th colspan="3">
@@ -307,7 +307,7 @@ if ($_GET['Action'] == 'Enter') {
 												description
 										FROM stockcheckfreeze INNER JOIN stockmaster
 										ON stockcheckfreeze.stockid=stockmaster.stockid
-										WHERE categoryid='" . $_POST['StkCat'] . "' AND loccode = '" . $_POST['Location'] . "'
+										WHERE categoryid='" . $_POST['StkCat'] . "' and loccode = '" . $_POST['Location'] . "'
 										ORDER BY stockcheckfreeze.stockid");
 
 			$RowCount=1;
@@ -349,9 +349,8 @@ if ($_GET['Action'] == 'Enter') {
 				</div>';
 	} // there is a stock check to enter counts for
 //END OF action=ENTER
-} elseif ($_GET['Action']=='View'){
-
-	if (isset($_POST['DEL']) AND is_array($_POST['DEL']) ){
+} elseif ($_GET['Action']=='View') {
+	if (isset($_POST['DEL']) and is_array($_POST['DEL']) ){
 		foreach ($_POST['DEL'] as $id=>$val){
 			if ($val == 'on'){
 				$id = (int)$id;
@@ -359,14 +358,14 @@ if ($_GET['Action'] == 'Enter') {
 				$ErrMsg = __('Failed to delete StockCount ID #').' '.$i;
 				$EnterResult = DB_query($SQL, $ErrMsg);
 				prnMsg( __('Deleted Id #') . ' ' . $id, 'success');
-			}
+}
 		}
 	}
 
 	//START OF action=VIEW
 	$SQL = "select stockcounts.*,
 					canupd from stockcounts
-					INNER JOIN locationusers ON locationusers.loccode=stockcounts.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
+					INNER JOIN locationusers ON locationusers.loccode=stockcounts.loccode and locationusers.userid='" .  $_SESSION['UserID'] . "' and locationusers.canview=1";
 	$Result = DB_query($SQL);
 	echo '<input type="hidden" name="Action" value="View" />';
 	echo '<table cellpadding="2" class="selection">';
@@ -384,9 +383,8 @@ if ($_GET['Action'] == 'Enter') {
 			<td>'.$MyRow['reference'].'</td>
 			<td>';
 		if ($MyRow['canupd']==1) {
-			echo '<input type="checkbox" name="DEL[' . $MyRow['id'] . ']" maxlength="20" size="20" />';
-
-		}
+	echo '<input type="checkbox" name="DEL[' . $MyRow['id'] . ']" maxlength="20" size="20" />';
+}
 		echo '</td></tr>';
 
 	}
