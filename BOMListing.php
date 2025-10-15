@@ -108,7 +108,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '</tbody>
 				</table>
 				<div class = "centre">
-					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" /></form>
+					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -131,7 +131,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	} else {
 		$Title = __('Bill Of Material Listing');
 		include('includes/header.php');
-		echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title = "' . $Title . '" alt = "" />' . ' ' . $Title . '</p>';
+		echo '<p class = "page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
 		echo $HTML;
 		include('includes/footer.php');
 	}
@@ -144,7 +144,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$BookMark = '';
 
 	include('includes/header.php');
-	echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/reports.png" title = "' . __('Search') .
+	echo '<p class = "page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/reports.png" title="' . __('Search') .
 		'" alt = "" />' . ' ' . $Title . '</p>';
 	if (!isset($_POST['FromCriteria']) || !isset($_POST['ToCriteria'])) {
 

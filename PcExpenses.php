@@ -14,8 +14,8 @@ $Title = __('Maintenance Of Petty Cash Of Expenses');
 
 include('includes/header.php');
 
-echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme,
-	'/images/money_add.png" title = "', // Icon image.
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/money_add.png" title="', // Icon image.
 	$Title, '" /> ', // Icon title.
 	$Title, '</p>';// Page title.
 
@@ -156,7 +156,7 @@ if (!isset($SelectedExpense)) {
 			FROM pcexpenses
 			ORDER BY codeexpense";
 	$Result = DB_query($SQL);
-	echo '<table class = "selection">
+	echo '<table class="selection">
 			<tr>
 				<th>', __('Expense Code'), '</th>
 				<th>', __('Description'), '</th>
@@ -178,16 +178,16 @@ if (!isset($SelectedExpense)) {
 					WHERE taxcatid = '" . $MyRow['taxcatid'] . "'";
 		$ResultTaxCat = DB_query($SqlTaxCat);
 		$DescriptionTaxCat = DB_fetch_array($ResultTaxCat);
-		echo '<tr class = "striped_row">
+		echo '<tr class="striped_row">
 				<td>', $MyRow['codeexpense'], '</td>
 				<td>', $MyRow['description'], '</td>
-				<td class = "number">', $MyRow['glaccount'], '</td>
+				<td class="number">', $MyRow['glaccount'], '</td>
 				<td>', $Description['accountname'], '</td>
 				<td>', $DescriptionTaxCat['taxcatname'], '</td>
 				<td>', locale_number_format($MyRow['klretentionpph21'],2), '</td>
 				<td>', locale_number_format($MyRow['klretentionpph23'],2), '</td>
-				<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedExpense = ', $MyRow['codeexpense'], '">', __('Edit'), '</a></td>
-				<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedExpense = ', $MyRow['codeexpense'], '&amp;delete = yes" onclick = "return MakeConfirm(\'' . __('Are you sure you wish to delete this expense code and all the details it may have set up?') . '\', \'Confirm Delete\', this);">' . __('Delete') . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedExpense=', $MyRow['codeexpense'], '">', __('Edit'), '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedExpense=', $MyRow['codeexpense'], '&amp;delete=yes" onclick="return MakeConfirm(\'' . __('Are you sure you wish to delete this expense code and all the details it may have set up?') . '\', \'Confirm Delete\', this);">' . __('Delete') . '</a></td>
 			</tr>';
 	}
 	//END while LIST LOOP
@@ -195,13 +195,13 @@ if (!isset($SelectedExpense)) {
 }
 //end of ifs and buts!
 if (isset($SelectedExpense)) {
-	echo '<div class = "centre">
-			<a href = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">', __('Show All Petty Cash Expenses Defined'), '</a>
+	echo '<div class="centre">
+			<a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">', __('Show All Petty Cash Expenses Defined'), '</a>
 		</div>';
 }
 if (!isset($_GET['delete'])) {
 	echo '<form method = "post" action = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">';
-	echo '<input type = "hidden" name = "FormID" value = "', $_SESSION['FormID'], '" />';
+	echo '<input type = "hidden" name="FormID" value = "', $_SESSION['FormID'], '" />';
 	// The user wish to EDIT an existing type
 	if (isset($SelectedExpense) and $SelectedExpense != '') {
 		// KL RICARD added 2 fields to SQL
@@ -222,8 +222,8 @@ if (!isset($_GET['delete'])) {
 		$_POST['KLRetentionPPH21']  = $MyRow['klretentionpph21'];
 		$_POST['KLRetentionPPH23']  = $MyRow['klretentionpph23'];
 		$_POST['TaxCategory'] = $MyRow['taxcatid'];
-		echo '<input type = "hidden" name = "SelectedExpense" value = "', $SelectedExpense, '" />';
-		echo '<input type = "hidden" name = "CodeExpense" value = "', $_POST['CodeExpense'], '" />';
+		echo '<input type = "hidden" name="SelectedExpense" value = "', $SelectedExpense, '" />';
+		echo '<input type = "hidden" name="CodeExpense" value = "', $_POST['CodeExpense'], '" />';
 		// We dont allow the user to change an existing type code
 		echo '<fieldset>
 				<legend>', __('Amend Expense Code'), '</legend>
@@ -237,7 +237,7 @@ if (!isset($_GET['delete'])) {
 				<legend>', __('Create Expense Code'), '</legend>
 				<field>
 					<label for = "CodeExpense">', __('Expense Code'), ':</label>
-					<input type = "text" name = "CodeExpense" autofocus = "autofocus" required = "required" maxlength = "20" />
+					<input type = "text" name="CodeExpense" autofocus = "autofocus" required = "required" maxlength = "20" />
 				</field>';
 	}
 	if (!isset($_POST['Description'])) {
@@ -245,11 +245,11 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<field>
 			<label for = "Description">', __('Description'), ':</label>
-			<input type = "text" name = "Description" size = "50" required = "required" maxlength = "50" value = "', $_POST['Description'], '" />
+			<input type = "text" name="Description" size = "50" required = "required" maxlength = "50" value = "', $_POST['Description'], '" />
 		</field>';
 	echo '<field>
 			<label for = "GLAccount">', __('Account Code'), ':</label>
-			<select required = "required" name = "GLAccount">';
+			<select required = "required" name="GLAccount">';
 	DB_free_result($Result);
 	$SQL = "SELECT accountcode,
 				accountname
@@ -291,7 +291,7 @@ if (!isset($_GET['delete'])) {
 	$Result = DB_query($SQL);
 	echo '<field>
 			<label for = "TaxCategory">', __('Tax Category'), ':</label>
-			<select name = "TaxCategory">';
+			<select name="TaxCategory">';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['TaxCategory']) and $_POST['TaxCategory'] == $MyRow['taxcatid']) {
 			echo '<option selected = "selected" value = "', $MyRow['taxcatid'], '">', $MyRow['taxcatid'], ' - ', $MyRow['taxcatname'], '</option>';
@@ -302,9 +302,9 @@ if (!isset($_GET['delete'])) {
 	echo '</select>
 		</field>';
 	echo '</fieldset>'; // close main table
-	echo '<div class = "centre">
-			<input type = "submit" name = "submit" value = "', __('Accept'), '" />
-			<input type = "reset" name = "Cancel" value = "', __('Cancel'), '" />
+	echo '<div class="centre">
+			<input type = "submit" name="submit" value = "', __('Accept'), '" />
+			<input type = "reset" name="Cancel" value = "', __('Cancel'), '" />
 		</div>';
 	echo '</form>';
 } // end if user wish to delete

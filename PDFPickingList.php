@@ -111,9 +111,9 @@ if (isset($_POST['Process'])) {
 			echo '<br />';
 			prnMsg(__('Unable to Locate any orders for this criteria '), 'info');
 			echo '<br />
-				<table class = "selection">
+				<table class="selection">
 				<tr>
-					<td><a href = "' . $RootPath . '/PDFPickingList.php">' . __('Enter Another Date') . '</a></td>
+					<td><a href="' . $RootPath . '/PDFPickingList.php">' . __('Enter Another Date') . '</a></td>
 				</tr>
 				</table>
 				<br />';
@@ -172,7 +172,7 @@ if (isset($_POST['Process'])) {
 }
 		}
 		$DeliveryAddress .= htmlspecialchars($order['deladd5']);
-		$HTML .= '<div style = "page-break-after: always;">';
+		$HTML .= '<div style="page-break-after: always;">';
 		$HTML .= '<h2>' . __('Picking List') . '</h2>';
 		$HTML .= "<table border = '0' style = 'width:100%;'>";
 		$HTML .= "<tr>
@@ -280,8 +280,8 @@ else {
 			FROM locations
 			INNER JOIN locationusers ON locationusers.loccode = locations.loccode and locationusers.userid = '" . $_SESSION['UserID'] . "' and locationusers.canview = 1";
 		$Result = DB_query($SQL);
-		echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/sales.png" title = "' . __('Search') . '" alt = "" />' . ' ' . $Title . '</p>';
-		echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" name = "form" target = "_blank">
+		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+		echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" name = "form" target="_blank">
 		<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />
 		<fieldset>
 			<legend>', __('Selection Criteria'), '</legend>
@@ -298,7 +298,7 @@ else {
 		echo '</select>
 		</field>
 		</fieldset>';
-		echo '<div class = "centre">
+		echo '<div class="centre">
 			<input type = "submit" name = "Process" value = "' . __('Print Picking Lists') . '" />
 		</div>
 		</form>';

@@ -15,7 +15,7 @@ $SQL = "SELECT periodno ,
 $ErrMsg =  __('No periods were returned by the SQL because');
 $PeriodsResult = DB_query($SQL, $ErrMsg);
 
-echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title = "' . $Title . '" alt = "" />' . ' '
+echo '<p class = "page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '
 		. $Title . '</p>';
 
 /*show a table of the orders returned by the SQL */

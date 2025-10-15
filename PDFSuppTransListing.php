@@ -76,7 +76,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 
 	if (isset($_POST['PrintPDF'])) {
-		$HTML .= '<img class = "logo" src = ' . $_SESSION['LogoFile'] . ' /><br />';
+		$HTML .= '<img class="logo" src = ' . $_SESSION['LogoFile'] . ' /><br />';
 	}
 
 	$HTML .= '<div class = "centre" id = "ReportHeader">
@@ -138,7 +138,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '</tbody>
 				</table>
 				<div class = "centre">
-					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" /></form>
+					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -160,7 +160,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	else {
 		$Title = __('Inventory Planning Report');
 		include ('includes/header.php');
-		echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title = "' . __('Supplier Transaction Listing') . '" alt = "" />' . ' ' . __('Supplier Transaction Listing') . '</p>';
+		echo '<p class = "page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Supplier Transaction Listing') . '" alt="" />' . ' ' . __('Supplier Transaction Listing') . '</p>';
 		echo $HTML;
 		include ('includes/footer.php');
 	}
@@ -172,7 +172,7 @@ else { /*The option to print PDF was not hit */
 	$BookMark = '';
 	include ('includes/header.php');
 
-	echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title = "' . $Title . '" alt = "" />' . ' ' . __('Supplier Transaction Listing') . '</p>';
+	echo '<p class = "page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . __('Supplier Transaction Listing') . '</p>';
 
 	if ($InputError == 1) {
 	prnMsg($Msg, 'error');

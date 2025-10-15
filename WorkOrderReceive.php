@@ -23,31 +23,31 @@ if (isset($_GET['StockID'])) {
 } else {
 	unset($StockID);
 }
-echo '<a href = "'. $RootPath . '/SelectWorkOrder.php" class = "toplink">' . __('Back to Work Orders'). '</a>';
+echo '<a href="'. $RootPath . '/SelectWorkOrder.php" class="toplink">' . __('Back to Work Orders'). '</a>';
 if (isset($SelectedWO)){
 
-	echo '<a href = "'. $RootPath . '/WorkOrderCosting.php?WO = ' .  $SelectedWO . '" class = "toplink">' . __('Back to Costing'). '</a>';
+	echo '<a href="'. $RootPath . '/WorkOrderCosting.php?WO=' .  $SelectedWO . '" class="toplink">' . __('Back to Costing'). '</a>';
 }
 echo '</div>';
 
-echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title = "' .
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' .
 	__('Search') . '" alt = "" />' . ' ' . $Title . '</p>';
 
 echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post">';
-echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 if (!isset($SelectedWO) or !isset($StockID)) {
 	/* This page can only be called with a purchase order number for invoicing*/
-	echo '<div class = "centre">
-			<a href = "' . $RootPath . '/SelectWorkOrder.php">' .  __('Select a work order to receive') . '</a>
+	echo '<div class="centre">
+			<a href="' . $RootPath . '/SelectWorkOrder.php">' .  __('Select a work order to receive') . '</a>
 		</div>';
 	prnMsg(__('This page can only be opened if a work order has been selected. Please select a work order to receive first'),'info');
 	include('includes/footer.php');
 	exit();
 } else {
-	echo '<input type = "hidden" name = "WO" value = "' .$SelectedWO . '" />';
+	echo '<input type = "hidden" name="WO" value = "' .$SelectedWO . '" />';
 	$_POST['WO']=$SelectedWO;
-	echo '<input type = "hidden" name = "StockID" value = "' .$StockID . '" />';
+	echo '<input type = "hidden" name="StockID" value = "' .$StockID . '" />';
 	$_POST['StockID']=$StockID;
 }
 
@@ -729,7 +729,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 		DB_Txn_Commit();
 
 		prnMsg(__('The receipt of') . ' ' . $QuantityReceived . ' ' . $WORow['units'] . ' ' . __('of')  . ' ' . $_POST['StockID'] . ' - ' . $WORow['description'] . ' ' . __('against work order') . ' '. $_POST['WO'] . ' ' . __('has been processed'),'info');
-		echo '<a href = "' . $RootPath . '/SelectWorkOrder.php">' . __('Select a different work order for receiving finished stock against'). '</a>';
+		echo '<a href="' . $RootPath . '/SelectWorkOrder.php">' . __('Select a different work order for receiving finished stock against'). '</a>';
 		unset($_POST['WO']);
 		unset($_POST['StockID']);
 		unset($_POST['IntoLocation']);
@@ -798,7 +798,7 @@ if ($WORow['closed']==1) {
 if (!isset($_POST['ReceivedDate'])){
 	$_POST['ReceivedDate'] = date($_SESSION['DefaultDateFormat']);
 }
-echo '<table class = "selection">
+echo '<table class="selection">
 		<tr>
 			<td>' . __('Receive work order') . ':</td>
 			<td>' . $_POST['WO']  . '</td><td>' . __('Item') . ':</td>
@@ -812,12 +812,12 @@ echo '<table class = "selection">
 		</tr>
 		 <tr>
 			<td>' . __('Quantity Ordered') . ':</td>
-			<td class = "number">' . locale_number_format($WORow['qtyreqd'],$WORow['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($WORow['qtyreqd'],$WORow['decimalplaces']) . '</td>
 			<td colspan = "2">' . $WORow['units'] . '</td>
 		</tr>
 		 <tr>
 			<td>' . __('Already Received') . ':</td>
-			<td class = "number">' . locale_number_format($WORow['qtyrecd'],$WORow['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($WORow['qtyrecd'],$WORow['decimalplaces']) . '</td>
 			<td colspan = "2">' . $WORow['units'] . '</td>
 		</tr>
 		 <tr>
@@ -826,11 +826,11 @@ echo '<table class = "selection">
 		//add expiry date for perishable product
 		if ($WORow['perishable']==1) {
 	echo '<td>' . __('Expiry Date') . ':<td>
-				  <td><input maxlength = "10" size = "11" name = "ExpiryDate" type = "date" required /></td>';
+				  <td><input maxlength = "10" size = "11" name="ExpiryDate" type = "date" required /></td>';
 }
 
 		echo '<td>' . __('Received Into') . ':</td>
-			<td><select name = "IntoLocation">';
+			<td><select name="IntoLocation">';
 
 
 if (!isset($_POST['IntoLocation'])){
@@ -896,7 +896,7 @@ if ($WORow['controlled']==1) {
 						echo '</tr>
 							<tr>';
 					}
-					echo '<td><input type = "checkbox" name = "CheckItem' . $i . '" />' .  $WOSNRow[0]  . '<input type = "hidden" name = "SerialNo' . $i . '" value = "' . $WOSNRow[0] . '" /><input type = "hidden" name = "QualityText' . $i . '" value = "' . $WOSNRow[1] . '" /></td>';
+					echo '<td><input type = "checkbox" name="CheckItem' . $i . '" />' .  $WOSNRow[0]  . '<input type = "hidden" name="SerialNo' . $i . '" value = "' . $WOSNRow[0] . '" /><input type = "hidden" name="QualityText' . $i . '" value = "' . $WOSNRow[1] . '" /></td>';
 					$i++;
 				}
 			}
@@ -906,7 +906,7 @@ if ($WORow['controlled']==1) {
 					echo '</tr>
 						<tr>';
 				}
-				echo '<td><input type = "textbox" name = "SerialNo' . $i . '" placeholder = "'.__('Serial No').'" ';
+				echo '<td><input type = "textbox" name="SerialNo' . $i . '" placeholder = "'.__('Serial No').'" ';
 				if ($i == 0) {
 	echo 'value = "' . $StringBitOfLotSNRef . ($LotSNRefNumeric + 1) . '"';
 }
@@ -917,14 +917,14 @@ if ($WORow['controlled']==1) {
 		if (!isset($i)){
 			$i = 0;
 		}
-		echo '<td><input type = "hidden" name = "CountOfInputs" value = "' . $i . '" /></td>';
+		echo '<td><input type = "hidden" name="CountOfInputs" value = "' . $i . '" /></td>';
 		echo '</tr>';
 		echo '<tr>
 				<td colspan = "5"></td>
 			</tr>
 			</fieldset>';
-		echo '<div class = "centre">
-				<input type = "submit" name = "Process" value = "' . __('Process Manufactured Items Received') . '" />
+		echo '<div class="centre">
+				<input type = "submit" name="Process" value = "' . __('Process Manufactured Items Received') . '" />
 			</div>';
 	} else { //controlled but not serialised - just lot/batch control
 		echo '<tr>
@@ -948,10 +948,10 @@ if ($WORow['controlled']==1) {
 					if (($i/5 -intval($i/5)) == 0){
 						echo '</tr><tr>';
 					}
-					echo '<td><input type = "textbox" name = "BatchRef' . $i . '" value = "' . $WOSNRow[0] . '" placeholder = "'.__('Batch/Lot No').'" /></td>
-						  <td><input type = "textbox" class = "number" name = "Qty' . $i . '" placeholder = "'.__('Quantity').'" />
-								<input type = "hidden" name = "QualityText' . $i . '" value = "' . $WOSNRow[2] . '" />
-								<input type = "hidden" name = "QtyReqd' . $i . '" value = "' . locale_number_format($WOSNRow[1],'Variable') . '" /></td>
+					echo '<td><input type = "textbox" name="BatchRef' . $i . '" value = "' . $WOSNRow[0] . '" placeholder = "'.__('Batch/Lot No').'" /></td>
+						  <td><input type = "textbox" class="number" name="Qty' . $i . '" placeholder = "'.__('Quantity').'" />
+								<input type = "hidden" name="QualityText' . $i . '" value = "' . $WOSNRow[2] . '" />
+								<input type = "hidden" name="QtyReqd' . $i . '" value = "' . locale_number_format($WOSNRow[1],'Variable') . '" /></td>
 							</tr>';
 					$i++;
 				}
@@ -959,7 +959,7 @@ if ($WORow['controlled']==1) {
 		} else { // batches/lots yet to be set up enter them manually
 			for ($i = 0; $i<15; $i++){
 				echo '<tr>
-						<td><input type = "textbox" name = "BatchRef' . $i .'" placeholder = "'.__('Batch/Lot No').'" ';
+						<td><input type = "textbox" name="BatchRef' . $i .'" placeholder = "'.__('Batch/Lot No').'" ';
 
 				if ($i == 0) {
 	$StringBitOfLotSNRef = isset($StringBitOfLotSNRef)?$StringBitOfLotSNRef:'';
@@ -967,28 +967,28 @@ if ($WORow['controlled']==1) {
 					echo 'value = "' . $StringBitOfLotSNRef . ($LotSNRefNumeric + 1) . '"';
 }
 				echo ' /></td>
-						  <td><input type = "textbox" class = "number" name = "Qty' . $i .'" /></td></tr>';
+						  <td><input type = "textbox" class="number" name="Qty' . $i .'" /></td></tr>';
 			}
 		}
 		echo '<tr>
-				 <td><input type = "hidden" name = "CountOfInputs" value = "' . $i . '" /></td>
+				 <td><input type = "hidden" name="CountOfInputs" value = "' . $i . '" /></td>
 			  </tr>
 			  </fieldset>';
-		echo '<div class = "centre">
-				<input type = "submit" name = "Process" value = "' . __('Process Manufactured Items Received') . '" />
+		echo '<div class="centre">
+				<input type = "submit" name="Process" value = "' . __('Process Manufactured Items Received') . '" />
 			</div>';
 	} //end of lot/batch control
 } else { //not controlled - an easy one!
 
 	echo '<field>
-			<input type = "hidden" name = "CountOfInputs" value = "1" />
+			<input type = "hidden" name="CountOfInputs" value = "1" />
 			<label for = "Qty">' . __('Quantity Received') . ':</label>
-			<input type = "text" class = "number" name = "Qty" required = "required" title = "" placeholder = "'.__('Received Qty').'" />
+			<input type = "text" class="number" name="Qty" required = "required" title="" placeholder = "'.__('Received Qty').'" />
 			<fieldhelp>'.__('The input must be numeric').'</fieldhelp>
 		</field>
 		</fieldset>';
-	echo '<div class = "centre">
-			<input type = "submit" name = "Process" value = "' . __('Process Manufactured Items Received') . '" />
+	echo '<div class="centre">
+			<input type = "submit" name="Process" value = "' . __('Process Manufactured Items Received') . '" />
 		</div>';
 }
 echo '</form>';

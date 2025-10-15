@@ -32,7 +32,7 @@ if ((! isset($_POST['FromPeriod']) or ! isset($_POST['ToPeriod']))
 	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
-	echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title = "' . __('Search') . '" alt = "" />' . ' ' . $Title . '</p>';
+	echo '<p class = "page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<fieldset>
 			<legend>', __('Report Criteria'), '</legend>';
@@ -363,7 +363,7 @@ if ((! isset($_POST['FromPeriod']) or ! isset($_POST['ToPeriod']))
 	$graph->DrawGraph();
 	echo '<table class = "selection">
 			<tr>
-				<td><p><img class = "graph" src = "',$RootPath,'/', $_SESSION['reports_dir'], '/salesgraph.png" alt = "Sales Report Graph"></img></p></td>
+				<td><p><img class="graph" src="',$RootPath,'/', $_SESSION['reports_dir'], '/salesgraph.png" alt = "Sales Report Graph"></img></p></td>
 			</tr>
 		  </table>';
 	include('includes/footer.php');

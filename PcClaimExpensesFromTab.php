@@ -418,15 +418,15 @@ if (!isset($SelectedTabs)) {
 	then none of the above are true and the list of sales types will be displayed with
 	links to delete or edit each. These will call the same page again and allow update/input
 	or deletion of the records*/
-	echo '<p class = "page_title_text">
-			<img src = "', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title = "', __('Payment Entry'), '" alt = "" />', ' ', $Title, '
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', __('Payment Entry'), '" alt="" />', ' ', $Title, '
 		</p>';
 	echo '<form method = "post" action = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" enctype = "multipart/form-data">';
-	echo '<input type = "hidden" name = "FormID" value = "', $_SESSION['FormID'], '" />';
+	echo '<input type = "hidden" name="FormID" value = "', $_SESSION['FormID'], '" />';
 	echo '<fieldset>
 			<field>
 				<label for="SelectedTabs">', __('Claim expenses on petty cash tab'), ':</label>
-				<select required = "required" name = "SelectedTabs">';
+				<select required = "required" name="SelectedTabs">';
 	$SQL = "SELECT tabcode
 		FROM pctabs
 		WHERE usercode = '" . $_SESSION['UserID'] . "'";
@@ -442,15 +442,15 @@ if (!isset($SelectedTabs)) {
 	echo '</select>
 		</field>';
 	echo '</fieldset>'; // close main table
-	echo '<div class = "centre">
-			<input type = "submit" name = "Process" value = "', __('Accept'), '" />
-			<input type = "reset" name = "Cancel" value = "', __('Cancel'), '" />
+	echo '<div class="centre">
+			<input type = "submit" name="Process" value = "', __('Accept'), '" />
+			<input type = "reset" name="Cancel" value = "', __('Cancel'), '" />
 		</div>';
 	echo '</form>';
 } else { // isset($SelectedTabs)
-	echo '<a class = "toplink" href = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">', __('Select another tab'), '</a>';
-	echo '<p class = "page_title_text">
-			<img src = "', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title = "', __('Petty Cash Claim Entry'), '" alt = "" />', ' ', $Title, ': ', $SelectedTabs, '
+	echo '<a class="toplink" href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">', __('Select another tab'), '</a>';
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', __('Petty Cash Claim Entry'), '" alt="" />', ' ', $Title, ': ', $SelectedTabs, '
 		</p>';
 	if (!isset($_GET['edit']) or isset($_POST['GO'])) {
 		if (!isset($Days)) {
@@ -465,15 +465,15 @@ if (!isset($SelectedTabs)) {
 		$MyRow = DB_fetch_array($Result);
 		$CurrDecimalPlaces = $MyRow['decimalplaces'];
 		echo '<form method = "post" action = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" enctype = "multipart/form-data">';
-		echo '<input type = "hidden" name = "FormID" value = "', $_SESSION['FormID'], '" />';
+		echo '<input type = "hidden" name="FormID" value = "', $_SESSION['FormID'], '" />';
 
 		//Limit expenses history to X days
 		echo '<fieldset>
 				<field>
 					<label for = "SelectedTabs">', __('Detail of Tab Movements For Last '), ':</label>
-					<input type = "hidden" name = "SelectedTabs" value = "' . $SelectedTabs . '" />
-					<input type = "text" class = "number" name = "Days" value = "', $Days, '" required = "required" maxlength = "3" size = "4" /> ', __('Days'), '
-					<input type = "submit" name = "Go" value = "', __('Go'), '" />
+					<input type = "hidden" name="SelectedTabs" value = "' . $SelectedTabs . '" />
+					<input type = "text" class="number" name="Days" value = "', $Days, '" required = "required" maxlength = "3" size = "4" /> ', __('Days'), '
+					<input type = "submit" name="Go" value = "', __('Go'), '" />
 				</field>
 			</fieldset>';
 		if (isset($_POST['Cancel'])) {
@@ -504,12 +504,12 @@ if (!isset($SelectedTabs)) {
 							counterindex ASC";
 		$Result = DB_query($SQL);
 		// KL RICARD Keep the receipt text field, and do not show tax, tag, purpose
-		echo '<table class = "selection">
+		echo '<table class="selection">
 				<thead>
 					<tr>
-						<th class = "SortedColumn">', __('Date of Expense'), '</th>
-						<th class = "SortedColumn">', __('Expense Code'), '</th>
-						<th class = "SortedColumn">', __('Amount'), '</th>
+						<th class="SortedColumn">', __('Date of Expense'), '</th>
+						<th class="SortedColumn">', __('Expense Code'), '</th>
+						<th class="SortedColumn">', __('Amount'), '</th>
 						<th>', __('Notes'), '</th>
 						<th>', __('Receipt'), '</th>
 						<th>', __('Receipt Attachment'), '</th>
@@ -549,7 +549,7 @@ if (!isset($SelectedTabs)) {
 				$ReceiptExt = $ReceiptRow['extension'];
 				$ReceiptFileName = $ReceiptHash . '.' . $ReceiptExt;
 				$ReceiptPath = $ReceiptDir . $ReceiptFileName;
-				$ReceiptText = '<a href = "' . $ReceiptPath . '" download = "ExpenseReceipt-' . mb_strtolower($SelectedTabs) . '-[' . $MyRow['date'] . ']-[' . $MyRow['counterindex'] . ']">' . __('Download attachment') . '</a>';
+				$ReceiptText = '<a href="' . $ReceiptPath . '" download="ExpenseReceipt-' . mb_strtolower($SelectedTabs) . '-[' . $MyRow['date'] . ']-[' . $MyRow['counterindex'] . ']">' . __('Download attachment') . '</a>';
 			} elseif ($ExpenseCodeDes == 'ASSIGNCASH') {
 	$ReceiptText = '';
 } else {
@@ -589,23 +589,23 @@ if (!isset($SelectedTabs)) {
 			if (($MyRow['authorized'] == '1000-01-01') and ($ExpenseCodeDes != 'ASSIGNCASH')) {
 				// only movements not authorised can be modified or deleted
 				// KL RICARD Keep the receipt text field, and do not show tax, tag, purpose
-				echo '<tr class = "striped_row">
-						<td class = "date">', ConvertSQLDate($MyRow['date']), '</td>
+				echo '<tr class="striped_row">
+						<td class="date">', ConvertSQLDate($MyRow['date']), '</td>
 						<td>', $ExpenseCodeDes, '</td>
-						<td class = "number">', locale_number_format($MyRow['amount'], $CurrDecimalPlaces), '</td>
+						<td class="number">', locale_number_format($MyRow['amount'], $CurrDecimalPlaces), '</td>
 						<td>', $MyRow['notes'], '</td>
 						<td>', $MyRow['receipt'], '</td>
 						<td>', $ReceiptText, '</td>
 						<td>', $AuthorisedDate, '</td>
-						<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedIndex = ', $MyRow['counterindex'], '&SelectedTabs = ' . $SelectedTabs . '&amp;Days = ' . $Days . '&amp;edit = yes">' . __('Edit') . '</a></td>
-						<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedIndex = ', $MyRow['counterindex'], '&amp;SelectedTabs = ' . $SelectedTabs . '&amp;Days = ' . $Days . '&amp;delete = yes" onclick = \'return confirm("' . __('Are you sure you wish to delete this expense?') . '");\'>' . __('Delete') . '</a></td>
+						<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedIndex=', $MyRow['counterindex'], '&SelectedTabs=' . $SelectedTabs . '&amp;Days=' . $Days . '&amp;edit=yes">' . __('Edit') . '</a></td>
+						<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedIndex=', $MyRow['counterindex'], '&amp;SelectedTabs=' . $SelectedTabs . '&amp;Days=' . $Days . '&amp;delete=yes" onclick=\'return confirm("' . __('Are you sure you wish to delete this expense?') . '");\'>' . __('Delete') . '</a></td>
 					</tr>';
 			} else {
 				// KL RICARD Keep the receipt text field, and do not show tax, tag, purpose
-				echo '<tr class = "striped_row">
-						<td class = "date">', ConvertSQLDate($MyRow['date']), '</td>
+				echo '<tr class="striped_row">
+						<td class="date">', ConvertSQLDate($MyRow['date']), '</td>
 						<td>', $ExpenseCodeDes, '</td>
-						<td class = "number">', locale_number_format($MyRow['amount'], $CurrDecimalPlaces), '</td>
+						<td class="number">', locale_number_format($MyRow['amount'], $CurrDecimalPlaces), '</td>
 						<td>', $MyRow['notes'], '</td>
 						<td>', $MyRow['receipt'], '</td>
 						<td>', $ReceiptText, '</td>
@@ -617,9 +617,9 @@ if (!isset($SelectedTabs)) {
 		$CurrentBalance = PettyCashTabCurrentBalance($SelectedTabs);
 		echo '</tbody>
 				<tfoot>
-					<tr class = "total_row">
-						<td colspan = "2" class = "number">', __('Current balance'), ':</td>
-						<td class = "number">', locale_number_format($CurrentBalance, $CurrDecimalPlaces), '</td>
+					<tr class="total_row">
+						<td colspan = "2" class="number">', __('Current balance'), ':</td>
+						<td class="number">', locale_number_format($CurrentBalance, $CurrDecimalPlaces), '</td>
 						<td colspan = "9"></td>
 					</tr>
 				</tfoot>';
@@ -628,7 +628,7 @@ if (!isset($SelectedTabs)) {
 	}
 	if (!isset($_GET['delete'])) {
 		echo '<form method = "post" action = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" enctype = "multipart/form-data">';
-		echo '<input type = "hidden" name = "FormID" value = "', $_SESSION['FormID'], '" />';
+		echo '<input type = "hidden" name="FormID" value = "', $_SESSION['FormID'], '" />';
 		if (isset($_GET['edit'])) {
 			// KL RICARD Keep the receipt text field
 			$SQL = "SELECT counterindex,
@@ -652,9 +652,9 @@ if (!isset($SelectedTabs)) {
 			// KL RICARD Keep the receipt text field
 			$_POST['Receipt'] = $MyRow['receipt'];
 			$_POST['Notes'] = $MyRow['notes'];
-			echo '<input type = "hidden" name = "SelectedTabs" value = "', $SelectedTabs, '" />';
-			echo '<input type = "hidden" name = "SelectedIndex" value = "', $SelectedIndex, '" />';
-			echo '<input type = "hidden" name = "Days" value = "', $Days, '" />';
+			echo '<input type = "hidden" name="SelectedTabs" value = "', $SelectedTabs, '" />';
+			echo '<input type = "hidden" name="SelectedIndex" value = "', $SelectedIndex, '" />';
+			echo '<input type = "hidden" name="Days" value = "', $Days, '" />';
 		} //end of Get Edit
 		if (!isset($_POST['Date'])) {
 			$_POST['Date'] = date($_SESSION['DefaultDateFormat']);
@@ -667,11 +667,11 @@ if (!isset($SelectedTabs)) {
 		}
 		echo '<field>
 				<label for = "Date">', __('Date of Expense'), ':</label>
-				<input type = "date" name = "Date" size = "11" required = "required" maxlength = "10" value = "', FormatDateForSQL($_POST['Date']), '" />
+				<input type = "date" name="Date" size = "11" required = "required" maxlength = "10" value = "', FormatDateForSQL($_POST['Date']), '" />
 			</field>
 			<field>
 				<label for = "SelectedExpense">', __('Expense Code'), ':</label>
-				<select required = "required" name = "SelectedExpense">';
+				<select required = "required" name="SelectedExpense">';
 		DB_free_result($Result);
 		$SQL = "SELECT pcexpenses.codeexpense,
 					pcexpenses.description
@@ -696,7 +696,7 @@ if (!isset($SelectedTabs)) {
 		}
 		echo '<field>
 				<label for="Amount">', __('Amount'), ':</label>
-				<input type = "text" class = "number" name = "Amount" size = "12" required = "required" maxlength = "11" value = "', $_POST['Amount'], '" />
+				<input type = "text" class="number" name="Amount" size = "12" required = "required" maxlength = "11" value = "', $_POST['Amount'], '" />
 			</field>';
 		/* KL RICARD END Do not show taxes 
 		if (isset($_GET['edit'])) {
@@ -713,17 +713,17 @@ if (!isset($SelectedTabs)) {
 						WHERE pccashdetail = '" . $SelectedIndex . "'";
 			$TaxesResult = DB_query($SQL);
 			while ($MyTaxRow = DB_fetch_array($TaxesResult)) {
-				echo '<input type = "hidden" name = "index', $MyTaxRow['counterindex'], '" value = "', $MyTaxRow['counterindex'], '" />';
-				echo '<input type = "hidden" name = "PcCashDetail', $MyTaxRow['counterindex'], '" value = "', $MyTaxRow['pccashdetail'], '" />';
-				echo '<input type = "hidden" name = "CalculationOrder', $MyTaxRow['counterindex'], '" value = "', $MyTaxRow['calculationorder'], '" />';
-				echo '<input type = "hidden" name = "Description', $MyTaxRow['counterindex'], '" value = "', $MyTaxRow['description'], '" />';
-				echo '<input type = "hidden" name = "TaxAuthority', $MyTaxRow['counterindex'], '" value = "', $MyTaxRow['taxauthid'], '" />';
-				echo '<input type = "hidden" name = "TaxGLAccount', $MyTaxRow['counterindex'], '" value = "', $MyTaxRow['purchtaxglaccount'], '" />';
-				echo '<input type = "hidden" name = "TaxOnTax', $MyTaxRow['counterindex'], '" value = "', $MyTaxRow['taxontax'], '" />';
-				echo '<input type = "hidden" name = "TaxRate', $MyTaxRow['counterindex'], '" value = "', $MyTaxRow['taxrate'], '" />';
+				echo '<input type = "hidden" name="index', $MyTaxRow['counterindex'], '" value = "', $MyTaxRow['counterindex'], '" />';
+				echo '<input type = "hidden" name="PcCashDetail', $MyTaxRow['counterindex'], '" value = "', $MyTaxRow['pccashdetail'], '" />';
+				echo '<input type = "hidden" name="CalculationOrder', $MyTaxRow['counterindex'], '" value = "', $MyTaxRow['calculationorder'], '" />';
+				echo '<input type = "hidden" name="Description', $MyTaxRow['counterindex'], '" value = "', $MyTaxRow['description'], '" />';
+				echo '<input type = "hidden" name="TaxAuthority', $MyTaxRow['counterindex'], '" value = "', $MyTaxRow['taxauthid'], '" />';
+				echo '<input type = "hidden" name="TaxGLAccount', $MyTaxRow['counterindex'], '" value = "', $MyTaxRow['purchtaxglaccount'], '" />';
+				echo '<input type = "hidden" name="TaxOnTax', $MyTaxRow['counterindex'], '" value = "', $MyTaxRow['taxontax'], '" />';
+				echo '<input type = "hidden" name="TaxRate', $MyTaxRow['counterindex'], '" value = "', $MyTaxRow['taxrate'], '" />';
 				echo '<field>
 						<label for = "TaxAmount">', $MyTaxRow['description'], ' - ', ($MyTaxRow['taxrate'] * 100), '%</label>
-						<input type = "text" class = "number" size = "12" name = "TaxAmount', $MyTaxRow['counterindex'], '" value = "', -$MyTaxRow['amount'], '" />
+						<input type = "text" class="number" size = "12" name="TaxAmount', $MyTaxRow['counterindex'], '" value = "', -$MyTaxRow['amount'], '" />
 					</field>';
 			}
 		} else {
@@ -748,16 +748,16 @@ if (!isset($SelectedTabs)) {
 			$TaxResult = DB_query($SQL);
 			$i = 0;
 			while ($MyTaxRow = DB_fetch_array($TaxResult)) {
-				echo '<input type = "hidden" name = "index', $i, '" value = "', $i, '" />';
-				echo '<input type = "hidden" name = "CalculationOrder', $i, '" value = "', $MyTaxRow['calculationorder'], '" />';
-				echo '<input type = "hidden" name = "Description', $i, '" value = "', $MyTaxRow['description'], '" />';
-				echo '<input type = "hidden" name = "TaxAuthority', $i, '" value = "', $MyTaxRow['taxauthid'], '" />';
-				echo '<input type = "hidden" name = "TaxGLAccount', $i, '" value = "', $MyTaxRow['purchtaxglaccount'], '" />';
-				echo '<input type = "hidden" name = "TaxOnTax', $i, '" value = "', $MyTaxRow['taxontax'], '" />';
-				echo '<input type = "hidden" name = "TaxRate', $i, '" value = "', $MyTaxRow['taxrate'], '" />';
+				echo '<input type = "hidden" name="index', $i, '" value = "', $i, '" />';
+				echo '<input type = "hidden" name="CalculationOrder', $i, '" value = "', $MyTaxRow['calculationorder'], '" />';
+				echo '<input type = "hidden" name="Description', $i, '" value = "', $MyTaxRow['description'], '" />';
+				echo '<input type = "hidden" name="TaxAuthority', $i, '" value = "', $MyTaxRow['taxauthid'], '" />';
+				echo '<input type = "hidden" name="TaxGLAccount', $i, '" value = "', $MyTaxRow['purchtaxglaccount'], '" />';
+				echo '<input type = "hidden" name="TaxOnTax', $i, '" value = "', $MyTaxRow['taxontax'], '" />';
+				echo '<input type = "hidden" name="TaxRate', $i, '" value = "', $MyTaxRow['taxrate'], '" />';
 				echo '<field>
 						<label for = "TaxAmount">', $MyTaxRow['description'], ' - ', ($MyTaxRow['taxrate'] * 100), '%:</label>
-						<input type = "text" class = "number" size = "12" name = "TaxAmount', $i, '" value = "0" />
+						<input type = "text" class="number" size = "12" name="TaxAmount', $i, '" value = "0" />
 					</field>';
 				++$i;
 			}
@@ -808,8 +808,8 @@ KL RICARD END Do not show tag */
 		}, $ReceiptSupportedExt);
 		echo '<field>
 				<label for = "Receipt">', __('Attach Receipt'), ':</label>
-				<input type = "hidden" name = "MAX_FILE_SIZE" value = "' . $_SESSION['MaxImageSize'] * 1024 . '" />
-				<input type = "file" name = "Receipt" id = "Receipt" accept = "' . implode(',', $ReceiptSupportedExtDotPrefix) . '" title = "', __('Accepted file types'), ': ', implode(', ', $ReceiptSupportedExt), '" />
+				<input type = "hidden" name="MAX_FILE_SIZE" value = "' . $_SESSION['MaxImageSize'] * 1024 . '" />
+				<input type = "file" name="Receipt" id="Receipt" accept = "' . implode(',', $ReceiptSupportedExtDotPrefix) . '" title="', __('Accepted file types'), ': ', implode(', ', $ReceiptSupportedExt), '" />
 			</field>';
 
 		if (!isset($_POST['Purpose'])) {
@@ -819,7 +819,7 @@ KL RICARD END Do not show tag */
 /* KL RICARD Do not show purpose
 		echo '<field>
 				<label for = "Purpose">', __('Business Purpose'), ':</label>
-				<input type = "text" name = "Purpose" size = "50" maxlength = "49" required = "required" value = "', $_POST['Purpose'], '" />s
+				<input type = "text" name="Purpose" size = "50" maxlength = "49" required = "required" value = "', $_POST['Purpose'], '" />s
 			</field>';
 KL RICARD END Do not show purpose */
 
@@ -828,16 +828,16 @@ KL RICARD END Do not show purpose */
 		}
 		echo '<field>
 				<label for = "Notes">', __('Notes'), ':</label>
-				<input type = "text" name = "Notes" size = "50" maxlength = "49" value = "', $_POST['Notes'], '" />
+				<input type = "text" name="Notes" size = "50" maxlength = "49" value = "', $_POST['Notes'], '" />
 			</field>';
 
-		echo '<div class = "centre">
-			<input type = "submit" name = "submit" value = "', __('Accept'), '" />
-			<input type = "reset" name = "Cancel" value = "', __('Cancel'), '" />
+		echo '<div class="centre">
+			<input type = "submit" name="submit" value = "', __('Accept'), '" />
+			<input type = "reset" name="Cancel" value = "', __('Cancel'), '" />
 			</div>';
 		echo '</fieldset>'; // close main table
-		echo '<input type = "hidden" name = "SelectedTabs" value = "', $SelectedTabs, '" />';
-		echo '<input type = "hidden" name = "Days" value = "', $Days, '" />';
+		echo '<input type = "hidden" name="SelectedTabs" value = "', $SelectedTabs, '" />';
+		echo '<input type = "hidden" name="Days" value = "', $Days, '" />';
 		echo '</form>';
 	} // end if user wish to delete
 }

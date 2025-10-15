@@ -7,8 +7,8 @@ $ViewTopic = 'Dashboard';
 $BookMark = 'Configure';
 include('includes/header.php');
 
-echo '<p class = "page_title_text">
-		<img src = "', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title = "', __('Page Security Levels'), '" alt = "" />', ' ', $Title, '
+echo '<p class="page_title_text">
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', __('Page Security Levels'), '" alt="" />', ' ', $Title, '
 	</p>';
 
 if (isset($_GET['Delete'])) {
@@ -92,9 +92,9 @@ if (DB_num_rows($Result) > 0 and !isset($_GET['Edit'])) {
 					<th colspan = "6">', __('Configured Dashboard Scripts'), '</th>
 				</tr>
 				<tr>
-					<th class = "SortedColumn">', __('Script'), '</th>
+					<th class="SortedColumn">', __('Script'), '</th>
 					<th>', __('Description'), '</th>
-					<th class = "SortedColumn">', __('Security Level'), '</th>
+					<th class="SortedColumn">', __('Security Level'), '</th>
 					<th></th>
 					<th></th>
 				</tr>
@@ -103,12 +103,12 @@ if (DB_num_rows($Result) > 0 and !isset($_GET['Edit'])) {
 	$ScriptArray = array();
 	while ($MyRow = DB_fetch_array($Result)) {
 		$ScriptArray[] = $MyRow['scripts'];
-		echo '<tr class = "striped_row">
+		echo '<tr class="striped_row">
 				<td>', $MyRow['scripts'], '</td>
 				<td>', __($MyRow['description']), '</td>
 				<td>', __($MyRow['tokenname']), '</td>
-				<td><a href = "', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedScript = ', urlencode($MyRow['id']), '&amp;Edit = 1">', __('Edit'), '</a></td>
-				<td><a href = "', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedScript = ', urlencode($MyRow['id']), '&amp;Delete = 1">', __('Remove'), '</a></td>
+				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedScript=', urlencode($MyRow['id']), '&amp;Edit=1">', __('Edit'), '</a></td>
+				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedScript=', urlencode($MyRow['id']), '&amp;Delete=1">', __('Remove'), '</a></td>
 			</tr>';
 	}
 	echo '</tbody>
@@ -116,7 +116,7 @@ if (DB_num_rows($Result) > 0 and !isset($_GET['Edit'])) {
 }
 
 echo '<form action = "', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method = "post">';
-echo '<input type = "hidden" name = "FormID" value = "', $_SESSION['FormID'], '" />';
+echo '<input type = "hidden" name="FormID" value = "', $_SESSION['FormID'], '" />';
 
 if (isset($_GET['Edit'])) {
 	$SQL = "SELECT id,
@@ -136,13 +136,13 @@ if (isset($_GET['Edit'])) {
 			<legend>', __('Edit dashboard script details'), '</legend>
 			<field>
 				<label for = "ID">', __('Script ID'), '</label>
-				<div class = "fieldtext">', $MyRow['id'], '</div>
+				<div class="fieldtext">', $MyRow['id'], '</div>
 			</field>
 			<field>
 				<label for = "Script">', __('Script Name'), '</label>
-				<div class = "fieldtext">', $MyRow['scripts'], '</div>
+				<div class="fieldtext">', $MyRow['scripts'], '</div>
 			</field>';
-	echo '<input type = "hidden" name = "ID" value = "', $MyRow['id'], '" />';
+	echo '<input type = "hidden" name="ID" value = "', $MyRow['id'], '" />';
 } else {
 
 	$_POST['Script'] = '';
@@ -153,7 +153,7 @@ if (isset($_GET['Edit'])) {
 			<legend>', __('New dashboard script details'), '</legend>
 			<field>
 				<label for = "Script">', __('Script Name'), '</label>
-				<select name = "Script">';
+				<select name="Script">';
 	$Scripts = glob('dashboard/*.php');
 	foreach ($Scripts as $ScriptName) {
 		$ScriptName = basename($ScriptName);
@@ -177,7 +177,7 @@ $TokenSQL = "SELECT tokenid,
 $TokenResult = DB_query($TokenSQL);
 echo '<field>
 		<label for = "PageSecurity">', __('Security Token'), '</label>
-		<select name = "PageSecurity">';
+		<select name="PageSecurity">';
 while ($MyTokenRow = DB_fetch_array($TokenResult)) {
 	if ($MyTokenRow['tokenid'] == $_POST['PageSecurity']) {
 	echo '<option selected = "selected" value = "', $MyTokenRow['tokenid'], '">', $MyTokenRow['tokenname'], '</option>';
@@ -190,18 +190,18 @@ echo '</select>
 
 echo '<field>
 		<label for = "Description">', __('Description'), '</label>
-		<input type = "text" size = "50" name = "Description" value = "', $_POST['Description'], '" />
+		<input type = "text" size = "50" name="Description" value = "', $_POST['Description'], '" />
 	</field>';
 
 echo '</fieldset>';
 
 if (isset($_GET['Edit'])) {
-	echo '<div class = "centre">
-			<input type = "submit" name = "Update" value = "', __('Update Configuration'), '" />
+	echo '<div class="centre">
+			<input type = "submit" name="Update" value = "', __('Update Configuration'), '" />
 		</div';
 } else {
-	echo '<div class = "centre">
-			<input type = "submit" name = "Insert" value = "', __('Insert New Script'), '" />
+	echo '<div class="centre">
+			<input type = "submit" name="Insert" value = "', __('Insert New Script'), '" />
 		</div';
 }
 

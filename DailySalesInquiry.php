@@ -65,7 +65,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<body>';
 
 	if (isset($_POST['PrintPDF'])) {
-		$HTML .= '<img class = "logo" src = ' . $_SESSION['LogoFile'] . ' /><br />';
+		$HTML .= '<img class="logo" src = ' . $_SESSION['LogoFile'] . ' /><br />';
 	}
 
 	$HTML .= '<div class = "centre" id = "ReportHeader">
@@ -172,7 +172,7 @@ $HTML .= '</table>';
 		$HTML .= '</tbody>
 				</table>
 				<div class = "centre">
-					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" /></form>
+					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -194,7 +194,7 @@ $HTML .= '</table>';
 		include('includes/header.php');
 
 		echo '<p class = "page_title_text">
-				<img src = "'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title = "' . __('Daily Sales') . '" alt = "" />' . ' ' . __('Daily Sales') . '
+				<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . __('Daily Sales') . '" alt="" />' . ' ' . __('Daily Sales') . '
 			</p>';
 		$Title = __('Daily Sales Report');
 		echo $HTML;
@@ -204,7 +204,7 @@ $HTML .= '</table>';
 	include('includes/header.php');
 
 	echo '<p class = "page_title_text">
-			<img src = "'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title = "' . __('Daily Sales') . '" alt = "" />' . ' ' . __('Daily Sales') . '
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . __('Daily Sales') . '" alt="" />' . ' ' . __('Daily Sales') . '
 		</p>';
 
 	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target = "_blank">';

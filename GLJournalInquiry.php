@@ -10,11 +10,11 @@ include('includes/header.php');
 if (isset($_POST['FromTransDate'])){$_POST['FromTransDate'] = ConvertSQLDate($_POST['FromTransDate']);}
 if (isset($_POST['ToTransDate'])){$_POST['ToTransDate'] = ConvertSQLDate($_POST['ToTransDate']);}
 
-echo '<p class = "page_title_text"><img src = "' . $RootPath, '/css/', $Theme, '/images/money_add.png" title = "' . __('Search') . '" alt = "" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text"><img src="' . $RootPath, '/css/', $Theme, '/images/money_add.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (!isset($_POST['Show'])) {
 	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post">';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 	echo '<fieldset>';
 	echo '<legend>' . __('Selection Criteria') . '</legend>';
@@ -26,7 +26,7 @@ if (!isset($_POST['Show'])) {
 	if (DB_num_rows($Result) > 0) {
 		echo '<field>
 				<label for = "TransType">' . __('Transaction Type') . ' </label>
-				<select name = "TransType">';
+				<select name="TransType">';
 		while ($MyRow = DB_fetch_array($Result)) {
 			if (!isset($MaxJournalNumberUsed)) {
 				$MaxJournalNumberUsed = $MyRow['typeno'];
@@ -43,8 +43,8 @@ if (!isset($_POST['Show'])) {
 
 	echo '<field>
 			<label>' . __('Journal Number Range') . ' (' . __('Between') . ' 1 ' . __('and') . ' ' . $MaxJournalNumberUsed . ')</label>
-			' . __('From') . ':' . '<input type = "text" class = "number" name = "NumberFrom" size = "10" maxlength = "11" value = "1" />' . '
-			' . __('To') . ':' . '<input type = "text" class = "number" name = "NumberTo" size = "10" maxlength = "11" value = "' . $MaxJournalNumberUsed . '" />' . '
+			' . __('From') . ':' . '<input type = "text" class="number" name="NumberFrom" size = "10" maxlength = "11" value = "1" />' . '
+			' . __('To') . ':' . '<input type = "text" class="number" name="NumberTo" size = "10" maxlength = "11" value = "' . $MaxJournalNumberUsed . '" />' . '
 		</field>';
 
 	$SQL = "SELECT MIN(trandate) as fromdate,
@@ -62,13 +62,13 @@ if (!isset($_POST['Show'])) {
 
 	echo '<field>
 			<label>' . __('Journals Dated Between') . ':</label>
-			' . __('From') . ':' . '<input name = "FromTransDate" type = "date" maxlength = "10" size = "11" value = "' . $FromDate . '" />
-			' . __('To') . ':' . '<input name = "ToTransDate" type = "date" maxlength = "10" size = "11" value = "' . $ToDate . '" />
+			' . __('From') . ':' . '<input name="FromTransDate" type = "date" maxlength = "10" size = "11" value = "' . $FromDate . '" />
+			' . __('To') . ':' . '<input name="ToTransDate" type = "date" maxlength = "10" size = "11" value = "' . $ToDate . '" />
 		</field>';
 
 	echo '</fieldset>';
-	echo '<div class = "centre">
-			<input type = "submit" name = "Show" value = "' . __('Show transactions') . '" />
+	echo '<div class="centre">
+			<input type = "submit" name="Show" value = "' . __('Show transactions') . '" />
 		</div>';
 	echo '</form>';
 }
@@ -97,7 +97,7 @@ else {
 		prnMsg(__('There are no transactions for this account in the date range selected') , 'info');
 	}
 	else {
-		echo '<table class = "selection">';
+		echo '<table class="selection">';
 		echo '<tr>
 				<th>' . __('Date') . '</th>
 				<th>' . __('Journal Number') . '</th>
@@ -129,12 +129,12 @@ else {
 	echo '<tr>
 						<td colspan = "8"></td>
 					</tr>
-					<tr class = "striped_row">
+					<tr class="striped_row">
 					<td>' . ConvertSQLDate($MyRow['trandate']) . '</td>
-					<td class = "number">' . $MyRow['typeno'] . '</td>';
+					<td class="number">' . $MyRow['typeno'] . '</td>';
 }
 			else {
-				echo '<tr class = "striped_row">
+				echo '<tr class="striped_row">
 						<td colspan = "2"></td>';
 			}
 
@@ -157,15 +157,15 @@ else {
 			}
 
 			echo '<td>' . $MyRow['narrative'] . '</td>
-					<td class = "number">' . locale_number_format($MyRow['amount'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($MyRow['amount'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 					<td valign = "top">', $TagDescriptions, '</td>';
 
 			if ($MyRow['typeno'] != $LastJournal and $CheckRow[0] > 0) {
-	echo '<td class = "number">
-						<a href = "' . $RootPath . '/PDFGLJournal.php?JournalNo = ' . $MyRow['typeno'] . '&Type = ' . $_POST['TransType'] . '&PDF = True" target = "_blank">' . __('Print') . '</a>
+	echo '<td class="number">
+						<a href="' . $RootPath . '/PDFGLJournal.php?JournalNo=' . $MyRow['typeno'] . '&Type=' . $_POST['TransType'] . '&PDF=True" target="_blank">' . __('Print') . '</a>
 					</td>';
-				echo '<td class = "number">
-						<a href = "' . $RootPath . '/PDFGLJournal.php?JournalNo = ' . $MyRow['typeno'] . '&Type = ' . $_POST['TransType'] . '&View = True" target = "_blank">' . __('View') . '</a>
+				echo '<td class="number">
+						<a href="' . $RootPath . '/PDFGLJournal.php?JournalNo=' . $MyRow['typeno'] . '&Type=' . $_POST['TransType'] . '&View=True" target="_blank">' . __('View') . '</a>
 					</td></tr>';
 }
 
@@ -177,8 +177,8 @@ else {
 		echo '</table>';
 	} //end if no bank trans in the range to show
 	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post">';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
-	echo '<br /><div class = "centre"><input type = "submit" name = "Return" value = "' . __('Select Another Date') . '" /></div>';
+	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<br /><div class="centre"><input type = "submit" name="Return" value = "' . __('Select Another Date') . '" /></div>';
 	echo '</form>';
 }
 include('includes/footer.php');

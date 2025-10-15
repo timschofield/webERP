@@ -7,9 +7,9 @@ $BookMark = '';// Anchor's id in the manual's html document.
 $Title = __('Customer EDI Set Up');
 include('includes/header.php');
 
-echo '<a href = "' . $RootPath . '/SelectCustomer.php">' . __('Back to Customers') . '</a><br />';
+echo '<a href="' . $RootPath . '/SelectCustomer.php">' . __('Back to Customers') . '</a><br />';
 
-echo '<p class = "page_title_text" ><img src = "' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/customer.png" title = "' . __('Search') . '" alt = "" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/customer.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
@@ -58,7 +58,7 @@ if (isset($_POST['submit'])) {
 }
 
 echo '<form method = "post" action = "' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
-echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 echo '<fieldset>
 		<legend>', __('EDI Details'), '</legend>';
 
@@ -89,7 +89,7 @@ echo '<field>
 	</field>';
 echo '<field>
 		<label for = "EDIInvoices">' . __('Enable Sending of EDI Invoices') . ':</label>
-		<select name = "EDIInvoices">';
+		<select name="EDIInvoices">';
 
 if ($MyRow['ediinvoices'] == 0) {
 	echo '<option selected = "selected" value = "0">' . __('Disabled') . '</option>';
@@ -99,12 +99,12 @@ if ($MyRow['ediinvoices'] == 0) {
 	echo '<option selected = "selected" value = "1">' . __('Enabled') . '</option>';
 }
 
-echo '</select><a href = "' . $RootPath . '/EDIMessageFormat.php?MessageType = INVOIC&amp;PartnerCode = ' . urlencode($_SESSION['CustomerID']) . '">' . __('Create') . '/' . __('Edit Invoice Message Format') . '</a>
+echo '</select><a href="' . $RootPath . '/EDIMessageFormat.php?MessageType=INVOIC&amp;PartnerCode=' . urlencode($_SESSION['CustomerID']) . '">' . __('Create') . '/' . __('Edit Invoice Message Format') . '</a>
 	</field>';
 
 echo '<field>
 		<label for = "EDIOrders">' . __('Enable Receiving of EDI Orders') . ':</label>
-		<select name = "EDIOrders">';
+		<select name="EDIOrders">';
 
 if ($MyRow['ediorders'] == 0) {
 	echo '<option selected = "selected" value = "0">' . __('Disabled') . '</option>';
@@ -119,12 +119,12 @@ echo '</select>
 
 echo '<field>
 		<label for = "EDIReference">' . __('Customer EDI Reference') . ':</label>
-		<input type = "text" name = "EDIReference" size = "20" required = "required" maxlength = "20" value = "' . $MyRow['edireference'] . '" />
+		<input type = "text" name="EDIReference" size = "20" required = "required" maxlength = "20" value = "' . $MyRow['edireference'] . '" />
 	</field>';
 
 echo '<field>
 		<label for = "EDITransport">' . __('EDI Communication Method') . ':</label>
-		<select name = "EDITransport" >';
+		<select name="EDITransport" >';
 
 if ($MyRow['editransport'] == 'email') {
 	echo '<option selected = "selected" value = "email">' . __('Email Attachments') . '</option>';
@@ -139,23 +139,23 @@ echo '</select>
 
 echo '<field>
 		<label for = "EDIAddress">' . __('FTP Server or Email Address') . ':</label>
-		<input type = "text" name = "EDIAddress" size = "42" required = "required" maxlength = "40" value = "' . $MyRow['ediaddress'] . '" />
+		<input type = "text" name="EDIAddress" size = "42" required = "required" maxlength = "40" value = "' . $MyRow['ediaddress'] . '" />
 	</field>';
 
 if ($MyRow['editransport'] == 'ftp') {
 	echo '<field>
 			<label for = "EDIServerUser">' . __('FTP Server User Name') . ':</label>
-			<input type = "text" name = "EDIServerUser" size = "20" required = "required" maxlength = "20" value = "' . $MyRow['ediserveruser'] . '" />
+			<input type = "text" name="EDIServerUser" size = "20" required = "required" maxlength = "20" value = "' . $MyRow['ediserveruser'] . '" />
 		</field>';
 	echo '<field>
 			<label for = "EDIServerPwd">' . __('FTP Server Password') . ':</label>
-			<input type = "text" name = "EDIServerPwd" size = "20" required = "required" maxlength = "20" value = "' . $MyRow['ediserverpwd'] . '" />
+			<input type = "text" name="EDIServerPwd" size = "20" required = "required" maxlength = "20" value = "' . $MyRow['ediserverpwd'] . '" />
 		</field>';
 }
 
 echo '</fieldset>
-		<div class = "centre">
-			<input type = "submit" name = "submit" value = "' . __('Update EDI Configuration') . '" />
+		<div class="centre">
+			<input type = "submit" name="submit" value = "' . __('Update EDI Configuration') . '" />
 		</div>
 	</form>';
 

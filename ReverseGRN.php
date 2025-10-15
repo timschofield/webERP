@@ -28,7 +28,7 @@ if (!isset($_POST['SupplierID']) or $_POST['SupplierID'] == "") {
 	$_POST['SuppName'] = $SuppRow[0];
 }
 
-echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title = "' . __('Sales') . '" alt = "" />' . ' ' . __('Reverse Goods Received from') . ' ' . $_POST['SuppName'] . '</p> ';
+echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . __('Sales') . '" alt="" />' . ' ' . __('Reverse Goods Received from') . ' ' . $_POST['SuppName'] . '</p> ';
 
 if (isset($_GET['GRNNo']) and isset($_POST['SupplierID'])) {
 	/* SQL to process the postings for the GRN reversal.. */
@@ -327,27 +327,27 @@ if (isset($_GET['GRNNo']) and isset($_POST['SupplierID'])) {
 
 	echo '<br />' . __('GRN number') . ' ' . $_GET['GRNNo'] . ' ' . __('for') . ' ' . $QtyToReverse . ' x ' . $GRN['itemcode'] . ' - ' . $GRN['itemdescription'] . ' ' . __('has been reversed') . '<br />';
 	unset($_GET['GRNNo']); // to ensure it cant be done again!!
-	echo '<a href = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . __('Select another GRN to Reverse') . '</a>';
+	echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . __('Select another GRN to Reverse') . '</a>';
 	/*end of Process Goods Received Reversal entry */
 
 } else {
 	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post">';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 	if (!isset($_POST['RecdAfterDate']) or !Is_Date($_POST['RecdAfterDate'])) {
 		$_POST['RecdAfterDate'] = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, date("m") - 3, date("d"), date("Y")));
 	}
-	echo '<input type = "hidden" name = "SupplierID" value = "' . $_POST['SupplierID'] . '" />';
-	echo '<input type = "hidden" name = "SuppName" value = "' . $_POST['SuppName'] . '" />';
+	echo '<input type = "hidden" name="SupplierID" value = "' . $_POST['SupplierID'] . '" />';
+	echo '<input type = "hidden" name="SuppName" value = "' . $_POST['SuppName'] . '" />';
 	echo '<fieldset>
 			<legend>', __('GRN Selection'), '</legend>';
 	echo '<field>
 			<label for = "RecdAfterDate">' . __('Show all goods received after') . ': </label>
-			<input type = "date" name = "RecdAfterDate" value = "' . FormatDateForSQL($_POST['RecdAfterDate']) . '" maxlength = "10" size = "11" />
+			<input type = "date" name="RecdAfterDate" value = "' . FormatDateForSQL($_POST['RecdAfterDate']) . '" maxlength = "10" size = "11" />
 		</field>
 		</fieldset>
-		<div class = "centre">
-			<input type = "submit" name = "ShowGRNS" value = "' . __('Show Outstanding Goods Received') . '" />
+		<div class="centre">
+			<input type = "submit" name="ShowGRNS" value = "' . __('Show Outstanding Goods Received') . '" />
 		</div>
 	</form>';
 
@@ -376,7 +376,7 @@ if (isset($_GET['GRNNo']) and isset($_POST['SupplierID'])) {
 		if (DB_num_rows($Result) == 0) {
 			prnMsg(__('There are no outstanding goods received yet to be invoiced for') . ' ' . $_POST['SuppName'] . '.<br />' . __('To reverse a GRN that has been invoiced first it must be credited'), 'warn');
 		} else { //there are GRNs to show
-			echo '<table cellpadding = "2" class = "selection">
+			echo '<table cellpadding = "2" class="selection">
 					<tr>
 						<th>' . __('GRN') . ' #</th>
 						<th>' . __('GRN Batch') . '</th>
@@ -400,18 +400,18 @@ if (isset($_GET['GRNNo']) and isset($_POST['SupplierID'])) {
 				$DisplayQtyInv = locale_number_format($MyRow['quantityinv'], 'Variable');
 				$DisplayQtyRev = locale_number_format($MyRow['qtytoreverse'], 'Variable');
 				$DisplayDateDel = ConvertSQLDate($MyRow['deliverydate']);
-				$LinkToRevGRN = '<a href = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?GRNNo = ' . $MyRow['grnno'] . '">' . __('Reverse') . '</a>';
+				$LinkToRevGRN = '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?GRNNo=' . $MyRow['grnno'] . '">' . __('Reverse') . '</a>';
 
-				echo '<tr class = "striped_row">
+				echo '<tr class="striped_row">
 						<td>', $MyRow['grnno'], '</td>
 						<td>', $MyRow['grnbatch'], '</td>
 						<td>', $MyRow['supplierref'], '</td>
 						<td>', $MyRow['itemcode'], '</td>
 						<td>', $MyRow['itemdescription'], '</td>
 						<td>', $DisplayDateDel, '</td>
-						<td class = "number">', $DisplayQtyRecd, '</td>
-						<td class = "number">', $DisplayQtyInv, '</td>
-						<td class = "number">', $DisplayQtyRev, '</td>
+						<td class="number">', $DisplayQtyRecd, '</td>
+						<td class="number">', $DisplayQtyInv, '</td>
+						<td class="number">', $DisplayQtyRev, '</td>
 						<td>', $LinkToRevGRN, '</td>
 					</tr>';
 

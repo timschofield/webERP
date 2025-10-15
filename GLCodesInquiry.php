@@ -8,7 +8,7 @@ $BookMark = '';
 include('includes/header.php');
 
 echo '<p class = "page_title_text">
-<img src = "'.$RootPath.'/css/'.$Theme.'/images/printer.png" title = "' . __('Print') . '" alt = "" />' . ' ' . __('Print Invoices or Credit Notes (Portrait Mode)') . '
+<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . __('Print') . '" alt="" />' . ' ' . __('Print Invoices or Credit Notes (Portrait Mode)') . '
 </p>';
 
 $SQL = "SELECT group_,

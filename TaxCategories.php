@@ -7,8 +7,8 @@ $ViewTopic = 'Tax';
 $BookMark = 'TaxCategories';
 include('includes/header.php');
 
-echo '<p class = "page_title_text"><img alt = "" src = "' . $RootPath . '/css/' . $Theme .
-		'/images/maintenance.png" title = "' .
+echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
+		'/images/maintenance.png" title="' .
 		__('Tax Category Maintenance') . '" />' . ' ' .
 		__('Tax Category Maintenance') . '</p>';
 
@@ -163,23 +163,23 @@ if (isset($_POST['submit'])) {
 	$ErrMsg = __('Could not get tax categories because');
 	$Result = DB_query($SQL, $ErrMsg);
 
-	echo '<table class = "selection">
+	echo '<table class="selection">
 		<thead>
 			<tr>
-				<th class = "SortedColumn">' . __('Tax Category') . '</th>
+				<th class="SortedColumn">' . __('Tax Category') . '</th>
 				<th colspan = "2">&nbsp;</th>
 			</tr>
 		</thead>
 		<tbody>';
 
 	while ($MyRow = DB_fetch_row($Result)) {
-		echo '<tr class = "striped_row">';
+		echo '<tr class="striped_row">';
 
 		if ($MyRow[1]!='Freight') {
 	// Uses gettext() to translate 'Exempt' and 'Handling':
 			echo '<td>' . __($MyRow[1]) . '</td>
-				<td><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTaxCategory = ' . $MyRow[0] . '">' . __('Edit') . '</a></td>
-				<td><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTaxCategory = ' . $MyRow[0] . '&amp;delete = 1" onclick = "return confirm(\'' . __('Are you sure you wish to delete this tax category?') . '\');">' .
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTaxCategory=' . $MyRow[0] . '">' . __('Edit') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTaxCategory=' . $MyRow[0] . '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this tax category?') . '\');">' .
 					__('Delete')  . '</a></td>';
 } else {
 			echo '<td>' . __($MyRow[1]) . '</td><td>&nbsp;</td><td>&nbsp;</td>';// Uses gettext() to translate 'Freight'.
@@ -192,15 +192,15 @@ if (isset($_POST['submit'])) {
 
 
 if (isset($SelectedTaxCategory)) {
-	echo '<div class = "centre">
-			<a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Review Tax Categories') . '</a>
+	echo '<div class="centre">
+			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Review Tax Categories') . '</a>
 		</div>';
 }
 
 if (! isset($_GET['delete'])) {
 
 	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedTaxCategory)) {
 		//editing an existing section
@@ -219,7 +219,7 @@ if (! isset($_GET['delete'])) {
 
 			$_POST['TaxCategoryName']  = $MyRow['taxcatname'];
 
-			echo '<input type = "hidden" name = "SelectedTaxCategory" value = "' . $MyRow['taxcatid'] . '" />';
+			echo '<input type = "hidden" name="SelectedTaxCategory" value = "' . $MyRow['taxcatid'] . '" />';
 			echo '<fieldset>
 					<legend>', __('Edit Tax Category'), '</legend>';
 		}
@@ -231,22 +231,22 @@ if (! isset($_GET['delete'])) {
 	}
 	echo '<field>
 			<label for = "TaxCategoryName">' . __('Tax Category Name') . ':' . '</label>
-			<input pattern = "(?!^ +$)[^><+-]+" required = "required" placeholder = "'.__('No more than 30 characters').'" type = "text" title = "" name = "TaxCategoryName" size = "30" maxlength = "30" value = "' . $_POST['TaxCategoryName'] . '" />
+			<input pattern = "(?!^ +$)[^><+-]+" required ="required" placeholder = "'.__('No more than 30 characters').'" type = "text" title="" name="TaxCategoryName" size = "30" maxlength = "30" value = "' . $_POST['TaxCategoryName'] . '" />
 			<fieldhelp>'.__('No illegal characters allowed and cannot be blank').'</fieldhelp>
 		</field>
 		</fieldset>';
 
-	echo '<div class = "centre">
-			<input type = "submit" name = "submit" value = "' . __('Enter Information') . '" />
+	echo '<div class="centre">
+			<input type = "submit" name="submit" value = "' . __('Enter Information') . '" />
 		</div>
 	</form>';
 
 } //end if record deleted no point displaying form to add record
 
-echo '<div class = "centre">
-		<a href = "' . $RootPath . '/TaxAuthorities.php">' . __('Tax Authorities and Rates Maintenance') .  '</a><br />
-		<a href = "' . $RootPath . '/TaxGroups.php">' . __('Tax Group Maintenance') .  '</a><br />
-		<a href = "' . $RootPath . '/TaxProvinces.php">' . __('Dispatch Tax Province Maintenance') .  '</a>
+echo '<div class="centre">
+		<a href="' . $RootPath . '/TaxAuthorities.php">' . __('Tax Authorities and Rates Maintenance') .  '</a><br />
+		<a href="' . $RootPath . '/TaxGroups.php">' . __('Tax Group Maintenance') .  '</a><br />
+		<a href="' . $RootPath . '/TaxProvinces.php">' . __('Dispatch Tax Province Maintenance') .  '</a>
 	</div>';
 
 include('includes/footer.php');

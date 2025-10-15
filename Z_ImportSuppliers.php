@@ -357,18 +357,18 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 	echo '
 		<br />
-		<a href = "' . $RootPath . '/Z_ImportSuppliers.php?gettemplate = 1">Get Import Template</a>
+		<a href="' . $RootPath . '/Z_ImportSuppliers.php?gettemplate=1">Get Import Template</a>
 		<br />
 		<br />';
 	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" enctype = "multipart/form-data">';
-    echo '<div class = "centre">';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+    echo '<div class="centre">';
+	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 
-	echo '<input type = "hidden" name = "MAX_FILE_SIZE" value = "1000000" />' .
-			__('Upload file') . ': <input name = "userfile" type = "file" />
+	echo '<input type = "hidden" name="MAX_FILE_SIZE" value = "1000000" />' .
+			__('Upload file') . ': <input name="userfile" type = "file" />
 			<input type = "submit" value = "' . __('Send File') . '" />';
 
-	echo '<br/>',__('Update if SupplierNo exists'),':<input type = "checkbox" name = "UpdateIfExists">';
+	echo '<br/>',__('Update if SupplierNo exists'),':<input type = "checkbox" name="UpdateIfExists">';
     echo '</div>
 		</form>';
 

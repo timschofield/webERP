@@ -23,7 +23,7 @@ if ( isset($_GET['CurrencyToShow']) ){
 	echo '<form method = "post" id = "update" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
     echo '<div>';
 	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
-	echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme,
+	echo '<p class = "page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/currency.png" title = "', // Icon image.
 		__('View Currency Trend'), '" /> ', // Icon title.
 		__('View Currency Trend'), '</p>';// Page title.
@@ -60,7 +60,7 @@ if ( isset($_GET['CurrencyToShow']) ){
 // **************
 // SHOW OUR GRAPH
 // **************
-	$Image = '//www.google.com/finance/getchart?q = ' . $FunctionalCurrency . $CurrencyToShow . '&amp;x = CURRENCY&amp;p = 3M&amp;i = 86400';
+	$Image = '//www.google.com/finance/getchart?q =' . $FunctionalCurrency . $CurrencyToShow . '&amp;x =CURRENCY&amp;p =3M&amp;i =86400';
 
 	echo '<br />
 		<table class = "selection">
@@ -72,7 +72,7 @@ if ( isset($_GET['CurrencyToShow']) ){
 			</th>
 		</tr>
 		<tr>
-			<td><img src = "' . $Image . '" alt = "' .__('Trend Currently Unavailable') . '" /></td>
+			<td><img src="' . $Image . '" alt = "' .__('Trend Currently Unavailable') . '" /></td>
 		</tr>
 		</table>';
 

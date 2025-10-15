@@ -108,10 +108,10 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level) {
 				or $MyRow['mbflag']=='K'
 				or $MyRow['mbflag']=='D') {
 	$DrillText = '%s%s';
-				$DrillLink = '<div class = "centre">' . __('No lower levels') . '</div>';
+				$DrillLink = '<div class="centre">' . __('No lower levels') . '</div>';
 				$DrillID = '';
 } else {
-				$DrillText = '<a href = "%s&amp;Select = %s">' . __('Drill Down') . '</a>';
+				$DrillText = '<a href="%s&amp;Select=%s">' . __('Drill Down') . '</a>';
 				$DrillLink = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?';
 				$DrillID = $MyRow['component'];
 			}
@@ -141,14 +141,14 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level) {
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					<td class = "number">%s</td>
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					<td class = "number">%s</td>
-					<td><a href = "%s&amp;Select = %s&amp;SelectedComponent = %s">' . __('Edit') . '</a></td>
-					 <td><a href = "%s&amp;Select = %s&amp;SelectedComponent = %s&amp;delete = 1&amp;ReSelect = %s&amp;Location = %s&amp;WorkCentre = %s" onclick = "return confirm(\'' . __('Are you sure you wish to delete this component from the bill of material?') . '\');">' . __('Delete') . '</a></td>
+					<td class="number">%s</td>
+					<td><a href="%s&amp;Select=%s&amp;SelectedComponent=%s">' . __('Edit') . '</a></td>
+					 <td><a href="%s&amp;Select=%s&amp;SelectedComponent=%s&amp;delete=1&amp;ReSelect=%s&amp;Location=%s&amp;WorkCentre=%s" onclick="return confirm(\'' . __('Are you sure you wish to delete this component from the bill of material?') . '\');">' . __('Delete') . '</a></td>
 					 </tr>',
 					$MyRow['sequence'],
 					$MyRow['component'],
@@ -219,7 +219,7 @@ $InputError = 0;
 if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Component
 	$SelectedParent = $Select;
 	unset($Select);// = null;
-	echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title = "' . __('Search') .
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') .
 		'" alt = "" />' . ' ' . $Title . '</p><br />';
 
 	if (isset($SelectedParent) and isset($_POST['Submit'])) {
@@ -429,7 +429,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			break;
 	}
 
-	echo '<br /><div class = "centre"><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Select a Different BOM') . '</a></div><br />';
+	echo '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Select a Different BOM') . '</a></div><br />';
 	// Display Manufatured Parent Items
 	$SQL = "SELECT bom.parent,
 				stockmaster.description,
@@ -443,10 +443,10 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 	$Result = DB_query($SQL, $ErrMsg);
 	$ix = 0;
 	if ( DB_num_rows($Result) > 0 ) {
-     echo '<table class = "selection">';
-	 echo '<tr><td><div class = "centre">' . __('Manufactured parent items').' : ';
+     echo '<table class="selection">';
+	 echo '<tr><td><div class="centre">' . __('Manufactured parent items').' : ';
 	 while ($MyRow = DB_fetch_array($Result)){
-	 	   echo (($ix)?', ':'') . '<a href = "'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Select = '.$MyRow['parent'].'">' .
+	 	   echo (($ix)?', ':'') . '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Select='.$MyRow['parent'].'">' .
 			$MyRow['description'].'&nbsp;('.$MyRow['parent'].')</a>';
 			$ix++;
 	 } //end while loop
@@ -465,11 +465,11 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 	$ErrMsg = __('Could not retrieve the description of the parent part because');
 	$Result = DB_query($SQL, $ErrMsg);
 	if ( DB_num_rows($Result) > 0 ) {
-        echo '<table class = "selection">';
-		echo '<tr><td><div class = "centre">' . __('Assembly parent items').' : ';
+        echo '<table class="selection">';
+		echo '<tr><td><div class="centre">' . __('Assembly parent items').' : ';
 	 	$ix = 0;
 	 	while ($MyRow = DB_fetch_array($Result)){
-	 	   echo (($ix)?', ':'') . '<a href = "'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Select = '.$MyRow['parent'].'">' .
+	 	   echo (($ix)?', ':'') . '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Select='.$MyRow['parent'].'">' .
 			$MyRow['description'].'&nbsp;('.$MyRow['parent'].')</a>';
 			$ix++;
 	 	} //end while loop
@@ -489,11 +489,11 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 	$ErrMsg = __('Could not retrieve the description of the parent part because');
 	$Result = DB_query($SQL, $ErrMsg);
 	if ( DB_num_rows($Result) > 0 ) {
-        echo '<table class = "selection">';
-		echo '<tr><td><div class = "centre">' . __('Kit sets').' : ';
+        echo '<table class="selection">';
+		echo '<tr><td><div class="centre">' . __('Kit sets').' : ';
 	 	$ix = 0;
 	 	while ($MyRow = DB_fetch_array($Result)){
-	 	   echo (($ix)?', ':'') . '<a href = "'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Select = '.$MyRow['parent'].'">' .
+	 	   echo (($ix)?', ':'') . '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Select='.$MyRow['parent'].'">' .
 			$MyRow['description'].'&nbsp;('.$MyRow['parent'].')</a>';
 			$ix++;
 	 	} //end while loop
@@ -512,12 +512,12 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 	$ErrMsg = __('Could not retrieve the description of the parent part because');
 	$Result = DB_query($SQL, $ErrMsg);
 	if ( DB_num_rows($Result) > 0 ) {
-		echo '<table class = "selection">
+		echo '<table class="selection">
 				<tr>
-					<td><div class = "centre">' . __('Phantom').' : ';
+					<td><div class="centre">' . __('Phantom').' : ';
 	 	$ix = 0;
 	 	while ($MyRow = DB_fetch_array($Result)){
-	 	   echo (($ix)?', ':'') . '<a href = "'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Select = '.$MyRow['parent'].'">' .  $MyRow['description'].'&nbsp;('.$MyRow['parent'].')</a>';
+	 	   echo (($ix)?', ':'') . '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Select='.$MyRow['parent'].'">' .  $MyRow['description'].'&nbsp;('.$MyRow['parent'].')</a>';
 			$ix++;
 	 	} //end while loop
 	 	echo '</div></td>
@@ -525,9 +525,9 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			</table>';
 	}
 	echo '<br />
-			<table class = "selection">';
+			<table class="selection">';
 	echo '<tr>
-			<th colspan = "13"><div class = "centre"><b>' . $SelectedParent .' - ' . $MyRow[0] . ' ('. $MBdesc. ') </b></div></th>
+			<th colspan = "13"><div class="centre"><b>' . $SelectedParent .' - ' . $MyRow[0] . ' ('. $MBdesc. ') </b></div></th>
 		</tr>';
 
 	$BOMTree = array();
@@ -551,7 +551,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 					</tr>';
 	echo $TableHeader;
 	if (count($BOMTree) == 0) {
-		echo '<tr class = "striped_row">
+		echo '<tr class="striped_row">
 				<td colspan = "8">' . __('No materials found.') . '</td>
 			</tr>';
 	} else {
@@ -563,7 +563,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			$Parent = $BOMItem['Parent'];
 			$Component = $BOMItem['Component'];
 
-			echo '<tr class = "striped_row">';
+			echo '<tr class="striped_row">';
 
 			DisplayBOMItems($UltimateParent, $Parent, $Component, $Level);
 		}
@@ -572,9 +572,9 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		<br />';
     /* We do want to show the new component entry form in any case - it is a lot of work to get back to it otherwise if we need to add */
 
-		echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Select = ' . $SelectedParent .'">';
+		echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Select=' . $SelectedParent .'">';
         echo '<div>';
-		echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+		echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 		if (isset($_GET['SelectedComponent']) and $InputError != 1) {
 		//editing a selected component from the link to the line item
@@ -604,31 +604,31 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 			prnMsg(__('Edit the details of the selected component in the fields below') . '. <br />' . __('Click on the Enter Information button to update the component details'),'info');
 			echo '<br />
-					<input type = "hidden" name = "SelectedParent" value = "' . $SelectedParent . '" />';
-			echo '<input type = "hidden" name = "SelectedComponent" value = "' . $SelectedComponent . '" />';
-			echo '<table class = "selection">';
+					<input type = "hidden" name="SelectedParent" value = "' . $SelectedParent . '" />';
+			echo '<input type = "hidden" name="SelectedComponent" value = "' . $SelectedComponent . '" />';
+			echo '<table class="selection">';
 			echo '<tr>
-					<th colspan = "13"><div class = "centre"><b>' .  ('Edit Component Details')  . '</b></div></th>
+					<th colspan = "13"><div class="centre"><b>' .  ('Edit Component Details')  . '</b></div></th>
 				</tr>';
 			echo '<tr>
 					<td>' . __('Component') . ':</td>
 					<td><b>' . $SelectedComponent . '</b></td>
-					 <input type = "hidden" name = "Component" value = "' . $SelectedComponent . '" />
+					 <input type = "hidden" name="Component" value = "' . $SelectedComponent . '" />
 				</tr>';
 
 		} else { //end of if $SelectedComponent
 			$_POST['Sequence'] = 0;
-			echo '<input type = "hidden" name = "SelectedParent" value = "' . $SelectedParent . '" />';
+			echo '<input type = "hidden" name="SelectedParent" value = "' . $SelectedParent . '" />';
 			/* echo "Enter the details of a new component in the fields below. <br />Click on 'Enter Information' to add the new component, once all fields are completed.";
 			*/
-			echo '<table class = "selection">';
+			echo '<table class="selection">';
 			echo '<tr>
-					<th colspan = "13"><div class = "centre"><b>' . __('New Component Details')  . '</b></div></th>
+					<th colspan = "13"><div class="centre"><b>' . __('New Component Details')  . '</b></div></th>
 				</tr>';
 			echo '<tr>
 					<td>' . __('Component code') . ':</td>
 					<td>';
-			echo '<select ' . (in_array('ComponentCode',$Errors) ?  'class = "selecterror"' : '' ) .' tabindex = "1" name = "Component">';
+			echo '<select ' . (in_array('ComponentCode',$Errors) ?  'class ="selecterror"' : '' ) .' tabindex = "1" name="Component">';
 
 			if ($ParentMBflag == 'A') {
 	/*Its an assembly */
@@ -669,12 +669,12 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		}
 		echo '<tr>
                 <td>' . __('Sequence in BOM') . ':</td>
-                <td><input type = "text" class = "integer" required = "required" size = "5" name = "Sequence" value = "' . $_POST['Sequence'] . '" /></td>
+                <td><input type = "text" class="integer" required = "required" size = "5" name="Sequence" value = "' . $_POST['Sequence'] . '" /></td>
             </tr>';
 
 		echo '<tr>
 				<td>' . __('Location') . ': </td>
-				<td><select tabindex = "2" name = "LocCode">';
+				<td><select tabindex = "2" name="LocCode">';
 
 		DB_free_result($Result);
 		$SQL = "SELECT locationname,
@@ -709,12 +709,12 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 		if (DB_num_rows($Result) == 0){
 			prnMsg( __('There are no work centres set up yet') . '. ' . __('Please use the link below to set up work centres') . '.','warn');
-			echo '<a href = "' . $RootPath . '/WorkCentres.php">' . __('Work Centre Maintenance') . '</a></td></tr></table><br />';
+			echo '<a href="' . $RootPath . '/WorkCentres.php">' . __('Work Centre Maintenance') . '</a></td></tr></table><br />';
 			include('includes/footer.php');
 			exit();
 		}
 
-		echo '<select tabindex = "3" name = "WorkCentreAdded">';
+		echo '<select tabindex = "3" name="WorkCentreAdded">';
 
 		while ($MyRow = DB_fetch_array($Result)) {
 			if (isset($_POST['WorkCentreAdded']) and $MyRow['code']==$_POST['WorkCentreAdded']) {
@@ -731,7 +731,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 				</tr>
 				<tr>
 					<td>' . __('Quantity') . ': </td>
-					<td><input ' . (in_array('Quantity',$Errors) ?  'class = "inputerror"' : '' ) .' tabindex = "4" type = "text" class = "number" required = "required" name = "Quantity" size = "10" maxlength = "8" title = "' . __('Enter the quantity of this item required for the parent item') . '" value = "';
+					<td><input ' . (in_array('Quantity',$Errors) ?  'class ="inputerror"' : '' ) .' tabindex = "4" type = "text" class="number" required = "required" name="Quantity" size = "10" maxlength = "8" title="' . __('Enter the quantity of this item required for the parent item') . '" value = "';
 		if (isset($_POST['Quantity'])){
 			echo $_POST['Quantity'];
 		} else {
@@ -750,18 +750,18 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 		echo '<tr>
 				<td>' . __('Effective After') . ' (' . $_SESSION['DefaultDateFormat'] . '):</td>
-				<td><input ' . (in_array('EffectiveAfter',$Errors) ?  'class = "inputerror"' : '' ) . ' tabindex = "5" required = "required" name = "EffectiveAfter" type = "date" size = "11" maxlength = "10" value = "' . $_POST['EffectiveAfter'] .'" /></td>
+				<td><input ' . (in_array('EffectiveAfter',$Errors) ?  'class ="inputerror"' : '' ) . ' tabindex = "5" required = "required" name="EffectiveAfter" type = "date" size = "11" maxlength = "10" value = "' . $_POST['EffectiveAfter'] .'" /></td>
 			</tr>
 			<tr>
 				<td>' . __('Effective To') . ' (' . $_SESSION['DefaultDateFormat'] . '):</td>
-				<td><input  ' . (in_array('EffectiveTo',$Errors) ?  'class = "inputerror"' : '' ) . ' tabindex = "6" name = "EffectiveTo" type = "date" size = "11" maxlength = "10" value = "' . $_POST['EffectiveTo'] .'" /></td>
+				<td><input  ' . (in_array('EffectiveTo',$Errors) ?  'class ="inputerror"' : '' ) . ' tabindex = "6" name="EffectiveTo" type = "date" size = "11" maxlength = "10" value = "' . $_POST['EffectiveTo'] .'" /></td>
 			</tr>';
 
 		if ($ParentMBflag == 'M' or $ParentMBflag == 'G') {
 	echo '<tr>
 					<td>' . __('Auto Issue this Component to Work Orders') . ':</td>
 					<td>
-					<select tabindex = "7" name = "AutoIssue">';
+					<select tabindex = "7" name="AutoIssue">';
 
 			if (!isset($_POST['AutoIssue'])){
 				$_POST['AutoIssue'] = $_SESSION['AutoIssue'];
@@ -778,13 +778,13 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			echo '</select></td>
 				</tr>';
 		} else {
-			echo '<input type = "hidden" name = "AutoIssue" value = "0" />';
+			echo '<input type = "hidden" name="AutoIssue" value = "0" />';
 		}
 
 		echo '</table>
 			<br />
-			<div class = "centre">
-				<input tabindex = "8" type = "submit" name = "Submit" value = "' . __('Enter Information') . '" />
+			<div class="centre">
+				<input tabindex = "8" type = "submit" name="Submit" value = "' . __('Enter Information') . '" />
 			</div>
             </div>
 			</form>';
@@ -856,28 +856,28 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 if (!isset($SelectedParent)) {
 
-	echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title = "' . __('Search') . '" alt = "" />' . ' ' . $Title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post">' .
-	'<div class = "page_help_text">' .  __('Select a manufactured part') . ' (' . __('or Assembly or Kit part') . ') ' . __('to maintain the bill of material for using the options below') .  '<br />' . __('Parts must be defined in the stock item entry') . '/' . __('modification screen as manufactured') . ', ' . __('kits or assemblies to be available for construction of a bill of material')  . '</div>' .  '
+	'<div class="page_help_text">' .  __('Select a manufactured part') . ' (' . __('or Assembly or Kit part') . ') ' . __('to maintain the bill of material for using the options below') .  '<br />' . __('Parts must be defined in the stock item entry') . '/' . __('modification screen as manufactured') . ', ' . __('kits or assemblies to be available for construction of a bill of material')  . '</div>' .  '
     <div>
      <br />
-     <table class = "selection" cellpadding = "3">
+     <table class="selection" cellpadding = "3">
 	<tr><td>' . __('Enter text extracts in the') . ' <b>' . __('description') . '</b>:</td>
-		<td><input tabindex = "1" type = "text" name = "Keywords" size = "20" maxlength = "25" /></td>
+		<td><input tabindex = "1" type = "text" name="Keywords" size = "20" maxlength = "25" /></td>
 		<td><b>' . __('or') . ' </b></td>
 		<td>' . __('Enter extract of the') . ' <b>' . __('Stock Code') . '</b>:</td>
-		<td><input tabindex = "2" type = "text" name = "StockCode" autofocus = "autofocus" size = "15" maxlength = "18" /></td>
+		<td><input tabindex = "2" type = "text" name="StockCode" autofocus = "autofocus" size = "15" maxlength = "18" /></td>
 	</tr>
 	</table>
-	<br /><div class = "centre"><input tabindex = "3" type = "submit" name = "Search" value = "' . __('Search Now') . '" /></div>';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+	<br /><div class="centre"><input tabindex = "3" type = "submit" name="Search" value = "' . __('Search Now') . '" /></div>';
+	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 	if (isset($_POST['Search'])
 		and isset($Result)
 		and !isset($SelectedParent)) {
 
 		echo '<br />
-			<table cellpadding = "2" class = "selection">';
+			<table cellpadding = "2" class="selection">';
 		$TableHeader = '<tr>
 							<th>' . __('Code') . '</th>
 							<th>' . __('Description') . '</th>
@@ -896,10 +896,10 @@ if (!isset($SelectedParent)) {
 				$StockOnHand = locale_number_format($MyRow['totalonhand'],$MyRow['decimalplaces']);
 			}
 			$Tab = $j+3;
-			printf('<tr class = "striped_row">
-					<td><input tabindex = "' . $Tab . '" type = "submit" name = "Select" value = "%s" /></td>
+			printf('<tr class="striped_row">
+					<td><input tabindex = "' . $Tab . '" type = "submit" name="Select" value = "%s" /></td>
 					<td>%s</td>
-					<td class = "number">%s</td>
+					<td class="number">%s</td>
 					<td>%s</td>
 					</tr>',
 					$MyRow['stockid'],

@@ -14,7 +14,7 @@ include('includes/KLEmails.php');
 
 include('includes/SQL_CommonFunctions.php');
 
-echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme,
+echo '<p class = "page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/maintenance.png" title = "',// Icon image.
 	$Title, '" /> ',// Icon title.
 	$Title, '</p>';// Page title.

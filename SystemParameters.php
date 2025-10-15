@@ -9,7 +9,7 @@ $ViewTopic = 'CreatingNewSystem';
 $BookMark = 'SystemParameters';
 include('includes/header.php');
 
-echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme,
+echo '<p class = "page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/maintenance.png" title = "', // Icon image.
 	$Title, '" /> ', // Icon title.
 	$Title, '</p>';// Page title.
@@ -457,11 +457,11 @@ echo '<fieldset>
 echo '<field>
 		<label for = "X_DefaultDateFormat">' . __('Default Date Format') . ':</label>
 		<select name = "X_DefaultDateFormat">
-			<option '.(($_SESSION['DefaultDateFormat']=='d/m/Y')?'selected = "selected" ':'').'value = "d/m/Y">' . __('d/m/Y') . '</option>
-			<option '.(($_SESSION['DefaultDateFormat']=='d.m.Y')?'selected = "selected" ':'').'value = "d.m.Y">' . __('d.m.Y') . '</option>
-			<option '.(($_SESSION['DefaultDateFormat']=='m/d/Y')?'selected = "selected" ':'').'value = "m/d/Y">' . __('m/d/Y') . '</option>
-			<option '.(($_SESSION['DefaultDateFormat']=='Y/m/d')?'selected = "selected" ':'').'value = "Y/m/d">' . __('Y/m/d') . '</option>
-			<option '.(($_SESSION['DefaultDateFormat']=='Y-m-d')?'selected = "selected" ':'').'value = "Y-m-d">' . __('Y-m-d') . '</option>
+			<option '.(($_SESSION['DefaultDateFormat']=='d/m/Y')?'selected ="selected" ':'').'value = "d/m/Y">' . __('d/m/Y') . '</option>
+			<option '.(($_SESSION['DefaultDateFormat']=='d.m.Y')?'selected ="selected" ':'').'value = "d.m.Y">' . __('d.m.Y') . '</option>
+			<option '.(($_SESSION['DefaultDateFormat']=='m/d/Y')?'selected ="selected" ':'').'value = "m/d/Y">' . __('m/d/Y') . '</option>
+			<option '.(($_SESSION['DefaultDateFormat']=='Y/m/d')?'selected ="selected" ':'').'value = "Y/m/d">' . __('Y/m/d') . '</option>
+			<option '.(($_SESSION['DefaultDateFormat']=='Y-m-d')?'selected ="selected" ':'').'value = "Y-m-d">' . __('Y-m-d') . '</option>
 		</select>
 		<fieldhelp>' . __('The default date format for entry of dates and display.') . '</fieldhelp>
 	</field>';
@@ -496,14 +496,14 @@ echo '<fieldset>
 // PastDueDays1
 echo '<field>
 		<label for = "X_PastDueDays1">' . __('First Overdue Deadline in (days)') . ':</label>
-		<input type = "text" class = "integer" required = "required"  pattern = "(?!^0\d+$)[\d]+" title = "'.__('The input must be integer').'" name = "X_PastDueDays1" value = "' . $_SESSION['PastDueDays1'] . '" size = "3" maxlength = "3" />
+		<input type = "text" class = "integer" required = "required"  pattern = "(?!^0\d+$)[\d]+" title ="'.__('The input must be integer').'" name = "X_PastDueDays1" value = "' . $_SESSION['PastDueDays1'] . '" size = "3" maxlength = "3" />
 		<fieldhelp>' . __('Customer and supplier balances are displayed as overdue by this many days. This parameter is used on customer and supplier enquiry screens and aged listings') . '</fieldhelp>
 	</field>';
 
 // PastDueDays2
 echo '<field>
 		<label for = "X_PastDueDays2">' . __('Second Overdue Deadline in (days)') . ':</label>
-		<input type = "text" class = "integer" required = "required"  pattern = "(?!^0\d+$)[\d]+" title = "'.__('The input must be integer').'" name = "X_PastDueDays2" value = "' . $_SESSION['PastDueDays2'] . '" size = "3" maxlength = "3" />
+		<input type = "text" class = "integer" required = "required"  pattern = "(?!^0\d+$)[\d]+" title ="'.__('The input must be integer').'" name = "X_PastDueDays2" value = "' . $_SESSION['PastDueDays2'] . '" size = "3" maxlength = "3" />
 		<fieldhelp>' . __('As above but the next level of overdue') . '</fieldhelp>
 	</field>';
 
@@ -518,9 +518,9 @@ echo '<field>
 echo '<field>
 		<label for = "X_CheckCreditLimits">' . __('Check Credit Limits') . ':</label>
 		<select name = "X_CheckCreditLimits">
-			<option value = "0"' . ($_SESSION['CheckCreditLimits'] == 0 ? ' selected = "selected"' : '') . '>' . __('Do not check') . '</option>
-			<option value = "1"' . ($_SESSION['CheckCreditLimits'] == 1 ? ' selected = "selected"' : '') . '>' . __('Warn on breach') . '</option>
-			<option value = "2"' . ($_SESSION['CheckCreditLimits'] == 2 ? ' selected = "selected"' : '') . '>' . __('Prohibit Sales') . '</option>
+			<option value = "0"' . ($_SESSION['CheckCreditLimits'] == 0 ? ' selected ="selected"' : '') . '>' . __('Do not check') . '</option>
+			<option value = "1"' . ($_SESSION['CheckCreditLimits'] == 1 ? ' selected ="selected"' : '') . '>' . __('Warn on breach') . '</option>
+			<option value = "2"' . ($_SESSION['CheckCreditLimits'] == 2 ? ' selected ="selected"' : '') . '>' . __('Prohibit Sales') . '</option>
 		</select>
 		<fieldhelp>' . __('Credit limits can be checked at order entry to warn only or to stop the order from being entered where it would take a customer account balance over their limit') . '</fieldhelp>
 	</field>';
@@ -529,8 +529,8 @@ echo '<field>
 echo '<field>
 		<label for = "X_Show_Settled_LastMonth">' . __('Show Settled Last Month') . ':</label>
 		<select name = "X_Show_Settled_LastMonth">
-			<option value = "1"' . ($_SESSION['Show_Settled_LastMonth'] ? ' selected = "selected"' : '') .'>' . __('Yes') . '</option>
-			<option value = "0"' . (!$_SESSION['Show_Settled_LastMonth'] ? ' selected = "selected"' : '') . '>' . __('No') . '</option>
+			<option value = "1"' . ($_SESSION['Show_Settled_LastMonth'] ? ' selected ="selected"' : '') .'>' . __('Yes') . '</option>
+			<option value = "0"' . (!$_SESSION['Show_Settled_LastMonth'] ? ' selected ="selected"' : '') . '>' . __('No') . '</option>
 		</select>
 		<fieldhelp>' . __('This setting refers to the format of customer statements. If the invoices and credit notes that have been paid and settled during the course of the current month should be shown then select Yes. Selecting No will only show currently outstanding invoices, credits and payments that have not been allocated') . '</fieldhelp>
 	</field>';
@@ -559,7 +559,7 @@ echo '<field style = "height:30px">
 // Frequently Ordered Items
 echo '<field>
 		<label for = "X_FrequentlyOrderedItems">' . __('Frequently Ordered Items') . ':</label>
-		<input type = "text" class = "integer" pattern = "(?!^0[1-9]+$)[\d]{1,2}" name = "X_FrequentlyOrderedItems" value = "' . $_SESSION['FrequentlyOrderedItems'] . '" size = "3" maxlength = "2" />
+		<input type = "text" class = "integer" pattern = "(?!^0[1-9]+$)[\d]{1,2}" name ="X_FrequentlyOrderedItems" value = "' . $_SESSION['FrequentlyOrderedItems'] . '" size = "3" maxlength = "2" />
 		<fieldhelp>' . __('To show the most frequently ordered items enter the number of frequently ordered items you wish to display from 1 to 99. If you do not wish to display the frequently ordered item list enter 0.') . '</fieldhelp>
 	</field>';
 
@@ -567,8 +567,8 @@ echo '<field>
 echo '<field>
 		<label for = "X_SO_AllowSameItemMultipleTimes">' . __('Sales Order Allows Same Item Multiple Times') . ':</label>
 		<select name = "X_SO_AllowSameItemMultipleTimes">
-			<option value = "1"' . ($_SESSION['SO_AllowSameItemMultipleTimes'] ? ' selected = "selected"' : '') . '>' . __('Yes') . '</option>
-			<option value = "0"' . (!$_SESSION['SO_AllowSameItemMultipleTimes'] ? ' selected = "selected"' : '') . '>' . __('No') . '</option>
+			<option value = "1"' . ($_SESSION['SO_AllowSameItemMultipleTimes'] ? ' selected ="selected"' : '') . '>' . __('Yes') . '</option>
+			<option value = "0"' . (!$_SESSION['SO_AllowSameItemMultipleTimes'] ? ' selected ="selected"' : '') . '>' . __('No') . '</option>
 		</select>
 	</field>';
 
@@ -576,8 +576,8 @@ echo '<field>
 echo '<field>
 		<label for = "X_AllowOrderLineItemNarrative">' . __('Order Entry allows Line Item Narrative') . ':</label>
 		<select name = "X_AllowOrderLineItemNarrative">
-			<option value = "1"' . ($_SESSION['AllowOrderLineItemNarrative'] == '1' ? ' selected = "selected"' : '') . '>' . __('Allow Narrative Entry') . '</option>
-			<option value = "0"' . ($_SESSION['AllowOrderLineItemNarrative'] == '0' ? ' selected = "selected"' : '') . '>' . __('No Narrative Line') . '</option>
+			<option value = "1"' . ($_SESSION['AllowOrderLineItemNarrative'] == '1' ? ' selected ="selected"' : '') . '>' . __('Allow Narrative Entry') . '</option>
+			<option value = "0"' . ($_SESSION['AllowOrderLineItemNarrative'] == '0' ? ' selected ="selected"' : '') . '>' . __('No Narrative Line') . '</option>
 		</select>
 		<fieldhelp>' . __('Select whether or not to allow entry of narrative on order line items. This narrative will appear on invoices and packing slips. Useful mainly for service businesses.') . '</fieldhelp>
 	</field>';
@@ -589,7 +589,7 @@ echo '<field>
 		<label for = "X_ItemDescriptionLanguages">' . __('Languages to Maintain Translations for Item Descriptions') . ':</label>
 		<select name = "X_ItemDescriptionLanguages[]" size = "5" multiple = "multiple" >';
 
-		echo '<option value = ""' . (count($LanguagesArray) == 0 ? '':'selected = "selected"') . '>' . __('None')  . '</option>';
+		echo '<option value = ""' . (count($LanguagesArray) == 0 ? '':'selected ="selected"') . '>' . __('None')  . '</option>';
 foreach ($LanguagesArray as $LanguageEntry => $LanguageName){
 	if (isset($_POST['X_ItemDescriptionLanguages']) and in_array($LanguageEntry,$_POST['X_ItemDescriptionLanguages'])){
 		echo '<option selected = "selected" value = "' . $LanguageEntry . '">' . $LanguageName['LanguageName']  . '</option>';
@@ -612,8 +612,8 @@ echo '<field>
 echo '<field style = "height:30px">
 		<label for = "X_RequirePickingNote">' . __('A picking note must be produced before an order can be delivered') . ':</label>
 		<select name = "X_RequirePickingNote">
-			<option value = "1"' . ($_SESSION['RequirePickingNote'] == '1' ? ' selected = "selected"' : '') . '>' . __('Yes') . '</option>
-			<option value = "0"' . ($_SESSION['RequirePickingNote'] == '0' ? ' selected = "selected"' : '') . '>' . __('No') . '</option>
+			<option value = "1"' . ($_SESSION['RequirePickingNote'] == '1' ? ' selected ="selected"' : '') . '>' . __('Yes') . '</option>
+			<option value = "0"' . ($_SESSION['RequirePickingNote'] == '0' ? ' selected ="selected"' : '') . '>' . __('No') . '</option>
 		</select>
 		<fieldhelp>' . __('Select whether or not a picking note must be produced before an order can be delivered to a customer.') . '</fieldhelp>
 	</field>';
@@ -622,8 +622,8 @@ echo '<field style = "height:30px">
 echo '<field>
 		<label for = "X_UpdateCurrencyRatesDaily">' . __('Auto Update Exchange Rates Daily') . ':</label>
 		<select name = "X_UpdateCurrencyRatesDaily">
-			<option value = "1"' . ($_SESSION['UpdateCurrencyRatesDaily'] != '1'? ' selected = "selected" ':'').'>' . __('Automatic') . '</option>
-			<option value = "0"' . ($_SESSION['UpdateCurrencyRatesDaily'] == '0'? ' selected = "selected" ':'').'>' . __('Manually') . '</option>
+			<option value = "1"' . ($_SESSION['UpdateCurrencyRatesDaily'] != '1'? ' selected ="selected" ':'').'>' . __('Automatic') . '</option>
+			<option value = "0"' . ($_SESSION['UpdateCurrencyRatesDaily'] == '0'? ' selected ="selected" ':'').'>' . __('Manually') . '</option>
 		</select>
 		<fieldhelp>' . __('Automatic updates to exchange rates will retrieve the latest daily rates from either the European Central Bank or Google once per day - when the first user logs in for the day. Manual will never update the rates automatically - exchange rates will need to be maintained manually') . '</fieldhelp>
 	</field>';
@@ -631,7 +631,7 @@ echo '<field>
 echo '<field>
 		<label for = "X_ExchangeRateFeed">' . __('Source Exchange Rates From') . ':</label>
 		<select name = "X_ExchangeRateFeed">
-			<option value = "ECB"' . ($_SESSION['ExchangeRateFeed'] != 'ECB' ? ' selected = "selected"' : '') . '>' . __('European Central Bank') . '</option>
+			<option value = "ECB"' . ($_SESSION['ExchangeRateFeed'] != 'ECB' ? ' selected ="selected"' : '') . '>' . __('European Central Bank') . '</option>
 		</select>
 		<fieldhelp>' . __('Specify the source to use for exchange rates') . '</fieldhelp>
 	</field>';
@@ -640,8 +640,8 @@ echo '<field>
 echo '<field>
 		<label for = "X_PackNoteFormat">' . __('Format of Packing Slips') . ':</label>
 		<select name = "X_PackNoteFormat">
-			<option value = "1"' . ($_SESSION['PackNoteFormat'] == '1' ? ' selected = "selected"' : '') . '>' . __('Laser Printed') . '</option>
-			<option value = "2"' . ($_SESSION['PackNoteFormat'] == '2' ? ' selected = "selected"' : '') . '>' . __('Special Stationery') . '</option>
+			<option value = "1"' . ($_SESSION['PackNoteFormat'] == '1' ? ' selected ="selected"' : '') . '>' . __('Laser Printed') . '</option>
+			<option value = "2"' . ($_SESSION['PackNoteFormat'] == '2' ? ' selected ="selected"' : '') . '>' . __('Special Stationery') . '</option>
 		</select>
 		<fieldhelp>' . __('Choose the format that packing notes should be printed by default') . '</fieldhelp>
 	</field>';
@@ -650,8 +650,8 @@ echo '<field>
 echo '<field>
 		<label for = "X_InvoicePortraitFormat">' . __('Invoice Orientation') . ':</label>
 		<select name = "X_InvoicePortraitFormat">
-			<option value = "0"' . ($_SESSION['InvoicePortraitFormat'] == '0' ? ' selected = "selected"' : '') . '>' . __('Landscape') . '</option>
-			<option value = "1"' . ($_SESSION['InvoicePortraitFormat'] == '1' ? ' selected = "selected"' : '') . '>' . __('Portrait') . '</option>
+			<option value = "0"' . ($_SESSION['InvoicePortraitFormat'] == '0' ? ' selected ="selected"' : '') . '>' . __('Landscape') . '</option>
+			<option value = "1"' . ($_SESSION['InvoicePortraitFormat'] == '1' ? ' selected ="selected"' : '') . '>' . __('Portrait') . '</option>
 		</select>
 		<fieldhelp>' . __('Select the invoice layout') . '</fieldhelp>
 	</field>';
@@ -660,8 +660,8 @@ echo '<field>
 echo '<field>
 		<label for = "X_InvoiceQuantityDefault">' . __('Invoice Quantity Default') . ':</label>
 		<select name = "X_InvoiceQuantityDefault">
-			<option value = "0"' . ($_SESSION['InvoiceQuantityDefault'] == '0' ? ' selected = "selected"' : '') . '>0</option>
-			<option value = "1"' . ($_SESSION['InvoiceQuantityDefault'] == '1' ? ' selected = "selected"' : '') . '>' . __('Outstanding') . '</option>
+			<option value = "0"' . ($_SESSION['InvoiceQuantityDefault'] == '0' ? ' selected ="selected"' : '') . '>0</option>
+			<option value = "1"' . ($_SESSION['InvoiceQuantityDefault'] == '1' ? ' selected ="selected"' : '') . '>' . __('Outstanding') . '</option>
 		</select>
 		<fieldhelp>' . __('This setting controls the default behaviour of invoicing. Setting to 0 defaults the invoice quantity to zero to force entry. Set to outstanding to default the invoice quantity to the balance outstanding, after previous deliveries, on the sales order') . '</fieldhelp>
 	</field>';
@@ -670,8 +670,8 @@ echo '<field>
 echo '<field>
 		<label for = "X_DefaultBlindPackNote">' . __('Show company details on packing slips') . ':</label>
 		<select name = "X_DefaultBlindPackNote">
-			<option value = "1"' . ($_SESSION['DefaultBlindPackNote'] == '1' ? ' selected = "selected"' : '') . '>' . __('Show Company Details') . '</option>
-			<option value = "2"' . ($_SESSION['DefaultBlindPackNote'] == '2' ? ' selected = "selected"' : '') . '>' . __('Hide Company Details') . '</option>
+			<option value = "1"' . ($_SESSION['DefaultBlindPackNote'] == '1' ? ' selected ="selected"' : '') . '>' . __('Show Company Details') . '</option>
+			<option value = "2"' . ($_SESSION['DefaultBlindPackNote'] == '2' ? ' selected ="selected"' : '') . '>' . __('Hide Company Details') . '</option>
 		</select>
 		<fieldhelp>' . __('Customer branches can be set by default not to print packing slips with the company logo and address. This is useful for companies that ship to customers customers and to show the source of the shipment would be inappropriate. There is an option on the setup of customer branches to ship blind, this setting is the default applied to all new customer branches') . '</fieldhelp>
 	</field>';
@@ -680,9 +680,9 @@ echo '<field>
 echo '<field>
 		<label for = "X_WorkingDaysWeek">' . __('Working Days on a Week') . ':</label>
 		<select name = "X_WorkingDaysWeek">
-			<option '.($_SESSION['WorkingDaysWeek']=='7'?'selected = "selected" ':'').'value = "7">7 '.__('working days') . '</option>
-			<option '.($_SESSION['WorkingDaysWeek']=='6'?'selected = "selected" ':'').'value = "6">6 '.__('working days') . '</option>
-			<option '.($_SESSION['WorkingDaysWeek']=='5'?'selected = "selected" ':'').'value = "5">5 '.__('working days') . '</option>
+			<option '.($_SESSION['WorkingDaysWeek']=='7'?'selected ="selected" ':'').'value = "7">7 '.__('working days') . '</option>
+			<option '.($_SESSION['WorkingDaysWeek']=='6'?'selected ="selected" ':'').'value = "6">6 '.__('working days') . '</option>
+			<option '.($_SESSION['WorkingDaysWeek']=='5'?'selected ="selected" ':'').'value = "5">5 '.__('working days') . '</option>
 		</select>
 		<fieldhelp>' . __('Number of working days on a week') . '</fieldhelp>
 	</field>';
@@ -692,7 +692,7 @@ echo '<field>
 		<label for = "X_DispatchCutOffTime">' . __('Dispatch Cut-Off Time') . ':</label>
 		<select name = "X_DispatchCutOffTime">';
 for ($i = 0;  $i < 24;  $i++ )
-	echo '<option value = "' . $i . '"' . ($_SESSION['DispatchCutOffTime'] == $i ? ' selected = "selected"' : '') . '>' . $i . '</option>';
+	echo '<option value = "' . $i . '"' . ($_SESSION['DispatchCutOffTime'] == $i ? ' selected ="selected"' : '') . '>' . $i . '</option>';
 echo '</select>
 	<fieldhelp>' . __('Orders entered after this time will default to be dispatched the following day, this can be over-ridden at the time of sales order entry') . '</fieldhelp>
 </field>';
@@ -701,8 +701,8 @@ echo '</select>
 echo '<field>
 		<label for = "X_AllowSalesOfZeroCostItems">' . __('Allow Sales Of Zero Cost Items') . ':</label>
 		<select name = "X_AllowSalesOfZeroCostItems">
-			<option value = "1"' . ($_SESSION['AllowSalesOfZeroCostItems'] ? ' selected = "selected"' : '') . '>' . __('Yes') . '</option>
-			<option value = "0"' . (!$_SESSION['AllowSalesOfZeroCostItems'] ? ' selected = "selected"' : '') . '>' . __('No') . '</option>
+			<option value = "1"' . ($_SESSION['AllowSalesOfZeroCostItems'] ? ' selected ="selected"' : '') . '>' . __('Yes') . '</option>
+			<option value = "0"' . (!$_SESSION['AllowSalesOfZeroCostItems'] ? ' selected ="selected"' : '') . '>' . __('No') . '</option>
 		</select>
 		<fieldhelp>' . __('If an item selected at order entry does not have a cost set up then if this parameter is set to No then the order line will not be able to be entered') . '</fieldhelp>
 	</field>';
@@ -711,8 +711,8 @@ echo '<field>
 echo '<field>
 		<label for = "X_CreditingControlledItems_MustExist">' . __('Controlled Items Must Exist For Crediting') . ':</label>
 		<select name = "X_CreditingControlledItems_MustExist">
-			<option value = "1"' . ($_SESSION['CreditingControlledItems_MustExist'] ? ' selected = "selected"' : '') . '>' . __('Yes') . '</option>
-			<option value = "0"' . (!$_SESSION['CreditingControlledItems_MustExist'] ? ' selected = "selected"' : '') . '>' . __('No') . '</option>
+			<option value = "1"' . ($_SESSION['CreditingControlledItems_MustExist'] ? ' selected ="selected"' : '') . '>' . __('Yes') . '</option>
+			<option value = "0"' . (!$_SESSION['CreditingControlledItems_MustExist'] ? ' selected ="selected"' : '') . '>' . __('No') . '</option>
 		</select>
 		<fieldhelp>' . __('This parameter relates to the behaviour of the controlled items code. If a serial numbered item has not previously existed then a credit note for it will not be allowed if this is set to Yes') . '</fieldhelp>
 	</field>';
@@ -728,7 +728,7 @@ if ( DB_num_rows($Result) == 0 ) {
 	echo '<option selected = "selected" value = "">' . __('Unavailable');
 } else {
 	while ( $Row = DB_fetch_array($Result) ) {
-		echo '<option '.($_SESSION['DefaultPriceList'] == $Row['typeabbrev']?'selected = "selected" ':'').'value = "'.$Row['typeabbrev'].'">' . $Row['sales_type'] . '</option>';
+		echo '<option '.($_SESSION['DefaultPriceList'] == $Row['typeabbrev']?'selected ="selected" ':'').'value = "'.$Row['typeabbrev'].'">' . $Row['sales_type'] . '</option>';
 	}
 }
 echo '</select>
@@ -746,7 +746,7 @@ if ( DB_num_rows($Result) == 0 ) {
 	echo '<option selected = "selected" value = "">' . __('Unavailable') . '</option>';
 } else {
 	while ( $Row = DB_fetch_array($Result) ) {
-		echo '<option '.($_SESSION['Default_Shipper'] == $Row['shipper_id']?'selected = "selected" ':'').'value = "'.$Row['shipper_id'].'">' . $Row['shippername'] . '</option>';
+		echo '<option '.($_SESSION['Default_Shipper'] == $Row['shipper_id']?'selected ="selected" ':'').'value = "'.$Row['shipper_id'].'">' . $Row['shippername'] . '</option>';
 	}
 }
 echo '</select>
@@ -757,8 +757,8 @@ echo '</select>
 echo '<field>
 		<label for = "X_DoFreightCalc">' . __('Do Freight Calculation') . ':</label>
 		<select name = "X_DoFreightCalc">
-			<option value = "1"' . ($_SESSION['DoFreightCalc'] ? ' selected = "selected"' : '') . '>' . __('Yes') . '</option>
-			<option value = "0"' . (!$_SESSION['DoFreightCalc'] ? ' selected = "selected"' : '') . '>' . __('No') . '</option>
+			<option value = "1"' . ($_SESSION['DoFreightCalc'] ? ' selected ="selected"' : '') . '>' . __('Yes') . '</option>
+			<option value = "0"' . (!$_SESSION['DoFreightCalc'] ? ' selected ="selected"' : '') . '>' . __('No') . '</option>
 		</select>
 		<fieldhelp>' . __('If this is set to Yes then the system will attempt to calculate the freight cost of a dispatch based on the weight and cubic and the data defined for each shipper and their rates for shipping to various locations. The results of this calculation will only be meaningful if the data is entered for the item weight and volume in the stock item setup for all items and the freight costs for each shipper properly maintained.') . '</fieldhelp>
 	</field>';
@@ -813,7 +813,7 @@ if ( DB_num_rows($Result) == 0 ) {
 	echo '<option selected = "selected" value = "">' . __('Unavailable') . '</option>';
 } else {
 	while ( $Row = DB_fetch_array($Result) ) {
-		echo '<option '.($_SESSION['DefaultTaxCategory'] == $Row['taxcatid']?'selected = "selected" ':'').'value = "'.$Row['taxcatid'].'">' . $Row['taxcatname'] . '</option>';
+		echo '<option '.($_SESSION['DefaultTaxCategory'] == $Row['taxcatid']?'selected ="selected" ':'').'value = "'.$Row['taxcatid'].'">' . $Row['taxcatname'] . '</option>';
 	}
 }
 echo '</select>
@@ -834,7 +834,7 @@ echo '<field>
 		<select name = "X_CountryOfOperation">';
 echo '<option selected = "selected" value = "">' . __('Unavailable') . '</option>';
 foreach ($CountriesArray as $CountryEntry => $CountryName){
-	echo '<option ' . ($_SESSION['CountryOfOperation'] == $CountryEntry?'selected = "selected" ':'') . ' value = "' . $CountryEntry . '">' . $CountryName  . '</option>';
+	echo '<option ' . ($_SESSION['CountryOfOperation'] == $CountryEntry?'selected ="selected" ':'') . ' value = "' . $CountryEntry . '">' . $CountryName  . '</option>';
 }
 
 echo '</select>
@@ -846,7 +846,7 @@ echo '<field>
 		<label for = "X_StandardCostDecimalPlaces">' . __('Standard Cost Decimal Places') . ':</label>
 		<select name = "X_StandardCostDecimalPlaces">';
 for ($i = 0;  $i <= 4;  $i++ )
-	echo '<option value = "' . $i . '"' . ($_SESSION['StandardCostDecimalPlaces'] == $i ? ' selected = "selected"' : '') . '>' . $i . '</option>';
+	echo '<option value = "' . $i . '"' . ($_SESSION['StandardCostDecimalPlaces'] == $i ? ' selected ="selected"' : '') . '>' . $i . '</option>';
 echo '</select>
 	<fieldhelp>' . __('Decimal Places to be used in Standard Cost')  . '</fieldhelp>
 </field>';
@@ -856,7 +856,7 @@ echo '<field>
 		<label for = "X_NumberOfPeriodsOfStockUsage">' . __('Number Of Periods Of StockUsage') . ':</label>
 		<select name = "X_NumberOfPeriodsOfStockUsage">';
 for ($i = 1;  $i <= 12;  $i++ )
-	echo '<option value = "' . $i . '"' . ($_SESSION['NumberOfPeriodsOfStockUsage'] == $i ? ' selected = "selected"' : '') . '>' . $i . '</option>';
+	echo '<option value = "' . $i . '"' . ($_SESSION['NumberOfPeriodsOfStockUsage'] == $i ? ' selected ="selected"' : '') . '>' . $i . '</option>';
 echo '</select>
 	<fieldhelp>' . __('In stock usage inquiries this determines how many periods of stock usage to show. An average is calculated over this many periods')  . '</fieldhelp>
 </field>';
@@ -865,8 +865,8 @@ echo '</select>
 echo '<field style = "height:30px">
 		<label for = "X_StockUsageShowZeroWithinPeriodRange">' . __('Show Zero Counts Within Stock Usage Graph Period Range') . ':</label>
 		<select name = "X_StockUsageShowZeroWithinPeriodRange">
-			<option value = "1"' . ($_SESSION['StockUsageShowZeroWithinPeriodRange'] ? ' selected = "selected"' : '') . '>' . __('Yes') . '</option>
-			<option value = "0"' . (!$_SESSION['StockUsageShowZeroWithinPeriodRange'] ? ' selected = "selected"' : '') . '>' . __('No') . '</option>
+			<option value = "1"' . ($_SESSION['StockUsageShowZeroWithinPeriodRange'] ? ' selected ="selected"' : '') . '>' . __('Yes') . '</option>
+			<option value = "0"' . (!$_SESSION['StockUsageShowZeroWithinPeriodRange'] ? ' selected ="selected"' : '') . '>' . __('No') . '</option>
 		</select>
 		<fieldhelp>' . __('Show periods having zero counts within Stock Usage Graph. Choosing yes may show a wider period range than expected.') . '</fieldhelp>
 	</field>';
@@ -875,8 +875,8 @@ echo '<field style = "height:30px">
 echo '<field>
 		<label for = "X_ShowValueOnGRN">' . __('Show order values on GRN') . ':</label>
 		<select name = "X_ShowValueOnGRN">
-			<option value = "1"' . ($_SESSION['ShowValueOnGRN'] ? ' selected = "selected"' : '') . '>' . __('Yes') . '</option>
-			<option value = "0"' . (!$_SESSION['ShowValueOnGRN'] ? ' selected = "selected"' : '') . '>' . __('No') . '</option>
+			<option value = "1"' . ($_SESSION['ShowValueOnGRN'] ? ' selected ="selected"' : '') . '>' . __('Yes') . '</option>
+			<option value = "0"' . (!$_SESSION['ShowValueOnGRN'] ? ' selected ="selected"' : '') . '>' . __('No') . '</option>
 		</select>
 		<fieldhelp>' . __('Should the value of the purchased stock be shown on the GRN screen') . '</fieldhelp>
 	</field>';
@@ -885,8 +885,8 @@ echo '<field>
 echo '<field>
 		<label for = "X_Check_Qty_Charged_vs_Del_Qty">' . __('Check Quantity Charged vs Deliver Qty') . ':</label>
 		<select name = "X_Check_Qty_Charged_vs_Del_Qty">
-			<option value = "1"' . ($_SESSION['Check_Qty_Charged_vs_Del_Qty'] ? ' selected = "selected"' : '') . '>' . __('Yes') . '</option>
-			<option value = "0"' . (!$_SESSION['Check_Qty_Charged_vs_Del_Qty'] ? ' selected = "selected"' : '') . '>' . __('No') . '</option>
+			<option value = "1"' . ($_SESSION['Check_Qty_Charged_vs_Del_Qty'] ? ' selected ="selected"' : '') . '>' . __('Yes') . '</option>
+			<option value = "0"' . (!$_SESSION['Check_Qty_Charged_vs_Del_Qty'] ? ' selected ="selected"' : '') . '>' . __('No') . '</option>
 		</select>
 		<fieldhelp>' . __('In entry of AP invoices this determines whether or not to check the quantities received into stock tie up with the quantities invoiced')  . '</fieldhelp>
 	</field>';
@@ -895,8 +895,8 @@ echo '<field>
 echo '<field>
 		<label for = "X_Check_Price_Charged_vs_Order_Price">' . __('Check Price Charged vs Order Price') . ':</label>
 		<select name = "X_Check_Price_Charged_vs_Order_Price">
-			<option value = "1"' . ($_SESSION['Check_Price_Charged_vs_Order_Price'] ? ' selected = "selected"' : '') . '>' . __('Yes') . '</option>
-			<option value = "0"' . (!$_SESSION['Check_Price_Charged_vs_Order_Price'] ? ' selected = "selected"' : '') . '>' . __('No') . '</option>
+			<option value = "1"' . ($_SESSION['Check_Price_Charged_vs_Order_Price'] ? ' selected ="selected"' : '') . '>' . __('Yes') . '</option>
+			<option value = "0"' . (!$_SESSION['Check_Price_Charged_vs_Order_Price'] ? ' selected ="selected"' : '') . '>' . __('No') . '</option>
 		</select>
 		<fieldhelp>' . __('In entry of AP invoices this parameter determines whether or not to check invoice prices tie up to ordered prices')  . '</fieldhelp>
 	</field>';
@@ -904,14 +904,14 @@ echo '<field>
 // OverChargeProportion
 echo '<field>
 		<label for = "X_OverChargeProportion">' . __('Allowed Over Charge Proportion') . ':</label>
-		<input type = "text" class = "integer" pattern = "(?!^0\d+$)[\d]{1,2}|(100)" required = "required" title = "'.__('The input must between 0 and 100').'" name = "X_OverChargeProportion" size = "4" maxlength = "3" value = "' . $_SESSION['OverChargeProportion'] . '" placeholder = "'.__('integer between 0 and 100').'" />
+		<input type = "text" class = "integer" pattern = "(?!^0\d+$)[\d]{1,2}|(100)" required ="required" title = "'.__('The input must between 0 and 100').'" name = "X_OverChargeProportion" size = "4" maxlength = "3" value = "' . $_SESSION['OverChargeProportion'] . '" placeholder = "'.__('integer between 0 and 100').'" />
 		<fieldhelp>' . __('If check price charges vs Order price is set to yes then this proportion determines the percentage by which invoices can be overcharged with respect to price')  . '</fieldhelp>
 	</field>';
 
 // OverReceiveProportion
 echo '<field>
 		<label for = "X_OverReceiveProportion">' . __('Allowed Over Receive Proportion') . ':</label>
-		<input type = "text" class = "integer" pattern = "(?!^0\d+$)[\d]{1,2}|(100)" required = "required" title = "'.__('The input must between 0 and 100').'" name = "X_OverReceiveProportion" size = "4" maxlength = "3" value = "' . $_SESSION['OverReceiveProportion'] . '" />
+		<input type = "text" class = "integer" pattern = "(?!^0\d+$)[\d]{1,2}|(100)" required ="required" title = "'.__('The input must between 0 and 100').'" name = "X_OverReceiveProportion" size = "4" maxlength = "3" value = "' . $_SESSION['OverReceiveProportion'] . '" />
 		<fieldhelp>' . __('If check quantity charged vs delivery quantity is set to yes then this proportion determines the percentage by which invoices can be overcharged with respect to delivery')  . '</fieldhelp>
 	</field>';
 
@@ -919,8 +919,8 @@ echo '<field>
 echo '<field>
 		<label for = "X_PO_AllowSameItemMultipleTimes">' . __('Purchase Order Allows Same Item Multiple Times') . ':</label>
 		<select name = "X_PO_AllowSameItemMultipleTimes">
-			<option value = "1"' . ($_SESSION['PO_AllowSameItemMultipleTimes'] ? ' selected = "selected"' : '') . '>' . __('Yes') . '</option>
-			<option value = "0"' . (!$_SESSION['PO_AllowSameItemMultipleTimes'] ? ' selected = "selected"' : '') . '>' . __('No') . '</option>
+			<option value = "1"' . ($_SESSION['PO_AllowSameItemMultipleTimes'] ? ' selected ="selected"' : '') . '>' . __('Yes') . '</option>
+			<option value = "0"' . (!$_SESSION['PO_AllowSameItemMultipleTimes'] ? ' selected ="selected"' : '') . '>' . __('No') . '</option>
 		</select>
 		<fieldhelp>' . __('If a purchase order can have the same item on the order several times this parameter should be set to yes') . '</fieldhelp>
 	</field>';
@@ -929,8 +929,8 @@ echo '<field>
 echo '<field>
 		<label for = "X_AutoAuthorisePO">' . __('Automatically authorise purchase orders if user has authority') . ':</label>
 		<select name = "X_AutoAuthorisePO">
-			<option value = "1"' . ($_SESSION['AutoAuthorisePO'] ? ' selected = "selected" ':'') . '>' . __('Yes') . '</option>
-			<option value = "0"' . (!$_SESSION['AutoAuthorisePO'] ? ' selected = "selected" ':'') . '>' . __('No') . '</option>
+			<option value = "1"' . ($_SESSION['AutoAuthorisePO'] ? ' selected ="selected" ':'') . '>' . __('Yes') . '</option>
+			<option value = "0"' . (!$_SESSION['AutoAuthorisePO'] ? ' selected ="selected" ':'') . '>' . __('No') . '</option>
 		</select>
 		<fieldhelp>' . __('If the user changing an existing purchase order or adding a new puchase order is set up to authorise purchase orders and the order is within their limit, then the purchase order status is automatically set to authorised') . '</fieldhelp>
 	</field>';
@@ -957,7 +957,7 @@ echo '<field>
 		<label for = "X_YearEnd">' . __('Financial Year Ends On') . ':</label>
 		<select name = "X_YearEnd">';
 for ($i = 1;  $i <= sizeof($MonthNames);  $i++ )
-	echo '<option value = "' . $i . '"' . ($_SESSION['YearEnd'] == $i ? ' selected = "selected"' : '') . '>' . $MonthNames[$i] . '</option>';
+	echo '<option value = "' . $i . '"' . ($_SESSION['YearEnd'] == $i ? ' selected ="selected"' : '') . '>' . $MonthNames[$i] . '</option>';
 echo '</select>
 	<fieldhelp>' . __('Defining the month in which the financial year ends enables the system to provide useful defaults for general ledger reports')  . '</fieldhelp>
 </field>';
@@ -965,13 +965,13 @@ echo '</select>
 //PageLength
 echo '<field>
 		<label for = "X_PageLength">' . __('Report Page Length') . ':</label>
-		<input type = "text" class = "integer" pattern = "(?!^0\d*$)[\d]{1,3}" title = "'.__('The input should be between 1 and 999').'" placeholder = "'.__('1 to 999').'" name = "X_PageLength" size = "4" maxlength = "6" value = "' . $_SESSION['PageLength'] . '" /></td>
+		<input type = "text" class = "integer" pattern = "(?!^0\d*$)[\d]{1,3}" title ="'.__('The input should be between 1 and 999').'" placeholder = "'.__('1 to 999').'" name = "X_PageLength" size = "4" maxlength = "6" value = "' . $_SESSION['PageLength'] . '" /></td>
 	</field>';
 
 //DefaultDisplayRecordsMax
 echo '<field>
 		<label for = "X_DefaultDisplayRecordsMax">' . __('Default Maximum Number of Records to Show') . ':</label>
-		<input type = "text" class = "integer" pattern = "(?!^0\d*$)[\d]{1,3}" required = "required" title = "'.__('The records should be between 1 and 999').'" name = "X_DefaultDisplayRecordsMax" size = "4" maxlength = "3" value = "' . $_SESSION['DefaultDisplayRecordsMax'] . '" />
+		<input type = "text" class = "integer" pattern = "(?!^0\d*$)[\d]{1,3}" required ="required" title = "'.__('The records should be between 1 and 999').'" name = "X_DefaultDisplayRecordsMax" size = "4" maxlength = "3" value = "' . $_SESSION['DefaultDisplayRecordsMax'] . '" />
 		<fieldhelp>' . __('When pages have code to limit the number of returned records - such as select customer, select supplier and select item, then this will be the default number of records to show for a user who has not changed this for themselves in user settings.') . '</fieldhelp>
 	</field>';
 
@@ -979,8 +979,8 @@ echo '<field>
 echo '<field>
 		<label for = "X_ShowStockidOnImages">' . __('Show Stockid on images') . ':</label>
 		<select name = "X_ShowStockidOnImages">
-			<option value = "1"' . ($_SESSION['ShowStockidOnImages'] ? ' selected = "selected" ':'') . '>' . __('Yes') . '</option>
-			<option value = "0"' . (!$_SESSION['ShowStockidOnImages'] ? ' selected = "selected" ':'') . '>' . __('No') . '</option>
+			<option value = "1"' . ($_SESSION['ShowStockidOnImages'] ? ' selected ="selected" ':'') . '>' . __('Yes') . '</option>
+			<option value = "0"' . (!$_SESSION['ShowStockidOnImages'] ? ' selected ="selected" ':'') . '>' . __('No') . '</option>
 		</select>
 		<fieldhelp>' . __('Show the code inside the thumbnail image of the items') . '</fieldhelp>
 	</field>';
@@ -988,14 +988,14 @@ echo '<field>
 //MaxImageSize
 echo '<field>
 		<label for = "X_MaxImageSize">' . __('Maximum Size in KB of uploaded images') . ':</label>
-		<input type = "text" class = "integer" pattern = "(?!^0\d*$)[\d]{1,4}" required = "required" title = "'.__('The input should be between 1 and 2048').'" placeholder = "'.__('1 to 2048').'" name = "X_MaxImageSize" size = "5" maxlength = "4" value = "' . $_SESSION['MaxImageSize'] . '" />
+		<input type = "text" class = "integer" pattern = "(?!^0\d*$)[\d]{1,4}" required ="required" title = "'.__('The input should be between 1 and 2048').'" placeholder = "'.__('1 to 2048').'" name = "X_MaxImageSize" size = "5" maxlength = "4" value = "' . $_SESSION['MaxImageSize'] . '" />
 		<fieldhelp>' . __('Picture files of items can be uploaded to the server. The system will check that files uploaded are less than this size (in KB) before they will be allowed to be uploaded. Large pictures will make the system slow and will be difficult to view in the stock maintenance screen.')  . '</fieldhelp>
 	</field>';
 
 //NumberOfMonthMustBeShown
 echo '<field>
 		<label for = "X_NumberOfMonthMustBeShown">' . __('Number Of Month Must Be Shown') . ':</label>
-			<input type = "text" class = "integer" pattern = "(?!^0\d*$)[\d]+" required = "required" title = "'.__('input must be positive integer').'" placeholder = "'.__('positive integer').'" name = "X_NumberOfMonthMustBeShown" size = "4" maxlength = "3" value = "' . $_SESSION['NumberOfMonthMustBeShown'] . '" />
+			<input type = "text" class = "integer" pattern = "(?!^0\d*$)[\d]+" required ="required" title = "'.__('input must be positive integer').'" placeholder = "'.__('positive integer').'" name = "X_NumberOfMonthMustBeShown" size = "4" maxlength = "3" value = "' . $_SESSION['NumberOfMonthMustBeShown'] . '" />
 			<fieldhelp>' . __('Number of month must be shown on report can be changed with this parameters ex: in CustomerInquiry.php ')  . '</fieldhelp>
 	</field>';
 
@@ -1058,8 +1058,8 @@ echo '</select>
 echo '<field>
 		<label for = "X_HTTPS_Only">' . __('Only allow secure socket connections') . ':</label>
 		<select name = "X_HTTPS_Only">
-			<option value = "1"' . ($_SESSION['HTTPS_Only'] ? ' selected = "selected" ':'') . '>' . __('Yes') . '</option>
-			<option value = "0"' . (!$_SESSION['HTTPS_Only'] ? ' selected = "selected" ':'') . '>' . __('No') . '</option>
+			<option value = "1"' . ($_SESSION['HTTPS_Only'] ? ' selected ="selected" ':'') . '>' . __('Yes') . '</option>
+			<option value = "0"' . (!$_SESSION['HTTPS_Only'] ? ' selected ="selected" ':'') . '>' . __('No') . '</option>
 		</select>
 		<fieldhelp>' . __('Force connections to be only over secure sockets - ie encrypted data only') . '</fieldhelp>
 	</field>';
@@ -1073,7 +1073,7 @@ echo '<field>
 		<label for = "X_WikiApp">' . __('Wiki application') . ':</label>
 		<select name = "X_WikiApp">';
 for ($i = 0;  $i < sizeof($WikiApplications);  $i++ ) {
-	echo '<option '.($_SESSION['WikiApp'] == $WikiApplications[$i] ? 'selected = "selected" ' : '').'value = "'.$WikiApplications[$i].'">' . $WikiApplications[$i]  . '</option>';
+	echo '<option '.($_SESSION['WikiApp'] == $WikiApplications[$i] ? 'selected ="selected" ' : '').'value = "'.$WikiApplications[$i].'">' . $WikiApplications[$i]  . '</option>';
 }
 echo '</select>
 	<fieldhelp>' . __('This feature makes webERP show links to a free form company knowledge base using a wiki. This allows sharing of important company information - about customers, suppliers and products and the set up of work flow menus and/or company procedures documentation')  . '</fieldhelp>
@@ -1206,7 +1206,7 @@ echo '</select>
 //Months of Audit Trail to Keep
 echo '<field>
 		<label for = "X_MonthsAuditTrail">' . __('Months of Audit Trail to Retain') . ':</label>
-		<input type = "text" class = "integer" pattern = "(?!^0\d+$)[\d]{1,2}" required = "required" name = "X_MonthsAuditTrail" size = "3" maxlength = "2" value = "' . $_SESSION['MonthsAuditTrail'] . '" />
+		<input type = "text" class = "integer" pattern = "(?!^0\d+$)[\d]{1,2}" required ="required" name = "X_MonthsAuditTrail" size = "3" maxlength = "2" value = "' . $_SESSION['MonthsAuditTrail'] . '" />
 		<fieldhelp>' . __('If this parameter is set to 0 (zero) then no audit trail is retained. An audit trail is a log of which users performed which additions updates and deletes of database records. The full SQL is retained') . '</fieldhelp>
 	</field>';
 
@@ -1239,8 +1239,8 @@ echo '<field>
 echo '<field>
 		<label for = "X_DefineControlledOnWOEntry">' . __('Controlled Items Defined At Work Order Entry') . ':</label>
 		<select name = "X_DefineControlledOnWOEntry">
-			<option value = "1"' . ($_SESSION['DefineControlledOnWOEntry']? ' selected = "selected" ':'') . '>' . __('Yes') . '</option>
-			<option value = "0"' . (!$_SESSION['DefineControlledOnWOEntry']? ' selected = "selected" ':'') . '>' . __('No') . '</option>
+			<option value = "1"' . ($_SESSION['DefineControlledOnWOEntry']? ' selected ="selected" ':'') . '>' . __('Yes') . '</option>
+			<option value = "0"' . (!$_SESSION['DefineControlledOnWOEntry']? ' selected ="selected" ':'') . '>' . __('No') . '</option>
 		</select>
 		<fieldhelp>' . __('When set to yes, controlled items are defined at the time of the work order creation. Otherwise controlled items (serial numbers and batch/roll/lot references) are entered at the time the finished items are received against the work order') . '</fieldhelp>
 	</field>';
@@ -1353,13 +1353,13 @@ echo '</select>
 	<field>
 		<label for = "X_LastDayOfWeek">' . __('Last day of the week'). '</label>
 		<select type = "text" name = "X_LastDayOfWeek" >
-			<option ' . ($_SESSION['LastDayOfWeek'] == 0 ?'selected = "selected"':'') . ' value = "0">' . __('Sunday') . '</option>
-			<option ' . ($_SESSION['LastDayOfWeek'] == 1 ?'selected = "selected"':'') . ' value = "1">' . __('Monday') . '</option>
-			<option ' . ($_SESSION['LastDayOfWeek'] == 2 ?'selected = "selected"':'') . ' value = "2">' . __('Tuesday') . '</option>
-			<option ' . ($_SESSION['LastDayOfWeek'] == 3 ?'selected = "selected"':'') . ' value = "3">' . __('Wednesday') . '</option>
-			<option ' . ($_SESSION['LastDayOfWeek'] == 4 ?'selected = "selected"':'') . ' value = "4">' . __('Thursday') . '</option>
-			<option ' . ($_SESSION['LastDayOfWeek'] == 5 ?'selected = "selected"':'') . ' value = "5">' . __('Friday') . '</option>
-			<option ' . ($_SESSION['LastDayOfWeek'] == 6 ?'selected = "selected"':'') . ' value = "6">' . __('Saturday') . '</option>
+			<option ' . ($_SESSION['LastDayOfWeek'] == 0 ?'selected ="selected"':'') . ' value = "0">' . __('Sunday') . '</option>
+			<option ' . ($_SESSION['LastDayOfWeek'] == 1 ?'selected ="selected"':'') . ' value = "1">' . __('Monday') . '</option>
+			<option ' . ($_SESSION['LastDayOfWeek'] == 2 ?'selected ="selected"':'') . ' value = "2">' . __('Tuesday') . '</option>
+			<option ' . ($_SESSION['LastDayOfWeek'] == 3 ?'selected ="selected"':'') . ' value = "3">' . __('Wednesday') . '</option>
+			<option ' . ($_SESSION['LastDayOfWeek'] == 4 ?'selected ="selected"':'') . ' value = "4">' . __('Thursday') . '</option>
+			<option ' . ($_SESSION['LastDayOfWeek'] == 5 ?'selected ="selected"':'') . ' value = "5">' . __('Friday') . '</option>
+			<option ' . ($_SESSION['LastDayOfWeek'] == 6 ?'selected ="selected"':'') . ' value = "6">' . __('Saturday') . '</option>
 		</select>
 		<fieldhelp>' .  __('Timesheet entry default to weeks ending on this day').'</fieldhelp>
 	</field>';

@@ -7,7 +7,7 @@ $ViewTopic = 'Manufacturing';
 $BookMark = '';
 include('includes/header.php');
 
-echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title = "' . __('Search') . '" alt = "" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post">';
 echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
@@ -125,7 +125,7 @@ if (!isset($StockID)) {
 
 	if (!isset($SelectedWO) or ($SelectedWO == '')){
 		echo '<fieldset>
-				<legend class = "search">', __('Search Criteria'), '</legend>';
+				<legend class="search">', __('Search Criteria'), '</legend>';
 		if (isset($SelectedStockItem)) {
 			echo '<field>
 					<label for = "SelectedStockItem">', __('For the item') . ':</label>
@@ -186,9 +186,9 @@ if (!isset($StockID)) {
 			</field>
 		</fieldset>';
 
-		echo '<div class = "centre">
+		echo '<div class="centre">
 				<input type = "submit" name = "SearchOrders" value = "' . __('Search') . '" />
-				<a href = "' . $RootPath . '/WorkOrderEntry.php">' . __('New Work Order') . '</a>
+				<a href="' . $RootPath . '/WorkOrderEntry.php">' . __('New Work Order') . '</a>
 			</div>';
 	}
 
@@ -200,7 +200,7 @@ if (!isset($StockID)) {
 	$Result1 = DB_query($SQL);
 
 	echo '<fieldset>
-			<legend class = "search">' . __('To search for work orders for a specific item use the item selection facilities below') . '</legend>
+			<legend class="search">' . __('To search for work orders for a specific item use the item selection facilities below') . '</legend>
 			<field>
 				<label for = "StockCat">' . __('Select a stock category') . ':</label>
 	  			<select name = "StockCat">';
@@ -222,19 +222,19 @@ if (!isset($StockID)) {
 			<input type = "text" name = "StockCode" size = "15" maxlength = "18" />
 		</field>
 	</fieldset>';
-	echo '<div class = "centre">
+	echo '<div class="centre">
 			<input type = "submit" name = "SearchParts" value = "' . __('Search Items Now') . '" />
 			<input type = "submit" name = "ResetPart" value = "' . __('Show All') . '" />
 		</div>';
 
 	if (isset($StockItemsResult)) {
 
-		echo '<table cellpadding = "2" class = "selection">
+		echo '<table cellpadding = "2" class="selection">
 			<thead>
 			<tr>
-				<th class = "SortedColumn">' . __('Code') . '</th>
-				<th class = "SortedColumn">' . __('Description') . '</th>
-				<th class = "SortedColumn">' . __('On Hand') . '</th>
+				<th class="SortedColumn">' . __('Code') . '</th>
+				<th class="SortedColumn">' . __('Description') . '</th>
+				<th class="SortedColumn">' . __('On Hand') . '</th>
 				<th>' . __('Units') . '</th>
 				</tr>
 			</thead>
@@ -242,10 +242,10 @@ if (!isset($StockID)) {
 
 		while ($MyRow = DB_fetch_array($StockItemsResult)) {
 
-			echo '<tr class = "striped_row">
+			echo '<tr class="striped_row">
 					<td><input type = "submit" name = "SelectedStockItem" value = "', $MyRow['stockid'], '" /></td>
 					<td>', $MyRow['description'], '</td>
-					<td class = "number">', locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']), '</td>
+					<td class="number">', locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']), '</td>
 					<td>', $MyRow['units'], '</td>
 				</tr>';
 
@@ -335,53 +335,53 @@ if (!isset($StockID)) {
 		/*show a table of the orders returned by the SQL */
 		if (DB_num_rows($WorkOrdersResult)>0) {
 			echo '<br />
-				<table cellpadding = "2" width = "95%" class = "selection">
+				<table cellpadding = "2" width = "95%" class="selection">
 				<thead>
 				<tr>
 					<th>' . __('Modify') . '</th>
-					<th class = "SortedColumn">' . __('Status') . '</th>
+					<th class="SortedColumn">' . __('Status') . '</th>
 					<th>' . __('Issue To') . '</th>
 					<th>' . __('Receive') . '</th>
 					<th>' . __('Costing') . '</th>
 					<th>' . __('Paperwork') . '</th>
 					<th>' . __('Location') . '</th>
-					<th class = "SortedColumn">' . __('Item') . '</th>
-					<th class = "SortedColumn">' . __('Quantity Required') . '</th>
-					<th class = "SortedColumn">' . __('Quantity Received') . '</th>
-					<th class = "SortedColumn">' . __('Quantity Outstanding') . '</th>
-					<th class = "SortedColumn">' . __('Start Date')  . '</th>
-					<th class = "SortedColumn">' . __('Required Date') . '</th>
+					<th class="SortedColumn">' . __('Item') . '</th>
+					<th class="SortedColumn">' . __('Quantity Required') . '</th>
+					<th class="SortedColumn">' . __('Quantity Received') . '</th>
+					<th class="SortedColumn">' . __('Quantity Outstanding') . '</th>
+					<th class="SortedColumn">' . __('Start Date')  . '</th>
+					<th class="SortedColumn">' . __('Required Date') . '</th>
 					</tr>
 				</thead>
 				<tbody>';
 
 		while ($MyRow = DB_fetch_array($WorkOrdersResult)) {
 
-			$ModifyPage = $RootPath . '/WorkOrderEntry.php?WO = ' . $MyRow['wo'];
-			$Status_WO = $RootPath . '/WorkOrderStatus.php?WO = ' .$MyRow['wo'] . '&amp;StockID = ' . urlencode($MyRow['stockid']);
-			$Receive_WO = $RootPath . '/WorkOrderReceive.php?WO = ' .$MyRow['wo'] . '&amp;StockID = ' . urlencode($MyRow['stockid']);
-			$Issue_WO = $RootPath . '/WorkOrderIssue.php?WO = ' .$MyRow['wo'] . '&amp;StockID = ' . urlencode($MyRow['stockid']);
-			$Costing_WO =$RootPath . '/WorkOrderCosting.php?WO = ' .$MyRow['wo'];
-			$Printing_WO =$RootPath . '/PDFWOPrint.php?WO = ' .$MyRow['wo'] . '&amp;StockID = ' . urlencode($MyRow['stockid']);
+			$ModifyPage = $RootPath . '/WorkOrderEntry.php?WO=' . $MyRow['wo'];
+			$Status_WO = $RootPath . '/WorkOrderStatus.php?WO=' .$MyRow['wo'] . '&amp;StockID=' . urlencode($MyRow['stockid']);
+			$Receive_WO = $RootPath . '/WorkOrderReceive.php?WO=' .$MyRow['wo'] . '&amp;StockID=' . urlencode($MyRow['stockid']);
+			$Issue_WO = $RootPath . '/WorkOrderIssue.php?WO=' .$MyRow['wo'] . '&amp;StockID=' . urlencode($MyRow['stockid']);
+			$Costing_WO =$RootPath . '/WorkOrderCosting.php?WO=' .$MyRow['wo'];
+			$Printing_WO =$RootPath . '/PDFWOPrint.php?WO=' .$MyRow['wo'] . '&amp;StockID=' . urlencode($MyRow['stockid']);
 
 			$FormatedRequiredByDate = ConvertSQLDate($MyRow['requiredby']);
 			$FormatedStartDate = ConvertSQLDate($MyRow['startdate']);
 
 
-			echo '<tr class = "striped_row">
-					<td><a href = "', $ModifyPage, '">', $MyRow['wo'].'['.$MyRow['reference'] . ']', '</a></td>
-					<td><a href = "', $Status_WO, '">' . __('Status') . '</a></td>
-					<td><a href = "', $Issue_WO, '">' . __('Issue To') . '</a></td>
-					<td><a href = "', $Receive_WO, '">' . __('Receive') . '</a></td>
-					<td><a href = "', $Costing_WO, '">' . __('Costing') . '</a></td>
-					<td><a href = "', $Printing_WO, '">' . __('Print W/O') . '</a></td>
+			echo '<tr class="striped_row">
+					<td><a href="', $ModifyPage, '">', $MyRow['wo'].'['.$MyRow['reference'] . ']', '</a></td>
+					<td><a href="', $Status_WO, '">' . __('Status') . '</a></td>
+					<td><a href="', $Issue_WO, '">' . __('Issue To') . '</a></td>
+					<td><a href="', $Receive_WO, '">' . __('Receive') . '</a></td>
+					<td><a href="', $Costing_WO, '">' . __('Costing') . '</a></td>
+					<td><a href="', $Printing_WO, '">' . __('Print W/O') . '</a></td>
 					<td>', $MyRow['loccode'], '</td>
 					<td>', urlencode($MyRow['stockid']), ' - ', $MyRow['description'], '</td>
-					<td class = "number">', locale_number_format($MyRow['qtyreqd'],$MyRow['decimalplaces']), '</td>
-					<td class = "number">', locale_number_format($MyRow['qtyrecd'],$MyRow['decimalplaces']), '</td>
-					<td class = "number">', locale_number_format($MyRow['qtyreqd']-$MyRow['qtyrecd'],$MyRow['decimalplaces']), '</td>
-					<td class = "date">', $FormatedStartDate, '</td>
-					<td class = "date">', $FormatedRequiredByDate, '</td>
+					<td class="number">', locale_number_format($MyRow['qtyreqd'],$MyRow['decimalplaces']), '</td>
+					<td class="number">', locale_number_format($MyRow['qtyrecd'],$MyRow['decimalplaces']), '</td>
+					<td class="number">', locale_number_format($MyRow['qtyreqd']-$MyRow['qtyrecd'],$MyRow['decimalplaces']), '</td>
+					<td class="date">', $FormatedStartDate, '</td>
+					<td class="date">', $FormatedRequiredByDate, '</td>
 				</tr>';
 		}
 		//end of while loop

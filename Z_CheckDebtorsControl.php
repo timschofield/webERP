@@ -12,15 +12,15 @@ include('includes/header.php');
 //
 
     // Context Navigation and Title
-echo '<a href = "'. $RootPath . '/index.php?&amp;Application = AR">' . __('Back to Customers') . '</a>';
-echo '<div class = "centre"><h3>' . $Title . '</h3></div>';
+echo '<a href="'. $RootPath . '/index.php?&amp;Application=AR">' . __('Back to Customers') . '</a>';
+echo '<div class="centre"><h3>' . $Title . '</h3></div>';
 
 	// Page Border
 echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">';
-echo '<div class = "centre">';
-echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<div class="centre">';
+echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 
-echo '<table class = "selection">';
+echo '<table class="selection">';
 
 $DefaultFromPeriod = ( !isset($_POST['FromPeriod']) or $_POST['FromPeriod']=='' ) ? 1 : $_POST['FromPeriod'];
 
@@ -37,19 +37,19 @@ if ( !isset($_POST['ToPeriod']) or $_POST['ToPeriod']=='' )
 
 echo '<tr>
 <td>' . __('Start Period:') . '</td>
-<td><select name = "FromPeriod">';
+<td><select name="FromPeriod">';
 
 $ToSelect = '<tr><td>' . __('End Period:')  . '</td>
-<td><select name = "ToPeriod">';
+<td><select name="ToPeriod">';
 
 $SQL = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno";
 $perResult = DB_query($SQL);
 
 while ( $perRow = DB_fetch_array($perResult) ) {
-	$FromSelected = ( $perRow['periodno'] == $DefaultFromPeriod ) ? 'selected = "selected"' : '';
+	$FromSelected = ( $perRow['periodno'] == $DefaultFromPeriod ) ? 'selected ="selected"' : '';
 	echo '<option ' . $FromSelected . ' value = "' . $perRow['periodno'] . '">' .MonthAndYearFromSQLDate($perRow['lastdate_in_period'])  . '</option>';
 
-	$ToSelected = ( $perRow['periodno'] == $DefaultToPeriod ) ? 'selected = "selected"' : '';
+	$ToSelected = ( $perRow['periodno'] == $DefaultToPeriod ) ? 'selected ="selected"' : '';
 	$ToSelect .= '<option ' . $ToSelected . ' value = "' . $perRow['periodno'] . '">' . MonthAndYearFromSQLDate($perRow['lastdate_in_period'])  . '</option>';
 }
 DB_free_result($perResult);
@@ -59,7 +59,7 @@ echo $ToSelect . '</select></td></tr>';
 
 echo '</table>';
 
-echo '<br /><input type = "submit" name = "Show" value = "'.__('Accept').'" />';
+echo '<br /><input type = "submit" name="Show" value = "'.__('Accept').'" />';
 echo '<input type = "submit" value = "' . __('Cancel') .'" />';
 
 
@@ -94,9 +94,9 @@ if ( isset($_POST['Show']) )	{
 		$GLOpening += $dtRow['bfwd'];
 		$glMovement = $dtRow['bfwd'] + $dtRow['actual'];
 
-		echo '<tr class = "striped_row">
+		echo '<tr class="striped_row">
 		<td>' . $CurPeriod . '</td>
-		<td class = "number">' . locale_number_format($dtRow['bfwd'],2) . '</td>';
+		<td class="number">' . locale_number_format($dtRow['bfwd'],2) . '</td>';
 
 		$SQL = "SELECT SUM((ovamount+ovgst+ovfreight+ovdiscount)/rate) as totinvnetcrds
 		FROM debtortrans
@@ -108,7 +108,7 @@ if ( isset($_POST['Show']) )	{
 
 		$invTotal += $invRow['totinvnetcrds'];
 
-		echo '<td class = "number">' . locale_number_format($invRow['totinvnetcrds'],2) . '</td>';
+		echo '<td class="number">' . locale_number_format($invRow['totinvnetcrds'],2) . '</td>';
 
 		$SQL = "SELECT SUM((ovamount+ovgst+ovfreight+ovdiscount)/rate) as totreceipts
 		FROM debtortrans
@@ -121,7 +121,7 @@ if ( isset($_POST['Show']) )	{
 		$RecTotal += $recRow['totreceipts'];
 		$CalcMovement = $dtRow['bfwd'] + $invRow['totinvnetcrds'] + $recRow['totreceipts'];
 
-		echo '<td class = "number">' . locale_number_format($recRow['totreceipts'],2) . '</td>';
+		echo '<td class="number">' . locale_number_format($recRow['totreceipts'],2) . '</td>';
 
 		$GLClosing += $glMovement;
 		$CalcTotal += $CalcMovement;
@@ -130,23 +130,23 @@ if ( isset($_POST['Show']) )	{
 		$diff = ( $dtRow['bfwd'] == 0 ) ? 0 : round($glMovement,2) - round($CalcMovement,2);
 		$color = ( $diff == 0 or $dtRow['bfwd'] == 0 ) ? 'green' : 'red';
 
-		echo '<td class = "number">' . locale_number_format($glMovement,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-		<td class = "number">' . locale_number_format(($CalcMovement),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-		<td class = "number" style = "background-color:white;color:' . $color . '">' . locale_number_format($diff,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		echo '<td class="number">' . locale_number_format($glMovement,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		<td class="number">' . locale_number_format(($CalcMovement),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		<td class="number" style="background-color:white;color:' . $color . '">' . locale_number_format($diff,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		</tr>';
 		$CurPeriod++;
 	}
 
 	$difColor = ( $DiffTotal == 0 ) ? 'green' : 'red';
 
-	echo '<tr style = "bgcolor:white">
+	echo '<tr style="bgcolor:white">
 	<td>' . __('Total') . '</td>
-	<td class = "number">' . locale_number_format($GLOpening,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-	<td class = "number">' . locale_number_format($invTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-	<td class = "number">' . locale_number_format($RecTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-	<td class = "number">' . locale_number_format($GLClosing,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-	<td class = "number">' . locale_number_format($CalcTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-	<td class = "number" style = "color = ' . $difColor . '">' . locale_number_format($DiffTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+	<td class="number">' . locale_number_format($GLOpening,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+	<td class="number">' . locale_number_format($invTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+	<td class="number">' . locale_number_format($RecTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+	<td class="number">' . locale_number_format($GLClosing,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+	<td class="number">' . locale_number_format($CalcTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+	<td class="number" style="color = ' . $difColor . '">' . locale_number_format($DiffTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 	</tr>';
 	echo '</table>';
 }

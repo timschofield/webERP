@@ -44,7 +44,7 @@ if (!isset($SelectedBudget)) {
 	echo '<input type = "hidden" name = "FormID" value = "', $_SESSION['FormID'], '" />';
 
 	echo '<p class = "page_title_text" >
-			<img src = "', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title = "', __('Budgets'), '" alt = "', __('Budgets'), '" />', ' ', __('Select Budget'), '
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', __('Budgets'), '" alt = "', __('Budgets'), '" />', ' ', __('Select Budget'), '
 		</p>';
 
 	echo '<fieldset>
@@ -76,7 +76,7 @@ if (!isset($SelectedBudget)) {
 	echo '<input type = "hidden" name = "SelectedBudget" value = "', $SelectedBudget, '" />';
 
 	echo '<p class = "page_title_text" >
-			<img src = "', $RootPath, '/css/', $_SESSION['Theme'], '/images/gl.png" title = "', __('Enter Budget Amounts'), '" alt = "', __('Enter Budget Amounts'), '" />', ' ', __('Enter Budget Amounts'), '
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/gl.png" title="', __('Enter Budget Amounts'), '" alt = "', __('Enter Budget Amounts'), '" />', ' ', __('Enter Budget Amounts'), '
 		</p>';
 
 	echo '<fieldset>

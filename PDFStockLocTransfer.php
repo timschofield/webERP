@@ -58,7 +58,7 @@ if (isset($_GET['TransferNo'])) {
 	th { background-color: #eee; }
 	</style>';
 	$HTML .= '<link href = "css/reports.css" rel = "stylesheet" type = "text/css" />';
-	$HTML .= '<img class = "logo" src = "' . $_SESSION['LogoFile'] . '" /><br />';
+	$HTML .= '<img class="logo" src="' . $_SESSION['LogoFile'] . '" /><br />';
 	$HTML .= '<h2>' . __('Inventory Location Transfer BOL') . ' #' . htmlspecialchars($_GET['TransferNo']) . '</h2>
 	<table>
 	<tr>
@@ -105,7 +105,7 @@ else {
 	$ViewTopic = 'Inventory';
 	$BookMark = '';
 	include ('includes/header.php');
-	echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title = "' . __('Search') . '" alt = "" />' . ' ' . __('Reprint transfer docket') . '</p>';
+	echo '<p class = "page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . __('Reprint transfer docket') . '</p>';
 	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 	echo '<fieldset>

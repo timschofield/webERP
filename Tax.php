@@ -26,7 +26,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 					<meta name = "Creator" content = "webERP https://www.weberp.org">
 				</head>
 				<body>
-				<div class = "centre" id = "ReportHeader">
+				<div class="centre" id="ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 					' . $ReportTitle . '<br />
 					' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
@@ -81,20 +81,20 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 			</thead>
 			<tbody>';
 		while ($DebtorTransRow = DB_fetch_array($DebtorTransResult)) {
-			$HTML .= '<tr class = "striped_row">
+			$HTML .= '<tr class="striped_row">
 						<td>' . ConvertSQLDate($DebtorTransRow['trandate']) . '</td>
 						<td>' . __($DebtorTransRow['typename']) . '</td>
-						<td class = "number">' . $DebtorTransRow['transno'] . '</td>
+						<td class="number">' . $DebtorTransRow['transno'] . '</td>
 						<td>' . htmlspecialchars($DebtorTransRow['name']) . '</td>
 						<td>' . htmlspecialchars($DebtorTransRow['branchcode']) . '</td>
-						<td class = "number">' . locale_number_format($DebtorTransRow['netamount'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-						<td class = "number">' . locale_number_format($DebtorTransRow['tax'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class="number">' . locale_number_format($DebtorTransRow['netamount'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class="number">' . locale_number_format($DebtorTransRow['tax'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 					</tr>';
 			$SalesCount++;
 			$SalesNet += $DebtorTransRow['netamount'];
 			$SalesTax += $DebtorTransRow['tax'];
 }
-		$HTML .= '<tr class = "total_row">
+		$HTML .= '<tr class="total_row">
 					<td colspan = "5"><strong>' . __('Total Outputs') . ':</strong></td>
 					<td>' . __('Net') . ': ' . locale_number_format($SalesNet, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 					<td>' . __('Tax') . ': ' . locale_number_format($SalesTax, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -174,14 +174,14 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 					</thead>
 					<tbody>';
 		while ($SuppTransRow = DB_fetch_array($SuppTransResult)) {
-			$HTML .= '<tr class = "striped_row">
+			$HTML .= '<tr class="striped_row">
 						<td>' . ConvertSQLDate($SuppTransRow['trandate']) . '</td>
 						<td>' . __($SuppTransRow['typename']) . '</td>
-						<td class = "number">' . $SuppTransRow['transno'] . '</td>
+						<td class="number">' . $SuppTransRow['transno'] . '</td>
 						<td>' . htmlspecialchars($SuppTransRow['suppname']) . '</td>
 						<td>' . htmlspecialchars($SuppTransRow['suppreference']) . '</td>
-						<td class = "number">' . locale_number_format($SuppTransRow['netamount'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-						<td class = "number">' . locale_number_format($SuppTransRow['taxamt'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class="number">' . locale_number_format($SuppTransRow['netamount'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class="number">' . locale_number_format($SuppTransRow['taxamt'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 					</tr>';
 			$PurchasesCount++;
 			$PurchasesNet += $SuppTransRow['netamount'];
@@ -242,14 +242,14 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 			$TotalTaxResult = DB_query($TotalTaxSQL);
 			$TotalTaxRow = DB_fetch_array($TotalTaxResult);
 			$NetAmount = ((-$PettyCashRow['gross']) - $TotalTaxRow['totaltax']);
-			$HTML .= '<tr class = "striped_row">
+			$HTML .= '<tr class="striped_row">
 						<td>' . ConvertSQLDate($PettyCashRow['trandate']) . '</td>
 						<td>' . __('Petty Cash Expense') . '</td>
-						<td class = "number">' . $PettyCashRow['transno'] . '</td>
+						<td class="number">' . $PettyCashRow['transno'] . '</td>
 						<td>' . htmlspecialchars($PettyCashRow['suppname']) . '</td>
 						<td>' . htmlspecialchars($PettyCashRow['suppreference']) . '</td>
-						<td class = "number">' . locale_number_format($NetAmount, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-						<td class = "number">' . locale_number_format((-$PettyCashRow['taxamt']), $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class="number">' . locale_number_format($NetAmount, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class="number">' . locale_number_format((-$PettyCashRow['taxamt']), $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 					</tr>';
 			$PettyCashCount++;
 			$PettyCashNet += $NetAmount;
@@ -285,53 +285,53 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 				<tbody>';
 	$SalesTotal = $SalesNet + $SalesTax;
 	$PurchasesTotal = $PurchasesNet + $PettyCashNet + $PurchasesTax + $PettyCashTax;
-	$HTML .= '<tr class = "striped_row">
+	$HTML .= '<tr class="striped_row">
 				<td>' . __('Outputs') . '</td>
-				<td class = "number">' . locale_number_format($SalesCount) . '</td>
-				<td class = "number">' . locale_number_format($SalesNet, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td class = "number">' . locale_number_format($SalesTax, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td class = "number">' . locale_number_format($SalesTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($SalesCount) . '</td>
+				<td class="number">' . locale_number_format($SalesNet, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($SalesTax, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($SalesTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			</tr>';
-	$HTML .= '<tr class = "striped_row">
+	$HTML .= '<tr class="striped_row">
 				<td>' . __('Inputs') . '</td>
-				<td class = "number">' . locale_number_format($PurchasesCount + $PettyCashCount) . '</td>
-				<td class = "number">' . locale_number_format($PurchasesNet + $PettyCashNet, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td class = "number">' . locale_number_format($PurchasesTax + $PettyCashTax, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td class = "number">' . locale_number_format($PurchasesTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($PurchasesCount + $PettyCashCount) . '</td>
+				<td class="number">' . locale_number_format($PurchasesNet + $PettyCashNet, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($PurchasesTax + $PettyCashTax, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($PurchasesTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			</tr>';
 	// Difference row
 	$diffCount = $SalesCount - $PurchasesCount;
 	$diffNet = $SalesNet - $PurchasesNet;
 	$diffTax = $SalesTax - $PurchasesTax;
 	$diffTotal = ($SalesTotal - ($PurchasesNet + $PurchasesTax));
-	$HTML .= '<tr class = "striped_row">
+	$HTML .= '<tr class="striped_row">
 				<td>' . __('Difference') . '</td>
-				<td class = "number">' . locale_number_format($diffCount) . '</td>
-				<td class = "number">' . locale_number_format($diffNet, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td class = "number">' . locale_number_format($diffTax, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td class = "number">' . locale_number_format($diffTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($diffCount) . '</td>
+				<td class="number">' . locale_number_format($diffNet, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($diffTax, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($diffTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			</tr>';
 	$HTML .= '</tbody></table>';
 
 	// Additional notes
-	$HTML .= '<div class = "page_help_text">';
+	$HTML .= '<div class="page_help_text">';
 	$HTML .= '<p>' . __('Adjustments for Tax paid to Customs, FBT, entertainments etc must also be entered') . '</p>';
 	$HTML .= '<p>' . __('This information excludes tax on journal entries/payments/receipts. All tax should be entered through the correct modules.') . '</p>';
 	$HTML .= '</div>';
 
 	if (isset($_POST['PrintPDF'])) {
 		$HTML .= '</tbody>
-				<div class = "footer fixed-section">
-					<div class = "right">
-						<span class = "page-number">Page </span>
+				<div class="footer fixed-section">
+					<div class="right">
+						<span class="page-number">Page </span>
 					</div>
 				</div>
 			</table>';
 	} else {
 		$HTML .= '</tbody>
 				</table>
-				<div class = "centre">
-					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" /></form>
+				<div class="centre">
+					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -341,7 +341,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 	$Title = __('Taxation Reporting Error');
 		include('includes/header.php');
 		prnMsg(__('There are no tax entries to list'), 'info');
-		echo '<br /><a href = "' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 		include('includes/footer.php');
 		exit();
 } else {
@@ -362,7 +362,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 		} else {
 			$Title = __('Tax Report');
 			include('includes/header.php');
-			echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/gl.png" title = "' . __('Tax Report') . '" alt = "" />' . ' ' . __('Tax Report') . '</p>';
+			echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/gl.png" title="' . __('Tax Report') . '" alt="" />' . ' ' . __('Tax Report') . '</p>';
 			echo $HTML;
 			include('includes/footer.php');
 		}
@@ -373,8 +373,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 	$ViewTopic = 'Tax';
 	$BookMark = 'Tax';
 	include('includes/header.php');
-	echo '<p class = "page_title_text"><img alt = "" src = "' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_delete.png" title = "' . __('Tax Report') . '" />' . ' ' . __('Tax Reporting') . '</p>';
-	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target = "_blank">';
+	echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_delete.png" title="' . __('Tax Report') . '" />' . ' ' . __('Tax Reporting') . '</p>';
+	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target="_blank">';
 	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 	echo '<fieldset>
 			<legend>', __('Report Criteria'), '</legend>';
@@ -425,9 +425,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 			</select>
 		</field>
 		</fieldset>
-		<div class = "centre">
-			<input type = "submit" name = "PrintPDF" title = "Produce PDF Report" value = "' . __('Print PDF') . '" />
-			<input type = "submit" name = "View" title = "View Report" value = "' . __('View') . '" />
+		<div class="centre">
+			<input type = "submit" name = "PrintPDF" title="Produce PDF Report" value = "' . __('Print PDF') . '" />
+			<input type = "submit" name = "View" title="View Report" value = "' . __('View') . '" />
 		</div>
 		</form>';
 	include('includes/footer.php');

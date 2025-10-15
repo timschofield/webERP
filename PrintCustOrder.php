@@ -9,14 +9,14 @@ include ('includes/SQL_CommonFunctions.php');
 if (!isset($_GET['TransNo']) or $_GET['TransNo'] == '') {
 	$Title = __('Select Order To Print');
 	include ('includes/header.php');
-	echo '<div class = "centre">';
+	echo '<div class="centre">';
 	prnMsg(__('Select an Order Number to Print before calling this page'), 'error');
-	echo '<table class = "table_index">
+	echo '<table class="table_index">
 			<tr>
-			<td class = "menu_group_item">
+			<td class="menu_group_item">
 				 <ul>
-					<li><a href = "' . $RootPath . '/SelectSalesOrder.php">' . __('Outstanding Sales Orders') . '</a></li>
-					<li><a href = "' . $RootPath . '/SelectCompletedOrder.php">' . __('Completed Sales Orders') . '</a></li>
+					<li><a href="' . $RootPath . '/SelectSalesOrder.php">' . __('Outstanding Sales Orders') . '</a></li>
+					<li><a href="' . $RootPath . '/SelectCompletedOrder.php">' . __('Completed Sales Orders') . '</a></li>
 				 </ul>
 				 </td>
 				 </tr>
@@ -75,13 +75,13 @@ if (DB_num_rows($Result) == 0) {
 
 	$Title = __('Print Packing Slip Error');
 	include ('includes/header.php');
-	echo '<div class = "centre"><br /><br /><br />';
+	echo '<div class="centre"><br /><br /><br />';
 	prnMsg(__('Unable to Locate Order Number') . ' : ' . $_GET['TransNo'] . ' ', 'error');
-	echo '<table class = "table_index">
+	echo '<table class="table_index">
 		<tr>
-		<td class = "menu_group_item">
-			<li><a href = "' . $RootPath . '/SelectSalesOrder.php">' . __('Outstanding Sales Orders') . '</a></li>
-			<li><a href = "' . $RootPath . '/SelectCompletedOrder.php">' . __('Completed Sales Orders') . '</a></li>
+		<td class="menu_group_item">
+			<li><a href="' . $RootPath . '/SelectSalesOrder.php">' . __('Outstanding Sales Orders') . '</a></li>
+			<li><a href="' . $RootPath . '/SelectCompletedOrder.php">' . __('Completed Sales Orders') . '</a></li>
 		</td>
 		</tr>
 		</table>
@@ -99,14 +99,14 @@ elseif (DB_num_rows($Result) == 1) {
 		include ('includes/header.php');
 		echo '<p>';
 		prnMsg(__('The packing slip for order number') . ' ' . $_GET['TransNo'] . ' ' . __('has previously been printed') . '. ' . __('It was printed on') . ' ' . ConvertSQLDate($MyRow['datepackingslipprinted']) . '<br />' . __('This check is there to ensure that duplicate packing slips are not produced and dispatched more than once to the customer'), 'warn');
-		echo '<p><a href = "' . $RootPath . '/PrintCustOrder.php?TransNo = ' . $_GET['TransNo'] . '&Reprint = OK">' . __('Do a Re-Print') . ' (' . __('On Pre-Printed Stationery') . ') ' . __('Even Though Previously Printed') . '</a><p>' . '<a href = "' . $RootPath . '/PrintCustOrder_generic.php?TransNo = ' . $_GET['TransNo'] . '&Reprint = OK">' . __('Do a Re-Print') . ' (' . __('Plain paper') . ' - ' . __('A4') . ' ' . __('landscape') . ')</a>';
+		echo '<p><a href="' . $RootPath . '/PrintCustOrder.php?TransNo=' . $_GET['TransNo'] . '&Reprint=OK">' . __('Do a Re-Print') . ' (' . __('On Pre-Printed Stationery') . ') ' . __('Even Though Previously Printed') . '</a><p>' . '<a href="' . $RootPath . '/PrintCustOrder_generic.php?TransNo=' . $_GET['TransNo'] . '&Reprint=OK">' . __('Do a Re-Print') . ' (' . __('Plain paper') . ' - ' . __('A4') . ' ' . __('landscape') . ')</a>';
 
 		echo __('Or select another Order Number to Print');
-		echo '<table class = "table_index">
+		echo '<table class="table_index">
 				<tr>
-					<td class = "menu_group_item">
-						<li><a href = "' . $RootPath . '/SelectSalesOrder.php">' . __('Outstanding Sales Orders') . '</a></li>
-						<li><a href = "' . $RootPath . '/SelectCompletedOrder.php">' . __('Completed Sales Orders') . '</a></li>
+					<td class="menu_group_item">
+						<li><a href="' . $RootPath . '/SelectSalesOrder.php">' . __('Outstanding Sales Orders') . '</a></li>
+						<li><a href="' . $RootPath . '/SelectCompletedOrder.php">' . __('Completed Sales Orders') . '</a></li>
 					</td>
 				</tr>
 			</table>
@@ -153,14 +153,14 @@ if (DB_num_rows($Result) > 0) {
 	$HTML .= '<!DOCTYPE html>
 	<head>
 		<link href = "css/reports.css" rel = "stylesheet" type = "text/css" />
-		<meta name = "author" content = "WebERP">
-		<meta name = "Creator" content = "webERP https://www.weberp.org">
+		<meta name="author" content = "WebERP">
+		<meta name="Creator" content = "webERP https://www.weberp.org">
 	</head>
 	<body>
 			<h1>' . __('Customer Packing Slip') . '</h1>
 			<table>
 				<tr>
-					<td style = "vertical-align:top">
+					<td style="vertical-align:top">
 						<strong>' . __('Order Number') . ':</strong> ' . $_GET['TransNo'] . '<br />
 						<strong>' . __('Order Date') . ':</strong> ' . htmlspecialchars(ConvertSQLDate($MyRow['orddate'])) . '<br />
 						<strong>' . __('Delivery Date') . ':</strong> ' . htmlspecialchars(ConvertSQLDate($MyRow['deliverydate'])) . '<br />
@@ -171,7 +171,7 @@ if (DB_num_rows($Result) > 0) {
 						<strong>' . __('Customer') . ':</strong> ' . htmlspecialchars($MyRow['name']) . '<br />
 						' . $CustomerAddress . '
 					</td>
-					<td style = "vertical-align:top">
+					<td style="vertical-align:top">
 						<strong>' . __('Deliver To') . ':</strong> ' . htmlspecialchars($MyRow['deliverto']) . '<br />
 						' . $DeliveryAddress . '
 					</td>
@@ -199,17 +199,17 @@ if (DB_num_rows($Result) > 0) {
 		$HTML .= '<tr>
 						<td>' . htmlspecialchars($MyRow2['stkcode']) . '</td>
 						<td>' . htmlspecialchars($MyRow2['description']) . '</td>
-						<td style = "text-align: right;">' . $DisplayQty . '</td>
+						<td style="text-align: right;">' . $DisplayQty . '</td>
 						<td>' . htmlspecialchars($MyRow2['units']) . '</td>
-						<td style = "text-align: right;">' . $DisplayQtySupplied . '</td>
-						<td style = "text-align: right;">' . $DisplayPrevDel . '</td>
+						<td style="text-align: right;">' . $DisplayQtySupplied . '</td>
+						<td style="text-align: right;">' . $DisplayPrevDel . '</td>
 					</tr>';
 	}
 
 	$HTML .= '</tbody>
 			</table>
 			<br /><br />
-			<div class = "footer">
+			<div class="footer">
 				' . __('Generated by webERP on') . ' ' . date('Y-m-d H:i') . '
 			</div>
 	</body>
@@ -242,7 +242,7 @@ if (DB_num_rows($Result) > 0) {
 else {
 	$Title = __('Print Packing Slip Error');
 	include ('includes/header.php');
-	echo '<p>' . __('There were no outstanding items on the order to deliver. A dispatch note cannot be printed') . '<br /><a href = "' . $RootPath . '/SelectSalesOrder.php">' . __('Print Another Packing Slip/Order') . '</a>' . '<br />' . '<a href = "' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
+	echo '<p>' . __('There were no outstanding items on the order to deliver. A dispatch note cannot be printed') . '<br /><a href="' . $RootPath . '/SelectSalesOrder.php">' . __('Print Another Packing Slip/Order') . '</a>' . '<br />' . '<a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 	include ('includes/footer.php');
 	exit();
 } /*end if there are order details to show on the order*/

@@ -13,9 +13,9 @@ if (isset($_GET['SupplierID'])){
 	$SupplierID = $_POST['SupplierID'];
 }
 
-echo '<a href = "' . $RootPath . '/SelectSupplier.php" class = "toplink">' . __('Back to Suppliers') . '</a><br />';
+echo '<a href="' . $RootPath . '/SelectSupplier.php" class="toplink">' . __('Back to Suppliers') . '</a><br />';
 
-echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title = "' .
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' .
 	__('Supplier Allocations') . '" alt = "" />' . ' ' . $Title . '</p>';
 
 if (!isset($SupplierID)) {
@@ -137,31 +137,31 @@ if (!isset($SelectedContact)){
 
 		$MyRow = DB_fetch_array($Result);
 
-		echo '<table class = "selection">
+		echo '<table class="selection">
 				<thead>
 					<tr>
 						<th colspan = "7">' . __('Contacts Defined for') . ' - ' . $MyRow['suppname'] . '</th>
 					</tr>
 					<tr>
-					<th class = "SortedColumn">' . __('Name') . '</th>
-					<th class = "SortedColumn">' . __('Position') . '</th>
-					<th class = "SortedColumn">' . __('Phone No') . '</th>
-					<th class = "SortedColumn">' . __('Fax No') . '</th>
-					<th class = "SortedColumn">' . __('Email') . '</th>
+					<th class="SortedColumn">' . __('Name') . '</th>
+					<th class="SortedColumn">' . __('Position') . '</th>
+					<th class="SortedColumn">' . __('Phone No') . '</th>
+					<th class="SortedColumn">' . __('Fax No') . '</th>
+					<th class="SortedColumn">' . __('Email') . '</th>
 					<th colspan = "2"></th>
 				</tr>
 			</thead>
 			<tbody>';
 
 		do {
-			echo '<tr class = "striped_row">
+			echo '<tr class="striped_row">
 					<td>', $MyRow['contact'], '</td>
 					<td>', $MyRow['position'], '</td>
 					<td>', $MyRow['tel'], '</td>
 					<td>', $MyRow['fax'], '</td>
-					<td><a href = "mailto:', $MyRow['email'], '">', $MyRow['email'], '</a></td>
-					<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SupplierID = ', $SupplierID, '&amp;SelectedContact = ', $MyRow['contact'], '">' . __('Edit') . '</a></td>
-					<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SupplierID = ', $SupplierID, '&amp;SelectedContact = ', $MyRow['contact'], '&amp;delete = yes" onclick = "return confirm(\''  . __('Are you sure you wish to delete this contact?') . '\');">' .  __('Delete') . '</a></td>
+					<td><a href="mailto:', $MyRow['email'], '">', $MyRow['email'], '</a></td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SupplierID=', $SupplierID, '&amp;SelectedContact=', $MyRow['contact'], '">' . __('Edit') . '</a></td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SupplierID=', $SupplierID, '&amp;SelectedContact=', $MyRow['contact'], '&amp;delete=yes" onclick="return confirm(\''  . __('Are you sure you wish to delete this contact?') . '\');">' .  __('Delete') . '</a></td>
 				</tr>';
 		} while ($MyRow = DB_fetch_array($Result));
 		echo '</tbody></table><br />';
@@ -175,8 +175,8 @@ if (!isset($SelectedContact)){
 
 
 if (isset($SelectedContact)) {
-	echo '<div class = "centre">
-			<a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SupplierID = ' . $SupplierID . '">' .
+	echo '<div class="centre">
+			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SupplierID=' . $SupplierID . '">' .
 		  __('Show all the supplier contacts for') . ' ' . $SupplierID . '</a>
 		 </div>';
 }
@@ -184,7 +184,7 @@ if (isset($SelectedContact)) {
 if (! isset($_GET['delete'])) {
 
 	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedContact)) {
 		//editing an existing contact
@@ -208,8 +208,8 @@ if (! isset($_GET['delete'])) {
 		$_POST['Fax']  = $MyRow['fax'];
 		$_POST['Email']  = $MyRow['email'];
 		$_POST['Mobile']  = $MyRow['mobile'];
-		echo '<input type = "hidden" name = "SelectedContact" value = "' . $_POST['Contact'] . '" />';
-		echo '<input type = "hidden" name = "Contact" value = "' . $_POST['Contact'] . '" />';
+		echo '<input type = "hidden" name="SelectedContact" value = "' . $_POST['Contact'] . '" />';
+		echo '<input type = "hidden" name="Contact" value = "' . $_POST['Contact'] . '" />';
 		echo '<fieldset>
 				<legend>', __('Edit Supplier Contact'), '</legend>
 				<field>
@@ -225,7 +225,7 @@ if (! isset($_GET['delete'])) {
 				<legend>', __('Create Supplier Contact'), '</legend>
 				<field>
 					<label for = "Contact">' . __('Contact Name') . ':</label>
-					<input type = "text" required = "required" pattern = "(?!^\s+$).{1,40}" title = "" placeholder = "'.__('More than one characters long').'" name = "Contact" size = "41" maxlength = "40" value = "' . $_POST['Contact'] . '" />
+					<input type = "text" required = "required" pattern = "(?!^\s+$).{1,40}" title="" placeholder = "'.__('More than one characters long').'" name="Contact" size = "41" maxlength = "40" value = "' . $_POST['Contact'] . '" />
 					<fieldhelp>'.__('The contact name must be more than one characters long').'</fieldhelp>
 				</field>';
 	}
@@ -246,34 +246,34 @@ if (! isset($_GET['delete'])) {
 	}
 
 	echo '<field>
-			<input type = "hidden" name = "SupplierID" value = "' . $SupplierID . '" />
+			<input type = "hidden" name="SupplierID" value = "' . $SupplierID . '" />
 			<label for = "Position">' . __('Position') . ':</label>
-			<input type = "text" name = "Position" size = "31" maxlength = "30" value = "' . $_POST['Position'] . '" />
+			<input type = "text" name="Position" size = "31" maxlength = "30" value = "' . $_POST['Position'] . '" />
 		</field>
 		<field>
 			<label for = "Tel">' . __('Telephone No') . ':</label>
-			<input type = "tel" pattern = "[\d\s+()-]{1,30}" title = "" placeholder = "'.__('Only digits,space,+,-,(,) allowed').'" name = "Tel" size = "31" maxlength = "30" value = "' . $_POST['Tel'] . '" />
+			<input type = "tel" pattern = "[\d\s+()-]{1,30}" title="" placeholder = "'.__('Only digits,space,+,-,(,) allowed').'" name="Tel" size = "31" maxlength = "30" value = "' . $_POST['Tel'] . '" />
 			<fieldhelp>'.__('The input should be phone number').'</fieldhelp>
 		</field>
 		<field>
 			<label for = "Fax">' . __('Facsimile No') . ':</label>
-			<input type = "tel" pattern = "[\d\s+()-]{1,30}" title = "" placeholder = "'.__('Only digits,space,+,-,(,) allowed').'" name = "Fax" size = "31" maxlength = "30" value = "' . $_POST['Fax'] . '" />
+			<input type = "tel" pattern = "[\d\s+()-]{1,30}" title="" placeholder = "'.__('Only digits,space,+,-,(,) allowed').'" name="Fax" size = "31" maxlength = "30" value = "' . $_POST['Fax'] . '" />
 			<fieldhelp>'.__('The input should be phone number').'</fieldhelp>
 		</field>
 		<field>
 			<label for = "Mobile">' . __('Mobile No') . ':</label>
-			<input type = "tel" pattern = "[\d\s+()-]{1,30}" title = "" placeholder = "'.__('Only digits,space,+,-,(,) allowed').'" name = "Mobile" size = "31" maxlength = "30" value = "' . $_POST['Mobile'] . '" />
+			<input type = "tel" pattern = "[\d\s+()-]{1,30}" title="" placeholder = "'.__('Only digits,space,+,-,(,) allowed').'" name="Mobile" size = "31" maxlength = "30" value = "' . $_POST['Mobile'] . '" />
 			<fieldhelp>'.__('The input should be phone number').'</fieldhelp>
 		</field>
 		<field>
-			<label for = "Email"><a href = "Mailto:' . $_POST['Email'] . '">' . __('Email') . ':</a></label>
-			<input type = "email" name = "Email" title = "" placeholder = "'.__('should be email format such as adm@weberp.org').'" size = "51" maxlength = "50" value = "' . $_POST['Email'] . '" />
+			<label for = "Email"><a href="Mailto:' . $_POST['Email'] . '">' . __('Email') . ':</a></label>
+			<input type = "email" name="Email" title="" placeholder = "'.__('should be email format such as adm@weberp.org').'" size = "51" maxlength = "50" value = "' . $_POST['Email'] . '" />
 			<fieldhelp>'.__('The input must be email format').'</fieldhelp>
 		</field>
 		</fieldset>';
 
-	echo '<div class = "centre">
-			<input type = "submit" name = "submit" value = "' . __('Enter Information') . '" />
+	echo '<div class="centre">
+			<input type = "submit" name="submit" value = "' . __('Enter Information') . '" />
 		</div>
 		</form>';
 

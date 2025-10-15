@@ -18,8 +18,8 @@ if (isset($_POST['TransDate'])){$_POST['TransDate'] = ConvertSQLDate($_POST['Tra
 if ($_SESSION['RequirePickingNote'] == 0) {
 	$Title = __('Picking Lists Not Enabled');
 	include('includes/header.php');
-	echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme,
-		'/images/error.png" title = "',
+	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+		'/images/error.png" title="',
 		$Title, '" /> ',
 		$Title, '</p>';
 	echo '<br />';
@@ -32,8 +32,8 @@ if ($_SESSION['RequirePickingNote'] == 0) {
 if ((!isset($_GET['TransNo']) or $_GET['TransNo'] == '') and !isset($_POST['TransDate'])) {
 	$Title = __('Select Picking Lists');
 	include('includes/header.php');
-	echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme,
-		'/images/sales.png" title = "',
+	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+		'/images/sales.png" title="',
 		__('Search'), '" /> ',
 		$Title, '</p>';
 	$SQL = "SELECT locations.loccode,
@@ -59,7 +59,7 @@ if ((!isset($_GET['TransNo']) or $_GET['TransNo'] == '') and !isset($_POST['Tran
 	echo '</select>
 		</field>
 		</fieldset>';
-	echo '<div class = "centre">
+	echo '<div class="centre">
 			<input type = "submit" name = "Process" value = "' . __('Print Picking Lists') . '" />
 		</div>
 		</form>';
@@ -161,9 +161,9 @@ if (isset($_POST['TransDate']) or (isset($_GET['TransNo']) and $_GET['TransNo'] 
 		echo '<br />';
 		prnMsg(__('Unable to Locate any orders for this criteria '), 'info');
 		echo '<br />
-			<table class = "selection">
+			<table class="selection">
 			<tr>
-				<td><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . __('Enter Another Date') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . __('Enter Another Date') . '</a></td>
 			</tr>
 			</table>
 			<br />';
@@ -216,8 +216,8 @@ body { font-family: DejaVu Sans, Arial, sans-serif; font-size: 12px; }
 $TotalOrderCount = sizeof($OrdersToPick);
 
 for ( $i = 0;  $i < $TotalOrderCount;  $i++ ){
-	$HTML .= '<div class = "header">'.__('Picking List').'</div>';
-	$HTML .= '<table class = "table">';
+	$HTML .= '<div class="header">'.__('Picking List').'</div>';
+	$HTML .= '<table class="table">';
 	$HTML .= '<tr>
 		<th>' . __('Stock Code') . '</th>
 		<th>' . __('Description') . '</th>
@@ -266,9 +266,9 @@ for ( $i = 0;  $i < $TotalOrderCount;  $i++ ){
 			<td>' . htmlspecialchars($MyRow2['stkcode']) . '</td>
 			<td>' . htmlspecialchars($MyRow2['description']) . '</td>
 			<td>' . htmlspecialchars($MyRow2['bin']) . '</td>
-			<td style = "text-align:right">' . $DisplayQtySupplied . '</td>
-			<td style = "text-align:right">' . $DisplayQtyAvail . '</td>
-			<td style = "text-align:right">' . $DisplayPicked . '</td>
+			<td style="text-align:right">' . $DisplayQtySupplied . '</td>
+			<td style="text-align:right">' . $DisplayQtyAvail . '</td>
+			<td style="text-align:right">' . $DisplayPicked . '</td>
 		</tr>';
 
 		if ($MyRow2['cust_part'] > '') {
@@ -308,7 +308,7 @@ for ( $i = 0;  $i < $TotalOrderCount;  $i++ ){
 
 	// Add page break for DomPDF for next order
 	if ($i < $TotalOrderCount-1) {
-	$HTML .= '<div style = "page-break-after:always"></div>';
+	$HTML .= '<div style="page-break-after:always"></div>';
 }
 }
 

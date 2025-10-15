@@ -73,7 +73,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 
 	if (isset($_POST['PrintPDF'])) {
-		$HTML .= '<img class = "logo" src = ' . $_SESSION['LogoFile'] . ' /><br />';
+		$HTML .= '<img class="logo" src = ' . $_SESSION['LogoFile'] . ' /><br />';
 	}
 
 	$HTML .= '<div class = "centre" id = "ReportHeader">
@@ -152,7 +152,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			$HTML .= '</tbody>
 					</table>
 					<div class = "centre">
-						<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" /></form>
+						<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick="window.close()" /></form>
 					</div>';
 		}
 		$HTML .= '</body>
@@ -175,7 +175,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		} else {
 			$Title = __('Create PDF Print Out For A Batch Of Receipts');
 			include('includes/header.php');
-			echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/bank.png" title = "' . __('Receipts') . '" alt = "" />' . ' ' . __('Create PDF Print Out For A Batch Of Receipts') . '</p>';
+			echo '<p class = "page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/bank.png" title="' . __('Receipts') . '" alt="" />' . ' ' . __('Create PDF Print Out For A Batch Of Receipts') . '</p>';
 			echo $HTML;
 			include('includes/footer.php');
 		}
@@ -185,7 +185,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$Title = __('Payment Listing');
 	include('includes/header.php');
 
-	echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title = "' .
+	echo '<p class = "page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' .
 		$Title . '" alt = "" />' . ' ' . $Title . '</p>';
 
 	if ($InputError == 1) {

@@ -31,7 +31,7 @@ if ((!isset($SelectedCOA) || $SelectedCOA == '') && (!isset($QASampleID) || $QAS
 	$BookMark = '';
 	$Title = __('Select Certificate of Analysis To Print');
 	include('includes/header.php');
-	echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/printer.png" title = "' . __('Print')  . '" alt = "" />' . ' ' . $Title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . __('Print')  . '" alt="" />' . ' ' . $Title . '</p>';
 	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method = "post">
 		<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />
 		<fieldset>
@@ -64,7 +64,7 @@ if ((!isset($SelectedCOA) || $SelectedCOA == '') && (!isset($QASampleID) || $QAS
 						ORDER BY lotkey";
 
 	$ResultSelection = DB_query($SQLSpecSelect);
-	echo '<select name = "QASampleID" style = "font-family: monospace; white-space:pre;">';
+	echo '<select name = "QASampleID" style="font-family: monospace; white-space:pre;">';
 	echo '<option value = "">' . str_pad(__('Lot/Serial'),15,'_'). str_pad(__('Item'),20, '_', STR_PAD_RIGHT). str_pad(__('Description'),20,'_') . '</option>';
 	while ($MyRowSelection = DB_fetch_array($ResultSelection)){
 		echo '<option value = "' . $MyRowSelection['sampleid'] . '">' . str_pad($MyRowSelection['lotkey'],15, '_', STR_PAD_RIGHT). str_pad($MyRowSelection['prodspeckey'],20,'_') .htmlspecialchars($MyRowSelection['description']) . '</option>';
@@ -129,7 +129,7 @@ $Result = DB_query($SQL, $ErrMsg);
 if (DB_num_rows($Result) == 0){
 	$Title = __('Print Certificate of Analysis Error');
 	include('includes/header.php');
-	echo '<div class = "centre">
+	echo '<div class="centre">
 			<br />
 			<br />
 			<br />';
@@ -137,10 +137,10 @@ if (DB_num_rows($Result) == 0){
 	echo '<br />
 			<br />
 			<br />
-			<table class = "table_index">
+			<table class="table_index">
 			<tr>
-				<td class = "menu_group_item">
-					<ul><li><a href = "'. $RootPath . '/PDFCOA.php">' . __('Certificate of Analysis') . '</a></li></ul>
+				<td class="menu_group_item">
+					<ul><li><a href="'. $RootPath . '/PDFCOA.php">' . __('Certificate of Analysis') . '</a></li></ul>
 				</td>
 			</tr>
 			</table>
@@ -176,14 +176,14 @@ $HTML = '
 <body>
 ';
 
-$HTML .= '<h2 class = "title">' . __('Certificate of Analysis') . ' ' . htmlspecialchars($SelectedCOA) . '</h2>';
+$HTML .= '<h2 class="title">' . __('Certificate of Analysis') . ' ' . htmlspecialchars($SelectedCOA) . '</h2>';
 
 // Optionally include a header file (logic from includes/PDFCOAHeader.php if needed as HTML)
 // For now, add a basic header:
-$HTML .= '<table style = "width:100%;margin-bottom:10px;"><tr>
-<td style = "width:33%;">' . __('Lot:') . ' ' . htmlspecialchars($SelectedCOA) . '</td>
-<td style = "width:33%;text-align:center;">' . __('Date:') . ' ' . date('Y-m-d') . '</td>
-<td style = "width:33%;text-align:right;">' . __('Item:') . ' ' . (isset($SelectedSpec)?htmlspecialchars($SelectedSpec):'') . '</td>
+$HTML .= '<table style="width:100%;margin-bottom:10px;"><tr>
+<td style="width:33%;">' . __('Lot:') . ' ' . htmlspecialchars($SelectedCOA) . '</td>
+<td style="width:33%;text-align:center;">' . __('Date:') . ' ' . date('Y-m-d') . '</td>
+<td style="width:33%;text-align:right;">' . __('Item:') . ' ' . (isset($SelectedSpec)?htmlspecialchars($SelectedSpec):'') . '</td>
 </tr></table>';
 
 $SectionsArray = [];
@@ -233,11 +233,11 @@ while ($MyRow = DB_fetch_array($Result)){
 				$HTML .= '</table>';
 				$tableOpen = false;
 }
-			$HTML .= '<div class = "section-trailer">'.htmlspecialchars($PrevTrailer).'</div>';
+			$HTML .= '<div class="section-trailer">'.htmlspecialchars($PrevTrailer).'</div>';
 		}
 		$CurSection = $MyRow['groupby'];
-		$HTML .= '<div class = "section-title">'.htmlspecialchars($SectionTitle).'</div>';
-		$HTML .= '<table class = "certificate"><tr>';
+		$HTML .= '<div class="section-title">'.htmlspecialchars($SectionTitle).'</div>';
+		$HTML .= '<table class="certificate"><tr>';
 		foreach ($SectionColLabs as $ColLabel) {
 			$HTML .= '<th>'.htmlspecialchars($ColLabel).'</th>';
 		}
@@ -279,7 +279,7 @@ if ($tableOpen) {
 }
 
 if ($SectionTrailer>'') {
-	$HTML .= '<div class = "section-trailer">'.htmlspecialchars($SectionTrailer).'</div>';
+	$HTML .= '<div class="section-trailer">'.htmlspecialchars($SectionTrailer).'</div>';
 }
 
 // Disclaimer
@@ -288,7 +288,7 @@ $Result = DB_query($SQL, $ErrMsg);
 $MyRow = DB_fetch_array($Result);
 $Disclaimer = $MyRow[0];
 if ($Disclaimer > '') {
-	$HTML .= '<div class = "disclaimer">'.htmlspecialchars($Disclaimer).'</div>';
+	$HTML .= '<div class="disclaimer">'.htmlspecialchars($Disclaimer).'</div>';
 }
 
 $HTML .= '</body></html>';

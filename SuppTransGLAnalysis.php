@@ -18,7 +18,7 @@ include('includes/GLFunctions.php');
 
 if (!isset($_SESSION['SuppTrans'])) {
 	prnMsg(__('To enter a supplier invoice or credit note the supplier must first be selected from the supplier selection screen') . ', ' . __('then the link to enter a supplier invoice or supplier credit note must be clicked on'), 'info');
-	echo '<br /><a href = "' . $RootPath . '/SelectSupplier.php">' . __('Select a supplier') . '</a>';
+	echo '<br /><a href="' . $RootPath . '/SelectSupplier.php">' . __('Select a supplier') . '</a>';
 	include('includes/footer.php');
 	exit();
 	/*It all stops here if there aint no supplier selected and transaction initiated ie $_SESSION['SuppTrans'] started off*/
@@ -88,32 +88,32 @@ if (isset($_GET['Edit'])) {
 }
 
 if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice') {
-	echo '<a href = "' . $RootPath . '/SupplierInvoice.php" class = "toplink">' . __('Back to Invoice Entry') . '</a>';
+	echo '<a href="' . $RootPath . '/SupplierInvoice.php" class="toplink">' . __('Back to Invoice Entry') . '</a>';
 } else {
-	echo '<a href = "' . $RootPath . '/SupplierCredit.php" class = "toplink">' . __('Back to Credit Note Entry') . '</a>';
+	echo '<a href="' . $RootPath . '/SupplierCredit.php" class="toplink">' . __('Back to Credit Note Entry') . '</a>';
 }
 
 /*Show all the selected GLCodes so far from the SESSION['SuppInv']->GLCodes array */
 if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice') {
-	echo '<p class = "page_title_text">
-			<img src = "' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title = "' . __('General Ledger') . '" alt = "" />' . ' ' . __('General Ledger Analysis of Invoice From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
+	echo '<p class="page_title_text">
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . __('General Ledger') . '" alt="" />' . ' ' . __('General Ledger Analysis of Invoice From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
 } else {
-	echo '<p class = "page_title_text">
-			<img src = "' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title = "' . __('General Ledger') . '" alt = "" />' . ' ' . __('General Ledger Analysis of Credit Note From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
+	echo '<p class="page_title_text">
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . __('General Ledger') . '" alt="" />' . ' ' . __('General Ledger Analysis of Credit Note From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
 }
 
 $SupplierCodeSQL = "SELECT defaultgl FROM suppliers WHERE supplierid = '" . $_SESSION['SuppTrans']->SupplierID . "'";
 $SupplierCodeResult = DB_query($SupplierCodeSQL);
 $SupplierCodeRow = DB_fetch_row($SupplierCodeResult);
 
-echo '<table class = "selection">
+echo '<table class="selection">
 	<thead>
 		<tr>
-					<th class = "SortedColumn">' . __('Account') . '</th>
-					<th class = "SortedColumn">' . __('Name') . '</th>
-					<th class = "SortedColumn">' . __('Amount') . '<br />(' . $_SESSION['SuppTrans']->CurrCode . ')</th>
+					<th class="SortedColumn">' . __('Account') . '</th>
+					<th class="SortedColumn">' . __('Name') . '</th>
+					<th class="SortedColumn">' . __('Amount') . '<br />(' . $_SESSION['SuppTrans']->CurrCode . ')</th>
 					<th>' . __('Narrative') . '</th>
-					<th class = "SortedColumn">' . __('Tag') . '</th>
+					<th class="SortedColumn">' . __('Tag') . '</th>
 					<th colspan = "2">&nbsp;</th>
 		</tr>
 	</thead>
@@ -126,13 +126,13 @@ foreach ($_SESSION['SuppTrans']->GLCodes as $EnteredGLCode) {
 	$DescriptionTag = GetDescriptionsFromTagArray($EnteredGLCode->Tag);
 
 	echo '<tr>
-			<td class = "text">' . $EnteredGLCode->GLCode . '</td>
-			<td class = "text">' . $EnteredGLCode->GLActName . '</td>
-			<td class = "number">' . locale_number_format($EnteredGLCode->Amount, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
-			<td class = "text">' . $EnteredGLCode->Narrative . '</td>
-			<td class = "text">' . $DescriptionTag . '</td>
-			<td><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Edit = ' . $EnteredGLCode->Counter . '">' . __('Edit') . '</a></td>
-			<td><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Delete = ' . $EnteredGLCode->Counter . '">' . __('Delete') . '</a></td>
+			<td class="text">' . $EnteredGLCode->GLCode . '</td>
+			<td class="text">' . $EnteredGLCode->GLActName . '</td>
+			<td class="number">' . locale_number_format($EnteredGLCode->Amount, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
+			<td class="text">' . $EnteredGLCode->Narrative . '</td>
+			<td class="text">' . $DescriptionTag . '</td>
+			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Edit=' . $EnteredGLCode->Counter . '">' . __('Edit') . '</a></td>
+			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Delete=' . $EnteredGLCode->Counter . '">' . __('Delete') . '</a></td>
 		</tr>';
 
 	$TotalGLValue+= $EnteredGLCode->Amount;
@@ -141,8 +141,8 @@ foreach ($_SESSION['SuppTrans']->GLCodes as $EnteredGLCode) {
 echo '</tbody>
 	<tfoot>
 		<tr>
-		<td colspan = "2" class = "number">' . __('Total') . ':</td>
-		<td class = "number">' . locale_number_format($TotalGLValue, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
+		<td colspan = "2" class="number">' . __('Total') . ':</td>
+		<td class="number">' . locale_number_format($TotalGLValue, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 		<td colspan = "4">&nbsp;</td>
 	</tr>
 	</tfoot>
@@ -150,7 +150,7 @@ echo '</tbody>
 
 /*Set up a form to allow input of new GL entries */
 echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post">';
-echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 echo '<fieldset>
 		<legend>', __('Supplier GL Analysis'), '</legend>';
@@ -166,7 +166,7 @@ $SQL = "SELECT tagref,
 $Result = DB_query($SQL);
 echo '<field>
 		<label for = "tag">', __('Tag'), '</label>
-		<select multiple = "multiple" name = "tag[]">';
+		<select multiple = "multiple" name="tag[]">';
 while ($MyRow = DB_fetch_array($Result)) {
 	if (isset($_POST['tag']) and in_array($MyRow['tagref'], $_POST['tag'])) {
 		echo '<option selected = "selected" value = "' . $MyRow['tagref'] . '">' . $MyRow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';
@@ -180,16 +180,16 @@ echo '</select>
 
 echo '<field>
 		<label for = "GLCode">' . __('Account Code') . ':</label>
-		<input type = "text" data-type = "no-illegal-chars" title = "" placeholder = "' . __('less than 20 alpha-numeric characters') . '" name = "GLCode" size = "21" maxlength = "20" value = "' . $_POST['GLCode'] . '" />
+		<input type = "text" data-type = "no-illegal-chars" title="" placeholder = "' . __('less than 20 alpha-numeric characters') . '" name="GLCode" size = "21" maxlength = "20" value = "' . $_POST['GLCode'] . '" />
 		<fieldhelp>' . __('The input must be alpha-numeric characters') . '</fieldhelp>
-		<input type = "hidden" name = "JobRef" value = "" /></td>
+		<input type = "hidden" name="JobRef" value = "" /></td>
 	</field>';
 if (!isset($_POST['AcctSelection']) or $_POST['AcctSelection'] == '') {
 	$_POST['AcctSelection'] = $SupplierCodeRow[0];
 }
 echo '<field>
 			<label for = "AcctSelection">' . __('Account Selection') . ':</label>
-			<select name = "AcctSelection">';
+			<select name="AcctSelection">';
 
 $SQL = "SELECT chartmaster.accountcode,
 			   chartmaster.accountname
@@ -216,7 +216,7 @@ if (!isset($_POST['Amount'])) {
 }
 echo '<field>
 		<label for = "Amount">' . __('Amount'), ' (', $_SESSION['SuppTrans']->CurrCode, '):</label>
-		<input type = "text" class = "number" required = "required" pattern = "(?!^[-]?0[.,]0*$).{1,11}" title = "" name = "Amount" size = "12" placeholder = "' . __('No zero numeric') . '" maxlength = "11" value = "' . locale_number_format($_POST['Amount'], $_SESSION['SuppTrans']->CurrDecimalPlaces) . '" />
+		<input type = "text" class="number" required = "required" pattern = "(?!^[-]?0[.,]0*$).{1,11}" title="" name="Amount" size = "12" placeholder = "' . __('No zero numeric') . '" maxlength = "11" value = "' . locale_number_format($_POST['Amount'], $_SESSION['SuppTrans']->CurrDecimalPlaces) . '" />
 		<fieldhelp>' . __('The amount must be numeric and cannot be zero') . '</fieldhelp>
 	</field>';
 
@@ -225,12 +225,12 @@ if (!isset($_POST['Narrative'])) {
 }
 echo '<field>
 		<label for = "Narrative">' . __('Narrative') . ':</label>
-		<textarea name = "Narrative" cols = "40" rows = "2">' . $_POST['Narrative'] . '</textarea>
+		<textarea name="Narrative" cols = "40" rows = "2">' . $_POST['Narrative'] . '</textarea>
 	</field>
 	</fieldset>';
 
-echo '<div class = "centre">
-		<input type = "submit" name = "AddGLCodeToTrans" value = "' . __('Enter GL Line') . '" />
+echo '<div class="centre">
+		<input type = "submit" name="AddGLCodeToTrans" value = "' . __('Enter GL Line') . '" />
 	</div>';
 
 echo '</form>';

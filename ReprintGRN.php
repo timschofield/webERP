@@ -7,23 +7,23 @@ $ViewTopic = 'Inventory';
 $BookMark = '';
 include('includes/header.php');
 
-echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title = "' . $Title . '" alt = "" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (!isset($_POST['PONumber'])) {
 	$_POST['PONumber']='';
 }
 
 echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post">';
-echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 echo '<fieldset>
 		<legend>' . __('Select a purchase order') . '</legend>
 		<field>
 			<label for = "PONumber">' . __('Enter a Purchase Order Number') . '</label>
-			' . '<input type = "text" name = "PONumber" class = "number" size = "7" value = "'.$_POST['PONumber'].'" />
+			' . '<input type = "text" name="PONumber" class="number" size = "7" value = "'.$_POST['PONumber'].'" />
 		</field>
 	</fieldset>
-	<div class = "centre">
-		<input type = "submit" name = "Show" value = "' . __('Show GRNs') . '" />
+	<div class="centre">
+		<input type = "submit" name="Show" value = "' . __('Show GRNs') . '" />
 	</div>
 	</form>';
 
@@ -74,7 +74,7 @@ if (isset($_POST['Show'])) {
 	}
 
 	echo '<br />
-			<table class = "selection">
+			<table class="selection">
 			<tr>
 				<th colspan = "8"><h3>' . __('GRNs for Purchase Order No') .' ' . $_POST['PONumber'] . '</h3></th>
 			</tr>
@@ -91,17 +91,17 @@ if (isset($_POST['Show'])) {
 			</tr>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
-		echo '<tr class = "striped_row">
+		echo '<tr class="striped_row">
 			<td>' . $MyRow['suppname'] . '</td>
-			<td class = "number">' . $MyRow['podetailitem'] . '</td>
-			<td class = "number">' . $MyRow['grnbatch'] . '</td>
+			<td class="number">' . $MyRow['podetailitem'] . '</td>
+			<td class="number">' . $MyRow['grnbatch'] . '</td>
 			<td>' . $MyRow['itemcode'] . '</td>
 			<td>' . $MyRow['itemdescription'] . '</td>
 			<td>' . $MyRow['deliverydate'] . '</td>
-			<td class = "number">' . locale_number_format($MyRow['qtyrecd'], $MyRow['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($MyRow['qtyrecd'], $MyRow['decimalplaces']) . '</td>
 			<td>' . $MyRow['suppinv'] . '</td>
-			<td><a href = "' . $RootPath . '/PDFGrn.php?GRNNo = ' . $MyRow['grnbatch'] .'&PONo = ' . $_POST['PONumber'] . '">' . __('Reprint GRN ') . '</a>
-			&nbsp;<a href = "' . $RootPath . '/PDFQALabel.php?GRNNo = ' . $MyRow['grnbatch'] .'&PONo = ' . $_POST['PONumber'] . '">' . __('Reprint Labels') . '</a></td>
+			<td><a href="' . $RootPath . '/PDFGrn.php?GRNNo=' . $MyRow['grnbatch'] .'&PONo=' . $_POST['PONumber'] . '">' . __('Reprint GRN ') . '</a>
+			&nbsp;<a href="' . $RootPath . '/PDFQALabel.php?GRNNo=' . $MyRow['grnbatch'] .'&PONo=' . $_POST['PONumber'] . '">' . __('Reprint Labels') . '</a></td>
 		</tr>';
 	}
 	echo '</table>';

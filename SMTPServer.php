@@ -9,7 +9,7 @@ $ViewTopic = 'CreatingNewSystem';
 $BookMark = 'SMTPServer';
 include('includes/header.php');
 
-echo '<p class = "page_title_text"><img alt = "" src = "'.$RootPath.'/css/'.$Theme.
+echo '<p class = "page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	'/images/email.png" title = "' .// Icon image.
 	__('SMTP Server') . '" /> ' .// Icon title.
 	__('SMTP Server Settings') . '</p>';// Page title.

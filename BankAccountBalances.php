@@ -9,7 +9,7 @@ $ViewTopic = 'GeneralLedger';
 $BookMark = 'BankAccountBalances';
 include('includes/header.php');
 
-echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme,
+echo '<p class = "page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 '/images/bank.png" title = "', // Icon image.
 __('Bank Account Balances'), '" /> ', // Icon title.
 __('Bank Account Balances'), '</p>',// Page title.

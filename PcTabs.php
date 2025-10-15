@@ -12,7 +12,7 @@ $ViewTopic = 'PettyCash';
 $BookMark = 'PCTabSetup';
 include('includes/header.php');
 
-echo '<p class = "page_title_text">
+echo '<p class="page_title_text">
 		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', $Title, '" alt="" />', ' ', $Title, '
 	</p>';
 
@@ -210,7 +210,7 @@ if (!isset($SelectedTab)) {
 				ORDER BY tabcode";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) > 0) {
-		echo '<table class = "selection">
+		echo '<table class="selection">
 				<tr>
 					<th>', __('Tab Code'), '</th>
 					<th>', __('User Name'), '</th>
@@ -226,20 +226,20 @@ if (!isset($SelectedTab)) {
 				</tr>';
 
 		while ($MyRow = DB_fetch_array($Result)) {
-			echo '<tr class = "striped_row">
+			echo '<tr class="striped_row">
 					<td>', $MyRow['tabcode'], '</td>
 					<td>', $MyRow['usercode'], '</td>
 					<td>', $MyRow['typetabdescription'], '</td>
 					<td>', $MyRow['currabrev'], '</td>
-					<td class = "number">', locale_number_format($MyRow['tablimit'], $MyRow['decimalplaces']), '</td>
+					<td class="number">', locale_number_format($MyRow['tablimit'], $MyRow['decimalplaces']), '</td>
 					<td>', $MyRow['assigner'], '</td>
 					<td>', $MyRow['authorizer'], '</td>
 					<td>', $MyRow['authorizerexpenses'], '</td>
 					<td>', $MyRow['glaccountassignment'] . ' - ' . $MyRow['glactassigntname'], '</td>
 					<td>', $MyRow['glaccountpcash'] . ' - ' . $MyRow['glactpcashname'], '</td>
 					<td>', $MyRow['taxgroupdescription'], '</td>
-					<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedTab = ', $MyRow['tabcode'], '">' . __('Edit') . '</a></td>
-					<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedTab = ', $MyRow['tabcode'], '&amp;delete = yes" onclick = \' return confirm("' . __('Are you sure you wish to delete this tab code?') . '", \'Confirm Delete\', this);\'>' . __('Delete') . '</a></td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedTab=', $MyRow['tabcode'], '">' . __('Edit') . '</a></td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedTab=', $MyRow['tabcode'], '&amp;delete=yes" onclick=\' return confirm("' . __('Are you sure you wish to delete this tab code?') . '", \'Confirm Delete\', this);\'>' . __('Delete') . '</a></td>
 				</tr>';
 		}
 		//END while LIST LOOP
@@ -248,8 +248,8 @@ if (!isset($SelectedTab)) {
 }
 //end of ifs and buts!
 if (isset($SelectedTab)) {
-	echo '<div class = "centre">
-			<a href = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">', __('Show All Tabs Defined'), '</a>
+	echo '<div class="centre">
+			<a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">', __('Show All Tabs Defined'), '</a>
 		</div>';
 }
 if (!isset($_GET['delete'])) {
@@ -354,7 +354,7 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<field>
 			<label for = "TabLimit">', __('Limit Of Tab'), ':</label>
-			<input type = "text" class = "number" name = "TabLimit" size = "12" required = "required" maxlength = "11" value = "', $_POST['TabLimit'], '" />
+			<input type = "text" class="number" name = "TabLimit" size = "12" required = "required" maxlength = "11" value = "', $_POST['TabLimit'], '" />
 		</field>';
 	// KL RICARD END multiple assigners and authorizers
 	echo '<field>
@@ -478,7 +478,7 @@ if (!isset($_GET['delete'])) {
 		</field>';
 	// End select tax
 	echo '</fieldset>'; // close main table
-	echo '<div class = "centre">
+	echo '<div class="centre">
 			<input type = "submit" name = "Submit" value = "', __('Accept'), '" />
 			<input type = "reset" name = "Cancel" value = "', __('Cancel'), '" />
 		</div>';

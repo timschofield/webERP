@@ -15,9 +15,9 @@ if (isset($_POST['SelectedType'])){
 
 $Errors = array();
 
-echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title = "' . __('Supplier Types')
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Supplier Types')
 	. '" alt = "" />' . __('Supplier Type Setup') . '</p>
-	<div class = "page_help_text">' . __('Add/edit/delete Supplier Types') . '</div>';
+	<div class="page_help_text">' . __('Add/edit/delete Supplier Types') . '</div>';
 
 if (isset($_POST['submit'])) {
 
@@ -143,11 +143,11 @@ if (!isset($SelectedType)){
 	$SQL = "SELECT typeid, typename FROM suppliertype";
 	$Result = DB_query($SQL);
 
-	echo '<table class = "selection">
+	echo '<table class="selection">
 			<thead>
 				<tr>
-					<th class = "SortedColumn" >' . __('Type ID') . '</th>
-					<th class = "SortedColumn" >' . __('Type Name') . '</th>
+					<th class="SortedColumn" >' . __('Type ID') . '</th>
+					<th class="SortedColumn" >' . __('Type Name') . '</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -155,11 +155,11 @@ if (!isset($SelectedType)){
 
 while ($MyRow = DB_fetch_row($Result)) {
 
-	echo '<tr class = "striped_row">
+	echo '<tr class="striped_row">
 			<td>', $MyRow[0], '</td>
 			<td>', $MyRow[1], '</td>
-			<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedType = ', $MyRow[0], '>' . __('Edit') . '</a></td>
-			<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedType = ', $MyRow[0], '&amp;delete = yes" onclick = "return confirm(\'' .
+			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedType=', $MyRow[0], '>' . __('Edit') . '</a></td>
+			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedType=', $MyRow[0], '&amp;delete=yes" onclick="return confirm(\'' .
 				__('Are you sure you wish to delete this Supplier Type?') . '\');">' . __('Delete') . '</a></td>
 		</tr>';
 	}
@@ -171,14 +171,14 @@ while ($MyRow = DB_fetch_row($Result)) {
 //end of ifs and buts!
 if (isset($SelectedType)) {
 
-	echo '<div class = "centre">
-			<p><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Show All Types Defined') . '</a></p>
+	echo '<div class="centre">
+			<p><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Show All Types Defined') . '</a></p>
 		</div>';
 }
 if (! isset($_GET['delete'])) {
 
 	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 	echo '<fieldset>'; //Main table
 
 	// The user wish to EDIT an existing type
@@ -195,9 +195,9 @@ if (! isset($_GET['delete'])) {
 		$_POST['TypeID'] = $MyRow['typeid'];
 		$_POST['TypeName']  = $MyRow['typename'];
 
-		echo '<input type = "hidden" name = "Edit" value = "' . $SelectedType . '" />';
-		echo '<input type = "hidden" name = "SelectedType" value = "' . $SelectedType . '" />';
-		echo '<input type = "hidden" name = "TypeID" value = "' . $_POST['TypeID'] . '" />';
+		echo '<input type = "hidden" name="Edit" value = "' . $SelectedType . '" />';
+		echo '<input type = "hidden" name="SelectedType" value = "' . $SelectedType . '" />';
+		echo '<input type = "hidden" name="TypeID" value = "' . $_POST['TypeID'] . '" />';
 
 		// We dont allow the user to change an existing type code
 
@@ -214,14 +214,14 @@ if (! isset($_GET['delete'])) {
 	}
 	echo '<field>
 			<label for = "TypeName">' . __('Type Name') . ':</label>
-			<input type = "text"  required = "true" pattern = "(?!^\s+$)[^<>+-]{1,100}" title = "" name = "TypeName" placeholder = "'.__('less than 100 characters').'" value = "' . $_POST['TypeName'] . '" />
+			<input type = "text"  required = "true" pattern = "(?!^\s+$)[^<>+-]{1,100}" title="" name="TypeName" placeholder = "'.__('less than 100 characters').'" value = "' . $_POST['TypeName'] . '" />
 			<fieldhelp>'.__('The input should not be over 100 characters and contains illegal characters') . ' ' . '" \' - &amp; or a space'.'</fieldhelp>
 		</field>';
 
 	echo '</fieldset>';
 
-	echo '<div class = "centre">
-			<input type = "submit" name = "submit" value = "' . __('Accept') . '" />
+	echo '<div class="centre">
+			<input type = "submit" name="submit" value = "' . __('Accept') . '" />
 		</div>';
 
 	echo '</form>';

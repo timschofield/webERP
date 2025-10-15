@@ -10,14 +10,14 @@ include('includes/SQL_CommonFunctions.php');
 if (!isset($_GET['TransNo']) || $_GET['TransNo'] == '') {
 	$Title = __('Select Order To Print');
 	include('includes/header.php');
-	echo '<div class = "centre">';
+	echo '<div class="centre">';
 	prnMsg(__('Select an Order Number to Print before calling this page'), 'error');
-	echo '<table class = "table_index">
+	echo '<table class="table_index">
 			<tr>
-			<td class = "menu_group_item">
+			<td class="menu_group_item">
 			<ul>
-				<li><a href = "' . $RootPath . '/SelectSalesOrder.php">' . __('Outstanding Sales Orders') . '</a></li>
-				<li><a href = "' . $RootPath . '/SelectCompletedOrder.php">' . __('Completed Sales Orders') . '</a></li>
+				<li><a href="' . $RootPath . '/SelectSalesOrder.php">' . __('Outstanding Sales Orders') . '</a></li>
+				<li><a href="' . $RootPath . '/SelectCompletedOrder.php">' . __('Completed Sales Orders') . '</a></li>
 			</ul>
 			</td>
 			</tr>
@@ -77,13 +77,13 @@ $Result = DB_query($SQL, $ErrMsg);
 if (DB_num_rows($Result) == 0) {
 	$Title = __('Print Packing Slip Error');
 	include('includes/header.php');
-	echo '<div class = "centre"><br /><br /><br />';
+	echo '<div class="centre"><br /><br /><br />';
 	prnMsg(__('Unable to Locate Order Number') . ' : ' . $_GET['TransNo'] . ' ', 'error');
-	echo '<table class = "table_index">
+	echo '<table class="table_index">
 			<tr>
-			<td class = "menu_group_item">
-			<li><a href = "' . $RootPath . '/SelectSalesOrder.php">' . __('Outstanding Sales Orders') . '</a></li>
-			<li><a href = "' . $RootPath . '/SelectCompletedOrder.php">' . __('Completed Sales Orders') . '</a></li>
+			<td class="menu_group_item">
+			<li><a href="' . $RootPath . '/SelectSalesOrder.php">' . __('Outstanding Sales Orders') . '</a></li>
+			<li><a href="' . $RootPath . '/SelectCompletedOrder.php">' . __('Completed Sales Orders') . '</a></li>
 			</td>
 			</tr>
 			</table>
@@ -101,17 +101,17 @@ if (DB_num_rows($Result) == 0) {
 		prnMsg(__('The packing slip for order number') . ' ' . $_GET['TransNo'] . ' ' .
 			__('has previously been printed') . '. ' . __('It was printed on') . ' ' . ConvertSQLDate($DatePrinted) .
 			'<br />' . __('This check is there to ensure that duplicate packing slips are not produced and dispatched more than once to the customer'), 'warn');
-		echo '<p><a href = "' . $RootPath . '/PrintCustOrder.php?TransNo = ' . urlencode($_GET['TransNo']) . '&Reprint = OK">'
+		echo '<p><a href="' . $RootPath . '/PrintCustOrder.php?TransNo=' . urlencode($_GET['TransNo']) . '&Reprint=OK">'
 			. __('Do a Re-Print') . ' (' . __('On Pre-Printed Stationery') . ') ' . __('Even Though Previously Printed') . '</a><p>' .
-				'<a href = "' . $RootPath. '/PrintCustOrder_generic.php?TransNo = ' . urlencode($_GET['TransNo']) . '&Reprint = OK">' .  __('Do a Re-Print') . ' (' . __('Plain paper') . ' - ' . __('A4') . ' ' . __('landscape') . ') ' . __('Even Though Previously Printed'). '</a>';
+				'<a href="' . $RootPath. '/PrintCustOrder_generic.php?TransNo=' . urlencode($_GET['TransNo']) . '&Reprint=OK">' .  __('Do a Re-Print') . ' (' . __('Plain paper') . ' - ' . __('A4') . ' ' . __('landscape') . ') ' . __('Even Though Previously Printed'). '</a>';
 
 		echo '<br /><br /><br />';
 		echo __('Or select another Order Number to Print');
-		echo '<table class = "table_index">
+		echo '<table class="table_index">
 				<tr>
-				<td class = "menu_group_item">
-				<li><a href = "' . $RootPath . '/SelectSalesOrder.php">' . __('Outstanding Sales Orders') . '</a></li>
-				<li><a href = "' . $RootPath . '/SelectCompletedOrder.php">' . __('Completed Sales Orders') . '</a></li>
+				<td class="menu_group_item">
+				<li><a href="' . $RootPath . '/SelectSalesOrder.php">' . __('Outstanding Sales Orders') . '</a></li>
+				<li><a href="' . $RootPath . '/SelectCompletedOrder.php">' . __('Completed Sales Orders') . '</a></li>
 				</td>
 				</tr>
 				</table>
@@ -143,7 +143,7 @@ body { font-family: Arial, sans-serif; font-size: 12px; }
 	$DeliveryAddress .= htmlspecialchars($MyRow['deladd5']);
 
 for ($i = 1;  $i <= 2;  $i++) {  // Office + Customer copy
-	$HTML .= '<div class = "header">' . __('Customer Laser Packing Slip') . ' - ' . ($_SESSION['CompanyRecord']['coyname']) . '</div>';
+	$HTML .= '<div class="header">' . __('Customer Laser Packing Slip') . ' - ' . ($_SESSION['CompanyRecord']['coyname']) . '</div>';
 	$HTML .= '<div>' . __('Order Number') . ': <strong>' . $_GET['TransNo'] . '</strong></div>';
 	$HTML .= '<div>' . __('Customer') . ': ' . htmlspecialchars($MyRow['name']) . '</div>';
 	$HTML .= '<div>' . __('Delivery To') . ': ' . htmlspecialchars($MyRow['deliverto']) . '</div>';
@@ -188,7 +188,7 @@ for ($i = 1;  $i <= 2;  $i++) {  // Office + Customer copy
 	$Result = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($Result) > 0) {
-		$HTML .= '<table class = "table">
+		$HTML .= '<table class="table">
 					<tr>
 						<th>' . __('Code') . '</th>
 						<th>' . __('Description') . '</th>
@@ -216,11 +216,11 @@ for ($i = 1;  $i <= 2;  $i++) {  // Office + Customer copy
 			$HTML .= '<tr>
 						<td>' . htmlspecialchars($MyRow2['stkcode']) . '</td>
 						<td>' . htmlspecialchars($MyRow2['description']) . '</td>
-						<td style = "text-align:right">' . $DisplayQty . '</td>
+						<td style="text-align:right">' . $DisplayQty . '</td>
 						<td>' . htmlspecialchars($MyRow2['units']) . '</td>
 						<td>' . htmlspecialchars($MyRow2['bin']) . '</td>
-						<td class = "number">' . $DisplayQtySupplied . '</td>
-						<td class = "number">' . $DisplayPrevDel . '</td>
+						<td class="number">' . $DisplayQtySupplied . '</td>
+						<td class="number">' . $DisplayPrevDel . '</td>
 					</tr>';
 
 			if ($_SESSION['AllowOrderLineItemNarrative'] == 1 && !empty($MyRow2['narrative'])) {
@@ -258,7 +258,7 @@ for ($i = 1;  $i <= 2;  $i++) {  // Office + Customer copy
 								<td>' . htmlspecialchars($ComponentRow['component']) . '</td>
 								<td>' . htmlspecialchars($ComponentRow['description']) . '</td>
 								<td colspan = "3"></td>
-								<td style = "text-align:right">' . $DisplayQtySupplied . '</td>
+								<td style="text-align:right">' . $DisplayQtySupplied . '</td>
 								<td></td>
 							</tr>';
 }
@@ -280,7 +280,7 @@ for ($i = 1;  $i <= 2;  $i++) {  // Office + Customer copy
 								<td>' . $ControlLabel . '</td>
 								<td>' . htmlspecialchars($MySer['serialno']) . '</td>
 								<td colspan = "3"></td>
-								<td style = "text-align:right">' . htmlspecialchars($MySer['moveqty']) . '</td>
+								<td style="text-align:right">' . htmlspecialchars($MySer['moveqty']) . '</td>
 								<td></td>
 							</tr>';
 				}
@@ -291,17 +291,17 @@ for ($i = 1;  $i <= 2;  $i++) {  // Office + Customer copy
 
 	// Signature line (only on office copy)
 	if ($i == 1) {
-	$HTML .= '<div style = "margin-top:40px;">Accepted/Received By: ________________________ Date: ________________</div>';
+	$HTML .= '<div style="margin-top:40px;">Accepted/Received By: ________________________ Date: ________________</div>';
 }
 
-	$HTML .= '<div style = "margin-top:20px;">Volume: ' . round($Volume) . ' GA &nbsp;&nbsp; Weight: ' . round($Weight) . ' LB (approximate)</div>';
+	$HTML .= '<div style="margin-top:20px;">Volume: ' . round($Volume) . ' GA &nbsp;&nbsp; Weight: ' . round($Weight) . ' LB (approximate)</div>';
 
 	// Reset for next copy
 	$Volume = 0;
 	$Weight = 0;
 
 	if ($i == 1) {
-	$HTML .= '<div style = "page-break-after:always"></div>';
+	$HTML .= '<div style="page-break-after:always"></div>';
 }
 }
 
@@ -311,9 +311,9 @@ if ($ListCount == 0) {
 	$Title = __('Print Packing Slip Error');
 	include('includes/header.php');
 	echo '<p>' . __('There were no outstanding items on the order to deliver') . '. ' . __('A packing slip cannot be printed') .
-		'<br /><a href = "' . $RootPath . '/SelectSalesOrder.php">' . __('Print Another Packing Slip/Order') .
+		'<br /><a href="' . $RootPath . '/SelectSalesOrder.php">' . __('Print Another Packing Slip/Order') .
 		'</a>
-		<br /><a href = "' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
+		<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 	include('includes/footer.php');
 	exit();
 } else {

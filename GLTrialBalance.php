@@ -51,12 +51,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 	}
 
 	$HTML .= '<form method = "post" action = "' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
-	$HTML .= '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
-	$HTML .= '<input type = "hidden" name = "PeriodFrom" value = "' . $_POST['PeriodFrom'] . '" />';
-	$HTML .= '<input type = "hidden" name = "PeriodTo" value = "' . $_POST['PeriodTo'] . '" />';
+	$HTML .= '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+	$HTML .= '<input type = "hidden" name="PeriodFrom" value = "' . $_POST['PeriodFrom'] . '" />';
+	$HTML .= '<input type = "hidden" name="PeriodTo" value = "' . $_POST['PeriodTo'] . '" />';
 
-	$HTML .= '<meta name = "author" content = "WebERP " . $Version">
-					<meta name = "Creator" content = "webERP https://www.weberp.org">
+	$HTML .= '<meta name="author" content = "WebERP " . $Version">
+					<meta name="Creator" content = "webERP https://www.weberp.org">
 				</head>
 				<body>
 				<table>
@@ -171,7 +171,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 	$HTML .= '<tr>
 				<td></td>
 			</tr>';
-	$HTML .= '<tr class = "total_row">
+	$HTML .= '<tr class="total_row">
 				<td>' . $AccountListRow['group_'] . '</td>
 				<td colspan = "6"></td>
 			</tr>';
@@ -209,13 +209,13 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 		$ThisPeriodArray[$AccountListRow['accountcode']] = 0;
 	}
 
-	$HTML .= '<tr class = "striped_row">
-				<td><a href = "' . $RootPath . '/GLAccountInquiry.php?PeriodFrom = ' . $_POST['PeriodFrom'] . '&amp;PeriodTo = ' . $_POST['PeriodTo'] . '&amp;Account = ' . $AccountListRow['accountcode'] . '&amp;Show = Yes">' . $AccountListRow['accountcode'] . '</a></td>
+	$HTML .= '<tr class="striped_row">
+				<td><a href="' . $RootPath . '/GLAccountInquiry.php?PeriodFrom=' . $_POST['PeriodFrom'] . '&amp;PeriodTo=' . $_POST['PeriodTo'] . '&amp;Account=' . $AccountListRow['accountcode'] . '&amp;Show=Yes">' . $AccountListRow['accountcode'] . '</a></td>
 				<td>' . $AccountListRow['accountname'] . '</td>
-				<td class = "number">' . locale_number_format($ThisMonthArray[$AccountListRow['accountcode']], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td class = "number">' . locale_number_format($MonthBudgetRow['monthbudget'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td class = "number">' . locale_number_format($ThisPeriodArray[$AccountListRow['accountcode']], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td class = "number">' . locale_number_format($PeriodBudgetRow['periodbudget'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($ThisMonthArray[$AccountListRow['accountcode']], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($MonthBudgetRow['monthbudget'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($ThisPeriodArray[$AccountListRow['accountcode']], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($PeriodBudgetRow['periodbudget'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			</tr>';
 
 	$MonthActualGroupTotal = $ThisMonthArray[$AccountListRow['accountcode']];
@@ -241,13 +241,13 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 	$HTML .= '<tr>
 						<td></td>
 					</tr>';
-			$HTML .= '<tr class = "total_row">
+			$HTML .= '<tr class="total_row">
 						<td>' . __('Total') . '</td>
 						<td>' . $LastGroupName . '</td>
-						<td class = "number">' . locale_number_format($MonthActualGroupTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-						<td class = "number">' . locale_number_format($MonthBudgetGroupTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-						<td class = "number">' . locale_number_format($PeriodActualGroupTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-						<td class = "number">' . locale_number_format($PeriodBudgetGroupTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class="number">' . locale_number_format($MonthActualGroupTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class="number">' . locale_number_format($MonthBudgetGroupTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class="number">' . locale_number_format($PeriodActualGroupTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class="number">' . locale_number_format($PeriodBudgetGroupTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 					</tr>';
 			$HTML .= '<tr>
 						<td></td>
@@ -256,7 +256,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 			$HTML .= '<tr>
 						<td></td>
 					</tr>';
-			$HTML .= '<tr class = "total_row">
+			$HTML .= '<tr class="total_row">
 						<td>' . $AccountListRow['group_'] . '</td>
 						<td colspan = "6"></td>
 					</tr>';
@@ -296,13 +296,13 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 			$PeriodBudgetRow['periodbudget'] = 0;
 		}
 
-		$HTML .= '<tr class = "striped_row">
-					<td><a href = "' . $RootPath . '/GLAccountInquiry.php?PeriodFrom = ' . $_POST['PeriodFrom'] . '&amp;PeriodTo = ' . $_POST['PeriodTo'] . '&amp;Account = ' . $AccountListRow['accountcode'] . '&amp;Show = Yes">' . $AccountListRow['accountcode'] . '</a></td>
+		$HTML .= '<tr class="striped_row">
+					<td><a href="' . $RootPath . '/GLAccountInquiry.php?PeriodFrom=' . $_POST['PeriodFrom'] . '&amp;PeriodTo=' . $_POST['PeriodTo'] . '&amp;Account=' . $AccountListRow['accountcode'] . '&amp;Show=Yes">' . $AccountListRow['accountcode'] . '</a></td>
 					<td>' . $AccountListRow['accountname'] . '</td>
-					<td class = "number">' . locale_number_format($ThisMonthArray[$AccountListRow['accountcode']], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-					<td class = "number">' . locale_number_format($MonthBudgetRow['monthbudget'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-					<td class = "number">' . locale_number_format($ThisPeriodArray[$AccountListRow['accountcode']], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-					<td class = "number">' . locale_number_format($PeriodBudgetRow['periodbudget'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($ThisMonthArray[$AccountListRow['accountcode']], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($MonthBudgetRow['monthbudget'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($ThisPeriodArray[$AccountListRow['accountcode']], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($PeriodBudgetRow['periodbudget'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				</tr>';
 		$MonthActualGroupTotal+= $ThisMonthArray[$AccountListRow['accountcode']];
 		$MonthBudgetGroupTotal+= $MonthBudgetRow['monthbudget'];
@@ -312,13 +312,13 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 	$HTML .= '<tr>
 				<td></td>
 			</tr>';
-	$HTML .= '<tr class = "total_row">
+	$HTML .= '<tr class="total_row">
 				<td>' . __('Total') . '</td>
 				<td>' . $LastGroupName . '</td>
-				<td class = "number">' . locale_number_format($MonthActualGroupTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td class = "number">' . locale_number_format($MonthBudgetGroupTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td class = "number">' . locale_number_format($PeriodActualGroupTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td class = "number">' . locale_number_format($PeriodBudgetGroupTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($MonthActualGroupTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($MonthBudgetGroupTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($PeriodActualGroupTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($PeriodBudgetGroupTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			</tr>';
 	$HTML .= '<tr>
 				<td></td>
@@ -330,13 +330,13 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 	$HTML .= '<tr>
 				<td></td>
 			</tr>';
-	$HTML .= '<tr class = "total_row">
+	$HTML .= '<tr class="total_row">
 				<td>' . __('Check Totals') . '</td>
 				<td></td>
-				<td class = "number">' . locale_number_format($CumulativeMonthActualGroupTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td class = "number"></td>
-				<td class = "number">' . locale_number_format($CumulativePeriodActualGroupTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td class = "number"></td>
+				<td class="number">' . locale_number_format($CumulativeMonthActualGroupTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number"></td>
+				<td class="number">' . locale_number_format($CumulativePeriodActualGroupTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number"></td>
 			</tr>';
 	$HTML .= '<tr>
 				<td></td>
@@ -347,17 +347,17 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 	$HTML .= '</form>';
 	if (isset($_POST['PrintPDF'])) {
 		$HTML .= '</tbody>
-				<div class = "footer fixed-section">
-					<div class = "right">
-						<span class = "page-number">Page </span>
+				<div class="footer fixed-section">
+					<div class="right">
+						<span class="page-number">Page </span>
 					</div>
 				</div>
 			</table>';
 	} else {
 		$HTML .= '</tbody>
 				</table>
-				<div class = "centre">
-					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" /></form>
+				<div class="centre">
+					<form><input type = "submit" name="close" value = "' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -393,8 +393,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 	} else {
 		$Title = __('General Ledger Trial Balance');
 		include('includes/header.php');
-		echo '<p class = "page_title_text">
-				<img src = "' . $RootPath . '/css/' . $Theme . '/images/gl.png" title = "' . __('Trial Balance Report') . '" alt = "" />
+		echo '<p class="page_title_text">
+				<img src="' . $RootPath . '/css/' . $Theme . '/images/gl.png" title="' . __('Trial Balance Report') . '" alt="" />
 				' . __('Trial Balance Report') . '
 			</p>';
 		echo $HTML;
@@ -406,11 +406,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 	$ViewTopic = 'GeneralLedger';
 	$BookMark = 'TrialBalance';
 	include('includes/header.php');
-	echo '<p class = "page_title_text">
-			<img src = "', $RootPath, '/css/', $_SESSION['Theme'], '/images/gl.png" title = "', __('Trial Balance'), '" alt = "', __('Print'), '" />', ' ', __('Trial Balance Report'), '
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/gl.png" title="', __('Trial Balance'), '" alt = "', __('Print'), '" />', ' ', __('Trial Balance Report'), '
 		</p>';
-	echo '<form method = "post" action = "', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" target = "_blank">';
-	echo '<input type = "hidden" name = "FormID" value = "', $_SESSION['FormID'], '" />';
+	echo '<form method = "post" action = "', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" target="_blank">';
+	echo '<input type = "hidden" name="FormID" value = "', $_SESSION['FormID'], '" />';
 
 	if (date('m') > $_SESSION['YearEnd']) {
 		/*Dates in SQL format */
@@ -428,7 +428,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 			<legend>', __('Input criteria for Trial Balance'), '</legend>
 			<field>
 				<label for = "PeriodFrom">', __('Select Period From'), ':</label>
-				<select name = "PeriodFrom" autofocus = "autofocus">';
+				<select name="PeriodFrom" autofocus = "autofocus">';
 	$NextYear = date('Y-m-d', strtotime('+1 Year'));
 	$SQL = "SELECT periodno,
 					lastdate_in_period
@@ -464,7 +464,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 
 	echo '<field>
 			<label for = "PeriodTo">', __('Select Period To'), ':</label>
-			<select name = "PeriodTo">';
+			<select name="PeriodTo">';
 
 	DB_data_seek($Periods, 0);
 
@@ -499,7 +499,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 	$Result = DB_query($SQL);
 	echo '<field>
 			<label for = "SelectedBudget">', __('Budget To Show Comparisons With'), '</label>
-			<select name = "SelectedBudget">';
+			<select name="SelectedBudget">';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (!isset($_POST['SelectedBudget']) and $MyRow['current'] == 1) {
 			$_POST['SelectedBudget'] = $MyRow['id'];
@@ -516,10 +516,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 
 	echo '</fieldset>';
 
-	echo '<div class = "centre">
-				<input type = "submit" name = "PrintPDF" title = "Produce PDF Report" value = "' . __('Print PDF') . '" />
-				<input type = "submit" name = "View" title = "View Report" value = "' . __('View') . '" />
-				<input type = "submit" name = "Spreadsheet" title = "Spreadsheet" value = "' . __('Spreadsheet') . '" />
+	echo '<div class="centre">
+				<input type = "submit" name="PrintPDF" title="Produce PDF Report" value = "' . __('Print PDF') . '" />
+				<input type = "submit" name="View" title="View Report" value = "' . __('View') . '" />
+				<input type = "submit" name="Spreadsheet" title="Spreadsheet" value = "' . __('Spreadsheet') . '" />
 		</div>';
 
 	echo '</form>';

@@ -71,13 +71,13 @@ if (isset($_POST['update'])) {
 } else {
 	prnMsg( __('Select a csv file containing the details of the account sections that you wish to import into webERP. '). '<br />' .
 		 __('The first line must contain the field names that you wish to import. ').
-		 '<a href = "' . $RootPath . '/Z_DescribeTable.php?table = accountsection">' . __('The field names can be found here'). '</a>', 'info');
-	echo '<form id = "ItemForm" enctype = "multipart/form-data" method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div class = "centre">';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+		 '<a href="' . $RootPath . '/Z_DescribeTable.php?table=accountsection">' . __('The field names can be found here'). '</a>', 'info');
+	echo '<form id="ItemForm" enctype = "multipart/form-data" method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+    echo '<div class="centre">';
+	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 	echo '<table><tr><td>' . __('File to import') . '</td>' .
-		'<td><input type = "file" id = "ImportFile" name = "ImportFile" /></td></tr></table>';
-	echo '<div class =  "centre"><input type = "submit" name = "update" value = "Process" /></div>';
+		'<td><input type = "file" id="ImportFile" name="ImportFile" /></td></tr></table>';
+	echo '<div class="centre"><input type = "submit" name="update" value = "Process" /></div>';
 	echo '</div>
           </form>';
 }

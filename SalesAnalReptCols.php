@@ -45,7 +45,7 @@ function DataOptions ($DataX) {
 
 Right ... now to the meat */
 
-echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title = "' . __('Search') . '" alt = "" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_GET['SelectedCol'])){
 	$SelectedCol = $_GET['SelectedCol'];
@@ -237,10 +237,10 @@ $Result = DB_query($SQL, $ErrMsg);
 if (DB_num_rows($Result) != 0){
 
 	$MyRow = DB_fetch_array($Result);
-	echo '<div class = "centre"><b>' . $MyRow['reportheading'] . '</b>
+	echo '<div class="centre"><b>' . $MyRow['reportheading'] . '</b>
 		<br />
 		</div>
-		<table class = "selection">
+		<table class="selection">
 		<tr>
 			<th>' . __('Col') . ' #</th>
             <th>' . __('Heading 1') . '</th>
@@ -269,8 +269,8 @@ if (DB_num_rows($Result) != 0){
 		$BudOrAct = __('N/A');
 	}
 
-		echo '<tr class = "striped_row">
-				<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?ReportID = ', $ReportID, '&amp;SelectedCol = ', $MyRow[1], '">', $MyRow[1], '</a></td>
+		echo '<tr class="striped_row">
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?ReportID=', $ReportID, '&amp;SelectedCol=', $MyRow[1], '">', $MyRow[1], '</a></td>
 				<td>', $MyRow[2], '</td>
 				<td>', $MyRow[3], '</td>
 				<td>', $Calc, '</td>
@@ -281,7 +281,7 @@ if (DB_num_rows($Result) != 0){
 				<td>', $MyRow[9], '</td>
 				<td>', $MyRow[10], '</td>
 				<td>', $BudOrAct, '</td>
-				<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?ReportID = ', $ReportID, '&amp;SelectedCol = ', $MyRow[1], '&amp;delete = 1">' . __('Delete') . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?ReportID=', $ReportID, '&amp;SelectedCol=', $MyRow[1], '&amp;delete=1">' . __('Delete') . '</a></td>
 			</tr>';
 
 	} while ($MyRow = DB_fetch_array($Result));
@@ -289,8 +289,8 @@ if (DB_num_rows($Result) != 0){
  }
 
 echo '</table>
-		<div class = "centre">
-			<a href = "' . $RootPath . '/SalesAnalRepts.php">' . __('Maintain Report Headers') . '</a>
+		<div class="centre">
+			<a href="' . $RootPath . '/SalesAnalRepts.php">' . __('Maintain Report Headers') . '</a>
 		</div>';
 if (DB_num_rows($Result)>10){
     prnMsg(__('WARNING') . ': ' . __('User defined reports can have up to 10 columns defined') . '. ' . __('The report will not be able to be run until some columns are deleted'),'warn');
@@ -303,9 +303,9 @@ if (!isset($_GET['delete'])) {
 	$MyRow = DB_fetch_array($Result);
 	$ReportHeading = $MyRow['reportheading'];
 	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
-	echo '<input type = "hidden" name = "ReportHeading" value = "'.$ReportHeading.'" />';
-	echo '<input type = "hidden" name = "ReportID" value = "' . $ReportID . '" />';
+	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<input type = "hidden" name="ReportHeading" value = "'.$ReportHeading.'" />';
+	echo '<input type = "hidden" name="ReportID" value = "' . $ReportID . '" />';
 	if (isset($SelectedCol)) {
 		//editing an existing Column
 
@@ -349,7 +349,7 @@ if (!isset($_GET['delete'])) {
 		$_POST['BudgetOrActual']=$MyRow['budgetoractual'];
 		$_POST['ValFormat']=$MyRow['valformat'];
 
-		echo '<input type = "hidden" name = "SelectedCol" value = "' . $SelectedCol . '" />';
+		echo '<input type = "hidden" name="SelectedCol" value = "' . $SelectedCol . '" />';
 		echo '<fieldset>
 				<legend>', __('Sales Analysis Columns'), '</legend>';
 
@@ -361,7 +361,7 @@ if (!isset($_GET['delete'])) {
 		}
 		echo '<field>
 				<label for = "ColID">' . __('Column Number') . ':</label>
-				<input type = "text" class = "number" name = "ColID" size = "3" maxlength = "3" value = "' . $_POST['ColID'] . '" />
+				<input type = "text" class="number" name="ColID" size = "3" maxlength = "3" value = "' . $_POST['ColID'] . '" />
 				<fieldhelp>' . __('A number between 1 and 10 is expected'), '</fieldhelp>
 			</field>';
 	}
@@ -370,18 +370,18 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<field>
 			<label for = "Heading1">' . __('Heading line 1') . ':</label>
-			<input type = "text" size = "16" maxlength = "15" name = "Heading1" value = "' . $_POST['Heading1'] . '" />
+			<input type = "text" size = "16" maxlength = "15" name="Heading1" value = "' . $_POST['Heading1'] . '" />
 		</field>';
 	if (!isset($_POST['Heading2'])) {
 		$_POST['Heading2']='';
 	}
 	echo '<field>
 			<label for = "Heading2">' . __('Heading line 2') . ':</label>
-			<input type = "text" size = "16" maxlength = "15" name = "Heading2" value = "' . $_POST['Heading2'] . '" />
+			<input type = "text" size = "16" maxlength = "15" name="Heading2" value = "' . $_POST['Heading2'] . '" />
 		</field>';
 	echo '<field>
 			<label for = "Calculation">' . __('Calculation') . ':</label>
-			<select name = "Calculation">';
+			<select name="Calculation">';
 	if (!isset($_POST['Calculation'])) {
 		$_POST['Calculation']=0;
 	}
@@ -400,7 +400,7 @@ if (!isset($_GET['delete'])) {
 
 		echo '<field>
 				<label for = "PeriodFrom">' . __('From Period') . ':</label>
-				<select name = "PeriodFrom">';
+				<select name="PeriodFrom">';
 		$SQL = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 		$ErrMsg = __('Could not load periods table');
 		$Result = DB_query($SQL, $ErrMsg);
@@ -416,7 +416,7 @@ if (!isset($_GET['delete'])) {
 
 		echo '<field>
 				<label for = "PeriodTo">' . __('ToPeriod') . ':</label>
-				<select name = "PeriodTo">';
+				<select name="PeriodTo">';
 		$SQL = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 		$ErrMsg = __('Could not load periods table');
 		$Result = DB_query($SQL, $ErrMsg);
@@ -432,14 +432,14 @@ if (!isset($_GET['delete'])) {
 
 		echo '<field>
 				<label for = "BudgetOrActual">' . __('Data to show') . ':</label>
-				<select name = "DataType">';
+				<select name="DataType">';
 		DataOptions($_POST['DataType']);
 		echo '</select>
 			</field>';
 
 		echo '<field>
 				<label for = "BudgetOrActual">' . __('Budget or Actual') . ':</label>
-				<select name = "BudgetOrActual">';
+				<select name="BudgetOrActual">';
 		if ($_POST['BudgetOrActual']==0) {
 	echo '<option selected = "selected" value = "0">' . __('Budget') . '</option>';
 			echo '<option value = "1">' . __('Actual') . '</option>';
@@ -448,25 +448,25 @@ if (!isset($_GET['delete'])) {
 		      echo '<option selected = "selected" value = "1">' . __('Actual') . '</option>';
 		}
 		echo '</select>';
-		echo '<input type = "hidden" name = "ValFormat" value = "N" />
-				<input type = "hidden" name = "ColNumerator" value = "0" />
-				<input type = "hidden" name = "ColDenominator" value = "0" />
-				<input type = "hidden" name = "CalcOperator" value = "" />
-				<input type = "hidden" name = "Constant" value = "0" />';
+		echo '<input type = "hidden" name="ValFormat" value = "N" />
+				<input type = "hidden" name="ColNumerator" value = "0" />
+				<input type = "hidden" name="ColDenominator" value = "0" />
+				<input type = "hidden" name="CalcOperator" value = "" />
+				<input type = "hidden" name="Constant" value = "0" />';
         echo '</field>';
 	} else {  /*it IS a calculated column */
 
 		echo '<field>
 				<label for = "ColNumerator">' . __('Numerator Column') . ' #:</label>
-				<input type = "text" size = "4" maxlength = "3" name = "ColNumerator" value = "' . $_POST['ColNumerator'] . '" />
+				<input type = "text" size = "4" maxlength = "3" name="ColNumerator" value = "' . $_POST['ColNumerator'] . '" />
 			</field>';
 		echo '<field>
 				<label for = "ColDenominator">' . __('Denominator Column') . ' #:</label>
-				<input type = "text" size = "4" maxlength = "3" name = "ColDenominator" value = "' . $_POST['ColDenominator'] . '" />
+				<input type = "text" size = "4" maxlength = "3" name="ColDenominator" value = "' . $_POST['ColDenominator'] . '" />
 			</field>';
 		echo '<field>
 				<label for = "CalcOperator">' . __('Calculation Operator') . ':</label>
-				<select name = "CalcOperator">';
+				<select name="CalcOperator">';
 		if ($_POST['CalcOperator'] == '/') {
 	echo '<option selected = "selected" value = "/">' . __('Numerator Divided By Denominator') . '</option>';
 } else {
@@ -498,11 +498,11 @@ if (!isset($_GET['delete'])) {
 
 		echo '<field>
 				<label for = "Constant">' . __('Constant') . ':</label>
-				<input type = "text" size = "10" maxlength = "10" name = "Constant" value = "' . $_POST['Constant'] . '" />
+				<input type = "text" size = "10" maxlength = "10" name="Constant" value = "' . $_POST['Constant'] . '" />
 			</field>';
 		echo '<field>
 				<label for = "ValFormat">' . __('Format Type') . ':</label>
-				<select name = "ValFormat">';
+				<select name="ValFormat">';
 		if ($_POST['ValFormat']=='N') {
 	echo '<option selected = "selected" value = "N">' . __('Numeric') . '</option>';
 			  echo '<option value = "P">' . __('Percentage') . '</option>';
@@ -513,17 +513,17 @@ if (!isset($_GET['delete'])) {
 		echo '</select>
 		</field>';
 
-		echo '<input type = "hidden" name = "BudgetOrActual" value = "0" />';
-		echo '<input type = "hidden" name = "DataType" value = "" />';
-		echo '<input type = "hidden" name = "PeriodFrom" value = "0" />';
-		echo '<input type = "hidden" name = "PeriodTo" value = "0" />';
+		echo '<input type = "hidden" name="BudgetOrActual" value = "0" />';
+		echo '<input type = "hidden" name="DataType" value = "" />';
+		echo '<input type = "hidden" name="PeriodFrom" value = "0" />';
+		echo '<input type = "hidden" name="PeriodTo" value = "0" />';
 	}
 
 	echo '</fieldset>';
 
 	echo '<br />
-			<div class = "centre">
-				<input type = "submit" name = "submit" value = "' . __('Enter Information') . '" />
+			<div class="centre">
+				<input type = "submit" name="submit" value = "' . __('Enter Information') . '" />
 			</div>
         </div>
 		</form>';

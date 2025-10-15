@@ -269,7 +269,7 @@ if ( isset($_POST['pricelist']) ) {
 	$CSVContent = stripcomma('stockid') . ','.
 				  stripcomma('filename') . ','.
 				  stripcomma('url') . "\n";
-	$baseurl = '//'. $_SERVER['HTTP_HOST'] . dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')) . '/' . 'getstockimg.php?automake = 1&stockid = %s.png';
+	$baseurl = '//'. $_SERVER['HTTP_HOST'] . dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')) . '/' . 'getstockimg.php?automake =1&stockid = %s.png';
 	while ($ImageList = DB_fetch_array($ImageResult)){
 		$url = sprintf($baseurl, urlencode($ImageList['stockid']));
 		$CSVContent .= (

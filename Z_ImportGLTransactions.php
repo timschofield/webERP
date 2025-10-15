@@ -9,7 +9,7 @@ include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.php');
 
-echo '<p class = "page_title_text"><img alt = "" src = "' . $RootPath . '/css/' . $Theme .
+echo '<p class = "page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title = "' .
 		__('Import GL Payments Receipts Or Journals From CSV') . '" />' . ' ' .
 		__('Import GL Payments Receipts Or Journals From CSV') . '</p>';

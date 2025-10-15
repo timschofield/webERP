@@ -8,7 +8,7 @@ $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetMaintenance';
 include('includes/header.php');
 
-echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title = "' . __('Search') . '" alt = "" />' . ' ' . $Title . '</p><br />';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
 
 if (isset($_GET['Complete'])) {
 	$Result = DB_query("UPDATE fixedassettasks
@@ -38,7 +38,7 @@ $SQL = "SELECT taskid,
 $ErrMsg = __('The maintenance schedule cannot be retrieved because');
 $Result = DB_query($SQL, $ErrMsg);
 
-echo '<table class = "selection">
+echo '<table class="selection">
      <tr>
 		<th>' . __('Task ID') . '</th>
 		<th>' . __('Asset') . '</th>
@@ -68,7 +68,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 			<td>' . ConvertSQLDate($MyRow['duedate']) . '</td>
 			<td>' . $MyRow['realname'] . '</td>
 			<td>' . $ManagerName . '</td>
-			<td><a href = "'.$RootPath.'/MaintenanceUserSchedule.php?Complete = Yes&amp;TaskID = ' . $MyRow['taskid'] .'" onclick = "return confirm(\'' . __('Are you sure you wish to mark this maintenance task as completed?') . '\');">' . __('Mark Completed') . '</a></td>
+			<td><a href="'.$RootPath.'/MaintenanceUserSchedule.php?Complete=Yes&amp;TaskID=' . $MyRow['taskid'] .'" onclick="return confirm(\'' . __('Are you sure you wish to mark this maintenance task as completed?') . '\');">' . __('Mark Completed') . '</a></td>
 		</tr>';
 }
 

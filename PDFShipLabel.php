@@ -265,13 +265,13 @@ if (isset($NoOfLabels) && $NoOfLabels > 0) {
 		$companyAddress6 = $_SESSION['CompanyRecord']['regoffice6'] ?? '';
 
 		$HTMLLabels .= '
-		<div style = "page-break-after: always; border: 1px solid #333; padding: 12px; font-family: Arial, sans-serif;">
-			<table style = "width:100%; border:none;">
+		<div style="page-break-after: always; border: 1px solid #333; padding: 12px; font-family: Arial, sans-serif;">
+			<table style="width:100%; border:none;">
 				<tr>
-					<td style = "width:40%; vertical-align:top;">';
-		$HTMLLabels .= '<img class = "logo" src = "' . $_SESSION['LogoFile'] . '" /><br />';
+					<td style="width:40%; vertical-align:top;">';
+		$HTMLLabels .= '<img class="logo" src="' . $_SESSION['LogoFile'] . '" /><br />';
 
-		$HTMLLabels .= '<div style = "font-weight:bold; margin-top:8px;">' . __('Ship From') . ':</div>
+		$HTMLLabels .= '<div style="font-weight:bold; margin-top:8px;">' . __('Ship From') . ':</div>
 						<div>' . htmlentities($_SESSION['CompanyRecord']['coyname']) . '</div>
 						<div>' . htmlentities($companyAddress) . '</div>
 						' . ($companyAddress2 ? '<div>' . htmlentities($companyAddress2) . '</div>' : '') . '
@@ -280,8 +280,8 @@ if (isset($NoOfLabels) && $NoOfLabels > 0) {
 						' . ($companyAddress5 ? '<div>' . htmlentities($companyAddress5) . '</div>' : '') . '
 						' . ($companyAddress6 ? '<div>' . htmlentities($companyAddress6) . '</div>' : '') . '
 					</td>
-					<td style = "width:60%; vertical-align:top;">
-						<div style = "font-weight:bold;">' . __('Ship To') . ':</div>
+					<td style="width:60%; vertical-align:top;">
+						<div style="font-weight:bold;">' . __('Ship To') . ':</div>
 						<div>' . htmlentities($MyArray[$i]['deliverto']) . '</div>
 						<div>' . htmlentities($MyArray[$i]['deladd1']) . '</div>
 						' . ($MyArray[$i]['deladd2'] ? '<div>' . htmlentities($MyArray[$i]['deladd2']) . '</div>' : '') . '
@@ -343,6 +343,6 @@ if (isset($NoOfLabels) && $NoOfLabels > 0) {
 	$Title = __('Label Error');
 	include('includes/header.php');
 	prnMsg(__('There were no labels to print'), 'warn');
-	echo '<br /><a href = "' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
+	echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 	include('includes/footer.php');
 }

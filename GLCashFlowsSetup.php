@@ -143,7 +143,7 @@ switch($_POST['Action']) {
 		// No reset , nor Automatic
 }
 
-echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/maintenance.png" title = "', // Icon image.
+echo '<p class = "page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/maintenance.png" title="', // Icon image.
 	$Title, '" /> ', // Icon title.
 	$Title, '</p>';// Page title.
 
@@ -184,7 +184,7 @@ if (!isset($_SESSION['PeriodProfitAccount']) or $_SESSION['PeriodProfitAccount']
 	}
 }
 while ($MyRow = DB_fetch_array($GLAccounts)) {
-	echo			'<option', ($MyRow['accountcode'] == $_SESSION['PeriodProfitAccount'] ? ' selected = "selected"' : '' ), ' value = "', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', $MyRow['accountname'], '</option>';
+	echo			'<option', ($MyRow['accountcode'] == $_SESSION['PeriodProfitAccount'] ? ' selected ="selected"' : '' ), ' value = "', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', $MyRow['accountname'], '</option>';
 }
 echo				'</select>
 				<fieldhelp>', __('GL account to post the net profit for the period'), '</fieldhelp>
@@ -205,18 +205,18 @@ if (!isset($_SESSION['RetainedEarningsAccount']) or $_SESSION['RetainedEarningsA
 }
 DB_data_seek($GLAccounts,0);
 while ($MyRow = DB_fetch_array($GLAccounts)) {
-	echo			'<option', ($MyRow['accountcode'] == $_SESSION['RetainedEarningsAccount'] ? ' selected = "selected"' : '' ), ' value = "', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', $MyRow['accountname'], '</option>';
+	echo			'<option', ($MyRow['accountcode'] == $_SESSION['RetainedEarningsAccount'] ? ' selected ="selected"' : '' ), ' value = "', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', $MyRow['accountname'], '</option>';
 }
 echo				'</select>
 				<fieldhelp>', __('GL account to post the retained earnings'), '</fieldhelp>
 			</field>
 		</fieldset>
 		<div class = "centre">',
-			'<button name = "Action" type = "submit" value = "Update"><img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', __('Update'), '</button>', // "Update" button.
-			'<button name = "Action" type = "submit" value = "Reset"><img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/cross.svg" /> ', __('Reset values'), '</button>', // "Reset values" button.
-			'<button name = "Action" type = "submit" value = "Automatic"><img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/next.png" width = "20px" /> ', __('Automatic setup'), '</button>', // "Automatic setup" button.
-			'<button name = "Action" type = "submit" value = "Manual"><img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/previous.png" width = "20px" /> ', __('Manual setup'), '</button>', // "Manual setup" button.
-			'<button onclick = "window.location = \'' . $RootPath . '/index.php?Application = GL\'" type = "button"><img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', __('Return'), '</button>', // "Return" button.
+			'<button name = "Action" type = "submit" value = "Update"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', __('Update'), '</button>', // "Update" button.
+			'<button name = "Action" type = "submit" value = "Reset"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/cross.svg" /> ', __('Reset values'), '</button>', // "Reset values" button.
+			'<button name = "Action" type = "submit" value = "Automatic"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/next.png" width = "20px" /> ', __('Automatic setup'), '</button>', // "Automatic setup" button.
+			'<button name = "Action" type = "submit" value = "Manual"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/previous.png" width = "20px" /> ', __('Manual setup'), '</button>', // "Manual setup" button.
+			'<button onclick="window.location = \'' . $RootPath . '/index.php?Application =GL\'" type = "button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', __('Return'), '</button>', // "Return" button.
 		'</div>
 	</form>';
 

@@ -9,8 +9,8 @@ $ViewTopic = 'CreatingNewSystem';
 $BookMark = 'COGSGLPostings';
 include('includes/header.php');
 
-echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme,
-	'/images/maintenance.png" title = "', // Icon image.
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/maintenance.png" title="', // Icon image.
 	$Title, '" /> ', // Icon title.
 	$Title, '</p>';// Page title.
 
@@ -90,7 +90,7 @@ if (!isset($SelectedCOGSPostingID)) {
 	if (DB_num_rows($Result)>0){
 		$ShowLivePostingRecords = false;
 		prnMsg(__('The following cost of sales posting records that do not have valid general ledger code specified - these records must be amended.'),'error');
-		echo '<table class = "selection">
+		echo '<table class="selection">
 			<tr>
 				<th>' . __('Area') . '</th>
 				<th>' . __('Stock Category') . '</th>
@@ -101,13 +101,13 @@ if (!isset($SelectedCOGSPostingID)) {
 
 		while ($MyRow = DB_fetch_array($Result)) {
 
-			echo '<tr class = "striped_row">
+			echo '<tr class="striped_row">
 					<td>', $MyRow['area'], '</td>
 					<td>', $MyRow['stkcat'], '</td>
 					<td>', $MyRow['salestype'], '</td>
 					<td>', $MyRow['accountname'], '</td>
-					<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedCOGSPostingID = ', $MyRow['id'], '">' . __('Edit') . '</a></td>
-					<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'). '?SelectedCOGSPostingID = ', $MyRow['id'], '&amp;delete = yes" onclick = "return confirm(\'' . __('Are you sure you wish to delete this COGS GL posting record?') . '\');">' .  __('Delete') . '</a></td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedCOGSPostingID=', $MyRow['id'], '">' . __('Edit') . '</a></td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'). '?SelectedCOGSPostingID=', $MyRow['id'], '&amp;delete=yes" onclick="return confirm(\'' . __('Are you sure you wish to delete this COGS GL posting record?') . '\');">' .  __('Delete') . '</a></td>
 				</tr>';
 		}//end while
 		echo '</table>';
@@ -185,7 +185,7 @@ if (!isset($SelectedCOGSPostingID)) {
 
 		$Result = DB_query($SQL);
 
-		echo '<table class = "selection">
+		echo '<table class="selection">
 			<tr>
 				<th>' . __('Area') . '</th>
 				<th>' . __('Stock Category') . '</th>
@@ -196,13 +196,13 @@ if (!isset($SelectedCOGSPostingID)) {
 
 		while ($MyRow = DB_fetch_array($Result)) {
 
-			echo '<tr class = "striped_row">
+			echo '<tr class="striped_row">
 					<td>', $MyRow['area'], '</td>
 					<td>', $MyRow['stkcat'], '</td>
 					<td>', $MyRow['salestype'], '</td>
 					<td>', $MyRow['accountname'], '</td>
-					<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedCOGSPostingID = ', $MyRow['id'], '">' . __('Edit') . '</a></td>
-					<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedCOGSPostingID = ', $MyRow['id'], '&amp;delete = yes" onclick = "return confirm(\'' . __('Are you sure you wish to delete this COGS GL posting record?') . '\');">' . __('Delete') . '</a></td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedCOGSPostingID=', $MyRow['id'], '">' . __('Edit') . '</a></td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedCOGSPostingID=', $MyRow['id'], '&amp;delete=yes" onclick="return confirm(\'' . __('Are you sure you wish to delete this COGS GL posting record?') . '\');">' . __('Delete') . '</a></td>
 				</tr>';
 }//END while LIST LOOP
 		echo '</table>';
@@ -211,11 +211,11 @@ if (!isset($SelectedCOGSPostingID)) {
 //end of ifs and buts!
 
 if (isset($SelectedCOGSPostingID)) {
-	echo '<div class = "centre"><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">' . __('Show all cost of sales posting records') . '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">' . __('Show all cost of sales posting records') . '</a></div>';
 }
 
 echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedCOGSPostingID)) {
 	//editing an existing cost of sales posting record
@@ -235,7 +235,7 @@ if (isset($SelectedCOGSPostingID)) {
 	$_POST['StkCat']  = $MyRow['stkcat'];
 	$_POST['SalesType'] = $MyRow['salestype'];
 
-	echo '<input type = "hidden" name = "SelectedCOGSPostingID" value = "' . $SelectedCOGSPostingID . '" />';
+	echo '<input type = "hidden" name="SelectedCOGSPostingID" value = "' . $SelectedCOGSPostingID . '" />';
 
 }  //end of if $SelectedCOGSPostingID only do the else when a new record is being entered
 
@@ -249,7 +249,7 @@ echo '<fieldset>
 		<legend>', __('Select criteria for COGS posting'), '</legend>
 		<field>
 			<label for = "Area">', __('Area'), ':</label>
-			<select name = "Area" autofocus = "autofocus">
+			<select name="Area" autofocus = "autofocus">
 				<option value = "AN">', __('Any Other'), '</option>';
 
 while ($MyRow = DB_fetch_array($Result)) {
@@ -268,7 +268,7 @@ $Result = DB_query($SQL);
 
 echo '<field>
 		<label for = "StkCat">', __('Stock Category'), ':</label>
-		<select name = "StkCat">
+		<select name="StkCat">
 			<option value = "ANY">', __('Any Other'), '</option>';
 
 while ($MyRow = DB_fetch_array($Result)) {
@@ -287,7 +287,7 @@ $Result = DB_query($SQL);
 
 echo '<field>
 		<label for = "SalesType">', __('Sales Type'), ' / ', __('Price List'), ':</label>
-		<select name = "SalesType">
+		<select name="SalesType">
 			<option value = "AN">', __('Any Other'), '</option>';
 
 while ($MyRow = DB_fetch_array($Result)) {
@@ -304,7 +304,7 @@ echo '</select>
 echo '<field>
 		<label for = "GLCode">', __('Post to GL account'), ':</label>';
 
-echo '<select tabindex = "4" name = "GLCode">';
+echo '<select tabindex = "4" name="GLCode">';
 
 DB_free_result($Result);
 $SQL = "SELECT chartmaster.accountcode,
@@ -336,8 +336,8 @@ echo '<fieldhelp>', __('Select the general ledger code to do COGS postingst to w
 
 echo '</fieldset>';
 
-echo '<div class = "centre">
-		<input tabindex = "5" type = "submit" name = "submit" value = "' . __('Enter Information') . '" />
+echo '<div class="centre">
+		<input tabindex = "5" type = "submit" name="submit" value = "' . __('Enter Information') . '" />
     </div>
 	</form>';
 

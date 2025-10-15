@@ -11,7 +11,7 @@ if (!DB_table_exists('mrprequirements')) {
 	$Title = __('MRP error');
 	include ('includes/header.php');
 	echo '<br />';
-	prnMsg(__('The MRP calculation must be run before you can run this report') . '<br />' . __('To run the MRP calculation click') . ' ' . '<a href = "' . $RootPath . '/MRP.php">' . __('here') . '</a>', 'error');
+	prnMsg(__('The MRP calculation must be run before you can run this report') . '<br />' . __('To run the MRP calculation click') . ' ' . '<a href="' . $RootPath . '/MRP.php">' . __('here') . '</a>', 'error');
 	include ('includes/footer.php');
 	exit();
 }
@@ -98,7 +98,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$Title = __('MRP Planned Work Orders');
 		include ('includes/header.php');
 		prnMsg(__('There were no items with demand greater than supply'), 'info');
-		echo '<br /><a href = "' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 		include ('includes/footer.php');
 		exit();
 	}
@@ -116,8 +116,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			.center { text-align: center;}
 		</style></head><body>';
 
-	$HTML .= '<div class = "company">' . $_SESSION['CompanyRecord']['coyname'] . '</div>';
-	$HTML .= '<div class = "report-title">' . __('MRP Planned Work Orders Report') . $ReportDate . '</div>';
+	$HTML .= '<div class="company">' . $_SESSION['CompanyRecord']['coyname'] . '</div>';
+	$HTML .= '<div class="report-title">' . __('MRP Planned Work Orders Report') . $ReportDate . '</div>';
 	$HTML .= '<div>' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '</div>';
 
 	$HTML .= '<table>';
@@ -155,19 +155,19 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$FormatedSupMRPDate = ConvertSQLDate($MyRow['mrpdate']);
 		$ExtCost = $MyRow['supplyquantity'] * $MyRow['computedcost'];
 
-		$HTML .= '<tr class = "' . $class . '">
+		$HTML .= '<tr class="' . $class . '">
 				<td>' . htmlspecialchars($MyRow['part']) . '</td>
-				<td class = "right">' . $FormatedSupDueDate . '</td>
-				<td class = "right">' . $FormatedSupMRPDate . '</td>
-				<td class = "right">' . locale_number_format($MyRow['supplyquantity'], $MyRow['decimalplaces']) . '</td>
-				<td class = "right">' . locale_number_format($ExtCost, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
+				<td class="right">' . $FormatedSupDueDate . '</td>
+				<td class="right">' . $FormatedSupMRPDate . '</td>
+				<td class="right">' . locale_number_format($MyRow['supplyquantity'], $MyRow['decimalplaces']) . '</td>
+				<td class="right">' . locale_number_format($ExtCost, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
 
 		if ($_POST['Consolidation'] == 'None') {
-	$HTML .= '<td class = "center">' . htmlspecialchars($MyRow['ordertype']) . '</td>
-						  <td class = "center">' . htmlspecialchars($MyRow['orderno']) . '</td>';
+	$HTML .= '<td class="center">' . htmlspecialchars($MyRow['ordertype']) . '</td>
+						  <td class="center">' . htmlspecialchars($MyRow['orderno']) . '</td>';
 }
 		else {
-			$HTML .= '<td class = "center">' . htmlspecialchars($MyRow['consolidatedcount']) . '</td>';
+			$HTML .= '<td class="center">' . htmlspecialchars($MyRow['consolidatedcount']) . '</td>';
 		}
 		$HTML .= '</tr>';
 
@@ -185,21 +185,21 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	// Print summary information for last part
 	$HTML .= '<tr><td colspan = "2"><b>' . $HoldDescription . '</b></td>
-			<td class = "center">' . __('Unit Cost:') . ' ' . locale_number_format($HoldCost, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-			<td class = "right">' . locale_number_format($TotalPartQty, $HoldDecimalPlaces) . '</td>
-			<td class = "right">' . locale_number_format($TotalPartCost, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-			<td class = "right">' . __('M/B:') . ' ' . $HoldMBFlag . '</td>
+			<td class="center">' . __('Unit Cost:') . ' ' . locale_number_format($HoldCost, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td class="right">' . locale_number_format($TotalPartQty, $HoldDecimalPlaces) . '</td>
+			<td class="right">' . locale_number_format($TotalPartCost, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td class="right">' . __('M/B:') . ' ' . $HoldMBFlag . '</td>
 			<td></td></tr>';
 
 	// Grand totals
-	$HTML .= '<tr><td colspan = "3" class = "right"><b>' . __('Number of Work Orders:') . ' ' . $Partctr . '</b></td>
-			<td colspan = "4" class = "right"><b>' . __('Total Extended Cost:') . ' ' . locale_number_format($Total_ExtCost, $_SESSION['CompanyRecord']['decimalplaces']) . '</b></td></tr>';
+	$HTML .= '<tr><td colspan = "3" class="right"><b>' . __('Number of Work Orders:') . ' ' . $Partctr . '</b></td>
+			<td colspan = "4" class="right"><b>' . __('Total Extended Cost:') . ' ' . locale_number_format($Total_ExtCost, $_SESSION['CompanyRecord']['decimalplaces']) . '</b></td></tr>';
 
 	if (isset($_POST['PrintPDF']) or isset($_POST['Email'])) {
 		$HTML .= '</tbody>
-				<div class = "footer fixed-section">
-					<div class = "right">
-						<span class = "page-number">Page </span>
+				<div class="footer fixed-section">
+					<div class="right">
+						<span class="page-number">Page </span>
 					</div>
 				</div>
 			</table>';
@@ -207,8 +207,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	else {
 		$HTML .= '</tbody>
 				</table>
-				<div class = "centre">
-					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" /></form>
+				<div class="centre">
+					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -232,7 +232,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	else {
 		$Title = __('MRP Planned Work Orders');
 		include ('includes/header.php');
-		echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title = "' . $Title . '" alt = "" />' . ' ' . $Title . '</p>';
+		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
 		echo $HTML;
 		include ('includes/footer.php');
 	}
@@ -244,10 +244,10 @@ else { /*The option to print PDF was not hit so display form */
 	$ViewTopic = 'MRP';
 	$BookMark = '';
 	include ('includes/header.php');
-	echo '<p class = "page_title_text">
-			<img src = "' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title = "' . __('Inventory') . '" alt = "" />' . ' ' . $Title . '</p>';
+	echo '<p class="page_title_text">
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
 
-	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target = "_blank">
+	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target="_blank">
 			<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />
 			<fieldset>
 			<legend>', __('Report Criteria'), '</legend>
@@ -271,9 +271,9 @@ else { /*The option to print PDF was not hit so display form */
 				<input required = "required" type = "date" name = "cutoffdate" autofocus = "autofocus" maxlength = "10" size = "11" value = "' . date('Y-m-d') . '" />
 			</field>
 			 </fieldset>
-			 <div class = "centre">
-				<input type = "submit" name = "PrintPDF" title = "Produce PDF Report" value = "' . __('Print PDF') . '" />
-				<input type = "submit" name = "View" title = "View Report" value = "' . __('View') . '" />
+			 <div class="centre">
+				<input type = "submit" name = "PrintPDF" title="Produce PDF Report" value = "' . __('Print PDF') . '" />
+				<input type = "submit" name = "View" title="View Report" value = "' . __('View') . '" />
 			 </div>
 		  </form>';
 

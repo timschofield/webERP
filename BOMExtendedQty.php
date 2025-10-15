@@ -250,7 +250,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				$HTML .= '</tbody>
 				</table>
 				<div class = "centre">
-				<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" /></form>
+				<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 			}
 			$HTML .= '</body>
@@ -273,7 +273,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			} else {
 				$Title = __('BOM Extended Quantity');
 				include('includes/header.php');
-				echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title = "' . $Title . '" alt = "" />' . ' ' . $Title . '</p>';
+				echo '<p class = "page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
 				echo $HTML;
 				include('includes/footer.php');
 			}
@@ -285,7 +285,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 		$Title = __('Quantity Extended BOM Listing');
 		include('includes/header.php');
-		echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title = "' . __('Search') . '" alt = "" />' . ' ' . $Title . '</p>';
+		echo '<p class = "page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 		echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post" target = "_blank">
 		<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />

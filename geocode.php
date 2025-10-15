@@ -23,7 +23,7 @@ $MapHost = $Row['map_host'];
 define("MAPS_HOST", $MapHost);
 define("KEY", $APIKey);
 
-echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title = "' . __('Geocode Setup') . '" alt = "" />' . ' ' . __('Geocoding of Customers and Suppliers')  . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Geocode Setup') . '" alt="" />' . ' ' . __('Geocoding of Customers and Suppliers')  . '</p>';
 
 // select all the customer branches
 $SQL = "SELECT * FROM custbranch";
@@ -37,7 +37,7 @@ $Result2 = DB_query($SQL);
 
 // Initialize delay in geocode speed
 $delay = 0;
-$BaseURLl = "https://" . MAPS_HOST . "/maps/api/geocode/xml?address = ";
+$BaseURLl = "https://" . MAPS_HOST . "/maps/api/geocode/xml?address =";
 
 // Iterate through the customer branch rows, geocoding each address
 
@@ -140,5 +140,5 @@ while ($Row2 = DB_fetch_array($Result2)) {
 		usleep($delay);
 	}
 }
-echo '<br /><div class = "centre"><a href = "' . $RootPath . '/GeocodeSetup.php">' . __('Go back to Geocode Setup') . '</a></div>';
+echo '<br /><div class="centre"><a href="' . $RootPath . '/GeocodeSetup.php">' . __('Go back to Geocode Setup') . '</a></div>';
 include('includes/footer.php');

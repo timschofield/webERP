@@ -7,8 +7,8 @@ $ViewTopic = 'PettyCash';
 $BookMark = 'PCTabTypes';
 include('includes/header.php');
 
-echo '<p class = "page_title_text">
-		<img src = "', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title = "', __('Payment Entry'), '" alt = "" />', ' ', $Title, '
+echo '<p class="page_title_text">
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', __('Payment Entry'), '" alt="" />', ' ', $Title, '
 	</p>';
 
 if (isset($_POST['SelectedTab'])) {
@@ -85,8 +85,8 @@ if (isset($_POST['submit'])) {
 	if ($MyRowPcTabExpenses[0] > 0 or $MyRowPcTabs[0] > 0) {
 	prnMsg(__('Cannot delete this tab type because tabs have been created using this tab type'), 'error');
 		echo '<form method = "post" action = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">';
-		echo '<input type = "hidden" name = "FormID" value = "', $_SESSION['FormID'], '" />';
-		echo '<div class = "centre"><input type = "submit" name = "Return" value = "', __('Return to list of tab types'), '" /></div>';
+		echo '<input type = "hidden" name="FormID" value = "', $_SESSION['FormID'], '" />';
+		echo '<div class="centre"><input type = "submit" name="Return" value = "', __('Return to list of tab types'), '" /></div>';
 		echo '</form>';
 		include('includes/footer.php');
 		exit();
@@ -108,18 +108,18 @@ if (!isset($SelectedTab)) {
 					typetabdescription
 				FROM pctypetabs";
 	$Result = DB_query($SQL);
-	echo '<table class = "selection">
+	echo '<table class="selection">
 			<tr>
 				<th>', __('Type Of Tab'), '</th>
 				<th>', __('Description'), '</th>
 			</tr>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
-		echo '<tr class = "striped_row">
+		echo '<tr class="striped_row">
 				<td>', $MyRow['typetabcode'], '</td>
 				<td>', $MyRow['typetabdescription'], '</td>
-				<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedTab = ', $MyRow['typetabcode'], '">' . __('Edit') . '</a></td>
-				<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedTab = ', $MyRow['typetabcode'], '&amp;delete = yes" onclick = "return confirm(\'' . __('Are you sure you wish to delete this code and all the description it may have set up?') . '\', \'Confirm Delete\', this);">' . __('Delete') . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedTab=', $MyRow['typetabcode'], '">' . __('Edit') . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedTab=', $MyRow['typetabcode'], '&amp;delete=yes" onclick="return confirm(\'' . __('Are you sure you wish to delete this code and all the description it may have set up?') . '\', \'Confirm Delete\', this);">' . __('Delete') . '</a></td>
 			</tr>';
 	}
 	//END while LIST LOOP
@@ -127,13 +127,13 @@ if (!isset($SelectedTab)) {
 }
 //end of ifs and buts!
 if (isset($SelectedTab)) {
-	echo '<div class = "centre">
-			<a href = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">', __('Show All Types Tabs Defined'), '</a>
+	echo '<div class="centre">
+			<a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">', __('Show All Types Tabs Defined'), '</a>
 		</div>';
 }
 if (!isset($_GET['delete'])) {
 	echo '<form method = "post" action = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">';
-	echo '<input type = "hidden" name = "FormID" value = "', $_SESSION['FormID'], '" />';
+	echo '<input type = "hidden" name="FormID" value = "', $_SESSION['FormID'], '" />';
 	if (isset($SelectedTab) and $SelectedTab != '') {
 		$SQL = "SELECT typetabcode,
 						typetabdescription
@@ -143,8 +143,8 @@ if (!isset($_GET['delete'])) {
 		$MyRow = DB_fetch_array($Result);
 		$_POST['TypeTabCode'] = $MyRow['typetabcode'];
 		$_POST['TypeTabDescription'] = $MyRow['typetabdescription'];
-		echo '<input type = "hidden" name = "SelectedTab" value = "', $SelectedTab, '" />
-			<input type = "hidden" name = "TypeTabCode" value = "', $_POST['TypeTabCode'], '" />
+		echo '<input type = "hidden" name="SelectedTab" value = "', $SelectedTab, '" />
+			<input type = "hidden" name="TypeTabCode" value = "', $_POST['TypeTabCode'], '" />
 			<fieldset>
 				<legend>', __('Edit Tab Type'), '</legend>
 				<field>
@@ -158,7 +158,7 @@ if (!isset($_GET['delete'])) {
 				<legend>', __('Create Tab Type'), '</legend>
 				<field>
 					<label for = "TypeTabCode">', __('Code Of Type Of Tab'), ':</label>
-					<input type = "text" minlegth = "1" maxlength = "20" name = "TypeTabCode" />
+					<input type = "text" minlegth = "1" maxlength = "20" name="TypeTabCode" />
 				</field>';
 	}
 	if (!isset($_POST['TypeTabDescription'])) {
@@ -166,12 +166,12 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<field>
 			<label for = "TypeTabCode">', __('Description Of Type of Tab'), ':</label>
-			<input type = "text" name = "TypeTabDescription" size = "50" required = "required" maxlength = "50" value = "', $_POST['TypeTabDescription'], '" />
+			<input type = "text" name="TypeTabDescription" size = "50" required = "required" maxlength = "50" value = "', $_POST['TypeTabDescription'], '" />
 		</field>';
 	echo '</fieldset>'; // close main table
-	echo '<div class = "centre">
-			<input type = "submit" name = "submit" value = "', __('Accept'), '" />
-			<input type = "reset" name = "Cancel" value = "', __('Cancel'), '" />
+	echo '<div class="centre">
+			<input type = "submit" name="submit" value = "', __('Accept'), '" />
+			<input type = "reset" name="Cancel" value = "', __('Cancel'), '" />
 		</div>
 	</form>';
 } // end if user wish to delete

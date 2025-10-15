@@ -7,8 +7,8 @@ $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetCategories';
 include('includes/header.php');
 
-echo '<p class = "page_title_text">
-		<img src = "'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title = "' . __('Fixed Asset Categories') . '" alt = "" />' . ' ' . $Title . '
+echo '<p class="page_title_text">
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . __('Fixed Asset Categories') . '" alt="" />' . ' ' . $Title . '
 	</p>';
 
 if (isset($_GET['SelectedCategory'])){
@@ -150,7 +150,7 @@ or deletion of the records*/
 			FROM fixedassetcategories";
 	$Result = DB_query($SQL);
 
-	echo '<table class = "selection">';
+	echo '<table class="selection">';
 	echo '<tr>
 			<th>' . __('Cat Code') . '</th>
 			<th>' . __('Description') . '</th>
@@ -162,15 +162,15 @@ or deletion of the records*/
 		  </tr>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
-		echo '<tr class = "striped_row">
+		echo '<tr class="striped_row">
 				<td>', $MyRow['categoryid'], '</td>
 				<td>', $MyRow['categorydescription'], '</td>
-				<td class = "number">', $MyRow['costact'], '</td>
-				<td class = "number">', $MyRow['depnact'], '</td>
-				<td class = "number">', $MyRow['disposalact'], '</td>
-				<td class = "number">', $MyRow['accumdepnact'], '</td>
-				<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedCategory = ', $MyRow['categoryid'], '">' . __('Edit') . '</a></td>
-				<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedCategory = ', $MyRow['categoryid'], '&amp;delete = yes" onclick = "return confirm(\'' . __('Are you sure you wish to delete this fixed asset category? Additional checks will be performed before actual deletion to ensure data integrity is not compromised.') . '\');">' . __('Delete') . '</a></td>
+				<td class="number">', $MyRow['costact'], '</td>
+				<td class="number">', $MyRow['depnact'], '</td>
+				<td class="number">', $MyRow['disposalact'], '</td>
+				<td class="number">', $MyRow['accumdepnact'], '</td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedCategory=', $MyRow['categoryid'], '">' . __('Edit') . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedCategory=', $MyRow['categoryid'], '&amp;delete=yes" onclick="return confirm(\'' . __('Are you sure you wish to delete this fixed asset category? Additional checks will be performed before actual deletion to ensure data integrity is not compromised.') . '\');">' . __('Delete') . '</a></td>
 			</tr>';
 	}
 	//END while LIST LOOP
@@ -180,11 +180,11 @@ or deletion of the records*/
 //end of ifs and buts!
 
 if (isset($SelectedCategory)) {
-	echo '<div class = "centre"><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' .__('Show All Fixed Asset Categories') . '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' .__('Show All Fixed Asset Categories') . '</a></div>';
 }
 
-echo '<form id = "CategoryForm" method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<form id="CategoryForm" method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedCategory) and !isset($_POST['submit'])) {
 	//editing an existing fixed asset category
@@ -207,8 +207,8 @@ if (isset($SelectedCategory) and !isset($_POST['submit'])) {
 	$_POST['DisposalAct']  = $MyRow['disposalact'];
 	$_POST['AccumDepnAct']  = $MyRow['accumdepnact'];
 
-	echo '<input type = "hidden" name = "SelectedCategory" value = "' . $SelectedCategory . '" />';
-	echo '<input type = "hidden" name = "CategoryID" value = "' . $_POST['CategoryID'] . '" />';
+	echo '<input type = "hidden" name="SelectedCategory" value = "' . $SelectedCategory . '" />';
+	echo '<input type = "hidden" name="CategoryID" value = "' . $_POST['CategoryID'] . '" />';
 	echo '<fieldset>
 			<legend>', __('Amend Category Details'), '</legend>
 			<field>
@@ -224,7 +224,7 @@ if (isset($SelectedCategory) and !isset($_POST['submit'])) {
 			<legend>', __('Create Category Details'), '</legend>
 			<field>
 				<label for = "CategoryID">' . __('Category Code') . ':</label>
-				<input type = "text" name = "CategoryID" required = "required" title = "" data-type = "no-illegal-chars" size = "7" maxlength = "6" value = "' . $_POST['CategoryID'] . '" />
+				<input type = "text" name="CategoryID" required = "required" title="" data-type = "no-illegal-chars" size = "7" maxlength = "6" value = "' . $_POST['CategoryID'] . '" />
 				<fieldhelp>' . __('Enter the asset category code. Up to 6 alpha-numeric characters are allowed') . '</fieldhelp>
 			</field>';
 }
@@ -254,12 +254,12 @@ if (!isset($_POST['CategoryDescription'])) {
 
 echo '<field>
 		<label for = "CategoryDescription">' . __('Category Description') . ':</label>
-		<input type = "text" name = "CategoryDescription" required = "required" title = "" size = "22" maxlength = "20" value = "' . $_POST['CategoryDescription'] . '" />
+		<input type = "text" name="CategoryDescription" required = "required" title="" size = "22" maxlength = "20" value = "' . $_POST['CategoryDescription'] . '" />
 		<fieldhelp>' . __('Enter the asset category description up to 20 characters') . '</fieldhelp>
 	</field>
 	<field>
 		<label for = "CostAct">' . __('Fixed Asset Cost GL Code') . ':</label>
-		<select name = "CostAct" required = "required" title = "" >';
+		<select name="CostAct" required = "required" title="" >';
 
 while ($MyRow = DB_fetch_array($BSAccountsResult)){
 
@@ -275,7 +275,7 @@ echo '</select>
 
 echo '<field>
 		<label for = "DepnAct">' . __('Profit and Loss Depreciation GL Code') . ':</label>
-		<select name = "DepnAct" required = "required" title = "" >';
+		<select name="DepnAct" required = "required" title="" >';
 
 while ($MyRow = DB_fetch_array($PnLAccountsResult)) {
 	if (isset($_POST['DepnAct']) and $MyRow['accountcode']==$_POST['DepnAct']) {
@@ -291,7 +291,7 @@ echo '</select>
 DB_data_seek($PnLAccountsResult,0);
 echo '<field>
 		<label for = "DisposalAct">' .  __('Profit or Loss on Disposal GL Code') . ':</label>
-		<select name = "DisposalAct" required = "required" title = "" >';
+		<select name="DisposalAct" required = "required" title="" >';
 while ($MyRow = DB_fetch_array($PnLAccountsResult)) {
 	if (isset($_POST['DisposalAct']) and $MyRow['accountcode']==$_POST['DisposalAct']) {
 		echo '<option selected = "selected" value = "'.$MyRow['accountcode'] . '">' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . ' ('.$MyRow['accountcode'].')' . '</option>';
@@ -306,7 +306,7 @@ echo '</select>
 DB_data_seek($BSAccountsResult,0);
 echo '<field>
 		<label for = "AccumDepnAct">' . __('Balance Sheet Accumulated Depreciation GL Code') . ':</label>
-		<select name = "AccumDepnAct" required = "required" title = "" >';
+		<select name="AccumDepnAct" required = "required" title="" >';
 
 while ($MyRow = DB_fetch_array($BSAccountsResult)) {
 
@@ -325,8 +325,8 @@ echo '</select>
 
 echo '</fieldset>';
 
-echo '<div class = "centre">
-		<input type = "submit" name = "submit" value = "' . __('Enter Information') . '" />
+echo '<div class="centre">
+		<input type = "submit" name="submit" value = "' . __('Enter Information') . '" />
 	</div>
 </form>';
 
