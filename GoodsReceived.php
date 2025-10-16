@@ -2,6 +2,12 @@
 
 /* Entry of items received against purchase orders */
 
+/*****************************************************************************************************************************************************************************
+ * 
+ * KL RICARD: Overrride stock GL account when receiving items PO's, so use the stockcategory of stockmaster, not the one store in purchdetails
+ * 
+ ****************************************************************************************************************************************************************************/
+
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefinePOClass.php');
 include('includes/DefineSerialItems.php');
@@ -113,7 +119,7 @@ if (!isset($_POST['ProcessGoodsReceived'])) {
 				<input type="date" maxlength="10" size="11" name="DefaultReceivedDate" value="' . FormatDateForSQL($_SESSION['PO' . $identifier]->DefaultReceivedDate) . '" />
 			</field>
 			<field>
-				<label for="SupplierReference">' . __('Supplier\'s Reference') . ':</label>
+				<label for="SupplierReference">' . __("Supplier's Reference") . ':</label>
 				<input type="text" name="SupplierReference" value="' . $SupplierReference. '" maxlength="30" size="20"  onchange="ReloadForm(form1.Update)"/>
 			</field>
 		</fieldset>';
@@ -183,7 +189,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_POST['ProcessGo
 
 		//Now Display LineItem
 		$SupportedImgExt = array('png','jpg','jpeg');
-		 $Glob = (glob($_SESSION['part_pics_dir'] . '/' . $LnItm->StockID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
+		$Glob = (glob($_SESSION['part_pics_dir'] . '/' . $LnItm->StockID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
 		$ImageFile = reset($Glob);
 		if ($ImageFile) {
 			$ImageLink = '<a href="' . $ImageFile . '" target="_blank">' .  $LnItm->StockID . '</a>';
@@ -669,10 +675,19 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 			} //assetid is set so the nominal item is an asset
 
 			/* If GLLink_Stock then insert GLTrans to debit the GL Code  and credit GRN Suspense account at standard cost*/
-			if ($_SESSION['PO'.$identifier]->GLLink==1 AND $OrderLine->GLCode !=0) {
+			if ($_SESSION['PO'.$identifier]->GLLink==1 AND $OrderLine->GLCode !=0){
 				/*GLCode is set to 0 when the GLLink is not activated this covers a situation where the GLLink is now active but it wasn't when this PO was entered */
 
+				// KL RICARD Override the GLCode to use the GLCode of the stockcategory, not the PO
+				$SQLGLCode = "SELECT stockcategory.stockact
+						FROM stockcategory, stockmaster
+						WHERE stockcategory.categoryid = stockmaster.categoryid
+							AND stockmaster.stockid = '" . $OrderLine->StockID . "'";
+				$resultGLCode = DB_query($SQLGLCode);		
+				$myrowGLCode = DB_fetch_array($resultGLCode);
+				
 				/*first the debit using the GLCode in the PO detail record entry*/
+//											$OrderLine->GLCode . "','" .
 				$SQL = "INSERT INTO gltrans (type,
 											typeno,
 											trandate,
@@ -685,7 +700,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 											$GRN . "','" .
 											$_POST['DefaultReceivedDate'] . "','" .
 											$PeriodNo . "','" .
-											$OrderLine->GLCode . "','" .
+											$myrowGLCode['stockact'] . "','" .
 											mb_substr(__('PO') . ' ' . $_SESSION['PO'.$identifier]->OrderNo . ': ' . $_SESSION['PO'.$identifier]->SupplierID . ' - ' . $OrderLine->StockID . ' - ' . DB_escape_string($OrderLine->ItemDescription) . ' x ' . $OrderLine->ReceiveQty . " @ " . locale_number_format($CurrentStandardCost,$_SESSION['CompanyRecord']['decimalplaces']), 0, 200) . "','" .
 											$CurrentStandardCost * $OrderLine->ReceiveQty . "')";
 
