@@ -2,6 +2,12 @@
 
 // Entry of a purchase order items - allows entry of items with lookup of currency cost from Purchasing Data previously entered also allows entry of nominal items against a general ledger code if the AP is integrated to the GL.
 
+/*************************************************************************************
+*
+* KL RICARD Added KL fields to control timing, status, etc.
+* 
+**************************************************************************************/
+
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefinePOClass.php');
 
@@ -127,10 +133,27 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 			/*Get the order number */
 			$_SESSION['PO'.$identifier]->OrderNo =  GetNextTransNo(18);
 
-			/*Insert to purchase order header record */
 			if(!isset( $_SESSION['PO' . $identifier]->DeliveryDate)){
 				$_SESSION['PO' . $identifier]->DeliveryDate = ConvertSQLDate('1000-01-01');
 			}
+
+			// KL RICARD Add custom fields to SQL
+			if(!isset( $_SESSION['PO' . $identifier]->KLAgreedDeliveryDate)){
+				$_SESSION['PO' . $identifier]->KLAgreedDeliveryDate = ConvertSQLDate('1000-01-01');
+			}
+			if(!isset( $_SESSION['PO' . $identifier]->KLPaymentDate)){
+				$_SESSION['PO' . $identifier]->KLPaymentDate = ConvertSQLDate('1000-01-01');
+			}
+			if(!isset( $_SESSION['PO' . $identifier]->KLShipmentDate)){
+				$_SESSION['PO' . $identifier]->KLShipmentDate = ConvertSQLDate('1000-01-01');
+			}
+			if(!isset( $_SESSION['PO' . $identifier]->KLCustomsDate)){
+				$_SESSION['PO' . $identifier]->KLCustomsDate = ConvertSQLDate('1000-01-01');
+			}
+			if(!isset( $_SESSION['PO' . $identifier]->KLArrivalDate)){
+				$_SESSION['PO' . $identifier]->KLArrivalDate = ConvertSQLDate('1000-01-01');
+			}
+
 			$SQL = "INSERT INTO purchorders ( orderno,
 											supplierno,
 											comments,
@@ -159,8 +182,15 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 											revised,
 											deliveryby,
 											status,
+											klstatus,
 											stat_comment,
+											agreeddeliverydate,
 											deliverydate,
+											paymentdate,
+											shipmentdate,
+											shipmentawb,
+											customsdate,
+											arrivaldate,
 											paymentterms,
 											allowprint)
 							VALUES(	'" . $_SESSION['PO'.$identifier]->OrderNo . "',
@@ -191,8 +221,15 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 									CURRENT_DATE,
 									'" . $_SESSION['PO'.$identifier]->DeliveryBy . "',
 									'" . $_SESSION['PO'.$identifier]->Status . "',
+									'" . $_SESSION['PO'.$identifier]->KLStatus . "',
 									'" . htmlspecialchars($StatusComment,ENT_QUOTES,'UTF-8') . "',
+									'" . FormatDateForSQL($_SESSION['PO'.$identifier]->KLAgreedDeliveryDate) . "',
 									'" . FormatDateForSQL($_SESSION['PO'.$identifier]->DeliveryDate) . "',
+									'" . FormatDateForSQL($_SESSION['PO'.$identifier]->KLPaymentDate) . "',
+									'" . FormatDateForSQL($_SESSION['PO'.$identifier]->KLShipmentDate) . "',
+									'" . $_SESSION['PO'.$identifier]->KLShipmentAWB . "',
+									'" . FormatDateForSQL($_SESSION['PO'.$identifier]->KLCustomsDate) . "',
+									'" . FormatDateForSQL($_SESSION['PO'.$identifier]->KLArrivalDate) . "',
 									'" . $_SESSION['PO'.$identifier]->PaymentTerms. "',
 									'" . $_SESSION['PO'.$identifier]->AllowPrintPO . "' )";
 
@@ -260,37 +297,45 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 			}
 		     /*Update the purchase order header with any changes */
 
-			$SQL = "UPDATE purchorders SET supplierno = '" . $_SESSION['PO'.$identifier]->SupplierID . "' ,
-										comments='" . $_SESSION['PO'.$identifier]->Comments . "',
-										rate='" . $_SESSION['PO'.$identifier]->ExRate . "',
-										initiator='" . $_SESSION['PO'.$identifier]->Initiator . "',
-										requisitionno= '" . $_SESSION['PO'.$identifier]->RequisitionNo . "',
-										version= '" .  $_SESSION['PO'.$identifier]->Version . "',
-										deliveryby='" . $_SESSION['PO'.$identifier]->DeliveryBy . "',
-										deliverydate='" . FormatDateForSQL($_SESSION['PO'.$identifier]->DeliveryDate) . "',
-										revised= CURRENT_DATE,
-										intostocklocation='" . $_SESSION['PO'.$identifier]->Location . "',
-										deladd1='" . $_SESSION['PO'.$identifier]->DelAdd1 . "',
-										deladd2='" . $_SESSION['PO'.$identifier]->DelAdd2 . "',
-										deladd3='" . $_SESSION['PO'.$identifier]->DelAdd3 . "',
-										deladd4='" . $_SESSION['PO'.$identifier]->DelAdd4 . "',
-										deladd5='" . $_SESSION['PO'.$identifier]->DelAdd5 . "',
-										deladd6='" . $_SESSION['PO'.$identifier]->DelAdd6 . "',
-										tel='" . $_SESSION['PO'.$identifier]->Tel . "',
-										suppdeladdress1='" . $_SESSION['PO'.$identifier]->SuppDelAdd1 . "',
-										suppdeladdress2='" . $_SESSION['PO'.$identifier]->SuppDelAdd2 . "',
-										suppdeladdress3='" . $_SESSION['PO'.$identifier]->SuppDelAdd3 . "',
-										suppdeladdress4='" . $_SESSION['PO'.$identifier]->SuppDelAdd4 . "',
-										suppdeladdress5='" . $_SESSION['PO'.$identifier]->SuppDelAdd5 . "',
-										suppdeladdress6='" . $_SESSION['PO'.$identifier]->SuppDelAdd6 . "',
-										suppliercontact='" . $_SESSION['PO'.$identifier]->SupplierContact . "',
-										supptel='" . $_SESSION['PO'.$identifier]->SuppTel . "',
-										contact='" . $_SESSION['PO'.$identifier]->Contact . "',
-										paymentterms='" . $_SESSION['PO'.$identifier]->PaymentTerms . "',
-										allowprint='" . $_SESSION['PO'.$identifier]->AllowPrintPO . "',
-										status = '" . $_SESSION['PO'.$identifier]->Status . "',
-										stat_comment = '" . htmlspecialchars($_SESSION['PO'.$identifier]->StatusComments,ENT_QUOTES,'UTF-8') . "'
-										WHERE orderno = '" . $_SESSION['PO'.$identifier]->OrderNo ."'";
+			$SQL = "UPDATE purchorders 
+					SET supplierno = '" . $_SESSION['PO'.$identifier]->SupplierID . "' ,
+						comments='" . $_SESSION['PO'.$identifier]->Comments . "',
+						rate='" . $_SESSION['PO'.$identifier]->ExRate . "',
+						initiator='" . $_SESSION['PO'.$identifier]->Initiator . "',
+						requisitionno= '" . $_SESSION['PO'.$identifier]->RequisitionNo . "',
+						version= '" .  $_SESSION['PO'.$identifier]->Version . "',
+						deliveryby='" . $_SESSION['PO'.$identifier]->DeliveryBy . "',
+						agreeddeliverydate='" . FormatDateForSQL($_SESSION['PO'.$identifier]->KLAgreedDeliveryDate) . "',
+						deliverydate='" . FormatDateForSQL($_SESSION['PO'.$identifier]->DeliveryDate) . "',
+						paymentdate='" . FormatDateForSQL($_SESSION['PO'.$identifier]->KLPaymentDate) . "',
+						shipmentdate='" . FormatDateForSQL($_SESSION['PO'.$identifier]->KLShipmentDate) . "',
+						shipmentawb='" . $_SESSION['PO'.$identifier]->KLShipmentAWB . "',
+						customsdate='" . FormatDateForSQL($_SESSION['PO'.$identifier]->KLCustomsDate) . "',
+						arrivaldate='" . FormatDateForSQL($_SESSION['PO'.$identifier]->KLArrivalDate) . "',
+						revised= CURRENT_DATE,
+						intostocklocation='" . $_SESSION['PO'.$identifier]->Location . "',
+						deladd1='" . $_SESSION['PO'.$identifier]->DelAdd1 . "',
+						deladd2='" . $_SESSION['PO'.$identifier]->DelAdd2 . "',
+						deladd3='" . $_SESSION['PO'.$identifier]->DelAdd3 . "',
+						deladd4='" . $_SESSION['PO'.$identifier]->DelAdd4 . "',
+						deladd5='" . $_SESSION['PO'.$identifier]->DelAdd5 . "',
+						deladd6='" . $_SESSION['PO'.$identifier]->DelAdd6 . "',
+						tel='" . $_SESSION['PO'.$identifier]->Tel . "',
+						suppdeladdress1='" . $_SESSION['PO'.$identifier]->SuppDelAdd1 . "',
+						suppdeladdress2='" . $_SESSION['PO'.$identifier]->SuppDelAdd2 . "',
+						suppdeladdress3='" . $_SESSION['PO'.$identifier]->SuppDelAdd3 . "',
+						suppdeladdress4='" . $_SESSION['PO'.$identifier]->SuppDelAdd4 . "',
+						suppdeladdress5='" . $_SESSION['PO'.$identifier]->SuppDelAdd5 . "',
+						suppdeladdress6='" . $_SESSION['PO'.$identifier]->SuppDelAdd6 . "',
+						suppliercontact='" . $_SESSION['PO'.$identifier]->SupplierContact . "',
+						supptel='" . $_SESSION['PO'.$identifier]->SuppTel . "',
+						contact='" . $_SESSION['PO'.$identifier]->Contact . "',
+						paymentterms='" . $_SESSION['PO'.$identifier]->PaymentTerms . "',
+						allowprint='" . $_SESSION['PO'.$identifier]->AllowPrintPO . "',
+						status = '" . $_SESSION['PO'.$identifier]->Status . "',
+						klstatus = '" . $_SESSION['PO'.$identifier]->KLStatus . "',
+						stat_comment = '" . htmlspecialchars($_SESSION['PO'.$identifier]->StatusComments,ENT_QUOTES,'UTF-8') . "'
+					WHERE orderno = '" . $_SESSION['PO'.$identifier]->OrderNo ."'";
 
 			$ErrMsg =  __('The purchase order could not be updated because');
 			$Result = DB_query($SQL, $ErrMsg, '', true);
@@ -867,6 +912,9 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 		<tbody>';
 
 	$_SESSION['PO'.$identifier]->Total = 0;
+	// KL Calculate these 2 totals
+	$TotalOurItems = 0;
+	$TotalSupplierItems = 0;
 
 	foreach ($_SESSION['PO'.$identifier]->LineItems as $POLine) {
 
@@ -902,16 +950,24 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 			}
 			echo '</tr>';
 			$_SESSION['PO'.$identifier]->Total += $LineTotal;
+			// KL RICARD Update these 2 totals
+			$TotalOurItems += $POLine->Quantity;
+			$TotalSupplierItems += round($POLine->Quantity/$POLine->ConversionFactor,$POLine->DecimalPlaces);
+
 		}
 	}
 
 	$DisplayTotal = locale_number_format($_SESSION['PO'.$identifier]->Total,$_SESSION['PO'.$identifier]->CurrDecimalPlaces);
+	// KL RICARD Show These 2 totals
 	echo '</tbody>
 		<tfoot>
-			<tr>',
-/*				'<td colspan="9" class="number">' . __('TOTAL') . __(' excluding Tax') . '</td>',*/
-				'<td class="number" colspan="9">', __('Total Excluding Tax'), '</td>',
-				'<td class="number"><b>', $DisplayTotal, '</b></td>
+			<tr>
+				<td class="number" colspan="2">' . __('TOTAL') . '</td>
+				<td class="number"><b>' . locale_number_format($TotalOurItems,0) . '</b></td>
+				<td class="number" colspan="3">' . '</td>
+				<td class="number"><b>' . locale_number_format($TotalSupplierItems,0) . '</b></td>
+				<td class="number" colspan="9">' , __('Total Excluding Tax'), '</td>
+				<td class="number"><b>', $DisplayTotal, '</b></td>
 			</tr>
 		</tfoot>
 		</table>
@@ -1003,7 +1059,7 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){ 
 							ON stockmaster.categoryid=stockcategory.categoryid
 						INNER JOIN purchdata
 							ON stockmaster.stockid=purchdata.stockid
-						WHERE (stockmaster.mbflag<>'D' OR stockcategory.stocktype='L')
+							WHERE (stockmaster.mbflag<>'D' OR stockcategory.stocktype='L')
 							AND stockmaster.mbflag<>'K'
 							AND stockmaster.mbflag<>'A'
 							AND stockmaster.mbflag<>'G'
