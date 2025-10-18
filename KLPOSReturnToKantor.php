@@ -106,29 +106,14 @@ if(isset($_POST['Submit']) AND $InputError==False){
 
 	$ErrMsg = __('CRITICAL ERROR') . '! ' . __('Unable to BEGIN Location Transfer transaction');
 
-	$TextToPrint = $InitPrinter . $CenteredJustified;
-	// name of shop
-	$TextToPrint .= KLPrintNameOfShop();
-	$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . 'TRANSFER TO KANTOR' . $NewLine;
-	// warning if it is a TEST
-	$TextToPrint .= KLPrintReceiptTestWarning("RETURN TRANSFER"). $NewLine . $CenteredJustified;
-	$TextToPrint .= DisplayDateTime() . $NewLine;
-	$TextToPrint .= 'SPG Code: ' . $_SESSION['SalesmanLogin'] . $NewLine;
-	$TextToPrint .= 'Shop Code: ' . substr($_SESSION['UserStockLocation'],3,2) . $NewLine;
-	$TextToPrint .= 'Transfer Number: ' . $_POST['Trf_ID'] . $NewLine;
-	$TextToPrint .=  $NewLine . $NewLine;
-	$TextToPrint .=  $LeftJustified;
-
-	$NumberOfItems = 0;
-
 	DB_Txn_Begin();
 
-	for ($i=0;$i < $_POST['LinesCounter'];$i++){
+	for ($i = 0; $i < $_POST['LinesCounter']; $i++){
 
 		if($_POST['StockID' . $i] != ''){
 			$DecimalsSql = "SELECT decimalplaces
 							FROM stockmaster
-							WHERE stockid='" . $_POST['StockID' . $i] . "'";
+							WHERE stockid = '" . $_POST['StockID' . $i] . "'";
 			$DecimalResult = DB_query($DecimalsSql);
 			$DecimalRow = DB_fetch_array($DecimalResult);
 			$SQL = "INSERT INTO loctransfers (reference,
@@ -149,32 +134,12 @@ if(isset($_POST['Submit']) AND $InputError==False){
 			if ($_POST['ToStockLocation'] == 'SERDE'){
 				KLSendEmail("ItemTransferredToSpecialLocation", "Silent", $_POST['StockID' . $i], round(filter_number_format($_POST['StockQTY' . $i]), $DecimalRow['decimalplaces']),$_POST['FromStockLocation'], $_POST['ToStockLocation']);
 			}
-			
-			$NumberOfItems += $_POST['StockQTY' . $i];
-			$TextToPrint .= round(filter_number_format($_POST['StockQTY' . $i]), $DecimalRow['decimalplaces']) . ' x ' . $_POST['StockID' . $i] . $NewLine;
-
 		}
 	}
 	$ErrMsg = __('CRITICAL ERROR') . '! ' . __('Unable to COMMIT Location Transfer transaction');
 	DB_Txn_Commit();
 
-	$TextToPrint .= $NewLine. $Emphasized . '# Pieces in this transfer: ' . filter_number_format($NumberOfItems) . $NewLine;
-
-	$TextToPrint .= $NewLine. $Emphasized . 'Prepared by: ' . $_SESSION['SalesmanLogin'] . $NewLine;
-	$TextToPrint .= $CharacterFontA . 'Date: ' . DisplayDateTime() . $NewLine;
-	$TextToPrint .= 'Signature: ' . $NewLine . $NewLine . $NewLine . $NewLine . $NewLine;
-	
-	$TextToPrint .= $Emphasized . 'Shipped by: ' . $NewLine;
-	$TextToPrint .= $CharacterFontA . 'Date: ' . $NewLine;
-	$TextToPrint .= 'Signature: ' . $NewLine . $NewLine . $NewLine . $NewLine . $NewLine;
-
-	$TextToPrint .= $Emphasized . 'Received by: ' . $NewLine;
-	$TextToPrint .= $CharacterFontA . 'Date: ' . $NewLine;
-	$TextToPrint .= 'Signature: ' . $NewLine . $NewLine . $NewLine . $NewLine . $NewLine;
-	
-	// warning if it is a TEST
-	$TextToPrint .= KLPrintReceiptTestWarning("RETURN TRANSFER"). $NewLine . $LeftJustified;
-	$TextToPrint .= $CutPaper;
+	$TextToPrint = KLPrintReturnTransferToKantor($_POST['Trf_ID']);
 
 	//################## PRINTING STUFF ##################### 
 	$identifier=GetPOSIdentifier();

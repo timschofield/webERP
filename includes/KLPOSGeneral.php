@@ -18,6 +18,7 @@ FUNCTION LIST (in alphabetical order):
 - KLPrintReceiptHeader: Generates the header for receipts
 - KLPrintReceiptShopFooter: Generates the shop copy footer for receipts
 - KLPrintReceiptTestWarning: Adds a test warning on receipts when in test mode
+- KLPrintReturnTransferToKantor: Generates the text for a receipt for a return transfer to the main office
 - RecordRetailCustomerInformation: Stores customer information from retail sales
 - zerofill: Pads a number with leading zeros
 **************************************************************************************************************/
@@ -1201,3 +1202,84 @@ function GetItemPackagingDescription($StockID){
 	}
 }
 
+
+/**************************************************************************************************************
+* Brief description: Generates the text for a receipt for a return transfer of items to the main office (Kantor)
+* Parameters:
+*   $Reference - The reference number of the transfer
+* Returns: The formatted text string for the receipt
+**************************************************************************************************************/
+function KLPrintReturnTransferToKantor($Reference){
+	include('includes/KLESCPOSCommands.php');
+
+	$CorrectTransfer = true;
+
+	$TextToPrint = $InitPrinter . $CenteredJustified;
+	// name of shop
+	$TextToPrint .= KLPrintNameOfShop();
+	$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . 'TRANSFER TO KANTOR' . $NewLine;
+	// warning if it is a TEST
+	$TextToPrint .= KLPrintReceiptTestWarning("RETURN TRANSFER"). $NewLine . $CenteredJustified;
+	$TextToPrint .= DisplayDateTime() . $NewLine;
+	$TextToPrint .= 'SPG Code: ' . $_SESSION['SalesmanLogin'] . $NewLine;
+	$TextToPrint .= 'Shop Code: ' . substr($_SESSION['UserStockLocation'],3,2) . $NewLine;
+	$TextToPrint .= 'Transfer Number: ' . $Reference . $NewLine;
+	$TextToPrint .=  $NewLine . $NewLine;
+	$TextToPrint .=  $LeftJustified;
+
+	$NumberOfItems = 0;
+	// loop for all the items in the transfer
+	$SQL = "SELECT reference,
+					loctransfers.stockid,
+					shipqty,
+					shiploc,
+					recloc,
+					decimalplaces
+			FROM loctransfers
+			INNER JOIN stockmaster
+				ON loctransfers.stockid = stockmaster.stockid
+			WHERE reference = '" . $Reference . "'
+			ORDER BY stockid ASC";
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) == 0){
+		$CorrectTransfer = false;
+		$TextToPrint .= 'No items found in this transfer or wrong transfer number.' . $NewLine;
+	} else {
+		while ($MyRow = DB_fetch_array($Result)) {
+			if ($MyRow['shiploc'] != $_SESSION['UserStockLocation']){
+				$CorrectTransfer = false;
+				$TextToPrint .= 'Item ' . $MyRow['stockid'] . ' has wrong shipping location.' . $NewLine;
+			} 
+			if ($MyRow['recloc'] != 'KANTOR'){
+				$CorrectTransfer = false;
+				$TextToPrint .= 'Item ' . $MyRow['stockid'] . ' has wrong receiving location.' . $NewLine;
+			}
+			if ($CorrectTransfer){
+				$NumberOfItems += $MyRow['shipqty'];
+				$TextToPrint .= round(filter_number_format($MyRow['shipqty']), $MyRow['decimalplaces']) . ' x ' . $MyRow['stockid'] . $NewLine;
+			}
+		}
+		if ($CorrectTransfer){
+			// footer
+			$TextToPrint .= $NewLine. $Emphasized . '# Pieces in this transfer: ' . filter_number_format($NumberOfItems) . $NewLine;
+
+			$TextToPrint .= $NewLine. $Emphasized . 'Prepared by: ' . $_SESSION['SalesmanLogin'] . $NewLine;
+			$TextToPrint .= $CharacterFontA . 'Date: ' . DisplayDateTime() . $NewLine;
+			$TextToPrint .= 'Signature: ' . $NewLine . $NewLine . $NewLine . $NewLine . $NewLine;
+			
+			$TextToPrint .= $Emphasized . 'Shipped by: ' . $NewLine;
+			$TextToPrint .= $CharacterFontA . 'Date: ' . $NewLine;
+			$TextToPrint .= 'Signature: ' . $NewLine . $NewLine . $NewLine . $NewLine . $NewLine;
+
+			$TextToPrint .= $Emphasized . 'Received by: ' . $NewLine;
+			$TextToPrint .= $CharacterFontA . 'Date: ' . $NewLine;
+			$TextToPrint .= 'Signature: ' . $NewLine . $NewLine . $NewLine . $NewLine . $NewLine;
+		}
+	}
+	
+	// warning if it is a TEST
+	$TextToPrint .= KLPrintReceiptTestWarning("RETURN TRANSFER"). $NewLine . $LeftJustified;
+	$TextToPrint .= $CutPaper;
+
+	return $TextToPrint;
+}

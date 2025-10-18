@@ -17,23 +17,6 @@ $LocationName = GetLocationNameFromCode($_SESSION['UserStockLocation']);
 ITEMS STILL IN PROCESS BY TRANSFERS ON THE LAST X DAYS
 *********************************************************************************************************/
 
-/* This SQL sentence is inefficient EXPLAIN 2019-11-10
-
-$SQL = "SELECT reference,
-				stockid,
-				shipqty,
-				recqty,
-				shipdate,
-				shiploc,
-				recloc
-		FROM loctransfers
-		WHERE (shiploc = '". $_SESSION['UserStockLocation'] ."'
-				OR recloc = '". $_SESSION['UserStockLocation'] ."')
-			AND pendingqty != 0
-		ORDER BY reference ASC,
-				stockid ASC";
-*/
-/* This equivalent query is around 5x more efficient */ 
 $SQL = "SELECT reference,
 				stockid,
 				shipqty,
@@ -73,6 +56,7 @@ echo '<table class="selection">
 				<th>' . __('Qty Send') . '</th>
 				<th>' . __('To') . '</th>
 				<th>' . __('Qty Received') . '</th>
+				<th>' . __('Print') . '</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -90,10 +74,16 @@ while ($MyRow = DB_fetch_array($Result)) {
 		$CurrentTransfer = $MyRow['reference'];
 		$Transfer = locale_number_format($MyRow['reference'],0);
 		$TransferDate = ConvertSQLDate($MyRow['shipdate']);
+		if ($MyRow['shiploc'] == $_SESSION['UserStockLocation']){
+			$PrintLink = '<a href="' . $RootPath . '/KLPOSPrintTransferSPG.php?TransferID=' . $MyRow['reference'] . '" target="_blank">' . _('Print') . '</a>';
+		} else {
+			$PrintLink = '';
+		}		
 	}else{
 		// the other items of the transfer
 		$Transfer = '';
 		$TransferDate = '';
+		$PrintLink = '';
 	}
 	
 	echo '<tr class="striped_row">
@@ -105,6 +95,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 		<td class="number">' . locale_number_format($MyRow['shipqty'], 0) . '</td>
 		<td>' . GetLocationNameFromCode($MyRow['recloc']) . '</td>
 		<td class="number">' . locale_number_format($MyRow['recqty'], 0) . '</td>
+		<td>' . $PrintLink . '</td>
 		</tr>';
 }
 echo '</tbody></table>';
