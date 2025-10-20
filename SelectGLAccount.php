@@ -52,7 +52,7 @@ if (isset($_POST['Search'])){
 
 		} elseif (mb_strlen($_POST['GLCode'])>0){
 			if (!empty($_POST['GLCode'])) {
-				echo '<meta http-equiv = "refresh" content = "0; url = ' . $RootPath . '/GLAccountInquiry.php?=Account=' . $_POST['GLCode'] . '&Show=Yes">';
+				echo '<meta http-equiv = "refresh" content = "0; url = ' . $RootPath . '/GLAccountInquiry.php?Account=' . $_POST['GLCode'] . '&Show=Yes">';
 				exit();
 			}
 
@@ -75,7 +75,7 @@ if (isset($_POST['Search'])){
 			if (DB_num_rows($Result) == 1) {
 				$AccountRow = DB_fetch_row($Result);
 				/// @todo BUG this must happen before we include header.php. Either that, or we hould use ob_start...
-				header('location:' . htmlspecialchars_decode($RootPath) . '/GLAccountInquiry.php?=Account=' . urlencode(htmlspecialchars_decode($AccountRow[0])) . '&Show=Yes');
+				header('location:' . htmlspecialchars_decode($RootPath) . '/GLAccountInquiry.php?Account=' . urlencode(htmlspecialchars_decode($AccountRow[0])) . '&Show=Yes');
 				exit();
 			}
 		}
@@ -157,8 +157,8 @@ if (!isset($AccountID)) {
 					<td>', htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false), '</td>
 					<td>', $MyRow['group_'], '</td>
 					<td>', $MyRow['pl'], '</td>
-					<td class="number"><a href="', $RootPath, '/GLAccountInquiry.php?=Account=', $MyRow['accountcode'], '&amp;Show=Yes&FromPeriod=', $TargetPeriod, '&ToPeriod=', $TargetPeriod, '"><img width="32px" src="', $RootPath, '/css/', $Theme, '/images/magnifier.png" title="' . __('Inquiry') . '" alt="' . __('Inquiry') . '" /></td>
-					<td><a href="', $RootPath, '/GLAccounts.php?=SelectedAccount=', $MyRow['accountcode'], '"><img width="32px" src="', $RootPath, '/css/', $Theme, '/images/maintenance.png" title="' . __('Edit') . '" alt="' . __('Edit') . '" /></a>
+					<td class="number"><a href="', $RootPath, '/GLAccountInquiry.php?Account=', $MyRow['accountcode'], '&amp;Show=Yes&FromPeriod=', $TargetPeriod, '&ToPeriod=', $TargetPeriod, '"><img width="32px" src="', $RootPath, '/css/', $Theme, '/images/magnifier.png" title="' . __('Inquiry') . '" alt="' . __('Inquiry') . '" /></td>
+					<td><a href="', $RootPath, '/GLAccounts.php?SelectedAccount=', $MyRow['accountcode'], '"><img width="32px" src="', $RootPath, '/css/', $Theme, '/images/maintenance.png" title="' . __('Edit') . '" alt="' . __('Edit') . '" /></a>
 				</tr>';
 
 //end of page full new headings if

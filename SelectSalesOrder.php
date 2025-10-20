@@ -591,7 +591,7 @@ if (!isset($StockID)) {
 		<div class="centre">
 			<input type="submit" name="SearchOrders" value="' . __('Search') . '" />
 			<input type="reset" name="Reset" value="' . __('Reset') . '" />
-			<a href="' . $RootPath . '/SelectOrderItems.php?=NewOrder=Yes">' . __('Add Sales Order') . '</a>
+			<a href="' . $RootPath . '/SelectOrderItems.php?NewOrder=Yes">' . __('Add Sales Order') . '</a>
 		</div>';
 	}
 
@@ -954,38 +954,38 @@ if (isset($StockItemsResult)
 		while ($MyRow = DB_fetch_array($SalesOrdersResult)) {
 			if (isset($MyRow['orderno'])) {
 				$ModifyPage = $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . urlencode((string) $MyRow['orderno']);
-				$Confirm_Invoice = $RootPath . '/ConfirmDispatch_Invoice.php?=OrderNumber=' . urlencode((string) $MyRow['orderno']);
+				$Confirm_Invoice = $RootPath . '/ConfirmDispatch_Invoice.php?OrderNumber=' . urlencode((string) $MyRow['orderno']);
 				$PrintPickList = '';
 				$PrintPickLabel = '';
 				$PrintDummyFlag = '<input type="hidden" name="dummy" value="%s" />';
 				if ($_SESSION['RequirePickingNote'] == 1) {
-	$PrintPickList = $RootPath . '/GeneratePickingList.php?=TransNo=' . urlencode((string) $MyRow['orderno']);
+	$PrintPickList = $RootPath . '/GeneratePickingList.php?TransNo=' . urlencode((string) $MyRow['orderno']);
 					if (isset($MyRow['prid']) and $MyRow['prid'] > '') {
-						$PrintPickLabel = '<td><a href="' . $RootPath . '/GeneratePickingList.php?=TransNo=' . urlencode((string) $MyRow['orderno']) . '" target="_blank">' . str_pad($MyRow['prid'], 10, '0', STR_PAD_LEFT) . '</a></td>';
+						$PrintPickLabel = '<td><a href="' . $RootPath . '/GeneratePickingList.php?TransNo=' . urlencode((string) $MyRow['orderno']) . '" target="_blank">' . str_pad($MyRow['prid'], 10, '0', STR_PAD_LEFT) . '</a></td>';
 } else {
-						$PrintPickLabel = '<td><a href="' . $RootPath . '/GeneratePickingList.php?=TransNo=' . urlencode((string) $MyRow['orderno']) . '" target="_blank">' . __('Pick') . '</a></td>';
+						$PrintPickLabel = '<td><a href="' . $RootPath . '/GeneratePickingList.php?TransNo=' . urlencode((string) $MyRow['orderno']) . '" target="_blank">' . __('Pick') . '</a></td>';
 					}
 					$PrintDummyFlag = '';
 				}
 
 				if ($_SESSION['PackNoteFormat'] == 1) {
 	/*Laser printed A4 default */
-					$PrintDispatchNote = $RootPath . '/PrintCustOrder_generic.php?=TransNo=' . urlencode((string) $MyRow['orderno']);
+					$PrintDispatchNote = $RootPath . '/PrintCustOrder_generic.php?TransNo=' . urlencode((string) $MyRow['orderno']);
 } else { /*pre-printed stationery default */
-					$PrintDispatchNote = $RootPath . '/PrintCustOrder.php?=TransNo=' . urlencode((string) $MyRow['orderno']);
+					$PrintDispatchNote = $RootPath . '/PrintCustOrder.php?TransNo=' . urlencode((string) $MyRow['orderno']);
 				}
-				$PrintQuotation = $RootPath . '/PDFQuotation.php?=QuotationNo=' . urlencode((string) $MyRow['orderno']) . '&orientation=landscape';
-				$PrintQuotationPortrait = $RootPath . '/PDFQuotation.php?=QuotationNo=' . urlencode((string) $MyRow['orderno']) . '&orientation=portrait';
+				$PrintQuotation = $RootPath . '/PDFQuotation.php?QuotationNo=' . urlencode((string) $MyRow['orderno']) . '&orientation=landscape';
+				$PrintQuotationPortrait = $RootPath . '/PDFQuotation.php?QuotationNo=' . urlencode((string) $MyRow['orderno']) . '&orientation=portrait';
 				$FormatedDelDate = isset($MyRow['deliverydate']) && $MyRow['deliverydate'] != '' ? ConvertSQLDate($MyRow['deliverydate']) : '';
 				$FormatedOrderDate = isset($MyRow['orddate']) && $MyRow['orddate'] != '' ? ConvertSQLDate($MyRow['orddate']) : '';
 				$FormatedOrderValue = locale_number_format($MyRow['ordervalue'],$_SESSION['CompanyRecord']['decimalplaces']);
 				if ($MyRow['customerref'] !== '') {
-	$CustomerRef = '<a href="' . $RootPath . '/SelectCompletedOrder.php?=CustomerRef=' . urlencode((string) $MyRow['customerref']) . '" target="_blank">' . $MyRow['customerref'] . '</a>';
+	$CustomerRef = '<a href="' . $RootPath . '/SelectCompletedOrder.php?CustomerRef=' . urlencode((string) $MyRow['customerref']) . '" target="_blank">' . $MyRow['customerref'] . '</a>';
 } else {
 					$CustomerRef = '';
 				}
 				$OrdersTotal += $MyRow['ordervalue'];
-				$PrintAck = $RootPath . '/PDFAck.php?=AcknowledgementNo=' . urlencode((string) $MyRow['orderno']);
+				$PrintAck = $RootPath . '/PDFAck.php?AcknowledgementNo=' . urlencode((string) $MyRow['orderno']);
 
 				if (!isset($PricesSecurity) or !in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens'])) {
 					$FormatedOrderValue = '---------';
@@ -997,7 +997,7 @@ if (isset($StockItemsResult)
 				$PrintText = __('Reprint');
 				}
 
-				$PrintLabels = $RootPath . '/PDFShipLabel.php?=Type=Sales&ORD=' . urlencode((string) $MyRow['orderno']);
+				$PrintLabels = $RootPath . '/PDFShipLabel.php?Type=Sales&ORD=' . urlencode((string) $MyRow['orderno']);
 
 				if ($_POST['Quotations'] == 'Orders_Only' or $_POST['Quotations'] == 'Overdue_Only') {
 	echo '<tr class="striped_row">

@@ -454,15 +454,15 @@ else {
 
 		while ($MyRow = DB_fetch_array($PickReqResult)) {
 
-			$ModifyPickList = $RootPath . '/PickingLists.php?=Prid=' . $MyRow['prid'];
-			$PrintPickList = $RootPath . '/GeneratePickingList.php?=TransNo=' . $MyRow['orderno'];
+			$ModifyPickList = $RootPath . '/PickingLists.php?Prid=' . $MyRow['prid'];
+			$PrintPickList = $RootPath . '/GeneratePickingList.php?TransNo=' . $MyRow['orderno'];
 
 			if ($_SESSION['PackNoteFormat'] == 1) {
 	/*Laser printed A4 default */
-				$PrintDispatchNote = $RootPath . '/PrintCustOrder_generic.php?=TransNo=' . $MyRow['orderno'];
+				$PrintDispatchNote = $RootPath . '/PrintCustOrder_generic.php?TransNo=' . $MyRow['orderno'];
 } else {
 				/*pre-printed stationery default */
-				$PrintDispatchNote = $RootPath . '/PrintCustOrder.php?=TransNo=' . $MyRow['orderno'];
+				$PrintDispatchNote = $RootPath . '/PrintCustOrder.php?TransNo=' . $MyRow['orderno'];
 			}
 
 			if ($MyRow['printedpackingslip'] == 0) {
@@ -472,14 +472,14 @@ else {
 				$PrintDispatchNote .= '&Reprint=OK';
 			}
 
-			$PrintLabels = $RootPath . '/PDFShipLabel.php?=Type=Sales&ORD=' . $MyRow['orderno'];
+			$PrintLabels = $RootPath . '/PDFShipLabel.php?Type=Sales&ORD=' . $MyRow['orderno'];
 			$FormatedRequestDate = ConvertSQLDate($MyRow['requestdate']);
 			$FormatedInitDate = ConvertSQLDate($MyRow['initdate']);
 			$FormatedShipDate = ConvertSQLDate($MyRow['shipdate']);
 			$Confirm_Invoice = '';
 
 			if ($MyRow['status'] == "Shipped") {
-	$Confirm_Invoice = '<td><a href="' . $RootPath . '/ConfirmDispatch_Invoice.php?=OrderNumber=' . $MyRow['orderno'] . '">' . __('Invoice Order') . '</a></td>';
+	$Confirm_Invoice = '<td><a href="' . $RootPath . '/ConfirmDispatch_Invoice.php?OrderNumber=' . $MyRow['orderno'] . '">' . __('Invoice Order') . '</a></td>';
 }
 
 			echo '<tr class="striped_row">
