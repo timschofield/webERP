@@ -443,7 +443,7 @@ else {
 			</tbody>';
 
 		while ($MyRow = DB_fetch_array($PurchOrdersResult)) {
-			$ViewPurchOrder = $RootPath . '/PO_OrderDetails.php?OrderNo =' . $MyRow['orderno'];
+			$ViewPurchOrder = $RootPath . '/PO_OrderDetails.php?OrderNo=' . $MyRow['orderno'];
 			$FormatedOrderDate = ConvertSQLDate($MyRow['orddate']);
 			$FormatedDeliveryDate = ConvertSQLDate($MyRow['deliverydate']);
 			$FormatedOrderValue = locale_number_format($MyRow['ordervalue'], $MyRow['currdecimalplaces']);
