@@ -1,23 +1,17 @@
 <?php
 
-/**************************************************************************************
-KL SPG Print Transfer - Allows SPG to print existing transfers
-***************************************************************************************/
-
 require(__DIR__ . '/includes/session.php');
 
-$Title = __('Print Transfer');
-$BookMark = "PrintTransfer";
-$ViewTopic = "Inventory";
+$Title = __('Print Transfer from Shop to Kantor');
 include('includes/header.php');
 
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLPOSGeneral.php');
+include('includes/KLESCPOSCommands.php');
 
 include('includes/WebClientPrint/WebClientPrint.php');
 use Neodynamic\SDK\Web\WebClientPrint;
-include('includes/KLESCPOSCommands.php');
 
 $InputError = false;
 $ErrorMessage = '';
@@ -48,18 +42,18 @@ if ($TransferReference != '' && !$InputError){
 	}
 }
 
-// Validate transfer reference if provided
-if (!$InputError){
+if (!$InputError AND $TransferReference != ''){
 	$TextToPrint = KLPrintReturnTransferToKantor($TransferReference);
 	
-	//################## PRINTING STUFF #####################
-	$Identifier = GetPOSIdentifier();
-	$FileName = GetFilenameFromPOSIdentifier($Identifier);
+	//################## PRINTING STUFF ##################### 
+	$identifier = GetPOSIdentifier();
+	$FileName = GetFilenameFromPOSIdentifier($identifier);  
 	file_put_contents($FileName, $TextToPrint);
 	$TextActionToPrint = 'Print Transfer number: ' . $TransferReference;
 	include('includes/KLSilentPrinting.php');
-	//################## PRINTING STUFF #####################
+	//################## PRINTING STUFF ##################### 
+}else{
+	prnMsg($ErrorMessage,'error');
 }
 
 include('includes/footer.php');
-?>

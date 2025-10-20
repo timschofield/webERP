@@ -1250,7 +1250,7 @@ function KLPrintReturnTransferToKantor($Reference){
 				$CorrectTransfer = false;
 				$TextToPrint .= 'Item ' . $MyRow['stockid'] . ' has wrong shipping location.' . $NewLine;
 			} 
-			if ($MyRow['recloc'] != 'KANTOR'){
+			if ($MyRow['recloc'] != 'KANTO'){
 				$CorrectTransfer = false;
 				$TextToPrint .= 'Item ' . $MyRow['stockid'] . ' has wrong receiving location.' . $NewLine;
 			}
