@@ -240,8 +240,8 @@ define('BOX_S_HEIGHT',         50);
 define('BOX_M_LENGTH',        115);
 define('BOX_M_WIDTH',         115);
 define('BOX_M_HEIGHT',         50);
-define('BOX_L_LENGTH',        235);
-define('BOX_L_WIDTH',         165);
+define('BOX_L_LENGTH',        250);
+define('BOX_L_WIDTH',         180);
 define('BOX_L_HEIGHT',         50);
 define('BOX_XL_LENGTH',       300); // approx
 define('BOX_XL_WIDTH',        300); // approx
