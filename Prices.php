@@ -274,20 +274,20 @@ if (DB_num_rows($Result) > 0) {
 		/*Only allow access to modify prices if securiy token 5 is allowed */
 		if (in_array(5, $_SESSION['AllowedPageSecurityTokens'])) {
 			echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') .
-				'?Item =' . $MyRow['stockid'] .
-				'&amp;TypeAbbrev =' . $MyRow['typeabbrev'] .
-				'&amp;CurrAbrev =' . $MyRow['currabrev'] .
-				'&amp;Price =' . locale_number_format($MyRow['price'], $MyRow['currdecimalplaces']) .
-				'&amp;StartDate =' . $MyRow['startdate'] .
-				'&amp;EndDate =' . $MyRow['enddate'] .
-				'&amp;Edit =1">' . __('Edit') . '</a></td>
+				'?Item=' . $MyRow['stockid'] .
+				'&amp;TypeAbbrev=' . $MyRow['typeabbrev'] .
+				'&amp;CurrAbrev=' . $MyRow['currabrev'] .
+				'&amp;Price=' . locale_number_format($MyRow['price'], $MyRow['currdecimalplaces']) .
+				'&amp;StartDate=' . $MyRow['startdate'] .
+				'&amp;EndDate=' . $MyRow['enddate'] .
+				'&amp;Edit=1">' . __('Edit') . '</a></td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') .
-				'?Item =' . $MyRow['stockid'] .
-				'&amp;TypeAbbrev =' . $MyRow['typeabbrev'] .
-				'&amp;CurrAbrev =' . $MyRow['currabrev'] .
-				'&amp;StartDate =' . $MyRow['startdate'] .
-				'&amp;EndDate =' . $MyRow['enddate'] .
-				'&amp;delete =yes" onclick="return confirm(\'' . __('Are you sure you wish to delete this price?') . '\');">' .
+				'?Item=' . $MyRow['stockid'] .
+				'&amp;TypeAbbrev=' . $MyRow['typeabbrev'] .
+				'&amp;CurrAbrev=' . $MyRow['currabrev'] .
+				'&amp;StartDate=' . $MyRow['startdate'] .
+				'&amp;EndDate=' . $MyRow['enddate'] .
+				'&amp;delete=yes" onclick="return confirm(\'' . __('Are you sure you wish to delete this price?') . '\');">' .
 				__('Delete') . '</a></td>';
 		}
 		echo '</tr>';

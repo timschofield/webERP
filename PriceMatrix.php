@@ -278,8 +278,8 @@ while ($MyRow = DB_fetch_array($Result)){
 				</tr>';
 
 				while ($MyRow = DB_fetch_array($Result)) {
-					$DeleteURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete =yes&amp;SalesType =' . $MyRow['salestype'] . '&amp;StockID =' . $MyRow['stockid'] . '&amp;QuantityBreak =' . $MyRow['quantitybreak'].'&amp;Price =' . $MyRow['price'] . '&amp;currabrev =' . $MyRow['currabrev'].'&amp;StartDate ='.$MyRow['startdate'].'&amp;EndDate ='.$MyRow['enddate'];
-					$EditURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Edit =yes&amp;StockID =' . $MyRow['stockid'] . '&amp;TypeAbbrev =' . $MyRow['salestype'] . '&amp;CurrAbrev =' . $MyRow['currabrev'] . '&amp;Price =' . locale_number_format($MyRow['price'], $MyRow['currdecimalplaces']) . '&amp;StartDate =' . $MyRow['startdate'] . '&amp;EndDate =' . $MyRow['enddate'].'&amp;QuantityBreak =' . $MyRow['quantitybreak'];
+					$DeleteURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=yes&amp;SalesType=' . $MyRow['salestype'] . '&amp;StockID=' . $MyRow['stockid'] . '&amp;QuantityBreak=' . $MyRow['quantitybreak'].'&amp;Price=' . $MyRow['price'] . '&amp;currabrev=' . $MyRow['currabrev'].'&amp;StartDate='.$MyRow['startdate'].'&amp;EndDate='.$MyRow['enddate'];
+					$EditURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Edit=yes&amp;StockID=' . $MyRow['stockid'] . '&amp;TypeAbbrev=' . $MyRow['salestype'] . '&amp;CurrAbrev=' . $MyRow['currabrev'] . '&amp;Price=' . locale_number_format($MyRow['price'], $MyRow['currdecimalplaces']) . '&amp;StartDate=' . $MyRow['startdate'] . '&amp;EndDate=' . $MyRow['enddate'].'&amp;QuantityBreak=' . $MyRow['quantitybreak'];
 
 					if (in_array(5, $_SESSION['AllowedPageSecurityTokens'])){
 						echo '<tr class="striped_row">

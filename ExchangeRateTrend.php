@@ -60,7 +60,7 @@ if ( isset($_GET['CurrencyToShow']) ){
 // **************
 // SHOW OUR GRAPH
 // **************
-	$Image = '//www.google.com/finance/getchart?q =' . $FunctionalCurrency . $CurrencyToShow . '&amp;x =CURRENCY&amp;p =3M&amp;i =86400';
+	$Image = '//www.google.com/finance/getchart?q=' . $FunctionalCurrency . $CurrencyToShow . '&amp;x=CURRENCY&amp;p=3M&amp;i=86400';
 
 	echo '<br />
 		<table class = "selection">
