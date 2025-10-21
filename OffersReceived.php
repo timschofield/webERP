@@ -245,7 +245,7 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 		if ($Result) {
 	prnMsg(__('The accepted offers from') . ' ' . $SupplierName . ' ' . __('have been converted to purchase orders and an email sent to')
 				. ' ' . $Email . "\n" . __('Please review the order contents') . ' ' . '<a href="' . $RootPath .
-				'/PO_Header.php?ModifyOrderNumber =' . $OrderNo . '">' . __('here') . '</a>', 'success');
+				'/PO_Header.php?ModifyOrderNumber=' . $OrderNo . '">' . __('here') . '</a>', 'success');
 } else {
 			prnMsg(__('The accepted offers from') . ' ' . $SupplierName . ' ' . __('have been converted to purcharse orders but failed to mail, you can view the order contents') . ' ' . '<a href="' . $RootPath . '/PO_Header.php?ModifyOrderNumber=' . $OrderNo . '">' . __('here') . '</a>', 'warn');
 		}

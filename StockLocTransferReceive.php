@@ -575,7 +575,7 @@ if (isset($_SESSION['Transfer'])) {
 		if ($TrfLine->Controlled == 1) {
 	echo '<td class="number"><input type = "hidden" name="Qty' . $i . '" value = "' .
 				 locale_number_format($Qty, $TrfLine->DecimalPlaces) . '" /><a href="' . $RootPath .
-				 '/StockTransferControlled.php?TransferItem =' . $i . '" />' . $Qty . '</a></td>';
+				 '/StockTransferControlled.php?TransferItem=' . $i . '" />' . $Qty . '</a></td>';
 } else {
 			echo '<td><input type = "text" class="number" name="Qty' . $i . '" maxlength = "10" size = "auto" value = "' .
 				 locale_number_format($Qty, $TrfLine->DecimalPlaces) . '" /></td>';

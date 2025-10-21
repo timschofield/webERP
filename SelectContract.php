@@ -165,10 +165,10 @@ $j = 1;
 while ($MyRow = DB_fetch_array($ContractsResult)) {
 	echo '<tr class="striped_row">';
 
-	$ModifyPage = $RootPath . '/Contracts.php?ModifyContractRef =' . $MyRow['contractref'];
-	$OrderModifyPage = $RootPath . '/SelectOrderItems.php?ModifyOrderNumber =' . $MyRow['orderno'];
-	$IssueToWOPage = $RootPath . '/WorkOrderIssue.php?WO =' . $MyRow['wo'] . '&amp;StockID =' . $MyRow['contractref'];
-	$CostingPage = $RootPath . '/ContractCosting.php?SelectedContract =' . $MyRow['contractref'];
+	$ModifyPage = $RootPath . '/Contracts.php?ModifyContractRef=' . $MyRow['contractref'];
+	$OrderModifyPage = $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $MyRow['orderno'];
+	$IssueToWOPage = $RootPath . '/WorkOrderIssue.php?WO=' . $MyRow['wo'] . '&amp;StockID=' . $MyRow['contractref'];
+	$CostingPage = $RootPath . '/ContractCosting.php?SelectedContract=' . $MyRow['contractref'];
 	$FormatedRequiredDate = ConvertSQLDate($MyRow['requireddate']);
 
 	if ($MyRow['status']==0 or $MyRow['status']==1) {

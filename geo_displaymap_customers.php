@@ -28,7 +28,7 @@ $ExtraHeadContent = '<style>
         padding: 0px;
     }
 </style>
-<script src = "https://' . $Map_Host . '/maps/api/js?key =' . $Api_Key . '&sensor = false"></script>
+<script src = "https://' . $Map_Host . '/maps/api/js?key=' . $Api_Key . '&sensor=false"></script>
 <script>
 //<![CDATA[
 var customIcons = {

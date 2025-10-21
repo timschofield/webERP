@@ -38,7 +38,7 @@ if (isset($_POST['UpdateLines']) or isset($_POST['BackToHeader'])) {
 
 
 if (isset($_POST['BackToHeader'])){
-	echo '<meta http-equiv = "Refresh" content = "0; url = ' . $RootPath . '/Contracts.php?identifier ='.$identifier. '" />';
+	echo '<meta http-equiv = "Refresh" content = "0; url = ' . $RootPath . '/Contracts.php?identifier='.$identifier. '" />';
 	echo '<br />';
 	prnMsg(__('You should automatically be forwarded to the Contract page. If this does not happen perhaps the browser does not support META Refresh') . '<a href="' . $RootPath . '/Contracts.php?identifier='.$identifier . '">' . __('click here') . '</a> ' . __('to continue'),'info');
 	include('includes/footer.php');
@@ -212,7 +212,7 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 
 /* This is where the order as selected should be displayed  reflecting any deletions or insertions*/
 
-echo '<form id="ContractBOMForm" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier =' . urlencode($identifier) . '" method = "post">';
+echo '<form id="ContractBOMForm" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . urlencode($identifier) . '" method = "post">';
 echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){

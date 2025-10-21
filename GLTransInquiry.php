@@ -76,17 +76,17 @@ if (!isset($_GET['TypeID']) or !isset($_GET['TransNo'])) {
 			$DetailResult = false;
 
 			if ($TransRow['amount'] > 0) {
-	$DebitAmount = locale_number_format($TransRow['amount'], $_SESSION['CompanyRecord']['decimalplaces']);
+				$DebitAmount = locale_number_format($TransRow['amount'], $_SESSION['CompanyRecord']['decimalplaces']);
 				$DebitTotal+= $TransRow['amount'];
 				$CreditAmount = '&nbsp;';
-} else {
+			} else {
 				$CreditAmount = locale_number_format(-$TransRow['amount'], $_SESSION['CompanyRecord']['decimalplaces']);
 				$CreditTotal+= $TransRow['amount'];
 				$DebitAmount = '&nbsp;';
 			}
 			if ($TransRow['account'] == $_SESSION['CompanyRecord']['debtorsact'] and $AnalysisCompleted == 'Not Yet') {
-	$URL = $RootPath . '/CustomerInquiry.php?CustomerID =';
-				$FromDate = '&amp;TransAfterDate =' . urlencode($TranDate);
+				$URL = $RootPath . '/CustomerInquiry.php?CustomerID=';
+				$FromDate = '&amp;TransAfterDate=' . urlencode($TranDate);
 
 				$DetailSQL = "SELECT debtortrans.debtorno as otherpartycode,
 										debtortrans.ovamount,
@@ -100,9 +100,9 @@ if (!isset($_GET['TypeID']) or !isset($_GET['TransNo'])) {
 									WHERE debtortrans.type = '" . $TransRow['type'] . "'
 									and debtortrans.transno = '" . $_GET['TransNo'] . "'";
 				$DetailResult = DB_query($DetailSQL);
-} elseif ($TransRow['account'] == $_SESSION['CompanyRecord']['creditorsact'] and $AnalysisCompleted == 'Not Yet') {
-	$URL = $RootPath . '/SupplierInquiry.php?SupplierID =';
-				$FromDate = '&amp;FromDate =' . urlencode($TranDate);
+			} elseif ($TransRow['account'] == $_SESSION['CompanyRecord']['creditorsact'] and $AnalysisCompleted == 'Not Yet') {
+				$URL = $RootPath . '/SupplierInquiry.php?SupplierID=';
+				$FromDate = '&amp;FromDate=' . urlencode($TranDate);
 
 				$DetailSQL = "SELECT supptrans.supplierno as otherpartycode,
 										supptrans.ovamount,
@@ -114,7 +114,7 @@ if (!isset($_GET['TypeID']) or !isset($_GET['TransNo'])) {
 									WHERE supptrans.type = '" . $TransRow['type'] . "'
 									and supptrans.transno = '" . $_GET['TransNo'] . "'";
 				$DetailResult = DB_query($DetailSQL);
-} else {
+			} else {
 				// if user is allowed to see the account we show it, other wise we show "OTHERS ACCOUNTS"
 				$CheckSql = "SELECT count(*)
 								 FROM glaccountusers
@@ -125,9 +125,9 @@ if (!isset($_GET['TypeID']) or !isset($_GET['TransNo'])) {
 				$CheckRow = DB_fetch_row($CheckResult);
 
 				if ($CheckRow[0] > 0) {
-	$AccountName = $TransRow['accountname'];
-					$URL = $RootPath . '/GLAccountInquiry.php?Account =' . urlencode($TransRow['account']);
-} else {
+					$AccountName = $TransRow['accountname'];
+					$URL = $RootPath . '/GLAccountInquiry.php?Account=' . urlencode($TransRow['account']);
+				} else {
 					$AccountName = __('Other GL Accounts');
 					$URL = "";
 				}
@@ -141,10 +141,10 @@ if (!isset($_GET['TypeID']) or !isset($_GET['TransNo'])) {
 							<td>' . $TranDate . '</td>';
 
 				if ($URL == "") {
-	// User is not allowed to see this GL account, don't show the details
+					// User is not allowed to see this GL account, don't show the details
 					echo '	<td>' . $AccountName . '</td>
 								<td>' . $AccountName . '</td>';
-} else {
+				} else {
 					echo '	<td><a href="' . $URL . '">' . $AccountName . '</a></td>
 								<td>' . $TransRow['narrative'] . '</td>';
 				}

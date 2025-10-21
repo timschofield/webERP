@@ -226,7 +226,7 @@ if (isset($_POST['SelectChoice'])) {
 			</tr>';
 
 		while ($MyRow = DB_fetch_array($Result)) {
-			$DeleteURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete =yes&amp;StockID =' . $MyRow['stockid'] . '&amp;DiscountCategory =' . $MyRow['discountcategory'];
+			$DeleteURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=yes&amp;StockID=' . $MyRow['stockid'] . '&amp;DiscountCategory=' . $MyRow['discountcategory'];
 
 			echo '<tr class="striped_row">
 					<td>', $MyRow['discountcategory'], '</td>

@@ -162,7 +162,7 @@ echo '<tr>
 	</tr>';
 
 while ($MyRow = DB_fetch_array($Result)) {
-	$DeleteURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete =yes&amp;SalesType =' . $MyRow['salestype'] . '&amp;DiscountCategory =' . $MyRow['discountcategory'] . '&amp;QuantityBreak =' . $MyRow['quantitybreak'];
+	$DeleteURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=yes&amp;SalesType=' . $MyRow['salestype'] . '&amp;DiscountCategory=' . $MyRow['discountcategory'] . '&amp;QuantityBreak=' . $MyRow['quantitybreak'];
 
 	echo '<tr class="striped_row">
 			<td>', $MyRow['sales_type'], '</td>

@@ -550,7 +550,7 @@ if (isset($SalesOrdersResult)) {
 			$OrdRow = DB_fetch_array($SalesOrdersResult);
 			$OrderNumber = $OrdRow['orderno'];
 		}
-		echo '<meta http-equiv = "refresh" content = "0; url = ' . $RootPath . '/OrderDetails.php?OrderNumber =' . $OrderNumber. '">';
+		echo '<meta http-equiv = "refresh" content = "0; url = ' . $RootPath . '/OrderDetails.php?OrderNumber=' . $OrderNumber. '">';
 		exit();
 	}
 
@@ -570,7 +570,7 @@ if (isset($SalesOrdersResult)) {
 
 	while ($MyRow = DB_fetch_array($SalesOrdersResult)) {
 
-		$ViewPage = $RootPath . '/OrderDetails.php?OrderNumber =' . $MyRow['orderno'];
+		$ViewPage = $RootPath . '/OrderDetails.php?OrderNumber=' . $MyRow['orderno'];
 		$FormatedDelDate = ConvertSQLDate($MyRow['deliverydate']);
 		$FormatedOrderDate = ConvertSQLDate($MyRow['orddate']);
 		$FormatedOrderValue = locale_number_format($MyRow['ordervalue'],$MyRow['currdecimalplaces']);

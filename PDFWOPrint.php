@@ -381,7 +381,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 
 	// Generate QR code for https://weberp.org via barcodepack
 	ob_start();
-	$qr = new qrCode($RootPath.'/WorkOrderIssue.php?WO ='.$SelectedWO.'&StockID = '.$StockID,5);
+	$qr = new qrCode($RootPath.'/WorkOrderIssue.php?WO='.$SelectedWO.'&StockID='.$StockID,5);
 	/// @todo there seems to be double work done here... $imageData is set but never used?
 	$qr->draw();  // This outputs PNG image directly
 	$imageData = ob_get_contents();
@@ -396,7 +396,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 	imagepng(($qr->draw()),$_SESSION['part_pics_dir'] . '/qr1.png');
 	$qrImgTag .= '<img style="width:192px" style="margin-bottom:-10px" src="' .$_SESSION['part_pics_dir'] . '/qr1.png" alt = "QR Code">';
 	ob_start();
-	$qr = new qrCode($RootPath.'/WorkOrderReceive.php?WO ='.$SelectedWO.'&StockID = '.$StockID,5);
+	$qr = new qrCode($RootPath.'/WorkOrderReceive.php?WO='.$SelectedWO.'&StockID='.$StockID,5);
 	$qr->draw();  // This outputs PNG image directly
 	$imageData = ob_get_contents();
 	ob_end_clean();

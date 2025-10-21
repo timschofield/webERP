@@ -340,7 +340,7 @@ if (isset($_POST['Show'])) {
 			}
 		}
 
-		$URL_to_TransDetail = $RootPath . '/GLTransInquiry.php?TypeID =' . urlencode($MyRow['type']) . '&amp;TransNo =' . urlencode($MyRow['typeno']);
+		$URL_to_TransDetail = $RootPath . '/GLTransInquiry.php?TypeID=' . urlencode($MyRow['type']) . '&amp;TransNo=' . urlencode($MyRow['typeno']);
 		$FormatedTranDate = ConvertSQLDate($MyRow['trandate']);
 		if ($MyRow['amount'] >= 0) {
 	$DebitAmount = locale_number_format($MyRow['amount'], $_SESSION['CompanyRecord']['decimalplaces']);

@@ -434,10 +434,10 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST
 		if ($_POST['ShowDetail'] == 'Detailed') {
 	if (isset($_POST['ShowZeroBalance']) or (!isset($_POST['ShowZeroBalance']) and ($AccountTotal != 0 or $AccountTotalLY != 0))) {
 				$AccountInquiryLink = $RootPath . '/GLAccountInquiry.php?' .
-					'PeriodFrom = ' . urlencode($_POST['PeriodFrom']) .
-					'&amp;PeriodTo =' . urlencode($_POST['PeriodTo']) .
-					'&amp;Account =' . urlencode($MyRow['accountcode']) .
-					'&amp;Show =Yes';
+					'PeriodFrom=' . urlencode($_POST['PeriodFrom']) .
+					'&amp;PeriodTo=' . urlencode($_POST['PeriodTo']) .
+					'&amp;Account=' . urlencode($MyRow['accountcode']) .
+					'&amp;Show=Yes';
 				echo '<tr class="striped_row">
 							<td class="text"><a href="', $AccountInquiryLink, '">', $MyRow['accountcode'], '</a></td>';
 				if ($Section == 1) {
