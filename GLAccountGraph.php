@@ -75,8 +75,8 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 	echo '<form method = "post" action = "' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
 	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
-	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '
+	echo '<p class = "page_title_text">
+			<img src = "' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title = "' . __('Search') . '" alt = "" />' . ' ' . $Title . '
 		</p>';
 
 	echo '<fieldset>
@@ -216,7 +216,7 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 		</field>';
 
 	echo '</fieldset>
-			<div class="centre">
+			<div class = "centre">
 				<input type = "submit" name = "ShowGraph" value = "' . __('Show Account Graph') . '" />
 			</div>
 		</form>';
@@ -331,14 +331,14 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 
 	//Draw it
 	$Graph->DrawGraph();
-	echo '<table class="selection">
+	echo '<table class = "selection">
 			<tr>
-				<td><img class="graph" src="companies/' . $_SESSION['DatabaseName'] . '/reports/glaccountgraph.png" alt = "Sales Report Graph"></img></td>
+				<td><img class = "graph" src = "companies/' . $_SESSION['DatabaseName'] . '/reports/glaccountgraph.png" alt = "Sales Report Graph"></img></td>
 			</tr>
 		  </table>';
 
-	echo '<div class="noPrint centre">
-			<a href="', basename(__FILE__), '">', __('Select Different Criteria'), '</a>
+	echo '<div class = "noPrint centre">
+			<a href = "', basename(__FILE__), '">', __('Select Different Criteria'), '</a>
 		</div>';
 	include('includes/footer.php');
 }

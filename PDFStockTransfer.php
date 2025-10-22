@@ -16,8 +16,8 @@ if (isset($_POST['Process'])) {
 </style></head><body>';
 	$HTML .= '<link href = "css/reports.css" rel = "stylesheet" type = "text/css" />';
 
-	$HTML .= '<img class="logo" src="' . $_SESSION['LogoFile'] . '" /><br />';
-	$HTML .= '<div class="header">' . __('Stock Transfer Form') . '</div>';
+	$HTML .= '<img class = "logo" src = "' . $_SESSION['LogoFile'] . '" /><br />';
+	$HTML .= '<div class = "header">' . __('Stock Transfer Form') . '</div>';
 	$HTML .= '<table><thead>
 	<tr>
 		<th>' . __('Stock ID') . '</th>
@@ -52,7 +52,7 @@ if (isset($_POST['Process'])) {
 		$Title = __('Print Stock Transfer - Error');
 		include ('includes/header.php');
 		prnMsg(__('There was no transfer found with number') . ': ' . $_POST['TransferNo'], 'error');
-		echo '<a href="' . $RootPath . '/PDFStockTransfer.php">' . __('Try Again') . '</a>';
+		echo '<a href = "' . $RootPath . '/PDFStockTransfer.php">' . __('Try Again') . '</a>';
 		include ('includes/footer.php');
 		exit();
 	}
@@ -74,7 +74,7 @@ if (isset($_POST['Process'])) {
 		$HTML .= '<td>' . htmlspecialchars($Description) . '</td>';
 		$HTML .= '<td>' . htmlspecialchars($From) . '</td>';
 		$HTML .= '<td>' . htmlspecialchars($To) . '</td>';
-		$HTML .= '<td class="number">' . htmlspecialchars($Quantity) . '</td>';
+		$HTML .= '<td class = "number">' . htmlspecialchars($Quantity) . '</td>';
 		$HTML .= '</tr>';
 
 		$SQL = "SELECT stockmaster.controlled
@@ -94,7 +94,7 @@ if (isset($_POST['Process'])) {
 				and stockmoves.transno = '" . $_GET['TransferNo'] . "'";
 			$GetStockMoveResult = DB_query($SQL, __('Could not retrieve the stock movement reference number which is required in order to retrieve details of the serial items that came in with this GRN'));
 			while ($SerialStockMoves = DB_fetch_array($GetStockMoveResult)) {
-				$HTML .= '<tr style="background:#f9f9f9;"><td colspan = "2">' . __('Lot/Serial:') . ' ' . htmlspecialchars($SerialStockMoves['serialno']) . '</td>';
+				$HTML .= '<tr style = "background:#f9f9f9;"><td colspan = "2">' . __('Lot/Serial:') . ' ' . htmlspecialchars($SerialStockMoves['serialno']) . '</td>';
 				$HTML .= '<td colspan = "2"></td>';
 				$HTML .= '<td>' . htmlspecialchars($SerialStockMoves['moveqty']) . '</td></tr>';
 }
@@ -102,9 +102,9 @@ if (isset($_POST['Process'])) {
 	}
 	$HTML .= '</tbody></table>';
 
-	$HTML .= '<div class="sign">' . __('Date of transfer: ') . htmlspecialchars(ConvertSQLDate($Date)) . '</div>';
-	$HTML .= '<div class="sign">' . __('Signed for') . ' ' . htmlspecialchars($From) . '______________________</div>';
-	$HTML .= '<div class="sign">' . __('Signed for') . ' ' . htmlspecialchars($To) . '______________________</div>';
+	$HTML .= '<div class = "sign">' . __('Date of transfer: ') . htmlspecialchars(ConvertSQLDate($Date)) . '</div>';
+	$HTML .= '<div class = "sign">' . __('Signed for') . ' ' . htmlspecialchars($From) . '______________________</div>';
+	$HTML .= '<div class = "sign">' . __('Signed for') . ' ' . htmlspecialchars($To) . '______________________</div>';
 
 	$HTML .= '</body></html>';
 
@@ -139,31 +139,31 @@ else {
 		$ViewTopic = 'Inventory';
 		$BookMark = '';
 		include ('includes/header.php');
-		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" title="' . __('Print Transfer Note') . '" alt="" />' . ' ' . $Title . '</p>';
-		echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" id="form" target="_blank">';
+		echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/printer.png" title = "' . __('Print Transfer Note') . '" alt = "" />' . ' ' . $Title . '</p>';
+		echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" id = "form" target = "_blank">';
 		echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 		echo '<fieldset>';
 		echo '<fieldset>
 			<field>
 				<label for = "TransferNo">' . __('Print Stock Transfer Note') . ' : ' . '</label>
-				<input type = "text" class="number"  name = "TransferNo" maxlength = "10" size = "11" />
+				<input type = "text" class = "number"  name = "TransferNo" maxlength = "10" size = "11" />
 			</field>
 			</fieldset>';
-		echo '<div class="centre">
+		echo '<div class = "centre">
 				<input type = "submit" name = "Process" value = "' . __('Print Transfer Note') . '" />
 			</div>
 			</form>';
 
-		echo '<form method = "post" action = "' . $RootPath . '/PDFShipLabel.php?Type =Sales" target="_blank">';
+		echo '<form method = "post" action = "' . $RootPath . '/PDFShipLabel.php?Type = Sales" target = "_blank">';
 		echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 		echo '<input type = "hidden" name = "Type" value = "Transfer" />';
 		echo '<fieldset>
 				<field>
 					<label for = "ORD">' . __('Transfer docket to reprint Shipping Labels') . '</label>
-					<input type = "text" class="number" size = "10" name = "ORD" />
+					<input type = "text" class = "number" size = "10" name = "ORD" />
 				</field>
 			</fieldset>';
-		echo '<div class="centre">
+		echo '<div class = "centre">
 				<input type = "submit" name = "Print" value = "' . __('Print Shipping Labels') . '" />
 			</div>';
 		echo '</fieldset>

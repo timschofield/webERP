@@ -24,7 +24,7 @@ $ViewTopic = 'Setup';
 $BookMark = 'FormDesigner';
 include('includes/header.php');
 
-echo '<p class = "page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/reports.png" title="', // Icon image.
+echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/reports.png" title = "', // Icon image.
 __('Form Designer'), '" /> ', // Icon title.
 __('Form Designer'), '</p>'; // Page title.
 
@@ -139,25 +139,25 @@ if (isset($_POST['preview']) or isset($_POST['save'])) {
 		$FormDesign->asXML(sys_get_temp_dir() . '/' . $_POST['FormName']);
 		switch ($_POST['FormName']) {
 			case 'PurchaseOrder.xml':
-				echo '<meta http-equiv = "Refresh" content = "0; url = ' . $RootPath . '/PO_PDFPurchOrder.php?OrderNo =Preview">';
+				echo '<meta http-equiv = "Refresh" content = "0; url = ' . $RootPath . '/PO_PDFPurchOrder.php?OrderNo = Preview">';
 			break;
 			case 'GoodsReceived.xml':
-				echo '<meta http-equiv = "Refresh" content = "0; url = ' . $RootPath . '/PDFGrn.php?GRNNo =Preview&PONo = 1">';
+				echo '<meta http-equiv = "Refresh" content = "0; url = ' . $RootPath . '/PDFGrn.php?GRNNo = Preview&PONo = 1">';
 			break;
 			case 'PickingList.xml':
-				echo '<meta http-equiv = "Refresh" content = "0; url = ' . $RootPath . '/PDFPickingList.php?TransNo =Preview">';
+				echo '<meta http-equiv = "Refresh" content = "0; url = ' . $RootPath . '/PDFPickingList.php?TransNo = Preview">';
 			break;
 			case 'QALabel.xml':
-				echo '<meta http-equiv = "Refresh" content = "0; url = ' . $RootPath . '/PDFQALabel.php?GRNNo =Preview&PONo = 1">';
+				echo '<meta http-equiv = "Refresh" content = "0; url = ' . $RootPath . '/PDFQALabel.php?GRNNo = Preview&PONo = 1">';
 			break;
 			case 'WOPaperwork.xml':
-				echo '<meta http-equiv = "Refresh" content = "0; url = ' . $RootPath . '/PDFWOPrint.php?WO =Preview">';
+				echo '<meta http-equiv = "Refresh" content = "0; url = ' . $RootPath . '/PDFWOPrint.php?WO = Preview">';
 			break;
 			case 'FGLabel.xml':
-				echo '<meta http-equiv = "Refresh" content = "0; url = ' . $RootPath . '/PDFFGLabel.php?WO =Preview">';
+				echo '<meta http-equiv = "Refresh" content = "0; url = ' . $RootPath . '/PDFFGLabel.php?WO = Preview">';
 			break;
 			case 'ShippingLabel.xml':
-				echo '<meta http-equiv = "Refresh" content = "0; url = ' . $RootPath . '/PDFShipLabel.php?ORD =Preview">';
+				echo '<meta http-equiv = "Refresh" content = "0; url = ' . $RootPath . '/PDFShipLabel.php?ORD = Preview">';
 			break;
 		}
 	} else {
@@ -198,8 +198,8 @@ if (empty($_POST['FormName'])) {
 				</td>
 			</tr>
 			<tr>
-				<td colspan = "2">', '<div class = "centre">', '<button name = "Submit" type = "submit" value = "Submit">', '<img alt="" src="', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', __('Submit'), '</button>', // "Submit" button.
-	'<button onclick="window.location = \'index.php?Application =system\'" type = "button">', '<img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', __('Return'), '</button>', // "Return" button.
+				<td colspan = "2">', '<div class = "centre">', '<button name = "Submit" type = "submit" value = "Submit">', '<img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', __('Submit'), '</button>', // "Submit" button.
+	'<button onclick = "window.location = \'index.php?Application = system\'" type = "button">', '<img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', __('Return'), '</button>', // "Return" button.
 	'</div>
 				</td>
 			</tr>
@@ -348,7 +348,7 @@ echo '</div>
 	<br />
 		<div class = "centre" style = "float:none;clear: left;">
 			<input type = "submit" name = "preview" value = "' . __('Preview the Form Layout') . '" />
-			<input type = "submit" name = "save" value = "' . __('Save the Form Layout') . '" />', '<button onclick="window.location = \'index.php?Application =system\'" type = "button">', '<img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', __('Return'), '</button>', // "Return" button.
+			<input type = "submit" name = "save" value = "' . __('Save the Form Layout') . '" />', '<button onclick = "window.location = \'index.php?Application = system\'" type = "button">', '<img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', __('Return'), '</button>', // "Return" button.
 '</div>';
 
 echo '</div>', '</form>';

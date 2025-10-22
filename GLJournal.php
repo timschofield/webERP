@@ -90,8 +90,8 @@ if (isset($_POST['LoadTemplate'])) {
 		prnMsg(__('There are no templates saved. You must first create a template.') , 'warn');
 	}
 	else {
-		echo '<p class="page_title_text" >
-				<img class="page_title_icon" src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/gl.png" title="" alt="" />', ' ', __('Load journal from a template') , '
+		echo '<p class = "page_title_text" >
+				<img class = "page_title_icon" src = "', $RootPath, '/css/', $_SESSION['Theme'], '/images/gl.png" title = "" alt = "" />', ' ', __('Load journal from a template') , '
 			</p>';
 
 		echo '<table>
@@ -111,11 +111,11 @@ if (isset($_POST['LoadTemplate'])) {
 			else {
 				$JournalType = __('Reversing');
 			}
-			echo '<tr class="striped_row">
+			echo '<tr class = "striped_row">
 					<td>', $MyRow['templateid'], '</td>
 					<td>', $MyRow['templatedescription'], '</td>
 					<td>', $JournalType, '</td>
-					<td class="noPrint"><a href="', basename(__FILE__) , '?TemplateID=', urlencode($MyRow['templateid']) , '">', __('Select') , '</a></td>
+					<td class = "noPrint"><a href = "', basename(__FILE__) , '?TemplateID = ', urlencode($MyRow['templateid']) , '">', __('Select') , '</a></td>
 				</tr>';
 		}
 
@@ -192,20 +192,20 @@ if (isset($_POST['SaveTemplate'])) {
 
 if (isset($_POST['ConfimSave'])) {
 
-	echo '<form action = "', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '" method = "post" id="form">';
-	echo '<input type = "hidden" name="FormID" value = "', $_SESSION['FormID'], '" />';
+	echo '<form action = "', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '" method = "post" id = "form">';
+	echo '<input type = "hidden" name = "FormID" value = "', $_SESSION['FormID'], '" />';
 
-	echo '<p class="page_title_text" >
-			<img  class="page_title_icon" src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/gl.png" title="" alt="" />', ' ', __('Save journal as a template') , '
+	echo '<p class = "page_title_text" >
+			<img  class = "page_title_icon" src = "', $RootPath, '/css/', $_SESSION['Theme'], '/images/gl.png" title = "" alt = "" />', ' ', __('Save journal as a template') , '
 		</p>';
 
 	echo '<table width = "85%">
 			<tr>
-				<th colspan = "5"><div class="centre"><h2>', __('Journal Summary') , '</h2></div></th>
+				<th colspan = "5"><div class = "centre"><h2>', __('Journal Summary') , '</h2></div></th>
 			</tr>
 			<tr>
 				<td colspan = "1">', __('Template description') , ':</td>
-				<td colspan = "4"><input type = "text" size = "50" name="Description" value = "" maxlength = "50" /></td>
+				<td colspan = "4"><input type = "text" size = "50" name = "Description" value = "" maxlength = "50" /></td>
 			</tr>
 			<tr>
 				<th>', __('GL Tag') , '</th>
@@ -216,7 +216,7 @@ if (isset($_POST['ConfimSave'])) {
 			</tr>';
 
 	foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
-		echo '<tr class="striped_row">
+		echo '<tr class = "striped_row">
 				<td>';
 		$Tag = $JournalItem->tag;
 		$SQL = "SELECT tagdescription
@@ -234,13 +234,13 @@ if (isset($_POST['ConfimSave'])) {
 		echo '</td>';
 		echo '<td>', $JournalItem->GLCode, ' - ', $JournalItem->GLActName, '</td>';
 		if ($JournalItem->Amount > 0) {
-	echo '<td class="number">', locale_number_format($JournalItem->Amount, $_SESSION['CompanyRecord']['decimalplaces']) , '</td>
+	echo '<td class = "number">', locale_number_format($JournalItem->Amount, $_SESSION['CompanyRecord']['decimalplaces']) , '</td>
 					<td></td>';
 }
 		elseif ($JournalItem->Amount < 0) {
 	$Credit = (-1 * $JournalItem->Amount);
 			echo '<td></td>
-				<td class="number">', locale_number_format($Credit, $_SESSION['CompanyRecord']['decimalplaces']) , '</td>';
+				<td class = "number">', locale_number_format($Credit, $_SESSION['CompanyRecord']['decimalplaces']) , '</td>';
 }
 
 		echo '<td>', $JournalItem->Narrative, '</td>
@@ -248,9 +248,9 @@ if (isset($_POST['ConfimSave'])) {
 	}
 	echo '</table>';
 
-	echo '<div class="centre">
-			<input type = "submit" name="SaveTemplate" value = "', __('Save as template') , '" /><br />
-			<input type = "reset" name="Cancel" value = "', __('Cancel') , '" />
+	echo '<div class = "centre">
+			<input type = "submit" name = "SaveTemplate" value = "', __('Save as template') , '" /><br />
+			<input type = "reset" name = "Cancel" value = "', __('Cancel') , '" />
 		</div>';
 	echo '</form>';
 
@@ -327,7 +327,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == __('Accept and Pro
 
 	/*Set up a newy in case user wishes to enter another */
 	echo '<br />
-			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?NewJournal=Yes">' . __('Enter Another General Ledger Journal') . '</a>';
+			<a href = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?NewJournal = Yes">' . __('Enter Another General Ledger Journal') . '</a>';
 
 	include('includes/footer.php');
 	exit();
@@ -436,11 +436,11 @@ if (isset($Cancel)) {
 	unset($_POST['GLManualCode']);
 }
 
-echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" name="form">';
-echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" name = "form">';
+echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
-echo '<p class="page_title_text">
-		<img src="' . $RootPath, '/css/', $Theme, '/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '
+echo '<p class = "page_title_text">
+		<img src = "' . $RootPath, '/css/', $Theme, '/images/maintenance.png" title = "' . __('Search') . '" alt = "" />' . ' ' . $Title . '
 	</p>';
 
 // A new table in the first column of the main table
@@ -453,11 +453,11 @@ echo '<fieldset>
 		<legend>', __('Journal Header') , '</legend>
 		<field>
 			<label for = "JournalProcessDate">' . __('Date to Process Journal') . ':</label>
-			<input type = "date" required = "required" name="JournalProcessDate" maxlength = "10" size = "11" value = "' . FormatDateForSQL($_SESSION['JournalDetail']->JnlDate) . '" />
+			<input type = "date" required = "required" name = "JournalProcessDate" maxlength = "10" size = "11" value = "' . FormatDateForSQL($_SESSION['JournalDetail']->JnlDate) . '" />
 		</field>
 		<field>
 			<label for = "JournalType">' . __('Type') . ':</label>
-			<select name="JournalType">';
+			<select name = "JournalType">';
 
 if ($_POST['JournalType'] == 'Reversing') {
 	echo '<option selected = "selected" value = "Reversing">' . __('Reversing') . '</option>';
@@ -486,7 +486,7 @@ $SQL = "SELECT tagref,
 $Result = DB_query($SQL);
 echo '<field>
 	<label for = "tag">', __('GL Tag') , '</label>
-	<select multiple = "multiple" name="tag[]">';
+	<select multiple = "multiple" name = "tag[]">';
 while ($MyRow = DB_fetch_array($Result)) {
 	if (isset($_GET['Edit']) and isset($_POST['tag']) and $_POST['tag'] == $MyRow['tagref'] or (isset($_SESSION['JournalDetail']->GLEntries[$_GET['Edit']]->tag)) and in_array($MyRow['tagref'], $_SESSION['JournalDetail']->GLEntries[$_GET['Edit']]->tag)) {
 		echo '<option selected = "selected" value = "', $MyRow['tagref'], '">', $MyRow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';
@@ -503,7 +503,7 @@ if (!isset($_POST['GLManualCode'])) {
 }
 echo '<field>
 		<label for = "GLManualCode">' . __('GL Account Code') . '</label>
-		<input type = "text" autofocus = "autofocus" name="GLManualCode" maxlength = "12" size = "12" onchange = "inArray(this, GLCode.options,' . "'" . 'The account code ' . "'" . '+ this.value+ ' . "'" . ' doesnt exist' . "'" . ')" value = "' . $_POST['GLManualCode'] . '"  />
+		<input type = "text" autofocus = "autofocus" name = "GLManualCode" maxlength = "12" size = "12" onchange = "inArray(this, GLCode.options,' . "'" . 'The account code ' . "'" . '+ this.value+ ' . "'" . ' doesnt exist' . "'" . ')" value = "' . $_POST['GLManualCode'] . '"  />
 	</field>';
 
 $SQL = "SELECT chartmaster.accountcode,
@@ -515,7 +515,7 @@ $SQL = "SELECT chartmaster.accountcode,
 $Result = DB_query($SQL);
 echo '<field>
 		<label for = "GLCode">' . __('Select GL Account') . '</label>
-		<select name="GLCode" onchange = "return assignComboToInput(this,' . 'GLManualCode' . ')">
+		<select name = "GLCode" onchange = "return assignComboToInput(this,' . 'GLManualCode' . ')">
 			<option value = "">' . __('Select a general ledger account code') . '</option>';
 while ($MyRow = DB_fetch_array($Result)) {
 	if (isset($_POST['GLCode']) and $_POST['GLCode'] == $MyRow['accountcode']) {
@@ -540,26 +540,26 @@ if (!isset($_POST['Debit'])) {
 
 echo '<field>
 		<label for = "Debit">' . __('Debit') . '</label>
-		<input type = "text" class="number" name="Debit" onchange = "eitherOr(this,Credit)" maxlength = "12" size = "10" value = "' . locale_number_format($_POST['Debit'], $_SESSION['CompanyRecord']['decimalplaces']) . '" />
+		<input type = "text" class = "number" name = "Debit" onchange = "eitherOr(this,Credit)" maxlength = "12" size = "10" value = "' . locale_number_format($_POST['Debit'], $_SESSION['CompanyRecord']['decimalplaces']) . '" />
 	</field>
 	<field>
 		<label for = "Credit">' . __('Credit') . '</label>
-		<input type = "text" class="number" name="Credit" onchange = "eitherOr(this,Debit)" maxlength = "12" size = "10" value = "' . locale_number_format($_POST['Credit'], $_SESSION['CompanyRecord']['decimalplaces']) . '" />
+		<input type = "text" class = "number" name = "Credit" onchange = "eitherOr(this,Debit)" maxlength = "12" size = "10" value = "' . locale_number_format($_POST['Credit'], $_SESSION['CompanyRecord']['decimalplaces']) . '" />
 	</field>
 	<field>
 		<label for = "GLNarrative">' . __('GL Narrative') . '</label>
-		<input type = "text" name="GLNarrative" maxlength = "100" size = "100" value = "' . $_POST['GLNarrative'] . '" />
+		<input type = "text" name = "GLNarrative" maxlength = "100" size = "100" value = "' . $_POST['GLNarrative'] . '" />
 	</field>
 	</fieldset>'; /*Close the main table */
-echo '<div class="centre">
-		<input type = "submit" name="Process" value = "' . __('Accept') . '" />
+echo '<div class = "centre">
+		<input type = "submit" name = "Process" value = "' . __('Accept') . '" />
 	</div>
 	<br />
 	<br />';
 
-echo '<table class="selection" width = "85%">
+echo '<table class = "selection" width = "85%">
 		<tr>
-			<th colspan = "6"><div class="centre"><h2>' . __('Journal Summary') . '</h2></div></th>
+			<th colspan = "6"><div class = "centre"><h2>' . __('Journal Summary') . '</h2></div></th>
 		</tr>
 		<tr>
 			<th>' . __('GL Tag') . '</th>
@@ -573,35 +573,35 @@ $DebitTotal = 0;
 $CreditTotal = 0;
 
 foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
-	echo '<tr class="striped_row">
+	echo '<tr class = "striped_row">
 		<td>';
 	echo GetDescriptionsFromTagArray($JournalItem->tag);
 	echo '</td>
 		<td>' . $JournalItem->GLCode . ' - ' . $JournalItem->GLActName . '</td>';
 	if ($JournalItem->Amount > 0) {
-	echo '<td class="number">' . locale_number_format($JournalItem->Amount, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+	echo '<td class = "number">' . locale_number_format($JournalItem->Amount, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td></td>';
 		$DebitTotal += $JournalItem->Amount;
 }
 	elseif ($JournalItem->Amount < 0) {
 	$Credit = (-1 * $JournalItem->Amount);
 		echo '<td></td>
-			<td class="number">' . locale_number_format($Credit, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
+			<td class = "number">' . locale_number_format($Credit, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
 		$CreditTotal = $CreditTotal + $Credit;
 }
 
 	echo '<td>' . $JournalItem->Narrative . '</td>
-		<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Delete=' . $JournalItem->ID . '">' . __('Delete') . '</a></td>
+		<td><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Delete = ' . $JournalItem->ID . '">' . __('Delete') . '</a></td>
 	</tr>';
 }
 
-echo '<tr class="striped_row"><td></td>
-		<td class="number"><b>' . __('Total') . '</b></td>
-		<td class="number"><b>' . locale_number_format($DebitTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
-		<td class="number"><b>' . locale_number_format($CreditTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
+echo '<tr class = "striped_row"><td></td>
+		<td class = "number"><b>' . __('Total') . '</b></td>
+		<td class = "number"><b>' . locale_number_format($DebitTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
+		<td class = "number"><b>' . locale_number_format($CreditTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
 	</tr>';
 if ($DebitTotal !=  $CreditTotal) {
-	echo '<tr><td class="centre" style="background-color: #fddbdb"><b>' . __('Required to balance') . ' - </b>' . locale_number_format(abs($DebitTotal - $CreditTotal) , $_SESSION['CompanyRecord']['decimalplaces']);
+	echo '<tr><td class = "centre" style = "background-color: #fddbdb"><b>' . __('Required to balance') . ' - </b>' . locale_number_format(abs($DebitTotal - $CreditTotal) , $_SESSION['CompanyRecord']['decimalplaces']);
 }
 if ($DebitTotal > $CreditTotal) {
 	echo ' ' . __('Credit') . '</td></tr>';
@@ -615,17 +615,17 @@ echo '</table>
 	</table>';
 
 if (abs($_SESSION['JournalDetail']->JournalTotal) < 0.001 and $_SESSION['JournalDetail']->GLItemCounter > 0) {
-	echo '<div class="centre">
-			<input type = "submit" name="CommitBatch" value = "', __('Accept and Process Journal') , '" /><br />
-			<input type = "submit" name="ConfimSave" value = "', __('Save as a template') , '" />
+	echo '<div class = "centre">
+			<input type = "submit" name = "CommitBatch" value = "', __('Accept and Process Journal') , '" /><br />
+			<input type = "submit" name = "ConfimSave" value = "', __('Save as a template') , '" />
 		</div>';
 }
 elseif (count($_SESSION['JournalDetail']->GLEntries) > 0) {
 	prnMsg(__('The journal must balance ie debits equal to credits before it can be processed') , 'warn');
 }
 else {
-	echo '<div class="centre">
-			<input type = "submit" name="LoadTemplate" value = "', __('Load from a template') , '" />
+	echo '<div class = "centre">
+			<input type = "submit" name = "LoadTemplate" value = "', __('Load from a template') , '" />
 		</div>';
 }
 

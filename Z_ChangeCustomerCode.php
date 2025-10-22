@@ -9,7 +9,7 @@ $ViewTopic = 'SpecialUtilities';
 $BookMark = 'Z_ChangeCustomerCode';
 include('includes/header.php');
 
-echo '<p class = "page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+echo '<p class = "page_title_text"><img alt = "" src = "'.$RootPath.'/css/'.$Theme.
 	'/images/customer.png" title = "' .
 	__('Change A Customer Code') . '" /> ' .// Icon title.
 	__('Change A Customer Code') . '</p>';// Page title.

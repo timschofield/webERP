@@ -122,7 +122,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 		$ErrMsg = __('The details of supplier invoices due could not be retrieved');
 		$TransResult = DB_query($SQL, $ErrMsg);
 		if (DB_num_rows($TransResult) == 0) {
-			$HTML .= '<tr><td colspan = "8" class="centre">' . __('There are no outstanding supplier invoices to pay') . '</td></tr>';
+			$HTML .= '<tr><td colspan = "8" class = "centre">' . __('There are no outstanding supplier invoices to pay') . '</td></tr>';
 			continue;
 		}
 
@@ -153,14 +153,14 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 			}
 
 			$HTML .= '<tr>
-						<td class="left">' . $DetailTrans['supplierid'] . '</td>
-						<td class="left">' . htmlspecialchars($DetailTrans['suppname']) . '</td>
-						<td class="left">' . htmlspecialchars($DetailTrans['terms']) . '</td>
+						<td class = "left">' . $DetailTrans['supplierid'] . '</td>
+						<td class = "left">' . htmlspecialchars($DetailTrans['suppname']) . '</td>
+						<td class = "left">' . htmlspecialchars($DetailTrans['terms']) . '</td>
 						<td>' . $DislayTranDate . '</td>
 						<td>' . htmlspecialchars($DetailTrans['typename']) . '</td>
 						<td>' . htmlspecialchars($DetailTrans['suppreference']) . '</td>
-						<td class="right">' . locale_number_format($DetailTrans['balance'], $CurrDecimalPlaces) . '</td>
-						<td class="right">' . locale_number_format($DiffOnExch, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class = "right">' . locale_number_format($DetailTrans['balance'], $CurrDecimalPlaces) . '</td>
+						<td class = "right">' . locale_number_format($DiffOnExch, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 					</tr>';
 		}
 	}
@@ -171,8 +171,8 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 				<tr>
 					<th colspan = "2">' . __('Grand Total Payments Due') . '</th>
 				<tr>
-					<td class="right">' . __('Total Payments') . ': ' . locale_number_format($AccumBalance, $CurrDecimalPlaces) . '</td>
-					<td class="right">' . __('Total Diff On Exch') . ': ' . locale_number_format($AccumDiffOnExch, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					<td class = "right">' . __('Total Payments') . ': ' . locale_number_format($AccumBalance, $CurrDecimalPlaces) . '</td>
+					<td class = "right">' . __('Total Diff On Exch') . ': ' . locale_number_format($AccumDiffOnExch, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				</tr>
 			</table>';
 
@@ -197,8 +197,8 @@ else {
 	$BookMark = '';
 	include ('includes/header.php');
 
-	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . __('Supplier Types') . '" alt="" />' . $Title . '
+	echo '<p class = "page_title_text">
+			<img src = "' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title = "' . __('Supplier Types') . '" alt = "" />' . $Title . '
 		</p>';
 
 	if (isset($_POST['Currency']) and !is_numeric(filter_number_format($_POST['ExRate']))) {
@@ -207,7 +207,7 @@ else {
 
 	/* show form to allow input	*/
 
-	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target="_blank">';
+	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target = "_blank">';
 	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 	echo '<fieldset>
 			<legend>', __('Select Suppliers To Pay'), '</legend>';
@@ -233,12 +233,12 @@ else {
 	}
 	echo '<field>
 			<label for = "FromCriteria">' . __('From Supplier Code') . ':</label>
-			<input type = "text" pattern = "[^><+-]{1,10}" title="" maxlength = "10" size = "7" name = "FromCriteria" value = "' . $DefaultFromCriteria . '" />
+			<input type = "text" pattern = "[^><+-]{1,10}" title = "" maxlength = "10" size = "7" name = "FromCriteria" value = "' . $DefaultFromCriteria . '" />
 			<fieldhelp>' . __('Illegal characters are not allowed') . ' ' . '" \' - &amp; or a space' . '</fieldhelp>
 		  </field>';
 	echo '<field>
 			<label for = "ToCriteria">' . __('To Supplier Code') . ':</label>
-			<input type = "text" pattern = "[^<>+-]{1,10}" title="" maxlength = "10" size = "7" name = "ToCriteria" value = "' . $DefaultToCriteria . '" />
+			<input type = "text" pattern = "[^<>+-]{1,10}" title = "" maxlength = "10" size = "7" name = "ToCriteria" value = "' . $DefaultToCriteria . '" />
 			<fieldhelp>' . __('Illegal characters are not allowed') . '</fieldhelp>
 		 </field>';
 
@@ -268,7 +268,7 @@ else {
 	}
 	echo '<field>
 			<label for = "ExRate">' . __('Exchange Rate') . ':</label>
-			<input type = "text" class="number" title="" name = "ExRate" maxlength = "11" size = "12" value = "' . locale_number_format($DefaultExRate, 'Variable') . '" />
+			<input type = "text" class = "number" title = "" name = "ExRate" maxlength = "11" size = "12" value = "' . locale_number_format($DefaultExRate, 'Variable') . '" />
 			<fieldhelp>' . __('The input must be number') . '</fieldhelp>
 		  </field>';
 
@@ -296,7 +296,7 @@ else {
 		echo '</select></td>
 			</field>
 			</table>
-			<p>' . __('Bank Accounts have not yet been defined. You must first') . ' <a href="' . $RootPath . '/BankAccounts.php">' . __('define the bank accounts') . '</a> ' . __('and general ledger accounts to be affected') . '.
+			<p>' . __('Bank Accounts have not yet been defined. You must first') . ' <a href = "' . $RootPath . '/BankAccounts.php">' . __('define the bank accounts') . '</a> ' . __('and general ledger accounts to be affected') . '.
 			</p>';
 		include ('includes/footer.php');
 		exit();
@@ -336,7 +336,7 @@ else {
 		</field>';
 
 	echo '</fieldset>
-			<div class="centre">
+			<div class = "centre">
 				<input type = "submit" name = "PrintPDF" value = "' . __('Print PDF Only') . '" />
 				<input type = "submit" name = "PrintPDFAndProcess" value = "' . __('Print and Process Payments') . '" />
 			</div>';

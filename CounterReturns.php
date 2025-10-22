@@ -183,13 +183,13 @@ if (isset($_POST['CancelReturn'])) {
 
 	echo '<br /><br />';
 	prnMsg(__('This return has been cancelled as requested'),'success');
-	echo '<br /><br /><a href="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Start a new Counter Return') . '</a>';
+	echo '<br /><br /><a href = "' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Start a new Counter Return') . '</a>';
 	include('includes/footer.php');
 	exit();
 
 } else { /*Not cancelling the return */
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Counter Return') . '" alt="" />' . ' ';
+	echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title = "' . __('Counter Return') . '" alt = "" />' . ' ';
 	echo '<font color = "red" size = "5">' . $_SESSION['Items' . $identifier]->CustomerName . '<br /> ' . __('Counter Return') . ' ' . __('to') . ' ' . $_SESSION['Items' . $identifier]->LocationName . ' ' . __('inventory') . ' (' . __('all amounts in') . ' ' . $_SESSION['Items' . $identifier]->DefaultCurrency . ')';
 	echo '</font></p>';
 }
@@ -197,11 +197,11 @@ if (isset($_POST['CancelReturn'])) {
 if (isset($_POST['search']) or isset($_POST['Next']) or isset($_POST['Prev'])) {
 
 	if ($_POST['Keywords']!='' and $_POST['StockCode']=='') {
-	$Msg = '<div class="page_help_text">' . __('Item description has been used in search') . '.</div>';
+	$Msg = '<div class = "page_help_text">' . __('Item description has been used in search') . '.</div>';
 } elseif ($_POST['StockCode']!='' and $_POST['Keywords']=='') {
-	$Msg = '<div class="page_help_text">' . __('Item Code has been used in search') . '.</div>';
+	$Msg = '<div class = "page_help_text">' . __('Item Code has been used in search') . '.</div>';
 } elseif ($_POST['Keywords']=='' and $_POST['StockCode']=='') {
-	$Msg = '<div class="page_help_text">' . __('Stock Category has been used in search') . '.</div>';
+	$Msg = '<div class = "page_help_text">' . __('Stock Category has been used in search') . '.</div>';
 }
 	if (isset($_POST['Keywords']) and mb_strlen($_POST['Keywords'])>0) {
 		//insert wildcard characters in spaces
@@ -337,8 +337,8 @@ if (isset($_POST['search']) or isset($_POST['Next']) or isset($_POST['Prev'])) {
 
 /* Always do the stuff below */
 
-echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?=identifier=' . urlencode($identifier) . '" name="SelectParts" method = "post">';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier = ' . urlencode($identifier) . '" name = "SelectParts" method = "post">';
+echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 //Get The exchange rate used for GPPercent calculations on adding or amending items
 if ($_SESSION['Items' . $identifier]->DefaultCurrency != $_SESSION['CompanyRecord']['currencydefault']) {
@@ -658,7 +658,7 @@ if (count($_SESSION['Items' . $identifier]->LineItems)>0) { /*only show return l
 */
 
 	echo '<br />
-		<table width="90%" cellpadding = "2" colspan="7">
+		<table width = "90%" cellpadding = "2" colspan = "7">
 		<tr bgcolor = "#800000">';
 	echo '<th>' . __('Item Code') . '</th>
    	      <th>' . __('Item Description') . '</th>
@@ -685,21 +685,21 @@ if (count($_SESSION['Items' . $identifier]->LineItems)>0) { /*only show return l
 		$DisplayDiscount = locale_number_format(($ReturnItemLine->DiscountPercent * 100),2);
 		$QtyReturned = $ReturnItemLine->Quantity;
 
-		echo '<input type="hidden" name="POLine_' .	 $ReturnItemLine->LineNumber . '" value="" />';
-		echo '<input type="hidden" name="ItemDue_' .	 $ReturnItemLine->LineNumber . '" value="'.$ReturnItemLine->ItemDue.'" />';
+		echo '<input type = "hidden" name = "POLine_' .	 $ReturnItemLine->LineNumber . '" value = "" />';
+		echo '<input type = "hidden" name = "ItemDue_' .	 $ReturnItemLine->LineNumber . '" value = "'.$ReturnItemLine->ItemDue.'" />';
 
-		echo '<tr class="striped_row">
-				<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?identifier='.$identifier . '&StockID=' . $ReturnItemLine->StockID . '&DebtorNo=' . $_SESSION['Items' . $identifier]->DebtorNo . '">' . $ReturnItemLine->StockID . '</a></td>
-			<td title="' . $ReturnItemLine->LongDescription . '">' . $ReturnItemLine->ItemDescription . '</td>';
+		echo '<tr class = "striped_row">
+				<td><a target = "_blank" href = "' . $RootPath . '/StockStatus.php?identifier = '.$identifier . '&StockID = ' . $ReturnItemLine->StockID . '&DebtorNo = ' . $_SESSION['Items' . $identifier]->DebtorNo . '">' . $ReturnItemLine->StockID . '</a></td>
+			<td title = "' . $ReturnItemLine->LongDescription . '">' . $ReturnItemLine->ItemDescription . '</td>';
 
-		echo '<td><input class="number" tabindex="2" type="text" name="Quantity_' . $ReturnItemLine->LineNumber . '" required = "required" size = "6" maxlength = "6" value="' . locale_number_format($ReturnItemLine->Quantity,$ReturnItemLine->DecimalPlaces) . '" />';
+		echo '<td><input class = "number" tabindex = "2" type = "text" name = "Quantity_' . $ReturnItemLine->LineNumber . '" required = "required" size = "6" maxlength = "6" value = "' . locale_number_format($ReturnItemLine->Quantity,$ReturnItemLine->DecimalPlaces) . '" />';
 
 		echo '</td>
 				<td>' . $ReturnItemLine->Units . '</td>
-				<td><input class="number" type="text" name="Price_' . $ReturnItemLine->LineNumber . '" required = "required" size = "16" maxlength = "16" value="' . locale_number_format($ReturnItemLine->Price,$_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '" /></td>
-				<td><input class="number" type="text" name="Discount_' . $ReturnItemLine->LineNumber . '" required = "required" size = "5" maxlength = "4" value="' . locale_number_format(($ReturnItemLine->DiscountPercent * 100),2) . '" /></td>
-				<td><input class="number" type="text" name="GPPercent_' . $ReturnItemLine->LineNumber . '" required = "required" size = "3" maxlength = "40" value="' . locale_number_format($ReturnItemLine->GPPercent,2) . '" /></td>
-				<td class="number">' . locale_number_format($SubTotal,$_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '</td>';
+				<td><input class = "number" type = "text" name = "Price_' . $ReturnItemLine->LineNumber . '" required = "required" size = "16" maxlength = "16" value = "' . locale_number_format($ReturnItemLine->Price,$_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '" /></td>
+				<td><input class = "number" type = "text" name = "Discount_' . $ReturnItemLine->LineNumber . '" required = "required" size = "5" maxlength = "4" value = "' . locale_number_format(($ReturnItemLine->DiscountPercent * 100),2) . '" /></td>
+				<td><input class = "number" type = "text" name = "GPPercent_' . $ReturnItemLine->LineNumber . '" required = "required" size = "3" maxlength = "40" value = "' . locale_number_format($ReturnItemLine->GPPercent,2) . '" /></td>
+				<td class = "number">' . locale_number_format($SubTotal,$_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '</td>';
 		$LineDueDate = $ReturnItemLine->ItemDue;
 		$_SESSION['Items' . $identifier]->LineItems[$ReturnItemLine->LineNumber]->ItemDue =  $LineDueDate;
 
@@ -723,15 +723,15 @@ if (count($_SESSION['Items' . $identifier]->LineItems)>0) { /*only show return l
 		$TaxTotal += $TaxLineTotal;
 		$_SESSION['Items' . $identifier]->TaxTotals = $TaxTotals;
 		$_SESSION['Items' . $identifier]->TaxGLCodes = $TaxGLCodes;
-		echo '<td class="number">' . locale_number_format($TaxLineTotal ,$_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '</td>';
-		echo '<td class="number">' . locale_number_format($SubTotal + $TaxLineTotal ,$_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '</td>';
-		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?=identifier='.$identifier . '&Delete=' . $ReturnItemLine->LineNumber . '" onclick="return confirm(\'' . __('Are You Sure?') . '\');">' . __('Delete') . '</a></td></tr>';
+		echo '<td class = "number">' . locale_number_format($TaxLineTotal ,$_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '</td>';
+		echo '<td class = "number">' . locale_number_format($SubTotal + $TaxLineTotal ,$_SESSION['Items' . $identifier]->CurrDecimalPlaces) . '</td>';
+		echo '<td><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier = '.$identifier . '&Delete = ' . $ReturnItemLine->LineNumber . '" onclick = "return confirm(\'' . __('Are You Sure?') . '\');">' . __('Delete') . '</a></td></tr>';
 
 		if ($_SESSION['AllowOrderLineItemNarrative'] == 1) {
-	echo '<tr class="striped_row">
-					<td valign = "top" colspan="11">' . __('Narrative') . ':<textarea name="Narrative_' . $ReturnItemLine->LineNumber . '" cols = "100" rows = "1">' . stripslashes(AddCarriageReturns($ReturnItemLine->Narrative)) . '</textarea><br /></td></tr>';
+	echo '<tr class = "striped_row">
+					<td valign = "top" colspan = "11">' . __('Narrative') . ':<textarea name = "Narrative_' . $ReturnItemLine->LineNumber . '" cols = "100" rows = "1">' . stripslashes(AddCarriageReturns($ReturnItemLine->Narrative)) . '</textarea><br /></td></tr>';
 } else {
-			echo '<input type="hidden" name="Narrative" value="" />';
+			echo '<input type = "hidden" name = "Narrative" value = "" />';
 		}
 
 		$_SESSION['Items' . $identifier]->total += $SubTotal;
@@ -741,15 +741,15 @@ if (count($_SESSION['Items' . $identifier]->LineItems)>0) { /*only show return l
 	} /* end of loop around items */
 
 
-	echo '<tr class="striped_row">
-			<td colspan="7" class="number"><b>', __('Total'), '</b></td>
-			<td class="number">', locale_number_format(($_SESSION['Items' . $identifier]->total), $_SESSION['Items' . $identifier]->CurrDecimalPlaces), '</td>
-			<td class="number">', locale_number_format($TaxTotal, $_SESSION['Items' . $identifier]->CurrDecimalPlaces), '</td>
-			<td class="number">', locale_number_format(($_SESSION['Items' . $identifier]->total + $TaxTotal), $_SESSION['Items' . $identifier]->CurrDecimalPlaces), '</td>
+	echo '<tr class = "striped_row">
+			<td colspan = "7" class = "number"><b>', __('Total'), '</b></td>
+			<td class = "number">', locale_number_format(($_SESSION['Items' . $identifier]->total), $_SESSION['Items' . $identifier]->CurrDecimalPlaces), '</td>
+			<td class = "number">', locale_number_format($TaxTotal, $_SESSION['Items' . $identifier]->CurrDecimalPlaces), '</td>
+			<td class = "number">', locale_number_format(($_SESSION['Items' . $identifier]->total + $TaxTotal), $_SESSION['Items' . $identifier]->CurrDecimalPlaces), '</td>
 		</tr>
 	</table>';
 
-	echo '<input type="hidden" name="TaxTotal" value="', $TaxTotal, '" />';
+	echo '<input type = "hidden" name = "TaxTotal" value = "', $TaxTotal, '" />';
 	echo '<fieldset>';
 	//nested table
 	echo '<fieldset>
@@ -757,29 +757,29 @@ if (count($_SESSION['Items' . $identifier]->LineItems)>0) { /*only show return l
 
 	echo '<field>
 			<label for = "DeliverTo">', __('Returned By'), ':</label>
-			<input type="text" size = "25" maxlength = "25" name="DeliverTo" value="', stripslashes($_SESSION['Items' . $identifier]->DeliverTo), '" />
+			<input type = "text" size = "25" maxlength = "25" name = "DeliverTo" value = "', stripslashes($_SESSION['Items' . $identifier]->DeliverTo), '" />
 		</field>';
 
 	echo '<field>
 			<label for = "PhoneNo">', __('Contact Phone Number'), ':</label>
-			<input type="tel" size = "25" maxlength = "25" name="PhoneNo" value="', stripslashes($_SESSION['Items' . $identifier]->PhoneNo), '" />
+			<input type = "tel" size = "25" maxlength = "25" name = "PhoneNo" value = "', stripslashes($_SESSION['Items' . $identifier]->PhoneNo), '" />
 		</field>';
 
 	echo '<field>
 			<label for = "Email">', __('Contact Email'), ':</label>
-			<input type="email" size = "25" maxlength = "30" name="Email" value="', stripslashes($_SESSION['Items' . $identifier]->Email), '" />
+			<input type = "email" size = "25" maxlength = "30" name = "Email" value = "', stripslashes($_SESSION['Items' . $identifier]->Email), '" />
 		</field>';
 
 	echo '<field>
 			<label for = "CustRef">', __('Customer Reference'), ':</label>
-			<input type="text" size = "25" maxlength = "25" name="CustRef" value="', stripcslashes($_SESSION['Items' . $identifier]->CustRef), '" />
+			<input type = "text" size = "25" maxlength = "25" name = "CustRef" value = "', stripcslashes($_SESSION['Items' . $identifier]->CustRef), '" />
 		</field>';
 
 	echo '<field>
 			<label for = "SalesPerson">', __('Sales person'), ':</label>';
 
 	if ($_SESSION['SalesmanLogin'] != '') {
-	echo '<div class="fieldtext">', $_SESSION['UsersRealName'], '</div>
+	echo '<div class = "fieldtext">', $_SESSION['UsersRealName'], '</div>
 			</field>';
 } else {
 		$SalesPeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman WHERE current = 1");
@@ -787,12 +787,12 @@ if (count($_SESSION['Items' . $identifier]->LineItems)>0) { /*only show return l
 			$_SESSION['Items' . $identifier]->SalesPerson = $_SESSION['SalesmanLogin'];
 		}
 
-		echo '<select name="SalesPerson">';
+		echo '<select name = "SalesPerson">';
 		while ($SalesPersonRow = DB_fetch_array($SalesPeopleResult)) {
 			if ($SalesPersonRow['salesmancode'] == $_SESSION['Items' . $identifier]->SalesPerson) {
-	echo '<option selected = "selected" value="', $SalesPersonRow['salesmancode'], '">', $SalesPersonRow['salesmanname'], '</option>';
+	echo '<option selected = "selected" value = "', $SalesPersonRow['salesmancode'], '">', $SalesPersonRow['salesmanname'], '</option>';
 } else {
-				echo '<option value="', $SalesPersonRow['salesmancode'], '">', $SalesPersonRow['salesmanname'], '</option>';
+				echo '<option value = "', $SalesPersonRow['salesmancode'], '">', $SalesPersonRow['salesmanname'], '</option>';
 			}
 		}
 		echo '</select>
@@ -801,7 +801,7 @@ if (count($_SESSION['Items' . $identifier]->LineItems)>0) { /*only show return l
 
 	echo '<field>
 			<label for = "Comments">', __('Reason for Return'), ':</label>
-			<textarea name="Comments" cols = "23" rows = "5">', stripcslashes($_SESSION['Items' . $identifier]->Comments), '</textarea>
+			<textarea name = "Comments" cols = "23" rows = "5">', stripcslashes($_SESSION['Items' . $identifier]->Comments), '</textarea>
 		</field>';
 
 	echo '</fieldset>'; //end the sub table in the first column of master table
@@ -812,12 +812,12 @@ if (count($_SESSION['Items' . $identifier]->LineItems)>0) { /*only show return l
 
 	echo '<field>
 			<label for = "PaymentMethod">', __('Payment Type'), ':</label>
-			<select name="PaymentMethod">';
+			<select name = "PaymentMethod">';
 	while ($PaymentMethodRow = DB_fetch_array($PaymentMethodsResult)) {
 		if (isset($_POST['PaymentMethod']) and $_POST['PaymentMethod'] == $PaymentMethodRow['paymentid']) {
-			echo '<option selected = "selected" value="', $PaymentMethodRow['paymentid'], '">', $PaymentMethodRow['paymentname'], '</option>';
+			echo '<option selected = "selected" value = "', $PaymentMethodRow['paymentid'], '">', $PaymentMethodRow['paymentname'], '</option>';
 		} else {
-			echo '<option value="', $PaymentMethodRow['paymentid'], '">', $PaymentMethodRow['paymentname'], '</option>';
+			echo '<option value = "', $PaymentMethodRow['paymentid'], '">', $PaymentMethodRow['paymentname'], '</option>';
 		}
 	}
 	echo '</select>
@@ -827,12 +827,12 @@ if (count($_SESSION['Items' . $identifier]->LineItems)>0) { /*only show return l
 
 	echo '<field>
 			<label for = "BankAccount">', __('Bank Account'), ':</label>
-			<select name="BankAccount">';
+			<select name = "BankAccount">';
 	while ($BankAccountsRow = DB_fetch_array($BankAccountsResult)) {
 		if (isset($_POST['BankAccount']) and $_POST['BankAccount'] == $BankAccountsRow['accountcode']) {
-			echo '<option selected = "selected" value="', $BankAccountsRow['accountcode'], '">', $BankAccountsRow['bankaccountname'], '</option>';
+			echo '<option selected = "selected" value = "', $BankAccountsRow['accountcode'], '">', $BankAccountsRow['bankaccountname'], '</option>';
 		} else {
-			echo '<option value="', $BankAccountsRow['accountcode'], '">', $BankAccountsRow['bankaccountname'], '</option>';
+			echo '<option value = "', $BankAccountsRow['accountcode'], '">', $BankAccountsRow['bankaccountname'], '</option>';
 		}
 	}
 	echo '</select>
@@ -843,15 +843,15 @@ if (count($_SESSION['Items' . $identifier]->LineItems)>0) { /*only show return l
 	}
 	echo '<field>
 			<label for = "AmountPaid">', __('Paid to Customer'), ':</label>
-			<input type="text" class="number" name="AmountPaid" required = "required" maxlength = "12" size = "12" value="', $_POST['AmountPaid'], '" />
+			<input type = "text" class = "number" name = "AmountPaid" required = "required" maxlength = "12" size = "12" value = "', $_POST['AmountPaid'], '" />
 		</field>';
 
 	echo '</fieldset>
 		</fieldset>'; //end of column/row/master table
 	if (!isset($_POST['ProcessReturn'])) {
-		echo '<div class="centre">
-				<input type="submit" name="Recalculate" value="', __('Re-Calculate'), '" />
-				<input type="submit" name="ProcessReturn" value="', __('Process The Return'), '" />
+		echo '<div class = "centre">
+				<input type = "submit" name = "Recalculate" value = "', __('Re-Calculate'), '" />
+				<input type = "submit" name = "ProcessReturn" value = "', __('Process The Return'), '" />
 			</div>';
 	}
 
@@ -1578,14 +1578,14 @@ if (isset($_POST['ProcessReturn']) and $_POST['ProcessReturn'] != '') {
 
 		prnMsg( __('Credit Note number'). ' '. $CreditNoteNo .' '. __('processed'), 'success');
 
-		echo '<br /><div class="centre">';
+		echo '<br /><div class = "centre">';
 
 		if ($_SESSION['InvoicePortraitFormat']==0) {
-	echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . __('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="'.$RootPath.'/PrintCustTrans.php?FromTransNo='.$CreditNoteNo.'&InvOrCredit=Credit&PrintPDF=True&orientation=landscape">' .  __('Print this credit note'). ' (' . __('Landscape') . ')</a><br /><br />';
+	echo '<img src = "'.$RootPath.'/css/'.$Theme.'/images/printer.png" title = "' . __('Print') . '" alt = "" />' . ' ' . '<a target = "_blank" href = "'.$RootPath.'/PrintCustTrans.php?FromTransNo = '.$CreditNoteNo.'&InvOrCredit = Credit&PrintPDF = True&orientation = landscape">' .  __('Print this credit note'). ' (' . __('Landscape') . ')</a><br /><br />';
 } else {
-			echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . __('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="'.$RootPath.'/PrintCustTrans.php?FromTransNo='.$CreditNoteNo.'&InvOrCredit=Credit&PrintPDF=True&orientation=portrait" onClick="return window.location=\'index.php\'">' .  __('Print this credit note'). ' (' . __('Portrait') . ')</a><br /><br />';
+			echo '<img src = "'.$RootPath.'/css/'.$Theme.'/images/printer.png" title = "' . __('Print') . '" alt = "" />' . ' ' . '<a target = "_blank" href = "'.$RootPath.'/PrintCustTrans.php?FromTransNo = '.$CreditNoteNo.'&InvOrCredit = Credit&PrintPDF = True&orientation = portrait" onClick = "return window.location = \'index.php\'">' .  __('Print this credit note'). ' (' . __('Portrait') . ')</a><br /><br />';
 		}
-		echo '<br /><br /><a href="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Start a new Counter Return') . '</a></div>';
+		echo '<br /><br /><a href = "' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Start a new Counter Return') . '</a></div>';
 
 	}
 	// There were input errors so don't process nuffin
@@ -1602,10 +1602,10 @@ if (isset($_POST['ProcessReturn']) and $_POST['ProcessReturn'] != '') {
 if (!isset($_POST['ProcessReturn'])) {
 	 if (isset($_POST['PartSearch']) and $_POST['PartSearch']!='') {
 
-		echo '<input type="hidden" name="PartSearch" value="' .  __('Yes Please') . '" />';
-		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Search') . '" alt="" />' . ' ';
+		echo '<input type = "hidden" name = "PartSearch" value = "' .  __('Yes Please') . '" />';
+		echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title = "' . __('Search') . '" alt = "" />' . ' ';
 		echo __('Search for Items') . '</p>';
-		echo '<div class="page_help_text">' . __('Search for Items') . __(', Searches the database for items, you can narrow the results by selecting a stock category, or just enter a partial item description or partial item code') . '.</div><br />';
+		echo '<div class = "page_help_text">' . __('Search for Items') . __(', Searches the database for items, you can narrow the results by selecting a stock category, or just enter a partial item description or partial item code') . '.</div><br />';
 		echo '<fieldset>
 				<legend>', __('Item Search Criteria'), '</legend>';
 
@@ -1617,18 +1617,18 @@ if (!isset($_POST['ProcessReturn'])) {
 		$Result1 = DB_query($SQL);
 		echo '<field>
 				<label for = "StockCat">', __('Select a Stock Category'), ':</label>
-				<select name="StockCat">';
+				<select name = "StockCat">';
 		if (!isset($_POST['StockCat'])) {
-			echo '<option selected = "selected" value="All">', __('All'), '</option>';
+			echo '<option selected = "selected" value = "All">', __('All'), '</option>';
 			$_POST['StockCat'] = 'All';
 		} else {
-			echo '<option value="All">', __('All'), '</option>';
+			echo '<option value = "All">', __('All'), '</option>';
 		}
 		while ($MyRow1 = DB_fetch_array($Result1)) {
 			if ($_POST['StockCat'] == $MyRow1['categoryid']) {
-	echo '<option selected = "selected" value="', $MyRow1['categoryid'], '">', $MyRow1['categorydescription'] . '</option>';
+	echo '<option selected = "selected" value = "', $MyRow1['categoryid'], '">', $MyRow1['categorydescription'] . '</option>';
 } else {
-				echo '<option value="', $MyRow1['categoryid'], '">', $MyRow1['categorydescription'], '</option>';
+				echo '<option value = "', $MyRow1['categoryid'], '">', $MyRow1['categorydescription'], '</option>';
 			}
 		}
 		echo '</select>
@@ -1639,7 +1639,7 @@ if (!isset($_POST['ProcessReturn'])) {
 		}
 		echo '<field>
 				<label for = "Keywords">', __('Enter partial Description'), ':</label>
-				<input type="search" autofocus = "autofocus" name="Keywords" size = "20" maxlength = "25" value="', $_POST['Keywords'], '" />
+				<input type = "search" autofocus = "autofocus" name = "Keywords" size = "20" maxlength = "25" value = "', $_POST['Keywords'], '" />
 			</field>';
 
 		if (!isset($_POST['StockCode'])) {
@@ -1648,28 +1648,28 @@ if (!isset($_POST['ProcessReturn'])) {
 
 		echo '<field>
 				<label for = "StockCode"> ', '<b>' , __('or') , ' </b>' , __('Enter extract of the Stock Code'), ':</label>
-				<input type="search" name="StockCode" size = "15" maxlength = "18" value="', $_POST['StockCode'], '" />
+				<input type = "search" name = "StockCode" size = "15" maxlength = "18" value = "', $_POST['StockCode'], '" />
 			</field>
 		</fieldset>';
 	// Add some useful help as the order progresses
 		if (isset($SearchResult)) {
-			echo '<div class="page_help_text">' . __('Select an item by entering the quantity required.  Click Return when ready.') . '</div>';
+			echo '<div class = "page_help_text">' . __('Select an item by entering the quantity required.  Click Return when ready.') . '</div>';
 		}
 
-		echo '<div class="centre">
-				<input type="submit" name="search" value="Search Items" />
+		echo '<div class = "centre">
+				<input type = "submit" name = "search" value = "Search Items" />
 			</div>';
 
 
 		if (isset($SearchResult)) {
 			$j = 1;
-			echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?=identifier=' . urlencode($identifier) . '" method = "post" name="ReturnForm">';
-			echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-			echo '<table class="table1">';
+			echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier = ' . urlencode($identifier) . '" method = "post" name = "ReturnForm">';
+			echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+			echo '<table class = "table1">';
 			echo '<tr>
-					<td><input type="hidden" name="previous" value="'.strval($Offset-1).'" /><input tabindex="'.strval($j+7).'" type="submit" name="Prev" value="'.__('Prev').'" /></td>
-					<td class="centre" colspan="6"><input type="hidden" name="SelectingReturnItems" value="1" /><input tabindex="'.strval($j+8).'" type="submit" value="'.__('Return Item(s)').'" /></td>
-					<td><input type="hidden" name="NextList" value="'.strval($Offset+1).'" /><input tabindex="'.strval($j+9).'" type="submit" name="Next" value="'.__('Next').'" /></td>
+					<td><input type = "hidden" name = "previous" value = "'.strval($Offset-1).'" /><input tabindex = "'.strval($j+7).'" type = "submit" name = "Prev" value = "'.__('Prev').'" /></td>
+					<td class = "centre" colspan = "6"><input type = "hidden" name = "SelectingReturnItems" value = "1" /><input tabindex = "'.strval($j+8).'" type = "submit" value = "'.__('Return Item(s)').'" /></td>
+					<td><input type = "hidden" name = "NextList" value = "'.strval($Offset+1).'" /><input tabindex = "'.strval($j+9).'" type = "submit" name = "Next" value = "'.__('Next').'" /></td>
 				</tr>';
 			$TableHeader = '<tr>
 								<th>' . __('Code') . '</th>
@@ -1696,34 +1696,34 @@ if (!isset($_POST['ProcessReturn'])) {
 
 				$Available = $QOH - $DemandQty + $QOO;
 
-				echo '<tr class="striped_row">
+				echo '<tr class = "striped_row">
 						<td>', $MyRow['stockid'], '</td>
-						<td title="', $MyRow['description'], '">', $MyRow['longdescription'], '</td>
+						<td title = "', $MyRow['description'], '">', $MyRow['longdescription'], '</td>
 						<td>', $MyRow['units'], '</td>
-						<td class="number">', locale_number_format($QOH, $MyRow['decimalplaces']), '</td>
-						<td class="number">', locale_number_format($DemandQty, $MyRow['decimalplaces']), '</td>
-						<td class="number">', locale_number_format($QOO, $MyRow['decimalplaces']), '</td>
-						<td class="number">', locale_number_format($Available, $MyRow['decimalplaces']), '</td>
-						<td><input class="number"  tabindex="'.strval($j+7).'" type="text"  required = "required" ' . ($i == 0?'autofocus ="autofocus"':'') . ' size = "6" name="ReturnQty', $i, '" value="0" /><input type="hidden" name="StockID', $i, '" value="', $MyRow['stockid'], '" /></td>
+						<td class = "number">', locale_number_format($QOH, $MyRow['decimalplaces']), '</td>
+						<td class = "number">', locale_number_format($DemandQty, $MyRow['decimalplaces']), '</td>
+						<td class = "number">', locale_number_format($QOO, $MyRow['decimalplaces']), '</td>
+						<td class = "number">', locale_number_format($Available, $MyRow['decimalplaces']), '</td>
+						<td><input class = "number"  tabindex = "'.strval($j+7).'" type = "text"  required = "required" ' . ($i == 0?'autofocus = "autofocus"':'') . ' size = "6" name = "ReturnQty', $i, '" value = "0" /><input type = "hidden" name = "StockID', $i, '" value = "', $MyRow['stockid'], '" /></td>
 					</tr>';
 				$j++;
 				$i++;
 	#end of page full new headings if
 			}
 	#end of while loop
-			echo '<input type="hidden" name="CustRef" value="'.$_SESSION['Items' . $identifier]->CustRef.'" />
-				<input type="hidden" name="Comments" value="'.$_SESSION['Items' . $identifier]->Comments.'" />
-				<input type="hidden" name="DeliverTo" value="'.$_SESSION['Items' . $identifier]->DeliverTo.'" />
-				<input type="hidden" name="PhoneNo" value="'.$_SESSION['Items' . $identifier]->PhoneNo.'" />
-				<input type="hidden" name="Email" value="'.$_SESSION['Items' . $identifier]->Email.'" />
-				<input type="hidden" name="SalesPerson" value="'.$_SESSION['Items' . $identifier]->SalesPerson.'" />
+			echo '<input type = "hidden" name = "CustRef" value = "'.$_SESSION['Items' . $identifier]->CustRef.'" />
+				<input type = "hidden" name = "Comments" value = "'.$_SESSION['Items' . $identifier]->Comments.'" />
+				<input type = "hidden" name = "DeliverTo" value = "'.$_SESSION['Items' . $identifier]->DeliverTo.'" />
+				<input type = "hidden" name = "PhoneNo" value = "'.$_SESSION['Items' . $identifier]->PhoneNo.'" />
+				<input type = "hidden" name = "Email" value = "'.$_SESSION['Items' . $identifier]->Email.'" />
+				<input type = "hidden" name = "SalesPerson" value = "'.$_SESSION['Items' . $identifier]->SalesPerson.'" />
 				<tr>
-					<td><input type="hidden" name="previous" value="'.strval($Offset-1).'" />
-						<input tabindex="'.strval($j+7).'" type="submit" name="Prev" value="'.__('Prev').'" /></td>
-					<td class="centre" colspan="6"><input type="hidden" name="SelectingReturnItems" value="1" />
-						<input tabindex="'.strval($j+8).'" type="submit" value="'.__('Add to Sale').'" /></td>
-					<td><input type="hidden" name="NextList" value="'.strval($Offset+1).'" />
-						<input tabindex="'.strval($j+9).'" type="submit" name="Next" value="'.__('Next').'" /></td>
+					<td><input type = "hidden" name = "previous" value = "'.strval($Offset-1).'" />
+						<input tabindex = "'.strval($j+7).'" type = "submit" name = "Prev" value = "'.__('Prev').'" /></td>
+					<td class = "centre" colspan = "6"><input type = "hidden" name = "SelectingReturnItems" value = "1" />
+						<input tabindex = "'.strval($j+8).'" type = "submit" value = "'.__('Add to Sale').'" /></td>
+					<td><input type = "hidden" name = "NextList" value = "'.strval($Offset+1).'" />
+						<input tabindex = "'.strval($j+9).'" type = "submit" name = "Next" value = "'.__('Next').'" /></td>
 				</tr>
 				</table>
 				</form>';
@@ -1731,7 +1731,7 @@ if (!isset($_POST['ProcessReturn'])) {
 	} /*end of PartSearch options to be displayed */
 		else { /* show the quick entry form variable */
 
-		echo '<div class="page_help_text"><b>' . __('Use this form to add return items quickly if the item codes are already known') . '</b></div><br />
+		echo '<div class = "page_help_text"><b>' . __('Use this form to add return items quickly if the item codes are already known') . '</b></div><br />
 		 		<table border = "1">
 				<tr>';
 			/*do not display colum unless customer requires po line number by sales order line*/
@@ -1740,33 +1740,33 @@ if (!isset($_POST['ProcessReturn'])) {
 				</tr>';
 		$ReturnDate = date($_SESSION['DefaultDateFormat']);
 		if (count($_SESSION['Items' . $identifier]->LineItems) == 0) {
-			echo '<input type="hidden" name="CustRef" value="'.$_SESSION['Items' . $identifier]->CustRef.'" />
-			<input type="hidden" name="Comments" value="'.$_SESSION['Items' . $identifier]->Comments.'" />
-			<input type="hidden" name="DeliverTo" value="'.$_SESSION['Items' . $identifier]->DeliverTo.'" />
-			<input type="hidden" name="PhoneNo" value="'.$_SESSION['Items' . $identifier]->PhoneNo.'" />
-			<input type="hidden" name="Email" value="'.$_SESSION['Items' . $identifier]->Email.'" />
-			<input type="hidden" name="SalesPerson" value="'.$_SESSION['Items' . $identifier]->SalesPerson.'" />';
+			echo '<input type = "hidden" name = "CustRef" value = "'.$_SESSION['Items' . $identifier]->CustRef.'" />
+			<input type = "hidden" name = "Comments" value = "'.$_SESSION['Items' . $identifier]->Comments.'" />
+			<input type = "hidden" name = "DeliverTo" value = "'.$_SESSION['Items' . $identifier]->DeliverTo.'" />
+			<input type = "hidden" name = "PhoneNo" value = "'.$_SESSION['Items' . $identifier]->PhoneNo.'" />
+			<input type = "hidden" name = "Email" value = "'.$_SESSION['Items' . $identifier]->Email.'" />
+			<input type = "hidden" name = "SalesPerson" value = "'.$_SESSION['Items' . $identifier]->SalesPerson.'" />';
 		}
 		for ($i = 1; $i<=$_SESSION['QuickEntries']; $i++) {
 
-	 		echo '<tr class="striped_row">';
+	 		echo '<tr class = "striped_row">';
 	 		/* Do not display colum unless customer requires po line number by sales order line*/
-	 		echo '<td><input type="text" name="part_' . $i . '" ' . ($i == 1 ? 'autofocus ="autofocus" ': '') . 'size = "21" data-type="no-illegal-chars" title="' . __('Enter a part code to be returned. Part codes can contain any alpha-numeric characters underscore or hyphen.') . '" maxlength = "20" /></td>
-					<td><input type="text" class="number" name="qty_' . $i . '" size = "6" maxlength = "6" />
-						<input type="hidden" type="date" name="ItemDue_' . $i . '" value="' . $ReturnDate . '" /></td>
+	 		echo '<td><input type = "text" name = "part_' . $i . '" ' . ($i == 1 ? 'autofocus = "autofocus" ': '') . 'size = "21" data-type = "no-illegal-chars" title = "' . __('Enter a part code to be returned. Part codes can contain any alpha-numeric characters underscore or hyphen.') . '" maxlength = "20" /></td>
+					<td><input type = "text" class = "number" name = "qty_' . $i . '" size = "6" maxlength = "6" />
+						<input type = "hidden" type = "date" name = "ItemDue_' . $i . '" value = "' . $ReturnDate . '" /></td>
 				</tr>';
    		}
 	 	echo '</table>
 				<br />
-				<div class="centre">
-					<input type="submit" name="QuickEntry" value="' . __('Quick Entry') . '" />
-					<input type="submit" name="PartSearch" value="' . __('Search Parts') . '" />
+				<div class = "centre">
+					<input type = "submit" name = "QuickEntry" value = "' . __('Quick Entry') . '" />
+					<input type = "submit" name = "PartSearch" value = "' . __('Search Parts') . '" />
 				</div>';
 
   	}
 	if ($_SESSION['Items' . $identifier]->ItemsOrdered >=1) {
-	echo '<div class="centre">
-				<input type="reset" name="CancelReturn" value="' . __('Cancel Return') . '" onclick="return confirm(\'' . __('Are you sure you wish to cancel this return?') . '\');" />
+	echo '<div class = "centre">
+				<input type = "reset" name = "CancelReturn" value = "' . __('Cancel Return') . '" onclick = "return confirm(\'' . __('Are you sure you wish to cancel this return?') . '\');" />
 			</div>';
 }
 }

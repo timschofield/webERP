@@ -7,7 +7,7 @@ $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
 
-echo '<p class = "page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
+echo '<p class = "page_title_text"><img alt = "" src = "' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title = "' .
 		__('Fix GL Trans Periods') . '" /></p>';
 

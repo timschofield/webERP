@@ -7,8 +7,8 @@ $ViewTopic = 'PurchaseOrdering';
 $BookMark = '';
 include('includes/header.php');
 
-echo '<p class="page_title_text">
-		<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . __('Purchase Orders') . '" alt=""  />' . ' ' . __('Purchase Orders') .
+echo '<p class = "page_title_text">
+		<img src = "' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title = "' . __('Purchase Orders') . '" alt = ""  />' . ' ' . __('Purchase Orders') .
 	'</p>';
 
 if (isset($_GET['SelectedStockItem'])) {
@@ -118,7 +118,7 @@ if (!isset($OrderNumber) or $OrderNumber == "") {
 	}
 	echo '<field>
 			<label for = "OrderNumber">', __('Order Number') . ':</label>
-			<input class="integer" name = "OrderNumber" autofocus = "autofocus" maxlength = "8" size = "9" />
+			<input class = "integer" name = "OrderNumber" autofocus = "autofocus" maxlength = "8" size = "9" />
 		</field>';
 
 	echo '<field>
@@ -180,7 +180,7 @@ if (!isset($OrderNumber) or $OrderNumber == "") {
 		</field>
 	</fieldset>';
 
-	echo '<div class="centre">
+	echo '<div class = "centre">
 			<input type = "submit" name = "SearchOrders" value = "' . __('Search Purchase Orders') . '" />
 		</div>';
 }
@@ -213,30 +213,30 @@ echo '<field>
 		<input type = "text" name = "StockCode" size = "15" maxlength = "18" />
 	</field>
 	</fieldset>
-	<div class="centre">
+	<div class = "centre">
 		<input type = "submit" name = "SearchParts" value = "' . __('Search Parts Now') . '" />
 		<input type = "submit" name = "ResetPart" value = "' . __('Show All') . '" />
 	</div>';
 
 if (isset($StockItemsResult)) {
-	echo '<table class="selection">
+	echo '<table class = "selection">
 		<thead>
 			<tr>
-				<th class="SortedColumn">' . __('Code') . '</th>
-				<th class="SortedColumn">' . __('Description') . '</th>
-				<th class="SortedColumn">' . __('On Hand') . '</th>
-				<th class="SortedColumn">' . __('Orders') . '<br />' . __('Outstanding') . '</th>
-				<th class="SortedColumn">' . __('Units') . '</th>
+				<th class = "SortedColumn">' . __('Code') . '</th>
+				<th class = "SortedColumn">' . __('Description') . '</th>
+				<th class = "SortedColumn">' . __('On Hand') . '</th>
+				<th class = "SortedColumn">' . __('Orders') . '<br />' . __('Outstanding') . '</th>
+				<th class = "SortedColumn">' . __('Units') . '</th>
 			</tr>
 		</thead>
 		<tbody>';
 
 	while ($MyRow = DB_fetch_array($StockItemsResult)) {
-		echo '<tr class="striped_row">
+		echo '<tr class = "striped_row">
 			<td><input type = "submit" name = "SelectedStockItem" value = "' . $MyRow['stockid'] . '"</td>
 			<td>' . $MyRow['description'] . '</td>
-			<td class="number">' . locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']) . '</td>
-			<td class="number">' . locale_number_format($MyRow['qord'],$MyRow['decimalplaces']) . '</td>
+			<td class = "number">' . locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']) . '</td>
+			<td class = "number">' . locale_number_format($MyRow['qord'],$MyRow['decimalplaces']) . '</td>
 			<td>' . $MyRow['units'] . '</td>
 			</tr>';
 	}
@@ -426,37 +426,37 @@ else {
 
 	if (DB_num_rows($PurchOrdersResult) > 0) {
 		/*show a table of the orders returned by the SQL */
-		echo '<table cellpadding = "2" width = "90%" class="selection">
+		echo '<table cellpadding = "2" width = "90%" class = "selection">
 			<thead>
 				<tr>
-					<th class="SortedColumn">' . __('View') . '</th>
-					<th class="SortedColumn">' . __('Supplier') . '</th>
-					<th class="SortedColumn">' . __('Currency') . '</th>
-					<th class="SortedColumn">' . __('Requisition') . '</th>
-					<th class="SortedColumn">' . __('Order Date') . '</th>
-					<th class="SortedColumn">' . __('Delivery Date') . '</th>
-					<th class="SortedColumn">' . __('Initiator') . '</th>
-					<th class="SortedColumn">' . __('Order Total') . '</th>
-					<th class="SortedColumn">' . __('Status') . '</th>
+					<th class = "SortedColumn">' . __('View') . '</th>
+					<th class = "SortedColumn">' . __('Supplier') . '</th>
+					<th class = "SortedColumn">' . __('Currency') . '</th>
+					<th class = "SortedColumn">' . __('Requisition') . '</th>
+					<th class = "SortedColumn">' . __('Order Date') . '</th>
+					<th class = "SortedColumn">' . __('Delivery Date') . '</th>
+					<th class = "SortedColumn">' . __('Initiator') . '</th>
+					<th class = "SortedColumn">' . __('Order Total') . '</th>
+					<th class = "SortedColumn">' . __('Status') . '</th>
 				</tr>
 			</thead>
 			</tbody>';
 
 		while ($MyRow = DB_fetch_array($PurchOrdersResult)) {
-			$ViewPurchOrder = $RootPath . '/PO_OrderDetails.php?OrderNo=' . $MyRow['orderno'];
+			$ViewPurchOrder = $RootPath . '/PO_OrderDetails.php?OrderNo = ' . $MyRow['orderno'];
 			$FormatedOrderDate = ConvertSQLDate($MyRow['orddate']);
 			$FormatedDeliveryDate = ConvertSQLDate($MyRow['deliverydate']);
 			$FormatedOrderValue = locale_number_format($MyRow['ordervalue'], $MyRow['currdecimalplaces']);
 
-			echo '<tr class="striped_row">
-					<td><a href="' . $ViewPurchOrder . '">' . $MyRow['orderno'] . '</a></td>
+			echo '<tr class = "striped_row">
+					<td><a href = "' . $ViewPurchOrder . '">' . $MyRow['orderno'] . '</a></td>
 					<td>' . $MyRow['suppname'] . '</td>
 					<td>' . $MyRow['currcode'] . '</td>
 					<td>' . $MyRow['requisitionno'] . '</td>
-					<td class="date">' . $FormatedOrderDate . '</td>
-					<td class="date">' . $FormatedDeliveryDate . '</td>
+					<td class = "date">' . $FormatedOrderDate . '</td>
+					<td class = "date">' . $FormatedDeliveryDate . '</td>
 					<td>' . $MyRow['initiator'] . '</td>
-					<td class="number">' . $FormatedOrderValue . '</td>
+					<td class = "number">' . $FormatedOrderValue . '</td>
 					<td>' . __($MyRow['status']) .  '</td>
 					</tr>';
 				//$MyRow['status'] is a string which has gettext translations from PO_Header.php script

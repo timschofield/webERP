@@ -298,10 +298,10 @@ if (isset($_GET['SupplierID'])) {
 	unset($SupplierID);
 }
 
-echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . __('Search') . '" alt="" />' . ' ' . __('Suppliers') . '</p>';
+echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title = "' . __('Search') . '" alt = "" />' . ' ' . __('Suppliers') . '</p>';
 if (isset($SupplierID)) {
 	echo '<p>
-			<a href="' . $RootPath . '/SupplierContacts.php?SupplierID=' . $SupplierID . '">' . __('Review Supplier Contact Details') . '</a>
+			<a href = "' . $RootPath . '/SupplierContacts.php?SupplierID = ' . $SupplierID . '">' . __('Review Supplier Contact Details') . '</a>
 		</p>';
 }
 $InputError = 0;
@@ -411,10 +411,10 @@ if (isset($_POST['submit'])) {
 			define('KEY', $APIKey);
 			// check that some sane values are setup already in geocode tables, if not skip the geocoding but add the record anyway.
 			if ($MapHost == "") {
-				echo '<div class="warn">' . __('Warning - Geocode Integration is enabled, but no hosts are setup.  Go to Geocode Setup') . '</div>';
+				echo '<div class = "warn">' . __('Warning - Geocode Integration is enabled, but no hosts are setup.  Go to Geocode Setup') . '</div>';
 } else {
 				$Address = urlencode($_POST['Address1'] . ', ' . $_POST['Address2'] . ', ' . $_POST['Address3'] . ', ' . $_POST['Address4'] . ', ' . $_POST['Address5'] . ', ' . $_POST['Address6']);
-				$BaseURLl = "https://" . MAPS_HOST . "/maps/api/geocode/xml?address =";
+				$BaseURLl = "https://" . MAPS_HOST . "/maps/api/geocode/xml?address = ";
 				$RequestURL = $BaseURLl . $Address . '&key = ' . KEY . '&sensor = true';
 
 				/// @todo file_get_contents might be disabled for remote files. Use a better api: curl or sockets
@@ -588,7 +588,7 @@ if (isset($_POST['submit'])) {
 			prnMsg(__('A new supplier for') . ' ' . $_POST['SuppName'] . ' ' . __('has been added to the database'), 'success');
 
 			echo '<p>
-				<a href="' . $RootPath . '/SupplierContacts.php?SupplierID=' . $SupplierID . '">' . __('Review Supplier Contact Details') . '</a>
+				<a href = "' . $RootPath . '/SupplierContacts.php?SupplierID = ' . $SupplierID . '">' . __('Review Supplier Contact Details') . '</a>
 				</p>';
 
 			unset($SupplierID);
@@ -678,9 +678,9 @@ if (!isset($SupplierID)) {
 	}
 
 	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
-	echo '<input type = "hidden" name="New" value = "Yes" />';
+	echo '<input type = "hidden" name = "New" value = "Yes" />';
 
 	echo '<fieldset>
 			<legend>', __('Create Supplier Details'), '</legend>';
@@ -689,43 +689,43 @@ if (!isset($SupplierID)) {
 	if ($_SESSION['AutoSupplierNo'] == 0) {
 	echo '<field>
 				<label for = "SupplierID">' . __('Supplier Code') . ':</label>
-				<input type = "text" data-type = "no-illegal-chars" title="" required = "required" name="SupplierID" placeholder = "' . __('max 10 characters') . '" size = "11" maxlength = "10" />
+				<input type = "text" data-type = "no-illegal-chars" title = "" required = "required" name = "SupplierID" placeholder = "' . __('max 10 characters') . '" size = "11" maxlength = "10" />
 				<fieldhelp>' . __('The supplier id cannot be blank (max 10 characters)') . '</fieldhelp>
 			</field>';
 }
 	echo '<field>
 			<label for = "SuppName">' . __('Supplier Name') . ':</label>
-			<input type = "text" pattern = "(?!^\s+$)[^<>+]{1,40}" required ="required" title="" name="SuppName" size = "42" placeholder = "' . __('max 40 characters') . '" maxlength = "40" />
+			<input type = "text" pattern = "(?!^\s+$)[^<>+]{1,40}" required = "required" title = "" name = "SuppName" size = "42" placeholder = "' . __('max 40 characters') . '" maxlength = "40" />
 			<fieldhelp>' . __('The supplier name should not be blank (max 40 characters)') . '</fieldhelp>
 		</field>
 		<field>
 			<label for = "Address1">' . __('Address Line 1 (Street)') . ':</label>
-			<input type = "text" pattern = ".{1,40}" title="" placeholder = "' . __('Max 39 characters') . '" name="Address1" size = "42" maxlength = "40" />
+			<input type = "text" pattern = ".{1,40}" title = "" placeholder = "' . __('Max 39 characters') . '" name = "Address1" size = "42" maxlength = "40" />
 			<fieldhelp>' . __('Max 39 characters') . '</fieldhelp>
 		</field>
 		<field>
 			<label for = "Address2">' . __('Address Line 2 (Street)') . ':</label>
-			<input type = "text" name="Address2" pattern = ".{1,40}" title="" placeholder = "' . __('Max 39 characters') . '" size = "42" maxlength = "40" />
+			<input type = "text" name = "Address2" pattern = ".{1,40}" title = "" placeholder = "' . __('Max 39 characters') . '" size = "42" maxlength = "40" />
 			<fieldhelp>' . __('Max 39 characters') . '</fieldhelp>
 		</field>
 		<field>
 			<label for = "Address3">' . __('Address Line 3 (Suburb/City)') . ':</label>
-			<input type = "text" title="" placeholder = "' . __('Max 39 characters') . '" name="Address3" size = "42" maxlength = "40" />
+			<input type = "text" title = "" placeholder = "' . __('Max 39 characters') . '" name = "Address3" size = "42" maxlength = "40" />
 			<fieldhelp>' . __('Max 39 characters') . '</fieldhelp>
 		</field>
 		<field>
 			<label for = "Address4">' . __('Address Line 4 (State/Province)') . ':</label>
-			<td><input type = "text" name="Address4" placeholder = "' . __('Max 49 characters') . '" size = "42" maxlength = "50" /></td>
+			<td><input type = "text" name = "Address4" placeholder = "' . __('Max 49 characters') . '" size = "42" maxlength = "50" /></td>
 			<fieldhelp>' . __('Max 49 characters') . '</fieldhelp>
 		</field>
 		<field>
 			<label for = "Address5">' . __('Address Line 5 (Postal Code)') . ':</label>
-			<td><input type = "text" name="Address5" size = "42" placeholder = "' . __('Max 39 characters') . '" maxlength = "20" /></td>
+			<td><input type = "text" name = "Address5" size = "42" placeholder = "' . __('Max 39 characters') . '" maxlength = "20" /></td>
 			<fieldhelp>' . __('Max 39 characters') . '</fieldhelp>
 		</field>
 		<field>
 			<label for = "Address6">' . __('Country') . ':</label>
-			<select name="Address6">';
+			<select name = "Address6">';
 	foreach ($CountriesArray as $CountryEntry => $CountryName) {
 		if (isset($_POST['Address6']) and ($_POST['Address6'] == $CountryName)) {
 			echo '<option selected = "selected" value = "' . $CountryName . '">' . $CountryName . '</option>';
@@ -739,27 +739,27 @@ if (!isset($SupplierID)) {
 		</field>
 		<field>
 			<label for = "Phone">' . __('Telephone') . ':</label>
-			<input type = "tel" pattern = "[\s\d+)(-]{1,40}" title="" placeholder = "' . __('only number + - ( and ) allowed') . '" name="Phone" size = "30" maxlength = "40" />
+			<input type = "tel" pattern = "[\s\d+)(-]{1,40}" title = "" placeholder = "' . __('only number + - ( and ) allowed') . '" name = "Phone" size = "30" maxlength = "40" />
 			<fieldhelp>' . __('The input should be phone number') . '</fieldhelp>
 		</field>
 		<field>
 			<label for = "Fax">' . __('Facsimile') . ':</label>
-			<input type = "tel" pattern = "[\s\d+)(-]{1,40}" title="" placeholder = "' . __('only number + - ( and ) allowed') . '" name="Fax" size = "30" maxlength = "40" />
+			<input type = "tel" pattern = "[\s\d+)(-]{1,40}" title = "" placeholder = "' . __('only number + - ( and ) allowed') . '" name = "Fax" size = "30" maxlength = "40" />
 			<fieldhelp>' . __('The input should be fax number') . '</fieldhelp>
 		</field>
 		<field>
 			<label for = "Email">' . __('Email Address') . ':</label>
-			<input type = "email" name="Email" title="" placeholder = "' . __('email format such as xx@mail.cn') . '" size = "30" maxlength = "50" pattern = "[a-z0-9!#$%&\'*+/=?^_` {|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*" />
+			<input type = "email" name = "Email" title = "" placeholder = "' . __('email format such as xx@mail.cn') . '" size = "30" maxlength = "50" pattern = "[a-z0-9!#$%&\'*+/=?^_` {|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*" />
 			<fieldhelp>' . __('Only email address are allowed') . '</fieldhelp>
 		</field>
 		<field>
 			<label for = "URL">' . __('URL') . ':</label>
-			<input type = "url" name="URL" title="" placeholder = "' . __('URL format such as www.example.com') . '" size = "30" maxlength = "50" />
+			<input type = "url" name = "URL" title = "" placeholder = "' . __('URL format such as www.example.com') . '" size = "30" maxlength = "50" />
 			<fieldhelp>' . __('Only URL address are allowed') . '</fieldhelp>
 		</field>
 		<field>
 			<label for = "SupplierType">' . __('Supplier Type') . ':</label>
-			<select name="SupplierType">';
+			<select name = "SupplierType">';
 	$Result = DB_query("SELECT typeid, typename FROM suppliertype");
 	while ($MyRow = DB_fetch_array($Result)) {
 		echo '<option value = "' . $MyRow['typeid'] . '">' . $MyRow['typename'] . '</option>';
@@ -770,26 +770,26 @@ if (!isset($SupplierID)) {
 	$DateString = date('Y-m-d');
 	echo '<field>
 			<label for = "SupplierSince">' . __('Supplier Since') . ' (' . $_SESSION['DefaultDateFormat'] . '):</label>
-			<input type = "date" name="SupplierSince" value = "' . $DateString . '" size = "11" maxlength = "10" />
+			<input type = "date" name = "SupplierSince" value = "' . $DateString . '" size = "11" maxlength = "10" />
 		</field>
 		<field>
 			<label for = "BankPartics">' . __('Bank Particulars') . ':</label>
-			<input type = "text" name="BankPartics" size = "13" maxlength = "12" />
+			<input type = "text" name = "BankPartics" size = "13" maxlength = "12" />
 		</field>
 		<field>
 			<label for = "BankRef">' . __('Bank reference') . ':</label>
-			<input type = "text" name="BankRef" value = "0" size = "13" maxlength = "12" />
+			<input type = "text" name = "BankRef" value = "0" size = "13" maxlength = "12" />
 		</field>
 		<field>
 			<label for = "BankAct">' . __('Bank Account No') . ':</label>
-			<input type = "text" placeholder = "' . __('Less than 30 characters') . '" name="BankAct" size = "31" maxlength = "30" />
+			<input type = "text" placeholder = "' . __('Less than 30 characters') . '" name = "BankAct" size = "31" maxlength = "30" />
 		</field>';
 
 	$Result = DB_query("SELECT terms, termsindicator FROM paymentterms");
 
 	echo '<field>
 			<label for = "PaymentTerms">' . __('Payment Terms') . ':</label>
-			<select name="PaymentTerms">';
+			<select name = "PaymentTerms">';
 
 	while ($MyRow = DB_fetch_array($Result)) {
 		echo '<option value = "' . $MyRow['termsindicator'] . '">' . $MyRow['terms'] . '</option>';
@@ -802,7 +802,7 @@ if (!isset($SupplierID)) {
 
 	echo '<field>
 			<label for = "FactorID">' . __('Factor Company') . ':</label>
-			<select name="FactorID">';
+			<select name = "FactorID">';
 	echo '<option value = "0">' . __('None') . '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['FactorID']) and $_POST['FactorID'] == $MyRow['id']) {
@@ -817,14 +817,14 @@ if (!isset($SupplierID)) {
 
 	echo '<field>
 			<label for = "TaxRef">' . __('Tax Reference') . ':</label>
-			<input type = "text" name="TaxRef" placehoder = "' . __('Within 20 characters') . '" size = "21" maxlength = "20" />
+			<input type = "text" name = "TaxRef" placehoder = "' . __('Within 20 characters') . '" size = "21" maxlength = "20" />
 		</field>';
 
 	$Result = DB_query("SELECT salesmancode, salesmanname FROM salesman");
 
 	echo '<field>
 			<label for = "SalesPersonID">', __('Sales Person'), ':</label>
-			<select name="SalesPersonID">';
+			<select name = "SalesPersonID">';
 	echo '<option value = "">', __('None'), '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($_POST['SalesPersonID'] == $MyRow['salesmancode']) {
@@ -846,7 +846,7 @@ if (!isset($SupplierID)) {
 
 	echo '<field>
 			<label for = "CurrCode">' . __('Supplier Currency') . ':</label>
-			<select name="CurrCode">';
+			<select name = "CurrCode">';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($_POST['CurrCode'] == $MyRow['currabrev']) {
 	echo '<option selected = "selected" value = "' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
@@ -861,7 +861,7 @@ if (!isset($SupplierID)) {
 
 	echo '<field>
 			<label for = "Remittance">' . __('Remittance Advice') . ':</label>
-			<select name="Remittance">
+			<select name = "Remittance">
 				<option value = "0">' . __('Not Required') . '</option>
 				<option value = "1">' . __('Required') . '</option>
 			</select>
@@ -873,7 +873,7 @@ if (!isset($SupplierID)) {
 	$Result = DB_query($SQL, $ErrMsg);
 	echo '<field>
 			<label for = "DefaultShipper">' . __('Default Shipper') . ':</label>';
-	echo '<select required = "required" name="DefaultShipper">';
+	echo '<select required = "required" name = "DefaultShipper">';
 
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($_POST['DefaultShipper'] == $MyRow['shipper_id']) {
@@ -894,7 +894,7 @@ if (!isset($SupplierID)) {
 					ORDER BY chartmaster.accountcode");
 	echo '<field>
 			<label for = "DefaultGL">' . __('Default GL Account') . ':</label>
-			<select tabindex = "19" name="DefaultGL">';
+			<select tabindex = "19" name = "DefaultGL">';
 
 	echo '<option value = "0">', __('None') , ' (0)</option>';
 	while ($MyRow = DB_fetch_row($Result)) {
@@ -909,7 +909,7 @@ if (!isset($SupplierID)) {
 
 	echo '<field>
 			<label for = "TaxGroup">' . __('Tax Group') . ':</label>
-			<select name="TaxGroup">';
+			<select name = "TaxGroup">';
 
 	DB_data_seek($Result, 0);
 
@@ -926,13 +926,13 @@ if (!isset($SupplierID)) {
 	echo '</select>
 		</field>
 		</fieldset>
-		<div class="centre"><input type = "submit" name="submit" value = "' . __('Insert New Supplier') . '" /></div>';
+		<div class = "centre"><input type = "submit" name = "submit" value = "' . __('Insert New Supplier') . '" /></div>';
 	echo '</form>';
 } else {
 
 	//SupplierID exists - either passed when calling the form or from the form itself
 	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 	echo '<fieldset>
 			<legend>', __('Edit Supplier Details'), '</legend>';
 
@@ -995,48 +995,48 @@ if (!isset($SupplierID)) {
 		$_POST['DefaultGL'] = $MyRow['defaultgl'];
 		$_POST['DefaultShipper'] = $MyRow['defaultshipper'];
 
-		echo '<field><td><input type = "hidden" name="SupplierID" value = "' . $SupplierID . '" /></td></field>';
+		echo '<field><td><input type = "hidden" name = "SupplierID" value = "' . $SupplierID . '" /></td></field>';
 		echo '<field>
 				<label for = "SupplierID">', __('Supplier Code'), '</label>
 				<fieldtext>', $SupplierID, '</fieldtext>';
 
 	} else {
 		// its a new supplier being added
-		echo '<field><td><input type = "hidden" name="New" value = "Yes" />';
+		echo '<field><td><input type = "hidden" name = "New" value = "Yes" />';
 		/* if $AutoSupplierNo is off (i.e. 0) then provide an input box for the SupplierID to manually assigned */
 		if ($_SESSION['AutoSupplierNo'] == 0) {
 	echo __('Supplier Code') . ':</td>
-					<td><input ' . (in_array('ID', $Errors) ? 'class ="inputerror"' : '') . ' type = "text" name="SupplierID" value = "' . $SupplierID . '" size = "12" maxlength = "10" /></td></field>';
+					<td><input ' . (in_array('ID', $Errors) ? 'class = "inputerror"' : '') . ' type = "text" name = "SupplierID" value = "' . $SupplierID . '" size = "12" maxlength = "10" /></td></field>';
 }
 	}
 
 	echo '<field>
 			<label for = "SuppName">' . __('Supplier Name') . ':</label>
-			<input ' . (in_array('Name', $Errors) ? 'class ="inputerror"' : '') . ' type = "text" name="SuppName" value = "' . $_POST['SuppName'] . '" size = "42" maxlength = "40" />
+			<input ' . (in_array('Name', $Errors) ? 'class = "inputerror"' : '') . ' type = "text" name = "SuppName" value = "' . $_POST['SuppName'] . '" size = "42" maxlength = "40" />
 		</field>
 		<field>
 			<label for = "Address1">' . __('Address Line 1 (Street)') . ':</label>
-			<input type = "text" name="Address1" value = "' . $_POST['Address1'] . '" size = "42" maxlength = "40" />
+			<input type = "text" name = "Address1" value = "' . $_POST['Address1'] . '" size = "42" maxlength = "40" />
 		</field>
 		<field>
 			<label for = "Address2">' . __('Address Line 2 (Street)') . ':</label>
-			<input type = "text" name="Address2" value = "' . $_POST['Address2'] . '" size = "42" maxlength = "40" />
+			<input type = "text" name = "Address2" value = "' . $_POST['Address2'] . '" size = "42" maxlength = "40" />
 		</field>
 		<field>
 			<label for = "Address3">' . __('Address Line 3 (Suburb/City)') . ':</label>
-			<input type = "text" name="Address3" placeholder = "' . __('Within 40 characters') . '" value = "' . $_POST['Address3'] . '" size = "42" maxlength = "40" />
+			<input type = "text" name = "Address3" placeholder = "' . __('Within 40 characters') . '" value = "' . $_POST['Address3'] . '" size = "42" maxlength = "40" />
 		</field>
 		<field>
 			<label for = "Address4">' . __('Address Line 4 (State/Province)') . ':</label>
-			<input type = "text" name="Address4" value = "' . $_POST['Address4'] . '" placeholder = "' . __('Within 40 characters') . '" size = "42" maxlength = "40" />
+			<input type = "text" name = "Address4" value = "' . $_POST['Address4'] . '" placeholder = "' . __('Within 40 characters') . '" size = "42" maxlength = "40" />
 		</field>
 		<field>
 			<label for = "Address5">' . __('Address Line 5 (Postal Code)') . ':</label>
-			<input type = "text" name="Address5" value = "' . $_POST['Address5'] . '" size = "42" placeholder = "' . __('Within 40 characters') . '" maxlength = "40" />
+			<input type = "text" name = "Address5" value = "' . $_POST['Address5'] . '" size = "42" placeholder = "' . __('Within 40 characters') . '" maxlength = "40" />
 		</field>
 		<field>
 			<label for = "Address6">' . __('Country') . ':</label>
-			<select name="Address6">';
+			<select name = "Address6">';
 
 	foreach ($CountriesArray as $CountryEntry => $CountryName) {
 		if (isset($_POST['Address6']) and ($_POST['Address6'] == $CountryName)) {
@@ -1052,25 +1052,25 @@ if (!isset($SupplierID)) {
 
 	echo '<field>
 			<label for = "Phone">' . __('Telephone') . ':</label>
-			<input ' . (in_array('Name', $Errors) ? 'class ="inputerror"' : '') . ' type = "tel" pattern = "[\s\d+()-]{1,40}" placeholder = "' . __('Only digit blank ( ) and - allowed') . '" name="Phone" value = "' . $_POST['Phone'] . '" size = "42" maxlength = "40" />
+			<input ' . (in_array('Name', $Errors) ? 'class = "inputerror"' : '') . ' type = "tel" pattern = "[\s\d+()-]{1,40}" placeholder = "' . __('Only digit blank ( ) and - allowed') . '" name = "Phone" value = "' . $_POST['Phone'] . '" size = "42" maxlength = "40" />
 		</field>
 		<field>
 			<label for = "Fax">' . __('Facsimile') . ':</label>
-			<input ' . (in_array('Name', $Errors) ? 'class ="inputerror"' : '') . ' type = "tel" pattern = "[\s\d+()-]{1,40}" placeholder = "' . __('Only digit blank ( ) and - allowed') . '" name="Fax" value = "' . $_POST['Fax'] . '" size = "42" maxlength = "40" />
+			<input ' . (in_array('Name', $Errors) ? 'class = "inputerror"' : '') . ' type = "tel" pattern = "[\s\d+()-]{1,40}" placeholder = "' . __('Only digit blank ( ) and - allowed') . '" name = "Fax" value = "' . $_POST['Fax'] . '" size = "42" maxlength = "40" />
 		</field>
 		<field>
 			<label for = "Email">' . __('Email Address') . ':</label>
-			<input ' . (in_array('Name', $Errors) ? 'class ="inputerror"' : '') . ' type = "email" title="" name="Email" value = "' . $_POST['Email'] . '" size = "42" maxlength = "40" placeholder = "' . __('email format such as xx@mail.cn') . '" pattern = "[a-z0-9!#$%&\'*+/=?^_` {|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*" />
+			<input ' . (in_array('Name', $Errors) ? 'class = "inputerror"' : '') . ' type = "email" title = "" name = "Email" value = "' . $_POST['Email'] . '" size = "42" maxlength = "40" placeholder = "' . __('email format such as xx@mail.cn') . '" pattern = "[a-z0-9!#$%&\'*+/=?^_` {|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*" />
 			<fieldhelp>' . __('The input must be in email format') . '</fieldhelp>
 		</field>
 		<field>
 			<label for = "URL">' . __('URL') . ':</label>
-			<input ' . (in_array('Name', $Errors) ? 'class ="inputerror"' : '') . ' type = "url" title="" name="URL" value = "' . $_POST['URL'] . '" size = "42" maxlength = "40" placeholder = "' . __('url format such as www.example.com') . '" />
+			<input ' . (in_array('Name', $Errors) ? 'class = "inputerror"' : '') . ' type = "url" title = "" name = "URL" value = "' . $_POST['URL'] . '" size = "42" maxlength = "40" placeholder = "' . __('url format such as www.example.com') . '" />
 			<fieldhelp>' . __('The input must be in url format') . '</fieldhelp>
 		</field>
 		<field>
 			<label for = "SupplierType">' . __('Supplier Type') . ':</label>
-			<select name="SupplierType">';
+			<select name = "SupplierType">';
 	$Result = DB_query("SELECT typeid, typename FROM suppliertype");
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($_POST['SupplierType'] == $MyRow['typeid']) {
@@ -1083,26 +1083,26 @@ if (!isset($SupplierID)) {
 		</field>
 		<field>
 			<label for = "SupplierSince">' . __('Supplier Since') . ' (' . $_SESSION['DefaultDateFormat'] . '):</label>
-			<input size = "11" maxlength = "10" type = "date" name="SupplierSince" value = "' . FormatDateForSQL($_POST['SupplierSince']) . '" />
+			<input size = "11" maxlength = "10" type = "date" name = "SupplierSince" value = "' . FormatDateForSQL($_POST['SupplierSince']) . '" />
 		</field>
 		<field>
 			<label for = "BankPartics">' . __('Bank Particulars') . ':</label>
-			<input type = "text" name="BankPartics" size = "13" maxlength = "12" value = "' . $_POST['BankPartics'] . '" />
+			<input type = "text" name = "BankPartics" size = "13" maxlength = "12" value = "' . $_POST['BankPartics'] . '" />
 		</field>
 		<field>
 			<label for = "BankRef">' . __('Bank Reference') . ':</label>
-			<input ' . (in_array('BankRef', $Errors) ? 'class ="inputerror"' : '') . ' type = "text" name="BankRef" size = "13" maxlength = "12" value = "' . $_POST['BankRef'] . '" />
+			<input ' . (in_array('BankRef', $Errors) ? 'class = "inputerror"' : '') . ' type = "text" name = "BankRef" size = "13" maxlength = "12" value = "' . $_POST['BankRef'] . '" />
 		</field>
 		<field>
 			<label for = "BankAct">' . __('Bank Account No') . ':</label>
-			<input type = "text" name="BankAct" size = "31" maxlength = "30" value = "' . $_POST['BankAct'] . '" />
+			<input type = "text" name = "BankAct" size = "31" maxlength = "30" value = "' . $_POST['BankAct'] . '" />
 		</field>';
 
 	$Result = DB_query("SELECT terms, termsindicator FROM paymentterms");
 
 	echo '<field>
 			<label for = "PaymentTerms">' . __('Payment Terms') . ':</label>
-			<select name="PaymentTerms">';
+			<select name = "PaymentTerms">';
 
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($_POST['PaymentTerms'] == $MyRow['termsindicator']) {
@@ -1119,7 +1119,7 @@ if (!isset($SupplierID)) {
 
 	echo '<field>
 			<label for = "FactorID">' . __('Factor Company') . ':</label>
-			<select name="FactorID">';
+			<select name = "FactorID">';
 	echo '<option value = "0">' . __('None') . '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($_POST['FactorID'] == $MyRow['id']) {
@@ -1134,14 +1134,14 @@ if (!isset($SupplierID)) {
 
 	echo '<field>
 			<label for = "TaxRef">' . __('Tax Reference') . ':</label>
-			<input type = "text" name="TaxRef" size = "21" maxlength = "20" value = "' . $_POST['TaxRef'] . '" />
+			<input type = "text" name = "TaxRef" size = "21" maxlength = "20" value = "' . $_POST['TaxRef'] . '" />
 		</field>';
 
 	$Result = DB_query("SELECT salesmancode, salesmanname FROM salesman");
 
 	echo '<field>
 			<label for = "SalesPersonID">', __('Sales Person'), ':</label>
-			<select name="SalesPersonID">';
+			<select name = "SalesPersonID">';
 	echo '<option value = "">', __('None'), '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($_POST['SalesPersonID'] == $MyRow['salesmancode']) {
@@ -1157,7 +1157,7 @@ if (!isset($SupplierID)) {
 
 	echo '<field>
 			<label for = "CurrCode">' . __('Supplier Currency') . ':</label>
-			<select name="CurrCode">';
+			<select name = "CurrCode">';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($_POST['CurrCode'] == $MyRow['currabrev']) {
 	echo '<option selected = "selected" value = "' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
@@ -1171,7 +1171,7 @@ if (!isset($SupplierID)) {
 		</field>
 		<field>
 			<label for = "Remittance">' . __('Remittance Advice') . ':</label>
-			<select name="Remittance">';
+			<select name = "Remittance">';
 
 	if ($_POST['Remittance'] == 0) {
 	echo '<option selected = "selected" value = "0">' . __('Not Required') . '</option>';
@@ -1191,7 +1191,7 @@ if (!isset($SupplierID)) {
 	$Result = DB_query($SQL, $ErrMsg);
 	echo '<field>
 			<label for = "DefaultShipper">' . __('Default Shipper') . ':</label>';
-	echo '<select required = "required" name="DefaultShipper">';
+	echo '<select required = "required" name = "DefaultShipper">';
 
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($_POST['DefaultShipper'] == $MyRow['shipper_id']) {
@@ -1212,7 +1212,7 @@ if (!isset($SupplierID)) {
 					ORDER BY chartmaster.accountcode");
 	echo '<field>
 			<label for = "DefaultGL">' . __('Default GL Account') . ':</label>
-			<select tabindex = "19" name="DefaultGL">';
+			<select tabindex = "19" name = "DefaultGL">';
 
 	while ($MyRow = DB_fetch_row($Result)) {
 		if ($_POST['DefaultGL'] == $MyRow[0]) {
@@ -1226,7 +1226,7 @@ if (!isset($SupplierID)) {
 
 	echo '<field>
 			<label for = "TaxGroup">' . __('Tax Group') . ':</label>
-			<select name="TaxGroup">';
+			<select name = "TaxGroup">';
 
 	DB_data_seek($Result, 0);
 
@@ -1246,17 +1246,17 @@ if (!isset($SupplierID)) {
 	</fieldset>';
 
 	if (isset($_POST['New'])) {
-		echo '<div class="centre">
-					<input type = "submit" name="submit" value = "' . __('Add These New Supplier Details') . '" />
+		echo '<div class = "centre">
+					<input type = "submit" name = "submit" value = "' . __('Add These New Supplier Details') . '" />
 				</div>';
 	} else {
-		echo '<div class="centre">
-					<input type = "submit" name="submit" value = "' . __('Update Supplier') . '" />
+		echo '<div class = "centre">
+					<input type = "submit" name = "submit" value = "' . __('Update Supplier') . '" />
 				</div>';
 		//		echo '<p><font color = red><b>' . __('WARNING') . ': ' . __('There is no second warning if you hit the delete button below') . '. ' . __('However checks will be made to ensure there are no outstanding purchase orders or existing accounts payable transactions before the deletion is processed') . '<br /></font></b>';
 		prnMsg(__('WARNING') . ': ' . __('There is no second warning if you hit the delete button below') . '. ' . __('However checks will be made to ensure there are no outstanding purchase orders or existing accounts payable transactions before the deletion is processed'), 'Warn');
-		echo '<div class="centre">
-				<input type = "reset" name="delete" value = "' . __('Delete Supplier') . '" onclick="return confirm(\'' . __('Are you sure you wish to delete this supplier?') . '\');" />
+		echo '<div class = "centre">
+				<input type = "reset" name = "delete" value = "' . __('Delete Supplier') . '" onclick = "return confirm(\'' . __('Are you sure you wish to delete this supplier?') . '\');" />
 			</div>';
 	}
 	echo '</div>

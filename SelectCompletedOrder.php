@@ -9,7 +9,7 @@ include('includes/header.php');
 
 if (isset($_POST['OrdersAfterDate'])){$_POST['OrdersAfterDate'] = ConvertSQLDate($_POST['OrdersAfterDate']);}
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Search') . '" alt="" />
+echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title = "' . __('Search') . '" alt = "" />
      ' . ' ' . __('Search Sales Orders') . '</p>';
 
 echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post">';
@@ -66,7 +66,7 @@ if (isset($_POST['ResetPart'])) {
 }
 
 if (isset($OrderNumber)) {
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/sales.png" title="' . __('Sales Order') . '" alt="" />
+	echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/sales.png" title = "' . __('Sales Order') . '" alt = "" />
          ' . ' ' . __('Order Number') . ' - ' . $OrderNumber . '</p>';
 	if (mb_strlen($_SESSION['UserBranch'])>1){
    	   echo __('For customer') . ': ' . $SelectedCustomer;
@@ -436,7 +436,7 @@ if (!isset($_POST['OrdersAfterDate']) or $_POST['OrdersAfterDate'] == '' or ! Is
 	$_POST['OrdersAfterDate'] = date($_SESSION['DefaultDateFormat'],mktime(0,0,0,date('m')-2,date('d'),date('Y')));
 }
 echo '<fieldset>
-		<legend class="search">', __('Sales Order Search'), '</legend>';
+		<legend class = "search">', __('Sales Order Search'), '</legend>';
 
 if (isset($PartString)) {
 	echo '<field><td>' . $PartString . '</td>';
@@ -471,13 +471,13 @@ if (!isset($SelectedStockItem)) {
 						FROM stockcategory
 						ORDER BY categorydescription");
 
-	echo '<div class="centre">
+   echo '<div class = "centre">
 			<input type = "submit" name = "SearchOrders" value = "' . __('Search Orders') . '" />
 		</div>';
-	echo '<div class="page_help_text">' . __('To search for sales orders for a specific part use the part selection facilities below') . '</div>';
-	echo '<fieldset>
-			<legend class="search">', __('Orders By Item Search'), '</legend>';
-	echo '<field>
+   echo '<div class = "page_help_text">' . __('To search for sales orders for a specific part use the part selection facilities below') . '</div>';
+   echo '<fieldset>
+			<legend class = "search">', __('Orders By Item Search'), '</legend>';
+   echo '<field>
 			<label for = "StockCat">' . __('Select a stock category') . ':</label>
 			<select name = "StockCat">';
 
@@ -503,7 +503,7 @@ if (!isset($SelectedStockItem)) {
 		</field>
 	</fieldset>';
 
-	echo '<div class="centre">
+	echo '<div class = "centre">
 			<input type = "submit" name = "SearchParts" value = "' . __('Search Parts Now') . '" />';
 
 	if (count($_SESSION['AllowedPageSecurityTokens'])>1){
@@ -514,7 +514,7 @@ if (!isset($SelectedStockItem)) {
 
 if (isset($StockItemsResult)) {
 
-	echo '<table cellpadding = "2" class="selection">
+	echo '<table cellpadding = "2" class = "selection">
 			<tr>
 				<th>' . __('Code') . '</th>
 				<th>' . __('Description') . '</th>
@@ -526,12 +526,12 @@ if (isset($StockItemsResult)) {
 
 	while ($MyRow = DB_fetch_array($StockItemsResult)) {
 
-		echo '<tr class="striped_row">
+		echo '<tr class = "striped_row">
 				<td><input type = "submit" name = "SelectedStockItem" value = "', $MyRow['stockid'], '" /></td>
 				<td>', $MyRow['description'], '</td>
-				<td class="number">', locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']), '</td>
-				<td class="number">', locale_number_format($MyRow['qoo'],$MyRow['decimalplaces']), '</td>
-				<td class="number">', locale_number_format($MyRow['qdem'],$MyRow['decimalplaces']), '</td>
+				<td class = "number">', locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']), '</td>
+				<td class = "number">', locale_number_format($MyRow['qoo'],$MyRow['decimalplaces']), '</td>
+				<td class = "number">', locale_number_format($MyRow['qdem'],$MyRow['decimalplaces']), '</td>
 				<td>', $MyRow['units'], '</td>
 			</tr>';
 
@@ -550,13 +550,13 @@ if (isset($SalesOrdersResult)) {
 			$OrdRow = DB_fetch_array($SalesOrdersResult);
 			$OrderNumber = $OrdRow['orderno'];
 		}
-		echo '<meta http-equiv = "refresh" content = "0; url = ' . $RootPath . '/OrderDetails.php?OrderNumber=' . $OrderNumber. '">';
+		echo '<meta http-equiv = "refresh" content = "0; url = ' . $RootPath . '/OrderDetails.php?OrderNumber = ' . $OrderNumber. '">';
 		exit();
 	}
 
 /*show a table of the orders returned by the SQL */
 
-	echo '<table cellpadding = "2" width = "90%" class="selection">
+	echo '<table cellpadding = "2" width = "90%" class = "selection">
 			<tr>
 				<th>' . __('Order') . ' #</th>
 				<th>' . __('Customer') . '</th>
@@ -570,20 +570,20 @@ if (isset($SalesOrdersResult)) {
 
 	while ($MyRow = DB_fetch_array($SalesOrdersResult)) {
 
-		$ViewPage = $RootPath . '/OrderDetails.php?OrderNumber=' . $MyRow['orderno'];
+		$ViewPage = $RootPath . '/OrderDetails.php?OrderNumber = ' . $MyRow['orderno'];
 		$FormatedDelDate = ConvertSQLDate($MyRow['deliverydate']);
 		$FormatedOrderDate = ConvertSQLDate($MyRow['orddate']);
 		$FormatedOrderValue = locale_number_format($MyRow['ordervalue'],$MyRow['currdecimalplaces']);
 
-		echo '<tr class="striped_row">
-				<td><a href="', $ViewPage, '">', $MyRow['orderno'], '</a></td>
+		echo '<tr class = "striped_row">
+				<td><a href = "', $ViewPage, '">', $MyRow['orderno'], '</a></td>
 				<td>', $MyRow['name'], '</td>
 				<td>', $MyRow['brname'], '</td>
 				<td>', $MyRow['customerref'], '</td>
 				<td>', $FormatedOrderDate, '</td>
 				<td>', $FormatedDelDate, '</td>
 				<td>', $MyRow['deliverto'], '</td>
-				<td class="number">', $FormatedOrderValue, '</td>
+				<td class = "number">', $FormatedOrderValue, '</td>
 			</tr>';
 
 //end of page full new headings if

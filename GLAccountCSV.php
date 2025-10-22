@@ -14,9 +14,9 @@ elseif (isset($_GET['Period'])) {
 	$SelectedPeriod = $_GET['Period'];
 }
 
-echo '<p class="page_title_text"><img src="' . $RootPath, '/css/', $Theme, '/images/transactions.png" title="' . __('General Ledger Account Inquiry') . '" alt="" />' . ' ' . __('General Ledger Account Report') . '</p>';
+echo '<p class = "page_title_text"><img src = "' . $RootPath, '/css/', $Theme, '/images/transactions.png" title = "' . __('General Ledger Account Inquiry') . '" alt = "" />' . ' ' . __('General Ledger Account Report') . '</p>';
 
-echo '<div class="page_help_text">' . __('Use the keyboard Shift key to select multiple accounts and periods') . '</div><br />';
+echo '<div class = "page_help_text">' . __('Use the keyboard Shift key to select multiple accounts and periods') . '</div><br />';
 
 echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
@@ -93,7 +93,7 @@ echo '</select>
 // End select tag
 echo '</fieldset>';
 
-echo '<div class="centre">
+echo '<div class = "centre">
 		<input type = "submit" name = "MakeCSV" value = "' . __('Make CSV File') . '" />
 	</div>
 </form>';
@@ -264,7 +264,7 @@ if (isset($_POST['MakeCSV'])) {
 
 	} /*end for each SelectedAccount */
 	fclose($fp);
-	echo '<p><a href="' . $FileName . '">' . __('click here') . '</a> ' . __('to view the file') . '<br />';
+	echo '<p><a href = "' . $FileName . '">' . __('click here') . '</a> ' . __('to view the file') . '<br />';
 } /* end of if CreateCSV button hit */
 
 include('includes/footer.php');

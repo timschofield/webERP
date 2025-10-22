@@ -7,8 +7,8 @@ $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
-		'/images/inventory.png" title="' .
+echo '<p class = "page_title_text"><img alt = "" src = "' . $RootPath . '/css/' . $Theme .
+		'/images/inventory.png" title = "' .
 		__('Import Stock Items from .csv') . '" />' . ' ' .
 		__('Import Stock Items from .csv') . '</p>';
 
@@ -290,15 +290,15 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 	echo '
 		<br />
-		<a href="' . $RootPath . '/Z_ImportStocks.php?gettemplate=1">Get Import Template</a>
+		<a href = "' . $RootPath . '/Z_ImportStocks.php?gettemplate = 1">Get Import Template</a>
 		<br />
 		<br />';
 	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" enctype = "multipart/form-data">';
-    echo '<div class="centre">';
-	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+    echo '<div class = "centre">';
+	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
-	echo '<input type = "hidden" name="MAX_FILE_SIZE" value = "1000000" />' .
-			__('Upload file') . ': <input name="userfile" type = "file" />
+	echo '<input type = "hidden" name = "MAX_FILE_SIZE" value = "1000000" />' .
+			__('Upload file') . ': <input name = "userfile" type = "file" />
 			<input type = "submit" value = "' . __('Send File') . '" />
         </div>
 		</form>';

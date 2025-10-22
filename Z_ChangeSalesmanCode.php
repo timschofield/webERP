@@ -10,7 +10,7 @@ $BookMark = 'Z_ChangeSalesmanCode';
 include('includes/header.php');
 
 echo '<p class = "page_title_text">
-		<img alt="" src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', __('Change A Sales Person Code'), '" /> ', __('Change A Sales Person Code'),
+		<img alt = "" src = "', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title = "', __('Change A Sales Person Code'), '" /> ', __('Change A Sales Person Code'),
 	'</p>';
 
 if (isset($_POST['ProcessSalesmanChange'])){

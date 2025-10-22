@@ -518,18 +518,18 @@ if (isset($_GET['Trf_ID'])) {
 if (isset($_SESSION['Transfer'])) {
 	//Begin Form for receiving shipment
 
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' .
+	echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title = "' .
 		 __('Dispatch') . '" alt = "" />' . ' ' . $Title . '</p>';
 	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post">';
 	echo '<div>';
-	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 	prnMsg(__('Please Verify Shipment Quantities Received'), 'info');
 
 	$i = 0;//Line Item Array pointer
 
 	echo '<br />
-			<table class="selection">';
+			<table class = "selection">';
 	echo '<tr>
 			<th colspan = "7"><h3>' . __('Location Transfer Reference') . ' #' . $_SESSION['Transfer']->TrfID . ' ' .
 		 __('from') . ' ' . $_SESSION['Transfer']->StockLocationFromName . ' ' . __('to') . ' ' .
@@ -550,11 +550,11 @@ if (isset($_SESSION['Transfer'])) {
 
 	foreach ($_SESSION['Transfer']->TransferItem as $TrfLine) {
 
-		echo '<tr class="striped_row">
+		echo '<tr class = "striped_row">
 			<td>' . $TrfLine->StockID . '</td>
 			<td>' . $TrfLine->ItemDescription . '</td>';
 
-		echo '<td class="number">' . locale_number_format($TrfLine->ShipQty, $TrfLine->DecimalPlaces) . '</td>';
+		echo '<td class = "number">' . locale_number_format($TrfLine->ShipQty, $TrfLine->DecimalPlaces) . '</td>';
 		if (isset($_POST['Qty' . $i]) and is_numeric(filter_number_format($_POST['Qty' . $i]))) {
 
 			$_SESSION['Transfer']->TransferItem[$i]->Quantity = round(filter_number_format($_POST['Qty' . $i]), $TrfLine->DecimalPlaces);
@@ -570,28 +570,28 @@ if (isset($_SESSION['Transfer'])) {
 		} else {
 			$Qty = $TrfLine->Quantity;
 		}
-		echo '<td class="number">' . locale_number_format($TrfLine->PrevRecvQty, $TrfLine->DecimalPlaces) . '</td>';
+		echo '<td class = "number">' . locale_number_format($TrfLine->PrevRecvQty, $TrfLine->DecimalPlaces) . '</td>';
 
 		if ($TrfLine->Controlled == 1) {
-	echo '<td class="number"><input type = "hidden" name="Qty' . $i . '" value = "' .
-				 locale_number_format($Qty, $TrfLine->DecimalPlaces) . '" /><a href="' . $RootPath .
-				 '/StockTransferControlled.php?TransferItem=' . $i . '" />' . $Qty . '</a></td>';
+	echo '<td class = "number"><input type = "hidden" name = "Qty' . $i . '" value = "' .
+				 locale_number_format($Qty, $TrfLine->DecimalPlaces) . '" /><a href = "' . $RootPath .
+				 '/StockTransferControlled.php?TransferItem = ' . $i . '" />' . $Qty . '</a></td>';
 } else {
-			echo '<td><input type = "text" class="number" name="Qty' . $i . '" maxlength = "10" size = "auto" value = "' .
+			echo '<td><input type = "text" class = "number" name = "Qty' . $i . '" maxlength = "10" size = "auto" value = "' .
 				 locale_number_format($Qty, $TrfLine->DecimalPlaces) . '" /></td>';
 		}
 
 		echo '<td>' . $TrfLine->PartUnit . '</td>';
 
-		echo '<td><input type = "checkbox" name="CancelBalance' . $i . '" value = "1" /></td>';
+		echo '<td><input type = "checkbox" name = "CancelBalance' . $i . '" value = "1" /></td>';
 
 
 		if ($TrfLine->Controlled == 1) {
 	if ($TrfLine->Serialised == 1) {
-				echo '<td><a href="' . $RootPath . '/StockTransferControlled.php?TransferItem=' . $i . '">' .
+				echo '<td><a href = "' . $RootPath . '/StockTransferControlled.php?TransferItem = ' . $i . '">' .
 					 __('Enter Serial Numbers') . '</a></td>';
 } else {
-				echo '<td><a href="' . $RootPath . '/StockTransferControlled.php?TransferItem=' . $i . '">' .
+				echo '<td><a href = "' . $RootPath . '/StockTransferControlled.php?TransferItem = ' . $i . '">' .
 					 __('Enter Batch Refs') . '</a></td>';
 			}
 		}
@@ -603,31 +603,31 @@ if (isset($_SESSION['Transfer'])) {
 
 	echo '</table>
 		<br />
-		<div class="centre">
-			<input type = "submit" name="ProcessTransfer" value = "' . __('Process Inventory Transfer') . '" />
+		<div class = "centre">
+			<input type = "submit" name = "ProcessTransfer" value = "' . __('Process Inventory Transfer') . '" />
 			<br />
 		</div>
 		</div>
 		</form>';
-	echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?NewTransfer=true">' .
+	echo '<a href = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?NewTransfer = true">' .
 		 __('Select A Different Transfer') . '</a>';
 
 } else { /*Not $_SESSION['Transfer'] set */
 
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' .
+	echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title = "' .
 		 __('Dispatch') . '" alt = "" />' . ' ' . $Title . '</p>';
 
-	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" id="form1">';
+	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" id = "form1">';
 	echo '<div>';
-	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 	$LocResult = DB_query("SELECT locationname, locations.loccode FROM locations INNER JOIN locationusers ON locationusers.loccode = locations.loccode and locationusers.userid = '" . $_SESSION['UserID'] . "' and locationusers.canview = 1 ORDER BY locationname");
 
-	echo '<table class="selection">';
+	echo '<table class = "selection">';
 	echo '<tr>
 			<td>' . __('Select Location Receiving Into') . ':</td>
 			<td>';
-	echo '<select name="RecLocation" onchange = "ReloadForm(form1.RefreshTransferList)">';
+	echo '<select name = "RecLocation" onchange = "ReloadForm(form1.RefreshTransferList)">';
 	if (!isset($_POST['RecLocation'])) {
 		$_POST['RecLocation'] = $_SESSION['UserStockLocation'];
 	}
@@ -639,7 +639,7 @@ if (isset($_SESSION['Transfer'])) {
 		}
 	}
 	echo '</select>
-		<input type = "submit" name="RefreshTransferList" value = "' . __('Refresh Transfer List') . '" /></td>
+		<input type = "submit" name = "RefreshTransferList" value = "' . __('Refresh Transfer List') . '" /></td>
 		</tr>
 		</table>
 		<br />';
@@ -659,7 +659,7 @@ if (isset($_SESSION['Transfer'])) {
 		$LocSql = "SELECT locationname FROM locations WHERE loccode = '" . $_POST['RecLocation'] . "'";
 		$LocResult = DB_query($LocSql);
 		$LocRow = DB_fetch_array($LocResult);
-		echo '<table class="selection">';
+		echo '<table class = "selection">';
 		echo '<tr><th colspan = "4"><h3>' . __('Pending Transfers Into') . ' ' . $LocRow['locationname'] . '</h3></th></tr>';
 		echo '<tr>
 			<th>' . __('Transfer Ref') . '</th>
@@ -668,11 +668,11 @@ if (isset($_SESSION['Transfer'])) {
 
 		while ($MyRow = DB_fetch_array($TrfResult)) {
 
-			echo '<tr class="striped_row">
-					<td class="number">' . $MyRow['reference'] . '</td>
+			echo '<tr class = "striped_row">
+					<td class = "number">' . $MyRow['reference'] . '</td>
 					<td>' . $MyRow['trffromloc'] . '</td>
 					<td>' . ConvertSQLDateTime($MyRow['shipdate']) . '</td>
-					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Trf_ID=' .
+					<td><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Trf_ID = ' .
 				 $MyRow['reference'] . '">' . __('Receive') . '</a></td>
 					</tr>';
 		}

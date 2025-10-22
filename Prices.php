@@ -19,18 +19,18 @@ $SQL = "SELECT typeabbrev, sales_type FROM salestypes";
 $TypeResult = DB_query($SQL);
 if (DB_num_rows($TypeResult) == 0) {
 	prnMsg(__('There are no sales types setup. Click') .
-		' <a href="' . $RootPath . '/SalesTypes.php" target="_blank">' .
+		' <a href = "' . $RootPath . '/SalesTypes.php" target = "_blank">' .
 		' ' . __('here') . ' ' . '</a>' . __('to create them'), 'warn');
 	include('includes/footer.php');
 	exit();
 }
 
-echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
-		'/images/money_add.png" title="' .
+echo '<p class = "page_title_text"><img alt = "" src = "' . $RootPath . '/css/' . $Theme .
+		'/images/money_add.png" title = "' .
 		__('Search') . '" />' . ' ' .
 		$Title . '</p>';
 
-echo '<a href="' . $RootPath . '/SelectProduct.php" class="toplink">' . __('Back to Items') . '</a><br />';
+echo '<a href = "' . $RootPath . '/SelectProduct.php" class = "toplink">' . __('Back to Items') . '</a><br />';
 
 include('includes/SQL_CommonFunctions.php');
 
@@ -87,7 +87,7 @@ if (isset($_POST['submit'])) {
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
-	// This gives some date in 1999?? $ZeroDate =date($_SESSION['DefaultDateFormat'],mktime(0,0,0,0,0,0));
+	// This gives some date in 1999?? $ZeroDate = date($_SESSION['DefaultDateFormat'],mktime(0,0,0,0,0,0));
 
 	if (!is_numeric(filter_number_format($_POST['Price'])) or $_POST['Price'] == '') {
 		$InputError = 1;
@@ -237,7 +237,7 @@ require_once('includes/CurrenciesArray.php');
 if (DB_num_rows($Result) > 0) {
 	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">
 		<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />
-		<table class="selection">
+		<table class = "selection">
 		<thead>
 			<tr>
 				<th colspan = "7">' .
@@ -245,11 +245,11 @@ if (DB_num_rows($Result) > 0) {
 				<input type = "text" required = "required" autofocus = "autofocus" name = "Item" size = "22" value = "' . $Item . '" maxlength = "20" />
 				<input type = "submit" name = "NewPart" value = "' . __('Review Prices') . '" /></th>
 			</tr>
-			<tr><th class="SortedColumn">' . __('Currency') . '</th>
-				<th class="SortedColumn">' . __('Sales Type') . '</th>
-				<th class="SortedColumn">' . __('Price') . '</th>
-				<th class="SortedColumn">' . __('Start Date') . ' </th>
-				<th class="SortedColumn">' . __('End Date') . '</th>';
+			<tr><th class = "SortedColumn">' . __('Currency') . '</th>
+				<th class = "SortedColumn">' . __('Sales Type') . '</th>
+				<th class = "SortedColumn">' . __('Price') . '</th>
+				<th class = "SortedColumn">' . __('Start Date') . ' </th>
+				<th class = "SortedColumn">' . __('End Date') . '</th>';
 	if (in_array(5, $_SESSION['AllowedPageSecurityTokens'])) { // If is allow to modify prices.
 		echo '<th colspan = "2">' . __('Maintenance') . '</th>';
 	}
@@ -264,30 +264,30 @@ if (DB_num_rows($Result) > 0) {
 			$EndDateDisplay = ConvertSQLDate($MyRow['enddate']);
 		}
 
-		echo '<tr class="striped_row">
+		echo '<tr class = "striped_row">
 				<td>' . $CurrencyName[$MyRow['currabrev']] . '</td>
 				<td>' . $MyRow['sales_type'] . '</td>
-				<td class="number">' . locale_number_format($MyRow['price'], $MyRow['currdecimalplaces'] + 2) . '</td>
-				<td class="date">' . ConvertSQLDate($MyRow['startdate']) . '</td>
-				<td class="date">' . $EndDateDisplay . '</td>';
+				<td class = "number">' . locale_number_format($MyRow['price'], $MyRow['currdecimalplaces'] + 2) . '</td>
+				<td class = "date">' . ConvertSQLDate($MyRow['startdate']) . '</td>
+				<td class = "date">' . $EndDateDisplay . '</td>';
 
 		/*Only allow access to modify prices if securiy token 5 is allowed */
 		if (in_array(5, $_SESSION['AllowedPageSecurityTokens'])) {
-			echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') .
-				'?Item=' . $MyRow['stockid'] .
-				'&amp;TypeAbbrev=' . $MyRow['typeabbrev'] .
-				'&amp;CurrAbrev=' . $MyRow['currabrev'] .
-				'&amp;Price=' . locale_number_format($MyRow['price'], $MyRow['currdecimalplaces']) .
-				'&amp;StartDate=' . $MyRow['startdate'] .
-				'&amp;EndDate=' . $MyRow['enddate'] .
-				'&amp;Edit=1">' . __('Edit') . '</a></td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') .
-				'?Item=' . $MyRow['stockid'] .
-				'&amp;TypeAbbrev=' . $MyRow['typeabbrev'] .
-				'&amp;CurrAbrev=' . $MyRow['currabrev'] .
-				'&amp;StartDate=' . $MyRow['startdate'] .
-				'&amp;EndDate=' . $MyRow['enddate'] .
-				'&amp;delete=yes" onclick="return confirm(\'' . __('Are you sure you wish to delete this price?') . '\');">' .
+			echo '<td><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') .
+				'?Item = ' . $MyRow['stockid'] .
+				'&amp;TypeAbbrev = ' . $MyRow['typeabbrev'] .
+				'&amp;CurrAbrev = ' . $MyRow['currabrev'] .
+				'&amp;Price = ' . locale_number_format($MyRow['price'], $MyRow['currdecimalplaces']) .
+				'&amp;StartDate = ' . $MyRow['startdate'] .
+				'&amp;EndDate = ' . $MyRow['enddate'] .
+				'&amp;Edit = 1">' . __('Edit') . '</a></td>
+				<td><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') .
+				'?Item = ' . $MyRow['stockid'] .
+				'&amp;TypeAbbrev = ' . $MyRow['typeabbrev'] .
+				'&amp;CurrAbrev = ' . $MyRow['currabrev'] .
+				'&amp;StartDate = ' . $MyRow['startdate'] .
+				'&amp;EndDate = ' . $MyRow['enddate'] .
+				'&amp;delete = yes" onclick = "return confirm(\'' . __('Are you sure you wish to delete this price?') . '\');">' .
 				__('Delete') . '</a></td>';
 		}
 		echo '</tr>';
@@ -365,27 +365,27 @@ if (!isset($_POST['EndDate'])) {
 }
 echo '<field>
 		<label for = "StartDate">' . __('Price Effective From Date') . ':</label>
-		<input type = "date" name = "StartDate" required = "required" size = "10" maxlength = "10" title="" value = "' . FormatDateForSQL($_POST['StartDate']) . '" />
+		<input type = "date" name = "StartDate" required = "required" size = "10" maxlength = "10" title = "" value = "' . FormatDateForSQL($_POST['StartDate']) . '" />
 		<fieldhelp>' . __('Enter the date from which this price should take effect.') . '</fieldhelp>
 	</field>';
 
 echo '<field>
 		<label for = "EndDate">' . __('Price Effective To Date') . ':</label>
-		<input type = "date" name = "EndDate" size = "10" maxlength = "10" title="" value = "' . FormatDateForSQL($_POST['EndDate']) . '" />
+		<input type = "date" name = "EndDate" size = "10" maxlength = "10" title = "" value = "' . FormatDateForSQL($_POST['EndDate']) . '" />
 		<fieldhelp>' . __('Enter the date to which this price should be in effect to, or leave empty if the price should continue indefinitely') . '</fieldhelp>
 		<input type = "hidden" name = "Item" value = "' . $Item . '" />
 	</field>';
 
 echo '<field>
 		<label for = "Price">' . __('Price') . ':</label>
-		<input type = "text" class="number" required = "required" name = "Price" size = "12" maxlength = "11" value = "';
+		<input type = "text" class = "number" required = "required" name = "Price" size = "12" maxlength = "11" value = "';
 if (isset($_POST['Price'])) {
 	echo $_POST['Price'];
 }
 echo '" />
 	</field>
 </fieldset>
-<div class="centre">
+<div class = "centre">
 <input type = "submit" name = "submit" value = "' . __('Enter') . '/' . __('Amend Price') . '" />
 </div>';
 

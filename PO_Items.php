@@ -28,7 +28,7 @@ $BookMark = 'PurchaseOrdering';
 include('includes/header.php');
 
 if (!isset($_POST['Commit'])) {
-	echo '<a href="'.$RootPath.'/PO_Header.php?=identifier=' . $identifier. '">' .__('Back To Purchase Order Header') . '</a><br />';
+	echo '<a href = "'.$RootPath.'/PO_Header.php?identifier = ' . $identifier. '">' .__('Back To Purchase Order Header') . '</a><br />';
 }
 
 if (isset($_POST['UpdateLines']) or isset($_POST['Commit'])) {
@@ -80,7 +80,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 		/*figure out what status to set the order to */
 		if (IsEmailAddress($_SESSION['UserEmail'])){
-			$UserDetails  = ' <a href="mailto:' . $_SESSION['UserEmail'] . '">' . $_SESSION['UsersRealName']. '</a>';
+			$UserDetails  = ' <a href = "mailto:' . $_SESSION['UserEmail'] . '">' . $_SESSION['UsersRealName']. '</a>';
 } else {
 			$UserDetails  = ' ' . $_SESSION['UsersRealName'] . ' ';
 		}
@@ -240,7 +240,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 				and ($_SESSION['PO'.$identifier]->Status == 'Authorised'
 				or $_SESSION['PO'.$identifier]->Status == 'Printed')){
 
-				echo '<br /><div class="centre"><a target="_blank" href="'.$RootPath.'/PO_PDFPurchOrder.php?=OrderNo=' . $_SESSION['PO'.$identifier]->OrderNo . '">' . __('Print Purchase Order') . '</a></div>';
+				echo '<br /><div class = "centre"><a target = "_blank" href = "'.$RootPath.'/PO_PDFPurchOrder.php?OrderNo = ' . $_SESSION['PO'.$identifier]->OrderNo . '">' . __('Print Purchase Order') . '</a></div>';
 			}
 
 		} else { /*its an existing order need to update the old order info */
@@ -370,7 +370,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 					and ($_SESSION['PO'.$identifier]->Status == 'Authorised'
 					or $_SESSION['PO'.$identifier]->Status == 'Printed')){
 
-				echo '<br /><div class="centre"><a target="_blank" href="'.$RootPath.'/PO_PDFPurchOrder.php?=OrderNo=' . $_SESSION['PO'.$identifier]->OrderNo . '">' . __('Print Purchase Order') . '</a></div>';
+				echo '<br /><div class = "centre"><a target = "_blank" href = "'.$RootPath.'/PO_PDFPurchOrder.php?OrderNo = ' . $_SESSION['PO'.$identifier]->OrderNo . '">' . __('Print Purchase Order') . '</a></div>';
 			}
 
 		} /*end of if its a new order or an existing one */
@@ -381,7 +381,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		if ($_SESSION['PO'.$identifier]->Status == 'Authorised'
                    and in_array($_SESSION['PageSecurityArray']['GoodsReceived.php'], $_SESSION['AllowedPageSecurityTokens'])){
 
-					echo '<a href="'.$RootPath.'/SupplierInvoice.php?=SupplierID=' . $_SESSION['PO'.$identifier]->SupplierID . '&amp;ReceivePO=' . $_SESSION['PO'.$identifier]->OrderNo . '&amp;DeliveryDate=' . $_SESSION['PO'.$identifier]->DeliveryDate . '">' . __('Receive and Enter Purchase Invoice') . '</a>';
+					echo '<a href = "'.$RootPath.'/SupplierInvoice.php?SupplierID = ' . $_SESSION['PO'.$identifier]->SupplierID . '&amp;ReceivePO = ' . $_SESSION['PO'.$identifier]->OrderNo . '&amp;DeliveryDate = ' . $_SESSION['PO'.$identifier]->DeliveryDate . '">' . __('Receive and Enter Purchase Invoice') . '</a>';
 		}
 
 		unset($_SESSION['PO'.$identifier]); /*Clear the PO data to allow a newy to be input*/
@@ -832,34 +832,34 @@ if (isset($_POST['UploadFile'])) {
 
 /* This is where the order as selected should be displayed  reflecting any deletions or insertions*/
 
-echo '<form id="form1" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?=identifier=' . urlencode($identifier) . '" method = "post" enctype="multipart/form-data">';
+echo '<form id = "form1" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier = ' . urlencode($identifier) . '" method = "post" enctype = "multipart/form-data">';
 echo '<div>';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 /*need to set up entry for item description where not a stock item and GL Codes */
 
 if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' .
-		__('Purchase Order') . '" alt="" />  '.$_SESSION['PO'.$identifier]->SupplierName;
+	echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title = "' .
+		__('Purchase Order') . '" alt = "" />  '.$_SESSION['PO'.$identifier]->SupplierName;
 
 	if (isset($_SESSION['PO'.$identifier]->OrderNo)) {
 		echo  ' ' . __('Purchase Order') .' '. $_SESSION['PO'.$identifier]->OrderNo ;
 	}
 	echo '<br /><b>', __('Order Summary'), '</b></p>';
-	echo '<table cellpadding = "2" class="selection">
+	echo '<table cellpadding = "2" class = "selection">
 		<thead>
 			<tr>
-			<th class="SortedColumn">' . __('Item Code') . '</th>
-			<th class="SortedColumn">' . __('Description') . '</th>
-			<th class="SortedColumn">' . __('Quantity Our Units') . '</th>
+			<th class = "SortedColumn">' . __('Item Code') . '</th>
+			<th class = "SortedColumn">' . __('Description') . '</th>
+			<th class = "SortedColumn">' . __('Quantity Our Units') . '</th>
 			<th>' . __('Our Unit')  . '</th>
-			<th class="SortedColumn">' . __('Price Our Units') .' (' . $_SESSION['PO'.$identifier]->CurrCode .  ')</th>
+			<th class = "SortedColumn">' . __('Price Our Units') .' (' . $_SESSION['PO'.$identifier]->CurrCode .  ')</th>
 			<th>' . __('Unit Conversion Factor') . '</th>
-			<th class="SortedColumn">' . __('Order Quantity') . '<br />' . __('Supplier Units') . '</th>
+			<th class = "SortedColumn">' . __('Order Quantity') . '<br />' . __('Supplier Units') . '</th>
 			<th>' .  __('Supplier Unit') . '</th>
-			<th class="SortedColumn">' . __('Order Price') . '<br />' . __('Supp Units') . ' ('.$_SESSION['PO'.$identifier]->CurrCode.  ')</th>
-			<th class="SortedColumn">' . __('Sub-Total') .' ('.$_SESSION['PO'.$identifier]->CurrCode.  ')</th>
-			<th class="SortedColumn">' . __('Deliver By')  . '</th>
+			<th class = "SortedColumn">' . __('Order Price') . '<br />' . __('Supp Units') . ' ('.$_SESSION['PO'.$identifier]->CurrCode.  ')</th>
+			<th class = "SortedColumn">' . __('Sub-Total') .' ('.$_SESSION['PO'.$identifier]->CurrCode.  ')</th>
+			<th class = "SortedColumn">' . __('Deliver By')  . '</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -881,22 +881,22 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 				$SuppPrice = locale_number_format(round(($POLine->Price *$POLine->ConversionFactor),($_SESSION['PO'.$identifier]->CurrDecimalPlaces+2)),($_SESSION['PO'.$identifier]->CurrDecimalPlaces+2));
 			}
 
-			echo '<tr class="striped_row">
+			echo '<tr class = "striped_row">
 				<td>' . $POLine->StockID  . '</td>
-                <td><input type="text" name="ItemDescription' . $POLine->LineNo.'" size = "30" value="' . stripslashes($POLine->ItemDescription) . '" /></td>
-				<td class="number">' . locale_number_format($POLine->Quantity,$POLine->DecimalPlaces) . '</td>
+                <td><input type = "text" name = "ItemDescription' . $POLine->LineNo.'" size = "30" value = "' . stripslashes($POLine->ItemDescription) . '" /></td>
+				<td class = "number">' . locale_number_format($POLine->Quantity,$POLine->DecimalPlaces) . '</td>
 				<td>' . $POLine->Units . '</td>
-				<td class="number">' . $DisplayPrice . '</td>
-				<td><input type="text" class="number" name="ConversionFactor' . $POLine->LineNo .'" size = "8" value="' . locale_number_format($POLine->ConversionFactor,'Variable') . '" /></td>
-				<td><input type="text" class="number" name="SuppQty' . $POLine->LineNo .'" size = "10" value="' . locale_number_format(round($POLine->Quantity/$POLine->ConversionFactor,$POLine->DecimalPlaces),$POLine->DecimalPlaces) . '" /></td>
+				<td class = "number">' . $DisplayPrice . '</td>
+				<td><input type = "text" class = "number" name = "ConversionFactor' . $POLine->LineNo .'" size = "8" value = "' . locale_number_format($POLine->ConversionFactor,'Variable') . '" /></td>
+				<td><input type = "text" class = "number" name = "SuppQty' . $POLine->LineNo .'" size = "10" value = "' . locale_number_format(round($POLine->Quantity/$POLine->ConversionFactor,$POLine->DecimalPlaces),$POLine->DecimalPlaces) . '" /></td>
 				<td>' . $POLine->SuppliersUnit . '</td>
-				<td><input type="text" class="number" name="SuppPrice' . $POLine->LineNo . '" size = "10" value="' . $SuppPrice .'" /></td>
-				<td class="number">' . $DisplayLineTotal . '</td>
-				<td><input type="date" name="ReqDelDate' . $POLine->LineNo.'" size = "10" value="' .FormatDateForSQL($POLine->ReqDelDate) .'" /></td>';
+				<td><input type = "text" class = "number" name = "SuppPrice' . $POLine->LineNo . '" size = "10" value = "' . $SuppPrice .'" /></td>
+				<td class = "number">' . $DisplayLineTotal . '</td>
+				<td><input type = "date" name = "ReqDelDate' . $POLine->LineNo.'" size = "10" value = "' .FormatDateForSQL($POLine->ReqDelDate) .'" /></td>';
 			if ($POLine->QtyReceived !=0 and $POLine->Completed != 1) {
-	echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?=identifier='.$identifier .'&amp;Complete=' . $POLine->LineNo . '">' . __('Complete') . '</a></td>';
+	echo '<td><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier = '.$identifier .'&amp;Complete = ' . $POLine->LineNo . '">' . __('Complete') . '</a></td>';
 } elseif ($POLine->QtyReceived ==0) {
-	echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?=identifier='.$identifier .'&amp;Delete=' . $POLine->LineNo . '">' . __('Delete'). '</a></td>';
+	echo '<td><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier = '.$identifier .'&amp;Delete = ' . $POLine->LineNo . '">' . __('Delete'). '</a></td>';
 }
 			echo '</tr>';
 			$_SESSION['PO'.$identifier]->Total += $LineTotal;
@@ -907,16 +907,16 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 	echo '</tbody>
 		<tfoot>
 			<tr>',
-/*				'<td colspan="9" class="number">' . __('TOTAL') . __(' excluding Tax') . '</td>',*/
-				'<td class="number" colspan="9">', __('Total Excluding Tax'), '</td>',
-				'<td class="number"><b>', $DisplayTotal, '</b></td>
+/*				'<td colspan = "9" class = "number">' . __('TOTAL') . __(' excluding Tax') . '</td>',*/
+				'<td class = "number" colspan = "9">', __('Total Excluding Tax'), '</td>',
+				'<td class = "number"><b>', $DisplayTotal, '</b></td>
 			</tr>
 		</tfoot>
 		</table>
 		<br />
-			<div class="centre">
-			<input type="submit" name="UpdateLines" value="' . __('Update Order Lines') . '" />
-			&nbsp;<input type="submit" name="Commit" value="' . __('Process Order') . '" />
+			<div class = "centre">
+			<input type = "submit" name = "UpdateLines" value = "' . __('Update Order Lines') . '" />
+			&nbsp;<input type = "submit" name = "Commit" value = "' . __('Process Order') . '" />
 			</div>';
 
 } /*Only display the order line items if there are any !! */
@@ -924,12 +924,12 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 
 if (isset($_POST['NonStockOrder'])) {
 
-	echo '<br /><table class="selection"><tr>
+	echo '<br /><table class = "selection"><tr>
 				<td>' . __('Item Description') . '</td>';
-	echo '<td><input type="text" name="ItemDescription" size = "40" /></td></tr>';
+	echo '<td><input type = "text" name = "ItemDescription" size = "40" /></td></tr>';
 	echo '<tr>
 			<td>' . __('General Ledger Code') . '</td>
-			<td><select name="GLCode">';
+			<td><select name = "GLCode">';
 	$SQL = "SELECT accountcode,
 				  accountname
 				FROM chartmaster
@@ -937,47 +937,47 @@ if (isset($_POST['NonStockOrder'])) {
 
 	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)) {
-		echo '<option value="'.$MyRow['accountcode'].'">' . $MyRow['accountcode'].' - '.$MyRow['accountname'] . '</option>';
+		echo '<option value = "'.$MyRow['accountcode'].'">' . $MyRow['accountcode'].' - '.$MyRow['accountname'] . '</option>';
 	}
 	echo '</select></td></tr>';
 	echo '<tr>
 			<td>' . __('or Asset ID'). '</td>
-			<td><select name="AssetID">';
+			<td><select name = "AssetID">';
 	$AssetsResult = DB_query("SELECT assetid,
 									description,
 									datepurchased
 								FROM fixedassets
 								ORDER BY assetid DESC");
-	echo '<option selected = "selected" value="Not an Asset">' . __('Not an Asset') . '</option>';
+	echo '<option selected = "selected" value = "Not an Asset">' . __('Not an Asset') . '</option>';
 	while ($AssetRow = DB_fetch_array($AssetsResult)){
 		if ($AssetRow['datepurchased']=='1000-01-01') {
 	$DatePurchased = __('Not yet purchased');
 } else {
 			$DatePurchased = ConvertSQLDate($AssetRow['datepurchased']);
 		}
-		echo '<option value="' . $AssetRow['assetid'] . '">'  . $AssetRow['assetid'] . ' - '.  $DatePurchased . ' - ' . $AssetRow['description'] . '</option>';
+		echo '<option value = "' . $AssetRow['assetid'] . '">'  . $AssetRow['assetid'] . ' - '.  $DatePurchased . ' - ' . $AssetRow['description'] . '</option>';
 	}
 
-	echo'</select><a href="'.$RootPath.'/FixedAssetItems.php" target="_blank>' .  __('New Fixed Asset') . '</a></td></tr>
+	echo'</select><a href = "'.$RootPath.'/FixedAssetItems.php" target = _blank>' .  __('New Fixed Asset') . '</a></td></tr>
 		<tr>
 			<td>' . __('Quantity to purchase') . '</td>
-			<td><input type="text" class="number" name="Qty" size = "10" value="1" /></td>
+			<td><input type = "text" class = "number" name = "Qty" size = "10" value = "1" /></td>
 		</tr>
 		<tr>
 			<td>' . __('Price per item') . '</td>
-			<td><input type="text" class="number" name="Price" size = "10" /></td>
+			<td><input type = "text" class = "number" name = "Price" size = "10" /></td>
 		</tr>
 		<tr>
 			<td>' . __('Unit') . '</td>
-			<td><input type="text" name="SuppliersUnit" size = "10" value="' . __('each') . '" /></td>
+			<td><input type = "text" name = "SuppliersUnit" size = "10" value = "' . __('each') . '" /></td>
 		</tr>
 		<tr>
 			<td>' . __('Delivery Date') . '</td>
-			<td><input type="date" name="ReqDelDate" size = "11" value="'.$_SESSION['PO'.$identifier]->DeliveryDate .'" /></td>
+			<td><input type = "date" name = "ReqDelDate" size = "11" value = "'.$_SESSION['PO'.$identifier]->DeliveryDate .'" /></td>
 		</tr>
 		</table>
-		<div class="centre">
-			<input type="submit" name="EnterLine" value="' . __('Enter Item') . '" />
+		<div class = "centre">
+			<input type = "submit" name = "EnterLine" value = "' . __('Enter Item') . '" />
 		</div>';
 }
 
@@ -1268,15 +1268,15 @@ if (!isset($_GET['Edit'])) {
 
 	echo '<field>
 			<label for = "StockCat">' . __('Item Category') . ':</label>
-			<select name="StockCat">
+			<select name = "StockCat">
 
-			<option selected = "selected" value="All">' . __('All') . '</option>';
+			<option selected = "selected" value = "All">' . __('All') . '</option>';
 
 	while ($MyRow1 = DB_fetch_array($Result1)) {
 		if (isset($_POST['StockCat']) and $_POST['StockCat']==$MyRow1['categoryid']){
-			echo '<option selected = "selected" value="'. $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
+			echo '<option selected = "selected" value = "'. $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 		} else {
-			echo '<option value="'. $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
+			echo '<option value = "'. $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 		}
 	}
 
@@ -1302,56 +1302,56 @@ if (!isset($_GET['Edit'])) {
 
 	echo '<field>
 			<label from = "Keywords">' . __('Enter text extracts in the description') . ':</label>
-			<input type="text" name="Keywords" size = "20" maxlength = "25" value="' . $_POST['Keywords'] . '" />
+			<input type = "text" name = "Keywords" size = "20" maxlength = "25" value = "' . $_POST['Keywords'] . '" />
 		</field>
 		<field>
 			<label for = "SupplierItemsOnly">' . __('Only items defined as from this Supplier') . '</label>
-			<input type="checkbox" ' . $Checked . ' name="SupplierItemsOnly" />
+			<input type = "checkbox" ' . $Checked . ' name = "SupplierItemsOnly" />
 		</field>
 		<field>
 			<label for = "StockCode"><b>' . __('or') . ' </b>' . __('Enter extract of the Stock Code') . ':</label>
-			<input type="text" name="StockCode" size = "15" maxlength = "18" value="' . $_POST['StockCode'] . '" />
+			<input type = "text" name = "StockCode" size = "15" maxlength = "18" value = "' . $_POST['StockCode'] . '" />
 		</field>
 		<field>
 			<label><b>' . __('or') . ' </b>', __('Create Stock Item'), '</label>
-			<a target="_blank" href="'.$RootPath.'/Stocks.php">' . __('Insert New Item') . '</a>
+			<a target = "_blank" href = "'.$RootPath.'/Stocks.php">' . __('Insert New Item') . '</a>
 		</field>
 		<field>
 			<label for = "UploadFile"><b>' . __('or') . ' </b>' . __('Upload items from csv file') . '</label>
-			<input type="file" name="CSVFile" />
-			<input type="submit" name="UploadFile" value="' . __('Upload File') . '" />
+			<input type = "file" name = "CSVFile" />
+			<input type = "submit" name = "UploadFile" value = "' . __('Upload File') . '" />
 		</field>		</fieldset>
 
-		<div class="centre">
-			<input type="submit" name="Search" value="' . __('Search Now') . '" />
-			<input type="submit" name="NonStockOrder" value="' . __('Order a non stock item') . '" />
+		<div class = "centre">
+			<input type = "submit" name = "Search" value = "' . __('Search Now') . '" />
+			<input type = "submit" name = "NonStockOrder" value = "' . __('Order a non stock item') . '" />
 		</div>';
 
 	$PartsDisplayed =0;
 }
 
 if (isset($SearchResult)) {
-	$PageBar = '<tr><td><input type="hidden" name="currpage" value="'.$Offset.'">';
+	$PageBar = '<tr><td><input type = "hidden" name = "currpage" value = "'.$Offset.'">';
 	if ($Offset>0)
-		$PageBar .= '<input type="submit" name="Prev" value="'.__('Prev').'" />';
+		$PageBar .= '<input type = "submit" name = "Prev" value = "'.__('Prev').'" />';
 	else
-		$PageBar .= '<input type="submit" name="Prev" value="'.__('Prev').'" disabled = "disabled"/>';
-	$PageBar .= '</td><td class="centre" colspan="4"><input type="submit" value="'.__('Order some').'" name="NewItem"/></td><td>';
+		$PageBar .= '<input type = "submit" name = "Prev" value = "'.__('Prev').'" disabled = "disabled"/>';
+	$PageBar .= '</td><td class = "centre" colspan = "4"><input type = "submit" value = "'.__('Order some').'" name = "NewItem"/></td><td>';
 	if ($Offset<$ListPageMax)
-		$PageBar .= '<input type="submit" name="Next" value="'.__('Next').'" />';
+		$PageBar .= '<input type = "submit" name = "Next" value = "'.__('Next').'" />';
 	else
-		$PageBar .= '<input type="submit" name="Next" value="'.__('Next').'" disabled = "disabled"/>';
+		$PageBar .= '<input type = "submit" name = "Next" value = "'.__('Next').'" disabled = "disabled"/>';
 	$PageBar .= '</td></tr>';
 
-	echo '<table cellpadding = "1" class="selection">';
+	echo '<table cellpadding = "1" class = "selection">';
 	echo $PageBar;
 	$TableHeader = '<tr>
-						<th class="SortedColumn">' . __('Code')  . '</th>
-						<th class="SortedColumn">' . __('Description') . '</th>
+						<th class = "SortedColumn">' . __('Code')  . '</th>
+						<th class = "SortedColumn">' . __('Description') . '</th>
 						<th>' . __('Our Units') . '</th>
 						<th>' . __('Conversion') . '<br />' .__('Factor') . '</th>
 						<th>' . __('Supplier/Order') . '<br />' .  __('Units') . '</th>
-						<th colspan="2"><a href="#end">' . __('Go to end of list') . '</a></th>
+						<th colspan = "2"><a href = "#end">' . __('Go to end of list') . '</a></th>
 					</tr>';
 	echo $TableHeader;
 
@@ -1382,15 +1382,15 @@ if (isset($SearchResult)) {
 			$OrderUnits = $MyRow['units'];
 			$ConversionFactor = 1;
 		}
-		echo '<tr class="striped_row">
+		echo '<tr class = "striped_row">
 			<td>' . $MyRow['stockid']  . '</td>
 			<td>' . $MyRow['description']  . '</td>
 			<td>' . $MyRow['units']  . '</td>
-			<td class="number">' . $ConversionFactor  . '</td>
+			<td class = "number">' . $ConversionFactor  . '</td>
 			<td>' . $OrderUnits . '</td>
 			<td>' . $ImageSource . '</td>
-			<td><input class="number" type="text" size = "6" value="0" name="NewQty' . $j . '" /></td>
-			<input type="hidden" name="StockID' . $j . '" value="' . $MyRow['stockid'] . '" />
+			<td><input class = "number" type = "text" size = "6" value = "0" name = "NewQty' . $j . '" /></td>
+			<input type = "hidden" name = "StockID' . $j . '" value = "' . $MyRow['stockid'] . '" />
 			</tr>';
 		$j++;
 		$PartsDisplayed++;
@@ -1400,8 +1400,8 @@ if (isset($SearchResult)) {
 	echo $PageBar;
 #end of while loop
 	echo '</table>';
-	echo '<input type="hidden" name="PO_ItemsResubmitFormValue" value="' . $_SESSION['PO_ItemsResubmitForm' . $identifier] . '" />';
-	echo '<a name="end"></a><br /><div class="centre"><input type="submit" name="NewItem" value="' . __('Order some') . '" /></div>';
+	echo '<input type = "hidden" name = "PO_ItemsResubmitFormValue" value = "' . $_SESSION['PO_ItemsResubmitForm' . $identifier] . '" />';
+	echo '<a name = "end"></a><br /><div class = "centre"><input type = "submit" name = "NewItem" value = "' . __('Order some') . '" /></div>';
 }#end if SearchResults to show
 
 echo '</div>

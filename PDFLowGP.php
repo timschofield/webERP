@@ -25,7 +25,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	<meta name = "Creator" content = "webERP https://www.weberp.org">
 	</head>
 	<body>
-	<div class="centre" id="ReportHeader">
+	<div class = "centre" id = "ReportHeader">
 	' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 	' . __('Items with low GP') . '<br />
 	' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
@@ -71,7 +71,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	if (DB_num_rows($LowGPSalesResult) == 0) {
 		include('includes/header.php');
 		prnMsg(__('No low GP items retrieved'), 'warn');
-		echo '<br /><a href="'  . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
+		echo '<br /><a href = "'  . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 		include('includes/footer.php');
 		exit();
 	}
@@ -103,10 +103,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		<td>' . $LowGPItems['transno'] . '</td>
 		<td>' . $LowGPItems['stockid'] . '</td>
 		<td>' . $LowGPItems['name'] . '</td>
-		<td class="number">' . $DisplaySellingPrice . '</td>
-		<td class="number">' . $DisplayUnitCost . '</td>
-		<td class="number">' . $DisplayGP . '</td>
-		<td class="number">' . $DisplayGPPercent . '%</td>
+		<td class = "number">' . $DisplaySellingPrice . '</td>
+		<td class = "number">' . $DisplayUnitCost . '</td>
+		<td class = "number">' . $DisplayGP . '</td>
+		<td class = "number">' . $DisplayGPPercent . '%</td>
 		</tr>';
 
 		} /*end low GP items while loop */
@@ -117,8 +117,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		} else {
 			$HTML .= '</tbody>
 			</table>
-			<div class="centre">
-			<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick="window.close()" /></form>
+			<div class = "centre">
+			<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" /></form>
 			</div>';
 		}
 		$HTML .= '</body>
@@ -141,8 +141,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		} else {
 			$Title = __('Sales With Low GP');
 			include('includes/header.php');
-			echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . __('Sales With Low G') . '" alt="" />' . ' ' . __('Sales With Low G') . '
+			echo '<p class = "page_title_text">
+			<img src = "' . $RootPath . '/css/' . $Theme . '/images/sales.png" title = "' . __('Sales With Low G') . '" alt = "" />' . ' ' . __('Sales With Low G') . '
 			</p>';
 			echo $HTML;
 			include('includes/footer.php');
@@ -155,7 +155,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 		include('includes/header.php');
 
-		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '
+		echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title = "' . $Title . '" alt = "" />' . ' '
 		. __('Low Gross Profit Report') . '</p>';
 
 		if (!isset($_POST['FromDate']) or !isset($_POST['ToDate'])) {
@@ -164,7 +164,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			$_POST['FromDate']=date('Y-m-d');
 			$_POST['ToDate']=date('Y-m-d');
 			$_POST['GPMin']=0;
-			echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post" target="_blank">';
+			echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post" target = "_blank">';
 			echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 			echo '<fieldset>
 			<legend>', __('Report Criteria'), '</legend>';
@@ -178,12 +178,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			</field>
 			<field>
 			<label for = "GPMin">' . __('Show sales with GP % below') . ':</label>
-			<input type = "text" class="integer" name = "GPMin" maxlength = "3" size = "3" value = "' . $_POST['GPMin'] . '" />
+			<input type = "text" class = "integer" name = "GPMin" maxlength = "3" size = "3" value = "' . $_POST['GPMin'] . '" />
 			</field>
 			</fieldset>
-			<div class="centre">
-			<input type = "submit" name = "PrintPDF" title="PDF" value = "' . __('Print Low GP PDF') . '" />
-			<input type = "submit" name = "View" title="View" value = "' . __('View Low GP Report') . '" />
+			<div class = "centre">
+			<input type = "submit" name = "PrintPDF" title = "PDF" value = "' . __('Print Low GP PDF') . '" />
+			<input type = "submit" name = "View" title = "View" value = "' . __('View Low GP Report') . '" />
 			</div>
 			</form>';
 		}

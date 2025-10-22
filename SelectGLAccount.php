@@ -52,7 +52,7 @@ if (isset($_POST['Search'])){
 
 		} elseif (mb_strlen($_POST['GLCode'])>0){
 			if (!empty($_POST['GLCode'])) {
-				echo '<meta http-equiv = "refresh" content = "0; url = ' . $RootPath . '/GLAccountInquiry.php?Account=' . $_POST['GLCode'] . '&Show=Yes">';
+				echo '<meta http-equiv = "refresh" content = "0; url = ' . $RootPath . '/GLAccountInquiry.php?Account = ' . $_POST['GLCode'] . '&Show = Yes">';
 				exit();
 			}
 
@@ -75,7 +75,7 @@ if (isset($_POST['Search'])){
 			if (DB_num_rows($Result) == 1) {
 				$AccountRow = DB_fetch_row($Result);
 				/// @todo BUG this must happen before we include header.php. Either that, or we hould use ob_start...
-				header('location:' . htmlspecialchars_decode($RootPath) . '/GLAccountInquiry.php?Account=' . urlencode(htmlspecialchars_decode($AccountRow[0])) . '&Show=Yes');
+				header('location:' . htmlspecialchars_decode($RootPath) . '/GLAccountInquiry.php?Account = ' . urlencode(htmlspecialchars_decode($AccountRow[0])) . '&Show = Yes');
 				exit();
 			}
 		}
@@ -85,19 +85,19 @@ $TargetPeriod = GetPeriod(date($_SESSION['DefaultDateFormat']));
 
 if (!isset($AccountID)) {
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Search') . '" alt="" />' . ' ' . __('Search for General Ledger Accounts') . '</p>
+	echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title = "' . __('Search') . '" alt = "" />' . ' ' . __('Search for General Ledger Accounts') . '</p>
 		<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method = "post">
-		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+		<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 	if (mb_strlen($Msg)>1){
 		prnMsg($Msg,'info');
 	}
 
 	echo '<fieldset>
-			<legend class="search">', __('General Ledger account Search'), '</legend>
+			<legend class = "search">', __('General Ledger account Search'), '</legend>
 		<field>
 			<label for = "Keywords">' . __('Enter extract of text in the Account name') .':</label>
-			<input type="text" name="Keywords" size = "20" maxlength = "25" />
+			<input type = "text" name = "Keywords" size = "20" maxlength = "25" />
 		</field>';
 
 	$SQLAccountSelect = "SELECT chartmaster.accountcode,
@@ -112,17 +112,17 @@ if (!isset($AccountID)) {
 	$OptGroup = '';
 	echo '<field>
 			<label for = "GLCode">', '<b>' , __('or') , '</b>' , __('Search for Account Code'), '</label>
-			<select name="GLCode">';
-	echo '<option value="">' . __('Select an Account Code') . '</option>';
+			<select name = "GLCode">';
+	echo '<option value = "">' . __('Select an Account Code') . '</option>';
 	while ($MyRowSelection = DB_fetch_array($ResultSelection)){
 		if ($OptGroup != $MyRowSelection['group_']) {
 	echo '<optgroup label = "' . $MyRowSelection['group_'] . '">';
 			$OptGroup = $MyRowSelection['group_'];
 }
 		if (isset($_POST['GLCode']) and $_POST['GLCode']==$MyRowSelection['accountcode']){
-			echo '<option selected = "selected" value="' . $MyRowSelection['accountcode'] . '">' . $MyRowSelection['accountcode'].' - ' .htmlspecialchars($MyRowSelection['accountname'], ENT_QUOTES,'UTF-8', false) . '</option>';
+			echo '<option selected = "selected" value = "' . $MyRowSelection['accountcode'] . '">' . $MyRowSelection['accountcode'].' - ' .htmlspecialchars($MyRowSelection['accountname'], ENT_QUOTES,'UTF-8', false) . '</option>';
 		} else {
-			echo '<option value="' . $MyRowSelection['accountcode'] . '">' . $MyRowSelection['accountcode'].' - ' .htmlspecialchars($MyRowSelection['accountname'], ENT_QUOTES,'UTF-8', false)  . '</option>';
+			echo '<option value = "' . $MyRowSelection['accountcode'] . '">' . $MyRowSelection['accountcode'].' - ' .htmlspecialchars($MyRowSelection['accountname'], ENT_QUOTES,'UTF-8', false)  . '</option>';
 		}
 	}
 	echo '</select>';
@@ -130,15 +130,15 @@ if (!isset($AccountID)) {
 	echo '</field>
 		</fieldset>';
 
-	echo '<div class="centre">
-			<input type="submit" name="Search" value="' . __('Search Now') . '" />
-			<input type="submit" name="reset" value="' . __('Reset') .'" />
+	echo '<div class = "centre">
+			<input type = "submit" name = "Search" value = "' . __('Search Now') . '" />
+			<input type = "submit" name = "reset" value = "' . __('Reset') .'" />
 		</div>';
 
 	if (isset($Result) and DB_num_rows($Result)>0) {
 
-		echo '<table class="selection">
-				<thead style="position: -webkit-sticky; position: sticky; top: 0px; z-index: 100;">
+		echo '<table class = "selection">
+				<thead style = "position: -webkit-sticky; position: sticky; top: 0px; z-index: 100;">
 					<tr>
 						<th>' . __('Code') . '</th>
 						<th>' . __('Account Name') . '</th>
@@ -152,13 +152,13 @@ if (!isset($AccountID)) {
 
 		while ($MyRow = DB_fetch_array($Result)) {
 
-			echo '<tr class="striped_row">
+			echo '<tr class = "striped_row">
 					<td>', htmlspecialchars($MyRow['accountcode'],ENT_QUOTES,'UTF-8',false), '</td>
 					<td>', htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false), '</td>
 					<td>', $MyRow['group_'], '</td>
 					<td>', $MyRow['pl'], '</td>
-					<td class="number"><a href="', $RootPath, '/GLAccountInquiry.php?Account=', $MyRow['accountcode'], '&amp;Show=Yes&FromPeriod=', $TargetPeriod, '&ToPeriod=', $TargetPeriod, '"><img width="32px" src="', $RootPath, '/css/', $Theme, '/images/magnifier.png" title="' . __('Inquiry') . '" alt="' . __('Inquiry') . '" /></td>
-					<td><a href="', $RootPath, '/GLAccounts.php?SelectedAccount=', $MyRow['accountcode'], '"><img width="32px" src="', $RootPath, '/css/', $Theme, '/images/maintenance.png" title="' . __('Edit') . '" alt="' . __('Edit') . '" /></a>
+					<td class = "number"><a href = "', $RootPath, '/GLAccountInquiry.php?Account = ', $MyRow['accountcode'], '&amp;Show = Yes&FromPeriod = ', $TargetPeriod, '&ToPeriod = ', $TargetPeriod, '"><img width = "32px" src = "', $RootPath, '/css/', $Theme, '/images/magnifier.png" title = "' . __('Inquiry') . '" alt = "' . __('Inquiry') . '" /></td>
+					<td><a href = "', $RootPath, '/GLAccounts.php?SelectedAccount = ', $MyRow['accountcode'], '"><img width = "32px" src = "', $RootPath, '/css/', $Theme, '/images/maintenance.png" title = "' . __('Edit') . '" alt = "' . __('Edit') . '" /></a>
 				</tr>';
 
 //end of page full new headings if

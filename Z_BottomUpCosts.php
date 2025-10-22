@@ -57,7 +57,7 @@ if (isset($Run)) { //start bom processing
     echo '<div>';
 	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 	echo '<p class = "page_title_text">
-			<img src="'.$RootPath.'/css/'.$Theme.'/images/sales.png" title="' . __('Search') . '" alt="" />' . ' ' . __('Update costs for all items listed in a bill of materials') . '<br />
+			<img src = "'.$RootPath.'/css/'.$Theme.'/images/sales.png" title = "' . __('Search') . '" alt = "" />' . ' ' . __('Update costs for all items listed in a bill of materials') . '<br />
 		</p>
 		<div class = "centre">
 			<input type = "submit" name = "Run" value = "' . __('Run') . '" />

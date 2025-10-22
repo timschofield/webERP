@@ -10,7 +10,7 @@ include('includes/header.php');
 $Errors = array();
 $i = 1;
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
+echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title = "' . __('Search') . '" alt = "" />' . ' ' . $Title . '</p><br />';
 
 if (isset($_POST['submit'])) {
 
@@ -127,15 +127,15 @@ if (DB_num_rows($Result) > 0) {
 
 echo '<field>
 		<label for = "QuantityBreak">' . __('Quantity Break') . '</label>
-		<input class="integer' . (in_array('QuantityBreak',$Errors) ? ' inputerror' : '') . '" tabindex ="3" required = "required" type = "number" name = "QuantityBreak" size = "10" maxlength = "10" />
+		<input class = "integer' . (in_array('QuantityBreak',$Errors) ? ' inputerror' : '') . '" tabindex = "3" required = "required" type = "number" name = "QuantityBreak" size = "10" maxlength = "10" />
 	</field>
 	<field>
 		<label for = "DiscountRate">' . __('Discount Rate') . ' (%):</label>
-		<input class="number' . (in_array('DiscountRate',$Errors) ? ' inputerror' : '') . '" tabindex ="4" type = "text" required = "required" name = "DiscountRate" title="" size = "5" maxlength = "5" />
+		<input class = "number' . (in_array('DiscountRate',$Errors) ? ' inputerror' : '') . '" tabindex = "4" type = "text" required = "required" name = "DiscountRate" title = "" size = "5" maxlength = "5" />
 		<fieldhelp>' . __('The discount to apply to orders where the quantity exceeds the specified quantity') . '</fieldhelp>
 	</field>
 	</fieldset>
-	<div class="centre">
+	<div class = "centre">
 		<input tabindex = "5" type = "submit" name = "submit" value = "' . __('Enter Information') . '" />
 	</div>';
 
@@ -152,7 +152,7 @@ $SQL = "SELECT sales_type,
 
 $Result = DB_query($SQL);
 
-echo '<table class="selection">';
+echo '<table class = "selection">';
 echo '<tr>
 		<th>' . __('Sales Type') . '</th>
 		<th>' . __('Discount Category') . '</th>
@@ -162,14 +162,14 @@ echo '<tr>
 	</tr>';
 
 while ($MyRow = DB_fetch_array($Result)) {
-	$DeleteURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=yes&amp;SalesType=' . $MyRow['salestype'] . '&amp;DiscountCategory=' . $MyRow['discountcategory'] . '&amp;QuantityBreak=' . $MyRow['quantitybreak'];
+	$DeleteURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete = yes&amp;SalesType = ' . $MyRow['salestype'] . '&amp;DiscountCategory = ' . $MyRow['discountcategory'] . '&amp;QuantityBreak = ' . $MyRow['quantitybreak'];
 
-	echo '<tr class="striped_row">
+	echo '<tr class = "striped_row">
 			<td>', $MyRow['sales_type'], '</td>
 			<td>', $MyRow['discountcategory'], '</td>
-			<td class="number">', $MyRow['quantitybreak'], '</td>
-			<td class="number">', $MyRow['discountrate']*100, '</td>
-			<td><a href="', $DeleteURL, '" onclick="return confirm(\'' . __('Are you sure you wish to delete this discount matrix record?') . '\');">' . __('Delete') . '</a></td>
+			<td class = "number">', $MyRow['quantitybreak'], '</td>
+			<td class = "number">', $MyRow['discountrate']*100, '</td>
+			<td><a href = "', $DeleteURL, '" onclick = "return confirm(\'' . __('Are you sure you wish to delete this discount matrix record?') . '\');">' . __('Delete') . '</a></td>
 		</tr>';
 
 }

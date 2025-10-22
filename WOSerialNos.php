@@ -39,8 +39,8 @@ $BookMark = '';
 
 include('includes/header.php');
 
-echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="" alt="" />' . ' ' . __('For Work Order Number') . ' ' . $WO . ' ' . __('and output item') . ' ' . $StockID . ' - ' . $Description . '
+echo '<p class = "page_title_text">
+		<img src = "'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title = "" alt = "" />' . ' ' . __('For Work Order Number') . ' ' . $WO . ' ' . __('and output item') . ' ' . $StockID . ' - ' . $Description . '
 	</p>';
 
 if (isset($_POST['AddControlledItems'])){
@@ -236,20 +236,20 @@ if (isset($_POST['UpdateItems'])){
 
 echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<div>';
-echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
-echo '<input type = "hidden" name="StockID" value = "' . $StockID . '" />';
-echo '<input type = "hidden" name="Description" value = "' . $Description . '" />';
-echo '<input type = "hidden" name="WO" value = "' . $WO . '" />';
-echo '<input type = "hidden" name="Serialised" value = "' . $Serialised . '" />';
-echo '<input type = "hidden" name="NextSerialNo" value = "' . $NextSerialNo . '" />';
+echo '<input type = "hidden" name = "StockID" value = "' . $StockID . '" />';
+echo '<input type = "hidden" name = "Description" value = "' . $Description . '" />';
+echo '<input type = "hidden" name = "WO" value = "' . $WO . '" />';
+echo '<input type = "hidden" name = "Serialised" value = "' . $Serialised . '" />';
+echo '<input type = "hidden" name = "NextSerialNo" value = "' . $NextSerialNo . '" />';
 
-echo '<table class="selection">';
+echo '<table class = "selection">';
 
 if ($Serialised == 1 and $NextSerialNo>0) {
 	echo '<tr><td>' . __('Add A Number of New Serial Numbers');
 	echo ':</td>
-		<td><input type = "text" name="NumberToAdd" required = "required" size = "10" class="number" maxlength = "10" value = "1" title="'.__('The input must be in number format').'" placeholder = "'.__('Number of new serial numbers').'" /></td>
+		<td><input type = "text" name = "NumberToAdd" required = "required" size = "10" class = "number" maxlength = "10" value = "1" title = "'.__('The input must be in number format').'" placeholder = "'.__('Number of new serial numbers').'" /></td>
 		<td>' . __('Starting at') . ':</td><td align = "right">' . $NextSerialNo . '</td>';
 } else {
 	//Need to allow entry of batch or serial number and its a batch a quantity too for individual entry
@@ -266,16 +266,16 @@ if ($Serialised == 1 and $NextSerialNo>0) {
 				<tr><td>';
 		echo __('Add a single batch/lot number');
 	}
-	echo '</td><td><input type = "text" name="Reference" maxlength = "30" size = "30" title="'.__('The reference must be input').'" placeholder = "'.__('SNs or batch no').'" /></td>';
+	echo '</td><td><input type = "text" name = "Reference" maxlength = "30" size = "30" title = "'.__('The reference must be input').'" placeholder = "'.__('SNs or batch no').'" /></td>';
 	if ($Serialised == 0) {
 	//also need to add the quantity
-		echo '<td><input type = "text" required = "required" name="Quantity" size = "10" class="number" maxlength = "10" value = "1" title="'.__('The quantity must be input').'" placeholder = "'.__('Quantity').'" /></td>';
+		echo '<td><input type = "text" required = "required" name = "Quantity" size = "10" class = "number" maxlength = "10" value = "1" title = "'.__('The quantity must be input').'" placeholder = "'.__('Quantity').'" /></td>';
 } else { //it will be 1 for a serial item
-		echo '<td><input type = "hidden" name="Quantity" value = "1" /></td>';
+		echo '<td><input type = "hidden" name = "Quantity" value = "1" /></td>';
 	}
 }
 
-echo '<td><input type = "submit" name="AddControlledItems" value = "' . __('Add') . '" /></td>
+echo '<td><input type = "submit" name = "AddControlledItems" value = "' . __('Add') . '" /></td>
 	</tr>
 	</table>
 	<br />';
@@ -294,7 +294,7 @@ if (DB_num_rows($WOSerialNoResult) == 0){
 	prnMsg(__('There are no serial items or batches yet defined for this work order item. Create new items first'),'info');
 } else {
 	echo '<br />
-		<table class="selection">';
+		<table class = "selection">';
 	if ($Serialised == 1) {
 	$Header = '<tr>
 					<th>' . __('Serial No') . '</th>
@@ -318,33 +318,33 @@ if (DB_num_rows($WOSerialNoResult) == 0){
 }
 
 		echo '<tr>
-				<td><input required = "required" type = "text" name="Reference' . $i .'" value = "' . $WOSNRow['serialno'] . '"/>';
-		echo '<input type = "hidden" name="OldReference' . $i . '" value = "' . $WOSNRow['serialno'] . '"/></td>';
+				<td><input required = "required" type = "text" name = "Reference' . $i .'" value = "' . $WOSNRow['serialno'] . '"/>';
+		echo '<input type = "hidden" name = "OldReference' . $i . '" value = "' . $WOSNRow['serialno'] . '"/></td>';
 		if ($Serialised == 0) {
-	echo '<td><input type = "text" class="number" required = "required" name="Quantity' . $i .'" value = "' . locale_number_format($WOSNRow['quantity'],'Variable') . '" />';
-			echo '<input type = "hidden" name="OldQuantity' . $i . '" value = "' . locale_number_format($WOSNRow['quantity'],'Variable') . '" /></td>';
+	echo '<td><input type = "text" class = "number" required = "required" name = "Quantity' . $i .'" value = "' . locale_number_format($WOSNRow['quantity'],'Variable') . '" />';
+			echo '<input type = "hidden" name = "OldQuantity' . $i . '" value = "' . locale_number_format($WOSNRow['quantity'],'Variable') . '" /></td>';
 } else {
-			echo '<td><input type = "hidden" name="Quantity' . $i . '" value = "1" /></td>';
+			echo '<td><input type = "hidden" name = "Quantity' . $i . '" value = "1" /></td>';
 		}
-		echo '<td><textarea name="Notes' . $i .'" cols = "60" rows = "3">' . $WOSNRow['qualitytext']  . '</textarea></td>';
-		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=1&Reference=' . $WOSNRow['serialno'] . '&Quantity=' . locale_number_format($WOSNRow['quantity'],'Variable') . '&WO=' . $WO . '&StockID=' . $StockID . '&Description=' . $Description . '&Serialised=' . $Serialised . '&NextSerialNo=' . $NextSerialNo . '">' . __('Delete') . '</a></td></tr>';
+		echo '<td><textarea name = "Notes' . $i .'" cols = "60" rows = "3">' . $WOSNRow['qualitytext']  . '</textarea></td>';
+		echo '<td><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete = 1&Reference = ' . $WOSNRow['serialno'] . '&Quantity = ' . locale_number_format($WOSNRow['quantity'],'Variable') . '&WO = ' . $WO . '&StockID = ' . $StockID . '&Description = ' . $Description . '&Serialised = ' . $Serialised . '&NextSerialNo = ' . $NextSerialNo . '">' . __('Delete') . '</a></td></tr>';
 		$i++;
 		$j++;
 	}
 
 	if ($Serialised == 0) {
-	echo '<tr><td style="text-align: center" colspan = "3">';
+	echo '<tr><td style = "text-align: center" colspan = "3">';
 } else {
-		echo '<tr><td style="text-align: center" colspan = "2">';
+		echo '<tr><td style = "text-align: center" colspan = "2">';
 	}
-	echo '<input type = "submit" name="UpdateItems" value = "' . __('Update') . '" /></td></tr>';
+	echo '<input type = "submit" name = "UpdateItems" value = "' . __('Update') . '" /></td></tr>';
 	echo '</table>';
 
-    echo '<input type = "hidden" name="CountOfItems" value = "' . $i . '" />';
+    echo '<input type = "hidden" name = "CountOfItems" value = "' . $i . '" />';
 
 } //end of if there are woserialno items defined
 
-echo '<br /><a href="' . $RootPath . '/WorkOrderEntry.php?WO=' . $WO . '">' . __('Back To Work Order') . ' ' . $WO  . '</a>';
+echo '<br /><a href = "' . $RootPath . '/WorkOrderEntry.php?WO = ' . $WO . '">' . __('Back To Work Order') . ' ' . $WO  . '</a>';
 
 echo '</div>
       </form>';

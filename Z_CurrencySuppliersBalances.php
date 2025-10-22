@@ -9,7 +9,7 @@ $ViewTopic = 'SpecialUtilities';
 $BookMark = 'Z_CurrencySuppliersBalances';
 include('includes/header.php');
 
-echo '<p class = "page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+echo '<p class = "page_title_text"><img alt = "" src = "'.$RootPath.'/css/'.$Theme.
 '/images/supplier.png" title = "' .
 __('Show Local Currency Total Suppliers Balances') . '" /> ' .// Icon title.
 __('Suppliers Balances By Currency Totals') . '</p>';// Page title.

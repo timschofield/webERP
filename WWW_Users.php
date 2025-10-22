@@ -20,8 +20,8 @@ if (isset($_POST['UserID']) and isset($_POST['ID'])) {
 
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-	'/images/group_add.png" title="', // Icon image.
+echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme,
+	'/images/group_add.png" title = "', // Icon image.
 	$Title, '" /> ', // Icon title.
 	$Title, '</p>';// Page title.
 
@@ -365,24 +365,24 @@ if (!isset($SelectedUser)) {
 
 /* If its the first time the page has been displayed with no parameters then none of the above are true and the list of Users will be displayed with links to delete or edit each. These will call the same page again and allow update/input or deletion of the records*/
 
-	echo '<table class="selection">
+	echo '<table class = "selection">
 		<thead>
 			<tr>
-				<th class="SortedColumn">', __('User Login'), '</th>
-				<th class="SortedColumn">', __('Full Name'), '</th>
-				<th class="SortedColumn">', __('Telephone'), '</th>
-				<th class="SortedColumn">', __('Email'), '</th>
-				<th class="SortedColumn">', __('Timeout'), '</th>
-				<th class="SortedColumn">', __('Customer Code'), '</th>
-				<th class="SortedColumn">', __('Branch Code'), '</th>
-				<th class="SortedColumn">', __('Supplier Code'), '</th>
-				<th class="SortedColumn">', __('Salesperson'), '</th>
-				<th class="SortedColumn">', __('Last Visit'), '</th>
-				<th class="SortedColumn">', __('Security Role'), '</th>
-				<th class="SortedColumn">', __('Report Size'), '</th>
-				<th class="SortedColumn">', __('Theme'), '</th>
-				<th class="SortedColumn">', __('Language'), '</th>
-				<th class="noPrint" colspan = "2">&nbsp;</th>
+				<th class = "SortedColumn">', __('User Login'), '</th>
+				<th class = "SortedColumn">', __('Full Name'), '</th>
+				<th class = "SortedColumn">', __('Telephone'), '</th>
+				<th class = "SortedColumn">', __('Email'), '</th>
+				<th class = "SortedColumn">', __('Timeout'), '</th>
+				<th class = "SortedColumn">', __('Customer Code'), '</th>
+				<th class = "SortedColumn">', __('Branch Code'), '</th>
+				<th class = "SortedColumn">', __('Supplier Code'), '</th>
+				<th class = "SortedColumn">', __('Salesperson'), '</th>
+				<th class = "SortedColumn">', __('Last Visit'), '</th>
+				<th class = "SortedColumn">', __('Security Role'), '</th>
+				<th class = "SortedColumn">', __('Report Size'), '</th>
+				<th class = "SortedColumn">', __('Theme'), '</th>
+				<th class = "SortedColumn">', __('Language'), '</th>
+				<th class = "noPrint" colspan = "2">&nbsp;</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -418,23 +418,23 @@ if (!isset($SelectedUser)) {
 			$LastVisitDate = ConvertSQLDate($MyRow['lastvisitdate']);
 		}
 		/*The SecurityHeadings array is defined in config.php */
-		echo '<tr class="striped_row">
-				<td class="text">', $MyRow['userid'], '</td>
-				<td class="text">', $MyRow['realname'], '</td>
-				<td class="text">', $MyRow['phone'], ' </td>
-				<td class="text">', $MyRow['email'], '</td>
-				<td class="number">', $MyRow['timeout'], ' ' , __('mins') , '</td>
-				<td class="text">', $MyRow['customerid'], '</td>
-				<td class="text">', $MyRow['branchcode'], '</td>
-				<td class="text">', $MyRow['supplierid'], '</td>
-				<td class="text">', $MyRow['salesman'], '</td>
-				<td class="date">', $LastVisitDate, '</td>
-				<td class="text">', $SecurityRoles[($MyRow['fullaccess'])], '</td>
-				<td class="text">', $MyRow['pagesize'], '</td>
-				<td class="text">', $MyRow['theme'], '</td>
-				<td class="text">', $LanguagesArray[$MyRow['language']]['LanguageName'], '</td>
-				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?', '&amp;SelectedUser=', $MyRow['userid'], '">', __('Edit'), '</a></td>
-				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?', '&amp;SelectedUser=', $MyRow['userid'], '&amp;delete=1" onclick="return confirm(\'', __('Are you sure you wish to delete this user?'), '\');">', __('Delete'), '</a></td>
+		echo '<tr class = "striped_row">
+				<td class = "text">', $MyRow['userid'], '</td>
+				<td class = "text">', $MyRow['realname'], '</td>
+				<td class = "text">', $MyRow['phone'], ' </td>
+				<td class = "text">', $MyRow['email'], '</td>
+				<td class = "number">', $MyRow['timeout'], ' ' , __('mins') , '</td>
+				<td class = "text">', $MyRow['customerid'], '</td>
+				<td class = "text">', $MyRow['branchcode'], '</td>
+				<td class = "text">', $MyRow['supplierid'], '</td>
+				<td class = "text">', $MyRow['salesman'], '</td>
+				<td class = "date">', $LastVisitDate, '</td>
+				<td class = "text">', $SecurityRoles[($MyRow['fullaccess'])], '</td>
+				<td class = "text">', $MyRow['pagesize'], '</td>
+				<td class = "text">', $MyRow['theme'], '</td>
+				<td class = "text">', $LanguagesArray[$MyRow['language']]['LanguageName'], '</td>
+				<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?', '&amp;SelectedUser = ', $MyRow['userid'], '">', __('Edit'), '</a></td>
+				<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?', '&amp;SelectedUser = ', $MyRow['userid'], '&amp;delete = 1" onclick = "return confirm(\'', __('Are you sure you wish to delete this user?'), '\');">', __('Delete'), '</a></td>
 			</tr>';
 	}// END foreach ($Result as $MyRow).
 	echo '</tbody></table>';
@@ -442,11 +442,11 @@ if (!isset($SelectedUser)) {
 
 
 if (isset($SelectedUser)) {
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Review Existing Users') . '</a></div>';
+	echo '<div class = "centre"><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Review Existing Users') . '</a></div>';
 }
 
 echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedUser)) {
 	//editing an existing User
@@ -503,9 +503,9 @@ if (isset($SelectedUser)) {
 	$_POST['PDFLanguage'] = $MyRow['pdflanguage'];
 	$_POST['Department'] = $MyRow['department'];
 
-	echo '<input type = "hidden" name="SelectedUser" value = "' . $SelectedUser . '" />';
-	echo '<input type = "hidden" name="UserID" value = "' . $_POST['UserID'] . '" />';
-	echo '<input type = "hidden" name="ModulesAllowed" value = "' . $_POST['ModulesAllowed'] . '" />';
+	echo '<input type = "hidden" name = "SelectedUser" value = "' . $SelectedUser . '" />';
+	echo '<input type = "hidden" name = "UserID" value = "' . $_POST['UserID'] . '" />';
+	echo '<input type = "hidden" name = "ModulesAllowed" value = "' . $_POST['ModulesAllowed'] . '" />';
 
 	echo '<fieldset>
 			<legend>', __('Amend User Details'), '</legend>
@@ -520,7 +520,7 @@ if (isset($SelectedUser)) {
 			<legend>', __('Create New User'), '</legend>
 			<field>
 				<label for = "UserID">' . __('User Login') . ':</label>
-				<input pattern = "(?!^([aA]{1}[dD]{1}[mM]{1}[iI]{1}[nN]{1})$)[^?+.&\\>< ]{4,}" type ="text" required = "required" name="UserID" size = "22" maxlength = "20" placeholder = "'.__('At least 4 characters').'" title="" />
+				<input pattern = "(?!^([aA]{1}[dD]{1}[mM]{1}[iI]{1}[nN]{1})$)[^?+.&\\>< ]{4,}" type = "text" required = "required" name = "UserID" size = "22" maxlength = "20" placeholder = "'.__('At least 4 characters').'" title = "" />
 				<fieldhelp>'.__('Please input not less than 4 characters and canot be admin or contains illegal characters').'</fieldhelp>
 			</field>';
 
@@ -556,30 +556,30 @@ if (!isset($_POST['Timeout'])) {
 }
 echo '<field>
 		<label for = "Password">' . __('Password') . ':</label>
-		<input type = "password" pattern = ".{5,}" name="Password" ' . (!isset($SelectedUser) ? 'required ="required"' : '') . ' size = "22" maxlength = "20" value = "" placeholder = "'.__('At least 5 characters').'" title="" />
+		<input type = "password" pattern = ".{5,}" name = "Password" ' . (!isset($SelectedUser) ? 'required = "required"' : '') . ' size = "22" maxlength = "20" value = "" placeholder = "'.__('At least 5 characters').'" title = "" />
 		<fieldhelp>'.__('Passwords must be 5 characters or more and cannot same as the users id. A mix of upper and lower case and some non-alphanumeric characters are recommended.').'</fieldhelp>
 	</field>';
 echo '<field>
 		<label for = "RealName">' . __('Full Name') . ':</label>
-		<input type = "text" name="RealName" ' . (isset($SelectedUser) ? 'autofocus ="autofocus"' : '') . ' required = "required" value = "' . $_POST['RealName'] . '" size = "36" maxlength = "35" />
+		<input type = "text" name = "RealName" ' . (isset($SelectedUser) ? 'autofocus = "autofocus"' : '') . ' required = "required" value = "' . $_POST['RealName'] . '" size = "36" maxlength = "35" />
 	</field>';
 echo '<field>
 		<label for = "Phone">' . __('Telephone No') . ':</label>
-		<input type = "tel" name="Phone" pattern = "[0-9+()\s-]*" value = "' . $_POST['Phone'] . '" size = "32" maxlength = "30" />
+		<input type = "tel" name = "Phone" pattern = "[0-9+()\s-]*" value = "' . $_POST['Phone'] . '" size = "32" maxlength = "30" />
 	</field>';
 echo '<field>
 		<label for = "Email">' . __('Email Address') .':</label>
-		<input type = "email" name="Email" placeholder = "' . __('e.g. user@domain.com') . '" required = "required" value = "' . $_POST['Email'] .'" size = "32" maxlength = "55" title="" />
+		<input type = "email" name = "Email" placeholder = "' . __('e.g. user@domain.com') . '" required = "required" value = "' . $_POST['Email'] .'" size = "32" maxlength = "55" title = "" />
 		<fieldhelp>'.__('A valid email address is required').'</fieldhelp>
 	</field>';
 echo '<field>
 		<label for = "Timeout">' . __('Timeout after') .':</label>
-		<input type = "text" class="number" name="Timeout" required = "required" value = "' . $_POST['Timeout'] .'" size = "4" maxlength = "5" title="" />&nbsp;', __('minutes'), '
+		<input type = "text" class = "number" name = "Timeout" required = "required" value = "' . $_POST['Timeout'] .'" size = "4" maxlength = "5" title = "" />&nbsp;', __('minutes'), '
 		<fieldhelp>'.__('Log the user out after this interval of non-use').'</fieldhelp>
 	</field>';
 echo '<field>
 		<label for = "Access">' . __('Security Role') . ':</label>
-		<select name="Access">';
+		<select name = "Access">';
 
 foreach ($SecurityRoles as $SecKey => $SecVal) {
 	if (isset($_POST['Access']) and $SecKey == $_POST['Access']) {
@@ -589,12 +589,12 @@ foreach ($SecurityRoles as $SecKey => $SecVal) {
 	}
 }
 echo '</select>';
-echo '<input type = "hidden" name="ID" value = "'.$_SESSION['UserID'].'" />
+echo '<input type = "hidden" name = "ID" value = "'.$_SESSION['UserID'].'" />
 	</field>';
 
 echo '<field>
 		<label for = "CanCreateTender">' . __('User Can Create Tenders') . ':</label>
-		<select name="CanCreateTender">';
+		<select name = "CanCreateTender">';
 
 if ($_POST['CanCreateTender']==0) {
 	echo '<option selected = "selected" value = "0">' . __('No') . '</option>';
@@ -608,7 +608,7 @@ echo '</select>
 
 echo '<field>
 		<label for = "DefaultLocation">' . __('Default Location') . ':</label>
-		<select name="DefaultLocation">';
+		<select name = "DefaultLocation">';
 
 $SQL = "SELECT loccode, locationname FROM locations";
 $Result = DB_query($SQL);
@@ -635,24 +635,24 @@ if (!isset($_POST['SupplierID'])) {
 }
 echo '<field>
 		<label for = "Cust">' . __('Customer Code') . ':</label>
-		<input type = "text" name="Cust" data-type = "no-ilLegal-chars" title="" size = "10" maxlength = "10" value = "' . $_POST['Cust'] . '" />
+		<input type = "text" name = "Cust" data-type = "no-ilLegal-chars" title = "" size = "10" maxlength = "10" value = "' . $_POST['Cust'] . '" />
 		<fieldhelp>' . __('If this user login is to be associated with a customer account, enter the customer account code') . '</fieldhelp>
 	</field>';
 
 echo '<field>
 		<label for = "BranchCode">' . __('Branch Code') . ':</label>
-		<input type = "text" name="BranchCode" data-type = "no-ilLegal-chars" title="" size = "10" maxlength = "10" value = "' . $_POST['BranchCode'] .'" />
+		<input type = "text" name = "BranchCode" data-type = "no-ilLegal-chars" title = "" size = "10" maxlength = "10" value = "' . $_POST['BranchCode'] .'" />
 		<fieldhelp>' . __('If this user login is to be associated with a customer account a valid branch for the customer account must be entered.') . '</fieldhelp>
 	</field>';
 
 echo '<field>
 		<label for = "SupplierID">' . __('Supplier Code') . ':</label>
-		<input type = "text" name="SupplierID" data-type = "no-ilLegal-chars" size = "10" maxlength = "10" value = "' . $_POST['SupplierID'] .'" />
+		<input type = "text" name = "SupplierID" data-type = "no-ilLegal-chars" size = "10" maxlength = "10" value = "' . $_POST['SupplierID'] .'" />
 	</field>';
 
 echo '<field>
 		<label for = "Salesman">' . __('Restrict to Sales Person') . ':</label>
-		<select name="Salesman">';
+		<select name = "Salesman">';
 
 $SQL = "SELECT salesmancode, salesmanname FROM salesman WHERE current = 1 ORDER BY salesmanname";
 $Result = DB_query($SQL);
@@ -676,7 +676,7 @@ echo '</select>
 
 echo '<field>
 		<label for = "PageSize">' . __('Reports Page Size') .':</label>
-		<select name="PageSize">';
+		<select name = "PageSize">';
 
 if (isset($_POST['PageSize']) and $_POST['PageSize']=='A4') {
 	echo '<option selected = "selected" value = "A4">' . __('A4') . '</option>';
@@ -724,7 +724,7 @@ echo '</select>
 
 echo '<field>
 		<label for = "Theme">' . __('Theme') . ':</label>
-		<select required = "required" name="Theme">';
+		<select required = "required" name = "Theme">';
 
 $ThemeDirectories = scandir($PathPrefix . 'css/');
 
@@ -751,7 +751,7 @@ echo '</select>
 
 echo '<field>
 		<label for = "UserLanguage">' . __('Language') . ':</label>
-		<select required = "required" name="UserLanguage">';
+		<select required = "required" name = "UserLanguage">';
 
 foreach ($LanguagesArray as $LanguageEntry => $LanguageName) {
 	if (isset($_POST['UserLanguage']) and $_POST['UserLanguage'] == $LanguageEntry) {
@@ -771,7 +771,7 @@ $i = 0;
 foreach ($ModuleList as $ModuleName) {
 	echo '<field>
 			<label for = "Module_', $i, '">', $ModuleListLabel[$i], ':</label>
-			<select id="Module_', $i, '" name="Module_', $i, '">';
+			<select id = "Module_', $i, '" name = "Module_', $i, '">';
 	if ($ModulesAllowed[$i] == 0) {
 	echo '<option selected = "selected" value = "0">', __('No'), '</option>',
 			 '<option value = "1">', __('Yes'), '</option>';
@@ -787,7 +787,7 @@ foreach ($ModuleList as $ModuleName) {
 // Turn off/on dashboard:
 echo '<field>
 		<label for = "ShowDashboard">', __('Display dashboard'), ':</label>
-		<select id="ShowDashboard" name="ShowDashboard">';
+		<select id = "ShowDashboard" name = "ShowDashboard">';
 if ($_POST['ShowDashboard']==0) {
 	echo '<option selected = "selected" value = "0">', __('No'), '</option>',
 		 '<option value = "1">', __('Yes'), '</option>';
@@ -801,7 +801,7 @@ echo '</select>', fShowFieldHelp(__('Show dashboard page after login')), // Func
 // Turn off/on page help:
 echo '<field>
 		<label for = "ShowPageHelp">', __('Display page help'), ':</label>
-		<select id="ShowPageHelp" name="ShowPageHelp">';
+		<select id = "ShowPageHelp" name = "ShowPageHelp">';
 if ($_POST['ShowPageHelp']==0) {
 	echo '<option selected = "selected" value = "0">', __('No'), '</option>',
 		 '<option value = "1">', __('Yes'), '</option>';
@@ -815,7 +815,7 @@ echo '</select>', fShowFieldHelp(__('Show page help when available')), // Functi
 // Turn off/on field help:
 echo '<field>
 		<label for = "ShowFieldHelp">', __('Display field help'), ':</label>
-		<select id="ShowFieldHelp" name="ShowFieldHelp">';
+		<select id = "ShowFieldHelp" name = "ShowFieldHelp">';
 if ($_POST['ShowFieldHelp']==0) {
 	echo '<option selected = "selected" value = "0">', __('No'), '</option>',
 		 '<option value = "1">', __('Yes'), '</option>';
@@ -832,7 +832,7 @@ if (!isset($_POST['PDFLanguage'])) {
 }
 echo '<field>
 		<label for = "PDFLanguage">', __('PDF Language Support'), ':</label>
-		<select id="PDFLanguage" name="PDFLanguage">';
+		<select id = "PDFLanguage" name = "PDFLanguage">';
 for ($i = 0;  $i < count($PDFLanguages);  $i++)  {
 	if ($_POST['PDFLanguage']==$i) {
 	echo '<option selected = "selected" value = "' . $i .'">' . $PDFLanguages[$i] . '</option>';
@@ -854,7 +854,7 @@ $SQL = "SELECT departmentid,
 		ORDER BY description";
 
 $Result = DB_query($SQL);
-echo '<select name="Department">';
+echo '<select name = "Department">';
 if ((isset($_POST['Department']) and $_POST['Department']=='0') or !isset($_POST['Department'])) {
 	echo '<option selected = "selected" value = "0">' . __('Any Internal Department') . '</option>';
 } else {
@@ -874,7 +874,7 @@ echo '</select>
 
 echo '<field>
 		<label for = "Blocked">' . __('Account Status') . ':</label>
-		<select required = "required" name="Blocked">';
+		<select required = "required" name = "Blocked">';
 if ($_POST['Blocked']==0) {
 	echo '<option selected = "selected" value = "0">' . __('Open') . '</option>';
 	echo '<option value = "1">' . __('Blocked') . '</option>';
@@ -886,8 +886,8 @@ echo '</select>
 	</field>';
 
 echo '</fieldset>
-	<div class="centre">
-		<input type = "submit" name="submit" value = "' . __('Enter Information') . '" />
+	<div class = "centre">
+		<input type = "submit" name = "submit" value = "' . __('Enter Information') . '" />
 	</div>
 	</form>';
 

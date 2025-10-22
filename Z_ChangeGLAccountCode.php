@@ -9,7 +9,7 @@ $ViewTopic = 'SpecialUtilities';
 $BookMark = 'Z_ChangeGLAccountCode';
 include('includes/header.php');
 
-echo '<p class = "page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme,
 	'/images/gl.png" title = "',// Icon image.
 	__('Change A GL Account Code'), '" /> ',// Icon title.
 	__('Change A GL Account Code'), '</p>';// Page title.

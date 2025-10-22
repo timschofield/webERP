@@ -113,14 +113,14 @@ if (!isset($SelectedShipper)) {
 then none of the above are true and the list of Shippers will be displayed with
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
-	echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title .
+	echo '<p class = "page_title_text">
+			<img src = "'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title = "' . __('Search') . '" alt = "" />' . ' ' . $Title .
 		'</p>';
 
 	$SQL = "SELECT * FROM shippers ORDER BY shipper_id";
 	$Result = DB_query($SQL);
 
-	echo '<table class="selection">
+	echo '<table class = "selection">
 			<tr>
 				<th>' .  __('Shipper ID'). '</th>
 				<th>' .  __('Shipper Name'). '</th>
@@ -128,11 +128,11 @@ or deletion of the records*/
 			</tr>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
-		echo '<tr class="striped_row">
+		echo '<tr class = "striped_row">
 				<td>', $MyRow[0], '</td>
 				<td>', $MyRow[1], '</td>
-				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedShipper=', $MyRow[0], '">' .  __('Edit') . '</a></td>
-				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedShipper=', $MyRow[0], '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this shipper?') . '\');">' .  __('Delete'). '</a></td>
+				<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedShipper = ', $MyRow[0], '">' .  __('Edit') . '</a></td>
+				<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedShipper = ', $MyRow[0], '&amp;delete = 1" onclick = "return confirm(\'' . __('Are you sure you wish to delete this shipper?') . '\');">' .  __('Delete'). '</a></td>
 			</tr>';
 	}
 	//END while LIST LOOP
@@ -141,16 +141,16 @@ or deletion of the records*/
 
 
 if (isset($SelectedShipper)) {
-	echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title .
+	echo '<p class = "page_title_text">
+			<img src = "'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title = "' . __('Search') . '" alt = "" />' . ' ' . $Title .
 		'</p>';
-	echo '<div class="centre"><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('REVIEW RECORDS') . '</a></div>';
+	echo '<div class = "centre"><a href = "'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('REVIEW RECORDS') . '</a></div>';
 }
 
 if (!isset($_GET['delete'])) {
 
 	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedShipper)) {
 		//editing an existing Shipper
@@ -163,8 +163,8 @@ if (!isset($_GET['delete'])) {
 		$_POST['Shipper_ID'] = $MyRow['shipper_id'];
 		$_POST['ShipperName']	= $MyRow['shippername'];
 
-		echo '<input type = "hidden" name="SelectedShipper" value = "'. $SelectedShipper .'" />';
-		echo '<input type = "hidden" name="Shipper_ID" value = "' . $_POST['Shipper_ID'] . '" />';
+		echo '<input type = "hidden" name = "SelectedShipper" value = "'. $SelectedShipper .'" />';
+		echo '<input type = "hidden" name = "Shipper_ID" value = "' . $_POST['Shipper_ID'] . '" />';
 		echo '<fieldset>
 				<legend>', __('Edit Shipper Details'), '</legend>
 				<field>
@@ -181,13 +181,13 @@ if (!isset($_GET['delete'])) {
 
 	echo '<field>
 			<label for = "ShipperName">' .  __('Shipper Name') .':</label>
-			<input type = "text" name="ShipperName"'. (in_array('ShipperName',$Errors) ? 'class ="inputerror"' : '' ) . ' value = "'. $_POST['ShipperName'] .'" size = "35" maxlength = "40" />
+			<input type = "text" name = "ShipperName"'. (in_array('ShipperName',$Errors) ? 'class = "inputerror"' : '' ) . ' value = "'. $_POST['ShipperName'] .'" size = "35" maxlength = "40" />
 		</field>
 
 	</fieldset>
 
-	<div class="centre">
-		<input type = "submit" name="submit" value = "'. __('Enter Information').'" />
+	<div class = "centre">
+		<input type = "submit" name = "submit" value = "'. __('Enter Information').'" />
 	</div>
 	</form>';
 

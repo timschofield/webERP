@@ -10,13 +10,13 @@ include('includes/SQL_CommonFunctions.php');
 if (!isset($_GET['QuotationNo']) || $_GET['QuotationNo']==""){
 	$Title = __('Select Quotation To Print');
 	include('includes/header.php');
-	echo '<div class="centre"><br /><br /><br />';
+	echo '<div class = "centre"><br /><br /><br />';
 	prnMsg( __('Select a Quotation to Print before calling this page') , 'error');
 	echo '<br /><br /><br />
-			<table class="table_index">
+			<table class = "table_index">
 				<tr>
-					<td class="menu_group_item">
-						<a href="'. $RootPath . '/SelectSalesOrder.php?Quotations=Quotes_Only">' . __('Quotations') . '</a></td>
+					<td class = "menu_group_item">
+						<a href = "'. $RootPath . '/SelectSalesOrder.php?Quotations = Quotes_Only">' . __('Quotations') . '</a></td>
 				</tr>
 			</table>
 			</div><br /><br /><br />';
@@ -83,13 +83,13 @@ $Result = DB_query($SQL, $ErrMsg);
 if (DB_num_rows($Result) == 0){
 	$Title = __('Print Quotation Error');
 	include('includes/header.php');
-	echo '<div class="centre"><br /><br /><br />';
+	echo '<div class = "centre"><br /><br /><br />';
 	prnMsg( __('Unable to Locate Quotation Number') . ' : ' . $_GET['QuotationNo'] . ' ', 'error');
 	echo '<br /><br /><br />
-			<table class="table_index">
+			<table class = "table_index">
 			<tr>
-				<td class="menu_group_item">
-					<a href="'. $RootPath . '/SelectSalesOrder.php?Quotations=Quotes_Only">' . __('Outstanding Quotations') . '</a>
+				<td class = "menu_group_item">
+					<a href = "'. $RootPath . '/SelectSalesOrder.php?Quotations = Quotes_Only">' . __('Outstanding Quotations') . '</a>
 				</td>
 			</tr>
 			</table>
@@ -136,8 +136,8 @@ $HTML = '
 	th { background: #eee; }
 </style>';
 $HTML .= '<link href = "css/reports.css" rel = "stylesheet" type = "text/css" />';
-$HTML .= '<div><img class="logo" src="' . $_SESSION['LogoFile'] . '" /></div>';
-$HTML .= '<div><span class="label">' . $CompanyName . '</span></div>';
+$HTML .= '<div><img class = "logo" src = "' . $_SESSION['LogoFile'] . '" /></div>';
+$HTML .= '<div><span class = "label">' . $CompanyName . '</span></div>';
 
 foreach ($CompanyAddress as $line) {
 	if (trim($line) != '') {
@@ -145,12 +145,12 @@ foreach ($CompanyAddress as $line) {
 	}
 }
 
-$HTML .= '<div class="header">
-<div class="subheader">' . __('Quotation No.') . ': ' . $_GET['QuotationNo'] . '</div>
-<div class="small">' . __('Date') . ': ' . date('Y-m-d', strtotime($MyRow['quotedate'])) . '</div>
-<div class="small">' . __('Customer') . ': ' . htmlspecialchars($MyRow['name']) . '</div>
-<div class="small">' . __('Customer Ref') . ': ' . htmlspecialchars($MyRow['customerref']) . '</div>
-<div class="small">' . __('Deliver To') . ': ' . htmlspecialchars($MyRow['deliverto']) . '</div>
+$HTML .= '<div class = "header">
+<div class = "subheader">' . __('Quotation No.') . ': ' . $_GET['QuotationNo'] . '</div>
+<div class = "small">' . __('Date') . ': ' . date('Y-m-d', strtotime($MyRow['quotedate'])) . '</div>
+<div class = "small">' . __('Customer') . ': ' . htmlspecialchars($MyRow['name']) . '</div>
+<div class = "small">' . __('Customer Ref') . ': ' . htmlspecialchars($MyRow['customerref']) . '</div>
+<div class = "small">' . __('Deliver To') . ': ' . htmlspecialchars($MyRow['deliverto']) . '</div>
 </div><br />
 <table>
 	<tr>
@@ -203,13 +203,13 @@ while ($MyRow2 = DB_fetch_array($Result)) {
 	$HTML .= '
 	<tr>
 		<td>' . htmlspecialchars($MyRow2['stkcode']) . '</td>
-		<td>' . htmlspecialchars($MyRow2['description']) . '<br /><span class="small">' . nl2br(htmlspecialchars($MyRow2['narrative'])) . '</span></td>
-		<td style="text-align:right;">' . $DisplayQty . '</td>
-		<td style="text-align:right;">' . $DisplayPrice . '</td>
-		<td style="text-align:right;">' . $DisplayDiscount . '</td>
-		<td style="text-align:right;">' . $DisplayTaxClass . '</td>
-		<td style="text-align:right;">' . $DisplayTaxAmount . '</td>
-		<td style="text-align:right;">' . $DisplayTotal . '</td>
+		<td>' . htmlspecialchars($MyRow2['description']) . '<br /><span class = "small">' . nl2br(htmlspecialchars($MyRow2['narrative'])) . '</span></td>
+		<td style = "text-align:right;">' . $DisplayQty . '</td>
+		<td style = "text-align:right;">' . $DisplayPrice . '</td>
+		<td style = "text-align:right;">' . $DisplayDiscount . '</td>
+		<td style = "text-align:right;">' . $DisplayTaxClass . '</td>
+		<td style = "text-align:right;">' . $DisplayTaxAmount . '</td>
+		<td style = "text-align:right;">' . $DisplayTotal . '</td>
 	</tr>';
 }
 
@@ -219,26 +219,26 @@ if ($ListCount == 0) {
 	$Title = __('Print Quotation Error');
 	include('includes/header.php');
 	prnMsg(__('There were no items on the quotation') . '. ' . __('The quotation cannot be printed'),'info');
-	echo '<br /><a href="' . $RootPath . '/SelectSalesOrder.php?Quotation=Quotes_only">' .  __('Print Another Quotation'). '</a>
-			<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
+	echo '<br /><a href = "' . $RootPath . '/SelectSalesOrder.php?Quotation = Quotes_only">' .  __('Print Another Quotation'). '</a>
+			<br /><a href = "' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 	include('includes/footer.php');
 	exit();
 }
 
 // Totals
 $HTML .= '
-<table style="width:60%; margin-left:auto; margin-bottom:20px;">
+<table style = "width:60%; margin-left:auto; margin-bottom:20px;">
 	<tr>
-		<th style="text-align:right;">' . __('Quotation Excluding Tax') . '</th>
-		<td style="text-align:right;">' . locale_number_format($QuotationTotalEx,$MyRow['currdecimalplaces']) . '</td>
+		<th style = "text-align:right;">' . __('Quotation Excluding Tax') . '</th>
+		<td style = "text-align:right;">' . locale_number_format($QuotationTotalEx,$MyRow['currdecimalplaces']) . '</td>
 	</tr>
 	<tr>
-		<th style="text-align:right;">' . __('Total Tax') . '</th>
-		<td style="text-align:right;">' . locale_number_format($TaxTotal,$MyRow['currdecimalplaces']) . '</td>
+		<th style = "text-align:right;">' . __('Total Tax') . '</th>
+		<td style = "text-align:right;">' . locale_number_format($TaxTotal,$MyRow['currdecimalplaces']) . '</td>
 	</tr>
 	<tr>
-		<th style="text-align:right;">' . __('Quotation Including Tax') . '</th>
-		<td style="text-align:right;">' . locale_number_format($QuotationTotal,$MyRow['currdecimalplaces']) . '</td>
+		<th style = "text-align:right;">' . __('Quotation Including Tax') . '</th>
+		<td style = "text-align:right;">' . locale_number_format($QuotationTotal,$MyRow['currdecimalplaces']) . '</td>
 	</tr>
 </table>';
 
@@ -248,7 +248,7 @@ if (mb_strlen(trim($MyRow['comments'])) > 1) {
 	$comments = str_replace('\n', ' ', $comments);
 	$comments = str_replace('\r', '', $comments);
 	$comments = str_replace('\t', '', $comments);
-	$HTML .= '<div class="subheader">' . __('Notes') . ':</div><div class="small">' . nl2br(htmlspecialchars($comments)) . '</div>';
+	$HTML .= '<div class = "subheader">' . __('Notes') . ':</div><div class = "small">' . nl2br(htmlspecialchars($comments)) . '</div>';
 }
 
 // Generate PDF with DomPDF

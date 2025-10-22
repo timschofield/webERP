@@ -39,7 +39,7 @@ if (!isset($Item) or !isset($_SESSION['CustomerID']) or $_SESSION['CustomerID']=
 	exit();
 }
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') .
+echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title = "' . __('Search') .
 		'" alt = "" />' . __('Special Customer Prices') . '</p>';
 
 if (isset($_POST['submit'])) {
@@ -188,7 +188,7 @@ $SQL = "SELECT prices.price,
 $ErrMsg = __('Could not retrieve the normal prices set up because');
 $Result = DB_query($SQL, $ErrMsg);
 
-echo '<table class="selection">';
+echo '<table class = "selection">';
 
 if (DB_num_rows($Result) == 0) {
 	prnMsg(  __('There are no default prices set up for this part'), 'info');
@@ -200,8 +200,8 @@ if (DB_num_rows($Result) == 0) {
 } else {
 			$EndDateDisplay = ConvertSQLDate($MyRow['enddate']);
 		}
-		echo '<tr class="striped_row">
-				<td class="number">', locale_number_format($MyRow['price'],$CurrDecimalPlaces), '</td>
+		echo '<tr class = "striped_row">
+				<td class = "number">', locale_number_format($MyRow['price'],$CurrDecimalPlaces), '</td>
 				<td type = "date">', ConvertSQLDate($MyRow['startdate']), '</td>
 				<td type = "date">', $EndDateDisplay, '</td>
 			</tr>';
@@ -231,7 +231,7 @@ $SQL = "SELECT prices.price,
 $ErrMsg = __('Could not retrieve the special prices set up because');
 $Result = DB_query($SQL, $ErrMsg);
 
-echo '<table class="selection">';
+echo '<table class = "selection">';
 
 if (DB_num_rows($Result) == 0) {
 	prnMsg( __('There are no special prices set up for this part'), 'warn');
@@ -272,16 +272,16 @@ if (DB_num_rows($Result) == 0) {
 		$StockRow['conversionfactor'] = 1;
 	}
 		$StockRow = DB_fetch_array($StockResult);
-		echo '<tr style="background-color:#CCCCCC">
-				<td class="number">' . locale_number_format($MyRow['price'],$CurrDecimalPlaces) . '</td>
+		echo '<tr style = "background-color:#CCCCCC">
+				<td class = "number">' . locale_number_format($MyRow['price'],$CurrDecimalPlaces) . '</td>
 				<td>' . $Branch . '</td>
 				<td>' . $StockRow['units'] . '</td>
-				<td class="number">' . $StockRow['conversionfactor'] . '</td>
+				<td class = "number">' . $StockRow['conversionfactor'] . '</td>
 				<td>' . ConvertSQLDate($MyRow['startdate']) . '</td>
 				<td>' . $EndDateDisplay . '</td>
-				<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?Item='.$Item.'&amp;Price='.$MyRow['price'].'&amp;Branch='.$MyRow['branchcode'].
-					'&amp;StartDate='.$MyRow['startdate'].'&amp;EndDate='.$MyRow['enddate'].'&amp;Edit=1">' . __('Edit') . '</a></td>
-				<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?Item='.$Item.'&amp;Branch='.$MyRow['branchcode'].'&amp;StartDate='.$MyRow['startdate'] .'&amp;EndDate='.$MyRow['enddate'].'&amp;delete=yes" onclick="return confirm(\'' . __('Are you sure you wish to delete this price?') . '\');">' . __('Delete') . '</a></td>
+				<td><a href = "'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?Item = '.$Item.'&amp;Price = '.$MyRow['price'].'&amp;Branch = '.$MyRow['branchcode'].
+					'&amp;StartDate = '.$MyRow['startdate'].'&amp;EndDate = '.$MyRow['enddate'].'&amp;Edit = 1">' . __('Edit') . '</a></td>
+				<td><a href = "'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?Item = '.$Item.'&amp;Branch = '.$MyRow['branchcode'].'&amp;StartDate = '.$MyRow['startdate'] .'&amp;EndDate = '.$MyRow['enddate'].'&amp;delete = yes" onclick = "return confirm(\'' . __('Are you sure you wish to delete this price?') . '\');">' . __('Delete') . '</a></td>
 			</tr>';
 
 
@@ -292,13 +292,13 @@ if (DB_num_rows($Result) == 0) {
 echo '</table></td></tr></table>';
 
 echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
-echo '<input type = "hidden" name="Item" value = "' . $Item . '" />';
+echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<input type = "hidden" name = "Item" value = "' . $Item . '" />';
 
 if (isset($_GET['Edit']) and $_GET['Edit']==1){
-	echo '<input type = "hidden" name="Editing" value = "Yes" />';
-	echo '<input type = "hidden" name="OldStartDate" value = "' . $_GET['StartDate'] .'" />';
-	echo '<input type = "hidden" name="OldEndDate" value = "' .  $_GET['EndDate'] . '" />';
+	echo '<input type = "hidden" name = "Editing" value = "Yes" />';
+	echo '<input type = "hidden" name = "OldStartDate" value = "' . $_GET['StartDate'] .'" />';
+	echo '<input type = "hidden" name = "OldEndDate" value = "' .  $_GET['EndDate'] . '" />';
 	$_POST['Price']=$_GET['Price'];
 	$_POST['Branch']=$_GET['Branch'];
 	$_POST['StartDate'] = ConvertSQLDate($_GET['StartDate']);
@@ -351,7 +351,7 @@ echo $Item . ' - ' . $MyRow[0] . '</b></legend>';
 
 echo '<field>
 		<label for = "Branch">' . __('Branch') . ':</label>
-		<select name="Branch">';
+		<select name = "Branch">';
 if (isset($MyRow['branchcode']) and $MyRow['branchcode']=='') {
 	echo '<option selected = "selected" value = "">' . __('All Branches') . '</option>';
 } else {
@@ -370,22 +370,22 @@ echo '</select>
 
 echo '<field>
 		<label for = "StartDate">' . __('Start Date') . ':</label>
-		<input name="StartDate" type = "date" size = "11" maxlength = "10" value = "' . FormatDateForSQL($_POST['StartDate']) . '" />
+		<input name = "StartDate" type = "date" size = "11" maxlength = "10" value = "' . FormatDateForSQL($_POST['StartDate']) . '" />
 	</field>';
 echo '<field>
 		<label for = "EndDate">' . __('End Date') . ':</label>
-		<input name="EndDate" type = "date" size = "11" maxlength = "10" value = "' . FormatDateForSQL($_POST['EndDate']) . '" />
+		<input name = "EndDate" type = "date" size = "11" maxlength = "10" value = "' . FormatDateForSQL($_POST['EndDate']) . '" />
 	</field>';
 
 echo '<field>
 		<label for = "Price">' . __('Price') . ':</label>
-		<input type = "text" class="number" name="Price" size = "11" maxlength = "10" value = "' . locale_number_format($_POST['Price'],2) . '" />
+		<input type = "text" class = "number" name = "Price" size = "11" maxlength = "10" value = "' . locale_number_format($_POST['Price'],2) . '" />
 	</field>
 </fieldset>';
 
 
-echo '<div class="centre">
-		<input type = "submit" name="submit" value = "' . __('Enter Information') . '" />
+echo '<div class = "centre">
+		<input type = "submit" name = "submit" value = "' . __('Enter Information') . '" />
 	</div>
 </form>';
 

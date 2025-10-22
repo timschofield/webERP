@@ -7,8 +7,8 @@ $ViewTopic = 'Tax';
 $BookMark = 'TaxAuthorityRates';
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
-'/images/maintenance.png" title="' .
+echo '<p class = "page_title_text"><img alt = "" src = "' . $RootPath . '/css/' . $Theme .
+'/images/maintenance.png" title = "' .
 __('Tax Rates Maintenance') . '" />' . ' ' .
 __('Tax Rates Maintenance') . '</p>';
 
@@ -21,7 +21,7 @@ if (isset($_GET['TaxAuthority'])) {
 
 if (!isset($TaxAuthority)) {
 	prnMsg(__('This page can only be called after selecting the tax authority to edit the rates for') . '. ' .
-	__('Please select the Rates link from the tax authority page') . '<br /><a href="' .
+	__('Please select the Rates link from the tax authority page') . '<br /><a href = "' .
 	$RootPath . '/TaxAuthorities.php">' . __('click here') . '</a> ' .
 	__('to go to the Tax Authority page'), 'error');
 	include('includes/footer.php');
@@ -75,41 +75,41 @@ ORDER BY taxauthrates.dispatchtaxprovince,
 taxauthrates.taxcatid");
 
 if (DB_num_rows($TaxRatesResult)>0) {
-	echo '<div class="centre"><h1>' . $MyRow[0] . '</h1></div>';// TaxAuthorityRates table title.
+	echo '<div class = "centre"><h1>' . $MyRow[0] . '</h1></div>';// TaxAuthorityRates table title.
 
-	echo '<table class="selection">
+	echo '<table class = "selection">
 	<thead>
 	<tr>
-	<th class="SortedColumn">' . __('Deliveries From') . '<br />' . __('Tax Province') . '</th>
-	<th class="SortedColumn">' . __('Tax Category') . '</th>
-	<th class="SortedColumn">' . __('Tax Rate') . '</th>
+	<th class = "SortedColumn">' . __('Deliveries From') . '<br />' . __('Tax Province') . '</th>
+	<th class = "SortedColumn">' . __('Tax Category') . '</th>
+	<th class = "SortedColumn">' . __('Tax Rate') . '</th>
 	</tr>
 	</thead>
 	<tbody>';
 
 	while ($MyRow = DB_fetch_array($TaxRatesResult)) {
-		echo '<tr class="striped_row">
+		echo '<tr class = "striped_row">
 		<td>', $MyRow['taxprovincename'], '</td>
 		<td>', __($MyRow['taxcatname']), '</td>
-		<td><input class="number" maxlength = "5" name = "', $MyRow['dispatchtaxprovince'] . '_' . $MyRow['taxcatid'], '" required = "required" size = "5" title="' . __('Input must be numeric') . '" type = "text" value = "', locale_number_format($MyRow['taxrate']*100,2), '" /></td>
+		<td><input class = "number" maxlength = "5" name = "', $MyRow['dispatchtaxprovince'] . '_' . $MyRow['taxcatid'], '" required = "required" size = "5" title = "' . __('Input must be numeric') . '" type = "text" value = "', locale_number_format($MyRow['taxrate']*100,2), '" /></td>
 		</tr>';
 		}// End of while loop.
 		echo '</tbody></table>
-		<div class="centre">
+		<div class = "centre">
 		<input type = "submit" name = "UpdateRates" value = "' . __('Update Rates') . '" />';
 	//end if tax taxcatid/rates to show
 
 	} else {
-		echo '<div class="centre">';
+		echo '<div class = "centre">';
 		prnMsg(__('There are no tax rates to show - perhaps the dispatch tax province records have not yet been created?'),'warn');
 	}
 	echo '</div>';// Closes Submit or prnMsg division.
 
-	echo '<div class="centre">
-	<a href="' . $RootPath . '/TaxAuthorities.php">' . __('Tax Authorities Maintenance') .  '</a><br />
-	<a href="' . $RootPath . '/TaxGroups.php">' . __('Tax Group Maintenance') .  '</a><br />
-	<a href="' . $RootPath . '/TaxProvinces.php">' . __('Dispatch Tax Province Maintenance') .  '</a><br />
-	<a href="' . $RootPath . '/TaxCategories.php">' . __('Tax Category Maintenance') .  '</a>
+	echo '<div class = "centre">
+	<a href = "' . $RootPath . '/TaxAuthorities.php">' . __('Tax Authorities Maintenance') .  '</a><br />
+	<a href = "' . $RootPath . '/TaxGroups.php">' . __('Tax Group Maintenance') .  '</a><br />
+	<a href = "' . $RootPath . '/TaxProvinces.php">' . __('Dispatch Tax Province Maintenance') .  '</a><br />
+	<a href = "' . $RootPath . '/TaxCategories.php">' . __('Tax Category Maintenance') .  '</a>
 	</div>';
 
 	include('includes/footer.php');

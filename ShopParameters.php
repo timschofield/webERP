@@ -7,7 +7,7 @@ $ViewTopic = 'Setup';
 $BookMark = 'ShopParameters';
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Shop Configuration')
+echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title = "' . __('Shop Configuration')
 	. '" alt = "" />' . $Title. '</p>';
 
 if (isset($_POST['submit'])) {
@@ -186,9 +186,9 @@ if (isset($_POST['submit'])) {
 
 echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
 	<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />
-	<fieldset class="TwoByThreeColumn">';
+	<fieldset class = "TwoByThreeColumn">';
 
-echo '<fieldset class="Column1x1">
+echo '<fieldset class = "Column1x1">
 		<legend>' . __('General Settings') . '</legend>';
 
 echo '<field>
@@ -269,7 +269,7 @@ echo '<field>
 	</field>';
 echo '</fieldset>';
 
-echo '<fieldset class="Column1x2">
+echo '<fieldset class = "Column1x2">
 		<legend>' . __('Web-Store Behaviour Settings') . '</legend>';
 
 echo '<field>
@@ -370,7 +370,7 @@ echo '</select>
 
 echo '</fieldset>';
 
-echo '<fieldset class="Column2x1">
+echo '<fieldset class = "Column2x1">
 		<legend>' . __('Bank Transfer Settings') . '</legend>';
 
 echo '<field>
@@ -388,13 +388,13 @@ echo '</select>
 	</field>';
 echo '<field>
 		<label for = "X_ShopBankTransferSurcharge">' . __('Bank Transfer Surcharge') . ':</label>
-		<input type = "text" class="number" size = "3" maxlength = "3" name = "X_ShopBankTransferSurcharge" value = "' . $_SESSION['ShopBankTransferSurcharge'] . '" />
+		<input type = "text" class = "number" size = "3" maxlength = "3" name = "X_ShopBankTransferSurcharge" value = "' . $_SESSION['ShopBankTransferSurcharge'] . '" />
 		<fieldhelp>' . __('The bank transfer surcharge') . '</fieldhelp>
 	</field>';
 
 echo '</fieldset>';
 
-echo '<fieldset class="Column2x2">
+echo '<fieldset class = "Column2x2">
 		<legend>' . __('Paypal Settings') . '</legend>';
 
 echo '<field>
@@ -449,7 +449,7 @@ echo '</select>
 
 echo '<field>
 		<label for = "X_ShopPayPalSurcharge">' . __('PayPal Surcharge') . ':</label>
-		<input type = "text" class="number" size = "5" maxlength = "5" name = "X_ShopPayPalSurcharge" value = "' . $_SESSION['ShopPayPalSurcharge'] . '" />
+		<input type = "text" class = "number" size = "5" maxlength = "5" name = "X_ShopPayPalSurcharge" value = "' . $_SESSION['ShopPayPalSurcharge'] . '" />
 		<fieldhelp>' . __('The PayPal surcharge') . '</fieldhelp>
 	</field>';
 
@@ -461,7 +461,7 @@ if ($AllowDemoMode) {
 } else {
 	echo '<field>
 			<label for = "X_ShopPayPalUser">' . __('PayPal User') . ':</label>
-			<input type = "text" class="noSpecialChars" size = "40" maxlength = "40" name = "X_ShopPayPalUser" value = "' . $_SESSION['ShopPayPalUser'] . '" />
+			<input type = "text" class = "noSpecialChars" size = "40" maxlength = "40" name = "X_ShopPayPalUser" value = "' . $_SESSION['ShopPayPalUser'] . '" />
 			<fieldhelp>' . __('The PayPal Merchant User account for Pay Pal Express Checkout') . '</fieldhelp>
 		</field>';
 	echo '<field>
@@ -477,7 +477,7 @@ if ($AllowDemoMode) {
 }
 echo '</fieldset>';
 
-echo '<fieldset class="Column1x3">
+echo '<fieldset class = "Column1x3">
 		<legend>' . __('Credit Card Processing Settings') . '</legend>';
 
 echo '<field>
@@ -522,7 +522,7 @@ echo '</select>
 
 echo '<field>
 		<label for = "X_ShopCreditCardSurcharge">' . __('Credit Card Surcharge') . ':</label>
-		<input type = "text" class="number" size = "5" maxlength = "5" name = "X_ShopCreditCardSurcharge" value = "' . $_SESSION['ShopCreditCardSurcharge'] . '" />
+		<input type = "text" class = "number" size = "5" maxlength = "5" name = "X_ShopCreditCardSurcharge" value = "' . $_SESSION['ShopCreditCardSurcharge'] . '" />
 		<fieldhelp>' . __('The credit card surcharge') . '</fieldhelp>
 	</field>';
 
@@ -549,56 +549,56 @@ if ($AllowDemoMode) {
 } else {
 	echo '<field>
 			<label for = "X_ShopPayPalProUser">' . __('PayPal Pro User') . ':</label>
-			<input type = "text" class="noSpecialChars"  size = "40" maxlength = "40" name = "X_ShopPayPalProUser" value = "' . $_SESSION['ShopPayPalProUser'] . '" />
-			<fieldhelp>' . __('The') . '<a href="https://www.paypal.com/us/webapps/mpp/paypal-payments-pro">' . __('PayPal Pro') .'</a> ' .  __('Merchant User account for credit card payment available in only USA and Canada') .  '</fieldhelp>
+			<input type = "text" class = "noSpecialChars"  size = "40" maxlength = "40" name = "X_ShopPayPalProUser" value = "' . $_SESSION['ShopPayPalProUser'] . '" />
+			<fieldhelp>' . __('The') . '<a href = "https://www.paypal.com/us/webapps/mpp/paypal-payments-pro">' . __('PayPal Pro') .'</a> ' .  __('Merchant User account for credit card payment available in only USA and Canada') .  '</fieldhelp>
 		</field>';
 
 	echo '<field>
 			<label for = "X_ShopPayPalProPassword">' . __('PayPal Pro Password') . ':</label>
 			<input type = "text" size = "20" maxlength = "20" name = "X_ShopPayPalProPassword" value = "' . $_SESSION['ShopPayPalProPassword'] . '" />
-			<fieldhelp>' . __('The') . '<a href="https://www.paypal.com/us/webapps/mpp/paypal-payments-pro">' . __('PayPal Pro') .'</a> ' . __('Merchant account password for credit card payment available in only USA and Canada') . '</fieldhelp>
+			<fieldhelp>' . __('The') . '<a href = "https://www.paypal.com/us/webapps/mpp/paypal-payments-pro">' . __('PayPal Pro') .'</a> ' . __('Merchant account password for credit card payment available in only USA and Canada') . '</fieldhelp>
 		</field>';
 	echo '<field>
 			<label for = "X_ShopPayPalProSignature">' . __('PayPal Pro Signature') . ':</label>
 			<input type = "text" size = "80" maxlength = "80" name = "X_ShopPayPalProSignature" value = "' . $_SESSION['ShopPayPalProSignature'] . '" />
-			<fieldhelp>' . __('The') . '<a href="https://www.paypal.com/us/webapps/mpp/paypal-payments-pro">' . __('PayPal Pro') . '</a> ' .__('merchant account signature for credit card payment available in only USA and Canada') . '</fieldhelp>
+			<fieldhelp>' . __('The') . '<a href = "https://www.paypal.com/us/webapps/mpp/paypal-payments-pro">' . __('PayPal Pro') . '</a> ' .__('merchant account signature for credit card payment available in only USA and Canada') . '</fieldhelp>
 		</field>';
 	echo '<field>
 			<label for = "X_ShopPayFlowUser">' . __('Pay Flow Pro User') . ':</label>
-			<input type = "text" class="noSpecialChars"  size = "40" maxlength = "40" name = "X_ShopPayFlowUser" value = "' . $_SESSION['ShopPayFlowUser'] . '" />
-			<fieldhelp>' . __('The') . ' <a href="https://www.paypal.com/us/webapps/mpp/payflow-payment-gateway">PayFlow Pro</a> ' . __('Merchant User account') . '</fieldhelp>
+			<input type = "text" class = "noSpecialChars"  size = "40" maxlength = "40" name = "X_ShopPayFlowUser" value = "' . $_SESSION['ShopPayFlowUser'] . '" />
+			<fieldhelp>' . __('The') . ' <a href = "https://www.paypal.com/us/webapps/mpp/payflow-payment-gateway">PayFlow Pro</a> ' . __('Merchant User account') . '</fieldhelp>
 		</field>';
 
 	echo '<field>
 			<label for = "X_ShopPayFlowPassword">' . __('Pay Flow Pro Password') . ':</label>
 			<input type = "text" size = "20" maxlength = "20" name = "X_ShopPayFlowPassword" value = "' . $_SESSION['ShopPayFlowPassword'] . '" />
-			<fieldhelp>' . __('The') . ' <a href="https://www.paypal.com/us/webapps/mpp/payflow-payment-gateway">PayFlow Pro</a> ' . __('Merchant account password') . '</fieldhelp>
+			<fieldhelp>' . __('The') . ' <a href = "https://www.paypal.com/us/webapps/mpp/payflow-payment-gateway">PayFlow Pro</a> ' . __('Merchant account password') . '</fieldhelp>
 		</field>';
 	echo '<field>
 			<label for = "X_ShopPayFlowVendor">' . __('Pay Flow Pro Vendor') . ':</label>
-			<input type = "text" class="noSpecialChars" size = "20" maxlength = "20" name = "X_ShopPayFlowVendor" value = "' . $_SESSION['ShopPayFlowVendor'] . '" />
-			<fieldhelp>' . __('The') . ' <a href="https://www.paypal.com/us/webapps/mpp/payflow-payment-gateway">PayFlow Pro</a> ' . __('vendor') . '</fieldhelp>
+			<input type = "text" class = "noSpecialChars" size = "20" maxlength = "20" name = "X_ShopPayFlowVendor" value = "' . $_SESSION['ShopPayFlowVendor'] . '" />
+			<fieldhelp>' . __('The') . ' <a href = "https://www.paypal.com/us/webapps/mpp/payflow-payment-gateway">PayFlow Pro</a> ' . __('vendor') . '</fieldhelp>
 		</field>';
 	echo '<field>
 			<label for = "X_ShopPayFlowMerchant">' . __('Pay Flow Pro Merchant') . ':</label>
 			<input type = "text" size = "20" maxlength = "20" name = "X_ShopPayFlowMerchant" value = "' . $_SESSION['ShopPayFlowMerchant'] . '" />
-			<fieldhelp>' . __('The') . ' <a href="https://www.paypal.com/us/webapps/mpp/payflow-payment-gateway">PayFlow Pro</a> ' . __('merchant') . '</fieldhelp>
+			<fieldhelp>' . __('The') . ' <a href = "https://www.paypal.com/us/webapps/mpp/payflow-payment-gateway">PayFlow Pro</a> ' . __('merchant') . '</fieldhelp>
 		</field>';
 	echo '<field>
 			<label for = "X_ShopSwipeHQMerchantID">' . __('SwipeHQ Merchant ID') . ':</label>
-			<input type = "text" class="noSpecialChars" size = "15" maxlength = "15" name = "X_ShopSwipeHQMerchantID" value = "' . $_SESSION['ShopSwipeHQMerchantID'] . '" />
-			<fieldhelp>' . __('The'). ' <a href="https://www.swipehq.com/credit-card-payment-solutions/index.php">SwipeHQ</a> ' . __('Merchant ID - see SwipeHQ settings -> API credentials') . '</fieldhelp>
+			<input type = "text" class = "noSpecialChars" size = "15" maxlength = "15" name = "X_ShopSwipeHQMerchantID" value = "' . $_SESSION['ShopSwipeHQMerchantID'] . '" />
+			<fieldhelp>' . __('The'). ' <a href = "https://www.swipehq.com/credit-card-payment-solutions/index.php">SwipeHQ</a> ' . __('Merchant ID - see SwipeHQ settings -> API credentials') . '</fieldhelp>
 		</field>';
 	echo '<field>
 			<label for = "X_ShopSwipeHQAPIKey">' . __('SwipeHQ API Key') . ':</label>
 			<input type = "text" size = "80"  maxlenght = "100" name = "X_ShopSwipeHQAPIKey" value = "' . $_SESSION['ShopSwipeHQAPIKey'] . '" />
-			<fieldhelp>' . __('The') . ' <a href="https://www.swipehq.com/credit-card-payment-solutions/index.php">SwipeHQ</a> ' . __('API Key - see SwipeHQ admin settings -> API credentials') . '</fieldhelp>
+			<fieldhelp>' . __('The') . ' <a href = "https://www.swipehq.com/credit-card-payment-solutions/index.php">SwipeHQ</a> ' . __('API Key - see SwipeHQ admin settings -> API credentials') . '</fieldhelp>
 		</field>';
 
 	echo '</fieldset>';
 	echo '</fieldset>';
 } //end of blocked inputs in demo mode
-echo '<div class="centre">
+echo '<div class = "centre">
 		<input type = "submit" name = "submit" value = "' . __('Update') . '" />
 	</div>
 	</form>';

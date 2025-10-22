@@ -27,8 +27,8 @@ if (isset($_GET['From'])) {
 
 if (isset($_POST['CheckCode'])) {
 
-	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-		'/images/magnifier.png" title="',// Icon image.
+	echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme,
+		'/images/magnifier.png" title = "',// Icon image.
 		__('Dispatch'), '" /> ',// Icon title.
 		__('Select Item to Transfer'), '</p>';// Page title.
 
@@ -45,11 +45,11 @@ if (isset($_POST['CheckCode'])) {
 	}
 	$ErrMsg = __('The stock information cannot be retrieved because');
 	$Result = DB_query($SQL, $ErrMsg);
-	echo '<table class="selection">
+	echo '<table class = "selection">
 		<thead>
 			<tr>
-				<th class="SortedColumn">' . __('Stock Code') . '</th>
-				<th class="SortedColumn">' . __('Stock Description') . '</th>
+				<th class = "SortedColumn">' . __('Stock Code') . '</th>
+				<th class = "SortedColumn">' . __('Stock Description') . '</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -57,7 +57,7 @@ if (isset($_POST['CheckCode'])) {
 		echo '<tr>
 				<td>' . $MyRow['stockid'] . '</td>
 				<td>' . $MyRow['description'] . '</td>
-				<td><a href="' . $RootPath . '/StockTransfers.php?StockID='.$MyRow['stockid'].'&amp;Description='.$MyRow['description'].'&amp;NewTransfer=Yes&amp;Quantity='. filter_number_format($_POST['Quantity']).'&amp;From='.$_POST['StockLocationFrom'].'&amp;To='.$_POST['StockLocationTo'].'">'
+				<td><a href = "' . $RootPath . '/StockTransfers.php?StockID = '.$MyRow['stockid'].'&amp;Description = '.$MyRow['description'].'&amp;NewTransfer = Yes&amp;Quantity = '. filter_number_format($_POST['Quantity']).'&amp;From = '.$_POST['StockLocationFrom'].'&amp;To = '.$_POST['StockLocationTo'].'">'
 				.__('Transfer') . '</a></td>
 			</tr>';
 
@@ -166,7 +166,7 @@ if ($NewTransfer) {
 		if ($MyRow['mbflag']=='D' or $MyRow['mbflag']=='A' or $MyRow['mbflag']=='K') {
 	prnMsg(__('The part entered is either or a dummy part or an assembly or a kit-set part') . '. ' . __('These parts are not physical parts and no stock holding is maintained for them') . '. ' . __('Stock Transfers are therefore not possible'),'warn');
 			echo '.<hr />';
-			echo '<a href="' . $RootPath . '/StockTransfers.php?NewTransfer=Yes">' . __('Enter another Transfer') . '</a>';
+			echo '<a href = "' . $RootPath . '/StockTransfers.php?NewTransfer = Yes">' . __('Enter another Transfer') . '</a>';
 			unset($_SESSION['Transfer']);
 			include('includes/footer.php');
 			exit();
@@ -572,7 +572,7 @@ if (isset($_POST['EnterTransfer']) ) {
 		DB_Txn_Commit();
 
 		prnMsg(__('An inventory transfer of').' ' . $_SESSION['Transfer']->TransferItem[0]->StockID . ' - ' . $_SESSION['Transfer']->TransferItem[0]->ItemDescription . ' '. __('has been created from').' ' . $_SESSION['Transfer']->StockLocationFrom . ' '. __('to') . ' ' . $_SESSION['Transfer']->StockLocationTo . ' '.__('for a quantity of').' ' . $_SESSION['Transfer']->TransferItem[0]->Quantity,'success');
-		echo '<br /><a href="' . $RootPath . '/PDFStockTransfer.php?TransferNo='.$TransferNumber.'">' . __('Print Transfer Note') . '</a>';
+		echo '<br /><a href = "' . $RootPath . '/PDFStockTransfer.php?TransferNo = '.$TransferNumber.'">' . __('Print Transfer Note') . '</a>';
 		unset($_SESSION['Transfer']);
 		include('includes/footer.php');
 		exit();
@@ -580,12 +580,12 @@ if (isset($_POST['EnterTransfer']) ) {
 
 }
 
-echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . __('Dispatch') . '" alt="" />' . ' ' . $Title . '
+echo '<p class = "page_title_text">
+		<img src = "'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title = "' . __('Dispatch') . '" alt = "" />' . ' ' . $Title . '
 	  </p>';
 
 echo '<form action = "'. htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post">';
-echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_GET['Description'])) {
 	$_GET['Description']='';
@@ -597,23 +597,23 @@ echo '<fieldset>
 if (!isset($_POST['StockID'])) {
 	$_POST['StockID'] = '';
 }
-	echo '<input type = "text"  title="" name="StockID" size = "21" value = "' . $_POST['StockID'] . '" maxlength = "20" />
+	echo '<input type = "text"  title = "" name = "StockID" size = "21" value = "' . $_POST['StockID'] . '" maxlength = "20" />
 		<fieldhelp>'.__('The stock ID should not be blank or contain illegal characters, you can choose left this blank and only keyin').' '.__('Partial Stock Code').' '.__('or').' '.__('Partial Description').' '.__('then push').' '.__('Check Part').'</fieldhelp>
 	</field>';
 
 echo '<field>
 		<label for = "StockText">' .  __('Partial Description'). ':</label>
-		<input type = "text" name="StockText" title="" size = "21" value = "' . $_GET['Description'] .'" />
+		<input type = "text" name = "StockText" title = "" size = "21" value = "' . $_GET['Description'] .'" />
 		<fieldhelp>'.__('You can key in part of stock description or left this and ').' '.__('Partial Stock Code').' '.__('blank and click ').' '.__('Check Part').' '.__('to view the whole stock list').'</fieldhelp>
 		' . __('Partial Stock Code'). ':';
 if (isset($_POST['StockID'])) {
-	echo '<input type = "text" title="" name="StockCode" size = "21" value = "' . $_POST['StockID'] .'" maxlength = "20" />
+	echo '<input type = "text" title = "" name = "StockCode" size = "21" value = "' . $_POST['StockID'] .'" maxlength = "20" />
 		<fieldhelp>'.__('You can key in partial of the stock code or just left this blank to click').' '.__('Check Part').'</fieldhelp>';
 } else {
-	echo '<input type = "text" title="" name="StockCode" size = "21" value = "" maxlength = "20" />
+	echo '<input type = "text" title = "" name = "StockCode" size = "21" value = "" maxlength = "20" />
 		<fieldhelp>'.__('You can key in partial of the stock code or just left this blank to click').' '.__('Check Part').'</fieldhelp>';
 }
-echo '<input type = "submit" name="CheckCode" value = "'.__('Check Part').'" />
+echo '<input type = "submit" name = "CheckCode" value = "'.__('Check Part').'" />
 	</field>';
 
 if (isset($_SESSION['Transfer']->TransferItem[0]->ItemDescription)
@@ -626,7 +626,7 @@ if (isset($_SESSION['Transfer']->TransferItem[0]->ItemDescription)
 
 echo '<field>
 		<label for = "StockLocationFrom">' . __('From Stock Location').':</label>
-		<select name="StockLocationFrom">';
+		<select name = "StockLocationFrom">';
 
 $SQL = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode = locations.loccode and locationusers.userid = '" .  $_SESSION['UserID'] . "' and locationusers.canupd = 1";
 $ResultStkLocs = DB_query($SQL);
@@ -651,7 +651,7 @@ echo '</select>
 
 echo '<field>
 		<label for = "StockLocationTo">' .  __('To Stock Location').': </label>
-		<select name="StockLocationTo"> ';
+		<select name = "StockLocationTo"> ';
 
 DB_data_seek($ResultStkLocs,0);
 
@@ -680,23 +680,23 @@ echo '<field>
 if (isset($_SESSION['Transfer']->TransferItem[0]->Controlled)
 	and $_SESSION['Transfer']->TransferItem[0]->Controlled == 1) {
 
-	echo '<input type = "hidden" name="Quantity" value = "' . locale_number_format($_SESSION['Transfer']->TransferItem[0]->Quantity) . '" />
-		<a href="' . $RootPath .'/StockTransferControlled.php?StockLocationFrom='.$_SESSION['Transfer']->StockLocationFrom.'">
+	echo '<input type = "hidden" name = "Quantity" value = "' . locale_number_format($_SESSION['Transfer']->TransferItem[0]->Quantity) . '" />
+		<a href = "' . $RootPath .'/StockTransferControlled.php?StockLocationFrom = '.$_SESSION['Transfer']->StockLocationFrom.'">
 		' . $_SESSION['Transfer']->TransferItem[0]->Quantity . '</a>
 	</field>';
 } elseif (isset($_SESSION['Transfer']->TransferItem[0]->Controlled)) {
-	echo '<input type = "text" class="number" name="Quantity" title="" size = "12" maxlength = "12" value = "' . locale_number_format($_SESSION['Transfer']->TransferItem[0]->Quantity) . '" />
+	echo '<input type = "text" class = "number" name = "Quantity" title = "" size = "12" maxlength = "12" value = "' . locale_number_format($_SESSION['Transfer']->TransferItem[0]->Quantity) . '" />
 		<fieldhelp'.__('The transfer quantity cannot be zero').'</fieldhelp>
 	</field>';
 } else {
-	echo '<input type = "text" class="number"  title="" name="Quantity" size = "12" maxlength = "12" value = "0" />
+	echo '<input type = "text" class = "number"  title = "" name = "Quantity" size = "12" maxlength = "12" value = "0" />
 		<fieldhelp>'.__('The transfer quantity cannot be zer0').'</fieldhelp>
 		</field>';
 }
 
 echo '</fieldset>
-	<div class="centre">
-		<input type = "submit" name="EnterTransfer" value = "' . __('Enter Stock Transfer') . '" />';
+	<div class = "centre">
+		<input type = "submit" name = "EnterTransfer" value = "' . __('Enter Stock Transfer') . '" />';
 
 if (empty($_SESSION['Transfer']->TransferItem[0]->StockID) and isset($_POST['StockID'])) {
 	$StockID = $_POST['StockID'];
@@ -707,15 +707,15 @@ if (empty($_SESSION['Transfer']->TransferItem[0]->StockID) and isset($_POST['Sto
 }
 if (isset($_SESSION['Transfer'])) {
 	echo '<br />
-		<a href="'.$RootPath.'/StockStatus.php?StockID=' . $StockID . '">' . __('Show Stock Status') . '</a>';
+		<a href = "'.$RootPath.'/StockStatus.php?StockID = ' . $StockID . '">' . __('Show Stock Status') . '</a>';
 	echo '<br />
-		<a href="'.$RootPath.'/StockMovements.php?StockID=' . $StockID . '">' . __('Show Movements') . '</a>';
+		<a href = "'.$RootPath.'/StockMovements.php?StockID = ' . $StockID . '">' . __('Show Movements') . '</a>';
 	echo '<br />
-		<a href="'.$RootPath.'/StockUsage.php?StockID=' . $StockID . '&amp;StockLocation=' . $_SESSION['Transfer']->StockLocationFrom . '">' . __('Show Stock Usage') . '</a>';
+		<a href = "'.$RootPath.'/StockUsage.php?StockID = ' . $StockID . '&amp;StockLocation = ' . $_SESSION['Transfer']->StockLocationFrom . '">' . __('Show Stock Usage') . '</a>';
 	echo '<br />
-		<a href="'.$RootPath.'/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '&amp;StockLocation=' . $_SESSION['Transfer']->StockLocationFrom . '">' . __('Search Outstanding Sales Orders') . '</a>';
+		<a href = "'.$RootPath.'/SelectSalesOrder.php?SelectedStockItem = ' . $StockID . '&amp;StockLocation = ' . $_SESSION['Transfer']->StockLocationFrom . '">' . __('Search Outstanding Sales Orders') . '</a>';
 	echo '<br />
-		<a href="'.$RootPath.'/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . __('Search Completed Sales Orders') . '</a>';
+		<a href = "'.$RootPath.'/SelectCompletedOrder.php?SelectedStockItem = ' . $StockID . '">' . __('Search Completed Sales Orders') . '</a>';
 }
 echo '</div>
 	</form>';

@@ -193,7 +193,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 
 	if (DB_num_rows($CheckedItems) == 0) {
 		$HTML .= '<p><b>' . __('There is no inventory check data to report on') . '</b></p>';
-		$HTML .= '<p>' . __('To start an inventory check first run the') . ' <a href="' . $RootPath . '/StockCheck.php">' . __('inventory check sheets') . '</a> - ' . __('and select the option to create new Inventory Check') . '</p>';
+		$HTML .= '<p>' . __('To start an inventory check first run the') . ' <a href = "' . $RootPath . '/StockCheck.php">' . __('inventory check sheets') . '</a> - ' . __('and select the option to create new Inventory Check') . '</p>';
 		$HTML .= '</body></html>';
 		$DomPDF = new Dompdf();
 		$DomPDF->loadHtml($HTML);
@@ -243,9 +243,9 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 							<td>' . htmlspecialchars($CheckItemRow['stockid']) . '</td>
 							<td>' . htmlspecialchars($CheckItemRow['description']) . '</td>
 							<td>' . htmlspecialchars($CheckItemRow['bin']) . '</td>
-							<td class="number">' . locale_number_format($CheckItemRow['qoh'], $CheckItemRow['decimalplaces']) . '</td>
+							<td class = "number">' . locale_number_format($CheckItemRow['qoh'], $CheckItemRow['decimalplaces']) . '</td>
 							<td colspan = "2">' . __('No counts entered') . '</td>
-							<td class="number">' . ($_POST['ZeroCounts'] == 'Adjust' ? locale_number_format(-($CheckItemRow['qoh']), $CheckItemRow['decimalplaces']) : '') . '</td>
+							<td class = "number">' . ($_POST['ZeroCounts'] == 'Adjust' ? locale_number_format(-($CheckItemRow['qoh']), $CheckItemRow['decimalplaces']) : '') . '</td>
 						</tr>';
 			}
 			elseif (DB_num_rows($Counts) > 0) {
@@ -261,16 +261,16 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 								<td rowspan = ' . $RowSpan . ' style = \'text-align:right\'>' . locale_number_format($CheckItemRow['qoh'], $CheckItemRow['decimalplaces']) . '</td>';
 						$FirstRow = false;
 }
-					$HTML .= '<td style="text-align:right">' . locale_number_format($CountRow['qtycounted'], $CheckItemRow['decimalplaces']) . '</td>
+					$HTML .= '<td style = "text-align:right">' . locale_number_format($CountRow['qtycounted'], $CheckItemRow['decimalplaces']) . '</td>
 							<td>' . htmlspecialchars($CountRow['reference']) . '</td>';
 					$TotalCount += $CountRow['qtycounted'];
 					$HTML .= "<td></td></tr>";
 				}
 				$HTML .= '<tr>
-							<td colspan = "6" class="number"><b>' . __('Total for') . ': ' . htmlspecialchars($CheckItemRow['stockid']) . '</b></td>
-							<td class="number"><b>' . locale_number_format($TotalCount, $CheckItemRow['decimalplaces']) . '</b></td>
+							<td colspan = "6" class = "number"><b>' . __('Total for') . ': ' . htmlspecialchars($CheckItemRow['stockid']) . '</b></td>
+							<td class = "number"><b>' . locale_number_format($TotalCount, $CheckItemRow['decimalplaces']) . '</b></td>
 							<td></td>
-							<td class="number"><b>' . locale_number_format($TotalCount - $CheckItemRow['qoh'], $CheckItemRow['decimalplaces']) . '</b></td>
+							<td class = "number"><b>' . locale_number_format($TotalCount - $CheckItemRow['qoh'], $CheckItemRow['decimalplaces']) . '</b></td>
 						</tr>';
 			}
 		}
@@ -302,9 +302,9 @@ else { /*The option to print PDF was not hit */
 	$BookMark = '';
 	include ('includes/header.php');
 
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
+	echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title = "' . $Title . '" alt = "" />' . ' ' . $Title . '</p>';
 
-	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target="_blank">';
+	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target = "_blank">';
 	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 	echo '<fieldset>
@@ -341,7 +341,7 @@ else { /*The option to print PDF was not hit */
 	echo '</select>
 		</field>';
 	echo '</fieldset>
-		<div class="centre"><input type = "submit" name = "PrintPDF" value = "' . __('Print PDF') . '" /></div>';
+		<div class = "centre"><input type = "submit" name = "PrintPDF" value = "' . __('Print PDF') . '" /></div>';
 	echo '</form>';
 
 	include ('includes/footer.php');

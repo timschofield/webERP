@@ -13,7 +13,7 @@ include('includes/LanguagesArray.php');
 if (!isset($_SESSION['SupplierID'])){
 	echo '<br />
 		<br />';
-	prnMsg(__('A supplier must first be selected before logins can be defined for it') . '<br /><br /><a href="' . $RootPath . '/SelectSupplier.php">' . __('Select a supplier') . '</a>','info');
+	prnMsg(__('A supplier must first be selected before logins can be defined for it') . '<br /><br /><a href = "' . $RootPath . '/SelectSupplier.php">' . __('Select a supplier') . '</a>','info');
 	include('includes/footer.php');
 	exit();
 }
@@ -29,10 +29,10 @@ $ModuleList = array(__('Orders'),
 					__('Petty Cash'),
 					__('Setup'));
 
-echo '<a href="' . $RootPath . '/SelectSupplier.php?" class="toplink">' . __('Back to Suppliers') . '</a><br />';
+echo '<a href = "' . $RootPath . '/SelectSupplier.php?" class = "toplink">' . __('Back to Suppliers') . '</a><br />';
 
-echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . __('Supplier') . '" alt="" />' . ' ' . __('Supplier') . ' : ' . $_SESSION['SupplierID'] . __(' has been selected') . '
+echo '<p class = "page_title_text">
+		<img src = "'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title = "' . __('Supplier') . '" alt = "" />' . ' ' . __('Supplier') . ' : ' . $_SESSION['SupplierID'] . __(' has been selected') . '
 	</p>';
 
 if (isset($_POST['submit'])) {
@@ -113,7 +113,7 @@ echo '<fieldset>
 		<legend>', __('Supplier Login Details'), '</legend>
 		<field>
 			<label for = "UserID">' . __('User Login') . ':</label>
-			<input type = "text" pattern = "[^><+-]{4,20}" title="" required = "required" placeholder = "'.__('More than 4 characters').'" name = "UserID" size = "22" maxlength = "20" />
+			<input type = "text" pattern = "[^><+-]{4,20}" title = "" required = "required" placeholder = "'.__('More than 4 characters').'" name = "UserID" size = "22" maxlength = "20" />
 			<fieldhelp>'.__('The user ID must has more than 4 legal characters').'</fieldhelp>
 		</field>';
 
@@ -132,22 +132,22 @@ if (!isset($_POST['Email'])) {
 }
 echo '<field>
 		<label for = "Password">' . __('Password') . ':</label>
-		<input type = "password" pattern = ".{5,20}" placeholder = "'.__('More than 5 characters').'" required = "required" title=""  name = "Password" size = "22" maxlength = "20" value = "' . $_POST['Password'] . '" />
+		<input type = "password" pattern = ".{5,20}" placeholder = "'.__('More than 5 characters').'" required = "required" title = ""  name = "Password" size = "22" maxlength = "20" value = "' . $_POST['Password'] . '" />
 		<fieldhelp>'.__('Password must be more than 5 characters').'</fieldhelp>
 	</field>
 	<field>
 		<label for = "RealName">' . __('Full Name') . ':</label>
-		<input type = "text" pattern = ".{0,35}" title="" placeholder = "'.__('User name').'" name = "RealName" value = "' . $_POST['RealName'] . '" size = "36" maxlength = "35" />
+		<input type = "text" pattern = ".{0,35}" title = "" placeholder = "'.__('User name').'" name = "RealName" value = "' . $_POST['RealName'] . '" size = "36" maxlength = "35" />
 		<fieldhelp>'.__('Must be less than 35 characters').'</fieldhelp>
 	</field>
 	<field>
 		<label for = "Phone">' . __('Telephone No') . ':</label>
-		<input type = "tel" pattern = "[\s+()-\d]{1,30}" title="" placeholder = "'.__('number and allowed charactrs').'" name = "Phone" value = "' . $_POST['Phone'] . '" size = "32" maxlength = "30" />
+		<input type = "tel" pattern = "[\s+()-\d]{1,30}" title = "" placeholder = "'.__('number and allowed charactrs').'" name = "Phone" value = "' . $_POST['Phone'] . '" size = "32" maxlength = "30" />
 		<fieldhelp>'.__('The input must be phone number').'</fieldhelp>
 	</field>
 	<field>
 		<label for = "Email">' . __('Email Address') .':</label>
-		<input type = "email" name = "Email" title="" placeholder = "'.__('email address format').'" value = "' . $_POST['Email'] .'" size = "32" maxlength = "55" />
+		<input type = "email" name = "Email" title = "" placeholder = "'.__('email address format').'" value = "' . $_POST['Email'] .'" size = "32" maxlength = "55" />
 		<fieldhelp>'.__('The input must be email address').'</fieldhelp>
 	</field>';
 
@@ -292,7 +292,7 @@ echo '</select>
 	</field>';
 
 echo '</fieldset>
-	<div class="centre">
+	<div class = "centre">
 		<input type = "submit" name = "submit" value = "' . __('Enter Information') . '" />
 	</div>
 	</form>';

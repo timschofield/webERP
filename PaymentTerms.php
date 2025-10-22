@@ -7,8 +7,8 @@ $ViewTopic = 'PaymentTerms';
 $BookMark = 'PaymentTerms';
 include('includes/header.php');
 
-echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . __('Payment Terms') . '" alt="" />' . ' ' . $Title .
+echo '<p class = "page_title_text">
+		<img src = "'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title = "' . __('Payment Terms') . '" alt = "" />' . ' ' . $Title .
 	'</p>';
 
 if (isset($_GET['SelectedTerms'])){
@@ -167,16 +167,16 @@ or deletion of the records*/
 	$SQL = "SELECT termsindicator, terms, daysbeforedue, dayinfollowingmonth FROM paymentterms";
 	$Result = DB_query($SQL);
 
-	echo '<table class="selection">';
+	echo '<table class = "selection">';
 	echo '<thead>
 			<tr>
 				<th colspan = "6"><h3>' . __('Payment Terms.') . '</h3></th>
 			</tr>';
 	echo '<tr>
-			<th class="SortedColumn">' . __('Term Code') . '</th>
-			<th class="SortedColumn">' . __('Description') . '</th>
-			<th class="SortedColumn">' . __('Following Month On') . '</th>
-			<th class="SortedColumn">' . __('Due After (Days)') . '</th>
+			<th class = "SortedColumn">' . __('Term Code') . '</th>
+			<th class = "SortedColumn">' . __('Description') . '</th>
+			<th class = "SortedColumn">' . __('Following Month On') . '</th>
+			<th class = "SortedColumn">' . __('Due After (Days)') . '</th>
 		</tr>
 	</thead>';
 
@@ -194,13 +194,13 @@ or deletion of the records*/
 			$DueAfterText = $MyRow['daysbeforedue'] . ' ' . __('days');
 		}
 
-	echo '<tr class="striped_row">
+	echo '<tr class = "striped_row">
 			<td>', $MyRow['termsindicator'], '</td>
 			<td>', $MyRow['terms'], '</td>
 			<td>', $FollMthText, '</td>
 			<td>', $DueAfterText, '</td>
-			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedTerms=', $MyRow[0], '">' . __('Edit') . '</a></td>
-			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedTerms=', $MyRow[0], '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this payment term?') . '\');">' . __('Delete') . '</a></td>
+			<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedTerms = ', $MyRow[0], '">' . __('Edit') . '</a></td>
+			<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedTerms = ', $MyRow[0], '&amp;delete = 1" onclick = "return confirm(\'' . __('Are you sure you wish to delete this payment term?') . '\');">' . __('Delete') . '</a></td>
 		</tr>';
 
 	} //END while LIST LOOP
@@ -208,15 +208,15 @@ or deletion of the records*/
 } //end of ifs and buts!
 
 if (isset($SelectedTerms)) {
-	echo '<div class="centre">
-			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Show all Payment Terms Definitions') . '</a>
+	echo '<div class = "centre">
+			<a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Show all Payment Terms Definitions') . '</a>
 		</div>';
 }
 
 if (!isset($_GET['delete'])) {
 
 	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedTerms)) {
 		//editing an existing payment terms
@@ -236,8 +236,8 @@ if (!isset($_GET['delete'])) {
 		$DaysBeforeDue  = $MyRow['daysbeforedue'];
 		$DayInFollowingMonth  = $MyRow['dayinfollowingmonth'];
 
-		echo '<input type = "hidden" name="SelectedTerms" value = "' . $SelectedTerms . '" />';
-		echo '<input type = "hidden" name="TermsIndicator" value = "' . $_POST['TermsIndicator'] . '" />';
+		echo '<input type = "hidden" name = "SelectedTerms" value = "' . $SelectedTerms . '" />';
+		echo '<input type = "hidden" name = "TermsIndicator" value = "' . $_POST['TermsIndicator'] . '" />';
 		echo '<fieldset>';
 		echo '<legend>' . __('Update Payment Terms.') . '</legend>';
 		echo '<field>
@@ -261,20 +261,20 @@ if (!isset($_GET['delete'])) {
 		echo '<legend>' . __('New Payment Terms.') . '</legend>';
 		echo '<field>
 				<label for = "TermsIndicator">' . __('Term Code') . ':</label>
-				<input type = "text" name="TermsIndicator"' . (in_array('TermsIndicator',$Errors) ? 'class ="inputerror"' : '' ) .' autofocus = "autofocus" required = "required" pattern = "[0-9a-ZA-Z_]*" title="" value = "' . $_POST['TermsIndicator'] . '" size = "3" maxlength = "2" />
+				<input type = "text" name = "TermsIndicator"' . (in_array('TermsIndicator',$Errors) ? 'class = "inputerror"' : '' ) .' autofocus = "autofocus" required = "required" pattern = "[0-9a-ZA-Z_]*" title = "" value = "' . $_POST['TermsIndicator'] . '" size = "3" maxlength = "2" />
 				<fieldhelp>' . __('A 2 character code to identify this payment term. Any alpha-numeric characters can be used') . '</fieldhelp>
 			</field>';
 	}
 
 	echo '<field>
 			<label for = "Terms">' .  __('Terms Description'). ':</label>
-			<input type = "text"' . (in_array('Terms',$Errors) ? 'class ="inputerror"' : '' ) .' name="Terms" ' . (isset($SelectedTerms)? 'autofocus ="autofocus"': '') . ' required = "required" value = "'.$_POST['Terms']. '" title="" size = "35" maxlength = "40" />
+			<input type = "text"' . (in_array('Terms',$Errors) ? 'class = "inputerror"' : '' ) .' name = "Terms" ' . (isset($SelectedTerms)? 'autofocus = "autofocus"': '') . ' required = "required" value = "'.$_POST['Terms']. '" title = "" size = "35" maxlength = "40" />
 			<fieldhelp>' . __('A description of the payment terms is required') . '</fieldhelp>
 		</field>';
 
 	echo '<field>
 			<label for = "DaysOrFoll">' . __('Due After A Given No. Of Days').':</label>
-			<input type = "checkbox" name="DaysOrFoll" ';
+			<input type = "checkbox" name = "DaysOrFoll" ';
 	if (isset($DayInFollowingMonth) and !$DayInFollowingMonth) {
 		echo 'checked';
 	}
@@ -283,7 +283,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<field>
 			<label for = "DayNumber">' . __('Days (Or Day In Following Month)').':</label>
-			<input type = "text" ' . (in_array('DayNumber',$Errors) ? 'class ="inputerror"' : '' ) .' name="DayNumber" required = "required" class="integer"  size = "4" maxlength = "3" value = "';
+			<input type = "text" ' . (in_array('DayNumber',$Errors) ? 'class = "inputerror"' : '' ) .' name = "DayNumber" required = "required" class = "integer"  size = "4" maxlength = "3" value = "';
 	if ($DaysBeforeDue != 0) {
 	echo locale_number_format($DaysBeforeDue,0);
 } else {
@@ -295,8 +295,8 @@ if (!isset($_GET['delete'])) {
 		<field>
 	</fieldset>';
 
-	echo '<div class="centre">
-			<input type = "submit" name="submit" value = "'.__('Enter Information').'" />
+	echo '<div class = "centre">
+			<input type = "submit" name = "submit" value = "'.__('Enter Information').'" />
 		</div>';
 	echo '</form>';
 } //end if record deleted no point displaying form to add record

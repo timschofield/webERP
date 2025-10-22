@@ -7,11 +7,11 @@ $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLBudgets';
 include('includes/header.php');
 
-echo '<form action = "', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method = "post" id="createbudget">';
-echo '<input type = "hidden" name="FormID" value = "', $_SESSION['FormID'], '" />';
+echo '<form action = "', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method = "post" id = "createbudget">';
+echo '<input type = "hidden" name = "FormID" value = "', $_SESSION['FormID'], '" />';
 
-echo '<p class="page_title_text" >
-		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', __('Budgets'), '" alt = "', __('Budgets'), '" />', ' ', $Title, '
+echo '<p class = "page_title_text" >
+		<img src = "', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title = "', __('Budgets'), '" alt = "', __('Budgets'), '" />', ' ', $Title, '
 	</p>';
 
 if (isset($_POST['Submit']) or isset($_POST['Update'])) {
@@ -115,9 +115,9 @@ if (isset($_GET['Edit'])) {
 			<legend>', __('Edit Budget Details'), '</legend>
 			<field>
 				<label for = "ID">', __('ID'), '</label>
-				<div class="fieldtext">', $_GET['Edit'], '</div>
+				<div class = "fieldtext">', $_GET['Edit'], '</div>
 			</field>';
-	echo '<input type = "hidden" name="ID" value = "', $_GET['Edit'], '" />';
+	echo '<input type = "hidden" name = "ID" value = "', $_GET['Edit'], '" />';
 } else {
 	$_POST['Owner'] = $_SESSION['UserID'];
 	$_POST['Name'] = '';
@@ -135,7 +135,7 @@ $Result = DB_query($SQL);
 
 echo '<field>
 		<label for = "Owner">', __('Budget Owner'), '</label>
-		<select name="Owner">';
+		<select name = "Owner">';
 while ($MyRow = DB_fetch_array($Result)) {
 	if ($MyRow['userid'] == $_POST['Owner']) {
 	echo '<option selected = "selected" value = "', $MyRow['userid'], '">', $MyRow['realname'], ' (', $MyRow['userid'], ')</option>';
@@ -148,12 +148,12 @@ echo '</select>
 
 echo '<field>
 		<label for = "Name">', __('Name of budget'), '</label>
-		<input type = "text" name="Name" size = "100" value = "', $_POST['Name'], '" />
+		<input type = "text" name = "Name" size = "100" value = "', $_POST['Name'], '" />
 	</field>';
 
 echo '<field>
 		<label for = "Description">', __('Budget Description'), '</label>
-		<textarea cols = "100" rows = "10" name="Description">', $_POST['Description'], '</textarea>
+		<textarea cols = "100" rows = "10" name = "Description">', $_POST['Description'], '</textarea>
 	</field>';
 
 $SQL = "SELECT periodno, lastdate_in_period FROM periods";
@@ -161,7 +161,7 @@ $Result = DB_query($SQL);
 
 echo '<field>
 		<label for = "StartPeriod">', __('Start Period'), '</label>
-		<select name="StartPeriod">';
+		<select name = "StartPeriod">';
 while ($MyRow = DB_fetch_array($Result)) {
 	if ($MyRow['periodno'] == $_POST['StartPeriod']) {
 	echo '<option selected = "selected" value = "', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
@@ -177,7 +177,7 @@ $Result = DB_query($SQL);
 
 echo '<field>
 		<label for = "EndPeriod">', __('End Period'), '</label>
-		<select name="EndPeriod">';
+		<select name = "EndPeriod">';
 while ($MyRow = DB_fetch_array($Result)) {
 	if ($MyRow['periodno'] == $_POST['EndPeriod']) {
 	echo '<option selected = "selected" value = "', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
@@ -190,7 +190,7 @@ echo '</select>
 
 echo '<field>
 		<label for = "Primary">', __('Default Budget for reports'), '</label>
-		<select name="Primary">';
+		<select name = "Primary">';
 if ($_POST['Primary'] == 1) {
 	echo '<option selected = "selected" value = "1">', __('Yes'), '</option>';
 	echo '<option value = "0">', __('No'), '</option>';
@@ -204,12 +204,12 @@ echo '</select>
 echo '</fieldset>';
 
 if (isset($_GET['Edit'])) {
-	echo '<div class="centre">
-			<input type = "submit" name="Update" value = "', __('Update Details'), '" />
+	echo '<div class = "centre">
+			<input type = "submit" name = "Update" value = "', __('Update Details'), '" />
 		</div>';
 } else {
-	echo '<div class="centre">
-			<input type = "submit" name="Submit" value = "', __('Save Details'), '" />
+	echo '<div class = "centre">
+			<input type = "submit" name = "Submit" value = "', __('Save Details'), '" />
 		</div>';
 }
 
@@ -245,14 +245,14 @@ if (DB_num_rows($Result) > 0) {
 } else {
 			$Current = __('Yes');
 		}
-		echo '<tr class="striped_row">
+		echo '<tr class = "striped_row">
 				<td>', $MyRow['id'], '</td>
 				<td>', $MyRow['owner'], '</td>
 				<td>', $MyRow['name'], '</td>
 				<td>', MonthAndYearFromPeriodNo($MyRow['startperiod']), '</td>
 				<td>', MonthAndYearFromPeriodNo($MyRow['endperiod']), '</td>
 				<td>', $Current, '</td>
-				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?Edit=', $MyRow['id'], '">', __('Edit'), '</a></td>
+				<td><a href = "', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?Edit = ', $MyRow['id'], '">', __('Edit'), '</a></td>
 			</tr>';
 	}
 	echo '</tbody>

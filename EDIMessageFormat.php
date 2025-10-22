@@ -99,10 +99,10 @@ if (isset($Msg)) {
 
 echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<div>';
-echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 echo '<br />
-	<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+	<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title = "' . __('Search') . '" alt = "" />' . ' ' . $Title . '</p>';
 
 if (!isset($SelectedMessageLine)) {
 
@@ -123,7 +123,7 @@ or deletion of the records*/
 
 	$Result = DB_query($SQL);
 
-	echo '<table class="selection">';
+	echo '<table class = "selection">';
 	echo '<tr><th colspan = "5"><h3>' . __('Definition of') . ' ' . $MessageType . ' ' . __('for') . ' ' . $PartnerCode . '</h3></th></tr>';
 	$TableHeader = '<tr>
 					<th>' . __('Section') . '</th>
@@ -134,19 +134,19 @@ or deletion of the records*/
 
 	while ($MyRow = DB_fetch_row($Result)) {
 
-		echo '<tr class="striped_row">
+		echo '<tr class = "striped_row">
 				<td>', $MyRow[1], '</td>
-				<td class="number">', $MyRow[2], '</td>
+				<td class = "number">', $MyRow[2], '</td>
 				<td>', $MyRow[3], '</td>
-				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedMessageLine=', $MyRow[0], '">' . __('Edit') . '</a></td>
-				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?delete=', $MyRow[0], '">' . __('Delete') . '</a></td>
+				<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedMessageLine = ', $MyRow[0], '">' . __('Edit') . '</a></td>
+				<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?delete = ', $MyRow[0], '">' . __('Delete') . '</a></td>
 			</tr>';
 
 	} //END while LIST LOOP
 	echo '</table>';
 	if (DB_num_rows($Result) == 0){
-		echo '<div class="centre">
-				<input tabindex = "1" type = "submit" name="NewEDIInvMsg" value = "' . __('Create New EDI Invoice Message From Default Template') . '" />
+		echo '<div class = "centre">
+				<input tabindex = "1" type = "submit" name = "NewEDIInvMsg" value = "' . __('Create New EDI Invoice Message From Default Template') . '" />
 			</div>';
 	}
 } //end of ifs SelectedLine is not set
@@ -169,14 +169,14 @@ if (isset($SelectedMessageLine)) {
 	$_POST['SequenceNo']  = $MyRow['sequenceno'];
 	$_POST['LineText']  = $MyRow['linetext'];
 
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?MessageType=INVOIC&amp;PartnerCode=' . $MyRow['partnercode'] . '">' . __('Review Message Lines') . '</a></div>';
+	echo '<div class = "centre"><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?MessageType = INVOIC&amp;PartnerCode = ' . $MyRow['partnercode'] . '">' . __('Review Message Lines') . '</a></div>';
 
-	echo '<input type = "hidden" name="SelectedMessageLine" value = "' . $SelectedMessageLine . '" />';
-	echo '<input type = "hidden" name="MessageType" value = "' . $MyRow['messagetype'] . '" />';
-	echo '<input type = "hidden" name="PartnerCode" value = "' . $MyRow['partnercode'] . '" />';
+	echo '<input type = "hidden" name = "SelectedMessageLine" value = "' . $SelectedMessageLine . '" />';
+	echo '<input type = "hidden" name = "MessageType" value = "' . $MyRow['messagetype'] . '" />';
+	echo '<input type = "hidden" name = "PartnerCode" value = "' . $MyRow['partnercode'] . '" />';
 } else { //end of if $SelectedMessageLine only do the else when a new record is being entered
-	echo '<input type = "hidden" name="MessageType" value = "' . $MessageType . '" />';
-	echo '<input type = "hidden" name="PartnerCode" value = "' . $PartnerCode . '" />';
+	echo '<input type = "hidden" name = "MessageType" value = "' . $MessageType . '" />';
+	echo '<input type = "hidden" name = "PartnerCode" value = "' . $PartnerCode . '" />';
 }
 
 echo '<fieldset>
@@ -188,7 +188,7 @@ if (isset($MyRow['messagetype']) and $MyRow['messagetype']!='') {
 
 echo '<field>
 		<label for = "Section">' . __('Section') . ':</label>';
-echo '<select tabindex = "2" name="Section">';
+echo '<select tabindex = "2" name = "Section">';
 
 if ($_POST['Section']=='Heading') {
 	echo '<option selected = "selected" value = "Heading">' . __('Heading') . '</option>';
@@ -217,23 +217,23 @@ echo '</field>';
 
 echo '<field>
 		<label for = "SequenceNo">Sequence Number:</label>
-		<input tabindex = "3" type = "text" name="SequenceNo" size = "3" maxlength = "3" value = "'.$_POST['SequenceNo'].'" />
+		<input tabindex = "3" type = "text" name = "SequenceNo" size = "3" maxlength = "3" value = "'.$_POST['SequenceNo'].'" />
 	</field>';
 
 echo '<field>
 		<label for = "LineText">' .  __('Line Text') . ':'  . '</label>
-		<input tabindex = "4" type = "text" name="LineText" size = "50" maxlength = "50" value = "'.$_POST['LineText'] .'" />
+		<input tabindex = "4" type = "text" name = "LineText" size = "50" maxlength = "50" value = "'.$_POST['LineText'] .'" />
 	</field>';
 
 echo '</fieldset>';
 
 if (isset($_GET['SelectedMessageLine'])) {
-	echo '<div class="centre">
-			<input tabindex = "5" type = "submit" name="update" value = "'.  __('Update Information'). '" />
+	echo '<div class = "centre">
+			<input tabindex = "5" type = "submit" name = "update" value = "'.  __('Update Information'). '" />
 		</div>';
 } else {
-	echo '<div class="centre">
-			<input tabindex = "5" type = "submit" name="submit" value = "'.  __('Enter Information'). '" />
+	echo '<div class = "centre">
+			<input tabindex = "5" type = "submit" name = "submit" value = "'.  __('Enter Information'). '" />
 		</div>';
 }
 echo '</form>';

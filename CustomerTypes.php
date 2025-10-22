@@ -15,9 +15,9 @@ if (isset($_POST['SelectedType'])){
 
 $Errors = array();
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Customer Types') .
+echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title = "' . __('Customer Types') .
 	'" alt = "" />' . __('Customer Type Setup') . '</p>';
-echo '<div class="page_help_text">' . __('Add/edit/delete Customer Types') . '</div>';
+echo '<div class = "page_help_text">' . __('Add/edit/delete Customer Types') . '</div>';
 
 if (isset($_POST['submit'])) {
 
@@ -179,11 +179,11 @@ or deletion of the records*/
 	$SQL = "SELECT typeid, typename FROM debtortype";
 	$Result = DB_query($SQL);
 
-	echo '<table class="selection">';
+	echo '<table class = "selection">';
 	echo '<thead>
 			<tr>
-				<th class="SortedColumn">' . __('Type ID') . '</th>
-				<th class="SortedColumn">' . __('Type Name') . '</th>
+				<th class = "SortedColumn">' . __('Type ID') . '</th>
+				<th class = "SortedColumn">' . __('Type Name') . '</th>
 				<th colspan = "2"></th>
 			</tr>
 		</thead>
@@ -191,11 +191,11 @@ or deletion of the records*/
 
 while ($MyRow = DB_fetch_row($Result)) {
 
-	echo '<tr class="striped_row">
+	echo '<tr class = "striped_row">
 			<td>', $MyRow[0], '</td>
 			<td>', $MyRow[1], '</td>
-			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedType=', $MyRow[0], '">' . __('Edit') . '</a></td>
-			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedType=', $MyRow[0], '&amp;delete=yes" onclick=\'return confirm("' . __('Are you sure you wish to delete this Customer Type?') . '");\'>' . __('Delete') . '</a></td>
+			<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedType = ', $MyRow[0], '">' . __('Edit') . '</a></td>
+			<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedType = ', $MyRow[0], '&amp;delete = yes" onclick = \'return confirm("' . __('Are you sure you wish to delete this Customer Type?') . '");\'>' . __('Delete') . '</a></td>
 		</tr>';
 	}
 	//END while LIST LOOP
@@ -205,12 +205,12 @@ while ($MyRow = DB_fetch_row($Result)) {
 //end of ifs and buts!
 if (isset($SelectedType)) {
 
-	echo '<div class="centre"><br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Show All Types Defined') . '</a></div>';
+	echo '<div class = "centre"><br /><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Show All Types Defined') . '</a></div>';
 }
 if (! isset($_GET['delete'])) {
 
 	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">
-		<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+		<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 	// The user wish to EDIT an existing type
 	if ( isset($SelectedType) and $SelectedType !=  '' ) {
@@ -226,8 +226,8 @@ if (! isset($_GET['delete'])) {
 		$_POST['typeid'] = $MyRow['typeid'];
 		$_POST['TypeName']  = $MyRow['typename'];
 
-		echo '<input type = "hidden" name="SelectedType" value = "' . $SelectedType . '" />
-			<input type = "hidden" name="typeid" value = "' . $_POST['typeid'] . '" />';
+		echo '<input type = "hidden" name = "SelectedType" value = "' . $SelectedType . '" />
+			<input type = "hidden" name = "typeid" value = "' . $_POST['typeid'] . '" />';
 
 		echo '<fieldset>
 				<legend>', __('Edit Customer Type'), '</legend>';
@@ -249,12 +249,12 @@ if (! isset($_GET['delete'])) {
 	}
 	echo '<field>
 			<label for = "TypeName">' . __('Type Name') . ':</label>
-			<input type = "text" name="TypeName"  required = "required" title="" value = "' . $_POST['TypeName'] . '" />
+			<input type = "text" name = "TypeName"  required = "required" title = "" value = "' . $_POST['TypeName'] . '" />
 			<fieldhelp>' . __('The customer type name is required') . '</fieldhelp
 		</field>
 		</fieldset>
-		<div class="centre">
-			<input type = "submit" name="submit" value = "' . __('Accept') . '" />
+		<div class = "centre">
+			<input type = "submit" name = "submit" value = "' . __('Accept') . '" />
 		</div>
 	</form>';
 

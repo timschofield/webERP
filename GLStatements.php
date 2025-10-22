@@ -93,7 +93,7 @@ if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo']) and !$_POST['NewRe
 	// If PeriodFrom and PeriodTo are set and it is not a NewReport, generates the report:
 
 	echo '<div class = "sheet">';// Division to identify the report block.
-	echo '<p class = "page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/gl.png" title="', // Icon image.
+	echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/gl.png" title = "', // Icon image.
 		$Title, '" /> ', // Icon title.
 		// Page title as IAS1 numerals 10 and 51:
 		$Title, '<br />', // Page title, reporting statement.
@@ -154,14 +154,14 @@ if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo']) and !$_POST['NewRe
 		'<input name = "ShowCashFlows" type = "hidden" value = "', $_POST['ShowCashFlows'], '" />',
 		'<input name = "ShowNotes" type = "hidden" value = "', $_POST['ShowNotes'], '" />',
 		'<div class = "centre noPrint">', // Form buttons:
-			'<button onclick="window.print()" type = "button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" /> ', __('Print'), '</button>', // "Print" button.
-			'<button name = "NewReport" type = "submit" value = "on"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/reports.png" /> ', __('New Report'), '</button>', // "New Report" button.
-			'<button onclick="window.location = \'' . $RootPath . '/index.php?Application =GL\'" type = "button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', __('Return'), '</button>', // "Return" button.
+			'<button onclick = "window.print()" type = "button"><img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/printer.png" /> ', __('Print'), '</button>', // "Print" button.
+			'<button name = "NewReport" type = "submit" value = "on"><img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/reports.png" /> ', __('New Report'), '</button>', // "New Report" button.
+			'<button onclick = "window.location = \'' . $RootPath . '/index.php?Application = GL\'" type = "button"><img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', __('Return'), '</button>', // "Return" button.
 		'</div>',
 		'</form>';
 } else {
 	// If PeriodFrom or PeriodTo are not set or it is a NewReport, shows a parameters input form:
-	echo '<p class = "page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/gl.png" title="', // Icon image.
+	echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/gl.png" title = "', // Icon image.
 		$Title, '" /> ', // Icon title.
 		$Title, '</p>';// Page title.
 	fShowPageHelp(// Shows the page help text if $_SESSION['ShowFieldHelp'] is true or is not set
@@ -194,7 +194,7 @@ if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo']) and !$_POST['NewRe
 		$_POST['PeriodFrom'] = GetPeriod(date($_SESSION['DefaultDateFormat'], $BeginDate));
 	}
 	while ($MyRow = DB_fetch_array($Periods)) {
-	    echo			'<option',($MyRow['periodno'] == $_POST['PeriodFrom'] ? ' selected ="selected"' : '' ), ' value = "', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
+	    echo			'<option',($MyRow['periodno'] == $_POST['PeriodFrom'] ? ' selected = "selected"' : '' ), ' value = "', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
 	}
 	echo			'</select>
 				<fieldhelp>', __('Select the beginning of the reporting period'), '</fieldhelp>
@@ -208,7 +208,7 @@ if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo']) and !$_POST['NewRe
 	}
 	DB_data_seek($Periods, 0);
 	while ($MyRow = DB_fetch_array($Periods)) {
-	    echo			'<option',($MyRow['periodno'] == $_POST['PeriodTo'] ? ' selected ="selected"' : '' ), ' value = "', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
+	    echo			'<option',($MyRow['periodno'] == $_POST['PeriodTo'] ? ' selected = "selected"' : '' ), ' value = "', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
 	}
 	echo			'</select>
 				<fieldhelp>', __('Select the end of the reporting period'), '</fieldhelp>
@@ -225,25 +225,25 @@ if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo']) and !$_POST['NewRe
 	// Show the budget:
 			'<field>
 				<label for = "ShowBudget">', __('Show the budget'), '</label>
-			 	<input', ($_POST['ShowBudget'] ? ' checked ="checked"' : ''), ' id = "ShowBudget" name = "ShowBudget" type = "checkbox">', // "Checked" if ShowBudget is set and it is true.
+			 	<input', ($_POST['ShowBudget'] ? ' checked = "checked"' : ''), ' id = "ShowBudget" name = "ShowBudget" type = "checkbox">', // "Checked" if ShowBudget is set and it is true.
 			 	'<fieldhelp>', __('Check this box to show the budget'), '</fieldhelp>
 			</field>',
 	// Show accounts with zero balance:
 			'<field>
 				<label for = "ShowZeroBalance">', __('Show accounts with zero balance'), '</label>
-			 	<input', ($_POST['ShowZeroBalance'] ? ' checked ="checked"' : ''), ' id = "ShowZeroBalance" name = "ShowZeroBalance" type = "checkbox">
+			 	<input', ($_POST['ShowZeroBalance'] ? ' checked = "checked"' : ''), ' id = "ShowZeroBalance" name = "ShowZeroBalance" type = "checkbox">
 			 	<fieldhelp>', __('Check this box to show accounts with zero balance'), '</fieldhelp>
 			</field>',
 	// Show the statement of financial position:
 			'<field>
 				<label for = "ShowFinancialPosition">', __('Show the statement of financial position'), '</label>
-			 	<input', ($_POST['ShowFinancialPosition'] ? ' checked ="checked"' : ''), ' id = "ShowFinancialPosition" name = "ShowFinancialPosition" type = "checkbox">
+			 	<input', ($_POST['ShowFinancialPosition'] ? ' checked = "checked"' : ''), ' id = "ShowFinancialPosition" name = "ShowFinancialPosition" type = "checkbox">
 				<fieldhelp>', __('Check this box to show the statement of financial position'), '</fieldhelp>
 			</field>',
 	// Show the statement of comprehensive income:
 			'<field>
 				<label for = "ShowComprehensiveIncome">', __('Show the statement of comprehensive income'), '</label>
-			 	<td><input', ($_POST['ShowComprehensiveIncome'] ? ' checked ="checked"' : ''), ' id = "ShowComprehensiveIncome" name = "ShowComprehensiveIncome" type = "checkbox">
+			 	<td><input', ($_POST['ShowComprehensiveIncome'] ? ' checked = "checked"' : ''), ' id = "ShowComprehensiveIncome" name = "ShowComprehensiveIncome" type = "checkbox">
 			 	<fieldhelp>', __('Check this box to show the statement of comprehensive income'), '</fieldhelp
 			</field>';
 	// Show the statement of changes in equity:
@@ -251,14 +251,14 @@ if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo']) and !$_POST['NewRe
 		echo
 			'<field>
 				<label for = "ShowChangesInEquity">', __('Show the statement of changes in equity'), '</label>
-			 	<input', ($_POST['ShowChangesInEquity'] ? ' checked ="checked"' : ''), ' id = "ShowChangesInEquity" name = "ShowChangesInEquity" type = "checkbox">
+			 	<input', ($_POST['ShowChangesInEquity'] ? ' checked = "checked"' : ''), ' id = "ShowChangesInEquity" name = "ShowChangesInEquity" type = "checkbox">
 			 	<fieldhelp>', __('Check this box to show the statement of changes in equity'), '</fieldhelp>
 			</field>';
 	}
 	// Show the statement of cash flows:
 	echo	'<field>
 				<label for = "ShowCashFlows">', __('Show the statement of cash flows'), '</label>
-			 	<input', ($_POST['ShowCashFlows'] ? ' checked ="checked"' : ''), ' id = "ShowCashFlows" name = "ShowCashFlows" type = "checkbox">
+			 	<input', ($_POST['ShowCashFlows'] ? ' checked = "checked"' : ''), ' id = "ShowCashFlows" name = "ShowCashFlows" type = "checkbox">
 			 	<fieldhelp>', __('Check this box to show the statement of cash flows'), '</fieldhelp>
 			</field>';
 	// Show the notes:
@@ -266,15 +266,15 @@ if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo']) and !$_POST['NewRe
 		echo
 			'<field>
 				<label for = "ShowNotes">', __('Show the notes'), '</label>
-			 	<input', ($_POST['ShowNotes'] ? ' checked ="checked"' : ''), ' id = "ShowNotes" name = "ShowNotes" type = "checkbox">
+			 	<input', ($_POST['ShowNotes'] ? ' checked = "checked"' : ''), ' id = "ShowNotes" name = "ShowNotes" type = "checkbox">
 			 	<fieldhelp>', __('Check this box to show the notes that summarize the significant accounting policies and other explanatory information'), '</fieldhelp>
 			</field>';
 	}
 	echo
 		'</fieldset>
 			<div class = "centre">
-				<button name = "Submit" type = "submit" value = "', __('Submit'), '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', __('Submit'), '</button>
-				<button onclick="window.location = \'index.php?Application =GL\'" type = "button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', __('Return'), '</button>
+				<button name = "Submit" type = "submit" value = "', __('Submit'), '"><img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', __('Submit'), '</button>
+				<button onclick = "window.location = \'index.php?Application = GL\'" type = "button"><img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', __('Return'), '</button>
 			</div>
 		</form>';
 }

@@ -21,7 +21,7 @@ if (isset($_POST['Create'])) {
 	$_POST['New'] = 'Yes';
 }
 
-echo '<div class="centre"><p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="'
+echo '<div class = "centre"><p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title = "'
 	. __('Factor Companies') . '" alt = "" />' . ' ' .$Title . '</p></div>';
 
 /* This section has been reached because the user has pressed either the insert/update buttons on the
@@ -195,9 +195,9 @@ if (isset($_POST['Amend']) or isset($_POST['Create'])) {
 	// its a new factor being added
 
 	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
-	echo '<input type = "hidden" name="FactorID" value = "' . $FactorID .'" />
-        <input type = "hidden" name="New" value = "Yes" />';
+	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<input type = "hidden" name = "FactorID" value = "' . $FactorID .'" />
+        <input type = "hidden" name = "New" value = "Yes" />';
 
 	if (isset($_POST['Amend'])) {
 		echo '<fieldset>
@@ -209,66 +209,66 @@ if (isset($_POST['Amend']) or isset($_POST['Create'])) {
 
 	echo '<field>
 			<label for = "FactorName">' . __('Factor company Name') . ':</label>
-			<input tabindex = "1" type = "text" name="FactorName" required = "required" size = "42" maxlength = "40" value = "' . $_POST['FactorName'] . '" />
+			<input tabindex = "1" type = "text" name = "FactorName" required = "required" size = "42" maxlength = "40" value = "' . $_POST['FactorName'] . '" />
 		</field>
 		<field>
 			<label for = "Address1">' . __('Address Line 1') . ':</label>
-			<input tabindex = "2" type = "text" name="Address1" size = "42" maxlength = "40" value = "' . $_POST['Address1'] .'" />
+			<input tabindex = "2" type = "text" name = "Address1" size = "42" maxlength = "40" value = "' . $_POST['Address1'] .'" />
 		</field>
 		<field>
 			<label for = "Address2">' . __('Address Line 2') . ':</label>
-			<input tabindex = "3" type = "text" name="Address2" size = "42" maxlength = "40" value = "' . $_POST['Address2'] .'" />
+			<input tabindex = "3" type = "text" name = "Address2" size = "42" maxlength = "40" value = "' . $_POST['Address2'] .'" />
 		</field>
 		<field>
 			<label for = "Address3">' . __('Address Line 3') . ':</label>
-			<input tabindex = "4" type = "text" name="Address3" size = "42" maxlength = "40" value = "' .$_POST['Address3'] .'" />
+			<input tabindex = "4" type = "text" name = "Address3" size = "42" maxlength = "40" value = "' .$_POST['Address3'] .'" />
 		</field>
 		<field>
 			<label for = "Address4">' . __('Address Line 4') . ':</label>
-			<input tabindex = "5" type = "text" name="Address4" size = "42" maxlength = "40" value = "' . $_POST['Address4'].'" />
+			<input tabindex = "5" type = "text" name = "Address4" size = "42" maxlength = "40" value = "' . $_POST['Address4'].'" />
 		</field>
 		<field>
 			<label for = "Address5">' . __('Address Line 5') . ':</label>
-			<input tabindex = "6" type = "text" name="Address5" size = "42" maxlength = "40" value = "' . $_POST['Address5'] .'" />
+			<input tabindex = "6" type = "text" name = "Address5" size = "42" maxlength = "40" value = "' . $_POST['Address5'] .'" />
 		</field>
 		<field>
 			<label for = "Address6">' . __('Address Line 6') . ':</label>
-			<input tabindex = "7" type = "text" name="Address6" size = "42" maxlength = "40" value = "' .$_POST['Address6'] . '" />
+			<input tabindex = "7" type = "text" name = "Address6" size = "42" maxlength = "40" value = "' .$_POST['Address6'] . '" />
 		</field>
 		<field>
 			<label for = "ContactName">' . __('Contact Name') . ':</label>
-			<input tabindex = "8" type = "text" name="ContactName" required = "required"  size = "20" maxlength = "25" value = "' . $_POST['ContactName'] .'" />
+			<input tabindex = "8" type = "text" name = "ContactName" required = "required"  size = "20" maxlength = "25" value = "' . $_POST['ContactName'] .'" />
 		</field>
 		<field>
 			<label for = "Telephone">' . __('Telephone') . ':</label>
-			<input tabindex = "9" type = "tel" name="Telephone" pattern = "[0-9+()\ ]*" size = "20" maxlength = "25" value = "' .$_POST['Telephone'].'" />
+			<input tabindex = "9" type = "tel" name = "Telephone" pattern = "[0-9+()\ ]*" size = "20" maxlength = "25" value = "' .$_POST['Telephone'].'" />
 		</field>
 		<field>
 			<label for = "Fax">' . __('Fax') . ':</label>
-			<input tabindex = "10" type = "tel" name="Fax" pattern = "[0-9+()\ ]*" size = "20" maxlength = "25" value = "' . $_POST['Fax'] .'" />
+			<input tabindex = "10" type = "tel" name = "Fax" pattern = "[0-9+()\ ]*" size = "20" maxlength = "25" value = "' . $_POST['Fax'] .'" />
 		</field>
 		<field>
 			<label for = "Email">' . __('Email') . ':</label>
-			<input tabindex = "11" type = "email" name="Email" size = "55" maxlength = "55" value = "' . $_POST['Email'] . '" />
+			<input tabindex = "11" type = "email" name = "Email" size = "55" maxlength = "55" value = "' . $_POST['Email'] . '" />
 		</field>
 		</fieldset>';
 }
 
 
 if (isset($_POST['Create'])) {
-	echo '<div class="centre">
-			<input tabindex = "12" type = "submit" name="Submit" value = "' . __('Insert New Factor') . '" />
+	echo '<div class = "centre">
+			<input tabindex = "12" type = "submit" name = "Submit" value = "' . __('Insert New Factor') . '" />
         </div>
 		</form>';
 } elseif (isset($_POST['Amend'])) {
 	echo '<br />
-		<div class="centre">
-			<input tabindex = "13" type = "submit" name="Update" value = "' . __('Update Factor') . '" />
+		<div class = "centre">
+			<input tabindex = "13" type = "submit" name = "Update" value = "' . __('Update Factor') . '" />
 			<br />
             <br />';
 			prnMsg( __('There is no second warning if you hit the delete button below') . '. ' . __('However checks will be made to ensure there are no suppliers are using this factor before the deletion is processed'), 'warn');
 			echo '<br />
-				<input tabindex = "14" type = "submit" name="Delete" value = "' . __('Delete Factor') . '" onclick="return confirm(\'' . __('Are you sure you wish to delete this factoring company?') . '\');" />
+				<input tabindex = "14" type = "submit" name = "Delete" value = "' . __('Delete Factor') . '" onclick = "return confirm(\'' . __('Are you sure you wish to delete this factoring company?') . '\');" />
 		</div>
         </div>
 		</form>';
@@ -281,10 +281,10 @@ if (empty($FactorID) and !isset($_POST['Create']) and !isset($_POST['Amend'])) {
 
 	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
     echo '<div>';
-	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
-	echo '<input type = "hidden" name="New" value = "No" />';
-	echo '<table class="selection">
+	echo '<input type = "hidden" name = "New" value = "No" />';
+	echo '<table class = "selection">
 			<tr>
 				<th>' . __('ID') . '</th>
 				<th>' . __('Company Name') . '</th>
@@ -315,7 +315,7 @@ if (empty($FactorID) and !isset($_POST['Create']) and !isset($_POST['Amend'])) {
 	$Result = DB_query($SQL);
 
 	while ($MyRow = DB_fetch_array($Result)) {
-		echo '<tr class="striped_row">
+		echo '<tr class = "striped_row">
 			<td>' . $MyRow['id'] . '</td>
 			<td>' . $MyRow['coyname'] . '</td>
 			<td>' . $MyRow['address1'] . '</td>
@@ -328,14 +328,14 @@ if (empty($FactorID) and !isset($_POST['Create']) and !isset($_POST['Amend'])) {
 			<td>' . $MyRow['telephone'] . '</td>
 			<td>' . $MyRow['fax'] . '</td>
 			<td>' . $MyRow['email'] . '</td>
-			<td><a href="'.$RootPath . '/Factors.php?FactorID='.$MyRow['id'].'">' . __('Edit') . '</a></td>
+			<td><a href = "'.$RootPath . '/Factors.php?FactorID = '.$MyRow['id'].'">' . __('Edit') . '</a></td>
 			</tr>';
 	} //end while loop
 	echo '</table>
 		<br />
-		<div class="centre">
+		<div class = "centre">
 			<br />
-			<input tabindex = "3" type = "submit" name="Create" value = "' . __('Create New Factor') . '" />
+			<input tabindex = "3" type = "submit" name = "Create" value = "' . __('Create New Factor') . '" />
 		</div>
         </div>
 		</form>';

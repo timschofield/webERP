@@ -9,8 +9,8 @@ include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.php');
 
-echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . __('Freight Costs') . '" alt="" />' . ' ' . $Title . '
+echo '<p class = "page_title_text">
+		<img src = "'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title = "' . __('Freight Costs') . '" alt = "" />' . ' ' . $Title . '
 	</p>';
 
 
@@ -67,16 +67,16 @@ echo $TableHeader;
 $j = 1;
 while ($MyRow = DB_fetch_array($SalesOrdersResult)) {
 
-	$FTPDispatchNote = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?OrderNo=' . $MyRow['orderno'];
+	$FTPDispatchNote = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?OrderNo = ' . $MyRow['orderno'];
 	$FormatedDelDate = ConvertSQLDate($MyRow['deliverydate']);
 	$FormatedOrderDate = ConvertSQLDate($MyRow['orddate']);
 	$FormatedOrderValue = locale_number_format($MyRow['ordervalue'],2);
 	$FormatedDateLastSent = ConvertSQLDate($MyRow['datepackingslipprinted']);
-	$ModifyPage = $RootPath . 'SelectOrderItems.php?ModifyOrderNumber=' . $MyRow['orderno'];
+	$ModifyPage = $RootPath . 'SelectOrderItems.php?ModifyOrderNumber = ' . $MyRow['orderno'];
 
 	if ($MyRow['printedpackingslip'] ==1) {
-	echo '<tr class="striped_row">
-				<td><font size = "2"><a href="', $ModifyPage, '">', $MyRow['orderno'], '</a></font></td>
+	echo '<tr class = "striped_row">
+				<td><font size = "2"><a href = "', $ModifyPage, '">', $MyRow['orderno'], '</a></font></td>
 				<td><font color = RED size = "2">' . __('Already') . '<br />' . __('Sent') . '</font></td>
 				<td><font size = "2">', $MyRow['name'], '</font></td>
 				<td><font size = "2">', $MyRow['brname'], '</font></td>
@@ -84,20 +84,20 @@ while ($MyRow = DB_fetch_array($SalesOrdersResult)) {
 				<td><font size = "2">', $FormatedOrderDate, '</font></td>
 				<td><font size = "2">', $FormatedDelDate, '</font></td>
 				<td><font size = "2">', $MyRow['deliverto'], '</font></td>
-				<td class="number"><font size = "2">', $FormatedOrderValue, '</font></td>
+				<td class = "number"><font size = "2">', $FormatedOrderValue, '</font></td>
 				<td><font size = "2">', $FormatedDateLastSent, '</font></td>
 			</tr>';
 } else {
-		echo '<tr class="striped_row">
-				<td><font size = "2"><a href="', $ModifyPage, '">', $MyRow['orderno'], '</a></font></td>
-				<td><font size = "2"><a href="', $FTPDispatchNote, '">' . __('Send') . '</a></font></td>
+		echo '<tr class = "striped_row">
+				<td><font size = "2"><a href = "', $ModifyPage, '">', $MyRow['orderno'], '</a></font></td>
+				<td><font size = "2"><a href = "', $FTPDispatchNote, '">' . __('Send') . '</a></font></td>
 				<td><font size = "2">', $MyRow['name'], '</font></td>
 				<td><font size = "2">', $MyRow['brname'], '</font></td>
 				<td><font size = "2">', $MyRow['customerref'], '</font></td>
 				<td><font size = "2">', $FormatedOrderDate, '</font></td>
 				<td><font size = "2">', $FormatedDelDate, '</font></td>
 				<td><font size = "2">', $MyRow['deliverto'], '</font></td>
-				<td class="number"><font size = "2">', $FormatedOrderValue, '</font></td>
+				<td class = "number"><font size = "2">', $FormatedOrderValue, '</font></td>
 				<td><font size = "2">', $FormatedDateLastSent, '</font></td>
 			</tr>';
 	}
@@ -162,8 +162,8 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 		$MyRow = DB_fetch_array($Result);
 		if ($MyRow['printedpackingslip']==1) {
 	prnMsg(__('Order Number') . ' ' . $_GET['OrderNo'] . ' ' . __('has previously been sent to Radio Beacon') . '. ' . __('It was sent on') . ' ' . ConvertSQLDate($MyRow['datepackingslipprinted']) . '<br />' . __('To re-send the order with the balance not previously dispatched and invoiced the order must be modified to allow a reprint (or re-send)') . '.<br />' . __('This check is there to ensure that duplication of dispatches to the customer are avoided'),'warn');
-			echo '<p><a href="' . $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $_GET['OrderNo'] . '">' . __('Modify the order to allow a re-send or reprint') . ' (' . __('Select Delivery Details') . ')' . '</a>';
-			echo '<p><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
+			echo '<p><a href = "' . $RootPath . '/SelectOrderItems.php?ModifyOrderNumber = ' . $_GET['OrderNo'] . '">' . __('Modify the order to allow a re-send or reprint') . ' (' . __('Select Delivery Details') . ')' . '</a>';
+			echo '<p><a href = "' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 			include('includes/footer.php');
 			exit();
 }

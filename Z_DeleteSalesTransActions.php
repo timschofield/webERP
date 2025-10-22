@@ -165,7 +165,7 @@ echo '<fieldset>
 </fieldset>';
 
 echo '<div class = "centre">';
-echo '<input type = "submit" name = "ProcessDeletions" value = "' . __('Process') . '"  onclick="return confirm(\'' . __('Are You Really REALLY Sure?') . '\');" />';
+echo '<input type = "submit" name = "ProcessDeletions" value = "' . __('Process') . '"  onclick = "return confirm(\'' . __('Are You Really REALLY Sure?') . '\');" />';
 echo '</div>';
 echo '</form>';
 

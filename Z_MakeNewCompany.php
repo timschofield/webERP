@@ -33,7 +33,7 @@ if (isset($_POST['submit']) and isset($_POST['NewDatabase'])) {
 	} else {
 		$_POST['NewDatabase'] = strtolower($_POST['NewDatabase']);
 		echo '<form method = "post" action = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">
-			<div class="centre">
+			<div class = "centre">
 			<input type = "hidden" name = "FormID" value = "', $_SESSION['FormID'], '" />';
 
 		/* check for directory existence */
@@ -157,7 +157,7 @@ if (isset($_POST['submit']) and isset($_POST['NewDatabase'])) {
 			/*OK Now upload the logo */
 			if ($UploadTheLogo == 'Yes') {
 	$Result  =  move_uploaded_file($_FILES['LogoFile']['tmp_name'], $FileName);
-				$Message = ($Result) ? __('File url') . '<a href="' . $FileName . '">' .  $FileName . '</a>' : __('Something is wrong with uploading a file');
+				$Message = ($Result) ? __('File url') . '<a href = "' . $FileName . '">' .  $FileName . '</a>' : __('Something is wrong with uploading a file');
 }
 
 		} else {
@@ -226,9 +226,9 @@ if (isset($_POST['submit']) and isset($_POST['NewDatabase'])) {
 
 		prnMsg(__('The new company database has been created for' . ' ' . htmlspecialchars($_POST['NewCompany'], ENT_QUOTES, 'UTF-8') . '. ' . __('The company details and parameters should now be set up for the new company. NB: Only a single user admin is defined with the password weberp in the new company database. A new system administrator user should be defined for the new company and this account deleted immediately.')), 'info');
 
-		echo '<p><a href="', $RootPath, '/CompanyPreferences.php">', __('Set Up New Company Details'), '</a></p>
-			<p><a href="', $RootPath, '/SystemParameters.php">', __('Set Up Configuration Details'), '</a></p>
-			<p><a href="', $RootPath, '/WWW_Users.php">', __('Set Up User Accounts'), '</a></p>
+		echo '<p><a href = "', $RootPath, '/CompanyPreferences.php">', __('Set Up New Company Details'), '</a></p>
+			<p><a href = "', $RootPath, '/SystemParameters.php">', __('Set Up Configuration Details'), '</a></p>
+			<p><a href = "', $RootPath, '/WWW_Users.php">', __('Set Up User Accounts'), '</a></p>
 			</div>
 		</form>';
 		include('includes/footer.php');
@@ -243,7 +243,7 @@ prnMsg(__('This utility will create a new company') . '. ' .
 
 echo '<br /><br />
 	<form method = "post" action = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" enctype = "multipart/form-data">
-	<div class="centre">
+	<div class = "centre">
 		<input type = "hidden" name = "FormID" value = "', $_SESSION['FormID'], '" />
 		<table>
 			<tr>
@@ -256,7 +256,7 @@ echo '<br /><br />
 			</tr>
 			<tr>
 				<td>' .  __('Logo Image File (.jpg)') . ':</td>
-				<td><input type = "file" required = "true" id="LogoFile" name = "LogoFile" /></td>
+				<td><input type = "file" required = "true" id = "LogoFile" name = "LogoFile" /></td>
 			</tr>
 			<tr>
 				<td>' . __('Create Database?') . '</td>

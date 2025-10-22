@@ -64,7 +64,7 @@ $HTML .= '<meta name = "author" content = "WebERP " . $Version">
 			<meta name = "Creator" content = "webERP https://www.weberp.org">
 		</head>
 		<body>
-			<div class="centre" id="ReportHeader">
+			<div class = "centre" id = "ReportHeader">
 				' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 				' . __('Inventory Valuation Report') . '<br />
 				' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
@@ -91,15 +91,15 @@ while ($InventoryValn = DB_fetch_array($InventoryResult)) {
 
 			/* need to print the total of previous category */
 			$DisplayCatTotVal = locale_number_format($CatTot_Val, 2);
-			$HTML .= '<tr class="total_row">
+			$HTML .= '<tr class = "total_row">
 						<td colspan = "3"></td>
 						<td>' . __('Total for') . ' ' . $Category . " - " . $CategoryName . '</td>
-						<td class="number">' . $DisplayCatTotVal . '</td>
+						<td class = "number">' . $DisplayCatTotVal . '</td>
 					</tr>';
 
 			$CatTot_Val = 0;
 }
-		$HTML .= '<tr class="total_row">
+		$HTML .= '<tr class = "total_row">
 					<td colspan = "5"><h3>' . $InventoryValn['categoryid'] . " - " . $InventoryValn['categorydescription'] . '</h3></td>
 				</tr>';
 		$Category = $InventoryValn['categoryid'];
@@ -112,9 +112,9 @@ while ($InventoryValn = DB_fetch_array($InventoryResult)) {
 	$HTML .= '<tr>
 				<td>' . $InventoryValn['stockid'] . '</td>
 				<td>' . $InventoryValn['description'] . '</td>
-				<td class="number">' . $DisplayQtyOnHand . '</td>
-				<td class="number">' . $DisplayUnitCost . '</td>
-				<td class="number">' . $DisplayItemTotal . '</td>
+				<td class = "number">' . $DisplayQtyOnHand . '</td>
+				<td class = "number">' . $DisplayUnitCost . '</td>
+				<td class = "number">' . $DisplayItemTotal . '</td>
 			</tr>';
 
 	$Tot_Val += $InventoryValn['itemtotal'];
@@ -123,18 +123,18 @@ while ($InventoryValn = DB_fetch_array($InventoryResult)) {
 } /*end inventory valn while loop */
 
 $DisplayCatTotVal = locale_number_format($CatTot_Val, 2);
-$HTML .= '<tr class="total_row">
+$HTML .= '<tr class = "total_row">
 			<td colspan = "3"></td>
 			<td>' . __('Total for') . ' ' . $Category . ' - ' . $CategoryName . '</td>
-			<td class="number">' . $DisplayCatTotVal . '</td>
+			<td class = "number">' . $DisplayCatTotVal . '</td>
 		</tr>';
 
 $DisplayTotalVal = locale_number_format($Tot_Val, 2);
 /*Print out the grand totals */
-$HTML .= '<tr class="total_row">
+$HTML .= '<tr class = "total_row">
 			<td colspan = "3"></td>
 			<td>' . __('Grand Total Value') . '</td>
-			<td class="number">' . $DisplayTotalVal . '</td>
+			<td class = "number">' . $DisplayTotalVal . '</td>
 		</tr>';
 
 $HTML .= '</tbody>
@@ -144,7 +144,7 @@ if ($ListCount == 0) {
 	$Title = __('Print Inventory Valuation Error');
 	include('includes/header.php');
 	echo '<p>' . __('There were no items with any value to print out for the location specified');
-	echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
+	echo '<br /><a href = "' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 	include('includes/footer.php');
 	exit(); // Javier: needs check
 } else {
@@ -183,11 +183,11 @@ if ($ListCount == 0) {
 	if ($Result) {
 	$Title = __('Print Inventory Valuation');
 		prnMsg(__('The Inventory valuation report has been mailed'), 'success');
-		echo '<div class="centre"><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a></div>';
+		echo '<div class = "centre"><a href = "' . $RootPath . '/index.php">' . __('Back to the menu') . '</a></div>';
 } else {
 		$Title = __('Print Inventory Valuation Error');
 		prnMsg(__('There are errors and the emails were not sent'), 'error');
-		echo '<div class="centre"><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a></div>';
+		echo '<div class = "centre"><a href = "' . $RootPath . '/index.php">' . __('Back to the menu') . '</a></div>';
 	}
 
 	include('includes/footer.php');

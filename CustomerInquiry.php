@@ -15,7 +15,7 @@ if (isset($_POST['TransAfterDate'])){$_POST['TransAfterDate'] = ConvertSQLDate($
 
 if (!isset($_GET['CustomerID']) and !isset($_SESSION['CustomerID'])) {
 	prnMsg(__('To display the enquiry a customer must first be selected from the customer selection screen'), 'info');
-	echo '<br /><div class="centre"><a href="', $RootPath, '/SelectCustomer.php">', __('Select a Customer to Inquire On'), '</a></div>';
+	echo '<br /><div class = "centre"><a href = "', $RootPath, '/SelectCustomer.php">', __('Select a Customer to Inquire On'), '</a></div>';
 	include('includes/footer.php');
 	exit();
 } else {
@@ -156,41 +156,41 @@ if ($NIL_BALANCE == true) {
 	$CustomerRecord['overdue2'] = 0;
 }
 
-echo '<div class="noPrint centre">
-		<a href="', $RootPath, '/SelectCustomer.php">', __('Back to Customer Screen'), '</a>
+echo '<div class = "noPrint centre">
+		<a href = "', $RootPath, '/SelectCustomer.php">', __('Back to Customer Screen'), '</a>
 	</div>';
 
-echo '<p class="page_title_text">
-		<img src="', $RootPath, '/css/', $Theme, '/images/customer.png" title="', __('Customer'), '" alt="" />', __('Customer'), ': ', stripslashes($CustomerID), ' - ', $CustomerRecord['name'], '<br />', __('All amounts stated in'), ': ', $CustomerRecord['currency'], '<br />', __('Terms'), ': ', $CustomerRecord['terms'], '<br />', __('Credit Limit'), ': ', locale_number_format($CustomerRecord['creditlimit'], 0), '<br />', __('Credit Status'), ': ', $CustomerRecord['reasondescription'], '
+echo '<p class = "page_title_text">
+		<img src = "', $RootPath, '/css/', $Theme, '/images/customer.png" title = "', __('Customer'), '" alt = "" />', __('Customer'), ': ', stripslashes($CustomerID), ' - ', $CustomerRecord['name'], '<br />', __('All amounts stated in'), ': ', $CustomerRecord['currency'], '<br />', __('Terms'), ': ', $CustomerRecord['terms'], '<br />', __('Credit Limit'), ': ', locale_number_format($CustomerRecord['creditlimit'], 0), '<br />', __('Credit Status'), ': ', $CustomerRecord['reasondescription'], '
 	</p>';
 
 if ($CustomerRecord['dissallowinvoices'] !=  0) {
 	echo '<br /><font color = "red" size = "4"><b>', __('ACCOUNT ON HOLD'), '</font></b><br />';
 }
 
-echo '<table class="selection" width = "70%">
+echo '<table class = "selection" width = "70%">
 	<tr>
-		<th style="width:20%">', __('Total Balance'), '</th>
-		<th style="width:20%">', __('Current'), '</th>
-		<th style="width:20%">', __('Now Due'), '</th>
-		<th style="width:20%">', $_SESSION['PastDueDays1'], '-', $_SESSION['PastDueDays2'], ' ' . __('Days Overdue'), '</th>
-		<th style="width:20%">', __('Over'), ' ', $_SESSION['PastDueDays2'], ' ', __('Days Overdue'), '</th>
+		<th style = "width:20%">', __('Total Balance'), '</th>
+		<th style = "width:20%">', __('Current'), '</th>
+		<th style = "width:20%">', __('Now Due'), '</th>
+		<th style = "width:20%">', $_SESSION['PastDueDays1'], '-', $_SESSION['PastDueDays2'], ' ' . __('Days Overdue'), '</th>
+		<th style = "width:20%">', __('Over'), ' ', $_SESSION['PastDueDays2'], ' ', __('Days Overdue'), '</th>
 	</tr>';
 
 echo '<tr>
-		<td class="number">', locale_number_format($CustomerRecord['balance'], $CustomerRecord['decimalplaces']), '</td>
-		<td class="number">', locale_number_format(($CustomerRecord['balance'] - $CustomerRecord['due']), $CustomerRecord['decimalplaces']), '</td>
-		<td class="number">', locale_number_format(($CustomerRecord['due'] - $CustomerRecord['overdue1']), $CustomerRecord['decimalplaces']), '</td>
-		<td class="number">', locale_number_format(($CustomerRecord['overdue1'] - $CustomerRecord['overdue2']), $CustomerRecord['decimalplaces']), '</td>
-		<td class="number">', locale_number_format($CustomerRecord['overdue2'], $CustomerRecord['decimalplaces']), '</td>
+		<td class = "number">', locale_number_format($CustomerRecord['balance'], $CustomerRecord['decimalplaces']), '</td>
+		<td class = "number">', locale_number_format(($CustomerRecord['balance'] - $CustomerRecord['due']), $CustomerRecord['decimalplaces']), '</td>
+		<td class = "number">', locale_number_format(($CustomerRecord['due'] - $CustomerRecord['overdue1']), $CustomerRecord['decimalplaces']), '</td>
+		<td class = "number">', locale_number_format(($CustomerRecord['overdue1'] - $CustomerRecord['overdue2']), $CustomerRecord['decimalplaces']), '</td>
+		<td class = "number">', locale_number_format($CustomerRecord['overdue2'], $CustomerRecord['decimalplaces']), '</td>
 	</tr>
 </table>';
 
-echo '<div class="centre"><form onSubmit = "return VerifyForm(this);" action = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method = "post" class="noPrint">
-		<input type = "hidden" name="FormID" value = "', $_SESSION['FormID'], '" />';
-echo __('Show all transactions after'), ':<input required = "required" type = "date" name="TransAfterDate" value = "', FormatDateForSQL($_POST['TransAfterDate']), '" maxlength = "10" size = "11" />';
+echo '<div class = "centre"><form onSubmit = "return VerifyForm(this);" action = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method = "post" class = "noPrint">
+		<input type = "hidden" name = "FormID" value = "', $_SESSION['FormID'], '" />';
+echo __('Show all transactions after'), ':<input required = "required" type = "date" name = "TransAfterDate" value = "', FormatDateForSQL($_POST['TransAfterDate']), '" maxlength = "10" size = "11" />';
 
-echo '<select name="Status">';
+echo '<select name = "Status">';
 if ($_POST['Status'] == '') {
 	echo '<option value = "" selected = "selected">', __('All'), '</option>';
 	echo '<option value = "1">', __('Invoices not fully allocated'), '</option>';
@@ -208,7 +208,7 @@ if ($_POST['Status'] == '') {
 }
 
 echo '</select>';
-echo '<input class="noPrint" name="Refresh Inquiry" type = "submit" value = "', __('Refresh Inquiry'), '" />
+echo '<input class = "noPrint" name = "Refresh Inquiry" type = "submit" value = "', __('Refresh Inquiry'), '" />
 	</form></div>';
 
 $DateAfterCriteria = FormatDateForSQL($_POST['TransAfterDate']);
@@ -240,30 +240,30 @@ $ErrMsg = __('No transactions were returned by the SQL because');
 $TransResult = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($TransResult) == 0) {
-	echo '<div class="centre">', __('There are no transactions to display since'), ' ', $_POST['TransAfterDate'], '</div>';
+	echo '<div class = "centre">', __('There are no transactions to display since'), ' ', $_POST['TransAfterDate'], '</div>';
 	include('includes/footer.php');
 	exit();
 }
 
 /* Show a table of the invoices returned by the SQL. */
 
-echo '<table class="selection"><thead>
+echo '<table class = "selection"><thead>
 	<tr>
-		<th class="SortedColumn">', __('Type'), '</th>
-		<th class="SortedColumn">', __('Number'), '</th>
-		<th class="SortedColumn">', __('Date'), '</th>
+		<th class = "SortedColumn">', __('Type'), '</th>
+		<th class = "SortedColumn">', __('Number'), '</th>
+		<th class = "SortedColumn">', __('Date'), '</th>
 		<th>', __('Branch'), '</th>
-		<th class="SortedColumn">', __('Reference'), '</th>
+		<th class = "SortedColumn">', __('Reference'), '</th>
 		<th>', __('Comments'), '</th>
 		<th>', __('Order'), '</th>
 		<th>', __('Total'), '</th>
 		<th>', __('Allocated'), '</th>
 		<th>', __('Balance'), '</th>
-		<th class="noPrint">', __('More Info'), '</th>
-		<th class="noPrint">', __('More Info'), '</th>
-		<th class="noPrint">', __('More Info'), '</th>
-		<th class="noPrint">', __('More Info'), '</th>
-		<th class="noPrint">', __('More Info'), '</th>
+		<th class = "noPrint">', __('More Info'), '</th>
+		<th class = "noPrint">', __('More Info'), '</th>
+		<th class = "noPrint">', __('More Info'), '</th>
+		<th class = "noPrint">', __('More Info'), '</th>
+		<th class = "noPrint">', __('More Info'), '</th>
 	</tr>
 	</thead><tbody>';
 
@@ -286,43 +286,43 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 			 * - User can raise credits
 			 * - User can view GL transactions
 			 */
-			echo '<tr class="striped_row">
+			echo '<tr class = "striped_row">
 					<td>', __($MyRow['typename']), '</td>
-					<td><a href="' . $RootPath . '/CustWhereAlloc.php?TransType=' . $MyRow['type'] . '&TransNo=' . $MyRow['transno'] . '" target="_blank">' . $MyRow['transno'] . '</a></td>
-					<td class="date">', ConvertSQLDate($MyRow['trandate']), '</td>
+					<td><a href = "' . $RootPath . '/CustWhereAlloc.php?TransType = ' . $MyRow['type'] . '&TransNo = ' . $MyRow['transno'] . '" target = "_blank">' . $MyRow['transno'] . '</a></td>
+					<td class = "date">', ConvertSQLDate($MyRow['trandate']), '</td>
 					<td>', $MyRow['branchcode'], '</td>
 					<td>', $MyRow['reference'], '</td>
-					<td style="width:200px">', $MyRow['invtext'], '</td>
+					<td style = "width:200px">', $MyRow['invtext'], '</td>
 					<td>', $MyRow['order_'], '</td>
-					<td class="number">', locale_number_format($MyRow['totalamount'], $CustomerRecord['decimalplaces']), '</td>
-					<td class="number">', locale_number_format($MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
-					<td class="number">', locale_number_format($MyRow['totalamount'] - $MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
-					<td class="noPrint">
-						<a href="', $RootPath, '/Credit_Invoice.php?InvoiceNumber=', $MyRow['transno'], '" title="', __('Click to credit the invoice'), '">
-							<img alt="" src="', $RootPath, '/css/', $Theme, '/images/credit.png" /> ',
+					<td class = "number">', locale_number_format($MyRow['totalamount'], $CustomerRecord['decimalplaces']), '</td>
+					<td class = "number">', locale_number_format($MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
+					<td class = "number">', locale_number_format($MyRow['totalamount'] - $MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
+					<td class = "noPrint">
+						<a href = "', $RootPath, '/Credit_Invoice.php?InvoiceNumber = ', $MyRow['transno'], '" title = "', __('Click to credit the invoice'), '">
+							<img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/credit.png" /> ',
 							__('Credit'), '
 						</a>
 					</td>
-					<td class="noPrint">
-						<a href="', $RootPath, '/PrintCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice&View=Yes" title="', __('Click to preview the invoice'), '" target="_blank">
-							<img alt="" src="', $RootPath, '/css/', $Theme, '/images/preview.png" /> ',
+					<td class = "noPrint">
+						<a href = "', $RootPath, '/PrintCustTrans.php?FromTransNo = ', $MyRow['transno'], '&amp;InvOrCredit = Invoice&View = Yes" title = "', __('Click to preview the invoice'), '" target = "_blank">
+							<img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/preview.png" /> ',
 							__('HTML'), '
 						</a>
 					</td>
-					<td class="noPrint">
-						<a href="', $RootPath, '/PrintCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice&amp;PrintPDF=True&orientation=' . $Orientation . '" title="', __('Click for PDF'), '" target="_blank">
-							<img alt="" src="', $RootPath, '/css/', $Theme, '/images/pdf.png" /> ',
+					<td class = "noPrint">
+						<a href = "', $RootPath, '/PrintCustTrans.php?FromTransNo = ', $MyRow['transno'], '&amp;InvOrCredit = Invoice&amp;PrintPDF = True&orientation = ' . $Orientation . '" title = "', __('Click for PDF'), '" target = "_blank">
+							<img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/pdf.png" /> ',
 							__('PDF'), '
 						</a>
 					</td>
-					<td class="noPrint">
-						<a href="', $RootPath, '/EmailCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice" title="', __('Click to email the invoice'), '">
-							<img alt="" src="', $RootPath, '/css/', $Theme, '/images/email.png" /> ', __('Email'), '
+					<td class = "noPrint">
+						<a href = "', $RootPath, '/EmailCustTrans.php?FromTransNo = ', $MyRow['transno'], '&amp;InvOrCredit = Invoice" title = "', __('Click to email the invoice'), '">
+							<img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/email.png" /> ', __('Email'), '
 						</a>
 					</td>
-					<td class="noPrint">
-						<a href="', $RootPath, '/GLTransInquiry.php?TypeID=', $MyRow['type'], '&amp;TransNo=', $MyRow['transno'], '" title="', __('Click to view the GL entries'), '">
-							<img alt="" src="', $RootPath, '/css/', $Theme, '/images/gl.png" /> ',
+					<td class = "noPrint">
+						<a href = "', $RootPath, '/GLTransInquiry.php?TypeID = ', $MyRow['type'], '&amp;TransNo = ', $MyRow['transno'], '" title = "', __('Click to view the GL entries'), '">
+							<img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/gl.png" /> ',
 							__('GL Entries'), '
 						</a>
 					</td>
@@ -333,41 +333,41 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 			 * - User can raise credits
 			 * - User cannot view GL transactions
 			 */
-			echo '<tr class="striped_row">
+			echo '<tr class = "striped_row">
 					<td>', __($MyRow['typename']), '</td>
-					<td><a href="' . $RootPath . '/CustWhereAlloc.php?TransType=' . $MyRow['type'] . '&TransNo=' . $MyRow['transno'] . '">' . $MyRow['transno'] . '</a></td>
+					<td><a href = "' . $RootPath . '/CustWhereAlloc.php?TransType = ' . $MyRow['type'] . '&TransNo = ' . $MyRow['transno'] . '">' . $MyRow['transno'] . '</a></td>
 					<td>', ConvertSQLDate($MyRow['trandate']), '</td>
 					<td>', $MyRow['branchcode'], '</td>
 					<td>', $MyRow['reference'], '</td>
-					<td style="width:200px">', $MyRow['invtext'], '</td>
+					<td style = "width:200px">', $MyRow['invtext'], '</td>
 					<td>', $MyRow['order_'], '</td>
-					<td class="number">', locale_number_format($MyRow['totalamount'], $CustomerRecord['decimalplaces']), '</td>
-					<td class="number">', locale_number_format($MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
-					<td class="number">', locale_number_format($MyRow['totalamount'] - $MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
-					<td class="noPrint">
-						<a href="', $RootPath, '/Credit_Invoice.php?InvoiceNumber=', $MyRow['transno'], '" title="', __('Click to credit the invoice'), '">
-							<img alt="" src="', $RootPath, '/css/', $Theme, '/images/credit.png" /> ',
+					<td class = "number">', locale_number_format($MyRow['totalamount'], $CustomerRecord['decimalplaces']), '</td>
+					<td class = "number">', locale_number_format($MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
+					<td class = "number">', locale_number_format($MyRow['totalamount'] - $MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
+					<td class = "noPrint">
+						<a href = "', $RootPath, '/Credit_Invoice.php?InvoiceNumber = ', $MyRow['transno'], '" title = "', __('Click to credit the invoice'), '">
+							<img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/credit.png" /> ',
 							__('Credit'), '
 						</a>
 					</td>
-					<td class="noPrint">
-						<a href="', $RootPath, '/PrintCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice" title="', __('Click to preview the invoice'), '">
-							<img alt="" src="', $RootPath, '/css/', $Theme, '/images/preview.png" /> ',
+					<td class = "noPrint">
+						<a href = "', $RootPath, '/PrintCustTrans.php?FromTransNo = ', $MyRow['transno'], '&amp;InvOrCredit = Invoice" title = "', __('Click to preview the invoice'), '">
+							<img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/preview.png" /> ',
 							__('HTML'), '
 						</a>
 					</td>
-					<td class="noPrint">
-						<a href="', $RootPath, '/', $PrintCustomerTransactionScript, '?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice&amp;PrintPDF=True" title="', __('Click for PDF'), '">
-							<img alt="" src="', $RootPath, '/css/', $Theme, '/images/pdf.png" /> ',
+					<td class = "noPrint">
+						<a href = "', $RootPath, '/', $PrintCustomerTransactionScript, '?FromTransNo = ', $MyRow['transno'], '&amp;InvOrCredit = Invoice&amp;PrintPDF = True" title = "', __('Click for PDF'), '">
+							<img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/pdf.png" /> ',
 							__('PDF'), '
 						</a>
 					</td>
-					<td class="noPrint">
-						<a href="', $RootPath, '/EmailCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice" title="', __('Click to email the invoice'), '">
-							<img alt="" src="', $RootPath, '/css/', $Theme, '/images/email.png" /> ', __('Email'), '
+					<td class = "noPrint">
+						<a href = "', $RootPath, '/EmailCustTrans.php?FromTransNo = ', $MyRow['transno'], '&amp;InvOrCredit = Invoice" title = "', __('Click to email the invoice'), '">
+							<img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/email.png" /> ', __('Email'), '
 						</a>
 					</td>
-					<td class="noPrint">&nbsp;</td>
+					<td class = "noPrint">&nbsp;</td>
 				</tr>';
 
 		}
@@ -378,36 +378,36 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 		 * - User cannot raise credits
 		 * - User cannot view GL transactions
 		 */
-		echo '<tr class="striped_row">
+		echo '<tr class = "striped_row">
 				<td>', __($MyRow['typename']), '</td>
 				<td>', $MyRow['transno'], '</td>
 				<td>', ConvertSQLDate($MyRow['trandate']), '</td>
 				<td>', $MyRow['branchcode'], '</td>
 				<td>', $MyRow['reference'], '</td>
-				<td style="width:200px">', $MyRow['invtext'], '</td>
+				<td style = "width:200px">', $MyRow['invtext'], '</td>
 				<td>', $MyRow['order_'], '</td>
-				<td class="number">', locale_number_format($MyRow['totalamount'], $CustomerRecord['decimalplaces']), '</td>
-				<td class="number">', locale_number_format($MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
-				<td class="number">', locale_number_format($MyRow['totalamount'] - $MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
-				<td class="noPrint">&nbsp;</td>
-				<td class="noPrint">
-					<a href="', $RootPath, '/PrintCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice" title="', __('Click to preview the invoice'), '">
-						<img alt="" src="', $RootPath, '/css/', $Theme, '/images/preview.png" /> ',
+				<td class = "number">', locale_number_format($MyRow['totalamount'], $CustomerRecord['decimalplaces']), '</td>
+				<td class = "number">', locale_number_format($MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
+				<td class = "number">', locale_number_format($MyRow['totalamount'] - $MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
+				<td class = "noPrint">&nbsp;</td>
+				<td class = "noPrint">
+					<a href = "', $RootPath, '/PrintCustTrans.php?FromTransNo = ', $MyRow['transno'], '&amp;InvOrCredit = Invoice" title = "', __('Click to preview the invoice'), '">
+						<img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/preview.png" /> ',
 						__('HTML'), '
 					</a>
 				</td>
-				<td class="noPrint">
-					<a href="', $RootPath, '/', $PrintCustomerTransactionScript, '?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice&amp;PrintPDF=True" title="', __('Click for PDF'), '">
-						<img alt="" src="', $RootPath, '/css/', $Theme, '/images/pdf.png" /> ',
+				<td class = "noPrint">
+					<a href = "', $RootPath, '/', $PrintCustomerTransactionScript, '?FromTransNo = ', $MyRow['transno'], '&amp;InvOrCredit = Invoice&amp;PrintPDF = True" title = "', __('Click for PDF'), '">
+						<img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/pdf.png" /> ',
 						__('PDF'), '
 					</a>
 				</td>
-				<td class="noPrint">
-					<a href="', $RootPath, '/EmailCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice" title="', __('Click to email the invoice'), '">
-						<img alt="" src="', $RootPath, '/css/', $Theme, '/images/email.png" /> ', __('Email'), '
+				<td class = "noPrint">
+					<a href = "', $RootPath, '/EmailCustTrans.php?FromTransNo = ', $MyRow['transno'], '&amp;InvOrCredit = Invoice" title = "', __('Click to email the invoice'), '">
+						<img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/email.png" /> ', __('Email'), '
 					</a>
 				</td>
-				<td class="noPrint">&nbsp;</td>
+				<td class = "noPrint">&nbsp;</td>
 			</tr>';
 } elseif ($MyRow['type'] == 11) {
 	/* Show transactions where:
@@ -415,43 +415,43 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 		 * - User can view GL transactions
 		 */
 		if ($_SESSION['CompanyRecord']['gllink_debtors'] == 1 and in_array($_SESSION['PageSecurityArray']['GLTransInquiry.php'], $_SESSION['AllowedPageSecurityTokens'])) {
-			echo '<tr class="striped_row">
+			echo '<tr class = "striped_row">
 					<td>', __($MyRow['typename']), '</td>
-					<td><a href="' . $RootPath . '/CustWhereAlloc.php?TransType=' . $MyRow['type'] . '&TransNo=' . $MyRow['transno'] . '">' . $MyRow['transno'] . '</a></td>
+					<td><a href = "' . $RootPath . '/CustWhereAlloc.php?TransType = ' . $MyRow['type'] . '&TransNo = ' . $MyRow['transno'] . '">' . $MyRow['transno'] . '</a></td>
 					<td>', ConvertSQLDate($MyRow['trandate']), '</td>
 					<td>', $MyRow['branchcode'], '</td>
 					<td>', $MyRow['reference'], '</td>
-					<td style="width:200px">', $MyRow['invtext'], '</td>
+					<td style = "width:200px">', $MyRow['invtext'], '</td>
 					<td>', $MyRow['order_'], '</td>
-					<td class="number">', locale_number_format($MyRow['totalamount'], $CustomerRecord['decimalplaces']), '</td>
-					<td class="number">', locale_number_format($MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
-					<td class="number">', locale_number_format($MyRow['totalamount'] - $MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
-					<td class="noPrint">
-						<a href="', $RootPath, '/PrintCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Credit" title="', __('Click to preview the credit note'), '">
-							<img alt="" src="', $RootPath, '/css/', $Theme, '/images/preview.png" /> ',
+					<td class = "number">', locale_number_format($MyRow['totalamount'], $CustomerRecord['decimalplaces']), '</td>
+					<td class = "number">', locale_number_format($MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
+					<td class = "number">', locale_number_format($MyRow['totalamount'] - $MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
+					<td class = "noPrint">
+						<a href = "', $RootPath, '/PrintCustTrans.php?FromTransNo = ', $MyRow['transno'], '&amp;InvOrCredit = Credit" title = "', __('Click to preview the credit note'), '">
+							<img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/preview.png" /> ',
 							__('HTML'), '
 						</a>
 					</td>
-					<td class="noPrint">
-						<a href="', $RootPath, '/', $PrintCustomerTransactionScript, '?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Credit&amp;PrintPDF=True" title="', __('Click for PDF'), '">
-							<img alt="" src="', $RootPath, '/css/', $Theme, '/images/pdf.png" /> ',
+					<td class = "noPrint">
+						<a href = "', $RootPath, '/', $PrintCustomerTransactionScript, '?FromTransNo = ', $MyRow['transno'], '&amp;InvOrCredit = Credit&amp;PrintPDF = True" title = "', __('Click for PDF'), '">
+							<img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/pdf.png" /> ',
 							__('PDF'), '
 						</a>
 					</td>
-					<td class="noPrint">
-						<a href="', $RootPath, '/EmailCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Credit">', __('Email'), '
-							<img src="', $RootPath, '/css/', $Theme, '/images/email.png" title="', __('Click to email the credit note'), '" alt="" />
+					<td class = "noPrint">
+						<a href = "', $RootPath, '/EmailCustTrans.php?FromTransNo = ', $MyRow['transno'], '&amp;InvOrCredit = Credit">', __('Email'), '
+							<img src = "', $RootPath, '/css/', $Theme, '/images/email.png" title = "', __('Click to email the credit note'), '" alt = "" />
 						</a>
 					</td>
-					<td class="noPrint">
-						<a href="', $RootPath, '/CustomerAllocations.php?AllocTrans=', $MyRow['id'], '" title="', __('Click to allocate funds'), '">
-							<img alt="" src="', $RootPath, '/css/', $Theme, '/images/allocation.png" /> ',
+					<td class = "noPrint">
+						<a href = "', $RootPath, '/CustomerAllocations.php?AllocTrans = ', $MyRow['id'], '" title = "', __('Click to allocate funds'), '">
+							<img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/allocation.png" /> ',
 							__('Allocation'), '
 						</a>
 					</td>
-					<td class="noPrint">
-						<a href="', $RootPath, '/GLTransInquiry.php?TypeID=', $MyRow['type'], '&amp;TransNo=', $MyRow['transno'], '" title="', __('Click to view the GL entries'), '">
-							<img alt="" src="', $RootPath, '/css/', $Theme, '/images/gl.png" /> ',
+					<td class = "noPrint">
+						<a href = "', $RootPath, '/GLTransInquiry.php?TypeID = ', $MyRow['type'], '&amp;TransNo = ', $MyRow['transno'], '" title = "', __('Click to view the GL entries'), '">
+							<img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/gl.png" /> ',
 							__('GL Entries'), '
 						</a>
 					</td>
@@ -461,41 +461,41 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 			* - Is credit note
 			* - User cannot view GL transactions
 			*/
-			echo '<tr class="striped_row">
+			echo '<tr class = "striped_row">
 					<td>', __($MyRow['typename']), '</td>
-					<td><a href="' . $RootPath . '/CustWhereAlloc.php?TransType=' . $MyRow['type'] . '&TransNo=' . $MyRow['transno'] . '">' . $MyRow['transno'] . '</a></td>
+					<td><a href = "' . $RootPath . '/CustWhereAlloc.php?TransType = ' . $MyRow['type'] . '&TransNo = ' . $MyRow['transno'] . '">' . $MyRow['transno'] . '</a></td>
 					<td>', ConvertSQLDate($MyRow['trandate']), '</td>
 					<td>', $MyRow['branchcode'], '</td>
 					<td>', $MyRow['reference'], '</td>
-					<td style="width:200px">', $MyRow['invtext'], '</td>
+					<td style = "width:200px">', $MyRow['invtext'], '</td>
 					<td>', $MyRow['order_'], '</td>
-					<td class="number">', locale_number_format($MyRow['totalamount'], $CustomerRecord['decimalplaces']), '</td>
-					<td class="number">', locale_number_format($MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
-					<td class="number">', locale_number_format($MyRow['totalamount'] - $MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
-					<td class="noPrint">
-						<a href="', $RootPath, '/PrintCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Credit" title="', __('Click to preview the credit note'), '">
-							<img alt="" src="', $RootPath, '/css/', $Theme, '/images/preview.png" /> ',
+					<td class = "number">', locale_number_format($MyRow['totalamount'], $CustomerRecord['decimalplaces']), '</td>
+					<td class = "number">', locale_number_format($MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
+					<td class = "number">', locale_number_format($MyRow['totalamount'] - $MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
+					<td class = "noPrint">
+						<a href = "', $RootPath, '/PrintCustTrans.php?FromTransNo = ', $MyRow['transno'], '&amp;InvOrCredit = Credit" title = "', __('Click to preview the credit note'), '">
+							<img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/preview.png" /> ',
 							__('HTML'), '
 						</a>
 					</td>
-					<td class="noPrint">
-						<a href="', $RootPath, '/', $PrintCustomerTransactionScript, '?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Credit&amp;PrintPDF=True" title="', __('Click for PDF'), '">
-							<img alt="" src="', $RootPath, '/css/', $Theme, '/images/pdf.png" /> ',
+					<td class = "noPrint">
+						<a href = "', $RootPath, '/', $PrintCustomerTransactionScript, '?FromTransNo = ', $MyRow['transno'], '&amp;InvOrCredit = Credit&amp;PrintPDF = True" title = "', __('Click for PDF'), '">
+							<img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/pdf.png" /> ',
 							__('PDF'), '
 						</a>
 					</td>
-					<td class="noPrint">
-						<a href="', $RootPath, '/EmailCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Credit">', __('Email'), '
-							<img src="', $RootPath, '/css/', $Theme, '/images/email.png" title="', __('Click to email the credit note'), '" alt="" />
+					<td class = "noPrint">
+						<a href = "', $RootPath, '/EmailCustTrans.php?FromTransNo = ', $MyRow['transno'], '&amp;InvOrCredit = Credit">', __('Email'), '
+							<img src = "', $RootPath, '/css/', $Theme, '/images/email.png" title = "', __('Click to email the credit note'), '" alt = "" />
 						</a>
 					</td>
-					<td class="noPrint">
-						<a href="', $RootPath, '/CustomerAllocations.php?AllocTrans=', $MyRow['id'], '" title="', __('Click to allocate funds'), '">
-							<img alt="" src="', $RootPath, '/css/', $Theme, '/images/allocation.png" /> ',
+					<td class = "noPrint">
+						<a href = "', $RootPath, '/CustomerAllocations.php?AllocTrans = ', $MyRow['id'], '" title = "', __('Click to allocate funds'), '">
+							<img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/allocation.png" /> ',
 							__('Allocation'), '
 						</a>
 					</td>
-					<td class="noPrint">&nbsp;</td>
+					<td class = "noPrint">&nbsp;</td>
 				</tr>';
 
 		}
@@ -505,29 +505,29 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 		 * - User can view GL transactions
 		 */
 		if ($_SESSION['CompanyRecord']['gllink_debtors'] == 1 and in_array($_SESSION['PageSecurityArray']['GLTransInquiry.php'], $_SESSION['AllowedPageSecurityTokens'])) {
-			echo '<tr class="striped_row">
+			echo '<tr class = "striped_row">
 					<td>', __($MyRow['typename']), '</td>
-					<td><a href="' . $RootPath . '/CustWhereAlloc.php?TransType=' . $MyRow['type'] . '&TransNo=' . $MyRow['transno'] . '">' . $MyRow['transno'] . '</a></td>
+					<td><a href = "' . $RootPath . '/CustWhereAlloc.php?TransType = ' . $MyRow['type'] . '&TransNo = ' . $MyRow['transno'] . '">' . $MyRow['transno'] . '</a></td>
 					<td>', ConvertSQLDate($MyRow['trandate']), '</td>
 					<td>', $MyRow['branchcode'], '</td>
 					<td>', $MyRow['reference'], '</td>
-					<td style="width:200px">', $MyRow['invtext'], '</td>
+					<td style = "width:200px">', $MyRow['invtext'], '</td>
 					<td>', $MyRow['order_'], '</td>
-					<td class="number">', locale_number_format($MyRow['totalamount'], $CustomerRecord['decimalplaces']), '</td>
-					<td class="number">', locale_number_format($MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
-					<td class="number">', locale_number_format($MyRow['totalamount'] - $MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
-					<td class="noPrint">
-						<a href="', $RootPath, '/CustomerAllocations.php?AllocTrans=', $MyRow['id'], '" title="', __('Click to allocate funds'), '">
-							<img alt="" src="', $RootPath, '/css/', $Theme, '/images/allocation.png" /> ',
+					<td class = "number">', locale_number_format($MyRow['totalamount'], $CustomerRecord['decimalplaces']), '</td>
+					<td class = "number">', locale_number_format($MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
+					<td class = "number">', locale_number_format($MyRow['totalamount'] - $MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
+					<td class = "noPrint">
+						<a href = "', $RootPath, '/CustomerAllocations.php?AllocTrans = ', $MyRow['id'], '" title = "', __('Click to allocate funds'), '">
+							<img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/allocation.png" /> ',
 							__('Allocation'), '
 						</a>
 					</td>
-					<td class="noPrint">&nbsp;</td>
-					<td class="noPrint">&nbsp;</td>
-					<td class="noPrint">&nbsp;</td>
-					<td class="noPrint">
-						<a href="', $RootPath, '/GLTransInquiry.php?TypeID=', $MyRow['type'], '&amp;TransNo=', $MyRow['transno'], '" title="', __('Click to view the GL entries'), '">
-							<img alt="" src="', $RootPath, '/css/', $Theme, '/images/gl.png" /> ',
+					<td class = "noPrint">&nbsp;</td>
+					<td class = "noPrint">&nbsp;</td>
+					<td class = "noPrint">&nbsp;</td>
+					<td class = "noPrint">
+						<a href = "', $RootPath, '/GLTransInquiry.php?TypeID = ', $MyRow['type'], '&amp;TransNo = ', $MyRow['transno'], '" title = "', __('Click to view the GL entries'), '">
+							<img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/gl.png" /> ',
 							__('GL Entries'), '
 						</a>
 					</td>
@@ -537,27 +537,27 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 		 * - Is credit note
 		 * - User cannot view GL transactions
 		 */
-			echo '<tr class="striped_row">
+			echo '<tr class = "striped_row">
 					<td>', __($MyRow['typename']), '</td>
 					<td>', $MyRow['transno'], '</td>
 					<td>', ConvertSQLDate($MyRow['trandate']), '</td>
 					<td>', $MyRow['branchcode'], '</td>
 					<td>', $MyRow['reference'], '</td>
-					<td style="width:200px">', $MyRow['invtext'], '</td>
+					<td style = "width:200px">', $MyRow['invtext'], '</td>
 					<td>', $MyRow['order_'], '</td>
-					<td class="number">', locale_number_format($MyRow['totalamount'], $CustomerRecord['decimalplaces']), '</td>
-					<td class="number">', locale_number_format($MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
-					<td class="number">', locale_number_format($MyRow['totalamount'] - $MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
-					<td class="noPrint">
-						<a href="', $RootPath, '/CustomerAllocations.php?AllocTrans=', $MyRow['id'], '" title="', __('Click to allocate funds'), '">
-							<img alt="" src="', $RootPath, '/css/', $Theme, '/images/allocation.png" /> ',
+					<td class = "number">', locale_number_format($MyRow['totalamount'], $CustomerRecord['decimalplaces']), '</td>
+					<td class = "number">', locale_number_format($MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
+					<td class = "number">', locale_number_format($MyRow['totalamount'] - $MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
+					<td class = "noPrint">
+						<a href = "', $RootPath, '/CustomerAllocations.php?AllocTrans = ', $MyRow['id'], '" title = "', __('Click to allocate funds'), '">
+							<img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/allocation.png" /> ',
 							__('Allocation'), '
 						</a>
 					</td>
-					<td class="noPrint">&nbsp;</td>
-					<td class="noPrint">&nbsp;</td>
-					<td class="noPrint">&nbsp;</td>
-					<td class="noPrint">&nbsp;</td>
+					<td class = "noPrint">&nbsp;</td>
+					<td class = "noPrint">&nbsp;</td>
+					<td class = "noPrint">&nbsp;</td>
+					<td class = "noPrint">&nbsp;</td>
 				</tr>';
 
 		}
@@ -567,24 +567,24 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 			* - Is a negative receipt
 			* - User can view GL transactions
 			*/
-			echo '<tr class="striped_row">
+			echo '<tr class = "striped_row">
 					<td>', __($MyRow['typename']), '</td>
 					<td>', $MyRow['transno'], '</td>
 					<td>', ConvertSQLDate($MyRow['trandate']), '</td>
 					<td>', $MyRow['branchcode'], '</td>
 					<td>', $MyRow['reference'], '</td>
-					<td style="width:200px">', $MyRow['invtext'], '</td>
+					<td style = "width:200px">', $MyRow['invtext'], '</td>
 					<td>', $MyRow['order_'], '</td>
-					<td class="number">', locale_number_format($MyRow['totalamount'], $CustomerRecord['decimalplaces']), '</td>
-					<td class="number">', locale_number_format($MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
-					<td class="number">', locale_number_format($MyRow['totalamount'] - $MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
-					<td class="noPrint">&nbsp;</td>
-					<td class="noPrint">&nbsp;</td>
-					<td class="noPrint">&nbsp;</td>
-					<td class="noPrint">&nbsp;</td>
-					<td class="noPrint">
-						<a href="', $RootPath, '/GLTransInquiry.php?TypeID=', $MyRow['type'], '&amp;TransNo=', $MyRow['transno'], '" title="', __('Click to view the GL entries'), '">
-							<img alt="" src="', $RootPath, '/css/', $Theme, '/images/gl.png" /> ',
+					<td class = "number">', locale_number_format($MyRow['totalamount'], $CustomerRecord['decimalplaces']), '</td>
+					<td class = "number">', locale_number_format($MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
+					<td class = "number">', locale_number_format($MyRow['totalamount'] - $MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
+					<td class = "noPrint">&nbsp;</td>
+					<td class = "noPrint">&nbsp;</td>
+					<td class = "noPrint">&nbsp;</td>
+					<td class = "noPrint">&nbsp;</td>
+					<td class = "noPrint">
+						<a href = "', $RootPath, '/GLTransInquiry.php?TypeID = ', $MyRow['type'], '&amp;TransNo = ', $MyRow['transno'], '" title = "', __('Click to view the GL entries'), '">
+							<img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/gl.png" /> ',
 							__('GL Entries'), '
 						</a>
 					</td>
@@ -594,22 +594,22 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 			* - Is a negative receipt
 			* - User cannot view GL transactions
 			*/
-			echo '<tr class="striped_row">
+			echo '<tr class = "striped_row">
 					<td>', __($MyRow['typename']), '</td>
 					<td>', $MyRow['transno'], '</td>
 					<td>', ConvertSQLDate($MyRow['trandate']), '</td>
 					<td>', $MyRow['branchcode'], '</td>
 					<td>', $MyRow['reference'], '</td>
-					<td style="width:200px">', $MyRow['invtext'], '</td>
+					<td style = "width:200px">', $MyRow['invtext'], '</td>
 					<td>', $MyRow['order_'], '</td>
-					<td class="number">', locale_number_format($MyRow['totalamount'], $CustomerRecord['decimalplaces']), '</td>
-					<td class="number">', locale_number_format($MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
-					<td class="number">', locale_number_format($MyRow['totalamount'] - $MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
-					<td class="noPrint">&nbsp;</td>
-					<td class="noPrint">&nbsp;</td>
-					<td class="noPrint">&nbsp;</td>
-					<td class="noPrint">&nbsp;</td>
-					<td class="noPrint">&nbsp;</td>
+					<td class = "number">', locale_number_format($MyRow['totalamount'], $CustomerRecord['decimalplaces']), '</td>
+					<td class = "number">', locale_number_format($MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
+					<td class = "number">', locale_number_format($MyRow['totalamount'] - $MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
+					<td class = "noPrint">&nbsp;</td>
+					<td class = "noPrint">&nbsp;</td>
+					<td class = "noPrint">&nbsp;</td>
+					<td class = "noPrint">&nbsp;</td>
+					<td class = "noPrint">&nbsp;</td>
 				</tr>';
 		}
 	} else {
@@ -618,24 +618,24 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 			* - Is a misc transaction
 			* - User can view GL transactions
 			*/
-			echo '<tr class="striped_row">
+			echo '<tr class = "striped_row">
 					<td>', __($MyRow['typename']), '</td>
 					<td>', $MyRow['transno'], '</td>
 					<td>', ConvertSQLDate($MyRow['trandate']), '</td>
 					<td>', $MyRow['branchcode'], '</td>
 					<td>', $MyRow['reference'], '</td>
-					<td style="width:200px">', $MyRow['invtext'], '</td>
+					<td style = "width:200px">', $MyRow['invtext'], '</td>
 					<td>', $MyRow['order_'], '</td>
-					<td class="number">', locale_number_format($MyRow['totalamount'], $CustomerRecord['decimalplaces']), '</td>
-					<td class="number">', locale_number_format($MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
-					<td class="number">', locale_number_format($MyRow['totalamount'] - $MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
-					<td class="noPrint">&nbsp;</td>
-					<td class="noPrint">&nbsp;</td>
-					<td class="noPrint">&nbsp;</td>
-					<td class="noPrint">&nbsp;</td>
-					<td class="noPrint">
-						<a href="', $RootPath, '/GLTransInquiry.php?TypeID=', $MyRow['type'], '&amp;TransNo=', $MyRow['transno'], '" title="', __('Click to view the GL entries'), '">
-							<img alt="" src="', $RootPath, '/css/', $Theme, '/images/gl.png" /> ',
+					<td class = "number">', locale_number_format($MyRow['totalamount'], $CustomerRecord['decimalplaces']), '</td>
+					<td class = "number">', locale_number_format($MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
+					<td class = "number">', locale_number_format($MyRow['totalamount'] - $MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
+					<td class = "noPrint">&nbsp;</td>
+					<td class = "noPrint">&nbsp;</td>
+					<td class = "noPrint">&nbsp;</td>
+					<td class = "noPrint">&nbsp;</td>
+					<td class = "noPrint">
+						<a href = "', $RootPath, '/GLTransInquiry.php?TypeID = ', $MyRow['type'], '&amp;TransNo = ', $MyRow['transno'], '" title = "', __('Click to view the GL entries'), '">
+							<img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/gl.png" /> ',
 							__('GL Entries'), '
 						</a>
 					</td>
@@ -646,22 +646,22 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 			* - Is a misc transaction
 			* - User cannot view GL transactions
 			*/
-			echo '<tr class="striped_row">
+			echo '<tr class = "striped_row">
 					<td>', $MyRow['typename'], '</td>
 					<td>', $MyRow['transno'], '</td>
 					<td>', ConvertSQLDate($MyRow['trandate']), '</td>
 					<td>', $MyRow['branchcode'], '</td>
 					<td>', $MyRow['reference'], '</td>
-					<td style="width:200px">', $MyRow['invtext'], '</td>
+					<td style = "width:200px">', $MyRow['invtext'], '</td>
 					<td>', $MyRow['order_'], '</td>
-					<td class="number">', locale_number_format($MyRow['totalamount'], $CustomerRecord['decimalplaces']), '</td>
-					<td class="number">', locale_number_format($MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
-					<td class="number">', locale_number_format($MyRow['totalamount'] - $MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
-					<td class="noPrint">&nbsp;</td>
-					<td class="noPrint">&nbsp;</td>
-					<td class="noPrint">&nbsp;</td>
-					<td class="noPrint">&nbsp;</td>
-					<td class="noPrint">&nbsp;</td>
+					<td class = "number">', locale_number_format($MyRow['totalamount'], $CustomerRecord['decimalplaces']), '</td>
+					<td class = "number">', locale_number_format($MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
+					<td class = "number">', locale_number_format($MyRow['totalamount'] - $MyRow['allocated'], $CustomerRecord['decimalplaces']), '</td>
+					<td class = "noPrint">&nbsp;</td>
+					<td class = "noPrint">&nbsp;</td>
+					<td class = "noPrint">&nbsp;</td>
+					<td class = "noPrint">&nbsp;</td>
+					<td class = "noPrint">&nbsp;</td>
 				</tr>';
 		}
 	}

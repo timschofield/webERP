@@ -262,7 +262,7 @@ if (isset($_POST['submit'])) {
 	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class = "page_title_text">
-			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . __('Excel file for Petty Cash Tab Expenses List') . '" alt="" />' . ' ' . __('Excel file for Petty Cash Tab Expenses List') . '
+			<img src = "' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title = "' . __('Excel file for Petty Cash Tab Expenses List') . '" alt = "" />' . ' ' . __('Excel file for Petty Cash Tab Expenses List') . '
 		</p>';
 
 	# Sets default date range for current month

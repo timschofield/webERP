@@ -15,14 +15,14 @@ $BookMark = "Z_poEditLangRemaining";
 $Title = __('Edit Remaining Strings For This Language');
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-	'/images/maintenance.png" title="', // Icon image.
+echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme,
+	'/images/maintenance.png" title = "', // Icon image.
 	$Title, '" /> ', // Icon title.
 	$Title, '</p>';// Page title.
 
 /* Your webserver user MUST have read/write access to here,	otherwise you'll be wasting your time */
 
-echo '<br />&nbsp;<a href="' . $RootPath . '/Z_poAdmin.php">' . __('Back to the translation menu') . '</a>';
+echo '<br />&nbsp;<a href = "' . $RootPath . '/Z_poAdmin.php">' . __('Back to the translation menu') . '</a>';
 echo '<br /><br />&nbsp;' . __('Utility to edit a language file module');
 echo '<br />&nbsp;' . __('Current language is') . ' ' . $_SESSION['Language'];
 
@@ -106,7 +106,7 @@ if (!$LangFile) {
 		/* stick it on the screen */
 
 		echo '<br />&nbsp;' . __('When finished modifying you must click on Modify at the bottom in order to save changes');
-		echo '<div class="centre">';
+		echo '<div class = "centre">';
 		echo '<br />';
 		prnMsg(__('Your existing translation file (messages.po) will be saved as messages.po.old') . '<br />', 'info', __('PLEASE NOTE'));
 		echo '<br />';
@@ -141,7 +141,7 @@ if (!$LangFile) {
 
 		echo '</td></tr>';
 		echo '</table>';
-		echo '<br /><div class="centre">';
+		echo '<br /><div class = "centre">';
 		echo '<input type = "submit" name = "submit" value = "' . __('Modify') . '" />&nbsp;&nbsp;';
 		echo '<input type = "hidden" name = "module" value = "' . $_POST['module'] . '" />';
 

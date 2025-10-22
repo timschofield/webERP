@@ -39,7 +39,7 @@ $ToDate = FormatDateForSQL($_POST['ToDate']);
 
 $Errors = array();
 
-echo '<p class = "page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title = "' . __('Search') . '" alt = "" />' . ' ' . $Title . '</p>';
 
 
 //prompt user for Key Value

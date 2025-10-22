@@ -7,8 +7,8 @@ $ViewTopic = 'Tax';
 $BookMark = 'TaxProvinces';
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
-		'/images/maintenance.png" title="' .
+echo '<p class = "page_title_text"><img alt = "" src = "' . $RootPath . '/css/' . $Theme .
+		'/images/maintenance.png" title = "' .
 		__('Dispatch Tax Province Maintenance') . '" />' . ' ' .
 		__('Dispatch Tax Province Maintenance') . '</p>';
 
@@ -159,20 +159,20 @@ or deletion of the records*/
 	$ErrMsg = __('Could not get tax categories because');
 	$Result = DB_query($SQL, $ErrMsg);
 
-	echo '<table class="selection">
+	echo '<table class = "selection">
 		<thead>
 			<tr>
-				<th class="SortedColumn">' . __('Tax Province') . '</th>
+				<th class = "SortedColumn">' . __('Tax Province') . '</th>
 				<th colspan = "2">&nbsp;</th>
 			</tr>
 		</thead>
 		<tbody>';
 
 	while ($MyRow = DB_fetch_row($Result)) {
-		echo '<tr class="striped_row">
+		echo '<tr class = "striped_row">
 				<td>' . $MyRow[1] . '</td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTaxProvince=' . $MyRow[0] . '">' . __('Edit') . '</a></td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTaxProvince=' . $MyRow[0] . '&amp;delete=1">' . __('Delete')  . '</a></td>
+				<td><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTaxProvince = ' . $MyRow[0] . '">' . __('Edit') . '</a></td>
+				<td><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTaxProvince = ' . $MyRow[0] . '&amp;delete = 1">' . __('Delete')  . '</a></td>
 			</tr>';
 
 	} //END while LIST LOOP
@@ -181,15 +181,15 @@ or deletion of the records*/
 
 
 if (isset($SelectedTaxProvince)) {
-	echo '<div class="centre">
-			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Review Tax Provinces') . '</a>
+	echo '<div class = "centre">
+			<a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Review Tax Provinces') . '</a>
 		</div>';
 }
 
 if (! isset($_GET['delete'])) {
 
 	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">';
-	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedTaxProvince)) {
 		//editing an existing section
@@ -208,7 +208,7 @@ if (! isset($_GET['delete'])) {
 
 			$_POST['TaxProvinceName']  = $MyRow['taxprovincename'];
 
-			echo '<input type = "hidden" name="SelectedTaxProvince" value = "' . $MyRow['taxprovinceid'] . '" />';
+			echo '<input type = "hidden" name = "SelectedTaxProvince" value = "' . $MyRow['taxprovinceid'] . '" />';
 			echo '<fieldset>
 					<legend>', __('Edit Tax Province'), '</legend>';
 		}
@@ -220,13 +220,13 @@ if (! isset($_GET['delete'])) {
 	}
 	echo '<field>
 			<td>' . __('Tax Province Name') . ':' . '</td>
-			<td><input type = "text" pattern = "(?!^ *$)[^\\><+-]+" required ="true" title="'.__('The tax province cannot be left blank and includes illegal characters').'" placeholder = "'.__('Within 30 legal characters').'" name="TaxProvinceName" size = "30" maxlength = "30" value = "' . $_POST['TaxProvinceName'] . '" /></td>
+			<td><input type = "text" pattern = "(?!^ *$)[^\\><+-]+" required = "true" title = "'.__('The tax province cannot be left blank and includes illegal characters').'" placeholder = "'.__('Within 30 legal characters').'" name = "TaxProvinceName" size = "30" maxlength = "30" value = "' . $_POST['TaxProvinceName'] . '" /></td>
 		</field>
 		</fieldset>';
 
 	echo '<br />
-			<div class="centre">
-				<input type = "submit" name="submit" value = "' . __('Enter Information') . '" />
+			<div class = "centre">
+				<input type = "submit" name = "submit" value = "' . __('Enter Information') . '" />
 			</div>';
 
 	echo '</div>
@@ -235,10 +235,10 @@ if (! isset($_GET['delete'])) {
 } //end if record deleted no point displaying form to add record
 
 echo '<br />
-	<div class="centre">
-		<a href="' . $RootPath . '/TaxAuthorities.php">' . __('Tax Authorities and Rates Maintenance') .  '</a><br />
-		<a href="' . $RootPath . '/TaxGroups.php">' . __('Tax Group Maintenance') .  '</a><br />
-		<a href="' . $RootPath . '/TaxCategories.php">' . __('Tax Category Maintenance') .  '</a>
+	<div class = "centre">
+		<a href = "' . $RootPath . '/TaxAuthorities.php">' . __('Tax Authorities and Rates Maintenance') .  '</a><br />
+		<a href = "' . $RootPath . '/TaxGroups.php">' . __('Tax Group Maintenance') .  '</a><br />
+		<a href = "' . $RootPath . '/TaxCategories.php">' . __('Tax Category Maintenance') .  '</a>
 	</div>';
 
 include('includes/footer.php');

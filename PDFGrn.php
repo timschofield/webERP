@@ -138,9 +138,9 @@ if ($NoOfGRNs > 0) {
 				<td>' . htmlspecialchars($MyRow['itemcode']) . '</td>
 				<td>' . htmlspecialchars($MyRow['itemdescription']) . '</td>
 				<td>' . htmlspecialchars($DeliveryDate) . '</td>
-				<td class="right">' . $SuppliersQuantity . '</td>
+				<td class = "right">' . $SuppliersQuantity . '</td>
 				<td>' . htmlspecialchars($MyRow['suppliersunit']) . '</td>
-				<td class="right">' . $OurUnitsQuantity . '</td>
+				<td class = "right">' . $OurUnitsQuantity . '</td>
 				<td>' . htmlspecialchars($MyRow['units']) . '</td>
 			</tr>
 		';
@@ -164,7 +164,7 @@ if ($NoOfGRNs > 0) {
 				$HTML .= '
 					<tr>
 						<td colspan = "2">' . __('Lot/Serial:') . ' ' . htmlspecialchars($SerialStockMoves['serialno']) . '</td>
-						<td class="right">' . htmlspecialchars($SerialStockMoves['moveqty']) . '</td>
+						<td class = "right">' . htmlspecialchars($SerialStockMoves['moveqty']) . '</td>
 						<td colspan = "4"></td>
 					</tr>
 				';
@@ -207,6 +207,6 @@ if ($NoOfGRNs > 0) {
 	$Title = __('GRN Error');
 	include('includes/header.php');
 	prnMsg(__('There were no GRNs to print'),'warn');
-	echo '<br /><a href="'.$RootPath.'/index.php">' .  __('Back to the menu') . '</a>';
+	echo '<br /><a href = "'.$RootPath.'/index.php">' .  __('Back to the menu') . '</a>';
 	include('includes/footer.php');
 }

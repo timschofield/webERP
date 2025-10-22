@@ -7,7 +7,7 @@ $ViewTopic = 'Setup';
 $BookMark = '';
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' .
+echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title = "' .
 		__('Search') . '" alt = "" />' . ' ' . $Title . '</p>';
 
 if ( isset($_GET['SelectedMeasureID']) )
@@ -166,20 +166,20 @@ if (isset($_POST['Submit'])) {
 	$ErrMsg = __('Could not get unit of measures because');
 	$Result = DB_query($SQL, $ErrMsg);
 
-	echo '<table class="selection">
+	echo '<table class = "selection">
 		<thead>
 			<tr>
-				<th class="SortedColumn">' . __('Units of Measure') . '</th>
+				<th class = "SortedColumn">' . __('Units of Measure') . '</th>
 			</tr>
 		</thead>
 		<tbody>';
 
 	while ($MyRow = DB_fetch_row($Result)) {
 
-		echo '<tr class="striped_row">
+		echo '<tr class = "striped_row">
 				<td>' . $MyRow[1] . '</td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedMeasureID=' . $MyRow[0] . '">' . __('Edit') . '</a></td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedMeasureID=' . $MyRow[0] . '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this unit of measure?') . '\');">' . __('Delete')  . '</a></td>
+				<td><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedMeasureID = ' . $MyRow[0] . '">' . __('Edit') . '</a></td>
+				<td><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedMeasureID = ' . $MyRow[0] . '&amp;delete = 1" onclick = "return confirm(\'' . __('Are you sure you wish to delete this unit of measure?') . '\');">' . __('Delete')  . '</a></td>
 			</tr>';
 
 	} //END while LIST LOOP
@@ -188,15 +188,15 @@ if (isset($_POST['Submit'])) {
 
 
 if (isset($SelectedMeasureID)) {
-	echo '<div class="centre">
-			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Review Units of Measure') . '</a>
+	echo '<div class = "centre">
+			<a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Review Units of Measure') . '</a>
 		</div>';
 }
 
 if (! isset($_GET['delete'])) {
 
 	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">';
-	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedMeasureID)) {
 		//editing an existing section
@@ -216,7 +216,7 @@ if (! isset($_GET['delete'])) {
 			$_POST['MeasureID'] = $MyRow['unitid'];
 			$_POST['MeasureName']  = $MyRow['unitname'];
 
-			echo '<input type = "hidden" name="SelectedMeasureID" value = "' . $_POST['MeasureID'] . '" />';
+			echo '<input type = "hidden" name = "SelectedMeasureID" value = "' . $_POST['MeasureID'] . '" />';
 			echo '<fieldset>
 					<legend>', __('Edit Unit of Measure'), '</legend>';
 		}
@@ -228,12 +228,12 @@ if (! isset($_GET['delete'])) {
 	}
 	echo '<field>
 		<td>' . __('Unit of Measure') . ':' . '</td>
-		<td><input required = "required" pattern = "(?!^ *$)[^+<>-]{1,}" type ="text" name="MeasureName" title="'.__('Cannot be blank or contains illegal characters').'" placeholder = "'.__('More than one character').'" size = "30" maxlength = "30" value = "' . $_POST['MeasureName'] . '" /></td>
+		<td><input required = "required" pattern = "(?!^ *$)[^+<>-]{1,}" type = "text" name = "MeasureName" title = "'.__('Cannot be blank or contains illegal characters').'" placeholder = "'.__('More than one character').'" size = "30" maxlength = "30" value = "' . $_POST['MeasureName'] . '" /></td>
 		</field>';
 	echo '</fieldset>';
 
-	echo '<div class="centre">
-			<input type = "submit" name="Submit" value = "' . __('Enter Information') . '" />
+	echo '<div class = "centre">
+			<input type = "submit" name = "Submit" value = "' . __('Enter Information') . '" />
 		</div>';
 
 	echo '</form>';

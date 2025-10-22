@@ -62,7 +62,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<meta name = "Creator" content = "webERP https://www.weberp.org">
 				</head>
 				<body>
-				<div class="centre" id="ReportHeader">
+				<div class = "centre" id = "ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 					' . __('Prices By Inventory Category') . '<br />
 					' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
@@ -102,7 +102,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			include('includes/header.php');
 			echo '<br />';
 			prnMsg( __('The customer must first be selected from the select customer link') . '. ' . __('Re-run the price list once the customer has been selected') );
-			echo '<br /><br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Back') . '</a>';
+			echo '<br /><br /><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Back') . '</a>';
 			include('includes/footer.php');
 			exit();
 }
@@ -112,7 +112,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			$BookMark = 'PDFPriceList';// Anchor's id in the manual's html document.
 			include('includes/header.php');
 			prnMsg(__('The effective date must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
-			echo '<br /><br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Back') . '</a>';
+			echo '<br /><br /><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Back') . '</a>';
 			include('includes/footer.php');
 			exit();
 		}
@@ -202,7 +202,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$Title = __('Print Price List Error');
 		include('includes/header.php');
 		prnMsg(__('There were no price details to print out for the customer or category specified'),'warn');
-		echo '<br /><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Back') . '</a>';
+		echo '<br /><a href = "'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Back') . '</a>';
 		include('includes/footer.php');
 		exit();
 	}
@@ -284,11 +284,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			if ($PriceList['price']!=0) {
 				$DisplayGPPercent = locale_number_format((($PriceList['price']-$PriceList['standardcost'])*100/$PriceList['price']), 2) . '%';
 }
-			$HTML .= '<td class="number">' . $DisplayGPPercent . '</td>';
+			$HTML .= '<td class = "number">' . $DisplayGPPercent . '</td>';
 		}
 
 		// Displays unit price:
-		$HTML .= '<td class="number">' . locale_number_format($PriceList['price'],$PriceList['decimalplaces']) . '</td></tr>';
+		$HTML .= '<td class = "number">' . locale_number_format($PriceList['price'],$PriceList['decimalplaces']) . '</td></tr>';
 
 	} /*end inventory valn while loop */
 
@@ -304,17 +304,17 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	if (isset($_POST['PrintPDF'])) {
 		$HTML .= '</tbody>
-				<div class="footer fixed-section">
-					<div class="right">
-						<span class="page-number">Page </span>
+				<div class = "footer fixed-section">
+					<div class = "right">
+						<span class = "page-number">Page </span>
 					</div>
 				</div>
 			</table>';
 	} else {
 		$HTML .= '</tbody>
 				</table>
-				<div class="centre">
-					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick="window.close()" /></form>
+				<div class = "centre">
+					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -337,7 +337,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	} else {
 		$Title = __('Prices By Inventory Category');
 		include('includes/header.php');
-		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Prices By Inventory Category') . '" alt="" />' . ' ' . __('Prices By Inventory Category') . '</p>';
+		echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title = "' . __('Prices By Inventory Category') . '" alt = "" />' . ' ' . __('Prices By Inventory Category') . '</p>';
 		echo $HTML;
 		include('includes/footer.php');
 	}
@@ -349,19 +349,19 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$BookMark = 'PDFPriceList';
 	include('includes/header.php');
 
-	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-		'/images/customer.png" title="', // Icon image.
+	echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme,
+		'/images/customer.png" title = "', // Icon image.
 		__('Price List'), '" /> ', // Icon title.
 		__('Print a price list by inventory category'), '</p>';// Page title.
 
-	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post" target="_blank">';
+	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post" target = "_blank">';
 	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 	echo '<fieldset>
 			<legend>', __('Report Criteria'), '</legend>
 		<field>
 			<label for = "Categories">', __('Select Inventory Categories'), ':</label>
-			<select autofocus = "autofocus" id="Categories" minlength = "1" multiple = "multiple" name = "Categories[]" required = "required">';
+			<select autofocus = "autofocus" id = "Categories" minlength = "1" multiple = "multiple" name = "Categories[]" required = "required">';
 	$SQL = "SELECT categoryid, categorydescription
 			FROM stockcategory
 			ORDER BY categorydescription";
@@ -430,7 +430,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 	echo '<field>
 			<label for = "ShowObsolete">', __('Show obsolete items'), ':</label>
-			<input',$Checked, ' id="ShowObsolete" name = "ShowObsolete" type = "checkbox" />
+			<input',$Checked, ' id = "ShowObsolete" name = "ShowObsolete" type = "checkbox" />
 			<fieldhelp>', __('Check this box to show the obsolete items'), '</fieldhelp>
 		</field>';
 
@@ -439,7 +439,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			<legend>', __('Sort items by'), ':</legend>
 		<field>
 	 		<label>', __('Currency, category and code'), '</label>
-	 		<input checked = "checked" id="ItemOrder" name = "ItemOrder" type = "radio" value = "Code" />
+	 		<input checked = "checked" id = "ItemOrder" name = "ItemOrder" type = "radio" value = "Code" />
 		</field>
 		<field>
 			<label>', __('Currency, category and description'), '</label>
@@ -448,9 +448,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		</fieldset>',
 
 		'</fieldset>
-			<div class="centre">
-				<input type = "submit" name = "PrintPDF" title="PDF" value = "' . __('PDF Price List') . '" />
-				<input type = "submit" name = "View" title="View" value = "' . __('View Price List') . '" />
+			<div class = "centre">
+				<input type = "submit" name = "PrintPDF" title = "PDF" value = "' . __('PDF Price List') . '" />
+				<input type = "submit" name = "View" title = "View" value = "' . __('View Price List') . '" />
 			</div>
 	</form>';
 
