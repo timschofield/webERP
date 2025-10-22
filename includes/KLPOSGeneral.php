@@ -1256,7 +1256,10 @@ function KLPrintReturnTransferToKantor($Reference){
 			}
 			if ($CorrectTransfer){
 				$NumberOfItems += $MyRow['shipqty'];
-				$TextToPrint .= round(filter_number_format($MyRow['shipqty']), $MyRow['decimalplaces']) . ' x ' . $MyRow['stockid'] . $NewLine;
+				$TextToPrint .= round(filter_number_format($MyRow['shipqty']), $MyRow['decimalplaces']) .
+					' x ' . $MyRow['stockid'] . 
+					' - (QOH = ' . GetQuantityOnHand($MyRow['stockid'], $_SESSION['UserStockLocation']) . ')' .
+					$NewLine;
 			}
 		}
 		if ($CorrectTransfer){

@@ -5,6 +5,8 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Print Transfer from Shop to Kantor');
 include('includes/header.php');
 
+include('includes/StockFunctions.php');
+
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLPOSGeneral.php');
