@@ -51,6 +51,14 @@ if ($_SESSION['ComissionCCMandiri'] != 0){
 		</tr>';
 }
 
+if ($_SESSION['ComissionCCBRI'] != 0){
+	echo '<tr>
+			<td></td>
+			<td>' . __('CC EDC BRI') . ':</td>
+			<td><input type="text" class="number" name="AmountPaidCCBRI" maxlength="12" size="12" value="' . $_POST['AmountPaidCCBRI'] . '" /></td>
+		</tr>';
+}
+
 if ($_SESSION['ComissionCCDanamon'] != 0){
 	echo '<tr>
 			<td></td>
@@ -75,13 +83,37 @@ if ($_SESSION['ComissionAmexBNI'] != 0){
 		</tr>';
 }
 
+if ($_SESSION['ComissionAmexMandiri'] != 0){
+	echo '<tr>
+			<td></td>
+			<td>' . __('AMEX EDC Mandiri') . ':</td>
+			<td><input type="text" class="number" name="AmountPaidAmexMandiri" maxlength="12" size="12" value="' . $_POST['AmountPaidAmexMandiri'] . '" /></td>
+		</tr>';
+}
+
+if ($_SESSION['ComissionAmexBRI'] != 0){
+	echo '<tr>
+			<td></td>
+			<td>' . __('AMEX EDC BRI') . ':</td>
+			<td><input type="text" class="number" name="AmountPaidAmexBRI" maxlength="12" size="12" value="' . $_POST['AmountPaidAmexBRI'] . '" /></td>
+		</tr>';
+}
+
 echo '<tr>';
 echo '<th>' . __('Other Payments') . '</th>';
-if ($_SESSION['ComissionQRIS'] != 0){
+if ($_SESSION['ComissionQRISMandiri'] != 0){
 	echo '<td>' . __('QRIS Mandiri') . ':</td>
 		<td><input type="text" class="number" name="AmountPaidQRIS" maxlength="12" size="12" value="' . $_POST['AmountPaidQRIS'] . '" /></td>';
 }
 echo '</tr>';
+
+if ($_SESSION['ComissionQRISBRI'] != 0){
+	echo '<tr>
+			<td></td>
+			<td>' . __('QRIS BRI') . ':</td>
+			<td><input type="text" class="number" name="AmountPaidQRISBRI" maxlength="12" size="12" value="' . $_POST['AmountPaidQRISBRI'] . '" /></td>
+		</tr>';
+}
 
 if ($_SESSION['ComissionWeChat'] != 0){
 	echo '<tr>

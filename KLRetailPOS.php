@@ -1497,25 +1497,25 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 
 		if ($_POST['AmountPaidQRIS'] != 0) {
 			// si han pagat QRIS, tot o en part
-			$QRISBankComissions = round($_POST['AmountPaidQRIS'] * ($_SESSION['ComissionQRIS']) / 100);
+			$QRISBankComissions = round($_POST['AmountPaidQRIS'] * ($_SESSION['ComissionQRISMandiri']) / 100);
 			$QRISNetPayment = $_POST['AmountPaidQRIS'] - $QRISBankComissions;
 
 			$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
-								$_SESSION['AccountQRIS'],
+								$_SESSION['AccountQRISMandiri'],
 								$InvoiceNo,
 								$_SESSION['Items' . $identifier]->CustRef,
 								$_POST['AmountPaidQRIS'],
 								$QRISBankComissions,
 								$QRISNetPayment,
 								$Tag,
-								$_SESSION['AccountComissionQRIS'],
-								$_SESSION['SettlementDelayQRIS'],
+								$_SESSION['AccountComissionQRISMandiri'],
+								$_SESSION['SettlementDelayQRISMandiri'],
 								$ExRate);
 
 			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
 								PAYMENT_BY_CREDITCARD,
 								$PeriodNo,
-								$_SESSION['AccountQRIS'],
+								$_SESSION['AccountQRISMandiri'],
 								$InvoiceNo,
 								$_SESSION['Items' . $identifier]->CustRef,
 								$_POST['AmountPaidQRIS'],

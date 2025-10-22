@@ -49,8 +49,8 @@ if (($KL_SPGSeniorOrSupport OR $KL_SPGJunior)
 					klretailpartners.accountwechat,
 					klretailpartners.comissionwechat,
 					klretailpartners.accountcomissionwechat,
-					klretailpartners.accountqris,
-					klretailpartners.comissionqris,
+					klretailpartners.accountqrismandiri,
+					klretailpartners.comissionqrismandiri,
 					klretailpartners.accountcomissionqris,
 					klretailpartners.counterinvoicea,
 					klretailpartners.counterinvoiceb,
@@ -59,7 +59,7 @@ if (($KL_SPGSeniorOrSupport OR $KL_SPGJunior)
 					klretailpartners.settlementdelaybni,
 					klretailpartners.settlementdelaybca,
 					klretailpartners.settlementdelaymandiri,
-					klretailpartners.settlementdelayqris,
+					klretailpartners.settlementdelayqrismandiri,
 					klretailpartners.settlementdelaywechat,
 					custbranch.brname,
 					custbranch.braddress1,
@@ -157,8 +157,8 @@ if (($KL_SPGSeniorOrSupport OR $KL_SPGJunior)
 		$_SESSION['AccountWeChat'] = $MyRow['accountwechat'];
 		$_SESSION['ComissionWeChat'] = $MyRow['comissionwechat'];
 		$_SESSION['AccountComissionWeChat'] = $MyRow['accountcomissionwechat'];
-		$_SESSION['AccountQRIS'] = $MyRow['accountqris'];
-		$_SESSION['ComissionQRIS'] = $MyRow['comissionqris'];
+		$_SESSION['AccountQRISMandiri'] = $MyRow['accountqrismandiri'];
+		$_SESSION['ComissionQRISMandiri'] = $MyRow['comissionqrismandiri'];
 		$_SESSION['AccountComissionQRIS'] = $MyRow['accountcomissionqris'];
 		$_SESSION['CounterInvoiceA'] = $MyRow['counterinvoicea'];
 		$_SESSION['CounterInvoiceB'] = $MyRow['counterinvoiceb'];
@@ -167,7 +167,7 @@ if (($KL_SPGSeniorOrSupport OR $KL_SPGJunior)
 		$_SESSION['SettlementDelayBNI'] = $MyRow['settlementdelaybni'];
 		$_SESSION['SettlementDelayBCA'] = $MyRow['settlementdelaybca'];
 		$_SESSION['SettlementDelayMandiri'] = $MyRow['settlementdelaymandiri'];
-		$_SESSION['SettlementDelayQRIS'] = $MyRow['settlementdelayqris'];
+		$_SESSION['SettlementDelayQRISMandiri'] = $MyRow['settlementdelayqrismandiri'];
 		$_SESSION['SettlementDelayWeChat'] = $MyRow['settlementdelaywechat'];
 		
 	}

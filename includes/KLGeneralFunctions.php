@@ -1919,8 +1919,8 @@ function ChangeGLAcoountCode($NewGL, $OldGL) {
 		ChangeFieldInTable("klretailpartners", "accountconsignmentcogspartner", $OldGL, $NewGL);
 		ChangeFieldInTable("klretailpartners", "accountwechat", $OldGL, $NewGL);
 		ChangeFieldInTable("klretailpartners", "accountcomissionwechat", $OldGL, $NewGL);
-		ChangeFieldInTable("klretailpartners", "accountqris", $OldGL, $NewGL);
-		ChangeFieldInTable("klretailpartners", "accountcomissionqris", $OldGL, $NewGL);
+		ChangeFieldInTable("klretailpartners", "accountqrismandiri", $OldGL, $NewGL);
+		ChangeFieldInTable("klretailpartners", "accountcomissionqrismandiri", $OldGL, $NewGL);
 
 		ChangeFieldInTable("klonlinepartners", "accountdokuidr", $OldGL, $NewGL);
 		ChangeFieldInTable("klonlinepartners", "accountdokucomissionidr", $OldGL, $NewGL);

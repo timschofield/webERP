@@ -1486,10 +1486,10 @@ CREATE TABLE `klretailpartners` (
   `settlementdelaywechat` int(11) NOT NULL DEFAULT 1 COMMENT 'Number of days after POS retail sale to get the settlement of funds',
   `comissionwechat` decimal(5,2) NOT NULL DEFAULT 0.00,
   `accountcomissionwechat` varchar(20) NOT NULL DEFAULT '',
-  `accountqris` varchar(20) NOT NULL DEFAULT '',
-  `settlementdelayqris` int(11) NOT NULL DEFAULT 1 COMMENT 'Number of days after POS retail sale to get the settlement of funds',
-  `comissionqris` decimal(5,2) NOT NULL DEFAULT 0.00,
-  `accountcomissionqris` varchar(20) NOT NULL DEFAULT ''
+  `accountqrismandiri` varchar(20) NOT NULL DEFAULT '',
+  `settlementdelayqrismandiri` int(11) NOT NULL DEFAULT 1 COMMENT 'Number of days after POS retail sale to get the settlement of funds',
+  `comissionqrismandiri` decimal(5,2) NOT NULL DEFAULT 0.00,
+  `accountcomissionqrismandiri` varchar(20) NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
