@@ -7,8 +7,8 @@ $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
 
-echo '<p class = "page_title_text"><img alt = "" src = "' . $RootPath . '/css/' . $Theme .
-		'/images/maintenance.png" title = "' .
+echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
+		'/images/maintenance.png" title="' .
 		__('Import Chart of Accounts from CSV file') . '" />' . ' ' .
 		__('Import Chart of Accounts from CSV file') . '</p>';
 
@@ -80,16 +80,17 @@ if (isset($_FILES['ChartFile']) and $_FILES['ChartFile']['name']) { //start file
 		}
 
 		//Then check that the account group actually exists
-		$SQL = "SELECT COUNT(groupname) FROM accountgroups WHERE groupname = '" . $MyRow[2] . "'";
+		$SQL = "SELECT COUNT(groupname) FROM accountgroups WHERE groupname='" . $MyRow[2] . "'";
 		$Result = DB_query($SQL);
 		$testrow = DB_fetch_row($Result);
 		if ($testrow[0] == 0) {
-	$InputError = 1;
+			$InputError = 1;
 			prnMsg(__('Account Group') . ' "' . $MyRow[2]. '" ' . __('does not exist. First enter the account groups you require in webERP before attempting to import the accounts.'),'error');
-}
+		}
 
-		if ($InputError !=1) {
-	//Insert the chart record
+		if ($InputError !=1){
+
+			//Insert the chart record
 			$SQL = "INSERT INTO chartmaster (accountcode,
 											accountname,
 											group_
@@ -100,20 +101,18 @@ if (isset($_FILES['ChartFile']) and $_FILES['ChartFile']['name']) { //start file
 
 			$ErrMsg =  __('The general ledger account could not be added because');
 			$Result = DB_query($SQL, $ErrMsg);
-}
+		}
 
-		if ($InputError == 1) {
-	//this row failed so exit loop
+		if ($InputError == 1) { //this row failed so exit loop
 			break;
-}
+		}
 		$LineNumber++;
 	}
 
-	if ($InputError == 1) {
-	//exited loop with errors so rollback
+	if ($InputError == 1) { //exited loop with errors so rollback
 		prnMsg(__('Failed on row') . ' '. $LineNumber. '. ' . __('Batch import of the chart of accounts has been rolled back.'),'error');
 		DB_Txn_Rollback();
-} else { //all good so commit data transaction
+	} else { //all good so commit data transaction
 		DB_Txn_Commit();
 		prnMsg( __('Batch Import of') .' ' . $FileName  . ' '. __('has been completed') . '. ' . __('All general ledger accounts have been added to the chart of accounts'),'success');
 	}
@@ -124,18 +123,18 @@ if (isset($_FILES['ChartFile']) and $_FILES['ChartFile']['name']) { //start file
 
 } else { //show file upload form
 
-	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" class = "noPrint" enctype = "multipart/form-data">';
-	echo '<div class = "centre">';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
-	echo '<div class = "page_help_text">' .
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint" enctype="multipart/form-data">';
+	echo '<div class="centre">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<div class="page_help_text">' .
 			__('This function loads a chart of accounts from a comma separated variable (csv) file.') . '<br />' .
 			__('The file must contain three columns, and the first row should be the following headers:') . '<br />Account Code, Description, Account Group<br />' .
 			__('followed by rows containing these three fields for each general ledger account to be uploaded.') .  '<br />' .
 			__('The Account Group field must have a corresponding entry in the account groups table. So these need to be set up first.') . '</div>';
 
-	echo '<br /><input type = "hidden" name = "MAX_FILE_SIZE" value = "1000000" />' .
-			__('Upload file') . ': <input name = "ChartFile" type = "file" />
-			<input type = "submit" name = "submit" value = "' . __('Send File') . '" />
+	echo '<br /><input type="hidden" name="MAX_FILE_SIZE" value="1000000" />' .
+			__('Upload file') . ': <input name="ChartFile" type="file" />
+			<input type="submit" name="submit" value="' . __('Send File') . '" />
 		</div>
 		</form>';
 

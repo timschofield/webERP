@@ -12,8 +12,8 @@ $ViewTopic = 'GeneralLedger';
 $BookMark = 'ImportBankTrans';
 include('includes/header.php');
 
-echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme,
-	'/images/bank.png" title = "', // Icon image.
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/bank.png" title="', // Icon image.
 	$Title, '" /> ', // Icon title.
 	$Title, '</p>';// Page title.
 
@@ -25,7 +25,7 @@ Read in the flat file one line at a time
 parse the data in the line of text from the flat file to read the bank transaction into an SESSION array of banktransactions objects
 */
 
-if (!isset($_FILES['ImportFile']) and !isset($_SESSION['Statement'])) {
+if (!isset($_FILES['ImportFile']) AND !isset($_SESSION['Statement'])) {
 
 	$SQL = "SELECT 	bankaccountname,
 					bankaccountnumber,
@@ -38,32 +38,32 @@ if (!isset($_FILES['ImportFile']) and !isset($_SESSION['Statement'])) {
 	$Result = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($Result) ==0) {
 		prnMsg(__('There are no bank accounts defined that are set up to allow importation of bank statement transactions. First define the file format used by your bank for statement exports.'),'error');
-		echo '<br /><a href = "' . $RootPath . '/BankAccounts.php>' . __('Setup Import Format for Bank Accounts') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/BankAccounts.php>' . __('Setup Import Format for Bank Accounts') . '</a>';
 		include('includes/footer.php');
 		exit();
 	}
-    echo '<form name = "ImportForm" enctype = "multipart/form-data" method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
-		<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />
+    echo '<form name="ImportForm" enctype="multipart/form-data" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<fieldset>
 			<legend>', __('Import Details'), '</legend>
 			<field>
-				 <label for = "ImportFormat">' .  __('Bank Account to Import Transaction For') . '</label>
-	             <select name = "ImportFormat">';
+				 <label for="ImportFormat">' .  __('Bank Account to Import Transaction For') . '</label>
+	             <select name="ImportFormat">';
 
 				while ($MyRow = DB_fetch_array($Result)) {
 					// Lists bank accounts order by bankaccountname
-					echo '<option value = "', $MyRow['importformat'], '">', $MyRow['bankaccountname'], '</option>';
+					echo '<option value="', $MyRow['importformat'], '">', $MyRow['bankaccountname'], '</option>';
 				}
 
 	 echo '</select>
 		</field>';
 
 	echo ' <field>
-			 <label for = "ImportFile">' .  __('MT940 format Bank Statement File to import') . '</label>
-				<td><input type = "file" id = "ImportFile" autofocus = "autofocus" required = "required" title = "' . __('Select the file that contains the bank transactions in MT940 format') . '" name = "ImportFile"></td>
+			 <label for="ImportFile">' .  __('MT940 format Bank Statement File to import') . '</label>
+				<td><input type="file" id="ImportFile" autofocus="autofocus" required="required" title="' . __('Select the file that contains the bank transactions in MT940 format') . '" name="ImportFile"></td>
 		</field>
         </fieldset>
-        <div class = "centre"><input type = "submit" name = "Import" value = "Process"></div>
+        <div class="centre"><input type="submit" name="Import" value="Process"></div>
         </form>';
 
 } elseif (isset($_POST['Import'])) {
@@ -80,16 +80,15 @@ if (!isset($_FILES['ImportFile']) and !isset($_SESSION['Statement'])) {
 		$ReadTheFile ='No';
 	}
 
-	/*elseif ( $_FILES['ImportFile']['type'] != 'text/plain' ) {
-	//File Type Check
+	/*elseif ( $_FILES['ImportFile']['type'] != 'text/plain' ) {  //File Type Check
 		prnMsg( __('A plain text file is expected, this file is a') . ' ' . $_FILES['ImportFile']['type'],'warn');
 		$ReadTheFile ='No';
-} */
+	} */
 
     $fp = fopen($_FILES['ImportFile']['tmp_name'], 'r');
 
     $TransactionLine = false;
-	$i = 0;
+	$i=0;
 	$_SESSION['Statement'] = new BankStatement;
 	$_SESSION['Trans'] = array();
 
@@ -120,14 +119,14 @@ if (!isset($_FILES['ImportFile']) and !isset($_SESSION['Statement'])) {
 					decimalplaces,
 					rate
 			FROM bankaccounts INNER JOIN currencies
-			ON bankaccounts.currcode = currencies.currabrev
+			ON bankaccounts.currcode=currencies.currabrev
 			WHERE bankaccountnumber " . LIKE . " '" . $_SESSION['Statement']->AccountNumber ."'
-			and currcode = '" . $_SESSION['Statement']->CurrCode . "'";
+			AND currcode = '" . $_SESSION['Statement']->CurrCode . "'";
 
 	$ErrMsg = __('Could not retrieve bank accounts that match with the statement being imported');
 
 	$Result = DB_query($SQL, $ErrMsg);
-	if (DB_num_rows($Result) == 0) { //but check for the worst!
+	if (DB_num_rows($Result)==0) { //but check for the worst!
 		//there is no bank account set up for the bank account being imported
 		prnMsg(__('The account') . ' ' . $_SESSION['Statement']->AccountNumber . ' ' . __('is not defined as a bank account of the business. No imports can be processed'), 'warn');
 	} else {
@@ -138,12 +137,12 @@ if (!isset($_FILES['ImportFile']) and !isset($_SESSION['Statement'])) {
 		$_SESSION['Statement']->ExchangeRate = $BankAccountRow['rate'];
 
 		/* Now check to see if each transaction has already been entered */
-		for ($i = 1;  $i <= count($_SESSION['Trans']);  $i++)  {
+		for($i=1;$i<=count($_SESSION['Trans']);$i++) {
 
 			$SQL = "SELECT banktransid FROM banktrans
-					WHERE transdate = '" . FormatDateForSQL($_SESSION['Trans'][$i]->ValueDate) . "'
-					and amount = '" . $_SESSION['Trans'][$i]->Amount . "'
-					and bankact = '" . $_SESSION['Statement']->BankGLAccount . "'";
+					WHERE transdate='" . FormatDateForSQL($_SESSION['Trans'][$i]->ValueDate) . "'
+					AND amount='" . $_SESSION['Trans'][$i]->Amount . "'
+					AND bankact='" . $_SESSION['Statement']->BankGLAccount . "'";
 			$Result = DB_query($SQL,__('There was a problem identifying a matching bank transaction'));
 			if (DB_num_rows($Result)>0) {
 				$MyRow = DB_fetch_array($Result);
@@ -156,16 +155,16 @@ if (!isset($_FILES['ImportFile']) and !isset($_SESSION['Statement'])) {
 if (isset($_POST['ProcessBankTrans'])) {
 	$InputError = false; //assume the best
 	if ($_SESSION['Statement']->CurrCode != $_SESSION['CompanyRecord']['currencydefault']
-		and $_POST['ExchangeRate']==1) {
-	prnMsg(__('It is necessary to enter the exchange rate to convert the bank receipts and payments into local currency for the purposes of calculating the general ledger entries necessary. The currency of this bank account is not the same as the company functional currency so an exchange rate of 1 is inappropriate'),'error');
+		AND $_POST['ExchangeRate']==1) {
+		prnMsg(__('It is necessary to enter the exchange rate to convert the bank receipts and payments into local currency for the purposes of calculating the general ledger entries necessary. The currency of this bank account is not the same as the company functional currency so an exchange rate of 1 is inappropriate'),'error');
 		$InputError = true;
-}
+	}
 	if (!is_numeric($_POST['ExchangeRate'])) {
 		prnMsg(__('The exchange rate is expected to be the number of the bank account currency that would purchase one unit of the company functional currency. A number is expected'),'error');
 		$InputError = true;
 	}
 	if ($InputError == false) {
-	/*This is it - process the data into the DB
+		/*This is it - process the data into the DB
 		 * First check to see if the item is flagged as matching an existing bank transaction - if it does and there is no analysis of the transaction then we need to flag the existing bank transaction as matched off the bank statement for reconciliation purposes.
 		 * Then, if the transaction is analysed:
 			* 1. create the bank transaction
@@ -174,31 +173,30 @@ if (isset($_POST['ProcessBankTrans'])) {
 			* 4. create the gltrans for either the gl analysis or the debtor/supplier receipt/payment created
 		*/
 
-		for ($i = 1;  $i <= count($_SESSION['Trans']);  $i++)  {
+		for($i=1;$i<=count($_SESSION['Trans']);$i++) {
 			DB_Txn_Begin();
-			if ($_SESSION['Trans'][$i]->DebtorNo != '' or
-				$_SESSION['Trans'][$i]->SupplierID != '' or
+			if ($_SESSION['Trans'][$i]->DebtorNo!='' OR
+				$_SESSION['Trans'][$i]->SupplierID!='' OR
 				$_SESSION['Trans'][$i]->GLTotal == $_SESSION['Trans'][$i]->Amount) {
 				/*A Debtor or Supplier is entered or there is GL analysis for the bank trans
 				 */
 				$PeriodNo = GetPeriod($_SESSION['Trans'][$i]->ValueDate);
 				$InsertBankTrans = true;
-} elseif ($_SESSION['Trans'][$i]->BankTransID != 0) {
-	//Update the banktrans to show it has cleared the bank
-				$Result = DB_query("UPDATE banktrans SET amountcleared = amount
+			} elseif ($_SESSION['Trans'][$i]->BankTransID!=0) {
+				//Update the banktrans to show it has cleared the bank
+				$Result = DB_query("UPDATE banktrans SET amountcleared=amount
 									WHERE banktransid = '" . $_SESSION['Trans'][$i]->BankTransID . "'",
 									__('Could not update the bank transaction as cleared'),
 									__('The SQL that failed to update the bank transaction as cleared was'),
 									true);
 				$InsertBankTrans = false;
-} else {
+			} else {
 				$InsertBankTrans = false;
 			}
 
-			if ($_SESSION['Trans'][$i]->Amount >0) {
-	//its a receipt
+			if ($_SESSION['Trans'][$i]->Amount >0) { //its a receipt
 
-				if ($_SESSION['Trans'][$i]->DebtorNo != '') {
+				if ($_SESSION['Trans'][$i]->DebtorNo!='') {
 					$TransType = 12;
 					$TransNo = GetNextTransNo(12); //debtors receipt
 					/* First insert the debtortrans record */
@@ -228,8 +226,8 @@ if (isset($_POST['ProcessBankTrans'])) {
 					/*Now update the debtors master for the last payment date */
 					$Result = DB_query("UPDATE debtorsmaster
 										SET lastpaiddate = '" . FormatDateForSQL($_SESSION['Trans'][$i]->ValueDate) . "',
-											lastpaid = '" . $_SESSION['Trans'][$i]->Amount ."'
-										WHERE debtorno = '" . $_SESSION['Trans'][$i]->DebtorNo . "'",
+											lastpaid='" . $_SESSION['Trans'][$i]->Amount ."'
+										WHERE debtorno='" . $_SESSION['Trans'][$i]->DebtorNo . "'",
 										__('Could not update the last payment date and amount paid'),
 										__('The SQL that failed to update the debtorsmaster was'),
 										true);
@@ -271,8 +269,9 @@ if (isset($_POST['ProcessBankTrans'])) {
 										__('Cannot insert a GL entry for the receipt because'),
 										__('The SQL that failed to insert the receipt GL entry was'),
 										true);
-} elseif ($_SESSION['Trans'][$i]->GLTotal == $_SESSION['Trans'][$i]->Amount) {
-	$TransType = 2; //gl receipt
+
+				} elseif ($_SESSION['Trans'][$i]->GLTotal == $_SESSION['Trans'][$i]->Amount) {
+					$TransType=2; //gl receipt
 					$TransNo = GetNextTransNo(2);
 					foreach ($_SESSION['Trans'][$i]->GLEntries as $GLAnalysis) {
 						/*Credit each analysis account */
@@ -293,7 +292,8 @@ if (isset($_POST['ProcessBankTrans'])) {
 											__('Cannot insert a GL entry for the receipt gl analysis because'),
 											__('The SQL that failed to insert the gl analysis of this receipt was'),
 											true);
-} //end loop around GLAnalysis
+
+					} //end loop around GLAnalysis
 					/*Now debit the bank account from $_SESSION['Statement']->BankGLAccount */
 					$Result = DB_query("INSERT INTO gltrans (type,
 												 			typeno,
@@ -314,8 +314,7 @@ if (isset($_POST['ProcessBankTrans'])) {
 										true);
 				}
 			} else { //its a payment
-				if ($_SESSION['Trans'][$i]->SupplierID != '') {
-	//its a supplier payment
+				if ($_SESSION['Trans'][$i]->SupplierID!='') { //its a supplier payment
 					$TransType = 22;
 					$TransNo = GetNextTransNo(22);
 					$Result = DB_query("INSERT INTO supptrans (transno,
@@ -344,8 +343,8 @@ if (isset($_POST['ProcessBankTrans'])) {
 					/*Now update the suppliers master for the last payment date */
 					$Result = DB_query("UPDATE suppliers
 										SET lastpaiddate = '" . FormatDateForSQL($_SESSION['Trans'][$i]->ValueDate) . "',
-											lastpaid = '" . $_SESSION['Trans'][$i]->Amount ."'
-										WHERE supplierid = '" . $_SESSION['Trans'][$i]->SupplierID . "'",
+											lastpaid='" . $_SESSION['Trans'][$i]->Amount ."'
+										WHERE supplierid='" . $_SESSION['Trans'][$i]->SupplierID . "'",
 										__('Could not update the supplier last payment date and amount paid'),
 										__('The SQL that failed to update the supplier with the last payment amount and date was'),
 										true);
@@ -387,8 +386,9 @@ if (isset($_POST['ProcessBankTrans'])) {
 										__('Cannot insert a GL entry for the supplier payment because'),
 										__('The SQL that failed to insert the supplier payment GL entry to the bank account was'),
 										true);
-} elseif ($_SESSION['Trans'][$i]->GLTotal == $_SESSION['Trans'][$i]->Amount) {
-	//its a GL payment
+
+				} elseif($_SESSION['Trans'][$i]->GLTotal == $_SESSION['Trans'][$i]->Amount) {
+					//its a GL payment
 					$TransType = 1; //gl payment
 					$TransNo = GetNextTransNo(1);
 					foreach ($_SESSION['Trans'][$i]->GLEntries as $GLAnalysis) {
@@ -410,7 +410,8 @@ if (isset($_POST['ProcessBankTrans'])) {
 											__('Cannot insert a GL entry for the payment gl analysis because'),
 											__('The SQL that failed to insert the gl analysis of this payment was'),
 											true);
-} //end loop around GLAnalysis
+
+					} //end loop around GLAnalysis
 					/*Now credit the gl account from $_SESSION['Statement']->BankGLAccount
 					 * Note payments are negatives*/
 					$Result = DB_query("INSERT INTO gltrans (type,
@@ -433,8 +434,8 @@ if (isset($_POST['ProcessBankTrans'])) {
 				}
 
 			} //end if its a payment
-			if ($InsertBankTrans == true) {
-	/* Now insert the bank transaction if necessary */
+			if ($InsertBankTrans==true) {
+			/* Now insert the bank transaction if necessary */
 			/* it is not possible to import transaction that were originally in another currency converted to the currency of the bank account by the bank - these entries would need to be done through the usual method */
 
 				$Result = DB_query("INSERT INTO banktrans (transno,
@@ -463,7 +464,7 @@ if (isset($_POST['ProcessBankTrans'])) {
 								__('Could not insert the bank transaction'),
 								__('The SQL that failed to insert the bank transaction was'),
 								true);
-}
+			}
 			DB_Txn_Commit(); // complete this bank transactions posting
 		} //end loop around the transactions
 		echo '<p />';
@@ -479,44 +480,44 @@ if (isset($_SESSION['Statement'])) {
 	//print_r($_SESSION['Statement']);
 
 
-	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post" >';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" >';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	if (!isset($_SESSION['Statement']->BankGLAccount)) {
 		$AllowImport = false;
 	} else {
 		$AllowImport = true;
 	}
-	/* show the statement in any event - just don't have links to process transactions if not $AllowImport
+	/* show the statement in any event - just don't have links to process transactions if NOT $AllowImport
 	*/
-	echo '<table class = "selection">
+	echo '<table class="selection">
 			<tr>
-				<th colspan = "5">' . __('Bank Statement No') . ' ' . $_SESSION['Statement']->StatementNumber . ' ' . __('for') . ' ' . $_SESSION['Statement']->BankAccountName  . ' ' . __('Number') . ' ' . $_SESSION['Statement']->AccountNumber . '</th>
+				<th colspan="5">' . __('Bank Statement No') . ' ' . $_SESSION['Statement']->StatementNumber . ' ' . __('for') . ' ' . $_SESSION['Statement']->BankAccountName  . ' ' . __('Number') . ' ' . $_SESSION['Statement']->AccountNumber . '</th>
 			</tr>
 			<tr>
 				<th colspan ="3">' . __('Opening Balance as at') . ' ' . $_SESSION['Statement']->OpeningDate . ' ' . __('in') . ' ' .$_SESSION['Statement']->CurrCode . '</th>';
 	if ($_SESSION['Statement']->OpeningBalance >=0) {
-	echo '<th class = "number">' . number_format($_SESSION['Statement']->OpeningBalance,$_SESSION['Statement']->CurrDecimalPlaces) . '</th><th></th></tr>';
-} else {
-		echo '<th></th><th class = "number">' . number_format($_SESSION['Statement']->OpeningBalance,$_SESSION['Statement']->CurrDecimalPlaces) . '</th></tr>';
+		echo '<th class="number">' . number_format($_SESSION['Statement']->OpeningBalance,$_SESSION['Statement']->CurrDecimalPlaces) . '</th><th></th></tr>';
+	} else {
+		echo '<th></th><th class="number">' . number_format($_SESSION['Statement']->OpeningBalance,$_SESSION['Statement']->CurrDecimalPlaces) . '</th></tr>';
 	}
-	for ($i = 1;  $i<=count($_SESSION['Trans']);  $i++) {
+	for ($i=1; $i<=count($_SESSION['Trans']); $i++) {
 
 		if ($_SESSION['Trans'][$i]->Amount >0) {
-	if ($_SESSION['Trans'][$i]->DebtorNo != ''
-				or $_SESSION['Trans'][$i]->GLTotal == $_SESSION['Trans'][$i]->Amount) {
-				echo '<tr style = "background-color: #FFFCCC;">';
-} elseif ($_SESSION['Trans'][$i]->BankTransID != 0) {
-	echo '<tr style = "background-color: #FFF222;">';
-} else {
+			if ($_SESSION['Trans'][$i]->DebtorNo!=''
+				OR $_SESSION['Trans'][$i]->GLTotal == $_SESSION['Trans'][$i]->Amount) {
+				echo '<tr style="background-color: #FFFCCC;">';
+			} elseif ($_SESSION['Trans'][$i]->BankTransID!=0) {
+				echo '<tr style="background-color: #FFF222;">';
+			} else {
 				echo '<tr>';
 			}
 		} else { //its a payment
-			if ($_SESSION['Trans'][$i]->SupplierID != ''
-				or $_SESSION['Trans'][$i]->GLTotal == $_SESSION['Trans'][$i]->Amount) {
-	echo '<tr style = "background-color: #FFFCCC;">';
-} elseif ($_SESSION['Trans'][$i]->BankTransID != 0) {
-	echo '<tr style = "background-color: #FFF222;">';
-} else {
+			if ($_SESSION['Trans'][$i]->SupplierID!=''
+				OR $_SESSION['Trans'][$i]->GLTotal == $_SESSION['Trans'][$i]->Amount) {
+				echo '<tr style="background-color: #FFFCCC;">';
+			} elseif ($_SESSION['Trans'][$i]->BankTransID!=0) {
+				echo '<tr style="background-color: #FFF222;">';
+			} else {
 				echo '<tr>';
 			}
 		}
@@ -525,37 +526,38 @@ if (isset($_SESSION['Statement'])) {
 				<td>' . $_SESSION['Trans'][$i]->Description . '</td>';
 
 		if ($_SESSION['Trans'][$i]->Amount>=0) {
-	echo '<td class = "number">' . number_format($_SESSION['Trans'][$i]->Amount,$_SESSION['Statement']->CurrDecimalPlaces) . '</td><td></td>';
-} else {
-			echo '<td></td><td class = "number">' . number_format($_SESSION['Trans'][$i]->Amount,$_SESSION['Statement']->CurrDecimalPlaces) . '</td>';
+			echo '<td class="number">' . number_format($_SESSION['Trans'][$i]->Amount,$_SESSION['Statement']->CurrDecimalPlaces) . '</td><td></td>';
+		} else {
+			echo '<td></td><td class="number">' . number_format($_SESSION['Trans'][$i]->Amount,$_SESSION['Statement']->CurrDecimalPlaces) . '</td>';
 		}
-		if ($AllowImport == true) {
-	echo '<td><a href = "' . $RootPath . '/ImportBankTransAnalysis.php?TransID = ' . $i .'">' . __('Analysis')  . '</a></td>';
-}
+		if ($AllowImport==true) {
+			echo '<td><a href="' . $RootPath . '/ImportBankTransAnalysis.php?TransID=' . $i .'">' . __('Analysis')  . '</a></td>';
+		}
 		echo '</tr>';
 	}
 	echo '<tr>
-			<th colspan = "3">' . __('Closing Balance as at') . ' ' . $_SESSION['Statement']->ClosingDate . ' ' . __('in') . ' ' .$_SESSION['Statement']->CurrCode . '</th>';
+			<th colspan="3">' . __('Closing Balance as at') . ' ' . $_SESSION['Statement']->ClosingDate . ' ' . __('in') . ' ' .$_SESSION['Statement']->CurrCode . '</th>';
 	if ($_SESSION['Statement']->ClosingBalance>=0) {
-	echo '<th class = "number">' . number_format($_SESSION['Statement']->ClosingBalance,$_SESSION['Statement']->CurrDecimalPlaces) . '</th><th></th>
+		echo '<th class="number">' . number_format($_SESSION['Statement']->ClosingBalance,$_SESSION['Statement']->CurrDecimalPlaces) . '</th><th></th>
 			</tr>';
-} else {
-		echo '<th></th><th class = "number">' . number_format($_SESSION['Statement']->ClosingBalance,$_SESSION['Statement']->CurrDecimalPlaces) . '</th>
+	} else {
+		echo '<th></th><th class="number">' . number_format($_SESSION['Statement']->ClosingBalance,$_SESSION['Statement']->CurrDecimalPlaces) . '</th>
 			</tr>';
 	}
 	echo '</table>';
 	echo '<br />
-	<table class = "selection">';
-	if ($_SESSION['Statement']->CurrCode != $_SESSION['CompanyRecord']['currencydefault']) {
-	echo '<tr>
+	<table class="selection">';
+	if ($_SESSION['Statement']->CurrCode!=$_SESSION['CompanyRecord']['currencydefault']) {
+
+		echo '<tr>
 				<td>' . __('Exchange Rate to Use When Processing Transactions') . '</td>
-				<td><input type = "text" class = "number" required = "required" name = "ExchangeRate" value = "' . $_SESSION['Statement']->ExchangeRate . '" /></td>
+				<td><input type="text" class="number" required="required" name="ExchangeRate" value="' . $_SESSION['Statement']->ExchangeRate . '" /></td>
 			</tr>';
-} else {
-		echo '<input type = "hidden" name = "ExchangeRate" value = "1" />';
+	} else {
+		echo '<input type="hidden" name="ExchangeRate" value="1" />';
 	}
 	echo '<tr>
-			<th colspan = "2"><input type = "submit" name = "ProcessBankTrans" value = "' . __('Process Bank Transactions') . '" onclick = "return confirm(\'' . __('This process will create bank transactions for ONLY THE ANALYSED transactions shown in yellow above together with the necessary general ledger journals and customer or supplier transactions. Are You Sure?') . '\');" /></th>
+			<th colspan="2"><input type="submit" name="ProcessBankTrans" value="' . __('Process Bank Transactions') . '" onclick="return confirm(\'' . __('This process will create bank transactions for ONLY THE ANALYSED transactions shown in yellow above together with the necessary general ledger journals and customer or supplier transactions. Are You Sure?') . '\');" /></th>
 		</tr>
 		</table>';
 }

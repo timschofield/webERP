@@ -8,7 +8,7 @@ use Dompdf\Dompdf;
 include('includes/SQL_CommonFunctions.php');
 include('includes/DefinePOClass.php');
 
-if (!isset($_GET['OrderNo']) and !isset($_POST['OrderNo'])) {
+if (!isset($_GET['OrderNo']) AND !isset($_POST['OrderNo'])) {
 	$Title = __('Select a purchase order');
 	include('includes/header.php');
 	echo '<div class="centre"><br /><br /><br />';
@@ -38,8 +38,8 @@ elseif (isset($_POST['OrderNo'])) {
 }
 $Title = __('Print Purchase Order Number') . ' ' . $OrderNo;
 
-if (isset($_POST['PrintOrEmail']) and isset($_POST['EmailTo'])) {
-	if ($_POST['PrintOrEmail'] == 'Email' and !IsEmailAddress($_POST['EmailTo'])) {
+if (isset($_POST['PrintOrEmail']) AND isset($_POST['EmailTo'])) {
+	if ($_POST['PrintOrEmail'] == 'Email' AND !IsEmailAddress($_POST['EmailTo'])) {
 		include('includes/header.php');
 		prnMsg(__('The email address entered does not appear to be valid. No emails have been sent.'), 'warn');
 		include('includes/footer.php');
@@ -49,23 +49,23 @@ if (isset($_POST['PrintOrEmail']) and isset($_POST['EmailTo'])) {
 
 $ViewingOnly = 0;
 
-if (isset($_GET['ViewingOnly']) and $_GET['ViewingOnly'] != '') {
+if (isset($_GET['ViewingOnly']) AND $_GET['ViewingOnly'] != '') {
 	$ViewingOnly = $_GET['ViewingOnly'];
 }
-elseif (isset($_POST['ViewingOnly']) and $_POST['ViewingOnly'] != '') {
+elseif (isset($_POST['ViewingOnly']) AND $_POST['ViewingOnly'] != '') {
 	$ViewingOnly = $_POST['ViewingOnly'];
 }
 
-if (isset($_POST['DoIt']) and ($_POST['PrintOrEmail'] == 'Print' or $ViewingOnly == 1)) {
+if (isset($_POST['DoIt']) AND ($_POST['PrintOrEmail'] == 'Print' OR $ViewingOnly == 1)) {
 	$MakePDFThenDisplayIt = true;
 	$MakePDFThenEmailIt = false;
-} elseif (isset($_POST['DoIt']) and $_POST['PrintOrEmail'] == 'Email' and isset($_POST['EmailTo'])) {
+} elseif (isset($_POST['DoIt']) AND $_POST['PrintOrEmail'] == 'Email' AND isset($_POST['EmailTo'])) {
 	$MakePDFThenEmailIt = true;
 	$MakePDFThenDisplayIt = false;
 }
 
 $POHeader = array();
-if (isset($OrderNo) and $OrderNo != '' and $OrderNo > 0) {
+if (isset($OrderNo) AND $OrderNo != '' AND $OrderNo > 0) {
 	$ErrMsg = __('There was a problem retrieving the purchase order header details for Order Number') . ' ' . $OrderNo . ' ' . __('from the database');
 	$SQL = "SELECT purchorders.supplierno,
 					suppliers.suppname,
@@ -93,7 +93,7 @@ if (isset($OrderNo) and $OrderNo != '' and $OrderNo > 0) {
 					purchorders.status,
 					purchorders.stat_comment,
 					paymentterms.terms,
-					currencies.decimalplaces as currdecimalplaces
+					currencies.decimalplaces AS currdecimalplaces
 				FROM purchorders INNER JOIN suppliers
 					ON purchorders.supplierno = suppliers.supplierid
 				INNER JOIN currencies
@@ -102,7 +102,7 @@ if (isset($OrderNo) and $OrderNo != '' and $OrderNo > 0) {
 					ON purchorders.paymentterms=paymentterms.termsindicator
 				INNER JOIN www_users
 					ON purchorders.initiator=www_users.userid
-				INNER JOIN locationusers ON locationusers.loccode=purchorders.intostocklocation and locationusers.userid='" .  $_SESSION['UserID'] . "' and locationusers.canview=1
+				INNER JOIN locationusers ON locationusers.loccode=purchorders.intostocklocation AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				WHERE purchorders.orderno='" . $OrderNo . "'";
 	$Result = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($Result) == 0) {
@@ -126,15 +126,15 @@ if (isset($OrderNo) and $OrderNo != '' and $OrderNo > 0) {
 	} elseif (DB_num_rows($Result) == 1) {
 		$POHeader = DB_fetch_array($Result);
 
-		if ($POHeader['status'] != 'Authorised' and $POHeader['status'] != 'Printed') {
-	include('includes/header.php');
+		if ($POHeader['status'] != 'Authorised' AND $POHeader['status'] != 'Printed') {
+			include('includes/header.php');
 			prnMsg(__('Purchase orders can only be printed once they have been authorised') . '. ' . __('This order is currently at a status of') . ' ' . __($POHeader['status']), 'warn');
 			include('includes/footer.php');
 			exit();
-}
+		}
 
 		if ($ViewingOnly == 0) {
-	if ($POHeader['allowprint'] == 0) {
+			if ($POHeader['allowprint'] == 0) {
 				$Title = __('Purchase Order Already Printed');
 				include('includes/header.php');
 				echo '<p>';
@@ -146,7 +146,7 @@ if (isset($OrderNo) and $OrderNo != '' and $OrderNo > 0) {
 						<li><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a></div>';
 				include('includes/footer.php');
 				exit();
-}
+			}
 		}
 	}
 }
@@ -164,22 +164,22 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 	$CompanyAddress = '';
 	for ($i = 1; $i < 7; $i++) {
 		if ($_SESSION['CompanyRecord']['regoffice' . $i] != '') {
-	$CompanyAddress .= $_SESSION['CompanyRecord']['regoffice' . $i] . '<br />';
-}
+			$CompanyAddress .= $_SESSION['CompanyRecord']['regoffice' . $i] . '<br />';
+		}
 	}
 
 	$SupplierAddress = '';
 	for ($i = 1; $i < 7; $i++) {
 		if ($POHeader['address' . $i] != '') {
-	$SupplierAddress .= $POHeader['address' . $i] . '<br />';
-}
+			$SupplierAddress .= $POHeader['address' . $i] . '<br />';
+		}
 	}
 
 	$DeliveryAddress = '';
 	for ($i = 1; $i < 7; $i++) {
 		if ($POHeader['deladd' . $i] != '') {
-	$DeliveryAddress .= $POHeader['deladd' . $i] . '<br />';
-}
+			$DeliveryAddress .= $POHeader['deladd' . $i] . '<br />';
+		}
 	}
 
 	$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
@@ -259,13 +259,13 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		}
 
 	foreach ($lines as $POLine) {
-		$DecimalPlaces = ($POLine['decimalplaces'] !== null) ? $POLine['decimalplaces'] : 2;
+		$DecimalPlaces = ($POLine['decimalplaces'] !== NULL) ? $POLine['decimalplaces'] : 2;
 		$DisplayQty = locale_number_format($POLine['quantityord'] / $POLine['conversionfactor'], $DecimalPlaces);
 
 		if ($_POST['ShowAmounts'] == 'Yes') {
-	$DisplayPrice = locale_number_format($POLine['unitprice'] * $POLine['conversionfactor'], $POHeader['currdecimalplaces']);
+			$DisplayPrice = locale_number_format($POLine['unitprice'] * $POLine['conversionfactor'], $POHeader['currdecimalplaces']);
 			$DisplayLineTotal = locale_number_format($POLine['unitprice'] * $POLine['quantityord'], $POHeader['currdecimalplaces']);
-} else {
+		} else {
 			$DisplayPrice = '----';
 			$DisplayLineTotal = '----';
 		}
@@ -287,8 +287,8 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 	$HTML .= '</tbody></table>';
 
 	if ($_POST['ShowAmounts'] == 'Yes') {
-	$DisplayOrderTotal = locale_number_format($OrderTotal, $POHeader['currdecimalplaces']);
-} else {
+		$DisplayOrderTotal = locale_number_format($OrderTotal, $POHeader['currdecimalplaces']);
+	} else {
 		$DisplayOrderTotal = '----';
 	}
 
@@ -300,7 +300,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 	$PdfFileName = $_SESSION['DatabaseName'] . '_PurchaseOrder_' . $OrderNo . '_' . date('Y-m-d') . '.pdf';
 
 	if ($MakePDFThenDisplayIt) {
-	// Display PDF in browser
+		// Display PDF in browser
 		$dompdf = new Dompdf(['chroot' => __DIR__]);
 		$dompdf->loadHtml($HTML);
 
@@ -314,7 +314,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		$dompdf->stream($PdfFileName, array(
 			"Attachment" => false
 		));
-} else {
+	} else {
 		// Save PDF to file and send via email
 		$dompdf = new Dompdf(['chroot' => __DIR__]);
 		$dompdf->loadHtml($HTML);
@@ -336,30 +336,35 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			$Body = __('Please find herewith Purchase Order From') . ' ' . htmlspecialchars($_SESSION['CompanyRecord']['coyname']);
 			$ConfirmationText = __('Please find attached the Purchase Order, generated by user') . ' ' . $_SESSION['UserID'] . ' ' . __('at') . ' ' . date('Y-m-d H:i:s');
 			$EmailSubject = $_SESSION['DatabaseName'] . '_PurchaseOrder_' . date('Y-m-d') . '.pdf';
-			$EmailResult = SendEmailFromWebERP($From, array($To=>''), $Subject, $Body, array($PdfFileName), false);
+			/// @todo drop this IF - it's handled within SendEmailFromWebERP
+			if ($_SESSION['SmtpSetting'] == 0) {
+				mail($To, $EmailSubject, $ConfirmationText);
+			} else {
+				$EmailResult = SendEmailFromWebERP($From, array($To=>''), $Subject, $Body, array($PdfFileName), false);
+			}
 		}
 		unlink($PdfFileName);
 
 		include('includes/header.php');
 		if ($EmailResult == 1) {
-	echo '<div class="centre"><br /><br /><br />';
+			echo '<div class="centre"><br /><br /><br />';
 			prnMsg(__('Purchase Order') . ' ' . $OrderNo . ' ' . __('has been emailed to') . ' ' . $_POST['EmailTo'] . ' ' . __('as directed'), 'success');
-} else {
+		} else {
 			echo '<div class="centre"><br /><br /><br />';
 			prnMsg(__('Emailing Purchase order') . ' ' . $OrderNo . ' ' . __('to') . ' ' . $_POST['EmailTo'] . ' ' . __('failed'), 'error');
 		}
 		include('includes/footer.php');
 	}
 
-	if ($ViewingOnly == 0 or $EmailResult == 1) {
-	$StatusComment = date($_SESSION['DefaultDateFormat']) . ' - ' . __('Printed by') . ' <a href="mailto:' . $_SESSION['UserEmail'] . '">' . $_SESSION['UsersRealName'] . '</a><br />' . html_entity_decode($POHeader['stat_comment']);
+	if ($ViewingOnly == 0 OR $EmailResult == 1) {
+		$StatusComment = date($_SESSION['DefaultDateFormat']) . ' - ' . __('Printed by') . ' <a href="mailto:' . $_SESSION['UserEmail'] . '">' . $_SESSION['UsersRealName'] . '</a><br />' . html_entity_decode($POHeader['stat_comment']);
 		$SQL = "UPDATE purchorders SET allowprint = 0,
 										dateprinted  = CURRENT_DATE,
 										status = 'Printed',
 										stat_comment = '" . htmlspecialchars($StatusComment, ENT_QUOTES, 'UTF-8') . "'
 				WHERE purchorders.orderno = '" . $OrderNo . "'";
 		$Result = DB_query($SQL);
-}
+	}
 } else {
 	// Print/email selection form (unchanged)
 	$ViewTopic = 'PurchaseOrdering';
@@ -368,8 +373,8 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" target="_blank">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	if ($ViewingOnly == 1) {
-	echo '<input type="hidden" name="ViewingOnly" value="1" />';
-}
+		echo '<input type="hidden" name="ViewingOnly" value="1" />';
+	}
 	echo '<input type="hidden" name="OrderNo" value="' . $OrderNo . '" />';
 	echo '<fieldset>
 			<legend>', __('Print Options'), '</legend>
@@ -380,13 +385,13 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		$_POST['PrintOrEmail'] = 'Print';
 	}
 	if ($ViewingOnly != 0) {
-	echo '<option selected="selected" value="Print">' . __('Print') . '</option>';
-}
+		echo '<option selected="selected" value="Print">' . __('Print') . '</option>';
+	}
 	else {
 		if ($_POST['PrintOrEmail'] == 'Print') {
-	echo '<option selected="selected" value="Print">' . __('Print') . '</option>';
+			echo '<option selected="selected" value="Print">' . __('Print') . '</option>';
 			echo '<option value="Email">' . __('Email') . '</option>';
-} else {
+		} else {
 			echo '<option value="Print">' . __('Print') . '</option>';
 			echo '<option selected="selected" value="Email">' . __('Email') . '</option>';
 		}
@@ -400,16 +405,16 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		$_POST['ShowAmounts'] = 'Yes';
 	}
 	if ($_POST['ShowAmounts'] == 'Yes') {
-	echo '<option selected="selected" value="Yes">' . __('Yes') . '</option>';
+		echo '<option selected="selected" value="Yes">' . __('Yes') . '</option>';
 		echo '<option value="No">' . __('No') . '</option>';
-} else {
+	} else {
 		echo '<option value="Yes">' . __('Yes') . '</option>';
 		echo '<option selected="selected" value="No">' . __('No') . '</option>';
 	}
 	echo '</select>
 		</field>';
 	if ($_POST['PrintOrEmail'] == 'Email') {
-	$ErrMsg = __('There was a problem retrieving the contact details for the supplier');
+		$ErrMsg = __('There was a problem retrieving the contact details for the supplier');
 		$SQL = "SELECT suppliercontacts.contact,
 						suppliercontacts.email
 				FROM suppliercontacts INNER JOIN purchorders
@@ -424,7 +429,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 				if (mb_strlen($ContactDetails['email']) > 2 and mb_strpos($ContactDetails['email'], '@') > 0) {
 					if (isset($_POST['EmailTo']) and $_POST['EmailTo'] == $ContactDetails['email']) {
 						echo '<option selected="selected" value="' . $ContactDetails['email'] . '">' . $ContactDetails['Contact'] . ' - ' . $ContactDetails['email'] . '</option>';
-} else {
+					} else {
 						echo '<option value="' . $ContactDetails['email'] . '">' . $ContactDetails['contact'] . ' - ' . $ContactDetails['email'] . '</option>';
 					}
 				}

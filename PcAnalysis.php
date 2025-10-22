@@ -12,12 +12,12 @@ if (isset($_POST['submit'])) {
 	$TabToShow = $_POST['Tabs'];
 	//first off validate inputs sensible
 
-	if ($InputError == 0) {
-	// Creation of beginning of SQL query
+	if ($InputError == 0){
+		// Creation of beginning of SQL query
 		$SQL = "SELECT pcexpenses.codeexpense,";
 
 		// Creation of periods SQL query
-		$PeriodToday = GetPeriod(date($_SESSION['DefaultDateFormat']));
+		$PeriodToday=GetPeriod(date($_SESSION['DefaultDateFormat']));
 		$SQLPeriods = "SELECT periodno,
 						lastdate_in_period
 				FROM periods
@@ -27,18 +27,18 @@ if (isset($_POST['submit'])) {
 		$Periods = DB_query($SQLPeriods);
 		$NumPeriod = 0;
 		$LabelsArray = array();
-		while ($MyRow = DB_fetch_array($Periods)){
+		while ($MyRow=DB_fetch_array($Periods)){
 
 			$NumPeriod++;
 			$LabelsArray[$NumPeriod] = MonthAndYearFromSQLDate($MyRow['lastdate_in_period']);
 			$SQL = $SQL . "(SELECT SUM(pcashdetails.amount)
 							FROM pcashdetails
 							WHERE pcashdetails.codeexpense = pcexpenses.codeexpense";
-			if ($TabToShow != 'All'){
-				$SQL = $SQL." 	and pcashdetails.tabcode = '". $TabToShow ."'";
-}
-			$SQL = $SQL . "		and date >= '" . beginning_of_month($MyRow['lastdate_in_period']). "'
-								and date <= '" . $MyRow['lastdate_in_period'] . "') as expense_period".$NumPeriod.", ";
+			if ($TabToShow!='All'){
+				$SQL = $SQL." 	AND pcashdetails.tabcode = '". $TabToShow ."'";
+			}
+			$SQL = $SQL . "		AND date >= '" . beginning_of_month($MyRow['lastdate_in_period']). "'
+								AND date <= '" . $MyRow['lastdate_in_period'] . "') AS expense_period".$NumPeriod.", ";
 		}
 		// Creation of final part of SQL
 		$SQL = $SQL." pcexpenses.description
@@ -144,16 +144,16 @@ if (isset($_POST['submit'])) {
 			$SpreadSheet->getActiveSheet()->freezePane('E5');
 
 			// Auto Size columns
-			for ($col = 'A';  $col !== $SpreadSheet->getActiveSheet()->getHighestDataColumn();  $col++) {
+			for($col = 'A'; $col !== $SpreadSheet->getActiveSheet()->getHighestDataColumn(); $col++) {
 				$SpreadSheet->getActiveSheet()
 					->getColumnDimension($col)
 					->setAutoSize(true);
 }
 
 			// Rename worksheet
-			if ($TabToShow == 'All') {
-	$SpreadSheet->getActiveSheet()->setTitle('All Accounts');
-}else{
+			if ($TabToShow=='All'){
+				$SpreadSheet->getActiveSheet()->setTitle('All Accounts');
+			}else{
 				$SpreadSheet->getActiveSheet()->setTitle($TabToShow);
 			}
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
@@ -164,9 +164,9 @@ if (isset($_POST['submit'])) {
 
 			$File = 'PCExpensesAnalysis-' . date('Y-m-d'). '.' . $_POST['Format'];
 
-			header('Content-Disposition: attachment;filename = "' . $File . '"');
+			header('Content-Disposition: attachment;filename="' . $File . '"');
 			/// @todo review caching headers
-			header('Cache-Control: max-age = 0');
+			header('Cache-Control: max-age=0');
 			// If you're serving to IE over SSL, then the following may be needed
 			header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
 			header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
@@ -174,12 +174,12 @@ if (isset($_POST['submit'])) {
 			header ('Pragma: public'); // HTTP/1.0
 
 			if ($_POST['Format'] == 'xlsx') {
-	$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($SpreadSheet);
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($SpreadSheet);
 				$objWriter->save('php://output');
-} elseif ($_POST['Format'] == 'ods') {
-	$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($SpreadSheet);
+			} else if ($_POST['Format'] == 'ods') {
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($SpreadSheet);
 				$objWriter->save('php://output');
-}
+			}
 
 		}else{
 			$Title = __('Excel file for Petty Cash Expenses Analysis');
@@ -197,44 +197,44 @@ if (isset($_POST['submit'])) {
 
 	include('includes/header.php');
 
-	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post">';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<p class = "page_title_text">
-			<img src = "' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title = "' . __('Excel file for Petty Cash Expenses Analysis') . '" alt = "" />' . ' ' . __('Excel file for Petty Cash Expenses Analysis') . '
+	echo '<p class="page_title_text">
+			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . __('Excel file for Petty Cash Expenses Analysis') . '" alt="" />' . ' ' . __('Excel file for Petty Cash Expenses Analysis') . '
 		</p>';
 
 	echo '<fieldset>
 			<legend>', __('Petty Cash Tab To Analyse'), '</legend>';
 
 	echo '<field>
-			<label for = "Tabs">' . __('For Petty Cash Tabs') . ':</label>
-			<select name = "Tabs">';
+			<label for="Tabs">' . __('For Petty Cash Tabs') . ':</label>
+			<select name="Tabs">';
 
 	$SQL = "SELECT tabcode
 			FROM pctabs
 			ORDER BY tabcode";
 	$CatResult = DB_query($SQL);
 
-	echo '<option value = "All">' . __('All Tabs') . '</option>';
+	echo '<option value="All">' . __('All Tabs') . '</option>';
 
 	while ($MyRow = DB_fetch_array($CatResult)){
-		echo '<option value = "' . $MyRow['tabcode'] . '">' . $MyRow['tabcode'] . '</option>';
+		echo '<option value="' . $MyRow['tabcode'] . '">' . $MyRow['tabcode'] . '</option>';
 	}
 	echo '</select>
 		</field>';
 
 	echo '<field>
-			<label for = "Format">', __('Output Format'), '</label>
-			<select name = "Format">
-				<option value = "xlsx">', __('Excel Format (.xlsx)'), '</option>
-				<option value = "ods" selected = "selected">', __('Open Document Format (.ods)'), '</option>
+			<label for="Format">', __('Output Format'), '</label>
+			<select name="Format">
+				<option value="xlsx">', __('Excel Format (.xlsx)'), '</option>
+				<option value="ods" selected="selected">', __('Open Document Format (.ods)'), '</option>
 			</select>
 		</field>';
 
 	echo '</fieldset>';
-	echo '<div class = "centre">
-			<input type = "submit" name = "submit" value = "' . __('Create Petty Cash Expenses Excel File') . '" />
+	echo '<div class="centre">
+			<input type="submit" name="submit" value="' . __('Create Petty Cash Expenses Excel File') . '" />
 		</div>';
 
 	echo '</form>';
@@ -242,7 +242,7 @@ if (isset($_POST['submit'])) {
 
 }
 
-function beginning_of_month($Date) {
+function beginning_of_month($Date){
 	$Date2 = explode("-",$Date);
 	$M = $Date2[1];
 	$Y = $Date2[0];

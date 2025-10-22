@@ -31,21 +31,21 @@ $SQL = "SELECT stockmaster.categoryid,
 				stockmaster.stockid,
 				stockmaster.description,
 				SUM(locstock.quantity) as qtyonhand,
-				stockmaster.actualcost as unitcost,
-				SUM(locstock.quantity) *(stockmaster.actualcost) as itemtotal
+				stockmaster.actualcost AS unitcost,
+				SUM(locstock.quantity) *(stockmaster.actualcost) AS itemtotal
 			FROM stockmaster,
 				stockcategory,
 				locstock
-			WHERE stockmaster.stockid = locstock.stockid
-			and stockmaster.categoryid = stockcategory.categoryid
+			WHERE stockmaster.stockid=locstock.stockid
+			AND stockmaster.categoryid=stockcategory.categoryid
 			GROUP BY stockmaster.categoryid,
 				stockcategory.categorydescription,
 				unitcost,
 				stockmaster.stockid,
 				stockmaster.description
-			HAVING SUM(locstock.quantity) != 0
-			and stockmaster.categoryid >= '" . $FromCriteria . "'
-			and stockmaster.categoryid <= '" . $ToCriteria . "'
+			HAVING SUM(locstock.quantity)!=0
+			AND stockmaster.categoryid >= '" . $FromCriteria . "'
+			AND stockmaster.categoryid <= '" . $ToCriteria . "'
 			ORDER BY stockmaster.categoryid,
 				stockmaster.stockid";
 
@@ -58,13 +58,13 @@ $HTML = '';
 
 $HTML .= '<html>
 			<head>';
-$HTML .= '<link href = "css/reports.css" rel = "stylesheet" type = "text/css" />';
+$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
 
-$HTML .= '<meta name = "author" content = "WebERP " . $Version">
-			<meta name = "Creator" content = "webERP https://www.weberp.org">
+$HTML .= '<meta name="author" content="WebERP " . $Version">
+			<meta name="Creator" content="webERP https://www.weberp.org">
 		</head>
 		<body>
-			<div class = "centre" id = "ReportHeader">
+			<div class="centre" id="ReportHeader">
 				' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 				' . __('Inventory Valuation Report') . '<br />
 				' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
@@ -87,20 +87,21 @@ $CatTot_Val = 0;
 while ($InventoryValn = DB_fetch_array($InventoryResult)) {
 
 	if ($Category != $InventoryValn['categoryid']) {
-	if ($Category != '') { /*Then it's not the first time round */
+
+		if ($Category != '') { /*Then it's NOT the first time round */
 
 			/* need to print the total of previous category */
 			$DisplayCatTotVal = locale_number_format($CatTot_Val, 2);
-			$HTML .= '<tr class = "total_row">
-						<td colspan = "3"></td>
+			$HTML .= '<tr class="total_row">
+						<td colspan="3"></td>
 						<td>' . __('Total for') . ' ' . $Category . " - " . $CategoryName . '</td>
-						<td class = "number">' . $DisplayCatTotVal . '</td>
+						<td class="number">' . $DisplayCatTotVal . '</td>
 					</tr>';
 
 			$CatTot_Val = 0;
-}
-		$HTML .= '<tr class = "total_row">
-					<td colspan = "5"><h3>' . $InventoryValn['categoryid'] . " - " . $InventoryValn['categorydescription'] . '</h3></td>
+		}
+		$HTML .= '<tr class="total_row">
+					<td colspan="5"><h3>' . $InventoryValn['categoryid'] . " - " . $InventoryValn['categorydescription'] . '</h3></td>
 				</tr>';
 		$Category = $InventoryValn['categoryid'];
 		$CategoryName = $InventoryValn['categorydescription'];
@@ -112,9 +113,9 @@ while ($InventoryValn = DB_fetch_array($InventoryResult)) {
 	$HTML .= '<tr>
 				<td>' . $InventoryValn['stockid'] . '</td>
 				<td>' . $InventoryValn['description'] . '</td>
-				<td class = "number">' . $DisplayQtyOnHand . '</td>
-				<td class = "number">' . $DisplayUnitCost . '</td>
-				<td class = "number">' . $DisplayItemTotal . '</td>
+				<td class="number">' . $DisplayQtyOnHand . '</td>
+				<td class="number">' . $DisplayUnitCost . '</td>
+				<td class="number">' . $DisplayItemTotal . '</td>
 			</tr>';
 
 	$Tot_Val += $InventoryValn['itemtotal'];
@@ -123,18 +124,18 @@ while ($InventoryValn = DB_fetch_array($InventoryResult)) {
 } /*end inventory valn while loop */
 
 $DisplayCatTotVal = locale_number_format($CatTot_Val, 2);
-$HTML .= '<tr class = "total_row">
-			<td colspan = "3"></td>
+$HTML .= '<tr class="total_row">
+			<td colspan="3"></td>
 			<td>' . __('Total for') . ' ' . $Category . ' - ' . $CategoryName . '</td>
-			<td class = "number">' . $DisplayCatTotVal . '</td>
+			<td class="number">' . $DisplayCatTotVal . '</td>
 		</tr>';
 
 $DisplayTotalVal = locale_number_format($Tot_Val, 2);
 /*Print out the grand totals */
-$HTML .= '<tr class = "total_row">
-			<td colspan = "3"></td>
+$HTML .= '<tr class="total_row">
+			<td colspan="3"></td>
 			<td>' . __('Grand Total Value') . '</td>
-			<td class = "number">' . $DisplayTotalVal . '</td>
+			<td class="number">' . $DisplayTotalVal . '</td>
 		</tr>';
 
 $HTML .= '</tbody>
@@ -144,9 +145,10 @@ if ($ListCount == 0) {
 	$Title = __('Print Inventory Valuation Error');
 	include('includes/header.php');
 	echo '<p>' . __('There were no items with any value to print out for the location specified');
-	echo '<br /><a href = "' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
+	echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 	include('includes/footer.php');
 	exit(); // Javier: needs check
+
 } else {
 
 	/// @todo we could skip generating the pdf if $From == ''
@@ -164,14 +166,14 @@ if ($ListCount == 0) {
 
 	$From = $_SESSION['CompanyRecord']['email'];
 	if ($From != '') {
-	$Subject = __('Inventory Valuation Report');
+		$Subject = __('Inventory Valuation Report');
 		$Body = __('Please find herewith the stock valuation report');
 		$ConfirmationText = __('Please find attached the Inventory Valuation report, generated by user') . ' ' . $_SESSION['UserID'] . ' ' . __('at') . ' ' . date('Y-m-d H:i:s');
 		$EmailSubject = $_SESSION['DatabaseName'] . '_InventoryValuation_' . date('Y-m-d') . '.pdf';
-		/// @todo drop this if - it's handled within SendEmailFromWebERP
+		/// @todo drop this IF - it's handled within SendEmailFromWebERP
 		if ($_SESSION['SmtpSetting'] == 0) {
 			mail($_SESSION['InventoryManagerEmail'], $EmailSubject, $ConfirmationText);
-} else {
+		} else {
 			$Result = SendEmailFromWebERP($From, $Recipients, $Subject, $Body, array($PDFFileName), false);
 		}
 	}
@@ -181,13 +183,13 @@ if ($ListCount == 0) {
 	include('includes/header.php');
 
 	if ($Result) {
-	$Title = __('Print Inventory Valuation');
+		$Title = __('Print Inventory Valuation');
 		prnMsg(__('The Inventory valuation report has been mailed'), 'success');
-		echo '<div class = "centre"><a href = "' . $RootPath . '/index.php">' . __('Back to the menu') . '</a></div>';
-} else {
+		echo '<div class="centre"><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a></div>';
+	} else {
 		$Title = __('Print Inventory Valuation Error');
 		prnMsg(__('There are errors and the emails were not sent'), 'error');
-		echo '<div class = "centre"><a href = "' . $RootPath . '/index.php">' . __('Back to the menu') . '</a></div>';
+		echo '<div class="centre"><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a></div>';
 	}
 
 	include('includes/footer.php');

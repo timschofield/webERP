@@ -6,7 +6,7 @@ require(__DIR__ . '/includes/session.php');
 
 /*
 http://127.0.0.1/~brink/webERP/GetStockImage.php
-?automake = 1&width = 81&height = 74&stockid = &textcolor = FFFFF0&bevel = 3&text = aa&bgcolor = 007F00
+?automake=1&width=81&height=74&stockid=&textcolor=FFFFF0&bevel=3&text=aa&bgcolor=007F00
 
 automake - if specified allows auto creation of images
 stockid - if not specified it produces a blank image if set to empty string uses default stock image
@@ -23,8 +23,8 @@ bevel - if specified draws a drop-down bevel
 // Color decode function
 function DecodeBgColor( $ColourStr ) {
 	if ( $ColourStr[0] == '#' ) {
-	$ColourStr = mb_substr($ColourStr, 1, mb_strlen($ColourStr));
-}
+		$ColourStr = mb_substr($ColourStr, 1, mb_strlen($ColourStr));
+	}
 	$Red = 0;
 	if (mb_strlen($ColourStr) > 1) {
 		$Red = hexdec(mb_substr($ColourStr, 0, 2));
@@ -128,7 +128,7 @@ if ( file_exists($tmpFileName.'.jpg') ) {
 	$IsJpeg = $DefaultIsJpeg;
 }
 
-if ( !extension_loaded('gd') or (!$automake and (!isset($FileName) or !file_exists($FilePath.$FileName))) ) {
+if ( !extension_loaded('gd') OR (!$automake and (!isset($FileName) or !file_exists($FilePath.$FileName))) ) {
 	$Title = __('Stock Image Retrieval ....');
 	include('includes/header.php');
 	if ( !extension_loaded('gd') ) {
@@ -136,7 +136,7 @@ if ( !extension_loaded('gd') or (!$automake and (!isset($FileName) or !file_exis
 	} else {
 		prnMsg( __('The Image could not be retrieved because it does not exist'), 'error');
 	}
-	echo '<br /><a href = "' .$RootPath .'/index.php">' . __('Back to the menu'). '</a>';
+	echo '<br /><a href="' .$RootPath .'/index.php">' . __('Back to the menu'). '</a>';
 	include('includes/footer.php');
 	exit();
 }
@@ -150,7 +150,7 @@ if ( $style == 'jpg' ) {
 }
 
 // See if we need to automake this image
-if ( $automake and !isset($FileName) ) {
+if ( $automake AND !isset($FileName) ) {
 	// Have we got height and width specs
 	if ( !isset($width) )
 		$width = 64;
@@ -185,10 +185,10 @@ if ( $automake and !isset($FileName) ) {
 	if ( isset($TranspColour) ) {
 		$TranspColour = DecodeBgColor( $TranspColour );
 		if ( $TranspColour != $BackgroundColour ) {
-	if ( !isset($TextColour['alpha']) ) {
+			if ( !isset($TextColour['alpha']) ) {
 				$ixtranscolor = imagecolorallocate($im,
 					$TranspColour['red'], $TranspColour['green'], $TranspColour['blue']);
-} else {
+			} else {
 				$ixtranscolor = imagecolorallocatealpha($im,
 					$TranspColour['red'], $TranspColour['green'], $TranspColour['blue'], $TranspColour['alpha']);
 			}
@@ -199,11 +199,11 @@ if ( $automake and !isset($FileName) ) {
 	imagefill($im, 0, 0, $ixbgcolor );
 
 	if ( $doTrans ) {
-	imagecolortransparent($im, $ixtranscolor);
-}
+		imagecolortransparent($im, $ixtranscolor);
+	}
 
 	if ($_SESSION['ShowStockidOnImages'] == 1) {
-	if (!isset($Text))
+		if (!isset($Text))
 			$Text = $StockID;
 		if (mb_strlen($Text) > 0 ) {
 			$fw = imagefontwidth($fontsize);
@@ -215,14 +215,14 @@ if ( $automake and !isset($FileName) ) {
 			if (!$notextbg)
 				imagefilledrectangle($im, $px, $fy, imagesx($im)-($px+1), $fyh, $ixbgcolor );
 			imagestring($im, $fontsize, $px, $fy, $Text, $ixtextcolor);
-}
+		}
 	}
 
 } else {
 	$tmpFileName = $FilePath.$FileName;
 	if ( $IsJpeg ) {
-	$im = imagecreatefromjpeg($tmpFileName);
-} else {
+		$im = imagecreatefromjpeg($tmpFileName);
+	} else {
 		$im = imagecreatefrompng($tmpFileName);
 	}
 
@@ -253,16 +253,16 @@ if ( $automake and !isset($FileName) ) {
 
 	$sw = imagesx($im);
 	$sh = imagesy($im);
-	if ( isset($width) and ($width != $sw) or isset($height) and ($height != $sh)) {
+	if ( isset($width) AND ($width != $sw) OR isset($height) AND ($height != $sh)) {
 		if ( !isset($width) )
 			$width = imagesx($im);
 		if ( !isset($height) )
 			$height = imagesy($im);
 			$resize_scale = min($width/$sw, $height/$sh);
 		if ($resize_scale < 1) {
-	$resize_new_width = floor($resize_scale*$sw);
+			$resize_new_width = floor($resize_scale*$sw);
 			$resize_new_height = floor($resize_scale*$sh);
-} else {
+		} else {
 			$resize_new_width = $sw;
 			$resize_new_height = $sh;
 		}
@@ -293,10 +293,10 @@ if ( $automake and !isset($FileName) ) {
 	if ( isset($TranspColour) ) {
 		$TranspColour = DecodeBgColor( $TranspColour );
 		if ( $TranspColour != $BackgroundColour ) {
-	if ( !isset($TextColour['alpha']) ) {
+			if ( !isset($TextColour['alpha']) ) {
 				$ixtranscolor = imagecolorallocate($im,
 					$TranspColour['red'], $TranspColour['green'], $TranspColour['blue']);
-} else {
+			} else {
 				$ixtranscolor = imagecolorallocatealpha($im,
 					$TranspColour['red'], $TranspColour['green'], $TranspColour['blue'], $TranspColour['alpha']);
 			}
@@ -305,15 +305,15 @@ if ( $automake and !isset($FileName) ) {
 		}
 	}
 	if ( $doTrans ) {
-	imagecolortransparent($im, $ixtranscolor);
-}
+		imagecolortransparent($im, $ixtranscolor);
+	}
 	if ( $doTrans )
 		$ixtextbgcolor = $ixtranscolor;
 	else
 		$ixtextbgcolor = $ixbgcolor;
 //	$ixtextbgcolor = imagecolorallocatealpha($im, 0, 0, 0, 0);
 	if ($_SESSION['ShowStockidOnImages'] == 1) {
-	if (!isset($Text))
+		if (!isset($Text))
 			$Text = $StockID;
 		if (mb_strlen($Text) > 0 ) {
 			$fw = imagefontwidth($fontsize);
@@ -325,7 +325,7 @@ if ( $automake and !isset($FileName) ) {
 			if (!$notextbg)
 				imagefilledrectangle($im, $px, $fy, imagesx($im)-($px+1), $fyh, $ixtextbgcolor );
 				imagestring($im, $fontsize, $px, $fy, $Text, $ixtextcolor);
-}
+		}
 	}
 }
 
@@ -345,13 +345,13 @@ if ( $bevel ) {
 /// @todo cache on disk the final generated image
 
 // Set up headers
-header('Content-Disposition: filename = '.$StockID.'.'.$Type);
-header('Cache-Control: must-revalidate, post-check = 0, pre-check = 0');
+header('Content-Disposition: filename='.$StockID.'.'.$Type);
+header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 /// @todo review caching header
 header('Pragma: public');
 header('Content-type: image/'.$style);
 // Which function should we use jpeg or png
 //images
 $func = 'image'.$functype;
-// and send image
+// AND send image
 $func($im);
