@@ -7,8 +7,8 @@ $ViewTopic = 'QualityAssurance';// Filename in ManualContents.php's TOC.
 $BookMark = 'QA_ProdSpecs';// Anchor's id in the manual's html document.
 include('includes/header.php');
 
-echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Product Specification Groups') . '" alt="" />' . ' ' . $Title .
+echo '<p class = "page_title_text">
+		<img src = "'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title = "' . __('Product Specification Groups') . '" alt = "" />' . ' ' . $Title .
 	'</p>';
 
 if (isset($_GET['SelectedGroup'])){
@@ -189,18 +189,18 @@ or deletion of the records*/
 	$SQL = "SELECT groupid, groupname, groupbyNo, headertitle, labels, numcols FROM prodspecgroups ORDER BY groupbyNo";
 	$Result = DB_query($SQL);
 
-	echo '<table class="selection">';
+	echo '<table class = "selection">';
 	echo '<thead>
 			<tr>
 				<th colspan = "8"><h3>' . __('Product Specification Groups') . '</h3></th>
 			</tr>';
 	echo '<tr>
-			<th class="SortedColumn">' . __('Group ID') . '</th>
-			<th class="SortedColumn">' . __('Group Name') . '</th>
-			<th class="SortedColumn">' . __('Group By No.') . '</th>
-			<th class="SortedColumn">' . __('Header Title') . '</th>
-			<th class="SortedColumn">' . __('Labels') . '</th>
-			<th class="SortedColumn">' . __('Num Cols') . '</th>
+			<th class = "SortedColumn">' . __('Group ID') . '</th>
+			<th class = "SortedColumn">' . __('Group Name') . '</th>
+			<th class = "SortedColumn">' . __('Group By No.') . '</th>
+			<th class = "SortedColumn">' . __('Header Title') . '</th>
+			<th class = "SortedColumn">' . __('Labels') . '</th>
+			<th class = "SortedColumn">' . __('Num Cols') . '</th>
 		</tr>
 	</thead>';
 
@@ -208,15 +208,15 @@ or deletion of the records*/
 
 		$HeaderText = empty($MyRow['headertitle']) ? __('N/A') : $MyRow['headertitle'];
 
-	echo '<tr class="striped_row">
+	echo '<tr class = "striped_row">
 			<td>', $MyRow['groupid'], '</td>
 			<td>', $MyRow['groupname'], '</td>
 			<td>', $MyRow['groupbyNo'], '</td>
 			<td>', $HeaderText, '</td>
 			<td>', $MyRow['labels'], '</td>
 			<td>', $MyRow['numcols'], '</td>
-			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedGroup=', $MyRow['groupid'], '">' . __('Edit') . '</a></td>
-			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedGroup=', $MyRow['groupid'], '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this product specification group?') . '\');">' . __('Delete') . '</a></td>
+			<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedGroup = ', $MyRow['groupid'], '">' . __('Edit') . '</a></td>
+			<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedGroup = ', $MyRow['groupid'], '&amp;delete = 1" onclick = "return confirm(\'' . __('Are you sure you wish to delete this product specification group?') . '\');">' . __('Delete') . '</a></td>
 		</tr>';
 
 	} //END while LIST LOOP
@@ -224,15 +224,15 @@ or deletion of the records*/
 } //end of ifs and buts!
 
 if (isset($SelectedGroup)) {
-	echo '<div class="centre">
-			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Show all Product Specification Group Definitions') . '</a>
+	echo '<div class = "centre">
+			<a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Show all Product Specification Group Definitions') . '</a>
 		</div>';
 }
 
 if (!isset($_GET['delete'])) {
 
 	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedGroup)) {
 		//editing an existing product spec group
@@ -257,7 +257,7 @@ if (!isset($_GET['delete'])) {
 		$_POST['Labels']  = $MyRow['labels'];
 		$_POST['NumCols']  = $MyRow['numcols'];
 
-		echo '<input type = "hidden" name="SelectedGroup" value = "' . $SelectedGroup . '" />';
+		echo '<input type = "hidden" name = "SelectedGroup" value = "' . $SelectedGroup . '" />';
 		echo '<fieldset>';
 		echo '<legend>' . __('Update Product Specification Group.') . '</legend>';
 		echo '<field>
@@ -280,47 +280,47 @@ if (!isset($_GET['delete'])) {
 
 	echo '<field>
 			<label for = "GroupName">' . __('Group Name') . ':</label>
-			<input type = "text" name="GroupName"' . (in_array('GroupName',$Errors) ? ' class="inputerror"' : '' ) .' ' . (!isset($SelectedGroup) ? 'autofocus ="autofocus"' : 'autofocus = "autofocus"') . ' required = "required" value = "' . $_POST['GroupName'] . '" size = "35" maxlength = "50" />
+			<input type = "text" name = "GroupName"' . (in_array('GroupName',$Errors) ? ' class = "inputerror"' : '' ) .' ' . (!isset($SelectedGroup) ? 'autofocus = "autofocus"' : 'autofocus = "autofocus"') . ' required = "required" value = "' . $_POST['GroupName'] . '" size = "35" maxlength = "50" />
 			<fieldhelp>' . __('A descriptive name to identify this product specification group') . '</fieldhelp>
 		</field>';
 
 	echo '<field>
 			<label for = "GroupByNo">' . __('Group By Number') . ':</label>
-			<input type = "text"' . (in_array('GroupByNo',$Errors) ? ' class="inputerror"' : '' ) .' name="GroupByNo" required = "required" class="integer" value = "' . $_POST['GroupByNo'] . '" size = "6" maxlength = "11" />
+			<input type = "text"' . (in_array('GroupByNo',$Errors) ? ' class = "inputerror"' : '' ) .' name = "GroupByNo" required = "required" class = "integer" value = "' . $_POST['GroupByNo'] . '" size = "6" maxlength = "11" />
 			<fieldhelp>' . __('A numeric value used for ordering groups') . '</fieldhelp>
 		</field>';
 
 	echo '<field>
 			<label for = "HeaderTitle">' . __('Header Title') . ':</label>
-			<input type = "text"' . (in_array('HeaderTitle',$Errors) ? ' class="inputerror"' : '' ) .' name="HeaderTitle" value = "' . $_POST['HeaderTitle'] . '" size = "60" maxlength = "100" />
+			<input type = "text"' . (in_array('HeaderTitle',$Errors) ? ' class = "inputerror"' : '' ) .' name = "HeaderTitle" value = "' . $_POST['HeaderTitle'] . '" size = "60" maxlength = "100" />
 			<fieldhelp>' . __('Optional header title for this group') . '</fieldhelp>
 		</field>';
 
 	echo '<field>
 			<label for = "TrailerText">' . __('Trailer Text') . ':</label>
-			<input type = "text"' . (in_array('TrailerText',$Errors) ? ' class="inputerror"' : '' ) .' name="TrailerText" value = "' . $_POST['TrailerText'] . '" size = "60" maxlength = "240" />
+			<input type = "text"' . (in_array('TrailerText',$Errors) ? ' class = "inputerror"' : '' ) .' name = "TrailerText" value = "' . $_POST['TrailerText'] . '" size = "60" maxlength = "240" />
 			<fieldhelp>' . __('Optional trailer text for this group') . '</fieldhelp>
 		</field>';
 
 	echo '<field>
 			<label for = "NumCols">' . __('Number of Columns') . ':</label>
-			<select name="NumCols"' . (in_array('NumCols',$Errors) ? ' class="inputerror"' : '' ) . ' required = "required">
-				<option value = "2"' . ($_POST['NumCols'] == '2' ? ' selected ="selected"' : '') . '>2</option>
-				<option value = "3"' . ($_POST['NumCols'] == '3' ? ' selected ="selected"' : '') . '>3</option>
+			<select name = "NumCols"' . (in_array('NumCols',$Errors) ? ' class = "inputerror"' : '' ) . ' required = "required">
+				<option value = "2"' . ($_POST['NumCols'] == '2' ? ' selected = "selected"' : '') . '>2</option>
+				<option value = "3"' . ($_POST['NumCols'] == '3' ? ' selected = "selected"' : '') . '>3</option>
 			</select>
 			<fieldhelp>' . __('Select 2 or 3 columns for this group. If you select 3 columns the Testing Method on the group will display') . '</fieldhelp>
 		</field>';
 
 	echo '<field>
 			<label for = "Labels">' . __('Labels') . ':</label>
-			<input type = "text"' . (in_array('Labels',$Errors) ? ' class="inputerror"' : '' ) .' name="Labels" required = "required" value = "' . $_POST['Labels'] . '" size = "60" maxlength = "240" />
+			<input type = "text"' . (in_array('Labels',$Errors) ? ' class = "inputerror"' : '' ) .' name = "Labels" required = "required" value = "' . $_POST['Labels'] . '" size = "60" maxlength = "240" />
 			<fieldhelp>' . __('Comma separated list of column labels - must match the number of columns') . '</fieldhelp>
 		</field>';
 
 	echo '</fieldset>';
 
-	echo '<div class="centre">
-			<input type = "submit" name="submit" value = "'.__('Enter Information').'" />
+	echo '<div class = "centre">
+			<input type = "submit" name = "submit" value = "'.__('Enter Information').'" />
 		</div>';
 	echo '</form>';
 } //end if record deleted no point displaying form to add record

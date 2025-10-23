@@ -6,7 +6,7 @@ require(__DIR__ . '/includes/session.php');
 
 /*
 http://127.0.0.1/~brink/webERP/GetStockImage.php
-?automake =1&width = 81&height = 74&stockid = &textcolor = FFFFF0&bevel = 3&text = aa&bgcolor = 007F00
+?automake = 1&width = 81&height = 74&stockid = &textcolor = FFFFF0&bevel = 3&text = aa&bgcolor = 007F00
 
 automake - if specified allows auto creation of images
 stockid - if not specified it produces a blank image if set to empty string uses default stock image
@@ -136,7 +136,7 @@ if ( !extension_loaded('gd') or (!$automake and (!isset($FileName) or !file_exis
 	} else {
 		prnMsg( __('The Image could not be retrieved because it does not exist'), 'error');
 	}
-	echo '<br /><a href="' .$RootPath .'/index.php">' . __('Back to the menu'). '</a>';
+	echo '<br /><a href = "' .$RootPath .'/index.php">' . __('Back to the menu'). '</a>';
 	include('includes/footer.php');
 	exit();
 }

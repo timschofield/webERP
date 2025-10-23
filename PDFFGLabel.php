@@ -83,7 +83,7 @@ $HTML = '<html><head><style>
 		.table th, .table td { border: 1px solid #000; padding: 4px; }
 		.header { font-weight: bold; font-size: 16px; text-align: center; margin-bottom: 20px; }
 		</style></head><body>';
-$pageBreak = '<div style="page-break-after: always;"></div>';
+$pageBreak = '<div style = "page-break-after: always;"></div>';
 $HTML .= '<link href = "css/reports.css" rel = "stylesheet" type = "text/css" />';
 
 $i = 1;
@@ -119,17 +119,17 @@ if ($LeftOverQty > 0) {
 
 if ($NoOfLabels > 0) {
 	for ($i = 1;  $i<=$NoOfLabels;  $i++) {
-		$HTML .= '<div><img class="logo" src = ' . $_SESSION['LogoFile'] . ' /></div>';
+		$HTML .= '<div><img class = "logo" src = ' . $_SESSION['LogoFile'] . ' /></div>';
 		$MyRow = $MyArray[$i];
 		$SQL = "SELECT stockmaster.controlled, stockmaster.units FROM stockmaster WHERE stockid ='" . $MyRow['itemcode'] . "'";
 		$CheckControlledResult = DB_query($SQL, '<br />' . __('Could not determine if the item was controlled or not because') . ' ');
 		$ControlledRow = DB_fetch_row($CheckControlledResult);
 		// Build HTML for each label
 		$HTML .= '
-		<div style="width: 100%; font-family: Arial, sans-serif; border: 1px solid #000; margin-bottom: 24px; padding: 12px;">
-			<div style="text-align: center;">
+		<div style = "width: 100%; font-family: Arial, sans-serif; border: 1px solid #000; margin-bottom: 24px; padding: 12px;">
+			<div style = "text-align: center;">
 			</div>
-			<div style="margin-top: 10px;">
+			<div style = "margin-top: 10px;">
 				<strong>' . $_SESSION['CompanyRecord']['regoffice1'] . '</strong><br />
 				' . $_SESSION['CompanyRecord']['regoffice2'] . '<br />
 				' . $_SESSION['CompanyRecord']['regoffice3'] . '<br />
@@ -137,7 +137,7 @@ if ($NoOfLabels > 0) {
 				' . $_SESSION['CompanyRecord']['regoffice4'] . '<br />
 			</div>
 			<hr>
-			<div style="margin-top: 12px;">
+			<div style = "margin-top: 12px;">
 				<strong>Item:</strong> ' . $MyArray[$i]['itemcode'] . '<br />
 				<strong>Description:</strong> ' . $MyArray[$i]['itemdescription'] . '<br />
 				<strong>Weight (' . htmlspecialchars($ControlledRow[1]) . '):</strong> ' . $MyArray[$i]['weight'] . '<br />
@@ -186,7 +186,7 @@ if ($NoOfLabels > 0) {
 
 		$Title = __('Email a Work Order');
 		include('includes/header.php');
-		echo '<div class="centre"><br /><br /><br />';
+		echo '<div class = "centre"><br /><br /><br />';
 		if ($Success == 1) {
 	prnMsg(__('Work Order') . ' ' . $SelectedWO . ' ' . __('has been emailed to') . ' ' . $_POST['EmailTo'] . ' ' . __('as directed'), 'success');
 } else {
@@ -198,6 +198,6 @@ if ($NoOfLabels > 0) {
 	$Title = __('Label Error');
 	include('includes/header.php');
 	prnMsg(__('There were no labels to print'),'warn');
-	echo '<br /><a href="'.$RootPath.'/index.php">' .  __('Back to the menu') . '</a>';
+	echo '<br /><a href = "'.$RootPath.'/index.php">' .  __('Back to the menu') . '</a>';
 	include('includes/footer.php');
 }

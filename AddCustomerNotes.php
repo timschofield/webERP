@@ -24,7 +24,7 @@ if (isset($_POST['DebtorNo'])) {
 	$DebtorNo = $_GET['DebtorNo'];
 }
 
-echo '<a class="toplink" href="' . $RootPath . '/SelectCustomer.php?DebtorNo=' . $DebtorNo . '">' . __('Back to Select Customer') . '</a>';
+echo '<a class = "toplink" href = "' . $RootPath . '/SelectCustomer.php?DebtorNo = ' . $DebtorNo . '">' . __('Back to Select Customer') . '</a>';
 
 if ( isset($_POST['submit']) ) {
 
@@ -102,7 +102,7 @@ if (!isset($Id)) {
 				WHERE debtorno = '".$DebtorNo."'";
 	$Result = DB_query($SQLname);
 	$Row = DB_fetch_array($Result);
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . __('Notes for Customer').': <b>' .$Row['name'] . '</b></p>';
+	echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title = "' . __('Search') . '" alt = "" />' . __('Notes for Customer').': <b>' .$Row['name'] . '</b></p>';
 
 	$SQL = "SELECT noteid,
 					debtorno,
@@ -115,7 +115,7 @@ if (!isset($Id)) {
 				ORDER BY date DESC";
 	$Result = DB_query($SQL);
 
-	echo '<table class="selection">
+	echo '<table class = "selection">
 		<tr>
 			<th>' . __('Date') . '</th>
 			<th>' . __('Note') . '</th>
@@ -125,13 +125,13 @@ if (!isset($Id)) {
 		</tr>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
-		echo '<tr class="striped_row">
+		echo '<tr class = "striped_row">
 				<td>', ConvertSQLDate($MyRow['date']), '</td>
 				<td>', $MyRow['note'], '</td>
-				<td><a href="', $MyRow['href'], '">', $MyRow['href'], '</a></td>
+				<td><a href = "', $MyRow['href'], '">', $MyRow['href'], '</a></td>
 				<td>', $MyRow['priority'], '</td>
-				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Id=', $MyRow['noteid'], '&DebtorNo=', $MyRow['debtorno'], '">' .  __('Edit').' </td>
-				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Id=', $MyRow['noteid'], '&DebtorNo=', $MyRow['debtorno'], '&delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this customer note?') . '\');">' .  __('Delete'). '</td>
+				<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Id = ', $MyRow['noteid'], '&DebtorNo = ', $MyRow['debtorno'], '">' .  __('Edit').' </td>
+				<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Id = ', $MyRow['noteid'], '&DebtorNo = ', $MyRow['debtorno'], '&delete = 1" onclick = "return confirm(\'' . __('Are you sure you wish to delete this customer note?') . '\');">' .  __('Delete'). '</td>
 			</tr>';
 
 	}
@@ -139,15 +139,15 @@ if (!isset($Id)) {
 	echo '</table>';
 }
 if (isset($Id)) {
-	echo '<div class="centre">
-			<a href="'.htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?DebtorNo='.$DebtorNo.'">' . __('Review all notes for this Customer') . '</a>
+	echo '<div class = "centre">
+			<a href = "'.htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?DebtorNo = '.$DebtorNo.'">' . __('Review all notes for this Customer') . '</a>
 		</div>';
 }
 
 if (!isset($_GET['delete'])) {
 
-	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?DebtorNo=' . $DebtorNo . '">';
-	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?DebtorNo = ' . $DebtorNo . '">';
+	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 	if (isset($Id)) {
 		//editing an existing
@@ -172,9 +172,9 @@ if (!isset($_GET['delete'])) {
 		$_POST['NoteDate']  = $MyRow['date'];
 		$_POST['Priority']  = $MyRow['priority'];
 		$_POST['debtorno']  = $MyRow['debtorno'];
-		echo '<input type = "hidden" name="Id" value = "'. $Id .'" />';
-		echo '<input type = "hidden" name="Con_ID" value = "' . $_POST['Noteid'] . '" />';
-		echo '<input type = "hidden" name="DebtorNo" value = "' . $_POST['debtorno'] . '" />';
+		echo '<input type = "hidden" name = "Id" value = "'. $Id .'" />';
+		echo '<input type = "hidden" name = "Con_ID" value = "' . $_POST['Noteid'] . '" />';
+		echo '<input type = "hidden" name = "DebtorNo" value = "' . $_POST['debtorno'] . '" />';
 		echo '<fieldset>
 				<legend>', __('Edit existing customer note'), '</legend>
 				<field>
@@ -189,50 +189,50 @@ if (!isset($_GET['delete'])) {
 	echo '<field>
 			<label for = "Note">' . __('Contact Note'). '</label>';
 	if (isset($_POST['Note'])) {
-		echo '<textarea name="Note" autofocus = "autofocus" required = "required" rows = "3" cols = "32">' .$_POST['Note'] . '</textarea>
+		echo '<textarea name = "Note" autofocus = "autofocus" required = "required" rows = "3" cols = "32">' .$_POST['Note'] . '</textarea>
 			<fieldhelp>', __('Write the customer note here'), '</fieldhelp>
 		</field>';
 	} else {
-		echo '<textarea name="Note" autofocus = "autofocus" required = "required" rows = "3" cols = "32"></textarea>
+		echo '<textarea name = "Note" autofocus = "autofocus" required = "required" rows = "3" cols = "32"></textarea>
 			<fieldhelp>', __('Write the customer note here'), '</fieldhelp>
 		</field>';
 	}
 	echo '<field>
 			<label for = "Href">' .  __('WWW') . '</label>';
 	if (isset($_POST['Href'])) {
-		echo '<input type = "url" name="Href" value = "'.$_POST['Href'].'" size = "35" maxlength = "100" />
+		echo '<input type = "url" name = "Href" value = "'.$_POST['Href'].'" size = "35" maxlength = "100" />
 			<fieldhelp>', __('Any website associated with this note'), '</fieldhelp>
 		</field>';
 	} else {
-		echo '<input type = "url" name="Href" size = "35" maxlength = "100" />
+		echo '<input type = "url" name = "Href" size = "35" maxlength = "100" />
 			<fieldhelp>', __('Any website associated with this note'), '</fieldhelp>
 		</field>';
 	}
 	echo '<field>
 			<label for = "NoteDate">' . __('Date') . '</label>';
 	if (isset($_POST['NoteDate'])) {
-		echo '<input type = "date" required name="NoteDate"  value = "' . FormatDateForSQL($_POST['NoteDate']) . '" size = "11" maxlength = "10" />
+		echo '<input type = "date" required name = "NoteDate"  value = "' . FormatDateForSQL($_POST['NoteDate']) . '" size = "11" maxlength = "10" />
 			<fieldhelp>', __('The date of this note'), '</fieldhelp>
 		</field>';
 	} else {
-		echo '<input type = "date" required name="NoteDate" value = "' . date('Y-m-d') . '" size = "11" maxlength = "10" />
+		echo '<input type = "date" required name = "NoteDate" value = "' . date('Y-m-d') . '" size = "11" maxlength = "10" />
 			<fieldhelp>', __('The date of this note'), '</fieldhelp>
 		</field>';
 	}
 	echo '<field>
 			<label for = "Priority">' .  __('Priority'). '</label>';
 	if (isset($_POST['Priority'])) {
-		echo '<input type = "text" class="number" required = "required" name="Priority" class="number" value = "' . $_POST['Priority']. '" size = "1" maxlength = "3" />
+		echo '<input type = "text" class = "number" required = "required" name = "Priority" class = "number" value = "' . $_POST['Priority']. '" size = "1" maxlength = "3" />
 			<fieldhelp>', __('The priority level for this note, between 1 and 9'), '</fieldhelp>
 		</field>';
 	} else {
-		echo '<input type = "text" class="number" required = "required"  name="Priority" value = "1"  size = "1" maxlength = "3"/>
+		echo '<input type = "text" class = "number" required = "required"  name = "Priority" value = "1"  size = "1" maxlength = "3"/>
 			<fieldhelp>', __('The priority level for this note, between 1 and 9'), '</fieldhelp>
 		</field>';
 	}
 	echo '</fieldset>';
-	echo '<div class="centre">
-			<input type = "submit" name="submit" value = "'.__('Enter Information').'" />
+	echo '<div class = "centre">
+			<input type = "submit" name = "submit" value = "'.__('Enter Information').'" />
 		</div>
 	</form>';
 

@@ -13,13 +13,13 @@ include('includes/SQL_CommonFunctions.php');
 if (!isset($_SESSION['CustomerID'])){
 	echo '<br />
 		<br />';
-	prnMsg(__('A customer must first be selected before logins can be defined for it') . '<br /><br /><a href="' . $RootPath . '/SelectCustomer.php">' . __('Select A Customer') . '</a>','info');
+	prnMsg(__('A customer must first be selected before logins can be defined for it') . '<br /><br /><a href = "' . $RootPath . '/SelectCustomer.php">' . __('Select A Customer') . '</a>','info');
 	include('includes/footer.php');
 	exit();
 }
 
 
-echo '<a href="' . $RootPath . '/SelectCustomer.php">' . __('Back to Customers') . '</a><br />';
+echo '<a href = "' . $RootPath . '/SelectCustomer.php">' . __('Back to Customers') . '</a><br />';
 
 $SQL = "SELECT name
 		FROM debtorsmaster
@@ -29,8 +29,8 @@ $Result = DB_query($SQL);
 $MyRow = DB_fetch_array($Result);
 $CustomerName = $MyRow['name'];
 
-echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . __('Customer') . '" alt="" />' . ' ' . __('Customer') . ' : ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName. __(' has been selected') .
+echo '<p class = "page_title_text">
+		<img src = "'.$RootPath.'/css/'.$Theme.'/images/customer.png" title = "' . __('Customer') . '" alt = "" />' . ' ' . __('Customer') . ' : ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName. __(' has been selected') .
 	'</p>
 	<br />';
 
@@ -130,7 +130,7 @@ echo '<fieldset>
 		<legend>', __('Login details for customer'), ' ', $CustomerName, '</legend>
 		<field>
 			<label for = "UserID">' . __('User Login') . ':</label>
-			<input type = "text" name = "UserID" required = "required" ' . (isset($_GET['SelectedUser']) ? '':'autofocus ="autofocus"') . 'title = "" size = "22" maxlength = "20" />
+			<input type = "text" name = "UserID" required = "required" ' . (isset($_GET['SelectedUser']) ? '':'autofocus = "autofocus"') . 'title = "" size = "22" maxlength = "20" />
 			<fieldhelp>' . __('Enter a userid for this customer login') . '</fieldhelp>
 		</field>';
 
@@ -150,12 +150,12 @@ if (!isset($_POST['Email'])) {
 echo '<input type = "hidden" name = "Access" value = "1" />';
 echo '<field>
 		<label for = "Password">' . __('Password') . ':</label>
-		<input type = "password" name = "Password" required = "required" ' . (isset($_GET['SelectedUser']) ? 'autofocus ="autofocus"':'') . ' title="" size = "22" maxlength = "20" value = "' . $_POST['Password'] . '" />
+		<input type = "password" name = "Password" required = "required" ' . (isset($_GET['SelectedUser']) ? 'autofocus = "autofocus"':'') . ' title = "" size = "22" maxlength = "20" value = "' . $_POST['Password'] . '" />
 		<fieldhelp>' . __('Enter a password for this customer login') . '</fieldhelp>
 	</field>
 	<field>
 		<label for = "RealName">' . __('Full Name') . ':</label>
-		<input type = "text" name = "RealName" value = "' . $_POST['RealName'] . '" required = "required" title="" size = "36" maxlength = "35" />
+		<input type = "text" name = "RealName" value = "' . $_POST['RealName'] . '" required = "required" title = "" size = "36" maxlength = "35" />
 		<fieldhelp>' . __('Enter the user\'s real name') . '</fieldhelp>
 	</field>
 	<field>
@@ -164,7 +164,7 @@ echo '<field>
 	</field>
 	<field>
 		<label for = "Email">' . __('Email Address') .':</label>
-		<input type = "email" name = "Email" value = "' . $_POST['Email'] .'" required = "required" title="" size = "32" maxlength = "55" />
+		<input type = "email" name = "Email" value = "' . $_POST['Email'] .'" required = "required" title = "" size = "32" maxlength = "55" />
 		<fieldhelp>' . __('Enter the user\'s email address') . '</fieldhelp>
 	</field>
     <field>
@@ -279,7 +279,7 @@ echo '</select>
 
 echo '</fieldset>';
 
-echo '<div class="centre">
+echo '<div class = "centre">
 		<input type = "submit" name = "submit" value = "' . __('Enter Information') . '" />
     </div>
 	</form>';

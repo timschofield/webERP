@@ -56,10 +56,10 @@ if (file_exists($ManualHeader)) { // Use locale ManualHeader.html if exists. Eac
 	  <link rel = "stylesheet" type = "text/css" href = "', $ManualStyle, '" />
 	</head>
 	<body>
-		<div id="pagetitle">', $Title, '</div>
-		<div class="right">
-			<a id="top">&#160;</a><a class="minitext" href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '">☜ ', __('Table of Contents'), '</a><br />
-			<a class="minitext" href="#bottom">⬇ ', __('Go to Bottom'), '</a>
+		<div id = "pagetitle">', $Title, '</div>
+		<div class = "right">
+			<a id = "top">&#160;</a><a class = "minitext" href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '">☜ ', __('Table of Contents'), '</a><br />
+			<a class = "minitext" href = "#bottom">⬇ ', __('Go to Bottom'), '</a>
 		</div>';
 }
 
@@ -81,12 +81,12 @@ if (((!isset($_POST['Submit'])) and (empty($_GET['ViewTopic']))) || ((isset($_PO
 	foreach ($TOC_Array['TableOfContents'] as $Title => $SubLinks) {
 		$Name = 'Select' . $Title;
 		echo '<ul>
-			<li class="toc"';
+			<li class = "toc"';
 		// List topic title:
 		if (!isset($_POST['Submit'])) {
-			echo ' style="list-style-type:none;">';
+			echo ' style = "list-style-type:none;">';
 		}
-		echo '<a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?ViewTopic=', $Title, '">', $SubLinks[0], '</a></li>';
+		echo '<a href = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?ViewTopic = ', $Title, '">', $SubLinks[0], '</a></li>';
 		// List topic content:
 		if (count($SubLinks) > 1) {
 			echo '<ul>';
@@ -104,7 +104,7 @@ if (((!isset($_POST['Submit'])) and (empty($_GET['ViewTopic']))) || ((isset($_PO
 		++$j;
 	}
 	echo '</ul>',
-		'<p><input type = "submit" name="Submit" value = "', __('Display Checked'), '" /></p>',
+		'<p><input type = "submit" name = "Submit" value = "', __('Display Checked'), '" /></p>',
 		'</form>';
 }
 
@@ -124,7 +124,7 @@ foreach ($TOC_Array['TableOfContents'] as $Name => $FullName) {
 		if (!file_exists($ManualPage)) {// If locale topic page not exist, use topic page in doc/Manual.
 			$ManualPage = 'doc/Manual/Manual' . $Name;
 		}
-		echo '<div id="manualpage">';
+		echo '<div id = "manualpage">';
 		include($ManualPage);
 		echo '</div>';
 	}
@@ -135,9 +135,9 @@ $ManualFooter = 'locale/' . $Language . '/Manual/ManualFooter.html';
 if (file_exists($ManualFooter)) {// Use locale ManualHeader.html if exists. Each language can have its own page footer.
 	include($ManualFooter);
 } else {// Default page footer:
-	echo '<div class="right">
-			<a id="bottom">&#160;</a><a class="minitext" href="#top">⬆ ', __('Go to Top'), '</a><br />
-			<a id="top">&#160;</a><a class="minitext" href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '">☜ ', __('Table of Contents'), '</a>
+	echo '<div class = "right">
+			<a id = "bottom">&#160;</a><a class = "minitext" href = "#top">⬆ ', __('Go to Top'), '</a><br />
+			<a id = "top">&#160;</a><a class = "minitext" href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '">☜ ', __('Table of Contents'), '</a>
 		</div>
 	</body>
 	</html>';

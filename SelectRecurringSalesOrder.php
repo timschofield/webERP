@@ -9,11 +9,11 @@ include('includes/header.php');
 
 echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post">';
 echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
-echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' .
+echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/customer.png" title = "' .
 	__('Inventory Items') . '" alt = "" />' . ' ' . $Title . '</p>';
 
 echo '<fieldset>
-		<legend class="search">', __('Search Recurring Orders'), '</legend>
+		<legend class = "search">', __('Search Recurring Orders'), '</legend>
 		<field>
 			<label for = "StockLocation">' . __('Select recurring order templates for delivery from:') . ' </label>
 			<select name = "StockLocation">';
@@ -40,7 +40,7 @@ echo '</select>
 	</field>
 	</fieldset>';
 
-echo '<div class="centre"><input type = "submit" name = "SearchRecurringOrders" value = "' . __('Search Recurring Orders') . '" /></div>';
+echo '<div class = "centre"><input type = "submit" name = "SearchRecurringOrders" value = "' . __('Search Recurring Orders') . '" /></div>';
 
 if (isset($_POST['SearchRecurringOrders'])){
 
@@ -81,7 +81,7 @@ SUM(recurrsalesorderdetails.unitprice*recurrsalesorderdetails.quantity*(1-recurr
 
 	/*show a table of the orders returned by the SQL */
 
-	echo '<table cellpadding = "2" width = "90%" class="selection">
+	echo '<table cellpadding = "2" width = "90%" class = "selection">
 			<tr>
 				<th>' . __('Modify') . '</th>
 				<th>' . __('Customer') . '</th>
@@ -95,20 +95,20 @@ SUM(recurrsalesorderdetails.unitprice*recurrsalesorderdetails.quantity*(1-recurr
 
 	while ($MyRow = DB_fetch_array($SalesOrdersResult)) {
 
-		$ModifyPage = $RootPath . '/RecurringSalesOrders.php?ModifyRecurringSalesOrder =' . $MyRow['recurrorderno'];
+		$ModifyPage = $RootPath . '/RecurringSalesOrders.php?ModifyRecurringSalesOrder = ' . $MyRow['recurrorderno'];
 		$FormatedLastRecurrence = ConvertSQLDate($MyRow['lastrecurrence']);
 		$FormatedStopDate = ConvertSQLDate($MyRow['stopdate']);
 		$FormatedOrderValue = locale_number_format($MyRow['ordervalue'],$MyRow['currdecimalplaces']);
 
-		echo '<tr class="striped_row">
-				<td><a href="', $ModifyPage, '">', $MyRow['recurrorderno'], '</a></td>
+		echo '<tr class = "striped_row">
+				<td><a href = "', $ModifyPage, '">', $MyRow['recurrorderno'], '</a></td>
 				<td>', $MyRow['name'], '</td>
 				<td>', $MyRow['brname'], '</td>
 				<td>', $MyRow['customerref'], '</td>
 				<td>', $FormatedLastRecurrence, '</td>
 				<td>', $FormatedStopDate, '</td>
 				<td>', $MyRow['frequency'], '</td>
-				<td class="number">', $FormatedOrderValue, '</td>
+				<td class = "number">', $FormatedOrderValue, '</td>
 			</tr>';
 	//end of page full new headings if
 	}

@@ -202,7 +202,7 @@ if (isset($_POST['CreateTemplate'])){
 		fwrite ($FileHandle, $SQLScript);
 		fclose ($FileHandle);
 
-		echo '<p><a href="' . $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/reports/' . $_POST['TemplateName'] .'.sql">' . __('Show the sql template file produced') . '</a></p>';
+		echo '<p><a href = "' . $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/reports/' . $_POST['TemplateName'] .'.sql">' . __('Show the sql template file produced') . '</a></p>';
 
            /* Send email with the template file */
 		$To = array('"Submissions" <submissions@weberp.org>');
@@ -218,7 +218,7 @@ if (isset($_POST['CreateTemplate'])){
 		} /*end submit button hit */
 
 		echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-		echo '<div class="centre">';
+		echo '<div class = "centre">';
 		echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 		prnMsg(__('Running the create a new company template script will export all account groups, account codes and tax set up tables including tax groups, tax authorities, tax rates etc. However, no transactions or private data will be exported. There is opportunity to prevent specific general ledger accounts from being exported where these are considered private - again no transactional or balance data is exported and you can inspect the contents of the sql file. The template file will be emailed automatically to the webERP project'),'info');
 
@@ -244,7 +244,7 @@ if (isset($_POST['CreateTemplate'])){
 
 		echo '</table>';
 		echo '<hr />';
-		echo '<div class="centre"><input type = "submit" name = "CreateTemplate" value = "' . __('Create Template and Email') . '" /></div>';
+		echo '<div class = "centre"><input type = "submit" name = "CreateTemplate" value = "' . __('Create Template and Email') . '" /></div>';
 
 		echo '</div>
 		</form>';

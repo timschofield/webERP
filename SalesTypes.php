@@ -15,7 +15,7 @@ if (isset($_POST['SelectedType'])){
 
 $Errors = array();
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title = "' . __('Search') . '" alt = "" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['submit'])) {
 
@@ -180,11 +180,11 @@ or deletion of the records*/
 	$SQL = "SELECT typeabbrev,sales_type FROM salestypes ORDER BY typeabbrev";
 	$Result = DB_query($SQL);
 
-	echo '<table class="selection">
+	echo '<table class = "selection">
 			<thead>
 			<tr>
-				<th class="SortedColumn">' . __('Type Code') . '</th>
-				<th class="SortedColumn">' . __('Type Name') . '</th>
+				<th class = "SortedColumn">' . __('Type Code') . '</th>
+				<th class = "SortedColumn">' . __('Type Name') . '</th>
 				<th colspan = "2"></th>
 			</tr>
 		</thead>
@@ -192,11 +192,11 @@ or deletion of the records*/
 
 while ($MyRow = DB_fetch_row($Result)) {
 
-	echo '<tr class="striped_row">
+	echo '<tr class = "striped_row">
 			<td>', $MyRow[0], '</td>
 			<td>', $MyRow[1], '</td>
-			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedType=', $MyRow[0], '">' . __('Edit') . '</a></td>
-			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedType=', $MyRow[0], '&amp;delete=yes" onclick="return confirm(\'' . __('Are you sure you wish to delete this price list and all the prices it may have set up?') . '\');">' . __('Delete') . '</a></td>
+			<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedType = ', $MyRow[0], '">' . __('Edit') . '</a></td>
+			<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedType = ', $MyRow[0], '&amp;delete = yes" onclick = "return confirm(\'' . __('Are you sure you wish to delete this price list and all the prices it may have set up?') . '\');">' . __('Delete') . '</a></td>
 		</tr>';
 	}
 	//END while LIST LOOP
@@ -207,14 +207,14 @@ while ($MyRow = DB_fetch_row($Result)) {
 if (isset($SelectedType)) {
 
 	echo '<br />
-			<div class="centre">
-				<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">' . __('Show All Sales Types Defined') . '</a>
+			<div class = "centre">
+				<a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">' . __('Show All Sales Types Defined') . '</a>
 			</div>';
 }
 if (! isset($_GET['delete'])) {
 
 	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" >
-		<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+		<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 
 	// The user wish to EDIT an existing type
@@ -231,8 +231,8 @@ if (! isset($_GET['delete'])) {
 		$_POST['TypeAbbrev'] = $MyRow['typeabbrev'];
 		$_POST['Sales_Type']  = $MyRow['sales_type'];
 
-		echo '<input type = "hidden" name="SelectedType" value = "' . $SelectedType . '" />
-			<input type = "hidden" name="TypeAbbrev" value = "' . $_POST['TypeAbbrev'] . '" />
+		echo '<input type = "hidden" name = "SelectedType" value = "' . $SelectedType . '" />
+			<input type = "hidden" name = "TypeAbbrev" value = "' . $_POST['TypeAbbrev'] . '" />
 			<fieldset>
 			<legend>' . __('Edit Sales Type/Price') . '</legend>
 			<field>
@@ -248,7 +248,7 @@ if (! isset($_GET['delete'])) {
 				<legend>' . __('Create Sales Type/Price List') . '</legend>
 				<field>
 					<label for = "TypeAbbrev">' . __('Type Code') . ':</label>
-					<input type = "text" ' . (in_array('SalesType',$Errors) ? 'class ="inputerror"' : '' ) .' size = "3" maxlength = "2" name="TypeAbbrev" />
+					<input type = "text" ' . (in_array('SalesType',$Errors) ? 'class = "inputerror"' : '' ) .' size = "3" maxlength = "2" name = "TypeAbbrev" />
 				</field>';
 	}
 
@@ -257,12 +257,12 @@ if (! isset($_GET['delete'])) {
 	}
 	echo '<field>
 			<label for = "Sales_Type">' . __('Sales Type Name') . ':</label>
-			<input type = "text" name="Sales_Type" value = "' . $_POST['Sales_Type'] . '" />
+			<input type = "text" name = "Sales_Type" value = "' . $_POST['Sales_Type'] . '" />
 		</field>
 		</fieldset>'; // close main table
 
-	echo '<div class="centre">
-			<input type = "submit" name="submit" value = "' . __('Accept') . '" /><input type = "reset" name="Cancel" value = "' . __('Cancel') . '" />
+	echo '<div class = "centre">
+			<input type = "submit" name = "submit" value = "' . __('Accept') . '" /><input type = "reset" name = "Cancel" value = "' . __('Cancel') . '" />
 		</div>
 	</form>';
 

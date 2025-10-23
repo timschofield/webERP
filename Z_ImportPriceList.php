@@ -9,7 +9,7 @@ include('includes/header.php');
 
 if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);}
 
-echo '<p class = "page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
+echo '<p class = "page_title_text"><img alt = "" src = "' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title = "' .
 		__('Import Price List from CSV file') . '" />' . ' ' .
 		__('Import Price List from CSV file') . '</p>';

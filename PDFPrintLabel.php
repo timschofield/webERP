@@ -48,14 +48,14 @@ if ((isset($_POST['ShowLabels']) or isset($_POST['SelectAll']))
 
 	if (DB_num_rows($LabelsResult) == 0) {
 		prnMsg(__('There were no price labels to print out for the category specified'), 'warn');
-		echo '<br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' .  __('Back') . '</a>';
+		echo '<br /><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' .  __('Back') . '</a>';
 		include('includes/footer.php');
 		exit();
 	}
 
 	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post">';
 	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
-	echo '<table class="selection">
+	echo '<table class = "selection">
 			<tr>
 				<th>' . __('Item Code') . '</th>
 				<th>' . __('Item Description') . '</th>
@@ -75,7 +75,7 @@ if ((isset($_POST['ShowLabels']) or isset($_POST['SelectAll']))
 		echo '<tr>
 				<td>' . $LabelRow['stockid'] . '</td>
 				<td>' . $LabelRow['description'] . '</td>
-				<td class="number">' . locale_number_format($LabelRow['price'], $LabelRow['decimalplaces']) . '</td>
+				<td class = "number">' . locale_number_format($LabelRow['price'], $LabelRow['decimalplaces']) . '</td>
 				<td>';
 		if (isset($_POST['SelectAll']) && isset($_POST['CheckAll'])) {
 			echo '<input type = "checkbox" checked = "checked" name = "PrintLabel' . $i . '" />';
@@ -99,11 +99,11 @@ if ((isset($_POST['ShowLabels']) or isset($_POST['SelectAll']))
 		<input type = "hidden" name = "Currency" value = "' . $_POST['Currency'] . '" />
 		<input type = "hidden" name = "EffectiveDate" value = "' . FormatDateForSQL($_POST['EffectiveDate']) . '" />
 		<input type = "hidden" name = "LabelsPerItem" value = "' . $_POST['LabelsPerItem'] . '" />
-		<div class="centre">
+		<div class = "centre">
 			<input type = "submit" name = "PrintLabels" value = "' . __('Print Labels') . '" />
 		</div>
-		<div class="centre">
-			<a href="' . $RootPath . '/Labels.php">' . __('Label Template Maintenance') . '</a>
+		<div class = "centre">
+			<a href = "' . $RootPath . '/Labels.php">' . __('Label Template Maintenance') . '</a>
 		</div>
 		</form>';
 	include('includes/footer.php');
@@ -186,7 +186,7 @@ if (isset($_POST['PrintLabels']) && $NoOfLabels > 0) {
 		</style>
 	</head>
 	<body>
-		<table class="label-table">';
+		<table class = "label-table">';
 	$HTML .= '<link href = "css/reports.css" rel = "stylesheet" type = "text/css" />';
 
 	$TotalLabels = $NoOfLabels * $_POST['LabelsPerItem'];
@@ -201,29 +201,29 @@ if (isset($_POST['PrintLabels']) && $NoOfLabels > 0) {
 				if ($colCount == 0) {
 	$HTML .= '<tr>';
 }
-				$HTML .= '<td class="label-cell"><div class="label-content" style="font-size:' . $LabelFields[0]['FontSize'] . 'pt;">';
+				$HTML .= '<td class = "label-cell"><div class = "label-content" style = "font-size:' . $LabelFields[0]['FontSize'] . 'pt;">';
 
 				foreach ($LabelFields as $Field) {
 					if ($Field['FieldValue'] == 'price') {
 	$Value = $_POST['Price' . $i] . ' ' . $_POST['Currency'];
-						$HTML .= '<div style="position:absolute;top:' . $Field['VPos'] . 'pt;left:' . $Field['HPos'] . 'pt;">' . htmlspecialchars($Value) . '</div>';
+						$HTML .= '<div style = "position:absolute;top:' . $Field['VPos'] . 'pt;left:' . $Field['HPos'] . 'pt;">' . htmlspecialchars($Value) . '</div>';
 } elseif ($Field['FieldValue'] == 'stockid') {
 	$Value = $_POST['StockID' . $i];
-						$HTML .= '<div style="position:absolute;top:' . $Field['VPos'] . 'pt;left:' . $Field['HPos'] . 'pt;">' . htmlspecialchars($Value) . '</div>';
+						$HTML .= '<div style = "position:absolute;top:' . $Field['VPos'] . 'pt;left:' . $Field['HPos'] . 'pt;">' . htmlspecialchars($Value) . '</div>';
 } elseif ($Field['FieldValue'] == 'description') {
 	$Value = $_POST['Description' . $i];
-						$HTML .= '<div style="position:absolute;top:' . $Field['VPos'] . 'pt;left:' . $Field['HPos'] . 'pt;">' . htmlspecialchars($Value) . '</div>';
+						$HTML .= '<div style = "position:absolute;top:' . $Field['VPos'] . 'pt;left:' . $Field['HPos'] . 'pt;">' . htmlspecialchars($Value) . '</div>';
 } elseif ($Field['FieldValue'] == 'barcode') {
 	$Value = $_POST['Barcode' . $i];
 						if ($Field['Barcode'] == 1 && !empty($Value)) {
 							// Generate barcode using an external library and embed as an image
 							// For demonstration, just output barcode value as text
-							$HTML .= '<div style="position:absolute;top:' . $Field['VPos'] . 'pt;left:' . $Field['HPos'] . 'pt;"><span style="font-family:monospace;">' . htmlspecialchars($Value) . '</span></div>';
+							$HTML .= '<div style = "position:absolute;top:' . $Field['VPos'] . 'pt;left:' . $Field['HPos'] . 'pt;"><span style = "font-family:monospace;">' . htmlspecialchars($Value) . '</span></div>';
 }
 					} elseif ($Field['FieldValue'] == 'logo') {
 	if (!empty($_SESSION['LogoFile'])) {
 							$LogoPath = $_SESSION['LogoFile'];
-							$HTML .= '<img src="' . $LogoPath . '" style="position:absolute;top:' . $Field['VPos'] . 'pt;left:' . $Field['HPos'] . 'pt;max-height:' . $Field['FontSize'] . 'pt;" />';
+							$HTML .= '<img src = "' . $LogoPath . '" style = "position:absolute;top:' . $Field['VPos'] . 'pt;left:' . $Field['HPos'] . 'pt;max-height:' . $Field['FontSize'] . 'pt;" />';
 }
 					}
 				}
@@ -268,7 +268,7 @@ if (isset($_POST['PrintLabels']) && $NoOfLabels > 0) {
 	$BookMark = '';
 	include('includes/header.php');
 
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . __('Price Labels') . '" alt="" />
+	echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/customer.png" title = "' . __('Price Labels') . '" alt = "" />
          ' . ' ' . __('Print Price Labels') . '</p>';
 
 	if (!function_exists('gd_info')) {
@@ -344,14 +344,14 @@ if (isset($_POST['PrintLabels']) && $NoOfLabels > 0) {
 
 		echo '<field>
 				<label for = "LabelsPerItem">' . __('Number of labels per item') . ':</label>
-				<input type = "text" class="number" name = "LabelsPerItem" size = "3" value = "1" /></field>';
+				<input type = "text" class = "number" name = "LabelsPerItem" size = "3" value = "1" /></field>';
 
 		echo '</fieldset>
-				<div class="centre">
+				<div class = "centre">
 					<input type = "submit" name = "ShowLabels" value = "' . __('Show Labels') . '" />
 				</div>
-				<div class="centre">
-					<a href="' . $RootPath . '/Labels.php">' . __('Label Template Maintenance') . '</a>
+				<div class = "centre">
+					<a href = "' . $RootPath . '/Labels.php">' . __('Label Template Maintenance') . '</a>
 				</div>
 				</form>';
 

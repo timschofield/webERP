@@ -109,8 +109,8 @@ if (!isset($SelectedWC)) {
 then none of the above are true and the list of work centres will be displayed with
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
-	echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '
+	echo '<p class = "page_title_text">
+			<img src = "'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title = "' . __('Search') . '" alt = "" />' . ' ' . $Title . '
 		</p>';
 
 	$SQL = "SELECT workcentres.code,
@@ -124,14 +124,14 @@ or deletion of the records*/
 			WHERE workcentres.location = locations.loccode";
 
 	$Result = DB_query($SQL);
-	echo '<table class="selection">
+	echo '<table class = "selection">
 		<thead>
 			<tr>
-				<th class="SortedColumn">', __('WC Code'), '</th>
-				<th class="SortedColumn">', __('Description'), '</th>
-				<th class="SortedColumn">', __('Location'), '</th>
-				<th class="SortedColumn">', __('Overhead GL Account'), '</th>
-				<th class="SortedColumn">', __('Overhead Per Hour'), '</th>
+				<th class = "SortedColumn">', __('WC Code'), '</th>
+				<th class = "SortedColumn">', __('Description'), '</th>
+				<th class = "SortedColumn">', __('Location'), '</th>
+				<th class = "SortedColumn">', __('Overhead GL Account'), '</th>
+				<th class = "SortedColumn">', __('Overhead Per Hour'), '</th>
 				<th colspan = "2">&nbsp;</th>
 			</tr>
 		</thead>
@@ -139,14 +139,14 @@ or deletion of the records*/
 
 	while ($MyRow = DB_fetch_array($Result)) {
 
-		echo '<tr class="striped_row">
+		echo '<tr class = "striped_row">
 				<td>', $MyRow['code'], '</td>
 				<td>', $MyRow['description'], '</td>
 				<td>', $MyRow['locationname'], '</td>
 				<td>', $MyRow['overheadrecoveryact'], '</td>
-				<td class="number">', $MyRow['overheadperhour'], '</td>
-				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedWC=', $MyRow['code'], '">' . __('Edit') . '</a></td>
-				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedWC=', $MyRow['code'], '&amp;delete=yes" onclick="return confirm(\'' . __('Are you sure you wish to delete this work centre?') . '\');">' . __('Delete')  . '</a></td>
+				<td class = "number">', $MyRow['overheadperhour'], '</td>
+				<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedWC = ', $MyRow['code'], '">' . __('Edit') . '</a></td>
+				<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedWC = ', $MyRow['code'], '&amp;delete = yes" onclick = "return confirm(\'' . __('Are you sure you wish to delete this work centre?') . '\');">' . __('Delete')  . '</a></td>
 			</tr>';
 	}
 
@@ -157,15 +157,15 @@ or deletion of the records*/
 //end of ifs and buts!
 
 if (isset($SelectedWC)) {
-	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-		'/images/maintenance.png" title="',// Icon image.
+	echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme,
+		'/images/maintenance.png" title = "',// Icon image.
 		$Title, '" /> ',// Icon title.
 		$Title, '</p>';// Page title.
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Show all Work Centres') . '</a></div>';
+	echo '<div class = "centre"><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Show all Work Centres') . '</a></div>';
 }
 
 echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedWC)) {
 	//editing an existing work centre
@@ -188,8 +188,8 @@ if (isset($SelectedWC)) {
 	$_POST['OverheadRecoveryAct']  = $MyRow['overheadrecoveryact'];
 	$_POST['OverheadPerHour']  = $MyRow['overheadperhour'];
 
-	echo '<input type = "hidden" name="SelectedWC" value = "' . $SelectedWC . '" />
-		<input type = "hidden" name="Code" value = "' . $_POST['Code'] . '" />
+	echo '<input type = "hidden" name = "SelectedWC" value = "' . $SelectedWC . '" />
+		<input type = "hidden" name = "Code" value = "' . $_POST['Code'] . '" />
 		<fieldset>
 			<legend>', __('Edit Work Centre'), '</legend>
 			<field>
@@ -205,7 +205,7 @@ if (isset($SelectedWC)) {
 			<legend>', __('Create Work Centre'), '</legend>
 			<field>
 				<label for = "Code">' . __('Work Centre Code') . ':</label>
-				<input type = "text" name="Code" pattern = "[^&+-]{2,}" required = "required" autofocus = "autofocus" title=""  size = "6" maxlength = "5" value = "' . $_POST['Code'] . '" placeholder = "'.__('More than 2 legal characters').'" />
+				<input type = "text" name = "Code" pattern = "[^&+-]{2,}" required = "required" autofocus = "autofocus" title = ""  size = "6" maxlength = "5" value = "' . $_POST['Code'] . '" placeholder = "'.__('More than 2 legal characters').'" />
 				<fieldhelp>'.__('The code should be at least 2 characters and no illegal characters allowed') . ' ' . '" \' - &amp; or a space'.'</fieldhelp>
 			</field>';
 }
@@ -221,13 +221,13 @@ if (!isset($_POST['Description'])) {
 }
 echo '<field>
 		<label for = "Description">' . __('Work Centre Description') . ':</label>
-		<input type = "text" pattern = "[^&+-]{3,}" required = "required" title="" name="Description" ' . (isset($SelectedWC)? 'autofocus ="autofocus"': '') . ' size = "21" maxlength = "20" value = "' . $_POST['Description'] . '" placeholder = "'.__('More than 3 legal characters').'" />
+		<input type = "text" pattern = "[^&+-]{3,}" required = "required" title = "" name = "Description" ' . (isset($SelectedWC)? 'autofocus = "autofocus"': '') . ' size = "21" maxlength = "20" value = "' . $_POST['Description'] . '" placeholder = "'.__('More than 3 legal characters').'" />
 		<fieldhelp>'.__('The Work Center should be more than 3 characters and no illegal characters allowed').'</fieldhelp>
 	</field>';
 
 echo '<field>
 		<label for = "Location">' . __('Location') . ':</label>
-		<select name="Location">';
+		<select name = "Location">';
 
 while ($MyRow = DB_fetch_array($Result)) {
 	if (isset($_POST['Location']) and $MyRow['loccode']==$_POST['Location']) {
@@ -247,7 +247,7 @@ echo '</select>
 
 echo '<field>
 		<label for = "OverheadRecoveryAct">' . __('Overhead Recovery GL Account') . ':</label>
-		<select name="OverheadRecoveryAct">';
+		<select name = "OverheadRecoveryAct">';
 
 //SQL to poulate account selection boxes
 $SQL = "SELECT accountcode,
@@ -279,14 +279,14 @@ echo '</select>
 
 echo '<field>
 		<label for = "OverheadPerHour">' . __('Overhead Per Hour') . ':</label>
-		<input type = "text" class="number" name="OverheadPerHour" size = "6" title="" maxlength = "6" value = "'.$_POST['OverheadPerHour'].'" />
+		<input type = "text" class = "number" name = "OverheadPerHour" size = "6" title = "" maxlength = "6" value = "'.$_POST['OverheadPerHour'].'" />
 		<fieldhelp>'.__('The input must be numeric').'</fieldhelp>
 	</field>';
 
 echo '</fieldset>';
 
-echo '<div class="centre">
-		<input type = "submit" name="submit" value = "' . __('Enter Information') . '" />
+echo '<div class = "centre">
+		<input type = "submit" name = "submit" value = "' . __('Enter Information') . '" />
 	</div>
 	</form>';
 include('includes/footer.php');

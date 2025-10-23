@@ -7,8 +7,8 @@ $ViewTopic = 'Tax';// Filename in ManualContents.php's TOC.
 $BookMark = 'TaxGroups';// Anchor's id in the manual's html document.
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
-		'/images/maintenance.png" title="' .
+echo '<p class = "page_title_text"><img alt = "" src = "' . $RootPath . '/css/' . $Theme .
+		'/images/maintenance.png" title = "' .
 		__('Tax Group Maintenance') . '" />' . ' ' .
 		__('Tax Group Maintenance') . '</p>';
 
@@ -168,26 +168,26 @@ if (!isset($SelectedGroup)) {
 	$Result = DB_query($SQL);
 
 	if ( DB_num_rows($Result) == 0 ) {
-		echo '<div class="centre">';
+		echo '<div class = "centre">';
 		prnMsg(__('There are no tax groups configured.'),'info');
 		echo '</div>';
 	} else {
-		echo '<table class="selection">
+		echo '<table class = "selection">
 			<thead>
 				<tr>
-					<th class="SortedColumn" >' . __('Group No') . '</th>
-					<th class="SortedColumn" >' . __('Tax Group') . '</th>
-					<th colspan="2" >&nbsp;</th>
+					<th class = "SortedColumn" >' . __('Group No') . '</th>
+					<th class = "SortedColumn" >' . __('Tax Group') . '</th>
+					<th colspan = "2" >&nbsp;</th>
 				</tr>
 			</thead>
 			<tbody>';
 
 		while ($MyRow = DB_fetch_array($Result)) {
-			echo '<tr class="striped_row">
-					<td class="number">', $MyRow['taxgroupid'], '</td>
+			echo '<tr class = "striped_row">
+					<td class = "number">', $MyRow['taxgroupid'], '</td>
 					<td>', $MyRow['taxgroupdescription'], '</td>
-					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedGroup=', $MyRow['taxgroupid'], '">' . __('Edit') . '</a></td>
-					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedGroup=', $MyRow['taxgroupid'], '&amp;Delete=1&amp;GroupID=', urlencode($MyRow['taxgroupdescription']), '" onclick="return confirm(\'' . __('Are you sure you wish to delete this tax group?') . '\');">' . __('Delete') . '</a></td>
+					<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedGroup = ', $MyRow['taxgroupid'], '">' . __('Edit') . '</a></td>
+					<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedGroup = ', $MyRow['taxgroupid'], '&amp;Delete = 1&amp;GroupID = ', urlencode($MyRow['taxgroupdescription']), '" onclick = "return confirm(\'' . __('Are you sure you wish to delete this tax group?') . '\');">' . __('Delete') . '</a></td>
 					</tr>';
 
 		} //END while LIST LOOP
@@ -196,8 +196,8 @@ if (!isset($SelectedGroup)) {
 } //end of ifs and buts!
 
 if (isset($SelectedGroup)) {
-	echo '<div class="centre">
-			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Review Existing Groups') . '</a>
+	echo '<div class = "centre">
+			<a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Review Existing Groups') . '</a>
 		</div>';
 }
 
@@ -218,10 +218,10 @@ if (isset($SelectedGroup)) {
 	}
 }
 echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 echo '<fieldset>';
 if ( isset($_POST['SelectedGroup'])) {
-	echo '<input type="hidden" name="SelectedGroup" value="' . $_POST['SelectedGroup'] . '" />';
+	echo '<input type = "hidden" name = "SelectedGroup" value = "' . $_POST['SelectedGroup'] . '" />';
 	echo '<legend>', __('Edit Tax Group'), '</legend>';
 } else {
 	echo '<legend>', __('Create Tax Group'), '</legend>';
@@ -233,13 +233,13 @@ if (!isset($_POST['GroupName'])) {
 }
 echo '<field>
 		<label for = "GroupName">' . __('Tax Group') . ':</label>
-		<input pattern = "(?!^ +$)[^><+-]{4,}" title="" placeholder = "'.__('4 to 40 legal characters').'" type="text" name="GroupName" size = "40" maxlength = "40" value="' . $_POST['GroupName'] . '" />
+		<input pattern = "(?!^ +$)[^><+-]{4,}" title = "" placeholder = "'.__('4 to 40 legal characters').'" type = "text" name = "GroupName" size = "40" maxlength = "40" value = "' . $_POST['GroupName'] . '" />
 		<fieldhelp>'.__('The group name must be more 4 and less than 40 characters and cannot be left blank').'</fieldhelp>
 	</field>';
 echo '</fieldset>';
 
-echo '<div class="centre">
-		<input type="submit" name="submit" value="' . __('Enter Group') . '" />
+echo '<div class = "centre">
+		<input type = "submit" name = "submit" value = "' . __('Enter Group') . '" />
 	</div>
 	</form>';
 
@@ -274,11 +274,11 @@ if (isset($SelectedGroup)) {
 	/* the order and tax on tax will only be an issue if more than one tax authority in the group */
 	if (count($TaxAuthsUsed)>0) {
 		echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-				<input type="hidden" name="SelectedGroup" value="' . $SelectedGroup .'" />';
-		echo '<table class="selection">
+		echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />
+				<input type = "hidden" name = "SelectedGroup" value = "' . $SelectedGroup .'" />';
+		echo '<table class = "selection">
 				<tr>
-					<th colspan="3"><h3>' . __('Calculation Order') . '</h3></th>
+					<th colspan = "3"><h3>' . __('Calculation Order') . '</h3></th>
 				</tr>
 				<tr>
 					<th>' . __('Tax Authority') . '</th>
@@ -292,34 +292,34 @@ if (isset($SelectedGroup)) {
 	$TaxAuthRow[$i]['calculationorder'] = $i;
 }
 
-			echo '<tr class="striped_row">
+			echo '<tr class = "striped_row">
 				<td>' . $TaxAuthRow[$i]['taxname'] . '</td>
-				<td><input type="text" class="integer" pattern = "(?!^0*$)(\d+)" title="'.__('The input must be positive integer and less than 10').'" name="CalcOrder_' . $TaxAuthRow[$i]['taxauthid'] . '" value="' . $TaxAuthRow[$i]['calculationorder'] . '" size = "1" maxlength = "1" style="width: 90%" /></td>
-				<td><select name="TaxOnTax_' . $TaxAuthRow[$i]['taxauthid'] . '" style="width: 100%">';
+				<td><input type = "text" class = "integer" pattern = "(?!^0*$)(\d+)" title = "'.__('The input must be positive integer and less than 10').'" name = "CalcOrder_' . $TaxAuthRow[$i]['taxauthid'] . '" value = "' . $TaxAuthRow[$i]['calculationorder'] . '" size = "1" maxlength = "1" style = "width: 90%" /></td>
+				<td><select name = "TaxOnTax_' . $TaxAuthRow[$i]['taxauthid'] . '" style = "width: 100%">';
 			if ($TaxAuthRow[$i]['taxontax']==1) {
-	echo '<option selected = "selected" value="1">' . __('Yes') . '</option>';
-				echo '<option value="0">' . __('No') . '</option>';
+	echo '<option selected = "selected" value = "1">' . __('Yes') . '</option>';
+				echo '<option value = "0">' . __('No') . '</option>';
 } else {
-				echo '<option value="1">' . __('Yes') . '</option>';
-				echo '<option selected = "selected" value="0">' . __('No') . '</option>';
+				echo '<option value = "1">' . __('Yes') . '</option>';
+				echo '<option selected = "selected" value = "0">' . __('No') . '</option>';
 			}
 			echo '</select></td>
 				</tr>';
 
 		}
 		echo '</table>';
-		echo '<div class="centre">
-				<input type="submit" name="UpdateOrder" value="' . __('Update Order') . '" />
+		echo '<div class = "centre">
+				<input type = "submit" name = "UpdateOrder" value = "' . __('Update Order') . '" />
 			</div>';
 	}
 	echo '</form>';
 
 	if (DB_num_rows($Result)>0 ) {
-		echo '<br /><table class="selection">
+		echo '<br /><table class = "selection">
 			<tr>
-				<th colspan="4">' . __('Assigned Taxes') . '</th>
+				<th colspan = "4">' . __('Assigned Taxes') . '</th>
 				<th rowspan = "2">&nbsp;</th>
-				<th colspan="2">' . __('Available Taxes') . '</th>
+				<th colspan = "2">' . __('Available Taxes') . '</th>
 			</tr>
 			<tr>
 				<th>' . __('Tax Auth ID') . '</th>
@@ -331,7 +331,7 @@ if (isset($SelectedGroup)) {
 			</tr>';
 
 	} else {
-		echo '<br /><div class="centre">' .
+		echo '<br /><div class = "centre">' .
 				__('There are no tax authorities defined to allocate to this tax group') .
 			'</div>';
 	}
@@ -346,14 +346,14 @@ if (isset($SelectedGroup)) {
 } else {
 				$TaxOnTax = __('No');
 			}
-			printf('<tr class="striped_row">
-				<td class="number">%s</td>
+			printf('<tr class = "striped_row">
+				<td class = "number">%s</td>
 				<td>%s</td>
-				<td class="number">%s</td>
+				<td class = "number">%s</td>
 				<td>%s</td>
-				<td class="centre"><a href="%sSelectedGroup=%s&amp;remove=1&amp;TaxAuthority=%s" onclick="return confirm(\'' .
+				<td class = "centre"><a href = "%sSelectedGroup = %s&amp;remove = 1&amp;TaxAuthority = %s" onclick = "return confirm(\'' .
 					__('Are you sure you wish to remove this tax authority from the group?') . '\');">' . __('Remove') . '</a></td>
-				<td class="number">&nbsp;</td>
+				<td class = "number">&nbsp;</td>
 				<td>&nbsp;</td>
 				</tr>',
 				$AvailRow['taxid'],
@@ -366,14 +366,14 @@ if (isset($SelectedGroup)) {
 				);
 
 		} else {
-			printf('<tr class="striped_row">
-				<td class="number">&nbsp;</td>
+			printf('<tr class = "striped_row">
+				<td class = "number">&nbsp;</td>
 				<td>&nbsp;</td>
-				<td class="number">&nbsp;</td>
+				<td class = "number">&nbsp;</td>
 				<td>&nbsp;</td>
-				<td class="centre"><a href="%sSelectedGroup=%s&amp;add=1&amp;TaxAuthority=%s">' .
+				<td class = "centre"><a href = "%sSelectedGroup = %s&amp;add = 1&amp;TaxAuthority = %s">' .
 					__('Add') . '</a></td>
-				<td class="number">%s</td>
+				<td class = "number">%s</td>
 				<td>%s</td>
 				</tr>',
 				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '?',
@@ -386,10 +386,10 @@ if (isset($SelectedGroup)) {
 	echo '</table>';
 }
 
-echo '<div class="centre">
-		<a href="' . $RootPath . '/TaxAuthorities.php">' . __('Tax Authorities and Rates Maintenance') .  '</a><br />
-		<a href="' . $RootPath . '/TaxProvinces.php">' . __('Dispatch Tax Province Maintenance') .  '</a><br />
-		<a href="' . $RootPath . '/TaxCategories.php">' . __('Tax Category Maintenance') .  '</a>
+echo '<div class = "centre">
+		<a href = "' . $RootPath . '/TaxAuthorities.php">' . __('Tax Authorities and Rates Maintenance') .  '</a><br />
+		<a href = "' . $RootPath . '/TaxProvinces.php">' . __('Dispatch Tax Province Maintenance') .  '</a><br />
+		<a href = "' . $RootPath . '/TaxCategories.php">' . __('Tax Category Maintenance') .  '</a>
 	</div>';
 
 include('includes/footer.php');

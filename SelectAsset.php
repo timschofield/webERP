@@ -41,17 +41,17 @@ $Result = DB_query($SQL);
 if (DB_num_rows($Result) == 0) {
 	echo '<p><font size = "4" color = "red">' . __('Problem Report') . ':</font><br />' .
 		__('There are no asset categories currently defined please use the link below to set them up');
-	echo '<br /><a href="' . $RootPath . '/FixedAssetCategories.php">' . __('Define Asset Categories') . '</a>';
+	echo '<br /><a href = "' . $RootPath . '/FixedAssetCategories.php">' . __('Define Asset Categories') . '</a>';
 	exit();
 }
 // end of showing search facilities
 
 echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post">
 		<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />
-		<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme .
-		'/images/magnifier.png" title="' . __('Search') . '" alt = "" />' . ' ' . $Title . '</p>
+		<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme .
+		'/images/magnifier.png" title = "' . __('Search') . '" alt = "" />' . ' ' . $Title . '</p>
 		<fieldset>
-		<legend class="search">', __('Search Criteria'), '</legend>
+		<legend class = "search">', __('Search Criteria'), '</legend>
 		<field>
 			<label for = "AssetCategory">' . __('In Asset Category') . ':</label>
 			<select name = "AssetCategory">';
@@ -111,7 +111,7 @@ echo '</select>
 echo '<field>
 		<label>'. '<b>' . __('or') . ' </b>' . __('Enter partial asset code') . ':</label>';
 if (isset($_POST['AssetCode'])) {
-	echo '<input type = "text" class="number" name = "AssetCode" value = "' . $_POST['AssetCode'] . '" size = "15" maxlength = "13" />';
+	echo '<input type = "text" class = "number" name = "AssetCode" value = "' . $_POST['AssetCode'] . '" size = "15" maxlength = "13" />';
 } else {
 	echo '<input type = "text" name = "AssetCode" size = "15" maxlength = "13" />';
 }
@@ -140,7 +140,7 @@ echo '</select>
 	</field>';
 
 echo '</fieldset>
-	<div class="centre">
+	<div class = "centre">
 		<input type = "submit" name = "Search" value = "' . __('Search Now') . '" />
 	</div>';
 
@@ -258,7 +258,7 @@ if (isset($SearchResult) and !isset($_POST['Select'])) {
 	$_POST['PageOffset'] = $ListPageMax;
 }
 		if ($ListPageMax > 1) {
-	echo '<div class="centre"><p>&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . __('of') . ' ' .
+	echo '<div class = "centre"><p>&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . __('of') . ' ' .
 				$ListPageMax . ' ' . __('pages') . '. ' . __('Go to Page') . ': ';
 			echo '<select name = "PageOffset">';
 			$ListPage = 1;
@@ -283,7 +283,7 @@ if (isset($SearchResult) and !isset($_POST['Select'])) {
 		echo '<div>';
 		echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
-		echo '<table class="selection">';
+		echo '<table class = "selection">';
 		$TableHeader = '<tr>
 					<th>' . __('Asset Code') . '</th>
 					<th>' . __('Description') . '</th>
@@ -297,7 +297,7 @@ if (isset($SearchResult) and !isset($_POST['Select'])) {
 			DB_data_seek($SearchResult, ($_POST['PageOffset'] - 1) * $_SESSION['DisplayRecordsMax']);
 		}
 		while (($MyRow = DB_fetch_array($SearchResult)) and ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
-			echo '<tr class="striped_row">
+			echo '<tr class = "striped_row">
 				<td><input type = "submit" name = "Select" value = "' . $MyRow['assetid'] . '" /></td>
 				<td>' . $MyRow['description'] . '</td>
 				<td>' . $MyRow['locationdescription'] . '</td>

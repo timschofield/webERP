@@ -7,7 +7,7 @@ $ViewTopic = 'Inventory';
 $BookMark = 'AuthoriseRequest';
 include('includes/header.php');
 
-echo '<p class = "page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title = "' . $Title . '" alt = "" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['UpdateAll'])) {
 	foreach ($_POST as $POSTVariableName => $POSTValue) {

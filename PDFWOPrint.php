@@ -113,12 +113,12 @@ if (isset($_GET['LabelLot'])) {
 if (!isset($_GET['WO']) and !isset($_POST['WO'])) {
 	$Title = __('Select a Work Order');
 	include('includes/header.php');
-	echo '<div class="centre">';
+	echo '<div class = "centre">';
 	prnMsg(__('Select a Work Order Number to Print before calling this page'), 'error');
-	echo '<table class="table_index">
+	echo '<table class = "table_index">
 			<tr>
-				<td class="menu_group_item">
-					<li><a href="' . $RootPath . '/SelectWorkOrder.php">' . __('Select Work Order') . '</a></li>
+				<td class = "menu_group_item">
+					<li><a href = "' . $RootPath . '/SelectWorkOrder.php">' . __('Select Work Order') . '</a></li>
 				</td>
 			</tr>
 		</table>
@@ -192,12 +192,12 @@ if (isset($SelectedWO) and $SelectedWO != '' and $SelectedWO > 0) {
 		/*There is no order header returned */
 		$Title = __('Print Work Order Error');
 		include('includes/header.php');
-		echo '<div class="centre">';
+		echo '<div class = "centre">';
 		prnMsg(__('Unable to Locate Work Order Number') . ' : ' . $SelectedWO . ' ', 'error');
-		echo '<table class="table_index">
+		echo '<table class = "table_index">
 				<tr>
-					<td class="menu_group_item">
-						<li><a href="' . $RootPath . '/SelectWorkOrder.php">' . __('Select Work Order') . '</a></li>
+					<td class = "menu_group_item">
+						<li><a href = "' . $RootPath . '/SelectWorkOrder.php">' . __('Select Work Order') . '</a></li>
 					</td>
 				</tr>
 			</table>
@@ -257,12 +257,12 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 	$HTML .= '<html>
 				<head>';
 	$HTML .= '<link href = "css/reports.css" rel = "stylesheet" type = "text/css" />';
-	$HTML .= '<img class="logo" src = ' . $_SESSION['LogoFile'] . ' /><br />';
+	$HTML .= '<img class = "logo" src = ' . $_SESSION['LogoFile'] . ' /><br />';
 
 	$HTML .= '<table>
 				<tr>
-					<td style="width:50%;background:transparent">';
-	$HTML .= '<div class="centre" id="ReportHeader">';
+					<td style = "width:50%;background:transparent">';
+	$HTML .= '<div class = "centre" id = "ReportHeader">';
 	$HTML .= $_SESSION['CompanyRecord']['coyname'] . '<br />';
 	$HTML .= $_SESSION['CompanyRecord']['regoffice1'] . '<br />';
 	$HTML .= $_SESSION['CompanyRecord']['regoffice2'] . '<br />';
@@ -273,7 +273,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 	$HTML .= __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />';
 	$HTML .= '</div>';
 	$HTML .= '</td>';
-	$HTML .= '<td style="width:50%;background:transparent"><div class="centre" id="ReportHeader" style="float:right">';
+	$HTML .= '<td style = "width:50%;background:transparent"><div class = "centre" id = "ReportHeader" style = "float:right">';
 	$HTML .= __('Produced At') . ':<br />';
 	$HTML .= $WOHeader['locationname'] . '<br />';
 	$HTML .= $WOHeader['deladd1'] . '<br />';
@@ -283,8 +283,8 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 	$HTML .= $WOHeader['deladd5'] . '<br />';
 	$HTML .= $WOHeader['deladd6'] . '<br />';
 	$HTML .= '</div></td></tr></table>';
-	$HTML .= '<div class="header">' . __('Work Order Number') . ' ' . htmlspecialchars($SelectedWO) . '</div>';
-	$HTML .= '<table class="table"><tr>
+	$HTML .= '<div class = "header">' . __('Work Order Number') . ' ' . htmlspecialchars($SelectedWO) . '</div>';
+	$HTML .= '<table class = "table"><tr>
 				<th colspan = "7"><h4>' . __('Work Order Details') . '</h4></th>
 			</tr><tr>
 				<th>' . __('Item Number') . '</th>
@@ -300,12 +300,12 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 				<td>' . $WOHeader['description'] . '</td>
 				<td>' . $SerialNo . '</td>
 				<td>' . ConvertSQLDate($WOHeader['requiredby']) . '</td>
-				<td class="number">' . $WOHeader['qtyreqd'] . '</td>
-				<td class="number">' . $WOHeader['qtyrecd'] . '</td>
-				<td class="number">' . $PackQty . '</td>
+				<td class = "number">' . $WOHeader['qtyreqd'] . '</td>
+				<td class = "number">' . $WOHeader['qtyrecd'] . '</td>
+				<td class = "number">' . $PackQty . '</td>
 			</tr>
 			</table>';
-	$HTML .= '<table class="table">';
+	$HTML .= '<table class = "table">';
 	$HTML .= '<tr>
 				<th colspan = "6"><h4>' . __('Material Requirements for this Work Order') . '</h4></th>
 			</tr>
@@ -330,8 +330,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 									FROM worequirements INNER JOIN stockmaster
 									ON worequirements.stockid = stockmaster.stockid
 									WHERE wo = '" . $SelectedWO . "'
-									and worequirements.parentstockid = '" . $StockID . "'
-									ORDER BY worequirements.stockid");
+									and worequirements.parentstockid = '" . $StockID . "'");
 		$IssuedAlreadyResult = DB_query("SELECT stockid,
 											SUM(-qty) as total
 										FROM stockmoves
@@ -359,7 +358,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		$WOLine[$i]['item'] = $RequirementsRow['stockid'];
 		$WOLine[$i]['description'] = $RequirementsRow['description'];
 		$WOLine[$i]['controlled'] = $RequirementsRow['controlled'];
-		$WOLine[$i]['qtyreqd'] = $RequirementsRow['qtypu'];
+		$WOLine[$i]['qtyreqd'] = $WOHeader['qtyreqd']*$RequirementsRow['qtypu'];
 		$WOLine[$i]['issued'] = $Issued  ;
 		$WOLine[$i]['decimalplaces'] = $RequirementsRow['decimalplaces'];
 		$WOLine[$i]['units'] = $RequirementsRow['units'];
@@ -371,8 +370,8 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			<td>' . htmlspecialchars($line['action']) . '</td>
 			<td>' . htmlspecialchars($line['item']) . '</td>
 			<td>' . htmlspecialchars($line['description']) . '</td>
-			<td class="number">' . locale_number_format($line['qtyreqd'], $line['decimalplaces']) . '</td>
-			<td class="number">' . locale_number_format($line['issued'], $line['decimalplaces']) . '</td>
+			<td class = "number">' . locale_number_format($line['qtyreqd'], $line['decimalplaces']) . '</td>
+			<td class = "number">' . locale_number_format($line['issued'], $line['decimalplaces']) . '</td>
 			<td>' . htmlspecialchars($line['units']) . '</td>
 		</tr>';
 	}
@@ -381,33 +380,33 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 
 	// Generate QR code for https://weberp.org via barcodepack
 	ob_start();
-	$qr = new qrCode($RootPath.'/WorkOrderIssue.php?WO='.$SelectedWO.'&StockID='.$StockID,5);
+	$qr = new qrCode($RootPath.'/WorkOrderIssue.php?WO = '.$SelectedWO.'&StockID = '.$StockID,5);
 	/// @todo there seems to be double work done here... $imageData is set but never used?
 	$qr->draw();  // This outputs PNG image directly
 	$imageData = ob_get_contents();
 	ob_end_clean();
 	imagepng(($qr->draw()),$_SESSION['part_pics_dir'] . '/qr.png');
-	$qrImgTag = '<div style="margin-right:18px 0;"><img style="width:192px" style="margin-top:80px" src="' .$_SESSION['part_pics_dir'] . '/qr.png" alt = "QR Code">';
+	$qrImgTag = '<div style = "margin-right:18px 0;"><img style = "width:192px" style = "margin-top:80px" src = "' .$_SESSION['part_pics_dir'] . '/qr.png" alt = "QR Code">';
 	ob_start();
 	$qr = new qrCode($StockID,7);
 	$qr->draw();  // This outputs PNG image directly
 	$imageData = ob_get_contents();
 	ob_end_clean();
 	imagepng(($qr->draw()),$_SESSION['part_pics_dir'] . '/qr1.png');
-	$qrImgTag .= '<img style="width:192px" style="margin-bottom:-10px" src="' .$_SESSION['part_pics_dir'] . '/qr1.png" alt = "QR Code">';
+	$qrImgTag .= '<img style = "width:192px" style = "margin-bottom:-10px" src = "' .$_SESSION['part_pics_dir'] . '/qr1.png" alt = "QR Code">';
 	ob_start();
-	$qr = new qrCode($RootPath.'/WorkOrderReceive.php?WO='.$SelectedWO.'&StockID='.$StockID,5);
+	$qr = new qrCode($RootPath.'/WorkOrderReceive.php?WO = '.$SelectedWO.'&StockID = '.$StockID,5);
 	$qr->draw();  // This outputs PNG image directly
 	$imageData = ob_get_contents();
 	ob_end_clean();
 	imagepng(($qr->draw()),$_SESSION['part_pics_dir'] . '/qr2.png');
-	$qrImgTag .= '<img style="width:192px" style="margin-top:80px" src="' .$_SESSION['part_pics_dir'] . '/qr2.png" alt = "QR Code"></div>';
+	$qrImgTag .= '<img style = "width:192px" style = "margin-top:80px" src = "' .$_SESSION['part_pics_dir'] . '/qr2.png" alt = "QR Code"></div>';
 	// Insert QR code here
 	$HTML .= $qrImgTag;
 
 	$HTML .= '<br/><b>' . __('Date') . ':</b> ______________ &nbsp;&nbsp; <b>' . __('Signed for') . ':</b> ____________________________________';
 
-	// If you want QR codes, generate them as PNG and embed <img src="data:image/png;base64,..." />
+	// If you want QR codes, generate them as PNG and embed <img src = "data:image/png;base64,..." />
 	// Use a library like endroid/qr-code or similar for QR code generation
 
 	$HTML .= '</body></html>';
@@ -518,8 +517,8 @@ else {
 			}
 		} //controlled
 	} //not set yet
-	echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/printer.png" title="' . __('Print') . '" alt="" />' . ' ' . $Title . '</p>';
-	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target="_blank">';
+	echo '<p class = "page_title_text" ><img src = "' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/printer.png" title = "' . __('Print') . '" alt = "" />' . ' ' . $Title . '</p>';
+	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target = "_blank">';
 	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 	if ($ViewingOnly == 1) {
 	echo '<input type = "hidden" name = "ViewingOnly" value = "1" />';
@@ -588,13 +587,13 @@ else {
 	} else {
 		echo '</fieldset>';
 	}
-	echo '<div class="centre">
+	echo '<div class = "centre">
 			<input type = "submit" name = "DoIt" value = "' . __('Paperwork') . '" />
 		</div>
 	</form>';
 
 	if ($PrintLabels == "Yes") {
-	echo '<form action = "' . $RootPath . '/PDFFGLabel.php" method = "post" target="_blank">';
+	echo '<form action = "' . $RootPath . '/PDFFGLabel.php" method = "post" target = "_blank">';
 		echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 		if ($ViewingOnly == 1) {
 			echo '<input type = "hidden" name = "ViewingOnly" value = "1" />';
@@ -619,19 +618,19 @@ else {
 				</field>
 				<field>
 					<label for = "NoOfBoxes">' . __('No of Full Packages') . ':</label>
-					<input name = "NoOfBoxes" class="integer" value = "' .$NoOfBoxes.'"/>
+					<input name = "NoOfBoxes" class = "integer" value = "' .$NoOfBoxes.'"/>
 				</field>
 				<field>
 					<label for = "LabelsPerBox">' . __('Labels/Package') . ':</label>
-					<input name = "LabelsPerBox" class="integer" value = "' .$LabelsPerBox.'"/>
+					<input name = "LabelsPerBox" class = "integer" value = "' .$LabelsPerBox.'"/>
 				</field>
 				<field>
 					<label for = "QtyPerBox">' . __('Weight/Package') . ':</label>
-					<input name = "QtyPerBox" class="number" value = "' .$QtyPerBox. '"/>
+					<input name = "QtyPerBox" class = "number" value = "' .$QtyPerBox. '"/>
 				</field>
 				<field>
 					<label for = "LeftOverQty">' . __('LeftOver Qty') . ':</label>
-					<input name = "LeftOverQty" class="number" value = "' .$LeftOverQty.'"/>
+					<input name = "LeftOverQty" class = "number" value = "' .$LeftOverQty.'"/>
 				</field>
 				<field>
 					<label for = "PrintOrEmail">' . __('Print or Email the Order') . '</label>
@@ -676,7 +675,7 @@ else {
 		else {
 			echo '</fieldset>';
 		}
-		echo '<div class="centre">
+		echo '<div class = "centre">
 				<input type = "submit" name = "PrintLabels" value = "' . __('Labels') . '" />
 			</div>
 			</form>';

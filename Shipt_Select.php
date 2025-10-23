@@ -7,7 +7,7 @@ $ViewTopic = 'Shipments';
 $BookMark = '';
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Search') .
+echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title = "' . __('Search') .
 	'" alt = "" />' . ' ' . $Title . '</p>';
 
 if (isset($_GET['SelectedStockItem'])){
@@ -102,7 +102,7 @@ if (isset($_POST['SearchParts'])) {
 
 if (!isset($ShiptRef) or $ShiptRef == ""){
 	echo '<fieldset>
-			<legend class="search">', __('Search Criteria'), '</legend>
+			<legend class = "search">', __('Search Criteria'), '</legend>
 			<field>
 				<label for = "ShiptRef">', __('Shipment Number'). ':</label>
 				<input type = "text" name = "ShiptRef" maxlength = "10" size = "10" />
@@ -144,7 +144,7 @@ if (!isset($ShiptRef) or $ShiptRef == ""){
 		</field>
 	</fieldset>';
 
-	echo '<div class="centre">
+	echo '<div class = "centre">
 			<input type = "submit" name = "SearchShipments" value = "'. __('Search Shipments'). '" />
 		</div>';
 }
@@ -157,7 +157,7 @@ $SQL = "SELECT categoryid,
 $Result1 = DB_query($SQL);
 
 echo '<fieldset>';
-echo '<legend class="search">' . __('To search for shipments for a specific part use the part selection facilities below') . '</legend>
+echo '<legend class = "search">' . __('To search for shipments for a specific part use the part selection facilities below') . '</legend>
 	<field>
 		<label for = "StockCat">' . __('Select a stock category') . ':</label>
 		<select name = "StockCat">';
@@ -181,14 +181,14 @@ echo '</select>
 	</field>
 	</fieldset>';
 
-echo '<div class="centre">
+echo '<div class = "centre">
 		<input type = "submit" name = "SearchParts" value = "'.__('Search Parts Now').'" />
 		<input type = "submit" name = "ResetPart" value = "'. __('Show All') .'" />
 	</div>';
 
 if (isset($StockItemsResult)) {
 
-	echo '<table class="selection">
+	echo '<table class = "selection">
 			<tr>
 				<th>' .  __('Code') . '</th>
 				<th>' .  __('Description') . '</th>
@@ -201,11 +201,11 @@ if (isset($StockItemsResult)) {
 	while ($MyRow = DB_fetch_array($StockItemsResult)) {
 /*
 Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand     Orders Ostdg	Units	 */
-		echo '<tr class="striped_row">
+		echo '<tr class = "striped_row">
 				<td><input type = "submit" name = "SelectedStockItem" value = "', $MyRow['stockid'], '" /></td>
 				<td>', $MyRow['description'], '</td>
-				<td class="number">', locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']), '</td>
-				<td class="number">', locale_number_format($MyRow['qord'],$MyRow['decimalplaces']), '</td>
+				<td class = "number">', locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']), '</td>
+				<td class = "number">', locale_number_format($MyRow['qord'],$MyRow['decimalplaces']), '</td>
 				<td>', $MyRow['units'], '</td>
 			</tr>';
 
@@ -271,7 +271,7 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 	if (DB_num_rows($ShipmentsResult)>0){
 		/*show a table of the shipments returned by the SQL */
 
-		echo '<table width = "95%" class="selection">
+		echo '<table width = "95%" class = "selection">
 				<tr>
 					<th>' .  __('Shipment'). '</th>
 					<th>' .  __('Supplier'). '</th>
@@ -283,33 +283,33 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 
 		while ($MyRow = DB_fetch_array($ShipmentsResult)) {
 
-			$URL_Modify_Shipment = $RootPath . '/Shipments.php?SelectedShipment =' . $MyRow['shiptref'];
-			$URL_View_Shipment = $RootPath . '/ShipmentCosting.php?SelectedShipment =' . $MyRow['shiptref'];
+			$URL_Modify_Shipment = $RootPath . '/Shipments.php?SelectedShipment = ' . $MyRow['shiptref'];
+			$URL_View_Shipment = $RootPath . '/ShipmentCosting.php?SelectedShipment = ' . $MyRow['shiptref'];
 
 			$FormatedETA = ConvertSQLDate($MyRow['eta']);
 			/* ShiptRef   Supplier  Vessel  Voyage  ETA */
 
 			if ($MyRow['closed']==0) {
-	$URL_Close_Shipment = $URL_View_Shipment . '&amp;Close =Yes';
+	$URL_Close_Shipment = $URL_View_Shipment . '&amp;Close = Yes';
 
-				echo '<tr class="striped_row">
+				echo '<tr class = "striped_row">
 						<td>', $MyRow['shiptref'], '</td>
 						<td>', $MyRow['suppname'], '</td>
 						<td>', $MyRow['vessel'], '</td>
 						<td>', $MyRow['voyageref'], '</td>
 						<td>', $FormatedETA, '</td>
-						<td><a href="', $URL_View_Shipment, '">' . __('Costing') . '</a></td>
-						<td><a href="', $URL_Modify_Shipment, '">' . __('Modify') . '</a></td>
-						<td><a href="', $URL_Close_Shipment, '"><b>' . __('Close') . '</b></a></td>
+						<td><a href = "', $URL_View_Shipment, '">' . __('Costing') . '</a></td>
+						<td><a href = "', $URL_Modify_Shipment, '">' . __('Modify') . '</a></td>
+						<td><a href = "', $URL_Close_Shipment, '"><b>' . __('Close') . '</b></a></td>
 					</tr>';
 } else {
-				echo '<tr class="striped_row">
+				echo '<tr class = "striped_row">
 						<td>', $MyRow['shiptref'], '</td>
 						<td>', $MyRow['suppname'], '</td>
 						<td>', $MyRow['vessel'], '</td>
 						<td>', $MyRow['voyage'], '</td>
 						<td>', $FormatedETA, '</td>
-						<td><a href="', $URL_View_Shipment, '">' . __('Costing') . '</a></td>
+						<td><a href = "', $URL_View_Shipment, '">' . __('Costing') . '</a></td>
 						</tr>';
 			}
 		//end of page full new headings if

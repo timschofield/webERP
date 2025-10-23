@@ -183,7 +183,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '</tbody>
 				</table>
 				<div class = "centre">
-					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick="window.close()" /></form>
+					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -213,7 +213,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	else {
 		$Title = __('Inventory Planning Report');
 		include ('includes/header.php');
-		echo '<p class = "page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Inventory') . '" alt="" />' . ' ' . __('Inventory Planning Report') . '</p>';
+		echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title = "' . __('Inventory') . '" alt = "" />' . ' ' . __('Inventory Planning Report') . '</p>';
 		echo $HTML;
 		include ('includes/footer.php');
 	}
@@ -226,7 +226,7 @@ else { /*The option to print PDF was not hit */
 	$BookMark = 'PlanningReport';
 	include ('includes/header.php');
 
-	echo '<p class = "page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+	echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title = "' . __('Search') . '" alt = "" />' . ' ' . $Title . '</p>';
 
 	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target = "_blank">';
 	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
@@ -261,7 +261,7 @@ else { /*The option to print PDF was not hit */
 	else {
 		echo '<option value = "0.5">' . __('Two Weeks') . '</option>';
 	}
-	echo '<option ' . ($_POST['NumberMonthsHolding'] == 1 ? 'selected ="selected" ' : '') . 'value = "1">' . __('One Month') . '</option>';
+	echo '<option ' . ($_POST['NumberMonthsHolding'] == 1 ? 'selected = "selected" ' : '') . 'value = "1">' . __('One Month') . '</option>';
 	if ($_POST['NumberMonthsHolding'] == 1.5) {
 	echo '<option selected = "selected" value = "1.5">' . __('Six Weeks') . '</option>';
 }

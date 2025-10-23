@@ -13,10 +13,10 @@ if (!isset($_GET['AcknowledgementNo']) || $_GET['AcknowledgementNo'] == "") {
 	$Title = __('Select Acknowledgement To Print');
 	include('includes/header.php');
 	prnMsg(__('Select an Acknowledgement to Print before calling this page'), 'error');
-	echo '<table class="table_index">
+	echo '<table class = "table_index">
 				<tr>
-					<td class="menu_group_item">
-						<ul><li><a href="' . $RootPath . '/SelectSalesOrder.php?Acknowledgements=Quotes_Only">' . __('Acknowledgements') . '</a></li>
+					<td class = "menu_group_item">
+						<ul><li><a href = "' . $RootPath . '/SelectSalesOrder.php?Acknowledgements = Quotes_Only">' . __('Acknowledgements') . '</a></li>
 						</ul>
 					</td>
 				</tr>
@@ -71,10 +71,10 @@ if (DB_num_rows($Result) == 0) {
 	$Title = __('Print Acknowledgement Error');
 	include('includes/header.php');
 	prnMsg(__('Unable to Locate Acknowledgement Number') . ' : ' . $_GET['AcknowledgementNo'] . ' ', 'error');
-	echo '<table class="table_index">
+	echo '<table class = "table_index">
 			<tr>
-				<td class="menu_group_item">
-					<ul><li><a href="' . $RootPath . '/SelectSalesOrder.php?Acknowledgements=Quotes_Only">' . __('Outstanding Acknowledgements') . '</a></li></ul>
+				<td class = "menu_group_item">
+					<ul><li><a href = "' . $RootPath . '/SelectSalesOrder.php?Acknowledgements = Quotes_Only">' . __('Outstanding Acknowledgements') . '</a></li></ul>
 				</td>
 			</tr>
 			</table>';
@@ -163,10 +163,10 @@ while ($MyRow2 = DB_fetch_array($Result)) {
 		<td>' . htmlspecialchars($MyRow2['stkcode']) . '</td>
 		<td>' . htmlspecialchars($MyRow2['description']) . '</td>
 		<td>' . ConvertSQLDate($MyRow2['itemdue']) . '</td>
-		<td style="text-align:right;">' . $DisplayQty . '</td>
+		<td style = "text-align:right;">' . $DisplayQty . '</td>
 		<td>' . htmlspecialchars($DisplayUOM) . '</td>
-		<td style="text-align:right;">' . $DisplayPrice . '</td>
-		<td style="text-align:right;">' . locale_number_format($LineTotal, $MyRow['currdecimalplaces']) . '</td>
+		<td style = "text-align:right;">' . $DisplayPrice . '</td>
+		<td style = "text-align:right;">' . locale_number_format($LineTotal, $MyRow['currdecimalplaces']) . '</td>
 	</tr>';
 
 	// Customer part and description
@@ -190,7 +190,7 @@ while ($MyRow2 = DB_fetch_array($Result)) {
 if ($ListCount == 0) {
 	$Title = __('Print Acknowledgement Error');
 	include('includes/header.php');
-	echo '<p>' . __('There were no items on the Acknowledgement') . '. ' . __('The Acknowledgement cannot be printed') . '<br /><a href="' . $RootPath . '/SelectSalesOrder.php?Acknowledgement=Quotes_only">Back</a></p>';
+	echo '<p>' . __('There were no items on the Acknowledgement') . '. ' . __('The Acknowledgement cannot be printed') . '<br /><a href = "' . $RootPath . '/SelectSalesOrder.php?Acknowledgement = Quotes_only">Back</a></p>';
 	include('includes/footer.php');
 	exit();
 }
@@ -237,29 +237,29 @@ $HTML = '
 		</tr>
 		' . $lineItemsHtml . '
 	</table>
-	<table class="totals">
+	<table class = "totals">
 		<tr>
-			<td style="text-align:right;" colspan = "6">' . __('Total Excluding Tax') . ':</td>
-			<td style="text-align:right;">' . locale_number_format($AcknowledgementTotalEx, $MyRow['currdecimalplaces']) . '</td>
+			<td style = "text-align:right;" colspan = "6">' . __('Total Excluding Tax') . ':</td>
+			<td style = "text-align:right;">' . locale_number_format($AcknowledgementTotalEx, $MyRow['currdecimalplaces']) . '</td>
 		</tr>
 		<tr>
-			<td style="text-align:right;" colspan = "6">' . __('Tax') . ':</td>
-			<td style="text-align:right;">' . locale_number_format($TaxTotal, $MyRow['currdecimalplaces']) . '</td>
+			<td style = "text-align:right;" colspan = "6">' . __('Tax') . ':</td>
+			<td style = "text-align:right;">' . locale_number_format($TaxTotal, $MyRow['currdecimalplaces']) . '</td>
 		</tr>
 		<tr>
-			<td style="text-align:right;" colspan = "6">' . __('Freight') . ':</td>
-			<td style="text-align:right;">' . locale_number_format($MyRow['freightcost'], $MyRow['currdecimalplaces']) . '</td>
+			<td style = "text-align:right;" colspan = "6">' . __('Freight') . ':</td>
+			<td style = "text-align:right;">' . locale_number_format($MyRow['freightcost'], $MyRow['currdecimalplaces']) . '</td>
 		</tr>
 		<tr>
-			<td style="text-align:right;" colspan = "6"><strong>' . __('Total Including Tax and Freight') . ':</strong></td>
-			<td style="text-align:right;"><strong>' . locale_number_format($AcknowledgementTotal, $MyRow['currdecimalplaces']) . '</strong></td>
+			<td style = "text-align:right;" colspan = "6"><strong>' . __('Total Including Tax and Freight') . ':</strong></td>
+			<td style = "text-align:right;"><strong>' . locale_number_format($AcknowledgementTotal, $MyRow['currdecimalplaces']) . '</strong></td>
 		</tr>
 	</table>
-	<div class="notes">
+	<div class = "notes">
 		<strong>' . __('Notes:') . '</strong>
 		<p>' . nl2br(htmlspecialchars($MyRow['comments'])) . '</p>
 	</div>
-	<div class="terms">
+	<div class = "terms">
 		<strong>' . __('Terms & Conditions') . ':</strong>
 		<p>' . nl2br(htmlspecialchars($Terms)) . '</p>
 	</div>

@@ -41,13 +41,13 @@ if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo'])) {
 // Main code:
 if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo']) and !$_POST['NewReport']) {
 	// If PeriodFrom and PeriodTo are set and it is not a NewReport, generates the report:
-	echo '<div class="sheet">', // Division to identify the report block.
-		'<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/reports.png" title="', // Icon image.
+	echo '<div class = "sheet">', // Division to identify the report block.
+		'<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/reports.png" title = "', // Icon image.
 		$Title, '" /> ', // Icon title.
 		$Title, '</p>', // Page title.
 		'<p>', __('Period from'), ': ', $_POST['PeriodFrom'],
 		'<br />', __('Period to'), ': ', $_POST['PeriodTo'], '</p>',
-		'<table class="selection">
+		'<table class = "selection">
 		<thead>
 			<tr>';
 	// $CommonHead is the common table head between ShowDetails = off and ShowDetails = on:
@@ -106,16 +106,16 @@ if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo']) and !$_POST['NewRe
 				if ($SupplierId != '') {// If not the first line.
 					echo '<tr>',
 							'<td colspan = "3">&nbsp;</td>',
-							'<td class="number">', locale_number_format($SupplierOvAmount, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-							'<td class="number">', locale_number_format($SupplierOvTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-							'<td class="number">', locale_number_format($SupplierOvAmount+$SupplierOvTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-							'<td class="number">', locale_number_format($SupplierGlAmount, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-							'<td class="number">', locale_number_format($SupplierGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-							'<td class="number">', locale_number_format($SupplierGlAmount+$SupplierGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+							'<td class = "number">', locale_number_format($SupplierOvAmount, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+							'<td class = "number">', locale_number_format($SupplierOvTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+							'<td class = "number">', locale_number_format($SupplierOvAmount+$SupplierOvTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+							'<td class = "number">', locale_number_format($SupplierGlAmount, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+							'<td class = "number">', locale_number_format($SupplierGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+							'<td class = "number">', locale_number_format($SupplierGlAmount+$SupplierGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
 						'</tr>';
 }
 				echo '<tr><td colspan = "9">&nbsp;</td></tr>';
-				echo '<tr><td class="text" colspan = "9"><a href="', $RootPath, '/SupplierInquiry.php?SupplierID=', $MyRow['supplierno'], '">', $MyRow['supplierno'], ' - ', $MyRow['suppname'], '</a> - ', $MyRow['currcode'], ' ', $CurrencyName[$MyRow['currcode']], '</td></tr>';
+				echo '<tr><td class = "text" colspan = "9"><a href = "', $RootPath, '/SupplierInquiry.php?SupplierID = ', $MyRow['supplierno'], '">', $MyRow['supplierno'], ' - ', $MyRow['suppname'], '</a> - ', $MyRow['currcode'], ' ', $CurrencyName[$MyRow['currcode']], '</td></tr>';
 				$TotalGlAmount += $SupplierGlAmount;
 				$TotalGlTax += $SupplierGlTax;
 				$SupplierId = $MyRow['supplierno'];
@@ -127,16 +127,16 @@ if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo']) and !$_POST['NewRe
 
 			$GlAmount = $MyRow['ovamount']/$MyRow['rate'];
 			$GlTax = $MyRow['ovgst']/$MyRow['rate'];
-			echo '<tr class="striped_row">
-					<td class="centre">', $MyRow['trandate'], '</td>',
-					'<td class="number">', $MyRow['transno'], '</td>',
-					'<td class="text">', $MyRow['suppreference'], '</td>',
-					'<td class="number">', locale_number_format($MyRow['ovamount'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-					'<td class="number">', locale_number_format($MyRow['ovgst'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-					'<td class="number"><a href="', $RootPath, '/SuppWhereAlloc.php?TransType=20&TransNo=', $MyRow['transno'], '&amp;ScriptFrom=PurchasesReport" target="_blank" title="', __('Click to view where allocated'), '">', locale_number_format($MyRow['ovamount']+$MyRow['ovgst'], $_SESSION['CompanyRecord']['decimalplaces']), '</a></td>',
-					'<td class="number">', locale_number_format($GlAmount, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-					'<td class="number">',	locale_number_format($GlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-					'<td class="number"><a href="', $RootPath, '/GLTransInquiry.php?TypeID=20&amp;TransNo=', $MyRow['transno'], '&amp;ScriptFrom=PurchasesReport" target="_blank" title="', __('Click to view the GL entries'), '">', locale_number_format($GlAmount+$GlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</a></td>', // RChacon: Should be "Click to view the General Ledger transaction" instead?
+			echo '<tr class = "striped_row">
+					<td class = "centre">', $MyRow['trandate'], '</td>',
+					'<td class = "number">', $MyRow['transno'], '</td>',
+					'<td class = "text">', $MyRow['suppreference'], '</td>',
+					'<td class = "number">', locale_number_format($MyRow['ovamount'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+					'<td class = "number">', locale_number_format($MyRow['ovgst'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+					'<td class = "number"><a href = "', $RootPath, '/SuppWhereAlloc.php?TransType = 20&TransNo = ', $MyRow['transno'], '&amp;ScriptFrom = PurchasesReport" target = "_blank" title = "', __('Click to view where allocated'), '">', locale_number_format($MyRow['ovamount']+$MyRow['ovgst'], $_SESSION['CompanyRecord']['decimalplaces']), '</a></td>',
+					'<td class = "number">', locale_number_format($GlAmount, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+					'<td class = "number">',	locale_number_format($GlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+					'<td class = "number"><a href = "', $RootPath, '/GLTransInquiry.php?TypeID = 20&amp;TransNo = ', $MyRow['transno'], '&amp;ScriptFrom = PurchasesReport" target = "_blank" title = "', __('Click to view the GL entries'), '">', locale_number_format($GlAmount+$GlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</a></td>', // RChacon: Should be "Click to view the General Ledger transaction" instead?
 				'</tr>';
 			$SupplierOvAmount += $MyRow['ovamount'];
 			$SupplierOvTax += $MyRow['ovgst'];
@@ -147,12 +147,12 @@ if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo']) and !$_POST['NewRe
 		// Prints last supplier total:
 		echo '<tr>',
 				'<td colspan = "3">&nbsp;</td>',
-				'<td class="number">', locale_number_format($SupplierOvAmount, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-				'<td class="number">', locale_number_format($SupplierOvTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-				'<td class="number">', locale_number_format($SupplierOvAmount+$SupplierOvTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-				'<td class="number">', locale_number_format($SupplierGlAmount, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-				'<td class="number">', locale_number_format($SupplierGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-				'<td class="number">', locale_number_format($SupplierGlAmount+$SupplierGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+				'<td class = "number">', locale_number_format($SupplierOvAmount, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+				'<td class = "number">', locale_number_format($SupplierOvTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+				'<td class = "number">', locale_number_format($SupplierOvAmount+$SupplierOvTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+				'<td class = "number">', locale_number_format($SupplierGlAmount, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+				'<td class = "number">', locale_number_format($SupplierGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+				'<td class = "number">', locale_number_format($SupplierGlAmount+$SupplierGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
 			'</tr>',
 			'<tr><td colspan = "9">&nbsp;</td></tr>';
 
@@ -183,16 +183,16 @@ if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo']) and !$_POST['NewRe
 				ORDER BY supptrans.supplierno, supptrans.trandate";
 		$Result = DB_query($SQL);
 		foreach ($Result as $MyRow) {
-			echo '<tr class="striped_row">',
-					'<td class="text">', $MyRow['supplierno'], '</td>',
-					'<td class="text"><a href="', $RootPath, '/SupplierInquiry.php?SupplierID=', $MyRow['supplierno'], '">', $MyRow['suppname'], '</a></td>',
-					'<td class="text">', $MyRow['currcode'], '</td>',
-					'<td class="number">', locale_number_format($MyRow['SupplierOvAmount'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-					'<td class="number">', locale_number_format($MyRow['SupplierOvTax'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-					'<td class="number">', locale_number_format($MyRow['SupplierOvAmount']+$MyRow['SupplierOvTax'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-					'<td class="number">', locale_number_format($MyRow['SupplierGlAmount'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-					'<td class="number">', locale_number_format($MyRow['SupplierGlTax'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
-					'<td class="number">', locale_number_format($MyRow['SupplierGlAmount']+$MyRow['SupplierGlTax'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+			echo '<tr class = "striped_row">',
+					'<td class = "text">', $MyRow['supplierno'], '</td>',
+					'<td class = "text"><a href = "', $RootPath, '/SupplierInquiry.php?SupplierID = ', $MyRow['supplierno'], '">', $MyRow['suppname'], '</a></td>',
+					'<td class = "text">', $MyRow['currcode'], '</td>',
+					'<td class = "number">', locale_number_format($MyRow['SupplierOvAmount'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+					'<td class = "number">', locale_number_format($MyRow['SupplierOvTax'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+					'<td class = "number">', locale_number_format($MyRow['SupplierOvAmount']+$MyRow['SupplierOvTax'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+					'<td class = "number">', locale_number_format($MyRow['SupplierGlAmount'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+					'<td class = "number">', locale_number_format($MyRow['SupplierGlTax'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
+					'<td class = "number">', locale_number_format($MyRow['SupplierGlAmount']+$MyRow['SupplierGlTax'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
 				'</tr>';
 			$TotalGlAmount += $MyRow['SupplierGlAmount'];
 			$TotalGlTax += $MyRow['SupplierGlTax'];
@@ -200,35 +200,35 @@ if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo']) and !$_POST['NewRe
 	}
 	// Prints all suppliers total:
 	echo	'<tr>
-				<td class="text" colspan = "6">&nbsp;</td>
-				<td class="number">', locale_number_format($TotalGlAmount, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
-				<td class="number">', locale_number_format($TotalGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
-				<td class="number">', locale_number_format($TotalGlAmount+$TotalGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+				<td class = "text" colspan = "6">&nbsp;</td>
+				<td class = "number">', locale_number_format($TotalGlAmount, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+				<td class = "number">', locale_number_format($TotalGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+				<td class = "number">', locale_number_format($TotalGlAmount+$TotalGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
 			</tr>',
 		'</tbody></table>',
-		'</div>', // div id="Report".
+		'</div>', // div id = "Report".
 	// Shows a form to select an action after the report was shown:
 		'<form action = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method = "post">',
-		'<input name="FormID" type = "hidden" value = "', $_SESSION['FormID'], '" />',
+		'<input name = "FormID" type = "hidden" value = "', $_SESSION['FormID'], '" />',
 	// Resend report parameters:
-		'<input name="PeriodFrom" type = "hidden" value = "', $_POST['PeriodFrom'], '" />',
-		'<input name="PeriodTo" type = "hidden" value = "', $_POST['PeriodTo'], '" />',
-		'<input name="ShowDetails" type = "hidden" value = "', $_POST['ShowDetails'], '" />',
-		'<div class="centre noPrint">', // Form buttons:
-			'<button onclick="window.print()" type = "button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" /> ', __('Print'), '</button>', // "Print" button.
-			'<button name="NewReport" type = "submit" value = "on"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/reports.png" /> ', __('New Report'), '</button>', // "New Report" button.
-			'<button onclick="window.location = \'' . $RootPath . '/index.php?Application=PO\'" type = "button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', __('Return'), '</button>', // "Return" button.
+		'<input name = "PeriodFrom" type = "hidden" value = "', $_POST['PeriodFrom'], '" />',
+		'<input name = "PeriodTo" type = "hidden" value = "', $_POST['PeriodTo'], '" />',
+		'<input name = "ShowDetails" type = "hidden" value = "', $_POST['ShowDetails'], '" />',
+		'<div class = "centre noPrint">', // Form buttons:
+			'<button onclick = "window.print()" type = "button"><img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/printer.png" /> ', __('Print'), '</button>', // "Print" button.
+			'<button name = "NewReport" type = "submit" value = "on"><img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/reports.png" /> ', __('New Report'), '</button>', // "New Report" button.
+			'<button onclick = "window.location = \'' . $RootPath . '/index.php?Application = PO\'" type = "button"><img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', __('Return'), '</button>', // "Return" button.
 		'</div>';
 } else {
 	// If PeriodFrom or PeriodTo are not set or it is a NewReport, shows a parameters input form:
-	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/gl.png" title="', // Icon image.
+	echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/gl.png" title = "', // Icon image.
 		$Title, '" /> ', // Icon title.
 		$Title, '</p>';// Page title.
 	fShowPageHelp(// Shows the page help text if $_SESSION['ShowFieldHelp'] is true or is not set
 		__('Shows a report of purchases from suppliers for the range of selected dates.'));// Function fShowPageHelp() in ~/includes/MiscFunctions.php
 	echo // Shows a form to input the report parameters:
 		'<form action = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method = "post">',
-		'<input name="FormID" type = "hidden" value = "', $_SESSION['FormID'], '" />', // Input table:
+		'<input name = "FormID" type = "hidden" value = "', $_SESSION['FormID'], '" />', // Input table:
 		'<fieldset>
 			<legend>', __('Report Criteria'), '</legend>', // Content of the header and footer of the input table:
 /*		'<thead>
@@ -243,7 +243,7 @@ if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo']) and !$_POST['NewRe
 	if (!isset($_POST['PeriodFrom'])) {
 		$_POST['PeriodFrom'] = date($_SESSION['DefaultDateFormat'], strtotime("-1 year", time()));// One year before current date.
 	}
-	echo '<td><input type = "date" id="PeriodFrom" maxlength = "10" name="PeriodFrom" required = "required" size = "11" value = "', FormatDateForSQL($_POST['PeriodFrom']), '" />',
+	echo '<td><input type = "date" id = "PeriodFrom" maxlength = "10" name = "PeriodFrom" required = "required" size = "11" value = "', FormatDateForSQL($_POST['PeriodFrom']), '" />',
 				'<fieldhelp>', __('Select the beginning of the reporting period'), '</fieldhelp>
 			</field>',
 			// Select period to:
@@ -252,20 +252,20 @@ if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo']) and !$_POST['NewRe
 	if (!isset($_POST['PeriodTo'])) {
 		$_POST['PeriodTo'] = date($_SESSION['DefaultDateFormat']);
 	}
-	echo 		'<input type = "date" id="PeriodTo" maxlength = "10" name="PeriodTo" required = "required" size = "11" value = "', FormatDateForSQL($_POST['PeriodTo']), '" />',
+	echo 		'<input type = "date" id = "PeriodTo" maxlength = "10" name = "PeriodTo" required = "required" size = "11" value = "', FormatDateForSQL($_POST['PeriodTo']), '" />',
 				'<fieldhelp>', __('Select the end of the reporting period'), '</fieldhelp>
 			</field>';
 	// Show the budget for the period:
 	echo '<field>',
 			 	'<label for = "ShowDetails">', __('Show details'), '</label>',
-			 	'<input', (isset($_POST['ShowDetails']) && $_POST['ShowDetails'] ? ' checked ="checked"' : ''), ' id="ShowDetails" name="ShowDetails" type = "checkbox">', // If $_POST['ShowDetails'] is set and it is true, shows this input checked.
+			 	'<input', (isset($_POST['ShowDetails']) && $_POST['ShowDetails'] ? ' checked = "checked"' : ''), ' id = "ShowDetails" name = "ShowDetails" type = "checkbox">', // If $_POST['ShowDetails'] is set and it is true, shows this input checked.
 				'<fieldhelp>', __('Check this box to show purchase invoices'), '</fieldhelp>
 			</field>';
 	echo '</fieldset>';
 }
-echo '<div class="centre">',
-		'<button name="Submit" type = "submit" value = "submit"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', __('Submit'), '</button>', // "Submit" button.
-		'<button onclick="window.location = \'' . $RootPath . '/index.php?Application=PO\'" type = "button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', __('Return'), '</button>', // "Return" button.
+echo '<div class = "centre">',
+		'<button name = "Submit" type = "submit" value = "submit"><img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', __('Submit'), '</button>', // "Submit" button.
+		'<button onclick = "window.location = \'' . $RootPath . '/index.php?Application = PO\'" type = "button"><img alt = "" src = "', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', __('Return'), '</button>', // "Return" button.
 	'</div>';
 
 echo	'</form>';

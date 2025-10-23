@@ -9,7 +9,7 @@ $ViewTopic = 'SpecialUtilities';
 $BookMark = 'Z_ChangeBranchCode';
 include('includes/header.php');
 
-echo '<p class = "page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+echo '<p class = "page_title_text"><img alt = "" src = "'.$RootPath.'/css/'.$Theme.
 	'/images/customer.png" title = "' .
 	__('Change A Customer Branch Code') . '" /> ' .// Icon title.
 	__('Change A Customer Branch Code') . '</p>';// Page title.

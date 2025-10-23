@@ -15,7 +15,7 @@ if (isset($_GET['SelectedSalesPostingID'])){
 
 $InputError = false;
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/customer.png" title = "' . __('Search') . '" alt = "" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['submit'])) {
 
@@ -110,7 +110,7 @@ if (!isset($SelectedSalesPostingID)) {
 	if (DB_num_rows($Result)>0){
 		$ShowLivePostingRecords = false;
 		prnMsg(__('The following posting records that do not have valid general ledger code specified - these records must be amended.'),'error');
-		echo '<table class="selection">
+		echo '<table class = "selection">
 				<tr>
 					<th>' . __('Area') . '</th>
 					<th>' . __('Stock Category') . '</th>
@@ -122,14 +122,14 @@ if (!isset($SelectedSalesPostingID)) {
 
 		while ($MyRow = DB_fetch_row($Result)) {
 
-			echo '<tr class="striped_row">
+			echo '<tr class = "striped_row">
 					<td>', $MyRow[1], '</td>
 					<td>', $MyRow[2], '</td>
 					<td>', $MyRow[3], '</td>
 					<td>', htmlspecialchars($MyRow[4],ENT_QUOTES,'UTF-8'), '</td>
 					<td>', $MyRow[5], '</td>
-					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedSalesPostingID=', $MyRow[0], '">' . __('Edit') . '</a></td>
-					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedSalesPostingID=', $MyRow[0], '&amp;delete=yes" onclick="return confirm(\'' . __('Are you sure you wish to delete this sales GL posting record?') . '\');">' .  __('Delete') . '</a></td>
+					<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedSalesPostingID = ', $MyRow[0], '">' . __('Edit') . '</a></td>
+					<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedSalesPostingID = ', $MyRow[0], '&amp;delete = yes" onclick = "return confirm(\'' . __('Are you sure you wish to delete this sales GL posting record?') . '\');">' .  __('Delete') . '</a></td>
 				</tr>';
 		}
 	}
@@ -212,7 +212,7 @@ if (!isset($SelectedSalesPostingID)) {
 
 		$Result = DB_query($SQL);
 
-		echo '<table class="selection">
+		echo '<table class = "selection">
 				<tr>
 					<th>' . __('Area') . '</th>
 					<th>' . __('Stock Category') . '</th>
@@ -224,14 +224,14 @@ if (!isset($SelectedSalesPostingID)) {
 
 		while ($MyRow = DB_fetch_row($Result)) {
 
-			echo '<tr class="striped_row">
+			echo '<tr class = "striped_row">
 					<td>', $MyRow[1], '</td>
 					<td>', $MyRow[2], '</td>
 					<td>', $MyRow[3], '</td>
 					<td>', htmlspecialchars($MyRow[4],ENT_QUOTES,'UTF-8'), '</td>
 					<td>', $MyRow[5], '</td>
-					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedSalesPostingID=', $MyRow[0], '">' . __('Edit') . '</a></td>
-					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedSalesPostingID=', $MyRow[0], '&amp;delete=yes" onclick="return confirm(\'' . __('Are you sure you wish to delete this sales GL posting record?') . '\');">' .  __('Delete') . '</a></td>
+					<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedSalesPostingID = ', $MyRow[0], '">' . __('Edit') . '</a></td>
+					<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedSalesPostingID = ', $MyRow[0], '&amp;delete = yes" onclick = "return confirm(\'' . __('Are you sure you wish to delete this sales GL posting record?') . '\');">' .  __('Delete') . '</a></td>
 				</tr>';
 }
 		//END while LIST LOOP
@@ -242,14 +242,14 @@ if (!isset($SelectedSalesPostingID)) {
 //end of ifs and buts!
 
 if (isset($SelectedSalesPostingID)) {
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Show All Sales Posting Codes Defined') . '</a></div>';
+	echo '<div class = "centre"><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Show All Sales Posting Codes Defined') . '</a></div>';
 }
 
 
 if (!isset($_GET['delete'])) {
 
 	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">';
-	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedSalesPostingID)) {
 		//editing an existing sales posting record
@@ -272,7 +272,7 @@ if (!isset($_GET['delete'])) {
 		$_POST['SalesType']=$MyRow['salestype'];
 		DB_free_result($Result);
 
-		echo '<input type = "hidden" name="SelectedSalesPostingID" value = "' . $SelectedSalesPostingID . '" />';
+		echo '<input type = "hidden" name = "SelectedSalesPostingID" value = "' . $SelectedSalesPostingID . '" />';
 
 	}
 /*end of if $SelectedSalesPostingID only do the else when a new record is being entered */
@@ -286,7 +286,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<field>
 			<label for = "Area">' . __('Area') . ':</label>
-			<select name="Area">
+			<select name = "Area">
 				<option value = "AN">' . __('Any Other') . '</option>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -309,7 +309,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<field>
 			<label for = "StkCat">' . __('Stock Category') . ':</label>
-			<select name="StkCat">
+			<select name = "StkCat">
 				<option value = "ANY">' . __('Any Other') . '</option>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -336,7 +336,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<field>
 			<label for = "SalesType">' . __('Sales Type') . ' / ' . __('Price List') . ':</label>
-			<select name="SalesType">';
+			<select name = "SalesType">';
 	echo '<option value = "AN">' . __('Any Other') . '</option>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -354,7 +354,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<field>
 			<label for = "SalesGLCode">' . __('Post Sales to GL Account') . ':</label>
-			<select name="SalesGLCode">';
+			<select name = "SalesGLCode">';
 
 	DB_free_result($Result);
 	$SQL = "SELECT chartmaster.accountcode,
@@ -385,7 +385,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '<field>
 			<label for = "DiscountGLCode">' . __('Post Discount to GL Account') . ':</label>
-			<select name="DiscountGLCode">';
+			<select name = "DiscountGLCode">';
 
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['DiscountGLCode']) and $MyRow['accountcode']==$_POST['DiscountGLCode']) {
@@ -401,7 +401,7 @@ if (!isset($_GET['delete'])) {
 		</field>
 	</fieldset>';
 
-	echo '<div class="centre"><input type = "submit" name="submit" value = "' . __('Enter Information') . '" /></div>';
+	echo '<div class = "centre"><input type = "submit" name = "submit" value = "' . __('Enter Information') . '" /></div>';
 
 	echo '</form>';
 

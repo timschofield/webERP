@@ -91,7 +91,7 @@ body { font-family: DejaVu Sans, Arial, Helvetica, sans-serif; font-size: 10pt; 
 
 $HTML .='</head>
 <body>';
-$HTML .= '<div><img class="logo" src="' . $_SESSION['LogoFile'] . '" /></div>';
+$HTML .= '<div><img class = "logo" src = "' . $_SESSION['LogoFile'] . '" /></div>';
 $HTML .= '<div><span class = "label">' . $CompanyName . '</span></div>';
 
 foreach ($CompanyAddress as $line) {

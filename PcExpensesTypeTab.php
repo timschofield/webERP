@@ -8,8 +8,8 @@ $ViewTopic = 'PettyCash';
 $BookMark = 'PCTabTypes';
 include('includes/header.php');
 
-echo '<p class="page_title_text">
-		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', __('Payment Entry'), '" alt="" />', ' ', $Title, '
+echo '<p class = "page_title_text">
+		<img src = "', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title = "', __('Payment Entry'), '" alt = "" />', ' ', $Title, '
 	</p>';
 
 if (isset($_POST['SelectedCode'])) {
@@ -93,11 +93,11 @@ if (!isset($SelectedTab)) {
 	links to delete or edit each. These will call the same page again and allow update/input
 	or deletion of the records*/
 	echo '<form method = "post" action = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">';
-	echo '<input type = "hidden" name="FormID" value = "', $_SESSION['FormID'], '" />';
+	echo '<input type = "hidden" name = "FormID" value = "', $_SESSION['FormID'], '" />';
 	echo '<fieldset>'; //Main table
 	echo '<field>
 			<label for = "SelectedTab">', __('Select Type of Tab'), ':</label>
-			<select required = "required" name="SelectedTab">';
+			<select required = "required" name = "SelectedTab">';
 	$SQL = "SELECT typetabcode,
 					typetabdescription
 			FROM pctypetabs";
@@ -113,20 +113,20 @@ if (!isset($SelectedTab)) {
 	echo '</select>
 		</field>';
 	echo '</fieldset>'; // close main table
-	echo '<div class="centre">
-			<input type = "submit" name="Process" value = "', __('Accept'), '" />
-			<input type = "reset" name="Cancel" value = "', __('Cancel'), '" />
+	echo '<div class = "centre">
+			<input type = "submit" name = "Process" value = "', __('Accept'), '" />
+			<input type = "reset" name = "Cancel" value = "', __('Cancel'), '" />
 		</div>';
 	echo '</form>';
 }
 //end of ifs and buts!
 if (isset($_POST['process']) or isset($SelectedTab)) {
-	echo '<div class="centre">
-			<a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">', __('Expense Codes for Type of Tab '), ' ', $SelectedTab, '</a>
+	echo '<div class = "centre">
+			<a href = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">', __('Expense Codes for Type of Tab '), ' ', $SelectedTab, '</a>
 		</div>';
 	echo '<form method = "post" action = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">';
-	echo '<input type = "hidden" name="FormID" value = "', $_SESSION['FormID'], '" />';
-	echo '<input type = "hidden" name="SelectedTab" value = "', $SelectedTab, '" />';
+	echo '<input type = "hidden" name = "FormID" value = "', $_SESSION['FormID'], '" />';
+	echo '<input type = "hidden" name = "SelectedTab" value = "', $SelectedTab, '" />';
 	$SQL = "SELECT pctabexpenses.codeexpense,
 					pcexpenses.description
 				FROM pctabexpenses
@@ -135,7 +135,7 @@ if (isset($_POST['process']) or isset($SelectedTab)) {
 				WHERE pctabexpenses.typetabcode = '" . $SelectedTab . "'
 				ORDER BY pctabexpenses.codeexpense ASC";
 	$Result = DB_query($SQL);
-	echo '<table class="selection">
+	echo '<table class = "selection">
 			<tr>
 				<th colspan = "3">
 					<h3>', __('Expense Codes for Type of Tab '), ' ', $SelectedTab, '</h3>
@@ -147,10 +147,10 @@ if (isset($_POST['process']) or isset($SelectedTab)) {
 			</tr>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
-		echo '<tr class="striped_row">
+		echo '<tr class = "striped_row">
 			<td>', $MyRow['codeexpense'], '</td>
 			<td>', $MyRow['description'], '</td>
-			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedCode=', $MyRow['codeexpense'], '&amp;delete=yes&amp;SelectedTab=', $SelectedTab, '" onclick="return confirm(\'' . __('Are you sure you wish to delete this expense code?') . '\', \'Confirm Delete\', this);">' . __('Delete') . '</a></td>
+			<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedCode = ', $MyRow['codeexpense'], '&amp;delete = yes&amp;SelectedTab = ', $SelectedTab, '" onclick = "return confirm(\'' . __('Are you sure you wish to delete this expense code?') . '\', \'Confirm Delete\', this);">' . __('Delete') . '</a></td>
 		</tr>';
 	}
 	//END while LIST LOOP
@@ -159,7 +159,7 @@ if (isset($_POST['process']) or isset($SelectedTab)) {
 		echo '<fieldset>'; //Main table
 		echo '<field>
 				<label for = "SelectedExpense">', __('Select Expense Code'), ':</td>
-				<select required = "required" name="SelectedExpense">';
+				<select required = "required" name = "SelectedExpense">';
 		$SQL = "SELECT codeexpense,
 						description
 				FROM pcexpenses";
@@ -177,9 +177,9 @@ if (isset($_POST['process']) or isset($SelectedTab)) {
 		echo '</select>
 			</field>';
 		echo '</fieldset>'; // close main table
-		echo '<div class="centre">
-				<input type = "submit" name="submit" value = "', __('Accept'), '" />
-				<input type = "reset" name="Cancel" value = "', __('Cancel'), '" />
+		echo '<div class = "centre">
+				<input type = "submit" name = "submit" value = "', __('Accept'), '" />
+				<input type = "reset" name = "Cancel" value = "', __('Cancel'), '" />
 			</div>';
 		echo '</form>';
 	} // end if user wish to delete

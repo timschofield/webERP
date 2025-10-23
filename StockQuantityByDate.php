@@ -9,12 +9,12 @@ include('includes/header.php');
 
 if (isset($_POST['OnHandDate'])){$_POST['OnHandDate'] = ConvertSQLDate($_POST['OnHandDate']);}
 
-echo '<p class="page_title_text" >
-		<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/inventory.png" title="' . __('Inventory') . '" alt="" /><b>' . $Title . '</b>
+echo '<p class = "page_title_text" >
+		<img src = "' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/inventory.png" title = "' . __('Inventory') . '" alt = "" /><b>' . $Title . '</b>
 	</p>';
 
 echo '<form action = "' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method = "post">';
-echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 $SQL = "SELECT categoryid, categorydescription FROM stockcategory";
 $ResultStkLocs = DB_query($SQL);
@@ -23,7 +23,7 @@ echo '<fieldset>
 		<legend>', __('Report Criteria'), '</legend>
 		<field>
 			<label for = "StockCategory">' . __('For Stock Category') . ':</label>
-			<select required = "required" name="StockCategory">
+			<select required = "required" name = "StockCategory">
 				<option value = "All">' . __('All') . '</option>';
 
 while ($MyRow = DB_fetch_array($ResultStkLocs)) {
@@ -52,7 +52,7 @@ $ResultStkLocs = DB_query($SQL);
 
 echo '<field>
 		<label for = "StockLocation">' . __('For Stock Location') . ':</label>
-		<select required = "required" name="StockLocation"> ';
+		<select required = "required" name = "StockLocation"> ';
 
 while ($MyRow = DB_fetch_array($ResultStkLocs)) {
 	if (isset($_POST['StockLocation']) and $_POST['StockLocation'] != 'All') {
@@ -77,7 +77,7 @@ if (!isset($_POST['OnHandDate'])) {
 
 echo '<field>
 		<label for = "OnHandDate">' . __('On-Hand On Date') . ':</label>
-		<input type = "date" name="OnHandDate" size = "12" required = "required" maxlength = "10" value = "' . FormatDateForSQL($_POST['OnHandDate']) . '" />
+		<input type = "date" name = "OnHandDate" size = "12" required = "required" maxlength = "10" value = "' . FormatDateForSQL($_POST['OnHandDate']) . '" />
 	</field>';
 
 if (isset($_POST['ShowZeroStocks'])) {
@@ -88,12 +88,12 @@ if (isset($_POST['ShowZeroStocks'])) {
 
 echo '<field>
 		<label for = "ShowZeroStocks">', ('Include zero stocks'), '</label>
-		<input type = "checkbox" name="ShowZeroStocks" value = "" ', $Checked, '  />
+		<input type = "checkbox" name = "ShowZeroStocks" value = "" ', $Checked, '  />
 	</field>
 </fieldset>';
 
-echo '<div class="centre">
-		<input type = "submit" name="ShowStatus" value = "' . __('Show Stock Status') . '" />
+echo '<div class = "centre">
+		<input type = "submit" name = "ShowStatus" value = "' . __('Show Stock Status') . '" />
 	</div>
 </form>';
 
@@ -167,17 +167,17 @@ if (isset($_POST['ShowStatus']) and is_date($_POST['OnHandDate'])) {
 			}
 
 			if ($NumRows == 0) {
-	echo '<tr class="striped_row">
-						<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=' . mb_strtoupper($MyRow['stockid']) . '>' . mb_strtoupper($MyRow['stockid']) . '</a></td>
+	echo '<tr class = "striped_row">
+						<td><a target = "_blank" href = "' . $RootPath . '/StockStatus.php?StockID = ' . mb_strtoupper($MyRow['stockid']) . '>' . mb_strtoupper($MyRow['stockid']) . '</a></td>
 						<td>' . $MyRow['description'] . '</td>
-						<td class="number">0</td>
+						<td class = "number">0</td>
 					</tr>';
 } else {
-				echo '<tr class="striped_row">
-						<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=', mb_strtoupper($MyRow['stockid']), '">', mb_strtoupper($MyRow['stockid']), '</a></td>
+				echo '<tr class = "striped_row">
+						<td><a target = "_blank" href = "' . $RootPath . '/StockStatus.php?StockID = ', mb_strtoupper($MyRow['stockid']), '">', mb_strtoupper($MyRow['stockid']), '</a></td>
 						<td>', $MyRow['description'], '</td>
-						<td class="number">', locale_number_format($LocQtyRow['newqoh'], $MyRow['decimalplaces']), '</td>
-						<td class="number">', $Controlled, '</td>
+						<td class = "number">', locale_number_format($LocQtyRow['newqoh'], $MyRow['decimalplaces']), '</td>
+						<td class = "number">', $Controlled, '</td>
 					</tr>';
 
 				$TotalQuantity+= $LocQtyRow['newqoh'];
@@ -187,10 +187,10 @@ if (isset($_POST['ShowStatus']) and is_date($_POST['OnHandDate'])) {
 		}
 
 	} //end of while loop
-	echo '<tr class="total_row">
+	echo '<tr class = "total_row">
 			<td></td>
 			<td>' . __('Total Quantity') . ':</td>
-			<td class="number">' . $TotalQuantity . '</td>
+			<td class = "number">' . $TotalQuantity . '</td>
 			<td></td>
 		</tr>
 		</table>';

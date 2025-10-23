@@ -7,8 +7,8 @@ $ViewTopic = 'SalesCommission';
 $BookMark = 'Reports';
 include('includes/header.php');
 
-echo '<p class="page_title_text">
-		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/reports.png" title="', __('Search'), '" alt="" />', ' ', $Title, '
+echo '<p class = "page_title_text">
+		<img src = "', $RootPath, '/css/', $_SESSION['Theme'], '/images/reports.png" title = "', __('Search'), '" alt = "" />', ' ', $Title, '
 	</p>';
 
 if (isset($_POST['Submit'])) {
@@ -62,13 +62,13 @@ if (isset($_POST['Submit'])) {
 		echo '<table>
 				<thead>
 					<tr>
-						<th class="SortedColumn">', __('Commission ID'), '</th>
-						<th class="SortedColumn">', __('Sales Person'), '</th>
-						<th class="SortedColumn">', __('Period'), '</th>
-						<th class="SortedColumn">', __('Customer'), '</th>
-						<th class="SortedColumn">', __('Invoice/Credit'), '</th>
-						<th class="SortedColumn">', __('Amount'), '</th>
-						<th class="SortedColumn">', __('Paid?'), '</th>
+						<th class = "SortedColumn">', __('Commission ID'), '</th>
+						<th class = "SortedColumn">', __('Sales Person'), '</th>
+						<th class = "SortedColumn">', __('Period'), '</th>
+						<th class = "SortedColumn">', __('Customer'), '</th>
+						<th class = "SortedColumn">', __('Invoice/Credit'), '</th>
+						<th class = "SortedColumn">', __('Amount'), '</th>
+						<th class = "SortedColumn">', __('Paid?'), '</th>
 					</tr>
 				</thead>';
 		echo '<tbody>';
@@ -84,13 +84,13 @@ if (isset($_POST['Submit'])) {
 } else {
 				$Paid = __('Yes');
 			}
-			echo '<tr class="striped_row">
+			echo '<tr class = "striped_row">
 					<td>', $MyRow['commissionno'], '</td>
 					<td>', $MyRow['salesmanname'], '</td>
 					<td>', $MyRow['month'], ' ', $MyRow['year'], '</td>
 					<td>', $MyRow['debtorno'], ' - ', $MyRow['name'], '</td>
 					<td>', $Type, ' no ', $MyRow['invcredno'], '</td>
-					<td class="number">', locale_number_format($MyRow['amount'], $MyRow['decimalplaces']), '</td>
+					<td class = "number">', locale_number_format($MyRow['amount'], $MyRow['decimalplaces']), '</td>
 					<td>', $Paid, '</td>
 				</tr>';
 		}
@@ -100,7 +100,7 @@ if (isset($_POST['Submit'])) {
 	} else {
 		prnMsg(__('There are no commissions meeting this criteria. Please select different criteria and run the report again.'), 'info');
 	}
-	echo '<a class="noPrint" href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">', __('Select different report criteria'), '</a><br />';
+	echo '<a class = "noPrint" href = "', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">', __('Select different report criteria'), '</a><br />';
 	include('includes/footer.php');
 	exit();
 
@@ -240,7 +240,7 @@ if (isset($_POST['Submit'])) {
 
 	echo '</fieldset>';
 
-	echo '<div class="centre">
+	echo '<div class = "centre">
 			<input type = "submit" name = "Submit" value = "', __('View Report'), '" />
 		</div>';
 

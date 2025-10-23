@@ -32,7 +32,7 @@ if (isset($_POST['PrintPDF']) && $_POST['Part'] != '') {
 		$Errors = 1;
 		$Title = __('Print MRP Report Warning');
 		include('includes/header.php');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
+		echo '<br /><a href = "' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 		include('includes/footer.php');
 		exit();
 	}
@@ -120,7 +120,7 @@ if (isset($_POST['PrintPDF']) && $_POST['Part'] != '') {
 		$Title = __('MRP Report') . ' - ' . __('Problem Report');
 		include('includes/header.php');
 		prnMsg( __('The MRP Report could not be retrieved'), 'error');
-		echo '<br /><a href="' .$RootPath .'/index.php">' . __('Back to the menu') . '</a>';
+		echo '<br /><a href = "' .$RootPath .'/index.php">' . __('Back to the menu') . '</a>';
 		include('includes/footer.php');
 		exit();
 	}
@@ -170,36 +170,36 @@ if (isset($_POST['PrintPDF']) && $_POST['Part'] != '') {
 		</style>
 	</head>
 	<body>
-		<h2 style="text-align: center;">'.htmlspecialchars($_SESSION['CompanyRecord']['coyname']).'</h2>
-		<h3 style="text-align: center;">MRP Report</h3>
-		<table class="header-table">
+		<h2 style = "text-align: center;">'.htmlspecialchars($_SESSION['CompanyRecord']['coyname']).'</h2>
+		<h3 style = "text-align: center;">MRP Report</h3>
+		<table class = "header-table">
 			<tr>
 				<td><b>Part:</b></td>
 				<td>'.htmlspecialchars($MyRow['part']).'</td>
 				<td><b>EOQ:</b></td>
-				<td class="number">'.locale_number_format($MyRow['eoq'],$MyRow['decimalplaces']).'</td>
+				<td class = "number">'.locale_number_format($MyRow['eoq'],$MyRow['decimalplaces']).'</td>
 				<td><b>On Hand:</b></td>
-				<td class="number">'.locale_number_format($QOH,$MyRow['decimalplaces']).'</td>
+				<td class = "number">'.locale_number_format($QOH,$MyRow['decimalplaces']).'</td>
 			</tr>
 			<tr>
 				<td><b>Description:</b></td>
 				<td colspan = "3">'.html_entity_decode($MyRow['description']).'</td>
 				<td><b>On Order:</b></td>
-				<td class="number">'.locale_number_format($OpenOrd,$MyRow['decimalplaces']).'</td>
+				<td class = "number">'.locale_number_format($OpenOrd,$MyRow['decimalplaces']).'</td>
 			</tr>
 			<tr>
 				<td><b>M/B:</b></td>
 				<td>'.htmlspecialchars($MyRow['mbflag']).'</td>
 				<td><b>Shrinkage:</b></td>
-				<td class="number">'.locale_number_format($MyRow['shrinkfactor'],$MyRow['decimalplaces']).'</td>
+				<td class = "number">'.locale_number_format($MyRow['shrinkfactor'],$MyRow['decimalplaces']).'</td>
 				<td><b>Gross Req:</b></td>
-				<td class="number">'.locale_number_format($GrossReq,$MyRow['decimalplaces']).'</td>
+				<td class = "number">'.locale_number_format($GrossReq,$MyRow['decimalplaces']).'</td>
 			</tr>
 			<tr>
 				<td><b>Lead Time:</b></td>
 				<td>'.htmlspecialchars($MyRow['leadtime']).'</td>
 				<td><b>Last Cost:</b></td>
-				<td class="number">'.locale_number_format($MyRow['lastcost'],2).'</td>
+				<td class = "number">'.locale_number_format($MyRow['lastcost'],2).'</td>
 				<td></td>
 				<td></td>
 			</tr>
@@ -216,20 +216,20 @@ if (isset($_POST['PrintPDF']) && $_POST['Part'] != '') {
 		$HTML .= '<th>'.htmlspecialchars(DateAdd($Today,'w',$i)).'</th>';
 	}
 	$HTML .= '</tr>
-		<tr><td class="section">Gross Reqts</td><td class="number">'.locale_number_format($PastDueReq,0).'</td>';
-	for ($i = 0;  $i<9;  $i++) $HTML .= '<td class="number">'.locale_number_format($WeeklyReq[$i],0).'</td>';
+		<tr><td class = "section">Gross Reqts</td><td class = "number">'.locale_number_format($PastDueReq,0).'</td>';
+	for ($i = 0;  $i<9;  $i++) $HTML .= '<td class = "number">'.locale_number_format($WeeklyReq[$i],0).'</td>';
 	$HTML .= '</tr>
-		<tr><td class="section">Open Order</td><td class="number">'.locale_number_format($PastDueSup,0).'</td>';
-	for ($i = 0;  $i<9;  $i++) $HTML .= '<td class="number">'.locale_number_format($WeeklySup[$i],0).'</td>';
+		<tr><td class = "section">Open Order</td><td class = "number">'.locale_number_format($PastDueSup,0).'</td>';
+	for ($i = 0;  $i<9;  $i++) $HTML .= '<td class = "number">'.locale_number_format($WeeklySup[$i],0).'</td>';
 	$HTML .= '</tr>
-		<tr><td class="section">Planned</td><td class="number">'.locale_number_format($PastDuePlan,0).'</td>';
-	for ($i = 0;  $i<9;  $i++) $HTML .= '<td class="number">'.locale_number_format($WeeklyPlan[$i],0).'</td>';
+		<tr><td class = "section">Planned</td><td class = "number">'.locale_number_format($PastDuePlan,0).'</td>';
+	for ($i = 0;  $i<9;  $i++) $HTML .= '<td class = "number">'.locale_number_format($WeeklyPlan[$i],0).'</td>';
 	$HTML .= '</tr>
-		<tr><td class="section">Proj Avail</td><td class="number">'.locale_number_format($PastDueAvail,0).'</td>';
-	for ($i = 0;  $i<9;  $i++) $HTML .= '<td class="number">'.locale_number_format($WeeklyAvail[$i],0).'</td>';
+		<tr><td class = "section">Proj Avail</td><td class = "number">'.locale_number_format($PastDueAvail,0).'</td>';
+	for ($i = 0;  $i<9;  $i++) $HTML .= '<td class = "number">'.locale_number_format($WeeklyAvail[$i],0).'</td>';
 	$HTML .= '</tr>
-		<tr><td class="section">Planned Acc</td><td class="number">'.locale_number_format($PastDuePlan,0).'</td>';
-	for ($i = 0;  $i<9;  $i++) $HTML .= '<td class="number">'.locale_number_format($PlannedAccum[$i],0).'</td>';
+		<tr><td class = "section">Planned Acc</td><td class = "number">'.locale_number_format($PastDuePlan,0).'</td>';
+	for ($i = 0;  $i<9;  $i++) $HTML .= '<td class = "number">'.locale_number_format($PlannedAccum[$i],0).'</td>';
 	$HTML .= '</tr></table>';
 
 	$HTML .= '<table>
@@ -239,20 +239,20 @@ if (isset($_POST['PrintPDF']) && $_POST['Part'] != '') {
 		$HTML .= '<th>'.htmlspecialchars(DateAdd($Today,'w',$i)).'</th>';
 	}
 	$HTML .= '</tr>
-		<tr><td class="section">Gross Reqts</td>';
-	for ($i = 9;  $i<19;  $i++) $HTML .= '<td class="number">'.locale_number_format($WeeklyReq[$i],0).'</td>';
+		<tr><td class = "section">Gross Reqts</td>';
+	for ($i = 9;  $i<19;  $i++) $HTML .= '<td class = "number">'.locale_number_format($WeeklyReq[$i],0).'</td>';
 	$HTML .= '</tr>
-		<tr><td class="section">Open Order</td>';
-	for ($i = 9;  $i<19;  $i++) $HTML .= '<td class="number">'.locale_number_format($WeeklySup[$i],0).'</td>';
+		<tr><td class = "section">Open Order</td>';
+	for ($i = 9;  $i<19;  $i++) $HTML .= '<td class = "number">'.locale_number_format($WeeklySup[$i],0).'</td>';
 	$HTML .= '</tr>
-		<tr><td class="section">Planned</td>';
-	for ($i = 9;  $i<19;  $i++) $HTML .= '<td class="number">'.locale_number_format($WeeklyPlan[$i],0).'</td>';
+		<tr><td class = "section">Planned</td>';
+	for ($i = 9;  $i<19;  $i++) $HTML .= '<td class = "number">'.locale_number_format($WeeklyPlan[$i],0).'</td>';
 	$HTML .= '</tr>
-		<tr><td class="section">Proj Avail</td>';
-	for ($i = 9;  $i<19;  $i++) $HTML .= '<td class="number">'.locale_number_format($WeeklyAvail[$i],0).'</td>';
+		<tr><td class = "section">Proj Avail</td>';
+	for ($i = 9;  $i<19;  $i++) $HTML .= '<td class = "number">'.locale_number_format($WeeklyAvail[$i],0).'</td>';
 	$HTML .= '</tr>
-		<tr><td class="section">Planned Acc</td>';
-	for ($i = 9;  $i<19;  $i++) $HTML .= '<td class="number">'.locale_number_format($PlannedAccum[$i],0).'</td>';
+		<tr><td class = "section">Planned Acc</td>';
+	for ($i = 9;  $i<19;  $i++) $HTML .= '<td class = "number">'.locale_number_format($PlannedAccum[$i],0).'</td>';
 	$HTML .= '</tr></table>';
 
 	$HTML .= '<table>
@@ -262,21 +262,21 @@ if (isset($_POST['PrintPDF']) && $_POST['Part'] != '') {
 		$HTML .= '<th>'.htmlspecialchars(DateAdd($Today,'w',$i)).'</th>';
 	}
 	$HTML .= '<th>Future</th></tr>
-		<tr><td class="section">Gross Reqts</td>';
-	for ($i = 19;  $i<28;  $i++) $HTML .= '<td class="number">'.locale_number_format($WeeklyReq[$i],0).'</td>';
-	$HTML .= '<td class="number">'.locale_number_format($FutureReq,0).'</td></tr>
-		<tr><td class="section">Open Order</td>';
-	for ($i = 19;  $i<28;  $i++) $HTML .= '<td class="number">'.locale_number_format($WeeklySup[$i],0).'</td>';
-	$HTML .= '<td class="number">'.locale_number_format($FutureSup,0).'</td></tr>
-		<tr><td class="section">Planned</td>';
-	for ($i = 19;  $i<28;  $i++) $HTML .= '<td class="number">'.locale_number_format($WeeklyPlan[$i],0).'</td>';
-	$HTML .= '<td class="number">'.locale_number_format($FuturePlan,0).'</td></tr>
-		<tr><td class="section">Proj Avail</td>';
-	for ($i = 19;  $i<28;  $i++) $HTML .= '<td class="number">'.locale_number_format($WeeklyAvail[$i],0).'</td>';
-	$HTML .= '<td class="number">'.locale_number_format($FutureAvail,0).'</td></tr>
-		<tr><td class="section">Planned Acc</td>';
-	for ($i = 19;  $i<28;  $i++) $HTML .= '<td class="number">'.locale_number_format($PlannedAccum[$i],0).'</td>';
-	$HTML .= '<td class="number">'.locale_number_format($FuturePlannedaccum,0).'</td></tr>
+		<tr><td class = "section">Gross Reqts</td>';
+	for ($i = 19;  $i<28;  $i++) $HTML .= '<td class = "number">'.locale_number_format($WeeklyReq[$i],0).'</td>';
+	$HTML .= '<td class = "number">'.locale_number_format($FutureReq,0).'</td></tr>
+		<tr><td class = "section">Open Order</td>';
+	for ($i = 19;  $i<28;  $i++) $HTML .= '<td class = "number">'.locale_number_format($WeeklySup[$i],0).'</td>';
+	$HTML .= '<td class = "number">'.locale_number_format($FutureSup,0).'</td></tr>
+		<tr><td class = "section">Planned</td>';
+	for ($i = 19;  $i<28;  $i++) $HTML .= '<td class = "number">'.locale_number_format($WeeklyPlan[$i],0).'</td>';
+	$HTML .= '<td class = "number">'.locale_number_format($FuturePlan,0).'</td></tr>
+		<tr><td class = "section">Proj Avail</td>';
+	for ($i = 19;  $i<28;  $i++) $HTML .= '<td class = "number">'.locale_number_format($WeeklyAvail[$i],0).'</td>';
+	$HTML .= '<td class = "number">'.locale_number_format($FutureAvail,0).'</td></tr>
+		<tr><td class = "section">Planned Acc</td>';
+	for ($i = 19;  $i<28;  $i++) $HTML .= '<td class = "number">'.locale_number_format($PlannedAccum[$i],0).'</td>';
+	$HTML .= '<td class = "number">'.locale_number_format($FuturePlannedaccum,0).'</td></tr>
 	</table>';
 
 	// Demand/Supply details
@@ -311,7 +311,7 @@ if (isset($_POST['PrintPDF']) && $_POST['Part'] != '') {
 			$HTML .= '<td>' . htmlspecialchars($Requirements[$i]['mrpdemandtype']) . '</td>
 				<td>' . htmlspecialchars($Requirements[$i]['whererequired']) . '</td>
 				<td>' . htmlspecialchars($Requirements[$i]['orderno']) . '</td>
-				<td class="number">' . locale_number_format($Requirements[$i]['quantity'],$MyRow['decimalplaces']) . '</td>
+				<td class = "number">' . locale_number_format($Requirements[$i]['quantity'],$MyRow['decimalplaces']) . '</td>
 				<td>' . htmlspecialchars($FormatedReqDueDate) . '</td>';
 		} else {
 			$HTML .= '<td colspan = "5"></td>';
@@ -332,7 +332,7 @@ if (isset($_POST['PrintPDF']) && $_POST['Part'] != '') {
 			$HTML .= '<td>' . htmlspecialchars($OrderNo) . '</td>
 				<td>' . htmlspecialchars($DisplayType) . '</td>
 				<td>' . htmlspecialchars($ForType) . '</td>
-				<td class="number">' . locale_number_format($Supplies[$i]['supplyquantity'],$MyRow['decimalplaces']) . '</td>
+				<td class = "number">' . locale_number_format($Supplies[$i]['supplyquantity'],$MyRow['decimalplaces']) . '</td>
 				<td>' . htmlspecialchars($FormatedSupDueDate) . '</td>
 				<td>' . htmlspecialchars($FormatedSupMRPDate) . '</td>';
 		} else {
@@ -368,19 +368,19 @@ if (isset($_POST['PrintPDF']) && $_POST['Part'] != '') {
 			ORDER BY categorydescription";
 	$Result1 = DB_query($SQL);
 	if (DB_num_rows($Result1) == 0) {
-		echo '<p class="bad">' . __('Problem Report') . ':<br />' . __('There are no stock categories currently defined please use the link below to set them up');
-		echo '<a href="' . $RootPath . '/StockCategories.php">' . __('Define Stock Categories') . '</a>';
+		echo '<p class = "bad">' . __('Problem Report') . ':<br />' . __('There are no stock categories currently defined please use the link below to set them up');
+		echo '<a href = "' . $RootPath . '/StockCategories.php">' . __('Define Stock Categories') . '</a>';
 		exit();
 	}
 
-	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post" target="_blank">
-		<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />
-		<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . __('Search') . '" alt="" />' . ' ' . __('Search for Inventory Items') . '</p>
+	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post" target = "_blank">
+		<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />
+		<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title = "' . __('Search') . '" alt = "" />' . ' ' . __('Search for Inventory Items') . '</p>
 		<fieldset>
 			<legend>', __('Search Criteria'), '</legend>
 			<field>
 				<label for = "StockCat">' . __('In Stock Category') . ':</label>
-				<select name="StockCat">';
+				<select name = "StockCat">';
 	if (!isset($_POST['StockCat'])) {
 		$_POST['StockCat'] = '';
 	}
@@ -401,23 +401,23 @@ if (isset($_POST['PrintPDF']) && $_POST['Part'] != '') {
 	echo '<field>
 			<label for = "Keywords">' . __('Enter partial') . '<b> ' . __('Description') . '</b>:</label>';
 	if (isset($_POST['Keywords'])) {
-		echo '<input type = "text" autofocus = "autofocus" name="Keywords" value = "' . $_POST['Keywords'] . '" size = "20" maxlength = "25" />';
+		echo '<input type = "text" autofocus = "autofocus" name = "Keywords" value = "' . $_POST['Keywords'] . '" size = "20" maxlength = "25" />';
 	} else {
-		echo '<input type = "text" autofocus = "autofocus" name="Keywords" size = "20" maxlength = "25" />';
+		echo '<input type = "text" autofocus = "autofocus" name = "Keywords" size = "20" maxlength = "25" />';
 	}
 	echo '</field>';
 
 	echo '<field>
 			<label for = "StockCode">' . '<b>' . __('or') . ' </b>' . __('Enter partial') . ' <b>' . __('Stock Code') . '</b>:</label>';
 	if (isset($_POST['StockCode'])) {
-		echo '<input type = "text" name="StockCode" value = "' . $_POST['StockCode'] . '" size = "15" maxlength = "18" />';
+		echo '<input type = "text" name = "StockCode" value = "' . $_POST['StockCode'] . '" size = "15" maxlength = "18" />';
 	} else {
-		echo '<input type = "text" name="StockCode" size = "15" maxlength = "18" />';
+		echo '<input type = "text" name = "StockCode" size = "15" maxlength = "18" />';
 	}
 	echo '</field>
 		</fieldset>
-		<div class="centre">
-			<input type = "submit" name="Search" value = "' . __('Search Now') . '" />
+		<div class = "centre">
+			<input type = "submit" name = "Search" value = "' . __('Search Now') . '" />
 		</div>
 		</form>';
 	if (!isset($_POST['Search'])) {
@@ -561,8 +561,8 @@ if (isset($_POST['Search']) or isset($_POST['Go']) or isset($_POST['Next']) or i
 /* end query for list of records */
 /* display list if there is more than one record */
 if (isset($SearchResult) and !isset($_POST['Select'])) {
-	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post" target="_blank">';
-	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post" target = "_blank">';
+	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 	$ListCount = DB_num_rows($SearchResult);
 	if ($ListCount > 0) {
 	// If the user hit the search button and there is more than one item to show
@@ -581,9 +581,9 @@ if (isset($SearchResult) and !isset($_POST['Select'])) {
 	$_POST['PageOffset'] = $ListPageMax;
 }
 		if ($ListPageMax > 1) {
-	echo '<div class="centre">
+	echo '<div class = "centre">
 					<p>&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . __('of') . ' ' . $ListPageMax . ' ' . __('pages') . '. ' . __('Go to Page') . ': ';
-			echo '<select name="PageOffset">';
+			echo '<select name = "PageOffset">';
 			$ListPage = 1;
 			while ($ListPage <= $ListPageMax) {
 				if ($ListPage == $_POST['PageOffset']) {
@@ -594,15 +594,15 @@ if (isset($SearchResult) and !isset($_POST['Select'])) {
 				$ListPage++;
 			}
 			echo '</select>
-				<input type = "submit" name="Go" value = "' . __('Go') . '" />
-				<input type = "submit" name="Previous" value = "' . __('Previous') . '" />
-				<input type = "submit" name="Next" value = "' . __('Next') . '" />
-				<input type = "hidden" name="Keywords" value = "'.$_POST['Keywords'].'" />
-				<input type = "hidden" name="StockCat" value = "'.$_POST['StockCat'].'" />
-				<input type = "hidden" name="StockCode" value = "'.$_POST['StockCode'].'" />
+				<input type = "submit" name = "Go" value = "' . __('Go') . '" />
+				<input type = "submit" name = "Previous" value = "' . __('Previous') . '" />
+				<input type = "submit" name = "Next" value = "' . __('Next') . '" />
+				<input type = "hidden" name = "Keywords" value = "'.$_POST['Keywords'].'" />
+				<input type = "hidden" name = "StockCat" value = "'.$_POST['StockCat'].'" />
+				<input type = "hidden" name = "StockCode" value = "'.$_POST['StockCode'].'" />
 				</div>';
 		}
-		echo '<table class="selection">';
+		echo '<table class = "selection">';
 		$Tableheader = '<tr>
 							<th>' . __('Code') . '</th>
 							<th>' . __('Description') . '</th>
@@ -622,12 +622,12 @@ if (isset($SearchResult) and !isset($_POST['Select'])) {
 } else {
 				$QOH = locale_number_format($MyRow['qoh'], $MyRow['decimalplaces']);
 			}
-			echo '<tr class="striped_row">
-				<td><input type = "submit" name="Select" value = "'.$MyRow['stockid']. '" /></td>
+			echo '<tr class = "striped_row">
+				<td><input type = "submit" name = "Select" value = "'.$MyRow['stockid']. '" /></td>
 				<td>' . $MyRow['description'] . '</td>
-				<td class="number">' . $QOH . '</td>
+				<td class = "number">' . $QOH . '</td>
 				<td>' . $MyRow['units'] . '</td>
-				<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=' . $MyRow['stockid'] .'">' . __('View') . '</a></td>
+				<td><a target = "_blank" href = "' . $RootPath . '/StockStatus.php?StockID = ' . $MyRow['stockid'] .'">' . __('View') . '</a></td>
 				</tr>';
 			$j++;
 			if ($j == 20 and ($RowIndex + 1 != $_SESSION['DisplayRecordsMax'])) {

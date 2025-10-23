@@ -220,7 +220,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '</tbody>
 				</table>
 				<div class = "centre">
-					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick="window.close()" /></form>
+					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -243,7 +243,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	} else {
 		$Title = __('Inventory Planning Report');
 		include('includes/header.php');
-		echo '<p class = "page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('General Ledger Account Report') . '" alt="" />' . ' ' . __('General Ledger Account Report') . '</p>';
+		echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title = "' . __('General Ledger Account Report') . '" alt = "" />' . ' ' . __('General Ledger Account Report') . '</p>';
 		echo $HTML;
 		include('includes/footer.php');
 	}
@@ -252,7 +252,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$Title = __('General Ledger Account Report');
 	include('includes/header.php');
 
-	echo '<p class = "page_title_text"><img src="' . $RootPath, '/css/', $Theme, '/images/transactions.png" title="' . __('General Ledger Account Inquiry') . '" alt="" />' . ' ' . __('General Ledger Account Report') . '</p>';
+	echo '<p class = "page_title_text"><img src = "' . $RootPath, '/css/', $Theme, '/images/transactions.png" title = "' . __('General Ledger Account Inquiry') . '" alt = "" />' . ' ' . __('General Ledger Account Report') . '</p>';
 
 	echo '<div class = "page_help_text">' . __('Use the keyboard Shift key to select multiple accounts and periods') . '</div><br />';
 

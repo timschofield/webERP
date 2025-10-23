@@ -15,7 +15,7 @@ if (isset($_GET['StockID'])){
 
 if (!isset($_POST['StockID'])) {
 	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post">
-		<div class="page_help_text">
+		<div class = "page_help_text">
 			'. __('Select a manufactured part') . ' (' . __('or Assembly or Kit part') . ') ' . __('to view the costed bill of materials') . '
 			<br />' . __('Parts must be defined in the stock item entry') . '/' . __('modification screen as manufactured') . ', ' . __('kits or assemblies to be available for construction of a bill of material') . '
 		</div>
@@ -23,18 +23,18 @@ if (!isset($_POST['StockID'])) {
 			<legend>', __('Report Criteria'), '</legend>
 		<field>
 			<label for = "Keywords">' . __('Enter text extracts in the') . ' <b>' . __('description') . '</b>:</label>
-			<input tabindex = "1" type = "text" autofocus = "autofocus" name="Keywords" size = "20" maxlength = "25" />
+			<input tabindex = "1" type = "text" autofocus = "autofocus" name = "Keywords" size = "20" maxlength = "25" />
 		</field>
 			<b>' . __('or') . ' </b>
 		<field>
 			<label for = "StockCode">' . __('Enter extract of the') . ' <b>' . __('Stock Code') . '</b>:</label>
-			<input tabindex = "2" type = "text" name="StockCode" size = "15" maxlength = "20" />
+			<input tabindex = "2" type = "text" name = "StockCode" size = "15" maxlength = "20" />
 		</field>
 		</fieldset>
-		<div class="centre">
-			<input tabindex = "3" type = "submit" name="Search" value = "' . __('Search Now') . '" />
+		<div class = "centre">
+			<input tabindex = "3" type = "submit" name = "Search" value = "' . __('Search Now') . '" />
 		</div>
-		<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+		<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 }
 
 if (isset($_POST['Search'])){
@@ -101,7 +101,7 @@ if (isset($_POST['Search'])
 	and isset($Result)
 	and !isset($SelectedParent)) {
 
-	echo '<table class="selection">
+	echo '<table class = "selection">
 			<tr>
 				<th>' . __('Code') . '</th>
 				<th>' . __('Description') . '</th>
@@ -118,10 +118,10 @@ if (isset($_POST['Search'])
 			$StockOnHand = locale_number_format($MyRow['totalonhand'],2);
 		}
 		$TabIndex = $j+4;
-		echo'<tr class="striped_row">
-				<td><input tabindex = "' .$TabIndex . '" type = "submit" name="StockID" value = "', $MyRow['stockid'], '" /></td>
+		echo'<tr class = "striped_row">
+				<td><input tabindex = "' .$TabIndex . '" type = "submit" name = "StockID" value = "', $MyRow['stockid'], '" /></td>
 		        <td>', $MyRow['description'], '</td>
-				<td class="number">', $StockOnHand, '</td>
+				<td class = "number">', $StockOnHand, '</td>
 				<td>', $MyRow['units'], '</td>
 			</tr>';
 		$j++;
@@ -166,12 +166,12 @@ if (isset($StockID) and $StockID !=  ""){
 	if (DB_num_rows($BOMResult) == 0){
 		prnMsg(__('The bill of material for this part is not set up') . ' - ' . __('there are no components defined for it'),'warn');
 	} else {
-		echo '<a class="toplink" href="'.$RootPath.'/BOMInquiry.php">' . __('Select another BOM') . '</a>';
-		echo '<p class="page_title_text">
-				<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title.'
+		echo '<a class = "toplink" href = "'.$RootPath.'/BOMInquiry.php">' . __('Select another BOM') . '</a>';
+		echo '<p class = "page_title_text">
+				<img src = "'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title = "' . __('Search') . '" alt = "" />' . ' ' . $Title.'
 			</p>';
 
-		echo '<table class="selection">';
+		echo '<table class = "selection">';
 		echo '<tr>
 				<th colspan = "5">
 					<b>' . $MyRow[0] . ' : ' . __('per') . ' ' . $MyRow[1] . '</b>
@@ -191,15 +191,15 @@ if (isset($StockID) and $StockID !=  ""){
 
 		while ($MyRow = DB_fetch_array($BOMResult)) {
 
-			$ComponentLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['component'] . '">' . $MyRow['component'] . '</a>';
+			$ComponentLink = '<a href = "' . $RootPath . '/SelectProduct.php?StockID = ' . $MyRow['component'] . '">' . $MyRow['component'] . '</a>';
 
 			/* Component Code  Description  Quantity Std Cost  Total Cost */
-			echo '<tr class="striped_row">
+			echo '<tr class = "striped_row">
 					<td>', $ComponentLink, '</td>
 					<td>', $MyRow['description'], '</td>
-					<td class="number">', locale_number_format($MyRow['quantity'],$MyRow['decimalplaces']), '</td>
-					<td class="number">', locale_number_format($MyRow['standardcost'],$_SESSION['CompanyRecord']['decimalplaces'] + 2), '</td>
-					<td class="number">', locale_number_format($MyRow['componentcost'],$_SESSION['CompanyRecord']['decimalplaces'] + 2), '</td>
+					<td class = "number">', locale_number_format($MyRow['quantity'],$MyRow['decimalplaces']), '</td>
+					<td class = "number">', locale_number_format($MyRow['standardcost'],$_SESSION['CompanyRecord']['decimalplaces'] + 2), '</td>
+					<td class = "number">', locale_number_format($MyRow['componentcost'],$_SESSION['CompanyRecord']['decimalplaces'] + 2), '</td>
 				</tr>';
 
 			$TotalCost += $MyRow['componentcost'];
@@ -207,19 +207,19 @@ if (isset($StockID) and $StockID !=  ""){
 		}
 
 		$TotalCost += $ParentLabourCost;
-		echo '<tr class="total_row">
-				<td colspan = "4" class="number"><b>' . __('Labour Cost') . '</b></td>
-				<td class="number"><b>' . locale_number_format($ParentLabourCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
+		echo '<tr class = "total_row">
+				<td colspan = "4" class = "number"><b>' . __('Labour Cost') . '</b></td>
+				<td class = "number"><b>' . locale_number_format($ParentLabourCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
 			</tr>';
 		$TotalCost += $ParentOverheadCost;
-		echo '<tr class="total_row">
-				<td colspan = "4" class="number"><b>' . __('Overhead Cost') . '</b></td>
-				<td class="number"><b>' . locale_number_format($ParentOverheadCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
+		echo '<tr class = "total_row">
+				<td colspan = "4" class = "number"><b>' . __('Overhead Cost') . '</b></td>
+				<td class = "number"><b>' . locale_number_format($ParentOverheadCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
 			</tr>';
 
-		echo '<tr class="total_row">
-				<td colspan = "4" class="number"><b>' . __('Total Cost') . '</b></td>
-				<td class="number"><b>' . locale_number_format($TotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
+		echo '<tr class = "total_row">
+				<td colspan = "4" class = "number"><b>' . __('Total Cost') . '</b></td>
+				<td class = "number"><b>' . locale_number_format($TotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
 			</tr>';
 
 		echo '</table>';

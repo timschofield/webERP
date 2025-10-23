@@ -45,24 +45,24 @@ if (isset($_GET['Application']) and ($_GET['Application'] != '')) {
 include('includes/header.php');
 
 if (isset($SupplierLogin) and $SupplierLogin == 1) {
-	echo '<section class="MainBody clearfix">';
-	echo '<form class="centre" style="width:30%">
+	echo '<section class = "MainBody clearfix">';
+	echo '<form class = "centre" style = "width:30%">
 			<fieldset>
 				<legend>', __('Menu Options'), '</legend>';
-	echo '<table style="width:100%">
+	echo '<table style = "width:100%">
 			<tr>
-				<td style="width:auto">
-					<p>&bull; <a href="' . $RootPath . '/SupplierTenders.php?TenderType=1">' . __('View or Amend outstanding offers') . '</a></p>
+				<td style = "width:auto">
+					<p>&bull; <a href = "' . $RootPath . '/SupplierTenders.php?TenderType = 1">' . __('View or Amend outstanding offers') . '</a></p>
 				</td>
 			</tr>
 			<tr>
-				<td class="menu_group_item">
-					<p>&bull; <a href="' . $RootPath . '/SupplierTenders.php?TenderType=2">' . __('Create a new offer') . '</a></p>
+				<td class = "menu_group_item">
+					<p>&bull; <a href = "' . $RootPath . '/SupplierTenders.php?TenderType = 2">' . __('Create a new offer') . '</a></p>
 				</td>
 			</tr>
 			<tr>
-				<td class="menu_group_item">
-					<p>&bull; <a href="' . $RootPath . '/SupplierTenders.php?TenderType=3">' . __('View any open tenders without an offer') . '</a></p>
+				<td class = "menu_group_item">
+					<p>&bull; <a href = "' . $RootPath . '/SupplierTenders.php?TenderType = 3">' . __('View any open tenders without an offer') . '</a></p>
 				</td>
 			</tr>
 		</table>';
@@ -72,24 +72,24 @@ if (isset($SupplierLogin) and $SupplierLogin == 1) {
 	include('includes/footer.php');
 	exit;
 } elseif (isset($CustomerLogin) and $CustomerLogin == 1) {
-	echo '<section class="MainBody clearfix">';
-	echo '<form class="centre" style="width:30%">
+	echo '<section class = "MainBody clearfix">';
+	echo '<form class = "centre" style = "width:30%">
 			<fieldset>
 				<legend>', __('Menu Options'), '</legend>';
-	echo '<table style="width:100%">
+	echo '<table style = "width:100%">
 			<tr>
 				<td>
-					<p>&bull; <a href="' . $RootPath . '/CustomerInquiry.php?CustomerID=' . $_SESSION['CustomerID'] . '">' . __('Account Status') . '</a></p>
+					<p>&bull; <a href = "' . $RootPath . '/CustomerInquiry.php?CustomerID = ' . $_SESSION['CustomerID'] . '">' . __('Account Status') . '</a></p>
 				</td>
 			</tr>
 			<tr>
-				<td class="menu_group_item">
-					<p>&bull; <a href="' . $RootPath . '/SelectOrderItems.php?NewOrder=Yes">' . __('Place An Order') . '</a></p>
+				<td class = "menu_group_item">
+					<p>&bull; <a href = "' . $RootPath . '/SelectOrderItems.php?NewOrder = Yes">' . __('Place An Order') . '</a></p>
 				</td>
 			</tr>
 			<tr>
-				<td class="menu_group_item">
-					<p>&bull; <a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedCustomer=' . $_SESSION['CustomerID'] . '">' . __('Order Status') . '</a></p>
+				<td class = "menu_group_item">
+					<p>&bull; <a href = "' . $RootPath . '/SelectCompletedOrder.php?SelectedCustomer = ' . $_SESSION['CustomerID'] . '">' . __('Order Status') . '</a></p>
 				</td>
 			</tr>
 		</table>';
@@ -101,7 +101,7 @@ if (isset($SupplierLogin) and $SupplierLogin == 1) {
 }
 
 //=== MainMenuDiv =======================================================================
-echo '<nav class="ModuleList">
+echo '<nav class = "ModuleList">
 		<ul>'; //===HJ===
 $i = 0;
 while ($i < count($ModuleLink)) {
@@ -114,11 +114,11 @@ while ($i < count($ModuleLink)) {
 			$_SESSION['Module'] = $ModuleLink[$i];
 		}
 		if ($ModuleLink[$i] == $_SESSION['Module']) {
-			echo '<li class="ModuleSelected">';
+			echo '<li class = "ModuleSelected">';
 		} else {
-			echo '<li class="ModuleUnSelected">';
+			echo '<li class = "ModuleUnSelected">';
 		}
-		echo '<a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?Application=', urlencode($ModuleLink[$i]), '">', $ModuleList[$i], '</a></li>';
+		echo '<a href = "', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?Application = ', urlencode($ModuleLink[$i]), '">', $ModuleList[$i], '</a></li>';
 	}
 	++$i;
 }
@@ -127,15 +127,15 @@ echo '</ul>
 
 
 //=== SubMenuDiv (wrapper) ==============================================================================
-echo '<section class="MainBody clearfix">';
-echo '<fieldset class="MenuList">'; //=== TransactionsDiv ===
+echo '<section class = "MainBody clearfix">';
+echo '<fieldset class = "MenuList">'; //=== TransactionsDiv ===
 echo '<legend>'; //=== SubMenuHeader ===
 if ($_SESSION['Module'] == 'system') {
-	echo '<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/company.png" data-title="', __('General Setup Options'), '" alt="', __('General Setup Options'), '" /><b>', __('General Setup Options'), '</b>';
+	echo '<img src = "', $RootPath, '/css/', $_SESSION['Theme'], '/images/company.png" data-title = "', __('General Setup Options'), '" alt = "', __('General Setup Options'), '" /><b>', __('General Setup Options'), '</b>';
 } elseif ($_SESSION['Module'] == 'hospsetup') {
-	echo '<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/company.png" data-title="', __('General Hospital Setup'), '" alt="', __('General Hospital Setup'), '" /><b>', __('General Hospital Setup'), '</b>';
+	echo '<img src = "', $RootPath, '/css/', $_SESSION['Theme'], '/images/company.png" data-title = "', __('General Hospital Setup'), '" alt = "', __('General Hospital Setup'), '" /><b>', __('General Hospital Setup'), '</b>';
 } else {
-	echo '<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/transactions.png" data-title="', __('Transactions'), '" alt="', __('Transactions'), '" /><b>', __('Transactions'), '</b>';
+	echo '<img src = "', $RootPath, '/css/', $_SESSION['Theme'], '/images/transactions.png" data-title = "', __('Transactions'), '" alt = "', __('Transactions'), '" /><b>', __('Transactions'), '</b>';
 }
 
 echo '</legend><ul>'; // SubMenuHeader
@@ -148,22 +148,22 @@ foreach ($MenuItems[$_SESSION['Module']]['Transactions']['Caption'] as $Caption)
 		$PageSecurity = $_SESSION['PageSecurityArray'][$ScriptNameArray[0]];
 	}
 	if ((in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) and $PageSecurity != '')) {
-		echo '<li class="MenuItem">
-				<a href="', $RootPath, $MenuItems[$_SESSION['Module']]['Transactions']['URL'][$i], '">&bull; ', $Caption, '</a>
+		echo '<li class = "MenuItem">
+				<a href = "', $RootPath, $MenuItems[$_SESSION['Module']]['Transactions']['URL'][$i], '">&bull; ', $Caption, '</a>
 			</li>';
 	}
 	++$i;
 }
 echo '</ul>
 	</fieldset>'; //=== TransactionsDiv ===
-echo '<fieldset class="MenuList">'; //=== TransactionsDiv ===
+echo '<fieldset class = "MenuList">'; //=== TransactionsDiv ===
 echo '<legend>'; //=== SubMenuHeader ===
 if ($_SESSION['Module'] == 'system') {
-	$Header = '<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/ar.png" data-title="' . __('Receivables/Payables Setup') . '" alt="' . __('Receivables/Payables Setup') . '" /><b>' . __('Receivables/Payables Setup') . '</b>';
+	$Header = '<img src = "' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/ar.png" data-title = "' . __('Receivables/Payables Setup') . '" alt = "' . __('Receivables/Payables Setup') . '" /><b>' . __('Receivables/Payables Setup') . '</b>';
 } elseif ($_SESSION['Module'] == 'hospsetup') {
-	$Header = '<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/ar.png" data-title="' . __('ERP Integration') . '" alt="' . __('ERP Integration') . '" /><b>' . __('ERP Integration') . '</b>';
+	$Header = '<img src = "' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/ar.png" data-title = "' . __('ERP Integration') . '" alt = "' . __('ERP Integration') . '" /><b>' . __('ERP Integration') . '</b>';
 } else {
-	$Header = '<img data-title="' . __('Inquiries and Reports') . '" src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/reports.png" alt="' . __('Inquiries and Reports') . '" /><b>' . __('Inquiries and Reports') . '</b>';
+	$Header = '<img data-title = "' . __('Inquiries and Reports') . '" src = "' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/reports.png" alt = "' . __('Inquiries and Reports') . '" /><b>' . __('Inquiries and Reports') . '</b>';
 }
 echo $Header;
 echo '</legend>
@@ -178,8 +178,8 @@ if (isset($MenuItems[$_SESSION['Module']]['Reports'])) {
 // KL RICARD Check that AND ($Caption != '') to avoid empty lines on the menu
 		if ((in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) or !isset($PageSecurity)) AND ($Caption != '')) {
 // KL RICARD END
-			echo '<li class="MenuItem">
-				<a href="' . $RootPath . $MenuItems[$_SESSION['Module']]['Reports']['URL'][$i] . '">&bull; ' . $Caption . '</a>
+			echo '<li class = "MenuItem">
+				<a href = "' . $RootPath . $MenuItems[$_SESSION['Module']]['Reports']['URL'][$i] . '">&bull; ' . $Caption . '</a>
 			</li>';
 		}
 		++$i;
@@ -191,14 +191,14 @@ if (isset($MenuItems[$_SESSION['Module']]['Reports'])) {
 // KL RICARD END
 echo '</ul>
 	</fieldset>'; //=== InquiriesDiv ===
-echo '<fieldset class="MenuList">'; //=== MaintenanceDive ===
+echo '<fieldset class = "MenuList">'; //=== MaintenanceDive ===
 echo '<legend>';
 if ($_SESSION['Module'] == 'system') {
-	$Header = '<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/inventory.png" data-title="' . __('Inventory Setup') . '" alt="' . __('Inventory Setup') . '" /><b>' . __('Inventory Setup') . '</b>';
+	$Header = '<img src = "' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/inventory.png" data-title = "' . __('Inventory Setup') . '" alt = "' . __('Inventory Setup') . '" /><b>' . __('Inventory Setup') . '</b>';
 } elseif ($_SESSION['Module'] == 'hospsetup') {
-	$Header = '<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" data-title="' . __('Maintain types') . '" alt="' . __('Maintain Types') . '" /><b>' . __('Maintain Types') . '</b>';
+	$Header = '<img src = "' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" data-title = "' . __('Maintain types') . '" alt = "' . __('Maintain Types') . '" /><b>' . __('Maintain Types') . '</b>';
 } else {
-	$Header = '<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" data-title="' . __('Maintenance') . '" alt="' . __('Maintenance') . '" /><b>' . __('Maintenance') . '</b>';
+	$Header = '<img src = "' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" data-title = "' . __('Maintenance') . '" alt = "' . __('Maintenance') . '" /><b>' . __('Maintenance') . '</b>';
 }
 echo $Header;
 echo '</legend>
@@ -212,8 +212,8 @@ if (isset($MenuItems[$_SESSION['Module']]['Maintenance'])) {
 		if (isset($_SESSION['PageSecurityArray'][$ScriptNameArray[0]])) {
 			$PageSecurity = $_SESSION['PageSecurityArray'][$ScriptNameArray[0]];
 			if ((in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) or !isset($PageSecurity))) {
-				echo '<li class="MenuItem">
-						<a href="' . $RootPath . $MenuItems[$_SESSION['Module']]['Maintenance']['URL'][$i] . '">&bull; ' . $Caption . '</a>
+				echo '<li class = "MenuItem">
+						<a href = "' . $RootPath . $MenuItems[$_SESSION['Module']]['Maintenance']['URL'][$i] . '">&bull; ' . $Caption . '</a>
 					</li>';
 			}
 		}
@@ -259,15 +259,15 @@ function GetRptLinks($GroupID) {
 	}
 	$RptLinks = '';
 	for ($Def = 1;  $Def >= 0;  $Def--) {
-		$RptLinks.= '<li class="CustomMenuList">';
+		$RptLinks.= '<li class = "CustomMenuList">';
 		$RptLinks.= '<b>' . $Title[$Def] . '</b>';
 		$RptLinks.= '</li>';
 		$NoEntries = true;
 		if (isset($_SESSION['ReportList']['groupname']) and count($_SESSION['ReportList']['groupname']) > 0) { // then there are reports to show, show by grouping
 			foreach ($_SESSION['ReportList'] as $Report) {
 				if (isset($Report['groupname']) and $Report['groupname'] == $GroupID and $Report['defaultreport'] == $Def) {
-					$RptLinks.= '<li class="menu_group_item">';
-					$RptLinks.= '<p><a href="' . $RootPath . '/reportwriter/ReportMaker.php?action=go&amp;reportid=';
+					$RptLinks.= '<li class = "menu_group_item">';
+					$RptLinks.= '<p><a href = "' . $RootPath . '/reportwriter/ReportMaker.php?action = go&amp;reportid = ';
 					$RptLinks.= urlencode($Report['id']) . '">&nbsp; ' . __($Report['reportname']) . '</a></p>';
 					$RptLinks.= '</li>';
 					$NoEntries = false;
@@ -278,9 +278,9 @@ function GetRptLinks($GroupID) {
 			foreach ($_SESSION['ReportList'] as $Report) {
 				$Group = explode(':', $Report['groupname']); // break into main group and form group array
 				if ($NoForms and $Group[0] == $GroupID and $Report['reporttype'] == 'frm' and $Report['defaultreport'] == $Def) {
-	$RptLinks.= '<li class="menu_group_item">';
-					$RptLinks.= '<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/folders.gif" width = "16" height = "13" alt="" />&nbsp; ';
-					$RptLinks.= '<p><a href="' . $RootPath . '/reportwriter/FormMaker.php?id=' . urlencode($Report['groupname']) . '">';
+	$RptLinks.= '<li class = "menu_group_item">';
+					$RptLinks.= '<img src = "' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/folders.gif" width = "16" height = "13" alt = "" />&nbsp; ';
+					$RptLinks.= '<p><a href = "' . $RootPath . '/reportwriter/FormMaker.php?id = ' . urlencode($Report['groupname']) . '">';
 					$RptLinks.= $_SESSION['FormGroups'][$Report['groupname']] . '</a></p>';
 					$RptLinks.= '</li>';
 					$NoForms = false;
@@ -288,7 +288,7 @@ function GetRptLinks($GroupID) {
 }
 			}
 		}
-		if ($NoEntries) $RptLinks.= '<li class="menu_group_item">' . __('There are no reports to show!') . '</li>';
+		if ($NoEntries) $RptLinks.= '<li class = "menu_group_item">' . __('There are no reports to show!') . '</li>';
 	}
 	return $RptLinks;
 }

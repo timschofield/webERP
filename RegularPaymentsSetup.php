@@ -12,8 +12,8 @@ include('includes/GLFunctions.php');
 if (isset($_POST['FirstPaymentDate'])){$_POST['FirstPaymentDate'] = ConvertSQLDate($_POST['FirstPaymentDate']);}
 if (isset($_POST['LastPaymentDate'])){$_POST['LastPaymentDate'] = ConvertSQLDate($_POST['LastPaymentDate']);}
 
-echo '<p class="page_title_text" >
-		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', $Title, '" alt="" />', ' ', $Title, '
+echo '<p class = "page_title_text" >
+		<img src = "', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title = "', $Title, '" alt = "" />', ' ', $Title, '
 	</p>';
 
 if (isset($_GET['Complete'])) {
@@ -159,8 +159,8 @@ if (isset($_POST['Add']) or isset($_POST['Update'])) {
 	}
 }
 
-echo '<form method = "post" id="RegularPaymentsSetup" action = "' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
-echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<form method = "post" id = "RegularPaymentsSetup" action = "' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
+echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 echo '<fieldset>
 		<legend>', __('Regular General Ledger Payment'), '</legend>';
@@ -197,7 +197,7 @@ if (!isset($_POST['Tag'])) {
 $Tags = $_POST['Tag'];
 echo '<field>
 		<label for = "Frequency">', __('Frequency Of Payment'), '</label>
-		<select autofocus = "autofocus" name="Frequency">
+		<select autofocus = "autofocus" name = "Frequency">
 			<option value = ""></option>';
 foreach ($Frequencies as $Initial => $Name) {
 	if ($Initial == $_POST['Frequency']) {
@@ -211,16 +211,16 @@ echo '</select>
 
 echo '<field>
 		<label for = "Days">', __('Days'), '</label>
-		<input type = "text" class="number" size = "4" name="Days" value = "', $_POST['Days'], '" />
+		<input type = "text" class = "number" size = "4" name = "Days" value = "', $_POST['Days'], '" />
 		<fieldhelp>', __('The number of days from the start of the period that the payment is to be made'), '</fieldhelp>
 	</field>
 	<field>
 		<label for = "FirstPaymentDate">', __('Date of first payment'), '</label>
-		<input name="FirstPaymentDate" type = "date" required = "required" maxlength = "10" size = "11" value = "', FormatDateForSQL($_POST['FirstPaymentDate']), '" />
+		<input name = "FirstPaymentDate" type = "date" required = "required" maxlength = "10" size = "11" value = "', FormatDateForSQL($_POST['FirstPaymentDate']), '" />
 	</field>
 	<field>
 		<label for = "LastPaymentDate">', __('Date of Last payment'), '</label>
-		<input name="LastPaymentDate" type = "date" required = "required" maxlength = "10" size = "11" value = "', FormatDateForSQL($_POST['LastPaymentDate']), '" />
+		<input name = "LastPaymentDate" type = "date" required = "required" maxlength = "10" size = "11" value = "', FormatDateForSQL($_POST['LastPaymentDate']), '" />
 	</field>';
 
 $SQL = "SELECT bankaccountname,
@@ -238,12 +238,12 @@ $AccountsResults = DB_query($SQL, $ErrMsg);
 
 echo '<field>
 		<label for = "BankAccount">', __('Bank Account'), ':</label>
-		<select name="BankAccount">';
+		<select name = "BankAccount">';
 if (DB_num_rows($AccountsResults) == 0) {
 	echo '</select>
 		</field>
 	</fieldset>';
-	prnMsg(__('Bank Accounts have not yet been defined. You must first') . ' <a href="' . $RootPath . '/BankAccounts.php">' . __('define the bank accounts') . '</a> ' . __('and general ledger accounts to be affected'), 'warn');
+	prnMsg(__('Bank Accounts have not yet been defined. You must first') . ' <a href = "' . $RootPath . '/BankAccounts.php">' . __('define the bank accounts') . '</a> ' . __('and general ledger accounts to be affected'), 'warn');
 	include('includes/footer.php');
 	exit();
 } else {
@@ -263,7 +263,7 @@ if (DB_num_rows($AccountsResults) == 0) {
 
 echo '<field>
 		<label for = "Currency">', __('Currency of Payment'), ':</label>
-		<select required = "required" name="Currency">';
+		<select required = "required" name = "Currency">';
 $SQL = "SELECT currency, currabrev, rate FROM currencies";
 $Result = DB_query($SQL);
 
@@ -292,7 +292,7 @@ $SQL = "SELECT tagref,
 $Result = DB_query($SQL);
 echo '<field>
 		<label for = "Tag">', __('GL Tag'), '</label>
-		<select multiple = "multiple" name="Tag[]">';
+		<select multiple = "multiple" name = "Tag[]">';
 while ($MyRow = DB_fetch_array($Result)) {
 	if (in_array($MyRow['tagref'], $Tags)) {
 		echo '<option selected = "selected" value = "', $MyRow['tagref'], '">', $MyRow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';
@@ -313,7 +313,7 @@ $SQL = "SELECT chartmaster.accountcode,
 $Result = DB_query($SQL);
 echo '<field>
 		<label for = "GLManualCode">' . __('Select GL Account') . '</label>
-		<select name="GLManualCode" onchange = "return assignComboToInput(this,' . 'GLManualCode' . ')">
+		<select name = "GLManualCode" onchange = "return assignComboToInput(this,' . 'GLManualCode' . ')">
 			<option value = "">' . __('Select a general ledger account code') . '</option>';
 while ($MyRow = DB_fetch_array($Result)) {
 	if (isset($_POST['GLManualCode']) and $_POST['GLManualCode'] == $MyRow['accountcode']) {
@@ -331,38 +331,38 @@ echo '<fieldhelp>', __('Select the account code for this transaction'), '</field
 if (isset($_POST['GLNarrative'])) { // General Ledger Payment (Different than Bank Account) info to be inserted on gltrans.narrative, varchar(200).
 	echo '<field>
 			<label for = "GLNarrative">', __('GL Narrative'), ':</label>
-			<input type = "text" name="GLNarrative" maxlength = "50" size = "52" value = "', stripslashes($_POST['GLNarrative']), '" /></label>
+			<input type = "text" name = "GLNarrative" maxlength = "50" size = "52" value = "', stripslashes($_POST['GLNarrative']), '" /></label>
 		</field>';
 } else {
 	echo '<field>
 			<label for = "GLNarrative">', __('GL Narrative'), ':</label>
-			<input type = "text" name="GLNarrative" maxlength = "50" size = "52" />
+			<input type = "text" name = "GLNarrative" maxlength = "50" size = "52" />
 		</field>';
 }
 
 if (isset($_POST['GLAmount'])) {
 	echo '<field>
 			<label for = "GLAmount">', __('Amount'), '</label>
-			<input type = "text" name="GLAmount" maxlength = "12" size = "12" class="number" value = "', $_POST['GLAmount'], '" />
+			<input type = "text" name = "GLAmount" maxlength = "12" size = "12" class = "number" value = "', $_POST['GLAmount'], '" />
 		</field>';
 } else {
 	echo '<field>
 			<label for = "GLAmount">', __('Amount'), '</label>
-			<input type = "text" name="GLAmount" maxlength = "12" size = "12" class="number" />
+			<input type = "text" name = "GLAmount" maxlength = "12" size = "12" class = "number" />
 		</field>';
 }
 
 echo '</fieldset>';
 
 if (!isset($_GET['Edit'])) {
-	echo '<div class="centre">
-			<input type = "submit" name="Add" value = "', __('Add New Regular Payment'), '" />
+	echo '<div class = "centre">
+			<input type = "submit" name = "Add" value = "', __('Add New Regular Payment'), '" />
 		</div>';
 } else {
-	echo '<div class="centre">
-			<input type = "submit" name="Update" value = "', __('Update Regular Payment Details'), '" />
+	echo '<div class = "centre">
+			<input type = "submit" name = "Update" value = "', __('Update Regular Payment Details'), '" />
 		</div>
-		<input type = "hidden" name="ID" value = "', $_GET['Payment'], '" />';
+		<input type = "hidden" name = "ID" value = "', $_GET['Payment'], '" />';
 }
 echo '</form>';
 
@@ -407,20 +407,20 @@ if (DB_num_rows($Result) > 0 and !isset($_GET['Edit'])) {
 	while ($MyRow = DB_fetch_array($Result)) {
 		$Tags = explode(',', $MyRow['tag']);
 		$TagText = GetDescriptionsFromTagArray($Tags);
-		echo '<tr class="striped_row">
+		echo '<tr class = "striped_row">
 				<td>', $Frequencies[$MyRow['frequency']], '</td>
-				<td class="number">', $MyRow['days'], '</td>
+				<td class = "number">', $MyRow['days'], '</td>
 				<td>', $MyRow['bankaccountname'], '</td>
 				<td>', $MyRow['glcode'], ' - ', $MyRow['accountname'], '</td>
 				<td>', $TagText, '</td>
-				<td class="number">', $MyRow['amount'], '</td>
+				<td class = "number">', $MyRow['amount'], '</td>
 				<td>', $MyRow['currabrev'], '</td>
 				<td>', $MyRow['narrative'], '</td>
 				<td>', ConvertSQLDate($MyRow['firstpayment']), '</td>
 				<td>', ConvertSQLDate($MyRow['nextpayment']), '</td>
 				<td>', ConvertSQLDate($MyRow['finalpayment']), '</td>
-				<td><a href="', htmlspecialchars(basename(__FILE__) . '?Payment=' . urlencode($MyRow['id'])), '&Edit=True">', __('Edit'), '</a></td>
-				<td><a href="', htmlspecialchars(basename(__FILE__) . '?Payment=' . urlencode($MyRow['id'])), '&Complete=True">', __('Complete'), '</a></td>
+				<td><a href = "', htmlspecialchars(basename(__FILE__) . '?Payment = ' . urlencode($MyRow['id'])), '&Edit = True">', __('Edit'), '</a></td>
+				<td><a href = "', htmlspecialchars(basename(__FILE__) . '?Payment = ' . urlencode($MyRow['id'])), '&Complete = True">', __('Complete'), '</a></td>
 			</tr>';
 	}
 	echo '</table>';

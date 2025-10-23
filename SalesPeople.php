@@ -33,7 +33,7 @@ $CommissionPeriods[1] = __('Monthly');
 $CommissionPeriods[2] = __('Quarterly');
 $CommissionPeriods[3] = __('Annually');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title = "' . __('Search') . '" alt = "" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['submit'])) {
 
@@ -200,12 +200,12 @@ or deletion of the records*/
 
 	$Result = DB_query($SQL);
 
-	echo '<table class="selection">';
+	echo '<table class = "selection">';
 	echo '<thead>
 		<tr>
-			<th class="SortedColumn">' . __('Code') . '</th>
-			<th class="SortedColumn">' . __('Name') . '</th>
-			<th class="SortedColumn">', __('Current'), '</th>
+			<th class = "SortedColumn">' . __('Code') . '</th>
+			<th class = "SortedColumn">' . __('Name') . '</th>
+			<th class = "SortedColumn">', __('Current'), '</th>
 			<th colspan="2"></th>
 		</tr>
 		</thead>
@@ -233,12 +233,12 @@ or deletion of the records*/
 		$GLResult = DB_query($SQL);
 		$GLRow = DB_fetch_array($GLResult);
 
-		echo'<tr class="striped_row">
+		echo'<tr class = "striped_row">
 				<td>', $MyRow['salesmancode'], '</td>
 				<td>', $MyRow['salesmanname'], '</td>
 				<td>', $ActiveText, '</td>
-				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedSalesPerson=', urlencode($MyRow['salesmancode']), '">', __('Edit'), '</a></td>
-				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedSalesPerson=', urlencode($MyRow['salesmancode']), '&amp;delete=1" onclick="return MakeConfirm(\'', __('Are you sure you wish to delete this sales person?'), '\', \'Confirm Delete\', this);">', __('Delete'), '</a></td>
+				<td><a href = "', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedSalesPerson = ', urlencode($MyRow['salesmancode']), '">', __('Edit'), '</a></td>
+				<td><a href = "', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedSalesPerson = ', urlencode($MyRow['salesmancode']), '&amp;delete = 1" onclick = "return MakeConfirm(\'', __('Are you sure you wish to delete this sales person?'), '\', \'Confirm Delete\', this);">', __('Delete'), '</a></td>
 			</tr>';
 
 	} //END while LIST LOOP
@@ -247,13 +247,13 @@ or deletion of the records*/
 } //end of ifs and buts!
 
 if (isset($SelectedSalesPerson)) {
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Show All Sales People') . '</a></div>';
+	echo '<div class = "centre"><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Show All Sales People') . '</a></div>';
 }
 
 if (! isset($_GET['delete'])) {
 
 	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedSalesPerson)) {
 		//editing an existing Sales-person
@@ -282,13 +282,13 @@ if (! isset($_GET['delete'])) {
 		$_POST['GLAccount'] = $MyRow['glaccount'];
 
 
-		echo '<input type = "hidden" name="SelectedSalesPerson" value = "' . $SelectedSalesPerson . '" />';
-		echo '<input type = "hidden" name="SalesmanCode" value = "' . $_POST['SalesmanCode'] . '" />';
+		echo '<input type = "hidden" name = "SelectedSalesPerson" value = "' . $SelectedSalesPerson . '" />';
+		echo '<input type = "hidden" name = "SalesmanCode" value = "' . $_POST['SalesmanCode'] . '" />';
 		echo '<fieldset>
 				<legend>', __('Edit the details for'), ' ', $_POST['SalesmanCode'], ' - ', $_POST['SalesmanName'], '</legend>
 				<field>
 					<label for = "SalesmanCode">' . __('SPG Code') . ':</label>
-					<div class="fieldtext">', $_POST['SalesmanCode'], '</div>
+					<div class = "fieldtext">', $_POST['SalesmanCode'], '</div>
 				</field>';
 
 	} else { //end of if $SelectedSalesPerson only do the else when a new record is being entered
@@ -297,7 +297,7 @@ if (! isset($_GET['delete'])) {
 				<legend>', __('Enter the details for a new SPG'), '</legend>
 				<field>
 					<label for="SalesmanCode">', __('SPG code'), ':</label>
-					<input type = "text" name="SalesmanCode" size = "3" autofocus = "autofocus" required = "required" maxlength = "3" />
+					<input type = "text" name = "SalesmanCode" size = "3" autofocus = "autofocus" required = "required" maxlength = "3" />
 					<fieldhelp>', __('Enter a three number code for this SPG.'), '</fieldhelp>
 				</field>';
 	}
@@ -325,24 +325,24 @@ if (! isset($_GET['delete'])) {
 
 	echo '<field>
 			<label for="SalesmanName">' . __('SPG Name') . ':</label>
-			<input type = "text" '. (in_array('SalesmanName',$Errors) ? 'class ="inputerror"' : '' ) .' name="SalesmanName"  size = "30" maxlength = "30" value = "' . $_POST['SalesmanName'] . '" />
+			<input type = "text" '. (in_array('SalesmanName',$Errors) ? 'class = "inputerror"' : '' ) .' name = "SalesmanName"  size = "30" maxlength = "30" value = "' . $_POST['SalesmanName'] . '" />
 			<fieldhelp>', __('Enter the name by which this SPG will be known.'), '</fieldhelp>
 		</field>';
 /* KL RICARD We do not show these fields
 	echo '<field>
 			<label for = "SManTel">' . __('Telephone No') . ':</label>
-			<input type = "text" name="SManTel" size = "20" maxlength = "20" value = "' . $_POST['SManTel'] . '" />
+			<input type = "text" name = "SManTel" size = "20" maxlength = "20" value = "' . $_POST['SManTel'] . '" />
 			<fieldhelp>', __('Contact telephone number for this sales person.'), '</fieldhelp>
 		</field>';
 	echo '<field>
 			<label for = "SManFax">' . __('Facsimile No') . ':</label>
-			<input type = "text" name="SManFax" size = "20" maxlength = "20" value = "' . $_POST['SManFax'] . '" />
+			<input type = "text" name = "SManFax" size = "20" maxlength = "20" value = "' . $_POST['SManFax'] . '" />
 			<fieldhelp>', __('Contact fax number for this sales person.'), '</fieldhelp>
 		</field>';
 
 	echo '<field>
 			<label for = "CommissionPeriod">', __('Commission Period'), ':</label>
-			<select required = "required" name="CommissionPeriod">';
+			<select required = "required" name = "CommissionPeriod">';
 	foreach ($CommissionPeriods as $Index => $PeriodName) {
 		if ($Index == $_POST['CommissionPeriod']) {
 	echo '<option selected = "selected" value = "', $Index, '">', $PeriodName, '</option>';
@@ -356,7 +356,7 @@ if (! isset($_GET['delete'])) {
 
 	echo '<field>
 			<label for = "CommissionTypeID">', __('Commission Calculation Method'), ':</label>
-			<select name="CommissionTypeID">';
+			<select name = "CommissionTypeID">';
 	$SQL = "SELECT commissiontypeid, commissiontypename FROM salescommissiontypes ORDER BY commissiontypename";
 	$ErrMsg = __('An error occurred in retrieving the sales commission types from the database');
 	$CommissionTypeResult = DB_query($SQL, $ErrMsg);
@@ -385,7 +385,7 @@ if (! isset($_GET['delete'])) {
 						ORDER BY chartmaster.accountcode");
 	echo '<field>
 			<label for = "GLAccount">', __('GL Commission Account'), ':</label>
-			<select name="GLAccount">';
+			<select name = "GLAccount">';
 
 	while ($MyRow = DB_fetch_row($Result)) {
 		if ($_POST['GLAccount'] == $MyRow[0]) {
@@ -400,7 +400,7 @@ if (! isset($_GET['delete'])) {
  KL RICARD END We do not show these fields */
 	echo '<field>
 			<label for = "Current">', __('Current?'), ':</label>
-			<select required = "required" name="Current">';
+			<select required = "required" name = "Current">';
 	if ($_POST['Current'] == 1) {
 	echo '<option selected = "selected" value = "1">', __('Yes'), '</option>';
 	} else {
@@ -417,8 +417,8 @@ if (! isset($_GET['delete'])) {
 
 	echo '</fieldset>';
 
-	echo '<div class="centre">
-			<input type = "submit" name="submit" value = "' . __('Enter Information') . '" />
+	echo '<div class = "centre">
+			<input type = "submit" name = "submit" value = "' . __('Enter Information') . '" />
         </div>
 	</form>';
 

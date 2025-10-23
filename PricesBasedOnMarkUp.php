@@ -10,7 +10,7 @@ include('includes/header.php');
 if (isset($_POST['PriceStartDate'])){$_POST['PriceStartDate'] = ConvertSQLDate($_POST['PriceStartDate']);}
 if (isset($_POST['PriceEndDate'])){$_POST['PriceEndDate'] = ConvertSQLDate($_POST['PriceEndDate']);}
 
-echo '<p class = "page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . __('Search') . '" alt="" />' . $Title . '</p>';
+echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title = "' . __('Search') . '" alt = "" />' . $Title . '</p>';
 
 echo '<div class = "page_help_text">' . __('This page adds new prices or updates already existing prices for a specified sales type (price list) and currency for the stock category selected - based on a percentage mark up from cost prices or from preferred supplier cost data or from another price list. The rounding factor ensures that prices are at least this amount or a multiple of it. A rounding factor of 5 would mean that prices would be a minimum of 5 and other prices would be expressed as multiples of 5.') . '</div><br />';
 
@@ -185,7 +185,7 @@ echo '<field>
 </fieldset>';
 
 echo '<div class = "centre">
-		<input type = "submit" name = "UpdatePrices" value = "' . __('Update Prices') . '"  onclick="return confirm(\'' . __('Are you sure you wish to update or add all the prices according to the criteria selected?') . '\');" />
+		<input type = "submit" name = "UpdatePrices" value = "' . __('Update Prices') . '"  onclick = "return confirm(\'' . __('Are you sure you wish to update or add all the prices according to the criteria selected?') . '\');" />
 	</div>';
 
 echo '</form>';

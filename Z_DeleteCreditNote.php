@@ -5,7 +5,7 @@ not included on any menu for obvious reasons
 
 STRONGLY RECOMMEND not USING THIS -  RE INVOICE INSTEAD
 
-must be called directly with path/DeleteCreditnote.php?CreditNoteNo =???????
+must be called directly with path/DeleteCreditnote.php?CreditNoteNo = ???????
 
 !! */
 

@@ -39,7 +39,7 @@ isset($_POST['ToCriteria']) && mb_strlen($_POST['ToCriteria']) >= 1
 		$Title = __('Print Remittance Advices Error');
 		include('includes/header.php');
 		prnMsg(__('There were no remittance advices to print out for the supplier range and payment date specified'), 'warn');
-		echo '<br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . __('Back') . '</a>';
+		echo '<br /><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . __('Back') . '</a>';
 		include('includes/footer.php');
 		exit();
 	}
@@ -67,9 +67,9 @@ isset($_POST['ToCriteria']) && mb_strlen($_POST['ToCriteria']) >= 1
 
 		// Header
 
-		$HTML .= '<div class="header">';
+		$HTML .= '<div class = "header">';
 		$HTML .= '<h2>' . __('Remittance Advice') . '</h2>';
-		$HTML .= '<div class="company-info">';
+		$HTML .= '<div class = "company-info">';
 		$HTML .= $_SESSION['CompanyRecord']['coyname'] . '<br>';
 		$HTML .= $_SESSION['CompanyRecord']['regoffice1'] . '<br>';
 		$HTML .= $_SESSION['CompanyRecord']['regoffice2'] . '<br>';
@@ -81,7 +81,7 @@ isset($_POST['ToCriteria']) && mb_strlen($_POST['ToCriteria']) >= 1
 		$HTML .= '</div>';
 
 		// Supplier info
-		$HTML .= '<div class="supplier-info">';
+		$HTML .= '<div class = "supplier-info">';
 		$HTML .= '<strong>' . $SuppliersPaid['suppname'] . '</strong><br>';
 		$HTML .= $SuppliersPaid['address1'] . '<br>';
 		$HTML .= $SuppliersPaid['address2'] . '<br>';
@@ -123,22 +123,22 @@ isset($_POST['ToCriteria']) && mb_strlen($_POST['ToCriteria']) >= 1
 			<td>' . htmlspecialchars($DetailTrans['typename']) . '</td>
 			<td>' . htmlspecialchars($DisplayTranDate) . '</td>
 			<td>' . htmlspecialchars($DetailTrans['suppreference']) . '</td>
-			<td style="text-align:right;">' . locale_number_format($DetailTrans['trantotal'], $SuppliersPaid['currdecimalplaces']) . '</td>
-			<td style="text-align:right;">' . locale_number_format($DetailTrans['amt'], $SuppliersPaid['currdecimalplaces']) . '</td>
+			<td style = "text-align:right;">' . locale_number_format($DetailTrans['trantotal'], $SuppliersPaid['currdecimalplaces']) . '</td>
+			<td style = "text-align:right;">' . locale_number_format($DetailTrans['amt'], $SuppliersPaid['currdecimalplaces']) . '</td>
 			</tr>';
 			$AccumBalance += $DetailTrans['amt'];
 		}
 
-		$HTML .= '<tr class="totals">
+		$HTML .= '<tr class = "totals">
 		<td colspan = "4">' . __('Total Payment:') . '</td>
-		<td style="text-align:right;">' . locale_number_format($AccumBalance, $SuppliersPaid['currdecimalplaces']) . '</td>
+		<td style = "text-align:right;">' . locale_number_format($AccumBalance, $SuppliersPaid['currdecimalplaces']) . '</td>
 		</tr>';
 		$HTML .= '</table>';
 
 		$TotalPayments += $AccumBalance;
 
 		// Page break for next supplier
-		$HTML .= '<div style="page-break-after:always;"></div>';
+		$HTML .= '<div style = "page-break-after:always;"></div>';
 	}
 
 	$HTML .= '</body></html>';
@@ -161,8 +161,8 @@ isset($_POST['ToCriteria']) && mb_strlen($_POST['ToCriteria']) >= 1
 	$BookMark = '';
 	include('includes/header.php');
 
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
-	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target="_blank">';
+	echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/printer.png" title = "' . $Title . '" alt = "" />' . ' ' . $Title . '</p>';
+	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target = "_blank">';
 	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 	echo '<fieldset>
 	<legend>', __('Remittance Advice Criteria'), '</legend>';
@@ -198,7 +198,7 @@ isset($_POST['ToCriteria']) && mb_strlen($_POST['ToCriteria']) >= 1
 	</field>';
 
 	echo '</fieldset>
-	<div class="centre">
+	<div class = "centre">
 	<input type = "submit" name = "PrintPDF" value = "' . __('Print PDF') . '" />
 	</div>';
 

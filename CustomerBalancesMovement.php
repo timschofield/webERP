@@ -12,7 +12,7 @@ $BookMark = '';
 
 if (!isset($_POST['CreateCSV'])) {
 	include('includes/header.php');
-	echo '<p class = "page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . __('Customer Activity and Balances') . '" /> ' . __('Customer Activity and Balances') . '</p>';
+	echo '<p class = "page_title_text"><img alt = "" src = "'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title = "' . __('Customer Activity and Balances') . '" /> ' . __('Customer Activity and Balances') . '</p>';
 }
 
 if (!isset($_POST['RunReport'])){

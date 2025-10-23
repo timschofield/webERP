@@ -35,7 +35,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 					<meta name = "Creator" content = "webERP https://www.weberp.org">
 				</head>
 				<body>
-				<div class="centre" id="ReportHeader">
+				<div class = "centre" id = "ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 					' . __('Reorder Level Report') . '<br />
 					' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
@@ -103,26 +103,26 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 				<td>' . $MyRow['stockid'] . '</td>
 				<td>' . $MyRow['description'] . '</td>
 				<td>' . $MyRow['loccode'] . '</td>
-				<td class="number">' . locale_number_format($MyRow['quantity'], $MyRow['decimalplaces']) . '</td>
-				<td class="number">' . locale_number_format($MyRow['reorderlevel'], $MyRow['decimalplaces']) . '</td>
-				<td class="number">' . locale_number_format($OnOrderRow['quantityonorder'], $MyRow['decimalplaces']) . '</td>
-				<td class="number">' . locale_number_format($Shortage, $MyRow['decimalplaces']) . '</td>
+				<td class = "number">' . locale_number_format($MyRow['quantity'], $MyRow['decimalplaces']) . '</td>
+				<td class = "number">' . locale_number_format($MyRow['reorderlevel'], $MyRow['decimalplaces']) . '</td>
+				<td class = "number">' . locale_number_format($OnOrderRow['quantityonorder'], $MyRow['decimalplaces']) . '</td>
+				<td class = "number">' . locale_number_format($Shortage, $MyRow['decimalplaces']) . '</td>
 			</tr>';
 	}
 
 	if (isset($_POST['PrintPDF']) or isset($_POST['Email'])) {
 		$HTML .= '</tbody>
-				<div class="footer fixed-section">
-					<div class="right">
-						<span class="page-number">Page </span>
+				<div class = "footer fixed-section">
+					<div class = "right">
+						<span class = "page-number">Page </span>
 					</div>
 				</div>
 			</table>';
 	} else {
 		$HTML .= '</tbody>
 				</table>
-				<div class="centre">
-					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick="window.close()" /></form>
+				<div class = "centre">
+					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -177,14 +177,14 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 		$Title = __('Send Report By Email');
 		include('includes/header.php');
 		/// @todo give different message based on $Success
-		echo '<div class="centre">
-				<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick="window.close()" /></form>
+		echo '<div class = "centre">
+				<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" /></form>
 			</div>';
 		include('includes/footer.php');
 	} else {
 		$Title = __('Reorder Level Reporting');
 		include('includes/header.php');
-		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Inventory') . '" alt="" />' . ' ' . __('Inventory Reorder Level Report') . '</p>';
+		echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title = "' . __('Inventory') . '" alt = "" />' . ' ' . __('Inventory Reorder Level Report') . '</p>';
 		echo $HTML;
 		include('includes/footer.php');
 	}
@@ -195,10 +195,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 	$ViewTopic = 'Inventory';
 	$BookMark = '';
 	include('includes/header.php');
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Inventory') . '" alt="" />' . ' ' . __('Inventory Reorder Level Report') . '</p>';
-	echo '<div class="page_help_text">' . __('Use this report to display the reorder levels for Inventory items in different categories.') . '</div>';
+	echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title = "' . __('Inventory') . '" alt = "" />' . ' ' . __('Inventory Reorder Level Report') . '</p>';
+	echo '<div class = "page_help_text">' . __('Use this report to display the reorder levels for Inventory items in different categories.') . '</div>';
 
-	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target="_blank">';
+	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target = "_blank">';
 	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 	$SQL = "SELECT locations.loccode,
 			locationname
@@ -233,7 +233,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 		echo '</td></field>
 			</table>';
 		prnMsg(__('There are no stock categories currently defined please use the link below to set them up') , 'warn');
-		echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . __('Define Stock Categories') . '</a>';
+		echo '<br /><a href = "' . $RootPath . '/StockCategories.php">' . __('Define Stock Categories') . '</a>';
 		include('includes/footer.php');
 		exit();
 	}
@@ -259,10 +259,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 	echo '</select>
 		</field>';
 	echo '</fieldset>
-			<div class="centre">
-				<input type = "submit" name = "PrintPDF" title="Produce PDF Report" value = "' . __('Print PDF') . '" />
-				<input type = "submit" name = "View" title="View Report" value = "' . __('View') . '" />
-				<input type = "submit" name = "Email" title="Email Report" value = "' . __('Email') . '" />
+			<div class = "centre">
+				<input type = "submit" name = "PrintPDF" title = "Produce PDF Report" value = "' . __('Print PDF') . '" />
+				<input type = "submit" name = "View" title = "View Report" value = "' . __('View') . '" />
+				<input type = "submit" name = "Email" title = "Email Report" value = "' . __('Email') . '" />
 			</div>';
 	echo '</form>';
 	include('includes/footer.php');

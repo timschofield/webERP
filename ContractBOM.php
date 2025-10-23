@@ -38,9 +38,9 @@ if (isset($_POST['UpdateLines']) or isset($_POST['BackToHeader'])) {
 
 
 if (isset($_POST['BackToHeader'])){
-	echo '<meta http-equiv = "Refresh" content = "0; url = ' . $RootPath . '/Contracts.php?identifier='.$identifier. '" />';
+	echo '<meta http-equiv = "Refresh" content = "0; url = ' . $RootPath . '/Contracts.php?identifier = '.$identifier. '" />';
 	echo '<br />';
-	prnMsg(__('You should automatically be forwarded to the Contract page. If this does not happen perhaps the browser does not support META Refresh') . '<a href="' . $RootPath . '/Contracts.php?identifier='.$identifier . '">' . __('click here') . '</a> ' . __('to continue'),'info');
+	prnMsg(__('You should automatically be forwarded to the Contract page. If this does not happen perhaps the browser does not support META Refresh') . '<a href = "' . $RootPath . '/Contracts.php?identifier = '.$identifier . '">' . __('click here') . '</a> ' . __('to continue'),'info');
 	include('includes/footer.php');
 	exit();
 }
@@ -212,8 +212,8 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 
 /* This is where the order as selected should be displayed  reflecting any deletions or insertions*/
 
-echo '<form id="ContractBOMForm" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . urlencode($identifier) . '" method = "post">';
-echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<form id = "ContractBOMForm" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier = ' . urlencode($identifier) . '" method = "post">';
+echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
 	$SQL = "SELECT categoryid,
@@ -224,15 +224,15 @@ if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
 			ORDER BY categorydescription";
 	$ErrMsg = __('The supplier category details could not be retrieved because');
 	$Result1 = DB_query($SQL, $ErrMsg);
-	echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$Theme.'/images/contract.png" title="' . __('Contract Bill of Material') . '" alt="" />  '.$_SESSION['Contract'.$identifier]->CustomerName . '
+	echo '<p class = "page_title_text">
+			<img src = "'.$RootPath.'/css/'.$Theme.'/images/contract.png" title = "' . __('Contract Bill of Material') . '" alt = "" />  '.$_SESSION['Contract'.$identifier]->CustomerName . '
 		</p>';
 
 	echo '<fieldset>
 			<legend>', __('Search For Stock Items'), '</legend>
 			<field>
 				<label for = "StockCat"">', __('Select Stock Category'), '</label>
-				<select name="StockCat">';
+				<select name = "StockCat">';
 
 	echo '<option selected = "selected" value = "All">', __('All'), '</option>';
 	while ($MyRow1 = DB_fetch_array($Result1)) {
@@ -258,16 +258,16 @@ if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
 
 	echo '<field>
 			<label for = "Keywords">', __('Enter text extracts in the description'), ':</label>
-			<input type = "search" name="Keywords" size = "20" autofocus = "autofocus" maxlength = "25" value = "', $_POST['Keywords'], '" />
+			<input type = "search" name = "Keywords" size = "20" autofocus = "autofocus" maxlength = "25" value = "', $_POST['Keywords'], '" />
 		</field>
 		<field>
 			<label for = "StockCode">', '<b>', __('or'), ' </b>', __('Enter extract of the Stock Code'), ':</label>
-			<input type = "search" name="StockCode" size = "15" maxlength = "18" value = "', $_POST['StockCode'], '" />
+			<input type = "search" name = "StockCode" size = "15" maxlength = "18" value = "', $_POST['StockCode'], '" />
 		</field>
-		<a target="_blank" href="', $RootPath, '/Stocks.php">', '<b>', __('or'), ' </b>', __('Create a New Stock Item'), '</a>
+		<a target = "_blank" href = "', $RootPath, '/Stocks.php">', '<b>', __('or'), ' </b>', __('Create a New Stock Item'), '</a>
 	</fieldset>';
-	echo '<div class="centre"><input type = "submit" name="UpdateLines" value = "' . __('Update Lines') . '" />';
-	echo '<input type = "submit" name="BackToHeader" value = "' . __('Back To Contract Header') . '" /></div>';
+	echo '<div class = "centre"><input type = "submit" name = "UpdateLines" value = "' . __('Update Lines') . '" />';
+	echo '<input type = "submit" name = "BackToHeader" value = "' . __('Back To Contract Header') . '" /></div>';
 
 } /*Only display the contract BOM lines if there are any !! */
 
@@ -280,13 +280,13 @@ if (!isset($_GET['Edit'])) {
 			ORDER BY categorydescription";
 	$ErrMsg = __('The supplier category details could not be retrieved because');
 	$Result1 = DB_query($SQL, $ErrMsg);
-	echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Print') . '" alt="" />' . ' ' . __('Search For Stock Items') .
+	echo '<p class = "page_title_text">
+			<img src = "'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title = "' . __('Print') . '" alt = "" />' . ' ' . __('Search For Stock Items') .
 		'</p>';
-	echo '<table class="selection">
+	echo '<table class = "selection">
 			<tr></tr>
 			<tr>
-				<td><select name="StockCat">';
+				<td><select name = "StockCat">';
 
 	echo '<option selected = "selected" value = "All">' . __('All') . '</option>';
 	while ($MyRow1 = DB_fetch_array($Result1)) {
@@ -310,21 +310,21 @@ if (!isset($_GET['Edit'])) {
 
 	echo '</select></td>
 			<td>' . __('Enter text extracts in the description') . ':</td>
-			<td><input type = "text" autofocus = "autofocus" title="' . __('Enter any text that should appear in the item description as the basis of your search') . '" name="Keywords" size = "20" maxlength = "25" value = "' . $_POST['Keywords'] . '" /></td>
+			<td><input type = "text" autofocus = "autofocus" title = "' . __('Enter any text that should appear in the item description as the basis of your search') . '" name = "Keywords" size = "20" maxlength = "25" value = "' . $_POST['Keywords'] . '" /></td>
 		</tr>
 		<tr>
 			<td></td>
 			<td><b>' . __('or') . ' </b>' . __('Enter extract of the Stock Code') . ':</td>
-			<td><input type = "text" title="' . __('Enter any part of an item code to seach for all matching items containing that text in the code') . '" name="StockCode" size = "15" maxlength = "18" value = "' . $_POST['StockCode'] . '" /></td>
+			<td><input type = "text" title = "' . __('Enter any part of an item code to seach for all matching items containing that text in the code') . '" name = "StockCode" size = "15" maxlength = "18" value = "' . $_POST['StockCode'] . '" /></td>
 		</tr>
 		<tr>
 			<td></td>
-			<td><b>' . __('or') . ' </b><a target="_blank" href="'.$RootPath.'/Stocks.php">' . __('Create a New Stock Item') . '</a></td>
+			<td><b>' . __('or') . ' </b><a target = "_blank" href = "'.$RootPath.'/Stocks.php">' . __('Create a New Stock Item') . '</a></td>
 		</tr>
 		</table>
 		<br />
-		<div class="centre">
-			<input type = "submit" name="Search" value = "' . __('Search Now') . '" />
+		<div class = "centre">
+			<input type = "submit" name = "Search" value = "' . __('Search Now') . '" />
 		</div>
 		<br />';
 
@@ -351,13 +351,13 @@ if (isset($SearchResult)) {
 		$ImageFile = reset($Glob);
 		$ImageSource = GetImageLink($ImageFile, $MyRow['stockid'], 100, 100, "", "");
 
-		echo '<tr class="striped_row">
+		echo '<tr class = "striped_row">
 				<td>' . $MyRow['stockid'] . '</td>
 				<td>' . $MyRow['description'] . '</td>
 				<td>' . $MyRow['units'] . '</td>
 				<td>' . $ImageSource . '</td>
-				<td><input class="number" type = "text" title="' . __('Enter the quantity required of this item to complete the contract') . '" required = "required" size = "6" value = "0" name="Qty'.$i.'" />
-				<input type = "hidden" name="StockID' . $i . '" value = "' . $MyRow['stockid'] . '" />
+				<td><input class = "number" type = "text" title = "' . __('Enter the quantity required of this item to complete the contract') . '" required = "required" size = "6" value = "0" name = "Qty'.$i.'" />
+				<input type = "hidden" name = "StockID' . $i . '" value = "' . $MyRow['stockid'] . '" />
 				</td>
 			</tr>';
 		$i++;
@@ -369,13 +369,13 @@ if (isset($SearchResult)) {
 
 #end of while loop
 	echo '</table>
-			<input type = "hidden" name="CountOfItems" value = "'. $i . '" />';
+			<input type = "hidden" name = "CountOfItems" value = "'. $i . '" />';
 	if ($i == $_SESSION['DisplayRecordsMax']) {
 	prnMsg( __('Only the first') . ' ' . $_SESSION['DisplayRecordsMax'] . ' ' . __('can be displayed') . '. ' . __('Please restrict your search to only the parts required'),'info');
 }
 	echo '<br />
-		<div class="centre">
-			<input type = "submit" name="NewItem" value = "' . __('Add to Contract Bill Of Material') .'" />
+		<div class = "centre">
+			<input type = "submit" name = "NewItem" value = "' . __('Add to Contract Bill Of Material') .'" />
 		</div>';
 }#end if SearchResults to show
 

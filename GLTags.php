@@ -59,12 +59,12 @@ if (isset($_POST['update'])) {
 		prnMsg(__('The tag could not be updated'), 'error');
 	}
 }
-echo '<p class="page_title_text">
-		<img src="' . $RootPath, '/css/', $Theme, '/images/maintenance.png" title="' . __('Print') . '" alt="" />' . ' ' . $Title . '
+echo '<p class = "page_title_text">
+		<img src = "' . $RootPath, '/css/', $Theme, '/images/maintenance.png" title = "' . __('Print') . '" alt = "" />' . ' ' . $Title . '
 	</p>';
 
-echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" id="form">';
-echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" id = "form">';
+echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 if (isset($_GET['Action']) and $_GET['Action'] == 'edit') {
 	echo '<fieldset>
 			<legend>', __('Edit Tag details') , '</legend>';
@@ -75,27 +75,27 @@ else {
 }
 echo '<field>
 			<label for = "Description">' . __('Description') . '</label>
-			<input type = "text" required = "required" autofocus = "autofocus" size = "30" maxlength = "30" name="Description" title="" value = "' . $Description . '" />
+			<input type = "text" required = "required" autofocus = "autofocus" size = "30" maxlength = "30" name = "Description" title = "" value = "' . $Description . '" />
 			<fieldhelp>' . __('Enter the description of the general ledger tag up to 30 characters') . '</fieldhelp>
-			<input type = "hidden" name="reference" value = "' . $_GET['SelectedTag'] . '" />
+			<input type = "hidden" name = "reference" value = "' . $_GET['SelectedTag'] . '" />
 		</field>
 	</fieldset>';
 
-echo '<div class="centre">';
+echo '<div class = "centre">';
 if (isset($_GET['Action']) and $_GET['Action'] == 'edit') {
-	echo '<input type = "submit" name="update" value = "' . __('Update') . '" />';
+	echo '<input type = "submit" name = "update" value = "' . __('Update') . '" />';
 }
 else {
-	echo '<input type = "submit" name="submit" value = "' . __('Insert') . '" />';
+	echo '<input type = "submit" name = "submit" value = "' . __('Insert') . '" />';
 }
 echo '</div>
 	</form>';
 
-echo '<table class="selection">
+echo '<table class = "selection">
 		<thead>
 			<tr>
-				<th class="SortedColumn">' . __('Tag ID') . '</th>
-				<th class="SortedColumn">' . __('Description') . '</th>
+				<th class = "SortedColumn">' . __('Tag ID') . '</th>
+				<th class = "SortedColumn">' . __('Description') . '</th>
 				<th colspan = "2"></th>
 			</tr>
 		</thead>';
@@ -109,11 +109,11 @@ $Result = DB_query($SQL);
 
 echo '<tbody>';
 while ($MyRow = DB_fetch_array($Result)) {
-	echo '<tr class="striped_row">
+	echo '<tr class = "striped_row">
 			<td>' . $MyRow['tagref'] . '</td>
 			<td>' . $MyRow['tagdescription'] . '</td>
-			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedTag=' . $MyRow['tagref'] . '&amp;Action=edit">' . __('Edit') . '</a></td>
-			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedTag=' . $MyRow['tagref'] . '&amp;Action=delete" onclick="return confirm(\'' . __('Are you sure you wish to delete this GL tag?') . '\');">' . __('Delete') . '</a></td>
+			<td><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedTag = ' . $MyRow['tagref'] . '&amp;Action = edit">' . __('Edit') . '</a></td>
+			<td><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedTag = ' . $MyRow['tagref'] . '&amp;Action = delete" onclick = "return confirm(\'' . __('Are you sure you wish to delete this GL tag?') . '\');">' . __('Delete') . '</a></td>
 		</tr>';
 }
 echo '</tbody>';

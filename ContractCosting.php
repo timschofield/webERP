@@ -57,7 +57,7 @@ while ($InventoryIssuesRow = DB_fetch_array($InventoryIssuesResult)){
 }
 
 echo '<p class = "page_title_text">
-			<img src="'.$RootPath.'/css/'.$Theme.'/images/contract.png" title="' . __('Contract') . '" alt="" />';
+			<img src = "'.$RootPath.'/css/'.$Theme.'/images/contract.png" title = "' . __('Contract') . '" alt = "" />';
 if ($_SESSION['Contract'.$identifier]->Status == 3) {
 	echo __('Closed')  . ' ';
 } elseif ($_SESSION['Contract'.$identifier]->Status == 2) {
@@ -439,12 +439,12 @@ if (isset($_POST['CloseContract']) and $_SESSION['Contract'.$identifier]->Status
 if ($_SESSION['Contract'.$identifier]->Status ==2) {
 	//the contract is an order being processed now
 
-	echo '<form  method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedContract=' . urlencode($_SESSION['Contract'.$identifier]->ContractRef) . '&amp;identifier=' . urlencode($identifier) . '">';
+	echo '<form  method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedContract = ' . urlencode($_SESSION['Contract'.$identifier]->ContractRef) . '&amp;identifier = ' . urlencode($identifier) . '">';
     echo '<div>';
 	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 	echo '<br />
 		<div class = "centre">
-			<input type = "submit" name = "CloseContract" value = "' . __('Close Contract') .  '" onclick="return confirm(\'' . __('Closing the contract will prevent further stock being issued to it and charges being made against it. Variances will be taken to the profit and loss account. Are You Sure?') . '\');" />
+			<input type = "submit" name = "CloseContract" value = "' . __('Close Contract') .  '" onclick = "return confirm(\'' . __('Closing the contract will prevent further stock being issued to it and charges being made against it. Variances will be taken to the profit and loss account. Are You Sure?') . '\');" />
 		</div>
         </div>
 		</form>';

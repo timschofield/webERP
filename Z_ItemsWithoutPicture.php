@@ -19,9 +19,9 @@ $Result = DB_query($SQL);
 $PrintHeader = true;
 
 if (DB_num_rows($Result) != 0){
-	echo '<p class="page_title_text"><strong>' . __('Current Items without picture in webERP') . '</strong></p>';
+	echo '<p class = "page_title_text"><strong>' . __('Current Items without picture in webERP') . '</strong></p>';
 	echo '<div>';
-	echo '<table class="selection">';
+	echo '<table class = "selection">';
 	$i = 1;
 	$SupportedImgExt = array('png','jpg','jpeg');
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -39,9 +39,9 @@ if (DB_num_rows($Result) != 0){
 				$PrintHeader = false;
 }
 
-			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '" target="_blank">' . $MyRow['stockid'] . '</a>';
-			echo '<tr class="striped_row">
-					<td class="number">', $i, '</td>
+			$CodeLink = '<a href = "' . $RootPath . '/SelectProduct.php?StockID = ' . $MyRow['stockid'] . '" target = "_blank">' . $MyRow['stockid'] . '</a>';
+			echo '<tr class = "striped_row">
+					<td class = "number">', $i, '</td>
 					<td>', $MyRow['categorydescription'], '</td>
 					<td>', $CodeLink, '</td>
 					<td>', $MyRow['description'], '</td>

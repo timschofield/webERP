@@ -7,7 +7,7 @@ $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetTransfer';
 include('includes/header.php');
 
-echo '<p class = "page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Search') .
+echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title = "' . __('Search') .
 		'" alt = "" />' . ' ' . $Title . '</p>';
 
 foreach ($_POST as $AssetToMove => $Value) { //Value is not used?

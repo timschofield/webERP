@@ -9,7 +9,7 @@ if (isset($_GET['SelectedSalesPerson'])) {
 } else {
 	$Title = __('Sales Commission Rates');
 	include('includes/header.php');
-	prnMsg(__('This script can only be called from') . ' ' . '<a href="' . $RootPath . '/SalesPeople.php">' . __('here') . '</a>', 'error');
+	prnMsg(__('This script can only be called from') . ' ' . '<a href = "' . $RootPath . '/SalesPeople.php">' . __('here') . '</a>', 'error');
 	include('includes/footer.php');
 	exit();
 }
@@ -109,8 +109,8 @@ if (isset($_GET['Delete'])) {
 	}
 }
 
-echo '<p class="page_title_text">
-		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', __('Search'), '" alt="" />', ' ', $Title, '
+echo '<p class = "page_title_text">
+		<img src = "', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title = "', __('Search'), '" alt = "" />', ' ', $Title, '
 	</p>';
 
 $SQL = "SELECT  salescommissionrates.categoryid,
@@ -132,12 +132,12 @@ if (DB_num_rows($Result) > 0) {
 	echo '<table>
 			<thead>
 				<tr>
-					<th class="SortedColumn">', __('Stock Category'), '</th>
-					<th class="SortedColumn">', __('Area'), '</th>
-					<th class="SortedColumn">', __('Currency'), '</th>
-					<th class="SortedColumn">', __('Starting Level'), '</th>
-					<th class="SortedColumn">', __('After Days Active'), '</th>
-					<th class="SortedColumn">', __('Commission Rate (%)'), '</th>
+					<th class = "SortedColumn">', __('Stock Category'), '</th>
+					<th class = "SortedColumn">', __('Area'), '</th>
+					<th class = "SortedColumn">', __('Currency'), '</th>
+					<th class = "SortedColumn">', __('Starting Level'), '</th>
+					<th class = "SortedColumn">', __('After Days Active'), '</th>
+					<th class = "SortedColumn">', __('Commission Rate (%)'), '</th>
 					<th colspan = "2"></th>
 				</tr>';
 
@@ -157,15 +157,15 @@ if (DB_num_rows($Result) > 0) {
 			$AreaResult = DB_query($AreaSQL);
 			$AreaRow = DB_fetch_array($AreaResult);
 		}
-		echo '<tr class="striped_row">
+		echo '<tr class = "striped_row">
 				<td>', $MyRow['categoryid'], ' - ', $CategoryRow['categorydescription'], '</td>
 				<td>', $MyRow['area'], ' - ', $AreaRow['areadescription'], '</td>
 				<td>', $MyRow['currency'], ' - ', $MyRow['currencyname'], '</td>
-				<td class="number">', locale_number_format($MyRow['startfrom'], $MyRow['decimalplaces']), '</td>
-				<td class="number">', locale_number_format($MyRow['daysactive'], 0), '</td>
-				<td class="number">', locale_number_format($MyRow['rate'], 2), '</td>
-				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedSalesPerson=', urlencode($SelectedSalesPerson), '&SelectedCategory=', urlencode($MyRow['categoryid']), '&Area=', urlencode($MyRow['area']), '&Currency=', urlencode($MyRow['currency']), '&StartFrom=', urlencode($MyRow['startfrom']), '&DaysActive=', urlencode($MyRow['daysactive']), '&Edit=Yes">', __('Edit'), '</a></td>
-				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedSalesPerson=', urlencode($SelectedSalesPerson), '&SelectedCategory=', urlencode($MyRow['categoryid']), '&Area=', urlencode($MyRow['area']), '&Currency=', urlencode($MyRow['currency']), '&StartFrom=', urlencode($MyRow['startfrom']), '&DaysActive=', urlencode($MyRow['daysactive']), '&Delete=1" onclick="return MakeConfirm(\'', __('Are you sure you wish to delete this sales commission record?'), '\', \'Confirm Delete\', this);">', __('Delete'), '</a></td>
+				<td class = "number">', locale_number_format($MyRow['startfrom'], $MyRow['decimalplaces']), '</td>
+				<td class = "number">', locale_number_format($MyRow['daysactive'], 0), '</td>
+				<td class = "number">', locale_number_format($MyRow['rate'], 2), '</td>
+				<td><a href = "', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedSalesPerson = ', urlencode($SelectedSalesPerson), '&SelectedCategory = ', urlencode($MyRow['categoryid']), '&Area = ', urlencode($MyRow['area']), '&Currency = ', urlencode($MyRow['currency']), '&StartFrom = ', urlencode($MyRow['startfrom']), '&DaysActive = ', urlencode($MyRow['daysactive']), '&Edit = Yes">', __('Edit'), '</a></td>
+				<td><a href = "', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedSalesPerson = ', urlencode($SelectedSalesPerson), '&SelectedCategory = ', urlencode($MyRow['categoryid']), '&Area = ', urlencode($MyRow['area']), '&Currency = ', urlencode($MyRow['currency']), '&StartFrom = ', urlencode($MyRow['startfrom']), '&DaysActive = ', urlencode($MyRow['daysactive']), '&Delete = 1" onclick = "return MakeConfirm(\'', __('Are you sure you wish to delete this sales commission record?'), '\', \'Confirm Delete\', this);">', __('Delete'), '</a></td>
 			</tr>';
 	}
 
@@ -174,7 +174,7 @@ if (DB_num_rows($Result) > 0) {
 }
 
 echo '<form method = "post" action = "', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
-echo '<input type = "hidden" name="FormID" value = "', $_SESSION['FormID'], '" />';
+echo '<input type = "hidden" name = "FormID" value = "', $_SESSION['FormID'], '" />';
 
 if (isset($_GET['Edit'])) {
 	$SQL = "SELECT  salescommissionrates.rate,
@@ -214,33 +214,33 @@ if (isset($_GET['Edit'])) {
 		$AreaRow = DB_fetch_array($AreaResult);
 	}
 
-	echo '<input type = "hidden" name="SelectedSalesPerson" value = "', $SelectedSalesPerson, '" />';
-	echo '<input type = "hidden" name="Currency" value = "', $_GET['Currency'], '" />';
-	echo '<input type = "hidden" name="StartFrom" value = "', $_GET['StartFrom'], '" />';
-	echo '<input type = "hidden" name="DaysActive" value = "', $_GET['DaysActive'], '" />';
-	echo '<input type = "hidden" name="CategoryID" value = "', $_POST['CategoryID'], '" />';
-	echo '<input type = "hidden" name="Area" value = "', $_POST['Area'], '" />';
+	echo '<input type = "hidden" name = "SelectedSalesPerson" value = "', $SelectedSalesPerson, '" />';
+	echo '<input type = "hidden" name = "Currency" value = "', $_GET['Currency'], '" />';
+	echo '<input type = "hidden" name = "StartFrom" value = "', $_GET['StartFrom'], '" />';
+	echo '<input type = "hidden" name = "DaysActive" value = "', $_GET['DaysActive'], '" />';
+	echo '<input type = "hidden" name = "CategoryID" value = "', $_POST['CategoryID'], '" />';
+	echo '<input type = "hidden" name = "Area" value = "', $_POST['Area'], '" />';
 	echo '<fieldset>
 			<legend>', __('Edit Commission Details'), '</legend>
 			<field>
 				<label for = "CategoryID">', __('Stock Category'), '</label>
-				<div class="fieldtext">', $_GET['SelectedCategory'], ' - ', $CategoryRow['categorydescription'], '</div>
+				<div class = "fieldtext">', $_GET['SelectedCategory'], ' - ', $CategoryRow['categorydescription'], '</div>
 			</field>
 			<field>
 				<label for = "Area">', __('Sales Area'), '</label>
-				<div class="fieldtext">', $_GET['Area'], ' - ', $AreaRow['areadescription'], '</div>
+				<div class = "fieldtext">', $_GET['Area'], ' - ', $AreaRow['areadescription'], '</div>
 			</field>
 			<field>
 				<label for = "Currency">', __('Currency'), '</label>
-				<div class="fieldtext">', $_GET['Currency'], ' - ', $MyRow['currencyname'], '</div>
+				<div class = "fieldtext">', $_GET['Currency'], ' - ', $MyRow['currencyname'], '</div>
 			</field>
 			<field>
 				<label for = "StartFrom">', __('Start From Value'), '</label>
-				<div class="fieldtext">', $_GET['StartFrom'], '</div>
+				<div class = "fieldtext">', $_GET['StartFrom'], '</div>
 			</field>
 			<field>
 				<label for = "DaysActive">', __('Below Number of Active Days'), '</label>
-				<div class="fieldtext">', $_GET['DaysActive'], '</div>
+				<div class = "fieldtext">', $_GET['DaysActive'], '</div>
 			</field>';
 } else {
 	$_POST['CategoryID'] = '';
@@ -248,8 +248,8 @@ if (isset($_GET['Edit'])) {
 	$_POST['StartFrom'] = 0;
 	$_POST['Rate'] = 0;
 
-	echo '<input type = "hidden" name="SelectedSalesPerson" value = "', $SelectedSalesPerson, '" />';
-	echo '<input type = "hidden" name="New" value = "Yes" />';
+	echo '<input type = "hidden" name = "SelectedSalesPerson" value = "', $SelectedSalesPerson, '" />';
+	echo '<input type = "hidden" name = "New" value = "Yes" />';
 	echo '<fieldset>
 			<legend>', __('Create Commission Details'), '</legend>';
 
@@ -257,7 +257,7 @@ if (isset($_GET['Edit'])) {
 	$Result = DB_query($SQL);
 	echo '<field>
 			<label for = "CategoryID">', __('Stock Category'), '</label>
-			<select name="CategoryID" autofocus = "autofocus" required = "required">
+			<select name = "CategoryID" autofocus = "autofocus" required = "required">
 				<option value = ""></option>
 				<option value = "ALL">', __('All Categories'), '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -275,7 +275,7 @@ if (isset($_GET['Edit'])) {
 	$Result = DB_query($SQL);
 	echo '<field>
 			<label for = "Area">', __('Sales Area'), '</label>
-			<select name="Area" required = "required">
+			<select name = "Area" required = "required">
 				<option value = "ALL">', __('All Areas'), '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($MyRow['areacode'] == $_POST['Area'] or $MyRow['areacode'] == $SalesPersonArea) {
@@ -292,7 +292,7 @@ if (isset($_GET['Edit'])) {
 	$Result = DB_query($SQL);
 	echo '<field>
 			<label for = "Currency">', __('Currency'), '</label>
-			<select name="Currency" required = "required">';
+			<select name = "Currency" required = "required">';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($MyRow['currabrev'] == $_POST['Currency']) {
 	echo '<option selected = "selected" value = "', $MyRow['currabrev'], '">', $MyRow['currency'], ' (', $MyRow['currabrev'], ')</option>';
@@ -306,27 +306,27 @@ if (isset($_GET['Edit'])) {
 
 	echo '<field>
 			<label for = "StartFrom">', __('Start From Value'), '</label>
-			<input type = "text" class="number" requited = "required" name="StartFrom" value = "0.0" />
+			<input type = "text" class = "number" requited = "required" name = "StartFrom" value = "0.0" />
 			<fieldhelp>', __('The value at which this commission rate kicks in.'), '</fieldhelp>
 		</field>';
 
 	echo '<field>
 			<label for = "DaysActive">', __('Below Number of Active Days'), '</label>
-			<input type = "text" class="number" requited = "required" name="DaysActive" size = "3" value = "0" />
+			<input type = "text" class = "number" requited = "required" name = "DaysActive" size = "3" value = "0" />
 			<fieldhelp>', __('This commission can apply for just a certain number of days after the customer has become active. Choose zero if the rate always applies.'), '</fieldhelp>
 		</field>';
 }
 
 echo '<field>
 		<label for = "Rate">', __('Commission Rate'), '</label>
-		<input type = "text" class="number" requited = "required" name="Rate" value = "', $_POST['Rate'], '" /> %
+		<input type = "text" class = "number" requited = "required" name = "Rate" value = "', $_POST['Rate'], '" /> %
 		<fieldhelp>', __('The percentage commission to be applied for this record.'), '</fieldhelp>
 	</field>';
 
 echo '</fieldset>';
 
-echo '<div class="centre">
-		<input type = "submit" name="Submit" value = "Save" />
+echo '<div class = "centre">
+		<input type = "submit" name = "Submit" value = "Save" />
 	</div>';
 
 echo '</form>';

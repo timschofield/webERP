@@ -9,8 +9,8 @@ $ViewTopic = 'SecuritySchema';
 $BookMark = 'WWW_Access';
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
-	'/images/group_add.png" title="' .
+echo '<p class = "page_title_text"><img alt = "" src = "'.$RootPath.'/css/'.$Theme.
+	'/images/group_add.png" title = "' .
 	__('Access Permissions Maintenance') . '" /> ' .// Icon title.
 	__('Access Permissions Maintenance') . '</p>';// Page title.
 
@@ -116,7 +116,7 @@ if (!isset($SelectedRole)) {
 		ORDER BY secrolename";
 	$Result = DB_query($SQL);
 
-	echo '<table class="selection">
+	echo '<table class = "selection">
 		<tr>
 			<th>' . __('Role') . '</th>
 			<th>&nbsp;</th>
@@ -127,10 +127,10 @@ if (!isset($SelectedRole)) {
 
 		/*The SecurityHeadings array is defined in config.php */
 
-		echo '<tr class="striped_row">
+		echo '<tr class = "striped_row">
 				<td>', $MyRow['secrolename'], '</td>
-				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '?&amp;SelectedRole=', $MyRow['secroleid'], '">' . __('Edit') . '</a></td>
-				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedRole=', $MyRow['secroleid'], '&amp;delete=1&amp;SecRoleName=', urlencode($MyRow['secrolename']), '" onclick="return confirm(\'' . __('Are you sure you wish to delete this role?') . '\');">' . __('Delete') . '</a></td>
+				<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '?&amp;SelectedRole = ', $MyRow['secroleid'], '">' . __('Edit') . '</a></td>
+				<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedRole = ', $MyRow['secroleid'], '&amp;delete = 1&amp;SecRoleName = ', urlencode($MyRow['secrolename']), '" onclick = "return confirm(\'' . __('Are you sure you wish to delete this role?') . '\');">' . __('Delete') . '</a></td>
 			</tr>';
 
 	} //END while LIST LOOP
@@ -139,7 +139,7 @@ if (!isset($SelectedRole)) {
 
 
 if (isset($SelectedRole)) {
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Review Existing Roles') . '</a></div>';
+	echo '<div class = "centre"><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Review Existing Roles') . '</a></div>';
 }
 
 if (isset($SelectedRole)) {
@@ -159,9 +159,9 @@ if (isset($SelectedRole)) {
 	}
 }
 echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 if ( isset($_POST['SelectedRole'])) {
-	echo '<input type="hidden" name="SelectedRole" value="' . $_POST['SelectedRole'] . '" />';
+	echo '<input type = "hidden" name = "SelectedRole" value = "' . $_POST['SelectedRole'] . '" />';
 }
 echo '<fieldset>';
 if (!isset($_POST['SecRoleName'])) {
@@ -172,12 +172,12 @@ if (!isset($_POST['SecRoleName'])) {
 }
 echo '<field>
 		<label for = "SecRoleName">' . __('Role') . ':</label>
-		<input type="text" name="SecRoleName" pattern = ".{4,}" size = "40" maxlength = "40" value="' . $_POST['SecRoleName'] . '" required = "true" title="" />
+		<input type = "text" name = "SecRoleName" pattern = ".{4,}" size = "40" maxlength = "40" value = "' . $_POST['SecRoleName'] . '" required = "true" title = "" />
 		<fieldhelp>'.__('The role description entered must be at least 4 characters long').'</fieldhelp>
 	</field>';
 echo '</fieldset>
-	<div class="centre">
-		<input type="submit" name="submit" value="' . __('Enter Role') . '" />
+	<div class = "centre">
+		<input type = "submit" name = "submit" value = "' . __('Enter Role') . '" />
 	</div>
 	</form>';
 
@@ -198,21 +198,21 @@ if (isset($SelectedRole)) {
 		$i++;
 	}
 
-	echo '<table class="selection"><tr>';
+	echo '<table class = "selection"><tr>';
 
 	if (DB_num_rows($Result)>0 ) {
-		echo '<th colspan="3"><div class="centre">' . __('Assigned Security Tokens') . '</div></th>';
-		echo '<th colspan="3"><div class="centre">' . __('Available Security Tokens') . '</div></th>';
+		echo '<th colspan = "3"><div class = "centre">' . __('Assigned Security Tokens') . '</div></th>';
+		echo '<th colspan = "3"><div class = "centre">' . __('Available Security Tokens') . '</div></th>';
 	}
 	echo '</tr>';
 
 	while ($AvailRow = DB_fetch_array($Result)) {
 
 		if (in_array($AvailRow['tokenid'],$TokensUsed)){
-			printf('<tr class="striped_row">
+			printf('<tr class = "striped_row">
 					<td>%s</td>
 					<td>%s</td>
-					<td><a href="%sSelectedRole=%s&amp;remove=1&amp;PageToken=%s" onclick="return confirm(\'' . __('Are you sure you wish to delete this security token from this role?') . '\');">' . __('Remove') . '</a></td>
+					<td><a href = "%sSelectedRole = %s&amp;remove = 1&amp;PageToken = %s" onclick = "return confirm(\'' . __('Are you sure you wish to delete this security token from this role?') . '\');">' . __('Remove') . '</a></td>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
@@ -223,13 +223,13 @@ if (isset($SelectedRole)) {
 					$SelectedRole,
 					$AvailRow['tokenid'] );
 		} else {
-			printf('<tr class="striped_row">
+			printf('<tr class = "striped_row">
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
 					<td>%s</td>
 					<td>%s</td>
-					<td><a href="%sSelectedRole=%s&amp;add=1&amp;PageToken=%s">' . __('Add') . '</a></td>
+					<td><a href = "%sSelectedRole = %s&amp;add = 1&amp;PageToken = %s">' . __('Add') . '</a></td>
 					</tr>',
 					$AvailRow['tokenid'],
 					$AvailRow['tokenname'],

@@ -26,7 +26,7 @@ function stripcomma($str) { //because we're using comma as a delimiter
 	return str_replace(',', '', $str);
 }
 
-echo '<p class = "page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Export Sales Analysis Files') .'" alt="" /><b>' . $Title. '</b></p>';
+echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title = "' . __('Export Sales Analysis Files') .'" alt = "" /><b>' . $Title. '</b></p>';
 
 echo '<div class = "centre">' . __('Making a comma separated values file of the stock items') . '</div>';
 

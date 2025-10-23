@@ -118,10 +118,10 @@ if (isset($_POST['PrintPDF'])) {
 	// Handle on-screen view
 	$Title = __('General Ledger Journal');
 	include('includes/header.php');
-	echo '<p class = "page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+	echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title = "' . __('Search') . '" alt = "" />' . ' ' . $Title . '</p>';
 	echo $HTML;
 	echo '<div class = "centre">
-	<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick="window.close()" /></form>
+	<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" /></form>
 	</div>';
 	include('includes/footer.php');
 } else {

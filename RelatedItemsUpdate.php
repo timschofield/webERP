@@ -9,10 +9,10 @@ $ViewTopic = 'QualityAssurance';
 $BookMark = 'QA_Tests';
 include('includes/header.php');
 
-echo '<a href="' . $RootPath . '/SelectProduct.php" class="toplink">' . __('Back to Items') . '</a>';
+echo '<a href = "' . $RootPath . '/SelectProduct.php" class = "toplink">' . __('Back to Items') . '</a>';
 
-echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-	'/images/inventory.png" title="', // Icon image.
+echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme,
+	'/images/inventory.png" title = "', // Icon image.
 	$Title, '" /> ', // Icon title.
 	$Title, '</p>';// Page title.
 
@@ -145,18 +145,18 @@ $Result = DB_query($SQL);
 if (DB_num_rows($Result) > 0) {
 	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
 		<div>
-		<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />
-		<table class="selection">
+		<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />
+		<table class = "selection">
 		<thead>
 			<tr>
 				<th colspan = "3">' .
 				__('Related Items To') . ':
-				<input type = "text" required = "required" autofocus = "autofocus" name="Item" size = "22" value = "' . $Item . '" maxlength = "20" />
-				<input type = "submit" name="NewPart" value = "' . __('List Related Items') . '" /></th>
+				<input type = "text" required = "required" autofocus = "autofocus" name = "Item" size = "22" value = "' . $Item . '" maxlength = "20" />
+				<input type = "submit" name = "NewPart" value = "' . __('List Related Items') . '" /></th>
 			</tr>
 			<tr>
-				<th class="SortedColumn">' . __('Code') . '</th>
-				<th class="SortedColumn">' . __('Description') . '</th>
+				<th class = "SortedColumn">' . __('Code') . '</th>
+				<th class = "SortedColumn">' . __('Description') . '</th>
 				<th>' . __('Delete') . '</th>
 			</tr>
 		</thead>
@@ -164,10 +164,10 @@ if (DB_num_rows($Result) > 0) {
 
 	while ($MyRow = DB_fetch_array($Result)) {
 
-		echo '<tr class="striped_row">
+		echo '<tr class = "striped_row">
 				<td>' . $MyRow['stockid'] . '</td>
 				<td>' .  $MyRow['description'] . '</td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Item=' . $Item . '&amp;Related=' . $MyRow['stockid'] . '&amp;delete=yes" onclick="return confirm(\'' . __('Are you sure you wish to delete this relationship?') . '\');">' . __('Delete') . '</a></td>';
+				<td><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Item = ' . $Item . '&amp;Related = ' . $MyRow['stockid'] . '&amp;delete = yes" onclick = "return confirm(\'' . __('Are you sure you wish to delete this relationship?') . '\');">' . __('Delete') . '</a></td>';
 		echo '</tr>';
 
 	}
@@ -179,9 +179,9 @@ if (DB_num_rows($Result) > 0) {
 	prnMsg(__('There are no items related set up for this part'),'warn');
 }
 
-echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Item=' . $Item . '">';
+echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Item = ' . $Item . '">';
 echo '<div>';
-echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 if (isset($_GET['Edit'])){
 	/*the price sent with the get is sql format price so no need to filter */
 	$_POST['Related'] = $_GET['Related'];
@@ -193,15 +193,15 @@ echo '<legend>' . $Item . ' - ' . $PartDescription . '</legend>';
 
 echo '<field>
 		<label for = "Related">' . __('Related Item Code') . ':</label>
-		<input type = "text" class="text" required = "required" name="Related" size = "21" maxlength = "20" value = "';
+		<input type = "text" class = "text" required = "required" name = "Related" size = "21" maxlength = "20" value = "';
 		if (isset($_POST['Related'])) {
 			echo $_POST['Related'];
 		}
 		echo '" />
 		</field>
 	</fieldset>
-	<div class="centre">
-		<input type = "submit" name="submit" value = "' . __('Enter') . '/' . __('Amend Relation') . '" />
+	<div class = "centre">
+		<input type = "submit" name = "submit" value = "' . __('Enter') . '/' . __('Amend Relation') . '" />
 	</div>';
 
 echo '</form>';

@@ -16,19 +16,19 @@ include('includes/header.php');
 
 if (!isset($_SESSION['SuppTrans'])){
 	prnMsg(__('Fixed asset additions or credits are entered against supplier invoices or credit notes respectively') . '. ' . __('To enter supplier transactions the supplier must first be selected from the supplier selection screen') . ', ' . __('then the link to enter a supplier invoice or credit note must be clicked on'),'info');
-	echo '<br /><a href="' . $RootPath . '/SelectSupplier.php">' . __('Select a supplier') . '</a>';
+	echo '<br /><a href = "' . $RootPath . '/SelectSupplier.php">' . __('Select a supplier') . '</a>';
 	exit();
 	/*It all stops here if there aint no supplier selected and invoice/credit initiated ie $_SESSION['SuppTrans'] started off*/
 }
 
 if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice') {
-	echo '<a href="' . $RootPath . '/SupplierInvoice.php" class="toplink">' . __('Back to Invoice Entry') . '</a>';
+	echo '<a href = "' . $RootPath . '/SupplierInvoice.php" class = "toplink">' . __('Back to Invoice Entry') . '</a>';
 } else {
-	echo '<a href="' . $RootPath . '/SupplierCredit.php" class="toplink">' . __('Back to Credit Note Entry') . '</a>';
+	echo '<a href = "' . $RootPath . '/SupplierCredit.php" class = "toplink">' . __('Back to Credit Note Entry') . '</a>';
 }
 
-echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Dispatch') . '" alt="" />' . ' ' . $Title . '
+echo '<p class = "page_title_text">
+		<img src = "'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title = "' . __('Dispatch') . '" alt = "" />' . ' ' . $Title . '
 	</p>';
 
 if (isset($_POST['AddAssetToInvoice'])){
@@ -71,18 +71,18 @@ if (isset($_GET['Delete'])){
 
 /*Show all the selected ShiptRefs so far from the SESSION['SuppInv']->Shipts array */
 if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice') {
-	echo '<p class="page_title_text">' .  __('Fixed Assets on Invoice') . ' ';
+	echo '<p class = "page_title_text">' .  __('Fixed Assets on Invoice') . ' ';
 } else {
-	echo '<p class="page_title_text">' . __('Fixed Asset credits on Credit Note') . ' ';
+	echo '<p class = "page_title_text">' . __('Fixed Asset credits on Credit Note') . ' ';
 }
 echo $_SESSION['SuppTrans']->SuppReference . ' ' .__('From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
 echo '</p>';
-echo '<table class="selection">
+echo '<table class = "selection">
 	<thead>
 		<tr>
-					<th class="SortedColumn">' . __('Asset ID') . '</th>
-					<th class="SortedColumn">' . __('Description') . '</th>
-					<th class="SortedColumn">' . __('Amount') . '</th>
+					<th class = "SortedColumn">' . __('Asset ID') . '</th>
+					<th class = "SortedColumn">' . __('Description') . '</th>
+					<th class = "SortedColumn">' . __('Amount') . '</th>
 		</tr>
 	</thead>
 	<tbody>';
@@ -93,24 +93,24 @@ foreach ($_SESSION['SuppTrans']->Assets as $EnteredAsset){
 
 	echo '<tr><td>' . $EnteredAsset->AssetID . '</td>
 		<td>' . $EnteredAsset->Description . '</td>
-		<td class="number">' . locale_number_format($EnteredAsset->Amount,$_SESSION['SuppTrans']->CurrDecimalPlaces). '</td>
-		<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $EnteredAsset->Counter . '">' . __('Delete') . '</a></td></tr>';
+		<td class = "number">' . locale_number_format($EnteredAsset->Amount,$_SESSION['SuppTrans']->CurrDecimalPlaces). '</td>
+		<td><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete = ' . $EnteredAsset->Counter . '">' . __('Delete') . '</a></td></tr>';
 
 	$TotalAssetValue +=  $EnteredAsset->Amount;
 
 }
 
 echo '</tbody></table>
-	<table class="selection">
+	<table class = "selection">
 		<tr>
-	<td class="number"><h4>' . __('Total') . ':</h4></td>
-	<td class="number"><h4>' . locale_number_format($TotalAssetValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</h4></td>
+	<td class = "number"><h4>' . __('Total') . ':</h4></td>
+	<td class = "number"><h4>' . locale_number_format($TotalAssetValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</h4></td>
 		</tr>
 	</table>';
 
 /*Set up a form to allow input of new Shipment charges */
 echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post" />';
-echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_POST['AssetID'])) {
 	$_POST['AssetID']='';
@@ -123,13 +123,13 @@ echo '<fieldset>
 
 echo '<field>
 		<label for = "AssetID">', __('Enter Asset ID'), ':</label>
-		<input class="integer" maxlength = "6" name="AssetID" pattern = "[^-]{1,5}" placeholder = "', __('Positive integer'), '" size = "7" title="" type = "text" value = "',  $_POST['AssetID'], '" />
+		<input class = "integer" maxlength = "6" name = "AssetID" pattern = "[^-]{1,5}" placeholder = "', __('Positive integer'), '" size = "7" title = "" type = "text" value = "',  $_POST['AssetID'], '" />
 		<fieldhelp>', __('The Asset ID should be positive integer'), '</fieldhelp>
-		<a href="' . $RootPath . '/FixedAssetItems.php" target="_blank">', __('New Fixed Asset'), '</a>
+		<a href = "' . $RootPath . '/FixedAssetItems.php" target = "_blank">', __('New Fixed Asset'), '</a>
 	</field>
 	<field>
 		<label for = "AssetSelection">', '<b>' . __('or') . ' </b>' . __('Select from list'), ':</label>
-		<select name="AssetSelection">';
+		<select name = "AssetSelection">';
 
 $SQL = "SELECT assetid,
 			description
@@ -156,13 +156,13 @@ if (!isset($_POST['Amount'])) {
 }
 echo '<field>
 		<label for = "Amount">' . __('Amount') . ':</label>
-		<input type = "text" class="number" pattern = "(?!^-?0[,.]0*$).{1,11}" title="" name="Amount" size = "12" maxlength = "11" value = "' .  locale_number_format($_POST['Amount'],$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" />
+		<input type = "text" class = "number" pattern = "(?!^-?0[,.]0*$).{1,11}" title = "" name = "Amount" size = "12" maxlength = "11" value = "' .  locale_number_format($_POST['Amount'],$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" />
 		<fieldhelp>'.__('The amount must be numeric and cannot be zero').'</fieldhelp>
 	</field>';
 echo '</fieldset>';
 
-echo '<div class="centre">
-		<input type = "submit" name="AddAssetToInvoice" value = "' . __('Enter Fixed Asset') . '" />
+echo '<div class = "centre">
+		<input type = "submit" name = "AddAssetToInvoice" value = "' . __('Enter Fixed Asset') . '" />
 	</div>';
 
 echo '</form>';

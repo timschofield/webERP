@@ -7,8 +7,8 @@ $ViewTopic = '';
 $BookMark = 'PO_AuthorisationLevels';
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-	'/images/group_add.png" title="', // Icon image.
+echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme,
+	'/images/group_add.png" title = "', // Icon image.
 	$Title, '" /> ', // Icon title.
 	$Title, '</p>';// Page title.
 
@@ -120,15 +120,15 @@ $SQL = "SELECT purchorderauth.userid,
 $ErrMsg = __('The authentication details cannot be retrieved because');
 $Result = DB_query($SQL, $ErrMsg);
 
-echo '<table class="selection">
+echo '<table class = "selection">
 		<thead>
 			<tr>
-				<th class="SortedColumn">' . __('User ID') . '</th>
-				<th class="SortedColumn">' . __('User Name') . '</th>
-				<th class="SortedColumn">' . __('Currency') . '</th>
-				<th class="SortedColumn">' . __('Create Order') . '</th>
-				<th class="SortedColumn">' . __('Can Release') . '<br />' .  __('Invoices') . '</th>
-				<th class="SortedColumn">' . __('Authority Level') . '</th>
+				<th class = "SortedColumn">' . __('User ID') . '</th>
+				<th class = "SortedColumn">' . __('User Name') . '</th>
+				<th class = "SortedColumn">' . __('Currency') . '</th>
+				<th class = "SortedColumn">' . __('Create Order') . '</th>
+				<th class = "SortedColumn">' . __('Can Release') . '<br />' .  __('Invoices') . '</th>
+				<th class = "SortedColumn">' . __('Authority Level') . '</th>
 				<th colspan = "2">&nbsp;</th>
 			</tr>
 		</thead>';
@@ -144,17 +144,17 @@ while ($MyRow = DB_fetch_array($Result)) {
 } else {
 		$DisplayOffHold = __('No');
 	}
-	echo '<tr class="striped_row">
+	echo '<tr class = "striped_row">
 			<td>' . $MyRow['userid'] . '</td>
 			<td>' . $MyRow['realname'] . '</td>
 			<td>', __($MyRow['currency']), '</td>
 			<td>' . $DisplayCanCreate . '</td>
 			<td>' . $DisplayOffHold . '</td>
-			<td class="number">' . locale_number_format($MyRow['authlevel'],$MyRow['decimalplaces']) . '</td>
-			<td><a href="'.$RootPath.'/PO_AuthorisationLevels.php?Edit=Yes&amp;UserID=' . $MyRow['userid'] .
-	'&amp;Currency='.$MyRow['currabrev'].'">' . __('Edit') . '</a></td>
-			<td><a href="'.$RootPath.'/PO_AuthorisationLevels.php?Delete=Yes&amp;UserID=' . $MyRow['userid'] .
-	'&amp;Currency='.$MyRow['currabrev'].'" onclick="return confirm(\'' . __('Are you sure you wish to delete this authorisation level?') . '\');">' . __('Delete') . '</a></td>
+			<td class = "number">' . locale_number_format($MyRow['authlevel'],$MyRow['decimalplaces']) . '</td>
+			<td><a href = "'.$RootPath.'/PO_AuthorisationLevels.php?Edit = Yes&amp;UserID = ' . $MyRow['userid'] .
+	'&amp;Currency = '.$MyRow['currabrev'].'">' . __('Edit') . '</a></td>
+			<td><a href = "'.$RootPath.'/PO_AuthorisationLevels.php?Delete = Yes&amp;UserID = ' . $MyRow['userid'] .
+	'&amp;Currency = '.$MyRow['currabrev'].'" onclick = "return confirm(\'' . __('Are you sure you wish to delete this authorisation level?') . '\');">' . __('Delete') . '</a></td>
 		</tr>';
 }
 
@@ -168,8 +168,8 @@ if (!isset($_GET['Edit'])) {
 	$AuthLevel = 0;
 }
 
-echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post" id="form1">';
-echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post" id = "form1">';
+echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 echo '<fieldset>
 		<legend>', __('Set Authorisation Levels'), '</legend>';
 
@@ -178,11 +178,11 @@ if (isset($_GET['Edit'])) {
 			<label for = "UserID">' . __('User ID') . '</label>
 			<fieldtext>' . $_GET['UserID'] . '</fieldtext>
 		</field>';
-	echo '<input type = "hidden" name="UserID" value = "'.$_GET['UserID'].'" />';
+	echo '<input type = "hidden" name = "UserID" value = "'.$_GET['UserID'].'" />';
 } else {
 	echo '<field>
 			<label for = "UserID">' . __('User ID') . '</label>
-			<select name="UserID">';
+			<select name = "UserID">';
 	$UserSQL = "SELECT userid FROM www_users";
 	$Userresult = DB_query($UserSQL);
 	while ($MyRow = DB_fetch_array($Userresult)) {
@@ -220,11 +220,11 @@ if (isset($_GET['Edit'])) {
 			<label for = "CurrCode">' . __('Currency') . '</label>
 			<fieldtext>' . $MyRow['currency'] . '</fieldtext>
 		</field>';
-	echo '<input type = "hidden" name="CurrCode" value = "'.$Currency.'" />';
+	echo '<input type = "hidden" name = "CurrCode" value = "'.$Currency.'" />';
 } else {
 	echo '<field>
 			<label for = "CurrCode">' . __('Currency') . '</label>
-			<select name="CurrCode">';
+			<select name = "CurrCode">';
 	$Currencysql = "SELECT currabrev,currency,decimalplaces FROM currencies";
 	$Currencyresult = DB_query($Currencysql);
 	while ($MyRow = DB_fetch_array($Currencyresult)) {
@@ -242,37 +242,37 @@ if (isset($_GET['Edit'])) {
 echo '<field>
 		<label for = "CanCreate">' . __('User can create orders') . '</label>';
 if ($CanCreate == 1) {
-	echo '<input type = "checkbox" name="CanCreate" />
+	echo '<input type = "checkbox" name = "CanCreate" />
 		</field>';
 } else {
-	echo '<input type = "checkbox" checked = "checked" name="CanCreate" />
+	echo '<input type = "checkbox" checked = "checked" name = "CanCreate" />
 		</field>';
 }
 
 echo '<field>
 		<label for = "OffHold">' . __('User can release invoices') . '</label>';
 if ($OffHold == 1) {
-	echo '<input type = "checkbox" name="OffHold" />
+	echo '<input type = "checkbox" name = "OffHold" />
 		</field>';
 } else {
-	echo '<input type = "checkbox" checked = "checked" name="OffHold" />
+	echo '<input type = "checkbox" checked = "checked" name = "OffHold" />
 		</field>';
 }
 
 echo '<field>
 		<label for = "AuthLevel">' . __('User can authorise orders up to :') . '</label>
-		<input type = "text" name="AuthLevel" size = "11" class="integer" title="" value = "'  . locale_number_format($AuthLevel,$CurrDecimalPlaces) . '" />
+		<input type = "text" name = "AuthLevel" size = "11" class = "integer" title = "" value = "'  . locale_number_format($AuthLevel,$CurrDecimalPlaces) . '" />
 		<fieldhelp>' . __('Enter the amount that this user is premitted to authorise purchase orders up to') . '</fieldhelp>
 	</field>
 	</fieldset>';
 
 if (isset($_GET['Edit'])) {
-	echo '<div class="centre">
-			<input type = "submit" name="Update" value = "'.__('Update Information').'" />
+	echo '<div class = "centre">
+			<input type = "submit" name = "Update" value = "'.__('Update Information').'" />
 		</div>';
 } else {
-	echo '<div class="centre">
-			<input type = "submit" name="Submit" value = "'.__('Enter Information').'" />
+	echo '<div class = "centre">
+			<input type = "submit" name = "Submit" value = "'.__('Enter Information').'" />
 		</div>';
 }
 echo '</div>

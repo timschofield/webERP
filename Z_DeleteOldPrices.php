@@ -44,7 +44,7 @@ echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-
 <div class = "centre">
 <input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />
 <br />
-<input type = "submit" name = "DeleteOldPrices" value = "' . __('Purge Old Prices') . '" onclick="return confirm(\'' . __('Are You Sure you wish to delete all old prices?') . '\');" />
+<input type = "submit" name = "DeleteOldPrices" value = "' . __('Purge Old Prices') . '" onclick = "return confirm(\'' . __('Are You Sure you wish to delete all old prices?') . '\');" />
 </div>
 </form>';
 
