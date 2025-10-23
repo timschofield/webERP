@@ -6,7 +6,7 @@
 *
 *******************************************************************************/
 /* KL RICARD Configuration file for specific KL code */
-$KLCodeVersion = "048";
+$KLCodeVersion = "049";
 
 // let's setup all the variables depending on the environment
 if (URLWithoutScriptNameContains(".LOCAL")) {
