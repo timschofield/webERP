@@ -153,18 +153,8 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 						'SPG    : ' . $Param3 . "\r\n" .
 						'Shop   : ' . $Param4 . "\r\n" .
 						'Area   : ' . $Param5 . "\r\n" .
-						'Total Cash            : ' . $Param6  . "\r\n" .
-						'Total CC EDC Danamon  : ' . $Param7  . "\r\n" .
-						'Total CC EDC BNI      : ' . $Param15 . "\r\n" .
-						'Total CC EDC Mandiri  : ' . $Param9  . "\r\n" .
-						'Total CC EDC BCA      : ' . $Param10 . "\r\n" .
-						'Total Amex EDC BCA    : ' . $Param8  . "\r\n" .
-						'Total Amex EDC BNI    : ' . $Param16  . "\r\n" .
-						'Total WeChat/Alipay   : ' . $Param13 . "\r\n" .
-						'Total QRIS            : ' . $Param14 . "\r\n" .
-						'Total Returned Goods  : ' . $Param11 . "\r\n" .
-						'Total Voucher/Discount: ' . $Param12 . "\r\n" .
-						'Comments              : ' . $Param17; 		
+						EmailAllPaymentsDetails() .
+						'Comments                : ' . $Param6; 		
 			$EmailAddress = "kl-splittedpayments@kapal-laut.com";
 			break;
 		case "GoodsReturnedToShop":
@@ -175,22 +165,12 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 						'SPG    : ' . $Param3 . "\r\n" .
 						'Shop   : ' . $Param4 . "\r\n" .
 						'Area   : ' . $Param5 . "\r\n" .
-						'Total Cash             : ' . $Param6  . "\r\n" .
-						'Total CC EDC Danamon   : ' . $Param7  . "\r\n" .
-						'Total CC EDC BNI       : ' . $Param19  . "\r\n" .
-						'Total CC EDC Mandiri   : ' . $Param9  . "\r\n" .
-						'Total CC EDC BCA       : ' . $Param10 . "\r\n" .
-						'Total Amex EDC BCA     : ' . $Param8  . "\r\n" .
-						'Total Amex EDC BNI     : ' . $Param20 . "\r\n" .
-						'Total WeChat/Alipay    : ' . $Param17 . "\r\n" .
-						'Total QRIS Mandiri     : ' . $Param18 . "\r\n" .
-						'Total Returned Goods   : ' . $Param11 . "\r\n" .
-						'Total Voucher/Discount : ' . $Param12 . "\r\n" .
-						'Old Invoice            : ' . $Param13 . "\r\n" .
-						'Old Invoice Date       : ' . $Param14 . "\r\n" .
-						'Items Returned         : ' . $Param15 . "\r\n" .
-						'Reason of return       : ' . $Param16 . "\r\n" .
-						'Comments               : ' . $Param21; 		
+						EmailAllPaymentsDetails() .
+						'Old Invoice            : ' . $Param6 . "\r\n" .
+						'Old Invoice Date       : ' . $Param7 . "\r\n" .
+						'Items Returned         : ' . $Param8 . "\r\n" .
+						'Reason of return       : ' . $Param9 . "\r\n" .
+						'Comments               : ' . $Param10; 		
 			$EmailAddress = "kl-goodsreturnedtoshop@kapal-laut.com";
 			break;
 		case "VoucherDiscounts":
@@ -201,19 +181,9 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 						'SPG    : ' . $Param3 . "\r\n" .
 						'Shop   : ' . $Param4 . "\r\n" .
 						'Area   : ' . $Param5 . "\r\n" .
-						'Total Cash            : ' . $Param6  . "\r\n" .
-						'Total CC EDC Danamon  : ' . $Param7  . "\r\n" .
-						'Total CC EDC BNI      : ' . $Param16 . "\r\n" .
-						'Total CC EDC Mandiri  : ' . $Param9  . "\r\n" .
-						'Total CC EDC BCA      : ' . $Param10 . "\r\n" .
-						'Total Amex EDC BCA    : ' . $Param8  . "\r\n" .
-						'Total Amex EDC BNI    : ' . $Param17 . "\r\n" .
-						'Total WeChat/Alipay   : ' . $Param14 . "\r\n" .
-						'Total QRIS Mandiri    : ' . $Param15 . "\r\n" .
-						'Total Returned Goods  : ' . $Param11 . "\r\n" .
-						'Total Voucher/Discount: ' . $Param12 . "\r\n" .
-						'Voucher/Discount Code : ' . $Param13 . "\r\n" .
-						'Comments              : ' . $Param18; 		
+						EmailAllPaymentsDetails() .
+						'Voucher/Discount Code : ' . $Param6 . "\r\n" .
+						'Comments              : ' . $Param7; 		
 			$EmailAddress = "kl-voucherdiscounts@kapal-laut.com";
 			break;
 		case "SalesWithNotEnoughQOH":
@@ -441,3 +411,23 @@ function RepeatText($char, $long){
 	return $Text;
 }
 
+function EmailAllPaymentsDetails(){
+	$Text = 'Total Cash              : ' . number_format($_POST['AmountPaidCash'], 0) . "\r\n" .
+			'Total CC EDC Danamon    : ' . number_format($_POST['AmountPaidCCDanamon'], 0) . "\r\n" .
+			'Total CC EDC BNI        : ' . number_format($_POST['AmountPaidCCBNI'], 0) . "\r\n" .
+			'Total CC EDC Mandiri    : ' . number_format($_POST['AmountPaidCCMandiri'], 0) . "\r\n" .
+			'Total CC EDC BCA        : ' . number_format($_POST['AmountPaidCCBCA'], 0) . "\r\n" .
+			'Total CC EDC BRI        : ' . number_format($_POST['AmountPaidCCBRI'], 0) . "\r\n" .
+			'Total Amex EDC Danamon  : ' . number_format($_POST['AmountPaidAmexDanamon'], 0) . "\r\n" .
+			'Total Amex EDC BNI      : ' . number_format($_POST['AmountPaidAmexBNI'], 0) . "\r\n" .
+			'Total Amex EDC Mandiri  : ' . number_format($_POST['AmountPaidAmexMandiri'], 0) . "\r\n" .
+			'Total Amex EDC BCA      : ' . number_format($_POST['AmountPaidAmexBCA'], 0) . "\r\n" .
+			'Total Amex EDC BRI      : ' . number_format($_POST['AmountPaidAmexBRI'], 0) . "\r\n" .
+			'Total WeChat/Alipay     : ' . number_format($_POST['AmountPaidWeChat'], 0) . "\r\n" .
+			'Total QRIS Mandiri      : ' . number_format($_POST['AmountPaidQRISMandiri'], 0) . "\r\n" .
+			'Total QRIS BRI          : ' . number_format($_POST['AmountPaidQRISBRI'], 0) . "\r\n" .
+			'Total Returned Goods    : ' . number_format($_POST['AmountReturnedGoods'], 0) . "\r\n" .
+			'Total Voucher/Discount  : ' . number_format($_POST['AmountVouchers'], 0) . "\r\n";
+
+	return $Text;
+}

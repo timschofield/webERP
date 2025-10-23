@@ -47,6 +47,7 @@ include('includes/header.php');
 
 include('includes/GetPrice.php');
 include('includes/SQL_CommonFunctions.php');
+include('includes/StockFunctions.php');
 include('includes/GetSalesTransGLCodes.php');
 
 include('includes/KLDefines.php');
@@ -408,9 +409,9 @@ foreach ($_SESSION['Items' . $identifier]->LineItems as $OrderLine) {
 		}
 		$Result = DB_query("SELECT MAX(discountrate) AS discount
 							FROM discountmatrix
-							WHERE salestype='" . $_SESSION['Items' . $identifier]->DefaultSalesType . "'
-								AND discountcategory ='" . $OrderLine->DiscCat . "'
-								AND quantitybreak <='" . $QuantityOfDiscCat . "'");
+							WHERE salestype = '" . $_SESSION['Items' . $identifier]->DefaultSalesType . "'
+								AND discountcategory = '" . $OrderLine->DiscCat . "'
+								AND quantitybreak <= '" . $QuantityOfDiscCat . "'");
 		$MyRow = DB_fetch_row($Result);
 		if ($MyRow[0] != 0) { /* need to update the lines affected */
 			foreach ($_SESSION['Items' . $identifier]->LineItems as $StkItems_2) {
@@ -820,22 +821,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 			if ($MBFlag == 'B' OR $MBFlag == 'M') {
 				$Assembly = False;
 
-				/* Need to get the current location quantity
-				will need it later for the stock movement */
-				$SQL = "SELECT locstock.quantity
-						FROM locstock
-						WHERE locstock.stockid='" . $OrderLine->StockID . "'
-						AND loccode= '" . $_SESSION['Items' . $identifier]->Location . "'";
-				$ErrMsg = __('WARNING') . ': ' . __('Could not retrieve current location stock');
-				$Result = DB_query($SQL, $ErrMsg);
-
-				if (DB_num_rows($Result) == 1) {
-					$LocQtyRow = DB_fetch_row($Result);
-					$QtyOnHandPrior = $LocQtyRow[0];
-				} else {
-					/* There must be some error this should never happen */
-					$QtyOnHandPrior = 0;
-				}
+				/* Need to get the current location quantity will need it later for the stock movement */
+				$QtyOnHandPrior = GetQuantityOnHand($OrderLine->StockID, $_SESSION['Items' . $identifier]->Location);
 
 				$SQL = "UPDATE locstock
 						SET quantity = locstock.quantity - " . $OrderLine->Quantity . "
@@ -1829,17 +1816,6 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 						$_SESSION['SalesmanLogin'],
 						$_SESSION['Items' . $identifier]->Location,
 						$Area,
-						number_format($_POST['AmountPaidCash'], 0),
-						number_format($_POST['AmountPaidCCDanamon'], 0),
-						number_format($_POST['AmountPaidAmexBCA'], 0),
-						number_format($_POST['AmountPaidCCMandiri'], 0),
-						number_format($_POST['AmountPaidCCBCA'], 0),
-						number_format($_POST['AmountReturnedGoods'], 0),
-						number_format($_POST['AmountVouchers'], 0),
-						number_format($_POST['AmountPaidWeChat'], 0),
-						number_format($_POST['AmountPaidQRIS'], 0),
-						number_format($_POST['AmountPaidCCBNI'], 0),
-						number_format($_POST['AmountPaidAmexBNI'], 0),
 						stripcslashes($_SESSION['Items' . $identifier]->Comments));
 		}
 
@@ -1887,21 +1863,10 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 						$_SESSION['SalesmanLogin'],
 						$_SESSION['Items' . $identifier]->Location,
 						$Area,
-						number_format($_POST['AmountPaidCash'], 0),
-						number_format($_POST['AmountPaidCCDanamon'], 0),
-						number_format($_POST['AmountPaidAmexBCA'], 0),
-						number_format($_POST['AmountPaidCCMandiri'], 0),
-						number_format($_POST['AmountPaidCCBCA'], 0),
-						number_format($_POST['AmountReturnedGoods'], 0),
-						number_format($_POST['AmountVouchers'], 0),
 						mb_strtoupper($_POST['ReturnedGoodsOldInvoice']),
 						$_POST['ReturnDate'],
 						mb_strtoupper($_POST['ReturnedGoodsItems']),
 						$ReturnReasonText,
-						number_format($_POST['AmountPaidWeChat'], 0),
-						number_format($_POST['AmountPaidQRIS'], 0),
-						number_format($_POST['AmountPaidCCBNI'], 0),
-						number_format($_POST['AmountPaidAmexBNI'], 0),
 						stripcslashes($_SESSION['Items' . $identifier]->Comments));
 			}
 			if ($_POST['AmountVouchers'] != 0) {
@@ -1912,18 +1877,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 						$_SESSION['SalesmanLogin'],
 						$_SESSION['Items' . $identifier]->Location,
 						$Area,
-						number_format($_POST['AmountPaidCash'], 0),
-						number_format($_POST['AmountPaidCCDanamon'], 0),
-						number_format($_POST['AmountPaidAmexBCA'], 0),
-						number_format($_POST['AmountPaidCCMandiri'], 0),
-						number_format($_POST['AmountPaidCCBCA'], 0),
-						number_format($_POST['AmountReturnedGoods'], 0),
-						number_format($_POST['AmountVouchers'], 0),
 						stripcslashes($_POST['VoucherCode']),
-						number_format($_POST['AmountPaidWeChat'], 0),
-						number_format($_POST['AmountPaidQRIS'], 0),
-						number_format($_POST['AmountPaidCCBNI'], 0),
-						number_format($_POST['AmountPaidAmexBNI'], 0),
 						stripcslashes($_SESSION['Items' . $identifier]->Comments));
 			}
 		}
@@ -1935,9 +1889,9 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 							stockmaster.mbflag
 					FROM locstock
 					INNER JOIN stockmaster
-					ON stockmaster.stockid=locstock.stockid
-					WHERE stockmaster.stockid='" . $OrderLine->StockID . "'
-					AND locstock.loccode='" . $_SESSION['Items' . $identifier]->Location . "'";
+					ON stockmaster.stockid = locstock.stockid
+					WHERE stockmaster.stockid = '" . $OrderLine->StockID . "'
+					AND locstock.loccode = '" . $_SESSION['Items' . $identifier]->Location . "'";
 
 			$ErrMsg = __('Could not retrieve the quantity left at the location once this order is invoiced (for the purposes of checking that stock will not go negative because)');
 			$Result = DB_query($SQL, $ErrMsg);
