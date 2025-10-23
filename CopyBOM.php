@@ -155,7 +155,7 @@ if (isset($_POST['Submit'])) {
 
 		UpdateCost($NewStockID);
 
-		header('Location: ' . htmlspecialchars_decode($RootPath) . '/BOMs.php?Select ='.urlencode(htmlspecialchars_decode($NewStockID)));
+		header('Location: ' . htmlspecialchars_decode($RootPath) . '/BOMs.php?Select='.urlencode(htmlspecialchars_decode($NewStockID)));
 		//ob_end_flush();
 		exit();
 	} //end  if there is no input error

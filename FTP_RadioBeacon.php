@@ -67,12 +67,12 @@ echo $TableHeader;
 $j = 1;
 while ($MyRow = DB_fetch_array($SalesOrdersResult)) {
 
-	$FTPDispatchNote = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?OrderNo =' . $MyRow['orderno'];
+	$FTPDispatchNote = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?OrderNo=' . $MyRow['orderno'];
 	$FormatedDelDate = ConvertSQLDate($MyRow['deliverydate']);
 	$FormatedOrderDate = ConvertSQLDate($MyRow['orddate']);
 	$FormatedOrderValue = locale_number_format($MyRow['ordervalue'],2);
 	$FormatedDateLastSent = ConvertSQLDate($MyRow['datepackingslipprinted']);
-	$ModifyPage = $RootPath . 'SelectOrderItems.php?ModifyOrderNumber =' . $MyRow['orderno'];
+	$ModifyPage = $RootPath . 'SelectOrderItems.php?ModifyOrderNumber=' . $MyRow['orderno'];
 
 	if ($MyRow['printedpackingslip'] ==1) {
 	echo '<tr class="striped_row">

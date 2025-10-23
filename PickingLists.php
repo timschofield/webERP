@@ -362,7 +362,7 @@ foreach ($_SESSION['Items' . $identifier]->LineItems as $LnItm) {
 	if (isset($_POST['ProcessPickList'])) {
 			echo '<td class="number">' . locale_number_format($LnItm->QtyDispatched, $LnItm->DecimalPlaces) . '</td>';
 } else {
-			echo '<td class="number"><input type = "hidden" name="' . $LnItm->LineNumber . '_QtyDispatched"  value = "' . $LnItm->QtyDispatched . '" /><a href="' . $RootPath . '/PickingListsControlled.php?=identifier=' . $identifier . '&amp;LineNo=' . $LnItm->LineNumber . '">' . locale_number_format($LnItm->QtyDispatched, $LnItm->DecimalPlaces) . '</a></td>';
+			echo '<td class="number"><input type = "hidden" name="' . $LnItm->LineNumber . '_QtyDispatched"  value = "' . $LnItm->QtyDispatched . '" /><a href="' . $RootPath . '/PickingListsControlled.php?identifier=' . $identifier . '&amp;LineNo=' . $LnItm->LineNumber . '">' . locale_number_format($LnItm->QtyDispatched, $LnItm->DecimalPlaces) . '</a></td>';
 		}
 	} else {
 		if (isset($_POST['ProcessPickList'])) {
@@ -376,7 +376,7 @@ foreach ($_SESSION['Items' . $identifier]->LineItems as $LnItm) {
 
 	if ($LnItm->Controlled == 1) {
 	if (!isset($_POST['ProcessPickList'])) {
-			echo '<td><a href="' . $RootPath . '/PickingListsControlled.php?=identifier=' . $identifier . '&amp;LineNo=' . $LnItm->LineNumber . '">';
+			echo '<td><a href="' . $RootPath . '/PickingListsControlled.php?identifier=' . $identifier . '&amp;LineNo=' . $LnItm->LineNumber . '">';
 			if ($LnItm->Serialised == 1) {
 				echo __('Enter Serial Numbers');
 } else {
@@ -636,13 +636,13 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] !=  '') {
 
 	if ($_SESSION['PackNoteFormat'] == 1) {
 	/*Laser printed A4 default */
-		$PrintDispatchNote = $RootPath . '/PrintCustOrder_generic.php?=TransNo=' . $_SESSION['Items' . $identifier]->OrderNo;
+		$PrintDispatchNote = $RootPath . '/PrintCustOrder_generic.php?TransNo=' . $_SESSION['Items' . $identifier]->OrderNo;
 } else {
 		/*pre-printed stationery default */
-		$PrintDispatchNote = $RootPath . '/PrintCustOrder.php?=TransNo=' . $_SESSION['Items' . $identifier]->OrderNo;
+		$PrintDispatchNote = $RootPath . '/PrintCustOrder.php?TransNo=' . $_SESSION['Items' . $identifier]->OrderNo;
 	}
 
-	$PrintLabels = $RootPath . '/PDFShipLabel.php?=Type=Sales&ORD=' . $_SESSION['Items' . $identifier]->OrderNo;
+	$PrintLabels = $RootPath . '/PDFShipLabel.php?Type=Sales&ORD=' . $_SESSION['Items' . $identifier]->OrderNo;
 	unset($_SESSION['Items' . $identifier]->LineItems);
 	unset($_SESSION['Items' . $identifier]);
 	unset($_SESSION['ProcessingPick']);

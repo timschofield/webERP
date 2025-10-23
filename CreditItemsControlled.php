@@ -25,7 +25,7 @@ if (!isset($_GET['identifier'])){
 	exit();
 } else {
 	$identifier = $_GET['identifier'];
-	$CreditLink .= '?identifier =' . $identifier;
+	$CreditLink .= '?identifier=' . $identifier;
 }
 
 if (isset($_GET['LineNo'])){
@@ -92,7 +92,7 @@ echo '</tr>
 
 /*TotalQuantity set inside this include file from the sum of the bundles
 of the item selected for dispatch */
-if ($CreditLink == 'Credit_Invoice.php?identifier =' . $identifier) {
+if ($CreditLink == 'Credit_Invoice.php?identifier=' . $identifier) {
 	$_SESSION['CreditItems' . $identifier]->LineItems[$LineNo]->QtyDispatched = $TotalQuantity;
 } else {
 	$_SESSION['CreditItems' . $identifier]->LineItems[$LineNo]->Quantity = $TotalQuantity;

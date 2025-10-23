@@ -17,24 +17,43 @@ if (!isset($_POST['AmountPaidCCDanamon'])){
 if (!isset($_POST['AmountPaidCCBNI'])){
 	$_POST['AmountPaidCCBNI'] = 0;
 }
-if (!isset($_POST['AmountPaidAmexBCA'])){
-	$_POST['AmountPaidAmexBCA'] = 0;
-}
-if (!isset($_POST['AmountPaidAmexBNI'])){
-	$_POST['AmountPaidAmexBNI'] = 0;
-}
 if (!isset($_POST['AmountPaidCCMandiri'])){
 	$_POST['AmountPaidCCMandiri'] = 0;
 }
 if (!isset($_POST['AmountPaidCCBCA'])){
 	$_POST['AmountPaidCCBCA'] = 0;
 }
+if (!isset($_POST['AmountPaidCCBRI'])){
+	$_POST['AmountPaidCCBRI'] = 0;
+}
+
+if (!isset($_POST['AmountPaidAmexDanamon'])){
+	$_POST['AmountPaidAmexDanamon'] = 0;
+}
+if (!isset($_POST['AmountPaidAmexBNI'])){
+	$_POST['AmountPaidAmexBNI'] = 0;
+}
+if (!isset($_POST['AmountPaidAmexMandiri'])){
+	$_POST['AmountPaidAmexMandiri'] = 0;
+}
+if (!isset($_POST['AmountPaidAmexBCA'])){
+	$_POST['AmountPaidAmexBCA'] = 0;
+}
+if (!isset($_POST['AmountPaidAmexBRI'])){
+	$_POST['AmountPaidAmexBRI'] = 0;
+}
+
 if (!isset($_POST['AmountPaidWeChat'])){
 	$_POST['AmountPaidWeChat'] = 0;
 }
-if (!isset($_POST['AmountPaidQRIS'])){
-	$_POST['AmountPaidQRIS'] = 0;
+
+if (!isset($_POST['AmountPaidQRISMandiri'])){
+	$_POST['AmountPaidQRISMandiri'] = 0;
 }
+if (!isset($_POST['AmountPaidQRISBRI'])){
+	$_POST['AmountPaidQRISBRI'] = 0;
+}
+
 if (!isset($_POST['AmountReturnedGoods'])){
 	$_POST['AmountReturnedGoods'] = 0;
 }

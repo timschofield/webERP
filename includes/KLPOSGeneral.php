@@ -18,6 +18,7 @@ FUNCTION LIST (in alphabetical order):
 - KLPrintReceiptHeader: Generates the header for receipts
 - KLPrintReceiptShopFooter: Generates the shop copy footer for receipts
 - KLPrintReceiptTestWarning: Adds a test warning on receipts when in test mode
+- KLPrintReturnTransferToKantor: Generates the text for a receipt for a return transfer to the main office
 - RecordRetailCustomerInformation: Stores customer information from retail sales
 - zerofill: Pads a number with leading zeros
 **************************************************************************************************************/
@@ -1055,17 +1056,33 @@ function KLPrintReceiptShopFooter($Identifier, $OrderNo){
 	if ($_POST['AmountPaidCCBCA'] > 0){
 		$TextToPrint .= 'Paid CC EDC BCA: ' . number_format($_POST['AmountPaidCCBCA'], 0) . $NewLine;
 	}
+	if ($_POST['AmountPaidCCBRI'] > 0){
+		$TextToPrint .= 'Paid CC EDC BRI: ' . number_format($_POST['AmountPaidCCBRI'], 0) . $NewLine;
+	}
+
+	if ($_POST['AmountPaidAmexDanamon'] > 0){
+		$TextToPrint .= 'Paid AMEX EDC Danamon: ' . number_format($_POST['AmountPaidAmexDanamon'], 0) . $NewLine;
+	}
 	if ($_POST['AmountPaidAmexBNI'] > 0){
 		$TextToPrint .= 'Paid AMEX EDC BNI: ' . number_format($_POST['AmountPaidAmexBNI'], 0) . $NewLine;
+	}
+	if ($_POST['AmountPaidAmexMandiri'] > 0){
+		$TextToPrint .= 'Paid AMEX EDC Mandiri: ' . number_format($_POST['AmountPaidAmexMandiri'], 0) . $NewLine;
 	}
 	if ($_POST['AmountPaidAmexBCA'] > 0){
 		$TextToPrint .= 'Paid AMEX EDC BCA: ' . number_format($_POST['AmountPaidAmexBCA'], 0) . $NewLine;
 	}
+	if ($_POST['AmountPaidAmexBRI'] > 0){
+		$TextToPrint .= 'Paid AMEX EDC BRI: ' . number_format($_POST['AmountPaidAmexBRI'], 0) . $NewLine;
+	}
 	if ($_POST['AmountPaidWeChat'] > 0){
 		$TextToPrint .= 'Paid Alipay/WeChat: ' . number_format($_POST['AmountPaidWeChat'], 0) . $NewLine;
 	}
-	if ($_POST['AmountPaidQRIS'] > 0){
-		$TextToPrint .= 'Paid QRIS Mandiri: ' . number_format($_POST['AmountPaidQRIS'], 0) . $NewLine;
+	if ($_POST['AmountPaidQRISMandiri'] > 0){
+		$TextToPrint .= 'Paid QRIS Mandiri: ' . number_format($_POST['AmountPaidQRISMandiri'], 0) . $NewLine;
+	}
+	if ($_POST['AmountPaidQRISBRI'] > 0){
+		$TextToPrint .= 'Paid QRIS BRI: ' . number_format($_POST['AmountPaidQRISBRI'], 0) . $NewLine;
 	}
 	if ($_POST['AmountReturnedGoods'] > 0){
 		$TextToPrint .= 'Returned Goods: ' . number_format($_POST['AmountReturnedGoods'], 0) . $NewLine;
@@ -1201,3 +1218,87 @@ function GetItemPackagingDescription($StockID){
 	}
 }
 
+
+/**************************************************************************************************************
+* Brief description: Generates the text for a receipt for a return transfer of items to the main office (Kantor)
+* Parameters:
+*   $Reference - The reference number of the transfer
+* Returns: The formatted text string for the receipt
+**************************************************************************************************************/
+function KLPrintReturnTransferToKantor($Reference){
+	include('includes/KLESCPOSCommands.php');
+
+	$CorrectTransfer = true;
+
+	$TextToPrint = $InitPrinter . $CenteredJustified;
+	// name of shop
+	$TextToPrint .= KLPrintNameOfShop();
+	$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . 'TRANSFER TO KANTOR' . $NewLine;
+	// warning if it is a TEST
+	$TextToPrint .= KLPrintReceiptTestWarning("RETURN TRANSFER"). $NewLine . $CenteredJustified;
+	$TextToPrint .= DisplayDateTime() . $NewLine;
+	$TextToPrint .= 'SPG Code: ' . $_SESSION['SalesmanLogin'] . $NewLine;
+	$TextToPrint .= 'Shop Code: ' . substr($_SESSION['UserStockLocation'],3,2) . $NewLine;
+	$TextToPrint .= 'Transfer Number: ' . $Reference . $NewLine;
+	$TextToPrint .=  $NewLine . $NewLine;
+	$TextToPrint .=  $LeftJustified;
+
+	$NumberOfItems = 0;
+	// loop for all the items in the transfer
+	$SQL = "SELECT reference,
+					loctransfers.stockid,
+					shipqty,
+					shiploc,
+					recloc,
+					decimalplaces
+			FROM loctransfers
+			INNER JOIN stockmaster
+				ON loctransfers.stockid = stockmaster.stockid
+			WHERE reference = '" . $Reference . "'
+			ORDER BY stockid ASC";
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) == 0){
+		$CorrectTransfer = false;
+		$TextToPrint .= 'No items found in this transfer or wrong transfer number.' . $NewLine;
+	} else {
+		while ($MyRow = DB_fetch_array($Result)) {
+			if ($MyRow['shiploc'] != $_SESSION['UserStockLocation']){
+				$CorrectTransfer = false;
+				$TextToPrint .= 'Item ' . $MyRow['stockid'] . ' has wrong shipping location.' . $NewLine;
+			} 
+			if ($MyRow['recloc'] != 'KANTO'){
+				$CorrectTransfer = false;
+				$TextToPrint .= 'Item ' . $MyRow['stockid'] . ' has wrong receiving location.' . $NewLine;
+			}
+			if ($CorrectTransfer){
+				$NumberOfItems += $MyRow['shipqty'];
+				$TextToPrint .= round(filter_number_format($MyRow['shipqty']), $MyRow['decimalplaces']) .
+					' x ' . $MyRow['stockid'] . 
+					' - (QOH = ' . GetQuantityOnHand($MyRow['stockid'], $_SESSION['UserStockLocation']) . ')' .
+					$NewLine;
+			}
+		}
+		if ($CorrectTransfer){
+			// footer
+			$TextToPrint .= $NewLine. $Emphasized . '# Pieces in this transfer: ' . filter_number_format($NumberOfItems) . $NewLine;
+
+			$TextToPrint .= $NewLine. $Emphasized . 'Prepared by: ' . $_SESSION['SalesmanLogin'] . $NewLine;
+			$TextToPrint .= $CharacterFontA . 'Date: ' . DisplayDateTime() . $NewLine;
+			$TextToPrint .= 'Signature: ' . $NewLine . $NewLine . $NewLine . $NewLine . $NewLine;
+			
+			$TextToPrint .= $Emphasized . 'Shipped by: ' . $NewLine;
+			$TextToPrint .= $CharacterFontA . 'Date: ' . $NewLine;
+			$TextToPrint .= 'Signature: ' . $NewLine . $NewLine . $NewLine . $NewLine . $NewLine;
+
+			$TextToPrint .= $Emphasized . 'Received by: ' . $NewLine;
+			$TextToPrint .= $CharacterFontA . 'Date: ' . $NewLine;
+			$TextToPrint .= 'Signature: ' . $NewLine . $NewLine . $NewLine . $NewLine . $NewLine;
+		}
+	}
+	
+	// warning if it is a TEST
+	$TextToPrint .= KLPrintReceiptTestWarning("RETURN TRANSFER"). $NewLine . $LeftJustified;
+	$TextToPrint .= $CutPaper;
+
+	return $TextToPrint;
+}

@@ -1,6 +1,7 @@
 <?php
 
 /************************************************************************
+v 4.80 Added BRI payments
 v 4.70 Asign customer debt and payment to different account for each retail partner
 v 4.60 Split returned items into several rows when inserting into DB
 v 4.50 Using just one userid for SPG, not one per shop
@@ -16,7 +17,7 @@ v 3.01 add fields for returned goods
 v 3.00 read barcode + print receipt
 v 2.15 Do not account returns in debtortrans to avoid balance errors getting large
 v 2.14 Do not allow splitted payments.
-v 2.13 Mod to use Amex credit card with BCA ECDD
+v 2.13 Mod to use Amex credit card with BCA EDC
 v 2.12 Mod to use outlet or regular packaging
 v 2.11 Mod to include BCA CC accounts
 v 2.10 use KL list of countries to avoid mistakes of "funny" visitor countries
@@ -46,6 +47,7 @@ include('includes/header.php');
 
 include('includes/GetPrice.php');
 include('includes/SQL_CommonFunctions.php');
+include('includes/StockFunctions.php');
 include('includes/GetSalesTransGLCodes.php');
 
 include('includes/KLDefines.php');
@@ -407,9 +409,9 @@ foreach ($_SESSION['Items' . $identifier]->LineItems as $OrderLine) {
 		}
 		$Result = DB_query("SELECT MAX(discountrate) AS discount
 							FROM discountmatrix
-							WHERE salestype='" . $_SESSION['Items' . $identifier]->DefaultSalesType . "'
-								AND discountcategory ='" . $OrderLine->DiscCat . "'
-								AND quantitybreak <='" . $QuantityOfDiscCat . "'");
+							WHERE salestype = '" . $_SESSION['Items' . $identifier]->DefaultSalesType . "'
+								AND discountcategory = '" . $OrderLine->DiscCat . "'
+								AND quantitybreak <= '" . $QuantityOfDiscCat . "'");
 		$MyRow = DB_fetch_row($Result);
 		if ($MyRow[0] != 0) { /* need to update the lines affected */
 			foreach ($_SESSION['Items' . $identifier]->LineItems as $StkItems_2) {
@@ -461,10 +463,15 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 								+ $_POST['AmountPaidCCBNI']
 								+ $_POST['AmountPaidCCMandiri']
 								+ $_POST['AmountPaidCCBCA']
+								+ $_POST['AmountPaidCCBRI']
+								+ $_POST['AmountPaidAmexDanamon']
 								+ $_POST['AmountPaidAmexBNI']
+								+ $_POST['AmountPaidAmexMandiri']
 								+ $_POST['AmountPaidAmexBCA']
+								+ $_POST['AmountPaidAmexBRI']
 								+ $_POST['AmountPaidWeChat']
-								+ $_POST['AmountPaidQRIS'];
+								+ $_POST['AmountPaidQRISMandiri']
+								+ $_POST['AmountPaidQRISBRI'];
 
 	$TotalFromCustomer = $TotalReceivedCash
 						+ $TotalReceivedCreditCard
@@ -494,22 +501,37 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 	if ($_POST['AmountPaidCCBNI'] != 0) {
 		$PaymentSystemsUsed++;
 	}
-	if ($_POST['AmountPaidAmexBNI'] != 0) {
-		$PaymentSystemsUsed++;
-	}
-	if ($_POST['AmountPaidAmexBCA'] != 0) {
-		$PaymentSystemsUsed++;
-	}
 	if ($_POST['AmountPaidCCMandiri'] != 0) {
 		$PaymentSystemsUsed++;
 	}
 	if ($_POST['AmountPaidCCBCA'] != 0) {
 		$PaymentSystemsUsed++;
 	}
+	if ($_POST['AmountPaidCCBRI'] != 0) {
+		$PaymentSystemsUsed++;
+	}
+	if ($_POST['AmountPaidAmexDanamon'] != 0) {
+		$PaymentSystemsUsed++;
+	}
+	if ($_POST['AmountPaidAmexBNI'] != 0) {
+		$PaymentSystemsUsed++;
+	}
+	if ($_POST['AmountPaidAmexMandiri'] != 0) {
+		$PaymentSystemsUsed++;
+	}
+	if ($_POST['AmountPaidAmexBCA'] != 0) {
+		$PaymentSystemsUsed++;
+	}
+	if ($_POST['AmountPaidAmexBRI'] != 0) {
+		$PaymentSystemsUsed++;
+	}
 	if ($_POST['AmountPaidWeChat'] != 0) {
 		$PaymentSystemsUsed++;
 	}
-	if ($_POST['AmountPaidQRIS'] != 0) {
+	if ($_POST['AmountPaidQRISMandiri'] != 0) {
+		$PaymentSystemsUsed++;
+	}
+	if ($_POST['AmountPaidQRISBRI'] != 0) {
 		$PaymentSystemsUsed++;
 	}
 
@@ -673,15 +695,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 						CURRENT_DATE,
 						0,
 						'" . $_SESSION['SalesmanLogin'] . "',
-						'" . $_POST['AmountPaidCash'] . "',
-						'" . ($_POST['AmountPaidCCDanamon']
-							+ $_POST['AmountPaidCCBNI']
-							+ $_POST['AmountPaidAmexBNI']
-							+ $_POST['AmountPaidAmexBCA']
-							+ $_POST['AmountPaidCCMandiri']
-							+ $_POST['AmountPaidCCBCA']
-							+ $_POST['AmountPaidWeChat']
-							+ $_POST['AmountPaidQRIS']) . "',
+						'" . $TotalReceivedCash . "',
+						'" . $TotalReceivedCreditCard . "',
 						'" . $_POST['AmountReturnedGoods'] . "',
 						'" . $_POST['AmountVouchers'] . "',
 						'" . $Area . "')";
@@ -806,22 +821,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 			if ($MBFlag == 'B' OR $MBFlag == 'M') {
 				$Assembly = False;
 
-				/* Need to get the current location quantity
-				will need it later for the stock movement */
-				$SQL = "SELECT locstock.quantity
-						FROM locstock
-						WHERE locstock.stockid='" . $OrderLine->StockID . "'
-						AND loccode= '" . $_SESSION['Items' . $identifier]->Location . "'";
-				$ErrMsg = __('WARNING') . ': ' . __('Could not retrieve current location stock');
-				$Result = DB_query($SQL, $ErrMsg);
-
-				if (DB_num_rows($Result) == 1) {
-					$LocQtyRow = DB_fetch_row($Result);
-					$QtyOnHandPrior = $LocQtyRow[0];
-				} else {
-					/* There must be some error this should never happen */
-					$QtyOnHandPrior = 0;
-				}
+				/* Need to get the current location quantity will need it later for the stock movement */
+				$QtyOnHandPrior = GetQuantityOnHand($OrderLine->StockID, $_SESSION['Items' . $identifier]->Location);
 
 				$SQL = "UPDATE locstock
 						SET quantity = locstock.quantity - " . $OrderLine->Quantity . "
@@ -1240,9 +1241,9 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 			exit();
 		}
 
-
+		// Now process the payments made
 		if ($_POST['AmountPaidCash'] != 0) {
-			// si han pagat CASH
+			//if customer paid cash
 			$BankAccountCash = $_SESSION['klposcashaccount'];
 			$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CASH,
 								$BankAccountCash,
@@ -1272,7 +1273,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 		}//amount paid cash was not zero
 
 		if ($_POST['AmountPaidCCDanamon'] != 0) {
-			// si han pagat CREDITCARD DANAMON
+			// if customer paid CREDITCARD DANAMON
 			$CreditCardBankComissions = round($_POST['AmountPaidCCDanamon'] * ($_SESSION['ComissionCCDanamon']) / 100);
 			$CreditCardNetPayment = $_POST['AmountPaidCCDanamon'] - $CreditCardBankComissions;
 
@@ -1304,7 +1305,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 		}//amount paid Credit Card DANAMON  was not zero
 
 		if ($_POST['AmountPaidCCBNI'] != 0) {
-			// si han pagat CREDITCARD BNI
+			// if customer paid CREDITCARD BNI
 			$CreditCardBankComissions = round($_POST['AmountPaidCCBNI'] * ($_SESSION['ComissionCCBNI']) / 100);
 			$CreditCardNetPayment = $_POST['AmountPaidCCBNI'] - $CreditCardBankComissions;
 
@@ -1335,72 +1336,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 								$_SESSION['Items' . $identifier]->DebtorNo);
 		}//amount paid Credit Card BNI was not zero
 
-		if ($_POST['AmountPaidAmexBNI'] != 0) {
-			// si han pagat AMEX BNI, tot o en part
-			$CreditCardBankComissions = round($_POST['AmountPaidAmexBNI'] * ($_SESSION['ComissionAmexBNI']) / 100);
-			$CreditCardNetPayment = $_POST['AmountPaidAmexBNI'] - $CreditCardBankComissions;
-
-			$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
-								$_SESSION['AccountBankBNI'],
-								$InvoiceNo,
-								$_SESSION['Items' . $identifier]->CustRef,
-								$_POST['AmountPaidAmexBNI'],
-								$CreditCardBankComissions,
-								$CreditCardNetPayment,
-								$Tag,
-								$_SESSION['AccountComissionCreditCard'],
-								$_SESSION['SettlementDelayBNI'],
-								$ExRate);
-
-			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
-								PAYMENT_BY_CREDITCARD,
-								$PeriodNo,
-								$_SESSION['AccountBankBNI'],
-								$InvoiceNo,
-								$_SESSION['Items' . $identifier]->CustRef,
-								$_POST['AmountPaidAmexBNI'],
-								$CreditCardNetPayment,
-								$ExRate,
-								$DebtorTransID,
-								$OrderNo,
-								$_SESSION['Items' . $identifier]->DefaultCurrency,
-								$_SESSION['Items' . $identifier]->DebtorNo);
-		}//amount paid American Express BNI was not zero
-
-		if ($_POST['AmountPaidAmexBCA'] != 0) {
-			// si han pagat AMEX BCA, tot o en part
-			$CreditCardBankComissions = round($_POST['AmountPaidAmexBCA'] * ($_SESSION['ComissionAmexBCA']) / 100);
-			$CreditCardNetPayment = $_POST['AmountPaidAmexBCA'] - $CreditCardBankComissions;
-
-			$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
-								$_SESSION['AccountBankBCA'],
-								$InvoiceNo,
-								$_SESSION['Items' . $identifier]->CustRef,
-								$_POST['AmountPaidAmexBCA'],
-								$CreditCardBankComissions,
-								$CreditCardNetPayment,
-								$Tag,
-								$_SESSION['AccountComissionCreditCard'],
-								$_SESSION['SettlementDelayBCA'],
-								$ExRate);
-
-			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
-								PAYMENT_BY_CREDITCARD,
-								$PeriodNo,
-								$_SESSION['AccountBankBCA'],
-								$InvoiceNo,
-								$_SESSION['Items' . $identifier]->CustRef,
-								$_POST['AmountPaidAmexBCA'],
-								$CreditCardNetPayment,
-								$ExRate,
-								$DebtorTransID,
-								$OrderNo,
-								$_SESSION['Items' . $identifier]->DefaultCurrency,
-								$_SESSION['Items' . $identifier]->DebtorNo);
-		}//amount paid American Express BCA was not zero
-
 		if ($_POST['AmountPaidCCMandiri'] != 0) {
-			// si han pagat CREDITCARD MANDIRI
+			// if customer paid CREDIT CARD MANDIRI
 			$CreditCardBankComissions = round($_POST['AmountPaidCCMandiri'] * ($_SESSION['ComissionCCMandiri']) / 100);
 			$CreditCardNetPayment = $_POST['AmountPaidCCMandiri'] - $CreditCardBankComissions;
 
@@ -1432,7 +1369,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 		}//amount paid Credit Card MANDIRI was not zero
 
 		if ($_POST['AmountPaidCCBCA'] != 0) {
-			// si han pagat CREDITCARD BCA
+			// if customer paid CREDIT CARD BCA
 			$CreditCardBankComissions = round($_POST['AmountPaidCCBCA'] * ($_SESSION['ComissionCCBCA']) / 100);
 			$CreditCardNetPayment = $_POST['AmountPaidCCBCA'] - $CreditCardBankComissions;
 
@@ -1463,8 +1400,200 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 								$_SESSION['Items' . $identifier]->DebtorNo);
 		}//amount paid Credit Card BCA was not zero
 
+		if ($_POST['AmountPaidCCBRI'] != 0) {
+			// if customer paid CREDIT CARD BRI
+			$CreditCardBankComissions = round($_POST['AmountPaidCCBRI'] * ($_SESSION['ComissionCCBRI']) / 100);
+			$CreditCardNetPayment = $_POST['AmountPaidCCBRI'] - $CreditCardBankComissions;
+
+			$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
+								$_SESSION['AccountBankBRI'],
+								$InvoiceNo,
+								$_SESSION['Items' . $identifier]->CustRef,
+								$_POST['AmountPaidCCBRI'],
+								$CreditCardBankComissions,
+								$CreditCardNetPayment,
+								$Tag,
+								$_SESSION['AccountComissionCreditCard'],
+								$_SESSION['SettlementDelayBRI'],
+								$ExRate);
+
+			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
+								PAYMENT_BY_CREDITCARD,
+								$PeriodNo,
+								$_SESSION['AccountBankBRI'],
+								$InvoiceNo,
+								$_SESSION['Items' . $identifier]->CustRef,
+								$_POST['AmountPaidCCBRI'],
+								$CreditCardNetPayment,
+								$ExRate,
+								$DebtorTransID,
+								$OrderNo,
+								$_SESSION['Items' . $identifier]->DefaultCurrency,
+								$_SESSION['Items' . $identifier]->DebtorNo);
+		}//amount paid Credit Card BRI was not zero
+
+		if ($_POST['AmountPaidAmexDanamon'] != 0) {
+			// if customer paid with AMEX Danamon
+			$CreditCardBankComissions = round($_POST['AmountPaidAmexDanamon'] * ($_SESSION['ComissionAmexDanamon']) / 100);
+			$CreditCardNetPayment = $_POST['AmountPaidAmexDanamon'] - $CreditCardBankComissions;
+
+			$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
+								$_SESSION['AccountBankDanamon'],
+								$InvoiceNo,
+								$_SESSION['Items' . $identifier]->CustRef,
+								$_POST['AmountPaidAmexDanamon'],
+								$CreditCardBankComissions,
+								$CreditCardNetPayment,
+								$Tag,
+								$_SESSION['AccountComissionCreditCard'],
+								$_SESSION['SettlementDelayDanamon'],
+								$ExRate);
+
+			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
+								PAYMENT_BY_CREDITCARD,
+								$PeriodNo,
+								$_SESSION['AccountBankDanamon'],
+								$InvoiceNo,
+								$_SESSION['Items' . $identifier]->CustRef,
+								$_POST['AmountPaidAmexDanamon'],
+								$CreditCardNetPayment,
+								$ExRate,
+								$DebtorTransID,
+								$OrderNo,
+								$_SESSION['Items' . $identifier]->DefaultCurrency,
+								$_SESSION['Items' . $identifier]->DebtorNo);
+		}//amount paid American Express Danamon was not zero
+
+		if ($_POST['AmountPaidAmexBNI'] != 0) {
+			// if customer paid with AMEX BNI
+			$CreditCardBankComissions = round($_POST['AmountPaidAmexBNI'] * ($_SESSION['ComissionAmexBNI']) / 100);
+			$CreditCardNetPayment = $_POST['AmountPaidAmexBNI'] - $CreditCardBankComissions;
+
+			$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
+								$_SESSION['AccountBankBNI'],
+								$InvoiceNo,
+								$_SESSION['Items' . $identifier]->CustRef,
+								$_POST['AmountPaidAmexBNI'],
+								$CreditCardBankComissions,
+								$CreditCardNetPayment,
+								$Tag,
+								$_SESSION['AccountComissionCreditCard'],
+								$_SESSION['SettlementDelayBNI'],
+								$ExRate);
+
+			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
+								PAYMENT_BY_CREDITCARD,
+								$PeriodNo,
+								$_SESSION['AccountBankBNI'],
+								$InvoiceNo,
+								$_SESSION['Items' . $identifier]->CustRef,
+								$_POST['AmountPaidAmexBNI'],
+								$CreditCardNetPayment,
+								$ExRate,
+								$DebtorTransID,
+								$OrderNo,
+								$_SESSION['Items' . $identifier]->DefaultCurrency,
+								$_SESSION['Items' . $identifier]->DebtorNo);
+		}//amount paid American Express BNI was not zero
+
+		if ($_POST['AmountPaidAmexMandiri'] != 0) {
+			// if customer paid with AMEX Mandiri
+			$CreditCardBankComissions = round($_POST['AmountPaidAmexMandiri'] * ($_SESSION['ComissionAmexMandiri']) / 100);
+			$CreditCardNetPayment = $_POST['AmountPaidAmexMandiri'] - $CreditCardBankComissions;
+
+			$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
+								$_SESSION['AccountBankMandiri'],
+								$InvoiceNo,
+								$_SESSION['Items' . $identifier]->CustRef,
+								$_POST['AmountPaidAmexMandiri'],
+								$CreditCardBankComissions,
+								$CreditCardNetPayment,
+								$Tag,
+								$_SESSION['AccountComissionCreditCard'],
+								$_SESSION['SettlementDelayMandiri'],
+								$ExRate);
+
+			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
+								PAYMENT_BY_CREDITCARD,
+								$PeriodNo,
+								$_SESSION['AccountBankMandiri'],
+								$InvoiceNo,
+								$_SESSION['Items' . $identifier]->CustRef,
+								$_POST['AmountPaidAmexMandiri'],
+								$CreditCardNetPayment,
+								$ExRate,
+								$DebtorTransID,
+								$OrderNo,
+								$_SESSION['Items' . $identifier]->DefaultCurrency,
+								$_SESSION['Items' . $identifier]->DebtorNo);
+		}//amount paid American Express Mandiri was not zero
+
+		if ($_POST['AmountPaidAmexBCA'] != 0) {
+			// if customer paid with AMEX BCA
+			$CreditCardBankComissions = round($_POST['AmountPaidAmexBCA'] * ($_SESSION['ComissionAmexBCA']) / 100);
+			$CreditCardNetPayment = $_POST['AmountPaidAmexBCA'] - $CreditCardBankComissions;
+
+			$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
+								$_SESSION['AccountBankBCA'],
+								$InvoiceNo,
+								$_SESSION['Items' . $identifier]->CustRef,
+								$_POST['AmountPaidAmexBCA'],
+								$CreditCardBankComissions,
+								$CreditCardNetPayment,
+								$Tag,
+								$_SESSION['AccountComissionCreditCard'],
+								$_SESSION['SettlementDelayBCA'],
+								$ExRate);
+
+			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
+								PAYMENT_BY_CREDITCARD,
+								$PeriodNo,
+								$_SESSION['AccountBankBCA'],
+								$InvoiceNo,
+								$_SESSION['Items' . $identifier]->CustRef,
+								$_POST['AmountPaidAmexBCA'],
+								$CreditCardNetPayment,
+								$ExRate,
+								$DebtorTransID,
+								$OrderNo,
+								$_SESSION['Items' . $identifier]->DefaultCurrency,
+								$_SESSION['Items' . $identifier]->DebtorNo);
+		}//amount paid American Express BCA was not zero
+
+		if ($_POST['AmountPaidAmexBRI'] != 0) {
+			// if customer paid with AMEX BRI
+			$CreditCardBankComissions = round($_POST['AmountPaidAmexBRI'] * ($_SESSION['ComissionAmexBRI']) / 100);
+			$CreditCardNetPayment = $_POST['AmountPaidAmexBRI'] - $CreditCardBankComissions;
+
+			$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
+								$_SESSION['AccountBankBRI'],
+								$InvoiceNo,
+								$_SESSION['Items' . $identifier]->CustRef,
+								$_POST['AmountPaidAmexBRI'],
+								$CreditCardBankComissions,
+								$CreditCardNetPayment,
+								$Tag,
+								$_SESSION['AccountComissionCreditCard'],
+								$_SESSION['SettlementDelayBRI'],
+								$ExRate);
+
+			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
+								PAYMENT_BY_CREDITCARD,
+								$PeriodNo,
+								$_SESSION['AccountBankBRI'],
+								$InvoiceNo,
+								$_SESSION['Items' . $identifier]->CustRef,
+								$_POST['AmountPaidAmexBRI'],
+								$CreditCardNetPayment,
+								$ExRate,
+								$DebtorTransID,
+								$OrderNo,
+								$_SESSION['Items' . $identifier]->DefaultCurrency,
+								$_SESSION['Items' . $identifier]->DebtorNo);
+		}//amount paid American Express BRI was not zero
+
 		if ($_POST['AmountPaidWeChat'] != 0) {
-			// si han pagat WECHAT, tot o en part
+			// if customer paid with WECHAT
 			$WeChatBankComissions = round($_POST['AmountPaidWeChat'] * ($_SESSION['ComissionWeChat']) / 100);
 			$WeChatNetPayment = $_POST['AmountPaidWeChat'] - $WeChatBankComissions;
 
@@ -1495,27 +1624,27 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 								$_SESSION['Items' . $identifier]->DebtorNo);
 		}//amount paid WeChat  was not zero
 
-		if ($_POST['AmountPaidQRIS'] != 0) {
-			// si han pagat QRIS, tot o en part
-			$QRISBankComissions = round($_POST['AmountPaidQRIS'] * ($_SESSION['ComissionQRIS']) / 100);
-			$QRISNetPayment = $_POST['AmountPaidQRIS'] - $QRISBankComissions;
+		if ($_POST['AmountPaidQRISMandiri'] != 0) {
+			// if customer paid with QRIS Mandiri
+			$QRISBankComissions = round($_POST['AmountPaidQRISMandiri'] * ($_SESSION['ComissionQRISMandiri']) / 100);
+			$QRISNetPayment = $_POST['AmountPaidQRISMandiri'] - $QRISBankComissions;
 
 			$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
-								$_SESSION['AccountQRIS'],
+								$_SESSION['AccountQRISMandiri'],
 								$InvoiceNo,
 								$_SESSION['Items' . $identifier]->CustRef,
-								$_POST['AmountPaidQRIS'],
+								$_POST['AmountPaidQRISMandiri'],
 								$QRISBankComissions,
 								$QRISNetPayment,
 								$Tag,
 								$_SESSION['AccountComissionQRIS'],
-								$_SESSION['SettlementDelayQRIS'],
+								$_SESSION['SettlementDelayQRISMandiri'],
 								$ExRate);
 
 			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
 								PAYMENT_BY_CREDITCARD,
 								$PeriodNo,
-								$_SESSION['AccountQRIS'],
+								$_SESSION['AccountQRISMandiri'],
 								$InvoiceNo,
 								$_SESSION['Items' . $identifier]->CustRef,
 								$_POST['AmountPaidQRIS'],
@@ -1525,7 +1654,39 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 								$OrderNo,
 								$_SESSION['Items' . $identifier]->DefaultCurrency,
 								$_SESSION['Items' . $identifier]->DebtorNo);
-		}//amount paid QRIS  was not zero
+		}//amount paid QRIS MANDIRI was not zero
+
+		if ($_POST['AmountPaidQRISBRI'] != 0) {
+			// if customer paid with QRIS BRI
+			$QRISBankComissions = round($_POST['AmountPaidQRISBRI'] * ($_SESSION['ComissionQRISBRI']) / 100);
+			$QRISNetPayment = $_POST['AmountPaidQRISBRI'] - $QRISBankComissions;
+
+			$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
+								$_SESSION['AccountQRISBRI'],
+								$InvoiceNo,
+								$_SESSION['Items' . $identifier]->CustRef,
+								$_POST['AmountPaidQRISBRI'],
+								$QRISBankComissions,
+								$QRISNetPayment,
+								$Tag,
+								$_SESSION['AccountComissionQRIS'],
+								$_SESSION['SettlementDelayQRISBRI'],
+								$ExRate);
+
+			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
+								PAYMENT_BY_CREDITCARD,
+								$PeriodNo,
+								$_SESSION['AccountQRISBRI'],
+								$InvoiceNo,
+								$_SESSION['Items' . $identifier]->CustRef,
+								$_POST['AmountPaidQRISBRI'],
+								$QRISNetPayment,
+								$ExRate,
+								$DebtorTransID,
+								$OrderNo,
+								$_SESSION['Items' . $identifier]->DefaultCurrency,
+								$_SESSION['Items' . $identifier]->DebtorNo);
+		}//amount paid QRIS MANDIRI was not zero
 
 		/* Account for the Packaging */
 		if ($_SESSION['TypeLoc'] == "SHOPKL") {
@@ -1602,17 +1763,32 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 		if ($_POST['AmountPaidCCBCA'] > 0) {
 			echo '<tr><td>' . __('Payment CC EDC BCA') . ':</td> <td>' . number_format($_POST['AmountPaidCCBCA'], 0) . '</td></tr>';
 		}
+		if ($_POST['AmountPaidCCBRI'] > 0) {
+			echo '<tr><td>' . __('Payment CC EDC BRI') . ':</td> <td>' . number_format($_POST['AmountPaidCCBRI'], 0) . '</td></tr>';
+		}
+		if ($_POST['AmountPaidAmexDanamon'] > 0) {
+			echo '<tr><td>' . __('Payment AMEX EDC Danamon') . ':</td> <td>' . number_format($_POST['AmountPaidAmexDanamon'], 0) . '</td></tr>';
+		}
 		if ($_POST['AmountPaidAmexBNI'] > 0) {
 			echo '<tr><td>' . __('Payment AMEX EDC BNI') . ':</td> <td>' . number_format($_POST['AmountPaidAmexBNI'], 0) . '</td></tr>';
+		}
+		if ($_POST['AmountPaidAmexMandiri'] > 0) {
+			echo '<tr><td>' . __('Payment AMEX EDC Mandiri') . ':</td> <td>' . number_format($_POST['AmountPaidAmexMandiri'], 0) . '</td></tr>';
 		}
 		if ($_POST['AmountPaidAmexBCA'] > 0) {
 			echo '<tr><td>' . __('Payment AMEX EDC BCA') . ':</td> <td>' . number_format($_POST['AmountPaidAmexBCA'], 0) . '</td></tr>';
 		}
+		if ($_POST['AmountPaidAmexBRI'] > 0) {
+			echo '<tr><td>' . __('Payment AMEX EDC BRI') . ':</td> <td>' . number_format($_POST['AmountPaidAmexBRI'], 0) . '</td></tr>';
+		}
 		if ($_POST['AmountPaidWeChat'] > 0) {
 			echo '<tr><td>' . __('Payment Alipay/WeChat') . ':</td> <td>' . number_format($_POST['AmountPaidWeChat'], 0) . '</td></tr>';
 		}
-		if ($_POST['AmountPaidQRIS'] > 0) {
-			echo '<tr><td>' . __('Payment QRIS Mandiri') . ':</td> <td>' . number_format($_POST['AmountPaidQRIS'], 0) . '</td></tr>';
+		if ($_POST['AmountPaidQRISMandiri'] > 0) {
+			echo '<tr><td>' . __('Payment QRIS Mandiri') . ':</td> <td>' . number_format($_POST['AmountPaidQRISMandiri'], 0) . '</td></tr>';
+		}
+		if ($_POST['AmountPaidQRISBRI'] > 0) {
+			echo '<tr><td>' . __('Payment QRIS BRI') . ':</td> <td>' . number_format($_POST['AmountPaidQRISBRI'], 0) . '</td></tr>';
 		}
 		if ($_POST['AmountReturnedGoods'] > 0) {
 			echo '<tr><td>' . __('Returned Goods Value') . ':</td> <td>' . number_format($_POST['AmountReturnedGoods'], 0) . '</td></tr>';
@@ -1640,17 +1816,6 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 						$_SESSION['SalesmanLogin'],
 						$_SESSION['Items' . $identifier]->Location,
 						$Area,
-						number_format($_POST['AmountPaidCash'], 0),
-						number_format($_POST['AmountPaidCCDanamon'], 0),
-						number_format($_POST['AmountPaidAmexBCA'], 0),
-						number_format($_POST['AmountPaidCCMandiri'], 0),
-						number_format($_POST['AmountPaidCCBCA'], 0),
-						number_format($_POST['AmountReturnedGoods'], 0),
-						number_format($_POST['AmountVouchers'], 0),
-						number_format($_POST['AmountPaidWeChat'], 0),
-						number_format($_POST['AmountPaidQRIS'], 0),
-						number_format($_POST['AmountPaidCCBNI'], 0),
-						number_format($_POST['AmountPaidAmexBNI'], 0),
 						stripcslashes($_SESSION['Items' . $identifier]->Comments));
 		}
 
@@ -1698,21 +1863,10 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 						$_SESSION['SalesmanLogin'],
 						$_SESSION['Items' . $identifier]->Location,
 						$Area,
-						number_format($_POST['AmountPaidCash'], 0),
-						number_format($_POST['AmountPaidCCDanamon'], 0),
-						number_format($_POST['AmountPaidAmexBCA'], 0),
-						number_format($_POST['AmountPaidCCMandiri'], 0),
-						number_format($_POST['AmountPaidCCBCA'], 0),
-						number_format($_POST['AmountReturnedGoods'], 0),
-						number_format($_POST['AmountVouchers'], 0),
 						mb_strtoupper($_POST['ReturnedGoodsOldInvoice']),
 						$_POST['ReturnDate'],
 						mb_strtoupper($_POST['ReturnedGoodsItems']),
 						$ReturnReasonText,
-						number_format($_POST['AmountPaidWeChat'], 0),
-						number_format($_POST['AmountPaidQRIS'], 0),
-						number_format($_POST['AmountPaidCCBNI'], 0),
-						number_format($_POST['AmountPaidAmexBNI'], 0),
 						stripcslashes($_SESSION['Items' . $identifier]->Comments));
 			}
 			if ($_POST['AmountVouchers'] != 0) {
@@ -1723,18 +1877,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 						$_SESSION['SalesmanLogin'],
 						$_SESSION['Items' . $identifier]->Location,
 						$Area,
-						number_format($_POST['AmountPaidCash'], 0),
-						number_format($_POST['AmountPaidCCDanamon'], 0),
-						number_format($_POST['AmountPaidAmexBCA'], 0),
-						number_format($_POST['AmountPaidCCMandiri'], 0),
-						number_format($_POST['AmountPaidCCBCA'], 0),
-						number_format($_POST['AmountReturnedGoods'], 0),
-						number_format($_POST['AmountVouchers'], 0),
 						stripcslashes($_POST['VoucherCode']),
-						number_format($_POST['AmountPaidWeChat'], 0),
-						number_format($_POST['AmountPaidQRIS'], 0),
-						number_format($_POST['AmountPaidCCBNI'], 0),
-						number_format($_POST['AmountPaidAmexBNI'], 0),
 						stripcslashes($_SESSION['Items' . $identifier]->Comments));
 			}
 		}
@@ -1746,9 +1889,9 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 							stockmaster.mbflag
 					FROM locstock
 					INNER JOIN stockmaster
-					ON stockmaster.stockid=locstock.stockid
-					WHERE stockmaster.stockid='" . $OrderLine->StockID . "'
-					AND locstock.loccode='" . $_SESSION['Items' . $identifier]->Location . "'";
+					ON stockmaster.stockid = locstock.stockid
+					WHERE stockmaster.stockid = '" . $OrderLine->StockID . "'
+					AND locstock.loccode = '" . $_SESSION['Items' . $identifier]->Location . "'";
 
 			$ErrMsg = __('Could not retrieve the quantity left at the location once this order is invoiced (for the purposes of checking that stock will not go negative because)');
 			$Result = DB_query($SQL, $ErrMsg);

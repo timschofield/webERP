@@ -1910,17 +1910,19 @@ function ChangeGLAcoountCode($NewGL, $OldGL) {
 		ChangeFieldInTable("klretailpartners", "accountppn", $OldGL, $NewGL);
 		ChangeFieldInTable("klretailpartners", "accounthppcompensation", $OldGL, $NewGL);
 		ChangeFieldInTable("klretailpartners", "accountposreceivable", $OldGL, $NewGL);
+		ChangeFieldInTable("klretailpartners", "accountconsignmentsalesptadu", $OldGL, $NewGL);
+		ChangeFieldInTable("klretailpartners", "accountconsignmentcogspartner", $OldGL, $NewGL);
+		ChangeFieldInTable("klretailpartners", "accountcomissioncreditcard", $OldGL, $NewGL);
 		ChangeFieldInTable("klretailpartners", "accountbankdanamon", $OldGL, $NewGL);
 		ChangeFieldInTable("klretailpartners", "accountbankbni", $OldGL, $NewGL);
 		ChangeFieldInTable("klretailpartners", "accountbankmandiri", $OldGL, $NewGL);
 		ChangeFieldInTable("klretailpartners", "accountbankbca", $OldGL, $NewGL);
-		ChangeFieldInTable("klretailpartners", "accountcomissioncreditcard", $OldGL, $NewGL);
-		ChangeFieldInTable("klretailpartners", "accountconsignmentsalesptadu", $OldGL, $NewGL);
-		ChangeFieldInTable("klretailpartners", "accountconsignmentcogspartner", $OldGL, $NewGL);
+		ChangeFieldInTable("klretailpartners", "accountbankbri", $OldGL, $NewGL);
 		ChangeFieldInTable("klretailpartners", "accountwechat", $OldGL, $NewGL);
 		ChangeFieldInTable("klretailpartners", "accountcomissionwechat", $OldGL, $NewGL);
-		ChangeFieldInTable("klretailpartners", "accountqris", $OldGL, $NewGL);
 		ChangeFieldInTable("klretailpartners", "accountcomissionqris", $OldGL, $NewGL);
+		ChangeFieldInTable("klretailpartners", "accountqrismandiri", $OldGL, $NewGL);
+		ChangeFieldInTable("klretailpartners", "accountqrisbri", $OldGL, $NewGL);
 
 		ChangeFieldInTable("klonlinepartners", "accountdokuidr", $OldGL, $NewGL);
 		ChangeFieldInTable("klonlinepartners", "accountdokucomissionidr", $OldGL, $NewGL);

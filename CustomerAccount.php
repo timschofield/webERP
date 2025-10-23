@@ -296,19 +296,19 @@ foreach ($Transactions as $MyRow) {
 			<td class="number">', locale_number_format($MyRow['alloc'], $CustomerRecord['decimalplaces']), '</td>
 			<td class="number">', locale_number_format($MyRow['balance'], $CustomerRecord['decimalplaces']), '</td>
 			<td class="noPrint">
-				<a href="', $RootPath, '/PrintCustTrans.php?=FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice&View=Yes" title="', __('Click to preview the invoice'), '" target="_blank">
+				<a href="', $RootPath, '/PrintCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice&View=Yes" title="', __('Click to preview the invoice'), '" target="_blank">
 					<img alt="" src="', $RootPath, '/css/', $Theme, '/images/preview.png" /> ',
 					__('HTML'), '
 				</a>
 			</td>
 			<td class="noPrint">
-				<a href="', $RootPath, '/PrintCustTrans.php?=FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice&amp;PrintPDF=True&orientation=' . $Orientation . '" title="', __('Click for PDF'), '" target="_blank">
+				<a href="', $RootPath, '/PrintCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice&amp;PrintPDF=True&orientation=' . $Orientation . '" title="', __('Click for PDF'), '" target="_blank">
 					<img alt="" src="', $RootPath, '/css/', $Theme, '/images/pdf.png" /> ',
 					__('PDF'), '
 				</a>
 			</td>
 			<td class="noPrint" title="', __('Click to email the invoice'), '">
-				<a href="', $RootPath, '/EmailCustTrans.php?=FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/email.png" />', __('Email'), '</a>
+				<a href="', $RootPath, '/EmailCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/email.png" />', __('Email'), '</a>
 			</td>
 			<td class="noPrint">&nbsp;</td>
 		</tr>';
@@ -326,16 +326,16 @@ foreach ($Transactions as $MyRow) {
 				<td class="number">', locale_number_format($MyRow['alloc'], $CustomerRecord['decimalplaces']), '</td>
 				<td class="number">', locale_number_format($MyRow['balance'], $CustomerRecord['decimalplaces']), '</td>
 				<td class="noPrint" title="', __('Click to preview the credit note'), '">
-					<a href="', $RootPath, '/PrintCustTrans.php?=FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Credit"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/preview.png" />', __('HTML'), '</a>
+					<a href="', $RootPath, '/PrintCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Credit"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/preview.png" />', __('HTML'), '</a>
 				</td>
 				<td class="noPrint" title="', __('Click for PDF'), '">
 					<a href="', $RootPath, '/', $PrintCustomerTransactionScript, '?=FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Credit&amp;PrintPDF=True"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/pdf.png" />', __('PDF'), '</a>
 				</td>
 				<td class="noPrint" title="', __('Click to email the credit note'), '">
-					<a href="', $RootPath, '/EmailCustTrans.php?=FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Credit"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/email.png" />', __('Email'), '</a>
+					<a href="', $RootPath, '/EmailCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Credit"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/email.png" />', __('Email'), '</a>
 				</td>
 				<td class="noPrint" title="', __('Click to allocate funds'), '">
-					<a href="', $RootPath, '/CustomerAllocations.php?=AllocTrans=', $MyRow['id'], '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/allocation.png" />', __('Allocation'), '</a>
+					<a href="', $RootPath, '/CustomerAllocations.php?AllocTrans=', $MyRow['id'], '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/allocation.png" />', __('Allocation'), '</a>
 				</td>
 			</tr>';
 } elseif ($MyRow['type'] == 12 and $MyRow['totalamount'] < 0) {
@@ -355,7 +355,7 @@ foreach ($Transactions as $MyRow) {
 				<td class="number">', locale_number_format($MyRow['alloc'], $CustomerRecord['decimalplaces']), '</td>
 				<td class="number">', locale_number_format($MyRow['balance'], $CustomerRecord['decimalplaces']), '</td>
 				<td class="noPrint" title="', __('Click to allocate funds'), '">
-					<a href="', $RootPath, '/CustomerAllocations.php?=AllocTrans=', $MyRow['id'], '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/allocation.png" />', __('Allocation'), '</a>
+					<a href="', $RootPath, '/CustomerAllocations.php?AllocTrans=', $MyRow['id'], '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/allocation.png" />', __('Allocation'), '</a>
 				</td>
 				<td class="noPrint">&nbsp;</td>
 				<td class="noPrint">&nbsp;</td>
