@@ -8,7 +8,7 @@ $BookMark = 'PaymentMethods';
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . __('Payments') .
-	'" alt = "" />' . ' ' . $Title . '</p>';
+	'" alt="" />' . ' ' . $Title . '</p>';
 
 if ( isset($_GET['SelectedPaymentID']) )
 	$SelectedPaymentID = $_GET['SelectedPaymentID'];
@@ -25,7 +25,7 @@ if (isset($_POST['submit'])) {
 
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
-	$i = 1;
+	$i=1;
 
 	//first off validate inputs sensible
 
@@ -57,19 +57,19 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'DiscountPercent';
 		$i++;
 	}
-	if (isset($_POST['SelectedPaymentID']) and $InputError != 1) {
+	if (isset($_POST['SelectedPaymentID']) AND $InputError != 1) {
 
 		/*SelectedPaymentID could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 		// Check the name does not clash
 		$SQL = "SELECT count(*) FROM paymentmethods
 				WHERE paymentid <> '" . $SelectedPaymentID ."'
-				and paymentname ".LIKE." '" . $_POST['MethodName'] . "'";
+				AND paymentname ".LIKE." '" . $_POST['MethodName'] . "'";
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_row($Result);
 		if ( $MyRow[0] > 0 ) {
-	$InputError = 1;
+			$InputError = 1;
 			prnMsg( __('The payment method can not be renamed because another with the same name already exists.'),'error');
-} else {
+		} else {
 			// Get the old name and check that the record still exists need to be very careful here
 
 			$SQL = "SELECT paymentname FROM paymentmethods
@@ -79,7 +79,7 @@ if (isset($_POST['submit'])) {
 				$MyRow = DB_fetch_row($Result);
 				$OldName = $MyRow[0];
 				$SQL = "UPDATE paymentmethods
-						SET paymentname = '" . $_POST['MethodName'] . "',
+						SET paymentname='" . $_POST['MethodName'] . "',
 							paymenttype = '" . $_POST['ForPayment'] . "',
 							receipttype = '" . $_POST['ForReceipt'] . "',
 							usepreprintedstationery = '" . $_POST['UsePrePrintedStationery']. "',
@@ -95,7 +95,7 @@ if (isset($_POST['submit'])) {
 		$Msg = __('Record Updated');
 		$ErrMsg = __('Could not update payment method');
 	} elseif ($InputError != 1) {
-	/*SelectedPaymentID is null cos no item selected on first time round so must be adding a record*/
+		/*SelectedPaymentID is null cos no item selected on first time round so must be adding a record*/
 		$SQL = "SELECT count(*) FROM paymentmethods
 				WHERE paymentname LIKE'".$_POST['MethodName'] ."'";
 		$Result = DB_query($SQL);
@@ -103,7 +103,7 @@ if (isset($_POST['submit'])) {
 		if ( $MyRow[0] > 0 ) {
 			$InputError = 1;
 			prnMsg( __('The payment method can not be created because another with the same name already exists.'),'error');
-} else {
+		} else {
 			$SQL = "INSERT INTO paymentmethods (paymentname,
 												paymenttype,
 												receipttype,
@@ -121,11 +121,11 @@ if (isset($_POST['submit'])) {
 		$ErrMsg = __('Could not insert the new payment method');
 	}
 
-	if ($InputError !=  1) {
-	$Result = DB_query($SQL, $ErrMsg);
+	if ($InputError!= 1){
+		$Result = DB_query($SQL, $ErrMsg);
 		prnMsg($Msg,'success');
 		echo '<br />';
-}
+	}
 	unset ($SelectedPaymentID);
 	unset ($_POST['SelectedPaymentID']);
 	unset ($_POST['MethodName']);
@@ -136,7 +136,7 @@ if (isset($_POST['submit'])) {
 
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
-// PREVENT DELETES if DEPENDENT RECORDS IN 'stockmaster'
+// PREVENT DELETES IF DEPENDENT RECORDS IN 'stockmaster'
 	// Get the original name of the payment method the ID is just a secure way to find the payment method
 	$SQL = "SELECT paymentname FROM paymentmethods
 			WHERE paymentid = '" . $SelectedPaymentID . "'";
@@ -147,15 +147,15 @@ if (isset($_POST['submit'])) {
 	} else {
 		$MyRow = DB_fetch_row($Result);
 		$OldMeasureName = $MyRow[0];
-		$SQL =  "SELECT COUNT(*) FROM banktrans
+		$SQL= "SELECT COUNT(*) FROM banktrans
 				WHERE banktranstype LIKE '" . $OldMeasureName . "'";
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_row($Result);
 		if ($MyRow[0]>0) {
-	prnMsg( __('Cannot delete this payment method because bank transactions have been created using this payment method'),'warn');
+			prnMsg( __('Cannot delete this payment method because bank transactions have been created using this payment method'),'warn');
 			echo '<br />' . __('There are') . ' ' . $MyRow[0] . ' ' . __('bank transactions that refer to this payment method') . '</font>';
-} else {
-			$SQL = "DELETE FROM paymentmethods WHERE paymentname " . LIKE  . " '" . $OldMeasureName . "'";
+		} else {
+			$SQL="DELETE FROM paymentmethods WHERE paymentname " . LIKE  . " '" . $OldMeasureName . "'";
 			$Result = DB_query($SQL);
 			prnMsg( $OldMeasureName . ' ' . __('payment method has been deleted') . '!','success');
 			echo '<br />';
@@ -204,7 +204,7 @@ if (isset($_POST['submit'])) {
 			<th class="SortedColumn">' . __('Use Pre-printed Stationery') . '</th>
 			<th class="SortedColumn">' . __('Open POS Cash Drawer for Sale') . '</th>
 			<th class="SortedColumn">' . __('Payment discount') . ' %</th>
-			<th colspan = "2">&nbsp;</th>
+			<th colspan="2">&nbsp;</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -222,7 +222,7 @@ if (isset($_POST['submit'])) {
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedPaymentID=' . $MyRow['paymentid'] . '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this payment method?') . '\');">' . __('Delete')  . '</a></td>
 			</tr>';
 
-	} //END while LIST LOOP
+	} //END WHILE LIST LOOP
 	echo '</tbody></table><br />';
 } //end of ifs and buts!
 
@@ -233,8 +233,8 @@ if (isset($SelectedPaymentID)) {
 
 if (! isset($_GET['delete'])) {
 
-	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedPaymentID)) {
 		//editing an existing section
@@ -247,7 +247,7 @@ if (! isset($_GET['delete'])) {
 						opencashdrawer,
 						percentdiscount
 				FROM paymentmethods
-				WHERE paymentid = '" . $SelectedPaymentID . "'";
+				WHERE paymentid='" . $SelectedPaymentID . "'";
 
 		$Result = DB_query($SQL);
 		if ( DB_num_rows($Result) == 0 ) {
@@ -264,7 +264,7 @@ if (! isset($_GET['delete'])) {
 			$_POST['OpenCashDrawer'] = $MyRow['opencashdrawer'];
 			$_POST['DiscountPercent'] = $MyRow['percentdiscount'];
 
-			echo '<input type = "hidden" name="SelectedPaymentID" value = "' . $_POST['MethodID'] . '" />';
+			echo '<input type="hidden" name="SelectedPaymentID" value="' . $_POST['MethodID'] . '" />';
 			echo '<fieldset>
 					<legend>', __('Edit Payment Method'), '</legend>';
 		}
@@ -280,44 +280,44 @@ if (! isset($_GET['delete'])) {
 					<legend>', __('Create Payment Method'), '</legend>';
 	}
 	echo '<field>
-			<label for = "MethodName">' . __('Payment Method') . ':</label>
-			<input type = "text" '. (in_array('MethodName',$Errors) ? 'class ="inputerror"' : '' ) .' name="MethodName" autofocus = "autofocus" required = "required" size = "30" maxlength = "30" value = "' . $_POST['MethodName'] . '" />
+			<label for="MethodName">' . __('Payment Method') . ':</label>
+			<input type="text" '. (in_array('MethodName',$Errors) ? 'class="inputerror"' : '' ) .' name="MethodName" autofocus="autofocus" required="required" size="30" maxlength="30" value="' . $_POST['MethodName'] . '" />
 		</field>';
 	echo '<field>
-			<label for = "ForPayment">' . __('Use For Payments') . ':' . '</label>
-			<select required = "required" name="ForPayment">
-				<option' . ($_POST['ForPayment'] ? ' selected ="selected"' : '') .' value = "1">' . __('Yes') . '</option>
-				<option' . ($_POST['ForPayment'] ? '' : ' selected ="selected"') .' value = "0">' . __('No') . '</option>
+			<label for="ForPayment">' . __('Use For Payments') . ':' . '</label>
+			<select required="required" name="ForPayment">
+				<option' . ($_POST['ForPayment'] ? ' selected="selected"' : '') .' value="1">' . __('Yes') . '</option>
+				<option' . ($_POST['ForPayment'] ? '' : ' selected="selected"') .' value="0">' . __('No') . '</option>
 			</select>
 		</field>';
 	echo '<field>
-			<label for = "ForReceipt">' . __('Use For Receipts') . ':</label>
-			<select required = "required" name="ForReceipt">
-				<option' . ($_POST['ForReceipt'] ? ' selected ="selected"' : '') .' value = "1">' . __('Yes') . '</option>
-				<option' . ($_POST['ForReceipt'] ? '' : ' selected ="selected"') .' value = "0">' . __('No') . '</option>
+			<label for="ForReceipt">' . __('Use For Receipts') . ':</label>
+			<select required="required" name="ForReceipt">
+				<option' . ($_POST['ForReceipt'] ? ' selected="selected"' : '') .' value="1">' . __('Yes') . '</option>
+				<option' . ($_POST['ForReceipt'] ? '' : ' selected="selected"') .' value="0">' . __('No') . '</option>
 			</select>
 		</field>';
 	echo '<field>
-			<label for = "UsePrePrintedStationery">' . __('Use Pre-printed Stationery') . ':' . '</label>
+			<label for="UsePrePrintedStationery">' . __('Use Pre-printed Stationery') . ':' . '</label>
 			<select name="UsePrePrintedStationery">
-				<option' . ($_POST['UsePrePrintedStationery'] ? ' selected ="selected"': '' ) .' value = "1">' . __('Yes') . '</option>
-				<option' . ($_POST['UsePrePrintedStationery']==1 ? '' : ' selected ="selected"' ) .' value = "0">' . __('No') . '</option>
+				<option' . ($_POST['UsePrePrintedStationery'] ? ' selected="selected"': '' ) .' value="1">' . __('Yes') . '</option>
+				<option' . ($_POST['UsePrePrintedStationery']==1 ? '' : ' selected="selected"' ) .' value="0">' . __('No') . '</option>
 			</select>
 		</field>';
 	echo '<field>
-			<label for = "OpenCashDrawer">' . __('Open POS Cash Drawer for Sale') . ':' . '</label>
+			<label for="OpenCashDrawer">' . __('Open POS Cash Drawer for Sale') . ':' . '</label>
 			<select name="OpenCashDrawer">
-				<option' . ($_POST['OpenCashDrawer'] ? ' selected ="selected"' : '') .' value = "1">' . __('Yes') . '</option>
-				<option' . ($_POST['OpenCashDrawer'] ? '' : ' selected ="selected"') .' value = "0">' . __('No') . '</option>
+				<option' . ($_POST['OpenCashDrawer'] ? ' selected="selected"' : '') .' value="1">' . __('Yes') . '</option>
+				<option' . ($_POST['OpenCashDrawer'] ? '' : ' selected="selected"') .' value="0">' . __('No') . '</option>
 			</select>
 		</field>';
 	echo '<field>
-			<label for = "DiscountPercent">' . __('Payment Discount Percent on Receipts') . ':' . '</label>
-			<input type = "text" class="number" min = "0" max = "1" name="DiscountPercent" value = "' . locale_number_format($_POST['DiscountPercent'],2) . '" />
+			<label for="DiscountPercent">' . __('Payment Discount Percent on Receipts') . ':' . '</label>
+			<input type="text" class="number" min="0" max="1" name="DiscountPercent" value="' . locale_number_format($_POST['DiscountPercent'],2) . '" />
 		</field>';
 	echo '</fieldset>';
 
-	echo '<div class="centre"><input type = "submit" name="submit" value = "' . __('Enter Information') . '" /></div>';
+	echo '<div class="centre"><input type="submit" name="submit" value="' . __('Enter Information') . '" /></div>';
 	echo '</form>';
 
 } //end if record deleted no point displaying form to add record

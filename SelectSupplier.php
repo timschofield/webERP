@@ -20,7 +20,7 @@ if (isset($_POST['Select'])) { /*User has hit the button selecting a supplier */
 	unset($_POST['Previous']);
 }
 // only get geocode information if integration is on, and supplier has been selected
-if ($_SESSION['geocode_integration'] == 1 and isset($_SESSION['SupplierID'])) {
+if ($_SESSION['geocode_integration'] == 1 AND isset($_SESSION['SupplierID'])) {
 	$SQL = "SELECT * FROM geocode_param";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
@@ -40,7 +40,7 @@ if ($_SESSION['geocode_integration'] == 1 and isset($_SESSION['SupplierID'])) {
 	$map_height = $MyRow['map_height'];
 	$map_width = $MyRow['map_width'];
 	$MapHost = $MyRow['map_host'];
-	$ExtraHeadContent = '<script src = "https://maps.google.com/maps?file=api&amp;v=2&amp;key=' . $APIKey . '"></script>' . "\n";
+	$ExtraHeadContent = '<script src="https://maps.google.com/maps?file=api&amp;v=2&amp;key=' . $APIKey . '"></script>' . "\n";
 	$ExtraHeadContent .= ' <script>' . "\n";
 	$ExtraHeadContent .= '	function load() {
 		if (GBrowserIsCompatible()) {
@@ -63,26 +63,26 @@ if ($_SESSION['geocode_integration'] == 1 and isset($_SESSION['SupplierID'])) {
 $Title = __('Search Suppliers');
 $ViewTopic = 'AccountsPayable';
 $BookMark = 'SelectSupplier';
-$BodyOnLoad = 'load();';
+$BodyOnLoad='load();';
 include('includes/header.php');
 
 if (!isset($_POST['PageOffset'])) {
 	$_POST['PageOffset'] = 1;
 } else {
 	if ($_POST['PageOffset'] == 0) {
-	$_POST['PageOffset'] = 1;
-}
+		$_POST['PageOffset'] = 1;
+	}
 }
 if (isset($_POST['Search'])
-	or isset($_POST['Go'])
-	or isset($_POST['Next'])
-	or isset($_POST['Previous'])) {
+	OR isset($_POST['Go'])
+	OR isset($_POST['Next'])
+	OR isset($_POST['Previous'])) {
 
-	if (mb_strlen($_POST['Keywords']) > 0 and mb_strlen($_POST['SupplierCode']) > 0) {
+	if (mb_strlen($_POST['Keywords']) > 0 AND mb_strlen($_POST['SupplierCode']) > 0) {
 		prnMsg( __('Supplier name keywords have been used in preference to the Supplier code extract entered'), 'info' );
 	}
-	if ($_POST['Keywords'] == '' and $_POST['SupplierCode'] == '') {
-	$SQL = "SELECT supplierid,
+	if ($_POST['Keywords'] == '' AND $_POST['SupplierCode'] == '') {
+		$SQL = "SELECT supplierid,
 					suppname,
 					currcode,
 					address1,
@@ -94,7 +94,7 @@ if (isset($_POST['Search'])
 					url
 				FROM suppliers
 				ORDER BY suppname";
-} else {
+	} else {
 		if (mb_strlen($_POST['Keywords']) > 0) {
 			$_POST['Keywords'] = mb_strtoupper($_POST['Keywords']);
 			//insert wildcard characters in spaces
@@ -145,7 +145,7 @@ if (isset($_POST['Search'])
 } //end of if search
 
 $TableHead =
-	'<table cellpadding = "4" width = "90%" class="selection">
+	'<table cellpadding="4" width="90%" class="selection">
 		<thead>
 			<tr>
 				<th style="width:33%">' .
@@ -180,11 +180,11 @@ if (isset($_SESSION['SupplierID'])) {
 		'<br />',
 		$TableHead,
 			'<tr>
-				<td valign = "top" class="select">';
+				<td valign="top" class="select">';
 	// Supplier inquiries options:
 	echo '<a href="' . $RootPath . '/SupplierInquiry.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . __('Supplier Account Inquiry') . '</a>
 		<br />
-		<a href="' . $RootPath . '/SupplierGRNAndInvoiceInquiry.php?SelectedSupplier=' . $_SESSION['SupplierID'] . '&amp;SupplierName='.urlencode($SupplierName).'">' . __('Supplier Delivery Note and GRN inquiry') . '</a>
+		<a href="' . $RootPath . '/SupplierGRNAndInvoiceInquiry.php?SelectedSupplier=' . $_SESSION['SupplierID'] . '&amp;SupplierName='.urlencode($SupplierName).'">' . __('Supplier Delivery Note AND GRN inquiry') . '</a>
 		<br />
 		<br />';
 
@@ -194,14 +194,14 @@ if (isset($_SESSION['SupplierID'])) {
 	echo '<br /><a href="' . $RootPath . '/ShiptsList.php?SupplierID=' . $_SESSION['SupplierID'] . '&amp;SupplierName=' . urlencode($SupplierName) . '">' . __('List all open shipments for') .' '.$SupplierName. '</a>';
 	echo '<br /><a href="' . $RootPath . '/Shipt_Select.php?SelectedSupplier=' . $_SESSION['SupplierID'] . '">' . __('Search / Modify / Close Shipments') . '</a>';
 	echo '<br /><a href="' . $RootPath . '/SuppPriceList.php?SelectedSupplier=' . $_SESSION['SupplierID'] . '">' . __('Supplier Price List') . '</a>';
-	echo '</td><td valign = "top" class="select">'; /* Supplier Transactions */
+	echo '</td><td valign="top" class="select">'; /* Supplier Transactions */
 	echo '<a href="' . $RootPath . '/PO_Header.php?NewOrder=Yes&amp;SupplierID=' . $_SESSION['SupplierID'] . '">' . __('Enter a Purchase Order for This Supplier') . '</a><br />';
 	echo '<a href="' . $RootPath . '/SupplierInvoice.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . __('Enter a Suppliers Invoice') . '</a><br />';
 	echo '<a href="' . $RootPath . '/SupplierCredit.php?New=true&amp;SupplierID=' . $_SESSION['SupplierID'] . '">' . __('Enter a Suppliers Credit Note') . '</a><br />';
 	echo '<a href="' . $RootPath . '/Payments.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . __('Enter a Payment to, or Receipt from the Supplier') . '</a><br />';
 	echo '<br />';
 	echo '<br /><a href="' . $RootPath . '/ReverseGRN.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . __('Reverse an Outstanding Goods Received Note (GRN)') . '</a>';
-	echo '</td><td valign = "top" class="select">'; /* Supplier Maintenance */
+	echo '</td><td valign="top" class="select">'; /* Supplier Maintenance */
 	echo '<a href="' . $RootPath . '/Suppliers.php">' . __('Add a New Supplier') . '</a>
 		<br /><a href="' . $RootPath . '/Suppliers.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . __('Modify Or Delete Supplier Details') . '</a>
 		<br /><a href="' . $RootPath . '/SupplierContacts.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . __('Add/Edit/Delete Supplier Contacts') . '</a>
@@ -226,67 +226,67 @@ if (isset($_SESSION['SupplierID'])) {
 			'<td class="select"><a href="', $RootPath, '/Suppliers.php">', __('Add a New Supplier'), '</a></td>',// Supplier Maintenance options.
 		'</tr><tbody></table>';
 }
-echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post">';
-echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . __('Search') . '" alt="" />' . ' ' . __('Search for Suppliers') . '</p>';
 
 echo '<fieldset>
 		<legend class="search">', __('Search Criteria'), '</legend>
 		<field>
-			<label for = "Keywords">' . __('Enter a partial Name') . ':</label>';
+			<label for="Keywords">' . __('Enter a partial Name') . ':</label>';
 if (isset($_POST['Keywords'])) {
-	echo '<input type = "text" name="Keywords" value = "' . $_POST['Keywords'] . '" size = "20" maxlength = "25" />';
+	echo '<input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" maxlength="25" />';
 } else {
-	echo '<input type = "text" name="Keywords" size = "20" maxlength = "25" />';
+	echo '<input type="text" name="Keywords" size="20" maxlength="25" />';
 }
 echo '<field>
-		<label for = "SupplierCode">' . '<b>' . __('or') . ' </b>' . __('Enter a partial Code') . ':</label>';
+		<label for="SupplierCode">' . '<b>' . __('OR') . ' </b>' . __('Enter a partial Code') . ':</label>';
 if (isset($_POST['SupplierCode'])) {
-	echo '<input type = "text" autofocus = "autofocus" name="SupplierCode" value = "' . $_POST['SupplierCode'] . '" size = "15" maxlength = "18" />';
+	echo '<input type="text" autofocus="autofocus" name="SupplierCode" value="' . $_POST['SupplierCode'] . '" size="15" maxlength="18" />';
 } else {
-	echo '<input type = "text" autofocus = "autofocus" name="SupplierCode" size = "15" maxlength = "18" />';
+	echo '<input type="text" autofocus="autofocus" name="SupplierCode" size="15" maxlength="18" />';
 }
 echo '</field>
 	</fieldset>';
 
-echo '<div class="centre"><input type = "submit" name="Search" value = "' . __('Search Now') . '" /></div>';
-//if (isset($Result) and !isset($SingleSupplierReturned)) {
+echo '<div class="centre"><input type="submit" name="Search" value="' . __('Search Now') . '" /></div>';
+//if (isset($Result) AND !isset($SingleSupplierReturned)) {
 if (isset($_POST['Search'])) {
 	$ListCount = DB_num_rows($Result);
 	$ListPageMax = ceil($ListCount / $_SESSION['DisplayRecordsMax']);
 	if (isset($_POST['Next'])) {
 		if ($_POST['PageOffset'] < $ListPageMax) {
-	$_POST['PageOffset'] = $_POST['PageOffset'] + 1;
-}
+			$_POST['PageOffset'] = $_POST['PageOffset'] + 1;
+		}
 	}
 	if (isset($_POST['Previous'])) {
 		if ($_POST['PageOffset'] > 1) {
-	$_POST['PageOffset'] = $_POST['PageOffset'] - 1;
-}
+			$_POST['PageOffset'] = $_POST['PageOffset'] - 1;
+		}
 	}
 	if ($ListPageMax > 1) {
-	echo '<p>&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . __('of') . ' ' . $ListPageMax . ' ' . __('pages') . '. ' . __('Go to Page') . ': </p>';
+		echo '<p>&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . __('of') . ' ' . $ListPageMax . ' ' . __('pages') . '. ' . __('Go to Page') . ': </p>';
 		echo '<select name="PageOffset">';
 		$ListPage = 1;
 		while ($ListPage <= $ListPageMax) {
 			if ($ListPage == $_POST['PageOffset']) {
-				echo '<option value = "' . $ListPage . '" selected = "selected">' . $ListPage . '</option>';
-} else {
-				echo '<option value = "' . $ListPage . '">' . $ListPage . '</option>';
+				echo '<option value="' . $ListPage . '" selected="selected">' . $ListPage . '</option>';
+			} else {
+				echo '<option value="' . $ListPage . '">' . $ListPage . '</option>';
 			}
 			$ListPage++;
 		}
 		echo '</select>
-			<input type = "submit" name="Go" value = "' . __('Go') . '" />
-			<input type = "submit" name="Previous" value = "' . __('Previous') . '" />
-			<input type = "submit" name="Next" value = "' . __('Next') . '" />';
+			<input type="submit" name="Go" value="' . __('Go') . '" />
+			<input type="submit" name="Previous" value="' . __('Previous') . '" />
+			<input type="submit" name="Next" value="' . __('Next') . '" />';
 		echo '<br />';
 	}
-	echo '<input type = "hidden" name="Search" value = "' . __('Search Now') . '" />';
+	echo '<input type="hidden" name="Search" value="' . __('Search Now') . '" />';
 	echo '<br />
 		<br />
 		<br />
-		<table cellpadding = "2">
+		<table cellpadding="2">
 		<thead>
 			<tr>
 	  		<th class="SortedColumn">' . __('Code') . '</th>
@@ -307,9 +307,9 @@ if (isset($_POST['Search'])) {
 	if (DB_num_rows($Result) <> 0) {
 		DB_data_seek($Result, ($_POST['PageOffset'] - 1) * $_SESSION['DisplayRecordsMax']);
 	}
-	while (($MyRow = DB_fetch_array($Result)) and ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
+	while (($MyRow = DB_fetch_array($Result)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
 		echo '<tr class="striped_row">
-				<td><input type = "submit" name="Select" value = "'.$MyRow['supplierid'].'" /></td>
+				<td><input type="submit" name="Select" value="'.$MyRow['supplierid'].'" /></td>
 				<td>' . $MyRow['suppname'] . '</td>
 				<td>' . $MyRow['currcode'] . '</td>
 				<td>' . $MyRow['address1'] . '</td>
@@ -333,16 +333,16 @@ if (isset($ListPageMax) and $ListPageMax > 1) {
 	$ListPage = 1;
 	while ($ListPage <= $ListPageMax) {
 		if ($ListPage == $_POST['PageOffset']) {
-	echo '<option value = "' . $ListPage . '" selected = "selected">' . $ListPage . '</option>';
-} else {
-			echo '<option value = "' . $ListPage . '">' . $ListPage . '</option>';
+			echo '<option value="' . $ListPage . '" selected="selected">' . $ListPage . '</option>';
+		} else {
+			echo '<option value="' . $ListPage . '">' . $ListPage . '</option>';
 		}
 		$ListPage++;
 	}
 	echo '</select>
-		<input type = "submit" name="Go" value = "' . __('Go') . '" />
-		<input type = "submit" name="Previous" value = "' . __('Previous') . '" />
-		<input type = "submit" name="Next" value = "' . __('Next') . '" />';
+		<input type="submit" name="Go" value="' . __('Go') . '" />
+		<input type="submit" name="Previous" value="' . __('Previous') . '" />
+		<input type="submit" name="Next" value="' . __('Next') . '" />';
 	echo '<br />';
 }
 echo '</div>
@@ -350,10 +350,10 @@ echo '</div>
 // Only display the geocode map if the integration is turned on, and there is a latitude/longitude to display
 if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 	if ($_SESSION['geocode_integration'] == 1) {
-	if ($lat == 0) {
+		if ($lat == 0) {
 			echo '<br />';
 			echo '<div class="centre">' . __('Mapping is enabled, but no Mapping data to display for this Supplier.') . '</div>';
-} else {
+		} else {
 
 			echo '<br />
 				<table class="selection">
@@ -374,45 +374,45 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 	}
 	// Extended Info only if selected in Configuration
 	if ($_SESSION['Extended_SupplierInfo'] == 1) {
-	if ($_SESSION['SupplierID'] != '') {
+		if ($_SESSION['SupplierID'] != '') {
 			$SQL = "SELECT suppliers.suppname,
 							suppliers.lastpaid,
 							suppliers.lastpaiddate,
 							suppliersince,
-							currencies.decimalplaces as currdecimalplaces
+							currencies.decimalplaces AS currdecimalplaces
 					FROM suppliers INNER JOIN currencies
-					ON suppliers.currcode = currencies.currabrev
+					ON suppliers.currcode=currencies.currabrev
 					WHERE suppliers.supplierid ='" . $_SESSION['SupplierID'] . "'";
 			$DataResult = DB_query($SQL);
 			$MyRow = DB_fetch_array($DataResult);
 			// Select some more data about the supplier
-			$SQL = "SELECT SUM(ovamount) as total FROM supptrans WHERE supplierno = '" . $_SESSION['SupplierID'] . "' and (type = '20' or type = '21')";
+			$SQL = "SELECT SUM(ovamount) AS total FROM supptrans WHERE supplierno = '" . $_SESSION['SupplierID'] . "' AND (type = '20' OR type='21')";
 			$Total1Result = DB_query($SQL);
 			$Row = DB_fetch_array($Total1Result);
 			echo '<br />';
-			echo '<table width = "45%" cellpadding = "4">';
-			echo '<tr><th style="width:33%" colspan = "2">' . __('Supplier Data') . '</th></tr>';
-			echo '<tr><td valign = "top" class="select">'; /* Supplier Data */
+			echo '<table width="45%" cellpadding="4">';
+			echo '<tr><th style="width:33%" colspan="2">' . __('Supplier Data') . '</th></tr>';
+			echo '<tr><td valign="top" class="select">'; /* Supplier Data */
 			//echo "Distance to this Supplier: <b>TBA</b><br />";
 			if ($MyRow['lastpaiddate'] == 0) {
 				echo __('No payments yet to this supplier.') . '</td>
-					<td valign = "top" class="select"></td>
+					<td valign="top" class="select"></td>
 					</tr>';
-} else {
+			} else {
 				echo __('Last Paid:') . '</td>
-					<td valign = "top" class="select"> <b>' . ConvertSQLDate($MyRow['lastpaiddate']) . '</b></td>
+					<td valign="top" class="select"> <b>' . ConvertSQLDate($MyRow['lastpaiddate']) . '</b></td>
 					</tr>';
 			}
 			echo '<tr>
-					<td valign = "top" class="select">' . __('Last Paid Amount:') . '</td>
-					<td valign = "top" class="select">  <b>' . locale_number_format($MyRow['lastpaid'], $MyRow['currdecimalplaces']) . '</b></td></tr>';
+					<td valign="top" class="select">' . __('Last Paid Amount:') . '</td>
+					<td valign="top" class="select">  <b>' . locale_number_format($MyRow['lastpaid'], $MyRow['currdecimalplaces']) . '</b></td></tr>';
 			echo '<tr>
-					<td valign = "top" class="select">' . __('Supplier since:') . '</td>
-					<td valign = "top" class="select"> <b>' . ConvertSQLDate($MyRow['suppliersince']) . '</b></td>
+					<td valign="top" class="select">' . __('Supplier since:') . '</td>
+					<td valign="top" class="select"> <b>' . ConvertSQLDate($MyRow['suppliersince']) . '</b></td>
 					</tr>';
 			echo '<tr>
-					<td valign = "top" class="select">' . __('Total Spend with this Supplier:') . '</td>
-					<td valign = "top" class="select"> <b>' . locale_number_format($Row['total'], $MyRow['currdecimalplaces']) . '</b></td>
+					<td valign="top" class="select">' . __('Total Spend with this Supplier:') . '</td>
+					<td valign="top" class="select"> <b>' . locale_number_format($Row['total'], $MyRow['currdecimalplaces']) . '</b></td>
 					</tr>';
 			echo '</table>';
 		}

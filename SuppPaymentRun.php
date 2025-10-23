@@ -32,7 +32,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 		.left { text-align: left; }
 		.centre { text-align: center; }
 		h2 { margin-bottom: 0; }
-	</style><link href = "css/reports.css" rel = "stylesheet" type = "text/css" /></head><body>';
+	</style><link href="css/reports.css" rel="stylesheet" type="text/css" /></head><body>';
 
 	$HTML .= '<h2>' . $_SESSION['CompanyRecord']['coyname'] . '</h2>';
 	$HTML .= '<h2>' . __('Payment Run Report') . '</h2>';
@@ -52,8 +52,8 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 	</thead><tbody>';
 
 	$SQL = "SELECT suppliers.supplierid,
-					currencies.decimalplaces as currdecimalplaces,
-					SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) as balance
+					currencies.decimalplaces AS currdecimalplaces,
+					SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) AS balance
 			FROM suppliers INNER JOIN paymentterms
 			ON suppliers.paymentterms = paymentterms.termsindicator
 			INNER JOIN supptrans
@@ -61,13 +61,13 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 			INNER JOIN systypes
 			ON systypes.typeid = supptrans.type
 			INNER JOIN currencies
-			ON suppliers.currcode = currencies.currabrev
+			ON suppliers.currcode=currencies.currabrev
 			WHERE supptrans.ovamount + supptrans.ovgst - supptrans.alloc !=0
-			and supptrans.duedate <='" . FormatDateForSQL($_POST['AmountsDueBy']) . "'
-			and supptrans.hold = 0
-			and suppliers.currcode = '" . $_POST['Currency'] . "'
-			and supptrans.supplierno >= '" . $_POST['FromCriteria'] . "'
-			and supptrans.supplierno <= '" . $_POST['ToCriteria'] . "'
+			AND supptrans.duedate <='" . FormatDateForSQL($_POST['AmountsDueBy']) . "'
+			AND supptrans.hold=0
+			AND suppliers.currcode = '" . $_POST['Currency'] . "'
+			AND supptrans.supplierno >= '" . $_POST['FromCriteria'] . "'
+			AND supptrans.supplierno <= '" . $_POST['ToCriteria'] . "'
 			GROUP BY suppliers.supplierid,
 					currencies.decimalplaces
 			HAVING SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) > 0
@@ -98,8 +98,8 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 						supptrans.rate,
 						supptrans.transno,
 						supptrans.type,
-						(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) as balance,
-						(supptrans.ovamount + supptrans.ovgst ) as trantotal,
+						(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) AS balance,
+						(supptrans.ovamount + supptrans.ovgst ) AS trantotal,
 						supptrans.diffonexch,
 						supptrans.id
 				FROM suppliers INNER JOIN paymentterms
@@ -109,12 +109,12 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 				INNER JOIN systypes
 				ON systypes.typeid = supptrans.type
 				WHERE supptrans.supplierno = '" . $SuppliersToPay['supplierid'] . "'
-				and supptrans.ovamount + supptrans.ovgst - supptrans.alloc !=0
-				and supptrans.duedate <='" . FormatDateForSQL($_POST['AmountsDueBy']) . "'
-				and supptrans.hold = 0
-				and suppliers.currcode = '" . $_POST['Currency'] . "'
-				and supptrans.supplierno >= '" . $_POST['FromCriteria'] . "'
-				and supptrans.supplierno <= '" . $_POST['ToCriteria'] . "'
+				AND supptrans.ovamount + supptrans.ovgst - supptrans.alloc !=0
+				AND supptrans.duedate <='" . FormatDateForSQL($_POST['AmountsDueBy']) . "'
+				AND supptrans.hold = 0
+				AND suppliers.currcode = '" . $_POST['Currency'] . "'
+				AND supptrans.supplierno >= '" . $_POST['FromCriteria'] . "'
+				AND supptrans.supplierno <= '" . $_POST['ToCriteria'] . "'
 				ORDER BY supptrans.supplierno,
 					supptrans.type,
 					supptrans.transno";
@@ -122,7 +122,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 		$ErrMsg = __('The details of supplier invoices due could not be retrieved');
 		$TransResult = DB_query($SQL, $ErrMsg);
 		if (DB_num_rows($TransResult) == 0) {
-			$HTML .= '<tr><td colspan = "8" class="centre">' . __('There are no outstanding supplier invoices to pay') . '</td></tr>';
+			$HTML .= '<tr><td colspan="8" class="centre">' . __('There are no outstanding supplier invoices to pay') . '</td></tr>';
 			continue;
 		}
 
@@ -146,7 +146,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 												alloc = '" . $DetailTrans['trantotal'] . "',
 												diffonexch = '" . ($DetailTrans['diffonexch'] + $DiffOnExch) . "'
 								WHERE type = '" . $DetailTrans['type'] . "'
-								and transno = '" . $DetailTrans['transno'] . "'";
+								AND transno = '" . $DetailTrans['transno'] . "'";
 
 				$ErrMsg = ('None of the payments will be processed since updates to the transaction records for') . ' ' . $DetailTrans['suppname'] . ' ' . __('could not be processed');
 				$ProcessResult = DB_query($SQL, $ErrMsg, '', true);
@@ -169,7 +169,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 
 	$HTML .= '<table>
 				<tr>
-					<th colspan = "2">' . __('Grand Total Payments Due') . '</th>
+					<th colspan="2">' . __('Grand Total Payments Due') . '</th>
 				<tr>
 					<td class="right">' . __('Total Payments') . ': ' . locale_number_format($AccumBalance, $CurrDecimalPlaces) . '</td>
 					<td class="right">' . __('Total Diff On Exch') . ': ' . locale_number_format($AccumDiffOnExch, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -207,8 +207,8 @@ else {
 
 	/* show form to allow input	*/
 
-	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target="_blank">';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" target="_blank">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<fieldset>
 			<legend>', __('Select Suppliers To Pay'), '</legend>';
 
@@ -232,29 +232,29 @@ else {
 		$DefaultToCriteria = $_POST['ToCriteria'];
 	}
 	echo '<field>
-			<label for = "FromCriteria">' . __('From Supplier Code') . ':</label>
-			<input type = "text" pattern = "[^><+-]{1,10}" title="" maxlength = "10" size = "7" name = "FromCriteria" value = "' . $DefaultFromCriteria . '" />
+			<label for="FromCriteria">' . __('From Supplier Code') . ':</label>
+			<input type="text" pattern="[^><+-]{1,10}" title="" maxlength="10" size="7" name="FromCriteria" value="' . $DefaultFromCriteria . '" />
 			<fieldhelp>' . __('Illegal characters are not allowed') . ' ' . '" \' - &amp; or a space' . '</fieldhelp>
 		  </field>';
 	echo '<field>
-			<label for = "ToCriteria">' . __('To Supplier Code') . ':</label>
-			<input type = "text" pattern = "[^<>+-]{1,10}" title="" maxlength = "10" size = "7" name = "ToCriteria" value = "' . $DefaultToCriteria . '" />
+			<label for="ToCriteria">' . __('To Supplier Code') . ':</label>
+			<input type="text" pattern="[^<>+-]{1,10}" title="" maxlength="10" size="7" name="ToCriteria" value="' . $DefaultToCriteria . '" />
 			<fieldhelp>' . __('Illegal characters are not allowed') . '</fieldhelp>
 		 </field>';
 
 	echo '<field>
-			<label for = "Currency">' . __('For Suppliers Trading in') . ':</label>
-			<select name = "Currency">';
+			<label for="Currency">' . __('For Suppliers Trading in') . ':</label>
+			<select name="Currency">';
 
 	$SQL = "SELECT currency, currabrev FROM currencies";
 	$Result = DB_query($SQL);
 
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($MyRow['currabrev'] == $_SESSION['CompanyRecord']['currencydefault']) {
-	echo '<option selected = "selected" value = "' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
-}
+			echo '<option selected="selected" value="' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
+		}
 		else {
-			echo '<option value = "' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
+			echo '<option value="' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
 		}
 	}
 	echo '</select>
@@ -267,8 +267,8 @@ else {
 		$DefaultExRate = filter_number_format($_POST['ExRate']);
 	}
 	echo '<field>
-			<label for = "ExRate">' . __('Exchange Rate') . ':</label>
-			<input type = "text" class="number" title="" name = "ExRate" maxlength = "11" size = "12" value = "' . locale_number_format($DefaultExRate, 'Variable') . '" />
+			<label for="ExRate">' . __('Exchange Rate') . ':</label>
+			<input type="text" class="number" title="" name="ExRate" maxlength="11" size="12" value="' . locale_number_format($DefaultExRate, 'Variable') . '" />
 			<fieldhelp>' . __('The input must be number') . '</fieldhelp>
 		  </field>';
 
@@ -280,8 +280,8 @@ else {
 	}
 
 	echo '<field>
-			<label for = "AmountsDueBy">' . __('Payments Due To') . ':</label>
-			<input type = "date" name = "AmountsDueBy" maxlength = "10" size = "11" value = "' . $DefaultDate . '" />
+			<label for="AmountsDueBy">' . __('Payments Due To') . ':</label>
+			<input type="date" name="AmountsDueBy" maxlength="10" size="11" value="' . $DefaultDate . '" />
 		  </field>';
 
 	$ErrMsg = __('The bank accounts could not be retrieved');
@@ -289,8 +289,8 @@ else {
 	$AccountsResults = DB_query($SQL, $ErrMsg);
 
 	echo '<field>
-			<label for = "BankAccount">' . __('Pay From Account') . ':</label>
-			<select name = "BankAccount">';
+			<label for="BankAccount">' . __('Pay From Account') . ':</label>
+			<select name="BankAccount">';
 
 	if (DB_num_rows($AccountsResults) == 0) {
 		echo '</select></td>
@@ -306,10 +306,10 @@ else {
 			/*list the bank account names */
 
 			if (isset($_POST['BankAccount']) and $_POST['BankAccount'] == $MyRow['accountcode']) {
-				echo '<option selected = "selected" value = "' . $MyRow['accountcode'] . '">' . $MyRow['bankaccountname'] . '</option>';
+				echo '<option selected="selected" value="' . $MyRow['accountcode'] . '">' . $MyRow['bankaccountname'] . '</option>';
 			}
 			else {
-				echo '<option value = "' . $MyRow['accountcode'] . '">' . $MyRow['bankaccountname'] . '</option>';
+				echo '<option value="' . $MyRow['accountcode'] . '">' . $MyRow['bankaccountname'] . '</option>';
 			}
 		}
 		echo '</select>
@@ -317,8 +317,8 @@ else {
 	}
 
 	echo '<field>
-			<label for = "PaytType">' . __('Payment Type') . ':</label>
-			<select name = "PaytType">';
+			<label for="PaytType">' . __('Payment Type') . ':</label>
+			<select name="PaytType">';
 
 	/* The array PaytTypes is set up in config.php for user modification
 	 Payment types can be modified by editing that file */
@@ -326,10 +326,10 @@ else {
 	foreach ($PaytTypes as $PaytType) {
 
 		if (isset($_POST['PaytType']) and $_POST['PaytType'] == $PaytType) {
-			echo '<option selected = "selected" value = "' . $PaytType . '">' . $PaytType . '</option>';
+			echo '<option selected="selected" value="' . $PaytType . '">' . $PaytType . '</option>';
 		}
 		else {
-			echo '<option value = "' . $PaytType . '">' . $PaytType . '</option>';
+			echo '<option value="' . $PaytType . '">' . $PaytType . '</option>';
 		}
 	}
 	echo '</select>
@@ -337,8 +337,8 @@ else {
 
 	echo '</fieldset>
 			<div class="centre">
-				<input type = "submit" name = "PrintPDF" value = "' . __('Print PDF Only') . '" />
-				<input type = "submit" name = "PrintPDFAndProcess" value = "' . __('Print and Process Payments') . '" />
+				<input type="submit" name="PrintPDF" value="' . __('Print PDF Only') . '" />
+				<input type="submit" name="PrintPDFAndProcess" value="' . __('Print and Process Payments') . '" />
 			</div>';
 	echo '</form>';
 	include ('includes/footer.php');

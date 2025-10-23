@@ -80,22 +80,22 @@ if (!isset($_GET['Prid']) and !isset($_SESSION['ProcessingPick'])) {
 								custbranch.defaultshipvia,
 								custbranch.specialinstructions
 						FROM pickreq INNER JOIN salesorders
-							ON salesorders.orderno = pickreq.orderno INNER JOIN debtorsmaster
+							ON salesorders.orderno=pickreq.orderno INNER JOIN debtorsmaster
 							ON salesorders.debtorno = debtorsmaster.debtorno
 						INNER JOIN custbranch
 							ON salesorders.branchcode = custbranch.branchcode
-							and salesorders.debtorno = custbranch.debtorno
+							AND salesorders.debtorno = custbranch.debtorno
 						INNER JOIN currencies
 							ON debtorsmaster.currcode = currencies.currabrev
 						INNER JOIN locations
-							ON locations.loccode = salesorders.fromstkloc
-						INNER JOIN locationusers ON locationusers.loccode = salesorders.fromstkloc and locationusers.userid = '" . $_SESSION['UserID'] . "' and locationusers.canupd = 1
+							ON locations.loccode=salesorders.fromstkloc
+						INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" . $_SESSION['UserID'] . "' AND locationusers.canupd=1
 						WHERE pickreq.prid = '" . $_GET['Prid'] . "'
-							and pickreq.closed = 0";
+							AND pickreq.closed=0";
 
 	if ($_SESSION['SalesmanLogin'] !=  '') {
-	$OrderHeaderSQL .= " and salesorders.salesperson = '" . $_SESSION['SalesmanLogin'] . "'";
-}
+		$OrderHeaderSQL .= " AND salesorders.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+	}
 
 	$ErrMsg = __('The pick list cannot be retrieved because');
 	$GetOrdHdrResult = DB_query($OrderHeaderSQL, $ErrMsg);
@@ -176,17 +176,17 @@ if (!isset($_GET['Prid']) and !isset($_SESSION['ProcessingPick'])) {
 								salesorderdetails.orderlineno,
 								salesorderdetails.poline,
 								salesorderdetails.itemdue,
-								stockmaster.actualcost as standardcost
+								stockmaster.actualcost AS standardcost
 							FROM pickreqdetails
 							INNER JOIN pickreq
-								ON pickreq.prid = pickreqdetails.prid
+								ON pickreq.prid=pickreqdetails.prid
 							INNER JOIN salesorderdetails
 								ON salesorderdetails.orderno = pickreq.orderno
-								and salesorderdetails.orderlineno = pickreqdetails.orderlineno
+								AND salesorderdetails.orderlineno=pickreqdetails.orderlineno
 							INNER JOIN stockmaster
 							 	ON salesorderdetails.stkcode = stockmaster.stockid
 							WHERE pickreqdetails.prid ='" . $_GET['Prid'] . "'
-								and salesorderdetails.quantity - salesorderdetails.qtyinvoiced >0
+								AND salesorderdetails.quantity - salesorderdetails.qtyinvoiced >0
 							ORDER BY salesorderdetails.orderlineno";
 
 		$ErrMsg = __('The line items of the pick list cannot be retrieved because');
@@ -228,9 +228,9 @@ if (!isset($_GET['Prid']) and !isset($_SESSION['ProcessingPick'])) {
 										moveqty
 									FROM pickserialdetails
 									INNER JOIN pickreqdetails
-										ON pickreqdetails.detailno = pickserialdetails.detailno
+										ON pickreqdetails.detailno=pickserialdetails.detailno
 									WHERE pickreqdetails.prid ='" . $_GET['Prid'] . "'
-										and pickserialdetails.detailno = '" . $MyRow['detailno'] . "'";
+										AND pickserialdetails.detailno='" . $MyRow['detailno'] . "'";
 
 				$ErrMsg = __('The serial items of the pick list cannot be retrieved because');
 				$SerialItemsResult = DB_query($SerialItemsSQL, $ErrMsg);
@@ -317,13 +317,13 @@ echo '<table class="selection">
 			</tr>
 		</table>';
 
-echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?=identifier=' . urlencode($identifier) . '" method = "post">';
-echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . urlencode($identifier) . '" method="post">';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 /***************************************************************
 Line Item Display
 ***************************************************************/
-echo '<table width = "90%" cellpadding = "2" class="selection">
+echo '<table width="90%" cellpadding="2" class="selection">
 	<tr>
 		<th>' . __('Item Code') . '</th>
 		<th>' . __('Item Description') . '</th>
@@ -359,27 +359,27 @@ foreach ($_SESSION['Items' . $identifier]->LineItems as $LnItm) {
 		<td class="number">' . locale_number_format($LnItm->QtyInv, $LnItm->DecimalPlaces) . '</td>';
 
 	if ($LnItm->Controlled == 1) {
-	if (isset($_POST['ProcessPickList'])) {
+		if (isset($_POST['ProcessPickList'])) {
 			echo '<td class="number">' . locale_number_format($LnItm->QtyDispatched, $LnItm->DecimalPlaces) . '</td>';
-} else {
-			echo '<td class="number"><input type = "hidden" name="' . $LnItm->LineNumber . '_QtyDispatched"  value = "' . $LnItm->QtyDispatched . '" /><a href="' . $RootPath . '/PickingListsControlled.php?identifier=' . $identifier . '&amp;LineNo=' . $LnItm->LineNumber . '">' . locale_number_format($LnItm->QtyDispatched, $LnItm->DecimalPlaces) . '</a></td>';
+		} else {
+			echo '<td class="number"><input type="hidden" name="' . $LnItm->LineNumber . '_QtyDispatched"  value="' . $LnItm->QtyDispatched . '" /><a href="' . $RootPath . '/PickingListsControlled.php?identifier=' . $identifier . '&amp;LineNo=' . $LnItm->LineNumber . '">' . locale_number_format($LnItm->QtyDispatched, $LnItm->DecimalPlaces) . '</a></td>';
 		}
 	} else {
 		if (isset($_POST['ProcessPickList'])) {
 			echo '<td class="number">' . locale_number_format($LnItm->QtyDispatched, $LnItm->DecimalPlaces) . '</td>';
 		} else {
-			echo '<td class="number"><input tabindex="' . $j . '" type = "text" ' . ($j == 1 ? 'autofocus ="autofocus" ' : '') . ' class="number" required = "required" title="' . __('Enter the quantity to charge the customer for, that has been dispatched') . '" name="' . $LnItm->LineNumber . '_QtyDispatched" maxlength = "12" size = "12" value = "' . locale_number_format($LnItm->QtyDispatched, $LnItm->DecimalPlaces) . '" /></td>';
+			echo '<td class="number"><input tabindex="' . $j . '" type="text" ' . ($j == 1 ? 'autofocus="autofocus" ' : '') . ' class="number" required="required" title="' . __('Enter the quantity to charge the customer for, that has been dispatched') . '" name="' . $LnItm->LineNumber . '_QtyDispatched" maxlength="12" size="12" value="' . locale_number_format($LnItm->QtyDispatched, $LnItm->DecimalPlaces) . '" /></td>';
 		}
 	}
 
 	echo '<td class="number">' . locale_number_format($_SESSION['Items' . $identifier]->LineItems[$LnItm->LineNumber]->QtyShipped, $LnItm->DecimalPlaces) . '</td>';
 
 	if ($LnItm->Controlled == 1) {
-	if (!isset($_POST['ProcessPickList'])) {
+		if (!isset($_POST['ProcessPickList'])) {
 			echo '<td><a href="' . $RootPath . '/PickingListsControlled.php?identifier=' . $identifier . '&amp;LineNo=' . $LnItm->LineNumber . '">';
 			if ($LnItm->Serialised == 1) {
 				echo __('Enter Serial Numbers');
-} else {
+			} else {
 				/*Just batch/roll/lot control */
 				echo __('Enter Batch/Roll/Lot #');
 			}
@@ -391,7 +391,7 @@ foreach ($_SESSION['Items' . $identifier]->LineItems as $LnItm) {
 	if (mb_strlen($LnItm->Narrative) > 1) {
 		$Narrative = str_replace('\r\n', '<br />', $LnItm->Narrative);
 		echo '<tr class="striped_row">
-				<td colspan = "6">' . stripslashes($Narrative) . '</td>
+				<td colspan="6">' . stripslashes($Narrative) . '</td>
 			</tr>';
 	}
 } //end foreach ($Line)
@@ -406,8 +406,7 @@ echo '</table>';
 
 if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] !=  '') {
 
-	if ($_SESSION['ProhibitNegativeStock'] == 1) {
-	// checks for negative stock after processing invoice
+	if ($_SESSION['ProhibitNegativeStock'] == 1) { // checks for negative stock after processing invoice
 		//sadly this check does not combine quantities occuring twice on and order and each line is considered individually :-(
 		$NegativesFound = false;
 		foreach ($_SESSION['Items' . $identifier]->LineItems as $OrderLine) {
@@ -416,9 +415,9 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] !=  '') {
 					   		stockmaster.mbflag
 		 			FROM locstock
 		 			INNER JOIN stockmaster
-						ON stockmaster.stockid = locstock.stockid
-					WHERE stockmaster.stockid = '" . $OrderLine->StockID . "'
-						and locstock.loccode = '" . $_SESSION['Items' . $identifier]->Location . "'";
+						ON stockmaster.stockid=locstock.stockid
+					WHERE stockmaster.stockid='" . $OrderLine->StockID . "'
+						AND locstock.loccode='" . $_SESSION['Items' . $identifier]->Location . "'";
 
 			$ErrMsg = __('Could not retrieve the quantity left at the location once this order is invoiced (for the purposes of checking that stock will not go negative because)');
 			$Result = DB_query($SQL, $ErrMsg);
@@ -427,21 +426,22 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] !=  '') {
 				if ($CheckNegRow['quantity'] < $OrderLine->QtyDispatched) {
 					prnMsg(__('Invoicing the selected order would result in negative stock. The system parameters are set to prohibit negative stocks from occurring. This invoice cannot be created until the stock on hand is corrected.'), 'error', $OrderLine->StockID . ' ' . $CheckNegRow['description'] . ' - ' . __('Negative Stock Prohibited'));
 					$NegativesFound = true;
-}
+				}
 			} elseif ($CheckNegRow['mbflag'] == 'A') {
-	/*Now look for assembly components that would go negative */
+
+				/*Now look for assembly components that would go negative */
 				$SQL = "SELECT bom.component,
 							   stockmaster.description,
-							   locstock.quantity-(" . $OrderLine->QtyDispatched . "*bom.quantity) as qtyleft
+							   locstock.quantity-(" . $OrderLine->QtyDispatched . "*bom.quantity) AS qtyleft
 						FROM bom
 						INNER JOIN locstock
-							ON bom.component = locstock.stockid
+							ON bom.component=locstock.stockid
 						INNER JOIN stockmaster
-							ON stockmaster.stockid = bom.component
-						WHERE bom.parent = '" . $OrderLine->StockID . "'
-							and locstock.loccode = '" . $_SESSION['Items' . $identifier]->Location . "'
-							and effectiveafter < CURRENT_DATE
-							and effectiveto >= CURRENT_DATE";
+							ON stockmaster.stockid=bom.component
+						WHERE bom.parent='" . $OrderLine->StockID . "'
+							AND locstock.loccode='" . $_SESSION['Items' . $identifier]->Location . "'
+							AND effectiveafter < CURRENT_DATE
+							AND effectiveto >= CURRENT_DATE";
 
 				$ErrMsg = __('Could not retrieve the component quantity left at the location once the assembly item on this order is invoiced (for the purposes of checking that stock will not go negative because)');
 				$Result = DB_query($SQL, $ErrMsg);
@@ -449,20 +449,20 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] !=  '') {
 					if ($NegRow['qtyleft'] < 0) {
 						prnMsg(__('Invoicing the selected order would result in negative stock for a component of an assembly item on the order. The system parameters are set to prohibit negative stocks from occurring. This invoice cannot be created until the stock on hand is corrected.'), 'error', $NegRow['component'] . ' ' . $NegRow['description'] . ' - ' . __('Negative Stock Prohibited'));
 						$NegativesFound = true;
-} // end if negative would result
+					} // end if negative would result
 				} //loop around the components of an assembly item
 			} //end if its an assembly item - check component stock
 
 		} //end of loop around items on the order for negative check
 
 		if ($NegativesFound) {
-	echo '</form>';
+			echo '</form>';
 			echo '<div class="centre">
-					<input type = "submit" name="Update" value = "' . __('Update') . '" />
+					<input type="submit" name="Update" value="' . __('Update') . '" />
 				</div>';
 			include('includes/footer.php');
 			exit();
-}
+		}
 	} //end of testing for negative stocks
 
 	/* Now Get the area where the sale is to from the branches table */
@@ -471,7 +471,7 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] !=  '') {
 					defaultshipvia
 			FROM custbranch
 			WHERE custbranch.debtorno ='" . $_SESSION['Items' . $identifier]->DebtorNo . "'
-			and custbranch.branchcode = '" . $_SESSION['Items' . $identifier]->Branch . "'";
+			AND custbranch.branchcode = '" . $_SESSION['Items' . $identifier]->Branch . "'";
 
 	$ErrMsg = __('We were unable to load Area where the Sale is to from the BRANCHES table') . '. ' . __('Please remedy this');
 	$Result = DB_query($SQL, $ErrMsg);
@@ -483,11 +483,11 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] !=  '') {
 	/*company record read in on login with info on GL Links and debtors GL account*/
 
 	if ($_SESSION['CompanyRecord'] == 0) {
-	/*The company data and preferences could not be retrieved for some reason */
+		/*The company data and preferences could not be retrieved for some reason */
 		prnMsg(__('The company information and preferences could not be retrieved') . ' - ' . __('see your system administrator'), 'error');
 		include('includes/footer.php');
 		exit();
-}
+	}
 
 	/*Now need to check that the order details are the same as they were when they were read into the Items array. If they've changed then someone else may have invoiced them */
 
@@ -497,11 +497,11 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] !=  '') {
 					pickreqdetails.orderlineno
 				FROM pickreqdetails
 				INNER JOIN pickreq
-					ON pickreq.prid = pickreqdetails.prid
+					ON pickreq.prid=pickreqdetails.prid
 				INNER JOIN salesorderdetails
-					ON salesorderdetails.orderno = pickreq.orderno
-					and salesorderdetails.orderlineno = pickreqdetails.orderlineno
-					and salesorderdetails.completed = 0 and salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
+					ON salesorderdetails.orderno=pickreq.orderno
+					AND salesorderdetails.orderlineno=pickreqdetails.orderlineno
+					AND salesorderdetails.completed=0 AND salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
 				WHERE pickreqdetails.prid = '" . $_SESSION['ProcessingPick'] . "'";
 
 	$Result = DB_query($SQL);
@@ -522,7 +522,8 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] !=  '') {
 	while ($MyRow = DB_fetch_array($Result)) {
 		$TotalQtyInv += $_SESSION['Items' . $identifier]->LineItems[$MyRow['orderlineno']]->QtyDispatched; //need total qty later to distribute freight equally
 		if ($_SESSION['Items' . $identifier]->LineItems[$MyRow['orderlineno']]->Quantity !=  $MyRow['quantity'] or $_SESSION['Items' . $identifier]->LineItems[$MyRow['orderlineno']]->QtyInv !=  $MyRow['qtyinvoiced']) {
-	echo '<br />' . __('Orig order for') . ' ' . $MyRow['orderlineno'] . ' ' . __('has a quantity of') . ' ' . $MyRow['quantity'] . ' ' . __('and an invoiced qty of') . ' ' . $MyRow['qtyinvoiced'] . ' ' . __('the session shows quantity of') . ' ' . $_SESSION['Items' . $identifier]->LineItems[$MyRow['orderlineno']]->Quantity . ' ' . __('and quantity invoice of') . ' ' . $_SESSION['Items' . $identifier]->LineItems[$MyRow['orderlineno']]->QtyInv;
+
+			echo '<br />' . __('Orig order for') . ' ' . $MyRow['orderlineno'] . ' ' . __('has a quantity of') . ' ' . $MyRow['quantity'] . ' ' . __('and an invoiced qty of') . ' ' . $MyRow['qtyinvoiced'] . ' ' . __('the session shows quantity of') . ' ' . $_SESSION['Items' . $identifier]->LineItems[$MyRow['orderlineno']]->Quantity . ' ' . __('and quantity invoice of') . ' ' . $_SESSION['Items' . $identifier]->LineItems[$MyRow['orderlineno']]->QtyInv;
 
 			prnMsg(__('This order has been changed or invoiced since this delivery was started to be confirmed') . ' ' . __('Processing halted.') . ' ' . __('To enter and confirm this dispatch, it must be re-selected and re-read again to update the changes made by the other user'), 'error');
 
@@ -533,7 +534,7 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] !=  '') {
 			unset($_SESSION['ProcessingPick']);
 			include('includes/footer.php');
 			exit();
-}
+		}
 	}
 	/*loop through all line items of the order to ensure none have been invoiced since started looking at this order*/
 
@@ -553,63 +554,63 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] !=  '') {
 	$SQL = "DELETE pickserialdetails
 				FROM pickserialdetails
 				INNER JOIN pickreqdetails
-					ON pickreqdetails.detailno = pickserialdetails.detailno
-				WHERE prid = '" . $_SESSION['ProcessingPick'] . "'";
-	$ErrMsg = __('CRITICAL ERROR') . ' ' . __('NOTE DOWN THIS ERROR and SEEK ASSISTANCE') . ': ' . __('The pickserialdetails could not be deleted');
+					ON pickreqdetails.detailno=pickserialdetails.detailno
+				WHERE prid='" . $_SESSION['ProcessingPick'] . "'";
+	$ErrMsg = __('CRITICAL ERROR') . ' ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The pickserialdetails could not be deleted');
 	$Result = DB_query($SQL, $ErrMsg, '', true);
 
 	/*Update order header for invoice charged on */
 	$ExtraUpdSQL = '';
 	if ($_POST['Status'] == 'Shipped') {
-	$ExtraUpdSQL = ",shippedby = '" . $_SESSION['UserID'] . "',
-					shipdate = '" . $DefaultDispatchDate . "'";
-		$ExtraLineSQL = ",shipqty = qtypicked";
-} else {
-		$ExtraUpdSQL = ",shippedby = '',
-					shipdate = '1000-01-01'";
-		$ExtraLineSQL = ",shipqty = 0";
+		$ExtraUpdSQL = ",shippedby='" . $_SESSION['UserID'] . "',
+					shipdate='" . $DefaultDispatchDate . "'";
+		$ExtraLineSQL = ",shipqty=qtypicked";
+	} else {
+		$ExtraUpdSQL = ",shippedby='',
+					shipdate='1000-01-01'";
+		$ExtraLineSQL = ",shipqty=0";
 	}
 
 	if ($_POST['Status'] == 'Cancelled') {
-	$ExtraUpdSQL .= ",closed = '1'";
-}
+		$ExtraUpdSQL .= ",closed='1'";
+	}
 
 	$SQL = "UPDATE salesorders, pickreq
 			SET internalcomment = '" . $_POST['InternalComments'] . "',
-				pickreq.comments =  '" . $_POST['Comments'] . "',
+				pickreq.comments= '" . $_POST['Comments'] . "',
 				status = '" . $_POST['Status'] . "',
 				consignment = '" . $_POST['Consignment'] . "',
 				packages = '" . $_POST['Packages'] . "'
 				" . $ExtraUpdSQL . "
-			WHERE prid =  '" . $_SESSION['ProcessingPick'] . "'
-			and salesorders.orderno = pickreq.orderno";
+			WHERE prid= '" . $_SESSION['ProcessingPick'] . "'
+			AND salesorders.orderno=pickreq.orderno";
 
-	$ErrMsg = __('CRITICAL ERROR') . ' ' . __('NOTE DOWN THIS ERROR and SEEK ASSISTANCE') . ': ' . __('The sales order header could not be updated with the internal comments');
+	$ErrMsg = __('CRITICAL ERROR') . ' ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The sales order header could not be updated with the internal comments');
 	$Result = DB_query($SQL, $ErrMsg, '', true);
 
 	foreach ($_SESSION['Items' . $identifier]->LineItems as $OrderLine) {
 		$LineItemsSQL = "SELECT pickreqdetails.detailno
-						FROM pickreqdetails INNER JOIN pickreq ON pickreq.prid = pickreqdetails.prid
+						FROM pickreqdetails INNER JOIN pickreq ON pickreq.prid=pickreqdetails.prid
 						INNER JOIN salesorderdetails
 							ON salesorderdetails.orderno = pickreq.orderno
-							and salesorderdetails.orderlineno = pickreqdetails.orderlineno
+							AND salesorderdetails.orderlineno=pickreqdetails.orderlineno
 						WHERE pickreqdetails.prid ='" . $_SESSION['ProcessingPick'] . "'
-						and salesorderdetails.orderlineno = '" . $OrderLine->LineNumber . "'";
+						AND salesorderdetails.orderlineno='" . $OrderLine->LineNumber . "'";
 
 		$ErrMsg = __('The line items of the pick list cannot be retrieved because');
 		$LineItemsResult = DB_query($LineItemsSQL, $ErrMsg);
 		$MyLine = DB_fetch_array($LineItemsResult);
 		$DetailNo = $MyLine['detailno'];
 		$SQL = "UPDATE pickreqdetails
-				SET qtypicked = '" . $OrderLine->QtyDispatched . "'
+				SET qtypicked='" . $OrderLine->QtyDispatched . "'
 				" . $ExtraLineSQL . "
-				WHERE detailno = '" . $DetailNo . "'";
+				WHERE detailno='" . $DetailNo . "'";
 
-		$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR and SEEK ASSISTANCE') . ': ' . __('The pickreqdetail record could not be inserted because');
+		$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The pickreqdetail record could not be inserted because');
 		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		if ($OrderLine->Controlled == 1) {
-	foreach ($OrderLine->SerialItems as $Item) {
+			foreach($OrderLine->SerialItems as $Item) {
 				/* now insert the serial records */
 				$SQL = "INSERT INTO pickserialdetails (detailno,
 													stockid,
@@ -620,9 +621,9 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] !=  '') {
 										'" . $Item->BundleRef . "',
 										'" . $Item->BundleQty . "')";
 
-				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR and SEEK ASSISTANCE') . ': ' . __('The serial stock movement record could not be inserted because');
+				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The serial stock movement record could not be inserted because');
 				$Result = DB_query($SQL, $ErrMsg, '', true);
-}/* foreach controlled item in the serialitems array */
+			}/* foreach controlled item in the serialitems array */
 		} /*end if the orderline is a controlled item */
 
 	}
@@ -635,9 +636,9 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] !=  '') {
 	prnMsg(__('PickList ') . ' ' . $_SESSION['ProcessingPick'] . ' ' . __('processed'), 'success');
 
 	if ($_SESSION['PackNoteFormat'] == 1) {
-	/*Laser printed A4 default */
+		/*Laser printed A4 default */
 		$PrintDispatchNote = $RootPath . '/PrintCustOrder_generic.php?TransNo=' . $_SESSION['Items' . $identifier]->OrderNo;
-} else {
+	} else {
 		/*pre-printed stationery default */
 		$PrintDispatchNote = $RootPath . '/PrintCustOrder.php?TransNo=' . $_SESSION['Items' . $identifier]->OrderNo;
 	}
@@ -676,30 +677,30 @@ else {
 	echo '<fieldset>
 			<legend<', __('Picking List Criteria'), '</legend>
 			<field>
-				<label for = "Status">' . __('Pick List Status') . ':</label>
+				<label for="Status">' . __('Pick List Status') . ':</label>
 				<select name="Status">';
 
 	if (($_SESSION['Items' . $identifier]->Status !=  'Shipped') or (in_array($ARSecurity, $_SESSION['AllowedPageSecurityTokens']))) {
 		//only allow A/R to change status on an already shipped Pick, we expect to invoice, we need A/R intervention to prevent ship, cancel, no invoice, lost money
 		if ($_POST['Status'] == 'Picked') {
-	echo '<option selected = "selected" value = "Picked">' . __('Picked') . '</option>';
-} else {
-			echo '<option value = "Picked">' . __('Picked') . '</option>';
+			echo '<option selected="selected" value="Picked">' . __('Picked') . '</option>';
+		} else {
+			echo '<option value="Picked">' . __('Picked') . '</option>';
 		}
 	}
 
 	if ($_POST['Status'] == 'Shipped') {
-	echo '<option selected = "selected" value = "Shipped">' . __('Shipped') . '</option>';
-} else {
-		echo '<option value = "Shipped">' . __('Shipped') . '</option>';
+		echo '<option selected="selected" value="Shipped">' . __('Shipped') . '</option>';
+	} else {
+		echo '<option value="Shipped">' . __('Shipped') . '</option>';
 	}
 
 	if (($_SESSION['Items' . $identifier]->Status !=  'Shipped') or (in_array($ARSecurity, $_SESSION['AllowedPageSecurityTokens']))) {
 		//only allow A/R to cancel an already shipped Pick, we expect to invoice, we need A/R intervention to prevent ship, cancel, no invoice, lost money
 		if ($_POST['Status'] == 'Cancelled') {
-	echo '<option selected = "selected" value = "Cancelled">' . __('Cancelled') . '</option>';
-} else {
-			echo '<option value = "Cancelled">' . __('Cancelled') . '</option>';
+			echo '<option selected="selected" value="Cancelled">' . __('Cancelled') . '</option>';
+		} else {
+			echo '<option value="Cancelled">' . __('Cancelled') . '</option>';
 		}
 	}
 
@@ -707,27 +708,27 @@ else {
 		</field>';
 
 	echo '<field>
-			<label for = "Consignment">' . __('Consignment Note Ref') . ':</label>
-			<input tabindex="' . $j . '" type = "text" data-type = "no-illegal-chars" title="" maxlength = "15" size = "15" name="Consignment" value = "' . $_POST['Consignment'] . '" />
+			<label for="Consignment">' . __('Consignment Note Ref') . ':</label>
+			<input tabindex="' . $j . '" type="text" data-type="no-illegal-chars" title="" maxlength="15" size="15" name="Consignment" value="' . $_POST['Consignment'] . '" />
 			<fieldhelp>' . __('Enter the consignment note reference to enable tracking of the delivery in the event of customer proof of delivery issues') . '</fieldhelp>
 		</field>';
 	++$j;
 
 	echo '<field>
-			<label for = "Packages">' . __('No Of Packages in Delivery') . ':</label>
-			<input tabindex="' . $j . '" type = "number" maxlength = "6" size = "6" class="integer" name="Packages" value = "' . $_POST['Packages'] . '" />
+			<label for="Packages">' . __('No Of Packages in Delivery') . ':</label>
+			<input tabindex="' . $j . '" type="number" maxlength="6" size="6" class="integer" name="Packages" value="' . $_POST['Packages'] . '" />
 		</field>';
 
 	++$j;
 	echo '<field>
-			<label for = "Comments">' . __('Pick List Comments') . ':</label>
-			<textarea tabindex="' . $j . '" name="Comments" pattern = ".{0,20}" cols = "31" rows = "5">' . reverse_escape($_SESSION['Items' . $identifier]->Comments) . '</textarea>
+			<label for="Comments">' . __('Pick List Comments') . ':</label>
+			<textarea tabindex="' . $j . '" name="Comments" pattern=".{0,20}" cols="31" rows="5">' . reverse_escape($_SESSION['Items' . $identifier]->Comments) . '</textarea>
 		</field>';
 
 	++$j;
 	echo '<field>
-			<label for = "InternalComments">' . __('Order Internal Comments') . ':</label>
-			<textarea tabindex="' . $j . '" name="InternalComments" pattern = ".{0,20}" cols = "31" rows = "5">' . reverse_escape($_SESSION['Items' . $identifier]->InternalComments) . '</textarea>
+			<label for="InternalComments">' . __('Order Internal Comments') . ':</label>
+			<textarea tabindex="' . $j . '" name="InternalComments" pattern=".{0,20}" cols="31" rows="5">' . reverse_escape($_SESSION['Items' . $identifier]->InternalComments) . '</textarea>
 		</field>';
 
 	++$j;
@@ -736,11 +737,11 @@ else {
 	if (($_SESSION['Items' . $identifier]->Status !=  'Shipped') or (in_array($ARSecurity, $_SESSION['AllowedPageSecurityTokens']))) {
 		//only allow A/R to change status on an already shipped Pick, we expect to invoice, we need A/R intervention to prevent ship, cancel, no invoice, lost money
 		echo '<div class="centre">
-				<input type = "submit" tabindex="' . $j . '" name="Update" value = "' . __('Update') . '" />';
+				<input type="submit" tabindex="' . $j . '" name="Update" value="' . __('Update') . '" />';
 		++$j;
-		echo '<input type = "submit" tabindex="' . $j . '" name="ProcessPickList" value = "' . __('Process Pick List') . '" />
+		echo '<input type="submit" tabindex="' . $j . '" name="ProcessPickList" value="' . __('Process Pick List') . '" />
 			</div>
-			<input type = "hidden" name="ShipVia" value = "' . $_SESSION['Items' . $identifier]->ShipVia . '" />';
+			<input type="hidden" name="ShipVia" value="' . $_SESSION['Items' . $identifier]->ShipVia . '" />';
 	}
 }
 echo '</form>';

@@ -54,16 +54,16 @@ $SQL = "SELECT salesorders.customerref,
 			salesorders.datepackingslipprinted,
 			locations.locationname
 		FROM salesorders INNER JOIN debtorsmaster
-			ON salesorders.debtorno = debtorsmaster.debtorno
+			ON salesorders.debtorno=debtorsmaster.debtorno
 		INNER JOIN shippers
-			ON salesorders.shipvia = shippers.shipper_id
+			ON salesorders.shipvia=shippers.shipper_id
 		INNER JOIN locations
-			ON salesorders.fromstkloc = locations.loccode
-		INNER JOIN locationusers ON locationusers.loccode = locations.loccode and locationusers.userid = '" . $_SESSION['UserID'] . "' and locationusers.canview = 1
-		WHERE salesorders.orderno = '" . $_GET['TransNo'] . "'";
+			ON salesorders.fromstkloc=locations.loccode
+		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" . $_SESSION['UserID'] . "' AND locationusers.canview=1
+		WHERE salesorders.orderno='" . $_GET['TransNo'] . "'";
 
 if ($_SESSION['SalesmanLogin'] != '') {
-	$SQL .= " and salesorders.salesperson = '" . $_SESSION['SalesmanLogin'] . "'";
+	$SQL .= " AND salesorders.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 }
 
 $Result = DB_query($SQL, $ErrMsg);
@@ -128,33 +128,33 @@ $SQL = "SELECT salesorderdetails.stkcode,
 			stockmaster.decimalplaces,
 			stockmaster.units
 		FROM salesorderdetails INNER JOIN stockmaster
-			ON salesorderdetails.stkcode = stockmaster.stockid
-		 WHERE salesorderdetails.orderno = '" . $_GET['TransNo'] . "'";
+			ON salesorderdetails.stkcode=stockmaster.stockid
+		 WHERE salesorderdetails.orderno='" . $_GET['TransNo'] . "'";
 $Result = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($Result) > 0) {
 
 	// ---- Prepare HTML for DomPDF ----
 	$DeliveryAddress = '';
-	for ($j = 1; $j < 5; $j++) {
+	for ($j = 1;$j < 5;$j++) {
 		if ($MyRow['deladd' . $j] != '') {
-	$DeliveryAddress .= htmlspecialchars($MyRow['deladd' . $j]) . "<br />";
-}
+			$DeliveryAddress .= htmlspecialchars($MyRow['deladd' . $j]) . "<br />";
+		}
 	}
 	$DeliveryAddress .= htmlspecialchars($MyRow['deladd5']);
 	$CustomerAddress = '';
-	for ($j = 1; $j < 6; $j++) {
+	for ($j = 1;$j < 6;$j++) {
 		if ($MyRow['address' . $j] != '') {
-	$CustomerAddress .= htmlspecialchars($MyRow['address' . $j]) . "<br />";
-}
+			$CustomerAddress .= htmlspecialchars($MyRow['address' . $j]) . "<br />";
+		}
 	}
 	$CustomerAddress .= htmlspecialchars($MyRow['address6']);
 	$HTML = '';
 	$HTML .= '<!DOCTYPE html>
 	<head>
-		<link href = "css/reports.css" rel = "stylesheet" type = "text/css" />
-		<meta name="author" content = "WebERP">
-		<meta name="Creator" content = "webERP https://www.weberp.org">
+		<link href="css/reports.css" rel="stylesheet" type="text/css" />
+		<meta name="author" content="WebERP">
+		<meta name="Creator" content="webERP https://www.weberp.org">
 	</head>
 	<body>
 			<h1>' . __('Customer Packing Slip') . '</h1>
@@ -178,7 +178,7 @@ if (DB_num_rows($Result) > 0) {
 				</tr>
 			</table>
 			<br />
-			<table border = "1" cellspacing = "0" cellpadding = "3" width = "100%">
+			<table border="1" cellspacing="0" cellpadding="3" width="100%">
 				<thead>
 					<tr>
 						<th>' . __('Code') . '</th>

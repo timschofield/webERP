@@ -52,8 +52,8 @@ if (!isset($_POST['PageOffset'])) {
 	$_POST['PageOffset'] = 1;
 } else {
 	if ($_POST['PageOffset'] == 0) {
-	$_POST['PageOffset'] = 1;
-} // $_POST['PageOffset'] == 0
+		$_POST['PageOffset'] = 1;
+	} // $_POST['PageOffset'] == 0
 
 }
 
@@ -88,23 +88,23 @@ if (isset($_POST['Search']) or isset($_POST['CSV']) or isset($_POST['Go']) or is
 		$_POST['CustPhone'] = trim($_POST['CustPhone']);
 		$_POST['CustAdd'] = trim($_POST['CustAdd']);
 		$SQL .= " WHERE debtorsmaster.name " . LIKE . " '%" . $SearchKeywords . "%'
-						and debtorsmaster.debtorno " . LIKE . " '%" . $_POST['CustCode'] . "%'
-						and (custbranch.phoneno " . LIKE . " '%" . $_POST['CustPhone'] . "%' or custbranch.phoneno IS null)
-						and (debtorsmaster.address1 " . LIKE . " '%" . $_POST['CustAdd'] . "%'
-							or debtorsmaster.address2 " . LIKE . " '%" . $_POST['CustAdd'] . "%'
-							or debtorsmaster.address3 " . LIKE . " '%" . $_POST['CustAdd'] . "%'
-							or debtorsmaster.address4 " . LIKE . " '%" . $_POST['CustAdd'] . "%')"; // If there is no custbranch set, the phoneno in custbranch will be null, so we add IS null condition otherwise those debtors without custbranches setting will be no searchable and it will make a inconsistence with customer receipt interface.
+						AND debtorsmaster.debtorno " . LIKE . " '%" . $_POST['CustCode'] . "%'
+						AND (custbranch.phoneno " . LIKE . " '%" . $_POST['CustPhone'] . "%' OR custbranch.phoneno IS NULL)
+						AND (debtorsmaster.address1 " . LIKE . " '%" . $_POST['CustAdd'] . "%'
+							OR debtorsmaster.address2 " . LIKE . " '%" . $_POST['CustAdd'] . "%'
+							OR debtorsmaster.address3 " . LIKE . " '%" . $_POST['CustAdd'] . "%'
+							OR debtorsmaster.address4 " . LIKE . " '%" . $_POST['CustAdd'] . "%')"; // If there is no custbranch set, the phoneno in custbranch will be null, so we add IS NULL condition otherwise those debtors without custbranches setting will be no searchable and it will make a inconsistence with customer receipt interface.
 		if (mb_strlen($_POST['CustType']) > 0 and $_POST['CustType'] != 'ALL') {
-			$SQL.= " and debtortype.typename = '" . $_POST['CustType'] . "'";
+			$SQL.= " AND debtortype.typename = '" . $_POST['CustType'] . "'";
 		} // mb_strlen($_POST['CustType']) > 0 and $_POST['CustType'] != 'ALL'
 		if (mb_strlen($_POST['Area']) > 0 and $_POST['Area'] != 'ALL') {
-			$SQL.= " and custbranch.area = '" . $_POST['Area'] . "'";
+			$SQL.= " AND custbranch.area = '" . $_POST['Area'] . "'";
 		} // mb_strlen($_POST['Area']) > 0 and $_POST['Area'] != 'ALL'
 
 	} // one of keywords or custcode or custphone was more than a zero length string
 	if ($_SESSION['SalesmanLogin'] != '') {
-	$SQL.= " and custbranch.salesman = '" . $_SESSION['SalesmanLogin'] . "'";
-} // $_SESSION['SalesmanLogin'] != ''
+		$SQL.= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
+	} // $_SESSION['SalesmanLogin'] != ''
 	$SQL.= " ORDER BY debtorsmaster.name";
 	$ErrMsg = __('The searched customer records requested cannot be retrieved because');
 
@@ -126,11 +126,11 @@ if ($_SESSION['CustomerID'] != '' and !isset($_POST['Search']) and !isset($_POST
 				custbranch.brname
 			FROM debtorsmaster
 			INNER JOIN custbranch
-			ON debtorsmaster.debtorno = custbranch.debtorno
-			WHERE custbranch.debtorno = '" . $_SESSION['CustomerID'] . "'";
+			ON debtorsmaster.debtorno=custbranch.debtorno
+			WHERE custbranch.debtorno='" . $_SESSION['CustomerID'] . "'";
 
 	if (isset($_SESSION['BranchCode'])) {
-		$SQL .= " and custbranch.branchcode = '" . $_SESSION['BranchCode'] . "'";
+		$SQL .= " AND custbranch.branchcode='" . $_SESSION['BranchCode'] . "'";
 	} // isset($_SESSION['BranchCode'])
 
 	$ErrMsg = __('The customer name requested cannot be retrieved because');
@@ -187,7 +187,7 @@ if ($_SESSION['CustomerID'] != '' and !isset($_POST['Search']) and !isset($_POST
 					<a href="', $RootPath, '/SelectSalesOrder.php?SelectedCustomer=', urlencode($_SESSION['CustomerID']), '">', __('Modify Outstanding Sales Orders'), '</a>
 				</li>
 				<li class="MenuItem">
-					<a data-title="', __('This allows the deposits received from the customer to be matched against invoices'), '" href="', $RootPath, '/CustomerAllocations.php?DebtorNo=', urlencode($_SESSION['CustomerID']), '">', __('Allocate Receipts or Credit Notes'), '</a>
+					<a data-title="', __('This allows the deposits received from the customer to be matched against invoices'), '" href="', $RootPath, '/CustomerAllocations.php?DebtorNo=', urlencode($_SESSION['CustomerID']), '">', __('Allocate Receipts OR Credit Notes'), '</a>
 				</li>
 				<li class="MenuItem">
 					<a href="', $RootPath, '/JobCards.php?DebtorNo=', urlencode($_SESSION['CustomerID']), '&amp;BranchNo=', $_SESSION['BranchCode'], '">', __('Job Cards'), '</a>
@@ -238,8 +238,8 @@ if ($_SESSION['CustomerID'] != '' and !isset($_POST['Search']) and !isset($_POST
 }
 
 // Search for customers:
-echo '<form action = "', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method = "post">
-		<input type = "hidden" name="FormID" value = "', $_SESSION['FormID'], '" />';
+echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">
+		<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 if (mb_strlen($Msg) > 1) {
 	prnMsg($Msg, 'info');
 } // mb_strlen($Msg) > 1
@@ -250,48 +250,48 @@ echo '<fieldset>
 		<legend>', __('Search Criteria'), '</legend>
 		<field>';
 echo '<field>
-		<label for = "Keywords">', __('Enter a partial Name'), ':</label>
-		<input type = "text" maxlength = "25" name="Keywords" title=""  size = "20" ',( isset($_POST['Keywords']) ? 'value ="' . $_POST['Keywords'] . '" ' : '' ), '/>
+		<label for="Keywords">', __('Enter a partial Name'), ':</label>
+		<input type="text" maxlength="25" name="Keywords" title=""  size="20" ',( isset($_POST['Keywords']) ? 'value="' . $_POST['Keywords'] . '" ' : '' ), '/>
 		<fieldhelp>', __('If there is an entry in this field then customers with the text entered in their name will be returned') , '</fieldhelp>
 	</field>';
 
 echo '<field>
-		<label for = "CustCode">', '<b>' . __('or') . ' </b>' . __('Enter a partial Code'), ':</label>
-		<input maxlength = "18" name="CustCode" pattern = "[\w-]*" size = "15" type = "text" title="" ', (isset($_POST['CustCode']) ? 'value ="' . $_POST['CustCode'] . '" ' : '' ), '/>
+		<label for="CustCode">', '<b>' . __('OR') . ' </b>' . __('Enter a partial Code'), ':</label>
+		<input maxlength="18" name="CustCode" pattern="[\w-]*" size="15" type="text" title="" ', (isset($_POST['CustCode']) ? 'value="' . $_POST['CustCode'] . '" ' : '' ), '/>
 		<fieldhelp>', __('If there is an entry in this field then customers with the text entered in their customer code will be returned') , '</fieldhelp>
 	</field>';
 
 echo '<field>
-		<label for = "CustPhone">', '<b>' . __('or') . ' </b>' . __('Enter a partial Phone Number'), ':</label>
-		<input maxlength = "18" name="CustPhone" pattern = "[0-9\-\s()+]*" size = "15" type = "tel" ',( isset($_POST['CustPhone']) ? 'value ="' . $_POST['CustPhone'] . '" ' : '' ), '/>
+		<label for="CustPhone">', '<b>' . __('OR') . ' </b>' . __('Enter a partial Phone Number'), ':</label>
+		<input maxlength="18" name="CustPhone" pattern="[0-9\-\s()+]*" size="15" type="tel" ',( isset($_POST['CustPhone']) ? 'value="' . $_POST['CustPhone'] . '" ' : '' ), '/>
 	</field>';
 
 echo '<field>
-		<label for = "CustAdd">', '<b>' . __('or') . ' </b>' . __('Enter part of the Address'), ':</label>
-		<input maxlength = "25" name="CustAdd" size = "20" type = "text" ',(isset($_POST['CustAdd']) ? 'value ="' . $_POST['CustAdd'] . '" ' : '' ), '/>
+		<label for="CustAdd">', '<b>' . __('OR') . ' </b>' . __('Enter part of the Address'), ':</label>
+		<input maxlength="25" name="CustAdd" size="20" type="text" ',(isset($_POST['CustAdd']) ? 'value="' . $_POST['CustAdd'] . '" ' : '' ), '/>
 	</field>';
 
 echo '<field>
-		<label for = "CustType">', '<b>' . __('or') . ' </b>' . __('Choose a Type'), ':</label>
+		<label for="CustType">', '<b>' . __('OR') . ' </b>' . __('Choose a Type'), ':</label>
 		<field>';
-if (isset($_POST['CustType'])) {
+if(isset($_POST['CustType'])) {
 	// Show Customer Type drop down list
 	$Result2 = DB_query("SELECT typeid, typename FROM debtortype ORDER BY typename");
 	// Error if no customer types setup
-	if (DB_num_rows($Result2) == 0) {
+	if(DB_num_rows($Result2) == 0) {
 		$DataError = 1;
 		echo '<a href="' . $RootPath . '/CustomerTypes.php" target="_parent">' . __('Setup Types') . '</a>';
-		echo '<field><td colspan = "2">' . prnMsg(__('No Customer types defined'), 'error','',true) . '</td></field>';
+		echo '<field><td colspan="2">' . prnMsg(__('No Customer types defined'), 'error','',true) . '</td></field>';
 	} else {
 		// If OK show select box with option selected
 		echo '<select name="CustType">
-				<option value = "ALL">' . __('Any') . '</option>';
+				<option value="ALL">' . __('Any') . '</option>';
 		while ($MyRow = DB_fetch_array($Result2)) {
-			if ($_POST['CustType'] == $MyRow['typename']) {
-	echo '<option selected = "selected" value = "' . $MyRow['typename'] . '">' . $MyRow['typename'] . '</option>';
-}// $_POST['CustType'] == $MyRow['typename']
+			if($_POST['CustType'] == $MyRow['typename']) {
+				echo '<option selected="selected" value="' . $MyRow['typename'] . '">' . $MyRow['typename'] . '</option>';
+			}// $_POST['CustType'] == $MyRow['typename']
 			else {
-				echo '<option value = "' . $MyRow['typename'] . '">' . $MyRow['typename'] . '</option>';
+				echo '<option value="' . $MyRow['typename'] . '">' . $MyRow['typename'] . '</option>';
 			}
 		}// end while loop
 		DB_data_seek($Result2, 0);
@@ -299,19 +299,19 @@ if (isset($_POST['CustType'])) {
 			</field>';
 	}
 } else {// CustType is not set
-	// No option selected = "selected" yet, so show Customer Type drop down list
+	// No option selected="selected" yet, so show Customer Type drop down list
 	$Result2 = DB_query("SELECT typeid, typename FROM debtortype ORDER BY typename");
 	// Error if no customer types setup
-	if (DB_num_rows($Result2) == 0) {
+	if(DB_num_rows($Result2) == 0) {
 		$DataError = 1;
 		echo '<a href="' . $RootPath . '/CustomerTypes.php" target="_parent">' . __('Setup Types') . '</a>';
-		echo '<field><td colspan = "2">' . prnMsg(__('No Customer types defined'), 'error','',true) . '</td></field>';
+		echo '<field><td colspan="2">' . prnMsg(__('No Customer types defined'), 'error','',true) . '</td></field>';
 	} else {
 		// if OK show select box with available options to choose
 		echo '<select name="CustType">
-				<option value = "ALL">' . __('Any') . '</option>';
+				<option value="ALL">' . __('Any') . '</option>';
 		while ($MyRow = DB_fetch_array($Result2)) {
-			echo '<option value = "' . $MyRow['typename'] . '">' . $MyRow['typename'] . '</option>';
+			echo '<option value="' . $MyRow['typename'] . '">' . $MyRow['typename'] . '</option>';
 		}// end while loop
 		DB_data_seek($Result2, 0);
 		echo '</select>
@@ -321,22 +321,22 @@ if (isset($_POST['CustType'])) {
 
 /* Option to select a sales area */
 echo '<field>
-		<label for = "Area">' . '<b>' . __('or') . ' </b>' . __('Choose an Area') . ':</label>';
+		<label for="Area">' . '<b>' . __('OR') . ' </b>' . __('Choose an Area') . ':</label>';
 $Result2 = DB_query("SELECT areacode, areadescription FROM areas");
 // Error if no sales areas setup
-if (DB_num_rows($Result2) == 0) {
+if(DB_num_rows($Result2) == 0) {
 	$DataError = 1;
 	echo '<a href="' . $RootPath . '/Areas.php" target="_parent">' . __('Setup Areas') . '</a>';
-	echo '<field><td colspan = "2">' . prnMsg(__('No Sales Areas defined'), 'error','',true) . '</td></field>';
+	echo '<field><td colspan="2">' . prnMsg(__('No Sales Areas defined'), 'error','',true) . '</td></field>';
 } else {
 	// if OK show select box with available options to choose
 	echo '<select name="Area">';
-	echo '<option value = "ALL">' . __('Any') . '</option>';
+	echo '<option value="ALL">' . __('Any') . '</option>';
 	while ($MyRow = DB_fetch_array($Result2)) {
-		if (isset($_POST['Area']) and $_POST['Area'] == $MyRow['areacode']) {
-			echo '<option selected = "selected" value = "' . $MyRow['areacode'] . '">' . $MyRow['areadescription'] . '</option>';
+		if(isset($_POST['Area']) AND $_POST['Area'] == $MyRow['areacode']) {
+			echo '<option selected="selected" value="' . $MyRow['areacode'] . '">' . $MyRow['areadescription'] . '</option>';
 		} else {
-			echo '<option value = "' . $MyRow['areacode'] . '">' . $MyRow['areadescription'] . '</option>';
+			echo '<option value="' . $MyRow['areacode'] . '">' . $MyRow['areadescription'] . '</option>';
 		}
 	}// end while loop
 	DB_data_seek($Result2, 0);
@@ -346,8 +346,8 @@ if (DB_num_rows($Result2) == 0) {
 echo '</fieldset>';
 
 echo '<div class="centre">
-		<input name="Search" type = "submit" value = "', __('Search Now'), '" />
-		<input name="CSV" type = "submit" value = "', __('CSV Format'), '" />
+		<input name="Search" type="submit" value="', __('Search Now'), '" />
+		<input name="CSV" type="submit" value="', __('CSV Format'), '" />
 	</div>';
 
 // End search for customers.
@@ -361,40 +361,40 @@ if (isset($SearchResult)) {
 	if (!isset($_POST['CSV'])) {
 		if (isset($_POST['Next'])) {
 			if ($_POST['PageOffset'] < $ListPageMax) {
-	$_POST['PageOffset'] = $_POST['PageOffset'] + 1;
-} // $_POST['PageOffset'] < $ListPageMax
+				$_POST['PageOffset'] = $_POST['PageOffset'] + 1;
+			} // $_POST['PageOffset'] < $ListPageMax
 
 		} // isset($_POST['Next'])
 		if (isset($_POST['Previous'])) {
 			if ($_POST['PageOffset'] > 1) {
-	$_POST['PageOffset'] = $_POST['PageOffset'] - 1;
-} // $_POST['PageOffset'] > 1
+				$_POST['PageOffset'] = $_POST['PageOffset'] - 1;
+			} // $_POST['PageOffset'] > 1
 
 		} // isset($_POST['Previous'])
-		echo '<input type = "hidden" name="PageOffset" value = "', $_POST['PageOffset'], '" />';
+		echo '<input type="hidden" name="PageOffset" value="', $_POST['PageOffset'], '" />';
 		if ($ListPageMax > 1) {
-	echo '<div class="centre">&nbsp;&nbsp;', $_POST['PageOffset'], ' ', __('of'), ' ', $ListPageMax, ' ', __('pages'), '. ', __('Go to Page'), ': ';
+			echo '<div class="centre">&nbsp;&nbsp;', $_POST['PageOffset'], ' ', __('of'), ' ', $ListPageMax, ' ', __('pages'), '. ', __('Go to Page'), ': ';
 			echo '<select name="PageOffset1">';
 			$ListPage = 1;
 			while ($ListPage <= $ListPageMax) {
 				if ($ListPage == $_POST['PageOffset']) {
-					echo '<option value = "', $ListPage, '" selected = "selected">', $ListPage, '</option>';
-} // $ListPage == $_POST['PageOffset']
+					echo '<option value="', $ListPage, '" selected="selected">', $ListPage, '</option>';
+				} // $ListPage == $_POST['PageOffset']
 				else {
-					echo '<option value = "', $ListPage, '">', $ListPage, '</option>';
+					echo '<option value="', $ListPage, '">', $ListPage, '</option>';
 				}
 				$ListPage++;
 			} // $ListPage <= $ListPageMax
 			echo '</select>
-				<input type = "submit" name="Go1" value = "', __('Go'), '" />
-				<input type = "submit" name="Previous" value = "', __('Previous'), '" />
-				<input type = "submit" name="Next" value = "', __('Next'), '" />';
+				<input type="submit" name="Go1" value="', __('Go'), '" />
+				<input type="submit" name="Previous" value="', __('Previous'), '" />
+				<input type="submit" name="Next" value="', __('Next'), '" />';
 			echo '</div>';
 		} // $ListPageMax > 1
 		$RowIndex = 0;
 	} // !isset($_POST['CSV'])
 	if (DB_num_rows($SearchResult) <> 0) {
-		echo '<table cellpadding = "2">
+		echo '<table cellpadding="2">
 				<thead>
 					<tr>
 						<th class="SortedColumn">', __('Code'), '</th>
@@ -426,7 +426,7 @@ if (isset($SearchResult)) {
 		echo '<tbody>';
 		while (($MyRow = DB_fetch_array($SearchResult)) and ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
 			echo '<tr class="striped_row">
-					<td><button type = "submit" name="SubmitCustomerSelection[', htmlspecialchars($MyRow['debtorno'], ENT_QUOTES, 'UTF-8', false), ']" value = "', htmlspecialchars($MyRow['branchcode'], ENT_QUOTES, 'UTF-8', false), '" >', $MyRow['debtorno'], ' ', $MyRow['branchcode'], '</button></td>
+					<td><button type="submit" name="SubmitCustomerSelection[', htmlspecialchars($MyRow['debtorno'], ENT_QUOTES, 'UTF-8', false), ']" value="', htmlspecialchars($MyRow['branchcode'], ENT_QUOTES, 'UTF-8', false), '" >', $MyRow['debtorno'], ' ', $MyRow['branchcode'], '</button></td>
 					<td class="text">', htmlspecialchars($MyRow['name'], ENT_QUOTES, 'UTF-8', false), '</td>
 					<td class="text">', htmlspecialchars($MyRow['brname'], ENT_QUOTES, 'UTF-8', false), '</td>
 					<td class="text">', $MyRow['contactname'], '</td>
@@ -443,7 +443,7 @@ if (isset($SearchResult)) {
 		// end of while loop
 		echo '</tbody>';
 		echo '</table>';
-		echo '<input type = "hidden" name="JustSelectedACustomer" value = "Yes" />';
+		echo '<input type="hidden" name="JustSelectedACustomer" value="Yes" />';
 	} // DB_num_rows($Result) <> 0
 
 } // isset($Result)
@@ -455,17 +455,17 @@ if (!isset($_POST['CSV'])) {
 		$ListPage = 1;
 		while ($ListPage <= $ListPageMax) {
 			if ($ListPage == $_POST['PageOffset']) {
-	echo '<option value = "', $ListPage, '" selected = "selected">', $ListPage, '</option>';
-} // $ListPage == $_POST['PageOffset']
+				echo '<option value="', $ListPage, '" selected="selected">', $ListPage, '</option>';
+			} // $ListPage == $_POST['PageOffset']
 			else {
-				echo '<option value = "', $ListPage, '">', $ListPage, '</option>';
+				echo '<option value="', $ListPage, '">', $ListPage, '</option>';
 			}
 			$ListPage++;
 		} // $ListPage <= $ListPageMax
 		echo '</select>
-			<input type = "submit" name="Go2" value = "', __('Go'), '" />
-			<input type = "submit" name="Previous" value = "', __('Previous'), '" />
-			<input type = "submit" name="Next" value = "', __('Next'), '" />';
+			<input type="submit" name="Go2" value="', __('Go'), '" />
+			<input type="submit" name="Previous" value="', __('Previous'), '" />
+			<input type="submit" name="Next" value="', __('Next'), '" />';
 		echo '</div>';
 	} // isset($ListPageMax) and $ListPageMax > 1
 	// end if results to show
@@ -476,13 +476,14 @@ echo '</form>';
 // Only display the geocode map if the integration is turned on, and there is a latitude/longitude to display
 if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 	if ($_SESSION['geocode_integration'] == 1) {
-	$SQL = "SELECT * FROM geocode_param";
+
+		$SQL = "SELECT * FROM geocode_param";
 		$Result = DB_query($SQL);
 		if (DB_num_rows($Result) == 0) {
 			prnMsg(__('You must first setup the geocode parameters') . ' ' . '<a href="' . $RootPath . '/GeocodeSetup.php">' . __('here') . '</a>', 'error');
 			include('includes/footer.php');
 			exit();
-}
+		}
 		$MyRow = DB_fetch_array($Result);
 		$API_key = $MyRow['geocode_key'];
 		$center_long = $MyRow['center_long'];
@@ -506,7 +507,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 				LEFT JOIN custbranch
 					ON debtorsmaster.debtorno = custbranch.debtorno
 				WHERE debtorsmaster.debtorno = '" . $_SESSION['CustomerID'] . "'
-					and custbranch.branchcode = '" . $_SESSION['BranchCode'] . "'
+					AND custbranch.branchcode = '" . $_SESSION['BranchCode'] . "'
 				ORDER BY debtorsmaster.debtorno";
 		$Result2 = DB_query($SQL);
 		$MyRow2 = DB_fetch_array($Result2);
@@ -515,7 +516,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 
 		/// @todo move getting of geocode info into a dedicated function, and move off google maps
 		if ($Lat == 0 and $MyRow2['braddress1'] != '' and $_SESSION['BranchCode'] != '') {
-	$delay = 0;
+			$delay = 0;
 			$base_url = 'https://' . $map_host . '/maps/api/geocode/xml?address=';
 
 			$geocode_pending = true;
@@ -536,12 +537,12 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 					$Lat = $xml->result->geometry->location->lat;
 					$Lng = $xml->result->geometry->location->lng;
 
-					$query = sprintf("UPDATE custbranch " . " SET lat = '%s', lng = '%s' " . " WHERE branchcode = '%s' " . " and debtorno = '%s' LIMIT 1;", ($Lat), ($Lng), ($id), ($debtorno));
+					$query = sprintf("UPDATE custbranch " . " SET lat = '%s', lng = '%s' " . " WHERE branchcode = '%s' " . " AND debtorno = '%s' LIMIT 1;", ($Lat), ($Lng), ($id), ($debtorno));
 					$update_result = DB_query($query);
 
 					if ($update_result == 1) {
 						prnMsg(__('GeoCode has been updated for CustomerID') . ': ' . $id . ' - ' . __('Latitude') . ': ' . $Lat . ' ' . __('Longitude') . ': ' . $Lng, 'info');
-}
+					}
 				} else {
 					$geocode_pending = false;
 					prnMsg(__('Unable to update GeoCode for CustomerID') . ': ' . $id . ' - ' . __('Received status') . ': ' . $status, 'error');
@@ -551,10 +552,10 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 		}
 
 		if ($Lat == 0) {
-	echo '<div class="centre">', __('Mapping is enabled, but no Mapping data to display for this Customer.'), '</div>';
-} // $Lattitude == 0
+			echo '<div class="centre">', __('Mapping is enabled, but no Mapping data to display for this Customer.'), '</div>';
+		} // $Lattitude == 0
 		else {
-			echo '<table cellpadding = "4">
+			echo '<table cellpadding="4">
 					<thead>
 						<tr>
 							<th style="width:auto">', __('Customer Mapping'), '</th>
@@ -615,14 +616,14 @@ function initMap() {
 	});
 }
 </script>
-<script async defer src = "https://maps.googleapis.com/maps/api/js?key=', $API_key, '&callback=initMap"></script>';
-			/*		echo '<script src = "https://' . $map_host . '/maps/api/js?v=3.exp&key=' . $API_key . '" type = "text/javascript"></script>';*/
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=', $API_key, '&callback=initMap"></script>';
+			/*		echo '<script src="https://' . $map_host . '/maps/api/js?v=3.exp&key=' . $API_key . '" type="text/javascript"></script>';*/
 		}
 
 	} // $_SESSION['geocode_integration'] == 1
 	// Extended Customer Info only if selected in Configuration
 	if ($_SESSION['Extended_CustomerInfo'] == 1) {
-	if ($_SESSION['CustomerID'] != '') {
+		if ($_SESSION['CustomerID'] != '') {
 			$SQL = "SELECT debtortype.typeid,
 							debtortype.typename
 					FROM debtorsmaster
@@ -642,10 +643,10 @@ function initMap() {
 						debtorsmaster.paymentterms,
 						debtorsmaster.lastpaid,
 						debtorsmaster.lastpaiddate,
-						currencies.decimalplaces as currdecimalplaces
+						currencies.decimalplaces AS currdecimalplaces
 					FROM debtorsmaster
 					INNER JOIN currencies
-						ON debtorsmaster.currcode = currencies.currabrev
+						ON debtorsmaster.currcode=currencies.currabrev
 					WHERE debtorsmaster.debtorno ='" . $_SESSION['CustomerID'] . "'";
 			$DataResult = DB_query($SQL);
 			$MyRow = DB_fetch_array($DataResult);
@@ -653,22 +654,22 @@ function initMap() {
 			$SQL = "SELECT sum(ovamount+ovgst) as total
 					FROM debtortrans
 					WHERE debtorno = '" . $_SESSION['CustomerID'] . "'
-						and type !=12";
+						AND type !=12";
 			$Total1Result = DB_query($SQL);
 			$row = DB_fetch_array($Total1Result);
 			echo '<table style="width: 45%;">
 					<tr>
-						<th colspan = "3" style="width:33%">', __('Customer Data'), '</th>
+						<th colspan="3" style="width:33%">', __('Customer Data'), '</th>
 					</tr>
 					<tr>
-						<td class="select" valign = "top">';
+						<td class="select" valign="top">';
 			/* Customer Data */
 			if ($MyRow['lastpaiddate'] == 0) {
 				echo __('No receipts from this customer.'), '</td>
 					<td class="select">&nbsp;</td>
 					<td class="select">&nbsp;</td>
 				</tr>';
-} // $MyRow['lastpaiddate'] == 0
+			} // $MyRow['lastpaiddate'] == 0
 			else {
 				echo __('Last Paid Date'), ':</td>
 					<td class="select"><b>', ConvertSQLDate($MyRow['lastpaiddate']), '</b></td>
@@ -686,12 +687,12 @@ function initMap() {
 					<td class="select">', $MyRow['customersincedays'], ' ', __('days'), '</td>
 				</tr>';
 			if ($row['total'] == 0) {
-	echo '<tr>
+				echo '<tr>
 						<td class="select"><b>', __('No Spend from this Customer.'), '</b></td>
 						<td class="select">&nbsp;</td>
 						<td class="select">&nbsp;</td>
 					</tr>';
-} // $row['total'] == 0
+			} // $row['total'] == 0
 			else {
 				echo '<tr>
 						<td class="select">', __('Total Spend from this Customer (inc tax)'), ':</td>
@@ -708,7 +709,7 @@ function initMap() {
 		} // $_SESSION['CustomerID'] != ''
 		// Customer Contacts
 		$SQL = "SELECT * FROM custcontacts
-				WHERE debtorno = '" . $_SESSION['CustomerID'] . "'
+				WHERE debtorno='" . $_SESSION['CustomerID'] . "'
 				ORDER BY contid";
 		$Result = DB_query($SQL);
 		if (DB_num_rows($Result) <> 0) {
@@ -716,7 +717,7 @@ function initMap() {
 					<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/group_add.png" title="', __('Customer Contacts'), '" alt="" />', ' ', __('Customer Contacts'), '
 				</p>';
 
-			echo '<table width = "45%">
+			echo '<table width="45%">
 					<thead>
 						<tr>
 							<th class="SortedColumn">', __('Name'), '</th>
@@ -744,7 +745,7 @@ function initMap() {
 						<td><a href="' . $RootPath . '/AddCustomerContacts.php?Id=', urlencode($MyRow[0]), '&DebtorNo=', urlencode($MyRow[1]), '&delete=1">', __('Delete'), '</a></td>
 						<td></td>
 					</tr>';
-			} // END while LIST LOOP
+			} // END WHILE LIST LOOP
 			// Customer Branch Contacts if selected
 			if (isset($_SESSION['BranchCode']) and $_SESSION['BranchCode'] != '') {
 				$SQL = "SELECT
@@ -754,8 +755,8 @@ function initMap() {
 							phoneno,
 							email
 						FROM custbranch
-						WHERE debtorno = '" . $_SESSION['CustomerID'] . "'
-							and branchcode = '" . $_SESSION['BranchCode'] . "'";
+						WHERE debtorno='" . $_SESSION['CustomerID'] . "'
+							AND branchcode='" . $_SESSION['BranchCode'] . "'";
 				$Result2 = DB_query($SQL);
 				$BranchContact = DB_fetch_row($Result2);
 
@@ -764,7 +765,7 @@ function initMap() {
 						<td>', __('Branch Contact'), ' ', $BranchContact[0], '</td>
 						<td>', $BranchContact[3], '</td>
 						<td><a href="mailto:', $BranchContact[4], '">', $BranchContact[4], '</a></td>
-						<td colspan = "5"></td>
+						<td colspan="5"></td>
 					</tr>';
 			}
 			echo '</tbody>
@@ -772,11 +773,11 @@ function initMap() {
 		} // DB_num_rows($Result) <> 0
 		else {
 			if ($_SESSION['CustomerID'] != '') {
-	echo '<p class="page_title_text">
+				echo '<p class="page_title_text">
 						<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/group_add.png" title="', __('Customer Contacts'), '" alt="" />
 						<a href="' . $RootPath . '/AddCustomerContacts.php?DebtorNo=', urlencode($_SESSION['CustomerID']), '">', ' ', __('Add New Contact'), '</a>
 					</p>';
-} // $_SESSION['CustomerID'] != ''
+			} // $_SESSION['CustomerID'] != ''
 
 		}
 		// Customer Notes
@@ -788,7 +789,7 @@ function initMap() {
 					date,
 					priority
 				FROM custnotes
-				WHERE debtorno = '" . $_SESSION['CustomerID'] . "'
+				WHERE debtorno='" . $_SESSION['CustomerID'] . "'
 				ORDER BY date DESC";
 		$Result = DB_query($SQL);
 		if (DB_num_rows($Result) <> 0) {
@@ -819,22 +820,22 @@ function initMap() {
 						<td><a href="' . $RootPath . '/AddCustomerNotes.php?Id=', urlencode($MyRow['noteid']), '&amp;DebtorNo=', urlencode($MyRow['debtorno']), '&amp;delete=1">', __('Delete'), '</a></td>
 						<td></td>
 					</tr>';
-			} // END while LIST LOOP
+			} // END WHILE LIST LOOP
 			echo '</tbody>';
 			echo '</table>';
 		} // DB_num_rows($Result) <> 0
 		else {
 			if ($_SESSION['CustomerID'] != '') {
-	echo '<p class="page_title_text">
+				echo '<p class="page_title_text">
 						<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/note_add.png" title="', __('Customer Notes'), '" alt="" />
 						<a href="' . $RootPath . '/AddCustomerNotes.php?DebtorNo=', urlencode($_SESSION['CustomerID']), '">', ' ', __('Add New Note for this Customer'), '</a>
 					</p>';
-} // $_SESSION['CustomerID'] != ''
+			} // $_SESSION['CustomerID'] != ''
 
 		}
 		// Custome Type Notes
 		$SQL = "SELECT * FROM debtortypenotes
-				WHERE typeid = '" . $CustomerType . "'
+				WHERE typeid='" . $CustomerType . "'
 				ORDER BY date DESC";
 		$Result = DB_query($SQL);
 		if (DB_num_rows($Result) <> 0) {
@@ -864,17 +865,17 @@ function initMap() {
 						<td><a href="' . $RootPath . '/AddCustomerTypeNotes.php?Id=', urlencode($MyRow[0]), '&amp;DebtorType=', urlencode($MyRow[1]), '">', __('Edit'), '</a></td>
 						<td><a href="' . $RootPath . '/AddCustomerTypeNotes.php?Id=', urlencode($MyRow[0]), '&amp;DebtorType=', urlencode($MyRow[1]), '&amp;delete=1">', __('Delete'), '</a></td>
 					</tr>';
-			} // END while LIST LOOP
+			} // END WHILE LIST LOOP
 			echo '</tbody>';
 			echo '</table>';
 		} // DB_num_rows($Result) <> 0
 		else {
 			if ($_SESSION['CustomerID'] != '') {
-	echo '<p class="page_title_text">
+				echo '<p class="page_title_text">
 						<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/folder_add.png" title="', __('Customer Group Notes'), '" alt="" />
 						<a href="' . $RootPath . '/AddCustomerTypeNotes.php?DebtorType=', urlencode($CustomerType), '">', ' ', __('Add New Group Note'), '</a>
 					</p>';
-} // $_SESSION['CustomerID'] != ''
+			} // $_SESSION['CustomerID'] != ''
 
 		}
 	} // $_SESSION['Extended_CustomerInfo'] == 1

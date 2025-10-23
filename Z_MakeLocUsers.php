@@ -12,15 +12,15 @@ include('includes/header.php');
 echo '<br /><br />' . __('This script makes stock location records for parts where they do not already exist');
 
 $SQL = "INSERT INTO locationusers (userid, loccode, canview, canupd)
-SELECT www_users.userid,
-locations.loccode,
-1,
-1
-FROM www_users CROSS JOIN locations
-LEFT JOIN locationusers
-ON www_users.userid = locationusers.userid
-and locations.loccode = locationusers.loccode
-WHERE locationusers.userid IS null;";
+		SELECT www_users.userid,
+		locations.loccode,
+		1,
+		1
+		FROM www_users CROSS JOIN locations
+		LEFT JOIN locationusers
+		ON www_users.userid = locationusers.userid
+		AND locations.loccode = locationusers.loccode
+        WHERE locationusers.userid IS NULL;";
 
 $ErrMsg = __('The users/locations that need user location records created cannot be retrieved because');
 $Result = DB_query($SQL, $ErrMsg);

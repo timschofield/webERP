@@ -43,13 +43,13 @@ $OrderHeaderSQL = "SELECT salesorders.debtorno,
 					FROM salesorders INNER JOIN 	debtorsmaster
 					ON salesorders.debtorno = debtorsmaster.debtorno
 					INNER JOIN currencies
-					ON debtorsmaster.currcode = currencies.currabrev
+					ON debtorsmaster.currcode=currencies.currabrev
 					WHERE salesorders.orderno = '" . $_GET['OrderNumber'] . "'";
 
 $ErrMsg =  __('The order cannot be retrieved because');
 $GetOrdHdrResult = DB_query($OrderHeaderSQL, $ErrMsg);
 
-if (DB_num_rows($GetOrdHdrResult) == 1) {
+if (DB_num_rows($GetOrdHdrResult)==1) {
 
 	echo '<a class="toplink" href="' . $RootPath . '/SelectCompletedOrder.php">' . __('Return to Sales Order Inquiry') . '</a><br/><br/>
 		<a class="toplink" href="' . $RootPath . '/SelectCustomer.php">' . __('Return to Customer Inquiry Interface') . '</a>';
@@ -61,11 +61,11 @@ if (DB_num_rows($GetOrdHdrResult) == 1) {
 	$MyRow = DB_fetch_array($GetOrdHdrResult);
 	$CurrDecimalPlaces = $MyRow['decimalplaces'];
 
-	if ($CustomerLogin ==1 and $MyRow['debtorno']!= $_SESSION['CustomerID']) {
-	prnMsg(__('Your customer login will only allow you to view your own purchase orders'),'error');
+	if ($CustomerLogin ==1 AND $MyRow['debtorno']!= $_SESSION['CustomerID']) {
+		prnMsg(__('Your customer login will only allow you to view your own purchase orders'),'error');
 		include('includes/footer.php');
 		exit();
-}
+	}
 	//retrieve invoice number
 	$Invs = explode(' Inv ',$MyRow['comments']);
 	$Inv = '';
@@ -77,7 +77,7 @@ if (DB_num_rows($GetOrdHdrResult) == 1) {
 
 	echo '<table class="selection">
 			<tr>
-				<th colspan = "4"><h3>' . __('Order Header Details For Order No').' '.$_GET['OrderNumber'] . '</h3></th>
+				<th colspan="4"><h3>' . __('Order Header Details For Order No').' '.$_GET['OrderNumber'] . '</h3></th>
 			</tr>
 			<tr>
 				<th class="text">' . __('Customer Code') . ':</th>
@@ -133,11 +133,11 @@ if (DB_num_rows($GetOrdHdrResult) == 1) {
 			</tr>
 			<tr>
 				<th class="text">' . __('Comments'). ': </th>
-				<td colspan = "3">' . $MyRow['comments'] . '</td>
+				<td colspan="3">' . $MyRow['comments'] . '</td>
 			</tr>
 			<tr>
 				<th class="text">' . __('Invoices') . ': </th>
-				<td colspan = "3">' . $Inv . '</td>
+				<td colspan="3">' . $Inv . '</td>
 			</tr>
 			</table>';
 }
@@ -178,7 +178,7 @@ if (DB_num_rows($GetOrdHdrResult) == 1) {
 		echo '<br />
 			<table class="selection">
 			<tr>
-				<th colspan = "13"><h3>' . __('Order Line Details For Order No').' '.$_GET['OrderNumber'] . '</h3></th>
+				<th colspan="13"><h3>' . __('Order Line Details For Order No').' '.$_GET['OrderNumber'] . '</h3></th>
 			</tr>
 			<tr>
 				<th>' . __('PO Line') . '</th>
@@ -194,11 +194,11 @@ if (DB_num_rows($GetOrdHdrResult) == 1) {
 				<th>' . __('Narrative') . '</th>
 			</tr>';
 
-		while ($MyRow = DB_fetch_array($LineItemsResult)) {
+		while ($MyRow=DB_fetch_array($LineItemsResult)) {
 
-			if ($MyRow['qtyinvoiced']>0) {
-	$DisplayActualDeliveryDate = ConvertSQLDate($MyRow['actualdispatchdate']);
-} else {
+			if ($MyRow['qtyinvoiced']>0){
+				$DisplayActualDeliveryDate = ConvertSQLDate($MyRow['actualdispatchdate']);
+			} else {
 		  		$DisplayActualDeliveryDate = '<span style="color:red;">' . ConvertSQLDate($MyRow['itemdue']) . '</span>';
 			}
 
@@ -226,8 +226,8 @@ if (DB_num_rows($GetOrdHdrResult) == 1) {
 		$DisplayWeight = locale_number_format($OrderTotalWeight,2);
 
 		echo '<tr class="total_row">
-				<td colspan = "6" class="number"><b>' . __('TOTAL Excl Tax/Freight') . '</b></td>
-				<td colspan = "2" class="number">' . $DisplayTotal . '</td>
+				<td colspan="6" class="number"><b>' . __('TOTAL Excl Tax/Freight') . '</b></td>
+				<td colspan="2" class="number">' . $DisplayTotal . '</td>
 			</tr>
 			</table>';
 

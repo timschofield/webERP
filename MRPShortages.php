@@ -19,7 +19,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$SQL = "CREATE TEMPORARY TABLE demandtotal (
 				part char(20),
 				demand double,
-				KEY `PART` (`part`)) default CHARSET = utf8";
+				KEY `PART` (`part`)) DEFAULT CHARSET=utf8";
 	$Result = DB_query($SQL, __('Create of demandtotal failed because'));
 
 	$SQL = "INSERT INTO demandtotal
@@ -34,7 +34,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$SQL = "CREATE TEMPORARY TABLE supplytotal (
 				part char(20),
 				supply double,
-				KEY `PART` (`part`)) default CHARSET = utf8";
+				KEY `PART` (`part`)) DEFAULT CHARSET=utf8";
 	$Result = DB_query($SQL, __('Create of supplytotal failed because'));
 
 	$SQL = "INSERT INTO supplytotal
@@ -49,23 +49,23 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			SET supply = (SELECT SUM(mrpsupplies.supplyquantity)
 							FROM mrpsupplies
 							WHERE supplytotal.part = mrpsupplies.part
-								and mrpsupplies.supplyquantity > 0)";
+								AND mrpsupplies.supplyquantity > 0)";
 	$Result = DB_query($SQL);
 
-	$SQL = "UPDATE supplytotal SET supply = 0 WHERE supply IS null";
+	$SQL = "UPDATE supplytotal SET supply = 0 WHERE supply IS NULL";
 	$Result = DB_query($SQL);
 
 	if ($_POST['CategoryID'] == 'All') {
-	$SQLCategory = ' ';
-} else {
+		$SQLCategory = ' ';
+	} else {
 		$SQLCategory = "WHERE stockmaster.categoryid = '" . $_POST['CategoryID'] . "'";
 	}
 
 	if ($_POST['ReportType'] == 'Shortage') {
-	$SQLHaving = " HAVING demandtotal.demand > supplytotal.supply ";
+		$SQLHaving = " HAVING demandtotal.demand > supplytotal.supply ";
 		$reportTitle = __('MRP Shortages Report');
 		$reportSubject = __('MRP Shortages');
-} else {
+	} else {
 		$SQLHaving = " HAVING demandtotal.demand <= supplytotal.supply ";
 		$reportTitle = __('MRP Excess Report');
 		$reportSubject = __('MRP Excess');
@@ -109,7 +109,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 
 	// Build report as HTML
-	$HTML = '<html><head><meta charset = "UTF-8"><style>
+	$HTML = '<html><head><meta charset="UTF-8"><style>
 		body { font-family: DejaVu Sans, Arial, sans-serif; font-size: 10px; }
 		h1 { text-align: center; font-size: 18px; }
 		table { border-collapse: collapse; width: 100%; margin-top: 10px; }
@@ -133,8 +133,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		<th>' . __('Demand') . '</th>';
 
 	if ($_POST['ReportType'] == 'Shortage') {
-	$HTML .= '<th>' . __('Shortage') . '</th><th>' . __('Ext. Shortage') . '</th>';
-} else {
+		$HTML .= '<th>' . __('Shortage') . '</th><th>' . __('Ext. Shortage') . '</th>';
+	} else {
 		$HTML .= '<th>' . __('Excess') . '</th><th>' . __('Ext. Excess') . '</th>';
 	}
 
@@ -147,12 +147,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($_POST['ReportType'] == 'Shortage') {
-	$LineToPrint = ($MyRow['demand'] > $MyRow['supply']);
+			$LineToPrint = ($MyRow['demand'] > $MyRow['supply']);
 			$Shortage = ($MyRow['demand'] - $MyRow['supply']) * -1;
 			$Extcost = $Shortage * $MyRow['computedcost'];
 			$shortageVal = locale_number_format($Shortage, $MyRow['decimalplaces']);
 			$extcostVal = locale_number_format($MyRow['extcost'], 2);
-} else {
+		} else {
 			$LineToPrint = ($MyRow['demand'] <= $MyRow['supply']);
 			$Shortage = ($MyRow['supply'] - $MyRow['demand']);
 			$Extcost = $Shortage * $MyRow['computedcost'];
@@ -161,7 +161,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		}
 
 		if ($LineToPrint) {
-	$class = ($fillRow && $rowAlt) ? 'fill' : '';
+			$class = ($fillRow && $rowAlt) ? 'fill' : '';
 			$HTML .= '<tr class="' . $class . '">';
 			$HTML .= '<td>' . htmlspecialchars($MyRow['stockid']) . '</td>';
 			$HTML .= '<td>' . htmlspecialchars($MyRow['description']) . '</td>';
@@ -176,7 +176,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			$Total_Shortage += $MyRow['extcost'];
 			$Partctr++;
 			$rowAlt = !$rowAlt;
-}
+		}
 	}
 
 	$HTML .= '</tbody></table>';
@@ -203,7 +203,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '</tbody>
 				</table>
 				<div class="centre">
-					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick="window.close()" /></form>
+					<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -240,53 +240,53 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Stock') . '" alt="" />' . ' ' . $Title . '</p>';
 
-	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target="_blank">';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" target="_blank">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<fieldset>
 			<legend>', __('Report Criteria'), '</legend>';
 
 	echo '<field>
-			<label for = "CategoryID">' . __('Inventory Category') . ':</label>
-			<select name = "CategoryID">';
-	echo '<option selected = "selected" value = "All">' . __('All Stock Categories') . '</option>';
+			<label for="CategoryID">' . __('Inventory Category') . ':</label>
+			<select name="CategoryID">';
+	echo '<option selected="selected" value="All">' . __('All Stock Categories') . '</option>';
 	$SQL = "SELECT categoryid,
 			categorydescription
 			FROM stockcategory";
 	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)) {
-		echo '<option value = "' . $MyRow['categoryid'] . '">' . $MyRow['categoryid'] . ' - ' . $MyRow['categorydescription'] . '</option>';
+		echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categoryid'] . ' - ' . $MyRow['categorydescription'] . '</option>';
 	}
 	echo '</select>
 		</field>';
 
 	echo '<field>
-			<label for = "Sort">' . __('Sort') . ':</label>
-			<select name = "Sort">
-				<option selected = "selected" value = "extcost">' . __('Extended Shortage Dollars') . '</option>
-				<option value = "stockid">' . __('Part Number') . '</option>
+			<label for="Sort">' . __('Sort') . ':</label>
+			<select name="Sort">
+				<option selected="selected" value="extcost">' . __('Extended Shortage Dollars') . '</option>
+				<option value="stockid">' . __('Part Number') . '</option>
 			</select>
 		</field>';
 
 	echo '<field>
-			<label for = "ReportType">' . __('Shortage-Excess Option') . ':</label>
-			<select name = "ReportType">
-				<option selected = "selected" value = "Shortage">' . __('Report MRP Shortages') . '</option>
-				<option value = "Excess">' . __('Report MRP Excesses') . '</option>
+			<label for="ReportType">' . __('Shortage-Excess Option') . ':</label>
+			<select name="ReportType">
+				<option selected="selected" value="Shortage">' . __('Report MRP Shortages') . '</option>
+				<option value="Excess">' . __('Report MRP Excesses') . '</option>
 			</select>
 		</field>';
 
 	echo '<field>
-			<label for = "Fill">' . __('Print Option') . ':</label>
-			<select name = "Fill">
-				<option selected = "selected" value = "yes">' . __('Print With Alternating Highlighted Lines') . '</option>
-				<option value = "no">' . __('Plain Print') . '</option>
+			<label for="Fill">' . __('Print Option') . ':</label>
+			<select name="Fill">
+				<option selected="selected" value="yes">' . __('Print With Alternating Highlighted Lines') . '</option>
+				<option value="no">' . __('Plain Print') . '</option>
 			</select>
 		</field>';
 	echo '</fieldset>
 		<div class="centre">
-			<input type = "submit" name = "PrintPDF" title="Produce PDF Report" value = "' . __('Print PDF') . '" />
-			<input type = "submit" name = "View" title="View Report" value = "' . __('View') . '" />
+			<input type="submit" name="PrintPDF" title="Produce PDF Report" value="' . __('Print PDF') . '" />
+			<input type="submit" name="View" title="View Report" value="' . __('View') . '" />
 		</div>
 	</form>';
 

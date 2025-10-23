@@ -13,8 +13,8 @@ include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.php');
 
-echo '<p class = "page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
-	'/images/inventory.png" title = "' .
+echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+	'/images/inventory.png" title="' .
 	__('Change An Inventory Item Code') . '" /> ' .// Icon title.
 	__('Change An Inventory Item Code') . '</p>';// Page title.
 
@@ -25,8 +25,8 @@ if (isset($_POST['ProcessStockChange'])){
 	$_POST['NewStockID'] = mb_strtoupper($_POST['NewStockID']);
 
 /*First check the stock code exists */
-	$Result = DB_query("SELECT stockid FROM stockmaster WHERE stockid = '" . $_POST['OldStockID'] . "'");
-	if (DB_num_rows($Result) == 0){
+	$Result = DB_query("SELECT stockid FROM stockmaster WHERE stockid='" . $_POST['OldStockID'] . "'");
+	if (DB_num_rows($Result)==0){
 		prnMsg(__('The stock code') . ': ' . $_POST['OldStockID'] . ' ' . __('does not currently exist as a stock code in the system'),'error');
 		$InputError =1;
 	}
@@ -36,23 +36,22 @@ if (isset($_POST['ProcessStockChange'])){
 		$InputError =1;
 	}
 
-	if ($_POST['NewStockID']=='') {
-	prnMsg(__('The new stock code to change the old code to must be entered as well'),'error');
+	if ($_POST['NewStockID']==''){
+		prnMsg(__('The new stock code to change the old code to must be entered as well'),'error');
 		$InputError =1;
-}
+	}
 
 
 /*Now check that the new code doesn't already exist */
-	$Result = DB_query("SELECT stockid FROM stockmaster WHERE stockid = '" . $_POST['NewStockID'] . "'");
-	if (DB_num_rows($Result) != 0){
+	$Result = DB_query("SELECT stockid FROM stockmaster WHERE stockid='" . $_POST['NewStockID'] . "'");
+	if (DB_num_rows($Result)!=0){
 		echo '<br /><br />';
 		prnMsg(__('The replacement stock code') . ': ' . $_POST['NewStockID'] . ' ' . __('already exists as a stock code in the system') . ' - ' . __('a unique stock code must be entered for the new code'),'error');
 		$InputError =1;
 	}
 
 
-	if ($InputError ==0) {
-	// no input errors
+	if ($InputError ==0){ // no input errors
 
 		DB_IgnoreForeignKeys();
         DB_Txn_Begin();
@@ -114,7 +113,7 @@ if (isset($_POST['ProcessStockChange'])){
 					netweight,
 					lastcostupdate
 				FROM stockmaster
-				WHERE stockid = '" . $_POST['OldStockID'] . "'";
+				WHERE stockid='" . $_POST['OldStockID'] . "'";
 
 		$ErrMsg =__('The SQL to insert the new stock master record failed');
 		$Result = DB_query($SQL, $ErrMsg, '', true);
@@ -130,17 +129,17 @@ if (isset($_POST['ProcessStockChange'])){
 		$Result = DB_query($SQL, '', '', false, false);
 		if (DB_error_no() == 0) {
 			$Result = DB_query("SELECT COUNT(*) FROM mrpplannedorders",'','',false,false);
-			if (DB_error_no() == 0) {
+			if (DB_error_no()==0) {
 				ChangeFieldInTable("mrpplannedorders", "part", $_POST['OldStockID'], $_POST['NewStockID']);
-}
+			}
 
 			$Result = DB_query("SELECT * FROM mrprequirements" ,'','',false,false);
-			if (DB_error_no() == 0){
+			if (DB_error_no()==0){
 				ChangeFieldInTable("mrprequirements", "part", $_POST['OldStockID'], $_POST['NewStockID']);
 			}
 
 			$Result = DB_query("SELECT * FROM mrpsupplies" ,'','',false,false);
-			if (DB_error_no() == 0){
+			if (DB_error_no()==0){
 				ChangeFieldInTable("mrpsupplies", "part", $_POST['OldStockID'], $_POST['NewStockID']);
 			}
 		}
@@ -196,36 +195,37 @@ if (isset($_POST['ProcessStockChange'])){
 		DB_Txn_Commit();
 
 		echo '<br />' . __('Deleting the old stock master record');
-		$SQL = "DELETE FROM stockmaster WHERE stockid = '" . $_POST['OldStockID'] . "'";
+		$SQL = "DELETE FROM stockmaster WHERE stockid='" . $_POST['OldStockID'] . "'";
 		$ErrMsg = __('The SQL to delete the old stock master record failed');
 		$Result = DB_query($SQL, $ErrMsg, '', true);
 		echo ' ... ' . __('completed');
 		echo '<p>' . __('Stock Code') . ': ' . $_POST['OldStockID'] . ' ' . __('was successfully changed to') . ' : ' . $_POST['NewStockID'];
 
 		// If the current SelectedStockItem is the same as the OldStockID, it updates to the NewStockID:
-		if (isset($_SESSION['SelectedStockItem']) AND $_SESSION['SelectedStockItem'] == $_POST['OldStockID']) {
+		if ($_SESSION['SelectedStockItem'] == $_POST['OldStockID']) {
 			$_SESSION['SelectedStockItem'] = $_POST['NewStockID'];
 		}
-	} //only do the stuff above if  $InputError == 0
+
+	} //only do the stuff above if  $InputError==0
 }
 
-echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method = "post">';
-echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<fieldset>
 	<legend>', __('Stock Item To Change'), '</legend>
 	<field>
 		<label>' . __('Existing Inventory Code') . ':</label>
-		<input type = "text" name = "OldStockID" size = "20" maxlength = "20" />
+		<input type="text" name="OldStockID" size="20" maxlength="20" />
 	</field>
 	<field>
 		<label>' . __('New Inventory Code') . ':</label>
-		<input type = "text" name = "NewStockID" size = "20" maxlength = "20" />
+		<input type="text" name="NewStockID" size="20" maxlength="20" />
 	</field>
 	</fieldset>
 
-	<div class = "centre">
-		<input type = "submit" name = "ProcessStockChange" value = "' . __('Process') . '" />
+	<div class="centre">
+		<input type="submit" name="ProcessStockChange" value="' . __('Process') . '" />
 	</div>
 	</form>';
 

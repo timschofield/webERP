@@ -34,12 +34,12 @@ if (isset($_GET['Related'])){
 
 $Result = DB_query("SELECT stockmaster.description
 					FROM stockmaster
-					WHERE stockmaster.stockid = '".$Item."'");
+					WHERE stockmaster.stockid='".$Item."'");
 $MyRow = DB_fetch_row($Result);
 
-if (DB_num_rows($Result) == 0){
+if (DB_num_rows($Result)==0){
 	prnMsg( __('The part code entered does not exist in the database') . ': ' . $Item . __('Only valid parts can have related items entered against them'),'error');
-	$InputError = 1;
+	$InputError=1;
 }
 
 
@@ -62,33 +62,33 @@ if (isset($_POST['submit'])) {
 	$Result_related = DB_query("SELECT stockmaster.description,
 							stockmaster.mbflag
 					FROM stockmaster
-					WHERE stockmaster.stockid = '".$_POST['Related']."'");
+					WHERE stockmaster.stockid='".$_POST['Related']."'");
 	$MyRow_related = DB_fetch_row($Result_related);
 
-	if (DB_num_rows($Result_related) == 0){
+	if (DB_num_rows($Result_related)==0){
 		prnMsg( __('The part code entered as related item does not exist in the database') . ': ' . $_POST['Related'] .  __('Only valid parts can be related items'),'error');
-		$InputError = 1;
+		$InputError=1;
 	}
 
 	$SQL = "SELECT related
 				FROM relateditems
-			WHERE stockid = '".$Item."'
-				and related = '" . $_POST['Related'] . "'";
+			WHERE stockid='".$Item."'
+				AND related = '" . $_POST['Related'] . "'";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_row($Result);
 
-	if (DB_num_rows($Result) != 0){
+	if (DB_num_rows($Result)!=0){
 		prnMsg( __('This related item has already been entered.') , 'warn');
 		$InputError =1;
 	}
 
-	if ($_POST['Related'] == $Item) {
-	prnMsg( __('An item can not be related to itself') , 'warn');
+	if ($_POST['Related'] == $Item){
+		prnMsg( __('An item can not be related to itself') , 'warn');
 		$InputError =1;
-}
+	}
 
 	if ($InputError !=1) {
-	$SQL = "INSERT INTO relateditems (stockid,
+		$SQL = "INSERT INTO relateditems (stockid,
 									related)
 							VALUES ('" . $Item . "',
 								'" . $_POST['Related'] . "')";
@@ -100,12 +100,12 @@ if (isset($_POST['submit'])) {
 		/* It is safe to assume that, if A is related to B, B is related to A */
 		$SQL_reverse = "SELECT related
 					FROM relateditems
-				WHERE stockid = '".$_POST['Related']."'
-					and related = '" . $Item . "'";
+				WHERE stockid='".$_POST['Related']."'
+					AND related = '" . $Item . "'";
 		$Result_reverse = DB_query($SQL_reverse);
 		$MyRow_reverse = DB_fetch_row($Result_reverse);
 
-		if (DB_num_rows($Result_reverse) == 0){
+		if (DB_num_rows($Result_reverse)==0){
 			$SQL = "INSERT INTO relateditems (stockid,
 										related)
 								VALUES ('" . $_POST['Related'] . "',
@@ -113,7 +113,7 @@ if (isset($_POST['submit'])) {
 			$ErrMsg = __('The new related item could not be added');
 			$Result = DB_query($SQL, $ErrMsg);
 			prnMsg($Item . ' ' . __('is now related to') . ' ' . $_POST['Related'],'success');
-}
+		}
 	}
 
 	unset($_POST['Related']);
@@ -123,9 +123,9 @@ if (isset($_POST['submit'])) {
 
 	/* Again it is safe to assume that we have to delete both relations A to B and B to A */
 
-	$SQL = "DELETE FROM relateditems
-			WHERE (stockid = '". $Item ."' and related ='". $_GET['Related'] ."')
-			or (stockid = '". $_GET['Related'] ."' and related ='". $Item ."')";
+	$SQL="DELETE FROM relateditems
+			WHERE (stockid = '". $Item ."' AND related ='". $_GET['Related'] ."')
+			OR (stockid = '". $_GET['Related'] ."' AND related ='". $Item ."')";
 	$ErrMsg = __('Could not delete this relationshop');
 	$Result = DB_query($SQL, $ErrMsg);
 	prnMsg( __('This relationship has been deleted'),'success');
@@ -138,21 +138,21 @@ $SQL = "SELECT stockmaster.stockid,
 			stockmaster.description
 		FROM stockmaster, relateditems
 		WHERE stockmaster.stockid = relateditems.related
-			and relateditems.stockid = '".$Item."'";
+			AND relateditems.stockid='".$Item."'";
 
 $Result = DB_query($SQL);
 
 if (DB_num_rows($Result) > 0) {
-	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
 		<div>
-		<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<table class="selection">
 		<thead>
 			<tr>
-				<th colspan = "3">' .
+				<th colspan="3">' .
 				__('Related Items To') . ':
-				<input type = "text" required = "required" autofocus = "autofocus" name="Item" size = "22" value = "' . $Item . '" maxlength = "20" />
-				<input type = "submit" name="NewPart" value = "' . __('List Related Items') . '" /></th>
+				<input type="text" required="required" autofocus="autofocus" name="Item" size="22" value="' . $Item . '" maxlength="20" />
+				<input type="submit" name="NewPart" value="' . __('List Related Items') . '" /></th>
 			</tr>
 			<tr>
 				<th class="SortedColumn">' . __('Code') . '</th>
@@ -171,7 +171,7 @@ if (DB_num_rows($Result) > 0) {
 		echo '</tr>';
 
 	}
-	//END while LIST LOOP
+	//END WHILE LIST LOOP
 	echo '</tbody></table>';
 	echo '</div>
 		  </form>';
@@ -179,9 +179,9 @@ if (DB_num_rows($Result) > 0) {
 	prnMsg(__('There are no items related set up for this part'),'warn');
 }
 
-echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Item=' . $Item . '">';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Item=' . $Item . '">';
 echo '<div>';
-echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 if (isset($_GET['Edit'])){
 	/*the price sent with the get is sql format price so no need to filter */
 	$_POST['Related'] = $_GET['Related'];
@@ -192,8 +192,8 @@ echo '<fieldset>';
 echo '<legend>' . $Item . ' - ' . $PartDescription . '</legend>';
 
 echo '<field>
-		<label for = "Related">' . __('Related Item Code') . ':</label>
-		<input type = "text" class="text" required = "required" name="Related" size = "21" maxlength = "20" value = "';
+		<label for="Related">' . __('Related Item Code') . ':</label>
+		<input type="text" class="text" required="required" name="Related" size="21" maxlength="20" value="';
 		if (isset($_POST['Related'])) {
 			echo $_POST['Related'];
 		}
@@ -201,7 +201,7 @@ echo '<field>
 		</field>
 	</fieldset>
 	<div class="centre">
-		<input type = "submit" name="submit" value = "' . __('Enter') . '/' . __('Amend Relation') . '" />
+		<input type="submit" name="submit" value="' . __('Enter') . '/' . __('Amend Relation') . '" />
 	</div>';
 
 echo '</form>';

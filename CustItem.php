@@ -77,12 +77,12 @@ if ((isset($_POST['AddRecord']) or isset($_POST['UpdateRecord'])) and isset($Deb
 		unset($DebtorsMasterResult);
 	}
 	if ($InputError == 0 and isset($_POST['UpdateRecord'])) {
-		$SQL = "UPDATE custitem SET customersuom = '" . $_POST['customersUOM'] . "',
-										conversionfactor = '" . filter_number_format($_POST['ConversionFactor']) . "',
-										cust_description = '" . $_POST['cust_description'] . "',
-										custitem.cust_part = '" . $_POST['cust_part'] . "'
-							WHERE custitem.stockid = '" . $StockId . "'
-							and custitem.debtorno = '" . $DebtorNo . "'";
+		$SQL = "UPDATE custitem SET customersuom='" . $_POST['customersUOM'] . "',
+										conversionfactor='" . filter_number_format($_POST['ConversionFactor']) . "',
+										cust_description='" . $_POST['cust_description'] . "',
+										custitem.cust_part='" . $_POST['cust_part'] . "'
+							WHERE custitem.stockid='" . $StockId . "'
+							AND custitem.debtorno='" . $DebtorNo . "'";
 		$ErrMsg = __('The customer details could not be updated because');
 		$UpdResult = DB_query($SQL, $ErrMsg);
 		prnMsg(__('customer data has been updated'), 'success');
@@ -103,8 +103,8 @@ if ((isset($_POST['AddRecord']) or isset($_POST['UpdateRecord'])) and isset($Deb
 
 if (isset($_GET['Delete'])) {
 	$SQL = "DELETE FROM custitem
-	   				WHERE custitem.debtorno = '" . $DebtorNo . "'
-	   				and custitem.stockid = '" . $StockId . "'";
+	   				WHERE custitem.debtorno='" . $DebtorNo . "'
+	   				AND custitem.stockid='" . $StockId . "'";
 	$ErrMsg = __('The customer details could not be deleted because');
 	$DelResult = DB_query($SQL, $ErrMsg);
 	prnMsg(__('This customer data record has been successfully deleted'), 'success');
@@ -112,7 +112,8 @@ if (isset($_GET['Delete'])) {
 }
 
 if ($Edit == false) {
-	$ItemResult = DB_query("SELECT description FROM stockmaster WHERE stockid = '" . $StockId . "'");
+
+	$ItemResult = DB_query("SELECT description FROM stockmaster WHERE stockid='" . $StockId . "'");
 	$DescriptionRow = DB_fetch_array($ItemResult);
 	echo '<p class="page_title_text">
 			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', __('Search'), '" alt="" />', ' ', $Title, ' ', __('For Stock Code'), ' - ', $StockId, ' - ', $DescriptionRow['description'], '
@@ -125,19 +126,20 @@ if ($Edit == false) {
 				custitem.conversionfactor,
 				custitem.cust_description,
 				custitem.cust_part,
-				currencies.decimalplaces as currdecimalplaces
+				currencies.decimalplaces AS currdecimalplaces
 			FROM custitem INNER JOIN debtorsmaster
-				ON custitem.debtorno = debtorsmaster.DebtorNo
+				ON custitem.debtorno=debtorsmaster.DebtorNo
 			INNER JOIN currencies
-				ON debtorsmaster.currcode = currencies.currabrev
+				ON debtorsmaster.currcode=currencies.currabrev
 			WHERE custitem.stockid = '" . $StockId . "'";
 	$ErrMsg = __('The customer details for the selected part could not be retrieved because');
 	$CustItemResult = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($CustItemResult) == 0 and $StockId !=  '') {
 		prnMsg(__('There is no customer data set up for the part selected'), 'info');
 		$NoCustItemData = 1;
-} elseif ($StockId !=  '') {
-	echo '<table cellpadding = "2">
+	} elseif ($StockId !=  '') {
+
+		echo '<table cellpadding="2">
 				<thead>
 					<tr>
 						<th class="SortedColumn">', __('Customer'), '</th>
@@ -162,7 +164,7 @@ if ($Edit == false) {
 						<td><a href="', htmlspecialchars(basename(__FILE__)), '?StockID=', urlencode($StockId), '&amp;DebtorNo=', urlencode($MyRow['debtorno']), '&amp;Edit=1">', __('Edit'), '</a></td>
 						<td><a href="', htmlspecialchars(basename(__FILE__)), '?StockID=', urlencode($StockId), '&amp;DebtorNo=', urlencode($MyRow['debtorno']), '&amp;Delete=1" onclick=\'return confirm("', __('Are you sure you wish to delete this customer data?'), '");\'>', __('Delete'), '</a></td>
 					</tr>';
-} //end of while loop
+		} //end of while loop
 		echo '</tbody>
 			</table>';
 	} // end of there are rows to show
@@ -171,15 +173,15 @@ if ($Edit == false) {
 /* Only show the existing records if one is not being edited */
 
 if (isset($DebtorNo) and $DebtorNo !=  '' and !isset($_POST['Searchcustomer'])) {
-	/*not EDITING AN EXISTING BUT customer selected or ENTERED*/
+	/*NOT EDITING AN EXISTING BUT customer selected or ENTERED*/
 
 	$SQL = "SELECT debtorsmaster.name,
 					debtorsmaster.currcode,
-					currencies.decimalplaces as currdecimalplaces
+					currencies.decimalplaces AS currdecimalplaces
 			FROM debtorsmaster
 			INNER JOIN currencies
-			ON debtorsmaster.currcode = currencies.currabrev
-			WHERE DebtorNo = '" . $DebtorNo . "'";
+			ON debtorsmaster.currcode=currencies.currabrev
+			WHERE DebtorNo='" . $DebtorNo . "'";
 	$ErrMsg = __('The customer details for the selected customer could not be retrieved because');
 	$SuppSelResult = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($SuppSelResult) == 1) {
@@ -193,30 +195,30 @@ if (isset($DebtorNo) and $DebtorNo !=  '' and !isset($_POST['Searchcustomer'])) 
 	}
 } else {
 	if ($NoCustItemData == 0) {
-	echo '<p class="page_title_text">
+		echo '<p class="page_title_text">
 				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', __('Search'), '" alt="" />', ' ', __('Search For Customer'), '
 			</p>';
-}
+	}
 	if (!isset($_POST['Searchcustomer'])) {
-		echo '<form action = "', htmlspecialchars(basename(__FILE__)), '" method = "post">';
-		echo '<input type = "hidden" name="FormID" value = "', $_SESSION['FormID'], '" />';
+		echo '<form action="', htmlspecialchars(basename(__FILE__)), '" method="post">';
+		echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 		echo '<fieldset>
-				<input type = "hidden" name="FormID" value = "', $_SESSION['FormID'], '" />
-				<input type = "hidden" name="StockID" value = "', $StockId, '" />
+				<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />
+				<input type="hidden" name="StockID" value="', $StockId, '" />
 				<legend>', __('Search Criteria'), '</legend>
 				<field>
-					<label for = "Keywords">', __('Text in the customer'), ' <b>', __('NAME'), '</b>:</label>
-					<input type = "text" name="Keywords" size = "20" maxlength = "25" />
+					<label for="Keywords">', __('Text in the customer'), ' <b>', __('NAME'), '</b>:</label>
+					<input type="text" name="Keywords" size="20" maxlength="25" />
 				</field>
 				<field>
-					<label for = "cust_no">', '<b>', __('or'), ' </b>', __('Text in customer'), ' <b>', __('CODE'), '</b>:</label>
-					<input type = "text" name="cust_no" data-type = "no-illegal-chars" size = "20" maxlength = "50" />
+					<label for="cust_no">', '<b>', __('OR'), ' </b>', __('Text in customer'), ' <b>', __('CODE'), '</b>:</label>
+					<input type="text" name="cust_no" data-type="no-illegal-chars" size="20" maxlength="50" />
 				</field>
 			</fieldset>';
 
 		echo '<div class="centre">
-				<input type = "submit" name="Searchcustomer" value = "', __('Find Customers Now'), '" />
+				<input type="submit" name="Searchcustomer" value="', __('Find Customers Now'), '" />
 			</div>
 		</form>';
 		include('includes/footer.php');
@@ -225,7 +227,7 @@ if (isset($DebtorNo) and $DebtorNo !=  '' and !isset($_POST['Searchcustomer'])) 
 }
 
 if ($Edit == true) {
-	$ItemResult = DB_query("SELECT description FROM stockmaster WHERE stockid = '" . $StockId . "'");
+	$ItemResult = DB_query("SELECT description FROM stockmaster WHERE stockid='" . $StockId . "'");
 	$DescriptionRow = DB_fetch_array($ItemResult);
 	echo '<p class="page_title_text">
 			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', __('Search'), '" alt="" />', ' ', $Title, ' ', __('For Stock Code'), ' - ', $StockId, ' - ', $DescriptionRow['description'], '
@@ -237,8 +239,8 @@ if (isset($_POST['Searchcustomer'])) {
 		prnMsg(__('Customer Name keywords have been used in preference to the customer Code extract entered') . '.', 'info');
 	}
 	if ($_POST['Keywords'] == '' and $_POST['cust_no'] == '') {
-	$_POST['Keywords'] = ' ';
-}
+		$_POST['Keywords'] = ' ';
+	}
 	if (mb_strlen($_POST['Keywords']) > 0) {
 		//insert wildcard characters in spaces
 		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
@@ -272,7 +274,7 @@ if (isset($DebtorsMasterResult) and DB_num_rows($DebtorsMasterResult) > 0) {
 								stockmaster.units,
 								stockmaster.mbflag
 						FROM stockmaster
-						WHERE stockmaster.stockid = '" . $StockId . "'");
+						WHERE stockmaster.stockid='" . $StockId . "'");
 		$MyRow = DB_fetch_row($Result);
 		$StockUOM = $MyRow[1];
 		if (DB_num_rows($Result) <> 1) {
@@ -282,10 +284,10 @@ if (isset($DebtorsMasterResult) and DB_num_rows($DebtorsMasterResult) > 0) {
 		$StockId = '';
 		$StockUOM = 'each';
 	}
-	echo '<form action = "' . htmlspecialchars(basename(__FILE__)) . '" method = "post">';
-	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<form action="' . htmlspecialchars(basename(__FILE__)) . '" method="post">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<table cellpadding = "2" colspan = "7">
+	echo '<table cellpadding="2" colspan="7">
 			<thead>
 				<tr>
 					<th class="SortedColumn">' . __('Code') . '</th>
@@ -301,7 +303,7 @@ if (isset($DebtorsMasterResult) and DB_num_rows($DebtorsMasterResult) > 0) {
 	echo '<tbody>';
 	while ($MyRow = DB_fetch_array($DebtorsMasterResult)) {
 		echo '<tr class="striped_row">
-				<td><input type = "submit" name="DebtorNo" value = "', $MyRow['DebtorNo'], '" /></td>
+				<td><input type="submit" name="DebtorNo" value="', $MyRow['DebtorNo'], '" /></td>
 				<td>', $MyRow['name'], '</td>
 				<td>', $MyRow['currcode'], '</td>
 				<td>', $MyRow['address1'], '</td>
@@ -309,8 +311,8 @@ if (isset($DebtorsMasterResult) and DB_num_rows($DebtorsMasterResult) > 0) {
 				<td>', $MyRow['address3'], '</td>
 			</tr>';
 
-		echo '<input type = "hidden" name="StockID" value = "' . $StockId . '" />';
-		echo '<input type = "hidden" name="StockUOM" value = "' . $StockUOM . '" />';
+		echo '<input type="hidden" name="StockID" value="' . $StockId . '" />';
+		echo '<input type="hidden" name="StockUOM" value="' . $StockUOM . '" />';
 
 	}
 	//end of while loop
@@ -331,15 +333,15 @@ if (!isset($DebtorsMasterResult)) {
 						custitem.conversionfactor,
 						custitem.cust_part,
 						stockmaster.units,
-						currencies.decimalplaces as currdecimalplaces
+						currencies.decimalplaces AS currdecimalplaces
 				FROM custitem INNER JOIN debtorsmaster
-					ON custitem.debtorno = debtorsmaster.DebtorNo
+					ON custitem.debtorno=debtorsmaster.DebtorNo
 				INNER JOIN stockmaster
-					ON custitem.stockid = stockmaster.stockid
+					ON custitem.stockid=stockmaster.stockid
 				INNER JOIN currencies
 					ON debtorsmaster.currcode = currencies.currabrev
-				WHERE custitem.debtorno = '" . $DebtorNo . "'
-				and custitem.stockid = '" . $StockId . "'";
+				WHERE custitem.debtorno='" . $DebtorNo . "'
+				AND custitem.stockid='" . $StockId . "'";
 
 		$ErrMsg = __('The customer purchasing details for the selected customer and item could not be retrieved because');
 		$EditResult = DB_query($SQL, $ErrMsg);
@@ -354,31 +356,31 @@ if (!isset($DebtorsMasterResult)) {
 		$_POST['cust_part'] = $MyRow['cust_part'];
 		$StockUOM = $MyRow['units'];
 	}
-	echo '<form action = "', htmlspecialchars(basename(__FILE__)), '" method = "post">';
-	echo '<input type = "hidden" name="FormID" value = "', $_SESSION['FormID'], '" />';
+	echo '<form action="', htmlspecialchars(basename(__FILE__)), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
-	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	if (!isset($DebtorNo)) {
 		$DebtorNo = '';
 	}
 	if ($Edit == true) {
-	echo '<fieldset>
+		echo '<fieldset>
 				<legend>', __('Edit Details'), '</legend>
 				<field>
-					<label for = "DebtorNo">', __('Customer Name'), ':</label>
-					<input type = "hidden" name="DebtorNo" value = "', $DebtorNo, '" />
+					<label for="DebtorNo">', __('Customer Name'), ':</label>
+					<input type="hidden" name="DebtorNo" value="', $DebtorNo, '" />
 					<div class="fieldtext">', $DebtorNo, ' - ', $Name, '</div>
 				</field>';
-} else {
+	} else {
 		echo '<fieldset>
 				<legend>', __('New Details'), '</legend>
 				<field>
-					<label for = "DebtorNo">', __('Customer Name'), ':</label>
-					<input type = "hidden" name="DebtorNo" maxlength = "10" size = "11" value = "', $DebtorNo, '" />';
+					<label for="DebtorNo">', __('Customer Name'), ':</label>
+					<input type="hidden" name="DebtorNo" maxlength="10" size="11" value="', $DebtorNo, '" />';
 
 		if ($DebtorNo !=  '') {
-	echo '<div class="fieldtext">', $Name;
-}
+			echo '<div class="fieldtext">', $Name;
+		}
 		if (!isset($Name) or $Name = '') {
 			echo '(', __('A search facility is available below if necessary'), ')';
 		} else {
@@ -387,7 +389,7 @@ if (!isset($DebtorsMasterResult)) {
 		echo '</div>
 			</field>';
 	}
-	echo '<input type = "hidden" name="StockID" maxlength = "10" size = "11" value = "' . $StockId . '" />';
+	echo '<input type="hidden" name="StockID" maxlength="10" size="11" value="' . $StockId . '" />';
 	if (!isset($CurrCode)) {
 		$CurrCode = '';
 	}
@@ -402,8 +404,8 @@ if (!isset($DebtorsMasterResult)) {
 		$_POST['cust_part'] = '';
 	}
 	echo '<field>
-			<label for = "CurrCode">', __('Currency'), ':</label>
-			<input type = "hidden" name="CurrCode" value = "', $CurrCode, '" />
+			<label for="CurrCode">', __('Currency'), ':</label>
+			<input type="hidden" name="CurrCode" value="', $CurrCode, '" />
 			<div class="fieldtext">', $CurrCode, '</div>
 		</field>';
 
@@ -415,8 +417,8 @@ if (!isset($DebtorsMasterResult)) {
 		</field>';
 	}
 	echo '<field>
-			<label for = "customersUOM">', __('Customer Unit of Measure'), ':</label>
-			<input type = "text" name="customersUOM" size = "20" maxlength = "20" value ="', $_POST['customersUOM'], '"/>
+			<label for="customersUOM">', __('Customer Unit of Measure'), ':</label>
+			<input type="text" name="customersUOM" size="20" maxlength="20" value ="', $_POST['customersUOM'], '"/>
 		</field>';
 
 	if (!isset($_POST['ConversionFactor']) or $_POST['ConversionFactor'] == '') {
@@ -424,30 +426,30 @@ if (!isset($DebtorsMasterResult)) {
 	}
 
 	echo '<field>
-			<label for = "ConversionFactor">', __('Conversion Factor (to our UOM)'), ':</label>
-			<input type = "text" class="number" name="ConversionFactor" maxlength = "12" size = "12" value = "', $_POST['ConversionFactor'], '" />
+			<label for="ConversionFactor">', __('Conversion Factor (to our UOM)'), ':</label>
+			<input type="text" class="number" name="ConversionFactor" maxlength="12" size="12" value="', $_POST['ConversionFactor'], '" />
 		</field>';
 
 	echo '<field>
-			<label for = "cust_part">', __('Customer Stock Code'), ':</label>
-			<input type = "text" name="cust_part" maxlength = "20" size = "20" value = "', $_POST['cust_part'], '" />
+			<label for="cust_part">', __('Customer Stock Code'), ':</label>
+			<input type="text" name="cust_part" maxlength="20" size="20" value="', $_POST['cust_part'], '" />
 		</field>';
 
 	echo '<field>
-			<label for = "cust_description">', __('Customer Stock Description'), ':</label>
-			<input type = "text" name="cust_description" maxlength = "30" size = "30" value = "', $_POST['cust_description'], '" />
+			<label for="cust_description">', __('Customer Stock Description'), ':</label>
+			<input type="text" name="cust_description" maxlength="30" size="30" value="', $_POST['cust_description'], '" />
 		</field>';
 
 	echo '</fieldset>';
 
 	if ($Edit == true) {
-	echo '<div class="centre">
-				<input type = "submit" name="UpdateRecord" value = "', __('Update'), '" />
-				<input type = "hidden" name="Edit" value = "1" />
-			</div>';
-} else {
 		echo '<div class="centre">
-				<input type = "submit" name="AddRecord" value = "', __('Add'), '" />
+				<input type="submit" name="UpdateRecord" value="', __('Update'), '" />
+				<input type="hidden" name="Edit" value="1" />
+			</div>';
+	} else {
+		echo '<div class="centre">
+				<input type="submit" name="AddRecord" value="', __('Add'), '" />
 			</div>';
 	}
 

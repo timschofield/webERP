@@ -17,7 +17,7 @@ $LineHeight = $FormDesign->LineHeight;
 
 $HTML = '<html>
 			<head>
-				<meta charset = "UTF-8">
+				<meta charset="UTF-8">
 				<title>' . __('QA Label') . '</title>
 				<style>
 					body { margin: 0; padding: 0; }
@@ -36,7 +36,7 @@ $SQL = "SELECT grns.itemcode,
 			ON grns.podetailitem = purchorderdetails.podetailitem
 			LEFT JOIN stockmaster
 			ON grns.itemcode = stockmaster.stockid
-			WHERE grnbatch = '" . $GRNNo . "'";
+			WHERE grnbatch='" . $GRNNo . "'";
 
 $GRNResult = DB_query($SQL);
 $NoOfGRNs = DB_num_rows($GRNResult);
@@ -44,13 +44,13 @@ if ($NoOfGRNs > 0) {
 	$SQL = "SELECT suppliers.suppname
 				FROM grns INNER JOIN suppliers
 				ON grns.supplierid = suppliers.supplierid
-				WHERE grnbatch = '" . $GRNNo . "'";
+				WHERE grnbatch='" . $GRNNo . "'";
 	$SuppResult = DB_query($SQL, __('Could not get the supplier of the selected GRN'));
 	$SuppRow = DB_fetch_array($SuppResult);
 }
 
 if ($NoOfGRNs > 0) {
-	for ($i = 1; $i <= $NoOfGRNs; $i++) {
+	for ($i = 1;$i <= $NoOfGRNs;$i++) {
 		$MyRow = DB_fetch_array($GRNResult);
 		$DeliveryDate = ConvertSQLDate($MyRow['deliverydate']);
 		$SQL = "SELECT stockmaster.controlled
@@ -62,9 +62,9 @@ if ($NoOfGRNs > 0) {
 			$SQL = "SELECT stockserialmoves.serialno
 					FROM stockmoves INNER JOIN stockserialmoves
 					ON stockmoves.stkmoveno = stockserialmoves.stockmoveno
-					WHERE stockmoves.stockid = '" . $MyRow['itemcode'] . "'
-					and stockmoves.type = 25
-					and stockmoves.transno = '" . $GRNNo . "'";
+					WHERE stockmoves.stockid='" . $MyRow['itemcode'] . "'
+					AND stockmoves.type = 25
+					AND stockmoves.transno='" . $GRNNo . "'";
 			$GetStockMoveResult = DB_query($SQL, __('Could not retrieve the stock movement reference number which is required in order to retrieve details of the serial items that came in with this GRN'));
 			while ($SerialStockMoves = DB_fetch_array($GetStockMoveResult)) {
 				$HTML .= '
@@ -93,7 +93,7 @@ if ($NoOfGRNs > 0) {
 						</div>
 					</div>
 				';
-}
+			}
 		}
 		else {
 			$HTML .= '

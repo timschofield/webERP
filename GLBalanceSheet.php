@@ -15,7 +15,7 @@ Parameters:
 	IsIncluded: Parameter to indicate that a script is included within another.
 */
 
-if (!isset($IsIncluded)) {// Runs normally if this script is not included in another.
+if (!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
 	require(__DIR__ . '/includes/session.php');
 }
 
@@ -31,13 +31,13 @@ include_once('includes/AccountSectionsDef.php'); // This loads the $Sections var
 include_once('includes/CurrenciesArray.php');// Array to retrieve currency name.
 
 // Merges GETs into POSTs:
-if (isset($_GET['PeriodTo'])) {
+if(isset($_GET['PeriodTo'])) {
 	$_POST['PeriodTo'] = $_GET['PeriodTo'];
 }
-if (isset($_GET['ShowDetail'])) {// Select period from.
+if(isset($_GET['ShowDetail'])) {// Select period from.
 	$_POST['ShowDetail'] = $_GET['ShowDetail'];
 }
-if (isset($_GET['ShowZeroBalance'])) {// Select period from.
+if(isset($_GET['ShowZeroBalance'])) {// Select period from.
 	$_POST['ShowZeroBalance'] = $_GET['ShowZeroBalance'];
 }
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
@@ -46,25 +46,25 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$BalanceDate = ConvertSQLDate(EndDateSQLFromPeriodNo($_POST['PeriodTo']));
 
 	/* Get the retained earnings amount */
-	$ThisYearRetainedEarningsSQL = "SELECT ROUND(SUM(amount), " . $_SESSION['CompanyRecord']['decimalplaces'] . " +1) as retainedearnings
+	$ThisYearRetainedEarningsSQL = "SELECT ROUND(SUM(amount), " . $_SESSION['CompanyRecord']['decimalplaces'] . " +1) AS retainedearnings
 									FROM gltotals
 									INNER JOIN chartmaster
-										ON gltotals.account = chartmaster.accountcode
+										ON gltotals.account=chartmaster.accountcode
 									INNER JOIN accountgroups
-										ON chartmaster.group_ = accountgroups.groupname
+										ON chartmaster.group_=accountgroups.groupname
 									WHERE period<='" . $_POST['PeriodTo'] . "'
-										and pandl = 1";
+										AND pandl=1";
 	$ThisYearRetainedEarningsResult = DB_query($ThisYearRetainedEarningsSQL);
 	$ThisYearRetainedEarningsRow = DB_fetch_array($ThisYearRetainedEarningsResult);
 
-	$LastYearRetainedEarningsSQL = "SELECT ROUND(SUM(amount), " . $_SESSION['CompanyRecord']['decimalplaces'] . " +1) as retainedearnings
+	$LastYearRetainedEarningsSQL = "SELECT ROUND(SUM(amount), " . $_SESSION['CompanyRecord']['decimalplaces'] . " +1) AS retainedearnings
 									FROM gltotals
 									INNER JOIN chartmaster
-										ON gltotals.account = chartmaster.accountcode
+										ON gltotals.account=chartmaster.accountcode
 									INNER JOIN accountgroups
-										ON chartmaster.group_ = accountgroups.groupname
+										ON chartmaster.group_=accountgroups.groupname
 									WHERE period<='" . ($_POST['PeriodTo'] - 12) . "'
-										and pandl = 1";
+										AND pandl=1";
 	$LastYearRetainedEarningsResult = DB_query($LastYearRetainedEarningsSQL);
 	$LastYearRetainedEarningsRow = DB_fetch_array($LastYearRetainedEarningsResult);
 
@@ -79,21 +79,21 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					pandl
 				FROM chartmaster
 				INNER JOIN glaccountusers
-					ON glaccountusers.accountcode = chartmaster.accountcode
-					and glaccountusers.userid = '" . $_SESSION['UserID'] . "'
-					and glaccountusers.canview = 1
+					ON glaccountusers.accountcode=chartmaster.accountcode
+					AND glaccountusers.userid='" . $_SESSION['UserID'] . "'
+					AND glaccountusers.canview=1
 				INNER JOIN accountgroups
-					ON accountgroups.groupname = chartmaster.group_
+					ON accountgroups.groupname=chartmaster.group_
 				INNER JOIN accountsection
-					ON accountsection.sectionid = accountgroups.sectioninaccounts
-				WHERE pandl = 0
+					ON accountsection.sectionid=accountgroups.sectioninaccounts
+				WHERE pandl=0
 				ORDER BY sequenceintb,
 						group_,
 						accountcode";
 	$AccountListResult = DB_query($SQL);
 
 	$SQL = "SELECT account,
-					ROUND(SUM(amount), " . $_SESSION['CompanyRecord']['decimalplaces'] . " +1) as accounttotal
+					ROUND(SUM(amount), " . $_SESSION['CompanyRecord']['decimalplaces'] . " +1) AS accounttotal
 				FROM gltotals
 				WHERE period<='" . $_POST['PeriodTo'] . "'
 				GROUP BY account
@@ -106,7 +106,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 
 	$SQL = "SELECT account,
-					ROUND(SUM(amount), " . $_SESSION['CompanyRecord']['decimalplaces'] . " +1) as accounttotal
+					ROUND(SUM(amount), " . $_SESSION['CompanyRecord']['decimalplaces'] . " +1) AS accounttotal
 				FROM gltotals
 				WHERE period<='" . ($_POST['PeriodTo'] - 12) . "'
 				GROUP BY account
@@ -123,31 +123,31 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	if (isset($_POST['PrintPDF'])) {
 		$HTML .= '<html>
 					<head>';
-		$HTML .= '<link href = "css/reports.css" rel = "stylesheet" type = "text/css" />';
+		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
 	}
 
-	$HTML .= '<table summary = "' . __('HTML View') . '">
+	$HTML .= '<table summary="' . __('HTML View') . '">
 			<thead>
 				<tr>
-					<th colspan = "6">
+					<th colspan="6">
 						<h2>' . __('Balance Sheet as at') . ' ' . $BalanceDate . '
 						</h2>
 					</th>
 				</tr>';
 
 	if ($_POST['ShowDetail'] == 'Detailed') {
-	$HTML .= '<tr>
+		$HTML .= '<tr>
 				<th>' . __('Account') . '</th>
 				<th>' . __('Account Name') . '</th>
-				<th colspan = "2">' . $BalanceDate . '</th>
-				<th colspan = "2">' . __('Last Year') . '</th>
+				<th colspan="2">' . $BalanceDate . '</th>
+				<th colspan="2">' . __('Last Year') . '</th>
 			</tr>';
-} else {
+	} else {
 		/*summary */
 		$HTML .= '<tr>
-				<th colspan = "2"></th>
-				<th colspan = "2">' . $BalanceDate . '</th>
-				<th colspan = "2">' . __('Last Year') . '</th>
+				<th colspan="2"></th>
+				<th colspan="2">' . $BalanceDate . '</th>
+				<th colspan="2">' . __('Last Year') . '</th>
 			</tr>';
 	}
 	$HTML .= '</thead>';
@@ -180,24 +180,24 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		}
 
 		if ($MyRow['accountcode'] == $RetainedEarningsAct) {
-	$AccountBalance = $ThisYearRetainedEarningsRow['retainedearnings'];
+			$AccountBalance = $ThisYearRetainedEarningsRow['retainedearnings'];
 			$LYAccountBalance = $LastYearRetainedEarningsRow['retainedearnings'];
-}
+		}
 
 		if ($MyRow['group_'] != $ActGrp and $ActGrp != '') {
-	if ($MyRow['parentgroupname'] != $ActGrp) {
+			if ($MyRow['parentgroupname'] != $ActGrp) {
 				while ($MyRow['group_'] != $ParentGroups[$Level] and $Level > 0) {
 					if ($_POST['ShowDetail'] == 'Detailed') {
 						$HTML .= '<tr>
-								<td colspan = "2"></td>
+								<td colspan="2"></td>
 								<td><hr /></td>
 								<td></td>
 								<td><hr /></td>
 								<td></td>
 							</tr>';
-}
+					}
 					$HTML .= '<tr class="total_row">
-							<td colspan = "2"><I>' . $ParentGroups[$Level] . '</I></td>
+							<td colspan="2"><I>' . $ParentGroups[$Level] . '</I></td>
 							<td class="number">' . locale_number_format($GroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 							<td></td>
 							<td class="number">' . locale_number_format($LYGroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -210,17 +210,17 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					++$j;
 				}
 				if ($_POST['ShowDetail'] == 'Detailed') {
-	$HTML .= '<tr>
-							<td colspan = "2"></td>
+					$HTML .= '<tr>
+							<td colspan="2"></td>
 							<td><hr /></td>
 							<td></td>
 							<td><hr /></td>
 							<td></td>
 						</tr>';
-}
+				}
 
 				$HTML .= '<tr class="total_row">
-						<td colspan = "2">' . $ParentGroups[$Level] . '</td>
+						<td colspan="2">' . $ParentGroups[$Level] . '</td>
 						<td class="number">' . locale_number_format($GroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 						<td></td>
 						<td class="number">' . locale_number_format($LYGroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -234,18 +234,19 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			}
 		}
 		if ($MyRow['sectionid'] != $Section) {
-	if ($Section != '') {
+
+			if ($Section != '') {
 				if ($_POST['ShowDetail'] == 'Detailed') {
 					$HTML .= '<tr>
-							<td colspan = "2"></td>
+							<td colspan="2"></td>
 							<td><hr /></td>
 							<td></td>
 							<td><hr /></td>
 							<td></td>
 						</tr>';
-} else {
+				} else {
 					$HTML .= '<tr>
-							<td colspan = "3"></td>
+							<td colspan="3"></td>
 							<td><hr /></td>
 							<td></td>
 							<td><hr /></td>
@@ -253,7 +254,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				}
 
 				$HTML .= '<tr class="total_row">
-						<td colspan = "3"><h2>' . $Sections[$Section] . '</h2></td>
+						<td colspan="3"><h2>' . $Sections[$Section] . '</h2></td>
 						<td class="number">' . locale_number_format($SectionBalance, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 						<td></td>
 						<td class="number">' . locale_number_format($SectionBalanceLY, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -265,23 +266,24 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			$Section = $MyRow['sectionid'];
 
 			if ($_POST['ShowDetail'] == 'Detailed') {
-	$HTML .= '<tr>
-						<td colspan = "6"><h1>' . $Sections[$MyRow['sectionid']] . '</h1></td>
+				$HTML .= '<tr>
+						<td colspan="6"><h1>' . $Sections[$MyRow['sectionid']] . '</h1></td>
 					</tr>';
-}
+			}
 		}
 
 		if ($MyRow['group_'] != $ActGrp) {
-	if ($ActGrp != '' and $MyRow['parentgroupname'] == $ActGrp) {
+
+			if ($ActGrp != '' and $MyRow['parentgroupname'] == $ActGrp) {
 				$Level++;
-}
+			}
 
 			if ($_POST['ShowDetail'] == 'Detailed') {
-	$ActGrp = $MyRow['group_'];
+				$ActGrp = $MyRow['group_'];
 				$HTML .= '<tr>
-						<td colspan = "6"><h3>' . $MyRow['group_'] . '</h3></td>
+						<td colspan="6"><h3>' . $MyRow['group_'] . '</h3></td>
 					</tr>';
-}
+			}
 			$GroupTotal[$Level] = 0;
 			$LYGroupTotal[$Level] = 0;
 			$ActGrp = $MyRow['group_'];
@@ -291,7 +293,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 		$SectionBalanceLY+= $LYAccountBalance;
 		$SectionBalance+= $AccountBalance;
-		for ($i = 0; $i <= $Level; $i++) {
+		for ($i = 0;$i <= $Level;$i++) {
 			$LYGroupTotal[$i]+= $LYAccountBalance;
 			$GroupTotal[$i]+= $AccountBalance;
 		}
@@ -299,7 +301,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$CheckTotal+= $AccountBalance;
 
 		if ($_POST['ShowDetail'] == 'Detailed') {
-	if (isset($_POST['ShowZeroBalance'])) {
+			if (isset($_POST['ShowZeroBalance'])) {
 				$ActEnquiryURL = '<a href="' . $RootPath . '/GLAccountInquiry.php?FromPeriod=' . urlencode(FYStartPeriod($_POST['PeriodTo'])) . '&ToPeriod=' . urlencode($_POST['PeriodTo']) . '&amp;Account=' . urlencode($MyRow['accountcode']) . '">' . $MyRow['accountcode'] . '</a>';
 
 				$HTML .= '<tr class="striped_row">
@@ -311,7 +313,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 						<td></td>
 					</tr>';
 				++$j;
-} elseif (round($AccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) != 0
+		} elseif (round($AccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) != 0
 			or round($LYAccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) != 0) {
 				$ActEnquiryURL = '<a href="' . $RootPath . '/GLAccountInquiry.php?FromPeriod=' . urlencode(FYStartPeriod($_POST['PeriodTo'])) . '&ToPeriod=' . urlencode($_POST['PeriodTo']) . '&amp;Account=' . urlencode($MyRow['accountcode']) . '">' . $MyRow['accountcode'] . '</a>';
 
@@ -332,16 +334,16 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	//end of loop
 	while ($Group != $ParentGroups[$Level] and $Level > 0) {
 		if ($_POST['ShowDetail'] == 'Detailed') {
-	$HTML .= '<tr>
-					<td colspan = "2"></td>
+			$HTML .= '<tr>
+					<td colspan="2"></td>
 					<td><hr /></td>
 					<td></td>
 					<td><hr /></td>
 					<td></td>
 				</tr>';
-}
+		}
 		$HTML .= '<tr class="total_row">
-				<td colspan = "2"><I>' . $ParentGroups[$Level] . '</I></td>
+				<td colspan="2"><I>' . $ParentGroups[$Level] . '</I></td>
 				<td class="number">' . locale_number_format($GroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td></td>
 				<td class="number">' . locale_number_format($LYGroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -350,17 +352,17 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$Level--;
 	}
 	if ($_POST['ShowDetail'] == 'Detailed') {
-	$HTML .= '<tr>
-				<td colspan = "2"></td>
+		$HTML .= '<tr>
+				<td colspan="2"></td>
 				<td><hr /></td>
 				<td></td>
 				<td><hr /></td>
 				<td></td>
 			</tr>';
-}
+	}
 
 	$HTML .= '<tr class="total_row">
-			<td colspan = "2">' . $ParentGroups[$Level] . '</td>
+			<td colspan="2">' . $ParentGroups[$Level] . '</td>
 			<td class="number">' . locale_number_format($GroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			<td></td>
 			<td class="number">' . locale_number_format($LYGroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -368,16 +370,16 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		</tr>';
 
 	if ($_POST['ShowDetail'] == 'Detailed') {
-	$HTML .= '<tr>
-				<td colspan = "2"></td>
+		$HTML .= '<tr>
+				<td colspan="2"></td>
 				<td><hr /></td>
 				<td></td>
 				<td><hr /></td>
 				<td></td>
 			</tr>';
-} else {
+	} else {
 		$HTML .= '<tr>
-				<td colspan = "3"></td>
+				<td colspan="3"></td>
 				<td><hr /></td>
 				<td></td>
 				<td><hr /></td>
@@ -385,7 +387,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 
 	$HTML .= '<tr class="total_row">
-			<td colspan = "3"><h2>' . $Sections[$Section] . '</h2></td>
+			<td colspan="3"><h2>' . $Sections[$Section] . '</h2></td>
 			<td class="number">' . locale_number_format($SectionBalance, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			<td></td>
 			<td class="number">' . locale_number_format($SectionBalanceLY, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -395,26 +397,26 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	if (isset($MyRow['sectioninaccounts']) and $_POST['ShowDetail'] == 'Detailed') {
 		$HTML .= '<tr>
-				<td colspan = "6"><h1>' . $Sections[$MyRow['sectioninaccounts']] . '</h1></td>
+				<td colspan="6"><h1>' . $Sections[$MyRow['sectioninaccounts']] . '</h1></td>
 			</tr>';
 	}
 
 	$HTML .= '<tr>
-			<td colspan = "3"></td>
+			<td colspan="3"></td>
 			<td><hr /></td>
 			<td></td>
 			<td><hr /></td>
 		</tr>';
 
 	$HTML .= '<tr class="total_row">
-			<td colspan = "3"><h2>' . __('Check Total') . '</h2></td>
+			<td colspan="3"><h2>' . __('Check Total') . '</h2></td>
 			<td class="number">' . locale_number_format($CheckTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			<td></td>
 			<td class="number">' . locale_number_format($LYCheckTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		</tr>';
 
 	$HTML .= '<tr>
-			<td colspan = "3"></td>
+			<td colspan="3"></td>
 			<td><hr /></td>
 			<td></td>
 			<td><hr /></td>
@@ -450,12 +452,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 		echo $HTML;
 		echo // Shows a form to select an action after the report was shown:
-		'<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target="_blank">',
-		'<input name="FormID" type = "hidden" value = "' . $_SESSION['FormID'] . '" />',
+		'<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" target="_blank">',
+		'<input name="FormID" type="hidden" value="' . $_SESSION['FormID'] . '" />',
 		// Resend report parameters:
-		'<input name="PeriodTo" type = "hidden" value = "' . $_POST['PeriodTo'] . '" />',
+		'<input name="PeriodTo" type="hidden" value="' . $_POST['PeriodTo'] . '" />',
 		'<div class="centre">
-			<input type = "submit" name="close" value = "' . __('Close') . '" onclick="window.close()" />
+			<input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" />
 		</div>' .
 		'</form>';
 		include('includes/footer.php');
@@ -463,7 +465,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 } else {
 	// Show a form to allow input of criteria for TB to show
-	if (!isset($IsIncluded)) {// Runs normally if this script is not included in another.
+	if (!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
 		include('includes/header.php');
 	}
 	if (!isset($_POST['ShowZeroBalance'])) {
@@ -480,19 +482,19 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		__('The balance sheet has three parts: assets, liabilities and ownership equity. The main categories of assets are listed first and are followed by the liabilities. The difference between the assets and the liabilities is known as equity or the net assets or the net worth or capital of the company and according to the accounting equation, net worth must equal assets minus liabilities.') . '<br />' .
 		__('webERP is an accrual based system (not a cash based system). Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.'));// Function fShowPageHelp() in ~/includes/MiscFunctions.php
 	echo // Shows a form to input the report parameters:
-		'<form action = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method = "post" target="_blank">',
-		'<input name="FormID" type = "hidden" value = "', $_SESSION['FormID'], '" />',
+		'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post" target="_blank">',
+		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />',
 		// Input table:
 		'<fieldset>
 			<legend>', __('Report Criteria'), '</legend>
 			<field>
-				<label for = "PeriodTo">' . __('Select the balance date') . ':</label>
-				<select name="PeriodTo" required = "required">';
+				<label for="PeriodTo">' . __('Select the balance date') . ':</label>
+				<select name="PeriodTo" required="required">';
 
 		$PeriodSQL = "SELECT periodno
 						FROM periods
 						WHERE MONTH(lastdate_in_period) = MONTH(CURRENT_DATE())
-						and YEAR(lastdate_in_period ) = YEAR(CURRENT_DATE())";
+						AND YEAR(lastdate_in_period ) = YEAR(CURRENT_DATE())";
 		$PeriodResult = DB_query($PeriodSQL);
 		$PeriodRow = DB_fetch_array($PeriodResult);
 		$PeriodNo = $PeriodRow['periodno'];
@@ -503,21 +505,21 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	while ($MyRow = DB_fetch_array($Periods)) {
 		echo
 			'<option',
-			(($MyRow['periodno'] == $PeriodNo) ? ' selected ="selected"' : ''),
-			' value = "', $MyRow['periodno'], '">', ConvertSQLDate($MyRow['lastdate_in_period']), '</option>';
+			(($MyRow['periodno'] == $PeriodNo) ? ' selected="selected"' : ''),
+			' value="', $MyRow['periodno'], '">', ConvertSQLDate($MyRow['lastdate_in_period']), '</option>';
 	}
 	echo '</select>
 		</field>';
 
 	echo '<field>
-			<label for = "ShowDetail">', __('Detail or summary'), '</label>
-			<select name="ShowDetail" required = "required" title="" >';
-	if ($_POST['ShowDetail'] == 'Summary') {
-	echo	'<option selected = "selected" value = "Summary">', __('Summary'), '</option>
-				<option value = "Detailed">', __('All Accounts'), '</option>';
-} else {
-		echo	'<option value = "Summary">', __('Summary'), '</option>
-				<option selected = "selected" value = "Detailed">', __('All Accounts'), '</option>';
+			<label for="ShowDetail">', __('Detail or summary'), '</label>
+			<select name="ShowDetail" required="required" title="" >';
+	if($_POST['ShowDetail'] == 'Summary') {
+		echo	'<option selected="selected" value="Summary">', __('Summary'), '</option>
+				<option value="Detailed">', __('All Accounts'), '</option>';
+	} else {
+		echo	'<option value="Summary">', __('Summary'), '</option>
+				<option selected="selected" value="Detailed">', __('All Accounts'), '</option>';
 	}
 	echo	'</select>
 			<fieldhelp>', __('Selecting Summary will show on the totals at the account group level'), '</fieldhelp>
@@ -525,15 +527,15 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	// Show accounts with zero balance:
 	echo '<field>
-			<label for = "ShowZeroBalance">', __('Show accounts with zero balance'), '</label>
-			<input', ($_POST['ShowZeroBalance'] ? ' checked ="checked"' : ''), ' id="ShowZeroBalance" name="ShowZeroBalance" type = "checkbox" />
+			<label for="ShowZeroBalance">', __('Show accounts with zero balance'), '</label>
+			<input', ($_POST['ShowZeroBalance'] ? ' checked="checked"' : ''), ' id="ShowZeroBalance" name="ShowZeroBalance" type="checkbox" />
 	 		<fieldhelp>', __('Check this box to show all accounts including those with zero balance'), '</fieldhelp>
 		 </field>',
 		'</fieldset>';
 
 	echo '<div class="centre">
-			<input type = "submit" name="PrintPDF" title="PDF" value = "'.__('PDF Balance Sheet').'" />
-			<input type = "submit" name="View" title="View" value = "' . __('Show Balance Sheet') .'" />
+			<input type="submit" name="PrintPDF" title="PDF" value="'.__('PDF Balance Sheet').'" />
+			<input type="submit" name="View" title="View" value="' . __('Show Balance Sheet') .'" />
 		</div>',
 		'</form>';
 

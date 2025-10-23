@@ -39,28 +39,28 @@ if ((!isset($_GET['TransNo']) or $_GET['TransNo'] == '') and !isset($_POST['Tran
 	$SQL = "SELECT locations.loccode,
 			locationname
 		FROM locations
-		INNER JOIN locationusers ON locationusers.loccode = locations.loccode and locationusers.userid = '" . $_SESSION['UserID'] . "' and locationusers.canupd = 1";
+		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" . $_SESSION['UserID'] . "' AND locationusers.canupd=1";
 	$Result = DB_query($SQL);
-	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" name = "form">';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" name="form">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<fieldset>
 			<legend>', __('Picking List Criteria'), '</legend>';
 	echo '<field>
-			<label for = "TransDate">' . __('Create picking lists for all deliveries to be made on') . ' : ' . '</label>
-			<input required = "required" autofocus = "autofocus" type = "date" name = "TransDate" maxlength = "10" size = "11" value = "' . date('Y-m-d', mktime(date('m'), date('Y'), date('d') + 1)) . '" />
+			<label for="TransDate">' . __('Create picking lists for all deliveries to be made on') . ' : ' . '</label>
+			<input required="required" autofocus="autofocus" type="date" name="TransDate" maxlength="10" size="11" value="' . date('Y-m-d', mktime(date('m'), date('Y'), date('d') + 1)) . '" />
 		</field>
 		<field>
-			<label for = "loccode">' . __('From Warehouse') . ' : ' . '</label>
-			<select required = "required" name = "loccode">';
+			<label for="loccode">' . __('From Warehouse') . ' : ' . '</label>
+			<select required="required" name="loccode">';
 	while ($MyRow = DB_fetch_array($Result)) {
-		echo '<option value = "' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	}
 	echo '</select>
 		</field>
 		</fieldset>';
 	echo '<div class="centre">
-			<input type = "submit" name = "Process" value = "' . __('Print Picking Lists') . '" />
+			<input type="submit" name="Process" value="' . __('Print Picking Lists') . '" />
 		</div>
 		</form>';
 	include('includes/footer.php');
@@ -97,15 +97,15 @@ if (!isset($_POST['TransDate']) and $_GET['TransNo'] !=  'Preview') {
 					salesorders.datepackingslipprinted,
 					locations.loccode,
 					locations.locationname
-				FROM salesorders INNER JOIN salesorderdetails on salesorderdetails.orderno = salesorders.orderno,
+				FROM salesorders INNER JOIN salesorderdetails on salesorderdetails.orderno=salesorders.orderno,
 					debtorsmaster,
 					shippers,
-					locations INNER JOIN locationusers ON locationusers.loccode = locations.loccode and locationusers.userid = '" . $_SESSION['UserID'] . "' and locationusers.canupd = 1
-				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					and salesorders.shipvia = shippers.shipper_id
-					and salesorders.fromstkloc = locations.loccode
-					and salesorders.orderno = '" . $_GET['TransNo'] . "'
-					and salesorderdetails.completed = 0
+					locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" . $_SESSION['UserID'] . "' AND locationusers.canupd=1
+				WHERE salesorders.debtorno=debtorsmaster.debtorno
+					AND salesorders.shipvia=shippers.shipper_id
+					AND salesorders.fromstkloc=locations.loccode
+					AND salesorders.orderno='" . $_GET['TransNo'] . "'
+					AND salesorderdetails.completed=0
 				GROUP BY salesorders.orderno";
 } elseif (isset($_POST['TransDate']) or (isset($_GET['TransNo']) and $_GET['TransNo'] !=  'Preview')) {
 	$SQL = "SELECT salesorders.debtorno,
@@ -134,22 +134,22 @@ if (!isset($_POST['TransDate']) and $_GET['TransNo'] !=  'Preview') {
 					salesorders.datepackingslipprinted,
 					locations.loccode,
 					locations.locationname
-				FROM salesorders INNER JOIN salesorderdetails on salesorderdetails.orderno = salesorders.orderno,
+				FROM salesorders INNER JOIN salesorderdetails on salesorderdetails.orderno=salesorders.orderno,
 					debtorsmaster,
 					shippers,
-					locations INNER JOIN locationusers ON locationusers.loccode = locations.loccode and locationusers.userid = '" . $_SESSION['UserID'] . "' and locationusers.canupd = 1
-				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					and salesorders.shipvia = shippers.shipper_id
-					and salesorders.fromstkloc = locations.loccode
-					and salesorders.fromstkloc = '" . $_POST['loccode'] . "'
-					and salesorders.deliverydate<='" . FormatDateForSQL($_POST['TransDate']) . "'
-					and salesorderdetails.completed = 0
+					locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" . $_SESSION['UserID'] . "' AND locationusers.canupd=1
+				WHERE salesorders.debtorno=debtorsmaster.debtorno
+					AND salesorders.shipvia=shippers.shipper_id
+					AND salesorders.fromstkloc=locations.loccode
+					AND salesorders.fromstkloc='" . $_POST['loccode'] . "'
+					AND salesorders.deliverydate<='" . FormatDateForSQL($_POST['TransDate']) . "'
+					AND salesorderdetails.completed=0
 				GROUP BY salesorders.orderno
 				ORDER BY salesorders.deliverydate, salesorders.orderno";
 }
 
 if ($_SESSION['SalesmanLogin'] !=  '') {
-	$SQL .= " and salesorders.salesperson = '" . $_SESSION['SalesmanLogin'] . "'";
+	$SQL .= " AND salesorders.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 }
 
 if (isset($_POST['TransDate']) or (isset($_GET['TransNo']) and $_GET['TransNo'] !=  'Preview')) {
@@ -215,7 +215,7 @@ body { font-family: DejaVu Sans, Arial, sans-serif; font-size: 12px; }
 
 $TotalOrderCount = sizeof($OrdersToPick);
 
-for ( $i = 0;  $i < $TotalOrderCount;  $i++ ){
+for ( $i = 0; $i < $TotalOrderCount; $i++ ){
 	$HTML .= '<div class="header">'.__('Picking List').'</div>';
 	$HTML .= '<table class="table">';
 	$HTML .= '<tr>
@@ -246,15 +246,15 @@ for ( $i = 0;  $i < $TotalOrderCount;  $i++ ){
 					bin
 				FROM salesorderdetails
 				INNER JOIN locstock
-					ON locstock.loccode = '" . $Order['loccode'] . "'
-					and locstock.stockid = salesorderdetails.stkcode
+					ON locstock.loccode='" . $Order['loccode'] . "'
+					AND locstock.stockid=salesorderdetails.stkcode
 				INNER JOIN stockmaster
-					ON salesorderdetails.stkcode = stockmaster.stockid
+					ON salesorderdetails.stkcode=stockmaster.stockid
 				LEFT OUTER JOIN custitem
-					ON custitem.debtorno = '" . $Order['debtorno'] . "'
-					and custitem.stockid = stockmaster.stockid
-				WHERE salesorderdetails.orderno = '" . $Order['orderno'] . "'
-				and salesorderdetails.completed = 0";
+					ON custitem.debtorno='" . $Order['debtorno'] . "'
+					AND custitem.stockid=stockmaster.stockid
+				WHERE salesorderdetails.orderno='" . $Order['orderno'] . "'
+				AND salesorderdetails.completed=0";
 	$LineResult = DB_query($SQL);
 
 	while ($MyRow2 = DB_fetch_array($LineResult)) {
@@ -272,35 +272,35 @@ for ( $i = 0;  $i < $TotalOrderCount;  $i++ ){
 		</tr>';
 
 		if ($MyRow2['cust_part'] > '') {
-	$HTML .= '<tr>
+			$HTML .= '<tr>
 				<td></td>
-				<td colspan = "5">' . htmlspecialchars($MyRow2['cust_part'] . ' ' . $MyRow2['cust_description']) . '</td>
+				<td colspan="5">' . htmlspecialchars($MyRow2['cust_part'] . ' ' . $MyRow2['cust_description']) . '</td>
 			</tr>';
-}
+		}
 		if ($MyRow2['narrative'] > '') {
-	$HTML .= '<tr>
+			$HTML .= '<tr>
 				<td></td>
-				<td colspan = "5">' . htmlspecialchars($MyRow2['narrative']) . '</td>
+				<td colspan="5">' . htmlspecialchars($MyRow2['narrative']) . '</td>
 			</tr>';
-}
+		}
 
 		// Serial/batch details if controlled
 		if ($MyRow2['controlled'] == 1) {
-	$label = $MyRow2['serialised'] == 1 ? __('Serial number') : __('Lot Number');
+			$label = $MyRow2['serialised'] == 1 ? __('Serial number') : __('Lot Number');
 			$SQLBundles = "SELECT serialno, quantity
 				FROM stockserialitems
-				WHERE stockid = '" . $MyRow2['stkcode'] . "'
-				and stockserialitems.loccode ='" . $Order['loccode'] . "'
-				and quantity > 0
+				WHERE stockid='" . $MyRow2['stkcode'] . "'
+				AND stockserialitems.loccode ='" . $Order['loccode'] . "'
+				AND quantity > 0
 				ORDER BY createdate, quantity";
 			$Bundles = DB_query($SQLBundles);
 			while ($MyBundles = DB_fetch_array($Bundles)) {
 				$HTML .= '<tr>
 					<td></td>
-					<td colspan = "2">' . $label . ': ' . htmlspecialchars($MyBundles['serialno']) . '</td>
-					<td colspan = "3">' . locale_number_format($MyBundles['quantity'], $MyRow2['decimalplaces']) . '</td>
+					<td colspan="2">' . $label . ': ' . htmlspecialchars($MyBundles['serialno']) . '</td>
+					<td colspan="3">' . locale_number_format($MyBundles['quantity'], $MyRow2['decimalplaces']) . '</td>
 				</tr>';
-}
+			}
 		}
 	}
 	$HTML .= '</table>';
@@ -308,8 +308,8 @@ for ( $i = 0;  $i < $TotalOrderCount;  $i++ ){
 
 	// Add page break for DomPDF for next order
 	if ($i < $TotalOrderCount-1) {
-	$HTML .= '<div style="page-break-after:always"></div>';
-}
+		$HTML .= '<div style="page-break-after:always"></div>';
+	}
 }
 
 $HTML .= '</body></html>';

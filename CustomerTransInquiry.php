@@ -15,31 +15,31 @@ echo '<p class="page_title_text">
 	</p>';
 echo '<div class="page_help_text">' . __('Choose which type of transaction to report on.') . '</div>';
 
-echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post">';
-echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<fieldset>
 			<legend>', __('Report Criteria'), '</legend>
 			<field>
-				<label for = "TransType">' . __('Type') . ':</label>
+				<label for="TransType">' . __('Type') . ':</label>
 				<select tabindex="1" name="TransType"> ';
 
 $SQL = "SELECT typeid,
 				typename
 		FROM systypes
 		WHERE typeid >= 10
-		and typeid <= 14";
+		AND typeid <= 14";
 
 $ResultTypes = DB_query($SQL);
 
-echo '<option value = "All">' . __('All') . '</option>';
-while ($MyRow = DB_fetch_array($ResultTypes)) {
+echo '<option value="All">' . __('All') . '</option>';
+while($MyRow=DB_fetch_array($ResultTypes)) {
 	echo '<option';
-	if (isset($_POST['TransType'])) {
-		if ($MyRow['typeid'] == $_POST['TransType']) {
-	echo ' selected = "selected"' ;
-}
+	if(isset($_POST['TransType'])) {
+		if($MyRow['typeid'] == $_POST['TransType']) {
+		     echo ' selected="selected"' ;
+		}
 	}
-	echo ' value = "' . $MyRow['typeid'] . '">' . __($MyRow['typename']) . '</option>';
+	echo ' value="' . $MyRow['typeid'] . '">' . __($MyRow['typename']) . '</option>';
 }
 echo '</select>
 	</field>';
@@ -51,16 +51,16 @@ if (!isset($_POST['ToDate'])){
 	$_POST['ToDate'] = date($_SESSION['DefaultDateFormat']);
 }
 echo '<field>
-		<label for = "FromDate">' . __('From') . ':</label>
-		<input type = "date" maxlength = "10" name="FromDate" required = "required" size = "11" tabindex="2" value = "' . FormatDateForSQL($_POST['FromDate']) . '" />
+		<label for="FromDate">' . __('From') . ':</label>
+		<input type="date" maxlength="10" name="FromDate" required="required" size="11" tabindex="2" value="' . FormatDateForSQL($_POST['FromDate']) . '" />
 	</field>
 	<field>
-		<label for = "ToDate">' . __('To') . ':</label>
-		<input type = "date" maxlength = "10" name="ToDate" required = "required" size = "11" tabindex="3" value = "' . FormatDateForSQL($_POST['ToDate']) . '" />
+		<label for="ToDate">' . __('To') . ':</label>
+		<input type="date" maxlength="10" name="ToDate" required="required" size="11" tabindex="3" value="' . FormatDateForSQL($_POST['ToDate']) . '" />
 	</field>
 	</fieldset>
 	<div class="centre">
-		<input name="ShowResults" tabindex="4" type = "submit" value = "' . __('Show transactions') . '" />
+		<input name="ShowResults" tabindex="4" type="submit" value="' . __('Show transactions') . '" />
     </div>
 	</form>';
 
@@ -78,17 +78,17 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] !=  ''){
 				ovamount+ovgst+ovfreight+ovdiscount as totalamt,
 				currcode,
 				typename,
-				decimalplaces as currdecimalplaces
+				decimalplaces AS currdecimalplaces
 			FROM debtortrans
-			INNER JOIN debtorsmaster ON debtortrans.debtorno = debtorsmaster.debtorno
-			INNER JOIN currencies ON debtorsmaster.currcode = currencies.currabrev
+			INNER JOIN debtorsmaster ON debtortrans.debtorno=debtorsmaster.debtorno
+			INNER JOIN currencies ON debtorsmaster.currcode=currencies.currabrev
 			INNER JOIN systypes ON debtortrans.type = systypes.typeid
 			WHERE ";
 
-   $SQL = $SQL . "trandate >='" . $SQL_FromDate . "' and trandate <= '" . $SQL_ToDate . "'";
-	if  ($_POST['TransType']!= 'All') {
-	$SQL .= " and type = '" . $_POST['TransType']."'";
-}
+   $SQL = $SQL . "trandate >='" . $SQL_FromDate . "' AND trandate <= '" . $SQL_ToDate . "'";
+	if  ($_POST['TransType']!= 'All')  {
+		$SQL .= " AND type = '" . $_POST['TransType']."'";
+	}
 	$SQL .=  " ORDER BY id";
 
    $ErrMsg = __('The customer transactions for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg();
@@ -114,10 +114,9 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] !=  ''){
 
 	$RowCounter = 1;
 
-	while ($MyRow = DB_fetch_array($TransResult)) {
+	while ($MyRow=DB_fetch_array($TransResult)) {
 
-		if ($_POST['TransType']==10) {
-	/* invoices */
+		if ($_POST['TransType']==10){ /* invoices */
 
 			echo '<tr class="striped_row">
 						<td>', __($MyRow['typename']), '</td>
@@ -136,8 +135,8 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] !=  ''){
 							<img src="', $RootPath.'/css/'.$Theme.'/images/preview.png', '" title="' . __('Click to preview the invoice') . '" /></a>
 						</td>
 					</tr>';
-} elseif ($_POST['TransType']==11) {
-	/* credit notes */
+
+		} elseif($_POST['TransType']==11) { /* credit notes */
 			echo '<tr class="striped_row">
 						<td>', __($MyRow['typename']), '</td>
 						<td>', $MyRow['transno'], '</td>
@@ -155,7 +154,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] !=  ''){
 							<img src="', $RootPath.'/css/'.$Theme.'/images/preview.png', '" title="' . __('Click to preview the credit') . '" /></a>
 						</td>
 					</tr>';
-} else {  /* otherwise */
+		} else {  /* otherwise */
 			echo '<tr class="striped_row">
 						<td>', __($MyRow['typename']), '</td>
 						<td>', $MyRow['transno'], '</td>

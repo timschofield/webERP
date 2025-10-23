@@ -24,7 +24,7 @@ if (isset($_GET['StockID'])){
 if (isset($_POST['UpdateBinLocations'])){
 	foreach ($_POST as $PostVariableName => $Bin) {
 		if (mb_substr($PostVariableName,0,11) == 'BinLocation') {
-			$SQL = "UPDATE locstock SET bin = '" . strtoupper($Bin) . "' WHERE loccode = '" . mb_substr($PostVariableName,11) . "' and stockid = '" . $StockID . "'";
+			$SQL = "UPDATE locstock SET bin='" . strtoupper($Bin) . "' WHERE loccode='" . mb_substr($PostVariableName,11) . "' AND stockid='" . $StockID . "'";
 			$Result = DB_query($SQL);
 		}
 	}
@@ -36,7 +36,7 @@ $Result = DB_query("SELECT description,
 						   serialised,
 						   controlled
 					FROM stockmaster
-					WHERE stockid = '".$StockID."'",
+					WHERE stockid='".$StockID."'",
 					__('Could not retrieve the requested item'),
 					__('The SQL used to retrieve the items was'));
 
@@ -49,42 +49,42 @@ if (DB_num_rows($Result) > 0) {
 	$Units = $MyRow['units'];
 	$KitSet = $MyRow['mbflag'];
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Inventory') .
-		'" alt = "" /><b>' . ' ' . $StockID . ' - ' . $Description . ' : ' . __('in units of') . ' : ' . $MyRow['units'] . '</b></p>';
+		'" alt="" /><b>' . ' ' . $StockID . ' - ' . $Description . ' : ' . __('in units of') . ' : ' . $MyRow['units'] . '</b></p>';
 } else {
 	$DecimalPlaces = 2;
 	$Serialised = 0;
 	$Controlled = 0;
 	$KitSet = '';
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Inventory') .
-	'" alt = "" /><b>' . __('Stock Status') . '</b></p>';
+	'" alt="" /><b>' . __('Stock Status') . '</b></p>';
 }
 
 
 $Its_A_KitSet_Assembly_Or_Dummy =false;
-if ($KitSet == 'K') {
+if ($KitSet=='K'){
 	$Its_A_KitSet_Assembly_Or_Dummy =true;
 	prnMsg( __('This is a kitset part and cannot have a stock holding') . ', ' . __('only the total quantity on outstanding sales orders is shown'),'info');
-} elseif ($KitSet == 'A') {
+} elseif ($KitSet=='A'){
 	$Its_A_KitSet_Assembly_Or_Dummy =true;
 	prnMsg(__('This is an assembly part and cannot have a stock holding') . ', ' . __('only the total quantity on outstanding sales orders is shown'),'info');
-} elseif ($KitSet == 'D') {
+} elseif ($KitSet=='D'){
 	$Its_A_KitSet_Assembly_Or_Dummy =true;
 	prnMsg( __('This is an dummy part and cannot have a stock holding') . ', ' . __('only the total quantity on outstanding sales orders is shown'),'info');
 }
 
-echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post">';
-echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<fieldset>
 		<legend>', __('Select Stock Code'), '</legend>
 		<field>
-			<label for = "StockID">', __('Stock Code') . ':</label>
-			<input type = "text" data-type = "no-illegal-chars" title="" placeholder = "'.__('Alpha-numeric only').'" required = "required" name="StockID" size = "21" value = "' . $StockID . '" maxlength = "20" />
+			<label for="StockID">', __('Stock Code') . ':</label>
+			<input type="text" data-type="no-illegal-chars" title ="" placeholder="'.__('Alpha-numeric only').'" required="required" name="StockID" size="21" value="' . $StockID . '" maxlength="20" />
 			<fieldhelp>'.__('Input the stock code to inquire upon. Only alpha-numeric characters are allowed in stock codes with no spaces punctuation or special characters. Underscore or dashes are allowed.').'</fieldhelp>
 		</field>
 	</fieldset>';
 
 echo '<div class="centre">
-		<input type = "submit" name="ShowStatus" value = "' . __('Show Stock Status') . '" />
+		<input type="submit" name="ShowStatus" value="' . __('Show Stock Status') . '" />
 	</div>';
 
 $SQL = "SELECT locstock.loccode,
@@ -95,8 +95,8 @@ $SQL = "SELECT locstock.loccode,
 				locations.managed,
 				canupd
 		FROM locstock INNER JOIN locations
-		ON locstock.loccode = locations.loccode
-		INNER JOIN locationusers ON locationusers.loccode = locations.loccode and locationusers.userid = '" .  $_SESSION['UserID'] . "' and locationusers.canview = 1
+		ON locstock.loccode=locations.loccode
+		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 		WHERE locstock.stockid = '" . $StockID . "'
 		ORDER BY locations.locationname";
 
@@ -106,7 +106,7 @@ $LocStockResult = DB_query($SQL, $ErrMsg);
 echo '<table class="selection">';
 	echo '<thead>';
 
-if ($Its_A_KitSet_Assembly_Or_Dummy == true) {
+if ($Its_A_KitSet_Assembly_Or_Dummy == true){
 	echo '<tr>
 						<th class="SortedColumn">' . __('Location') . '</th>
 						<th class="SortedColumn">' . __('Demand') . '</th>
@@ -127,12 +127,12 @@ if ($Its_A_KitSet_Assembly_Or_Dummy == true) {
 echo '</thead>
 		<tbody>';
 
-while ($MyRow = DB_fetch_array($LocStockResult)) {
+while ($MyRow=DB_fetch_array($LocStockResult)) {
 
 	$DemandQty = GetDemand($StockID, $MyRow['loccode']);
 
-	if ($Its_A_KitSet_Assembly_Or_Dummy == false) {
-	// Get the QOO
+	if ($Its_A_KitSet_Assembly_Or_Dummy == false){
+		// Get the QOO
 		$QOO = GetQuantityOnOrder($StockID, $MyRow['loccode']);
 
 		$InTransitQuantityOut = -GetItemQtyInTransitFromLocation($StockID, $MyRow['loccode']);
@@ -141,15 +141,15 @@ while ($MyRow = DB_fetch_array($LocStockResult)) {
 
 		if (($InTransitQuantityIn+$InTransitQuantityOut) < 0) {
 			$Available = $MyRow['quantity'] - $DemandQty + ($InTransitQuantityIn+$InTransitQuantityOut);
-} else {
+		} else {
 			$Available = $MyRow['quantity'] - $DemandQty;
 		}
 
 		echo '<tr class="striped_row">';
 		if ($MyRow['canupd']==1) {
-	echo '<td>' . $MyRow['locationname'] . '</td>
-				<td><input type = "text" name="BinLocation' . $MyRow['loccode'] . '" value = "' . $MyRow['bin'] . '" maxlength = "10" size = "11" onchange = "ReloadForm(UpdateBinLocations)"/></td>';
-} else {
+			echo '<td>' . $MyRow['locationname'] . '</td>
+				<td><input type="text" name="BinLocation' . $MyRow['loccode'] . '" value="' . $MyRow['bin'] . '" maxlength="10" size="11" onchange="ReloadForm(UpdateBinLocations)"/></td>';
+		} else {
 			echo '<td>' . $MyRow['locationname'] . '</td>
 				<td> ' . $MyRow['bin'] . '</td>';
 		}
@@ -161,13 +161,12 @@ while ($MyRow = DB_fetch_array($LocStockResult)) {
 				<td class="number">', locale_number_format($Available, $DecimalPlaces), '</td>
 				<td class="number">', locale_number_format($QOO, $DecimalPlaces), '</td>';
 
-		if ($Serialised ==1) {
-	/*The line is a serialised item*/
+		if ($Serialised ==1){ /*The line is a serialised item*/
 
 			echo '<td><a target="_blank" href="' . $RootPath . '/StockSerialItems.php?Serialised=Yes&amp;Location=' . $MyRow['loccode'] . '&amp;StockID=' .$StockID . '">' . __('Serial Numbers') . '</tr>';
-} elseif ($Controlled == 1) {
-	echo '<td><a target="_blank" href="' . $RootPath . '/StockSerialItems.php?Location=' . $MyRow['loccode'] . '&amp;StockID=' .$StockID . '">' . __('Batches') . '</a></td></tr>';
-}else{
+		} elseif ($Controlled==1){
+			echo '<td><a target="_blank" href="' . $RootPath . '/StockSerialItems.php?Location=' . $MyRow['loccode'] . '&amp;StockID=' .$StockID . '">' . __('Batches') . '</a></td></tr>';
+		}else{
 			echo '</tr>';
 		}
 
@@ -185,7 +184,7 @@ while ($MyRow = DB_fetch_array($LocStockResult)) {
 echo '</tbody>
 	<tr>
 		<td></td>
-		<td><input type = "submit" name="UpdateBinLocations" value = "' . __('Update Bins') . '" /></td>
+		<td><input type="submit" name="UpdateBinLocations" value="' . __('Update Bins') . '" /></td>
 	</tr>
 	</table>';
 
@@ -194,43 +193,42 @@ if (isset($_GET['DebtorNo'])){
 } elseif (isset($_POST['DebtorNo'])){
 	$DebtorNo = trim(mb_strtoupper($_POST['DebtorNo']));
 } elseif (isset($_SESSION['CustomerID'])){
-	$DebtorNo = $_SESSION['CustomerID'];
+	$DebtorNo=$_SESSION['CustomerID'];
 }
 
-if ($DebtorNo) {
-	/* display recent pricing history for this debtor and this stock item */
+if ($DebtorNo) { /* display recent pricing history for this debtor and this stock item */
 
 	$SQL = "SELECT stockmoves.trandate,
 				stockmoves.qty,
 				stockmoves.price,
 				stockmoves.discountpercent
 			FROM stockmoves
-			WHERE stockmoves.debtorno = '" . $DebtorNo . "'
-				and stockmoves.type = 10
-				and stockmoves.stockid = '" . $StockID . "'
-				and stockmoves.hidemovt = 0
+			WHERE stockmoves.debtorno='" . $DebtorNo . "'
+				AND stockmoves.type=10
+				AND stockmoves.stockid = '" . $StockID . "'
+				AND stockmoves.hidemovt=0
 			ORDER BY stockmoves.trandate DESC";
 
-	/* only show pricing history for sales invoices - type = 10 */
+	/* only show pricing history for sales invoices - type=10 */
 
 	$ErrMsg = __('The stock movements for the selected criteria could not be retrieved because') . ' - ';
 
 	$MovtsResult = DB_query($SQL, $ErrMsg);
 
-	$k = 1;
-	while ($MyRow = DB_fetch_array($MovtsResult)) {
+	$k=1;
+	while ($MyRow=DB_fetch_array($MovtsResult)) {
 	  if ($LastPrice != $MyRow['price']
-			or $LastDiscount != $MyRow['discount']) { /* consolidate price history for records with same price/discount */
+			OR $LastDiscount != $MyRow['discount']) { /* consolidate price history for records with same price/discount */
 	    if (isset($Qty)) {
-	    	$DateRange = ConvertSQLDate($FromDate);
+	    	$DateRange=ConvertSQLDate($FromDate);
 	    	if ($FromDate != $ToDate) {
 	        	$DateRange .= ' - ' . ConvertSQLDate($ToDate);
-}
+	     	}
 	    	$PriceHistory[] = array($DateRange, $Qty, $LastPrice, $LastDiscount);
 	    	$k++;
 	    	if ($k > 9) {
-	break; /* 10 price records is enough to display */
-}
+                  break; /* 10 price records is enough to display */
+                }
 	    	if ($MyRow['trandate'] < FormatDateForSQL(DateAdd(date($_SESSION['DefaultDateFormat']),'y', -1))) {
 	    	  break; /* stop displaying price history more than a year old once we have at least one  to display */
    	        }
@@ -247,8 +245,8 @@ if ($DebtorNo) {
 	if (isset($Qty)) {
 		$DateRange = ConvertSQLDate($FromDate);
 		if ($FromDate != $ToDate) {
-	$DateRange .= ' - '.ConvertSQLDate($ToDate);
-}
+	   		$DateRange .= ' - '.ConvertSQLDate($ToDate);
+		}
 		$PriceHistory[] = array($DateRange, $Qty, $LastPrice, $LastDiscount);
 	}
 
@@ -256,7 +254,7 @@ if ($DebtorNo) {
 	  echo '<table class="selection">
 			<thead>
 			<tr>
-				<th colspan = "4"><font color = "navy" size = "2">' . __('Pricing history for sales of') . ' ' . $StockID . ' ' . __('to') . ' ' . $DebtorNo . '</font></th>
+				<th colspan="4"><font color="navy" size="2">' . __('Pricing history for sales of') . ' ' . $StockID . ' ' . __('to') . ' ' . $DebtorNo . '</font></th>
 				</tr>
 				<tr>
 						<th class="SortedColumn">' . __('Date Range') . '</th>
@@ -267,7 +265,7 @@ if ($DebtorNo) {
 			</thead>
 			<tbody>';
 
-	  foreach ($PriceHistory as $PreviousPrice) {
+	  foreach($PriceHistory as $PreviousPrice) {
 
 		echo '<tr class="striped_row">
 				<td>', $PreviousPrice[0], '</td>
@@ -287,7 +285,7 @@ echo '<a href="' . $RootPath . '/StockMovements.php?StockID=' . $StockID . '">' 
 	<br /><a href="' . $RootPath . '/StockUsage.php?StockID=' . $StockID . '">' . __('Show Usage') . '</a>
 	<br /><a href="' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '">' . __('Search Outstanding Sales Orders') . '</a>
 	<br /><a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . __('Search Completed Sales Orders') . '</a>';
-if ($Its_A_KitSet_Assembly_Or_Dummy ==false) {
+if ($Its_A_KitSet_Assembly_Or_Dummy ==false){
 	echo '<br /><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?SelectedStockItem=' . $StockID . '">' . __('Search Outstanding Purchase Orders') . '</a>';
 }
 

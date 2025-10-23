@@ -36,9 +36,9 @@ if (isset($_POST['Submit'])) {
 	ie the page has called itself with some user input */
 	//first off validate inputs sensible
 	if ($_POST['TabCode'] == '' or $_POST['TabCode'] == ' ' or $_POST['TabCode'] == '  ') {
-	$InputError = 1;
+		$InputError = 1;
 		prnMsg('<br />' . __('The Tab code cannot be an empty string or spaces'), 'error');
-} elseif (mb_strlen($_POST['TabCode']) > 20) {
+	} elseif (mb_strlen($_POST['TabCode']) > 20) {
 		$InputError = 1;
 		prnMsg(__('The Tab code must be twenty characters or less long'), 'error');
 	} elseif (($_POST['SelectUser']) == '') {
@@ -73,11 +73,11 @@ if (isset($_POST['Submit'])) {
 									authorizerexpenses = '" . $_POST['SelectAuthoriserExpenses'] . "',
 									glaccountassignment = '" . $_POST['GLAccountCash'] . "',
 									glaccountpcash = '" . $_POST['GLAccountPcashTab'] . "',
-									taxgroupid = '" . $_POST['TaxGroup'] . "'
+									taxgroupid='" . $_POST['TaxGroup'] . "'
 				WHERE tabcode = '" . $SelectedTab . "'";
 		$Msg = __('The Petty Cash Tab') . ' ' . $SelectedTab . ' ' . __('has been updated');
 	} elseif ($InputError != 1) {
-	// First check the type is not being duplicated
+		// First check the type is not being duplicated
 		$CheckSQL = "SELECT count(*)
 					 FROM pctabs
 					 WHERE tabcode = '" . $_POST['TabCode'] . "'";
@@ -86,7 +86,7 @@ if (isset($_POST['Submit'])) {
 		if ($CheckRow[0] > 0) {
 			$InputError = 1;
 			prnMsg(__('The Tab ') . ' ' . $_POST['TabCode'] . ' ' . __(' already exists'), 'error');
-} else {
+		} else {
 			// Add new record on submit
 			$SQL = "INSERT INTO pctabs	(tabcode,
 							 			 usercode,
@@ -115,7 +115,7 @@ if (isset($_POST['Submit'])) {
 		}
 	}
 	if ($InputError != 1) {
-	//run the SQL from either of the above possibilites
+		//run the SQL from either of the above possibilites
 		$Result = DB_query($SQL);
 		prnMsg($Msg, 'success');
 		unset($SelectedTab);
@@ -129,9 +129,9 @@ if (isset($_POST['Submit'])) {
 		unset($_POST['GLAccountCash']);
 		unset($_POST['GLAccountPcashTab']);
 		unset($_POST['TaxGroup']);
-}
+	}
 } elseif (isset($_GET['delete'])) {
-	$SQL = "DELETE FROM pctabs WHERE tabcode = '" . $SelectedTab . "'";
+	$SQL = "DELETE FROM pctabs WHERE tabcode='" . $SelectedTab . "'";
 	$ErrMsg = __('The Tab record could not be deleted because');
 	$Result = DB_query($SQL, $ErrMsg);
 	prnMsg(__('The Petty Cash Tab') . ' ' . $SelectedTab . ' ' . __('has been deleted'), 'success');
@@ -154,20 +154,20 @@ if (!isset($SelectedTab)) {
 					glaccountassignment,
 					glaccountpcash,
 					currencies.decimalplaces,
-					chartmaster1.accountname as glactassigntname,
-					chartmaster2.accountname as glactpcashname,
+					chartmaster1.accountname AS glactassigntname,
+					chartmaster2.accountname AS glactpcashname,
 					taxgroupdescription
 				FROM pctabs
 				INNER JOIN currencies
-					ON pctabs.currency = currencies.currabrev
+					ON pctabs.currency=currencies.currabrev
 				INNER JOIN pctypetabs
-					ON pctabs.typetabcode = pctypetabs.typetabcode
-				INNER JOIN chartmaster as chartmaster1 ON
+					ON pctabs.typetabcode=pctypetabs.typetabcode
+				INNER JOIN chartmaster AS chartmaster1 ON
 					pctabs.glaccountassignment = chartmaster1.accountcode
-				INNER JOIN chartmaster as chartmaster2 ON
+				INNER JOIN chartmaster AS chartmaster2 ON
 					pctabs.glaccountpcash = chartmaster2.accountcode
 				INNER JOIN taxgroups
-					ON pctabs.taxgroupid = taxgroups.taxgroupid
+					ON pctabs.taxgroupid=taxgroups.taxgroupid
 				ORDER BY tabcode";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) > 0) {
@@ -203,7 +203,7 @@ if (!isset($SelectedTab)) {
 					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedTab=', $MyRow['tabcode'], '&amp;delete=yes" onclick=\' return confirm("' . __('Are you sure you wish to delete this tab code?') . '", \'Confirm Delete\', this);\'>' . __('Delete') . '</a></td>
 				</tr>';
 		}
-		//END while LIST LOOP
+		//END WHILE LIST LOOP
 		echo '</table>';
 	} //if there are tabs to show
 }
@@ -214,8 +214,8 @@ if (isset($SelectedTab)) {
 		</div>';
 }
 if (!isset($_GET['delete'])) {
-	echo '<form method = "post" action = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">';
-	echo '<input type = "hidden" name = "FormID" value = "', $_SESSION['FormID'], '" />';
+	echo '<form method="post" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 	if (isset($SelectedTab) and $SelectedTab != '') {
 		$SQL = "SELECT tabcode,
 						usercode,
@@ -229,7 +229,7 @@ if (!isset($_GET['delete'])) {
 						glaccountpcash,
 						taxgroupid
 					FROM pctabs
-				WHERE tabcode = '" . $SelectedTab . "'";
+				WHERE tabcode='" . $SelectedTab . "'";
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_array($Result);
 		$_POST['TabCode'] = $MyRow['tabcode'];
@@ -243,12 +243,12 @@ if (!isset($_GET['delete'])) {
 		$_POST['GLAccountCash'] = $MyRow['glaccountassignment'];
 		$_POST['GLAccountPcashTab'] = $MyRow['glaccountpcash'];
 		$_POST['TaxGroup'] = $MyRow['taxgroupid'];
-		echo '<input type = "hidden" name = "SelectedTab" value = "', $SelectedTab, '" />';
-		echo '<input type = "hidden" name = "TabCode" value = "', $_POST['TabCode'], '" />';
+		echo '<input type="hidden" name="SelectedTab" value="', $SelectedTab, '" />';
+		echo '<input type="hidden" name="TabCode" value="', $_POST['TabCode'], '" />';
 		echo '<fieldset>
 				<legend>', __('Amend Petty Cash Type'), '</legend>
 				<field>
-					<label for = "TabCode">', __('Tab Code'), ':</label>
+					<label for="TabCode">', __('Tab Code'), ':</label>
 					<fieldtext>', $_POST['TabCode'], '</fieldtext>
 				</field>';
 	} else {
@@ -256,32 +256,32 @@ if (!isset($_GET['delete'])) {
 		echo '<fieldset>
 				<legend>', __('Create Petty Cash Type'), '</legend>
 				<field>
-					<label for = "TabCode">', __('Tab Code'), ':</label>
-					<input type = "text" required = "required" maxlength = "20" name = "TabCode" />
+					<label for="TabCode">', __('Tab Code'), ':</label>
+					<input type="text" required="required" maxlength="20" name="TabCode" />
 				</field>';
 	}
 	if (!isset($_POST['typetabdescription'])) {
 		$_POST['typetabdescription'] = '';
 	}
 	echo '<field>
-			<label for = "SelectUser">', __('User Name'), ':</label>
-			<select required = "required" name = "SelectUser">';
+			<label for="SelectUser">', __('User Name'), ':</label>
+			<select required="required" name="SelectUser">';
 	$SQL = "SELECT userid,
 					realname
 			FROM www_users ORDER BY userid";
 	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['SelectUser']) and $MyRow['userid'] == $_POST['SelectUser']) {
-			echo '<option selected = "selected" value = "', $MyRow['userid'], '">', $MyRow['userid'], ' - ', $MyRow['realname'], '</option>';
+			echo '<option selected="selected" value="', $MyRow['userid'], '">', $MyRow['userid'], ' - ', $MyRow['realname'], '</option>';
 		} else {
-			echo '<option value = "', $MyRow['userid'], '">', $MyRow['userid'], ' - ', $MyRow['realname'], '</option>';
+			echo '<option value="', $MyRow['userid'], '">', $MyRow['userid'], ' - ', $MyRow['realname'], '</option>';
 		}
 	} //end while loop get user
 	echo '</select>
 		</field>';
 	echo '<field>
-			<label for = "SelectTabs">', __('Type Of Tab'), ':</label>
-			<select required = "required" name = "SelectTabs">';
+			<label for="SelectTabs">', __('Type Of Tab'), ':</label>
+			<select required="required" name="SelectTabs">';
 	$SQL = "SELECT typetabcode,
 					typetabdescription
 			FROM pctypetabs
@@ -289,23 +289,23 @@ if (!isset($_GET['delete'])) {
 	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['SelectTabs']) and $MyRow['typetabcode'] == $_POST['SelectTabs']) {
-			echo '<option selected = "selected" value = "', $MyRow['typetabcode'], '">', $MyRow['typetabcode'], ' - ', $MyRow['typetabdescription'], '</option>';
+			echo '<option selected="selected" value="', $MyRow['typetabcode'], '">', $MyRow['typetabcode'], ' - ', $MyRow['typetabdescription'], '</option>';
 		} else {
-			echo '<option value = "', $MyRow['typetabcode'], '">', $MyRow['typetabcode'], ' - ', $MyRow['typetabdescription'], '</option>';
+			echo '<option value="', $MyRow['typetabcode'], '">', $MyRow['typetabcode'], ' - ', $MyRow['typetabdescription'], '</option>';
 		}
 	} //end while loop get type of tab
 	echo '</select>
 		</field>';
 	echo '<field>
-			<label for = "SelectCurrency">', __('Currency'), ':</label>
-			<select required = "required" name = "SelectCurrency">';
+			<label for="SelectCurrency">', __('Currency'), ':</label>
+			<select required="required" name="SelectCurrency">';
 	$SQL = "SELECT currency, currabrev FROM currencies";
 	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['SelectCurrency']) and $MyRow['currabrev'] == $_POST['SelectCurrency']) {
-			echo '<option selected = "selected" value = "', $MyRow['currabrev'], '">', $MyRow['currency'], '</option>';
+			echo '<option selected="selected" value="', $MyRow['currabrev'], '">', $MyRow['currency'], '</option>';
 		} else {
-			echo '<option value = "', $MyRow['currabrev'], '">', $MyRow['currency'], '</option>';
+			echo '<option value="', $MyRow['currabrev'], '">', $MyRow['currency'], '</option>';
 		}
 	} //end while loop get type of tab
 	echo '</select>
@@ -314,12 +314,12 @@ if (!isset($_GET['delete'])) {
 		$_POST['TabLimit'] = 0;
 	}
 	echo '<field>
-			<label for = "TabLimit">', __('Limit Of Tab'), ':</label>
-			<input type = "text" class="number" name = "TabLimit" size = "12" required = "required" maxlength = "11" value = "', $_POST['TabLimit'], '" />
+			<label for="TabLimit">', __('Limit Of Tab'), ':</label>
+			<input type="text" class="number" name="TabLimit" size="12" required="required" maxlength="11" value="', $_POST['TabLimit'], '" />
 		</field>';
 	echo '<field>
-			<label for = "SelectAssigner">', __('Cash Assigner'), ':</label>
-			<select required = "required" name = "SelectAssigner">';
+			<label for="SelectAssigner">', __('Cash Assigner'), ':</label>
+			<select required="required" name="SelectAssigner">';
 	$SQL = "SELECT userid,
 					realname
 			FROM www_users
@@ -327,16 +327,16 @@ if (!isset($_GET['delete'])) {
 	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['SelectAssigner']) and $MyRow['userid'] == $_POST['SelectAssigner']) {
-			echo '<option selected = "selected" value = "', $MyRow['userid'], '">', $MyRow['userid'], ' - ', $MyRow['realname'], '</option>';
+			echo '<option selected="selected" value="', $MyRow['userid'], '">', $MyRow['userid'], ' - ', $MyRow['realname'], '</option>';
 		} else {
-			echo '<option value = "', $MyRow['userid'], '">', $MyRow['userid'], ' - ', $MyRow['realname'], '</option>';
+			echo '<option value="', $MyRow['userid'], '">', $MyRow['userid'], ' - ', $MyRow['realname'], '</option>';
 		}
 	} //end while loop get assigner
 	echo '</select>
 		</field>';
 	echo '<field>
-			<label for = "SelectAuthoriserCash">', __('Authoriser - Cash'), ':</label>
-			<select required = "required" name = "SelectAuthoriserCash">';
+			<label for="SelectAuthoriserCash">', __('Authoriser - Cash'), ':</label>
+			<select required="required" name="SelectAuthoriserCash">';
 	$SQL = "SELECT userid,
 					realname
 			FROM www_users
@@ -344,16 +344,16 @@ if (!isset($_GET['delete'])) {
 	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['SelectAuthoriserCash']) and $MyRow['userid'] == $_POST['SelectAuthoriserCash']) {
-			echo '<option selected = "selected" value = "', $MyRow['userid'], '">', $MyRow['userid'], ' - ', $MyRow['realname'], '</option>';
+			echo '<option selected="selected" value="', $MyRow['userid'], '">', $MyRow['userid'], ' - ', $MyRow['realname'], '</option>';
 		} else {
-			echo '<option value = "', $MyRow['userid'], '">', $MyRow['userid'], ' - ', $MyRow['realname'], '</option>';
+			echo '<option value="', $MyRow['userid'], '">', $MyRow['userid'], ' - ', $MyRow['realname'], '</option>';
 		}
 	} //end while loop get authoriser
 	echo '</select>
 		</field>';
 	echo '<field>
-			<label for = "SelectAuthoriserExpenses">', __('Authoriser - Expenses'), ':</label>
-			<select required = "required" name = "SelectAuthoriserExpenses">';
+			<label for="SelectAuthoriserExpenses">', __('Authoriser - Expenses'), ':</label>
+			<select required="required" name="SelectAuthoriserExpenses">';
 	$SQL = "SELECT userid,
 					realname
 			FROM www_users
@@ -361,16 +361,16 @@ if (!isset($_GET['delete'])) {
 	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['SelectAuthoriserExpenses']) and $MyRow['userid'] == $_POST['SelectAuthoriserExpenses']) {
-			echo '<option selected = "selected" value = "', $MyRow['userid'], '">', $MyRow['userid'], ' - ', $MyRow['realname'], '</option>';
+			echo '<option selected="selected" value="', $MyRow['userid'], '">', $MyRow['userid'], ' - ', $MyRow['realname'], '</option>';
 		} else {
-			echo '<option value = "', $MyRow['userid'], '">', $MyRow['userid'], ' - ', $MyRow['realname'], '</option>';
+			echo '<option value="', $MyRow['userid'], '">', $MyRow['userid'], ' - ', $MyRow['realname'], '</option>';
 		}
 	} //end while loop get authoriser
 	echo '</select>
 		</field>';
 	echo '<field>
-			<label for = "GLAccountCash">', __('GL Account Cash Assignment'), ':</label>
-			<select required = "required" name = "GLAccountCash">';
+			<label for="GLAccountCash">', __('GL Account Cash Assignment'), ':</label>
+			<select required="required" name="GLAccountCash">';
 	$SQL = "SELECT chartmaster.accountcode,
 					chartmaster.accountname
 			FROM chartmaster
@@ -380,16 +380,16 @@ if (!isset($_GET['delete'])) {
 	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['GLAccountCash']) and $MyRow['accountcode'] == $_POST['GLAccountCash']) {
-			echo '<option selected = "selected" value = "', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false), '</option>';
+			echo '<option selected="selected" value="', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false), '</option>';
 		} else {
-			echo '<option value = "', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false), '</option>';
+			echo '<option value="', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false), '</option>';
 		}
 	} //end while loop
 	echo '</select>
 		</field>';
 	echo '<field>
-			<label for = "GLAccountPcashTab">', __('GL Account Petty Cash Tab'), ':</label>
-			<select required = "required" name = "GLAccountPcashTab">';
+			<label for="GLAccountPcashTab">', __('GL Account Petty Cash Tab'), ':</label>
+			<select required="required" name="GLAccountPcashTab">';
 	$SQL = "SELECT accountcode,
 					accountname
 				FROM chartmaster
@@ -397,9 +397,9 @@ if (!isset($_GET['delete'])) {
 	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['GLAccountPcashTab']) and $MyRow['accountcode'] == $_POST['GLAccountPcashTab']) {
-			echo '<option selected = "selected" value = "', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false), '</option>';
+			echo '<option selected="selected" value="', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false), '</option>';
 		} else {
-			echo '<option value = "', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false), '</option>';
+			echo '<option value="', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false), '</option>';
 		}
 	} //end while loop
 	echo '</select>
@@ -412,13 +412,13 @@ if (!isset($_GET['delete'])) {
 			ORDER BY taxgroupdescription";
 	$Result = DB_query($SQL);
 	echo '<field>
-			<label for = "TaxGroup">', __('Tax Group'), ':</label>
-			<select name = "TaxGroup">';
+			<label for="TaxGroup">', __('Tax Group'), ':</label>
+			<select name="TaxGroup">';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['TaxGroup']) and $_POST['TaxGroup'] == $MyRow['taxgroupid']) {
-			echo '<option selected = "selected" value = "', $MyRow['taxgroupid'], '">', $MyRow['taxgroupid'], ' - ', $MyRow['taxgroupdescription'], '</option>';
+			echo '<option selected="selected" value="', $MyRow['taxgroupid'], '">', $MyRow['taxgroupid'], ' - ', $MyRow['taxgroupdescription'], '</option>';
 		} else {
-			echo '<option value = "', $MyRow['taxgroupid'], '">', $MyRow['taxgroupid'], ' - ', $MyRow['taxgroupdescription'], '</option>';
+			echo '<option value="', $MyRow['taxgroupid'], '">', $MyRow['taxgroupid'], ' - ', $MyRow['taxgroupdescription'], '</option>';
 		}
 	}
 	echo '</select>
@@ -426,8 +426,8 @@ if (!isset($_GET['delete'])) {
 	// End select tax
 	echo '</fieldset>'; // close main table
 	echo '<div class="centre">
-			<input type = "submit" name = "Submit" value = "', __('Accept'), '" />
-			<input type = "reset" name = "Cancel" value = "', __('Cancel'), '" />
+			<input type="submit" name="Submit" value="', __('Accept'), '" />
+			<input type="reset" name="Cancel" value="', __('Cancel'), '" />
 		</div>';
 	echo '</form>';
 } // end if user wish to delete

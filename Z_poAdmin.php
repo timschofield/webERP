@@ -2,7 +2,7 @@
 
 //	Allows for a gettext language po file to be administered
 /*	Steve Kitchen
-Up front menu for language file maintenance */
+	Up front menu for language file maintenance */
 
 //$PageSecurity = 15;
 
@@ -15,9 +15,9 @@ $Title = __('Maintain Language Files');
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-'/images/maintenance.png" title="', // Icon image.
-$Title, '" /> ', // Icon title.
-$Title, '</p>';// Page title.
+	'/images/maintenance.png" title="', // Icon image.
+	$Title, '" /> ', // Icon title.
+	$Title, '</p>';// Page title.
 
 /* Check if we have gettext - we're useless without it... */
 //if (!function_exists('gettext')){

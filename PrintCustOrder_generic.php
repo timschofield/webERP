@@ -56,19 +56,19 @@ $SQL = "SELECT salesorders.debtorno,
 			salesorders.fromstkloc
 		FROM salesorders
 		INNER JOIN debtorsmaster
-			ON salesorders.debtorno = debtorsmaster.debtorno
+			ON salesorders.debtorno=debtorsmaster.debtorno
 		INNER JOIN shippers
-			ON salesorders.shipvia = shippers.shipper_id
+			ON salesorders.shipvia=shippers.shipper_id
 		INNER JOIN locations
-			ON salesorders.fromstkloc = locations.loccode
+			ON salesorders.fromstkloc=locations.loccode
 		INNER JOIN locationusers
-			ON locationusers.loccode = locations.loccode
-			and locationusers.userid = '" .  $_SESSION['UserID'] . "'
-			and locationusers.canview = 1
-		WHERE salesorders.orderno = '" . $_GET['TransNo'] . "'";
+			ON locationusers.loccode=locations.loccode
+			AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+			AND locationusers.canview=1
+		WHERE salesorders.orderno='" . $_GET['TransNo'] . "'";
 
 if ($_SESSION['SalesmanLogin'] != '') {
-	$SQL .= " and salesorders.salesperson = '" . $_SESSION['SalesmanLogin'] . "'";
+	$SQL .= " AND salesorders.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 }
 
 $Result = DB_query($SQL, $ErrMsg);
@@ -127,7 +127,7 @@ $ListCount = 0;
 $Volume = 0;
 $Weight = 0;
 
-$HTML = '<html><head><link href = "css/reports.css" rel = "stylesheet" type = "text/css" /><style>
+$HTML = '<html><head><link href="css/reports.css" rel="stylesheet" type="text/css" /><style>
 body { font-family: Arial, sans-serif; font-size: 12px; }
 .table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
 .table th, .table td { border: 1px solid #000; padding: 5px; }
@@ -135,14 +135,14 @@ body { font-family: Arial, sans-serif; font-size: 12px; }
 </style></head><body>';
 
 	$DeliveryAddress = '';
-	for ($j = 1; $j < 5; $j++) {
+	for ($j = 1;$j < 5;$j++) {
 		if ($MyRow['deladd' . $j] != '') {
-	$DeliveryAddress .= htmlspecialchars($MyRow['deladd' . $j]) . ", ";
-}
+			$DeliveryAddress .= htmlspecialchars($MyRow['deladd' . $j]) . ", ";
+		}
 	}
 	$DeliveryAddress .= htmlspecialchars($MyRow['deladd5']);
 
-for ($i = 1;  $i <= 2;  $i++) {  // Office + Customer copy
+for ($i = 1; $i <= 2; $i++) {  // Office + Customer copy
 	$HTML .= '<div class="header">' . __('Customer Laser Packing Slip') . ' - ' . ($_SESSION['CompanyRecord']['coyname']) . '</div>';
 	$HTML .= '<div>' . __('Order Number') . ': <strong>' . $_GET['TransNo'] . '</strong></div>';
 	$HTML .= '<div>' . __('Customer') . ': ' . htmlspecialchars($MyRow['name']) . '</div>';
@@ -171,20 +171,20 @@ for ($i = 1;  $i <= 2;  $i++) {  // Office + Customer copy
 					locstock.bin
 				FROM salesorderdetails
 				INNER JOIN stockmaster
-					ON salesorderdetails.stkcode = stockmaster.stockid
+					ON salesorderdetails.stkcode=stockmaster.stockid
 				INNER JOIN locstock
 					ON stockmaster.stockid = locstock.stockid
 				LEFT OUTER JOIN pickreq
-					ON pickreq.orderno = salesorderdetails.orderno
-					and pickreq.closed = 0
+					ON pickreq.orderno=salesorderdetails.orderno
+					AND pickreq.closed=0
 				LEFT OUTER JOIN pickreqdetails
-					ON pickreqdetails.prid = pickreq.prid
-					and pickreqdetails.orderlineno = salesorderdetails.orderlineno
+					ON pickreqdetails.prid=pickreq.prid
+					AND pickreqdetails.orderlineno=salesorderdetails.orderlineno
 				LEFT OUTER JOIN custitem
-					ON custitem.debtorno = '" . $MyRow['debtorno'] . "'
-					and custitem.stockid = salesorderdetails.stkcode
+					ON custitem.debtorno='" . $MyRow['debtorno'] . "'
+					AND custitem.stockid=salesorderdetails.stkcode
 				WHERE locstock.loccode = '" . $MyRow['fromstkloc'] . "'
-					and salesorderdetails.orderno = '" . $_GET['TransNo'] . "'";
+					AND salesorderdetails.orderno='" . $_GET['TransNo'] . "'";
 	$Result = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($Result) > 0) {
@@ -208,8 +208,8 @@ for ($i = 1;  $i <= 2;  $i++) {  // Office + Customer copy
 			$DisplayPrevDel = locale_number_format($MyRow2['qtyinvoiced'], $MyRow2['decimalplaces']);
 
 			if ($MyRow2['qtypicked'] > 0) {
-	$DisplayQtySupplied = locale_number_format($MyRow2['qtypicked'], $MyRow2['decimalplaces']);
-} else {
+				$DisplayQtySupplied = locale_number_format($MyRow2['qtypicked'], $MyRow2['decimalplaces']);
+			} else {
 				$DisplayQtySupplied = locale_number_format($MyRow2['quantity'] - $MyRow2['qtyinvoiced'], $MyRow2['decimalplaces']);
 			}
 
@@ -224,62 +224,62 @@ for ($i = 1;  $i <= 2;  $i++) {  // Office + Customer copy
 					</tr>';
 
 			if ($_SESSION['AllowOrderLineItemNarrative'] == 1 && !empty($MyRow2['narrative'])) {
-				$HTML .= '<tr><td colspan = "7"><em>' . htmlspecialchars($MyRow2['narrative']) . '</em></td></tr>';
+				$HTML .= '<tr><td colspan="7"><em>' . htmlspecialchars($MyRow2['narrative']) . '</em></td></tr>';
 			}
 
 			// Customer part info
 			if ($MyRow2['cust_part'] > '') {
-	$HTML .= '<tr>
-							<td colspan = "2">' . htmlspecialchars($MyRow2['cust_part']) . ' - ' . htmlspecialchars($MyRow2['cust_description']) . '</td>
-							<td colspan = "5"></td>
+				$HTML .= '<tr>
+							<td colspan="2">' . htmlspecialchars($MyRow2['cust_part']) . ' - ' . htmlspecialchars($MyRow2['cust_description']) . '</td>
+							<td colspan="5"></td>
 						</tr>';
-}
+			}
 
 			// Assembly components
 			if ($MyRow2['mbflag'] == 'A') {
-	$SQL = "SELECT bom.component,
+				$SQL = "SELECT bom.component,
 									bom.quantity,
 									stockmaster.description,
 									stockmaster.decimalplaces
 							FROM bom
 							INNER JOIN stockmaster
-								ON bom.component = stockmaster.stockid
-							WHERE bom.parent = '" . $MyRow2['stkcode'] . "'
-								and bom.effectiveafter <= CURRENT_DATE
-								and bom.effectiveto > CURRENT_DATE";
+								ON bom.component=stockmaster.stockid
+							WHERE bom.parent='" . $MyRow2['stkcode'] . "'
+								AND bom.effectiveafter <= CURRENT_DATE
+								AND bom.effectiveto > CURRENT_DATE";
 				$ErrMsg = __('Could not retrieve the components of the ordered assembly item');
 				$AssemblyResult = DB_query($SQL, $ErrMsg);
 				$HTML .= '<tr>
-							<td colspan = "7"><strong>' . __('Assembly Components:-') . '</strong></td>
+							<td colspan="7"><strong>' . __('Assembly Components:-') . '</strong></td>
 						</tr>';
 				while ($ComponentRow = DB_fetch_array($AssemblyResult)) {
 					$DisplayQtySupplied = locale_number_format($ComponentRow['quantity'] * ($MyRow2['quantity'] - $MyRow2['qtyinvoiced']), $ComponentRow['decimalplaces']);
 					$HTML .= '<tr>
 								<td>' . htmlspecialchars($ComponentRow['component']) . '</td>
 								<td>' . htmlspecialchars($ComponentRow['description']) . '</td>
-								<td colspan = "3"></td>
+								<td colspan="3"></td>
 								<td style="text-align:right">' . $DisplayQtySupplied . '</td>
 								<td></td>
 							</tr>';
-}
+				}
 			}
 
 			// Controlled/serialised items
 			if ($MyRow2['controlled'] == '1') {
-	$ControlLabel = __('Lot') . ':';
+				$ControlLabel = __('Lot') . ':';
 				if ($MyRow2['serialised'] == 1) {
 					$ControlLabel = __('Serial') . ':';
-}
+				}
 				$SerSQL = "SELECT serialno,
 										moveqty
 								FROM pickserialdetails
-								WHERE pickserialdetails.detailno = '" . $MyRow2['detailno'] . "'";
+								WHERE pickserialdetails.detailno='" . $MyRow2['detailno'] . "'";
 				$SerResult = DB_query($SerSQL, $ErrMsg);
 				while ($MySer = DB_fetch_array($SerResult)) {
 					$HTML .= '<tr>
 								<td>' . $ControlLabel . '</td>
 								<td>' . htmlspecialchars($MySer['serialno']) . '</td>
-								<td colspan = "3"></td>
+								<td colspan="3"></td>
 								<td style="text-align:right">' . htmlspecialchars($MySer['moveqty']) . '</td>
 								<td></td>
 							</tr>';
@@ -291,8 +291,8 @@ for ($i = 1;  $i <= 2;  $i++) {  // Office + Customer copy
 
 	// Signature line (only on office copy)
 	if ($i == 1) {
-	$HTML .= '<div style="margin-top:40px;">Accepted/Received By: ________________________ Date: ________________</div>';
-}
+		$HTML .= '<div style="margin-top:40px;">Accepted/Received By: ________________________ Date: ________________</div>';
+	}
 
 	$HTML .= '<div style="margin-top:20px;">Volume: ' . round($Volume) . ' GA &nbsp;&nbsp; Weight: ' . round($Weight) . ' LB (approximate)</div>';
 
@@ -301,8 +301,8 @@ for ($i = 1;  $i <= 2;  $i++) {  // Office + Customer copy
 	$Weight = 0;
 
 	if ($i == 1) {
-	$HTML .= '<div style="page-break-after:always"></div>';
-}
+		$HTML .= '<div style="page-break-after:always"></div>';
+	}
 }
 
 $HTML .= '</body></html>';

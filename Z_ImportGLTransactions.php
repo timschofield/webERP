@@ -9,8 +9,8 @@ include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.php');
 
-echo '<p class = "page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
-		'/images/maintenance.png" title = "' .
+echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
+		'/images/maintenance.png" title="' .
 		__('Import GL Payments Receipts Or Journals From CSV') . '" />' . ' ' .
 		__('Import GL Payments Receipts Or Journals From CSV') . '</p>';
 
@@ -65,7 +65,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	$TransNo = GetNextTransNo( $_POST['TransactionType']);
 
 	//Get the exchange rate to use between the transaction currency and the functional currency
-	$SQL = "SELECT rate FROM currencies WHERE currabrev = '" . $_POST['Currency'] . "'";
+	$SQL = "SELECT rate FROM currencies WHERE currabrev='" . $_POST['Currency'] . "'";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
 	$ExRate = $MyRow['rate'];
@@ -82,12 +82,12 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 		//check for correct number of fields
 		$FieldCount = count($MyRow);
-		if ($FieldCount != $FieldTarget) {
-	prnMsg(__($FieldTarget. ' fields required, '. $FieldCount. ' fields received'),'error');
+		if ($FieldCount != $FieldTarget){
+			prnMsg(__($FieldTarget. ' fields required, '. $FieldCount. ' fields received'),'error');
 			fclose($FileHandle);
 			include('includes/footer.php');
 			exit();
-}
+		}
 
 		// cleanup the data (csv files often import with empty strings and such)
 		foreach ($MyRow as &$Value) {
@@ -96,13 +96,13 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		}
 
 		//first off check that the account code actually exists
-		$SQL = "SELECT COUNT(accountcode) FROM chartmaster WHERE accountcode = '" . $MyRow[1] . "'";
+		$SQL = "SELECT COUNT(accountcode) FROM chartmaster WHERE accountcode='" . $MyRow[1] . "'";
 		$Result = DB_query($SQL);
 		$TestRow = DB_fetch_row($Result);
 		if ($TestRow[0] == 0) {
-	$InputError = 1;
+			$InputError = 1;
 			prnMsg(__('Account code' . ' ' . $MyRow[1] . ' ' . 'does not exist'),'error');
-}
+		}
 
 		//Then check that the date is in a correct format
 		if (!Is_date($MyRow[0])) {
@@ -121,8 +121,9 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 		//Finally force the amount to be a double
 		$MyRow[3] = (float)$MyRow[3];
-		if ($InputError !=1) {
-	//Firstly add the line to the gltrans table
+		if ($InputError !=1){
+
+			//Firstly add the line to the gltrans table
 			$SQL = "INSERT INTO gltrans (type,
 										typeno,
 										chequeno,
@@ -144,14 +145,14 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 			$Result = DB_query($SQL);
 
-			if ($_POST['TransactionType'] != 0 and IsBankAccount($MyRow[1])) {
+			if ($_POST['TransactionType'] != 0 AND IsBankAccount($MyRow[1])) {
 
 				//Get the exchange rate to use between the transaction currency and the bank account currency
 				$SQL = "SELECT rate
 						FROM currencies
 						INNER JOIN bankaccounts
-							ON currencies.currabrev = bankaccounts.currcode
-						WHERE bankaccounts.accountcode = '" . $MyRow[1] . "'";
+							ON currencies.currabrev=bankaccounts.currcode
+						WHERE bankaccounts.accountcode='" . $MyRow[1] . "'";
 
 				$Result = DB_query($SQL);
 				$MyRateRow = DB_fetch_array($Result);
@@ -181,15 +182,14 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 												'" . $_POST['Currency'] . "'
 											)";
 				$Result = DB_query($SQL);
-}
+			}
 			$PreviousPeriod = $Period;
 			$TransactionTotal = $TransactionTotal + $MyRow[3];
 		}
 
-		if ($InputError == 1) {
-	//this row failed so exit loop
+		if ($InputError == 1) { //this row failed so exit loop
 			break;
-}
+		}
 		$Row++;
 
 	}
@@ -199,11 +199,10 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		prnMsg(__('The total of the transactions must balance back to zero'),'error');
 	}
 
-	if ($InputError == 1) {
-	//exited loop with errors so rollback
+	if ($InputError == 1) { //exited loop with errors so rollback
 		prnMsg(__('Failed on row') . ' ' . $Row. '. ' . __('Batch import has been rolled back'),'error');
 		DB_Txn_Rollback();
-} else { //all good so commit data transaction
+	} else { //all good so commit data transaction
 		DB_Txn_Commit();
 		prnMsg( __('Batch Import of') .' ' . $FileName  . ' '. __('has been completed. All transactions committed to the database'),'success');
 	}
@@ -213,9 +212,9 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 } else { //show file upload form
 
-	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" class = "noPrint" enctype = "multipart/form-data">';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
-	echo '<div class = "page_help_text">' .
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint" enctype="multipart/form-data">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<div class="page_help_text">' .
 			__('This function loads a set of general ledger transactions from a comma separated variable (csv) file.') . '<br />' .
 			__('The file must contain six columns, and the first row should be the following headers:') . '<br />' .
 			$FieldHeadings[0] . ', ' . $FieldHeadings[1] . ', ' . $FieldHeadings[2] . ', ' . $FieldHeadings[3] . ', ' . $FieldHeadings[4] . ', ' . $FieldHeadings[5] . '<br />' .
@@ -226,19 +225,19 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 	echo '<fieldset>
 			<legend>', __('Import Details'), '</legend>
-			<input type = "hidden" name = "MAX_FILE_SIZE" value = "1000000" />';
+			<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />';
 	echo '<field>
 			<label>', __('Select Transaction Type') . ':&nbsp;</label>
-			<select name = "TransactionType">
-				<option value = 0>' . __('GL Journal') . '</option>
-				<option value = 1>' . __('GL Payment') . '</option>
-				<option value = 2>' . __('GL Receipt') . '</option>
+			<select name="TransactionType">
+				<option value=0>' . __('GL Journal') . '</option>
+				<option value=1>' . __('GL Payment') . '</option>
+				<option value=2>' . __('GL Receipt') . '</option>
 			</select>
 		</field>';
 
 	echo '<field>
 			<label>', __('Select Currency') . ':&nbsp;</label>
-			<select name = "Currency">';
+			<select name="Currency">';
 	$SQL = "SELECT currency, currabrev, rate FROM currencies";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) == 0) {
@@ -248,9 +247,9 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	} else {
 		while ($MyRow = DB_fetch_array($Result)) {
 			if ($_SESSION['CompanyRecord']['currencydefault'] == $MyRow['currabrev']) {
-	echo '<option selected = "selected" value = "' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
-} else {
-				echo '<option value = "' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
+				echo '<option selected="selected" value="' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
+			} else {
+				echo '<option value="' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
 			}
 		}
 		echo '</select>
@@ -258,11 +257,11 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	}
 	echo '<field>
 			<label>', __('Upload file') . ':</label>
-			<input name = "userfile" type = "file" />
+			<input name="userfile" type="file" />
 		</field>';
 	echo '</fieldset>';
-	echo '<div class = "centre">';
-	echo '<input type = "submit" name = "submit" value = "' . __('Send File') . '" />
+	echo '<div class="centre">';
+	echo '<input type="submit" name="submit" value="' . __('Send File') . '" />
 		</div>
 		</form>';
 
@@ -271,9 +270,9 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 include('includes/footer.php');
 
 function IsBankAccount($Account) {
-	$SQL ="SELECT accountcode FROM bankaccounts WHERE accountcode = '" . $Account . "'";
+	$SQL ="SELECT accountcode FROM bankaccounts WHERE accountcode='" . $Account . "'";
 	$Result = DB_query($SQL);
-	if (DB_num_rows($Result) == 0) {
+	if (DB_num_rows($Result)==0) {
 		return false;
 	} else {
 		return true;

@@ -5,11 +5,11 @@ require(__DIR__ . '/includes/session.php');
 use Dompdf\Dompdf;
 
 if (isset($_POST['PrintPDF'])
-or isset($_POST['View'])
-and isset($_POST['FromCriteria'])
-and mb_strlen($_POST['FromCriteria']) >= 1
-and isset($_POST['ToCriteria'])
-and mb_strlen($_POST['ToCriteria']) >= 1) {
+	or isset($_POST['View'])
+	and isset($_POST['FromCriteria'])
+	and mb_strlen($_POST['FromCriteria']) >= 1
+	and isset($_POST['ToCriteria'])
+	and mb_strlen($_POST['ToCriteria']) >= 1) {
 
 	$Title = __('Supplier Balance Listing');
 	$Subject = __('Supplier Balances');
@@ -18,33 +18,33 @@ and mb_strlen($_POST['ToCriteria']) >= 1) {
 	$HTML = '';
 	if (isset($_POST['PrintPDF'])) {
 		$HTML .= '<html>
-		<head>';
-		$HTML .= '<link href = "css/reports.css" rel = "stylesheet" type = "text/css" />';
+					<head>';
+		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
 	}
 
 	$SQL = "SELECT suppliers.supplierid,
-	suppliers.suppname,
-	currencies.currency,
-	currencies.decimalplaces as currdecimalplaces,
-	SUM((supptrans.ovamount + supptrans.ovgst - supptrans.alloc)/supptrans.rate) as balance,
-	SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) as fxbalance,
-	SUM(case WHEN supptrans.trandate > '" . $_POST['PeriodEnd'] . "' THEN
-	(supptrans.ovamount + supptrans.ovgst)/supptrans.rate else 0 END) as afterdatetrans,
-	SUM(case WHEN supptrans.trandate > '" . $_POST['PeriodEnd'] . "'
-	and (supptrans.type = 22 or supptrans.type = 21) THEN
-	supptrans.diffonexch else 0 END) as afterdatediffonexch,
-	SUM(case WHEN supptrans.trandate > '" . $_POST['PeriodEnd'] . "' THEN
-	supptrans.ovamount + supptrans.ovgst else 0 END) as fxafterdatetrans
-	FROM suppliers INNER JOIN currencies
-	ON suppliers.currcode = currencies.currabrev
-	INNER JOIN supptrans
-	ON suppliers.supplierid = supptrans.supplierno
-	WHERE suppliers.supplierid >= '" . $_POST['FromCriteria'] . "'
-	and suppliers.supplierid <= '" . $_POST['ToCriteria'] . "'
-	GROUP BY suppliers.supplierid,
-	suppliers.suppname,
-	currencies.currency,
-	currencies.decimalplaces";
+					suppliers.suppname,
+					currencies.currency,
+					currencies.decimalplaces AS currdecimalplaces,
+					SUM((supptrans.ovamount + supptrans.ovgst - supptrans.alloc)/supptrans.rate) AS balance,
+					SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) AS fxbalance,
+					SUM(CASE WHEN supptrans.trandate > '" . $_POST['PeriodEnd'] . "' THEN
+						(supptrans.ovamount + supptrans.ovgst)/supptrans.rate ELSE 0 END) AS afterdatetrans,
+					SUM(CASE WHEN supptrans.trandate > '" . $_POST['PeriodEnd'] . "'
+						AND (supptrans.type=22 OR supptrans.type=21) THEN
+						supptrans.diffonexch ELSE 0 END) AS afterdatediffonexch,
+					SUM(CASE WHEN supptrans.trandate > '" . $_POST['PeriodEnd'] . "' THEN
+						supptrans.ovamount + supptrans.ovgst ELSE 0 END) AS fxafterdatetrans
+			FROM suppliers INNER JOIN currencies
+			ON suppliers.currcode = currencies.currabrev
+			INNER JOIN supptrans
+			ON suppliers.supplierid = supptrans.supplierno
+			WHERE suppliers.supplierid >= '" . $_POST['FromCriteria'] . "'
+			AND suppliers.supplierid <= '" . $_POST['ToCriteria'] . "'
+			GROUP BY suppliers.supplierid,
+				suppliers.suppname,
+				currencies.currency,
+				currencies.decimalplaces";
 
 	$ErrMsg = __('The Supplier details could not be retrieved');
 	$SupplierResult = DB_query($SQL, $ErrMsg);
@@ -59,24 +59,24 @@ and mb_strlen($_POST['ToCriteria']) >= 1) {
 	}
 
 	// Table header
-	$HTML .= '<meta name = "author" content = "WebERP " . $Version">
-	<meta name = "Creator" content = "webERP https://www.weberp.org">
-	</head>
-	<body>
-	<div class="centre" id="ReportHeader">
-	' . $_SESSION['CompanyRecord']['coyname'] . '<br />
-	' . __('Supplier Balance Listing') . '<br />
-	' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
-	</div><table>
-	<thead>
-	<tr>
-	<th>' . __('Supplier Code & Name') . '</th>
-	<th>' . __('Balance') . '</th>
-	<th>' . __('FX Balance') . '</th>
-	<th>' . __('Currency') . '</th>
-	</tr>
-	</thead>
-	<tbody>';
+	$HTML .= '<meta name="author" content="WebERP " . $Version">
+					<meta name="Creator" content="webERP https://www.weberp.org">
+				</head>
+				<body>
+				<div class="centre" id="ReportHeader">
+					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
+					' . __('Supplier Balance Listing') . '<br />
+					' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
+				</div><table>
+		<thead>
+			<tr>
+				<th>' . __('Supplier Code & Name') . '</th>
+				<th>' . __('Balance') . '</th>
+				<th>' . __('FX Balance') . '</th>
+				<th>' . __('Currency') . '</th>
+			</tr>
+		</thead>
+		<tbody>';
 
 	$TotBal = 0;
 
@@ -92,65 +92,65 @@ and mb_strlen($_POST['ToCriteria']) >= 1) {
 			$TotBal += $Balance;
 
 			$HTML .= '<tr class="striped_row">
-			<td class="left">' . $SupplierBalances['supplierid'] . ' - ' . $SupplierBalances['suppname'] . '</td>
-			<td class="number">' . $DisplayBalance . '</td>
-			<td class="number">' . $DisplayFXBalance . '</td>
-			<td class="left">' . $SupplierBalances['currency'] . '</td>
+				<td class="left">' . $SupplierBalances['supplierid'] . ' - ' . $SupplierBalances['suppname'] . '</td>
+				<td class="number">' . $DisplayBalance . '</td>
+				<td class="number">' . $DisplayFXBalance . '</td>
+				<td class="left">' . $SupplierBalances['currency'] . '</td>
 			</tr>';
 		}
-		} // end while
+	} // end while
 
-		$DisplayTotBalance = locale_number_format($TotBal, $_SESSION['CompanyRecord']['decimalplaces']);
+	$DisplayTotBalance = locale_number_format($TotBal, $_SESSION['CompanyRecord']['decimalplaces']);
 
 	// Total row
-		$HTML .= '<tr class="total_row">
+	$HTML .= '<tr class="total_row">
 		<td class="left"><strong>' . __('Total') . '</strong></td>
 		<td class="number"><strong>' . $DisplayTotBalance . '</strong></td>
 		<td></td>
 		<td></td>
-		</tr>';
+	</tr>';
 
-		if (isset($_POST['PrintPDF'])) {
-			$HTML .= '</tbody>
-			<div class="footer fixed-section">
-			<div class="right">
-			<span class="page-number">Page </span>
-			</div>
-			</div>
+	if (isset($_POST['PrintPDF'])) {
+		$HTML .= '</tbody>
+				<div class="footer fixed-section">
+					<div class="right">
+						<span class="page-number">Page </span>
+					</div>
+				</div>
 			</table>';
-		} else {
-			$HTML .= '</tbody>
-			</table>
-			<div class="centre">
-			<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick="window.close()" /></form>
-			</div>';
-		}
-		$HTML .= '</body>
+	} else {
+		$HTML .= '</tbody>
+				</table>
+				<div class="centre">
+					<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
+				</div>';
+	}
+	$HTML .= '</body>
 		</html>';
-		if (isset($_POST['PrintPDF'])) {
-			$dompdf = new Dompdf(['chroot' => __DIR__]);
-			$dompdf->loadHtml($HTML);
+	if (isset($_POST['PrintPDF'])) {
+		$dompdf = new Dompdf(['chroot' => __DIR__]);
+		$dompdf->loadHtml($HTML);
 
 		// (Optional) Setup the paper size and orientation
-			$dompdf->setPaper($_SESSION['PageSize'], 'landscape');
+		$dompdf->setPaper($_SESSION['PageSize'], 'landscape');
 
 		// Render the HTML as PDF
-			$dompdf->render();
+		$dompdf->render();
 
 		// Output the generated PDF to Browser
-			$dompdf->stream($_SESSION['DatabaseName'] . '_Supplier_Balances_At_Prior_Month_' . date('Y-m-d') . '.pdf', array(
+		$dompdf->stream($_SESSION['DatabaseName'] . '_Supplier_Balances_At_Prior_Month_' . date('Y-m-d') . '.pdf', array(
 			"Attachment" => false
-			));
-		}
-		else {
-			$Title = __('Supplier Balances At A Period End');
-			include ('includes/header.php');
-			echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . __('Suppliers') . '" alt="" />' . ' ' . __('Supplier Balances At A Period End') . '</p>';
-			echo $HTML;
-			include ('includes/footer.php');
-		}
+		));
+	}
+	else {
+		$Title = __('Supplier Balances At A Period End');
+		include ('includes/header.php');
+		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . __('Suppliers') . '" alt="" />' . ' ' . __('Supplier Balances At A Period End') . '</p>';
+		echo $HTML;
+		include ('includes/footer.php');
+	}
 
-	} else { // Not printing PDF, show input form
+} else { // Not printing PDF, show input form
 
 	$Title = __('Supplier Balances At A Period End');
 	$ViewTopic = 'AccountsPayable';
@@ -158,7 +158,7 @@ and mb_strlen($_POST['ToCriteria']) >= 1) {
 	include('includes/header.php');
 
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' .
-	__('Supplier Allocations') . '" alt = "" />' . ' ' . $Title . '</p>';
+		__('Supplier Allocations') . '" alt="" />' . ' ' . $Title . '</p>';
 	if (!isset($_POST['FromCriteria'])) {
 		$_POST['FromCriteria'] = '1';
 	}
@@ -166,42 +166,42 @@ and mb_strlen($_POST['ToCriteria']) >= 1) {
 		$_POST['ToCriteria'] = 'zzzzzz';
 	}
 
-	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target="_blank">';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" target="_blank">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<fieldset>
-	<legend>', __('Report Criteria'), '</legend>';
+			<legend>', __('Report Criteria'), '</legend>';
 	echo '<field>
-	<label for = "FromCriteria">' . __('From Supplier Code') . ':</label>
-	<input type = "text" maxlength = "6" size = "7" name = "FromCriteria" value = "' . $_POST['FromCriteria'] . '" />
-	</field>
-	<field>
-	<label for = "ToCriteria">' . __('To Supplier Code') . ':</label>
-	<input type = "text" maxlength = "6" size = "7" name = "ToCriteria" value = "' . $_POST['ToCriteria'] . '" />
-	</field>
-	<field>
-	<label for = "PeriodEnd">' . __('Balances As At') . ':</label>
-	<select name = "PeriodEnd">';
+			<label for="FromCriteria">' . __('From Supplier Code') . ':</label>
+			<input type="text" maxlength="6" size="7" name="FromCriteria" value="' . $_POST['FromCriteria'] . '" />
+		</field>
+		<field>
+			<label for="ToCriteria">' . __('To Supplier Code') . ':</label>
+			<input type="text" maxlength="6" size="7" name="ToCriteria" value="' . $_POST['ToCriteria'] . '" />
+		</field>
+		<field>
+			<label for="PeriodEnd">' . __('Balances As At') . ':</label>
+			<select name="PeriodEnd">';
 
 	$SQL = "SELECT periodno,
-	lastdate_in_period
-	FROM periods
-	ORDER BY periodno DESC";
+					lastdate_in_period
+			FROM periods
+			ORDER BY periodno DESC";
 
 	$ErrMsg = __('Could not retrieve period data because');
 	$Periods = DB_query($SQL, $ErrMsg);
 
 	while ($MyRow = DB_fetch_array($Periods)) {
-		echo '<option value = "' . $MyRow['lastdate_in_period'] . '" selected = "selected" >' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period'], 'M', -1) . '</option>';
+		echo '<option value="' . $MyRow['lastdate_in_period'] . '" selected="selected" >' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period'], 'M', -1) . '</option>';
 	}
 	echo '</select>
-	</field>';
+		</field>';
 
 	echo '</fieldset>
-	<div class="centre">
-	<input type = "submit" name = "PrintPDF" value = "' . __('Print PDF') . '" />
-	<input type = "submit" name = "View" title="View Report" value = "' . __('View') . '" />
-	</div>';
+			<div class="centre">
+				<input type="submit" name="PrintPDF" value="' . __('Print PDF') . '" />
+			<input type="submit" name="View" title="View Report" value="' . __('View') . '" />
+			</div>';
 	echo '</form>';
 	include('includes/footer.php');
 }

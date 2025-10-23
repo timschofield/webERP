@@ -27,20 +27,20 @@ if (isset($_GET['Location'])) {
 if (isset($WO) && isset($StockId) && $WO != '') {
 
 	$SQL = "SELECT woitems.qtyreqd,
-	woitems.qtyrecd,
-	stockmaster.description,
-	stockmaster.decimalplaces,
-	stockmaster.units
-	FROM woitems, stockmaster
-	WHERE stockmaster.stockid = woitems.stockid
-	and woitems.wo = '" . $WO . "'
-	and woitems.stockid = '" . $StockId . "' ";
+					woitems.qtyrecd,
+					stockmaster.description,
+					stockmaster.decimalplaces,
+					stockmaster.units
+			FROM woitems, stockmaster
+			WHERE stockmaster.stockid = woitems.stockid
+				AND woitems.wo = '" . $WO . "'
+				AND woitems.stockid = '" . $StockId . "' ";
 
 	$ErrMsg = __('The SQL to find the details of the item to produce failed');
 	$ResultItems = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($ResultItems) != 0) {
-		$HTML = '<html><head><style>
+	$HTML = '<html><head><style>
 		body { font-family: Arial, sans-serif; font-size: 12px; }
 		.header { margin-bottom: 20px; }
 		.company-info { font-size: 10px; margin-bottom: 10px; }
@@ -49,7 +49,7 @@ if (isset($WO) && isset($StockId) && $WO != '') {
 		th, td { border: 1px solid #000; padding: 4px; }
 		th { background: #eee; }
 		.totals { text-align: right; font-weight: bold; }
-		</style><link href = "css/reports.css" rel = "stylesheet" type = "text/css" /></head><body>';
+		</style><link href="css/reports.css" rel="stylesheet" type="text/css" /></head><body>';
 		$ReportDate = date($_SESSION['DefaultDateFormat']);
 		$PageTitle = __('WO Production Slip');
 		$Subject = __('WO Production Slip');
@@ -59,49 +59,49 @@ if (isset($WO) && isset($StockId) && $WO != '') {
 			$HTML .= PrintHeaderHTML($_SESSION['CompanyRecord']['coyname'], $ReportDate, $WO, $StockId, $MyItem['description'], $QtyPending, $MyItem['units'], $MyItem['decimalplaces']);
 
 			$SQLBOM = "SELECT bom.parent,
-			bom.component,
-			bom.quantity as bomqty,
-			stockmaster.decimalplaces,
-			stockmaster.units,
-			stockmaster.description,
-			stockmaster.shrinkfactor,
-			locstock.quantity as qoh
-			FROM bom, stockmaster, locstock
-			WHERE bom.component = stockmaster.stockid
-			and bom.component = locstock.stockid
-			and locstock.loccode = '" . $Location . "'
-			and bom.parent = '" . $StockId . "'
-			and bom.effectiveafter <= CURRENT_DATE
-			and bom.effectiveto > CURRENT_DATE";
+						bom.component,
+						bom.quantity AS bomqty,
+						stockmaster.decimalplaces,
+						stockmaster.units,
+						stockmaster.description,
+						stockmaster.shrinkfactor,
+						locstock.quantity AS qoh
+					FROM bom, stockmaster, locstock
+					WHERE bom.component = stockmaster.stockid
+						AND bom.component = locstock.stockid
+						AND locstock.loccode = '" . $Location . "'
+						AND bom.parent = '" . $StockId . "'
+						AND bom.effectiveafter <= CURRENT_DATE
+						AND bom.effectiveto > CURRENT_DATE";
 
 			$ErrMsg = __('The bill of material could not be retrieved because');
 			$BOMResult = DB_query($SQLBOM, $ErrMsg);
 
-			$HTML .= '<table width = "100%" border = "1" cellspacing = "0" cellpadding = "4">
-			<thead>
-			<tr>
-			<th>' . __('Component Code') . '</th>
-			<th>' . __('Qty BOM') . '</th>
-			<th>' . __('Units') . '</th>
-			<th>' . __('Qty Needed') . '</th>
-			<th>' . __('Units') . '</th>
-			<th>' . __('Shrinkage') . '</th>
-			<th>' . __('Units') . '</th>
-			</tr>
-			</thead>
-			<tbody>';
+			$HTML .= '<table width="100%" border="1" cellspacing="0" cellpadding="4">
+				<thead>
+					<tr>
+						<th>' . __('Component Code') . '</th>
+						<th>' . __('Qty BOM') . '</th>
+						<th>' . __('Units') . '</th>
+						<th>' . __('Qty Needed') . '</th>
+						<th>' . __('Units') . '</th>
+						<th>' . __('Shrinkage') . '</th>
+						<th>' . __('Units') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 
 			while ($MyComponent = DB_fetch_array($BOMResult)) {
 				$ComponentNeeded = $MyComponent['bomqty'] * $QtyPending;
 				$PrevisionShrinkage = $ComponentNeeded * ($MyComponent['shrinkfactor'] / 100);
 				$HTML .= '<tr>
-				<td>' . htmlspecialchars($MyComponent['component']) . '</td>
-				<td align = "right">' . locale_number_format($MyComponent['bomqty'], 'Variable') . '</td>
-				<td>' . htmlspecialchars($MyComponent['units']) . '</td>
-				<td align = "right">' . locale_number_format($ComponentNeeded, $MyComponent['decimalplaces']) . '</td>
-				<td>' . htmlspecialchars($MyComponent['units']) . '</td>
-				<td align = "right">' . locale_number_format($PrevisionShrinkage, $MyComponent['decimalplaces']) . '</td>
-				<td>' . htmlspecialchars($MyComponent['units']) . '</td>
+					<td>' . htmlspecialchars($MyComponent['component']) . '</td>
+					<td align="right">' . locale_number_format($MyComponent['bomqty'], 'Variable') . '</td>
+					<td>' . htmlspecialchars($MyComponent['units']) . '</td>
+					<td align="right">' . locale_number_format($ComponentNeeded, $MyComponent['decimalplaces']) . '</td>
+					<td>' . htmlspecialchars($MyComponent['units']) . '</td>
+					<td align="right">' . locale_number_format($PrevisionShrinkage, $MyComponent['decimalplaces']) . '</td>
+					<td>' . htmlspecialchars($MyComponent['units']) . '</td>
 				</tr>';
 			}
 
@@ -132,49 +132,49 @@ if (isset($WO) && isset($StockId) && $WO != '') {
 
 function PrintHeaderHTML($CompanyName, $ReportDate, $WO, $StockId, $Description, $Qty, $UOM, $DecimalPlaces) {
 	return '
-	<h2 style="margin-bottom:0;">' . htmlspecialchars($CompanyName) . '</h2>
-	<p style="margin-top:0;">
-	' . __('Printed') . ': ' . htmlspecialchars($ReportDate) . '
-	<br />
-	' . __('Work Order Item Production Slip') . '
-	<br />
-	' . __('WO') . ': ' . htmlspecialchars($WO) . '
-	<br />
-	' . __('Item Code') . ': ' . htmlspecialchars($StockId) . ' - ' . htmlspecialchars($Description) . '
-	<br />
-	' . __('Quantity') . ': ' . locale_number_format($Qty, $DecimalPlaces) . ' ' . htmlspecialchars($UOM) . '
-	</p>
+		<h2 style="margin-bottom:0;">' . htmlspecialchars($CompanyName) . '</h2>
+		<p style="margin-top:0;">
+			' . __('Printed') . ': ' . htmlspecialchars($ReportDate) . '
+			<br />
+			' . __('Work Order Item Production Slip') . '
+			<br />
+			' . __('WO') . ': ' . htmlspecialchars($WO) . '
+			<br />
+			' . __('Item Code') . ': ' . htmlspecialchars($StockId) . ' - ' . htmlspecialchars($Description) . '
+			<br />
+			' . __('Quantity') . ': ' . locale_number_format($Qty, $DecimalPlaces) . ' ' . htmlspecialchars($UOM) . '
+		</p>
 	';
 }
 
 function PrintFooterSlipHTML($ProductionNotes, $Column1, $Column2, $Column3) {
 	return '
-	<h3>' . htmlspecialchars($ProductionNotes) . ':</h3>
-	<div style="height:80px;border:1px solid #000;margin-bottom:20px;"></div>
-	<table width = "100%" border = "0" cellspacing = "0" cellpadding = "8" style="margin-top:30px;">
-	<tr>
-	<td valign = "top" width = "33%">
-	<strong>' . htmlspecialchars($Column1) . ':</strong><br />
-	<br />' . __('Name') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
-	<br />' . __('Date') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
-	<br />' . __('Hour') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
-	<br />' . __('Signature') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span>
-	</td>
-	<td valign = "top" width = "33%">
-	<strong>' . htmlspecialchars($Column2) . ':</strong><br />
-	<br />' . __('Name') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
-	<br />' . __('Date') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
-	<br />' . __('Hour') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
-	<br />' . __('Signature') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span>
-	</td>
-	<td valign = "top" width = "33%">
-	<strong>' . htmlspecialchars($Column3) . ':</strong><br />
-	<br />' . __('Name') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
-	<br />' . __('Date') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
-	<br />' . __('Hour') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
-	<br />' . __('Signature') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span>
-	</td>
-	</tr>
-	</table>
+		<h3>' . htmlspecialchars($ProductionNotes) . ':</h3>
+		<div style="height:80px;border:1px solid #000;margin-bottom:20px;"></div>
+		<table width="100%" border="0" cellspacing="0" cellpadding="8" style="margin-top:30px;">
+			<tr>
+				<td valign="top" width="33%">
+					<strong>' . htmlspecialchars($Column1) . ':</strong><br />
+					<br />' . __('Name') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
+					<br />' . __('Date') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
+					<br />' . __('Hour') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
+					<br />' . __('Signature') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span>
+				</td>
+				<td valign="top" width="33%">
+					<strong>' . htmlspecialchars($Column2) . ':</strong><br />
+					<br />' . __('Name') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
+					<br />' . __('Date') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
+					<br />' . __('Hour') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
+					<br />' . __('Signature') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span>
+				</td>
+				<td valign="top" width="33%">
+					<strong>' . htmlspecialchars($Column3) . ':</strong><br />
+					<br />' . __('Name') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
+					<br />' . __('Date') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
+					<br />' . __('Hour') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
+					<br />' . __('Signature') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span>
+				</td>
+			</tr>
+		</table>
 	';
 }

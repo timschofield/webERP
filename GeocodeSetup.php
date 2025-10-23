@@ -9,7 +9,7 @@ include('includes/header.php');
 
 if (isset($_GET['SelectedParam'])){
 	$SelectedParam = $_GET['SelectedParam'];
-} elseif (isset($_POST['SelectedParam'])){
+} elseif(isset($_POST['SelectedParam'])){
 	$SelectedParam = $_POST['SelectedParam'];
 }
 
@@ -19,17 +19,17 @@ $InputError = 0;
 if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
-	$i = 1;
+	$i=1;
 
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
 
 	//first off validate inputs are sensible
 
-	$SQL = "SELECT count(geocodeid)
-			FROM geocode_param WHERE geocodeid = '".$_POST['GeoCodeID']."'";
+	$SQL="SELECT count(geocodeid)
+			FROM geocode_param WHERE geocodeid='".$_POST['GeoCodeID']."'";
 	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_row($Result);
+	$MyRow=DB_fetch_row($Result);
 
 	if ($MyRow[0]!= 0 and !isset($SelectedParam)) {
 		$InputError = 1;
@@ -38,25 +38,26 @@ if (isset($_POST['submit'])) {
 		$i++;
 	}
 
-	$Msg = '';
+	$Msg='';
 
-	if (isset($SelectedParam) and $InputError != 1) {
+	if (isset($SelectedParam) AND $InputError != 1) {
 
 		/*SelectedParam could also exist if submit had not been clicked this code would not run in this case cos submit is false of course see the delete code below*/
 
 		if (isset($_POST['GeoCode_Key']) and isset($_POST['GeoCode_Key']) ){
 			$SQL = "UPDATE geocode_param SET
-					geocode_key = '" . $_POST['GeoCode_Key'] . "',
-					center_long = '" . $_POST['Center_Long'] . "',
-					center_lat = '" . $_POST['Center_Lat'] . "',
-					map_height = '" . $_POST['Map_Height'] . "',
-					map_width = '" . $_POST['Map_Width'] . "',
-					map_host = '" . $_POST['Map_Host'] . "'
+					geocode_key='" . $_POST['GeoCode_Key'] . "',
+					center_long='" . $_POST['Center_Long'] . "',
+					center_lat='" . $_POST['Center_Lat'] . "',
+					map_height='" . $_POST['Map_Height'] . "',
+					map_width='" . $_POST['Map_Width'] . "',
+					map_host='" . $_POST['Map_Host'] . "'
 					WHERE geocodeid = '" . $SelectedParam . "'";
 		}
 		$Msg = __('The geocode status record has been updated');
 
 	} elseif ($InputError != 1) {
+
 	/*Selected Param is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new status code form */
 
 		if (isset($_POST['GeoCode_Key']) and $_POST['GeoCode_Key']>0){
@@ -75,7 +76,7 @@ if (isset($_POST['submit'])) {
 							'" . $_POST['Map_Height'] . "',
 							'" . $_POST['Map_Width'] . "',
 							'" . $_POST['Map_Host'] . "')";
-} else {
+		} else {
 			$SQL = "INSERT INTO geocode_param (geocodeid,
 												geocode_key,
 												center_long,
@@ -99,8 +100,8 @@ if (isset($_POST['submit'])) {
 	//run the SQL from either of the above possibilites
 	$Result = DB_query($SQL);
 	if ($Msg !=  '') {
-	prnMsg($Msg,'success');
-}
+		prnMsg($Msg,'success');
+	}
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 $SQL = "DELETE FROM geocode_param WHERE geocodeid = '" . $_GET['delete'] . "' LIMIT 1";
@@ -137,7 +138,7 @@ or deletion of the records*/
 			'<a href="//www.batchgeocode.com/lookup/" target="_blank">http://www.batchgeocode.com/lookup/</a></p>';
 	prnMsg(__('Set the maps centre point using the Center Longitude and Center Latitude. Set the maps screen size using the height and width in pixels (px)'),'info');
 	echo '</div><br />';
-	echo '<table border = "1">';
+	echo '<table border="1">';
 
 	echo '<tr>
 			<th>' .  __('Geocode ID')  . '</th>
@@ -149,7 +150,7 @@ or deletion of the records*/
 			<th>' .  __('Map host') . '</th>
 		</tr>';
 
-	while ($MyRow = DB_fetch_row($Result)) {
+	while ($MyRow=DB_fetch_row($Result)) {
 
 		echo '<tr class="striped_row">
 				<td>', $MyRow[0], '</td>
@@ -163,7 +164,7 @@ or deletion of the records*/
 				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedParam=', $MyRow[0], '&delete=', $MyRow[0], '">' .  __('Delete')  . '</a></td>
 			</tr>';
 
-	} //END while LIST LOOP
+	} //END WHILE LIST LOOP
 	echo '</table>';
 
 } //end of ifs and buts!
@@ -174,10 +175,10 @@ if (isset($SelectedParam)) {
 
 if (!isset($_GET['delete'])) {
 
-	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	if (isset($SelectedParam) and ($InputError !=  1)) {
+	if (isset($SelectedParam) and ($InputError!= 1)) {
 		//editing an existing status code
 
 		$SQL = "SELECT geocodeid,
@@ -188,7 +189,7 @@ if (!isset($_GET['delete'])) {
 					map_width,
 					map_host
 				FROM geocode_param
-				WHERE geocodeid = '" . $SelectedParam . "'";
+				WHERE geocodeid='" . $SelectedParam . "'";
 
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_array($Result);
@@ -201,8 +202,8 @@ if (!isset($_GET['delete'])) {
 		$_POST['Map_Width']  = $MyRow['map_width'];
 		$_POST['Map_Host']  = $MyRow['map_host'];
 
-		echo '<input type = "hidden" name="SelectedParam" value = "' . $SelectedParam . '" />';
-		echo '<input type = "hidden" name="GeoCodeID" value = "' . $_POST['GeoCodeID'] . '" />';
+		echo '<input type="hidden" name="SelectedParam" value="' . $SelectedParam . '" />';
+		echo '<input type="hidden" name="GeoCodeID" value="' . $_POST['GeoCodeID'] . '" />';
 		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Geocode Setup') . '" alt="" />' .  __('Setup configuration for Geocoding of Customers and Suppliers')  . '</p>';
 		echo '<fieldset>
 				<field><td>' .  __('Geocode Code') .':</td>
@@ -222,8 +223,8 @@ if (!isset($_GET['delete'])) {
 		echo '<fieldset>';
 //			<field>
 //				<td>' .  __('Geocode Code') .":</td>
-//				<td><input " . (in_array('GeoCodeID',$Errors) ? 'class ="inputerror"' : '' ) .
-//					" tabindex="1" type = 'Text' name = 'GeoCodeID' value = '". $_POST['GeoCodeID'] ."' size = "3" maxlength = "2"></td>
+//				<td><input " . (in_array('GeoCodeID',$Errors) ? 'class="inputerror"' : '' ) .
+//					" tabindex="1" type='Text' name='GeoCodeID' value='". $_POST['GeoCodeID'] ."' size="3" maxlength="2"></td>
 //			</field>";
 	}
 
@@ -231,38 +232,38 @@ if (!isset($_GET['delete'])) {
 		$_POST['GeoCode_Key'] = '';
 	}
 	echo '<field>
-			<label for = "GeoCode_Key">' .  __('Geocode Key') .':</label>
-			<input ' . (in_array('GeoCode_Key',$Errors) ? 'class ="inputerror"' : '' ) .
-			' tabindex="2" type = "text" name="GeoCode_Key" value = "'. $_POST['GeoCode_Key'] .'" size = "28" maxlength = "300" />
+			<label for="GeoCode_Key">' .  __('Geocode Key') .':</label>
+			<input ' . (in_array('GeoCode_Key',$Errors) ? 'class="inputerror"' : '' ) .
+			' tabindex="2" type="text" name="GeoCode_Key" value="'. $_POST['GeoCode_Key'] .'" size="28" maxlength="300" />
 		</field>
 
 		<field>
-			<label for = "Center_Long">' .  __('Geocode Center Long') . '</label>
-			<input tabindex="3" type = "text" name="Center_Long" value = "'. $_POST['Center_Long'] .'" size = "28" maxlength = "300" />
+			<label for="Center_Long">' .  __('Geocode Center Long') . '</label>
+			<input tabindex="3" type="text" name="Center_Long" value="'. $_POST['Center_Long'] .'" size="28" maxlength="300" />
 		</field>
 
 		<field>
-			<label for = "Center_Lat">' .  __('Geocode Center Lat') . '</label>
-			<input tabindex="4" type = "text" name="Center_Lat" value = "'. $_POST['Center_Lat'] .'" size = "28" maxlength = "300" />
+			<label for="Center_Lat">' .  __('Geocode Center Lat') . '</label>
+			<input tabindex="4" type="text" name="Center_Lat" value="'. $_POST['Center_Lat'] .'" size="28" maxlength="300" />
 		</field>
 
 		<field>
-			<label for = "Map_Height">' .  __('Geocode Map Height') . '</label>
-			<input tabindex="5" type = "text" name="Map_Height" value = "'. $_POST['Map_Height'] .'" size = "28" maxlength = "300" />
+			<label for="Map_Height">' .  __('Geocode Map Height') . '</label>
+			<input tabindex="5" type="text" name="Map_Height" value="'. $_POST['Map_Height'] .'" size="28" maxlength="300" />
 		</field>
 
 		<field>
-			<label for = "Map_Width">' .  __('Geocode Map Width') . '</label>
-			<input tabindex="6" type = "text" name="Map_Width" value = "'. $_POST['Map_Width'] .'" size = "28" maxlength = "300" />
+			<label for="Map_Width">' .  __('Geocode Map Width') . '</label>
+			<input tabindex="6" type="text" name="Map_Width" value="'. $_POST['Map_Width'] .'" size="28" maxlength="300" />
 		</field>
 
 		<field>
-			<label for = "Map_Host">' .  __('Geocode Host') . '</label>
-			<input tabindex="7" type = "text" name="Map_Host" value = "'. $_POST['Map_Host'] .'" size = "20" maxlength = "300" />
+			<label for="Map_Host">' .  __('Geocode Host') . '</label>
+			<input tabindex="7" type="text" name="Map_Host" value="'. $_POST['Map_Host'] .'" size="20" maxlength="300" />
 		</field>
 		</fieldset>
 		<div class="centre">
-			<input tabindex="4" type = "submit" name="submit" value = "' . __('Enter Information') . '" />
+			<input tabindex="4" type="submit" name="submit" value="' . __('Enter Information') . '" />
 		</div>
     </div>
 	</form>';

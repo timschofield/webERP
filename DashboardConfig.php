@@ -12,13 +12,13 @@ echo '<p class="page_title_text">
 	</p>';
 
 if (isset($_GET['Delete'])) {
-	$SQL = "SELECT scripts FROM dashboard_scripts WHERE id = '" . $_GET['SelectedScript'] . "'";
+	$SQL = "SELECT scripts FROM dashboard_scripts WHERE id='" . $_GET['SelectedScript'] . "'";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
 
-	$SQL = "DELETE FROM dashboard_scripts WHERE id = '" . $_GET['SelectedScript'] . "'";
+	$SQL = "DELETE FROM dashboard_scripts WHERE id='" . $_GET['SelectedScript'] . "'";
 	$Result = DB_query($SQL);
-	$SQL = "DELETE FROM scripts WHERE script = '" . $MyRow['scripts'] . "'";
+	$SQL = "DELETE FROM scripts WHERE script='" . $MyRow['scripts'] . "'";
 	$Result = DB_query($SQL);
 	if (DB_error_no() == 0) {
 		prnMsg(__('The script was successfully removed'), 'success');
@@ -28,17 +28,17 @@ if (isset($_GET['Delete'])) {
 }
 
 if (isset($_POST['Update'])) {
-	$SQL = "SELECT scripts FROM dashboard_scripts WHERE id = '" . $_GET['SelectedScript'] . "'";
+	$SQL = "SELECT scripts FROM dashboard_scripts WHERE id='" . $_GET['SelectedScript'] . "'";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
 
-	$SQL = "UPDATE dashboard_scripts SET pagesecurity = '" . $_POST['PageSecurity'] . "',
-										description = '" . $_POST['Description'] . "'
-									WHERE id = '" . $_POST['ID'] . "'";
+	$SQL = "UPDATE dashboard_scripts SET pagesecurity='" . $_POST['PageSecurity'] . "',
+										description='" . $_POST['Description'] . "'
+									WHERE id='" . $_POST['ID'] . "'";
 	$Result = DB_query($SQL);
-	$SQL = "UPDATE scripts SET pagesecurity = '" . $_POST['PageSecurity'] . "',
-								description = '" . $_POST['Description'] . "'
-							WHERE script = '" . $MyRow['scripts'] . "'";
+	$SQL = "UPDATE scripts SET pagesecurity='" . $_POST['PageSecurity'] . "',
+								description='" . $_POST['Description'] . "'
+							WHERE script='" . $MyRow['scripts'] . "'";
 	$Result = DB_query($SQL);
 	if (DB_error_no() == 0) {
 		prnMsg(__('The script was successfully updated'), 'success');
@@ -53,7 +53,7 @@ if (isset($_POST['Insert'])) {
 											pagesecurity,
 											description
 										) VALUES (
-											null,
+											NULL,
 											'" . $_POST['Script'] . "',
 											'" . $_POST['PageSecurity'] . "',
 											'" . $_POST['Description'] . "'
@@ -81,7 +81,7 @@ $SQL = "SELECT id,
 				description
 			FROM dashboard_scripts
 			INNER JOIN securitytokens
-				ON dashboard_scripts.pagesecurity = securitytokens.tokenid
+				ON dashboard_scripts.pagesecurity=securitytokens.tokenid
 			ORDER BY scripts";
 $Result = DB_query($SQL);
 
@@ -89,7 +89,7 @@ if (DB_num_rows($Result) > 0 and !isset($_GET['Edit'])) {
 	echo '<table>
 			<thead>
 				<tr>
-					<th colspan = "6">', __('Configured Dashboard Scripts'), '</th>
+					<th colspan="6">', __('Configured Dashboard Scripts'), '</th>
 				</tr>
 				<tr>
 					<th class="SortedColumn">', __('Script'), '</th>
@@ -115,8 +115,8 @@ if (DB_num_rows($Result) > 0 and !isset($_GET['Edit'])) {
 		</table>';
 }
 
-echo '<form action = "', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method = "post">';
-echo '<input type = "hidden" name="FormID" value = "', $_SESSION['FormID'], '" />';
+echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 if (isset($_GET['Edit'])) {
 	$SQL = "SELECT id,
@@ -124,7 +124,7 @@ if (isset($_GET['Edit'])) {
 					pagesecurity,
 					description
 				FROM dashboard_scripts
-				WHERE id = '" . $_GET['SelectedScript'] . "'";
+				WHERE id='" . $_GET['SelectedScript'] . "'";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
 
@@ -135,14 +135,14 @@ if (isset($_GET['Edit'])) {
 	echo '<fieldset>
 			<legend>', __('Edit dashboard script details'), '</legend>
 			<field>
-				<label for = "ID">', __('Script ID'), '</label>
+				<label for="ID">', __('Script ID'), '</label>
 				<div class="fieldtext">', $MyRow['id'], '</div>
 			</field>
 			<field>
-				<label for = "Script">', __('Script Name'), '</label>
+				<label for="Script">', __('Script Name'), '</label>
 				<div class="fieldtext">', $MyRow['scripts'], '</div>
 			</field>';
-	echo '<input type = "hidden" name="ID" value = "', $MyRow['id'], '" />';
+	echo '<input type="hidden" name="ID" value="', $MyRow['id'], '" />';
 } else {
 
 	$_POST['Script'] = '';
@@ -152,16 +152,16 @@ if (isset($_GET['Edit'])) {
 	echo '<fieldset>
 			<legend>', __('New dashboard script details'), '</legend>
 			<field>
-				<label for = "Script">', __('Script Name'), '</label>
+				<label for="Script">', __('Script Name'), '</label>
 				<select name="Script">';
 	$Scripts = glob('dashboard/*.php');
 	foreach ($Scripts as $ScriptName) {
 		$ScriptName = basename($ScriptName);
 		if ($ScriptName != 'template.php' and !in_array($ScriptName, $ScriptArray)) {
 			if ($_POST['Script'] == $ScriptName) {
-	echo '<option selected = "selected" value = "', $ScriptName, '">', $ScriptName, '</option>';
-} else {
-				echo '<option value = "', $ScriptName, '">', $ScriptName, '</option>';
+				echo '<option selected="selected" value="', $ScriptName, '">', $ScriptName, '</option>';
+			} else {
+				echo '<option value="', $ScriptName, '">', $ScriptName, '</option>';
 			}
 		}
 	}
@@ -176,32 +176,32 @@ $TokenSQL = "SELECT tokenid,
 			ORDER BY tokenid";
 $TokenResult = DB_query($TokenSQL);
 echo '<field>
-		<label for = "PageSecurity">', __('Security Token'), '</label>
+		<label for="PageSecurity">', __('Security Token'), '</label>
 		<select name="PageSecurity">';
 while ($MyTokenRow = DB_fetch_array($TokenResult)) {
 	if ($MyTokenRow['tokenid'] == $_POST['PageSecurity']) {
-	echo '<option selected = "selected" value = "', $MyTokenRow['tokenid'], '">', $MyTokenRow['tokenname'], '</option>';
-} else {
-		echo '<option value = "', $MyTokenRow['tokenid'], '">', $MyTokenRow['tokenname'], '</option>';
+		echo '<option selected="selected" value="', $MyTokenRow['tokenid'], '">', $MyTokenRow['tokenname'], '</option>';
+	} else {
+		echo '<option value="', $MyTokenRow['tokenid'], '">', $MyTokenRow['tokenname'], '</option>';
 	}
 }
 echo '</select>
 	</field>';
 
 echo '<field>
-		<label for = "Description">', __('Description'), '</label>
-		<input type = "text" size = "50" name="Description" value = "', $_POST['Description'], '" />
+		<label for="Description">', __('Description'), '</label>
+		<input type="text" size="50" name="Description" value="', $_POST['Description'], '" />
 	</field>';
 
 echo '</fieldset>';
 
 if (isset($_GET['Edit'])) {
 	echo '<div class="centre">
-			<input type = "submit" name="Update" value = "', __('Update Configuration'), '" />
+			<input type="submit" name="Update" value="', __('Update Configuration'), '" />
 		</div';
 } else {
 	echo '<div class="centre">
-			<input type = "submit" name="Insert" value = "', __('Insert New Script'), '" />
+			<input type="submit" name="Insert" value="', __('Insert New Script'), '" />
 		</div';
 }
 

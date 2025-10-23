@@ -63,16 +63,16 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 		__('webERP is an accrual based system (not a cash based system). Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.'));// Function fShowPageHelp() in ~/includes/MiscFunctions.php
 	// BEGIN ReportParametersFormStart:
 	echo // Shows a form to input the report parameters:
-		'<form action = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method = "post">',
-		'<input name="FormID" type = "hidden" value = "', $_SESSION['FormID'], '" />', // Input table:
+		'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
+		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />', // Input table:
 		'<fieldset>', // Content of the header and footer of the input table:
 		'<legend>', __('Report Parameters'), '</legend>';
 	// END ReportParametersFormStart.
 	// Content of the body of the input table:
 	// Select period to:
 	echo	'<field>
-				<label for = "PeriodTo">', __('Select the balance date'), '</label>
-				<select id="PeriodTo" name="PeriodTo" required = "required">';
+				<label for="PeriodTo">', __('Select the balance date'), '</label>
+				<select id="PeriodTo" name="PeriodTo" required="required">';
 
 	$PeriodNo = GetPeriod(date($_SESSION['DefaultDateFormat']));
 	$LastDateInPeriod = EndDateSQLFromPeriodNo($PeriodNo);
@@ -83,37 +83,37 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 	while ($MyRow = DB_fetch_array($Periods)) {
 		echo '<option';
 		if ($MyRow['periodno'] == $PeriodNo) {
-	echo ' selected = "selected"';
-}
-		echo ' value = "', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
+			echo ' selected="selected"';
+		}
+		echo ' value="', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
 	}
 	echo		'</select>
 			</field>
 			<field>
-				<label for = "ShowDetail">', __('Detail or summary'), '</label>
-				<select name="ShowDetail" required = "required">
-					<option value = "Summary">', __('Summary'), '</option>
-					<option selected = "selected" value = "Detailed">', __('All Accounts'), '</option>
+				<label for="ShowDetail">', __('Detail or summary'), '</label>
+				<select name="ShowDetail" required="required">
+					<option value="Summary">', __('Summary'), '</option>
+					<option selected="selected" value="Detailed">', __('All Accounts'), '</option>
 				</select>
 					<fieldhelp>', __('Selecting Summary will show on the totals at the account group level'), '</fieldhelp>
 			</field>',
 	// Show accounts with zero balance:
 			'<field>',
-				'<label for = "ShowZeroBalance">', __('Show accounts with zero balance'), '</label>
+				'<label for="ShowZeroBalance">', __('Show accounts with zero balance'), '</label>
 				<input';
 	if (isset($_POST['ShowZeroBalance'])) {
-		echo ' checked = "checked"';
+		echo ' checked="checked"';
 	} else {
 		echo '';
 	}
-	echo ' id="ShowZeroBalance" name="ShowZeroBalance" type = "checkbox">
+	echo ' id="ShowZeroBalance" name="ShowZeroBalance" type="checkbox">
 				<fieldhelp>', __('Check this box to show accounts with zero balance'),'</fieldhelp>
 			</field>';
 	// BEGIN ReportParametersFormEnd:
 	echo '</fieldset>
 			<div class="centre">
-				<button name="Submit" type = "submit" value = "submit"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', __('Submit'), '</button>
-				<button onclick="window.location = \'index.php?Application=GL\'" type = "button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', __('Return'), '</button>
+				<button name="Submit" type="submit" value="submit"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', __('Submit'), '</button>
+				<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', __('Return'), '</button>
 			</div>',
 		'</form>';
 	// END ReportParametersFormEnd.
@@ -138,12 +138,11 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 	echo '<table class="scrollable">
 		<thead>
 		<tr>';
-	if ($_POST['ShowDetail'] == 'Detailed') {
-	// Detailed report:
+	if ($_POST['ShowDetail'] == 'Detailed') {// Detailed report:
 		echo '<th class="text">', __('Account'), '</th>
 			<th class="text">', __('Account Name'), '</th>';
-} else {// Summary report:
-		echo '<th class="text" colspan = "2">', __('Summary'), '</th>';
+	} else {// Summary report:
+		echo '<th class="text" colspan="2">', __('Summary'), '</th>';
 	}
 	echo	'<th class="number">', __('Current period'), '</th>
 			<th class="number">', __('Last period'), '</th>
@@ -153,7 +152,7 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 		</thead>
 		<tfoot>
 			<tr>
-				<td class="text" colspan = "6">',// Prints an explanation of signs in actual and relative changes:
+				<td class="text" colspan="6">',// Prints an explanation of signs in actual and relative changes:
 					'<br /><b>', __('Notes'), ':</b><br />',
 					__('Actual change signs: a positive number indicates a source of funds; a negative number indicates an application of funds.'), '<br />',
 					__('Relative change signs: a positive number indicates an increase in the amount of that account; a negative number indicates a decrease in the amount of that account.'), '<br />',
@@ -164,8 +163,8 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 
 	// Calculate B/Fwd retained earnings:
 	$SQL = "SELECT
-				SUM(case WHEN gltotals.period <= '" . $_POST['PeriodTo'] . "' THEN gltotals.amount else 0 END) as accumprofitbfwd,
-				SUM(case WHEN gltotals.period <= '" . ($_POST['PeriodTo'] - 12) . "' THEN gltotals.amount else 0 END) as accumprofitbfwdly
+				SUM(CASE WHEN gltotals.period <= '" . $_POST['PeriodTo'] . "' THEN gltotals.amount ELSE 0 END) AS accumprofitbfwd,
+				SUM(CASE WHEN gltotals.period <= '" . ($_POST['PeriodTo'] - 12) . "' THEN gltotals.amount ELSE 0 END) AS accumprofitbfwdly
 			FROM chartmaster
 			INNER JOIN accountgroups
 				ON chartmaster.group_ = accountgroups.groupname
@@ -180,10 +179,10 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 	$SQL = "SELECT accountgroups.sectioninaccounts,
 				accountgroups.groupname,
 				accountgroups.parentgroupname,
-				gltotals.account as accountcode,
+				gltotals.account AS accountcode,
 				chartmaster.accountname,
-				SUM(case WHEN gltotals.period <= '" . $_POST['PeriodTo'] . "' THEN gltotals.amount else 0 END) as balancecfwd,
-				SUM(case WHEN gltotals.period <= '" . ($_POST['PeriodTo'] - 12) . "' THEN gltotals.amount else 0 END) as balancecfwdly
+				SUM(CASE WHEN gltotals.period <= '" . $_POST['PeriodTo'] . "' THEN gltotals.amount ELSE 0 END) AS balancecfwd,
+				SUM(CASE WHEN gltotals.period <= '" . ($_POST['PeriodTo'] - 12) . "' THEN gltotals.amount ELSE 0 END) AS balancecfwdly
 			FROM chartmaster
 			INNER JOIN accountgroups
 				ON chartmaster.group_ = accountgroups.groupname
@@ -191,8 +190,8 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 				ON chartmaster.accountcode = gltotals.account
 			INNER JOIN glaccountusers
 				ON glaccountusers.accountcode = chartmaster.accountcode
-				and glaccountusers.userid = '" .  $_SESSION['UserID'] . "'
-				and glaccountusers.canview = 1
+				AND glaccountusers.userid = '" .  $_SESSION['UserID'] . "'
+				AND glaccountusers.canview = 1
 			WHERE accountgroups.pandl = 0
 			GROUP BY accountgroups.groupname,
 				gltotals.account,
@@ -222,7 +221,7 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 	$GroupTotalLY = array(0);
 
 	$DrawTotalLine = '<tr>
-		<td colspan = "2">&nbsp;</td>
+		<td colspan="2">&nbsp;</td>
 		<td><hr /></td>
 		<td><hr /></td>
 		<td><hr /></td>
@@ -234,18 +233,18 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 		$AccountBalanceLY = $MyRow['balancecfwdly'];
 
 		if ($MyRow['accountcode'] == $RetainedEarningsAct) {
-	$AccountBalance += $AccumProfitRow['accumprofitbfwd'];
+			$AccountBalance += $AccumProfitRow['accumprofitbfwd'];
 			$AccountBalanceLY += $AccumProfitRow['accumprofitbfwdly'];
-}
+		}
 
-		if ($MyRow['groupname'] != $ActGrp and $ActGrp != '') {
-	if ($MyRow['parentgroupname'] != $ActGrp) {
-				while ($MyRow['groupname'] != $ParentGroups[$Level] and $Level > 0) {
+		if ($MyRow['groupname'] != $ActGrp AND $ActGrp != '') {
+			if ($MyRow['parentgroupname'] != $ActGrp) {
+				while ($MyRow['groupname'] != $ParentGroups[$Level] AND $Level > 0) {
 					if ($_POST['ShowDetail'] == 'Detailed') {
 						echo $DrawTotalLine;
-}
+					}
 					echo '<tr>
-							<td colspan = "2">', $ParentGroups[$Level], '</td>
+							<td colspan="2">', $ParentGroups[$Level], '</td>
 							<td class="number">', locale_number_format($GroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
 							<td class="number">', locale_number_format($GroupTotalLY[$Level], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
 							<td class="number">', locale_number_format($GroupTotal[$Level] - $GroupTotalLY[$Level], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
@@ -257,10 +256,10 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 					$Level--;
 				}
 				if ($_POST['ShowDetail'] == 'Detailed') {
-	echo $DrawTotalLine;
-}
+					echo $DrawTotalLine;
+				}
 				echo '<tr>
-						<td class="text" colspan = "2">', $ParentGroups[$Level], '</td>
+						<td class="text" colspan="2">', $ParentGroups[$Level], '</td>
 						<td class="number">', locale_number_format($GroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
 						<td class="number">', locale_number_format($GroupTotalLY[$Level], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
 						<td class="number">', locale_number_format($GroupTotal[$Level] - $GroupTotalLY[$Level], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
@@ -272,37 +271,38 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 			}
 		}
 		if ($MyRow['sectioninaccounts'] != $Section) {
-	if ($Section != '') {
+			if ($Section != '') {
 				echo $DrawTotalLine;
 				echo '<tr>
-						<td class="text" colspan = "2"><h2>', $Sections[$Section], '</h2></td>
+						<td class="text" colspan="2"><h2>', $Sections[$Section], '</h2></td>
 						<td class="number"><h2>', locale_number_format($SectionBalance, $_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 						<td class="number"><h2>', locale_number_format($SectionBalanceLY, $_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 						<td class="number"><h2>', locale_number_format($SectionBalance - $SectionBalanceLY, $_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 						<td class="number"><h2>', RelativeChange(-$SectionBalance, -$SectionBalanceLY), '</h2></td>
 					</tr>';
-}
+			}
 			$SectionBalance = 0;
 			$SectionBalanceLY = 0;
 			$Section = $MyRow['sectioninaccounts'];
 			if ($_POST['ShowDetail'] == 'Detailed') {
-	echo '<tr>
-						<td colspan = "6"><h2>', $Sections[$MyRow['sectioninaccounts']], '</h2></td>
+				echo '<tr>
+						<td colspan="6"><h2>', $Sections[$MyRow['sectioninaccounts']], '</h2></td>
 					</tr>';
-}
+			}
 		}
 
 		if ($MyRow['groupname'] != $ActGrp) {
-	if ($ActGrp != '' and $MyRow['parentgroupname'] == $ActGrp) {
+
+			if ($ActGrp != '' AND $MyRow['parentgroupname'] == $ActGrp) {
 				$Level++;
-}
+			}
 
 			if ($_POST['ShowDetail'] == 'Detailed') {
-	$ActGrp = $MyRow['groupname'];
+				$ActGrp = $MyRow['groupname'];
 				echo '<tr>
-						<td colspan = "6"><h3>', $MyRow['groupname'], '</h3></td>
+						<td colspan="6"><h3>', $MyRow['groupname'], '</h3></td>
 					</tr>';
-}
+			}
 			$GroupTotal[$Level] = 0;
 			$GroupTotalLY[$Level] = 0;
 			$ActGrp = $MyRow['groupname'];
@@ -311,7 +311,7 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 		$SectionBalance += $AccountBalance;
 		$SectionBalanceLY += $AccountBalanceLY;
 
-		for ($i = 0;  $i <= $Level;  $i++) {
+		for ($i = 0; $i <= $Level; $i++) {
 			$GroupTotalLY[$i] += $AccountBalanceLY;
 			$GroupTotal[$i] += $AccountBalance;
 		}
@@ -319,7 +319,7 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 		$CheckTotalLY += $AccountBalanceLY;
 
 		if ($_POST['ShowDetail'] == 'Detailed') {
-	if (isset($_POST['ShowZeroBalance']) or (!isset($_POST['ShowZeroBalance']) and (round($AccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) <> 0 or round($AccountBalanceLY, $_SESSION['CompanyRecord']['decimalplaces']) <> 0))) {
+			if (isset($_POST['ShowZeroBalance']) OR (!isset($_POST['ShowZeroBalance']) AND (round($AccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) <> 0 OR round($AccountBalanceLY, $_SESSION['CompanyRecord']['decimalplaces']) <> 0))) {
 				echo '<tr class="striped_row">
 						<td class="text"><a href="', $RootPath, '/GLAccountInquiry.php?Period=', $_POST['PeriodTo'], '&amp;Account=', $MyRow['accountcode'], '">', $MyRow['accountcode'], '</a></td>
 						<td class="text">', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false), '</td>
@@ -328,17 +328,17 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 						<td class="number">', locale_number_format($AccountBalance - $AccountBalanceLY, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
 						<td class="number">', RelativeChange(-$AccountBalance, -$AccountBalanceLY), '</td>
 					</tr>';
-}
+			}
 		}
 	}// End of loop.
 
 	if (isset($MyRow)) {
-		while ($MyRow['groupname'] != $ParentGroups[$Level] and $Level > 0) {
+		while ($MyRow['groupname'] != $ParentGroups[$Level] AND $Level > 0) {
 			if ($_POST['ShowDetail'] == 'Detailed') {
-	echo $DrawTotalLine;
-}
+				echo $DrawTotalLine;
+			}
 			echo '<tr>
-					<td colspan = "2">', $ParentGroups[$Level], '</td>
+					<td colspan="2">', $ParentGroups[$Level], '</td>
 					<td class="number">', locale_number_format($GroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
 					<td class="number">', locale_number_format($GroupTotalLY[$Level], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
 					<td class="number">', locale_number_format($GroupTotal[$Level] - $GroupTotalLY[$Level], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
@@ -348,10 +348,10 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 		}
 	}
 	if ($_POST['ShowDetail'] == 'Detailed') {
-	echo $DrawTotalLine;
-}
+		echo $DrawTotalLine;
+	}
 	echo '<tr>
-			<td colspan = "2">', $ParentGroups[$Level], '</td>
+			<td colspan="2">', $ParentGroups[$Level], '</td>
 			<td class="number">', locale_number_format($GroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
 			<td class="number">', locale_number_format($GroupTotalLY[$Level], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
 			<td class="number">', locale_number_format($GroupTotal[$Level] - $GroupTotalLY[$Level], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
@@ -359,7 +359,7 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 		</tr>';
 	echo $DrawTotalLine;
 	echo '<tr>
-			<td colspan = "2"><h2>', $Sections[$Section], '</h2></td>
+			<td colspan="2"><h2>', $Sections[$Section], '</h2></td>
 			<td class="number"><h2>', locale_number_format($SectionBalance, $_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 			<td class="number"><h2>', locale_number_format($SectionBalanceLY, $_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 			<td class="number"><h2>', locale_number_format($SectionBalance - $SectionBalanceLY, $_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
@@ -371,13 +371,13 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 
 		if (isset($MyRow['sectioninaccounts']) and $_POST['ShowDetail'] == 'Detailed') {
 			echo '<tr>
-					<td colspan = "6"><h2>', $Sections[$MyRow['sectioninaccounts']], '</h2></td>
+					<td colspan="6"><h2>', $Sections[$MyRow['sectioninaccounts']], '</h2></td>
 				</tr>';
 		}
 	}
 	echo $DrawTotalLine;
 	echo'<tr>
-			<td colspan = "2"><h2>', __('Check Total'), '</h2></td>
+			<td colspan="2"><h2>', __('Check Total'), '</h2></td>
 			<td class="number"><h2>', locale_number_format($CheckTotal, $_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 			<td class="number"><h2>', locale_number_format($CheckTotalLY, $_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 			<td class="number"><h2>', locale_number_format($CheckTotal - $CheckTotalLY, $_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
@@ -388,15 +388,15 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 		'</div>';// End div id="Report".
 	// BEGIN ReportDocEndButtons:
 	echo // Shows a form to select an action after the report was shown:
-		'<form action = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method = "post">',
-		'<input name="FormID" type = "hidden" value = "', $_SESSION['FormID'], '" />', // Resend report parameters:
-		'<input type = "hidden" name="PeriodTo" value = "', $_POST['PeriodTo'], '" />',
-		'<input name="ShowDetail" type = "hidden" value = "', $_POST['ShowDetail'], '" />',
-		'<input name="ShowZeroBalance" type = "hidden" value = "', $_POST['ShowZeroBalance'], '" />',
+		'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
+		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />', // Resend report parameters:
+		'<input type="hidden" name="PeriodTo" value="', $_POST['PeriodTo'], '" />',
+		'<input name="ShowDetail" type="hidden" value="', $_POST['ShowDetail'], '" />',
+		'<input name="ShowZeroBalance" type="hidden" value="', $_POST['ShowZeroBalance'], '" />',
 		'<div class="centre noPrint">', // Form buttons:
-			'<button onclick="window.print()" type = "button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" /> ', __('Print'), '</button>', // "Print" button.
-			'<button name="NewReport" type = "submit" value = "on"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/reports.png" /> ', __('New Report'), '</button>', // "New Report" button.
-			'<button onclick="window.location = \'index.php?Application=GL\'" type = "button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', __('Return'), '</button>', // "Return" button.
+			'<button onclick="window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" /> ', __('Print'), '</button>', // "Print" button.
+			'<button name="NewReport" type="submit" value="on"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/reports.png" /> ', __('New Report'), '</button>', // "New Report" button.
+			'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', __('Return'), '</button>', // "Return" button.
 		'</div>',
 		'</form>';
 	// END ReportDocEndButtons.

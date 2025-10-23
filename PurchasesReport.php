@@ -19,19 +19,19 @@ if (isset($_POST['PeriodFrom'])){$_POST['PeriodFrom'] = ConvertSQLDate($_POST['P
 if (isset($_POST['PeriodTo'])){$_POST['PeriodTo'] = ConvertSQLDate($_POST['PeriodTo']);}
 
 // Merges gets into posts:
-if (isset($_GET['PeriodFrom'])) {
+if(isset($_GET['PeriodFrom'])) {
 	$_POST['PeriodFrom'] = $_GET['PeriodFrom'];
 }
-if (isset($_GET['PeriodTo'])) {
+if(isset($_GET['PeriodTo'])) {
 	$_POST['PeriodTo'] = $_GET['PeriodTo'];
 }
-if (isset($_GET['ShowDetails'])) {
+if(isset($_GET['ShowDetails'])) {
 	$_POST['ShowDetails'] = $_GET['ShowDetails'];
 }
 
 // Validates the data submitted in the form:
-if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo'])) {
-	if (Date1GreaterThanDate2($_POST['PeriodFrom'], $_POST['PeriodTo'])) {
+if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo'])) {
+	if(Date1GreaterThanDate2($_POST['PeriodFrom'], $_POST['PeriodTo'])) {
 		// The beginning is after the end.
 		$_POST['NewReport'] = 'on';
 		prnMsg(__('The beginning of the period should be before or equal to the end of the period. Please reselect the reporting period.'), 'error');
@@ -39,7 +39,7 @@ if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo'])) {
 }
 
 // Main code:
-if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo']) and !$_POST['NewReport']) {
+if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewReport']) {
 	// If PeriodFrom and PeriodTo are set and it is not a NewReport, generates the report:
 	echo '<div class="sheet">', // Division to identify the report block.
 		'<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/reports.png" title="', // Icon image.
@@ -50,7 +50,7 @@ if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo']) and !$_POST['NewRe
 		'<table class="selection">
 		<thead>
 			<tr>';
-	// $CommonHead is the common table head between ShowDetails = off and ShowDetails = on:
+	// $CommonHead is the common table head between ShowDetails=off and ShowDetails=on:
 	$CommonHead =
 				'<th>' . __('Original Overall Amount') . '</th>' .
 				'<th>' . __('Original Overall Taxes') . '</th>' .
@@ -61,7 +61,7 @@ if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo']) and !$_POST['NewRe
 			'</tr>' .
 		'</thead><tfoot>' .
 			'<tr>' .
-				'<td colspan = "9"><br /><b>' .
+				'<td colspan="9"><br /><b>' .
 					__('Notes') . '</b><br />' .
 					__('Original amounts in the supplier\'s currency. GL amounts in the functional currency.') .
 				'</td>' .
@@ -71,8 +71,7 @@ if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo']) and !$_POST['NewRe
 	$TotalGlTax = 0;
 	$PeriodFrom = FormatDateForSQL($_POST['PeriodFrom']);
 	$PeriodTo = FormatDateForSQL($_POST['PeriodTo']);
-	if ($_POST['ShowDetails']) {
-	// Parameters: PeriodFrom, PeriodTo, ShowDetails = on.
+	if($_POST['ShowDetails']) {// Parameters: PeriodFrom, PeriodTo, ShowDetails=on.
 		echo		'<th>', __('Date'), '</th>',
 					'<th>', __('Purchase Invoice'), '</th>',
 					'<th>', __('Reference'), '</th>',
@@ -95,17 +94,17 @@ if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo']) and !$_POST['NewRe
 					supptrans.ovgst,
 					supptrans.rate
 				FROM supptrans
-					INNER JOIN suppliers ON supptrans.supplierno = suppliers.supplierid
+					INNER JOIN suppliers ON supptrans.supplierno=suppliers.supplierid
 				WHERE supptrans.trandate>='" . $PeriodFrom . "'
-					and supptrans.trandate<='" . $PeriodTo . "'
-					and supptrans.`type`=20
+					AND supptrans.trandate<='" . $PeriodTo . "'
+					AND supptrans.`type`=20
 				ORDER BY supptrans.supplierno, supptrans.trandate";
 		$Result = DB_query($SQL);
-		foreach ($Result as $MyRow) {
-			if ($MyRow['supplierno'] != $SupplierId) {// If different, prints supplier totals:
-				if ($SupplierId != '') {// If not the first line.
+		foreach($Result as $MyRow) {
+			if($MyRow['supplierno'] != $SupplierId) {// If different, prints supplier totals:
+				if($SupplierId != '') {// If NOT the first line.
 					echo '<tr>',
-							'<td colspan = "3">&nbsp;</td>',
+							'<td colspan="3">&nbsp;</td>',
 							'<td class="number">', locale_number_format($SupplierOvAmount, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
 							'<td class="number">', locale_number_format($SupplierOvTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
 							'<td class="number">', locale_number_format($SupplierOvAmount+$SupplierOvTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
@@ -113,9 +112,9 @@ if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo']) and !$_POST['NewRe
 							'<td class="number">', locale_number_format($SupplierGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
 							'<td class="number">', locale_number_format($SupplierGlAmount+$SupplierGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
 						'</tr>';
-}
-				echo '<tr><td colspan = "9">&nbsp;</td></tr>';
-				echo '<tr><td class="text" colspan = "9"><a href="', $RootPath, '/SupplierInquiry.php?SupplierID=', $MyRow['supplierno'], '">', $MyRow['supplierno'], ' - ', $MyRow['suppname'], '</a> - ', $MyRow['currcode'], ' ', $CurrencyName[$MyRow['currcode']], '</td></tr>';
+				}
+				echo '<tr><td colspan="9">&nbsp;</td></tr>';
+				echo '<tr><td class="text" colspan="9"><a href="', $RootPath, '/SupplierInquiry.php?SupplierID=', $MyRow['supplierno'], '">', $MyRow['supplierno'], ' - ', $MyRow['suppname'], '</a> - ', $MyRow['currcode'], ' ', $CurrencyName[$MyRow['currcode']], '</td></tr>';
 				$TotalGlAmount += $SupplierGlAmount;
 				$TotalGlTax += $SupplierGlTax;
 				$SupplierId = $MyRow['supplierno'];
@@ -146,7 +145,7 @@ if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo']) and !$_POST['NewRe
 
 		// Prints last supplier total:
 		echo '<tr>',
-				'<td colspan = "3">&nbsp;</td>',
+				'<td colspan="3">&nbsp;</td>',
 				'<td class="number">', locale_number_format($SupplierOvAmount, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
 				'<td class="number">', locale_number_format($SupplierOvTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
 				'<td class="number">', locale_number_format($SupplierOvAmount+$SupplierOvTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
@@ -154,12 +153,12 @@ if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo']) and !$_POST['NewRe
 				'<td class="number">', locale_number_format($SupplierGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
 				'<td class="number">', locale_number_format($SupplierGlAmount+$SupplierGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
 			'</tr>',
-			'<tr><td colspan = "9">&nbsp;</td></tr>';
+			'<tr><td colspan="9">&nbsp;</td></tr>';
 
 		$TotalGlAmount += $SupplierGlAmount;
 		$TotalGlTax += $SupplierGlTax;
 
-	} else {// Parameters: PeriodFrom, PeriodTo, ShowDetails = off.
+	} else {// Parameters: PeriodFrom, PeriodTo, ShowDetails=off.
 		// RChacon: Needs to update the table_sort function to use in this table.
 		echo		'<th>', __('Supplier Code'), '</th>',
 					'<th>', __('Supplier Name'), '</th>',
@@ -169,20 +168,20 @@ if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo']) and !$_POST['NewRe
 					supptrans.supplierno,
 					suppliers.suppname,
 					suppliers.currcode,
-					SUM(supptrans.ovamount) as SupplierOvAmount,
-					SUM(supptrans.ovgst) as SupplierOvTax,
-					SUM(supptrans.ovamount/supptrans.rate) as SupplierGlAmount,
-					SUM(supptrans.ovgst/supptrans.rate) as SupplierGlTax
+					SUM(supptrans.ovamount) AS SupplierOvAmount,
+					SUM(supptrans.ovgst) AS SupplierOvTax,
+					SUM(supptrans.ovamount/supptrans.rate) AS SupplierGlAmount,
+					SUM(supptrans.ovgst/supptrans.rate) AS SupplierGlTax
 				FROM supptrans
-					INNER JOIN suppliers ON supptrans.supplierno = suppliers.supplierid
+					INNER JOIN suppliers ON supptrans.supplierno=suppliers.supplierid
 				WHERE supptrans.trandate>='" . $PeriodFrom . "'
-					and supptrans.trandate<='" . $PeriodTo . "'
-					and supptrans.`type`=20
+					AND supptrans.trandate<='" . $PeriodTo . "'
+					AND supptrans.`type`=20
 				GROUP BY
 					supptrans.supplierno
 				ORDER BY supptrans.supplierno, supptrans.trandate";
 		$Result = DB_query($SQL);
-		foreach ($Result as $MyRow) {
+		foreach($Result as $MyRow) {
 			echo '<tr class="striped_row">',
 					'<td class="text">', $MyRow['supplierno'], '</td>',
 					'<td class="text"><a href="', $RootPath, '/SupplierInquiry.php?SupplierID=', $MyRow['supplierno'], '">', $MyRow['suppname'], '</a></td>',
@@ -200,7 +199,7 @@ if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo']) and !$_POST['NewRe
 	}
 	// Prints all suppliers total:
 	echo	'<tr>
-				<td class="text" colspan = "6">&nbsp;</td>
+				<td class="text" colspan="6">&nbsp;</td>
 				<td class="number">', locale_number_format($TotalGlAmount, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
 				<td class="number">', locale_number_format($TotalGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
 				<td class="number">', locale_number_format($TotalGlAmount+$TotalGlTax, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
@@ -208,64 +207,64 @@ if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo']) and !$_POST['NewRe
 		'</tbody></table>',
 		'</div>', // div id="Report".
 	// Shows a form to select an action after the report was shown:
-		'<form action = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method = "post">',
-		'<input name="FormID" type = "hidden" value = "', $_SESSION['FormID'], '" />',
+		'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
+		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />',
 	// Resend report parameters:
-		'<input name="PeriodFrom" type = "hidden" value = "', $_POST['PeriodFrom'], '" />',
-		'<input name="PeriodTo" type = "hidden" value = "', $_POST['PeriodTo'], '" />',
-		'<input name="ShowDetails" type = "hidden" value = "', $_POST['ShowDetails'], '" />',
+		'<input name="PeriodFrom" type="hidden" value="', $_POST['PeriodFrom'], '" />',
+		'<input name="PeriodTo" type="hidden" value="', $_POST['PeriodTo'], '" />',
+		'<input name="ShowDetails" type="hidden" value="', $_POST['ShowDetails'], '" />',
 		'<div class="centre noPrint">', // Form buttons:
-			'<button onclick="window.print()" type = "button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" /> ', __('Print'), '</button>', // "Print" button.
-			'<button name="NewReport" type = "submit" value = "on"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/reports.png" /> ', __('New Report'), '</button>', // "New Report" button.
-			'<button onclick="window.location = \'' . $RootPath . '/index.php?Application=PO\'" type = "button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', __('Return'), '</button>', // "Return" button.
+			'<button onclick="window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" /> ', __('Print'), '</button>', // "Print" button.
+			'<button name="NewReport" type="submit" value="on"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/reports.png" /> ', __('New Report'), '</button>', // "New Report" button.
+			'<button onclick="window.location=\'' . $RootPath . '/index.php?Application=PO\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', __('Return'), '</button>', // "Return" button.
 		'</div>';
 } else {
-	// If PeriodFrom or PeriodTo are not set or it is a NewReport, shows a parameters input form:
+	// If PeriodFrom or PeriodTo are NOT set or it is a NewReport, shows a parameters input form:
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/gl.png" title="', // Icon image.
 		$Title, '" /> ', // Icon title.
 		$Title, '</p>';// Page title.
 	fShowPageHelp(// Shows the page help text if $_SESSION['ShowFieldHelp'] is true or is not set
 		__('Shows a report of purchases from suppliers for the range of selected dates.'));// Function fShowPageHelp() in ~/includes/MiscFunctions.php
 	echo // Shows a form to input the report parameters:
-		'<form action = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method = "post">',
-		'<input name="FormID" type = "hidden" value = "', $_SESSION['FormID'], '" />', // Input table:
+		'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
+		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />', // Input table:
 		'<fieldset>
 			<legend>', __('Report Criteria'), '</legend>', // Content of the header and footer of the input table:
 /*		'<thead>
 			<field>
-				<th colspan = "2">', __('Report Parameters'), '</th>
+				<th colspan="2">', __('Report Parameters'), '</th>
 			</field>
 		</thead>',*/
 	// Content of the body of the input table:
 	// Select period from:
 			'<field>',
-				'<label for = "PeriodFrom">', __('Period from'), '</label>';
-	if (!isset($_POST['PeriodFrom'])) {
+				'<label for="PeriodFrom">', __('Period from'), '</label>';
+	if(!isset($_POST['PeriodFrom'])) {
 		$_POST['PeriodFrom'] = date($_SESSION['DefaultDateFormat'], strtotime("-1 year", time()));// One year before current date.
 	}
-	echo '<td><input type = "date" id="PeriodFrom" maxlength = "10" name="PeriodFrom" required = "required" size = "11" value = "', FormatDateForSQL($_POST['PeriodFrom']), '" />',
+	echo '<td><input type="date" id="PeriodFrom" maxlength="10" name="PeriodFrom" required="required" size="11" value="', FormatDateForSQL($_POST['PeriodFrom']), '" />',
 				'<fieldhelp>', __('Select the beginning of the reporting period'), '</fieldhelp>
 			</field>',
 			// Select period to:
 			'<field>',
-				'<label for = "PeriodTo">', __('Period to'), '</label>';
-	if (!isset($_POST['PeriodTo'])) {
+				'<label for="PeriodTo">', __('Period to'), '</label>';
+	if(!isset($_POST['PeriodTo'])) {
 		$_POST['PeriodTo'] = date($_SESSION['DefaultDateFormat']);
 	}
-	echo 		'<input type = "date" id="PeriodTo" maxlength = "10" name="PeriodTo" required = "required" size = "11" value = "', FormatDateForSQL($_POST['PeriodTo']), '" />',
+	echo 		'<input type="date" id="PeriodTo" maxlength="10" name="PeriodTo" required="required" size="11" value="', FormatDateForSQL($_POST['PeriodTo']), '" />',
 				'<fieldhelp>', __('Select the end of the reporting period'), '</fieldhelp>
 			</field>';
 	// Show the budget for the period:
 	echo '<field>',
-			 	'<label for = "ShowDetails">', __('Show details'), '</label>',
-			 	'<input', (isset($_POST['ShowDetails']) && $_POST['ShowDetails'] ? ' checked ="checked"' : ''), ' id="ShowDetails" name="ShowDetails" type = "checkbox">', // If $_POST['ShowDetails'] is set and it is true, shows this input checked.
+			 	'<label for="ShowDetails">', __('Show details'), '</label>',
+			 	'<input', (isset($_POST['ShowDetails']) && $_POST['ShowDetails'] ? ' checked="checked"' : ''), ' id="ShowDetails" name="ShowDetails" type="checkbox">', // If $_POST['ShowDetails'] is set AND it is true, shows this input checked.
 				'<fieldhelp>', __('Check this box to show purchase invoices'), '</fieldhelp>
 			</field>';
 	echo '</fieldset>';
 }
 echo '<div class="centre">',
-		'<button name="Submit" type = "submit" value = "submit"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', __('Submit'), '</button>', // "Submit" button.
-		'<button onclick="window.location = \'' . $RootPath . '/index.php?Application=PO\'" type = "button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', __('Return'), '</button>', // "Return" button.
+		'<button name="Submit" type="submit" value="submit"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', __('Submit'), '</button>', // "Submit" button.
+		'<button onclick="window.location=\'' . $RootPath . '/index.php?Application=PO\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', __('Return'), '</button>', // "Return" button.
 	'</div>';
 
 echo	'</form>';

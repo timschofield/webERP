@@ -14,30 +14,30 @@ echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	__('Access Permissions Maintenance') . '" /> ' .// Icon title.
 	__('Access Permissions Maintenance') . '</p>';// Page title.
 
-if ($AllowDemoMode) {
+if($AllowDemoMode) {
 	prnMsg(__('The the system is in demo mode and the security model administration is disabled'), 'warn');
 	include('includes/footer.php');
 	exit();
 }
 
-if (isset($_GET['SelectedRole'])) {
+if(isset($_GET['SelectedRole'])) {
 	$SelectedRole = $_GET['SelectedRole'];
 } elseif (isset($_POST['SelectedRole'])) {
 	$SelectedRole = $_POST['SelectedRole'];
 }
 
-if (isset($_POST['submit']) or isset($_GET['remove']) or isset($_GET['add']) ) {
+if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
-	if ($AllowDemoMode) {
-	$InputError =1;
+	if ($AllowDemoMode){
+		$InputError =1;
 		prnMsg('The demo functionality is crippled to prevent access problems. No changes will be made','warn');
-}
+	}
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
 	//first off validate inputs sensible
-	if (isset($_POST['SecRoleName']) and mb_strlen($_POST['SecRoleName'])<4){
+	if (isset($_POST['SecRoleName']) AND mb_strlen($_POST['SecRoleName'])<4){
 		$InputError = 1;
 		prnMsg(__('The role description entered must be at least 4 characters long'),'error');
 	}
@@ -46,7 +46,7 @@ if (isset($_POST['submit']) or isset($_GET['remove']) or isset($_GET['add']) ) {
 	// else it is either an add or remove of a page token
 	unset($SQL);
 	if (isset($_POST['SecRoleName']) ){ // Update or Add Security Headings
-		if (isset($SelectedRole)) { // Update Security Heading
+		if(isset($SelectedRole)) { // Update Security Heading
 			$SQL = "UPDATE securityroles SET secrolename = '" . $_POST['SecRoleName'] . "'
 					WHERE secroleid = '".$SelectedRole . "'";
 			$ErrMsg = __('The update of the security role description failed because');
@@ -60,7 +60,7 @@ if (isset($_POST['submit']) or isset($_GET['remove']) or isset($_GET['add']) ) {
 		unset($SelectedRole);
 	} elseif (isset($SelectedRole) ) {
 		$PageTokenId = $_GET['PageToken'];
-		if ( isset($_GET['add']) ) { // updating Security Groups add a page token
+		if( isset($_GET['add']) ) { // updating Security Groups add a page token
 			$SQL = "INSERT INTO securitygroups (secroleid,
 											tokenid)
 									VALUES ('".$SelectedRole."',
@@ -70,7 +70,7 @@ if (isset($_POST['submit']) or isset($_GET['remove']) or isset($_GET['add']) ) {
 		} elseif ( isset($_GET['remove']) ) { // updating Security Groups remove a page token
 			$SQL = "DELETE FROM securitygroups
 					WHERE secroleid = '".$SelectedRole."'
-					and tokenid = '".$PageTokenId . "'";
+					AND tokenid = '".$PageTokenId . "'";
 			$ErrMsg = __('The removal of this page-group access failed because');
 			$ResMsg = __('This page-group access was removed.');
 		}
@@ -79,25 +79,25 @@ if (isset($_POST['submit']) or isset($_GET['remove']) or isset($_GET['add']) ) {
 		unset($_GET['PageToken']);
 	}
 	// Need to exec the query
-	if (isset($SQL) and $InputError != 1 ) {
+	if (isset($SQL) AND $InputError != 1 ) {
 		$Result = DB_query($SQL, $ErrMsg);
-		if ( $Result ) {
-	prnMsg( $ResMsg,'success');
-}
+		if( $Result ) {
+			prnMsg( $ResMsg,'success');
+		}
 	}
 } elseif (isset($_GET['delete'])) {
 	//the Security heading wants to be deleted but some checks need to be performed fist
-	// PREVENT DELETES if DEPENDENT RECORDS IN 'www_users'
-	$SQL =  "SELECT COUNT(*) FROM www_users WHERE fullaccess = '" . $_GET['SelectedRole'] . "'";
+	// PREVENT DELETES IF DEPENDENT RECORDS IN 'www_users'
+	$SQL= "SELECT COUNT(*) FROM www_users WHERE fullaccess='" . $_GET['SelectedRole'] . "'";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_row($Result);
 	if ($MyRow[0]>0) {
-	prnMsg( __('Cannot delete this role because user accounts are setup using it'),'warn');
+		prnMsg( __('Cannot delete this role because user accounts are setup using it'),'warn');
 		echo '<br />' . __('There are') . ' ' . $MyRow[0] . ' ' . __('user accounts that have this security role setting') . '</font>';
-} else {
-		$SQL = "DELETE FROM securitygroups WHERE secroleid = '" . $_GET['SelectedRole'] . "'";
+	} else {
+		$SQL="DELETE FROM securitygroups WHERE secroleid='" . $_GET['SelectedRole'] . "'";
 		$Result = DB_query($SQL);
-		$SQL = "DELETE FROM securityroles WHERE secroleid = '" . $_GET['SelectedRole'] . "'";
+		$SQL="DELETE FROM securityroles WHERE secroleid='" . $_GET['SelectedRole'] . "'";
 		$Result = DB_query($SQL);
 		prnMsg( $_GET['SecRoleName'] . ' ' . __('security role has been deleted') . '!','success');
 
@@ -123,7 +123,7 @@ if (!isset($SelectedRole)) {
 			<th>&nbsp;</th>
 		</tr>';
 
-	while ($MyRow = DB_fetch_array($Result)) {
+	while($MyRow = DB_fetch_array($Result)) {
 
 		/*The SecurityHeadings array is defined in config.php */
 
@@ -133,7 +133,7 @@ if (!isset($SelectedRole)) {
 				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedRole=', $MyRow['secroleid'], '&amp;delete=1&amp;SecRoleName=', urlencode($MyRow['secrolename']), '" onclick="return confirm(\'' . __('Are you sure you wish to delete this role?') . '\');">' . __('Delete') . '</a></td>
 			</tr>';
 
-	} //END while LIST LOOP
+	} //END WHILE LIST LOOP
 	echo '</table>';
 } //end of ifs and buts!
 
@@ -148,7 +148,7 @@ if (isset($SelectedRole)) {
 	$SQL = "SELECT secroleid,
 			secrolename
 		FROM securityroles
-		WHERE secroleid = '" . $SelectedRole . "'";
+		WHERE secroleid='" . $SelectedRole . "'";
 	$Result = DB_query($SQL);
 	if ( DB_num_rows($Result) == 0 ) {
 		prnMsg( __('The selected role is no longer available.'),'warn');
@@ -158,9 +158,9 @@ if (isset($SelectedRole)) {
 		$_POST['SecRoleName'] = $MyRow['secrolename'];
 	}
 }
-echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-if ( isset($_POST['SelectedRole'])) {
+if( isset($_POST['SelectedRole'])) {
 	echo '<input type="hidden" name="SelectedRole" value="' . $_POST['SelectedRole'] . '" />';
 }
 echo '<fieldset>';
@@ -171,8 +171,8 @@ if (!isset($_POST['SecRoleName'])) {
 	echo '<legend>', __('Amend Role'), '</legend>';
 }
 echo '<field>
-		<label for = "SecRoleName">' . __('Role') . ':</label>
-		<input type="text" name="SecRoleName" pattern = ".{4,}" size = "40" maxlength = "40" value="' . $_POST['SecRoleName'] . '" required = "true" title="" />
+		<label for="SecRoleName">' . __('Role') . ':</label>
+		<input type="text" name="SecRoleName" pattern=".{4,}" size="40" maxlength="40" value="' . $_POST['SecRoleName'] . '" required="true" title="" />
 		<fieldhelp>'.__('The role description entered must be at least 4 characters long').'</fieldhelp>
 	</field>';
 echo '</fieldset>
@@ -185,15 +185,15 @@ if (isset($SelectedRole)) {
 	$SQL = "SELECT tokenid, tokenname
 			FROM securitytokens";
 
-	$SQLUsed = "SELECT tokenid FROM securitygroups WHERE secroleid = '". $SelectedRole . "'";
+	$SQLUsed = "SELECT tokenid FROM securitygroups WHERE secroleid='". $SelectedRole . "'";
 
 	$Result = DB_query($SQL);
 
 	/*Make an array of the used tokens */
 	$UsedResult = DB_query($SQLUsed);
 	$TokensUsed = array();
-	$i = 0;
-	while ($MyRow = DB_fetch_row($UsedResult)){
+	$i=0;
+	while ($MyRow=DB_fetch_row($UsedResult)){
 		$TokensUsed[$i] =$MyRow[0];
 		$i++;
 	}
@@ -206,7 +206,7 @@ if (isset($SelectedRole)) {
 	}
 	echo '</tr>';
 
-	while ($AvailRow = DB_fetch_array($Result)) {
+	while($AvailRow = DB_fetch_array($Result)) {
 
 		if (in_array($AvailRow['tokenid'],$TokensUsed)){
 			printf('<tr class="striped_row">

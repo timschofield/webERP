@@ -7,22 +7,21 @@ include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.php');
 
-echo '<p class = "page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-	'/images/maintenance.png" title = "',// Icon image.
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/maintenance.png" title="',// Icon image.
 	$Title, '" /> ',// Icon title.
 	$Title, '</p>';// Page title.
 
-if (isset($_POST['ProcessCopyAuthority'])) {
+if(isset($_POST['ProcessCopyAuthority'])) {
 
 	$InputError = 0;
 
-	if ($_POST['FromUserID'] == $_POST['ToUserID']) {
-	prnMsg(__('User FROM must be different from user TO'), 'error');
+	if($_POST['FromUserID'] == $_POST['ToUserID']) {
+		prnMsg(__('User FROM must be different from user TO'), 'error');
 		$InputError = 1;
-}
+	}
 
-	if ($InputError == 0) {
-	// no input errors
+	if($InputError == 0) {// no input errors
 		DB_Txn_Begin();
 
 		$SQL = "DELETE FROM locationusers WHERE UPPER(userid) = UPPER('" . $_POST['ToUserID'] . "')";
@@ -40,19 +39,20 @@ if (isset($_POST['ProcessCopyAuthority'])) {
 		prnMsg(__('Copied the authority to view / update the Locations from user') . ' ' . $_POST['FromUserID'] . ' ' . __('to user') . ' ' . $_POST['ToUserID'], 'success');
 
 		DB_Txn_Commit();
-}//only do the stuff above if  $InputError == 0
+
+	}//only do the stuff above if  $InputError==0
 }
 
-echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post">';
-echo '<div class = "centre">';
-echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
+echo '<div class="centre">';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<fieldset>
 		<legend>' . __('Copy Location Authority') . '</legend>';
 
 echo '<field>';
 echo '<label>' . __('Select User to copy the Authority FROM') . ':</label>';
-echo '<select name = "FromUserID">';
+echo '<select name="FromUserID">';
 
 if ($_SESSION['AccessLevel'] == 8) {
 	// if system admin can access to anyone.
@@ -69,9 +69,9 @@ if ($_SESSION['AccessLevel'] == 8) {
 						ORDER BY userid");
 }
 
-echo '<option selected value = "">' . __('Not Yet Selected') . '</option>';
+echo '<option selected value="">' . __('Not Yet Selected') . '</option>';
 while ($MyRow = DB_fetch_array($Result)) {
-	echo '<option value = "';
+	echo '<option value="';
 	echo $MyRow['userid'] . '">' . $MyRow['userid'] . ' - ' . $MyRow['realname'] . '</option>';
 } //end while loop
 echo '</select>';
@@ -79,7 +79,7 @@ echo '</field>';
 
 echo '<field>';
 echo '<label>' . __('Select User to copy the Authority TO') . ':</label>';
-echo '<select name = "ToUserID">';
+echo '<select name="ToUserID">';
 
 if ($_SESSION['AccessLevel'] == 8) {
 	// if system admin can access to anyone.
@@ -96,9 +96,9 @@ if ($_SESSION['AccessLevel'] == 8) {
 						ORDER BY userid");
 }
 
-echo '<option selected value = "">' . __('Not Yet Selected') . '</option>';
+echo '<option selected value="">' . __('Not Yet Selected') . '</option>';
 while ($MyRow = DB_fetch_array($Result)) {
-	echo '<option value = "';
+	echo '<option value="';
 	echo $MyRow['userid'] . '">' . $MyRow['userid'] . ' - ' . $MyRow['realname'] . '</option>';
 } //end while loop
 echo '</select>';
@@ -106,7 +106,7 @@ echo '</field>';
 
 echo '</fieldset>';
 
-echo '<div class = "centre"><input type = "submit" name = "ProcessCopyAuthority" value = "' . __('Process Copy of Authority') . '" />
+echo '<div class="centre"><input type="submit" name="ProcessCopyAuthority" value="' . __('Process Copy of Authority') . '" />
 	</div>
 	</form>';
 

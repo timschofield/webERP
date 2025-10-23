@@ -7,16 +7,16 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Database Upgrade');
 
 echo "<!DOCTYPE html>\n";
-echo '<html lang = "' . str_replace('_', '-', substr($Language, 0, 5)) . '">
+echo '<html lang="' . str_replace('_', '-', substr($Language, 0, 5)) . '">
 		<head>
 			<title>', $Title, '</title>
-			<meta http-equiv = "Content-Type" content = "text/html; charset = utf-8" />
-			<meta name="viewport" content = "width = device-width, initial-scale = 1.0">
-			<link rel = "icon" href = "' . $RootPath. '/favicon.ico" type = "image/x-icon" />
-			<script async src = "' . $RootPath. '/javascripts/DBUpgrade.js"></script>';
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<link rel="icon" href="' . $RootPath. '/favicon.ico" type="image/x-icon" />
+			<script async src="' . $RootPath. '/javascripts/DBUpgrade.js"></script>';
 
 echo '<title>', $Title, '</title>';
-echo '<link rel = "stylesheet" href = "' . $RootPath . '/css/dbupgrade.css" type = "text/css" />';
+echo '<link rel="stylesheet" href="' . $RootPath . '/css/dbupgrade.css" type="text/css" />';
 
 //ob_start(); /* what is this for? */
 
@@ -50,7 +50,7 @@ function executeSQL($SQL, $TrapErrors = false) {
 function updateDBNo($NewNumber, $Description = '') {
 	global $SQLFile;
 	if (!isset($SQLFile)) {
-		$SQL = "UPDATE config SET confvalue = '" . $NewNumber . "' WHERE confname = 'DBUpdateNumber'";
+		$SQL = "UPDATE config SET confvalue='" . $NewNumber . "' WHERE confname='DBUpdateNumber'";
 		executeSQL($SQL);
 		$_SESSION['DBUpdateNumber'] = $NewNumber;
 	}
@@ -63,8 +63,8 @@ echo '<div class="page_title_text">
 </div>';
 
 if (!isset($_POST['continue'])) {
-	echo '<form method = "post" action = "' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
-	echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<div class="page_help_text">' . __('You have the following database updates which are required.') . '<br />' . __('Please ensure that you have taken a backup of your current database before continuing.') . '</div><br />';
 	echo '<table>
@@ -76,7 +76,7 @@ if (!isset($_POST['continue'])) {
 	$StartingUpdate = $_SESSION['DBUpdateNumber'] + 1;
 	$EndingUpdate = $_SESSION['DBVersion'];
 	$x = 0;
-	for ($UpdateNumber = $StartingUpdate; $UpdateNumber <= $EndingUpdate; $UpdateNumber++) {
+	for ($UpdateNumber = $StartingUpdate;$UpdateNumber <= $EndingUpdate;$UpdateNumber++) {
 		$File = 'sql/updates/' . $UpdateNumber . '.php';
 		if (file_exists($File)) {
 			$Lines = file($File, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
@@ -97,7 +97,7 @@ if (!isset($_POST['continue'])) {
 				</tr>';
 			}
 			echo '<tr>
-				<td class="collapsed_row" id="collapsed_row', $x, '" colspan = "3">';
+				<td class="collapsed_row" id="collapsed_row', $x, '" colspan="3">';
 			foreach ($Lines as $Line) {
 				if ($Line != '?>' and substr($Line, 0, 8) != 'UpdateDB' and $Line != '<?php') {
 					echo $Line, '<br />';
@@ -112,7 +112,7 @@ if (!isset($_POST['continue'])) {
 	echo '</table>';
 
 	echo '<div class="centre">
-		<button type = "submit" name="continue">' . __('Continue With Updates') . '</button>
+		<button type="submit" name="continue">' . __('Continue With Updates') . '</button>
 	</div>';
 	echo '</form></div>';
 } else {
@@ -123,12 +123,12 @@ if (!isset($_POST['continue'])) {
 		'Successes' => 0,
 		'Warnings' => 0,
 	);
-	for ($UpdateNumber = $StartingUpdate;  $UpdateNumber <= $EndingUpdate;  $UpdateNumber++) {
+	for ($UpdateNumber = $StartingUpdate; $UpdateNumber <= $EndingUpdate; $UpdateNumber++) {
 		if (file_exists('sql/updates/' . $UpdateNumber . '.php')) {
-			$SQL = "SET FOREIGN_KEY_CHECKS = 0";
+			$SQL = "SET FOREIGN_KEY_CHECKS=0";
 			$Result = DB_query($SQL);
 			include('sql/updates/' . $UpdateNumber . '.php');
-			$SQL = "SET FOREIGN_KEY_CHECKS = 1";
+			$SQL = "SET FOREIGN_KEY_CHECKS=1";
 			$Result = DB_query($SQL);
 
 			/** @todo can we move here the line `UpdateDBNo(basename(__FILE__, '.php')`, and avoid having it in
@@ -137,7 +137,7 @@ if (!isset($_POST['continue'])) {
 	}
 	echo '<table>
 		<tr>
-			<th colspan = "4" class="header"><b>', __('Database Updates Have Been Run'), '</b></th>
+			<th colspan="4" class="header"><b>', __('Database Updates Have Been Run'), '</b></th>
 		</tr>
 		<tr>
 			<td class="fail_line">', $_SESSION['Updates']['Errors'], ' ', __('updates have errors in them'), '</td>
@@ -149,10 +149,10 @@ if (!isset($_POST['continue'])) {
 			<td class="success_line">', $_SESSION['Updates']['Successes'], ' ', __('updates have succeeded'), '</td>
 		</tr>';
 	if ($_SESSION['Updates']['Errors'] > 0) {
-	$SizeOfErrorMessages = sizeOf($_SESSION['Updates']['Messages']);
-		for ($i = 0; $i < $SizeOfErrorMessages; $i++) {
+		$SizeOfErrorMessages = sizeOf($_SESSION['Updates']['Messages']);
+		for ($i = 0;$i < $SizeOfErrorMessages;$i++) {
 			echo '<tr><td>' . $_SESSION['Updates']['Messages'][$i] . '</td></tr>';
-}
+		}
 	}
 	echo '</table><br />';
 

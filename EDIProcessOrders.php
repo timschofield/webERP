@@ -86,10 +86,10 @@ Order segements:
 
 $SQL = "SELECT id, segtag, maxoccur, seggroup FROM edi_orders_segs";
 $OrderSeg = DB_query($SQL);
-$i = 0;
+$i=0;
 $Seg = array();
 
-while ($SegRow = DB_fetch_array($OrderSeg)){
+while ($SegRow=DB_fetch_array($OrderSeg)){
 	$Seg[$i] = array('SegTag'=>$SegRow['segtag'], 'MaxOccur'=>$SegRow['maxoccur'], 'SegGroup'=>$SegRow['seggroup']);
 	$i++;
 }
@@ -113,13 +113,13 @@ $DirHandle = opendir($ediordersdir);
 //error_log("EDI orders directory error", 0);
 //}
 
-while (false !== ($OrderFile = readdir($DirHandle))) { /*there are files in the incoming orders dir */
+while (false !== ($OrderFile=readdir($DirHandle))) { /*there are files in the incoming orders dir */
 
 	$TryNextFile = false;
 
     if ($OrderFile == "." || $OrderFile == "..") {
-	continue;
-}
+		continue;
+	}
 
 //	  error_log("EDI orders file " . $OrderFile , 0);
 
@@ -134,64 +134,64 @@ while (false !== ($OrderFile = readdir($DirHandle))) { /*there are files in the 
 
 	$SegID = 0;
 	$SegCounter =0;
-	$SegTag = '';
+	$SegTag='';
 	$LastSeg = 0;
 	$FirstSegInGroup = 0;
 	$EmailText =''; /*Text of email to send to customer service person */
 	$CreateOrder = true; /*Assume that we are to create a sales order in the system for the message read */
     $LinCount = 0; // LIN segments
-    $ErrorCount = 0;
+    $ErrorCount=0;
 	$Order = new Cart;
 
-	while ($LineText = fgets($fp) and $TryNextFile != true){ /* get each line of the order file */
+	while ($LineText = fgets($fp) AND $TryNextFile != true){ /* get each line of the order file */
 
 		$LineText = StripTrailingComma($LineText);
 		echo '<br />' . $LineText;
 
 		if ($SegTag != mb_substr($LineText,0,3)){
-			$SegCounter = 1;
+			$SegCounter=1;
 			$SegTag = mb_substr($LineText,0,3);
 		} else {
 			$SegCounter++;
-			if ($SegCounter > $Seg[$SegID]['MaxOccur']) {
-	$EmailText = $EmailText . "\n" . __('The EANCOM Standard only allows for') . ' ' . $Seg[$SegID]['MaxOccur'] . ' ' .__('occurrences of the segment') . ' ' . $Seg[$SegID]['SegTag'] . ' ' . __('this is the') . ' ' . $SegCounter . ' ' . __('occurrence') .  '<br />' . __('The segment line read as follows') . ':<br />' . $LineText;
-}
+			if ($SegCounter > $Seg[$SegID]['MaxOccur']){
+				$EmailText = $EmailText . "\n" . __('The EANCOM Standard only allows for') . ' ' . $Seg[$SegID]['MaxOccur'] . ' ' .__('occurrences of the segment') . ' ' . $Seg[$SegID]['SegTag'] . ' ' . __('this is the') . ' ' . $SegCounter . ' ' . __('occurrence') .  '<br />' . __('The segment line read as follows') . ':<br />' . $LineText;
+			}
 		}
 
 /* Go through segments in the order message array in sequence looking for matching SegTags
 
 */
-		while ($SegTag != $Seg[$SegID]['SegTag'] and $SegID < $TotalNoOfSegments) {
+		while ($SegTag != $Seg[$SegID]['SegTag'] AND $SegID < $TotalNoOfSegments) {
 
 			$SegID++; /*Move to the next Seg in the order message */
 			$LastSeg = $SegID; /*Remember the last segid moved to */
 
 			echo "\n" . __('Segment Group') . ' = ' . $Seg[$SegID]['SegGroup'] . ' ' . __('Max Occurrences of Segment') . ' = ' . $Seg[$SegID]['MaxOccur'] . ' ' . __('No occurrences so far') . ' = ' . $SegCounter;
 
-			if ($Seg[$SegID]['SegGroup'] != $SegGroup and $Seg[$SegID]['MaxOccur'] > $SegCounter) {
-	/*moved to a new seg group  but could be more segment groups*/
+			if ($Seg[$SegID]['SegGroup'] != $SegGroup AND $Seg[$SegID]['MaxOccur'] > $SegCounter){ /*moved to a new seg group  but could be more segment groups*/
 				$SegID = $FirstSegInGroup; /*Try going back to first seg in the group */
 				if ($SegTag != $Seg[$SegID]['SegTag']){ /*still no match - must be into new seg group */
 					$SegID = $LastSeg;
 					$FirstSegInGroup = $SegID;
-} else {
+				} else {
 					$SegGroup = $Seg[$SegID]['SegGroup'];
 				}
 			}
 		}
 
-		if ($SegTag != $Seg[$SegID]['SegTag']) {
-	$EmailText .= "\n" . __('ERROR') . ': ' . __('Unable to identify segment tag') . ' ' . $SegTag . ' ' . __('from the message line') . '<br />' . $LineText . '<br /><font color = RED><b>' . __('This message processing has been aborted and separate advice will be required from the customer to obtain details of the order') . '<b></font>';
+		if ($SegTag != $Seg[$SegID]['SegTag']){
+
+			$EmailText .= "\n" . __('ERROR') . ': ' . __('Unable to identify segment tag') . ' ' . $SegTag . ' ' . __('from the message line') . '<br />' . $LineText . '<br /><font color=RED><b>' . __('This message processing has been aborted and separate advice will be required from the customer to obtain details of the order') . '<b></font>';
 
 			$TryNextFile = true;
-}
+		}
 
 		echo '<br />' . __('The segment tag') . ' ' . $SegTag . ' ' . __('is being processed');
 
 		switch ($SegTag){
 			case 'UNB':
 				$UNB = explode ('+',mb_substr($LineText,4));
-				if (mb_substr($UNB[6],0,6) != 'ORDERS'){
+				if (mb_substr($UNB[6],0,6)!='ORDERS'){
 					$EmailText .= "\n" . __('This message is not an edi order');
 					$TryNextFile = true;
 				}
@@ -205,7 +205,7 @@ while (false !== ($OrderFile = readdir($DirHandle))) { /*there are files in the 
 //				echo '<br />' . $EdiMsgVer;
 				$Order->Comments .= __('Customer EDI Ref') . ': ' . $UNH_elements[0];
 				$EmailText .= "\n" . __('EDI Message Ref') . ': ' . $UNH_elements[0];
-				if (mb_substr($UNH_elements[1],0,6) != 'ORDERS'){
+				if (mb_substr($UNH_elements[1],0,6)!='ORDERS'){
 					$EmailText .= "\n" . __('This message is not an EDI order');
 					$TryNextFile = true;
 				}
@@ -345,7 +345,7 @@ while (false !== ($OrderFile = readdir($DirHandle))) { /*there are files in the 
 						$EmailText .= "\n" . __('Promotion start date') . ' ' . $LocalFormatDate;
 						break;
 					case '37': /*ship not before */
-						$EmailText .= "\n" . __('Do not ship before') . ' ' . $LocalFormatDate;
+						$EmailText .= "\n" . __('Do NOT ship before') . ' ' . $LocalFormatDate;
 						break;
 					case '38': /*ship not later than */
 					case '61': /*Cancel if not delivered by this date */
@@ -363,9 +363,9 @@ while (false !== ($OrderFile = readdir($DirHandle))) { /*there are files in the 
 						use the RFF seg to determine if the date refers to the
 						order */
 						$EmailText .= "\n" . __('dated') . ' ' . $LocalFormatDate;
-						if ($SegGroup == 1) {
-	$Order->Comments .= ' ' . __('dated') . ': ' . $LocalFormatDate;
-}
+						if ($SegGroup == 1){
+							$Order->Comments .= ' ' . __('dated') . ': ' . $LocalFormatDate;
+						}
 						break;
 					case '200': /*Pickup collection date/time */
 						$EmailText .= "\n\n" . __('Pickup date') . ':  ' . $LocalFormatDate;
@@ -394,23 +394,23 @@ while (false !== ($OrderFile = readdir($DirHandle))) { /*there are files in the 
 			case 'PAI':
 				/*explode into an array all items delimited by the : - only after the + */
 				$PAI_C534 = explode(':',mb_substr($LineText,4));
-				if ($PAI_C534[0]=='1') {
-	$EmailText .= "\n" . __('Payment will be effected by a direct payment for this order');
-} elseif ($PAI_C534[0]=='OA') {
-	$EmailText .= "\n" . __('This order to be settled in accordance with the normal account trading terms');
-}
-				if ($PAI_C534[1]=='20') {
-	$EmailText .= "\n" . __('The goods on this order') . ' - ' . __('once delivered') . ' - ' . __('will be held as security for the payment');
-}
-				if ($PAI_C534[2]=='42') {
-	$EmailText .= "\n" . __('Payment will be effected to bank account');
-} elseif ($PAI_C534[2]=='60') {
-	$EmailText .= "\n" . __('Payment will be effected by promissory note');
-} elseif ($PAI_C534[2]=='40') {
-	$EmailText .= "\n" . __('Payment will be effected by a bill drawn by the creditor on the debtor');
-} elseif ($PAI_C534[2]=='10E') {
-	$EmailText .= "\n" . __('Payment terms are defined in the Commercial Account Summary Section');
-}
+				if ($PAI_C534[0]=='1'){
+					$EmailText .= "\n" . __('Payment will be effected by a direct payment for this order');
+				} elseif($PAI_C534[0]=='OA'){
+					$EmailText .= "\n" . __('This order to be settled in accordance with the normal account trading terms');
+				}
+				if ($PAI_C534[1]=='20'){
+					$EmailText .= "\n" . __('The goods on this order') . ' - ' . __('once delivered') . ' - ' . __('will be held as security for the payment');
+				}
+				if ($PAI_C534[2]=='42'){
+					$EmailText .= "\n" . __('Payment will be effected to bank account');
+				} elseif ($PAI_C534[2]=='60'){
+					$EmailText .= "\n" . __('Payment will be effected by promissory note');
+				} elseif ($PAI_C534[2]=='40'){
+					$EmailText .= "\n" . __('Payment will be effected by a bill drawn by the creditor on the debtor');
+				} elseif ($PAI_C534[2]=='10E'){
+					$EmailText .= "\n" . __('Payment terms are defined in the Commercial Account Summary Section');
+				}
 				if (isset($PAI_C534[5])){
 					if ($PAI_C534[5]=='2')
 					$EmailText .= "\n" . __('Payment will be posted through the ordinary mail system');
@@ -450,7 +450,7 @@ while (false !== ($OrderFile = readdir($DirHandle))) { /*there are files in the 
 				/*agreed coded text is not catered for ... yet
 				only free form text */
 				if (mb_strlen($FTX[3])>5){
-					$FTX_C108 = explode(':',$FTX[3]);
+					$FTX_C108=explode(':',$FTX[3]);
 					$Order->Comments .= $FTX_C108[0] . " " . $FTX_C108[1] . ' ' . $FTX_C108[2] . ' ' . $FTX_C108[3] . ' ' . $FTX_C108[4];
 					$EmailText .= "\n" . $FTX_C108[0] . ' ' . $FTX_C108[1] . ' ' . $FTX_C108[2] . ' ' . $FTX_C108[3] . ' ' . $FTX_C108[4] . ' ';
 				}
@@ -501,9 +501,9 @@ while (false !== ($OrderFile = readdir($DirHandle))) { /*there are files in the 
 						$MsgText =  "\n" . __('VAT registration number') . ' # ' . $RFF[1];
 						break;
 				}
-				if ($SegGroup == 1) {
-	$Order->Comments .= $MsgText;
-}
+				if ($SegGroup == 1){
+					$Order->Comments .= $MsgText;
+				}
 				$EmailText .= $MsgText;
 				break;
 			case 'NAD':
@@ -515,14 +515,14 @@ while (false !== ($OrderFile = readdir($DirHandle))) { /*there are files in the 
 				switch ($NAD[0]){
 					case 'IV': /* This Name and address detail is that of the party to be invoiced */
 						/*Look up the EAN Code given $NAD[1] for the buyer */
-						if ($NAD_C082[2] ==9) {
-	/*if NAD_C082[2] must = 9 then NAD_C082[0] is the EAN Intnat Article Numbering Assocn code of the customer - look up the customer by EDIReference*/
-							$InvoiceeResult = DB_query("SELECT debtorno FROM debtorsmaster WHERE edireference = '" . $NAD_C082[0] . "' and ediorders = 1");
-							if (DB_num_rows($InvoiceeResult) != 1){
+						if ($NAD_C082[2] ==9){
+						/*if NAD_C082[2] must = 9 then NAD_C082[0] is the EAN Intnat Article Numbering Assocn code of the customer - look up the customer by EDIReference*/
+							$InvoiceeResult = DB_query("SELECT debtorno FROM debtorsmaster WHERE edireference='" . $NAD_C082[0] . "' AND ediorders=1");
+							if (DB_num_rows($InvoiceeResult)!=1){
 								$EmailText .= "\n" . __('The Buyer reference was specified as an EAN International Article Numbering Association code') . '. ' . __('Unfortunately the field EDIReference of any of the customers currently set up to receive EDI orders does not match with the code') . ' ' . $NAD_C082[0] . ' ' . __('used in this message') . '. ' . __('So that is the end of the road for this message');
 								$TryNextFile = true; /* Look for other EDI msgs */
 								$CreateOrder = false; /*Dont create order in system */
-} else {
+							} else {
 								$CustRow = DB_fetch_array($InvoiceeResult);
 								$Order->DebtorNo = $CustRow['debtorno'];
 							}
@@ -535,12 +535,11 @@ while (false !== ($OrderFile = readdir($DirHandle))) { /*there are files in the 
 					case 'SU':
 						/*Supplier party details. This should be our EAN IANA number if not the message is not for us!! */
 //					  error_log("SU/EDIReference " . $_SESSION['EDIReference'] , 0);
-						if ($NAD_C082[0]!= $_SESSION['EDIReference']) {
-	/* $_SESSION['EDIReference'] is set in config.php as our EDIReference it should be our EAN International Article Numbering Association code */
+						if ($NAD_C082[0]!= $_SESSION['EDIReference']){
+							/* $_SESSION['EDIReference'] is set in config.php as our EDIReference it should be our EAN International Article Numbering Association code */
 							$EmailText .= "\n" . __('The supplier reference was specified as an EAN International Article Numbering Association code') . '. ' . __('Unfortunately the company EDIReference') . ' - ' . $_SESSION['EDIReference']  . ' ' . __('does not match with the code') . ' ' . $NAD_C082[0] . ' ' . __('used in this message') . '. ' . __('This implies that the EDI message is for some other supplier') . '. ' . __('No further processing will be done');
 							$TryNextFile = true; /* Look for other EDI msgs */
-							$CreateOrder = false; /* Don't create order in system */
-}
+							$CreateOrder = false; /* Don't create order in system */						}
 						break;
 					case 'DP':
 						/*Delivery Party - get the address and name etc */
@@ -571,8 +570,8 @@ while (false !== ($OrderFile = readdir($DirHandle))) { /*there are files in the 
 														defaultlocation,
 														phoneno,
 														email
-												FROM custbranch INNER JOIN debtorsmaster ON custbranch.debtorno = custbranch.debtorno WHERE custbranchcode = '" . $NAD_C082[0] . "' and custbranch.debtorno = '" . $Order->DebtorNo . "' and debtorsmaster.ediorders = 1");
-						if (DB_num_rows($BranchResult) != 1){
+												FROM custbranch INNER JOIN debtorsmaster ON custbranch.debtorno = custbranch.debtorno WHERE custbranchcode='" . $NAD_C082[0] . "' AND custbranch.debtorno='" . $Order->DebtorNo . "' AND debtorsmaster.ediorders=1");
+						if (DB_num_rows($BranchResult)!=1){
 							$EmailText .= "\n" . __('The Store number was specified as') . ' ' . $NAD_C082[0] . ' ' . __('Unfortunately there are either no branches of customer code') . ' ' . $Order->DebtorNo . ' ' .__('or several that match this store number') . '. ' . __('This order could not be processed further');
 							$TryNextFile = true; /* Look for other EDI msgs */
 							$CreateOrder = false; /*Dont create order in system */
@@ -613,9 +612,9 @@ while (false !== ($OrderFile = readdir($DirHandle))) { /*there are files in the 
 													 custbranch.email,
 													 custbranch.defaultlocation,
 													 custbranch.defaultshipvia
-												FROM debtorsmaster INNER JOIN custbranch ON debtorsmaster.debtorno = custbranch.debtorno WHERE debtorsmaster.edireference = '" . $NAD_C082[0] . "' and debtorsmaster.ediorders = 1");
+												FROM debtorsmaster INNER JOIN custbranch ON debtorsmaster.debtorno = custbranch.debtorno WHERE debtorsmaster.edireference='" . $NAD_C082[0] . "' AND debtorsmaster.ediorders=1");
 
-					 if (DB_num_rows($ByResult) != 1){
+					 if (DB_num_rows($ByResult)!=1){
 							$EmailText .= "\n" . __('The buyer ediref code was specified as') . ' ' . $NAD_C082[0] . ' ' . __('Unfortunately there are either no branches of customer code') . ' ' . __('or several that match this ediref code. This order could not be processed further');
 							$TryNextFile = true; /* Look for other EDI msgs */
 							$CreateOrder = false; /* Dont create order in system */
@@ -713,11 +712,11 @@ while (false !== ($OrderFile = readdir($DirHandle))) { /*there are files in the 
 				//echo '<br />' . 'Line# ' . $Order->ItemsOrdered;
 
 					if ($LinCount > 0) {
-	$UpdateDB = 'NO';
+						$UpdateDB='NO';
 						// add prev processed line to cart;
 				       // echo '<br />' . 'LinCount ' . $LinCount;
 						AddLinToChart ($Order,$StockID,$Qty,$Descr,$LongDescr,$Price,$Disc,$UOM,$Volume,$Weight);
-}
+					}
 
 					$LIN = explode('+',mb_substr($LineText,4));
 					$LIN2 = explode(':', $LIN[2]);
@@ -725,33 +724,33 @@ while (false !== ($OrderFile = readdir($DirHandle))) { /*there are files in the 
 					$LinCount++;
 					$Order->LineCounter = $LinCount;
 					// init order line data ffu....
-					$UpdateDB = 'NO';
-					$StockID = $LIN2[0];
-					$Descr = '';
-					$LongDescr = '';
-					$Qty = 0;
-					$Price = 1;
-					$Disc = 0;
-					$UOM = ''; // units
-					$Volume = 0;
-					$Weight = 0;
-					$QOHatLoc = 0;
-					$MBflag = 'B';
-					$ActDispatchDate = null;
-					$QtyInvoiced = 0;
-					$DiscCat = '';
-					$Controlled = 0;
-					$Serialised = 0;
-					$DecimalPlaces = 2;
-					$Narrative = '';
-					$TaxCategory = 0;
-					$ItemDue = '';
-					$POLine = '';
-					$StandardCost = 0;
-					$EOQ = 1;
-					$NextSerialNo = 0;
-					$ExRate = 1;
-					$identifier = 0;
+					$UpdateDB='NO';
+					$StockID=$LIN2[0];
+					$Descr='';
+					$LongDescr='';
+					$Qty=0;
+					$Price=1;
+					$Disc=0;
+					$UOM=''; // units
+					$Volume=0;
+					$Weight=0;
+					$QOHatLoc=0;
+					$MBflag='B';
+					$ActDispatchDate=NULL;
+					$QtyInvoiced=0;
+					$DiscCat='';
+					$Controlled=0;
+					$Serialised=0;
+					$DecimalPlaces=2;
+					$Narrative='';
+					$TaxCategory=0;
+					$ItemDue='';
+					$POLine='';
+					$StandardCost=0;
+					$EOQ=1;
+					$NextSerialNo=0;
+					$ExRate=1;
+					$identifier=0;
 					break;
 
 			case 'PIA':
@@ -759,7 +758,7 @@ while (false !== ($OrderFile = readdir($DirHandle))) { /*there are files in the 
 					$PIA2 = explode(':',$PIA[1]);
 					switch ($PIA[0]){
 						case '1': // additional item id
-//					        $Qty = $QTY2[1];
+//					        $Qty=$QTY2[1];
 					   		break;
 					}
 					$EmailText .= "\n" . __('Additional product id') . ': ' . $PIA2[0] ;
@@ -770,11 +769,11 @@ while (false !== ($OrderFile = readdir($DirHandle))) { /*there are files in the 
 					$IMD2 = explode(':',mb_substr($LineText,4));
 					switch ($IMD[1]){
 						case 'F': //
-					   //   $Qty = $QTY2[1];
+					   //   $Qty=$QTY2[1];
 					   break;
 					}
 
-					$Descr = $IMD2[3];
+					$Descr=$IMD2[3];
 					$EmailText .= "\n" . __('Item description') . ': ' . $IMD2[3] ;
 					break;
 
@@ -783,7 +782,7 @@ while (false !== ($OrderFile = readdir($DirHandle))) { /*there are files in the 
 					$QTY2 = explode(':',$QTY[0]);
 					switch ($QTY2[0]){
 						case '21': // ordered qty
-					      $Qty = $QTY2[1];
+					      $Qty=$QTY2[1];
 					   break;
 					}
 					$EmailText .= "\n" . __('Quantity') . ': ' . $QTY2[0] . '/'  . $QTY2[1] ;
@@ -862,11 +861,11 @@ while (false !== ($OrderFile = readdir($DirHandle))) { /*there are files in the 
 			// lin end
 			// add last lin into chart
 					if ($LinCount > 0) {
-	$UpdateDB = 'NO';
+						$UpdateDB='NO';
 						// add prev processed line to cart;
 				       // echo '<br />' . 'LinCount ' . $LinCount;
 						AddLinToChart ($Order,$StockID,$Qty,$Descr,$LongDescr,$Price,$Disc,$UOM,$Volume,$Weight);
-}
+					}
 
 					$EmailText .= "\n" . __('Section control/Order line count') . ': ' . $LinCount;
 					break;
@@ -885,7 +884,7 @@ while (false !== ($OrderFile = readdir($DirHandle))) { /*there are files in the 
           // message end
 			case 'UNT':
 			// end of msg  number of segments / message id
-				if ($ErrorCount > 0) {
+				IF ($ErrorCount > 0) {
 					$CreateOrder = false;
 				}
 /*
@@ -894,7 +893,7 @@ print_r($Order);
 echo '</pre>';
 */
 				if ($CreateOrder = true) {
-	//	UpdateOrder($Order);
+					//	UpdateOrder($Order);
 					DB_Txn_Begin();
 				//$Order->OrdDate = date("Y-m-d");
 					$OrderNo = GetNextTransNo(30); // next order number
@@ -902,10 +901,10 @@ echo '</pre>';
 					$OrderDate = FormatDateforSQL($Order->OrdDate);
 					if ($Order->OrderType == "") {
 						$Order->OrderType = $_SESSION['DefaultOrdertype'];
-}
+					}
 					if ($Order->SalesPerson == "") {
-	$Order->SalesPerson = $_SESSION['DefaultSalesperson'];
-}
+						$Order->SalesPerson = $_SESSION['DefaultSalesperson'];
+					}
 
 				//echo '<br />' . 'ordertype ' . $Order->OrderType . ' / ' . $_SESSION['DefaultOrdertype'];
 				//echo '<br />' . 'salesperon ' . $Order->SalesPerson . ' / ' . $_SESSION['DefaultSalesperson'];
@@ -966,7 +965,7 @@ echo '</pre>';
 						$ErrMsg = __('The order cannot be created because');
 						$InsertQryResult = DB_query($HeaderSQL, $ErrMsg);
 						// update salesorderdetails too here ..
-						$xi = 0;
+						$xi=0;
 						foreach ($Order->LineItems as $lineNumber => $linedetail) {
 							$xi++;
 							/*
@@ -984,8 +983,8 @@ echo '</pre>';
 							$discountpercent = $linedetail->Disc;
 							$itemdue = FormatDateForSQL($linedetail->ItemDue);
 							if ($linedetail->ItemDue == null) {
-	$itemdue = date("Y-m-d");
-}
+								$itemdue = date("Y-m-d");
+							}
 							//  echo "itemdue: " . $itemdue . "<br>";
 
 							$poline = $linedetail->POLine;
@@ -1030,18 +1029,18 @@ echo '</pre>';
 	if (mb_strlen($EmailText)>10){
 		/*Now send the email off to the appropriate person */
 
-		if ($TryNextFile == true) {
-	/*had to abort this message */
+		if ($TryNextFile==true){ /*had to abort this message */
 			/* send the email to the sysadmin  - get email address from users*/
 
-			$Result = DB_query("SELECT realname, email FROM www_users WHERE fullaccess = 7 and email <>''");
-			if (DB_num_rows($Result) == 0){ /*There are no sysadmins with email address specified */
+			$Result = DB_query("SELECT realname, email FROM www_users WHERE fullaccess=7 AND email <>''");
+			if (DB_num_rows($Result)==0){ /*There are no sysadmins with email address specified */
 
 				$Recipients = array("'phil' <phil@localhost>");
-} else { /*Make an array of the sysadmin recipients */
+
+			} else { /*Make an array of the sysadmin recipients */
 				$Recipients = array();
-				$i = 0;
-				while ($SysAdminsRow = DB_fetch_array($Result)){
+				$i=0;
+				while ($SysAdminsRow=DB_fetch_array($Result)){
 					$Recipients[$i] = "'" . $SysAdminsRow['realname'] . "' <" . $SysAdminsRow['email'] . ">";
 					$i++;
 				}
@@ -1097,7 +1096,7 @@ echo '</pre>';
 */
 }
 
-function UpdateOrder($Order) {
+function UpdateOrder($Order){
 //include('DeliveryDetails.php');
 /*
 echo '<pre>';

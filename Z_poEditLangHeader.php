@@ -30,7 +30,7 @@ if (!$fpIn) {
 	prnMsg(__('You do not have read access to the required files please contact your system administrator'),'error');
 } else {
 
-	for ($i = 1;  $i <= 17;  $i++) {
+	for ($i = 1; $i <= 17; $i++) {
 		/* message.po header is 17 lines long - this is easily broken */
 		$LanguageHeader[$i] = fgets($fpIn);
 	}
@@ -38,8 +38,8 @@ if (!$fpIn) {
 	if (isset($_POST['submit'])) {
 
 		echo '<br /><table><tr><td>';
-		echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-		echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		/* write the new header then the rest of the language file to a new file */
 
@@ -47,10 +47,10 @@ if (!$fpIn) {
 
 		$fpOut = fopen($PathToNewLanguage, 'w');
 		if (!$fpOut) {
-	prnMsg(__('You do not have write access to the required files please contact your system administrator'),'error');
+			prnMsg(__('You do not have write access to the required files please contact your system administrator'),'error');
 			fclose($fpIn);
-} else {
-			for ($i = 1;  $i <= 17;  $i++) {
+		} else {
+			for ($i = 1; $i <= 17; $i++) {
 				$Result = fputs($fpOut, stripslashes(html_entity_decode($_POST['Header_' . $i])) . "\n");
 			}
 
@@ -97,23 +97,23 @@ if (!$fpIn) {
 			prnMsg(__('Your existing translation file (messages.po) will be backed up as messages.po.old') . '<br /><br />' .
 				__('Make sure you know what you are doing BEFORE you edit the header'), 'info', __('PLEASE NOTE'));
 			echo '<br /></div>';
-			echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-			echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+			echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+			echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-			echo '<table><tr><th" colspan = "2" ALIGN = "center">' . __('Language File Header for') . ' "' . $_POST['language'] . '"</th></tr>';
-			echo '<tr><td colspan = "2"></td></tr>';
+			echo '<table><tr><th" colspan="2" ALIGN="center">' . __('Language File Header for') . ' "' . $_POST['language'] . '"</th></tr>';
+			echo '<tr><td colspan="2"></td></tr>';
 
-			for ($i = 1;  $i <= 17;  $i++) {
+			for ($i = 1; $i <= 17; $i++) {
 
 				echo '<tr>';
 				echo '<td>' . __('Header Line') . ' # ' . $i . '</td>';
-				echo '<td><input type = "text" size = "80" name = "Header_' . $i . '" value = "' . htmlspecialchars($LanguageHeader[$i]) . '" /></td>';
+				echo '<td><input type="text" size="80" name="Header_' . $i . '" value="' . htmlspecialchars($LanguageHeader[$i]) . '" /></td>';
 				echo '</tr>';
 			}
 
 			echo '</table>';
-			echo '<br /><div class="centre"><input type = "submit" name = "submit" value = "' . __('Modify') . '" />&nbsp;&nbsp;';
-			echo '<input type = "hidden" name = "language" value = "' . $_POST['language'] . '" /></div>';
+			echo '<br /><div class="centre"><input type="submit" name="submit" value="' . __('Modify') . '" />&nbsp;&nbsp;';
+			echo '<input type="hidden" name="language" value="' . $_POST['language'] . '" /></div>';
 			echo '</form>';
 		}
 	}
