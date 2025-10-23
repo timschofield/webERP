@@ -26,9 +26,9 @@ if (isset($_POST['submit'])) {
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
 
-	if (isset($SelectedManufacturer) and $InputError !=1) {
+	if (isset($SelectedManufacturer) AND $InputError !=1) {
 
-		if (isset($_FILES['BrandPicture']) and $_FILES['BrandPicture']['name'] !='') {
+		if (isset($_FILES['BrandPicture']) AND $_FILES['BrandPicture']['name'] !='') {
 
 			$Result	= $_FILES['BrandPicture']['error'];
 		 	$UploadTheFile = 'Yes'; //Assume all is well to start off with
@@ -43,31 +43,30 @@ if (isset($_POST['submit'])) {
 			} elseif ( $_FILES['BrandPicture']['size'] > ($_SESSION['MaxImageSize']*1024)) { //File Size Check
 				prnMsg(__('The file size is over the maximum allowed. The maximum size allowed in KB is') . ' ' . $_SESSION['MaxImageSize'],'warn');
 				$UploadTheFile ='No';
-			} elseif ( $_FILES['BrandPicture']['type'] == 'text/plain' ) {
-	//File Type Check
+			} elseif ( $_FILES['BrandPicture']['type'] == 'text/plain' ) {  //File Type Check
 				prnMsg( __('Only graphics files can be uploaded'),'warn');
 				 	$UploadTheFile ='No';
-}
+			}
 			foreach ($SupportedImgExt as $Ext) {
 				$File = $_SESSION['part_pics_dir'] . '/BRAND-' . $SelectedManufacturer . '.' . $Ext;
 				if (file_exists ($File) ) {
 					$Result = unlink($File);
-					if (!$Result) {
-	prnMsg(__('The existing image could not be removed'),'error');
+					if (!$Result){
+						prnMsg(__('The existing image could not be removed'),'error');
 						$UploadTheFile ='No';
-}
+					}
 				}
 			}
 
-			if ($UploadTheFile == 'Yes') {
-	$Result  =  move_uploaded_file($_FILES['BrandPicture']['tmp_name'], $FileName);
-				$Message = ($Result)?__('File url')  . '<a href = "' . $FileName .'">' .  $FileName . '</a>' : __('Something is wrong with uploading a file');
+			if ($UploadTheFile=='Yes'){
+				$Result  =  move_uploaded_file($_FILES['BrandPicture']['tmp_name'], $FileName);
+				$Message = ($Result)?__('File url')  . '<a href="' . $FileName .'">' .  $FileName . '</a>' : __('Something is wrong with uploading a file');
 				$_POST['ManufacturersImage'] = 'BRAND-' . $SelectedManufacturer;
-} else {
+			} else {
 				$_POST['ManufacturersImage'] = '';
 			}
 		}
-		if ( isset($_POST['ManufacturersImage'])){
+		if( isset($_POST['ManufacturersImage'])){
 			foreach ($SupportedImgExt as $Ext) {
 				$File = $_SESSION['part_pics_dir'] . '/BRAND-' . $SelectedManufacturer . '.' . $Ext;
 				if (file_exists ($File) ) {
@@ -85,17 +84,17 @@ if (isset($_POST['submit'])) {
 				if (file_exists ($File) ) {
 					@unlink($File);
 					$_POST['ManufacturersImage'] = '';
-					if (is_file($ImageFile)) {
+					if(is_file($ImageFile)) {
 						prnMsg(__('You do not have access to delete this item image file.'),'error');
 					}
 				}
 			}
 		}
 
-		$SQL = "UPDATE manufacturers SET manufacturers_name = '" . $_POST['ManufacturersName'] . "',
-									manufacturers_url = '" . $_POST['ManufacturersURL'] . "'";
+		$SQL = "UPDATE manufacturers SET manufacturers_name='" . $_POST['ManufacturersName'] . "',
+									manufacturers_url='" . $_POST['ManufacturersURL'] . "'";
 		if (isset($_POST['ManufacturersImage'])){
-			$SQL .= ", manufacturers_image = '" . $_POST['ManufacturersImage'] . "'";
+			$SQL .= ", manufacturers_image='" . $_POST['ManufacturersImage'] . "'";
 		}
 		$SQL .= " WHERE manufacturers_id = '" . $SelectedManufacturer . "'";
 
@@ -110,7 +109,8 @@ if (isset($_POST['submit'])) {
 		unset($SelectedManufacturer);
 
 	} elseif ($InputError !=1) {
-	/*SelectedManufacturer is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new Location form */
+
+		/*SelectedManufacturer is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new Location form */
 
 		$SQL = "INSERT INTO manufacturers (manufacturers_name,
 										manufacturers_url)
@@ -121,7 +121,7 @@ if (isset($_POST['submit'])) {
 		$Result = DB_query($SQL, $ErrMsg);
 		$LastInsertId = DB_Last_Insert_ID('manufacturers', 'manufacturers_id');
 
-		if (isset($_FILES['BrandPicture']) and $_FILES['BrandPicture']['name'] !='') {
+		if (isset($_FILES['BrandPicture']) AND $_FILES['BrandPicture']['name'] !='') {
 
 			$Result	= $_FILES['BrandPicture']['error'];
 		 	$UploadTheFile = 'Yes'; //Assume all is well to start off with
@@ -133,33 +133,32 @@ if (isset($_POST['submit'])) {
 			if (!in_array ($ImgExt, $SupportedImgExt)) {
 				prnMsg(__('Only ' . implode(", ", $SupportedImgExt) . ' files are supported - a file extension of ' . implode(", ", $SupportedImgExt) . ' is expected'),'warn');
 				$UploadTheFile ='No';
-} elseif ( $_FILES['BrandPicture']['size'] > ($_SESSION['MaxImageSize']*1024)) { //File Size Check
+			} elseif ( $_FILES['BrandPicture']['size'] > ($_SESSION['MaxImageSize']*1024)) { //File Size Check
 				prnMsg(__('The file size is over the maximum allowed. The maximum size allowed in KB is') . ' ' . $_SESSION['MaxImageSize'],'warn');
 				$UploadTheFile ='No';
-			} elseif ( $_FILES['BrandPicture']['type'] == 'text/plain' ) {
-	//File Type Check
+			} elseif ( $_FILES['BrandPicture']['type'] == 'text/plain' ) {  //File Type Check
 				prnMsg( __('Only graphics files can be uploaded'),'warn');
 				 	$UploadTheFile ='No';
-}
+			}
 			foreach ($SupportedImgExt as $Ext) {
 				$File = $_SESSION['part_pics_dir'] . '/BRAND-' . $LastInsertId . '.' . $Ext;
 				if (file_exists ($File) ) {
 					$Result = unlink($File);
-					if (!$Result) {
-	prnMsg(__('The existing image could not be removed'),'error');
+					if (!$Result){
+						prnMsg(__('The existing image could not be removed'),'error');
 						$UploadTheFile ='No';
-}
+					}
 				}
 			}
 
-			if ($UploadTheFile == 'Yes') {
-	$Result  =  move_uploaded_file($_FILES['BrandPicture']['tmp_name'], $FileName);
-				$Message = ($Result)?__('File url')  . '<a href = "' . $FileName .'">' .  $FileName . '</a>' : __('Something is wrong with uploading a file');
+			if ($UploadTheFile=='Yes'){
+				$Result  =  move_uploaded_file($_FILES['BrandPicture']['tmp_name'], $FileName);
+				$Message = ($Result)?__('File url')  . '<a href="' . $FileName .'">' .  $FileName . '</a>' : __('Something is wrong with uploading a file');
 				DB_query("UPDATE manufacturers
-					SET  manufacturers_image = '" . 'BRAND-' . $LastInsertId . "'
+					SET  manufacturers_image='" . 'BRAND-' . $LastInsertId . "'
 					WHERE manufacturers_id = '" . $LastInsertId . "'
 					");
-}
+			}
 		}
 
 		prnMsg( __('The new manufacturer record has been added'),'success');
@@ -175,23 +174,24 @@ if (isset($_POST['submit'])) {
 
 	$CancelDelete = false;
 
-// PREVENT DELETES if DEPENDENT RECORDS
-	$SQL =  "SELECT COUNT(*) FROM salescatprod WHERE manufacturers_id = '". $SelectedManufacturer . "'";
+// PREVENT DELETES IF DEPENDENT RECORDS
+	$SQL= "SELECT COUNT(*) FROM salescatprod WHERE manufacturers_id='". $SelectedManufacturer . "'";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_row($Result);
 	if ($MyRow[0]>0) {
-	$CancelDelete = true;
+		$CancelDelete = true;
 		prnMsg( __('Cannot delete this manufacturer because products have been defined as from this manufacturer'),'warn');
 		echo  __('There are') . ' ' . $MyRow[0] . ' ' . __('items with this manufacturer code');
-}
+	}
 
 	if (!$CancelDelete) {
-	$Result = DB_query("DELETE FROM manufacturers WHERE manufacturers_id = '" . $SelectedManufacturer . "'");
+
+		$Result = DB_query("DELETE FROM manufacturers WHERE manufacturers_id='" . $SelectedManufacturer . "'");
 		foreach ($SupportedImgExt as $Ext) {
 			$File = $_SESSION['part_pics_dir'] . '/BRAND-' . $SelectedManufacturer . '.' . $Ext;
 			if (file_exists ($File) ) {
 				@unlink($File);
-}
+			}
 		}
 		prnMsg( __('Manufacturer') . ' ' . $SelectedManufacturer . ' ' . __('has been deleted') . '!', 'success');
 		unset ($SelectedManufacturer);
@@ -214,19 +214,19 @@ or deletion of the records*/
 			FROM manufacturers";
 	$Result = DB_query($SQL);
 
-	if (DB_num_rows($Result) == 0){
+	if (DB_num_rows($Result)==0){
 		prnMsg(__('There are no manufacturers to display'),'error');
 	}
-	echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/supplier.png" Title = "' .
-			__('Manufacturers') . '" alt = "" />' . ' ' . $Title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" Title="' .
+			__('Manufacturers') . '" alt="" />' . ' ' . $Title . '</p>';
 
-	echo '<table class = "selection">';
+	echo '<table class="selection">';
 	echo '<tr>
 			<th>' . __('Brand Code') . '</th>
 			<th>' . __('Brand Name') . '</th>
 			<th>' . __('Brand URL') . '</th>
 			<th>' . __('Brands Image') . '</th>
-			<th colspan = "2"></th>
+			<th colspan="2"></th>
 		</tr>';
 
 while ($MyRow = DB_fetch_array($Result)) {
@@ -234,42 +234,42 @@ while ($MyRow = DB_fetch_array($Result)) {
 	$ImageFile = reset($Glob);
 	$BrandImgLink = GetImageLink($ImageFile, '/BRAND-' . $MyRow['manufacturers_id'], 120, 120, "", "");
 
-	echo '<tr class = "striped_row">
+	echo '<tr class="striped_row">
 			<td>', $MyRow['manufacturers_id'], '</td>
 			<td>', $MyRow['manufacturers_name'], '</td>
-			<td><a target = "_blank" href = "', $MyRow['manufacturers_url'], '">', $MyRow['manufacturers_url'], '</a></td>
+			<td><a target="_blank" href="', $MyRow['manufacturers_url'], '">', $MyRow['manufacturers_url'], '</a></td>
 			<td>', $BrandImgLink, '</td>
-			<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedManufacturer = ', $MyRow['manufacturers_id'], '&amp;edit = 1">' . __('Edit') . '</a></td>
-			<td><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedManufacturer = ', $MyRow['manufacturers_id'], '&amp;delete = 1" onclick = "return confirm(\'' . __('Are you sure you wish to delete this brand?') . '\');">' . __('Delete') . '</a></td>
+			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedManufacturer=', $MyRow['manufacturers_id'], '&amp;edit=1">' . __('Edit') . '</a></td>
+			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedManufacturer=', $MyRow['manufacturers_id'], '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this brand?') . '\');">' . __('Delete') . '</a></td>
 		</tr>';
 
 	}
-	//END while LIST LOOP
+	//END WHILE LIST LOOP
 	echo '</table>';
 }
 
 //end of ifs and buts!
 
 if (isset($SelectedManufacturer)) {
-	echo '<a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Review Records') . '</a>';
+	echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Review Records') . '</a>';
 }
 
 if (!isset($_GET['delete'])) {
 
-	echo '<form enctype = "multipart/form-data" method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<form enctype="multipart/form-data" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedManufacturer)) {
 		//editing an existing Brand
-		echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/supplier.png" Title = "' .
-			__('Brand') . '" alt = "" />' . ' ' . $Title . '</p>';
+		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" Title="' .
+			__('Brand') . '" alt="" />' . ' ' . $Title . '</p>';
 
 		$SQL = "SELECT manufacturers_id,
 					manufacturers_name,
 					manufacturers_url,
 					manufacturers_image
 				FROM manufacturers
-				WHERE manufacturers_id = '" . $SelectedManufacturer . "'";
+				WHERE manufacturers_id='" . $SelectedManufacturer . "'";
 
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_array($Result);
@@ -279,7 +279,7 @@ if (!isset($_GET['delete'])) {
 		$_POST['ManufacturersImage'] = $MyRow['manufacturers_image'];
 
 
-		echo '<input type = "hidden" name = "SelectedManufacturer" value = "' . $SelectedManufacturer . '" />';
+		echo '<input type="hidden" name="SelectedManufacturer" value="' . $SelectedManufacturer . '" />';
 		echo '<fieldset>';
 		echo '<legend>' . __('Amend Brand Details') . '</legend>';
 	} else { //end of if $SelectedManufacturer only do the else when a new record is being entered
@@ -298,21 +298,21 @@ if (!isset($_GET['delete'])) {
 	}
 
 	echo '<field>
-			<label for = "ManufacturersName">' .  __('Brand Name') . ':' . '</label>
-			<input type = "text" required = "required" autofocus = "autofocus" name = "ManufacturersName" value = "'. $_POST['ManufacturersName'] . '" size = "32" maxlength = "32" />
+			<label for="ManufacturersName">' .  __('Brand Name') . ':' . '</label>
+			<input type="text" required="required" autofocus="autofocus" name="ManufacturersName" value="'. $_POST['ManufacturersName'] . '" size="32" maxlength="32" />
 		</field>
 		<field>
-			<label for = "ManufacturersURL">' . __('Brand URL') . ':' . '</label>
-			<input type = "text" name = "ManufacturersURL" value = "' . $_POST['ManufacturersURL'] . '" size = "50" maxlength = "50" />
+			<label for="ManufacturersURL">' . __('Brand URL') . ':' . '</label>
+			<input type="text" name="ManufacturersURL" value="' . $_POST['ManufacturersURL'] . '" size="50" maxlength="50" />
 		</field>
 		<field>
-			<label for = "BrandPicture">' .  __('Brand Image File (' . implode(", ", $SupportedImgExt) . ')') . ':</label>
-			<input type = "file" id = "BrandPicture" name = "BrandPicture" />';
+			<label for="BrandPicture">' .  __('Brand Image File (' . implode(", ", $SupportedImgExt) . ')') . ':</label>
+			<input type="file" id="BrandPicture" name="BrandPicture" />';
 
 	if (isset ($_GET['edit']) ) {
 		echo '<field>
-				<label for = "ClearImage">'.__('Clear Image').'</label>
-				<input type = "checkbox" name = "ClearImage" id = "ClearImage" value = "1">
+				<label for="ClearImage">'.__('Clear Image').'</label>
+				<input type="checkbox" name="ClearImage" id="ClearImage" value="1">
 			</field>';
 	}
 
@@ -321,26 +321,26 @@ if (!isset($_GET['delete'])) {
             $Glob = (glob($_SESSION['part_pics_dir'] . '/BRAND-' . $SelectedManufacturer . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
 			$ImageFile = reset($Glob);
 			if (extension_loaded('gd') && function_exists('gd_info') && file_exists($ImageFile)) {
-				$BrandImgLink = '<img src = "GetStockImage.php?automake = 1&amp;textcolor = FFFFFF&amp;bgcolor = CCCCCC'.
-					'&amp;StockID = '.urlencode('/BRAND-' . $SelectedManufacturer).
-					'&amp;text = '.
-					'&amp;width = 100'.
-					'&amp;height = 100'.
-					'" alt = "" />';
+				$BrandImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
+					'&amp;StockID='.urlencode('/BRAND-' . $SelectedManufacturer).
+					'&amp;text='.
+					'&amp;width=100'.
+					'&amp;height=100'.
+					'" alt="" />';
 			} else {
-				if ( isset($SelectedManufacturer) and  !empty($SelectedManufacturer) and file_exists($ImageFile) ) {
-					$BrandImgLink = '<img src = "' . $ImageFile . '" height = "100" width = "100" />';
+				if( isset($SelectedManufacturer) AND  !empty($SelectedManufacturer) AND file_exists($ImageFile) ) {
+					$BrandImgLink = '<img src="' . $ImageFile . '" height="100" width="100" />';
 				} else {
 					$BrandImgLink = __('No Image');
 				}
 			}
 			$BrandImgLink = GetImageLink($ImageFile, '/BRAND-' . $SelectedManufacturer, 100, 100, "", "");
-			echo '<field><td colspan = "2">' . $BrandImgLink . '</td></field>';
+			echo '<field><td colspan="2">' . $BrandImgLink . '</td></field>';
 		}
 
 		echo 	'</fieldset>
-			<div class = "centre">
-				<input type = "submit" name = "submit" value = "' .  __('Enter Information') . '" />
+			<div class="centre">
+				<input type="submit" name="submit" value="' .  __('Enter Information') . '" />
 			</div>
 			</form>';
 

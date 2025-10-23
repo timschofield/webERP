@@ -21,8 +21,8 @@ if (isset($_POST['Create'])) {
 	$_POST['New'] = 'Yes';
 }
 
-echo '<div class = "centre"><p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title = "'
-	. __('Factor Companies') . '" alt = "" />' . ' ' .$Title . '</p></div>';
+echo '<div class="centre"><p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="'
+	. __('Factor Companies') . '" alt="" />' . ' ' .$Title . '</p></div>';
 
 /* This section has been reached because the user has pressed either the insert/update buttons on the
  form hopefully with input in the correct fields, which we check for firsrt. */
@@ -30,25 +30,25 @@ echo '<div class = "centre"><p class = "page_title_text"><img src = "'.$RootPath
 //initialise no input errors assumed initially before we test
 $InputError = 0;
 
-if (isset($_POST['Submit']) or isset($_POST['Update'])) {
+if (isset($_POST['Submit']) OR isset($_POST['Update'])) {
 
-	if (mb_strlen($_POST['FactorName']) > 40 or mb_strlen($_POST['FactorName']) == 0 or $_POST['FactorName'] == '') {
+	if (mb_strlen($_POST['FactorName']) > 40 OR mb_strlen($_POST['FactorName']) == 0 OR $_POST['FactorName'] == '') {
 		$InputError = 1;
 		prnMsg(__('The factoring company name must be entered and be forty characters or less long'),'error');
 	}
-	if (mb_strlen($_POST['Email'])>0 and !IsEmailAddress($_POST['Email'])){
+	if (mb_strlen($_POST['Email'])>0 AND !IsEmailAddress($_POST['Email'])){
 		prnMsg(__('The email address entered does not appear to be a valid email address format'),'error');
 		$InputError = 1;
 	}
 	// But if errors were found in the input
 	if ($InputError>0) {
-	prnMsg(__('Validation failed no insert or update took place'),'warn');
+		prnMsg(__('Validation failed no insert or update took place'),'warn');
 		include('includes/footer.php');
 		exit();
-}
+	}
 
 	/* If no input errors have been recieved */
-	if ($InputError == 0 and isset($_POST['Submit'])){
+	if ($InputError == 0 AND isset($_POST['Submit'])){
 		//And if its not a new part then update existing one
 
 		$SQL = "INSERT INTO factorcompanies (id,
@@ -83,17 +83,17 @@ if (isset($_POST['Submit']) or isset($_POST['Update'])) {
 		prnMsg(__('A new factoring company for') . ' ' . $_POST['FactorName'] . ' ' . __('has been added to the database'),'success');
 
 	}elseif ($InputError == 0 and isset($_POST['Update'])) {
-		$SQL = "UPDATE factorcompanies SET coyname = '" . $_POST['FactorName'] . "',
-				address1 = '" . $_POST['Address1'] . "',
-				address2 = '" . $_POST['Address2'] . "',
-				address3 = '" . $_POST['Address3'] . "',
-				address4 = '" . $_POST['Address4'] . "',
-				address5 = '" . $_POST['Address5'] . "',
-				address6 = '" . $_POST['Address6'] . "',
-				contact = '" . $_POST['ContactName'] . "',
-				telephone = '" . $_POST['Telephone'] . "',
-				fax = '" . $_POST['Fax'] . "',
-				email = '" . $_POST['Email'] . "'
+		$SQL = "UPDATE factorcompanies SET coyname='" . $_POST['FactorName'] . "',
+				address1='" . $_POST['Address1'] . "',
+				address2='" . $_POST['Address2'] . "',
+				address3='" . $_POST['Address3'] . "',
+				address4='" . $_POST['Address4'] . "',
+				address5='" . $_POST['Address5'] . "',
+				address6='" . $_POST['Address6'] . "',
+				contact='" . $_POST['ContactName'] . "',
+				telephone='" . $_POST['Telephone'] . "',
+				fax='" . $_POST['Fax'] . "',
+				email='" . $_POST['Email'] . "'
 			WHERE id = '" .$FactorID."'";
 
 		$ErrMsg = __('The factoring company could not be updated because');
@@ -120,24 +120,24 @@ if (isset($_POST['Delete'])) {
 
 	$CancelDelete = 0;
 
-	// PREVENT DELETES if DEPENDENT RECORDS IN 'SuppTrans' , PurchOrders, SupplierContacts
+	// PREVENT DELETES IF DEPENDENT RECORDS IN 'SuppTrans' , PurchOrders, SupplierContacts
 
-	$SQL =  "SELECT COUNT(*) FROM suppliers WHERE factorcompanyid = '".$FactorID."'";
+	$SQL= "SELECT COUNT(*) FROM suppliers WHERE factorcompanyid='".$FactorID."'";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_row($Result);
 	if ($MyRow[0] > 0) {
-	$CancelDelete = 1;
+		$CancelDelete = 1;
 		prnMsg(__('Cannot delete this factor because there are suppliers using them'),'warn');
 		echo '<br />' . __('There are') . ' ' . $MyRow[0] . ' ' . __('suppliers using this factor company');
-}
+	}
 
 	if ($CancelDelete == 0) {
-	$SQL = "DELETE FROM factorcompanies WHERE id = '".$FactorID."'";
+		$SQL="DELETE FROM factorcompanies WHERE id='".$FactorID."'";
 		$Result = DB_query($SQL);
 		prnMsg(__('Factoring company record record for') . ' ' . $_POST['FactorName'] . ' ' . __('has been deleted'),'success');
 		echo '<br />';
 		unset($_SESSION['FactorID']);
-} //end if Delete factor
+	} //end if Delete factor
 	unset($FactorID);
 }
 
@@ -194,10 +194,10 @@ if (isset($FactorID) and isset($_POST['Amend'])) {
 if (isset($_POST['Amend']) or isset($_POST['Create'])) {
 	// its a new factor being added
 
-	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
-	echo '<input type = "hidden" name = "FactorID" value = "' . $FactorID .'" />
-        <input type = "hidden" name = "New" value = "Yes" />';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<input type="hidden" name="FactorID" value="' . $FactorID .'" />
+        <input type="hidden" name="New" value="Yes" />';
 
 	if (isset($_POST['Amend'])) {
 		echo '<fieldset>
@@ -208,67 +208,67 @@ if (isset($_POST['Amend']) or isset($_POST['Create'])) {
 	}
 
 	echo '<field>
-			<label for = "FactorName">' . __('Factor company Name') . ':</label>
-			<input tabindex = "1" type = "text" name = "FactorName" required = "required" size = "42" maxlength = "40" value = "' . $_POST['FactorName'] . '" />
+			<label for="FactorName">' . __('Factor company Name') . ':</label>
+			<input tabindex="1" type="text" name="FactorName" required="required" size="42" maxlength="40" value="' . $_POST['FactorName'] . '" />
 		</field>
 		<field>
-			<label for = "Address1">' . __('Address Line 1') . ':</label>
-			<input tabindex = "2" type = "text" name = "Address1" size = "42" maxlength = "40" value = "' . $_POST['Address1'] .'" />
+			<label for="Address1">' . __('Address Line 1') . ':</label>
+			<input tabindex="2" type="text" name="Address1" size="42" maxlength="40" value="' . $_POST['Address1'] .'" />
 		</field>
 		<field>
-			<label for = "Address2">' . __('Address Line 2') . ':</label>
-			<input tabindex = "3" type = "text" name = "Address2" size = "42" maxlength = "40" value = "' . $_POST['Address2'] .'" />
+			<label for="Address2">' . __('Address Line 2') . ':</label>
+			<input tabindex="3" type="text" name="Address2" size="42" maxlength="40" value="' . $_POST['Address2'] .'" />
 		</field>
 		<field>
-			<label for = "Address3">' . __('Address Line 3') . ':</label>
-			<input tabindex = "4" type = "text" name = "Address3" size = "42" maxlength = "40" value = "' .$_POST['Address3'] .'" />
+			<label for="Address3">' . __('Address Line 3') . ':</label>
+			<input tabindex="4" type="text" name="Address3" size="42" maxlength="40" value="' .$_POST['Address3'] .'" />
 		</field>
 		<field>
-			<label for = "Address4">' . __('Address Line 4') . ':</label>
-			<input tabindex = "5" type = "text" name = "Address4" size = "42" maxlength = "40" value = "' . $_POST['Address4'].'" />
+			<label for="Address4">' . __('Address Line 4') . ':</label>
+			<input tabindex="5" type="text" name="Address4" size="42" maxlength="40" value="' . $_POST['Address4'].'" />
 		</field>
 		<field>
-			<label for = "Address5">' . __('Address Line 5') . ':</label>
-			<input tabindex = "6" type = "text" name = "Address5" size = "42" maxlength = "40" value = "' . $_POST['Address5'] .'" />
+			<label for="Address5">' . __('Address Line 5') . ':</label>
+			<input tabindex="6" type="text" name="Address5" size="42" maxlength="40" value="' . $_POST['Address5'] .'" />
 		</field>
 		<field>
-			<label for = "Address6">' . __('Address Line 6') . ':</label>
-			<input tabindex = "7" type = "text" name = "Address6" size = "42" maxlength = "40" value = "' .$_POST['Address6'] . '" />
+			<label for="Address6">' . __('Address Line 6') . ':</label>
+			<input tabindex="7" type="text" name="Address6" size="42" maxlength="40" value="' .$_POST['Address6'] . '" />
 		</field>
 		<field>
-			<label for = "ContactName">' . __('Contact Name') . ':</label>
-			<input tabindex = "8" type = "text" name = "ContactName" required = "required"  size = "20" maxlength = "25" value = "' . $_POST['ContactName'] .'" />
+			<label for="ContactName">' . __('Contact Name') . ':</label>
+			<input tabindex="8" type="text" name="ContactName" required="required"  size="20" maxlength="25" value="' . $_POST['ContactName'] .'" />
 		</field>
 		<field>
-			<label for = "Telephone">' . __('Telephone') . ':</label>
-			<input tabindex = "9" type = "tel" name = "Telephone" pattern = "[0-9+()\ ]*" size = "20" maxlength = "25" value = "' .$_POST['Telephone'].'" />
+			<label for="Telephone">' . __('Telephone') . ':</label>
+			<input tabindex="9" type="tel" name="Telephone" pattern="[0-9+()\ ]*" size="20" maxlength="25" value="' .$_POST['Telephone'].'" />
 		</field>
 		<field>
-			<label for = "Fax">' . __('Fax') . ':</label>
-			<input tabindex = "10" type = "tel" name = "Fax" pattern = "[0-9+()\ ]*" size = "20" maxlength = "25" value = "' . $_POST['Fax'] .'" />
+			<label for="Fax">' . __('Fax') . ':</label>
+			<input tabindex="10" type="tel" name="Fax" pattern="[0-9+()\ ]*" size="20" maxlength="25" value="' . $_POST['Fax'] .'" />
 		</field>
 		<field>
-			<label for = "Email">' . __('Email') . ':</label>
-			<input tabindex = "11" type = "email" name = "Email" size = "55" maxlength = "55" value = "' . $_POST['Email'] . '" />
+			<label for="Email">' . __('Email') . ':</label>
+			<input tabindex="11" type="email" name="Email" size="55" maxlength="55" value="' . $_POST['Email'] . '" />
 		</field>
 		</fieldset>';
 }
 
 
 if (isset($_POST['Create'])) {
-	echo '<div class = "centre">
-			<input tabindex = "12" type = "submit" name = "Submit" value = "' . __('Insert New Factor') . '" />
+	echo '<div class="centre">
+			<input tabindex="12" type="submit" name="Submit" value="' . __('Insert New Factor') . '" />
         </div>
 		</form>';
 } elseif (isset($_POST['Amend'])) {
 	echo '<br />
-		<div class = "centre">
-			<input tabindex = "13" type = "submit" name = "Update" value = "' . __('Update Factor') . '" />
+		<div class="centre">
+			<input tabindex="13" type="submit" name="Update" value="' . __('Update Factor') . '" />
 			<br />
             <br />';
 			prnMsg( __('There is no second warning if you hit the delete button below') . '. ' . __('However checks will be made to ensure there are no suppliers are using this factor before the deletion is processed'), 'warn');
 			echo '<br />
-				<input tabindex = "14" type = "submit" name = "Delete" value = "' . __('Delete Factor') . '" onclick = "return confirm(\'' . __('Are you sure you wish to delete this factoring company?') . '\');" />
+				<input tabindex="14" type="submit" name="Delete" value="' . __('Delete Factor') . '" onclick="return confirm(\'' . __('Are you sure you wish to delete this factoring company?') . '\');" />
 		</div>
         </div>
 		</form>';
@@ -277,14 +277,14 @@ if (isset($_POST['Create'])) {
 /* If it didn't come with a $FactorID it must be a completely fresh start, so choose a new $factorID or give the
   option to create a new one*/
 
-if (empty($FactorID) and !isset($_POST['Create']) and !isset($_POST['Amend'])) {
+if (empty($FactorID) AND !isset($_POST['Create']) AND !isset($_POST['Amend'])) {
 
-	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
     echo '<div>';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<input type = "hidden" name = "New" value = "No" />';
-	echo '<table class = "selection">
+	echo '<input type="hidden" name="New" value="No" />';
+	echo '<table class="selection">
 			<tr>
 				<th>' . __('ID') . '</th>
 				<th>' . __('Company Name') . '</th>
@@ -315,7 +315,7 @@ if (empty($FactorID) and !isset($_POST['Create']) and !isset($_POST['Amend'])) {
 	$Result = DB_query($SQL);
 
 	while ($MyRow = DB_fetch_array($Result)) {
-		echo '<tr class = "striped_row">
+		echo '<tr class="striped_row">
 			<td>' . $MyRow['id'] . '</td>
 			<td>' . $MyRow['coyname'] . '</td>
 			<td>' . $MyRow['address1'] . '</td>
@@ -328,14 +328,14 @@ if (empty($FactorID) and !isset($_POST['Create']) and !isset($_POST['Amend'])) {
 			<td>' . $MyRow['telephone'] . '</td>
 			<td>' . $MyRow['fax'] . '</td>
 			<td>' . $MyRow['email'] . '</td>
-			<td><a href = "'.$RootPath . '/Factors.php?FactorID = '.$MyRow['id'].'">' . __('Edit') . '</a></td>
+			<td><a href="'.$RootPath . '/Factors.php?FactorID='.$MyRow['id'].'">' . __('Edit') . '</a></td>
 			</tr>';
 	} //end while loop
 	echo '</table>
 		<br />
-		<div class = "centre">
+		<div class="centre">
 			<br />
-			<input tabindex = "3" type = "submit" name = "Create" value = "' . __('Create New Factor') . '" />
+			<input tabindex="3" type="submit" name="Create" value="' . __('Create New Factor') . '" />
 		</div>
         </div>
 		</form>';

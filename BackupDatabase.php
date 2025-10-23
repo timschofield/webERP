@@ -21,16 +21,16 @@ if (isset($_GET['BackupFile'])) {
 			$DeleteResult = unlink($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/' . $BackupFile);
 
 			if ($DeleteResult == true) {
-	prnMsg(__('Deleted') . ' companies/' . $_SESSION['DatabaseName'] . '/' . $BackupFile, 'info');
+				prnMsg(__('Deleted') . ' companies/' . $_SESSION['DatabaseName'] . '/' . $BackupFile, 'info');
 				$DeletedFiles = true;
-} else {
+			} else {
 				prnMsg(__('Unable to delete') . ' companies/' . $_SESSION['DatabaseName'] . '/' . $BackupFile, 'warn');
 			}
 		}
 	}
 	if ($DeletedFiles) {
-	prnMsg(__('All backup files on the server have been deleted'), 'success');
-} else {
+		prnMsg(__('All backup files on the server have been deleted'), 'success');
+	} else {
 		prnMsg(__('No backup files on the server were deleted'), 'info');
 	}
 } else {
@@ -46,11 +46,11 @@ if (isset($_GET['BackupFile'])) {
 	exec($Command, $Output, $Result);
 
 	prnMsg(__('The backup file has now been created. You must now download this to your computer because in case the web-server has a disk failure the backup would then not on the same machine. Use the link below') .
-		'<br /><br /><a href = "' . $BackupFile . '">' . __('Download the backup file to your locale machine') . '</a>', 'success');
+		'<br /><br /><a href="' . $BackupFile . '">' . __('Download the backup file to your locale machine') . '</a>', 'success');
 	prnMsg(__('Once you have downloaded the database backup file to your local machine you should use the link below to delete it - backup files can consume a lot of space on your hosting account and will accumulate if not deleted - they also contain sensitive information which would otherwise be available for others to download!'), 'info');
 	echo '<br />
 		<br />
-		<a href = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?BackupFile = ' . $BackupFile . '">' .
+		<a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?BackupFile=' . $BackupFile . '">' .
 		__('Delete the backup file off the server') . '</a>';
 }
 

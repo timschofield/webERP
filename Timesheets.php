@@ -13,24 +13,24 @@ include('includes/SQL_CommonFunctions.php');
 
 $MaxHours = 15; // perhaps this should be a configuration option??
 
-echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme,
-	'/images/company.png" title = "',// Icon image.
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/company.png" title="',// Icon image.
 	__('Timesheets'), '" /> ',// Icon title.
 	__('Timesheet Entry'), '</p>';// Page title.
 
 //try to set some sensible defaults
 $LatestWeekEndingDate = date($_SESSION['DefaultDateFormat'],mktime(0,0,0,date('n'),date('j')-(date('w')+$_SESSION['LastDayOfWeek'])+7,date('Y')));
 
-if (isset($_GET['SelectedEmployee'])) {
-	if ($_GET['SelectedEmployee']=='NewSelection') {
-	unset($SelectedEmployee);
-} else {
+if(isset($_GET['SelectedEmployee'])) {
+	if ($_GET['SelectedEmployee']=='NewSelection'){
+		unset($SelectedEmployee);
+	} else {
 		$SelectedEmployee = $_GET['SelectedEmployee'];
 	}
-} elseif (isset($_POST['SelectedEmployee'])) {
+} elseif(isset($_POST['SelectedEmployee'])) {
 	$SelectedEmployee = $_POST['SelectedEmployee'];
 } else {
-	$CheckUserResult = DB_query("SELECT id FROM employees WHERE userid = '" . $_SESSION['UserID'] . "'");
+	$CheckUserResult = DB_query("SELECT id FROM employees WHERE userid='" . $_SESSION['UserID'] . "'");
 	if (DB_num_rows($CheckUserResult)>0) { // then there is an employee match with the logged in user - in which case assume we are inputting their timesheet
 		$LoggedInEmployeeRow = DB_fetch_array($CheckUserResult);
 		$SelectedEmployee = $LoggedInEmployeeRow['id'];
@@ -55,24 +55,23 @@ if (isset($SelectedEmployee)) { //Get the employee's details
 					decimalplaces
 			FROM employees
 			INNER JOIN stockmaster
-			ON employees.stockid = stockmaster.stockid
-			WHERE employees.id = '" . $SelectedEmployee . "'";
+			ON employees.stockid=stockmaster.stockid
+			WHERE employees.id='" . $SelectedEmployee . "'";
 
 	$EmployeeResult = DB_query($SQL);
 	$EmployeeRow = DB_fetch_array($EmployeeResult);
 
-	if ($EmployeeRow['userid']!='') {
-	//get the employee's location if they are a user set up in webERP
-		$LocationResult = DB_query("SELECT defaultlocation FROM www_users WHERE userid = '" . $EmployeeRow['userid'] ."'");
+	if ($EmployeeRow['userid']!='') { //get the employee's location if they are a user set up in webERP
+		$LocationResult = DB_query("SELECT defaultlocation FROM www_users WHERE userid='" . $EmployeeRow['userid'] ."'");
 		$EmployeeLocationRow = DB_fetch_array($LocationResult);
 		$EmployeeLocation = $EmployeeLocationRow['defaultlocation'];
-} else {
+	} else {
 		$EmployeeLocation ='';
 	}
 }
 
 
-if ((isset($_POST['Enter']) or isset($_POST['ApproveTimesheet']) or isset($_POST['SubmitForApproval'])) and isset($SelectedEmployee) and isset($_POST['WeekEnding'])) {
+if((isset($_POST['Enter']) OR isset($_POST['ApproveTimesheet']) OR isset($_POST['SubmitForApproval'])) AND isset($SelectedEmployee) AND isset($_POST['WeekEnding'])) {
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
 
@@ -81,8 +80,8 @@ if ((isset($_POST['Enter']) or isset($_POST['ApproveTimesheet']) or isset($_POST
 
 
 	/* First off - run through the previously entered rows to update any changes in hours entered */
-	if (isset($_POST['Rows']) and $_POST['Rows'] > 0) {
-		for ($Row = 0;  $Row < $_POST['Rows'];  $Row++) {
+	if (isset($_POST['Rows']) AND $_POST['Rows'] > 0) {
+		for ($Row=0; $Row < $_POST['Rows']; $Row++) {
 			$InputError = 0;
 			if (!is_numeric($_POST['Day1_' . $Row])){
 				$_POST['Day1_' . $Row] = 0;
@@ -111,36 +110,35 @@ if ((isset($_POST['Enter']) or isset($_POST['ApproveTimesheet']) or isset($_POST
 			}
 
 
-			if ($_POST['Day1_' . $Row] > $MaxHours or $_POST['Day1_' . $Row] < -$MaxHours) {
-	$InputError = 1;
+			if ($_POST['Day1_' . $Row] > $MaxHours OR $_POST['Day1_' . $Row] < -$MaxHours) {
+				$InputError = 1;
 				prnMsg(__('The hours entered for day 1 look to be too high - this is probably an error'),'error');
-}
-			if ($_POST['Day2_' . $Row] > $MaxHours or $_POST['Day2_' . $Row] < -$MaxHours) {
-	$InputError = 1;
+			}
+			if ($_POST['Day2_' . $Row] > $MaxHours OR $_POST['Day2_' . $Row] < -$MaxHours) {
+				$InputError = 1;
 				prnMsg(__('The hours entered for day 2 look to be too high - this is probably an error'),'error');
-}
-			if ($_POST['Day3_' . $Row] > $MaxHours or $_POST['Day3_' . $Row] < -$MaxHours) {
-	$InputError = 1;
+			}
+			if ($_POST['Day3_' . $Row] > $MaxHours OR $_POST['Day3_' . $Row] < -$MaxHours) {
+				$InputError = 1;
 				prnMsg(__('The hours entered for day 3 look to be too high - this is probably an error'),'error');
-}
-			if ($_POST['Day4_' . $Row] > $MaxHours or $_POST['Day4_' . $Row] < -$MaxHours) {
-	$InputError = 1;
+			}
+			if ($_POST['Day4_' . $Row] > $MaxHours OR $_POST['Day4_' . $Row] < -$MaxHours) {
+				$InputError = 1;
 				prnMsg(__('The hours entered for day 4 look to be too high - this is probably an error'),'error');
-}
-			if ($_POST['Day5_' . $Row] > $MaxHours or $_POST['Day5_' . $Row] < -$MaxHours) {
-	$InputError = 1;
+			}
+			if ($_POST['Day5_' . $Row] > $MaxHours OR $_POST['Day5_' . $Row] < -$MaxHours) {
+				$InputError = 1;
 				prnMsg(__('The hours entered for day 5 look to be too high - this is probably an error'),'error');
-}
-			if (!$_POST['Day6_' . $Row] > $MaxHours or $_POST['Day6_' . $Row] < -$MaxHours) {
-	$InputError = 1;
+			}
+			if (!$_POST['Day6_' . $Row] > $MaxHours OR $_POST['Day6_' . $Row] < -$MaxHours) {
+				$InputError = 1;
 				prnMsg(__('The hours entered for day 6 look to be too high - this is probably an error'),'error');
-}
-			if (!$_POST['Day7_' . $Row] > $MaxHours or $_POST['Day7_' . $Row] < -$MaxHours) {
-	$InputError = 1;
+			}
+			if (!$_POST['Day7_' . $Row] > $MaxHours OR $_POST['Day7_' . $Row] < -$MaxHours) {
+				$InputError = 1;
 				prnMsg(__('The hours entered for day 7 look to be too high - this is probably an error'),'error');
-}
-			if ($InputError == 0 ) {
-	//error free :-)
+			}
+			if ($InputError == 0 ) { //error free :-)
 
 				$RowUpdateResult = DB_query("UPDATE timesheets
 											SET day1 ='" . $_POST['Day1_' . $Row] . "',
@@ -150,22 +148,22 @@ if ((isset($_POST['Enter']) or isset($_POST['ApproveTimesheet']) or isset($_POST
 												day5 ='" . $_POST['Day5_' . $Row] . "',
 												day6 ='" . $_POST['Day6_' . $Row] . "',
 												day7 ='" . $_POST['Day7_' . $Row] . "'
-											WHERE id = '" . $_POST['id_' . $Row] . "'");
-}
+											WHERE id='" . $_POST['id_' . $Row] . "'");
+			}
 		} //end of for loop
 
 
 	} /*end if there were existing timesheet recorded for the employee/weekending to update */
 
 	/* Now error trapping for the any new entry */
-	if ($_POST['WO'] == '0' and $_POST['WorkCentre'] != '0') {
-	prnMsg(__('If the time is non-chargable then both the work order and the work centre must reflect this. Only if a work order is selected can a work centre be set'),'error');
+	if ($_POST['WO'] == '0' AND $_POST['WorkCentre'] != '0') {
+		prnMsg(__('If the time is non-chargable then both the work order and the work centre must reflect this. Only if a work order is selected can a work centre be set'),'error');
 		$InputError = 1;
-}
-	if ($_POST['WO'] != '0' and $_POST['WorkCentre'] == '0') {
-	prnMsg(__('If a work order is selected then the work centre must be set'),'error');
+	}
+	if ($_POST['WO'] != '0' AND $_POST['WorkCentre'] == '0') {
+		prnMsg(__('If a work order is selected then the work centre must be set'),'error');
 		$InputError = 1;
-}
+	}
 	if (!is_numeric(filter_number_format($_POST['Day1']))){
 		$_POST['Day1'] = 0;
 	}
@@ -193,55 +191,55 @@ if ((isset($_POST['Enter']) or isset($_POST['ApproveTimesheet']) or isset($_POST
 	}
 
 
-	if (filter_number_format($_POST['Day1']) > $MaxHours or filter_number_format($_POST['Day1']) < -$MaxHours) {
+	if (filter_number_format($_POST['Day1']) > $MaxHours OR filter_number_format($_POST['Day1']) < -$MaxHours) {
 		$InputError = 1;
 		prnMsg(__('The hours entered for day 1 look to be too high - this is probably an error'),'error');
 	}
-	if (filter_number_format($_POST['Day2']) > $MaxHours or filter_number_format($_POST['Day2']) < -$MaxHours) {
+	if (filter_number_format($_POST['Day2']) > $MaxHours OR filter_number_format($_POST['Day2']) < -$MaxHours) {
 		$InputError = 1;
 		prnMsg(__('The hours entered for day 2 look to be too high - this is probably an error'),'error');
 	}
-	if (filter_number_format($_POST['Day3']) > $MaxHours or filter_number_format($_POST['Day3']) < -$MaxHours) {
+	if (filter_number_format($_POST['Day3']) > $MaxHours OR filter_number_format($_POST['Day3']) < -$MaxHours) {
 		$InputError = 1;
 		prnMsg(__('The hours entered for day 3 look to be too high - this is probably an error'),'error');
 	}
-	if (filter_number_format($_POST['Day4']) > $MaxHours or filter_number_format($_POST['Day4']) < -$MaxHours) {
+	if (filter_number_format($_POST['Day4']) > $MaxHours OR filter_number_format($_POST['Day4']) < -$MaxHours) {
 		$InputError = 1;
 		prnMsg(__('The hours entered for day 4 look to be too high - this is probably an error'),'error');
 	}
-	if (filter_number_format($_POST['Day5']) > $MaxHours or filter_number_format($_POST['Day5']) < -$MaxHours) {
+	if (filter_number_format($_POST['Day5']) > $MaxHours OR filter_number_format($_POST['Day5']) < -$MaxHours) {
 		$InputError = 1;
 		prnMsg(__('The hours entered for day 5 look to be too high - this is probably an error'),'error');
 	}
-	if (filter_number_format($_POST['Day6']) > $MaxHours or filter_number_format($_POST['Day6']) < -$MaxHours) {
+	if (filter_number_format($_POST['Day6']) > $MaxHours OR filter_number_format($_POST['Day6']) < -$MaxHours) {
 		$InputError = 1;
 		prnMsg(__('The hours entered for day 6 look to be too high - this is probably an error'),'error');
 	}
-	if (filter_number_format($_POST['Day7']) > $MaxHours or filter_number_format($_POST['Day7']) < -$MaxHours) {
+	if (filter_number_format($_POST['Day7']) > $MaxHours OR filter_number_format($_POST['Day7']) < -$MaxHours) {
 		$InputError = 1;
 		prnMsg(__('The hours entered for day 7 look to be too high - this is probably an error'),'error');
 	}
 
-	if ($InputError == 0) {
-	//no errors were reported :-)
+	if ($InputError==0) { //no errors were reported :-)
 	/*Now check to see if there is already a line for the same weekending/work order/work centre combo and update the existing line rather than inserting a new record */
 		$CheckTimesheetResult = DB_query("SELECT id FROM timesheets
-											WHERE employeeid = '" . $SelectedEmployee . "'
-											and wo = '" . $_POST['WO'] . "'
-											and weekending = '" . FormatDateForSQL($_POST['WeekEnding']) . "'
-											and workcentre = '" . $_POST['WorkCentre'] . "'");
-		if (DB_num_rows($CheckTimesheetResult) == 1) {
+											WHERE employeeid='" . $SelectedEmployee . "'
+											AND wo='" . $_POST['WO'] . "'
+											AND weekending='" . FormatDateForSQL($_POST['WeekEnding']) . "'
+											AND workcentre='" . $_POST['WorkCentre'] . "'");
+		if (DB_num_rows($CheckTimesheetResult)==1) {
 			$ExistingTimesheetRow = DB_fetch_array($CheckTimesheetResult);
-			$UpdateExistingResult = DB_query("UPDATE timesheets SET day1 = day1+" . filter_number_format($_POST['Day1']) .",
-																	day2 = day2+" . filter_number_format($_POST['Day2']) .",
-																	day3 = day3+" . filter_number_format($_POST['Day3']) .",
-																	day4 = day4+" . filter_number_format($_POST['Day4']) .",
-																	day5 = day5+" . filter_number_format($_POST['Day5']) .",
-																	day6 = day6+" . filter_number_format($_POST['Day6']) .",
-																	day7 = day7+" . filter_number_format($_POST['Day7']) ."
+			$UpdateExistingResult = DB_query("UPDATE timesheets SET day1=day1+" . filter_number_format($_POST['Day1']) .",
+																	day2=day2+" . filter_number_format($_POST['Day2']) .",
+																	day3=day3+" . filter_number_format($_POST['Day3']) .",
+																	day4=day4+" . filter_number_format($_POST['Day4']) .",
+																	day5=day5+" . filter_number_format($_POST['Day5']) .",
+																	day6=day6+" . filter_number_format($_POST['Day6']) .",
+																	day7=day7+" . filter_number_format($_POST['Day7']) ."
 												WHERE id ='" . $ExistingTimesheetRow['id'] . "'");
 			prnMsg(__('An existing timesheet record for the same work order, week ending and work centre was updated with these hours'),'info');
-} else {
+
+		} else {
 
 			$InsertTimsheetResult = DB_query("INSERT INTO timesheets (wo,
 																	employeeid,
@@ -283,37 +281,37 @@ if ((isset($_POST['Enter']) or isset($_POST['ApproveTimesheet']) or isset($_POST
 	}//end of inserts and reset of data
 } //end of the update/inserts
 
-if (isset($_POST['SubmitForApproval'])) {
+if(isset($_POST['SubmitForApproval'])) {
 
 	$WeekTimeTotalResult = DB_query("SELECT employeeid,
 									SUM(day1+day2+day3+day4+day5+day6+day7) as totalweekhours
 							FROM timesheets
 							WHERE employeeid ='" . $SelectedEmployee . "'
-							and weekending ='" . FormatDateForSQL($_POST['WeekEnding']) ."'
+							AND weekending ='" . FormatDateForSQL($_POST['WeekEnding']) ."'
 							GROUP BY employeeid");
 
 	$WeekTimeTotalRow = DB_fetch_array($WeekTimeTotalResult);
 
 	//Check that there is a full weeks worth of time before allowing the timesheet to be submitted
 	if ($WeekTimeTotalRow['totalweekhours'] < $EmployeeRow['normalhours']) {
-	prnMsg(__('This timesheet cannot be submitted until your full working week hours are accounted for'),'error', $EmployeeRow['normalhours'] . ' ' . __('hours or more must be entered'));
-} else {
+		prnMsg(__('This timesheet cannot be submitted until your full working week hours are accounted for'),'error', $EmployeeRow['normalhours'] . ' ' . __('hours or more must be entered'));
+	} else {
 		//change the status of the timesheet to submitted and email the manager
 		$SubmittedTimesheetResult = DB_query("UPDATE timesheets
-												SET status = 1
-											WHERE employeeid = '" . $SelectedEmployee . "'
-											and status = 0
-											and weekending = '" . FormatDateForSQL($_POST['WeekEnding']) . "'");
+												SET status=1
+											WHERE employeeid='" . $SelectedEmployee . "'
+											AND status=0
+											AND weekending='" . FormatDateForSQL($_POST['WeekEnding']) . "'");
 
 		$ManagerResult = DB_query("SELECT email
 									FROM employees
-									WHERE employees.id = '" . $EmployeeRow['manager'] . "'");
+									WHERE employees.id='" . $EmployeeRow['manager'] . "'");
 		$ManagerRow = DB_fetch_array($ManagerResult);
 		$Recipients = array($ManagerRow['email']);
 		// Prepare email content
 		$EmailSubject = $EmployeeRow['firstname'] . ' ' . $EmployeeRow['surname'] . ' ' . __('timesheet submitted for the week ending') . ' ' . $_POST['WeekEnding'];
 		$EmailBody = '<p>' . $EmailSubject . '</p>';
-		$EmailBody .= '<p><a href = "' . $RootPath . '/Timesheets.php?SelectedEmployee = ' . $SelectedEmployee  . '&WeekEnding = ' . $_POST['WeekEnding'] . '">' . __('Review and approve this timesheet') . '</a></p>';
+		$EmailBody .= '<p><a href="' . $RootPath . '/Timesheets.php?SelectedEmployee=' . $SelectedEmployee  . '&WeekEnding=' . $_POST['WeekEnding'] . '">' . __('Review and approve this timesheet') . '</a></p>';
 
 		// Send email using SendEmailFromWebERP
 		$Result = SendEmailFromWebERP($_SESSION['CompanyRecord']['email'],
@@ -323,27 +321,26 @@ if (isset($_POST['SubmitForApproval'])) {
 									'',
 									true);
 
-		if ($Result == 1) {
-	// SendEmailFromWebERP returns 1 on success
+		if ($Result == 1) { // SendEmailFromWebERP returns 1 on success
 			prnMsg(__('This timesheet has been submitted to your manager for approval'),'success', __('Timesheet submitted'));
-} else {
+		} else {
 			prnMsg(__('Failed to send the submission email to the manager.'), 'error');
 		}
 	}
 } // end submit for approval
 
-if (isset($_POST['ApproveTimesheet'])) {
+if(isset($_POST['ApproveTimesheet'])) {
 	//need to check again we have the full week!
 	$WeekTimeTotalResult = DB_query("SELECT employeeid,
 											employees.stockid,
-											actualcost as labourcost,
+											actualcost AS labourcost,
 											SUM(day1+day2+day3+day4+day5+day6+day7) as totalweekhours
 									FROM timesheets INNER JOIN employees
-									ON timesheets.employeeid = employees.id
+									ON timesheets.employeeid=employees.id
 									INNER JOIN stockmaster ON
-									employees.stockid = stockmaster.stockid
+									employees.stockid=stockmaster.stockid
 									WHERE employeeid ='" . $SelectedEmployee . "'
-									and weekending ='" . FormatDateForSQL($_POST['WeekEnding']) ."'
+									AND weekending ='" . FormatDateForSQL($_POST['WeekEnding']) ."'
 									GROUP BY employeeid,
 											employees.stockid,
 											 labourcost");
@@ -352,29 +349,29 @@ if (isset($_POST['ApproveTimesheet'])) {
 
 	//Check that there is a full weeks worth of time before allowing the timesheet to be submitted
 	if ($WeekTimeTotalRow['totalweekhours'] < $EmployeeRow['normalhours']) {
-	prnMsg(__('This timesheet cannot be submitted until your full working week hours are accounted for'),'error', $EmployeeRow['normalhours'] . ' ' . __('hours or more must be entered'));
-} elseif ($WeekTimeTotalRow['labourcost']==0) {
-	prnMsg(__('This timesheet cannot be submitted until a cost is set up for the item defined for this employee'),'error', __('This employees labour item has no cost entered'));
-} else {
+		prnMsg(__('This timesheet cannot be submitted until your full working week hours are accounted for'),'error', $EmployeeRow['normalhours'] . ' ' . __('hours or more must be entered'));
+	} elseif ($WeekTimeTotalRow['labourcost']==0) {
+		prnMsg(__('This timesheet cannot be submitted until a cost is set up for the item defined for this employee'),'error', __('This employees labour item has no cost entered'));
+	} else {
 		/* Now we are into posting the time to the work orders NB: only open work orders!! and only time that has not already been posted */
 		$WeekTimeResult = DB_query("SELECT timesheets.wo,
 											timesheets.workcentre,
 											employees.stockid as issueitem,
 											employees.surname,
 											employees.firstname,
-											actualcost as labourcost,
+											actualcost AS labourcost,
 											workorders.loccode,
 											SUM(day1+day2+day3+day4+day5+day6+day7) as totalweekhours
 									FROM timesheets INNER JOIN employees
-									ON timesheets.employeeid = employees.id
+									ON timesheets.employeeid=employees.id
 									INNER JOIN stockmaster
-									ON employees.stockid = stockmaster.stockid
+									ON employees.stockid=stockmaster.stockid
 									INNER JOIN workorders
-									ON timesheets.wo = workorders.wo
+									ON timesheets.wo=workorders.wo
 									WHERE employeeid ='" . $SelectedEmployee . "'
-									and weekending ='" . FormatDateForSQL($_POST['WeekEnding']) ."'
-									and workorders.closed = '0'
-									and timesheets.status <> '2'
+									AND weekending ='" . FormatDateForSQL($_POST['WeekEnding']) ."'
+									AND workorders.closed = '0'
+									AND timesheets.status <> '2'
 									GROUP BY wo,
 										workcentre,
 										issueitem,
@@ -383,7 +380,7 @@ if (isset($_POST['ApproveTimesheet'])) {
 										labourcost,
 										loccode");
 
-		if (DB_num_rows($WeekTimeResult) == 0) {
+		if (DB_num_rows($WeekTimeResult)==0) {
 			prnMsg(__('No more time to post for this timesheet'),'error');
 		} else {
 			/*Now Get the next WO Issue transaction type 28 - function in SQL_CommonFunctions*/
@@ -423,21 +420,21 @@ if (isset($_POST['ApproveTimesheet'])) {
 									'0',
 									'" .  __('Timesheet for the week ending') . ' ' . $_POST['WeekEnding'] . ': ' . $WeekTimeRow['firstname'] . ' ' . $WeekTimeRow['surname'] . "')";
 
-				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR and SEEK ASSISTANCE') . ': ' . __('labour stock movement records could not be inserted when processing the timesheet because');
+				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('labour stock movement records could not be inserted when processing the timesheet because');
 				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 
-				if ($_SESSION['CompanyRecord']['gllink_stock']==1 and ($WeekTimeRow['labourcost'] * $WeekTimeRow['totalweekhours']) != 0) {
+				if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND ($WeekTimeRow['labourcost'] * $WeekTimeRow['totalweekhours']) != 0) {
 
 				/*GL integration with stock is activated so need the GL journals to make it so */
 
 				/*first the debit the WIP of the item being manufactured from the WO - there could be several items being made on the WO but the WIP account of only the first item on the WO is used*/
 					$GetWIPGLAccountResult = DB_query("SELECT wipact
 														FROM stockcategory INNER JOIN stockmaster
-														ON stockcategory.categoryid = stockmaster.categoryid
+														ON stockcategory.categoryid=stockmaster.categoryid
 														INNER JOIN woitems
-														ON stockmaster.stockid = woitems.stockid
-														WHERE woitems.wo = '" . $WeekTimeRow['wo'] . "'");
+														ON stockmaster.stockid=woitems.stockid
+														WHERE woitems.wo='" . $WeekTimeRow['wo'] . "'");
 					$GetWIPAccountRow = DB_fetch_array($GetWIPGLAccountResult);
 
 					$SQL = "INSERT INTO gltrans (type,
@@ -455,7 +452,7 @@ if (isset($_POST['ApproveTimesheet'])) {
 								'" . mb_substr(__('WO') . ':' . $WeekTimeRow['wo'] . ' ' . __('Work Centre') . ': ' . $WeekTimeRow['workcentre'] . ' ' . $WeekTimeRow['firstname'] . ' ' . $WeekTimeRow['surname'] . ' ' . __('as') . ' ' . $WeekTimeRow['issueitem'] . ' x ' . $WeekTimeRow['totalweekhours'] . ' ' . __('hours') . ' @ ' . locale_number_format($WeekTimeRow['labourcost'], $_SESSION['CompanyRecord']['decimalplaces']), 0, 200) . "',
 								'" . ($WeekTimeRow['labourcost'] * $WeekTimeRow['totalweekhours']) . "')";
 
-					$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR and SEEK ASSISTANCE') . ': ' . __('The labour cost posting to a work order GL posting could not be inserted because');
+					$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The labour cost posting to a work order GL posting could not be inserted because');
 					$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				/*now the credit labour recovery entry - the GetSockGLCode actually returns the labour recovery GL account for labour type stock categories */
@@ -476,17 +473,17 @@ if (isset($_POST['ApproveTimesheet'])) {
 								'" . mb_substr(__('WO') . ':' . $WeekTimeRow['wo'] . ' ' . __('Work Centre') . ': ' . $WeekTimeRow['workcentre'] . ' ' . $WeekTimeRow['firstname'] . ' ' . $WeekTimeRow['surname'] . ' ' . __('as') . ' ' . $WeekTimeRow['issueitem'] . ' x ' . $WeekTimeRow['totalweekhours'] . ' ' . __('hours') . ' @ ' . locale_number_format($WeekTimeRow['labourcost'], $_SESSION['CompanyRecord']['decimalplaces']), 0, 200) . "',
 								'" . -($WeekTimeRow['labourcost'] * $WeekTimeRow['totalweekhours']) . "')";
 
-					$ErrMsg =   __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR and SEEK ASSISTANCE') . ': ' . __('The labour recovery account credit on the approval of a timesheet GL posting could not be inserted because');
+					$ErrMsg =   __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The labour recovery account credit on the approval of a timesheet GL posting could not be inserted because');
 					$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				} /* end of if GL and stock integrated and standard cost !=0 */
 
 
 				//update the wo with new cost issued
-				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR and SEEK ASSISTANCE') . ': ' .__('Could not update the work order labour cost because');
+				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' .__('Could not update the work order labour cost because');
 				$UpdateWOResult = DB_query("UPDATE workorders
-											SET costissued = costissued+" . ($WeekTimeRow['labourcost'] * $WeekTimeRow['totalweekhours']) . "
-											WHERE wo = '" . $WeekTimeRow['wo'] . "'",
+											SET costissued=costissued+" . ($WeekTimeRow['labourcost'] * $WeekTimeRow['totalweekhours']) . "
+											WHERE wo='" . $WeekTimeRow['wo'] . "'",
 											$ErrMsg,
 											'',
 											true);
@@ -494,10 +491,10 @@ if (isset($_POST['ApproveTimesheet'])) {
 
 		//change the status of the timesheet to approved
 			$SubmittedTimesheetResult = DB_query("UPDATE timesheets
-													SET status = 2
-												WHERE employeeid = '" . $SelectedEmployee . "'
-												and weekending = '" . FormatDateForSQL($_POST['WeekEnding']) . "'",
-												__('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR and SEEK ASSISTANCE') . ': ' .__('Could not change the timesheet status to approved because'),
+													SET status=2
+												WHERE employeeid='" . $SelectedEmployee . "'
+												AND weekending='" . FormatDateForSQL($_POST['WeekEnding']) . "'",
+												__('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' .__('Could not change the timesheet status to approved because'),
 												__('The following SQL was used to update the work order'),
 												true);
 			DB_Txn_Commit();
@@ -506,7 +503,7 @@ if (isset($_POST['ApproveTimesheet'])) {
 	} //end of if the timesheet has a full working week
 } // end approval
 
-if (!isset($SelectedEmployee) and in_array(20, $_SESSION['AllowedPageSecurityTokens'])) {
+if(!isset($SelectedEmployee) AND in_array(20, $_SESSION['AllowedPageSecurityTokens'])) {
 
 /* It could still be the second time the page has been run and a record has been selected for modification - SelectedEmployee will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters then none of the above are true and the list of employees will be displayed with links to select one. These will call the same page again and allow input of the timesheet or deletion of the records*/
 
@@ -521,87 +518,87 @@ if (!isset($SelectedEmployee) and in_array(20, $_SESSION['AllowedPageSecurityTok
 					employees.normalhours,
 					employees.email,
 					employees.userid
-			FROM employees LEFT JOIN employees as employees2
-			ON employees.manager = employees2.id";
+			FROM employees LEFT JOIN employees AS employees2
+			ON employees.manager=employees2.id";
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) > 0) {
-		echo '<table class = "selection">
+		echo '<table class="selection">
 			<thead>
-			<tr class = "striped_row">
-				<th class = "SortedColumn">', __('ID'), '</th>
-				<th class = "SortedColumn">', __('First name'), '</th>
-				<th class = "SortedColumn">', __('Surname'), '</th>
-				<th class = "SortedColumn">', __('Type'), '</th>
-				<th class = "SortedColumn">', __('Manager'), '</th>
-				<th class = "SortedColumn">', __('Email'), '</th>
-				<th class = "noPrint" colspan = "2">&nbsp;</th>
+			<tr class="striped_row">
+				<th class="SortedColumn">', __('ID'), '</th>
+				<th class="SortedColumn">', __('First name'), '</th>
+				<th class="SortedColumn">', __('Surname'), '</th>
+				<th class="SortedColumn">', __('Type'), '</th>
+				<th class="SortedColumn">', __('Manager'), '</th>
+				<th class="SortedColumn">', __('Email'), '</th>
+				<th class="noPrint" colspan="2">&nbsp;</th>
 				</tr>
 			</thead>
 			<tbody>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
 
-		echo '<tr class = "striped_row">
+		echo '<tr class="striped_row">
 				<td>', $MyRow['id'], '</td>
 				<td>', $MyRow['firstname'], '</td>
 				<td>', $MyRow['surname'], '</td>
 				<td>', $MyRow['stockid'], '</td>
 				<td>', $MyRow['managerfirstname'] . ' ' . $MyRow['managersurname'], '</td>
-				<td><a href = "mailto:', $MyRow['email'], '">', $MyRow['email'], '</a></td>
-				<td class = "noPrint"><a href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedEmployee = ', $MyRow['id'], '">' . __('Select') . '</a></td>
-				<td class = "noPrint"><a href = "' . $RootPath . '/Employees.php?SelectedEmployee = ', $MyRow['id'], '">' . __('Edit') . '</a></td>
+				<td><a href="mailto:', $MyRow['email'], '">', $MyRow['email'], '</a></td>
+				<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedEmployee=', $MyRow['id'], '">' . __('Select') . '</a></td>
+				<td class="noPrint"><a href="' . $RootPath . '/Employees.php?SelectedEmployee=', $MyRow['id'], '">' . __('Edit') . '</a></td>
 			</tr>';
 		}
-		//END while LIST LOOP
+		//END WHILE LIST LOOP
 		echo '</tbody></table>';
 	} else {
 		prnMsg(__('No employees have been set up yet'),'info');
 	}
 	echo '<br />';
-} elseif (in_array(20, $_SESSION['AllowedPageSecurityTokens']) and isset($SelectedEmployee)) {
-	echo '<a href = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedEmployee = NewSelection">' . __('Select a different employee') . '</a>';
-} elseif (!isset($SelectedEmployee)) {
+} elseif (in_array(20, $_SESSION['AllowedPageSecurityTokens']) AND isset($SelectedEmployee)) {
+	echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedEmployee=NewSelection">' . __('Select a different employee') . '</a>';
+} elseif(!isset($SelectedEmployee)) {
 	prnMsg(__('Only employees set up to enter timesheets can use this script - please see the timesheet administrator'),'info');
 }
 
-if (isset($_GET['Delete'])) {
-	$DeleteTimesheetRow = DB_query("DELETE FROM timesheets WHERE id = '" . $_GET['Delete'] . "'");
+if(isset($_GET['Delete'])) {
+	$DeleteTimesheetRow = DB_query("DELETE FROM timesheets WHERE id='" . $_GET['Delete'] . "'");
 	prnMsg(__('Timesheet row deleted'),'success');
 }
 
 if (isset($SelectedEmployee)){
-	echo '<form id = "TimesheetForm" method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
+	echo '<form id="TimesheetForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
 		<div>
-		<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />
-		<input type = "hidden" name = "SelectedEmployee" value = "' . $SelectedEmployee . '" />';
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+		<input type="hidden" name="SelectedEmployee" value="' . $SelectedEmployee . '" />';
 
 	//Entry of Timesheets - populate the employee's details
 
-	echo '<h2>' . __('For') . ' ' . $EmployeeRow['firstname'] . ' ' . $EmployeeRow['surname'] . ' ' . __('For the week ending') . ': <select name = "WeekEnding" onChange = "ReloadForm(TimesheetForm.RefreshWeek)" >';
+	echo '<h2>' . __('For') . ' ' . $EmployeeRow['firstname'] . ' ' . $EmployeeRow['surname'] . ' ' . __('For the week ending') . ': <select name="WeekEnding" onChange="ReloadForm(TimesheetForm.RefreshWeek)" >';
 
 	if (!isset($_POST['WeekEnding'])) {
-		echo '<option selected = "selected" value = "' . $LatestWeekEndingDate . '">' . $LatestWeekEndingDate . '</option>';
+		echo '<option selected="selected" value="' . $LatestWeekEndingDate . '">' . $LatestWeekEndingDate . '</option>';
 	} else {
-		echo '<option value = "' . $LatestWeekEndingDate . '">' . $LatestWeekEndingDate . '</option>';
+		echo '<option value="' . $LatestWeekEndingDate . '">' . $LatestWeekEndingDate . '</option>';
 	}
 
 
-	for ($i = -1; $i>-26; $i--) {
+	for ($i=-1;$i>-26;$i--) {
 		$ProposedWeekEndingDate = DateAdd($LatestWeekEndingDate,'w',$i);
 		if ($ProposedWeekEndingDate == $_POST['WeekEnding']) {
-	echo '<option selected = "selected" value = "' . $ProposedWeekEndingDate . '">' . $ProposedWeekEndingDate . '</option>';
-} else {
-			echo '<option value = "' . $ProposedWeekEndingDate . '">' . $ProposedWeekEndingDate . '</option>';
+			echo '<option selected="selected" value="' . $ProposedWeekEndingDate . '">' . $ProposedWeekEndingDate . '</option>';
+		} else {
+			echo '<option value="' . $ProposedWeekEndingDate . '">' . $ProposedWeekEndingDate . '</option>';
 		}
 	} //end for loop
 
-	echo '</select><input type = "submit" name = "RefreshWeek" value = "Refresh" /></h2>
+	echo '</select><input type="submit" name="RefreshWeek" value="Refresh" /></h2>
 			<hr />';
 
 	if ($_SESSION['LastDayOfWeek']==6) {
-	$FirstDayNumber = 0;
-} else {
+		$FirstDayNumber = 0;
+	} else {
 		$FirstDayNumber = $_SESSION['LastDayOfWeek']+1;
 	}
 
@@ -610,10 +607,10 @@ if (isset($SelectedEmployee)){
 			<th>' . __('Work Order') . '#</th>
 			<th>' . __('Work Centre') . '</th>';
 
-	for ($i = 0; $i<7; $i++) {
-		if ($FirstDayNumber +$i >6) {
-	$DayNumber = $FirstDayNumber + $i - 7;
-} else {
+	for ($i=0;$i<7;$i++) {
+		if ($FirstDayNumber +$i >6){
+			$DayNumber = $FirstDayNumber + $i - 7;
+		} else {
 			$DayNumber = $FirstDayNumber + $i;
 		}
 		echo '<th>' . GetWeekDayText($DayNumber) . '</th>';
@@ -647,40 +644,39 @@ if (isset($SelectedEmployee)){
 											day7,
 											status
 									FROM timesheets LEFT JOIN workcentres
-									ON timesheets.workcentre = workcentres.code
+									ON timesheets.workcentre=workcentres.code
 									WHERE employeeid ='" . $SelectedEmployee . "'
-									and weekending ='" . FormatDateForSQL($_POST['WeekEnding']) ."'");
+									AND weekending ='" . FormatDateForSQL($_POST['WeekEnding']) ."'");
 		if (DB_num_rows($TimesheetResult) > 0) {
 			while ($TimesheetRow = DB_fetch_array($TimesheetResult)) {
-				if ($TimesheetRow['status'] == 2) {
-	//the timesheet is already posted - no changes are now possible
+				if ($TimesheetRow['status'] == 2) { //the timesheet is already posted - no changes are now possible
 					$PostedRowNo++;
-					echo '<tr class = "striped_row">
+					echo '<tr class="striped_row">
 							<td>' . (($TimesheetRow['wo']=='0') ? __('Non-chargable') : $TimesheetRow['wo']) . '</td>
 							<td>' . $TimesheetRow['workcentrename'] . '</td>
-							<td class = "number">' . locale_number_format($TimesheetRow['day1'],$EmployeeRow['decimalplaces']) . '</td>
-							<td class = "number">' . locale_number_format($TimesheetRow['day2'],$EmployeeRow['decimalplaces']) . '</td>
-							<td class = "number">' . locale_number_format($TimesheetRow['day3'],$EmployeeRow['decimalplaces']) . '</td>
-							<td class = "number">' . locale_number_format($TimesheetRow['day4'],$EmployeeRow['decimalplaces']) . '</td>
-							<td class = "number">' . locale_number_format($TimesheetRow['day5'],$EmployeeRow['decimalplaces']) . '</td>
-							<td class = "number">' . locale_number_format($TimesheetRow['day6'],$EmployeeRow['decimalplaces']) . '</td>
-							<td class = "number">' . locale_number_format($TimesheetRow['day7'],$EmployeeRow['decimalplaces']) . '</td>
-							<td class = "number">' . locale_number_format(($TimesheetRow['day1']+$TimesheetRow['day2']+$TimesheetRow['day3']+$TimesheetRow['day4']+$TimesheetRow['day5']+$TimesheetRow['day6']+$TimesheetRow['day7']),$EmployeeRow['decimalplaces']) . '</td>
+							<td class="number">' . locale_number_format($TimesheetRow['day1'],$EmployeeRow['decimalplaces']) . '</td>
+							<td class="number">' . locale_number_format($TimesheetRow['day2'],$EmployeeRow['decimalplaces']) . '</td>
+							<td class="number">' . locale_number_format($TimesheetRow['day3'],$EmployeeRow['decimalplaces']) . '</td>
+							<td class="number">' . locale_number_format($TimesheetRow['day4'],$EmployeeRow['decimalplaces']) . '</td>
+							<td class="number">' . locale_number_format($TimesheetRow['day5'],$EmployeeRow['decimalplaces']) . '</td>
+							<td class="number">' . locale_number_format($TimesheetRow['day6'],$EmployeeRow['decimalplaces']) . '</td>
+							<td class="number">' . locale_number_format($TimesheetRow['day7'],$EmployeeRow['decimalplaces']) . '</td>
+							<td class="number">' . locale_number_format(($TimesheetRow['day1']+$TimesheetRow['day2']+$TimesheetRow['day3']+$TimesheetRow['day4']+$TimesheetRow['day5']+$TimesheetRow['day6']+$TimesheetRow['day7']),$EmployeeRow['decimalplaces']) . '</td>
 							<td>' . __('Posted') . '</td>
 						</tr>';
-} else { //yet to be posted so allow edits
-					echo '<tr class = "striped_row">
-							<td><input type = "hidden" name = "id_' . $EditableRowNo . '" value = "' . $TimesheetRow['id'] . '" />' .  (($TimesheetRow['wo']=='0') ? __('Non-chargable') : $TimesheetRow['wo']) . '</td>
+				} else { //yet to be posted so allow edits
+					echo '<tr class="striped_row">
+							<td><input type="hidden" name="id_' . $EditableRowNo . '" value="' . $TimesheetRow['id'] . '" />' .  (($TimesheetRow['wo']=='0') ? __('Non-chargable') : $TimesheetRow['wo']) . '</td>
 							<td>' .  $TimesheetRow['workcentrename'] . '</td>
-							<td><input type = "text" required = "required" class = "number" name = "Day1_' . $EditableRowNo . '" value = "' . locale_number_format($TimesheetRow['day1'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
-							<td><input type = "text" required = "required" class = "number" name = "Day2_' . $EditableRowNo . '" value = "' . locale_number_format($TimesheetRow['day2'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
-							<td><input type = "text" required = "required" class = "number" name = "Day3_' . $EditableRowNo . '" value = "' . locale_number_format($TimesheetRow['day3'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
-							<td><input type = "text" required = "required" class = "number" name = "Day4_' . $EditableRowNo . '" value = "' . locale_number_format($TimesheetRow['day4'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
-							<td><input type = "text" required = "required" class = "number" name = "Day5_' . $EditableRowNo . '" value = "' . locale_number_format($TimesheetRow['day5'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
-							<td><input type = "text" required = "required" class = "number" name = "Day6_' . $EditableRowNo . '" value = "' . locale_number_format($TimesheetRow['day6'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
-							<td><input type = "text" required = "required" class = "number" name = "Day7_' . $EditableRowNo . '" value = "' . locale_number_format($TimesheetRow['day7'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
-							<td class = "number">' . locale_number_format($TimesheetRow['day1']+$TimesheetRow['day2']+$TimesheetRow['day3']+$TimesheetRow['day4']+$TimesheetRow['day5']+$TimesheetRow['day6']+$TimesheetRow['day7'],$EmployeeRow['decimalplaces']) . '</td>
-							<td><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'] . '?Delete = ' . $TimesheetRow['id'] . '&SelectedEmployee = ' . $SelectedEmployee . '&WeekEnding = ' . $_POST['WeekEnding'], ENT_QUOTES,'UTF-8') . '" onclick = "return confirm(\'' . __('Are you sure you wish to delete this timesheet entry') . '\');">' . __('Delete')  . '</a></td>'
+							<td><input type="text" required="required" class="number" name="Day1_' . $EditableRowNo . '" value="' . locale_number_format($TimesheetRow['day1'],$EmployeeRow['decimalplaces']) . '" minlength="1" maxlength="4" size="4" /></td>
+							<td><input type="text" required="required" class="number" name="Day2_' . $EditableRowNo . '" value="' . locale_number_format($TimesheetRow['day2'],$EmployeeRow['decimalplaces']) . '" minlength="1" maxlength="4" size="4" /></td>
+							<td><input type="text" required="required" class="number" name="Day3_' . $EditableRowNo . '" value="' . locale_number_format($TimesheetRow['day3'],$EmployeeRow['decimalplaces']) . '" minlength="1" maxlength="4" size="4" /></td>
+							<td><input type="text" required="required" class="number" name="Day4_' . $EditableRowNo . '" value="' . locale_number_format($TimesheetRow['day4'],$EmployeeRow['decimalplaces']) . '" minlength="1" maxlength="4" size="4" /></td>
+							<td><input type="text" required="required" class="number" name="Day5_' . $EditableRowNo . '" value="' . locale_number_format($TimesheetRow['day5'],$EmployeeRow['decimalplaces']) . '" minlength="1" maxlength="4" size="4" /></td>
+							<td><input type="text" required="required" class="number" name="Day6_' . $EditableRowNo . '" value="' . locale_number_format($TimesheetRow['day6'],$EmployeeRow['decimalplaces']) . '" minlength="1" maxlength="4" size="4" /></td>
+							<td><input type="text" required="required" class="number" name="Day7_' . $EditableRowNo . '" value="' . locale_number_format($TimesheetRow['day7'],$EmployeeRow['decimalplaces']) . '" minlength="1" maxlength="4" size="4" /></td>
+							<td class="number">' . locale_number_format($TimesheetRow['day1']+$TimesheetRow['day2']+$TimesheetRow['day3']+$TimesheetRow['day4']+$TimesheetRow['day5']+$TimesheetRow['day6']+$TimesheetRow['day7'],$EmployeeRow['decimalplaces']) . '</td>
+							<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?Delete=' . $TimesheetRow['id'] . '&SelectedEmployee=' . $SelectedEmployee . '&WeekEnding=' . $_POST['WeekEnding'], ENT_QUOTES,'UTF-8') . '" onclick="return confirm(\'' . __('Are you sure you wish to delete this timesheet entry') . '\');">' . __('Delete')  . '</a></td>'
 							 . (($TimesheetRow['status']=='1') ? '<td>' . __('submitted') . '</td>' : '') .
 						'</tr>';
 						$EditableRowNo++; //increment the row number
@@ -697,65 +693,64 @@ if (isset($SelectedEmployee)){
 		} //end if there are previous entries
 
 		//Set up a form variable to tell us how many existing rows without going back to the DB
-		echo '<input type = "hidden" name = "Rows" value = "' . $EditableRowNo . '" />';
-		if ($EditableRowNo+$PostedRowNo > 1) {
-	// it is worth displaying the totals - only if there are several lines
+		echo '<input type="hidden" name="Rows" value="' . $EditableRowNo . '" />';
+		if ($EditableRowNo+$PostedRowNo > 1) { // it is worth displaying the totals - only if there are several lines
 			echo '<tr>
-					<td colspan = "10"><hr /></td>
+					<td colspan="10"><hr /></td>
 				</tr>
 				<tr>
-					<td colspan = "2">' . __('TOTALS') . '</td>
-					<td class = "number">' . locale_number_format($Day1,$EmployeeRow['decimalplaces']) . '</td>
-					<td class = "number">' . locale_number_format($Day2,$EmployeeRow['decimalplaces']) . '</td>
-					<td class = "number">' . locale_number_format($Day3,$EmployeeRow['decimalplaces']) . '</td>
-					<td class = "number">' . locale_number_format($Day4,$EmployeeRow['decimalplaces']) . '</td>
-					<td class = "number">' . locale_number_format($Day5,$EmployeeRow['decimalplaces']) . '</td>
-					<td class = "number">' . locale_number_format($Day6,$EmployeeRow['decimalplaces']) . '</td>
-					<td class = "number">' . locale_number_format($Day7,$EmployeeRow['decimalplaces']) . '</td>
-					<td class = "number">' . locale_number_format($Day1+$Day2+$Day3+$Day4+$Day5+$Day6+$Day7,$EmployeeRow['decimalplaces']) . '</td>
+					<td colspan="2">' . __('TOTALS') . '</td>
+					<td class="number">' . locale_number_format($Day1,$EmployeeRow['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($Day2,$EmployeeRow['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($Day3,$EmployeeRow['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($Day4,$EmployeeRow['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($Day5,$EmployeeRow['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($Day6,$EmployeeRow['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($Day7,$EmployeeRow['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($Day1+$Day2+$Day3+$Day4+$Day5+$Day6+$Day7,$EmployeeRow['decimalplaces']) . '</td>
 				</tr>';
-} // end of totals - only if multiple lines
+		} // end of totals - only if multiple lines
 		echo '<tr>
-				<td><select name = "WO">';
+				<td><select name="WO">';
 
-		if (!isset($_POST['WO']) or $_POST['WO']=='0'){
-			echo '<option selected = "selected" value = "0">' . __('Non-chargable') . '</option>';
+		if (!isset($_POST['WO']) OR $_POST['WO']=='0'){
+			echo '<option selected="selected" value="0">' . __('Non-chargable') . '</option>';
 		} else {
-			echo '<option  value = "0">' . __('Non-chargable') . '</option>';
+			echo '<option  value="0">' . __('Non-chargable') . '</option>';
 		}
 		$OpenWOResult = DB_query("SELECT woitems.wo,
 										stockmaster.description
 								FROM workorders INNER JOIN woitems
-									ON workorders.wo = woitems.wo
+									ON workorders.wo=woitems.wo
 									INNER JOIN stockmaster
-									ON stockmaster.stockid = woitems.stockid
-								WHERE workorders.closed = 0");
+									ON stockmaster.stockid=woitems.stockid
+								WHERE workorders.closed=0");
 		while ($OpenWORow = DB_fetch_array($OpenWOResult)) {
 			if ($OpenWORow['wo']==$_POST['WO']) {
-	echo '<option selected = "selected" value = "' . $OpenWORow['wo'] . '">' . $OpenWORow['wo'] . ' - ' . $OpenWORow['description'] . '</option>';
-} else {
-				echo '<option value = "' . $OpenWORow['wo'] . '">' . $OpenWORow['wo'] . ' - ' . $OpenWORow['description'] . '</option>';
+				echo '<option selected="selected" value="' . $OpenWORow['wo'] . '">' . $OpenWORow['wo'] . ' - ' . $OpenWORow['description'] . '</option>';
+			} else {
+				echo '<option value="' . $OpenWORow['wo'] . '">' . $OpenWORow['wo'] . ' - ' . $OpenWORow['description'] . '</option>';
 			}
 		}
 		echo '</select></td>
-				<td><select name = "WorkCentre">';
-		if (!isset($_POST['WorkCentre']) or $_POST['WorkCentre']=='0'){
-			echo '<option selected = "selected" value = "0">' . __('N/A') . '</option>';
+				<td><select name="WorkCentre">';
+		if (!isset($_POST['WorkCentre']) OR $_POST['WorkCentre']=='0'){
+			echo '<option selected="selected" value="0">' . __('N/A') . '</option>';
 		} else {
-			echo '<option value = "0">' . __('N/A') . '</option>';
+			echo '<option value="0">' . __('N/A') . '</option>';
 		}
 		$WorkCentreSQL = "SELECT code,
 								description
 						FROM workcentres";
-		if ($EmployeeLocation != '') {
-	$WorkCentreSQL .= " WHERE location = '" . $EmployeeLocation . "'";
-}
+		if ($EmployeeLocation!='') {
+			$WorkCentreSQL .= " WHERE location='" . $EmployeeLocation . "'";
+		}
 		$WorkCentresResult = DB_query($WorkCentreSQL);
 		while ($WorkCentreRow = DB_fetch_array($WorkCentresResult)) {
-			if ($_POST['WorkCentre']==$WorkCentreRow['code']) {
-	echo '<option selected = "selected" value = "' . $WorkCentreRow['code'] . '">' . $WorkCentreRow['description'] . '</option>';
-} else {
-				echo '<option value = "' . $WorkCentreRow['code'] . '">' . $WorkCentreRow['description'] . '</option>';
+			if ($_POST['WorkCentre']==$WorkCentreRow['code']){
+				echo '<option selected="selected" value="' . $WorkCentreRow['code'] . '">' . $WorkCentreRow['description'] . '</option>';
+			} else {
+				echo '<option value="' . $WorkCentreRow['code'] . '">' . $WorkCentreRow['description'] . '</option>';
 			}
 		} //end loop through valid work centres
 
@@ -770,29 +765,29 @@ if (isset($SelectedEmployee)){
 		}
 
 		echo '</select></td>
-			<td><input type = "text" required = "required" class = "number" name = "Day1" value = "' . locale_number_format($_POST['Day1'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
-			<td><input type = "text" required = "required" class = "number" name = "Day2" value = "' . locale_number_format($_POST['Day2'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
-			<td><input type = "text" required = "required" class = "number" name = "Day3" value = "' . locale_number_format($_POST['Day3'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
-			<td><input type = "text" required = "required" class = "number" name = "Day4" value = "' . locale_number_format($_POST['Day4'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
-			<td><input type = "text" required = "required" class = "number" name = "Day5" value = "' . locale_number_format($_POST['Day5'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
-			<td><input type = "text" required = "required" class = "number" name = "Day6" value = "' . locale_number_format($_POST['Day6'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
-			<td><input type = "text" required = "required" class = "number" name = "Day7" value = "' . locale_number_format($_POST['Day7'],$EmployeeRow['decimalplaces']) . '" minlength = "1" maxlength = "4" size = "4" /></td>
+			<td><input type="text" required="required" class="number" name="Day1" value="' . locale_number_format($_POST['Day1'],$EmployeeRow['decimalplaces']) . '" minlength="1" maxlength="4" size="4" /></td>
+			<td><input type="text" required="required" class="number" name="Day2" value="' . locale_number_format($_POST['Day2'],$EmployeeRow['decimalplaces']) . '" minlength="1" maxlength="4" size="4" /></td>
+			<td><input type="text" required="required" class="number" name="Day3" value="' . locale_number_format($_POST['Day3'],$EmployeeRow['decimalplaces']) . '" minlength="1" maxlength="4" size="4" /></td>
+			<td><input type="text" required="required" class="number" name="Day4" value="' . locale_number_format($_POST['Day4'],$EmployeeRow['decimalplaces']) . '" minlength="1" maxlength="4" size="4" /></td>
+			<td><input type="text" required="required" class="number" name="Day5" value="' . locale_number_format($_POST['Day5'],$EmployeeRow['decimalplaces']) . '" minlength="1" maxlength="4" size="4" /></td>
+			<td><input type="text" required="required" class="number" name="Day6" value="' . locale_number_format($_POST['Day6'],$EmployeeRow['decimalplaces']) . '" minlength="1" maxlength="4" size="4" /></td>
+			<td><input type="text" required="required" class="number" name="Day7" value="' . locale_number_format($_POST['Day7'],$EmployeeRow['decimalplaces']) . '" minlength="1" maxlength="4" size="4" /></td>
 			</tr>';
 	} //end of if isset($_POST['WeekEnding'])
 
 	echo '</table>
 		<br />
-		<div class = "centre">
-			<input type = "submit" name = "Enter" value = "' , __('Enter') , '" />';
+		<div class="centre">
+			<input type="submit" name="Enter" value="' , __('Enter') , '" />';
 
-	if (isset($SelectedEmployee) and $EditableRowNo>0){
-		echo '<input type = "submit" name = "SubmitForApproval" value = "' , __('Submit for Approval') , '" />';
+	if (isset($SelectedEmployee) AND $EditableRowNo>0){
+		echo '<input type="submit" name="SubmitForApproval" value="' , __('Submit for Approval') , '" />';
 	}
 
-	if (in_array(20, $_SESSION['AllowedPageSecurityTokens']) and isset($SelectedEmployee) and $EditableRowNo>0) { //a timesheet administrator
+	if (in_array(20, $_SESSION['AllowedPageSecurityTokens']) AND isset($SelectedEmployee) AND $EditableRowNo>0) { //a timesheet administrator
 		echo '<br />
 			<hr />
-			<input type = "submit" name = "ApproveTimesheet" value = "' , __('Approve') , '" />';
+			<input type="submit" name="ApproveTimesheet" value="' , __('Approve') , '" />';
 	}
 } //end if there is an employee selected - entering a timesheet
 

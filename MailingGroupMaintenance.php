@@ -7,7 +7,7 @@ $ViewTopic = 'Setup';
 $BookMark = 'MailingGroupMaintenance';
 include('includes/header.php');
 
-echo '<p class =  "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/group_add.png" alt = "" />' . $Title . '</p>';
+echo '<p class= "page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/group_add.png" alt="" />' . $Title . '</p>';
 
 //show the mail group existed only when user request this page first
 if (!isset($_POST['Clean']) and !isset($_GET['Delete']) and !isset($_GET['Edit']) and !isset($_GET['Add']) and !isset($_GET['Remove'])) {
@@ -26,11 +26,12 @@ if (isset($_POST['Enter'])) { //user has input a new value
 		include('includes/footer.php');
 	}
 	if ($InputError == 0) {
-	$SQL = "INSERT INTO mailgroups (groupname) VALUES ('" . $MailGroup . "')";
+		$SQL = "INSERT INTO mailgroups (groupname) VALUES ('" . $MailGroup . "')";
 		$ErrMsg = __('Failed to add new mail group');
 		$Result = DB_query($SQL, $ErrMsg);
 		GetMailGroup();
-}
+
+	}
 
 } //end of handling new mail group input
 
@@ -72,8 +73,8 @@ if (isset($_GET['Delete'])) {
 		$SQL = "SELECT userid
 					FROM mailgroupdetails
 					INNER JOIN mailgroups
-						ON mailgroupdetails.groupname = mailgroups.groupname
-					WHERE id = '" . $id . "'";
+						ON mailgroupdetails.groupname=mailgroups.groupname
+					WHERE id='" . $id . "'";
 		$Result = DB_query($SQL);
 		if (DB_num_rows($Result) == 0) {
 			$SQL = "DELETE FROM mailgroups WHERE id = '" . $id . "'";
@@ -145,27 +146,27 @@ if (isset($_GET['Remove'])) {
 		}
 
 	}
-	$SQL = "DELETE FROM mailgroupdetails WHERE userid = '" . $UserId . "' and groupname = '" . $GroupName . "'";
+	$SQL = "DELETE FROM mailgroupdetails WHERE userid = '" . $UserId . "' AND groupname = '" . $GroupName . "'";
 	$ErrMsg = 'Failed to delete the userid ' . $UserId . ' from group ' . $GroupName;
 	$Result = DB_query($SQL, $ErrMsg);
 	GetUsers($GroupId, $GroupName);
 
 }
 if (!isset($_GET['Edit'])) { //display the input form
-	echo '<form id = "MailGroups" action = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method = "post">';
-	echo '<input type = "hidden" name = "FormID" value = "', $_SESSION['FormID'], '" />';
+	echo '<form id="MailGroups" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 	echo '<fieldset>
 			<legend>', __('Mail Group'), '</legend>';
 	echo '<field>
-			<label for = "MailGroup">', __('Mail Group'), '</label>
-			<input type = "text" required = "required" autofocus = "autofocus" name = "MailGroup" maxlength = "100" size = "20" />
+			<label for="MailGroup">', __('Mail Group'), '</label>
+			<input type="text" required="required" autofocus="autofocus" name="MailGroup" maxlength="100" size="20" />
 		</field>';
 	echo '</fieldset>';
 
-	echo '<input type = "hidden" name = "Clean" value = "1" />';
-	echo '<div class = "centre">
-			<input type = "submit" name = "Enter" value = "', __('Submit'), '" />
+	echo '<input type="hidden" name="Clean" value="1" />';
+	echo '<div class="centre">
+			<input type="submit" name="Enter" value="', __('Submit'), '" />
 		</div>
 	</form>';
 
@@ -179,17 +180,17 @@ function GetMailGroup() {
 	$Result = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($Result) != 0) {
 
-		echo '<table class = "selection">
+		echo '<table class="selection">
 				<tr>
 					<th>' . __('Mail Group') . '</th>
-					<th colspan = "2"></th>
+					<th colspan="2"></th>
 				</tr>';
 		while ($MyRow = DB_fetch_array($Result)) {
 
-			echo '<tr class = "striped_row">
+			echo '<tr class="striped_row">
 					<td>' . $MyRow['groupname'] . '</td>
-					<td><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?GroupId = ' . $MyRow['id'] . '&amp;Edit = 1&amp;GroupName = ' . $MyRow['groupname'] . '" >' . __('Edit') . '</a></td>
-					<td><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Id = ' . $MyRow['id'] . '&amp;Delete = 1" onclick = "return confirm(\'' . __('Are you sure you wish to delete this group?') . '\');">' . __('Delete') . '</a></td>
+					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?GroupId=' . $MyRow['id'] . '&amp;Edit=1&amp;GroupName=' . $MyRow['groupname'] . '" >' . __('Edit') . '</a></td>
+					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Id=' . $MyRow['id'] . '&amp;Delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this group?') . '\');">' . __('Delete') . '</a></td>
 				</tr>';
 
 		}
@@ -198,7 +199,7 @@ function GetMailGroup() {
 }
 
 function GetUsers($GroupId, $GroupName) {
-	$SQL = "SELECT userid FROM mailgroups INNER JOIN mailgroupdetails ON mailgroups.groupname = mailgroupdetails.groupname WHERE mailgroups.id = '" . $GroupId . "'";
+	$SQL = "SELECT userid FROM mailgroups INNER JOIN mailgroupdetails ON mailgroups.groupname=mailgroupdetails.groupname WHERE mailgroups.id = '" . $GroupId . "'";
 	$ErrMsg = __('Failed to retrieve userid');
 	$Result = DB_query($SQL, $ErrMsg);
 
@@ -215,26 +216,26 @@ function GetUsers($GroupId, $GroupName) {
 	$ErrMsg = __('Failed to retrieve user information');
 	$Result = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($Result) != 0) {
-		echo '<a class = "toplink" href = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . __('View All Groups') . '</a>';
+		echo '<a class="toplink" href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . __('View All Groups') . '</a>';
 
-		echo '<table class = "selection">
-				<tr class = "total_row">
-					<th colspan = "6">' . __('Current Mail Group') . ' : ' . $GroupName . '</th>
+		echo '<table class="selection">
+				<tr class="total_row">
+					<th colspan="6">' . __('Current Mail Group') . ' : ' . $GroupName . '</th>
 				</tr>
 				<tr>
-					<th colspan = "3">' . __('Assigned Users') . '</th>
-					<th colspan = "3">' . __('Available Users') . '</th>
+					<th colspan="3">' . __('Assigned Users') . '</th>
+					<th colspan="3">' . __('Available Users') . '</th>
 				</tr>';
 
 		while ($MyRow = DB_fetch_array($Result)) {
 
-			echo '<tr class = "striped_row">';
+			echo '<tr class="striped_row">';
 
 			if (in_array($MyRow['userid'], $UsersAssigned)) {
 
 				echo '<td>' . $MyRow['userid'] . '</td>
 				<td>' . $MyRow['realname'] . '</td>
-				<td><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?UserId = ' . $MyRow['userid'] . '&amp;GroupName = ' . $GroupName . '&amp;Remove = 1&amp;GroupId = ' . $GroupId . '" onclick = "return confirm(\'' . __('Are you sure you wish to remove this user from this mail group?') . '\');">' . __('Remove') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?UserId=' . $MyRow['userid'] . '&amp;GroupName=' . $GroupName . '&amp;Remove=1&amp;GroupId=' . $GroupId . '" onclick="return confirm(\'' . __('Are you sure you wish to remove this user from this mail group?') . '\');">' . __('Remove') . '</a></td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>';
@@ -245,7 +246,7 @@ function GetUsers($GroupId, $GroupName) {
 				<td>&nbsp;</td>
 				<td>' . $MyRow['userid'] . '</td>
 				<td>' . $MyRow['realname'] . '</td>
-				<td><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?UserId = ' . $MyRow['userid'] . '&amp;Add = 1&amp;GroupName = ' . $GroupName . '&amp;GroupId = ' . $GroupId . '">' . __('Add') . '</a></td>';
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?UserId=' . $MyRow['userid'] . '&amp;Add=1&amp;GroupName=' . $GroupName . '&amp;GroupId=' . $GroupId . '">' . __('Add') . '</a></td>';
 
 			}
 

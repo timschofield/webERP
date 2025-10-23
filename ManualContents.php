@@ -22,7 +22,7 @@ $PageSecurity = 0;
 /*
 session_start();
 $Language = $_SESSION['Language'];
-if (isset($_GET['Language'])) {// Set an other language for manual.
+if(isset($_GET['Language'])) {// Set an other language for manual.
 	$Language = $_GET['Language'];
 }
 */
@@ -49,17 +49,17 @@ if (file_exists($ManualHeader)) { // Use locale ManualHeader.html if exists. Eac
 	include($ManualHeader);
 } else {// Default page header:
 	echo '<!DOCTYPE html>
-	<html lang = "', str_replace('_', '-', substr($Language, 0, 5)), '">
+	<html lang="', str_replace('_', '-', substr($Language, 0, 5)), '">
 	<head>
 	  <title>', $Title, '</title>
-	  <meta http-equiv = "Content-Type" content = "text/html;charset = utf-8">
-	  <link rel = "stylesheet" type = "text/css" href = "', $ManualStyle, '" />
+	  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	  <link rel="stylesheet" type="text/css" href="', $ManualStyle, '" />
 	</head>
 	<body>
-		<div id = "pagetitle">', $Title, '</div>
-		<div class = "right">
-			<a id = "top">&#160;</a><a class = "minitext" href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '">☜ ', __('Table of Contents'), '</a><br />
-			<a class = "minitext" href = "#bottom">⬇ ', __('Go to Bottom'), '</a>
+		<div id="pagetitle">', $Title, '</div>
+		<div class="right">
+			<a id="top">&#160;</a><a class="minitext" href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '">☜ ', __('Table of Contents'), '</a><br />
+			<a class="minitext" href="#bottom">⬇ ', __('Go to Bottom'), '</a>
 		</div>';
 }
 
@@ -68,33 +68,32 @@ $_GET['Bookmark'] = isset($_GET['Bookmark']) ? $_GET['Bookmark'] : '';
 $_GET['ViewTopic'] = isset($_GET['ViewTopic']) ? $_GET['ViewTopic'] : '';
 
 //all sections of manual listed here
-if (((!isset($_POST['Submit'])) and (empty($_GET['ViewTopic']))) || ((isset($_POST['Submit'])) and (isset($_POST['SelectTableOfContents'])))) {
-	echo '<form action = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method = "post">';
+if(((!isset($_POST['Submit'])) and (empty($_GET['ViewTopic']))) || ((isset($_POST['Submit'])) and (isset($_POST['SelectTableOfContents'])))) {
+	echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">';
 	// if not submittws then coming into manual to look at TOC
 	// if SelectTableOfContents set then user wants it displayed
-	if (!isset($_POST['Submit'])) {
+	if(!isset($_POST['Submit'])) {
 		echo '<p>', __('Click on a link to view a page'), '</p>';
 	}
 	echo '<h1>';
 	echo __('Table of Contents'), '</h1>';
 	$j = 0;
-	foreach ($TOC_Array['TableOfContents'] as $Title => $SubLinks) {
+	foreach($TOC_Array['TableOfContents'] as $Title => $SubLinks) {
 		$Name = 'Select' . $Title;
 		echo '<ul>
-			<li class = "toc"';
+			<li class="toc"';
 		// List topic title:
-		if (!isset($_POST['Submit'])) {
-			echo ' style = "list-style-type:none;">';
+		if(!isset($_POST['Submit'])) {
+			echo ' style="list-style-type:none;">';
 		}
-		echo '<a href = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?ViewTopic = ', $Title, '">', $SubLinks[0], '</a></li>';
+		echo '<a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?ViewTopic=', $Title, '">', $SubLinks[0], '</a></li>';
 		// List topic content:
-		if (count($SubLinks) > 1) {
+		if(count($SubLinks) > 1) {
 			echo '<ul>';
-			foreach ($SubLinks as $k => $SubName) {
-				if ($k == 0) {
-	// Skip first array element $SubLinks[0].
+			foreach($SubLinks as $k => $SubName) {
+				if($k == 0) {// Skip first array element $SubLinks[0].
 					continue;
-}
+				}
 				echo '<li>', $SubName, '</li>';
 			}
 			echo '</ul>';
@@ -104,27 +103,27 @@ if (((!isset($_POST['Submit'])) and (empty($_GET['ViewTopic']))) || ((isset($_PO
 		++$j;
 	}
 	echo '</ul>',
-		'<p><input type = "submit" name = "Submit" value = "', __('Display Checked'), '" /></p>',
+		'<p><input type="submit" name="Submit" value="', __('Display Checked'), '" /></p>',
 		'</form>';
 }
 
-if (!isset($_GET['ViewTopic'])) {
+if(!isset($_GET['ViewTopic'])) {
 	$_GET['ViewTopic'] = '';
 }
 
-foreach ($TOC_Array['TableOfContents'] as $Name => $FullName) {
+foreach($TOC_Array['TableOfContents'] as $Name => $FullName) {
 	$PostName = 'Select' . $Name;
 	if (($_GET['ViewTopic'] == $Name) or (isset($_POST[$PostName]))) {
 		if ($Name == 'APIFunctions') {
-	$Name .= '.php';
-} else {
+			$Name .= '.php';
+		} else {
 			$Name .= '.html';
 		}
 		$ManualPage = 'locale/' . $Language . '/Manual/Manual' . $Name;
 		if (!file_exists($ManualPage)) {// If locale topic page not exist, use topic page in doc/Manual.
 			$ManualPage = 'doc/Manual/Manual' . $Name;
 		}
-		echo '<div id = "manualpage">';
+		echo '<div id="manualpage">';
 		include($ManualPage);
 		echo '</div>';
 	}
@@ -132,12 +131,12 @@ foreach ($TOC_Array['TableOfContents'] as $Name => $FullName) {
 
 // Output the footer part:
 $ManualFooter = 'locale/' . $Language . '/Manual/ManualFooter.html';
-if (file_exists($ManualFooter)) {// Use locale ManualHeader.html if exists. Each language can have its own page footer.
+if(file_exists($ManualFooter)) {// Use locale ManualHeader.html if exists. Each language can have its own page footer.
 	include($ManualFooter);
 } else {// Default page footer:
-	echo '<div class = "right">
-			<a id = "bottom">&#160;</a><a class = "minitext" href = "#top">⬆ ', __('Go to Top'), '</a><br />
-			<a id = "top">&#160;</a><a class = "minitext" href = "', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '">☜ ', __('Table of Contents'), '</a>
+	echo '<div class="right">
+			<a id="bottom">&#160;</a><a class="minitext" href="#top">⬆ ', __('Go to Top'), '</a><br />
+			<a id="top">&#160;</a><a class="minitext" href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '">☜ ', __('Table of Contents'), '</a>
 		</div>
 	</body>
 	</html>';

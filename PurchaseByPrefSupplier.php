@@ -7,7 +7,7 @@ $ViewTopic = 'PurchaseOrdering';
 $BookMark = '';
 include('includes/header.php');
 
-if (isset($_POST['CreatePO']) and isset($_POST['Supplier'])){
+if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 	include('includes/SQL_CommonFunctions.php');
 	$InputError =0; //Always hope for the best
 
@@ -17,7 +17,7 @@ if (isset($_POST['CreatePO']) and isset($_POST['Supplier'])){
 	foreach ($_POST as $FormVariable => $Quantity) {
 		if (mb_strpos($FormVariable,'OrderQty')!==false) {
 			if ($Quantity > 0) {
-	$StockID = $_POST['StockID' . mb_substr($FormVariable,8)];
+				$StockID = $_POST['StockID' . mb_substr($FormVariable,8)];
 				$PurchItems[$StockID]['Quantity'] = filter_number_format($Quantity);
 
 				$SQL = "SELECT description,
@@ -38,11 +38,11 @@ if (isset($_POST['CreatePO']) and isset($_POST['Supplier'])){
 								suppliersuom,
 								suppliers_partno,
 								leadtime,
-								MAX(purchdata.effectivefrom) as latesteffectivefrom
+								MAX(purchdata.effectivefrom) AS latesteffectivefrom
 							FROM purchdata
 							WHERE purchdata.supplierno = '" . $_POST['Supplier'] . "'
-								and purchdata.effectivefrom <= CURRENT_DATE
-								and purchdata.stockid = '". $StockID . "'
+								AND purchdata.effectivefrom <= CURRENT_DATE
+								AND purchdata.stockid = '". $StockID . "'
 							GROUP BY purchdata.price,
 									purchdata.conversionfactor,
 									purchdata.supplierdescription,
@@ -61,10 +61,10 @@ if (isset($_POST['CreatePO']) and isset($_POST['Supplier'])){
 										discountamount
 								FROM supplierdiscounts
 								WHERE supplierno= '" . $_POST['Supplier'] . "'
-									and effectivefrom <= CURRENT_DATE
-									and (effectiveto >= CURRENT_DATE
-										or effectiveto ='1000-01-01')
-									and stockid = '". $StockID . "'";
+									AND effectivefrom <= CURRENT_DATE
+									AND (effectiveto >= CURRENT_DATE
+										OR effectiveto ='1000-01-01')
+									AND stockid = '". $StockID . "'";
 
 						$ItemDiscountPercent = 0;
 						$ItemDiscountAmount = 0;
@@ -73,10 +73,10 @@ if (isset($_POST['CreatePO']) and isset($_POST['Supplier'])){
 						while ($DiscountRow = DB_fetch_array($DiscountResult)) {
 							$ItemDiscountPercent += $DiscountRow['discountpercent'];
 							$ItemDiscountAmount += $DiscountRow['discountamount'];
-}
+						}
 						if ($ItemDiscountPercent != 0) {
-	prnMsg(__('Taken accumulated supplier percentage discounts of') .  ' ' . locale_number_format($ItemDiscountPercent*100,2) . '%','info');
-}
+							prnMsg(__('Taken accumulated supplier percentage discounts of') .  ' ' . locale_number_format($ItemDiscountPercent*100,2) . '%','info');
+						}
 						$PurchItems[$StockID]['Price'] = ($PurchRow['price']*(1-$ItemDiscountPercent) - $ItemDiscountAmount)/$PurchRow['conversionfactor'];
 						$PurchItems[$StockID]['ConversionFactor'] = $PurchRow['conversionfactor'];
 						$PurchItems[$StockID]['GLCode'] = $ItemRow['stockact'];
@@ -110,8 +110,7 @@ if (isset($_POST['CreatePO']) and isset($_POST['Supplier'])){
 		} //end if the form variable name is OrderQtyXXX
 	}//end loop around the form variables
 
-	if ($InputError==0) {
-	//only if all continues smoothly
+	if ($InputError==0) { //only if all continues smoothly
 
 		$SQL = "SELECT suppliers.suppname,
 						suppliers.currcode,
@@ -144,7 +143,7 @@ if (isset($_POST['CreatePO']) and isset($_POST['Supplier'])){
 		$LocnAddrResult = DB_query($SQL);
 		if (DB_num_rows($LocnAddrResult) == 1) {
 			$LocnRow = DB_fetch_array($LocnAddrResult);
-} else {
+		} else {
 			prnMsg(__('Your default inventory location is set to a non-existant inventory location. This purchase order cannot proceed'), 'error');
 			$InputError =1;
 		}
@@ -154,20 +153,20 @@ if (isset($_POST['CreatePO']) and isset($_POST['Supplier'])){
 			$UserDetails  = ' ' . $_SESSION['UsersRealName'] . ' ';
 		}
 		if ($_SESSION['AutoAuthorisePO']==1) {
-	//if the user has authority to authorise the PO then it will automatically be authorised
+			//if the user has authority to authorise the PO then it will automatically be authorised
 			$AuthSQL ="SELECT authlevel
 						FROM purchorderauth
 						WHERE userid='" . $_SESSION['UserID'] . "'
-						and currabrev='" . $SupplierRow['currcode'] ."'";
+						AND currabrev='" . $SupplierRow['currcode'] ."'";
 
 			$AuthResult = DB_query($AuthSQL);
 			$AuthRow=DB_fetch_array($AuthResult);
 
-			if (DB_num_rows($AuthResult) > 0 and $AuthRow['authlevel'] > $OrderValue) { //user has authority to authrorise as well as create the order
+			if (DB_num_rows($AuthResult) > 0 AND $AuthRow['authlevel'] > $OrderValue) { //user has authority to authrorise as well as create the order
 				$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . __('Order Created and Authorised by') . $UserDetails;
 				$AllowPrintPO=1;
 				$Status = 'Authorised';
-} else { // no authority to authorise this order
+			} else { // no authority to authorise this order
 				if (DB_num_rows($AuthResult) ==0){
 					$AuthMessage = __('Your authority to approve purchase orders in') . ' ' . $SupplierRow['currcode'] . ' ' . __('has not yet been set up') . '<br />';
 				} else {
@@ -314,7 +313,7 @@ $SuppResult = DB_query($SQL);
 echo '<option value="">' . __('Not Yet Selected') . '</option>';
 
 while ($MyRow=DB_fetch_array($SuppResult)){
-	if (isset($_POST['Supplier']) and $_POST['Supplier']==$MyRow['supplierid']){
+	if (isset($_POST['Supplier']) AND $_POST['Supplier']==$MyRow['supplierid']){
 		echo '<option selected="selected" value="' . $MyRow['supplierid'] . '">' . $MyRow['suppname']  . '</option>';
 	} else {
 		echo '<option value="' . $MyRow['supplierid'] . '">' . $MyRow['suppname']  . '</option>';
@@ -331,22 +330,22 @@ echo '<tr>
 if (!isset($_POST['NumberMonthsHolding'])){
 	$_POST['NumberMonthsHolding']=1;
 }
-if ($_POST['NumberMonthsHolding']==0.5) {
+if ($_POST['NumberMonthsHolding']==0.5){
 	echo '<option selected="selected" value="0.5">' . __('Two Weeks')  . '</option>';
 } else {
 	echo '<option value="0.5">' . __('Two Weeks')  . '</option>';
 }
-if ($_POST['NumberMonthsHolding']==1) {
+if ($_POST['NumberMonthsHolding']==1){
 	echo '<option selected="selected" value="1">' . __('One Month') . '</option>';
 } else {
 	echo '<option selected="selected" value="1">' . __('One Month') . '</option>';
 }
-if ($_POST['NumberMonthsHolding']==1.5) {
+if ($_POST['NumberMonthsHolding']==1.5){
 	echo '<option selected="selected" value="1.5">' . __('Six Weeks') . '</option>';
 } else {
 	echo '<option value="1.5">' . __('Six Weeks') . '</option>';
 }
-if ($_POST['NumberMonthsHolding']==2) {
+if ($_POST['NumberMonthsHolding']==2){
 	echo '<option selected="selected" value="2">' . __('Two Months') . '</option>';
 } else {
 	echo '<option value="2">' . __('Two Months') . '</option>';
@@ -359,7 +358,7 @@ echo '</fieldset>
 		<input type="submit" name="ShowItems" value="' . __('Show Items') . '" />
 	</div>';
 
-if (isset($_POST['Supplier']) and isset($_POST['ShowItems']) and $_POST['Supplier']!=''){
+if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplier']!=''){
 
 		$SQL = "SELECT stockmaster.description,
 						stockmaster.eoq,
@@ -367,20 +366,20 @@ if (isset($_POST['Supplier']) and isset($_POST['ShowItems']) and $_POST['Supplie
 						locstock.stockid,
 						purchdata.supplierno,
 						suppliers.suppname,
-						purchdata.leadtime/30 as monthsleadtime,
+						purchdata.leadtime/30 AS monthsleadtime,
 						locstock.bin,
-						SUM(locstock.quantity) as qoh
+						SUM(locstock.quantity) AS qoh
 					FROM locstock,
 						stockmaster,
 						purchdata,
 						suppliers
 					WHERE locstock.stockid=stockmaster.stockid
-					and purchdata.supplierno=suppliers.supplierid
-					and (stockmaster.mbflag='B' or stockmaster.mbflag='M')
-					and purchdata.stockid=stockmaster.stockid
-					and purchdata.preferred=1
-					and purchdata.supplierno='" . $_POST['Supplier'] . "'
-					and locstock.loccode='" . $_SESSION['UserStockLocation'] . "'
+					AND purchdata.supplierno=suppliers.supplierid
+					AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M')
+					AND purchdata.stockid=stockmaster.stockid
+					AND purchdata.preferred=1
+					AND purchdata.supplierno='" . $_POST['Supplier'] . "'
+					AND locstock.loccode='" . $_SESSION['UserStockLocation'] . "'
 					GROUP BY
 						purchdata.supplierno,
 						stockmaster.description,
@@ -418,19 +417,19 @@ if (isset($_POST['Supplier']) and isset($_POST['ShowItems']) and $_POST['Supplie
 
 	while ($ItemRow = DB_fetch_array($ItemsResult)){
 
-		$SQL = "SELECT SUM(case WHEN (trandate>='" . date('Y-m-d',mktime(0,0,0, date('m')-2, date('d'), date('Y'))) . "' and
-							trandate<='" . date('Y-m-d',mktime(0,0,0, date('m')-1, date('d'), date('Y'))) . "') THEN -qty else 0 END) as previousmonth,
-					SUM(case WHEN (trandate>='" . date('Y-m-d',mktime(0,0,0, date('m')-1, date('d'), date('Y'))) . "' and
-							trandate<= CURRENT_DATE) THEN -qty else 0 END) as lastmonth,
-					SUM(case WHEN (trandate>='" . date('Y-m-d',mktime(0,0,0, date('m'), date('d')-(3*7), date('Y'))) . "' and
-							trandate<='" . date('Y-m-d',mktime(0,0,0, date('m'), date('d')-(2*7), date('Y'))) . "') THEN -qty else 0 END) as wk3,
-					SUM(case WHEN (trandate>='" . date('Y-m-d',mktime(0,0,0, date('m'), date('d')-(2*7), date('Y'))) . "' and
-							trandate<='" . date('Y-m-d',mktime(0,0,0, date('m'), date('d')-7, date('Y'))) . "') THEN -qty else 0 END) as wk2,
-					SUM(case WHEN (trandate>='" . date('Y-m-d',mktime(0,0,0, date('m'), date('d')-7, date('Y'))) . "' and
-							trandate<= CURRENT_DATE) THEN -qty else 0 END) as wk1
+		$SQL = "SELECT SUM(CASE WHEN (trandate>='" . date('Y-m-d',mktime(0,0,0, date('m')-2, date('d'), date('Y'))) . "' AND
+							trandate<='" . date('Y-m-d',mktime(0,0,0, date('m')-1, date('d'), date('Y'))) . "') THEN -qty ELSE 0 END) AS previousmonth,
+					SUM(CASE WHEN (trandate>='" . date('Y-m-d',mktime(0,0,0, date('m')-1, date('d'), date('Y'))) . "' AND
+							trandate<= CURRENT_DATE) THEN -qty ELSE 0 END) AS lastmonth,
+					SUM(CASE WHEN (trandate>='" . date('Y-m-d',mktime(0,0,0, date('m'), date('d')-(3*7), date('Y'))) . "' AND
+							trandate<='" . date('Y-m-d',mktime(0,0,0, date('m'), date('d')-(2*7), date('Y'))) . "') THEN -qty ELSE 0 END) AS wk3,
+					SUM(CASE WHEN (trandate>='" . date('Y-m-d',mktime(0,0,0, date('m'), date('d')-(2*7), date('Y'))) . "' AND
+							trandate<='" . date('Y-m-d',mktime(0,0,0, date('m'), date('d')-7, date('Y'))) . "') THEN -qty ELSE 0 END) AS wk2,
+					SUM(CASE WHEN (trandate>='" . date('Y-m-d',mktime(0,0,0, date('m'), date('d')-7, date('Y'))) . "' AND
+							trandate<= CURRENT_DATE) THEN -qty ELSE 0 END) AS wk1
 				FROM stockmoves
 				WHERE stockid='" . $ItemRow['stockid'] . "'
-				and (type=10 or type=11)";
+				AND (type=10 OR type=11)";
 
 		$ErrMsg = __('The sales quantities could not be retrieved');
 		$SalesResult = DB_query($SQL, $ErrMsg, '',false);

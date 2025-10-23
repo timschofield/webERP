@@ -27,17 +27,17 @@ if ((isset($_POST['ShowLabels']) or isset($_POST['SelectAll']))
 					prices.price,
 					currencies.decimalplaces
 			FROM stockmaster INNER JOIN stockcategory
-					ON stockmaster.categoryid = stockcategory.categoryid
+					ON stockmaster.categoryid=stockcategory.categoryid
 			INNER JOIN prices
-				ON stockmaster.stockid = prices.stockid
+				ON stockmaster.stockid=prices.stockid
 			INNER JOIN currencies
-				ON prices.currabrev = currencies.currabrev
+				ON prices.currabrev=currencies.currabrev
 			WHERE stockmaster.categoryid = '" . $_POST['StockCategory'] . "'
-			and prices.typeabbrev = '" . $_POST['SalesType'] . "'
-			and prices.currabrev = '" . $_POST['Currency'] . "'
-			and prices.startdate<='" . FormatDateForSQL($_POST['EffectiveDate']) . "'
-			and prices.enddate>'" . FormatDateForSQL($_POST['EffectiveDate']) . "'
-			and prices.debtorno = ''
+			AND prices.typeabbrev='" . $_POST['SalesType'] . "'
+			AND prices.currabrev='" . $_POST['Currency'] . "'
+			AND prices.startdate<='" . FormatDateForSQL($_POST['EffectiveDate']) . "'
+			AND prices.enddate>'" . FormatDateForSQL($_POST['EffectiveDate']) . "'
+			AND prices.debtorno=''
 			ORDER BY prices.currabrev,
 				stockmaster.categoryid,
 				stockmaster.stockid,
@@ -48,14 +48,14 @@ if ((isset($_POST['ShowLabels']) or isset($_POST['SelectAll']))
 
 	if (DB_num_rows($LabelsResult) == 0) {
 		prnMsg(__('There were no price labels to print out for the category specified'), 'warn');
-		echo '<br /><a href = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' .  __('Back') . '</a>';
+		echo '<br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' .  __('Back') . '</a>';
 		include('includes/footer.php');
 		exit();
 	}
 
-	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post">';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
-	echo '<table class = "selection">
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<table class="selection">
 			<tr>
 				<th>' . __('Item Code') . '</th>
 				<th>' . __('Item Description') . '</th>
@@ -63,11 +63,11 @@ if ((isset($_POST['ShowLabels']) or isset($_POST['SelectAll']))
 				<th>' . __('Print') . ' ?</th>
 			</tr>
 			<tr>
-				<th colspan = "4"><input type = "submit" name = "SelectAll" value = "' . __('Select All Labels') . '" /><input type = "checkbox" name = "CheckAll" ';
+				<th colspan="4"><input type="submit" name="SelectAll" value="' . __('Select All Labels') . '" /><input type="checkbox" name="CheckAll" ';
 	if (isset($_POST['CheckAll'])) {
-		echo 'checked = "checked" ';
+		echo 'checked="checked" ';
 	}
-	echo 'onchange = "ReloadForm(SelectAll)" /></td>
+	echo 'onchange="ReloadForm(SelectAll)" /></td>
 		</tr>';
 
 	$i = 0;
@@ -75,35 +75,35 @@ if ((isset($_POST['ShowLabels']) or isset($_POST['SelectAll']))
 		echo '<tr>
 				<td>' . $LabelRow['stockid'] . '</td>
 				<td>' . $LabelRow['description'] . '</td>
-				<td class = "number">' . locale_number_format($LabelRow['price'], $LabelRow['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format($LabelRow['price'], $LabelRow['decimalplaces']) . '</td>
 				<td>';
 		if (isset($_POST['SelectAll']) && isset($_POST['CheckAll'])) {
-			echo '<input type = "checkbox" checked = "checked" name = "PrintLabel' . $i . '" />';
+			echo '<input type="checkbox" checked="checked" name="PrintLabel' . $i . '" />';
 		} else {
-			echo '<input type = "checkbox" name = "PrintLabel' . $i . '" />';
+			echo '<input type="checkbox" name="PrintLabel' . $i . '" />';
 		}
 		echo '</td>
 			</tr>';
-		echo '<input type = "hidden" name = "StockID' . $i . '" value = "' . $LabelRow['stockid'] . '" />
-			<input type = "hidden" name = "Description' . $i . '" value = "' . $LabelRow['description'] . '" />
-			<input type = "hidden" name = "Barcode' . $i . '" value = "' . $LabelRow['barcode'] . '" />
-			<input type = "hidden" name = "Price' . $i . '" value = "' . locale_number_format($LabelRow['price'], $LabelRow['decimalplaces']) . '" />';
+		echo '<input type="hidden" name="StockID' . $i . '" value="' . $LabelRow['stockid'] . '" />
+			<input type="hidden" name="Description' . $i . '" value="' . $LabelRow['description'] . '" />
+			<input type="hidden" name="Barcode' . $i . '" value="' . $LabelRow['barcode'] . '" />
+			<input type="hidden" name="Price' . $i . '" value="' . locale_number_format($LabelRow['price'], $LabelRow['decimalplaces']) . '" />';
 		$i++;
 	}
 	$i--;
 	echo '</table>
-		<input type = "hidden" name = "NoOfLabels" value = "' . $i . '" />
-		<input type = "hidden" name = "LabelID" value = "' . $_POST['LabelID'] . '" />
-		<input type = "hidden" name = "StockCategory" value = "' . $_POST['StockCategory'] . '" />
-		<input type = "hidden" name = "SalesType" value = "' . $_POST['SalesType'] . '" />
-		<input type = "hidden" name = "Currency" value = "' . $_POST['Currency'] . '" />
-		<input type = "hidden" name = "EffectiveDate" value = "' . FormatDateForSQL($_POST['EffectiveDate']) . '" />
-		<input type = "hidden" name = "LabelsPerItem" value = "' . $_POST['LabelsPerItem'] . '" />
-		<div class = "centre">
-			<input type = "submit" name = "PrintLabels" value = "' . __('Print Labels') . '" />
+		<input type="hidden" name="NoOfLabels" value="' . $i . '" />
+		<input type="hidden" name="LabelID" value="' . $_POST['LabelID'] . '" />
+		<input type="hidden" name="StockCategory" value="' . $_POST['StockCategory'] . '" />
+		<input type="hidden" name="SalesType" value="' . $_POST['SalesType'] . '" />
+		<input type="hidden" name="Currency" value="' . $_POST['Currency'] . '" />
+		<input type="hidden" name="EffectiveDate" value="' . FormatDateForSQL($_POST['EffectiveDate']) . '" />
+		<input type="hidden" name="LabelsPerItem" value="' . $_POST['LabelsPerItem'] . '" />
+		<div class="centre">
+			<input type="submit" name="PrintLabels" value="' . __('Print Labels') . '" />
 		</div>
-		<div class = "centre">
-			<a href = "' . $RootPath . '/Labels.php">' . __('Label Template Maintenance') . '</a>
+		<div class="centre">
+			<a href="' . $RootPath . '/Labels.php">' . __('Label Template Maintenance') . '</a>
 		</div>
 		</form>';
 	include('includes/footer.php');
@@ -112,14 +112,14 @@ if ((isset($_POST['ShowLabels']) or isset($_POST['SelectAll']))
 
 $NoOfLabels = 0;
 if (isset($_POST['PrintLabels']) && isset($_POST['NoOfLabels']) && $_POST['NoOfLabels'] > 0) {
-	for ($i = 0;  $i < $_POST['NoOfLabels'];  $i++) {
+	for ($i = 0; $i < $_POST['NoOfLabels']; $i++) {
 		if (isset($_POST['PrintLabel' . $i])) {
 			$NoOfLabels++;
 		}
 	}
 	if ($NoOfLabels == 0) {
-	prnMsg(__('There are no labels selected to print'), 'info');
-}
+		prnMsg(__('There are no labels selected to print'), 'info');
+	}
 }
 
 if (isset($_POST['PrintLabels']) && $NoOfLabels > 0) {
@@ -134,7 +134,7 @@ if (isset($_POST['PrintLabels']) && $NoOfLabels > 0) {
 								topmargin*" . $PtsPerMM . " as label_topmargin,
 								leftmargin*" . $PtsPerMM . " as label_leftmargin
 						FROM labels
-						WHERE labelid = '" . $_POST['LabelID'] . "'");
+						WHERE labelid='" . $_POST['LabelID'] . "'");
 	$LabelDimensions = DB_fetch_array($Result);
 
 	$Result = DB_query("SELECT fieldvalue,
@@ -148,10 +148,10 @@ if (isset($_POST['PrintLabels']) && $NoOfLabels > 0) {
 	$i = 0;
 	while ($LabelFieldRow = DB_fetch_array($Result)) {
 		if ($LabelFieldRow['fieldvalue'] == 'itemcode') {
-	$LabelFields[$i]['FieldValue'] = 'stockid';
-} elseif ($LabelFieldRow['fieldvalue'] == 'itemdescription') {
-	$LabelFields[$i]['FieldValue'] = 'description';
-} else {
+			$LabelFields[$i]['FieldValue'] = 'stockid';
+		} elseif ($LabelFieldRow['fieldvalue'] == 'itemdescription') {
+			$LabelFields[$i]['FieldValue'] = 'description';
+		} else {
 			$LabelFields[$i]['FieldValue'] = $LabelFieldRow['fieldvalue'];
 		}
 		$LabelFields[$i]['VPos'] = $LabelFieldRow['vpos'] * $PtsPerMM;
@@ -186,45 +186,45 @@ if (isset($_POST['PrintLabels']) && $NoOfLabels > 0) {
 		</style>
 	</head>
 	<body>
-		<table class = "label-table">';
-	$HTML .= '<link href = "css/reports.css" rel = "stylesheet" type = "text/css" />';
+		<table class="label-table">';
+	$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
 
 	$TotalLabels = $NoOfLabels * $_POST['LabelsPerItem'];
 	$LabelsPrinted = 0;
 	$rowCount = 0;
 	$colCount = 0;
 
-	for ($i = 0;  $i < $_POST['NoOfLabels'];  $i++) {
+	for ($i = 0; $i < $_POST['NoOfLabels']; $i++) {
 		if (isset($_POST['PrintLabel' . $i])) {
-			for ($LabelNumber = 0;  $LabelNumber < $_POST['LabelsPerItem'];  $LabelNumber++) {
+			for ($LabelNumber = 0; $LabelNumber < $_POST['LabelsPerItem']; $LabelNumber++) {
 
 				if ($colCount == 0) {
-	$HTML .= '<tr>';
-}
-				$HTML .= '<td class = "label-cell"><div class = "label-content" style = "font-size:' . $LabelFields[0]['FontSize'] . 'pt;">';
+					$HTML .= '<tr>';
+				}
+				$HTML .= '<td class="label-cell"><div class="label-content" style="font-size:' . $LabelFields[0]['FontSize'] . 'pt;">';
 
 				foreach ($LabelFields as $Field) {
 					if ($Field['FieldValue'] == 'price') {
-	$Value = $_POST['Price' . $i] . ' ' . $_POST['Currency'];
-						$HTML .= '<div style = "position:absolute;top:' . $Field['VPos'] . 'pt;left:' . $Field['HPos'] . 'pt;">' . htmlspecialchars($Value) . '</div>';
-} elseif ($Field['FieldValue'] == 'stockid') {
-	$Value = $_POST['StockID' . $i];
-						$HTML .= '<div style = "position:absolute;top:' . $Field['VPos'] . 'pt;left:' . $Field['HPos'] . 'pt;">' . htmlspecialchars($Value) . '</div>';
-} elseif ($Field['FieldValue'] == 'description') {
-	$Value = $_POST['Description' . $i];
-						$HTML .= '<div style = "position:absolute;top:' . $Field['VPos'] . 'pt;left:' . $Field['HPos'] . 'pt;">' . htmlspecialchars($Value) . '</div>';
-} elseif ($Field['FieldValue'] == 'barcode') {
-	$Value = $_POST['Barcode' . $i];
+						$Value = $_POST['Price' . $i] . ' ' . $_POST['Currency'];
+						$HTML .= '<div style="position:absolute;top:' . $Field['VPos'] . 'pt;left:' . $Field['HPos'] . 'pt;">' . htmlspecialchars($Value) . '</div>';
+					} elseif ($Field['FieldValue'] == 'stockid') {
+						$Value = $_POST['StockID' . $i];
+						$HTML .= '<div style="position:absolute;top:' . $Field['VPos'] . 'pt;left:' . $Field['HPos'] . 'pt;">' . htmlspecialchars($Value) . '</div>';
+					} elseif ($Field['FieldValue'] == 'description') {
+						$Value = $_POST['Description' . $i];
+						$HTML .= '<div style="position:absolute;top:' . $Field['VPos'] . 'pt;left:' . $Field['HPos'] . 'pt;">' . htmlspecialchars($Value) . '</div>';
+					} elseif ($Field['FieldValue'] == 'barcode') {
+						$Value = $_POST['Barcode' . $i];
 						if ($Field['Barcode'] == 1 && !empty($Value)) {
 							// Generate barcode using an external library and embed as an image
 							// For demonstration, just output barcode value as text
-							$HTML .= '<div style = "position:absolute;top:' . $Field['VPos'] . 'pt;left:' . $Field['HPos'] . 'pt;"><span style = "font-family:monospace;">' . htmlspecialchars($Value) . '</span></div>';
-}
+							$HTML .= '<div style="position:absolute;top:' . $Field['VPos'] . 'pt;left:' . $Field['HPos'] . 'pt;"><span style="font-family:monospace;">' . htmlspecialchars($Value) . '</span></div>';
+						}
 					} elseif ($Field['FieldValue'] == 'logo') {
-	if (!empty($_SESSION['LogoFile'])) {
+						if (!empty($_SESSION['LogoFile'])) {
 							$LogoPath = $_SESSION['LogoFile'];
-							$HTML .= '<img src = "' . $LogoPath . '" style = "position:absolute;top:' . $Field['VPos'] . 'pt;left:' . $Field['HPos'] . 'pt;max-height:' . $Field['FontSize'] . 'pt;" />';
-}
+							$HTML .= '<img src="' . $LogoPath . '" style="position:absolute;top:' . $Field['VPos'] . 'pt;left:' . $Field['HPos'] . 'pt;max-height:' . $Field['FontSize'] . 'pt;" />';
+						}
 					}
 				}
 
@@ -243,8 +243,8 @@ if (isset($_POST['PrintLabels']) && $NoOfLabels > 0) {
 
 	// Close last row if needed
 	if ($colCount > 0) {
-	$HTML .= '</tr>';
-}
+		$HTML .= '</tr>';
+	}
 	$HTML .= '</table>
 	</body>
 	</html>';
@@ -257,7 +257,7 @@ if (isset($_POST['PrintLabels']) && $NoOfLabels > 0) {
 	$FileName = $_SESSION['DatabaseName'] . '_' . __('Price_Labels') . '_' . date('Y-m-d') . '.pdf';
 	// Output the PDF inline to the browser
 	header('Content-Type: application/pdf');
-	header('Content-Disposition: inline; filename = "' . $FileName . '"');
+	header('Content-Disposition: inline; filename="' . $FileName . '"');
 	echo $dompdf->output();
 	exit();
 
@@ -268,7 +268,7 @@ if (isset($_POST['PrintLabels']) && $NoOfLabels > 0) {
 	$BookMark = '';
 	include('includes/header.php');
 
-	echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/customer.png" title = "' . __('Price Labels') . '" alt = "" />
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . __('Price Labels') . '" alt="" />
          ' . ' ' . __('Print Price Labels') . '</p>';
 
 	if (!function_exists('gd_info')) {
@@ -279,79 +279,79 @@ if (isset($_POST['PrintLabels']) && $NoOfLabels > 0) {
 
 		/*if $StockCategory is not set then show a form to allow input	*/
 
-		echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post">
-				<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />
+		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">
+				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 				<fieldset>
 				<legend>' . __('Label Criteria') . '</legend>
 				<field>
-					<label for = "LabelID">' . __('Label to print') . ':</label>
-					<select required = "required" autofocus = "autofocus" name = "LabelID">';
+					<label for="LabelID">' . __('Label to print') . ':</label>
+					<select required="required" autofocus="autofocus" name="LabelID">';
 
 		$LabelResult = DB_query("SELECT labelid, description FROM labels");
 		while ($LabelRow = DB_fetch_array($LabelResult)) {
-			echo '<option value = "' . $LabelRow['labelid'] . '">' . $LabelRow['description'] . '</option>';
+			echo '<option value="' . $LabelRow['labelid'] . '">' . $LabelRow['description'] . '</option>';
 		}
 		echo '</select>
 			</field>';
 
 		echo '<field>
-				<label for = "StockCategory">' .  __('For Stock Category') . ':</label>
-				<select name = "StockCategory">';
+				<label for="StockCategory">' .  __('For Stock Category') . ':</label>
+				<select name="StockCategory">';
 
 		$CatResult = DB_query("SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription");
 		while ($MyRow = DB_fetch_array($CatResult)) {
-			echo '<option value = "' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
+			echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
 		}
 		echo '</select>
 			</field>';
 
 		echo '<field>
-				<label for = "SalesType">' . __('For Sales Type/Price List') . ':</label>
-				<select name = "SalesType">';
+				<label for="SalesType">' . __('For Sales Type/Price List') . ':</label>
+				<select name="SalesType">';
 		$SQL = "SELECT sales_type, typeabbrev FROM salestypes";
 		$SalesTypesResult = DB_query($SQL);
 
 		while ($MyRow = DB_fetch_array($SalesTypesResult)) {
 			if ($_SESSION['DefaultPriceList'] == $MyRow['typeabbrev']) {
-	echo '<option selected = "selected" value = "' . $MyRow['typeabbrev'] . '">' . $MyRow['sales_type'] . '</option>';
-} else {
-				echo '<option value = "' . $MyRow['typeabbrev'] . '">' . $MyRow['sales_type'] . '</option>';
+				echo '<option selected="selected" value="' . $MyRow['typeabbrev'] . '">' . $MyRow['sales_type'] . '</option>';
+			} else {
+				echo '<option value="' . $MyRow['typeabbrev'] . '">' . $MyRow['sales_type'] . '</option>';
 			}
 		}
 		echo '</select>
 			</field>';
 
 		echo '<field>
-				<label for = "Currency">' . __('For Currency') . ':</label>
-				<select name = "Currency">';
+				<label for="Currency">' . __('For Currency') . ':</label>
+				<select name="Currency">';
 		$SQL = "SELECT currabrev, country, currency FROM currencies";
 		$CurrenciesResult = DB_query($SQL);
 
 		while ($MyRow = DB_fetch_array($CurrenciesResult)) {
 			if ($_SESSION['CompanyRecord']['currencydefault'] == $MyRow['currabrev']) {
-	echo '<option selected = "selected" value = "' . $MyRow['currabrev'] . '">' . $MyRow['country'] . ' - ' . $MyRow['currency'] . '</option>';
-} else {
-				echo '<option value = "' . $MyRow['currabrev'] . '">' . $MyRow['country'] . ' - ' . $MyRow['currency'] . '</option>';
+				echo '<option selected="selected" value="' . $MyRow['currabrev'] . '">' . $MyRow['country'] . ' - ' . $MyRow['currency'] . '</option>';
+			} else {
+				echo '<option value="' . $MyRow['currabrev'] . '">' . $MyRow['country'] . ' - ' . $MyRow['currency'] . '</option>';
 			}
 		}
 		echo '</select>
 			</field>';
 
 		echo '<field>
-				<label for = "EffectiveDate">' . __('Effective As At') . ':</label>
-				<input maxlength = "10" size = "11" type = "date" name = "EffectiveDate" value = "' . date('Y-m-d') . '" />
+				<label for="EffectiveDate">' . __('Effective As At') . ':</label>
+				<input maxlength="10" size="11" type="date" name="EffectiveDate" value="' . date('Y-m-d') . '" />
 			</field>';
 
 		echo '<field>
-				<label for = "LabelsPerItem">' . __('Number of labels per item') . ':</label>
-				<input type = "text" class = "number" name = "LabelsPerItem" size = "3" value = "1" /></field>';
+				<label for="LabelsPerItem">' . __('Number of labels per item') . ':</label>
+				<input type="text" class="number" name="LabelsPerItem" size="3" value="1" /></field>';
 
 		echo '</fieldset>
-				<div class = "centre">
-					<input type = "submit" name = "ShowLabels" value = "' . __('Show Labels') . '" />
+				<div class="centre">
+					<input type="submit" name="ShowLabels" value="' . __('Show Labels') . '" />
 				</div>
-				<div class = "centre">
-					<a href = "' . $RootPath . '/Labels.php">' . __('Label Template Maintenance') . '</a>
+				<div class="centre">
+					<a href="' . $RootPath . '/Labels.php">' . __('Label Template Maintenance') . '</a>
 				</div>
 				</form>';
 
