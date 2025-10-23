@@ -28,39 +28,47 @@ if (($KL_SPGSeniorOrSupport OR $KL_SPGJunior)
 					klretailpartners.areasalescash,
 					klretailpartners.areasalescashothers,
 					klretailpartners.cashsalesreported,
-					klretailpartners.hppcompensation,
-					klretailpartners.accountposreceivable,
-					klretailpartners.accounthppcompensation,
-					klretailpartners.accountbankdanamon,
-					klretailpartners.accountbankbni,
-					klretailpartners.accountbankmandiri,
-					klretailpartners.accountbankbca,
-					klretailpartners.accountcomissioncreditcard,
-					klretailpartners.comissionccdanamon,
-					klretailpartners.comissionamexdanamon,
-					klretailpartners.comissionccbni,
-					klretailpartners.comissionamexbni,
-					klretailpartners.comissionccmandiri,
-					klretailpartners.comissionccbca,
-					klretailpartners.comissionamexbca,
-					klretailpartners.percentconsignmentptadu,
-					klretailpartners.accountconsignmentsalesptadu,
-					klretailpartners.accountconsignmentcogspartner,
-					klretailpartners.accountwechat,
-					klretailpartners.comissionwechat,
-					klretailpartners.accountcomissionwechat,
-					klretailpartners.accountqrismandiri,
-					klretailpartners.comissionqrismandiri,
-					klretailpartners.accountcomissionqris,
 					klretailpartners.counterinvoicea,
 					klretailpartners.counterinvoiceb,
 					klretailpartners.counterinvoicec,
+					klretailpartners.hppcompensation,
+					klretailpartners.accountposreceivable,
+					klretailpartners.accounthppcompensation,
+					klretailpartners.percentconsignmentptadu,
+					klretailpartners.accountconsignmentsalesptadu,
+					klretailpartners.accountconsignmentcogspartner,
+					klretailpartners.accountcomissioncreditcard,
+					klretailpartners.accountbankdanamon,
+					klretailpartners.comissionccdanamon,
+					klretailpartners.comissionamexdanamon,
 					klretailpartners.settlementdelaydanamon,
+					klretailpartners.accountbankbni,
+					klretailpartners.comissionccbni,
+					klretailpartners.comissionamexbni,
 					klretailpartners.settlementdelaybni,
-					klretailpartners.settlementdelaybca,
+					klretailpartners.accountbankmandiri,
+					klretailpartners.comissionccmandiri,
+					klretailpartners.comissionamexmandiri,
 					klretailpartners.settlementdelaymandiri,
-					klretailpartners.settlementdelayqrismandiri,
+					klretailpartners.accountbankbca,
+					klretailpartners.comissionccbca,
+					klretailpartners.comissionamexbca,
+					klretailpartners.settlementdelaybca,
+					klretailpartners.accountbankbri,
+					klretailpartners.comissionccbri,
+					klretailpartners.comissionamexbri,
+					klretailpartners.settlementdelaybri,
+					klretailpartners.accountcomissionwechat,
+					klretailpartners.accountwechat,
+					klretailpartners.comissionwechat,
 					klretailpartners.settlementdelaywechat,
+					klretailpartners.accountcomissionqris,
+					klretailpartners.accountqrismandiri,
+					klretailpartners.comissionqrismandiri,
+					klretailpartners.settlementdelayqrismandiri,
+					klretailpartners.accountqrisbri,
+					klretailpartners.comissionqrisbri,
+					klretailpartners.settlementdelayqrisbri,
 					custbranch.brname,
 					custbranch.braddress1,
 					custbranch.specialinstructions,
@@ -76,9 +84,9 @@ if (($KL_SPGSeniorOrSupport OR $KL_SPGJunior)
 					salestypes,
 					paymentterms,
 					custbranch
-			 WHERE debtorsmaster.salestype=salestypes.typeabbrev
-				AND debtorsmaster.holdreason=holdreasons.reasoncode
-				AND debtorsmaster.paymentterms=paymentterms.termsindicator
+			 WHERE debtorsmaster.salestype = salestypes.typeabbrev
+				AND debtorsmaster.holdreason = holdreasons.reasoncode
+				AND debtorsmaster.paymentterms = paymentterms.termsindicator
 				AND debtorsmaster.debtorno = locations.cashsalecustomer
 				AND locations.partnercode = klretailpartners.partnercode
 				AND custbranch.debtorno = locations.cashsalecustomer
@@ -135,40 +143,50 @@ if (($KL_SPGSeniorOrSupport OR $KL_SPGJunior)
 		$_SESSION['AreaSalesCreditCard'] = $MyRow['areasalescreditcard'];
 		$_SESSION['AreaSalesCash'] = $MyRow['areasalescash'];
 		$_SESSION['AreaSalesCashOthers'] = $MyRow['areasalescashothers'];
-		$_SESSION['CashSalesReported'] = $MyRow['cashsalesreported'];
-		$_SESSION['HPPCompensation'] = $MyRow['hppcompensation'];
-		$_SESSION['AccountHPPCompensation'] = $MyRow['accounthppcompensation'];
-		$_SESSION['AccountPOSReceivable'] = $MyRow['accountposreceivable'];
-		$_SESSION['AccountBankDanamon'] = $MyRow['accountbankdanamon'];
-		$_SESSION['AccountBankBNI'] = $MyRow['accountbankbni'];
-		$_SESSION['AccountBankMandiri'] = $MyRow['accountbankmandiri'];
-		$_SESSION['AccountBankBCA'] = $MyRow['accountbankbca'];
-		$_SESSION['AccountComissionCreditCard'] = $MyRow['accountcomissioncreditcard'];
-		$_SESSION['ComissionCCDanamon'] = $MyRow['comissionccdanamon'];
-		$_SESSION['ComissionAmexDanamon'] = $MyRow['comissionamexdanamon'];
-		$_SESSION['ComissionCCBNI'] = $MyRow['comissionccbni'];
-		$_SESSION['ComissionAmexBNI'] = $MyRow['comissionamexbni'];
-		$_SESSION['ComissionCCMandiri'] = $MyRow['comissionccmandiri'];
-		$_SESSION['ComissionCCBCA'] = $MyRow['comissionccbca'];
-		$_SESSION['ComissionAmexBCA'] = $MyRow['comissionamexbca'];
-		$_SESSION['PercentConsignmentPTADU'] = $MyRow['percentconsignmentptadu'];
-		$_SESSION['AccountConsignmentSalesPTADU'] = $MyRow['accountconsignmentsalesptadu'];
-		$_SESSION['AccountConsignmentCOGSPartner'] = $MyRow['accountconsignmentcogspartner'];
-		$_SESSION['AccountWeChat'] = $MyRow['accountwechat'];
-		$_SESSION['ComissionWeChat'] = $MyRow['comissionwechat'];
-		$_SESSION['AccountComissionWeChat'] = $MyRow['accountcomissionwechat'];
-		$_SESSION['AccountQRISMandiri'] = $MyRow['accountqrismandiri'];
-		$_SESSION['ComissionQRISMandiri'] = $MyRow['comissionqrismandiri'];
-		$_SESSION['AccountComissionQRIS'] = $MyRow['accountcomissionqris'];
 		$_SESSION['CounterInvoiceA'] = $MyRow['counterinvoicea'];
 		$_SESSION['CounterInvoiceB'] = $MyRow['counterinvoiceb'];
 		$_SESSION['CounterInvoiceC'] = $MyRow['counterinvoicec'];
+		$_SESSION['CashSalesReported'] = $MyRow['cashsalesreported'];
+		$_SESSION['HPPCompensation'] = $MyRow['hppcompensation'];
+		$_SESSION['AccountHPPCompensation'] = $MyRow['accounthppcompensation'];
+		$_SESSION['PercentConsignmentPTADU'] = $MyRow['percentconsignmentptadu'];
+		$_SESSION['AccountConsignmentSalesPTADU'] = $MyRow['accountconsignmentsalesptadu'];
+		$_SESSION['AccountConsignmentCOGSPartner'] = $MyRow['accountconsignmentcogspartner'];
+
+		$_SESSION['AccountPOSReceivable'] = $MyRow['accountposreceivable'];
+
+		$_SESSION['AccountComissionCreditCard'] = $MyRow['accountcomissioncreditcard'];
+		$_SESSION['AccountBankDanamon'] = $MyRow['accountbankdanamon'];
+		$_SESSION['ComissionCCDanamon'] = $MyRow['comissionccdanamon'];
+		$_SESSION['ComissionAmexDanamon'] = $MyRow['comissionamexdnamon'];
 		$_SESSION['SettlementDelayDanamon'] = $MyRow['settlementdelaydanamon'];
+		$_SESSION['AccountBankBNI'] = $MyRow['accountbankbni'];
+		$_SESSION['ComissionCCBNI'] = $MyRow['comissionccbni'];
+		$_SESSION['ComissionAmexBNI'] = $MyRow['comissionamexbni'];
 		$_SESSION['SettlementDelayBNI'] = $MyRow['settlementdelaybni'];
-		$_SESSION['SettlementDelayBCA'] = $MyRow['settlementdelaybca'];
+		$_SESSION['AccountBankMandiri'] = $MyRow['accountbankmandiri'];
+		$_SESSION['ComissionCCMandiri'] = $MyRow['comissionccmandiri'];
+		$_SESSION['ComissionAmexMandiri'] = $MyRow['comissionamexmandiri'];
 		$_SESSION['SettlementDelayMandiri'] = $MyRow['settlementdelaymandiri'];
-		$_SESSION['SettlementDelayQRISMandiri'] = $MyRow['settlementdelayqrismandiri'];
+		$_SESSION['AccountBankBCA'] = $MyRow['accountbankbca'];
+		$_SESSION['ComissionCCBCA'] = $MyRow['comissionccbca'];
+		$_SESSION['ComissionAmexBCA'] = $MyRow['comissionamexbca'];
+		$_SESSION['SettlementDelayBCA'] = $MyRow['settlementdelaybca'];
+		$_SESSION['AccountBankBRI'] = $MyRow['accountbankbri'];
+		$_SESSION['ComissionCCBRI'] = $MyRow['comissionccbri'];
+		$_SESSION['ComissionAmexBRI'] = $MyRow['comissionamexbrri'];
+		$_SESSION['SettlementDelayBRI'] = $MyRow['settlementdelaybri'];
+		$_SESSION['AccountComissionWeChat'] = $MyRow['accountcomissionwechat'];
+		$_SESSION['AccountWeChat'] = $MyRow['accountwechat'];
+		$_SESSION['ComissionWeChat'] = $MyRow['comissionwechat'];
 		$_SESSION['SettlementDelayWeChat'] = $MyRow['settlementdelaywechat'];
-		
+		$_SESSION['AccountComissionQRIS'] = $MyRow['accountcomissionqris'];
+		$_SESSION['AccountQRISMandiri'] = $MyRow['accountqrismandiri'];
+		$_SESSION['ComissionQRISMandiri'] = $MyRow['comissionqrismandiri'];
+		$_SESSION['SettlementDelayQRISMandiri'] = $MyRow['settlementdelayqrismandiri'];
+		$_SESSION['AccountQRISBRI'] = $MyRow['accountqrisbri'];
+		$_SESSION['ComissionQRISBRI'] = $MyRow['comissionqrisbri'];
+		$_SESSION['SettlementDelayQRISBRI'] = $MyRow['settlementdelayqrisbri'];
+
 	}
 }

@@ -1,12 +1,10 @@
 <?php
 
-/* Defines the KL retail Partners */
-
 require(__DIR__ . '/includes/session.php');
 
-$Title = __('KL Retail Partners Maintenance'); // Screen identification.
-$ViewTopic = ''; // Filename's id in ManualContents.php's TOC.
-$BookMark = ''; // Anchor's id in the manual's html document.
+$Title = __('KL Retail Partners Maintenance');
+$ViewTopic = '';
+$BookMark = '';
 include('includes/header.php');
 
 include('includes/UIGeneralFunctions.php');
@@ -454,9 +452,13 @@ or deletion of the records*/
 				comissionccbni,
 				comissionamexbni,
 				comissionccmandiri,
-				comissionqrismandiri,
+				comissionamexmandiri,
 				comissionccbca,
 				comissionamexbca,
+				comissionccbri,
+				comissionamexbri,
+				comissionqrismandiri,
+				comissionqrisbri,
 				percentconsignmentptadu
 			FROM klretailpartners
 			ORDER BY partnername";
@@ -469,18 +471,35 @@ or deletion of the records*/
 	echo '<table class="selection">
 		<thead>
 			<tr>
+				<th></th>
+				<th></th>
+				<th>', __('Reported'), '</th>
+				<th colspan="2">', __('Danamon'), '</th>
+				<th colspan="2">', __('BNI'), '</th>
+				<th colspan="2">', __('Mandiri'), '</th>
+				<th colspan="2">', __('BCA'), '</th>
+				<th colspan="2">', __('BRI'), '</th>
+				<th colspan="2">', __('QRIS'), '</th>
+				<th>', __('Consignment'), '</th>
+				<th class="noprint" colspan="2">&nbsp;</th>
+			</tr>
+			<tr>
 				<th class="SortedColumn">', __('Code'), '</th>
-				<th class="SortedColumn">', __('Name'), '</th>
 				<th class="SortedColumn">', __('PPN'), '</th>
-				<th class="SortedColumn">', __('Cash Reported'), '</th>
-				<th class="SortedColumn">', __('EDC Danamon'), '</th>
-				<th class="SortedColumn">', __('EDC BNI'), '</th>
-				<th class="SortedColumn">', __('AMEX BNI'), '</th>
-				<th class="SortedColumn">', __('EDC Mandiri'), '</th>
-				<th class="SortedColumn">', __('QRIS Mandiri'), '</th>
-				<th class="SortedColumn">', __('EDC BCA'), '</th>
-				<th class="SortedColumn">', __('AMEX BCA'), '</th>
-				<th class="SortedColumn">', __('Consign PTADU'), '</th>
+				<th class="SortedColumn">', __('Cash'), '</th>
+				<th class="SortedColumn">', __('CC'), '</th>
+				<th class="SortedColumn">', __('AMEX'), '</th>
+				<th class="SortedColumn">', __('CC'), '</th>
+				<th class="SortedColumn">', __('AMEX'), '</th>
+				<th class="SortedColumn">', __('CC'), '</th>
+				<th class="SortedColumn">', __('AMEX'), '</th>
+				<th class="SortedColumn">', __('CC'), '</th>
+				<th class="SortedColumn">', __('AMEX'), '</th>
+				<th class="SortedColumn">', __('CC'), '</th>
+				<th class="SortedColumn">', __('AMEX'), '</th>
+				<th class="SortedColumn">', __('Mandiri'), '</th>
+				<th class="SortedColumn">', __('BRI'), '</th>
+				<th class="SortedColumn">', __('PTADU'), '</th>
 				<th class="noprint" colspan="2">&nbsp;</th>
 			</tr>
 		</thead>
@@ -489,16 +508,20 @@ or deletion of the records*/
 	while ($MyRow = DB_fetch_array($Result)) {
 		echo '<tr class="striped_row">';
 		echo '<td>' . $MyRow['partnercode'] . '</td>
-				<td>' . $MyRow['partnername'] . '</td>
 				<td class="number">' . locale_number_format($MyRow['ppn'], 0) . "%" . '</td>
 				<td class="number">' . locale_number_format($MyRow['cashsalesreported'], 0) . "%" . '</td>
 				<td class="number">' . locale_number_format($MyRow['comissionccdanamon'], 2) . "%" . '</td>
+				<td class="number">' . locale_number_format($MyRow['comissionamexdanamon'], 2) . "%" . '</td>
 				<td class="number">' . locale_number_format($MyRow['comissionccbni'], 2) . "%" . '</td>
 				<td class="number">' . locale_number_format($MyRow['comissionamexbni'], 2) . "%" . '</td>
 				<td class="number">' . locale_number_format($MyRow['comissionccmandiri'], 2) . "%" . '</td>
-				<td class="number">' . locale_number_format($MyRow['comissionqrismandiri'], 2) . "%" . '</td>
+				<td class="number">' . locale_number_format($MyRow['comissionamexmandiri'], 2) . "%" . '</td>
 				<td class="number">' . locale_number_format($MyRow['comissionccbca'], 2) . "%" . '</td>
 				<td class="number">' . locale_number_format($MyRow['comissionamexbca'], 2) . "%" . '</td>
+				<td class="number">' . locale_number_format($MyRow['comissionccbri'], 2) . "%" . '</td>
+				<td class="number">' . locale_number_format($MyRow['comissionamexbri'], 2) . "%" . '</td>
+				<td class="number">' . locale_number_format($MyRow['comissionqrismandiri'], 2) . "%" . '</td>
+				<td class="number">' . locale_number_format($MyRow['comissionqrisbri'], 2) . "%" . '</td>
 				<td class="number">' . locale_number_format($MyRow['percentconsignmentptadu'], 0) . "%" . '</td>
 				<td class="noprint"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') .
 					'?SelectedPartner=' . $MyRow['partnercode'] . '">' . __('Edit') . '</a></td>
@@ -686,7 +709,6 @@ if (!isset($_GET['delete'])) {
 
 		echo '<fieldset><legend>' . __('Edit Retail Partner details') . '</legend>';
 		echo '<field>' . __('Retail Partner Code') . ': ' . $_POST['PartnerCode'] . '</field>';
-		echo '</fieldset>';
 
 	} else { //end of if $SelectedPartner only do the else when a new record is being entered
 		if (!isset($_POST['PartnerCode'])) {
@@ -694,8 +716,8 @@ if (!isset($_GET['delete'])) {
 		}
 		echo '<fieldset><legend>' . __('New Retail Partner details') . '</legend>';
 		echo FieldToSelectOneText('PartnerCode', $_POST['PartnerCode'], 20, 20, __('Partner Code'), '', 'no-illegal-chars', '', true, true);
-		echo '</fieldset>';
 	}
+	
 	if (!isset($_POST['PartnerName'])) {
 		$_POST['PartnerName'] = '';
 	}
@@ -947,34 +969,46 @@ if (!isset($_GET['delete'])) {
 	echo FieldToSelectOneGLAccount('AccountConsignmentCOGSPartner', $_POST['AccountConsignmentCOGSPartner'], __('Consignment COGS Partner GL Account'));
 	echo '</fieldset>';
 
+	echo '</fieldset>';
+
 	echo '<fieldset><legend>' . __('Credit Card Comission Information') . '</legend>';
 
 	echo FieldToSelectOneGLAccount('AccountComissionCreditCard', $_POST['AccountComissionCreditCard'], __('Credit Card Comission GL Account'));
 
+	echo '<fieldset><legend>' . __('Danamon') . '</legend>';
 	echo FieldToSelectOneGLAccount('AccountBankDanamon', $_POST['AccountBankDanamon'], __('Bank Danamon GL Account'));
 	echo FieldToSelectOneText('SettlementDelayDanamon', $_POST['SettlementDelayDanamon'], 3, 3, __('Settlement Delay Danamon (days)'), '', 'number');
 	echo FieldToSelectOneText('ComissionCCDanamon', $_POST['ComissionCCDanamon'], 5, 5, __('% Credit Card Comission Bank Danamon'));
 	echo FieldToSelectOneText('ComissionAmexDanamon', $_POST['ComissionAmexDanamon'], 5, 5, __('% AMEX Comission Bank Danamon'));
+	echo '</fieldset>';
 
+	echo '<fieldset><legend>' . __('BNI') . '</legend>';
 	echo FieldToSelectOneGLAccount('AccountBankBNI', $_POST['AccountBankBNI'], __('Bank BNI GL Account'));
 	echo FieldToSelectOneText('SettlementDelayBNI', $_POST['SettlementDelayBNI'], 3, 3, __('Settlement Delay BNI (days)'), '', 'number');
 	echo FieldToSelectOneText('ComissionCCBNI', $_POST['ComissionCCBNI'], 5, 5, __('% Credit Card Comission Bank BNI'));
 	echo FieldToSelectOneText('ComissionAmexBNI', $_POST['ComissionAmexBNI'], 5, 5, __('% AMEX Comission Bank BNI'));
+	echo '</fieldset>';
 
+	echo '<fieldset><legend>' . __('Mandiri') . '</legend>';
 	echo FieldToSelectOneGLAccount('AccountBankMandiri', $_POST['AccountBankMandiri'], __('Bank Mandiri GL Account'));
 	echo FieldToSelectOneText('SettlementDelayMandiri', $_POST['SettlementDelayMandiri'], 3, 3, __('Settlement Delay Mandiri (days)'), '', 'number');
 	echo FieldToSelectOneText('ComissionCCMandiri', $_POST['ComissionCCMandiri'], 5, 5, __('% Credit Card Comission Bank Mandiri'));
 	echo FieldToSelectOneText('ComissionAmexMandiri', $_POST['ComissionAmexMandiri'], 5, 5, __('% AMEX Comission Bank Mandiri'));
+	echo '</fieldset>';
 
+	echo '<fieldset><legend>' . __('BCA') . '</legend>';
 	echo FieldToSelectOneGLAccount('AccountBankBCA', $_POST['AccountBankBCA'], __('Bank BCA GL Account'));
 	echo FieldToSelectOneText('SettlementDelayBCA', $_POST['SettlementDelayBCA'], 3, 3, __('Settlement Delay BCA (days)'), '', 'number');
 	echo FieldToSelectOneText('ComissionCCBCA', $_POST['ComissionCCBCA'], 5, 5, __('% Credit Card Comission Bank BCA'));
 	echo FieldToSelectOneText('ComissionAmexBCA', $_POST['ComissionAmexBCA'], 5, 5, __('% AMEX Comission Bank BCA'));
+	echo '</fieldset>';
 
+	echo '<fieldset><legend>' . __('BRI') . '</legend>';
 	echo FieldToSelectOneGLAccount('AccountBankBRI', $_POST['AccountBankBRI'], __('Bank BRI GL Account'));
 	echo FieldToSelectOneText('SettlementDelayBRI', $_POST['SettlementDelayBRI'], 3, 3, __('Settlement Delay BRI (days)'), '', 'number');
 	echo FieldToSelectOneText('ComissionCCBRI', $_POST['ComissionCCBRI'], 5, 5, __('% Credit Card Comission Bank BRI'));
 	echo FieldToSelectOneText('ComissionAmexBRI', $_POST['ComissionAmexBRI'], 5, 5, __('% AMEX Comission Bank BRI'));
+	echo '</fieldset>';
 
 	echo '</fieldset>';
 
@@ -982,13 +1016,17 @@ if (!isset($_GET['delete'])) {
 
 	echo FieldToSelectOneGLAccount('AccountComissionQRIS', $_POST['AccountComissionQRIS'], __('QRIS Comission GL Account'));
 
+	echo '<fieldset><legend>' . __('Mandiri') . '</legend>';
 	echo FieldToSelectOneGLAccount('AccountQRISMandiri', $_POST['AccountQRISMandiri'], __('QRIS Mandiri GL Account'));
 	echo FieldToSelectOneText('SettlementDelayQRISMandiri', $_POST['SettlementDelayQRISMandiri'], 3, 3, __('Settlement Delay QRIS Mandiri (days)'), '', 'number');
 	echo FieldToSelectOneText('ComissionQRISMandiri', $_POST['ComissionQRISMandiri'], 5, 5, __('% Comission QRIS Mandiri'));
+	echo '</fieldset>';
 
+	echo '<fieldset><legend>' . __('BRI') . '</legend>';
 	echo FieldToSelectOneGLAccount('AccountQRISBRI', $_POST['AccountQRISBRI'], __('QRIS BRI GL Account'));
 	echo FieldToSelectOneText('SettlementDelayQRISBRI', $_POST['SettlementDelayQRISBRI'], 3, 3, __('Settlement Delay QRIS BRI (days)'), '', 'number');
 	echo FieldToSelectOneText('ComissionQRISBRI', $_POST['ComissionQRISBRI'], 5, 5, __('% Comission QRIS BRI'));
+	echo '</fieldset>';
 
 	echo '</fieldset>';
 

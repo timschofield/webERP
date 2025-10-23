@@ -53,7 +53,7 @@ function submit($PartnerCode, $FromDate, $ToDate) {
 	
 	$SQLSettings =  "SELECT klretailpartners.accountcomissioncreditcard,
 						klretailpartners.accountcomissionwechat,
-						klretailpartners.accountcomissionqrismandiri
+						klretailpartners.accountcomissionqris
 					 FROM klretailpartners
 					 WHERE klretailpartners.partnercode = '" . $PartnerCode . "'";
 	$ResultSettings = DB_query($SQLSettings);
@@ -99,7 +99,7 @@ function submit($PartnerCode, $FromDate, $ToDate) {
 		$WhereGroupedAccounts = " ( accountgroups.groupname IN ('Penjualan', 'HPP (COGS)') 
 									OR gltrans.account = '" . $MyRowSettings['accountcomissioncreditcard'] . "'
 									OR gltrans.account = '" . $MyRowSettings['accountcomissionwechat'] . "'
-									OR gltrans.account = '" . $MyRowSettings['accountcomissionqrismandiri'] . "'
+									OR gltrans.account = '" . $MyRowSettings['accountcomissionqris'] . "'
 									OR gltrans.account IN " . GL_CONSUMABLES . " 
 									OR gltrans.account IN " . GL_ADJUSTMENT_STOCK . " 
 									OR gltrans.account IN " . GL_COMMISSION_TOKOPEDIA . " 

@@ -1056,17 +1056,33 @@ function KLPrintReceiptShopFooter($Identifier, $OrderNo){
 	if ($_POST['AmountPaidCCBCA'] > 0){
 		$TextToPrint .= 'Paid CC EDC BCA: ' . number_format($_POST['AmountPaidCCBCA'], 0) . $NewLine;
 	}
+	if ($_POST['AmountPaidCCBRI'] > 0){
+		$TextToPrint .= 'Paid CC EDC BRI: ' . number_format($_POST['AmountPaidCCBRI'], 0) . $NewLine;
+	}
+
+	if ($_POST['AmountPaidAmexDanamon'] > 0){
+		$TextToPrint .= 'Paid AMEX EDC Danamon: ' . number_format($_POST['AmountPaidAmexDanamon'], 0) . $NewLine;
+	}
 	if ($_POST['AmountPaidAmexBNI'] > 0){
 		$TextToPrint .= 'Paid AMEX EDC BNI: ' . number_format($_POST['AmountPaidAmexBNI'], 0) . $NewLine;
+	}
+	if ($_POST['AmountPaidAmexMandiri'] > 0){
+		$TextToPrint .= 'Paid AMEX EDC Mandiri: ' . number_format($_POST['AmountPaidAmexMandiri'], 0) . $NewLine;
 	}
 	if ($_POST['AmountPaidAmexBCA'] > 0){
 		$TextToPrint .= 'Paid AMEX EDC BCA: ' . number_format($_POST['AmountPaidAmexBCA'], 0) . $NewLine;
 	}
+	if ($_POST['AmountPaidAmexBRI'] > 0){
+		$TextToPrint .= 'Paid AMEX EDC BRI: ' . number_format($_POST['AmountPaidAmexBRI'], 0) . $NewLine;
+	}
 	if ($_POST['AmountPaidWeChat'] > 0){
 		$TextToPrint .= 'Paid Alipay/WeChat: ' . number_format($_POST['AmountPaidWeChat'], 0) . $NewLine;
 	}
-	if ($_POST['AmountPaidQRIS'] > 0){
-		$TextToPrint .= 'Paid QRIS Mandiri: ' . number_format($_POST['AmountPaidQRIS'], 0) . $NewLine;
+	if ($_POST['AmountPaidQRISMandiri'] > 0){
+		$TextToPrint .= 'Paid QRIS Mandiri: ' . number_format($_POST['AmountPaidQRISMandiri'], 0) . $NewLine;
+	}
+	if ($_POST['AmountPaidQRISBRI'] > 0){
+		$TextToPrint .= 'Paid QRIS BRI: ' . number_format($_POST['AmountPaidQRISBRI'], 0) . $NewLine;
 	}
 	if ($_POST['AmountReturnedGoods'] > 0){
 		$TextToPrint .= 'Returned Goods: ' . number_format($_POST['AmountReturnedGoods'], 0) . $NewLine;

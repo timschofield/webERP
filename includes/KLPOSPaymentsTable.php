@@ -75,6 +75,14 @@ if ($_SESSION['ComissionAmexBCA'] != 0){
 }
 echo '</tr>';
 
+if ($_SESSION['ComissionAmexDanamon'] != 0){
+	echo '<tr>
+			<td></td>
+			<td>' . __('AMEX EDC Danamon') . ':</td>
+			<td><input type="text" class="number" name="AmountPaidAmexDanamon" maxlength="12" size="12" value="' . $_POST['AmountPaidAmexDanamon'] . '" /></td>
+		</tr>';
+}
+
 if ($_SESSION['ComissionAmexBNI'] != 0){
 	echo '<tr>
 			<td></td>
@@ -103,7 +111,7 @@ echo '<tr>';
 echo '<th>' . __('Other Payments') . '</th>';
 if ($_SESSION['ComissionQRISMandiri'] != 0){
 	echo '<td>' . __('QRIS Mandiri') . ':</td>
-		<td><input type="text" class="number" name="AmountPaidQRIS" maxlength="12" size="12" value="' . $_POST['AmountPaidQRIS'] . '" /></td>';
+		<td><input type="text" class="number" name="AmountPaidQRISMandiri" maxlength="12" size="12" value="' . $_POST['AmountPaidQRISMandiri'] . '" /></td>';
 }
 echo '</tr>';
 
