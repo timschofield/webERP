@@ -88,10 +88,10 @@ function AdjustPackagingMovement($StockID, $QtyDelivered, $InvoiceNo, $PeriodNo,
 
 	if ($QtyDelivered != 0){
 		/* Need to get the current standard cost */
-		$SQL = "SELECT (actualcost)
+		$SQL = "SELECT actualcost
 				FROM stockmaster
 				WHERE stockmaster.stockid='" . $StockID . "'";
-		$ErrMsg = __('ERROR: Contact the office!!!  -> AdjustPackagingMovement-0010');
+		$ErrMsg = __('ERROR: Contact the office!!! -> AdjustPackagingMovement-0010');
 		$Result = DB_query($SQL, $ErrMsg);
 		if (DB_num_rows($Result) == 1){
 			$Row = DB_fetch_row($Result);
@@ -106,7 +106,7 @@ function AdjustPackagingMovement($StockID, $QtyDelivered, $InvoiceNo, $PeriodNo,
 				FROM locstock
 				WHERE locstock.stockid='" . $StockID . "'
 					AND loccode= '" . $_SESSION['UserStockLocation'] . "'";
-		$ErrMsg = __('ERROR: Contact the office!!!  -> AdjustPackagingMovement-0020');
+		$ErrMsg = __('ERROR: Contact the office!!! -> AdjustPackagingMovement-0020');
 		$Result = DB_query($SQL, $ErrMsg);
 
 		if (DB_num_rows($Result) == 1){
@@ -239,55 +239,63 @@ function InsertItemSoldIntoSalesAnalysis($Area,
 										$DiscountPercent
 										){
 
+	/* Query optimized by Gemini 2.5 on 24/10/2025
+	 * Also proposed the creation of index. 
+	 * CREATE INDEX salesanalysis_composite_idx ON salesanalysis
+	 *  (area, typeabbrev, periodno, budgetoractual, cust, custbranch, stockid, stkcategory, salesperson);
+	 * As this query is performed every time an item is sold, it makes sense to optimize it.
+	*/
 	$SQL = "SELECT COUNT(*),
-			salesanalysis.stockid,
-			salesanalysis.stkcategory,
-			salesanalysis.cust,
-			salesanalysis.custbranch,
-			salesanalysis.area,
-			salesanalysis.periodno,
-			salesanalysis.typeabbrev,
-			salesanalysis.salesperson
-		FROM salesanalysis,
-			custbranch,
-			stockmaster
-		WHERE salesanalysis.stkcategory=stockmaster.categoryid
-			AND salesanalysis.stockid=stockmaster.stockid
-			AND salesanalysis.cust=custbranch.debtorno
-			AND salesanalysis.custbranch=custbranch.branchcode
-			AND salesanalysis.area='" . $Area ."'
-			AND salesanalysis.salesperson=custbranch.salesman
-			AND salesanalysis.typeabbrev ='" . $SalesType . "'
-			AND salesanalysis.periodno='" . $PeriodNo . "'
-			AND salesanalysis.cust " . LIKE . " '" . $DebtorNo . "'
-			AND salesanalysis.custbranch " . LIKE . " '" . $DebtorBranch . "'
-			AND salesanalysis.stockid " . LIKE . " '" . $StockID . "'
-			AND salesanalysis.budgetoractual=1
-		GROUP BY salesanalysis.stockid,
-			salesanalysis.stkcategory,
-			salesanalysis.cust,
-			salesanalysis.custbranch,
-			salesanalysis.area,
-			salesanalysis.periodno,
-			salesanalysis.typeabbrev,
-			salesanalysis.salesperson";
+				sa.stockid,
+				sa.stkcategory,
+				sa.cust,
+				sa.custbranch,
+				sa.area,
+				sa.periodno,
+				sa.typeabbrev,
+				sa.salesperson
+			FROM salesanalysis AS sa
+			INNER JOIN stockmaster AS sm
+				ON sa.stkcategory = sm.categoryid
+					AND sa.stockid = sm.stockid
+			INNER JOIN custbranch AS cb
+				ON sa.cust = cb.debtorno
+					AND sa.custbranch = cb.branchcode
+					AND sa.salesperson = cb.salesman
+			WHERE sa.area = '" . $Area ."'
+				AND sa.typeabbrev = '" . $SalesType . "'
+				AND sa.periodno = '" . $PeriodNo . "'
+				AND sa.cust " . LIKE . " '" . $DebtorNo . "'
+				AND sa.custbranch " . LIKE . " '" . $DebtorBranch . "'
+				AND sa.stockid " . LIKE . " '" . $StockID . "'
+				AND sa.budgetoractual = 1
+			GROUP BY 
+				sa.stockid,
+				sa.stkcategory,
+				sa.cust,
+				sa.custbranch,
+				sa.area,
+				sa.periodno,
+				sa.typeabbrev,
+				sa.salesperson";
 
 	$ErrMsg = __('The count of existing Sales analysis records could not run because');
 	$Result = DB_query($SQL, $ErrMsg, '', true);
 
 	$MyRow = DB_fetch_row($Result);
 
+	// Added division-by-zero protection for $ExRate
+	if ($ExRate == 0) {
+		$ExRate = 1;
+	}
+
 	if ($MyRow[0] > 0){  /*Update the existing record that already exists */
-		// Added division-by-zero protection for $ExRate
-		if ($ExRate == 0) {
-			$ExRate = 1;
-		}
 		
 		$SQL = "UPDATE salesanalysis
-				SET amt=amt+" . ($Price * $Quantity / $ExRate) . ",
-					cost=cost+" . ($StandardCost * $Quantity) . ",
-					qty=qty +" . $Quantity . ",
-					disc=disc+" . ($DiscountPercent * $Price * $Quantity / $ExRate) . "
+				SET amt = amt + " . ($Price * $Quantity / $ExRate) . ",
+					cost = cost + " . ($StandardCost * $Quantity) . ",
+					qty = qty + " . $Quantity . ",
+					disc = disc + " . ($DiscountPercent * $Price * $Quantity / $ExRate) . "
 				WHERE salesanalysis.area='" . $MyRow[5] . "'
 					AND salesanalysis.salesperson='" . $MyRow[8] . "'
 					AND typeabbrev ='" . $SalesType . "'
@@ -296,13 +304,9 @@ function InsertItemSoldIntoSalesAnalysis($Area,
 					AND custbranch " . LIKE . " '" . $DebtorBranch . "'
 					AND stockid " . LIKE . " '" . $StockID . "'
 					AND salesanalysis.stkcategory ='" . $MyRow[2] . "'
-					AND budgetoractual=1";
+					AND budgetoractual = 1";
 
 	} else { /* insert a new sales analysis record */
-		// Added division-by-zero protection for $ExRate
-		if ($ExRate == 0) {
-			$ExRate = 1;
-		}
 		
 		$SQL = "INSERT INTO salesanalysis (	typeabbrev,
 											periodno,
@@ -338,7 +342,7 @@ function InsertItemSoldIntoSalesAnalysis($Area,
 	}
 
 	$ErrMsg = __('Sales analysis record could not be added or updated because');
-	$Result = DB_query($SQL, $ErrMsg, '', true);
+	DB_query($SQL, $ErrMsg, '', true);
 }
 
 /**************************************************************************************************************
@@ -420,7 +424,7 @@ function RecordRetailCustomerInformation($OrderNo, $FirstName, $LastName, $Count
 						sex = '" . $Sex . "'
 					WHERE orderno = '" . $OrderNo . "'";
 		}
-		$Result = DB_query($SQL, $ErrMsg, '', true);
+		DB_query($SQL, $ErrMsg, '', true);
 	}
 }
 
@@ -609,8 +613,9 @@ function AccountDebtorPayment($ReceiptNumber,
 	//Now need to add the receipt banktrans record
 	//First get the account currency that it has been banked into
 	$Result = DB_query("SELECT rate FROM currencies
-						INNER JOIN bankaccounts ON currencies.currabrev=bankaccounts.currcode
-						WHERE bankaccounts.accountcode='" . $BankAccount . "'");
+						INNER JOIN bankaccounts
+							ON currencies.currabrev = bankaccounts.currcode
+						WHERE bankaccounts.accountcode = '" . $BankAccount . "'");
 	$MyRow = DB_fetch_row($Result);
 	$BankAccountExRate = $MyRow[0];
 
@@ -762,7 +767,7 @@ function AccountDebtorDiscount($ReceiptNumber,
 				'" . 0 . "',
 				'" . $Description . "')";
 	$ErrMsg = __('Report to Office: AccountDebtorDiscount ERROR-002 FAILED Insert debtortrans');
-	$Result = DB_query($SQL, $ErrMsg, '', true);
+	DB_query($SQL, $ErrMsg, '', true);
 
 	return $ReceiptNumber;
 }
@@ -1200,10 +1205,11 @@ function DoubleJustified($Left, $Right, $Lenght, $Fillchar){
 function GetItemPackagingDescription($StockID){
 	$ErrMsg = __('Can not retrieve the packaging description because');
 
-	$SQL = "SELECT packagingdescription 
-			FROM klpackaging, stockmaster
-			WHERE klpackaging.packagingcode = stockmaster.klpackaging
-				AND stockmaster.stockid = '" . $StockID . "'";
+$SQL = "SELECT klp.packagingdescription 
+		FROM stockmaster AS sm
+		INNER JOIN klpackaging AS klp 
+			ON klp.packagingcode = sm.klpackaging
+		WHERE sm.stockid = '" . $StockID . "'";
 	$Result = DB_query($SQL, $ErrMsg, '', true);
 	if (DB_num_rows($Result) == 0){
 		// no packaging description found, return empty string
