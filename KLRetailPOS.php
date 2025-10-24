@@ -1644,7 +1644,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 								$_SESSION['AccountQRISMandiri'],
 								$InvoiceNo,
 								$_SESSION['Items' . $identifier]->CustRef,
-								$_POST['AmountPaidQRIS'],
+								$_POST['AmountPaidQRISMandiri'],
 								$QRISNetPayment,
 								$ExRate,
 								$DebtorTransID,
