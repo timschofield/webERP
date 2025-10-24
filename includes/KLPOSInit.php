@@ -124,9 +124,6 @@ if (!isset($_POST['PackagingPouchBag01M'])){
 if (!isset($_POST['PackagingPouchBag01S'])){
 	$_POST['PackagingPouchBag01S'] = 0;
 }
-if (!isset($_POST['BlinkPouchBag03XL'])){
-	$_POST['BlinkPouchBag03XL'] = 0;
-}
 if (!isset($_POST['BlinkPouchBag03L'])){
 	$_POST['BlinkPouchBag03L'] = 0;
 }

@@ -1142,10 +1142,6 @@ function KLPrintReceiptShopFooter($Identifier, $OrderNo){
 			$TextToPrint .= "BL Box-S: " . $_POST['PackagingBox02S'] . " boxes";
 			$TextToPrint .= $NewLine;
 		}
-		if ($_POST['BlinkPouchBag03XL'] != 0){
-			$TextToPrint .= "Blink Pouchbag-XL: " . $_POST['BlinkPouchBag03XL'] . " pouches";
-			$TextToPrint .= $NewLine;
-		}
 		if ($_POST['BlinkPouchBag03L'] != 0){
 			$TextToPrint .= "Blink Pouchbag-L: " . $_POST['BlinkPouchBag03L'] . " pouches";
 			$TextToPrint .= $NewLine;

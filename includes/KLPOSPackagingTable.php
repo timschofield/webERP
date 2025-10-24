@@ -94,9 +94,6 @@ if ($_SESSION['TypeLoc'] == "SHOPBL"){
 	if (!isset($_POST['BlinkShoppingBag04S'])){
 		$_POST['BlinkShoppingBag04S'] = 0;
 	}
-	if (!isset($_POST['BlinkPouchBag03XL'])){
-		$_POST['BlinkPouchBag03XL'] = 0;
-	}
 	if (!isset($_POST['BlinkPouchBag03L'])){
 		$_POST['BlinkPouchBag03L'] = 0;
 	}
@@ -111,18 +108,7 @@ if ($_SESSION['TypeLoc'] == "SHOPBL"){
 				<th colspan=8>' . __('BLINK Packaging & Shopping Bags included in this sale') . '
 				</th>
 			</tr>';
-
-	echo '<tr>
-		<td></td>
-		<td></td>';
-	echo '<td></td>';
-	echo '<td>' . __('BLINK Pouch Bag Extra Large') . ':</td>
-		<td><input type="text" class="number" name="BlinkPouchBag03XL" maxlength="3" size="3" value="' . $_POST['BlinkPouchBag03XL'] . '" /></td>';
-	echo '<td></td>';
-	echo '<td></td>
-		<td></td></tr>';
-	echo '</tr>';
-			
+	
 	echo '<tr>
 		<td>' . __('BLINK Box Large') . ':</td>
 		<td><input type="text" class="number" name="PackagingBox02L" maxlength="3" size="3" value="' . $_POST['PackagingBox02L'] . '" /></td>';
