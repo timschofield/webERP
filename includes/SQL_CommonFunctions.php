@@ -350,8 +350,10 @@ function EnsureGLEntriesBalance($TransType, $TransTypeNo) {
 							AND typeno = '" . $TransTypeNo . "'");
 	$MyRow = DB_fetch_row($Result);
 	$Difference = $MyRow[0];
-	if (abs($Difference) != 0) {
-		if (abs($Difference) > 0.1) {
+	if (abs($Difference) != 100) {
+		/* KL RICARD. Change the trigger below from 0.1 to 100 to make sense in IDR currency, as 0.1 IDR is tiny and even rounding a double can trigger the error
+		*/
+		if (abs($Difference) > 100) {
 			prnMsg(__('The general ledger entries created do not balance. See your system administrator'), 'error');
 			DB_Txn_Rollback();
 		} else {
