@@ -84,10 +84,11 @@ if (!isset($_POST['continue'])) {
 			$pattern = 'UpdateDBNo';
 			$pattern = "/^.*$pattern.*\$/m";
 			if (preg_match_all($pattern, $Contents, $Matches) and (implode("\n", $Matches[0]) != "UpdateDBNo(basename(__FILE__, '.php'));")) {
+				/// @todo use more regexps to extract the upgrade description rather than using substrings
 				echo '<tr>
 					<td><span class="expand_icon" id="expand_icon', $x, '"></span></td>
 					<td>', $UpdateNumber, '</td>
-					<td>', substr(substr(implode("\n", $Matches[0]), 42), 0, -4), '</td>
+					<td>', substr(substr(implode("\n", $Matches[0]), 44), 0, -4), '</td>
 				</tr>';
 			} else {
 				echo '<tr>

@@ -546,7 +546,11 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		flush();
 
 		DB_IgnoreForeignKeys();
-		$Errors = (int)PopulateSQLDataBySQLFile($Path_To_Root. '/install/sql/demo.sql', $DBType);
+		$Errors = 0;
+		if (!PopulateSQLDataBySQLFile($Path_To_Root. '/install/sql/demo.sql', $DBType)) {
+			$Errors++;
+			echo '<div class="error">' . __('There was an error populating the database with demo data') . '</div>';
+		}
 
 		/// @todo this could just be pushed into demo.sql - and checked for presence by the scripts in /build
 		$SQL = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('FirstLogIn','0')";
@@ -556,7 +560,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 			//echo '<div class="success">' . __('...') . '</div>';
 		} else {
 			$Errors++;
-			//echo '<div class="error">' . __('...') . '</div>';
+			echo '<div class="error">' . __('There was an error updating the FirstLogIn setting') . ' - ' . DB_error_msg() . '</div>';
 		}
 		DB_ReinstateForeignKeys();
 
@@ -679,14 +683,15 @@ function PopulateSQLDataBySQLFile($File, $DBType) {
 		// check if this line kicks off a function definition - pg chokes otherwise
 		/// @todo we can disable this filter if on mysql/mariadb
 		/// @todo use a regexp
-		if (mb_substr($SQLScriptFile[$i - 1], 0, 15) == 'CREATE FUNCTION') {
+		if (!$InAFunction && mb_substr($SQLScriptFile[$i - 1], 0, 15) == 'CREATE FUNCTION') {
 			$InAFunction = true;
 		}
 		// check if this line completes a function definition - pg chokes otherwise
 		/// @todo use a regexp
-		if (mb_substr($SQLScriptFile[$i - 1], 0, 8) == 'LANGUAGE') {
+		if ($InAFunction && mb_substr($SQLScriptFile[$i - 1], 0, 8) == 'LANGUAGE') {
 			$InAFunction = false;
 		}
+		/// @todo run last statement found even if not not comma terminated
 		if (mb_strpos($SQLScriptFile[$i - 1], ';') > 0 and !$InAFunction) {
 			// Database created above with correct name.
 			$Result = DB_query($SQL, '', '', false, false);

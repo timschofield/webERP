@@ -50,6 +50,11 @@ class BBB_SinglePageTest extends LoggedInUserTestCase
 				continue;
 			}
 			$pages[] = [$path];
+			// add one extra request for the one manual page which is known to be code-generated
+			/// @todo we could move this to a test dedicated to checking every page within the manual
+			if ($fileName == 'ManualContents.php') {
+				$pages[] = [$path . '?ViewTopic=APIFunctions'];
+			}
 		}
 		return $pages;
 	}
