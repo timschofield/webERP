@@ -135,7 +135,7 @@ function submit($RootPath, $Location) {
 			}
 			if ($ItemCanBeproduced){
 				$Action = 'Produce ' . locale_number_format($QtyPending,0) . ' x ' . $MyItem['stockid'] . ' for WO ' . locale_number_format($MyItem['wo'],0);
-				$ComponentLink = '<a href="' . $RootPath . '/PrintWOItemSlip.php?StockId=' . $MyItem['stockid'] . '&WO='. $MyItem['wo'] . '&Location=' . $Location . '">' . $Action . '</a>';
+				$ComponentLink = '<a href="' . $RootPath . '/PrintWOItemSlip.php?StockId=' . $MyItem['stockid'] . '&WO='. $MyItem['wo'] . '&Location=' . $Location . '" target="_blank">' . $Action . '</a>';
 			}else{
 				$ComponentLink = "";
 			}

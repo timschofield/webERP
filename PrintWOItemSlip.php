@@ -40,7 +40,9 @@ if (isset($WO) && isset($StockId) && $WO != '') {
 	$ResultItems = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($ResultItems) != 0) {
-	$HTML = '<html><head><style>
+	$HTML = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><style>
 		body { font-family: Arial, sans-serif; font-size: 12px; }
 		.header { margin-bottom: 20px; }
 		.company-info { font-size: 10px; margin-bottom: 10px; }
@@ -110,14 +112,16 @@ if (isset($WO) && isset($StockId) && $WO != '') {
 			// Add production notes and signature section
 			$HTML .= PrintFooterSlipHTML(__('Incidences / Production Notes'), __('Components Ready By'), __('Item Produced By'), __('Quality Control By'));
 		}
+		$HTML .= '</body>
+				</html>';
 
 		// Output to PDF using Dompdf
-		$dompdf = new Dompdf();
+		$dompdf = new Dompdf(['chroot' => __DIR__]);
 		$dompdf->loadHtml($HTML);
 		$dompdf->setPaper('A4', 'portrait');
 		$dompdf->render();
 		$filename = 'WO-' . $WO . '-' . $StockId . '-' . date('Y-m-d') . '.pdf';
-		$dompdf->stream($filename, ['Attachment' => 1]);
+		$dompdf->stream($filename, ['Attachment' => false]);
 		exit();
 	} else {
 		$Title = __('WO Item production Slip');
@@ -131,6 +135,13 @@ if (isset($WO) && isset($StockId) && $WO != '') {
 }
 
 function PrintHeaderHTML($CompanyName, $ReportDate, $WO, $StockId, $Description, $Qty, $UOM, $DecimalPlaces) {
+	$imgTag = '';
+	$imgPath = $_SESSION['part_pics_dir'] . '/' . $StockId . '.jpg';
+	if (file_exists($imgPath)) {
+		// DomPDF requires file:// prefix for local images
+		$imgTag = '<img src=' . $imgPath . ' style="width:200px;height:auto;margin-bottom:16px;" />';
+	}
+
 	return '
 		<h2 style="margin-bottom:0;">' . htmlspecialchars($CompanyName) . '</h2>
 		<p style="margin-top:0;">
@@ -143,6 +154,8 @@ function PrintHeaderHTML($CompanyName, $ReportDate, $WO, $StockId, $Description,
 			' . __('Item Code') . ': ' . htmlspecialchars($StockId) . ' - ' . htmlspecialchars($Description) . '
 			<br />
 			' . __('Quantity') . ': ' . locale_number_format($Qty, $DecimalPlaces) . ' ' . htmlspecialchars($UOM) . '
+			<br />
+			' . $imgTag . '
 		</p>
 	';
 }
