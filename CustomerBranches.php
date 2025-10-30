@@ -94,39 +94,43 @@ if (isset($_POST['submit'])) {
 		$Longitude=0.0;
 	}
 	if ($_SESSION['geocode_integration']==1 ){
-		// Get the lat/long from our geocoding host
+		// Get the lat/long from OpenStreetMap Nominatim
 		$SQL = "SELECT * FROM geocode_param";
 		$Resultgeo = DB_query($SQL);
 		$Row = DB_fetch_array($Resultgeo);
-		$APIKey = $Row['geocode_key'];
-		$MapHost = $Row['map_host'];
-		define('MAPS_HOST', $MapHost);
-		define('KEY', $APIKey);
-		if ($MapHost=="") {
-		// check that some sane values are setup already in geocode tables, if not skip the geocoding but add the record anyway.
-			echo '<div class="warn">' . __('Warning - Geocode Integration is enabled, but no hosts are setup. Go to Geocode Setup') . '</div>';
-		} else {
-			/// @todo move getting of geocode info into a dedicated function, and move off google maps
-			$Address = urlencode($_POST['BrAddress1'] . ', ' . $_POST['BrAddress2'] . ', ' . $_POST['BrAddress3'] . ', ' . $_POST['BrAddress4']);
-			$BaseURLl = "https://" . MAPS_HOST . "/maps/api/geocode/xml?address=";
-			$RequestURL = $BaseURLl . $Address . '&key=' . KEY . '&sensor=true';
-			/// @todo file_get_contents might be disabled for remote files. Use a better api: curl or sockets
-			$xml = simplexml_load_string(utf8_encode(file_get_contents($RequestURL))) or die('url not loading');
+		
+		// Build address string
+		$Address = urlencode($_POST['BrAddress1'] . ', ' . $_POST['BrAddress2'] . ', ' . $_POST['BrAddress3'] . ', ' . $_POST['BrAddress4']);
+		$BaseURL = "https://nominatim.openstreetmap.org/search?format=json&q=";
+		$RequestURL = $BaseURL . $Address . '&limit=1';
 
-			$Status = $xml->status;
-			if (strcmp($Status, 'OK') == 0) {
+		// Set up proper headers for Nominatim usage policy
+		$opts = array(
+			'http'=>array(
+				'method'=>"GET",
+				'header'=>"User-Agent: webERP-geocoding\r\n"
+			)
+		);
+		$context = stream_context_create($opts);
+		$buffer = @file_get_contents($RequestURL, false, $context);
+
+		if ($buffer !== false) {
+			$json = json_decode($buffer, true);
+			if (!empty($json) && isset($json[0]['lat']) && isset($json[0]['lon'])) {
 				// Successful geocode
-				$Geocode_Pending = false;
-				// Format: Longitude, Latitude, Altitude
-				$Latitude = $xml->result->geometry->location->lat;
-				$Longitude = $xml->result->geometry->location->lng;
+				$Latitude = $json[0]['lat'];
+				$Longitude = $json[0]['lon'];
 			} else {
-				// failure to geocode
-				$Geocode_Pending = false;
-				echo '<div class="page_help_text"><b>' . __('Geocode Notice') . ':</b> ' . __('Address') . ': ' . $Address . ' ' . __('failed to geocode');
-				echo __('Received status') . ' ' . $Status . '</div>';
+				// No results found
+				echo '<div class="page_help_text"><b>' . __('Geocode Notice') . ':</b> ' . __('Address') . ': ' . $Address . ' ' . __('failed to geocode') . ' - ' . __('No results found') . '</div>';
 			}
+		} else {
+			// Connection failed
+			echo '<div class="page_help_text"><b>' . __('Geocode Notice') . ':</b> ' . __('Address') . ': ' . $Address . ' ' . __('failed to geocode') . ' - ' . __('Connection failed') . '</div>';
 		}
+		
+		// Respect Nominatim usage policy: 1 request per second
+		usleep(1000000);
 	}
 	if (isset($SelectedBranch) AND $InputError != 1) {
 

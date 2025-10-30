@@ -26,7 +26,12 @@ if ($_SESSION['geocode_integration'] == 1 AND isset($_SESSION['SupplierID'])) {
 	$MyRow = DB_fetch_array($Result);
 	$SQL = "SELECT suppliers.supplierid,
 				suppliers.lat,
-				suppliers.lng
+				suppliers.lng,
+				suppliers.suppname,
+				suppliers.address1,
+				suppliers.address2,
+				suppliers.address3,
+				suppliers.address4
 			FROM suppliers
 			WHERE suppliers.supplierid = '" . $_SESSION['SupplierID'] . "'
 			ORDER BY suppliers.supplierid";
@@ -34,36 +39,20 @@ if ($_SESSION['geocode_integration'] == 1 AND isset($_SESSION['SupplierID'])) {
 	$MyRow2 = DB_fetch_array($Result2);
 	$lat = $MyRow2['lat'];
 	$lng = $MyRow2['lng'];
-	$APIKey = $MyRow['geocode_key'];
-	$center_long = $MyRow['center_long'];
-	$center_lat = $MyRow['center_lat'];
+	$suppname = $MyRow2['suppname'];
+	$address1 = $MyRow2['address1'];
+	$address2 = $MyRow2['address2'];
+	$address3 = $MyRow2['address3'];
+	$address4 = $MyRow2['address4'];
 	$map_height = $MyRow['map_height'];
 	$map_width = $MyRow['map_width'];
-	$MapHost = $MyRow['map_host'];
-	$ExtraHeadContent = '<script src="https://maps.google.com/maps?file=api&amp;v=2&amp;key=' . $APIKey . '"></script>' . "\n";
-	$ExtraHeadContent .= ' <script>' . "\n";
-	$ExtraHeadContent .= '	function load() {
-		if (GBrowserIsCompatible()) {
-			var map = new GMap2(document.getElementById("map"));
-			map.addControl(new GSmallMapControl());
-			map.addControl(new GMapTypeControl());';
-	$ExtraHeadContent .= '			map.setCenter(new GLatLng(' . $lat . ', ' . $lng . '), 11);';
-	$ExtraHeadContent .= '			var marker = new GMarker(new GLatLng(' . $lat . ', ' . $lng . '));';
-	$ExtraHeadContent .= '			map.addOverlay(marker);
-			GEvent.addListener(marker, "click", function() {
-				marker.openInfoWindowHtml(WINDOW_HTML);
-			});
-			marker.openInfoWindowHtml(WINDOW_HTML);
-		}
-	}
-</script>
-';
+	$ExtraHeadContent = '<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>' . "\n";
+	$ExtraHeadContent .= '<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>' . "\n";
 }
 
 $Title = __('Search Suppliers');
 $ViewTopic = 'AccountsPayable';
 $BookMark = 'SelectSupplier';
-$BodyOnLoad='load();';
 include('includes/header.php');
 
 if (!isset($_POST['PageOffset'])) {
@@ -370,6 +359,23 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 						</td>
 					</tr>
 				<tbody></table>';
+			
+			// OpenStreetMap with Leaflet
+			echo '<script>
+			var map = L.map(\'map\').setView([' . $lat . ', ' . $lng . '], 13);
+			
+			L.tileLayer(\'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png\', {
+				attribution: \'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors\',
+				maxZoom: 19
+			}).addTo(map);
+			
+			var marker = L.marker([' . $lat . ', ' . $lng . ']).addTo(map);
+			marker.bindPopup(\'<b>' . htmlspecialchars($suppname, ENT_QUOTES, 'UTF-8') . '</b><br>' . 
+				htmlspecialchars($address1, ENT_QUOTES, 'UTF-8') . '<br>' . 
+				htmlspecialchars($address2, ENT_QUOTES, 'UTF-8') . '<br>' . 
+				htmlspecialchars($address3, ENT_QUOTES, 'UTF-8') . '<br>' . 
+				htmlspecialchars($address4, ENT_QUOTES, 'UTF-8') . '\').openPopup();
+			</script>';
 		}
 	}
 	// Extended Info only if selected in Configuration

@@ -1,17 +1,18 @@
 <?php
-
-require(__DIR__ . '/includes/session.php');
+require (__DIR__ . '/includes/session.php');
 
 $Title = __('Supplier Maintenance');
 /* webERP manual links before header.php */
 $ViewTopic = 'AccountsPayable';
 $BookMark = 'NewSupplier';
-include('includes/header.php');
+include ('includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/CountriesArray.php');
+include ('includes/SQL_CommonFunctions.php');
+include ('includes/CountriesArray.php');
 
-if (isset($_POST['SupplierSince'])){$_POST['SupplierSince'] = ConvertSQLDate($_POST['SupplierSince']);}
+if (isset($_POST['SupplierSince'])) {
+	$_POST['SupplierSince'] = ConvertSQLDate($_POST['SupplierSince']);
+}
 
 function Is_ValidAccount($ActNo) {
 
@@ -150,7 +151,8 @@ function Is_ValidAccount($ActNo) {
 			case 3:
 				if ($BankPrefix == '08' or $BankPrefix == '09' or $BankPrefix == '25' or $BankPrefix == '33') {
 					$CheckSum = 0;
-				} else {
+				}
+				else {
 					$CheckSum = $CheckSum + ($DigitVal * 6);
 				}
 			break;
@@ -158,7 +160,8 @@ function Is_ValidAccount($ActNo) {
 			case 4:
 				if ($BankPrefix == '08' or $BankPrefix == '09' or $BankPrefix == '25' or $BankPrefix == '33') {
 					$CheckSum = 0;
-				} else {
+				}
+				else {
 					$CheckSum = $CheckSum + ($DigitVal * 3);
 				}
 			break;
@@ -166,7 +169,8 @@ function Is_ValidAccount($ActNo) {
 			case 5:
 				if ($BankPrefix == '08' or $BankPrefix == '09' or $BankPrefix == '25' or $BankPrefix == '33') {
 					$CheckSum = 0;
-				} else {
+				}
+				else {
 					$CheckSum = $CheckSum + ($DigitVal * 7);
 				}
 			break;
@@ -174,7 +178,8 @@ function Is_ValidAccount($ActNo) {
 			case 6:
 				if ($BankPrefix == '08' or $BankPrefix == '09' or $BankPrefix == '25' or $BankPrefix == '33') {
 					$CheckSum = 0;
-				} else {
+				}
+				else {
 					$CheckSum = $CheckSum + ($DigitVal * 9);
 				}
 			break;
@@ -182,7 +187,8 @@ function Is_ValidAccount($ActNo) {
 			case 7:
 				if ($BankPrefix == '08') {
 					$CheckSum = $CheckSum + $DigitVal * 7;
-				} elseif ($BankPrefix == '25' or $BankPrefix == '33') {
+				}
+				elseif ($BankPrefix == '25' or $BankPrefix == '33') {
 					$CheckSum = $CheckSum + $DigitVal * 1;
 				}
 			break;
@@ -190,11 +196,14 @@ function Is_ValidAccount($ActNo) {
 			case 8:
 				if ($BankPrefix == '08') {
 					$CheckSum = $CheckSum + ($DigitVal * 6);
-				} elseif ($BankPrefix == '09') {
+				}
+				elseif ($BankPrefix == '09') {
 					$CheckSum = 0;
-				} elseif ($BankPrefix == '25' or $BankPrefix == '33') {
+				}
+				elseif ($BankPrefix == '25' or $BankPrefix == '33') {
 					$CheckSum = $CheckSum + $DigitVal * 7;
-				} else {
+				}
+				else {
 					$CheckSum = $CheckSum + $DigitVal * 10;
 				}
 			break;
@@ -202,9 +211,11 @@ function Is_ValidAccount($ActNo) {
 			case 9:
 				if ($BankPrefix == '09') {
 					$CheckSum = 0;
-				} elseif ($BankPrefix == '25' or $BankPrefix == '33') {
+				}
+				elseif ($BankPrefix == '25' or $BankPrefix == '33') {
 					$CheckSum = $CheckSum + $DigitVal * 3;
-				} else {
+				}
+				else {
 					$CheckSum = $CheckSum + $DigitVal * 5;
 				}
 			break;
@@ -212,15 +223,19 @@ function Is_ValidAccount($ActNo) {
 			case 10:
 				if ($BankPrefix == '08') {
 					$CheckSum = $CheckSum + $DigitVal * 4;
-				} elseif ($BankPrefix == '09') {
+				}
+				elseif ($BankPrefix == '09') {
 					if (($DigitVal * 5) > 9) {
 						$CheckSum = $CheckSum + (int)mb_substr((string)($DigitVal * 5), 0, 1) + (int)mb_substr((string)($DigitVal * 5), mb_strlen((string)($DigitVal * 5)) - 1, 1);
-					} else {
+					}
+					else {
 						$CheckSum = $CheckSum + $DigitVal * 5;
 					}
-				} elseif ($BankPrefix == '25' or $BankPrefix == '33') {
+				}
+				elseif ($BankPrefix == '25' or $BankPrefix == '33') {
 					$CheckSum = $CheckSum + $DigitVal;
-				} else {
+				}
+				else {
 					$CheckSum = $CheckSum + $DigitVal * 8;
 				}
 			break;
@@ -228,15 +243,19 @@ function Is_ValidAccount($ActNo) {
 			case 11:
 				if ($BankPrefix == '08') {
 					$CheckSum = $CheckSum + $DigitVal * 3;
-				} elseif ($BankPrefix == '09') {
+				}
+				elseif ($BankPrefix == '09') {
 					if (($DigitVal * 4) > 9) {
 						$CheckSum = $CheckSum + (int)mb_substr(($DigitVal * 4), 0, 1) + (int)mb_substr(($DigitVal * 4), mb_strlen($DigitVal * 4) - 1, 1);
-					} else {
+					}
+					else {
 						$CheckSum = $CheckSum + $DigitVal * 4;
 					}
-				} elseif ($BankPrefix == '25' or $BankPrefix == '33') {
+				}
+				elseif ($BankPrefix == '25' or $BankPrefix == '33') {
 					$CheckSum = $CheckSum + $DigitVal * 7;
-				} else {
+				}
+				else {
 					$CheckSum = $CheckSum + $DigitVal * 4;
 				}
 			break;
@@ -244,13 +263,16 @@ function Is_ValidAccount($ActNo) {
 			case 12:
 				if ($BankPrefix == '25' or $BankPrefix == '33') {
 					$CheckSum = $CheckSum + $DigitVal * 3;
-				} elseif ($BankPrefix == '09') {
+				}
+				elseif ($BankPrefix == '09') {
 					if (($DigitVal * 3) > 9) {
 						$CheckSum = $CheckSum + (int)mb_substr(($DigitVal * 3), 0, 1) + (int)mb_substr(($DigitVal * 3), mb_strlen($DigitVal * 3) - 1, 1);
-					} else {
+					}
+					else {
 						$CheckSum = $CheckSum + $DigitVal * 3;
 					}
-				} else {
+				}
+				else {
 					$CheckSum = $CheckSum + $DigitVal * 2;
 				}
 			break;
@@ -259,10 +281,12 @@ function Is_ValidAccount($ActNo) {
 				if ($BankPrefix == '09') {
 					if (($DigitVal * 2) > 9) {
 						$CheckSum = $CheckSum + (int)mb_substr(($DigitVal * 2), 0, 1) + (int)mb_substr(($DigitVal * 2), mb_strlen($DigitVal * 2) - 1, 1);
-					} else {
+					}
+					else {
 						$CheckSum = $CheckSum + $DigitVal * 2;
 					}
-				} else {
+				}
+				else {
 					$CheckSum = $CheckSum + $DigitVal;
 				}
 			break;
@@ -280,7 +304,8 @@ function Is_ValidAccount($ActNo) {
 			echo '<p>' . __('The account number entered does not meet the banking check sum requirement and cannot be a valid account number');
 			return false;
 		}
-	} else {
+	}
+	else {
 		if ($CheckSum / 11 - (int)($CheckSum / 11) != 0) {
 			echo '<p>' . __('The account number entered does not meet the banking check sum requirement and cannot be a valid account number');
 			return false;
@@ -292,9 +317,11 @@ function Is_ValidAccount($ActNo) {
 
 if (isset($_GET['SupplierID'])) {
 	$SupplierID = mb_strtoupper($_GET['SupplierID']);
-} elseif (isset($_POST['SupplierID'])) {
+}
+elseif (isset($_POST['SupplierID'])) {
 	$SupplierID = mb_strtoupper($_POST['SupplierID']);
-} else {
+}
+else {
 	unset($SupplierID);
 }
 
@@ -401,42 +428,43 @@ if (isset($_POST['submit'])) {
 		$latitude = 0;
 		$longitude = 0;
 		if ($_SESSION['geocode_integration'] == 1) {
-			// Get the lat/long from our geocoding host
-			/// @todo move getting of geocode info into a dedicated function, and move off google maps
+			// Get the lat/long from OpenStreetMap Nominatim
 			$SQL = "SELECT * FROM geocode_param";
 			$Resultgeo = DB_query($SQL);
 			$Row = DB_fetch_array($Resultgeo);
-			$APIKey = $Row['geocode_key'];
-			$MapHost = $Row['map_host'];
-			define('MAPS_HOST', $MapHost);
-			define('KEY', $APIKey);
-			// check that some sane values are setup already in geocode tables, if not skip the geocoding but add the record anyway.
-			if ($MapHost == "") {
-				echo '<div class="warn">' . __('Warning - Geocode Integration is enabled, but no hosts are setup.  Go to Geocode Setup') . '</div>';
-			} else {
-				$Address = urlencode($_POST['Address1'] . ', ' . $_POST['Address2'] . ', ' . $_POST['Address3'] . ', ' . $_POST['Address4'] . ', ' . $_POST['Address5'] . ', ' . $_POST['Address6']);
-				$BaseURLl = "https://" . MAPS_HOST . "/maps/api/geocode/xml?address=";
-				$RequestURL = $BaseURLl . $Address . '&key=' . KEY . '&sensor=true';
+			
+			// Build address string
+			$Address = urlencode($_POST['Address1'] . ', ' . $_POST['Address2'] . ', ' . $_POST['Address3'] . ', ' . $_POST['Address4'] . ', ' . $_POST['Address5'] . ', ' . $_POST['Address6']);
+			$BaseURL = "https://nominatim.openstreetmap.org/search?format=json&q=";
+			$RequestURL = $BaseURL . $Address . '&limit=1';
 
-				/// @todo file_get_contents might be disabled for remote files. Use a better api: curl or sockets
-				$xml = simplexml_load_string(utf8_encode(file_get_contents($RequestURL))) or die("url not loading");
-				//			$xml = simplexml_load_file($RequestURL) or die("url not loading");
-				$coordinates = $xml->Response->Placemark->Point->coordinates;
+			// Set up proper headers for Nominatim usage policy
+			$opts = array(
+				'http'=>array(
+					'method'=>"GET",
+					'header'=>"User-Agent: webERP-geocoding\r\n"
+				)
+			);
+			$context = stream_context_create($opts);
+			$buffer = @file_get_contents($RequestURL, false, $context);
 
-				$status = $xml->status;
-				if (strcmp($status, 'OK') == 0) {
+			if ($buffer !== false) {
+				$json = json_decode($buffer, true);
+				if (!empty($json) && isset($json[0]['lat']) && isset($json[0]['lon'])) {
 					// Successful geocode
-					$geocode_pending = false;
-					// Format: Longitude, Latitude, Altitude
-					$latitude = $xml->result->geometry->location->lat;
-					$longitude = $xml->result->geometry->location->lng;
+					$latitude = $json[0]['lat'];
+					$longitude = $json[0]['lon'];
 				} else {
-					// failure to geocode
-					$geocode_pending = false;
-					echo '<p>' . __('Address') . ': ' . $Address . ' ' . __('failed to geocode') . "\n";
-					echo __('Received status') . ' ' . $status . "\n" . '</p>';
+					// No results found
+					echo '<p>' . __('Address') . ': ' . $Address . ' ' . __('failed to geocode') . ' - ' . __('No results found') . '</p>';
 				}
+			} else {
+				// Connection failed
+				echo '<p>' . __('Address') . ': ' . $Address . ' ' . __('failed to geocode') . ' - ' . __('Connection failed') . '</p>';
 			}
+			
+			// Respect Nominatim usage policy: 1 request per second
+			usleep(1000000);
 		}
 		if (!isset($_POST['New'])) {
 
@@ -481,7 +509,8 @@ if (isset($_POST['submit'])) {
 							defaultshipper='" . $_POST['DefaultShipper'] . "',
 							defaultgl='" . $_POST['DefaultGL'] . "'
 						WHERE supplierid = '" . $SupplierID . "'";
-			} else {
+			}
+			else {
 				if ($SuppCurrs[0] != $_POST['CurrCode']) {
 					prnMsg(__('Cannot change currency code as transactions already exist'), 'info');
 				}
@@ -520,7 +549,8 @@ if (isset($_POST['submit'])) {
 
 			prnMsg(__('The supplier master record for') . ' ' . $SupplierID . ' ' . __('has been updated'), 'success');
 
-		} else { //its a new supplier
+		}
+		else { //its a new supplier
 			if ($_SESSION['AutoSupplierNo'] == 1) {
 				/* system assigned, sequential, numeric */
 				$SupplierID = GetNextTransNo(600);
@@ -619,13 +649,15 @@ if (isset($_POST['submit'])) {
 
 		}
 
-	} else {
+	}
+	else {
 
 		prnMsg(__('Validation failed') . __('no updates or deletes took place'), 'warn');
 
 	}
 
-} elseif (isset($_POST['delete']) and $_POST['delete'] != '') {
+}
+elseif (isset($_POST['delete']) and $_POST['delete'] != '') {
 
 	//the link to delete a selected record was clicked instead of the submit button
 	$CancelDelete = 0;
@@ -639,7 +671,8 @@ if (isset($_POST['submit'])) {
 		prnMsg(__('Cannot delete this supplier because there are transactions that refer to this supplier'), 'warn');
 		echo '<br />' . __('There are') . ' ' . $MyRow[0] . ' ' . __('transactions against this supplier');
 
-	} else {
+	}
+	else {
 		$SQL = "SELECT COUNT(*) FROM purchorders WHERE supplierno='" . $SupplierID . "'";
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_row($Result);
@@ -647,7 +680,8 @@ if (isset($_POST['submit'])) {
 			$CancelDelete = 1;
 			prnMsg(__('Cannot delete the supplier record because purchase orders have been created against this supplier'), 'warn');
 			echo '<br />' . __('There are') . ' ' . $MyRow[0] . ' ' . __('orders against this supplier');
-		} else {
+		}
+		else {
 			$SQL = "SELECT COUNT(*) FROM suppliercontacts WHERE supplierid='" . $SupplierID . "'";
 			$Result = DB_query($SQL);
 			$MyRow = DB_fetch_row($Result);
@@ -732,9 +766,11 @@ if (!isset($SupplierID)) {
 	foreach ($CountriesArray as $CountryEntry => $CountryName) {
 		if (isset($_POST['Address6']) and ($_POST['Address6'] == $CountryName)) {
 			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName . '</option>';
-		} elseif (!isset($_POST['Address6']) and $CountryName == "") {
+		}
+		elseif (!isset($_POST['Address6']) and $CountryName == "") {
 			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName . '</option>';
-		} else {
+		}
+		else {
 			echo '<option value="' . $CountryName . '">' . $CountryName . '</option>';
 		}
 	}
@@ -810,7 +846,8 @@ if (!isset($SupplierID)) {
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['FactorID']) and $_POST['FactorID'] == $MyRow['id']) {
 			echo '<option selected="selected" value="' . $MyRow['id'] . '">' . $MyRow['coyname'] . '</option>';
-		} else {
+		}
+		else {
 			echo '<option value="' . $MyRow['id'] . '">' . $MyRow['coyname'] . '</option>';
 		}
 	} //end while loop
@@ -832,7 +869,8 @@ if (!isset($SupplierID)) {
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($_POST['SalesPersonID'] == $MyRow['salesmancode']) {
 			echo '<option selected="selected" value="', $MyRow['salesmancode'], '">', $MyRow['salesmanname'], '</option>';
-		} else {
+		}
+		else {
 			echo '<option value="', $MyRow['salesmancode'], '">', $MyRow['salesmanname'], '</option>';
 		}
 	} //end while loop
@@ -846,14 +884,14 @@ if (!isset($SupplierID)) {
 		$_POST['CurrCode'] = $MyRow[0];
 	}
 
-
 	echo '<field>
 			<label for="CurrCode">' . __('Supplier Currency') . ':</label>
 			<select name="CurrCode">';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($_POST['CurrCode'] == $MyRow['currabrev']) {
 			echo '<option selected="selected" value="' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
-		} else {
+		}
+		else {
 			echo '<option value="' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
 		}
 	} //end while loop
@@ -881,7 +919,8 @@ if (!isset($SupplierID)) {
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($_POST['DefaultShipper'] == $MyRow['shipper_id']) {
 			echo '<option selected="selected" value="' . $MyRow['shipper_id'] . '">' . $MyRow['shippername'] . '</option>';
-		} else {
+		}
+		else {
 			echo '<option value="' . $MyRow['shipper_id'] . '">' . $MyRow['shippername'] . '</option>';
 		}
 	}
@@ -899,11 +938,12 @@ if (!isset($SupplierID)) {
 			<label for="DefaultGL">' . __('Default GL Account') . ':</label>
 			<select tabindex="19" name="DefaultGL">';
 
-	echo '<option value="0">', __('None') , ' (0)</option>';
+	echo '<option value="0">', __('None'), ' (0)</option>';
 	while ($MyRow = DB_fetch_row($Result)) {
 		if ($_POST['DefaultGL'] == $MyRow[0]) {
 			echo '<option selected="selected" value="' . $MyRow[0] . '">' . htmlspecialchars($MyRow[1], ENT_QUOTES, 'UTF-8') . ' (' . $MyRow[0] . ')</option>';
-		} else {
+		}
+		else {
 			echo '<option value="' . $MyRow[0] . '">' . htmlspecialchars($MyRow[1], ENT_QUOTES, 'UTF-8') . ' (' . $MyRow[0] . ')</option>';
 		}
 	} //end while loop
@@ -922,7 +962,8 @@ if (!isset($SupplierID)) {
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['TaxGroup']) and $_POST['TaxGroup'] == $MyRow['taxgroupid']) {
 			echo '<option selected="selected" value="' . $MyRow['taxgroupid'] . '">' . $MyRow['taxgroupdescription'] . '</option>';
-		} else {
+		}
+		else {
 			echo '<option value="' . $MyRow['taxgroupid'] . '">' . $MyRow['taxgroupdescription'] . '</option>';
 		}
 	} //end while loop
@@ -931,7 +972,8 @@ if (!isset($SupplierID)) {
 		</fieldset>
 		<div class="centre"><input type="submit" name="submit" value="' . __('Insert New Supplier') . '" /></div>';
 	echo '</form>';
-} else {
+}
+else {
 
 	//SupplierID exists - either passed when calling the form or from the form itself
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
@@ -1003,7 +1045,8 @@ if (!isset($SupplierID)) {
 				<label for="SupplierID">', __('Supplier Code'), '</label>
 				<fieldtext>', $SupplierID, '</fieldtext>';
 
-	} else {
+	}
+	else {
 		// its a new supplier being added
 		echo '<field><td><input type="hidden" name="New" value="Yes" />';
 		/* if $AutoSupplierNo is off (i.e. 0) then provide an input box for the SupplierID to manually assigned */
@@ -1044,9 +1087,11 @@ if (!isset($SupplierID)) {
 	foreach ($CountriesArray as $CountryEntry => $CountryName) {
 		if (isset($_POST['Address6']) and ($_POST['Address6'] == $CountryName)) {
 			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName . '</option>';
-		} elseif (!isset($_POST['Address6']) and $CountryName == "") {
+		}
+		elseif (!isset($_POST['Address6']) and $CountryName == "") {
 			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName . '</option>';
-		} else {
+		}
+		else {
 			echo '<option value="' . $CountryName . '">' . $CountryName . '</option>';
 		}
 	}
@@ -1078,7 +1123,8 @@ if (!isset($SupplierID)) {
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($_POST['SupplierType'] == $MyRow['typeid']) {
 			echo '<option selected="selected" value="' . $MyRow['typeid'] . '">' . $MyRow['typename'] . '</option>';
-		} else {
+		}
+		else {
 			echo '<option value="' . $MyRow['typeid'] . '">' . $MyRow['typename'] . '</option>';
 		}
 	} //end while loop
@@ -1110,7 +1156,8 @@ if (!isset($SupplierID)) {
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($_POST['PaymentTerms'] == $MyRow['termsindicator']) {
 			echo '<option selected="selected" value="' . $MyRow['termsindicator'] . '">' . $MyRow['terms'] . '</option>';
-		} else {
+		}
+		else {
 			echo '<option value="' . $MyRow['termsindicator'] . '">' . $MyRow['terms'] . '</option>';
 		}
 	} //end while loop
@@ -1127,7 +1174,8 @@ if (!isset($SupplierID)) {
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($_POST['FactorID'] == $MyRow['id']) {
 			echo '<option selected="selected" value="' . $MyRow['id'] . '">' . $MyRow['coyname'] . '</option>';
-		} else {
+		}
+		else {
 			echo '<option value="' . $MyRow['id'] . '">' . $MyRow['coyname'] . '</option>';
 		}
 	} //end while loop
@@ -1149,7 +1197,8 @@ if (!isset($SupplierID)) {
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($_POST['SalesPersonID'] == $MyRow['salesmancode']) {
 			echo '<option selected="selected" value="', $MyRow['salesmancode'], '">', $MyRow['salesmanname'], '</option>';
-		} else {
+		}
+		else {
 			echo '<option value="', $MyRow['salesmancode'], '">', $MyRow['salesmanname'], '</option>';
 		}
 	} //end while loop
@@ -1164,7 +1213,8 @@ if (!isset($SupplierID)) {
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($_POST['CurrCode'] == $MyRow['currabrev']) {
 			echo '<option selected="selected" value="' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
-		} else {
+		}
+		else {
 			echo '<option value="' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
 		}
 	} //end while loop
@@ -1179,7 +1229,8 @@ if (!isset($SupplierID)) {
 	if ($_POST['Remittance'] == 0) {
 		echo '<option selected="selected" value="0">' . __('Not Required') . '</option>';
 		echo '<option value="1">' . __('Required') . '</option>';
-	} else {
+	}
+	else {
 		echo '<option value="0">' . __('Not Required') . '</option>';
 		echo '<option selected="selected" value="1">' . __('Required') . '</option>';
 
@@ -1199,7 +1250,8 @@ if (!isset($SupplierID)) {
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($_POST['DefaultShipper'] == $MyRow['shipper_id']) {
 			echo '<option selected="selected" value="' . $MyRow['shipper_id'] . '">' . $MyRow['shippername'] . '</option>';
-		} else {
+		}
+		else {
 			echo '<option value="' . $MyRow['shipper_id'] . '">' . $MyRow['shippername'] . '</option>';
 		}
 	}
@@ -1220,7 +1272,8 @@ if (!isset($SupplierID)) {
 	while ($MyRow = DB_fetch_row($Result)) {
 		if ($_POST['DefaultGL'] == $MyRow[0]) {
 			echo '<option selected="selected" value="' . $MyRow[0] . '">' . htmlspecialchars($MyRow[1], ENT_QUOTES, 'UTF-8') . ' (' . $MyRow[0] . ')</option>';
-		} else {
+		}
+		else {
 			echo '<option value="' . $MyRow[0] . '">' . htmlspecialchars($MyRow[1], ENT_QUOTES, 'UTF-8') . ' (' . $MyRow[0] . ')</option>';
 		}
 	} //end while loop
@@ -1239,7 +1292,8 @@ if (!isset($SupplierID)) {
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($MyRow['taxgroupid'] == $_POST['TaxGroup']) {
 			echo '<option selected="selected" value="' . $MyRow['taxgroupid'] . '">' . $MyRow['taxgroupdescription'] . '</option>';
-		} else {
+		}
+		else {
 			echo '<option value="' . $MyRow['taxgroupid'] . '">' . $MyRow['taxgroupdescription'] . '</option>';
 		}
 
@@ -1252,7 +1306,8 @@ if (!isset($SupplierID)) {
 		echo '<div class="centre">
 					<input type="submit" name="submit" value="' . __('Add These New Supplier Details') . '" />
 				</div>';
-	} else {
+	}
+	else {
 		echo '<div class="centre">
 					<input type="submit" name="submit" value="' . __('Update Supplier') . '" />
 				</div>';
@@ -1265,4 +1320,5 @@ if (!isset($SupplierID)) {
 	echo '</div>
 		</form>';
 } // end of main ifs
-include('includes/footer.php');
+include ('includes/footer.php');
+
