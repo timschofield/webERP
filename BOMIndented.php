@@ -143,13 +143,17 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	} // End of if $_POST['Levels']
 
 	$SQL = "SELECT stockmaster.stockid,
-				   stockmaster.description
+				   stockmaster.description,
+				   stockmaster.mbflag,
+				   stockmaster.units
 			  FROM stockmaster
 			  WHERE stockid = " . "'" . $_POST['Part'] . "'";
 	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
+	$ParentRow = DB_fetch_array($Result);
 	$Assembly = $_POST['Part'];
-	$AssemblyDesc = $MyRow['description'];
+	$AssemblyDesc = $ParentRow['description'];
+	$ParentMBFlag = $ParentRow['mbflag'];
+	$ParentUnits = $ParentRow['units'];
 
 	$HTML = '';
 
@@ -194,6 +198,16 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			ORDER BY sortpart";
 	$Result = DB_query($SQL);
 
+	// Display the top-level parent item first for consistency with single-level BOM
+	$HTML .= '<tr class="striped_row">
+				<td><strong>' . $Assembly . '</strong></td>
+				<td>' . $ParentMBFlag . '</td>
+				<td><strong>' . $AssemblyDesc . '</strong></td>
+				<td colspan="3">' . __('Top Level Assembly') . '</td>
+				<td>' . $ParentUnits . '</td>
+				<td colspan="2"></td>
+			</tr>';
+
 	// $Fill is used to alternate between lines with transparent and painted background
 
 	while ($MyRow = DB_fetch_array($Result)){
@@ -201,8 +215,13 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$FormatedEffectiveAfter = ConvertSQLDate($MyRow['effectiveafter']);
 		$FormatedEffectiveTo = ConvertSQLDate($MyRow['effectiveto']);
 
+		// Create visual indentation based on level
+		$Level = $MyRow['level'] - 1; // Adjust for parent being level 1
+		$Indent = str_repeat('&nbsp;&nbsp;', $Level * 2); // 2 spaces per level
+		$Symbol = ($Level > 0) ? '|_ ' : '';
+
 		$HTML .= '<tr class="striped_row">
-					<td>' . $MyRow['component'] . '</td>
+					<td>' . $Indent . $Symbol . $MyRow['component'] . '</td>
 					<td>' . $MyRow['mbflag'] . '</td>
 					<td>' . $MyRow['description'] . '</td>
 					<td>' . $MyRow['loccode'] . '</td>
