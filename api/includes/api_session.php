@@ -60,6 +60,7 @@ ini_set('session.cookie_httponly', 1);
 
 session_name('webERPapi');
 session_start();
+$WebErpSessionType = 'api';
 
 include($PathPrefix . 'includes/LanguageSetup.php');
 //  Establish a DB connection, if possible. NOTE that this connection

@@ -115,7 +115,9 @@ function DoSetup()
     if (isset($_SESSION['db']) AND $_SESSION['db'] != '' )
         include($PathPrefix . 'includes/GetConfig.php');
 
+	/// @todo not having declared this as global means that this assignment is useless...
     $db = $_SESSION['db'];	    // Used a bit in the following.
+
     if (isset($_SESSION['DB_Maintenance'])) {
 		if ($_SESSION['DB_Maintenance']>0)  {
 		    if (DateDiff(Date($_SESSION['DefaultDateFormat']),
