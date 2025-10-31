@@ -2,8 +2,7 @@
 
 require(__DIR__ . '/includes/session.php');
 
-include('api/api_errorcodes.php');
-include('api/api_glgroups.php');
+include('api/includes/api_php.php');
 
 $Title = __('Import Chart of Accounts');
 $ViewTopic = 'SpecialUtilities';

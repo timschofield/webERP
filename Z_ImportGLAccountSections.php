@@ -7,8 +7,7 @@ $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
 
-include('api/api_errorcodes.php');
-include('api/api_glsections.php');
+include('api/includes/api_php.php');
 
 //$webERPUser = $_SESSION['UserID'];
 //$SQL="SELECT password FROM www_users WHERE userid='" . $webERPUser ."'";
