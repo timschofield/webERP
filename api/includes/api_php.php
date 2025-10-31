@@ -13,6 +13,10 @@ $AllowAnyone = true;
 $PathPrefix = __DIR__ . '/../../';
 if (!isset($WebErpSessionType)) {
 	include(__DIR__ . '/api_session.php');
+} else {
+	if ($WebErpSessionType == 'web') {
+		$_SESSION['db'] = $db;
+	}
 }
 
 if (isset($_SESSION['DatabaseName'])) {
