@@ -7,6 +7,7 @@
  *       - make the API independent of sessions. Ideally, api_session.php would be included by the script which includes
  *         this one. We leave its inclusion here for BC - but make it possible to avoid its inclusion
  *       - simplify the api bootstrap chain
+ *       - get rid of $_SESSION['db'], use only the global var $db
  */
 
 $AllowAnyone = true;
