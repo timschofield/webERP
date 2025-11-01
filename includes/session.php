@@ -102,6 +102,7 @@ if (!isset($SessionName)) {
 }
 session_name($SessionName);
 session_start();
+$WebErpSessionType = 'web';
 
 include($PathPrefix . 'includes/LanguageSetup.php');
 

@@ -564,6 +564,17 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		}
 		DB_ReinstateForeignKeys();
 
+		/// @todo there is no guarantee that all the db updates have been applied to the single SQL files making up
+		///       the installer - that is left to the person preparing the release to verify...
+		$SQL = "INSERT INTO config VALUES('DBUpdateNumber', " . HighestFileName($Path_To_Root) . ")";
+		$Result = DB_query($SQL, '', '', false, false);
+		if (DB_error_no() == 0) {
+			echo '<div class="success">' . __('The database update revision has been inserted') . '</div>';
+		} else {
+			$Errors++;
+			echo '<div class="error">' . __('There was an error inserting the DB revision number') . ' - ' . DB_error_msg() . '</div>';
+		}
+
 		foreach (glob($Path_To_Root . '/companies/weberpdemo/part_pics/*.jp*') as $JpegFile) {
 			copy($Path_To_Root . "/companies/weberpdemo/part_pics/" . basename($JpegFile), $CompanyDir . '/part_pics/' . basename($JpegFile));
 		}

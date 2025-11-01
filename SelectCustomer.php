@@ -485,12 +485,8 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 			exit();
 		}
 		$MyRow = DB_fetch_array($Result);
-		$API_key = $MyRow['geocode_key'];
-		$center_long = $MyRow['center_long'];
-		$center_lat = $MyRow['center_lat'];
 		$map_height = $MyRow['map_height'];
 		$map_width = $MyRow['map_width'];
-		$map_host = $MyRow['map_host'];
 
 		$SQL = "SELECT
 					debtorsmaster.debtorno,
@@ -514,38 +510,48 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 		$Lat = $MyRow2['lat'];
 		$Lng = $MyRow2['lng'];
 
-		/// @todo move getting of geocode info into a dedicated function, and move off google maps
+		// Use OpenStreetMap Nominatim for geocoding if no coordinates exist
 		if ($Lat == 0 and $MyRow2['braddress1'] != '' and $_SESSION['BranchCode'] != '') {
-			$delay = 0;
-			$base_url = 'https://' . $map_host . '/maps/api/geocode/xml?address=';
+			$delay = 1000000; // 1 second delay for Nominatim usage policy
+			$base_url = 'https://nominatim.openstreetmap.org/search?format=json&q=';
 
 			$geocode_pending = true;
 			while ($geocode_pending) {
 				$address = urlencode($MyRow2['braddress1'] . ',' . $MyRow2['braddress2'] . ',' . $MyRow2['braddress3'] . ',' . $MyRow2['braddress4']);
 				$id = $MyRow2['branchcode'];
 				$debtorno = $MyRow2['debtorno'];
-				$request_url = $base_url . $address . ',&sensor=true';
+				$request_url = $base_url . $address . '&limit=1';
 
-				/// @todo file_get_contents might be disabled for remote files. Use a better api: curl or sockets
-				$buffer = file_get_contents($request_url) /* or die("url not loading")*/;
-				$xml = simplexml_load_string($buffer);
-				// echo $xml->asXML();
-				$status = $xml->status;
-				if (strcmp($status, "OK") == 0) {
-					$geocode_pending = false;
+				$opts = array(
+					'http'=>array(
+						'method'=>"GET",
+						'header'=>"User-Agent: webERP-geocoding\r\n"
+					)
+				);
+				$context = stream_context_create($opts);
+				$buffer = @file_get_contents($request_url, false, $context);
+				
+				if ($buffer !== false) {
+					$json = json_decode($buffer, true);
+					if (!empty($json) && isset($json[0]['lat']) && isset($json[0]['lon'])) {
+						$geocode_pending = false;
 
-					$Lat = $xml->result->geometry->location->lat;
-					$Lng = $xml->result->geometry->location->lng;
+						$Lat = $json[0]['lat'];
+						$Lng = $json[0]['lon'];
 
-					$query = sprintf("UPDATE custbranch " . " SET lat = '%s', lng = '%s' " . " WHERE branchcode = '%s' " . " AND debtorno = '%s' LIMIT 1;", ($Lat), ($Lng), ($id), ($debtorno));
-					$update_result = DB_query($query);
+						$query = sprintf("UPDATE custbranch " . " SET lat = '%s', lng = '%s' " . " WHERE branchcode = '%s' " . " AND debtorno = '%s' LIMIT 1;", ($Lat), ($Lng), ($id), ($debtorno));
+						$update_result = DB_query($query);
 
-					if ($update_result == 1) {
-						prnMsg(__('GeoCode has been updated for CustomerID') . ': ' . $id . ' - ' . __('Latitude') . ': ' . $Lat . ' ' . __('Longitude') . ': ' . $Lng, 'info');
+						if ($update_result == 1) {
+							prnMsg(__('GeoCode has been updated for CustomerID') . ': ' . $id . ' - ' . __('Latitude') . ': ' . $Lat . ' ' . __('Longitude') . ': ' . $Lng, 'info');
+						}
+					} else {
+						$geocode_pending = false;
+						prnMsg(__('Unable to update GeoCode for CustomerID') . ': ' . $id . ' - ' . __('No results found'), 'error');
 					}
 				} else {
 					$geocode_pending = false;
-					prnMsg(__('Unable to update GeoCode for CustomerID') . ': ' . $id . ' - ' . __('Received status') . ': ' . $status, 'error');
+					prnMsg(__('Unable to update GeoCode for CustomerID') . ': ' . $id . ' - ' . __('Connection failed'), 'error');
 				}
 				usleep($delay);
 			}
@@ -555,6 +561,9 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 			echo '<div class="centre">', __('Mapping is enabled, but no Mapping data to display for this Customer.'), '</div>';
 		} // $Lattitude == 0
 		else {
+			echo '<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>';
+			echo '<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>';
+			
 			echo '<table cellpadding="4">
 					<thead>
 						<tr>
@@ -571,53 +580,22 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 					</tbody>
 				</table>';
 
-			// Reference: Google Maps JavaScript API V3, https://developers.google.com/maps/documentation/javascript/reference.
-			echo '
-<script>
-var map;
-function initMap() {
-
-	var myLatLng = {lat: ', $Lat, ', lng: ', $Lng, '};', /* Fills with customer's coordinates. */
-			'
-
-	var map = new google.maps.Map(document.getElementById(\'map\'), {', /* Creates the map with the road map view. */
-			'
-		center: myLatLng,
-		mapTypeId: google.maps.MapTypeId.ROADMAP,
-		zoom: 14
-	});
-
-	var contentString =', /* Fills the content to be displayed in the InfoWindow. */
-			'
-		\'<div style="overflow: auto;">\' +
-		\'<div><b>', $BranchName, '</b></div>\' +
-		\'<div>', $MyRow2['braddress1'], '</div>\' +
-		\'<div>', $MyRow2['braddress2'], '</div>\' +
-		\'<div>', $MyRow2['braddress3'], '</div>\' +
-		\'<div>', $MyRow2['braddress4'], '</div>\' +
-		\'</div>\';
-
-	var infowindow = new google.maps.InfoWindow({', /* Creates an info window to display the content of 'contentString'. */
-			'
-		content: contentString,
-		maxWidth: 250
-	});
-
-	var marker = new google.maps.Marker({', /* Creates a marker to identify a location on the map. */
-			'
-		position: myLatLng,
-		map: map,
-		title: \'', $CustomerName, '\'
-	});
-
-	marker.addListener(\'click\', function() {', /* Creates the event clicking the marker to display the InfoWindow. */
-			'
-		infowindow.open(map, marker);
-	});
-}
-</script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=', $API_key, '&callback=initMap"></script>';
-			/*		echo '<script src="https://' . $map_host . '/maps/api/js?v=3.exp&key=' . $API_key . '" type="text/javascript"></script>';*/
+			// OpenStreetMap with Leaflet
+			echo '<script>
+			var map = L.map(\'map\').setView([' . $Lat . ', ' . $Lng . '], 14);
+			
+			L.tileLayer(\'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png\', {
+				attribution: \'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors\',
+				maxZoom: 19
+			}).addTo(map);
+			
+			var marker = L.marker([' . $Lat . ', ' . $Lng . ']).addTo(map);
+			marker.bindPopup(\'<div style="overflow: auto;"><div><b>' . htmlspecialchars($BranchName, ENT_QUOTES, 'UTF-8') . '</b></div><div>' . 
+				htmlspecialchars($MyRow2['braddress1'], ENT_QUOTES, 'UTF-8') . '</div><div>' . 
+				htmlspecialchars($MyRow2['braddress2'], ENT_QUOTES, 'UTF-8') . '</div><div>' . 
+				htmlspecialchars($MyRow2['braddress3'], ENT_QUOTES, 'UTF-8') . '</div><div>' . 
+				htmlspecialchars($MyRow2['braddress4'], ENT_QUOTES, 'UTF-8') . '</div></div>\').openPopup();
+			</script>';
 		}
 
 	} // $_SESSION['geocode_integration'] == 1

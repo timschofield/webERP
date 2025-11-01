@@ -1,29 +1,20 @@
 <?php
-
-//$PageSecurity = 3;
-
-require(__DIR__ . '/includes/session.php');
+require (__DIR__ . '/includes/session.php');
 
 $Title = __('Geocode Generate');
-include('includes/header.php');
+include ('includes/header.php');
 
 //include('includes/SQL_CommonFunctions.php');
-
 $SQL = "SELECT * FROM geocode_param";
-$Resultgeo = DB_query($SQL);
-$Row = DB_fetch_array($Resultgeo);
+$ResultGeo = DB_query($SQL);
+$MyRow = DB_fetch_array($ResultGeo);
 
-$APIKey = $Row['geocode_key'];
-$center_long = $Row['center_long'];
-$center_lat = $Row['center_lat'];
-$map_height = $Row['map_height'];
-$map_width = $Row['map_width'];
-$MapHost = $Row['map_host'];
+$MapHeight = $MyRow['map_height'];
+$MapWidth = $MyRow['map_width'];
 
-define("MAPS_HOST", $MapHost);
-define("KEY", $APIKey);
-
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Geocode Setup') . '" alt="" />' . ' ' . __('Geocoding of Customers and Suppliers')  . '</p>';
+echo '<p class="page_title_text">
+		<img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . __('Geocode Setup') . '" alt="" />' . ' ' . __('Geocoding of Customers and Suppliers') . '
+	</p>';
 
 // select all the customer branches
 $SQL = "SELECT * FROM custbranch";
@@ -33,112 +24,140 @@ $Result = DB_query($SQL);
 $SQL = "SELECT * FROM suppliers WHERE 1";
 $Result2 = DB_query($SQL);
 
-/// @todo move getting of geocode info into a dedicated function, and move off google maps
-
-// Initialize delay in geocode speed
-$delay = 0;
-$BaseURLl = "https://" . MAPS_HOST . "/maps/api/geocode/xml?address=";
+// Using OpenStreetMap Nominatim for geocoding
+// Initialize delay to respect Nominatim usage policy (1 request per second)
+$Delay = 1000000; // 1 second in microseconds
+$BaseURL = "https://nominatim.openstreetmap.org/search?format=json&q=";
 
 // Iterate through the customer branch rows, geocoding each address
 
-while ($Row = DB_fetch_array($Result)) {
-  $geocode_pending = true;
+echo '<table>
+		<tr>
+			<th>' . __('Customer Code') . '</th>
+			<th>' . __('Address') . '</th>
+			<th>' . __('Latitude') . '</th>
+			<th>' . __('Longitude') . '</th>
+		</tr>';
 
-  while ($geocode_pending) {
-    $Address = urlencode($Row["braddress1"] . "," . $Row["braddress2"] . "," . $Row["braddress3"] . "," . $Row["braddress4"]);
-    $id = $Row["branchcode"];
-    $DebtorNo = $Row["debtorno"];
-    $RequestURL = $BaseURLl . $Address . '&key=' . KEY . '&sensor=true';
+while ($MyRow = DB_fetch_array($Result)) {
+	$GeocodePending = true;
+	while ($GeocodePending) {
+		$Address = urlencode($MyRow['braddress1'] . ',' . $MyRow['braddress2'] . ',' . $MyRow['braddress3'] . ',' . $MyRow['braddress4']);
+		$DisplayAddress = $MyRow['braddress1'] . '<br />' . $MyRow['braddress2'] . '<br />' . $MyRow['braddress3'] . '<br />' . $MyRow['braddress4'];
+		$id = $MyRow['branchcode'];
+		$DebtorNo = $MyRow['debtorno'];
+		$RequestURL = $BaseURL . $Address . '&limit=1';
 
-    echo '<br \>', __('Customer Code'), ': ', $id;
+		$Options = array('http' => array('method' => "GET", 'header' => "User-Agent: webERP-geocoding\r\n"));
+		$Context = stream_context_create($Options);
+		$Buffer = @file_get_contents($RequestURL, false, $Context);
 
-    $xml = simplexml_load_string(utf8_encode(file_get_contents($RequestURL))) or die("url not loading");
-//    $xml = simplexml_load_file($RequestURL) or die("url not loading");
+		if ($Buffer !== false) {
+			$Json = json_decode($Buffer, true);
+			if (!empty($Json) && isset($Json[0]['lat']) && isset($Json[0]['lon'])) {
+				// Successful geocode
+				$GeocodePending = false;
+				$lat = $Json[0]['lat'];
+				$lng = $Json[0]['lon'];
 
-    $status = $xml->status;
+				$SQL = "UPDATE custbranch SET lat = '" . $lat . "',
+											lng = '" . $lng . "'
+										WHERE branchcode = '" . $id . "'
+										AND debtorno = '" . $DebtorNo . "'
+										LIMIT 1";
 
-    if (strcmp($status, "OK") == 0) {
-      // Successful geocode
-      $geocode_pending = false;
-      $coordinates = $xml->GeocodeResponse->result->geometry->location;
-      $coordinatesSplit = explode(",", $coordinates);
-      // Format: Longitude, Latitude, Altitude
-      $lat = $xml->result->geometry->location->lat;
-      $lng = $xml->result->geometry->location->lng;
+				$UpdateResult = DB_query($SQL);
 
-      $Query = sprintf("UPDATE custbranch " .
-             " SET lat = '%s', lng = '%s' " .
-             " WHERE branchcode = '%s' " .
- 	     " AND debtorno = '%s' LIMIT 1;",
-             ($lat),
-             ($lng),
-             ($id),
-             ($DebtorNo));
-
-      $Update_result = DB_query($Query);
-
-      if ($Update_result==1) {
-      echo '<br />'. 'Address: ' . $Address . ' updated to geocode.';
-      echo '<br />'. 'Received status ' . $status . '<br />';
+				if ($UpdateResult == 1) {
+					echo '<tr class="striped_row">
+							<td>' . $id . '</td>
+							<td>' . $DisplayAddress . '</td>
+							<td>' . $lat . '</td>
+							<td>' . $lng . '</td>
+						</tr>';
+				}
+			}
+			else {
+				// No results found
+				$GeocodePending = false;
+				echo '<br />' . 'Address: ' . $Address . ' ' . __('failed to geocode.');
+				echo 'No results found<br />';
+			}
+		}
+		else {
+			// failure to connect
+			$GeocodePending = false;
+			echo '<br />' . 'Address: ' . $Address . ' ' . __('failed to geocode.');
+			echo 'Connection failed<br />';
+		}
+		usleep($Delay);
 	}
-    } else {
-      // failure to geocode
-      $geocode_pending = false;
-      echo '<br />' . 'Address: ' . $Address . __('failed to geocode.');
-      echo 'Received status ' . $status . '<br />';
-    }
-    usleep($delay);
-  }
 }
+echo '</table>';
+
+echo '<table>
+		<tr>
+			<th>' . __('Supplier Code') . '</th>
+			<th>' . __('Address') . '</th>
+			<th>' . __('Latitude') . '</th>
+			<th>' . __('Longitude') . '</th>
+		</tr>';
 
 // Iterate through the Supplier rows, geocoding each address
-while ($Row2 = DB_fetch_array($Result2)) {
-  $geocode_pending = true;
+while ($MyRow2 = DB_fetch_array($Result2)) {
+	$GeocodePending = true;
 
-  while ($geocode_pending) {
-    $Address = $Row2["address1"] . ",+" . $Row2["address2"] . ",+" . $Row2["address3"] . ",+" . $Row2["address4"];
-    $Address = urlencode($Row2["address1"] . "," . $Row2["address2"] . "," . $Row2["address3"] . "," . $Row2["address4"]);
-    $id = $Row2["supplierid"];
-    $RequestURL = $BaseURLl . $Address . '&key=' . KEY . '&sensor=true';
+	while ($GeocodePending) {
+		$Address = urlencode($MyRow2["address1"] . "," . $MyRow2["address2"] . "," . $MyRow2["address3"] . "," . $MyRow2["address4"]);
+		$DisplayAddress = $MyRow2['address1'] . '<br />' . $MyRow2['address2'] . '<br />' . $MyRow2['address3'] . '<br />' . $MyRow2['address4'];
+		$id = $MyRow2["supplierid"];
+		$RequestURL = $BaseURL . $Address . '&limit=1';
 
-    echo '<p>' . __('Supplier Code: ') . $id;
+		$Options = array('http' => array('method' => "GET", 'header' => "User-Agent: webERP-geocoding\r\n"));
+		$Context = stream_context_create($Options);
+		$Buffer = @file_get_contents($RequestURL, false, $Context);
 
-    $xml = simplexml_load_string(utf8_encode(file_get_contents($RequestURL))) or die("url not loading");
-//    $xml = simplexml_load_file($RequestURL) or die("url not loading");
+		if ($Buffer !== false) {
+			$Json = json_decode($Buffer, true);
+			if (!empty($Json) && isset($Json[0]['lat']) && isset($Json[0]['lon'])) {
+				// Successful geocode
+				$GeocodePending = false;
+				$lat = $Json[0]['lat'];
+				$lng = $Json[0]['lon'];
 
-    $status = $xml->status;
+				$SQL = "UPDATE suppliers SET lat = '" . $lat . "',
+											lng = '" . $lng . "'
+											WHERE supplierid = '" . $id . "'
+											LIMIT 1;";
 
-    if (strcmp($status, "OK") == 0) {
-      // Successful geocode
-      $geocode_pending = false;
-      $coordinates = $xml->GeocodeResponse->result->geometry->location;
-      $coordinatesSplit = explode(",", $coordinates);
-      // Format: Longitude, Latitude, Altitude
-      $lat = $xml->result->geometry->location->lat;
-      $lng = $xml->result->geometry->location->lng;
+				$UpdateResult = DB_query($SQL);
 
-
-      $Query = sprintf("UPDATE suppliers " .
-             " SET lat = '%s', lng = '%s' " .
-             " WHERE supplierid = '%s' LIMIT 1;",
-             ($lat),
-             ($lng),
-             ($id));
-
-      $Update_result = DB_query($Query);
-
-      if ($Update_result==1) {
-      echo '<br />' . 'Address: ' . $Address . ' updated to geocode.';
-      echo '<br />' . 'Received status ' . $status . '<br />';
-      }
-    } else {
-      // failure to geocode
-      $geocode_pending = false;
-      echo '<br />' . 'Address: ' . $Address . ' failed to geocode.';
-      echo '<br />' . 'Received status ' . $status . '<br />';
-    }
-    usleep($delay);
-  }
+				if ($UpdateResult == 1) {
+					echo '<tr class="striped_row">
+							<td>' . $id . '</td>
+							<td>' . $DisplayAddress . '</td>
+							<td>' . $lat . '</td>
+							<td>' . $lng . '</td>
+						</tr>';
+				}
+			}
+			else {
+				// No results found
+				$GeocodePending = false;
+				echo '<br />' . 'Address: ' . $Address . ' failed to geocode.';
+				echo 'No results found<br />';
+			}
+		}
+		else {
+			// failure to connect
+			$GeocodePending = false;
+			echo '<br />' . 'Address: ' . $Address . ' failed to geocode.';
+			echo '<br />' . 'Connection failed<br />';
+		}
+		usleep($Delay);
+	}
 }
+echo '</table>';
 echo '<br /><div class="centre"><a href="' . $RootPath . '/GeocodeSetup.php">' . __('Go back to Geocode Setup') . '</a></div>';
-include('includes/footer.php');
+include ('includes/footer.php');
+

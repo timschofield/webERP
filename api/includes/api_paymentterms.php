@@ -32,6 +32,7 @@ function GetPaymentTermsList($user, $password) {
  */
 function GetPaymentTermsDetails($paymentterms, $user, $password) {
 	$Errors = array();
+	/// @todo this if is useless...
 	if (!isset($db)) {
 		$db = db($user, $password);
 		if (gettype($db)=='integer') {
@@ -49,6 +50,7 @@ function GetPaymentTermsDetails($paymentterms, $user, $password) {
  */
 function GetPaymentMethodsList($User, $Password) {
 	$Errors = array();
+	/// @todo this if is useless...
 	if (!isset($db)) {
 		$db = db($User, $Password);
 		if (gettype($db)=='integer') {
@@ -73,6 +75,7 @@ function GetPaymentMethodsList($User, $Password) {
  */
 function GetPaymentMethodDetails($PaymentMethod, $User, $Password) {
 	$Errors = array();
+	/// @todo this if is useless...
 	if (!isset($db)) {
 		$db = db($User, $Password);
 		if (gettype($db)=='integer') {

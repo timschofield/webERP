@@ -637,10 +637,15 @@ function ImportReport($RptName) {
 
 	$Title1Desc = ''; // Initialize to null, not used for forms
 	$Title2Desc = '';
-	foreach ($arrSQL as $sql) { // find the report translated reportname and title information
+	$GroupName = ''; // Initialize groupname from import file
+	foreach ($arrSQL as $sql) { // find the report translated reportname, title and groupname information
 		if (mb_strpos($sql,'ReportName:')===0) $ReportName = mb_substr(trim($sql),12,-1);
 		if (mb_strpos($sql,'Title1Desc:')===0) $Title1Desc = mb_substr(trim($sql),12,-1);
 		if (mb_strpos($sql,'Title2Desc:')===0) $Title2Desc = mb_substr(trim($sql),12,-1);
+		if (mb_strpos($sql,'ReportData:')===0) { // then it's the line we're after with reportname and groupname
+			$GrpPos = mb_strpos($sql,"groupname='")+11;
+			$GroupName = mb_substr($sql,$GrpPos,mb_strpos($sql,"'",$GrpPos)-$GrpPos);
+		}
 	}
 	// check for valid file, duplicate report name
 	if ($RptName=='') $RptName = $ReportName; // then no report was entered use reportname from file
@@ -667,11 +672,12 @@ function ImportReport($RptName) {
 	}
 	// fetch the id of the row inserted
 	$ReportID = DB_Last_Insert_ID(DBReports,'id');
-	// update the translated report name and title fields into the newly imported report
+	// update the translated report name, title fields and groupname into the newly imported report
 	$sql = "UPDATE ".DBReports." SET
 			reportname = '".$RptName."',
 			title1desc = '".$Title1Desc."',
-			title2desc = '".$Title2Desc."'
+			title2desc = '".$Title2Desc."',
+			groupname = '".$GroupName."'
 		WHERE id = ".$ReportID.";";
 	$Result = DB_query($sql,'','',false,true);
 	foreach ($arrSQL as $sql) { // fetch the translations for the field descriptions

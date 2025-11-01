@@ -2255,8 +2255,6 @@ if (!isset($_POST['ProcessSale'])) {
 			}
 		}
 
-		echo '<input type="text" autofocus="autofocus" onkeydown="if (event.keyCode == 13 || event.which == 13) AddQuickEntry(this);" onchange="AddQuickEntry(this);" placeholder="Item Code";  /><br><br>';
-
 		echo '<table id="QuickEntryTable" border="1">
 				<tr>
 					<th>' . __('Item Code') . '</th>
