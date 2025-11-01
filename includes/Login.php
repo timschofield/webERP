@@ -43,6 +43,53 @@ if (isset($_COOKIE['Login'])) {
 	$DefaultCompany = $DefaultDatabase;
 }
 
+// Read companies directory once and collect all company information
+$CompanyList = array();
+
+// If demo mode is enabled, only show weberpdemo company
+if ((isset($AllowDemoMode)) and ($AllowDemoMode == true)) {
+	$CompanyEntry = 'weberpdemo';
+	if (is_dir('companies/' . $CompanyEntry)) {
+		if (file_exists('companies/' . $CompanyEntry . '/Companies.php')) {
+			include('companies/' . $CompanyEntry . '/Companies.php');
+		} else {
+			$CompanyName[$CompanyEntry] = $CompanyEntry;
+		}
+
+		// Store company information for later use
+		$CompanyList[$CompanyEntry] = array(
+			'name' => $CompanyName[$CompanyEntry],
+			'has_png_logo' => file_exists('companies/' . $CompanyEntry . '/logo.png'),
+			'has_jpg_logo' => file_exists('companies/' . $CompanyEntry . '/logo.jpg')
+		);
+	}
+} else {
+	// Normal mode - show all companies
+	$DirHandle = dir($PathPrefix . 'companies/');
+
+	while (false !== ($CompanyEntry = $DirHandle->read())) {
+		if (is_dir('companies/' . $CompanyEntry) and $CompanyEntry != '..' and $CompanyEntry != '' and $CompanyEntry != '.' and $CompanyEntry != 'weberpdemo') {
+			if (file_exists('companies/' . $CompanyEntry . '/Companies.php')) {
+				include('companies/' . $CompanyEntry . '/Companies.php');
+			} else {
+				$CompanyName[$CompanyEntry] = $CompanyEntry;
+			}
+
+			// Store company information for later use
+			$CompanyList[$CompanyEntry] = array(
+				'name' => $CompanyName[$CompanyEntry],
+				'has_png_logo' => file_exists('companies/' . $CompanyEntry . '/logo.png'),
+				'has_jpg_logo' => file_exists('companies/' . $CompanyEntry . '/logo.jpg')
+			);
+		}
+	}
+	$DirHandle->close();
+}
+
+if ($AllowDemoMode == true) {
+	$DefaultCompany = 'weberpdemo';
+}
+// Generate appropriate company selection UI based on configuration
 if ($AllowCompanySelectionBox === 'Hide') {
 	// do not show input or selection box
 	echo '<input type="hidden" name="CompanyNameField"  value="' . $DefaultCompany . '" />';
@@ -53,30 +100,19 @@ if ($AllowCompanySelectionBox === 'Hide') {
 	// Show selection box ($AllowCompanySelectionBox == 'ShowSelectionBox')
 	echo '<select name="CompanyNameField" id="CompanyNameField">';
 
-	$DirHandle = dir($PathPrefix . 'companies/');
-
 	if (!isset($_COOKIE["Company"])) {
 		$Company = $DefaultCompany;
 	} else {
 		$Company = $_COOKIE["Company"];
 	}
 
-	while (false !== ($CompanyEntry = $DirHandle->read())) {
-		if (is_dir('companies/' . $CompanyEntry) and $CompanyEntry != '..' and $CompanyEntry != '' and $CompanyEntry != '.' and $CompanyEntry != 'default') {
-			if (file_exists('companies/' . $CompanyEntry . '/Companies.php')) {
-				include('companies/' . $CompanyEntry . '/Companies.php');
-			} else {
-				$CompanyName[$CompanyEntry] = $CompanyEntry;
-			}
-			if ($Company == $CompanyEntry) {
-				echo '<option selected="selected" value="' . $CompanyEntry . '">' . $CompanyName[$CompanyEntry] . '</option>';
-			} else {
-				echo '<option value="' . $CompanyEntry . '">' . $CompanyName[$CompanyEntry] . '</option>';
-			}
+	foreach ($CompanyList as $CompanyEntry => $CompanyInfo) {
+		if ($Company == $CompanyEntry) {
+			echo '<option selected="selected" value="' . $CompanyEntry . '">' . $CompanyInfo['name'] . '</option>';
+		} else {
+			echo '<option value="' . $CompanyEntry . '">' . $CompanyInfo['name'] . '</option>';
 		}
 	}
-
-	$DirHandle->close();
 
 	echo '</select>';
 }
@@ -89,33 +125,20 @@ if ($AllowCompanySelectionBox != 'Hide') {
 	} else {
 		echo '<ol id="dropdownlist" class="dropdownlist" style="padding-bottom:15px;">';
 	}
-}
 
-$DirHandle = dir($PathPrefix . 'companies/');
-
-while (false !== ($CompanyEntry = $DirHandle->read())) {
-	if (is_dir('companies/' . $CompanyEntry) and $CompanyEntry != '..' and $CompanyEntry != '' and $CompanyEntry != '.' and $CompanyEntry != 'default') {
-		if (file_exists('companies/' . $CompanyEntry . '/Companies.php')) {
-			include('companies/' . $CompanyEntry . '/Companies.php');
-		} else {
-			$CompanyName[$CompanyEntry] = $CompanyEntry;
-		}
-		if ($AllowCompanySelectionBox != 'Hide'){
-			if (!isset($ShowLogoAtLogin) OR ($ShowLogoAtLogin == true)) {
-				if (file_exists('companies/' . $CompanyEntry . '/logo.png')) {
-					echo '<li class="option" id="' . $CompanyEntry . '" ><img id="optionlogo" src="companies/' . $CompanyEntry . '/logo.png" /><span id="optionlabel">', $CompanyName[$CompanyEntry], '</span></li>';
-				} else if (file_exists('companies/' . $CompanyEntry . '/logo.jpg')) {
-					echo '<li class="option" id="' . $CompanyEntry . '" ><img id="optionlogo" src="companies/' . $CompanyEntry . '/logo.jpg" /><span id="optionlabel">', $CompanyName[$CompanyEntry], '</span></li>';
-				}
-			} else {
-				echo '<li class="option" id="' . $CompanyEntry . '" ><span style="top:0px" id="optionlabel">', $CompanyName[$CompanyEntry], '</span></li>';
+	// Generate company list with logos
+	foreach ($CompanyList as $CompanyEntry => $CompanyInfo) {
+		if (!isset($ShowLogoAtLogin) OR ($ShowLogoAtLogin == true)) {
+			if ($CompanyInfo['has_png_logo']) {
+				echo '<li class="option" id="' . $CompanyEntry . '" ><img id="optionlogo" src="companies/' . $CompanyEntry . '/logo.png" /><span id="optionlabel">', $CompanyInfo['name'], '</span></li>';
+			} else if ($CompanyInfo['has_jpg_logo']) {
+				echo '<li class="option" id="' . $CompanyEntry . '" ><img id="optionlogo" src="companies/' . $CompanyEntry . '/logo.jpg" /><span id="optionlabel">', $CompanyInfo['name'], '</span></li>';
 			}
+		} else {
+			echo '<li class="option" id="' . $CompanyEntry . '" ><span style="top:0px" id="optionlabel">', $CompanyInfo['name'], '</span></li>';
 		}
 	}
-}
-$DirHandle->close();
 
-if ($AllowCompanySelectionBox != 'Hide') {
 	echo '</ol>';
 }
 
