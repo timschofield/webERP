@@ -4,7 +4,7 @@ include ('includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('/includes/SetDomPDFOptions.php');
+include('includes/SetDomPDFOptions.php');
 
 include ('includes/SQL_CommonFunctions.php');
 

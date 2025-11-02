@@ -7,7 +7,7 @@ require_once __DIR__ . '/vendor/autoload.php'; // Make sure DomPDF is installed 
 
 use Dompdf\Dompdf;
 
-include('/includes/SetDomPDFOptions.php');
+include('includes/SetDomPDFOptions.php');
 use Dompdf\Options;
 
 if (isset($_GET['ORD'])) {

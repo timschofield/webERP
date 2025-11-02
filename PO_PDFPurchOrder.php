@@ -5,7 +5,7 @@ require 'vendor/autoload.php'; // DomPDF
 
 use Dompdf\Dompdf;
 
-include('/includes/SetDomPDFOptions.php');
+include('includes/SetDomPDFOptions.php');
 
 include('includes/SQL_CommonFunctions.php');
 include('includes/DefinePOClass.php');

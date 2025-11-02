@@ -6,7 +6,7 @@ require_once('includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('/includes/SetDomPDFOptions.php');
+include('includes/SetDomPDFOptions.php');
 
 require_once('includes/SQL_CommonFunctions.php');
 

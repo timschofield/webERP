@@ -3,7 +3,7 @@
 // Use DomPDF for PDF generation
 use Dompdf\Dompdf;
 
-include('/includes/SetDomPDFOptions.php');
+include('includes/SetDomPDFOptions.php');
 
 require(__DIR__ . '/includes/session.php');
 include('includes/SQL_CommonFunctions.php');

@@ -21,7 +21,7 @@ if (!isset($IsIncluded)) {// Runs normally if this script is NOT included in ano
 
 use Dompdf\Dompdf;
 
-include('/includes/SetDomPDFOptions.php');
+include('includes/SetDomPDFOptions.php');
 
 $Title = __('Profit and Loss');
 $Title2 = __('Statement of Comprehensive Income'); // Name as IAS.

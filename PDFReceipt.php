@@ -5,7 +5,7 @@ require_once('vendor/autoload.php'); // Ensure DomPDF is autoloaded
 
 use Dompdf\Dompdf;
 
-include('/includes/SetDomPDFOptions.php');
+include('includes/SetDomPDFOptions.php');
 
 // Fetch values from session and GET
 $BatchNumber = $_GET['BatchNumber'];

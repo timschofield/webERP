@@ -6,7 +6,7 @@ require (__DIR__ . '/includes/session.php');
 // Include DomPDF
 use Dompdf\Dompdf;
 
-include('/includes/SetDomPDFOptions.php');
+include('includes/SetDomPDFOptions.php');
 
 if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 

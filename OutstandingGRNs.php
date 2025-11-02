@@ -4,7 +4,7 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('/includes/SetDomPDFOptions.php');
+include('includes/SetDomPDFOptions.php');
 
 if (isset($_POST['FromCriteria'])
 	AND mb_strlen($_POST['FromCriteria'])>=1
