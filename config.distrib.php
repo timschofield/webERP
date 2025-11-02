@@ -130,6 +130,10 @@ $Debug = 0; // No debug information will be shown. Recommended for production en
 // $Debug = 1; // Simple debug information will be shown. Recommended for development environments
 // $Debug = 2; // Detailed debug information will be shown. Recommended for development environments
 
+// The real path to the symlinked part_pics directory, to prevent DomPDF from being unable to access images
+$SymlinkImageDir = ''; // if no symlink is used.
+// $SymlinkImageDir = '/var/www/vhosts/mydomain.com/dir/where/actually/images/are/stored'; // if symlink is used.
+
 // Installed companies
 // - see companies/dbname/Companies.php
 
