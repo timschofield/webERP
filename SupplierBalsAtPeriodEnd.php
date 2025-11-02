@@ -4,6 +4,8 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
+include('/includes/SetDomPDFOptions.php');
+
 if (isset($_POST['PrintPDF'])
 	or isset($_POST['View'])
 	and isset($_POST['FromCriteria'])
@@ -128,17 +130,17 @@ if (isset($_POST['PrintPDF'])
 	$HTML .= '</body>
 		</html>';
 	if (isset($_POST['PrintPDF'])) {
-		$dompdf = new Dompdf(['chroot' => __DIR__]);
-		$dompdf->loadHtml($HTML);
+		$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
+		$DomPDF->loadHtml($HTML);
 
 		// (Optional) Setup the paper size and orientation
-		$dompdf->setPaper($_SESSION['PageSize'], 'landscape');
+		$DomPDF->setPaper($_SESSION['PageSize'], 'landscape');
 
 		// Render the HTML as PDF
-		$dompdf->render();
+		$DomPDF->render();
 
 		// Output the generated PDF to Browser
-		$dompdf->stream($_SESSION['DatabaseName'] . '_Supplier_Balances_At_Prior_Month_' . date('Y-m-d') . '.pdf', array(
+		$DomPDF->stream($_SESSION['DatabaseName'] . '_Supplier_Balances_At_Prior_Month_' . date('Y-m-d') . '.pdf', array(
 			"Attachment" => false
 		));
 	}

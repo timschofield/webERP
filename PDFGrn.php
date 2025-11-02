@@ -5,6 +5,8 @@ require_once __DIR__ . '/vendor/autoload.php'; // DomPDF autoload
 
 use Dompdf\Dompdf;
 
+include('/includes/SetDomPDFOptions.php');
+
 // Get GRNNo
 $GRNNo = isset($_GET['GRNNo']) ? $_GET['GRNNo'] : '';
 
@@ -188,18 +190,18 @@ if ($NoOfGRNs > 0) {
 	';
 
 	// Generate PDF
-	$dompdf = new Dompdf(['chroot' => __DIR__]);
-	$dompdf->loadHtml($HTML);
+	$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
+	$DomPDF->loadHtml($HTML);
 
 	// (Optional) Setup the paper size and orientation
-	$dompdf->setPaper($_SESSION['PageSize'], 'portrait');
+	$DomPDF->setPaper($_SESSION['PageSize'], 'portrait');
 
 	// Render the HTML as PDF
-	$dompdf->render();
+	$DomPDF->render();
 
 	// Output the generated PDF to Browser
 	$FileName = $_SESSION['DatabaseName'] . '_GRN_' . $GRNNo . '_' . date('Y-m-d') . '.pdf';
-	$dompdf->stream($FileName, array("Attachment" => false));
+	$DomPDF->stream($FileName, array("Attachment" => false));
 
 	exit;
 } else {

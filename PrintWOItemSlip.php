@@ -4,6 +4,8 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
+include('/includes/SetDomPDFOptions.php');
+
 if (isset($_GET['WO'])) {
 	$WO = filter_number_format($_GET['WO']);
 } elseif (isset($_POST['WO'])) {
@@ -116,12 +118,12 @@ if (isset($WO) && isset($StockId) && $WO != '') {
 				</html>';
 
 		// Output to PDF using Dompdf
-		$dompdf = new Dompdf(['chroot' => __DIR__]);
-		$dompdf->loadHtml($HTML);
-		$dompdf->setPaper('A4', 'portrait');
-		$dompdf->render();
+		$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
+		$DomPDF->loadHtml($HTML);
+		$DomPDF->setPaper($_SESSION['PageSize'], 'portrait');
+		$DomPDF->render();
 		$filename = 'WO-' . $WO . '-' . $StockId . '-' . date('Y-m-d') . '.pdf';
-		$dompdf->stream($filename, ['Attachment' => false]);
+		$DomPDF->stream($filename, ['Attachment' => false]);
 		exit();
 	} else {
 		$Title = __('WO Item production Slip');

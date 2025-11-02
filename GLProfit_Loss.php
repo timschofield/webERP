@@ -21,6 +21,8 @@ if (!isset($IsIncluded)) {// Runs normally if this script is NOT included in ano
 
 use Dompdf\Dompdf;
 
+include('/includes/SetDomPDFOptions.php');
+
 $Title = __('Profit and Loss');
 $Title2 = __('Statement of Comprehensive Income'); // Name as IAS.
 $ViewTopic = 'GeneralLedger';
@@ -523,17 +525,17 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$HTML .= '</table>';
 	if (isset($_POST['PrintPDF'])) {
 		$HTML .= '</body></html>';
-		$dompdf = new Dompdf(['chroot' => __DIR__]);
-		$dompdf->loadHtml($HTML);
+		$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
+		$DomPDF->loadHtml($HTML);
 
 		// (Optional) Setup the paper size and orientation
-		$dompdf->setPaper($_SESSION['PageSize'], 'portrait');
+		$DomPDF->setPaper($_SESSION['PageSize'], 'portrait');
 
 		// Render the HTML as PDF
-		$dompdf->render();
+		$DomPDF->render();
 
 		// Output the generated PDF to Browser
-		$dompdf->stream($_SESSION['DatabaseName'] . '_Profit_Loss_' . date('Y-m-d') . '.pdf', array("Attachment" => false));
+		$DomPDF->stream($_SESSION['DatabaseName'] . '_Profit_Loss_' . date('Y-m-d') . '.pdf', array("Attachment" => false));
 	}
 	else {
 		$Title = __('General Ledger Profit and Loss');

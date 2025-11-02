@@ -5,6 +5,8 @@
 require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
+
+include('/includes/SetDomPDFOptions.php');
 use BarcodePack\qrCode;
 
 include('includes/SQL_CommonFunctions.php');
@@ -414,23 +416,23 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 	if ($MakePDFThenDisplayIt) {
 		// Stream PDF to browser
 		$FileName = $_SESSION['DatabaseName'] . '_WorkOrder_' . $SelectedWO . '_' . date('Y-m-d') . '.pdf';
-		$dompdf = new Dompdf(['chroot' => __DIR__]);
-		$dompdf->loadHtml($HTML);
+		$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
+		$DomPDF->loadHtml($HTML);
 
 		// (Optional) Setup the paper size and orientation
-		$dompdf->setPaper($_SESSION['PageSize'], 'portrait');
+		$DomPDF->setPaper($_SESSION['PageSize'], 'portrait');
 
 		// Render the HTML as PDF
-		$dompdf->render();
+		$DomPDF->render();
 
 		// Output the generated PDF to Browser
-		$dompdf->stream($FileName, array(
+		$DomPDF->stream($FileName, array(
 			"Attachment" => false
 		));
 		exit();
 	} else {
 		// Save PDF to file and send email
-		$pdfOutput = $dompdf->output();
+		$pdfOutput = $DomPDF->output();
 		$PDFFileName = $_SESSION['reports_dir'] . '/' . $_SESSION['DatabaseName'] . '_WorkOrder_' . $SelectedWO . '_' . date('Y-m-d') . '.pdf';
 		file_put_contents($PDFFileName, $pdfOutput);
 

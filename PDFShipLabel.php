@@ -6,6 +6,8 @@ require(__DIR__ . '/includes/session.php');
 require_once __DIR__ . '/vendor/autoload.php'; // Make sure DomPDF is installed via composer
 
 use Dompdf\Dompdf;
+
+include('/includes/SetDomPDFOptions.php');
 use Dompdf\Options;
 
 if (isset($_GET['ORD'])) {
@@ -106,12 +108,6 @@ if (isset($_POST['PrintOrEmail']) and $_POST['PrintOrEmail'] == 'Print') {
 }
 
 $FormDesign = simplexml_load_file($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/ShippingLabel.xml');
-
-// Set up DomPDF options
-$options = new Options();
-$options->set('isHtml5ParserEnabled', true);
-$options->set('isRemoteEnabled', true); // Enable for images/logos
-$dompdf = new Dompdf($options);
 
 $HTMLLabels = '';
 $HTMLLabels .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
@@ -300,24 +296,26 @@ if (isset($NoOfLabels) && $NoOfLabels > 0) {
 		';
 	}
 
-	$dompdf->loadHtml($HTMLLabels);
+	$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
+
+	$DomPDF->loadHtml($HTMLLabels);
 
 	// Optionally set paper size/orientation from $FormDesign
 	$paperSize = isset($FormDesign->PaperSize) ? (string)$FormDesign->PaperSize : 'A4';
 	$orientation = 'portrait';
-	$dompdf->setPaper($paperSize, $orientation);
+	$DomPDF->setPaper($paperSize, $orientation);
 
-	$dompdf->render();
+	$DomPDF->render();
 
 	$PDFFileName = $_SESSION['DatabaseName'] . '_FGLABEL_' . $SelectedORD . '_' . date('Y-m-d') . '.pdf';
 
 	if ($MakePDFThenDisplayIt) {
 		// Stream to browser
-		$dompdf->stream($PDFFileName, ['Attachment' => false]);
+		$DomPDF->stream($PDFFileName, ['Attachment' => false]);
 		exit;
 	} else {
 		// Save to file and email
-		$output = $dompdf->output();
+		$output = $DomPDF->output();
 		$tmpFile = sys_get_temp_dir() . '/' . $PDFFileName;
 		file_put_contents($tmpFile, $output);
 

@@ -4,6 +4,8 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
+include('/includes/SetDomPDFOptions.php');
+
 $Title = __('Inventory Negatives Listing');
 
 $ErrMsg = __('An error occurred retrieving the negative quantities.');
@@ -77,16 +79,16 @@ $HTML .= '
 ';
 
 // Setup DomPDF options
-$dompdf = new Dompdf(['chroot' => __DIR__]);
-$dompdf->loadHtml($HTML);
+$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
+$DomPDF->loadHtml($HTML);
 
 // (Optional) Setup the paper size and orientation
-$dompdf->setPaper($_SESSION['PageSize'], 'portrait');
+$DomPDF->setPaper($_SESSION['PageSize'], 'portrait');
 
 // Render the HTML as PDF
-$dompdf->render();
+$DomPDF->render();
 
 // Output the generated PDF to Browser
-$dompdf->stream($_SESSION['DatabaseName'] . '_NegativeStocks_' . date('Y-m-d') . '.pdf', array(
+$DomPDF->stream($_SESSION['DatabaseName'] . '_NegativeStocks_' . date('Y-m-d') . '.pdf', array(
 	"Attachment" => false
 ));

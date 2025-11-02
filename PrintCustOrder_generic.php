@@ -4,6 +4,8 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
+include('/includes/SetDomPDFOptions.php');
+
 include('includes/SQL_CommonFunctions.php');
 
 //Get Out if we have no order number to work with
@@ -318,7 +320,7 @@ if ($ListCount == 0) {
 	exit();
 } else {
 	// Generate PDF using dompdf
-	$DomPDF = new Dompdf(['chroot' => __DIR__]);
+	$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
 	$DomPDF->loadHtml($HTML);
 	// (Optional) Setup the paper size and orientation
 	$DomPDF->setPaper($_SESSION['PageSize'], 'landscape');

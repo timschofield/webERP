@@ -6,6 +6,8 @@ require (__DIR__ . '/includes/session.php');
 // Include DomPDF
 use Dompdf\Dompdf;
 
+include('/includes/SetDomPDFOptions.php');
+
 if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 
 	include ('includes/SQL_CommonFunctions.php');
@@ -197,9 +199,10 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 		$HTML .= '<p><b>' . __('There is no inventory check data to report on') . '</b></p>';
 		$HTML .= '<p>' . __('To start an inventory check first run the') . ' <a href="' . $RootPath . '/StockCheck.php">' . __('inventory check sheets') . '</a> - ' . __('and select the option to create new Inventory Check') . '</p>';
 		$HTML .= '</body></html>';
-		$DomPDF = new Dompdf();
+		
+		$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
 		$DomPDF->loadHtml($HTML);
-		$DomPDF->setPaper('A4', 'portrait');
+		$DomPDF->setPaper($_SESSION['PageSize'], 'portrait');
 		$DomPDF->render();
 		$DomPDF->stream($_SESSION['DatabaseName'] . '_StockComparison_' . date('Y-m-d') . '.pdf', ["Attachment" => false]);
 		exit();
@@ -281,9 +284,9 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 	$HTML .= '</body></html>';
 
 	// Output PDF
-	$DomPDF = new Dompdf(['chroot' => __DIR__]);
+	$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
 	$DomPDF->loadHtml($HTML);
-	$DomPDF->setPaper('A4', 'landscape');
+	$DomPDF->setPaper($_SESSION['PageSize'], 'landscape');
 	$DomPDF->render();
 	$DomPDF->stream($_SESSION['DatabaseName'] . '_StockComparison_' . date('Y-m-d') . '.pdf', ["Attachment" => false]);
 
