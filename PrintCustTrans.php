@@ -18,6 +18,8 @@ $BookMark = 'PrintInvoicesCredits';
 
 if (isset($_GET['orientation'])) {
 	$Orientation = $_GET['orientation'];
+} else {
+	$Orientation = 'landscape';
 }
 
 if (isset($_GET['FromTransNo'])) {
