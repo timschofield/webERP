@@ -10,8 +10,7 @@ $DomPDFOptions->set('isHtml5ParserEnabled', true);
 $DomPDFOptions->set('isRemoteEnabled', true);
 
 if (isset($SymlinkImageDir) and ($SymlinkImageDir != '')) {
-	$DomPDFOptions->setChroot([__DIR__, $SymlinkImageDir]);
+	$DomPDFOptions->setChroot([$PathPrefix, $SymlinkImageDir]);
 } else {
-	$DomPDFOptions->setChroot(__DIR__);
+	$DomPDFOptions->setChroot([$PathPrefix]);
 }
-
