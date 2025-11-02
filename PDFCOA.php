@@ -296,7 +296,7 @@ $HTML .= '</body></html>';
 
 $dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 $dompdf->loadHtml($HTML);
-$dompdf->setPaper('letter', 'portrait');
+$dompdf->setPaper($_SESSION['PageSize'], 'portrait');
 $dompdf->render();
 
 // Output to browser

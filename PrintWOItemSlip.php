@@ -120,7 +120,7 @@ if (isset($WO) && isset($StockId) && $WO != '') {
 		// Output to PDF using Dompdf
 		$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 		$dompdf->loadHtml($HTML);
-		$dompdf->setPaper('A4', 'portrait');
+		$dompdf->setPaper($_SESSION['PageSize'], 'portrait');
 		$dompdf->render();
 		$filename = 'WO-' . $WO . '-' . $StockId . '-' . date('Y-m-d') . '.pdf';
 		$dompdf->stream($filename, ['Attachment' => false]);

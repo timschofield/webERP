@@ -253,7 +253,7 @@ if (isset($_POST['PrintLabels']) && $NoOfLabels > 0) {
 
 	$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 	$dompdf->loadHtml($HTML);
-	$dompdf->setPaper('letter', 'landscape');
+	$dompdf->setPaper($_SESSION['PageSize'], 'landscape');
 	$dompdf->render();
 
 	$FileName = $_SESSION['DatabaseName'] . '_' . __('Price_Labels') . '_' . date('Y-m-d') . '.pdf';

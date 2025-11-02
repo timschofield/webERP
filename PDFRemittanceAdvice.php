@@ -148,7 +148,7 @@ if (
 	// Generate PDF using Dompdf
 	$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 	$DomPDF->loadHtml($HTML);
-	$DomPDF->setPaper('letter', 'portrait');
+	$DomPDF->setPaper($_SESSION['PageSize'], 'portrait');
 	$DomPDF->render();
 
 	$FileName = $_SESSION['DatabaseName'] . '_Remittance_Advices_' . date('Y-m-d') .'.pdf';

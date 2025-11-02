@@ -184,7 +184,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 	// Generate PDF using Dompdf
 	$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 	$DomPDF->loadHtml($HTML);
-	$DomPDF->setPaper('letter', 'portrait');
+	$DomPDF->setPaper($_SESSION['PageSize'], 'portrait');
 	$DomPDF->render();
 
 	$FileName = $_SESSION['DatabaseName'] . '_Payment_Run_' . date('Y-m-d_His') . '.pdf';

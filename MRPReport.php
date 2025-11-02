@@ -349,7 +349,7 @@ if (isset($_POST['PrintPDF']) && $_POST['Part'] != '') {
 	// Generate PDF with DomPDF
 	$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 	$DomPDF->loadHtml($HTML);
-	$DomPDF->setPaper('A4', 'landscape');
+	$DomPDF->setPaper($_SESSION['PageSize'], 'landscape');
 	$DomPDF->render();
 	$DomPDF->stream($_SESSION['DatabaseName'] . '_MRPReport_' . date('Y-m-d') . '.pdf', array("Attachment" => false));
 

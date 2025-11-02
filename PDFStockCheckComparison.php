@@ -202,7 +202,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 		
 		$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 		$DomPDF->loadHtml($HTML);
-		$DomPDF->setPaper('A4', 'portrait');
+		$DomPDF->setPaper($_SESSION['PageSize'], 'portrait');
 		$DomPDF->render();
 		$DomPDF->stream($_SESSION['DatabaseName'] . '_StockComparison_' . date('Y-m-d') . '.pdf', ["Attachment" => false]);
 		exit();
@@ -286,7 +286,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 	// Output PDF
 	$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 	$DomPDF->loadHtml($HTML);
-	$DomPDF->setPaper('A4', 'landscape');
+	$DomPDF->setPaper($_SESSION['PageSize'], 'landscape');
 	$DomPDF->render();
 	$DomPDF->stream($_SESSION['DatabaseName'] . '_StockComparison_' . date('Y-m-d') . '.pdf', ["Attachment" => false]);
 

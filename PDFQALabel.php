@@ -124,7 +124,7 @@ if ($NoOfGRNs > 0) {
 		</html>';
 
 	$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
-	$DomPDF->setPaper('A4', 'portrait'); // You may use $PaperSize if dynamically set
+	$DomPDF->setPaper($_SESSION['PageSize'], 'portrait'); // You may use $PaperSize if dynamically set
 	$DomPDF->loadHtml($HTML);
 	$DomPDF->render();
 
