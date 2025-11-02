@@ -21,6 +21,8 @@ if (!isset($IsIncluded)) {// Runs normally if this script is NOT included in ano
 
 use Dompdf\Dompdf;
 
+include('/includes/SetDomPDFOptions.php');
+
 $Title = __('Balance Sheet');
 $Title2 = __('Statement of Financial Position'); // Name as IAS.
 $ViewTopic = 'GeneralLedger';
@@ -425,7 +427,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	if (isset($_POST['PrintPDF'])) {
 		$HTML .= '</body></html>';
-		$dompdf = new Dompdf(['chroot' => __DIR__]);
+		$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 		$dompdf->loadHtml($HTML);
 
 		// (Optional) Setup the paper size and orientation

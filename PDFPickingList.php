@@ -3,6 +3,8 @@ require (__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
+include('/includes/SetDomPDFOptions.php');
+
 include ('includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['Process'])) {
@@ -252,7 +254,7 @@ if (isset($_POST['Process'])) {
 		exit();
 	}
 	else {
-		$DomPDF = new Dompdf(['chroot' => __DIR__]);
+		$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 		$DomPDF->loadHtml($HTML);
 
 		// (Optional) Setup the paper size and orientation

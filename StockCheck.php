@@ -4,6 +4,8 @@ require (__DIR__ . '/includes/StockFunctions.php');
 
 use Dompdf\Dompdf;
 
+include('/includes/SetDomPDFOptions.php');
+
 if (isset($_POST['PrintPDF'])) {
 
 	// First off do the stock check file stuff
@@ -146,7 +148,7 @@ if (isset($_POST['PrintPDF'])) {
 	$HTML .= '</body></html>';
 
 	// Generate PDF using Dompdf
-	$DomPDF = new Dompdf();
+	$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 	$DomPDF->loadHtml($HTML);
 	$DomPDF->setPaper('letter', 'portrait');
 	$DomPDF->render();

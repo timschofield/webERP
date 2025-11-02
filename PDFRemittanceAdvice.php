@@ -4,6 +4,8 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
+include('/includes/SetDomPDFOptions.php');
+
 if (isset($_POST['PaymentDate'])) {
 	$_POST['PaymentDate'] = ConvertSQLDate($_POST['PaymentDate']);
 }
@@ -144,7 +146,7 @@ if (
 	$HTML .= '</body></html>';
 
 	// Generate PDF using Dompdf
-	$DomPDF = new Dompdf(['chroot' => __DIR__]);
+	$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 	$DomPDF->loadHtml($HTML);
 	$DomPDF->setPaper('letter', 'portrait');
 	$DomPDF->render();

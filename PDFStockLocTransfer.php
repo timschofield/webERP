@@ -2,6 +2,8 @@
 require (__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
+
+include('/includes/SetDomPDFOptions.php');
 use Dompdf\Options;
 
 $Title = __('Stock Location Transfer Docket Error');
@@ -87,7 +89,7 @@ $HTML .= '<h2>' . __('Inventory Location Transfer BOL') . ' #' . htmlspecialchar
 	// Generate PDF using DomPDF
 	// Setup DomPDF
 	$FileName = $_SESSION['DatabaseName'] . '_StockLocTransfer_' . date('Y-m-d H-m-s') . '.pdf';
-	$dompdf = new Dompdf(['chroot' => __DIR__]);
+	$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 	$dompdf->loadHtml($HTML);
 
 	// (Optional) Setup the paper size and orientation

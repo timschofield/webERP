@@ -7,6 +7,8 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
+include('/includes/SetDomPDFOptions.php');
+
 if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])) {
 
 	if ($_POST['StockCat'] != 'All') {
@@ -129,7 +131,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 		</html>';
 
 	if (isset($_POST['PrintPDF'])) {
-		$dompdf = new Dompdf(['chroot' => __DIR__]);
+		$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 		$dompdf->loadHtml($HTML);
 
 		// (Optional) Setup the paper size and orientation
@@ -145,7 +147,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 	} elseif (isset($_POST['Email'])) {
 
 		/// @todo we could skip generating the pdf if $_SESSION['InventoryManagerEmail'] == ''
-		$dompdf = new Dompdf(['chroot' => __DIR__]);
+		$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 		$dompdf->loadHtml($HTML);
 		// (Optional) set up the paper size and orientation
 		$dompdf->setPaper($_SESSION['PageSize'], 'landscape');

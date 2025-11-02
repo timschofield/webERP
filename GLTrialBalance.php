@@ -11,9 +11,8 @@ $PageSecurity = 1;
 require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
-//use PhpOffice\PhpSpreadsheet\Helper\Sample;
-//use PhpOffice\PhpSpreadsheet\IOFactory;
-//use PhpOffice\PhpSpreadsheet\Spreadsheet;
+
+include('/includes/SetDomPDFOptions.php');
 
 $Title = __('Trial Balance');
 
@@ -365,7 +364,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 		</html>';
 
 	if (isset($_POST['PrintPDF'])) {
-		$dompdf = new Dompdf(['chroot' => __DIR__]);
+		$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 		$dompdf->set_option('isHtml5ParserEnabled', true);
 		$dompdf->loadHtml($HTML);
 

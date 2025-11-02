@@ -4,6 +4,8 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
+include('/includes/SetDomPDFOptions.php');
+
 if (isset($_POST['PrintPDF']) or isset($_POST['Spreadsheet']) or isset($_POST['View'])){
 
 /*Now figure out the inventory data to report for the category range under review */
@@ -237,7 +239,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['Spreadsheet']) or isset($_POST['V
 		</html>';
 
 	if (isset($_POST['PrintPDF'])) {
-		$dompdf = new Dompdf(['chroot' => __DIR__]);
+		$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 		$dompdf->loadHtml($HTML);
 
 		// (Optional) Setup the paper size and orientation

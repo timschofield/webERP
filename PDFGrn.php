@@ -5,6 +5,8 @@ require_once __DIR__ . '/vendor/autoload.php'; // DomPDF autoload
 
 use Dompdf\Dompdf;
 
+include('/includes/SetDomPDFOptions.php');
+
 // Get GRNNo
 $GRNNo = isset($_GET['GRNNo']) ? $_GET['GRNNo'] : '';
 
@@ -188,7 +190,7 @@ if ($NoOfGRNs > 0) {
 	';
 
 	// Generate PDF
-	$dompdf = new Dompdf(['chroot' => __DIR__]);
+	$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 	$dompdf->loadHtml($HTML);
 
 	// (Optional) Setup the paper size and orientation

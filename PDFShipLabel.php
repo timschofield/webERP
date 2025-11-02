@@ -6,6 +6,8 @@ require(__DIR__ . '/includes/session.php');
 require_once __DIR__ . '/vendor/autoload.php'; // Make sure DomPDF is installed via composer
 
 use Dompdf\Dompdf;
+
+include('/includes/SetDomPDFOptions.php');
 use Dompdf\Options;
 
 if (isset($_GET['ORD'])) {
@@ -106,12 +108,6 @@ if (isset($_POST['PrintOrEmail']) and $_POST['PrintOrEmail'] == 'Print') {
 }
 
 $FormDesign = simplexml_load_file($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/ShippingLabel.xml');
-
-// Set up DomPDF options
-$options = new Options();
-$options->set('isHtml5ParserEnabled', true);
-$options->set('isRemoteEnabled', true); // Enable for images/logos
-$dompdf = new Dompdf($options);
 
 $HTMLLabels = '';
 $HTMLLabels .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
@@ -299,6 +295,8 @@ if (isset($NoOfLabels) && $NoOfLabels > 0) {
 		</div>
 		';
 	}
+
+	$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 
 	$dompdf->loadHtml($HTMLLabels);
 

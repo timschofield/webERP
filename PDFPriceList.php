@@ -18,6 +18,8 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
+include('/includes/SetDomPDFOptions.php');
+
 if (isset($_POST['EffectiveDate'])){$_POST['EffectiveDate'] = ConvertSQLDate($_POST['EffectiveDate']);}
 
 // Merges gets into posts:
@@ -319,7 +321,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		</html>';
 
 	if (isset($_POST['PrintPDF'])) {
-		$dompdf = new Dompdf(['chroot' => __DIR__]);
+		$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 		$dompdf->loadHtml($HTML);
 
 		// (Optional) Setup the paper size and orientation

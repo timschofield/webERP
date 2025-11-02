@@ -6,6 +6,8 @@ require_once('includes/session.php');
 
 use Dompdf\Dompdf;
 
+include('/includes/SetDomPDFOptions.php');
+
 require_once('includes/SQL_CommonFunctions.php');
 
 //Get Out if we have no order number to work with
@@ -268,7 +270,7 @@ $HTML = '
 ';
 
 // Output PDF using DomPDF
-		$dompdf = new Dompdf(['chroot' => __DIR__]);
+		$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 		$dompdf->loadHtml($HTML);
 
 		// (Optional) Setup the paper size and orientation

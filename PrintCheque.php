@@ -6,6 +6,8 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
+include('/includes/SetDomPDFOptions.php');
+
 if (isset($_GET['identifier'])){
 	$identifier = $_GET['identifier'];
 } else {
@@ -110,7 +112,7 @@ $HTML = '
 ';
 
 // DomPDF options and generation
-$DomPDF = new Dompdf(['chroot' => __DIR__]);
+$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 $DomPDF->loadHtml($HTML);
 $DomPDF->setPaper('A4', 'portrait');
 $DomPDF->render();

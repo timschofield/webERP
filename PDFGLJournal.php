@@ -4,6 +4,8 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
+include('/includes/SetDomPDFOptions.php');
+
 if (isset($_POST['JournalNo'])) {
 	$JournalNo = $_POST['JournalNo'];
 	$Type = $_POST['Type'];
@@ -101,7 +103,7 @@ $HTML .= '</body></html>';
 
 if (isset($_POST['PrintPDF'])) {
 
-	$dompdf = new Dompdf(['chroot' => __DIR__]);
+	$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 	$dompdf->loadHtml($HTML);
 
 	// (Optional) Setup the paper size and orientation

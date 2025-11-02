@@ -4,6 +4,8 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
+include('/includes/SetDomPDFOptions.php');
+
 if (isset($_GET['WO'])) {
 	$SelectedWO = $_GET['WO'];
 } elseif (isset($_POST['WO'])){
@@ -156,7 +158,7 @@ if ($NoOfLabels > 0) {
 	if ($MakePDFThenDisplayIt) {
 		// Stream PDF to browser
 		$FileName = $_SESSION['DatabaseName'] . '_FGLabel_WO-'  . $SelectedWO . '_' . date('Y-m-d') . '.pdf';
-		$dompdf = new Dompdf(['chroot' => __DIR__]);
+		$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 		$dompdf->loadHtml($HTML);
 
 		// (Optional) Setup the paper size and orientation

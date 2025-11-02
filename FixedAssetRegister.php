@@ -6,6 +6,8 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
+include('/includes/SetDomPDFOptions.php');
+
 if (isset($_POST['FromDate'])) {
 	$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);
 }
@@ -211,7 +213,7 @@ if (isset($_POST['submit']) or isset($_POST['PrintPDF']) or isset($_POST['Spread
 		</html>';
 
 	if (isset($_POST['PrintPDF'])) {
-		$dompdf = new Dompdf(['chroot' => __DIR__]);
+		$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 		$dompdf->loadHtml($HTML);
 
 		// (Optional) Setup the paper size and orientation

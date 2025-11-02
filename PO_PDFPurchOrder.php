@@ -5,6 +5,8 @@ require 'vendor/autoload.php'; // DomPDF
 
 use Dompdf\Dompdf;
 
+include('/includes/SetDomPDFOptions.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/DefinePOClass.php');
 
@@ -301,7 +303,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 
 	if ($MakePDFThenDisplayIt) {
 		// Display PDF in browser
-		$dompdf = new Dompdf(['chroot' => __DIR__]);
+		$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 		$dompdf->loadHtml($HTML);
 
 		// (Optional) Setup the paper size and orientation
@@ -316,7 +318,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		));
 	} else {
 		// Save PDF to file and send via email
-		$dompdf = new Dompdf(['chroot' => __DIR__]);
+		$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 		$dompdf->loadHtml($HTML);
 		// (Optional) set up the paper size and orientation
 		$dompdf->setPaper($_SESSION['PageSize'], 'portrait');

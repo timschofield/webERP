@@ -7,6 +7,8 @@ require(__DIR__ . '/includes/session.php');
 // Use DomPDF for PDF generation
 use Dompdf\Dompdf;
 
+include('/includes/SetDomPDFOptions.php');
+
 if (isset($_POST['Select'])) {
 	$_POST['Part']=$_POST['Select'];
 	$_POST['PrintPDF']='Yes';
@@ -345,7 +347,7 @@ if (isset($_POST['PrintPDF']) && $_POST['Part'] != '') {
 	</body></html>';
 
 	// Generate PDF with DomPDF
-	$DomPDF = new Dompdf(['chroot' => __DIR__]);
+	$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 	$DomPDF->loadHtml($HTML);
 	$DomPDF->setPaper('A4', 'landscape');
 	$DomPDF->render();

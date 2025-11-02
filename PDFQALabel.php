@@ -3,6 +3,8 @@ require (__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
+include('/includes/SetDomPDFOptions.php');
+
 if (isset($_GET['GRNNo'])) {
 	$GRNNo = $_GET['GRNNo'];
 }
@@ -118,11 +120,11 @@ if ($NoOfGRNs > 0) {
 		}
 	}
 
-	$DomPDF = new Dompdf(['chroot' => __DIR__]);
-	$DomPDF->setPaper('A4', 'portrait'); // You may use $PaperSize if dynamically set
 	$HTML .= '</body>
 		</html>';
 
+	$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
+	$DomPDF->setPaper('A4', 'portrait'); // You may use $PaperSize if dynamically set
 	$DomPDF->loadHtml($HTML);
 	$DomPDF->render();
 

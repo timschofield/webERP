@@ -5,6 +5,8 @@ require_once('vendor/autoload.php'); // Ensure DomPDF is autoloaded
 
 use Dompdf\Dompdf;
 
+include('/includes/SetDomPDFOptions.php');
+
 // Fetch values from session and GET
 $BatchNumber = $_GET['BatchNumber'];
 $ReceiptNumber = $_GET['ReceiptNumber'];
@@ -132,7 +134,7 @@ $HTML .= '</div>
 // Generate PDF with DomPDF
 $PdfFileName = $_SESSION['DatabaseName'] . '_CustomerReceipt_No_' . $BatchNumber . ' - ' . $ReceiptNumber . ' _ ' . date('Y-m-d') . '.pdf';
 // Display PDF in browser
-$dompdf = new Dompdf(['chroot' => __DIR__]);
+$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 $dompdf->loadHtml($HTML);
 
 $dompdf->setPaper($_SESSION['PageSize'], 'portrait');

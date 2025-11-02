@@ -3,6 +3,8 @@ require (__DIR__ . '/includes/session.php');
 require_once 'vendor/autoload.php';
 use Dompdf\Dompdf;
 
+include('/includes/SetDomPDFOptions.php');
+
 if (isset($_POST['cutoffdate'])) {
 	$_POST['cutoffdate'] = ConvertSQLDate($_POST['cutoffdate']);
 }
@@ -217,7 +219,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	// Create PDF with DomPDF
 	$pdf_file = $_SESSION['DatabaseName'] . '_MRP_Planned_Work_Orders_' . date('Y-m-d') . '.pdf';
 	if (isset($_POST['PrintPDF'])) {
-		$dompdf = new Dompdf(['chroot' => __DIR__]);
+		$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 		$dompdf->loadHtml($HTML);
 
 		// (Optional) Setup the paper size and orientation

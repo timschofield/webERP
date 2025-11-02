@@ -4,6 +4,8 @@ require (__DIR__ . '/includes/session.php');
 require_once 'vendor/autoload.php';
 use Dompdf\Dompdf;
 
+include('/includes/SetDomPDFOptions.php');
+
 if (!DB_table_exists('mrprequirements')) {
 	$Title = 'MRP error';
 	include ('includes/header.php');
@@ -130,7 +132,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		</html>';
 
 	if (isset($_POST['PrintPDF'])) {
-		$dompdf = new Dompdf(['chroot' => __DIR__]);
+		$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 		$dompdf->loadHtml($HTML);
 
 		// (Optional) Setup the paper size and orientation

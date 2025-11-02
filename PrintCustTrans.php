@@ -5,6 +5,8 @@ require_once __DIR__ . '/vendor/autoload.php'; // DomPDF autoload
 
 use Dompdf\Dompdf;
 
+include('/includes/SetDomPDFOptions.php');
+
 $ViewTopic = 'ARReports';
 $BookMark = 'PrintInvoicesCredits';
 
@@ -551,7 +553,7 @@ if (isset($_GET['View']) and $_GET['View'] == 'Yes') {
 } elseif (isset($_GET['Email'])) {
 
 	$PdfFileName = $_SESSION['DatabaseName'] . '_' . $InvOrCredit . '_' . ($FromTransNo-1) .'_'. date('Y-m-d') . '.pdf';
-	$dompdf = new Dompdf(['chroot' => __DIR__]);
+	$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 	$dompdf->loadHtml($HTML);
 	// (Optional) set up the paper size and orientation
 	$dompdf->setPaper($_SESSION['PageSize'], 'landscape');
@@ -592,7 +594,7 @@ if (isset($_GET['View']) and $_GET['View'] == 'Yes') {
 	// Generate PDF with DomPDF
 	$PdfFileName = $_SESSION['DatabaseName'] . '_' . $InvOrCredit . '_' . ($FromTransNo-1) .'_'. date('Y-m-d') . '.pdf';
 	// Display PDF in browser
-	$dompdf = new Dompdf(['chroot' => __DIR__]);
+	$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 	$dompdf->loadHtml($HTML);
 
 	$dompdf->setPaper($_SESSION['PageSize'], $Orientation);

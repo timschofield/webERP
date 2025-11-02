@@ -3,6 +3,8 @@ require (__DIR__ . '/includes/session.php');
 include ('includes/SQL_CommonFunctions.php');
 
 use Dompdf\Dompdf;
+
+include('/includes/SetDomPDFOptions.php');
 use Dompdf\Options;
 
 $ViewTopic = 'ARReports';
@@ -355,7 +357,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCust']) and $_POST['FromCust
 	// Generate PDF with DomPDF
 	$PdfFileName = $_SESSION['DatabaseName'] . '_CustomerStatements_' . date('Y-m-d') . '.pdf';
 	// Display PDF in browser
-	$dompdf = new Dompdf(['chroot' => __DIR__]);
+	$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 	$dompdf->loadHtml($HTML);
 
 	// (Optional) Setup the paper size and orientation

@@ -6,6 +6,8 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
+include('/includes/SetDomPDFOptions.php');
+
 $FromCriteria = '1'; /*Category From */
 $ToCriteria = 'zzzzzzzz'; /*Category To */
 $Location = 'All'; /* Location to report on */
@@ -152,7 +154,7 @@ if ($ListCount == 0) {
 } else {
 
 	/// @todo we could skip generating the pdf if $From == ''
-	$dompdf = new Dompdf(['chroot' => __DIR__]);
+	$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 	$dompdf->loadHtml($HTML);
 	// (Optional) set up the paper size and orientation
 	$dompdf->setPaper($_SESSION['PageSize'], 'portrait');

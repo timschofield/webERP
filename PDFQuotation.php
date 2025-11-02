@@ -3,6 +3,8 @@
 // Use DomPDF for PDF generation
 use Dompdf\Dompdf;
 
+include('/includes/SetDomPDFOptions.php');
+
 require(__DIR__ . '/includes/session.php');
 include('includes/SQL_CommonFunctions.php');
 
@@ -254,7 +256,7 @@ if (mb_strlen(trim($MyRow['comments'])) > 1) {
 // Generate PDF with DomPDF
 $PdfFileName = $_SESSION['DatabaseName'] . '_Quotation_No_' . $_GET['QuotationNo'] . ' _ ' . date('Y-m-d') . '.pdf';
 // Display PDF in browser
-$dompdf = new Dompdf(['chroot' => __DIR__]);
+$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 $dompdf->loadHtml($HTML);
 
 $dompdf->setPaper($_SESSION['PageSize'], $Orientation);

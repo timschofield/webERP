@@ -6,6 +6,8 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
+include('/includes/SetDomPDFOptions.php');
+
 include('includes/SQL_CommonFunctions.php');
 
 /* $Title is set in several parts of this script. */
@@ -315,7 +317,7 @@ for ( $i = 0; $i < $TotalOrderCount; $i++ ){
 $HTML .= '</body></html>';
 
 // Output PDF
-$dompdf = new Dompdf(['chroot' => __DIR__]);
+$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 $dompdf->loadHtml($HTML);
 
 // (Optional) Setup the paper size and orientation

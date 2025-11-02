@@ -4,7 +4,8 @@ require(__DIR__ . '/includes/session.php');
 require_once __DIR__ . '/vendor/autoload.php';
 
 use Dompdf\Dompdf;
-use Dompdf\Options;
+
+include('/includes/SetDomPDFOptions.php');
 
 include('includes/SQL_CommonFunctions.php');
 
@@ -293,12 +294,7 @@ if ($Disclaimer > '') {
 
 $HTML .= '</body></html>';
 
-// DomPDF options and rendering
-$options = new Options();
-$options->set('isHtml5ParserEnabled', true);
-$options->set('isRemoteEnabled', true);
-
-$dompdf = new Dompdf($options);
+$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 $dompdf->loadHtml($HTML);
 $dompdf->setPaper('letter', 'portrait');
 $dompdf->render();

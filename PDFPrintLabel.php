@@ -6,6 +6,8 @@ require(__DIR__ . '/includes/session.php');
 require_once(__DIR__ . '/vendor/autoload.php'); // Make sure DomPDF is installed via composer
 
 use Dompdf\Dompdf;
+
+include('/includes/SetDomPDFOptions.php');
 use BarcodePack\code128;
 
 if (isset($_POST['EffectiveDate'])) {
@@ -249,7 +251,7 @@ if (isset($_POST['PrintLabels']) && $NoOfLabels > 0) {
 	</body>
 	</html>';
 
-	$dompdf = new Dompdf();
+	$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 	$dompdf->loadHtml($HTML);
 	$dompdf->setPaper('letter', 'landscape');
 	$dompdf->render();
