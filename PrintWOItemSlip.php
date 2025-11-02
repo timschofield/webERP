@@ -4,6 +4,8 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
+include('/includes/SetDomPDFOptions.php');
+
 if (isset($_GET['WO'])) {
 	$WO = filter_number_format($_GET['WO']);
 } elseif (isset($_POST['WO'])) {
@@ -116,7 +118,7 @@ if (isset($WO) && isset($StockId) && $WO != '') {
 				</html>';
 
 		// Output to PDF using Dompdf
-		$dompdf = new Dompdf(['chroot' => __DIR__]);
+		$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 		$dompdf->loadHtml($HTML);
 		$dompdf->setPaper('A4', 'portrait');
 		$dompdf->render();
