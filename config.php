@@ -107,3 +107,7 @@ if ($RootPath == "/" OR $RootPath == "\\") {
 }
 // Report all errors except E_NOTICE
 // Moved to KLConfig.php
+
+// The real path to the symlinked part_pics directory, to prevent DomPDF from being unable to access images
+// $SymlinkImageDir = ''; // if no symlink is used.
+$SymlinkImageDir = '/var/www/vhosts/kapal-laut.com/httpdocs/image/catalog/KL/part_pics'; // if symlink is used.
