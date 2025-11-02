@@ -251,7 +251,7 @@ if (isset($_POST['PrintLabels']) && $NoOfLabels > 0) {
 	</body>
 	</html>';
 
-	$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
+	$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
 	$DomPDF->loadHtml($HTML);
 	$DomPDF->setPaper($_SESSION['PageSize'], 'landscape');
 	$DomPDF->render();

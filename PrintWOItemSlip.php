@@ -118,7 +118,7 @@ if (isset($WO) && isset($StockId) && $WO != '') {
 				</html>';
 
 		// Output to PDF using Dompdf
-		$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
+		$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
 		$DomPDF->loadHtml($HTML);
 		$DomPDF->setPaper($_SESSION['PageSize'], 'portrait');
 		$DomPDF->render();

@@ -347,7 +347,7 @@ if (isset($_POST['PrintPDF']) && $_POST['Part'] != '') {
 	</body></html>';
 
 	// Generate PDF with DomPDF
-	$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
+	$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
 	$DomPDF->loadHtml($HTML);
 	$DomPDF->setPaper($_SESSION['PageSize'], 'landscape');
 	$DomPDF->render();

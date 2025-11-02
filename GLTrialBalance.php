@@ -364,7 +364,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 		</html>';
 
 	if (isset($_POST['PrintPDF'])) {
-		$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
+		$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
 		$DomPDF->set_option('isHtml5ParserEnabled', true);
 		$DomPDF->loadHtml($HTML);
 

@@ -4,14 +4,14 @@
 
 use Dompdf\Options;
 
-$options = new Options();
+$DomPDFOptions = new Options();
 
-$options->set('isHtml5ParserEnabled', true);
-$options->set('isRemoteEnabled', true);
+$DomPDFOptions->set('isHtml5ParserEnabled', true);
+$DomPDFOptions->set('isRemoteEnabled', true);
 
 if (isset($SymlinkImageDir) and ($SymlinkImageDir != '')) {
-	$options->setChroot([__DIR__, $SymlinkImageDir]);
+	$DomPDFOptions->setChroot([__DIR__, $SymlinkImageDir]);
 } else {
-	$options->setChroot(__DIR__);
+	$DomPDFOptions->setChroot(__DIR__);
 }
 

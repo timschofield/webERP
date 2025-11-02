@@ -199,7 +199,7 @@ if (isset($SelectedProdSpec) and $SelectedProdSpec != '') {
 	$HTML .= '</html>';
 
 	// Output PDF using DomPDF
-	$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
+	$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
 
 	$DomPDF->loadHtml($HTML, 'UTF-8');
 	$DomPDF->setPaper('letter');

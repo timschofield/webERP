@@ -219,7 +219,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	// Create PDF with DomPDF
 	$pdf_file = $_SESSION['DatabaseName'] . '_MRP_Planned_Work_Orders_' . date('Y-m-d') . '.pdf';
 	if (isset($_POST['PrintPDF'])) {
-		$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
+		$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
 		$DomPDF->loadHtml($HTML);
 
 		// (Optional) Setup the paper size and orientation

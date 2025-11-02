@@ -134,7 +134,7 @@ $HTML .= '</div>
 // Generate PDF with DomPDF
 $PdfFileName = $_SESSION['DatabaseName'] . '_CustomerReceipt_No_' . $BatchNumber . ' - ' . $ReceiptNumber . ' _ ' . date('Y-m-d') . '.pdf';
 // Display PDF in browser
-$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
+$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
 $DomPDF->loadHtml($HTML);
 
 $DomPDF->setPaper($_SESSION['PageSize'], 'portrait');

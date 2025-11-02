@@ -158,7 +158,7 @@ if ($NoOfLabels > 0) {
 	if ($MakePDFThenDisplayIt) {
 		// Stream PDF to browser
 		$FileName = $_SESSION['DatabaseName'] . '_FGLabel_WO-'  . $SelectedWO . '_' . date('Y-m-d') . '.pdf';
-		$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
+		$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
 		$DomPDF->loadHtml($HTML);
 
 		// (Optional) Setup the paper size and orientation

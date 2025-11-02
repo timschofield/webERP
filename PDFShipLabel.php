@@ -296,7 +296,7 @@ if (isset($NoOfLabels) && $NoOfLabels > 0) {
 		';
 	}
 
-	$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
+	$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
 
 	$DomPDF->loadHtml($HTMLLabels);
 

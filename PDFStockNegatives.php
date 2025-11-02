@@ -79,7 +79,7 @@ $HTML .= '
 ';
 
 // Setup DomPDF options
-$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
+$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
 $DomPDF->loadHtml($HTML);
 
 // (Optional) Setup the paper size and orientation

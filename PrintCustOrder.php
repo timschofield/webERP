@@ -219,7 +219,7 @@ if (DB_num_rows($Result) > 0) {
 
 	// ---- End HTML for DomPDF ----
 
-	$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
+	$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
 	$DomPDF->loadHtml($HTML);
 	// (Optional) Setup the paper size and orientation
 	$DomPDF->setPaper($_SESSION['PageSize'], 'landscape');

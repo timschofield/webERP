@@ -131,7 +131,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 		</html>';
 
 	if (isset($_POST['PrintPDF'])) {
-		$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
+		$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
 		$DomPDF->loadHtml($HTML);
 
 		// (Optional) Setup the paper size and orientation
@@ -147,7 +147,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 	} elseif (isset($_POST['Email'])) {
 
 		/// @todo we could skip generating the pdf if $_SESSION['InventoryManagerEmail'] == ''
-		$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
+		$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
 		$DomPDF->loadHtml($HTML);
 		// (Optional) set up the paper size and orientation
 		$DomPDF->setPaper($_SESSION['PageSize'], 'landscape');

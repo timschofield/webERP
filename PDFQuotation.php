@@ -256,7 +256,7 @@ if (mb_strlen(trim($MyRow['comments'])) > 1) {
 // Generate PDF with DomPDF
 $PdfFileName = $_SESSION['DatabaseName'] . '_Quotation_No_' . $_GET['QuotationNo'] . ' _ ' . date('Y-m-d') . '.pdf';
 // Display PDF in browser
-$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
+$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
 $DomPDF->loadHtml($HTML);
 
 $DomPDF->setPaper($_SESSION['PageSize'], $Orientation);

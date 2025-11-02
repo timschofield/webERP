@@ -303,7 +303,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 
 	if ($MakePDFThenDisplayIt) {
 		// Display PDF in browser
-		$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
+		$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
 		$DomPDF->loadHtml($HTML);
 
 		// (Optional) Setup the paper size and orientation
@@ -318,7 +318,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		));
 	} else {
 		// Save PDF to file and send via email
-		$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
+		$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
 		$DomPDF->loadHtml($HTML);
 		// (Optional) set up the paper size and orientation
 		$DomPDF->setPaper($_SESSION['PageSize'], 'portrait');

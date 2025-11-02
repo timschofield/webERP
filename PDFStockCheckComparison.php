@@ -200,7 +200,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 		$HTML .= '<p>' . __('To start an inventory check first run the') . ' <a href="' . $RootPath . '/StockCheck.php">' . __('inventory check sheets') . '</a> - ' . __('and select the option to create new Inventory Check') . '</p>';
 		$HTML .= '</body></html>';
 		
-		$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
+		$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
 		$DomPDF->loadHtml($HTML);
 		$DomPDF->setPaper($_SESSION['PageSize'], 'portrait');
 		$DomPDF->render();
@@ -284,7 +284,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 	$HTML .= '</body></html>';
 
 	// Output PDF
-	$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
+	$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
 	$DomPDF->loadHtml($HTML);
 	$DomPDF->setPaper($_SESSION['PageSize'], 'landscape');
 	$DomPDF->render();

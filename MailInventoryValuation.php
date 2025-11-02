@@ -154,7 +154,7 @@ if ($ListCount == 0) {
 } else {
 
 	/// @todo we could skip generating the pdf if $From == ''
-	$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
+	$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
 	$DomPDF->loadHtml($HTML);
 	// (Optional) set up the paper size and orientation
 	$DomPDF->setPaper($_SESSION['PageSize'], 'portrait');
