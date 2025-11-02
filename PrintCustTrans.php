@@ -553,14 +553,14 @@ if (isset($_GET['View']) and $_GET['View'] == 'Yes') {
 } elseif (isset($_GET['Email'])) {
 
 	$PdfFileName = $_SESSION['DatabaseName'] . '_' . $InvOrCredit . '_' . ($FromTransNo-1) .'_'. date('Y-m-d') . '.pdf';
-	$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
-	$dompdf->loadHtml($HTML);
+	$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
+	$DomPDF->loadHtml($HTML);
 	// (Optional) set up the paper size and orientation
-	$dompdf->setPaper($_SESSION['PageSize'], 'landscape');
+	$DomPDF->setPaper($_SESSION['PageSize'], 'landscape');
 	// Render the HTML as PDF
-	$dompdf->render();
+	$DomPDF->render();
 	// Output the generated PDF to a temporary file
-	$output = $dompdf->output();
+	$output = $DomPDF->output();
 
 	file_put_contents($PdfFileName, $output);
 
@@ -594,16 +594,16 @@ if (isset($_GET['View']) and $_GET['View'] == 'Yes') {
 	// Generate PDF with DomPDF
 	$PdfFileName = $_SESSION['DatabaseName'] . '_' . $InvOrCredit . '_' . ($FromTransNo-1) .'_'. date('Y-m-d') . '.pdf';
 	// Display PDF in browser
-	$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
-	$dompdf->loadHtml($HTML);
+	$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
+	$DomPDF->loadHtml($HTML);
 
-	$dompdf->setPaper($_SESSION['PageSize'], $Orientation);
+	$DomPDF->setPaper($_SESSION['PageSize'], $Orientation);
 
 	// Render the HTML as PDF
-	$dompdf->render();
+	$DomPDF->render();
 
 	// Output the generated PDF to Browser
-	$dompdf->stream($PdfFileName, array("Attachment" => false));
+	$DomPDF->stream($PdfFileName, array("Attachment" => false));
 }
 
 } else {

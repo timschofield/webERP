@@ -154,14 +154,14 @@ if ($ListCount == 0) {
 } else {
 
 	/// @todo we could skip generating the pdf if $From == ''
-	$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
-	$dompdf->loadHtml($HTML);
+	$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
+	$DomPDF->loadHtml($HTML);
 	// (Optional) set up the paper size and orientation
-	$dompdf->setPaper($_SESSION['PageSize'], 'portrait');
+	$DomPDF->setPaper($_SESSION['PageSize'], 'portrait');
 	// Render the HTML as PDF
-	$dompdf->render();
+	$DomPDF->render();
 	// Output the generated PDF to a temporary file
-	$output = $dompdf->output();
+	$output = $DomPDF->output();
 
 	$PDFFileName = sys_get_temp_dir() . '/' . $_SESSION['DatabaseName'] . '_InventoryValuation_' . date('Y-m-d') . '.pdf';
 	file_put_contents($PDFFileName, $output);

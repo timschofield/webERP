@@ -131,30 +131,30 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 		</html>';
 
 	if (isset($_POST['PrintPDF'])) {
-		$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
-		$dompdf->loadHtml($HTML);
+		$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
+		$DomPDF->loadHtml($HTML);
 
 		// (Optional) Setup the paper size and orientation
-		$dompdf->setPaper($_SESSION['PageSize'], 'landscape');
+		$DomPDF->setPaper($_SESSION['PageSize'], 'landscape');
 
 		// Render the HTML as PDF
-		$dompdf->render();
+		$DomPDF->render();
 
 		// Output the generated PDF to Browser
-		$dompdf->stream($_SESSION['DatabaseName'] . '_ReOrderLevel_' . date('Y-m-d') . '.pdf', array(
+		$DomPDF->stream($_SESSION['DatabaseName'] . '_ReOrderLevel_' . date('Y-m-d') . '.pdf', array(
 			"Attachment" => false
 		));
 	} elseif (isset($_POST['Email'])) {
 
 		/// @todo we could skip generating the pdf if $_SESSION['InventoryManagerEmail'] == ''
-		$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
-		$dompdf->loadHtml($HTML);
+		$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
+		$DomPDF->loadHtml($HTML);
 		// (Optional) set up the paper size and orientation
-		$dompdf->setPaper($_SESSION['PageSize'], 'landscape');
+		$DomPDF->setPaper($_SESSION['PageSize'], 'landscape');
 		// Render the HTML as PDF
-		$dompdf->render();
+		$DomPDF->render();
 		// Output the generated PDF to a temporary file
-		$output = $dompdf->output();
+		$output = $DomPDF->output();
 
 		$PDFFileName = sys_get_temp_dir() . '/' . $_SESSION['DatabaseName'] . '_ReOrderLevel_' . date('Y-m-d') . '.pdf';
 		file_put_contents($PDFFileName, $output);

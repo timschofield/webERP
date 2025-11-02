@@ -284,7 +284,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 	$HTML .= '</body></html>';
 
 	// Output PDF
-	$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
+	$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 	$DomPDF->loadHtml($HTML);
 	$DomPDF->setPaper($_SESSION['PageSize'], 'landscape');
 	$DomPDF->render();

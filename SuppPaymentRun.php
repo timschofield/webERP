@@ -182,7 +182,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 
 	// Create DomPDF instance and render
 	// Generate PDF using Dompdf
-	$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
+	$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 	$DomPDF->loadHtml($HTML);
 	$DomPDF->setPaper($_SESSION['PageSize'], 'portrait');
 	$DomPDF->render();

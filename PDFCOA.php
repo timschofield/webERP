@@ -294,13 +294,13 @@ if ($Disclaimer > '') {
 
 $HTML .= '</body></html>';
 
-$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
-$dompdf->loadHtml($HTML);
-$dompdf->setPaper($_SESSION['PageSize'], 'portrait');
-$dompdf->render();
+$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
+$DomPDF->loadHtml($HTML);
+$DomPDF->setPaper($_SESSION['PageSize'], 'portrait');
+$DomPDF->render();
 
 // Output to browser
 $filename = $_SESSION['DatabaseName'] . 'COA' . date('Y-m-d') . '.pdf';
-$dompdf->stream($filename, array("Attachment" => false));
+$DomPDF->stream($filename, array("Attachment" => false));
 
 exit;

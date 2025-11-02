@@ -303,29 +303,29 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 
 	if ($MakePDFThenDisplayIt) {
 		// Display PDF in browser
-		$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
-		$dompdf->loadHtml($HTML);
+		$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
+		$DomPDF->loadHtml($HTML);
 
 		// (Optional) Setup the paper size and orientation
-		$dompdf->setPaper($_SESSION['PageSize'], 'portrait');
+		$DomPDF->setPaper($_SESSION['PageSize'], 'portrait');
 
 		// Render the HTML as PDF
-		$dompdf->render();
+		$DomPDF->render();
 
 		// Output the generated PDF to Browser
-		$dompdf->stream($PdfFileName, array(
+		$DomPDF->stream($PdfFileName, array(
 			"Attachment" => false
 		));
 	} else {
 		// Save PDF to file and send via email
-		$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
-		$dompdf->loadHtml($HTML);
+		$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
+		$DomPDF->loadHtml($HTML);
 		// (Optional) set up the paper size and orientation
-		$dompdf->setPaper($_SESSION['PageSize'], 'portrait');
+		$DomPDF->setPaper($_SESSION['PageSize'], 'portrait');
 		// Render the HTML as PDF
-		$dompdf->render();
+		$DomPDF->render();
 		// Output the generated PDF to a temporary file
-		$output = $dompdf->output();
+		$output = $DomPDF->output();
 
 		$PdfFileName = sys_get_temp_dir() . '/' . $_SESSION['DatabaseName'] . '_InventoryValuation_' . date('Y-m-d') . '.pdf';
 		file_put_contents($PdfFileName, $output);

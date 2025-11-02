@@ -134,13 +134,13 @@ $HTML .= '</div>
 // Generate PDF with DomPDF
 $PdfFileName = $_SESSION['DatabaseName'] . '_CustomerReceipt_No_' . $BatchNumber . ' - ' . $ReceiptNumber . ' _ ' . date('Y-m-d') . '.pdf';
 // Display PDF in browser
-$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
-$dompdf->loadHtml($HTML);
+$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
+$DomPDF->loadHtml($HTML);
 
-$dompdf->setPaper($_SESSION['PageSize'], 'portrait');
+$DomPDF->setPaper($_SESSION['PageSize'], 'portrait');
 
 // Render the HTML as PDF
-$dompdf->render();
+$DomPDF->render();
 
 // Output the generated PDF to Browser
-$dompdf->stream($PdfFileName, array("Attachment" => false));
+$DomPDF->stream($PdfFileName, array("Attachment" => false));

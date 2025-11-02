@@ -158,25 +158,25 @@ if ($NoOfLabels > 0) {
 	if ($MakePDFThenDisplayIt) {
 		// Stream PDF to browser
 		$FileName = $_SESSION['DatabaseName'] . '_FGLabel_WO-'  . $SelectedWO . '_' . date('Y-m-d') . '.pdf';
-		$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
-		$dompdf->loadHtml($HTML);
+		$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
+		$DomPDF->loadHtml($HTML);
 
 		// (Optional) Setup the paper size and orientation
-		$dompdf->setPaper($_SESSION['PageSize'], 'landscape');
+		$DomPDF->setPaper($_SESSION['PageSize'], 'landscape');
 
 		// Render the HTML as PDF
-		$dompdf->render();
+		$DomPDF->render();
 
 		// Output the generated PDF to Browser
-		$dompdf->stream($FileName, array(
+		$DomPDF->stream($FileName, array(
 			"Attachment" => false
 		));
 	} else {
 		$pdfFilename = $_SESSION['DatabaseName'] . '_FGLABEL_WO-' . $SelectedWO . '_' . date('Y-m-d') . '.pdf';
-		$dompdf->loadHtml($HTML);
-		$dompdf->setPaper(strtolower($PaperSize), 'portrait');
-		$dompdf->render();
-		file_put_contents($_SESSION['reports_dir'] . '/' . $pdfFilename, $dompdf->output());
+		$DomPDF->loadHtml($HTML);
+		$DomPDF->setPaper(strtolower($PaperSize), 'portrait');
+		$DomPDF->render();
+		file_put_contents($_SESSION['reports_dir'] . '/' . $pdfFilename, $DomPDF->output());
 
 		$Success = SendEmailFromWebERP(
 			$_SESSION['CompanyRecord']['email'],

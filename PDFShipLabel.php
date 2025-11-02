@@ -296,26 +296,26 @@ if (isset($NoOfLabels) && $NoOfLabels > 0) {
 		';
 	}
 
-	$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
+	$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
 
-	$dompdf->loadHtml($HTMLLabels);
+	$DomPDF->loadHtml($HTMLLabels);
 
 	// Optionally set paper size/orientation from $FormDesign
 	$paperSize = isset($FormDesign->PaperSize) ? (string)$FormDesign->PaperSize : 'A4';
 	$orientation = 'portrait';
-	$dompdf->setPaper($paperSize, $orientation);
+	$DomPDF->setPaper($paperSize, $orientation);
 
-	$dompdf->render();
+	$DomPDF->render();
 
 	$PDFFileName = $_SESSION['DatabaseName'] . '_FGLABEL_' . $SelectedORD . '_' . date('Y-m-d') . '.pdf';
 
 	if ($MakePDFThenDisplayIt) {
 		// Stream to browser
-		$dompdf->stream($PDFFileName, ['Attachment' => false]);
+		$DomPDF->stream($PDFFileName, ['Attachment' => false]);
 		exit;
 	} else {
 		// Save to file and email
-		$output = $dompdf->output();
+		$output = $DomPDF->output();
 		$tmpFile = sys_get_temp_dir() . '/' . $PDFFileName;
 		file_put_contents($tmpFile, $output);
 

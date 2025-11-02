@@ -357,17 +357,17 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCust']) and $_POST['FromCust
 	// Generate PDF with DomPDF
 	$PdfFileName = $_SESSION['DatabaseName'] . '_CustomerStatements_' . date('Y-m-d') . '.pdf';
 	// Display PDF in browser
-	$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
-	$dompdf->loadHtml($HTML);
+	$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
+	$DomPDF->loadHtml($HTML);
 
 	// (Optional) Setup the paper size and orientation
-	$dompdf->setPaper($_SESSION['PageSize'], 'portrait');
+	$DomPDF->setPaper($_SESSION['PageSize'], 'portrait');
 
 	// Render the HTML as PDF
-	$dompdf->render();
+	$DomPDF->render();
 
 	// Output the generated PDF to Browser
-	$dompdf->stream($PdfFileName, array("Attachment" => false));
+	$DomPDF->stream($PdfFileName, array("Attachment" => false));
 
 }
 else { // The option to print PDF was not hit

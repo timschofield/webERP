@@ -251,16 +251,16 @@ if (isset($_POST['PrintLabels']) && $NoOfLabels > 0) {
 	</body>
 	</html>';
 
-	$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
-	$dompdf->loadHtml($HTML);
-	$dompdf->setPaper($_SESSION['PageSize'], 'landscape');
-	$dompdf->render();
+	$DomPDF = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
+	$DomPDF->loadHtml($HTML);
+	$DomPDF->setPaper($_SESSION['PageSize'], 'landscape');
+	$DomPDF->render();
 
 	$FileName = $_SESSION['DatabaseName'] . '_' . __('Price_Labels') . '_' . date('Y-m-d') . '.pdf';
 	// Output the PDF inline to the browser
 	header('Content-Type: application/pdf');
 	header('Content-Disposition: inline; filename="' . $FileName . '"');
-	echo $dompdf->output();
+	echo $DomPDF->output();
 	exit();
 
 } else { /*The option to print PDF was not hit */
