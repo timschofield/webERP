@@ -3,7 +3,7 @@ require (__DIR__ . '/includes/session.php');
 require_once 'vendor/autoload.php';
 use Dompdf\Dompdf;
 
-include('/includes/SetDomPDFOptions.php');
+include('includes/SetDomPDFOptions.php');
 
 if (isset($_POST['cutoffdate'])) {
 	$_POST['cutoffdate'] = ConvertSQLDate($_POST['cutoffdate']);

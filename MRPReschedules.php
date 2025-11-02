@@ -4,7 +4,7 @@ require (__DIR__ . '/includes/session.php');
 require_once 'vendor/autoload.php';
 use Dompdf\Dompdf;
 
-include('/includes/SetDomPDFOptions.php');
+include('includes/SetDomPDFOptions.php');
 
 if (!DB_table_exists('mrprequirements')) {
 	$Title = 'MRP error';

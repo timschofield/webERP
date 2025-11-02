@@ -3,7 +3,7 @@ require (__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('/includes/SetDomPDFOptions.php');
+include('includes/SetDomPDFOptions.php');
 use Dompdf\Options;
 
 $Title = __('Stock Location Transfer Docket Error');

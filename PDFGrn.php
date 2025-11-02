@@ -5,7 +5,7 @@ require_once __DIR__ . '/vendor/autoload.php'; // DomPDF autoload
 
 use Dompdf\Dompdf;
 
-include('/includes/SetDomPDFOptions.php');
+include('includes/SetDomPDFOptions.php');
 
 // Get GRNNo
 $GRNNo = isset($_GET['GRNNo']) ? $_GET['GRNNo'] : '';

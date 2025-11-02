@@ -6,7 +6,7 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('/includes/SetDomPDFOptions.php');
+include('includes/SetDomPDFOptions.php');
 
 if (isset($_GET['identifier'])){
 	$identifier = $_GET['identifier'];

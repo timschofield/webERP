@@ -10,7 +10,7 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('/includes/SetDomPDFOptions.php');
+include('includes/SetDomPDFOptions.php');
 
 $FromCriteria = '1'; /*Category From */
 $ToCriteria = 'zzzzzzzz'; /*Category To */

@@ -4,7 +4,7 @@ include ('includes/SQL_CommonFunctions.php');
 
 use Dompdf\Dompdf;
 
-include('/includes/SetDomPDFOptions.php');
+include('includes/SetDomPDFOptions.php');
 use Dompdf\Options;
 
 $ViewTopic = 'ARReports';

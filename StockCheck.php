@@ -4,7 +4,7 @@ require (__DIR__ . '/includes/StockFunctions.php');
 
 use Dompdf\Dompdf;
 
-include('/includes/SetDomPDFOptions.php');
+include('includes/SetDomPDFOptions.php');
 
 if (isset($_POST['PrintPDF'])) {
 

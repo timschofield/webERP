@@ -7,7 +7,7 @@ require_once(__DIR__ . '/vendor/autoload.php'); // Make sure DomPDF is installed
 
 use Dompdf\Dompdf;
 
-include('/includes/SetDomPDFOptions.php');
+include('includes/SetDomPDFOptions.php');
 use BarcodePack\code128;
 
 if (isset($_POST['EffectiveDate'])) {

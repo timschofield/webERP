@@ -20,7 +20,7 @@ include ('includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('/includes/SetDomPDFOptions.php');
+include('includes/SetDomPDFOptions.php');
 
 $ViewTopic = "Inventory";
 $BookMark = "PlanningReport";
