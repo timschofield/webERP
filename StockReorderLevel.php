@@ -21,11 +21,11 @@ echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Inventory') . '" alt="" /><b>' . $Title. '</b>
 	</p>';
 
-$Result = DB_query("SELECT description, units FROM stockmaster WHERE stockid = '" . $StockID . "'");
+$Result = DB_query("SELECT description, units FROM stockmaster WHERE stockid='" . $StockID . "'");
 $MyRow = DB_fetch_row($Result);
 
-echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post">';
-echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 $SQL = "SELECT locstock.loccode,
 				locations.locationname,
@@ -34,10 +34,10 @@ $SQL = "SELECT locstock.loccode,
 				stockmaster.decimalplaces,
 				canupd
 		FROM locstock INNER JOIN locations
-			ON locstock.loccode = locations.loccode
-		INNER JOIN locationusers ON locationusers.loccode = locstock.loccode and locationusers.userid = '" .  $_SESSION['UserID'] . "' and locationusers.canview = 1
+			ON locstock.loccode=locations.loccode
+		INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			INNER JOIN stockmaster
-			ON locstock.stockid = stockmaster.stockid
+			ON locstock.stockid=stockmaster.stockid
 		WHERE locstock.stockid = '" . $StockID . "'
 		ORDER BY locations.locationname";
 
@@ -49,10 +49,10 @@ $LocStockResult = DB_query($SQL, $ErrMsg);
 echo '<table class="selection">
 	<thead>
 		<tr>
-		<th colspan = "3">' . __('Stock Code') . ':<input  type = "text" data-type = "no-illegal-chars" title="'.__('The stock id should not contains illegal characters and blank or percentage mark is not allowed').'" required = "required" name="StockID" size = "21" value = "' . $StockID . '" maxlength = "20" /><input type = "submit" name="Show" value = "' . __('Show Re-Order Levels') . '" /></th>
+		<th colspan="3">' . __('Stock Code') . ':<input  type="text" data-type="no-illegal-chars" title="'.__('The stock id should not contains illegal characters and blank or percentage mark is not allowed').'" required="required" name="StockID" size="21" value="' . $StockID . '" maxlength="20" /><input type="submit" name="Show" value="' . __('Show Re-Order Levels') . '" /></th>
 		</tr>
 		<tr>
-		<th colspan = "3"><b>' . $StockID . ' - ' . $MyRow[0] . '</b>  (' . __('In Units of') . ' ' . $MyRow[1] . ')</th>
+		<th colspan="3"><b>' . $StockID . ' - ' . $MyRow[0] . '</b>  (' . __('In Units of') . ' ' . $MyRow[1] . ')</th>
 		</tr>
 		<tr>
 					<th class="SortedColumn">' . __('Location') . '</th>
@@ -62,25 +62,25 @@ echo '<table class="selection">
 	</thead>
 	<tbody>';
 
-while ($MyRow = DB_fetch_array($LocStockResult)) {
+while ($MyRow=DB_fetch_array($LocStockResult)) {
 
 	if (isset($_POST['UpdateData'])
-		and $_POST['Old_' . $MyRow['loccode']]!= filter_number_format($_POST[$MyRow['loccode']])
-		and is_numeric(filter_number_format($_POST[$MyRow['loccode']]))
-		and filter_number_format($_POST[$MyRow['loccode']])>=0){
+		AND $_POST['Old_' . $MyRow['loccode']]!= filter_number_format($_POST[$MyRow['loccode']])
+		AND is_numeric(filter_number_format($_POST[$MyRow['loccode']]))
+		AND filter_number_format($_POST[$MyRow['loccode']])>=0){
 
 	   $MyRow['reorderlevel'] = filter_number_format($_POST[$MyRow['loccode']]);
 	   $SQL = "UPDATE locstock SET reorderlevel = '" . filter_number_format($_POST[$MyRow['loccode']]) . "'
 	   		WHERE stockid = '" . $StockID . "'
-			and loccode = '"  . $MyRow['loccode'] ."'";
+			AND loccode = '"  . $MyRow['loccode'] ."'";
 	   $UpdateReorderLevel = DB_query($SQL);
 
 	}
 	if ($MyRow['canupd']==1) {
-	$UpdateCode = '<input title="'.__('Input safety stock quantity').'" type = "text" class="number" name="' . $MyRow['loccode'] . '" maxlength = "10" size = "10" value = "' . $MyRow['reorderlevel'] . '" />
+		$UpdateCode='<input title="'.__('Input safety stock quantity').'" type="text" class="number" name="' . $MyRow['loccode'] . '" maxlength="10" size="10" value="' . $MyRow['reorderlevel'] . '" />
 			';
-} else {
-		$UpdateCode = '<input type = "hidden" name="' . $MyRow['loccode'] . '">' . $MyRow['reorderlevel'] . '<input type = "hidden" name="' . $MyRow['loccode'] . '" value = "' . $MyRow['reorderlevel'] . '" />';
+	} else {
+		$UpdateCode='<input type="hidden" name="' . $MyRow['loccode'] . '">' . $MyRow['reorderlevel'] . '<input type="hidden" name="' . $MyRow['loccode'] . '" value="' . $MyRow['reorderlevel'] . '" />';
 	}
 	echo '<tr class="striped_row">
 			<td>', $MyRow['locationname'], '</td>
@@ -94,7 +94,7 @@ while ($MyRow = DB_fetch_array($LocStockResult)) {
 echo '</tbody>
 	</table>
 	<div class="centre">
-		<input type = "submit" name="UpdateData" value = "' . __('Update') . '" />';
+		<input type="submit" name="UpdateData" value="' . __('Update') . '" />';
 
 echo '<br /><a href="' . $RootPath . '/StockMovements.php?StockID=' . $StockID . '">' . __('Show Stock Movements') . '</a>';
 echo '<br /><a href="' . $RootPath . '/StockUsage.php?StockID=' . $StockID . '">' . __('Show Stock Usage') . '</a>';

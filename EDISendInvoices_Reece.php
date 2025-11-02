@@ -24,8 +24,8 @@ $SQL = 'SELECT debtorno,
 		ediserverpwd,
 		daysbeforedue,
 		dayinfollowingmonth
-	FROM debtorsmaster INNER JOIN paymentterms ON debtorsmaster.paymentterms = paymentterms.termsindicator
-	WHERE ediinvoices = 1';
+	FROM debtorsmaster INNER JOIN paymentterms ON debtorsmaster.paymentterms=paymentterms.termsindicator
+	WHERE ediinvoices=1';
 
 $EDIInvCusts = DB_query($SQL);
 
@@ -58,10 +58,10 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 			braddress4,
 			braddress5
 		FROM debtortrans INNER JOIN custbranch ON custbranch.debtorno = debtortrans.debtorno
-		and custbranch.branchcode = debtortrans.branchcode
-		WHERE (type = 10 or type = 11)
-		and edisent = 0
-		and debtortrans.debtorno = '" . $CustDetails['debtorno'] . "'";
+		AND custbranch.branchcode = debtortrans.branchcode
+		WHERE (type=10 or type=11)
+		AND edisent=0
+		AND debtortrans.debtorno='" . $CustDetails['debtorno'] . "'";
 
 	$ErrMsg = __('There was a problem retrieving the customer transactions because');
 	$TransHeaders = DB_query($SQL, $ErrMsg);
@@ -79,10 +79,9 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 	while ($TransDetails = DB_fetch_array($TransHeaders)) {
 
 		/*Set up the variables that will be needed in construction of the EDI message */
-		if ($TransDetails['type'] == 10) {
-	/* its an invoice */
+		if ($TransDetails['type'] == 10) { /* its an invoice */
 			$InvOrCrd = 388;
-} else { /* its a credit note */
+		} else { /* its a credit note */
 			$InvOrCrd = 381;
 		}
 		$TransNo = $TransDetails['transno'];
@@ -143,8 +142,8 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 		// **************Reece needs NAD ST in every invoice, sometimes freeform text, so no real code
 
 		if ($ShipToName === $BranchName) {
-	$ShipToCode = $CustBranchCode;
-} else {
+			$ShipToCode = $CustBranchCode;
+		} else {
 			$ShipToCode = $ShipToName;
 		}
 
@@ -156,8 +155,8 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 	                        FROM stockmoves,
 							stockmovestaxes
 	                        WHERE stockmoves.stkmoveno = stockmovestaxes.stkmoveno
-	                        and stockmoves.transno = " . $TransNo . "
-	                        and stockmoves.show_on_inv_crds = 1
+	                        AND stockmoves.transno=" . $TransNo . "
+	                        AND stockmoves.show_on_inv_crds=1
 	                        LIMIT 0,1";
 
 		$ResultTax = DB_query($SQL);
@@ -173,11 +172,11 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 		// **************Check to see if freight was added, probably specific to Reece and some other OZ hardware stores
 
 		if ($ShipToFreight > 0) {
-	$FreightTax = number_format(round(($ShipToFreight * $TaxRate / 100), 2), 2, '.', '');
+			$FreightTax = number_format(round(($ShipToFreight * $TaxRate / 100), 2), 2, '.', '');
 			$Freight_YN = "ALC+C" . "'" . "MOA+64:" . $ShipToFreight . "'" . "TAX+7+GST+++:::" . $TaxRate . "'" .
 				"MOA+124:" . $FreightTax . "'";
 			$SegCount = $SegCount + 3;
-} else {
+		} else {
 			$Freight_YN = "";
 		}
 
@@ -185,8 +184,8 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 
 		// Get the message lines, replace variable names with data, write the output to a file one line at a time
 
-		$SQL = "SELECT section, linetext FROM edimessageformat WHERE partnercode = '" . $CustDetails['debtorno'] .
-			"' and messagetype = 'INVOIC' ORDER BY sequenceno";
+		$SQL = "SELECT section, linetext FROM edimessageformat WHERE partnercode='" . $CustDetails['debtorno'] .
+			"' AND messagetype='INVOIC' ORDER BY sequenceno";
 		$ErrMsg = __('An error occurred in getting the EDI format template for') . ' ' . $CustDetails['debtorno'] . ' ' .
 			__('because');
 		$MessageLinesResult = DB_query($SQL, $ErrMsg);
@@ -196,9 +195,9 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 			$ArrayCounter = 0;
 			while ($MessageLine = DB_fetch_array($MessageLinesResult)) {
 				if ($MessageLine['section'] == 'Detail') {
-	$DetailLines[$ArrayCounter] = $MessageLine['linetext'];
+					$DetailLines[$ArrayCounter] = $MessageLine['linetext'];
 					$ArrayCounter++;
-}
+				}
 			}
 			DB_data_seek($MessageLinesResult, 0);
 
@@ -210,13 +209,13 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 			while ($LineDetails = DB_fetch_array($MessageLinesResult)) {
 
 				if ($LineDetails['section'] == 'Heading') {
-	$MsgLineText = $LineDetails['linetext'];
+					$MsgLineText = $LineDetails['linetext'];
 					include('includes/EDIVariableSubstitution.php');
 					$LastLine = 'Heading';
-}
+				}
 
-				if ($LineDetails['section'] == 'Detail' and $LastLine == 'Heading') {
-	/*This must be the detail section
+				if ($LineDetails['section'] == 'Detail' AND $LastLine == 'Heading') {
+					/*This must be the detail section
 					need to get the line details for the invoice or credit note
 					for creating the detail lines */
 
@@ -225,29 +224,30 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 						 		stockmaster.description,
 								-stockmoves.qty as quantity,
 								stockmoves.discountpercent,
-								((1 - stockmoves.discountpercent) * stockmoves.price * " . $ExchRate . " * -stockmoves.qty) as fxnet,
-								(stockmoves.price * " . $ExchRate . ") as fxprice,
+								((1 - stockmoves.discountpercent) * stockmoves.price * " . $ExchRate . " * -stockmoves.qty) AS fxnet,
+								(stockmoves.price * " . $ExchRate . ") AS fxprice,
 								stockmaster.units
 							FROM stockmoves,
 								stockmaster
 							WHERE stockmoves.stockid = stockmaster.stockid
-							and stockmoves.type = 10
-							and stockmoves.transno = " . $TransNo . "
-							and stockmoves.show_on_inv_crds = 1";
-} else {
+							AND stockmoves.type=10
+							AND stockmoves.transno=" . $TransNo . "
+							AND stockmoves.show_on_inv_crds=1";
+
+					} else {
 					/* credit note */
 			 			$SQL = "SELECT stockmoves.stockid,
 								stockmaster.description,
 								stockmoves.qty as quantity,
 								stockmoves.discountpercent,
 								((1 - stockmoves.discountpercent) * stockmoves.price * " . $ExchRate . " * stockmoves.qty) as fxnet,
-								(stockmoves.price * " . $ExchRate . ") as fxprice,
+								(stockmoves.price * " . $ExchRate . ") AS fxprice,
 								stockmaster.units
 							FROM stockmoves,
 								stockmaster
 							WHERE stockmoves.stockid = stockmaster.stockid
-							and stockmoves.type = 11 and stockmoves.transno = " . $TransNo . "
-							and stockmoves.show_on_inv_crds = 1";
+							AND stockmoves.type=11 and stockmoves.transno=" . $TransNo . "
+							AND stockmoves.show_on_inv_crds=1";
 					}
 					$TransLinesResult = DB_query($SQL);
 
@@ -259,9 +259,9 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 						$StockID = $TransLines['stockid'];
 						$SQL = "SELECT partnerstockid
 								FROM ediitemmapping
-							WHERE supporcust = 'CUST'
-							and partnercode ='" . $CustDetails['debtorno'] . "'
-							and stockid = '" . $TransLines['stockid'] . "'";
+							WHERE supporcust='CUST'
+							AND partnercode ='" . $CustDetails['debtorno'] . "'
+							AND stockid='" . $TransLines['stockid'] . "'";
 
 						$CustStkResult = DB_query($SQL);
 						if (DB_num_rows($CustStkResult) == 1) {
@@ -292,16 +292,16 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 					$NoLines = $LineNumber;
 				}
 
-				if ($LineDetails['section'] == 'Summary' and $LastLine == 'Detail') {
-	$MsgLineText = $LineDetails['linetext'];
+				if ($LineDetails['section'] == 'Summary' AND $LastLine == 'Detail') {
+					$MsgLineText = $LineDetails['linetext'];
 					include('includes/EDIVariableSubstitution.php');
-}
+				}
 			} /*end while there are message lines to parse and substitute vbles for */
 			fclose($fp); /*close the file at the end of each transaction */
-			DB_query("UPDATE debtortrans SET EDISent = 1 WHERE ID = " . $TransDetails['id']);
+			DB_query("UPDATE debtortrans SET EDISent=1 WHERE ID=" . $TransDetails['id']);
 			/*Now send the file using the customer transport */
 			if ($CustDetails['editransport'] == 'email') {
-	$MessageSent = SendEmailFromWebERP($_SESSION['CompanyRecord']['coyname'] . "<" .
+				$MessageSent = SendEmailFromWebERP($_SESSION['CompanyRecord']['coyname'] . "<" .
 					$_SESSION['CompanyRecord']['email'] . ">",
 					$CustDetails['ediaddress'],
 					'EDI Invoice/Credit Note ' . $TransNo,
@@ -312,7 +312,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 				if ($MessageSent == true) {
 					echo '<BR><BR>';
 					prnMsg(__('EDI Message') . ' ' . $TransNo . ' ' . __('was sucessfully emailed'), 'success');
-} else {
+				} else {
 					echo '<BR><BR>';
 					prnMsg(__('EDI Message') . ' ' . $TransNo . __('could not be emailed to') . ' ' .
 						$CustDetails['ediaddress'], 'error');
@@ -335,10 +335,10 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 				$MessageSent = ftp_put($conn_id, $_SESSION['EDI_MsgPending'] . '/EDI_INV_' . $EDITransNo,
 					'EDI_INV_' . $EDITransNo, FTP_ASCII); // check upload status
 				if (!$MessageSent) {
-	echo '<BR><BR>';
+					echo '<BR><BR>';
 					prnMsg(__('EDI Message') . ' ' . $EDITransNo . ' ' . __('could not be sent via ftp to') .' ' .
 						$CustDetails['ediaddress'],'error');
-} else {
+				} else {
 					echo '<BR><BR>';
 					prnMsg( __('Successfully uploaded EDI_INV_') . $EDITransNo . ' ' . __('via ftp to') . ' ' .
 						$CustDetails['ediaddress'],'success');
@@ -347,13 +347,12 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 				*/
 			}
 
-			if ($MessageSent == true) {
-	/*the email was sent successfully */
+			if ($MessageSent == true) { /*the email was sent successfully */
 				/* move the sent file to sent directory */
 				$Source = $PathPrefix . 'EDI_INV_' . $TransNo . '.txt';
 				$destination = $PathPrefix . 'EDI_Sent/EDI_INV_' . $TransNo . '.txt';
 				rename($Source, $destination);
-}
+			}
 
 		} else {
 			prnMsg(__('Cannot create EDI message since there is no EDI INVOIC message template set up for') . ' ' .

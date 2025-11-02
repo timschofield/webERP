@@ -6,7 +6,7 @@ if (!isset($PathPrefix)) {
 }
 
 // Include now for the error code values.
-include($PathPrefix . 'includes/LoginFunctions.php');	/* Login checking and setup */
+include_once($PathPrefix . 'includes/LoginFunctions.php');	/* Login checking and setup */
 
 //  Validates user and sets up $_SESSION environment for API users.
 function  LoginAPI($databasename, $user, $password) {
@@ -115,7 +115,9 @@ function DoSetup()
     if (isset($_SESSION['db']) AND $_SESSION['db'] != '' )
         include($PathPrefix . 'includes/GetConfig.php');
 
+	/// @todo not having declared this as global means that this assignment is useless...
     $db = $_SESSION['db'];	    // Used a bit in the following.
+
     if (isset($_SESSION['DB_Maintenance'])) {
 		if ($_SESSION['DB_Maintenance']>0)  {
 		    if (DateDiff(Date($_SESSION['DefaultDateFormat']),

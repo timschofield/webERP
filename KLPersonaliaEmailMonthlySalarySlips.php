@@ -9,6 +9,10 @@ include('includes/KLDefines.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 
+use Dompdf\Dompdf;
+
+include('/includes/SetDomPDFOptions.php');
+
 if (isset($_POST['submit'])) {
 	submit($Title, $_POST['Company'], $_POST['PeriodOfFile'], $_POST['SalaryType']);
 } else {
@@ -77,28 +81,23 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 				include('includes/KLPersonaliaPDFNewSalarySlip.php');
 				$HTML .= trim(ob_get_clean()); // Get and trim output buffer
 				
-				// Set the first slip flag to true since we're creating individual PDFs
-				$isFirstSlip = true;
-				
 				include('includes/KLPersonaliaPDFCalculatedFields.php');
 				include('includes/KLPersonaliaPDFOneSalarySlip.php');
 				
 				$HTML .= '</body></html>';
 				
 				// Create the PDF
-				$options = new \Dompdf\Options();
-				$options->set('isHtml5ParserEnabled', true);
-				$options->set('isRemoteEnabled', true);
-				$dompdf = new \Dompdf\Dompdf($options);
-				$dompdf->loadHtml($HTML);
-				$dompdf->setPaper('A4', 'portrait');
-				$dompdf->render();
+		
+				$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
+				$DomPDF->loadHtml($HTML);
+				$DomPDF->setPaper($_SESSION['PageSize'], 'portrait');
+				$DomPDF->render();
 				
 				// Save the PDF file for later attachment
 				$FileName = $CoreFileName . '.pdf';
 				$PathFileName = $_SESSION['reports_dir'] . '/' . $FileName;
 				
-				file_put_contents($PathFileName, $dompdf->output());
+				file_put_contents($PathFileName, $DomPDF->output());
 
 				// prepare the email fields to employees
 				$Subject  = $MyRow['codename'] . " " . $PageTitle;

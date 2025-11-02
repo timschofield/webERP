@@ -4,6 +4,8 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
+include('includes/SetDomPDFOptions.php');
+
 $Title = __('Sell Through Support Claims Report');
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
@@ -16,11 +18,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	if (isset($_POST['PrintPDF'])) {
 		$HTML .= '<html>
 					<head>';
-		$HTML .= '<link href = "css/reports.css" rel = "stylesheet" type = "text/css" />';
+		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
 	}
 
-	$HTML .= '<meta name = "author" content = "WebERP " . $Version">
-				<meta name = "Creator" content = "webERP https://www.weberp.org">
+	$HTML .= '<meta name="author" content="WebERP " . $Version">
+				<meta name="Creator" content="webERP https://www.weberp.org">
 				</head>
 				<body>
 				<div class="centre" id="ReportHeader">
@@ -32,7 +34,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	$Title = __('Sell Through Support Claim') . ' - ' . __('Problem Report');
 
-	if (! Is_Date($_POST['FromDate']) or ! Is_Date($_POST['ToDate'])){
+	if (! Is_Date($_POST['FromDate']) OR ! Is_Date($_POST['ToDate'])){
 		include('includes/header.php');
 		prnMsg(__('The dates entered must be in the format') . ' '  . $_SESSION['DefaultDateFormat'],'error');
 		include('includes/footer.php');
@@ -58,26 +60,26 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					sellthroughsupport.rebatepercent,
 					sellthroughsupport.rebateamount
 				FROM stockmaster INNER JOIN stockmoves
-					ON stockmaster.stockid = stockmoves.stockid
+					ON stockmaster.stockid=stockmoves.stockid
 				INNER JOIN systypes
-					ON stockmoves.type = systypes.typeid
+					ON stockmoves.type=systypes.typeid
 				INNER JOIN debtorsmaster
-					ON stockmoves.debtorno = debtorsmaster.debtorno
+					ON stockmoves.debtorno=debtorsmaster.debtorno
 				INNER JOIN purchdata
 					ON purchdata.stockid = stockmaster.stockid
 				INNER JOIN suppliers
 					ON suppliers.supplierid = purchdata.supplierno
 				INNER JOIN sellthroughsupport
-					ON sellthroughsupport.supplierno = suppliers.supplierid
+					ON sellthroughsupport.supplierno=suppliers.supplierid
 				INNER JOIN currencies
-					ON currencies.currabrev = suppliers.currcode
+					ON currencies.currabrev=suppliers.currcode
 				WHERE stockmoves.trandate >= '" . FormatDateForSQL($_POST['FromDate']) . "'
-				and stockmoves.trandate <= '" . FormatDateForSQL($_POST['ToDate']) . "'
-				and sellthroughsupport.effectivefrom <= stockmoves.trandate
-				and sellthroughsupport.effectiveto >= stockmoves.trandate
-				and (stockmoves.type = 10 or stockmoves.type = 11)
-				and (sellthroughsupport.stockid = stockmoves.stockid or sellthroughsupport.categoryid = stockmaster.categoryid)
-				and (sellthroughsupport.debtorno = stockmoves.debtorno or sellthroughsupport.debtorno = '')
+				AND stockmoves.trandate <= '" . FormatDateForSQL($_POST['ToDate']) . "'
+				AND sellthroughsupport.effectivefrom <= stockmoves.trandate
+				AND sellthroughsupport.effectiveto >= stockmoves.trandate
+				AND (stockmoves.type=10 OR stockmoves.type=11)
+				AND (sellthroughsupport.stockid=stockmoves.stockid OR sellthroughsupport.categoryid=stockmaster.categoryid)
+				AND (sellthroughsupport.debtorno=stockmoves.debtorno OR sellthroughsupport.debtorno='')
 				ORDER BY sellthroughsupport.supplierno,
 					stockmaster.stockid";
 
@@ -113,12 +115,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		if (isset($Supplier) and $SellThroRow['suppname']!=$Supplier){
 			$pdf->addTextWrap($Left_Margin+2,$YPos,250,$FontSize,$SellThroRow['suppname']);
 			if ($SupplierClaimTotal > 0) {
-	$HTML .= '<tr>
-							<td colspan = "3"></td>
-							<td colspan = "2">' . $Supplier . ' ' . __('Total Claim:') . ' (' . $CurrCode . ')' . '</td>
+				$HTML .= '<tr>
+							<td colspan="3"></td>
+							<td colspan="2">' . $Supplier . ' ' . __('Total Claim:') . ' (' . $CurrCode . ')' . '</td>
 							<td class="number">' . locale_number_format($SupplierClaimTotal,$CurrDecimalPlaces) . '</td>
 						</tr>';
-}
+			}
 		}
 		$DisplaySellingPrice = locale_number_format($SellThroRow['sellingprice'],$_SESSION['CompanyRecord']['decimalplaces']);
 		$ClaimAmount = (($SellThroRow['fxcost']*$SellThroRow['rebatepercent']) + $SellThroRow['rebateamount']) * -$SellThroRow['qty'];
@@ -135,12 +137,14 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	} /*end sell through support claims while loop */
 
 	if ($SupplierClaimTotal > 0) {
-	$HTML .= '<tr>
-					<td colspan = "3"></td>
-					<td colspan = "2">' . $Supplier . ' ' . __('Total Claim:') . ' (' . $CurrCode . ')' . '</td>
+
+		$HTML .= '<tr>
+					<td colspan="3"></td>
+					<td colspan="2">' . $Supplier . ' ' . __('Total Claim:') . ' (' . $CurrCode . ')' . '</td>
 					<td class="number">' . locale_number_format($SupplierClaimTotal,$CurrDecimalPlaces) . '</td>
 				</tr>';
-}
+
+	}
 
 	if (isset($_POST['PrintPDF'])) {
 		$HTML .= '</tbody>
@@ -149,24 +153,24 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '</tbody>
 				</table>
 				<div class="centre">
-					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick="window.close()" /></form>
+					<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
 			</html>';
 
 	if (isset($_POST['PrintPDF'])) {
-		$dompdf = new Dompdf(['chroot' => __DIR__]);
-		$dompdf->loadHtml($HTML);
+		$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
+		$DomPDF->loadHtml($HTML);
 
 		// (Optional) Setup the paper size and orientation
-		$dompdf->setPaper($_SESSION['PageSize'], 'landscape');
+		$DomPDF->setPaper($_SESSION['PageSize'], 'landscape');
 
 		// Render the HTML as PDF
-		$dompdf->render();
+		$DomPDF->render();
 
 		// Output the generated PDF to Browser
-		$dompdf->stream($_SESSION['DatabaseName'] . '_SellThroughSupportClaim_' . date('Y-m-d') . '.pdf', array(
+		$DomPDF->stream($_SESSION['DatabaseName'] . '_SellThroughSupportClaim_' . date('Y-m-d') . '.pdf', array(
 			"Attachment" => false
 		));
 	} else {
@@ -189,29 +193,29 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '
 		. __('Sell Through Support Claims Report') . '</p>';
 
-	if (!isset($_POST['FromDate']) or !isset($_POST['ToDate'])) {
+	if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])) {
 
 	/*if $FromDate is not set then show a form to allow input */
 		$_POST['FromDate']=date('Y-m-d');
 		$_POST['ToDate']=date('Y-m-d');
 		$_POST['GPMin']=0;
-		echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post" target="_blank">';
-		echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" target="_blank">';
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		echo '<fieldset>
 				<legend>', __('Report Criteria'), '</legend>
 				<field>
-					<label for = "FromDate">' . __('Sales Made From') . ' (' . __('in the format') . ' ' . $_SESSION['DefaultDateFormat'] . '):</label>
-					<input type = "date" name = "FromDate" size = "11" maxlength = "10" value = "' . $_POST['FromDate'] . '" />
+					<label for="FromDate">' . __('Sales Made From') . ' (' . __('in the format') . ' ' . $_SESSION['DefaultDateFormat'] . '):</label>
+					<input type="date" name="FromDate" size="11" maxlength="10" value="' . $_POST['FromDate'] . '" />
 				</field>
 				<field>
-					<label for = "ToDate">' . __('Sales Made To') . ' (' . __('in the format') . ' ' . $_SESSION['DefaultDateFormat'] . '):</label>
-					<input type = "date" name = "ToDate" size = "11" maxlength = "10" value = "' . $_POST['ToDate'] . '" />
+					<label for="ToDate">' . __('Sales Made To') . ' (' . __('in the format') . ' ' . $_SESSION['DefaultDateFormat'] . '):</label>
+					<input type="date" name="ToDate" size="11" maxlength="10" value="' . $_POST['ToDate'] . '" />
 				</field>
 			</fieldset>
 			<div class="centre">
-				<input type = "submit" name = "PrintPDF" title="PDF" value = "' . __('Print Low GP PDF') . '" />
-				<input type = "submit" name = "View" title="View" value = "' . __('View Low GP Report') . '" />
+				<input type="submit" name="PrintPDF" title="PDF" value="' . __('Print Low GP PDF') . '" />
+				<input type="submit" name="View" title="View" value="' . __('View Low GP Report') . '" />
 			</div>';
 		echo '</form>';
 	}

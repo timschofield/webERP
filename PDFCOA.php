@@ -4,76 +4,77 @@ require(__DIR__ . '/includes/session.php');
 require_once __DIR__ . '/vendor/autoload.php';
 
 use Dompdf\Dompdf;
-use Dompdf\Options;
+
+include('includes/SetDomPDFOptions.php');
 
 include('includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['LotKey']))  {
-	$SelectedCOA = $_GET['LotKey'];
+	$SelectedCOA=$_GET['LotKey'];
 } elseif (isset($_POST['LotKey'])) {
-	$SelectedCOA = $_POST['LotKey'];
+	$SelectedCOA=$_POST['LotKey'];
 }
 if (isset($_GET['ProdSpec']))  {
-	$SelectedSpec = $_GET['ProdSpec'];
+	$SelectedSpec=$_GET['ProdSpec'];
 } elseif (isset($_POST['ProdSpec'])) {
-	$SelectedSpec = $_POST['ProdSpec'];
+	$SelectedSpec=$_POST['ProdSpec'];
 }
 
 if (isset($_GET['QASampleID']))  {
-	$QASampleID = $_GET['QASampleID'];
+	$QASampleID=$_GET['QASampleID'];
 } elseif (isset($_POST['QASampleID'])) {
-	$QASampleID = $_POST['QASampleID'];
+	$QASampleID=$_POST['QASampleID'];
 }
 
 //Get Out if we have no Certificate of Analysis
-if ((!isset($SelectedCOA) || $SelectedCOA == '') && (!isset($QASampleID) || $QASampleID == '')){
+if ((!isset($SelectedCOA) || $SelectedCOA=='') && (!isset($QASampleID) || $QASampleID=='')){
 	$ViewTopic = 'QualityAssurance';
 	$BookMark = '';
 	$Title = __('Select Certificate of Analysis To Print');
 	include('includes/header.php');
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . __('Print')  . '" alt="" />' . ' ' . $Title . '</p>';
-	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method = "post">
-		<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<fieldset>
 		<legend>', __('Report Criteria'), '</legend>
 		<field>
-			<label for = "ProdSpec">' . __('Enter Item') .':</label>
-			<input type = "text" name = "ProdSpec" size = "25" maxlength = "25" />
+			<label for="ProdSpec">' . __('Enter Item') .':</label>
+			<input type="text" name="ProdSpec" size="25" maxlength="25" />
 		</field>
 		<field>
-			<label for = "LotKey">' . __('Enter Lot') .':</label>
-			<input type = "text" name = "LotKey" size = "25" maxlength = "25" />
+			<label for="LotKey">' . __('Enter Lot') .':</label>
+			<input type="text" name="LotKey" size="25" maxlength="25" />
 		</field>
 		</fieldset>
 		<div>
-			<input type = "submit" name = "PickSpec" value = "' . __('Submit') . '" />
+			<input type="submit" name="PickSpec" value="' . __('Submit') . '" />
 		</div>
 		</form>
-		<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method = "post">
-		<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />
+		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<fieldset>
 		<field>
-			<label for = "QASampleID">' . __('Or Select Existing Lot') .':</label>';
-	$SQLSpecSelect = "SELECT sampleid,
+			<label for="QASampleID">' . __('Or Select Existing Lot') .':</label>';
+	$SQLSpecSelect="SELECT sampleid,
 							lotkey,
 							prodspeckey,
 							description
 						FROM qasamples LEFT OUTER JOIN stockmaster
-						ON stockmaster.stockid = qasamples.prodspeckey
-						WHERE cert = '1'
+						ON stockmaster.stockid=qasamples.prodspeckey
+						WHERE cert='1'
 						ORDER BY lotkey";
 
-	$ResultSelection = DB_query($SQLSpecSelect);
-	echo '<select name = "QASampleID" style="font-family: monospace; white-space:pre;">';
-	echo '<option value = "">' . str_pad(__('Lot/Serial'),15,'_'). str_pad(__('Item'),20, '_', STR_PAD_RIGHT). str_pad(__('Description'),20,'_') . '</option>';
-	while ($MyRowSelection = DB_fetch_array($ResultSelection)){
-		echo '<option value = "' . $MyRowSelection['sampleid'] . '">' . str_pad($MyRowSelection['lotkey'],15, '_', STR_PAD_RIGHT). str_pad($MyRowSelection['prodspeckey'],20,'_') .htmlspecialchars($MyRowSelection['description']) . '</option>';
+	$ResultSelection=DB_query($SQLSpecSelect);
+	echo '<select name="QASampleID" style="font-family: monospace; white-space:pre;">';
+	echo '<option value="">' . str_pad(__('Lot/Serial'),15,'_'). str_pad(__('Item'),20, '_', STR_PAD_RIGHT). str_pad(__('Description'),20,'_') . '</option>';
+	while ($MyRowSelection=DB_fetch_array($ResultSelection)){
+		echo '<option value="' . $MyRowSelection['sampleid'] . '">' . str_pad($MyRowSelection['lotkey'],15, '_', STR_PAD_RIGHT). str_pad($MyRowSelection['prodspeckey'],20,'_') .htmlspecialchars($MyRowSelection['description']) . '</option>';
 	}
 	echo '</select>';
 	echo '</field>
 		</fieldset>
 		<div>
-		<input type = "submit" name = "PickSpec" value = "' . __('Submit') . '" />
+		<input type="submit" name="PickSpec" value="' . __('Submit') . '" />
 		</div>
 		</form>';
 	include('includes/footer.php');
@@ -93,14 +94,14 @@ if (isset($SelectedCOA)) {
 					prodspeckey,
 					groupby
 				FROM qasamples INNER JOIN sampleresults
-				ON sampleresults.sampleid = qasamples.sampleid
+				ON sampleresults.sampleid=qasamples.sampleid
 				INNER JOIN qatests
-				ON qatests.testid = sampleresults.testid
-				LEFT OUTER JOIN stockmaster on stockmaster.stockid = qasamples.prodspeckey
-				WHERE qasamples.lotkey = '" .$SelectedCOA."'
-				and qasamples.prodspeckey = '" .$SelectedSpec."'
-				and qasamples.cert = '1'
-				and sampleresults.showoncert = '1'
+				ON qatests.testid=sampleresults.testid
+				LEFT OUTER JOIN stockmaster on stockmaster.stockid=qasamples.prodspeckey
+				WHERE qasamples.lotkey='" .$SelectedCOA."'
+				AND qasamples.prodspeckey='" .$SelectedSpec."'
+				AND qasamples.cert='1'
+				AND sampleresults.showoncert='1'
 				ORDER by groupby, sampleresults.testid";
 } else {
 	$SQL = "SELECT lotkey,
@@ -114,19 +115,19 @@ if (isset($SelectedCOA)) {
 					prodspeckey,
 					groupby
 				FROM qasamples INNER JOIN sampleresults
-				ON sampleresults.sampleid = qasamples.sampleid
+				ON sampleresults.sampleid=qasamples.sampleid
 				INNER JOIN qatests
-				ON qatests.testid = sampleresults.testid
-				LEFT OUTER JOIN stockmaster on stockmaster.stockid = qasamples.prodspeckey
-				LEFT OUTER JOIN prodspecgroups on prodspecgroups.groupname = qatests.groupby
-				WHERE qasamples.sampleid = '" .$QASampleID."'
-				and qasamples.cert = '1'
-				and sampleresults.showoncert = '1'
+				ON qatests.testid=sampleresults.testid
+				LEFT OUTER JOIN stockmaster on stockmaster.stockid=qasamples.prodspeckey
+				LEFT OUTER JOIN prodspecgroups on prodspecgroups.groupname=qatests.groupby
+				WHERE qasamples.sampleid='" .$QASampleID."'
+				AND qasamples.cert='1'
+				AND sampleresults.showoncert='1'
 				ORDER by groupbyNo, sampleresults.testid";
 }
 $Result = DB_query($SQL, $ErrMsg);
 
-if (DB_num_rows($Result) == 0){
+if (DB_num_rows($Result)==0){
 	$Title = __('Print Certificate of Analysis Error');
 	include('includes/header.php');
 	echo '<div class="centre">
@@ -153,8 +154,8 @@ if (DB_num_rows($Result) == 0){
 }
 
 if ($QASampleID>'') {
-	$MyRow = DB_fetch_array($Result);
-	$SelectedCOA = $MyRow['lotkey'];
+	$MyRow=DB_fetch_array($Result);
+	$SelectedCOA=$MyRow['lotkey'];
 	DB_data_seek($Result,0);
 }
 
@@ -186,13 +187,13 @@ $HTML .= '<table style="width:100%;margin-bottom:10px;"><tr>
 <td style="width:33%;text-align:right;">' . __('Item:') . ' ' . (isset($SelectedSpec)?htmlspecialchars($SelectedSpec):'') . '</td>
 </tr></table>';
 
-$SectionsArray = [];
+$SectionsArray=[];
 $result2 = DB_query("SELECT groupname, headertitle, trailertext, labels, numcols FROM prodspecgroups", $db);
 while ($MyGroupRow = DB_fetch_array($result2)) {
 	if ($MyGroupRow['numcols']==2) {
-	$cols = array(240,265);
-} else {
-		$cols = array(260,110,135);
+		$cols=array(240,265);
+	} else {
+		$cols=array(260,110,135);
 	}
 	$SectionsArray[] = array(
 		$MyGroupRow['groupname'],
@@ -204,35 +205,35 @@ while ($MyGroupRow = DB_fetch_array($result2)) {
 	);
 }
 
-$CurSection = 'null';
+$CurSection = 'NULL';
 $SectionTitle = '';
 $SectionTrailer = '';
 $PrevTrailer = '';
 $PrintTrailer = 1;
 $tableOpen = false;
 
-while ($MyRow = DB_fetch_array($Result)){
+while ($MyRow=DB_fetch_array($Result)){
 	if ($MyRow['description']=='') {
-	$MyRow['description']=$MyRow['prodspeckey'];
-}
+		$MyRow['description']=$MyRow['prodspeckey'];
+	}
 	$Spec = htmlspecialchars($MyRow['description']);
 	$SampleDate = ConvertSQLDate($MyRow['sampledate']);
 
-	foreach ($SectionsArray as $Row) {
+	foreach($SectionsArray as $Row) {
 		if ($MyRow['groupby']==$Row[0]) {
-	$SectionColSizes = $Row[4];
+			$SectionColSizes = $Row[4];
 			$SectionColLabs = $Row[5];
 			$SectionTitle = $Row[2];
 			$SectionTrailer = $Row[3];
-}
+		}
 	}
 
 	if ($CurSection != $MyRow['groupby']) {
-	if ($CurSection != 'null' && $PrintTrailer == 1 && $PrevTrailer != '') {
+		if ($CurSection != 'NULL' && $PrintTrailer==1 && $PrevTrailer != '') {
 			if ($tableOpen) {
 				$HTML .= '</table>';
 				$tableOpen = false;
-}
+			}
 			$HTML .= '<div class="section-trailer">'.htmlspecialchars($PrevTrailer).'</div>';
 		}
 		$CurSection = $MyRow['groupby'];
@@ -249,13 +250,13 @@ while ($MyRow = DB_fetch_array($Result)){
 
 	$Value = '';
 	if ($MyRow['testvalue'] > '') {
-	$Value = $MyRow['testvalue'];
-}
-	if (strtoupper($Value) !== 'NB' && strtoupper($Value) !== 'NO break') {
+		$Value = $MyRow['testvalue'];
+	}
+	if (strtoupper($Value) !== 'NB' && strtoupper($Value) !== 'NO BREAK') {
 		$Value .= ' ' . $MyRow['units'];
 	}
 	$rowHtml = '<tr>';
-	for ($x = 0;  $x < count($SectionColLabs);  $x++) {
+	for ($x = 0; $x < count($SectionColLabs); $x++) {
 		switch ($x) {
 			case 0:
 				$DispValue = htmlspecialchars($MyRow['name']);
@@ -283,7 +284,7 @@ if ($SectionTrailer>'') {
 }
 
 // Disclaimer
-$SQL = "SELECT confvalue FROM config WHERE confname = 'QualityCOAText'";
+$SQL = "SELECT confvalue FROM config WHERE confname='QualityCOAText'";
 $Result = DB_query($SQL, $ErrMsg);
 $MyRow = DB_fetch_array($Result);
 $Disclaimer = $MyRow[0];
@@ -293,18 +294,13 @@ if ($Disclaimer > '') {
 
 $HTML .= '</body></html>';
 
-// DomPDF options and rendering
-$options = new Options();
-$options->set('isHtml5ParserEnabled', true);
-$options->set('isRemoteEnabled', true);
-
-$dompdf = new Dompdf($options);
-$dompdf->loadHtml($HTML);
-$dompdf->setPaper('letter', 'portrait');
-$dompdf->render();
+$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
+$DomPDF->loadHtml($HTML);
+$DomPDF->setPaper($_SESSION['PageSize'], 'portrait');
+$DomPDF->render();
 
 // Output to browser
 $filename = $_SESSION['DatabaseName'] . 'COA' . date('Y-m-d') . '.pdf';
-$dompdf->stream($filename, array("Attachment" => false));
+$DomPDF->stream($filename, array("Attachment" => false));
 
 exit;

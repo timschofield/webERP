@@ -6,6 +6,8 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
+include('includes/SetDomPDFOptions.php');
+
 if (isset($_GET['identifier'])){
 	$identifier = $_GET['identifier'];
 } else {
@@ -18,7 +20,7 @@ $Result = DB_query("SELECT hundredsname,
 						   decimalplaces,
 						   currency
 					FROM currencies
-					WHERE currabrev = '" . $_SESSION['PaymentDetail' . $identifier]->Currency . "'");
+					WHERE currabrev='" . $_SESSION['PaymentDetail' . $identifier]->Currency . "'");
 
 if (DB_num_rows($Result) == 0){
 	include ('includes/header.php');
@@ -35,7 +37,7 @@ $CurrencyName = mb_strtolower($CurrencyRow['currency']);
 $Amount = $_SESSION['PaymentDetail' . $identifier]->Amount;
 $AmountWords = number_to_words($Amount) . ' ' . $CurrencyName;
 $Cents = intval(round(($Amount - intval($Amount)) * 100, 0));
-if ($Cents > 0) {
+if ($Cents > 0){
 	$AmountWords .= ' ' . __('and') . ' ' .  strval($Cents) . ' ' . $HundredsName;
 } else {
 	$AmountWords .= ' ' . __('only');
@@ -63,20 +65,20 @@ $HTML = '
 	th, td { border: 1px solid #000; padding: 4px 8px; font-size: 10pt; text-align: left;}
 	th { background: #eee; }
 </style>
-<div class = "cheque-section">
-	<div class = "cheque-header">' . __('Print Cheque') . '</div>
-	<div class = "row"><span class = "label">' . __('Cheque No.') . ':</span><span class = "value">' . htmlspecialchars($_GET['ChequeNum']) . '</span></div>
-	<div class = "row"><span class = "label">' . __('Date Paid') . ':</span><span class = "value">' . htmlspecialchars($_SESSION['PaymentDetail' . $identifier]->DatePaid) . '</span></div>
-	<div class = "row"><span class = "label">' . __('Payee') . ':</span><span class = "value">' . htmlspecialchars($_SESSION['PaymentDetail' . $identifier]->SuppName) . '</span></div>
-	<div class = "row"><span class = "label">' . __('Address 1') . ':</span><span class = "value">' . htmlspecialchars($_SESSION['PaymentDetail' . $identifier]->Address1) . '</span></div>
-	<div class = "row"><span class = "label">' . __('Address 2') . ':</span><span class = "value">' . htmlspecialchars($_SESSION['PaymentDetail' . $identifier]->Address2) . '</span></div>
-	<div class = "row"><span class = "label">' . __('Address 3-6') . ':</span><span class = "value">' . htmlspecialchars($Address3) . '</span></div>
-	<div class = "row"><span class = "label">' . __('Amount') . ':</span><span class = "value">' . locale_number_format($Amount, $CurrDecimalPlaces) . '</span></div>
-	<div class = "amount-words">' . htmlspecialchars($AmountWords) . '</div>
+<div class="cheque-section">
+	<div class="cheque-header">' . __('Print Cheque') . '</div>
+	<div class="row"><span class="label">' . __('Cheque No.') . ':</span><span class="value">' . htmlspecialchars($_GET['ChequeNum']) . '</span></div>
+	<div class="row"><span class="label">' . __('Date Paid') . ':</span><span class="value">' . htmlspecialchars($_SESSION['PaymentDetail' . $identifier]->DatePaid) . '</span></div>
+	<div class="row"><span class="label">' . __('Payee') . ':</span><span class="value">' . htmlspecialchars($_SESSION['PaymentDetail' . $identifier]->SuppName) . '</span></div>
+	<div class="row"><span class="label">' . __('Address 1') . ':</span><span class="value">' . htmlspecialchars($_SESSION['PaymentDetail' . $identifier]->Address1) . '</span></div>
+	<div class="row"><span class="label">' . __('Address 2') . ':</span><span class="value">' . htmlspecialchars($_SESSION['PaymentDetail' . $identifier]->Address2) . '</span></div>
+	<div class="row"><span class="label">' . __('Address 3-6') . ':</span><span class="value">' . htmlspecialchars($Address3) . '</span></div>
+	<div class="row"><span class="label">' . __('Amount') . ':</span><span class="value">' . locale_number_format($Amount, $CurrDecimalPlaces) . '</span></div>
+	<div class="amount-words">' . htmlspecialchars($AmountWords) . '</div>
 </div>
 
-<div class = "remittance">
-	<div class = "remittance-header">' . __('Remittance Advice') . '</div>
+<div class="remittance">
+	<div class="remittance-header">' . __('Remittance Advice') . '</div>
 	<table>
 		<tr>
 			<th>' . __('Date Paid') . '</th>
@@ -91,7 +93,7 @@ $HTML = '
 			<td>' . locale_number_format($Amount, $CurrDecimalPlaces) . '</td>
 		</tr>
 	</table>
-	<div class = "remittance-header">' . __('Remittance Advice') . '</div>
+	<div class="remittance-header">' . __('Remittance Advice') . '</div>
 	<table>
 		<tr>
 			<th>' . __('Date Paid') . '</th>
@@ -110,9 +112,9 @@ $HTML = '
 ';
 
 // DomPDF options and generation
-$DomPDF = new Dompdf(['chroot' => __DIR__]);
+$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
 $DomPDF->loadHtml($HTML);
-$DomPDF->setPaper('A4', 'portrait');
+$DomPDF->setPaper($_SESSION['PageSize'], 'portrait');
 $DomPDF->render();
 
 $FileName = $_SESSION['DatabaseName'] . '_Cheque_' . date('Y-m-d') . '_ChequeNum_' . $_GET['ChequeNum'] . '.pdf';
@@ -123,7 +125,7 @@ exit;
 
 function number_to_words($Number) {
 
-	if (($Number < 0) or ($Number > 999999999)) {
+	if (($Number < 0) OR ($Number > 999999999)) {
 		prnMsg(__('Number is out of the range of numbers that can be expressed in words'),'error');
 		return __('error');
 	}
@@ -144,16 +146,16 @@ function number_to_words($Number) {
 	$NumberInWords = '';
 
 	if ($Millions) {
-	$NumberInWords .= number_to_words($Millions) . ' ' . __('million');
-}
+		$NumberInWords .= number_to_words($Millions) . ' ' . __('million');
+	}
 
 	if ($Thousands) {
-	$NumberInWords .= (empty($NumberInWords) ? '' : ' ') . number_to_words($Thousands) . ' ' . __('thousand');
-}
+		$NumberInWords .= (empty($NumberInWords) ? '' : ' ') . number_to_words($Thousands) . ' ' . __('thousand');
+	}
 
 	if ($Hundreds) {
-	$NumberInWords .= (empty($NumberInWords) ? '' : ' ') . number_to_words($Hundreds) . ' ' . __('hundred');
-}
+		$NumberInWords .= (empty($NumberInWords) ? '' : ' ') . number_to_words($Hundreds) . ' ' . __('hundred');
+	}
 
 	$Ones = array( 0 => '',
 				   1 => __('one'),
@@ -188,19 +190,19 @@ function number_to_words($Number) {
 				   9 => __('ninety') );
 
 
-	if ($NoOfTens or $NoOfOnes) {
-	if (!empty($NumberInWords)) {
+	if ($NoOfTens OR $NoOfOnes) {
+		if (!empty($NumberInWords)) {
 			$NumberInWords .= ' ' . __('and') . ' ';
-}
+		}
 
-		if ($NoOfTens < 2) {
-	$NumberInWords .= $Ones[$NoOfTens * 10 + $NoOfOnes];
-}
+		if ($NoOfTens < 2){
+			$NumberInWords .= $Ones[$NoOfTens * 10 + $NoOfOnes];
+		}
 		else {
 			$NumberInWords .= $Tens[$NoOfTens];
 			if ($NoOfOnes) {
-	$NumberInWords .= '-' . $Ones[$NoOfOnes];
-}
+				$NumberInWords .= '-' . $Ones[$NoOfOnes];
+			}
 		}
 	}
 

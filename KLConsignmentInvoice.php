@@ -12,6 +12,8 @@ include('includes/KLUIGeneralFunctions.php');
 
 use Dompdf\Dompdf;
 
+include('includes/SetDomPDFOptions.php');
+
 // The default company to Invoice from (PTADU).
 if(!isset($_POST['CompanyFrom'])) {
 	$_POST['CompanyFrom']='PTADU';
@@ -33,13 +35,13 @@ if(!isset($_POST['DraftOrInvoice'])) {
 }
 
 if (isset($_POST['submit'])) {
-	submit($_POST['CompanyFrom'], $_POST['CompanyTo'], $_POST['EndDate'], $_POST['DraftOrInvoice']);
+	submit($_POST['CompanyFrom'], $_POST['CompanyTo'], $_POST['EndDate'], $_POST['DraftOrInvoice'], $DomPDFOptions);
 } else {
 	display($Title);
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit($CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice) {
+function submit($CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $DomPDFOptions) {
 
 	$EndDate = FormatDateForSQL($EndDate);
 	$InvoiceNumber = CreateConsignmentInvoiceNumber($CompanyFrom, $CompanyTo, $EndDate);
@@ -67,22 +69,16 @@ function submit($CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice) {
 		if (DB_num_rows($Result) != 0){
 			// Let's start the real PDF creation 
 
-			// Increase memory limit to avoid exhaustion
-			// ini_set('memory_limit', '512M');
-	
+			// Configure DomPDF options first to optimize memory usage
+			$DomPDFOptions->set('defaultFont', 'Helvetica');
+			// $DomPDFOptions->set('isRemoteEnabled', false);
+			$DomPDFOptions->set('isJavascriptEnabled', false);
+			$DomPDFOptions->set('isFontSubsettingEnabled', true);
+			$DomPDFOptions->set('tempDir', sys_get_temp_dir());
+			
 			// Create a new DOMPDF instance
-			$dompdf = new Dompdf();
-			
-			 // Configure DomPDF options first to optimize memory usage
-			$options = $dompdf->getOptions();
-			$options->set('defaultFont', 'Helvetica');
-			$options->set('isRemoteEnabled', false);
-			$options->set('isJavascriptEnabled', false);
-			$options->set('isHtml5ParserEnabled', true);
-			$options->set('isFontSubsettingEnabled', true);
-			$options->set('tempDir', sys_get_temp_dir());
-			$dompdf->setOptions($options);
-			
+			$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
+	
 			// Start building the HTML for the PDF
 			$HTML = '<!DOCTYPE html>
 			<html>
@@ -392,21 +388,21 @@ function submit($CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice) {
 			
 			try {
 				// Load HTML into DomPDF and free the original HTML variable to save memory
-				$dompdf->loadHtml($HTML);
+				$DomPDF->loadHtml($HTML);
 				$HTML = null; // Free up memory by releasing the HTML string
 				
 				// Set paper size and orientation
-				$dompdf->setPaper('A4', 'portrait');
+				$DomPDF->setPaper($_SESSION['PageSize'], 'portrait');
 				
 				// Render the PDF with memory optimization
-				$dompdf->render();
+				$DomPDF->render();
 				
 				// Free any resources that might be holding memory
 				gc_collect_cycles();
 				
 				// Output the PDF for download
 				$FileName = $PageTitle . '.pdf';
-				$dompdf->stream($FileName, array('Attachment' => true));
+				$DomPDF->stream($FileName, array('Attachment' => true));
 				exit(); // Important to prevent any further output after PDF is streamed
 			} catch (Exception $e) {
 				// In case of errors, show a user-friendly message

@@ -5,6 +5,8 @@ require (__DIR__ . '/includes/session.php');
 require_once 'vendor/autoload.php';
 use Dompdf\Dompdf;
 
+include('includes/SetDomPDFOptions.php');
+
 if (isset($_POST['cutoffdate'])) {
 	$_POST['cutoffdate'] = ConvertSQLDate($_POST['cutoffdate']);
 }
@@ -24,12 +26,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$ReportDate = ' ';
 	if (Is_Date($_POST['cutoffdate'])) {
 		$FormatDate = FormatDateForSQL($_POST['cutoffdate']);
-		$WhereDate = " and duedate <= '" . $FormatDate . "' ";
+		$WhereDate = " AND duedate <= '" . $FormatDate . "' ";
 		$ReportDate = ' ' . __('Through') . ' ' . $_POST['cutoffdate'];
 	}
 
 	if ($_POST['Consolidation'] == 'None') {
-	$SQL = "SELECT mrpplannedorders.*,
+		$SQL = "SELECT mrpplannedorders.*,
 					stockmaster.stockid,
 					stockmaster.description,
 					stockmaster.mbflag,
@@ -40,14 +42,14 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					ON mrpplannedorders.part = stockmaster.stockid
 				WHERE stockmaster.mbflag IN ('B','P') " . $WhereDate . "
 				ORDER BY mrpplannedorders.part,mrpplannedorders.duedate";
-}
+	}
 	elseif ($_POST['Consolidation'] == 'Weekly') {
-	$SQL = "SELECT mrpplannedorders.part,
+		$SQL = "SELECT mrpplannedorders.part,
 					SUM(mrpplannedorders.supplyquantity) as supplyquantity,
-					TRUNCATE(((TO_DAYS(duedate) - TO_DAYS(CURRENT_DATE)) / 7),0) as weekindex,
+					TRUNCATE(((TO_DAYS(duedate) - TO_DAYS(CURRENT_DATE)) / 7),0) AS weekindex,
 					MIN(mrpplannedorders.duedate) as duedate,
 					MIN(mrpplannedorders.mrpdate) as mrpdate,
-					COUNT(*) as consolidatedcount,
+					COUNT(*) AS consolidatedcount,
 					stockmaster.stockid,
 					stockmaster.description,
 					stockmaster.mbflag,
@@ -66,14 +68,14 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					stockmaster.actualcost,
 					computedcost
 				ORDER BY mrpplannedorders.part,weekindex";
-}
+	}
 	else { // This else consolidates by month
 		$SQL = "SELECT mrpplannedorders.part,
 					SUM(mrpplannedorders.supplyquantity) as supplyquantity,
-					EXTRACT(YEAR_MONTH from duedate) as yearmonth,
+					EXTRACT(YEAR_MONTH from duedate) AS yearmonth,
 					MIN(mrpplannedorders.duedate) as duedate,
 					MIN(mrpplannedorders.mrpdate) as mrpdate,
-					COUNT(*) as consolidatedcount,
+					COUNT(*) AS consolidatedcount,
 					stockmaster.stockid,
 					stockmaster.description,
 					stockmaster.mbflag,
@@ -133,9 +135,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					<th>' . __('Ext. Cost') . '</th>';
 
 	if ($_POST['Consolidation'] == 'None') {
-	$HTML .= '<th>' . __('Source Type') . '</th>
+		$HTML .= '<th>' . __('Source Type') . '</th>
 					  <th>' . __('Source Order') . '</th>';
-}
+	}
 	else {
 		$HTML .= '<th>' . __('Consolidations') . '</th>';
 	}
@@ -163,9 +165,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '<td class="number">' . locale_number_format($ExtCost, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
 
 		if ($_POST['Consolidation'] == 'None') {
-	$HTML .= '<td>' . htmlspecialchars($MyRow['ordertype']) . '</td>';
+			$HTML .= '<td>' . htmlspecialchars($MyRow['ordertype']) . '</td>';
 			$HTML .= '<td>' . htmlspecialchars($MyRow['orderno']) . '</td>';
-}
+		}
 		else {
 			$HTML .= '<td class="number">' . htmlspecialchars($MyRow['consolidatedcount']) . '</td>';
 		}
@@ -179,14 +181,14 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 
 	$HTML .= '<tr>
-			<th colspan = "4" style="text-align:right;">' . __('Totals') . ':</th>
+			<th colspan="4" style="text-align:right;">' . __('Totals') . ':</th>
 			<th class="number">' . locale_number_format($TotalPartQty, 2) . '</th>
 			<th></th>
 			<th class="number">' . locale_number_format($Total_ExtCost, 2) . '</th>';
 
 	if ($_POST['Consolidation'] == 'None') {
-	$HTML .= '<th colspan = "2"></th>';
-}
+		$HTML .= '<th colspan="2"></th>';
+	}
 	else {
 		$HTML .= '<th></th>';
 	}
@@ -206,24 +208,24 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '</tbody>
 				</table>
 				<div class="centre">
-					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick="window.close()" /></form>
+					<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
 		</html>';
 
 	if (isset($_POST['PrintPDF'])) {
-		$dompdf = new Dompdf(['chroot' => __DIR__]);
-		$dompdf->loadHtml($HTML);
+		$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
+		$DomPDF->loadHtml($HTML);
 
 		// (Optional) Setup the paper size and orientation
-		$dompdf->setPaper($_SESSION['PageSize'], 'landscape');
+		$DomPDF->setPaper($_SESSION['PageSize'], 'landscape');
 
 		// Render the HTML as PDF
-		$dompdf->render();
+		$DomPDF->render();
 
 		// Output the generated PDF to Browser
-		$dompdf->stream($_SESSION['DatabaseName'] . '_MRPPlannedPurchases_' . date('Y-m-d') . '.pdf', array("Attachment" => false));
+		$DomPDF->stream($_SESSION['DatabaseName'] . '_MRPPlannedPurchases_' . date('Y-m-d') . '.pdf', array("Attachment" => false));
 	}
 	else {
 		$Title = __('MRP Planned Purchase Orders');
@@ -242,33 +244,33 @@ else { /*The option to print PDF was not hit so display form */
 	echo '<p class="page_title_text">
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
 
-	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target="_blank">
-			<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" target="_blank">
+			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<fieldset>
 				<legend>', __('Report Criteria'), '</legend>
 				<field>
-					<label for = "Consolidation">' . __('Consolidation') . ':</label>
-					<select required = "required" name = "Consolidation">
-						<option selected = "selected" value = "None">' . __('None') . '</option>
-						<option value = "Weekly">' . __('Weekly') . '</option>
-						<option value = "Monthly">' . __('Monthly') . '</option>
+					<label for="Consolidation">' . __('Consolidation') . ':</label>
+					<select required="required" name="Consolidation">
+						<option selected="selected" value="None">' . __('None') . '</option>
+						<option value="Weekly">' . __('Weekly') . '</option>
+						<option value="Monthly">' . __('Monthly') . '</option>
 					</select>
 			</field>
 			<field>
-				<label for = "Fill">' . __('Print Option') . ':</label>
-				<select name = "Fill">
-					<option selected = "selected" value = "yes">' . __('Print With Alternating Highlighted Lines') . '</option>
-					<option value = "no">' . __('Plain Print') . '</option>
+				<label for="Fill">' . __('Print Option') . ':</label>
+				<select name="Fill">
+					<option selected="selected" value="yes">' . __('Print With Alternating Highlighted Lines') . '</option>
+					<option value="no">' . __('Plain Print') . '</option>
 				</select>
 			</field>
 			<field>
-				<label for = "cutoffdate">' . __('Cut Off Date') . ':</label>
-				<input required = "required" type = "date" name = "cutoffdate" autofocus = "autofocus" maxlength = "10" size = "11" value = "' . date('Y-m-d') . '" />
+				<label for="cutoffdate">' . __('Cut Off Date') . ':</label>
+				<input required="required" type="date" name="cutoffdate" autofocus="autofocus" maxlength="10" size="11" value="' . date('Y-m-d') . '" />
 			</field>
 			</fieldset>
 			<div class="centre">
-				<input type = "submit" name = "PrintPDF" title="Produce PDF Report" value = "' . __('Print PDF') . '" />
-				<input type = "submit" name = "View" title="View Report" value = "' . __('View') . '" />
+				<input type="submit" name="PrintPDF" title="Produce PDF Report" value="' . __('Print PDF') . '" />
+				<input type="submit" name="View" title="View Report" value="' . __('View') . '" />
 			</div>
 		</form>';
 
@@ -303,7 +305,7 @@ function GetPartInfo($Part) {
 		$SQL = "SELECT supplierno, conversionfactor
 				FROM purchdata
 				WHERE stockid = '" . $Part . "'
-				and preferred = '1'";
+				AND preferred='1'";
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_array($Result);
 		$PartInfo[] = $MyRow['supplierno'];

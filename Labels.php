@@ -125,8 +125,8 @@ if (isset($_POST['SelectedLabelID'])){
 		for ($i=0;$i<=$_POST['NoOfFieldsDefined'];$i++){
 
 			if (ctype_digit($_POST['VPos' . $i])
-				and ctype_digit($_POST['HPos' . $i])
-				and ctype_digit($_POST['FontSize' . $i])){ // if all entries are integers
+				AND ctype_digit($_POST['HPos' . $i])
+				AND ctype_digit($_POST['FontSize' . $i])){ // if all entries are integers
 
 				$Result = DB_query("UPDATE labelfields SET fieldvalue='" . $_POST['FieldName' . $i] . "',
 														vpos='" . $_POST['VPos' . $i] . "',
@@ -140,8 +140,8 @@ if (isset($_POST['SelectedLabelID'])){
 		}
 	}
 	if (ctype_digit($_POST['VPos'])
-		and ctype_digit($_POST['HPos'])
-		and ctype_digit($_POST['FontSize'])){
+		AND ctype_digit($_POST['HPos'])
+		AND ctype_digit($_POST['FontSize'])){
 
 		//insert the new label field entered
 
@@ -175,12 +175,12 @@ if (isset($_POST['submit'])) {
 	}
 	$Message = '';
 
-	if (isset($_POST['PaperSize']) and $_POST['PaperSize']!='custom'){
+	if (isset($_POST['PaperSize']) AND $_POST['PaperSize']!='custom'){
 
 		$_POST['PageWidth'] = $PaperSize[$_POST['PaperSize']]['PageWidth'];
 		$_POST['PageHeight'] = $PaperSize[$_POST['PaperSize']]['PageHeight'];
 
-	} elseif ($_POST['PaperSize']=='custom' and !isset($_POST['PageWidth'])){
+	} elseif ($_POST['PaperSize']=='custom' AND !isset($_POST['PageWidth'])){
 
 		$_POST['PageWidth'] = 0;
 		$_POST['PageHeight'] = 0;
@@ -210,6 +210,7 @@ if (isset($_POST['submit'])) {
 		prnMsg($Message, 'success');
 
 	} elseif ($InputError !=1) {
+
 	/*Selected label is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new label form */
 
 		$SQL = "INSERT INTO labels (description,
@@ -235,9 +236,9 @@ if (isset($_POST['submit'])) {
 		$Result = DB_query($SQL, $ErrMsg);
 		$Message = __('The new label template has been added to the database');
 		prnMsg($Message, 'success');
-}
+	}
 
-	if (isset($InputError) and $InputError !=1) {
+	if (isset($InputError) AND $InputError !=1) {
 		unset($_POST['PaperSize']);
 		unset($_POST['Description']);
 		unset($_POST['Width']);
@@ -276,7 +277,7 @@ if (!isset($SelectedLabelID)) {
 				columnwidth
 			FROM labels";
 
-	$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR and SEEK ASSISTANCE') . ': ' . __('The defined label templates could not be retrieved because');
+	$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The defined label templates could not be retrieved because');
 	$Result = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($Result)>0){
@@ -296,20 +297,20 @@ if (!isset($SelectedLabelID)) {
 		while ($MyRow = DB_fetch_array($Result)) {
 
 			if ($MyRow['rowheight']>0) {
-	$NoOfRows = floor(($MyRow['pageheight']-$MyRow['topmargin'])/$MyRow['rowheight']);
-} else {
+				$NoOfRows = floor(($MyRow['pageheight']-$MyRow['topmargin'])/$MyRow['rowheight']);
+			} else {
 				$NoOfRows = 0;
 			}
 			if ($MyRow['columnwidth']>0) {
-	$NoOfCols = floor(($MyRow['pagewidth']-$MyRow['leftmargin'])/$MyRow['columnwidth']);
-} else {
+				$NoOfCols = floor(($MyRow['pagewidth']-$MyRow['leftmargin'])/$MyRow['columnwidth']);
+			} else {
 				$NoOfCols = 0;
 			}
 
 			foreach ($PaperSize as $PaperName=>$PaperType) {
-				if ($PaperType['PageWidth'] == $MyRow['pagewidth'] and $PaperType['PageHeight'] == $MyRow['pageheight']) {
-	$Paper = $PaperName;
-}
+				if ($PaperType['PageWidth'] == $MyRow['pagewidth'] AND $PaperType['PageHeight'] == $MyRow['pageheight']) {
+					$Paper = $PaperName;
+				}
 			}
 			if (isset($Paper)){
 				echo'<tr class="striped_row">
@@ -338,7 +339,7 @@ if (!isset($SelectedLabelID)) {
 					</tr>';
 			}
 		}
-		//END while LIST LOOP
+		//END WHILE LIST LOOP
 
 		//end of ifs and buts!
 
@@ -384,9 +385,9 @@ if (isset($SelectedLabelID)) {
 	$_POST['ColumnWidth']	= $MyRow['columnwidth'];
 
 	foreach ($PaperSize as $PaperName=>$PaperType) {
-		if ($PaperType['PageWidth'] == $MyRow['pagewidth'] and $PaperType['PageHeight'] == $MyRow['pageheight']) {
-	$_POST['PaperSize'] = $PaperName;
-}
+		if ($PaperType['PageWidth'] == $MyRow['pagewidth'] AND $PaperType['PageHeight'] == $MyRow['pageheight']) {
+			$_POST['PaperSize'] = $PaperName;
+		}
 	}
 
 	echo '<input type="hidden" name="SelectedLabelID" value="' . $SelectedLabelID . '" />';
@@ -417,7 +418,7 @@ if (!isset($_POST['PaperSize'])){
 	echo '<option value="custom">' . __('Custom Size') . '</option>';
 }
 foreach($PaperSize as $PaperType=>$PaperSizeElement) {
-	if (isset($_POST['PaperSize']) and $PaperType==$_POST['PaperSize']) {
+	if (isset($_POST['PaperSize']) AND $PaperType==$_POST['PaperSize']) {
 		echo '<option selected="selected" value="';
 	} else {
 		echo '<option value="';
@@ -455,7 +456,7 @@ if (!isset($_POST['ColumnWidth'])) {
 	$_POST['ColumnWidth']=0;
 }
 
-if (!isset($_POST['PaperSize']) or $_POST['PaperSize'] == 'Custom') {
+if (!isset($_POST['PaperSize']) OR $_POST['PaperSize'] == 'Custom') {
 	if (!isset($_POST['PageWidth'])){
 		$_POST['PageWidth'] = 0;
 		$_POST['PageHeight'] = 0;
@@ -528,29 +529,29 @@ if (isset($SelectedLabelID)) {
 
 			echo '<input type="hidden" name="LabelFieldID' . $i . '" value="' . $MyRow['labelfieldid'] . '" />
 			<tr class="striped_row"><td><select name="FieldName' . $i . '" onchange="ReloadForm(submit)">';
-			if ($MyRow['fieldvalue']=='itemcode') {
-	echo '<option selected="selected" value="itemcode">' . __('Item Code') . '</option>';
-} else {
+			if ($MyRow['fieldvalue']=='itemcode'){
+				echo '<option selected="selected" value="itemcode">' . __('Item Code') . '</option>';
+			} else {
 				echo '<option value="itemcode">' . __('Item Code') . '</option>';
 			}
-			if ($MyRow['fieldvalue']=='itemdescription') {
-	echo '<option selected="selected" value="itemdescription">' . __('Item Description') . '</option>';
-} else {
+			if ($MyRow['fieldvalue']=='itemdescription'){
+				echo '<option selected="selected" value="itemdescription">' . __('Item Description') . '</option>';
+			} else {
 				echo '<option value="itemdescription">' . __('Item Descrption') . '</option>';
 			}
-			if ($MyRow['fieldvalue']=='barcode') {
-	echo '<option selected="selected" value="barcode">' . __('Item Barcode') . '</option>';
-} else {
+			if ($MyRow['fieldvalue']=='barcode'){
+				echo '<option selected="selected" value="barcode">' . __('Item Barcode') . '</option>';
+			} else {
 				echo '<option value="barcode">' . __('Item Barcode') . '</option>';
 			}
-			if ($MyRow['fieldvalue']=='price') {
-	echo '<option selected="selected" value="price">' . __('Price') . '</option>';
-} else {
+			if ($MyRow['fieldvalue']=='price'){
+				echo '<option selected="selected" value="price">' . __('Price') . '</option>';
+			} else {
 				echo '<option value="price">' . __('Price') . '</option>';
 			}
-			if ($MyRow['fieldvalue']=='logo') {
-	echo '<option selected="selected" value="logo">' . __('Company Logo') . '</option>';
-} else {
+			if ($MyRow['fieldvalue']=='logo'){
+				echo '<option selected="selected" value="logo">' . __('Company Logo') . '</option>';
+			} else {
 				echo '<option value="logo">' . __('Company Logo') . '</option>';
 			}
 			echo '</select></td>
@@ -558,10 +559,10 @@ if (isset($SelectedLabelID)) {
 				<td><input type="text" name="HPos' . $i . '" size="4" maxlength="4" value="' . $MyRow['hpos'] . '" /></td>
 				<td><input type="text" name="FontSize' . $i . '" size="4" maxlength="4" value="' . $MyRow['fontsize'] . '" /></td>
 				<td><select name="Barcode' . $i . '" onchange="ReloadForm(submit)">';
-			if ($MyRow['barcode']==0) {
-	echo '<option selected="selected" value="0">' . __('No') . '</option>
+			if ($MyRow['barcode']==0){
+				echo '<option selected="selected" value="0">' . __('No') . '</option>
 						<option value="1">' . __('Yes') . '</option>';
-} else {
+			} else {
 				echo '<option selected="selected" value="1">' . __('Yes') . '</option>
 						<option value="0">' . __('No') . '</option>';
 			}
@@ -570,7 +571,7 @@ if (isset($SelectedLabelID)) {
 				</tr>';
 			$i++;
 		}
-		//END while LIST LOOP
+		//END WHILE LIST LOOP
 		$i--; //last increment needs to be wound back
 
 	} //end if there are label definitions to show

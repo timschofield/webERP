@@ -14,6 +14,8 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
+include('includes/SetDomPDFOptions.php');
+
 include ('includes/SQL_CommonFunctions.php');
 include ('includes/GetPrice.php');
 include ('includes/ImageFunctions.php');
@@ -30,14 +32,14 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	// Template selection
 	if ($_POST['template'] == 'simple') {
-	$Template = 'simple';
-}
+		$Template = 'simple';
+	}
 	elseif ($_POST['template'] == 'standard') {
-	$Template = 'standard';
-}
+		$Template = 'standard';
+	}
 	elseif ($_POST['template'] == 'full') {
-	$Template = 'full';
-}
+		$Template = 'full';
+	}
 	else {
 		$Template = 'fullprices';
 	}
@@ -52,7 +54,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	// From/To Location
 	$ErrMsg = __('Could not retrieve location name from the database');
-	$SQLfrom = "SELECT locationname FROM `locations` WHERE loccode = '" . $_POST['FromLocation'] . "'";
+	$SQLfrom = "SELECT locationname FROM `locations` WHERE loccode='" . $_POST['FromLocation'] . "'";
 	$Result = DB_query($SQLfrom, $ErrMsg);
 	$Row = DB_fetch_row($Result);
 	$FromLocation = $Row['0'];
@@ -61,7 +63,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		cashsalecustomer,
 		cashsalebranch
 		FROM `locations`
-		WHERE loccode = '" . $_POST['ToLocation'] . "'";
+		WHERE loccode='" . $_POST['ToLocation'] . "'";
 	$Resultto = DB_query($SQLto, $ErrMsg);
 	$RowTo = DB_fetch_row($Resultto);
 	$ToLocation = $RowTo['0'];
@@ -69,29 +71,29 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$ToBranch = $RowTo['2'];
 
 	if ($Template == 'fullprices') {
-	$SqlPrices = "SELECT debtorsmaster.currcode,
+		$SqlPrices = "SELECT debtorsmaster.currcode,
 			debtorsmaster.salestype,
 			currencies.decimalplaces
 			FROM debtorsmaster, currencies
 			WHERE debtorsmaster.currcode = currencies.currabrev
-			and debtorsmaster.debtorno ='" . $ToCustomer . "'";
+			AND debtorsmaster.debtorno ='" . $ToCustomer . "'";
 		$ResultPrices = DB_query($SqlPrices, $ErrMsg);
 		if (DB_num_rows($ResultPrices) > 0) {
 			$RowPrices = DB_fetch_row($ResultPrices);
 			$ToCurrency = $RowPrices['0'];
 			$ToPriceList = $RowPrices['1'];
 			$ToDecimalPlaces = $RowPrices['2'];
-}
+		}
 	}
 
 	// Stock category clause
 	if ($_POST['StockCat'] != 'All') {
-	$CategorySQL = "SELECT categorydescription FROM stockcategory WHERE categoryid = '" . $_POST['StockCat'] . "'";
+		$CategorySQL = "SELECT categorydescription FROM stockcategory WHERE categoryid='" . $_POST['StockCat'] . "'";
 		$CategoryResult = DB_query($CategorySQL);
 		$CategoryRow = DB_fetch_array($CategoryResult);
 		$CategoryDescription = $CategoryRow['categorydescription'];
-		$WhereCategory = " and stockmaster.categoryid ='" . $_POST['StockCat'] . "' ";
-}
+		$WhereCategory = " AND stockmaster.categoryid ='" . $_POST['StockCat'] . "' ";
+	}
 	else {
 		$CategoryDescription = __('All');
 // KL RICARD 18/12/2013
@@ -101,8 +103,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 
 	if ($_POST['Strategy'] == 'All') {
-	$WhereCategory = $WhereCategory . " and locstock.reorderlevel > locstock.quantity ";
-}
+		$WhereCategory = $WhereCategory . " AND locstock.reorderlevel > locstock.quantity ";
+	}
 
 	$SQL = "SELECT locstock.stockid,
 			stockmaster.description,
@@ -121,16 +123,16 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			fromlocstock.quantity as fromquantity
 			FROM stockmaster
 			LEFT JOIN stockcategory
-				ON stockmaster.categoryid = stockcategory.categoryid,
+				ON stockmaster.categoryid=stockcategory.categoryid,
 			locstock
-			LEFT JOIN locstock as fromlocstock ON
+			LEFT JOIN locstock AS fromlocstock ON
 			locstock.stockid = fromlocstock.stockid
-			and fromlocstock.loccode = '" . $_POST['FromLocation'] . "'
-			WHERE locstock.stockid = stockmaster.stockid
-			and locstock.loccode ='" . $_POST['ToLocation'] . "'
-			and (fromlocstock.quantity - fromlocstock.reorderlevel) > 0
-			and stockcategory.stocktype<>'A'
-			and (stockmaster.mbflag = 'B' or stockmaster.mbflag = 'M') " . $WhereCategory . " ORDER BY locstock.loccode,locstock.stockid";
+			AND fromlocstock.loccode = '" . $_POST['FromLocation'] . "'
+			WHERE locstock.stockid=stockmaster.stockid
+			AND locstock.loccode ='" . $_POST['ToLocation'] . "'
+			AND (fromlocstock.quantity - fromlocstock.reorderlevel) > 0
+			AND stockcategory.stocktype<>'A'
+			AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M') " . $WhereCategory . " ORDER BY locstock.loccode,locstock.stockid";
 
 	$ErrMsg = __('The Stock Dispatch report could not be retrieved');
 	$Result = DB_query($SQL, $ErrMsg);
@@ -152,18 +154,18 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	if (isset($_POST['PrintPDF']) or isset($_POST['Email'])) {
 		$HTML .= '<html>
 					<head>';
-		$HTML .= '<link href = "css/reports.css" rel = "stylesheet" type = "text/css" />';
+		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
 	}
 
 	// Header
 	if ($_POST['Strategy'] == 'OverFrom') {
-	$Strategy = __('Overstock items at ') . $FromLocation;
-}
+		$Strategy = __('Overstock items at ') . $FromLocation;
+	}
 	else {
 		$Strategy = __('Items needed at ') . $ToLocation;
 	}
-	$HTML .= '<meta name = "author" content = "WebERP " . $Version">
-					<meta name = "Creator" content = "webERP https://www.weberp.org">
+	$HTML .= '<meta name="author" content="WebERP " . $Version">
+					<meta name="Creator" content="webERP https://www.weberp.org">
 				</head>
 				<body>
 				<div class="centre" id="ReportHeader">
@@ -182,12 +184,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$HTML .= '<table><thead><tr>';
 	$HTML .= '<th>' . __('Part Number') . '</th>';
 	if ($Template == 'simple') {
-	$HTML .= '<th>' . __('Description') . '</th>';
+		$HTML .= '<th>' . __('Description') . '</th>';
 		$HTML .= '<th>' . __('QOH-From') . '</th>';
 		$HTML .= '<th>' . __('QOH-To') . '</th>';
 		$HTML .= '<th>' . __('Shipped') . '</th>';
 		$HTML .= '<th>' . __('Received') . '</th>';
-}
+	}
 	else {
 		$HTML .= '<th>' . __('Image/Description') . '</th>';
 		$HTML .= '<th>' . __('From') . '<br>' . __('Available') . '</span></th>';
@@ -202,8 +204,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		// Check if any stock in transit already sent from FROM LOCATION
 		$InTransitQuantityAtFrom = 0;
 		if ($_SESSION['ProhibitNegativeStock'] == 1) {
-	$InTransitQuantityAtFrom = GetItemQtyInTransitFromLocation($MyRow['stockid'], $_POST['FromLocation']);
-}
+			$InTransitQuantityAtFrom = GetItemQtyInTransitFromLocation($MyRow['stockid'], $_POST['FromLocation']);
+		}
 		$AvailableShipQtyAtFrom = $MyRow['available'] - $InTransitQuantityAtFrom;
 
 		// Check if TO location is waiting to receive some stock
@@ -213,14 +215,14 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 		// Decide how many are sent (strategy)
 		if ($_POST['Strategy'] == 'OverFrom') {
-	$ShipQty = $AvailableShipQtyAtFrom;
-}
+			$ShipQty = $AvailableShipQtyAtFrom;
+		}
 		else {
 			$ShipQty = 0;
 			if ($AvailableShipQtyAtFrom > 0) {
-	if ($AvailableShipQtyAtFrom >= $NeededQtyAtTo) {
+				if ($AvailableShipQtyAtFrom >= $NeededQtyAtTo) {
 					$ShipQty = $NeededQtyAtTo;
-}
+				}
 				else {
 					$ShipQty = $AvailableShipQtyAtFrom;
 				}
@@ -228,7 +230,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		}
 
 		if ($ShipQty > 0) {
-	if ($_POST['ReportType'] == 'Batch') {
+			if ($_POST['ReportType'] == 'Batch') {
 				// Insert loctransfers record
 				$SQL2 = "INSERT INTO loctransfers (reference,
 					stockid,
@@ -256,19 +258,19 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 			// Description/Image/Price
 			if ($Template == 'simple') {
-	$HTML .= '<td>' . htmlspecialchars($MyRow['description']) . '</td>';
+				$HTML .= '<td>' . htmlspecialchars($MyRow['description']) . '</td>';
 				$HTML .= '<td class="number">' . locale_number_format($MyRow['fromquantity'], $MyRow['decimalplaces']) . '</td>';
 				$HTML .= '<td class="number">' . locale_number_format($MyRow['quantity'], $MyRow['decimalplaces']) . '</td>';
 				$HTML .= '<td class="number">' . locale_number_format($ShipQty, $MyRow['decimalplaces']) . '</td>';
 				$HTML .= '<td class="number">_________</td>';
-}
+			}
 			elseif ($Template == 'standard') {
-	$HTML .= '<td>' . htmlspecialchars($MyRow['description']) . '</td>';
+				$HTML .= '<td>' . htmlspecialchars($MyRow['description']) . '</td>';
 				$HTML .= '<td class="number">' . locale_number_format($MyRow['fromquantity'] - $InTransitQuantityAtFrom, $MyRow['decimalplaces']) . '</td>';
 				$HTML .= '<td class="number">' . locale_number_format($MyRow['quantity'] + $InTransitQuantityAtTo, $MyRow['decimalplaces']) . '</td>';
 				$HTML .= '<td class="number">' . locale_number_format($ShipQty, $MyRow['decimalplaces']) . '</td>';
 				$HTML .= '<td class="number">_________</td>';
-}
+			}
 			else {
 				// full/fullprices
 				$ImgTag = getImageTag($MyRow['stockid']);
@@ -279,12 +281,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				$HTML .= '<td class="number">' . locale_number_format($ShipQty, $MyRow['decimalplaces']) . '</td>';
 				$HTML .= '<td class="number">_________</td>';
 				if ($Template == 'fullprices') {
-	$DefaultPrice = GetPrice($MyRow['stockid'], $ToCustomer, $ToBranch, $ShipQty, false);
+					$DefaultPrice = GetPrice($MyRow['stockid'], $ToCustomer, $ToBranch, $ShipQty, false);
 					$DiscountLine = $MyRow['discountcategory'] ? (' -> ' . __('Discount Category') . ':' . $MyRow['discountcategory']) : '';
 					if ($DefaultPrice != 0) {
 						$PriceLine = '<br><span>' . $ToPriceList . ':' . locale_number_format($DefaultPrice, $ToDecimalPlaces) . ' ' . $ToCurrency . $DiscountLine . '</span>';
-						$HTML .= '<td colspan = "5">' . $PriceLine . '</td>';
-}
+						$HTML .= '<td colspan="5">' . $PriceLine . '</td>';
+					}
 				}
 			}
 
@@ -298,43 +300,43 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	<table class="signatures">
 	<tr>
 		<td><strong>' . __('Prepared By :') . '</strong></td>
-		<td><input type = "text" /></td>
+		<td><input type="text" /></td>
 		<td><strong>' . __('Shipped By :') . '</strong></td>
-		<td><input type = "text" /></td>
+		<td><input type="text" /></td>
 		<td><strong>' . __('Received By :') . '</strong></td>
-		<td><input type = "text" /></td>
+		<td><input type="text" /></td>
 	</tr>
 	<tr>
 		<td>' . __('Name') . '</td>
-		<td><input type = "text" /></td>
+		<td><input type="text" /></td>
 		<td>' . __('Name') . '</td>
-		<td><input type = "text" /></td>
+		<td><input type="text" /></td>
 		<td>' . __('Name') . '</td>
-		<td><input type = "text" /></td>
+		<td><input type="text" /></td>
 	</tr>
 	<tr>
 		<td>' . __('Date') . '</td>
-		<td><input type = "text" /></td>
+		<td><input type="text" /></td>
 		<td>' . __('Date') . '</td>
-		<td><input type = "text" /></td>
+		<td><input type="text" /></td>
 		<td>' . __('Date') . '</td>
-		<td><input type = "text" /></td>
+		<td><input type="text" /></td>
 	</tr>
 	<tr>
 		<td>' . __('Hour') . '</td>
-		<td><input type = "text" /></td>
+		<td><input type="text" /></td>
 		<td>' . __('Hour') . '</td>
-		<td><input type = "text" /></td>
+		<td><input type="text" /></td>
 		<td>' . __('Hour') . '</td>
-		<td><input type = "text" /></td>
+		<td><input type="text" /></td>
 	</tr>
 	<tr>
 		<td>' . __('Signature') . '</td>
-		<td><input type = "text" /></td>
+		<td><input type="text" /></td>
 		<td>' . __('Signature') . '</td>
-		<td><input type = "text" /></td>
+		<td><input type="text" /></td>
 		<td>' . __('Signature') . '</td>
-		<td><input type = "text" /></td>
+		<td><input type="text" /></td>
 	</tr>';
 
 	if (isset($_POST['PrintPDF'])) {
@@ -350,23 +352,23 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '</tbody>
 				</table>
 				<div class="centre">
-					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick="window.close()" /></form>
+					<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
 		</html>';
 	if (isset($_POST['PrintPDF'])) {
-		$dompdf = new Dompdf(['chroot' => __DIR__]);
-		$dompdf->loadHtml($HTML);
+		$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
+		$DomPDF->loadHtml($HTML);
 
 		// (Optional) Setup the paper size and orientation
-		$dompdf->setPaper($_SESSION['PageSize'], 'landscape');
+		$DomPDF->setPaper($_SESSION['PageSize'], 'landscape');
 
 		// Render the HTML as PDF
-		$dompdf->render();
+		$DomPDF->render();
 
 		// Output the generated PDF to Browser
-		$dompdf->stream($_SESSION['DatabaseName'] . '_StockDispatch_' . date('Y-m-d') . '.pdf', array("Attachment" => false));
+		$DomPDF->stream($_SESSION['DatabaseName'] . '_StockDispatch_' . date('Y-m-d') . '.pdf', array("Attachment" => false));
 	}
 	else {
 		$Title = __('Inventory Planning Report');
@@ -387,12 +389,12 @@ else { /*The option to print PDF was not hit so display form */
 	echo '<div class="page_help_text">' . __('Create a transfer batch of overstock from one location to another location that is below reorder level.') . '<br/>' . __('Quantity to ship is based on reorder level minus the quantity on hand at the To Location; if there is a') . '<br/>' . __('dispatch percentage entered, that needed quantity is inflated by the percentage entered.') . '<br/>' . __('Use Bulk Inventory Transfer - Receive to process the batch') . '</div>';
 
 	$DefaultLocation = GetDefaultLocationFromUser($_SESSION['UserID']);
-	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target="_blank">';
-	echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" target="_blank">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$SQL = "SELECT locations.loccode,
 			locationname
 		FROM locations
-		INNER JOIN locationusers ON locationusers.loccode = locations.loccode and locationusers.userid = '" . $_SESSION['UserID'] . "' and locationusers.canupd = 1";
+		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" . $_SESSION['UserID'] . "' AND locationusers.canupd=1";
 	$ResultStkLocs = DB_query($SQL);
 	if (!isset($_POST['FromLocation'])) {
 		$_POST['FromLocation'] = $DefaultLocation;
@@ -400,18 +402,18 @@ else { /*The option to print PDF was not hit so display form */
 	echo '<fieldset>
 			<legend>', __('Report Criteria'), '</legend>
 		 <field>
-			<label for = "Percent">' . __('Dispatch Percent') . ':</label>
-			<input type ="text" name = "Percent" class="number" size = "8" value = "0" />
+			<label for="Percent">' . __('Dispatch Percent') . ':</label>
+			<input type ="text" name="Percent" class="number" size="8" value="0" />
 		 </field>';
 	echo '<field>
-			  <label for = "FromLocation">' . __('From Stock Location') . ':</label>
-			  <select name = "FromLocation"> ';
+			  <label for="FromLocation">' . __('From Stock Location') . ':</label>
+			  <select name="FromLocation"> ';
 	while ($MyRow = DB_fetch_array($ResultStkLocs)) {
 		if ($MyRow['loccode'] == $_POST['FromLocation']) {
-	echo '<option selected = "selected" value = "' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
-}
+			echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+		}
 		else {
-			echo '<option value = "' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+			echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 		}
 	}
 	echo '</select>
@@ -421,14 +423,14 @@ else { /*The option to print PDF was not hit so display form */
 		$_POST['ToLocation'] = $DefaultLocation;
 	}
 	echo '<field>
-			<label for = "ToLocation">' . __('To Stock Location') . ':</label>
-			<select name = "ToLocation"> ';
+			<label for="ToLocation">' . __('To Stock Location') . ':</label>
+			<select name="ToLocation"> ';
 	while ($MyRow = DB_fetch_array($ResultStkLocs)) {
 		if ($MyRow['loccode'] == $_POST['ToLocation']) {
-	echo '<option selected = "selected" value = "' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
-}
+			echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+		}
 		else {
-			echo '<option value = "' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+			echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 		}
 	}
 	echo '</select>
@@ -447,58 +449,58 @@ else { /*The option to print PDF was not hit so display form */
 	}
 
 	echo '<field>
-			<label for = "StockCat">' . __('In Stock Category') . ':</label>
-			<select name = "StockCat">';
+			<label for="StockCat">' . __('In Stock Category') . ':</label>
+			<select name="StockCat">';
 	if (!isset($_POST['StockCat'])) {
 		$_POST['StockCat'] = 'All';
 	}
 	if ($_POST['StockCat'] == 'All') {
-	echo '<option selected = "selected" value = "All">' . __('All') . '</option>';
-}
+		echo '<option selected="selected" value="All">' . __('All') . '</option>';
+	}
 	else {
-		echo '<option value = "All">' . __('All') . '</option>';
+		echo '<option value="All">' . __('All') . '</option>';
 	}
 	while ($MyRow1 = DB_fetch_array($Result1)) {
 		if ($MyRow1['categoryid'] == $_POST['StockCat']) {
-	echo '<option selected = "selected" value = "' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
-}
+			echo '<option selected="selected" value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
+		}
 		else {
-			echo '<option value = "' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
+			echo '<option value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 		}
 	}
 	echo '</select>
 		</field>';
 
 	echo '<field>
-			<label for = "Strategy">' . __('Dispatch Strategy:') . ':</label>
-			<select name = "Strategy">
-				<option selected = "selected" value = "All">' . __('Items needed at TO location with overstock at FROM location') . '</option>
-				<option value = "OverFrom">' . __('Items with overstock at FROM location') . '</option>
+			<label for="Strategy">' . __('Dispatch Strategy:') . ':</label>
+			<select name="Strategy">
+				<option selected="selected" value="All">' . __('Items needed at TO location with overstock at FROM location') . '</option>
+				<option value="OverFrom">' . __('Items with overstock at FROM location') . '</option>
 			</select>
 		</field>';
 
 	echo '<field>
-			<label for = "ReportType">' . __('Report Type') . ':</label>
-			<select name = "ReportType">
-				<option selected = "selected" value = "Batch">' . __('Create Batch') . '</option>
-				<option value = "Report">' . __('Report Only') . '</option>
+			<label for="ReportType">' . __('Report Type') . ':</label>
+			<select name="ReportType">
+				<option selected="selected" value="Batch">' . __('Create Batch') . '</option>
+				<option value="Report">' . __('Report Only') . '</option>
 			</select>
 		</field>';
 
 	echo '<field>
-			<label for = "template">' . __('Template') . ':</label>
-			<select name = "template">
-				<option selected = "selected" value = "fullprices">' . __('Full with Prices') . '</option>
-				<option value = "full">' . __('Full') . '</option>
-				<option value = "standard">' . __('Standard') . '</option>
-				<option value = "simple">' . __('Simple') . '</option>
+			<label for="template">' . __('Template') . ':</label>
+			<select name="template">
+				<option selected="selected" value="fullprices">' . __('Full with Prices') . '</option>
+				<option value="full">' . __('Full') . '</option>
+				<option value="standard">' . __('Standard') . '</option>
+				<option value="simple">' . __('Simple') . '</option>
 			</select>
 		</field>';
 
 	echo '</fieldset>
 		 <div class="centre">
-			<input type = "submit" name = "PrintPDF" title="Produce PDF Report" value = "' . __('Print PDF') . '" />
-			<input type = "submit" name = "View" title="View Report" value = "' . __('View') . '" />
+			<input type="submit" name="PrintPDF" title="Produce PDF Report" value="' . __('Print PDF') . '" />
+			<input type="submit" name="View" title="View Report" value="' . __('View') . '" />
 		 </div>';
 	echo '</form>';
 

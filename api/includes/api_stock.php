@@ -286,7 +286,7 @@ function InsertStockItem($StockItemDetails, $user, $password) {
 		$StockItemDetails[$key] = DB_escape_string($Value);
 	}
 	$Errors=VerifyStockCode($StockItemDetails['stockid'], sizeof($Errors), $Errors);
-	$Errors=VerifyStockDescription($StockItemDetails['decription'], sizeof($Errors), $Errors);
+	$Errors=VerifyStockDescription($StockItemDetails['description'], sizeof($Errors), $Errors);
 	$Errors=VerifyStockLongDescription($StockItemDetails['longdescription'], sizeof($Errors), $Errors);
 	if (isset($StockItemDetails['categoryid'])){
 		$Errors=VerifyStockCategoryExists($StockItemDetails['categoryid'], sizeof($Errors), $Errors);

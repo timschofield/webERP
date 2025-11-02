@@ -10,6 +10,9 @@ include('includes/KLUIGeneralFunctions.php');
 
 // Use necessary classes for PDF and Spreadsheet generation
 use Dompdf\Dompdf;
+
+include('/includes/SetDomPDFOptions.php');
+
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Reader\Html as HtmlReader; // Alias to avoid conflict if Html class exists
 
@@ -166,19 +169,19 @@ function GenerateReport($LocationForm) {
 			// Use DomPDF
 			 // Ensure DomPDF is loaded via Composer
 
-			$dompdf = new Dompdf(['chroot' => __DIR__, 'isRemoteEnabled' => true]); // chroot for local assets, remote enabled if using external images/css
-			$dompdf->loadHtml($HTML);
+			$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
+			$DomPDF->loadHtml($HTML);
 
 			// (Optional) Setup the paper size and orientation
-			$dompdf->setPaper($_SESSION['PageSize'], 'portrait'); // Usually portrait for lists
+			$DomPDF->setPaper($_SESSION['PageSize'], 'portrait'); // Usually portrait for lists
 
 			// Render the HTML as PDF
-			$dompdf->render();
+			$DomPDF->render();
 
 			// Output the generated PDF to Browser
 			$PDFFileName = $_SESSION['DatabaseName'] . '_InternalStockRequest_' . date('Y-m-d') . '.pdf';
 			// Setting Attachment to false streams inline, true forces download
-			$dompdf->stream($PDFFileName, array("Attachment" => false));
+			$DomPDF->stream($PDFFileName, array("Attachment" => false));
 			exit(); // Stop script after PDF output
 
 		} elseif (isset($_POST['Spreadsheet'])) {

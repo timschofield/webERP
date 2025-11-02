@@ -53,13 +53,13 @@ if (isset($_POST['submit'])) {
 	} elseif (mb_strlen($_POST['Password'])<5){
 			$InputError = 1;
 			prnMsg(__('The password entered must be at least 5 characters long'),'error');
-	} elseif (mb_strstr($_POST['Password'],$_POST['UserID']) !=  false){
+	} elseif (mb_strstr($_POST['Password'],$_POST['UserID'])!= false){
 		$InputError = 1;
 		prnMsg(__('The password cannot contain the user id'),'error');
 	}
 
 	/* Make a comma separated list of modules allowed ready to update the database*/
-	$i = 0;
+	$i=0;
 	$ModulesAllowed = '';
 	while ($i < count($ModuleList)){
 		$ModulesAllowed .= ' '. ',';//no any modules allowed for the suppliers
@@ -68,7 +68,8 @@ if (isset($_POST['submit'])) {
 
 
 	if ($InputError !=1) {
-	$SQL = "INSERT INTO www_users (userid,
+
+		$SQL = "INSERT INTO www_users (userid,
 										realname,
 										supplierid,
 										salesman,
@@ -103,17 +104,17 @@ if (isset($_POST['submit'])) {
 		prnMsg( __('A new supplier login has been created'), 'success' );
 		include('includes/footer.php');
 		exit();
-}
+	}
 }
 
-echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<fieldset>
 		<legend>', __('Supplier Login Details'), '</legend>
 		<field>
-			<label for = "UserID">' . __('User Login') . ':</label>
-			<input type = "text" pattern = "[^><+-]{4,20}" title="" required = "required" placeholder = "'.__('More than 4 characters').'" name = "UserID" size = "22" maxlength = "20" />
+			<label for="UserID">' . __('User Login') . ':</label>
+			<input type="text" pattern="[^><+-]{4,20}" title="" required="required" placeholder="'.__('More than 4 characters').'" name="UserID" size="22" maxlength="20" />
 			<fieldhelp>'.__('The user ID must has more than 4 legal characters').'</fieldhelp>
 		</field>';
 
@@ -131,30 +132,30 @@ if (!isset($_POST['Email'])) {
 	$_POST['Email']='';
 }
 echo '<field>
-		<label for = "Password">' . __('Password') . ':</label>
-		<input type = "password" pattern = ".{5,20}" placeholder = "'.__('More than 5 characters').'" required = "required" title=""  name = "Password" size = "22" maxlength = "20" value = "' . $_POST['Password'] . '" />
+		<label for="Password">' . __('Password') . ':</label>
+		<input type="password" pattern=".{5,20}" placeholder="'.__('More than 5 characters').'" required="required" title=""  name="Password" size="22" maxlength="20" value="' . $_POST['Password'] . '" />
 		<fieldhelp>'.__('Password must be more than 5 characters').'</fieldhelp>
 	</field>
 	<field>
-		<label for = "RealName">' . __('Full Name') . ':</label>
-		<input type = "text" pattern = ".{0,35}" title="" placeholder = "'.__('User name').'" name = "RealName" value = "' . $_POST['RealName'] . '" size = "36" maxlength = "35" />
+		<label for="RealName">' . __('Full Name') . ':</label>
+		<input type="text" pattern=".{0,35}" title="" placeholder="'.__('User name').'" name="RealName" value="' . $_POST['RealName'] . '" size="36" maxlength="35" />
 		<fieldhelp>'.__('Must be less than 35 characters').'</fieldhelp>
 	</field>
 	<field>
-		<label for = "Phone">' . __('Telephone No') . ':</label>
-		<input type = "tel" pattern = "[\s+()-\d]{1,30}" title="" placeholder = "'.__('number and allowed charactrs').'" name = "Phone" value = "' . $_POST['Phone'] . '" size = "32" maxlength = "30" />
+		<label for="Phone">' . __('Telephone No') . ':</label>
+		<input type="tel" pattern="[\s+()-\d]{1,30}" title="" placeholder="'.__('number and allowed charactrs').'" name="Phone" value="' . $_POST['Phone'] . '" size="32" maxlength="30" />
 		<fieldhelp>'.__('The input must be phone number').'</fieldhelp>
 	</field>
 	<field>
-		<label for = "Email">' . __('Email Address') .':</label>
-		<input type = "email" name = "Email" title="" placeholder = "'.__('email address format').'" value = "' . $_POST['Email'] .'" size = "32" maxlength = "55" />
+		<label for="Email">' . __('Email Address') .':</label>
+		<input type="email" name="Email" title="" placeholder="'.__('email address format').'" value="' . $_POST['Email'] .'" size="32" maxlength="55" />
 		<fieldhelp>'.__('The input must be email address').'</fieldhelp>
 	</field>';
 
 //Make an array of the security roles where only one role is active and is ID 1
 
 //For the security role selection box, we will only show roles that have:
-//- Only one entry in securitygroups and the tokenid of this entry == 9
+//- Only one entry in securitygroups AND the tokenid of this entry == 9
 
 //First get all available security role ID's'
 $RolesResult = DB_query("SELECT secroleid FROM securityroles");
@@ -166,15 +167,15 @@ while ($MyRoles = DB_fetch_array($RolesResult)){
 								WHERE secroleid = '" . $MyRoles['secroleid'] ."'");
 
 	while ($MyToken = DB_fetch_row($TokensResult)) {
-		if ($MyToken[0]==9) {
-	echo'<input type = "hidden" name = "Access" value ="' . $MyRoles['secroleid'] . '" />';
+		if ($MyToken[0]==9){
+			echo'<input type="hidden" name="Access" value ="' . $MyRoles['secroleid'] . '" />';
 			$FoundTheSupplierRole = true;
 			break;
-}
+		}
 	}
 }
 
-if (!$FoundTheSupplierRole) {
+if (!$FoundTheSupplierRole){
 	echo '</fieldset>
 		  </form>';
 	prnMsg(__('The supplier login role is expected to contain just one token - number 9. There is no such role currently defined - so a supplier login cannot be set up until this role is defined'),'error');
@@ -184,90 +185,90 @@ if (!$FoundTheSupplierRole) {
 
 
 echo '<field>
-		<label for = "DefaultLocation">' . __('Default Location') . ':</label>
-		<select name = "DefaultLocation">';
+		<label for="DefaultLocation">' . __('Default Location') . ':</label>
+		<select name="DefaultLocation">';
 
-$SQL = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode = locations.loccode and locationusers.userid = '" .  $_SESSION['UserID'] . "' and locationusers.canupd = 1";
+$SQL = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
 $Result = DB_query($SQL);
 
-while ($MyRow = DB_fetch_array($Result)){
+while ($MyRow=DB_fetch_array($Result)){
 
 	if (isset($_POST['DefaultLocation'])
-		and $MyRow['loccode'] == $_POST['DefaultLocation']){
+		AND $MyRow['loccode'] == $_POST['DefaultLocation']){
 
-		echo '<option selected = "selected" value = "' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+		echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	} else {
-		echo '<option value = "' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	}
 }
 echo '</select>
 	</field>';
 
 echo '<field>
-		<label for = "PageSize">' . __('Reports Page Size') .':</label>
-		<select name = "PageSize">';
+		<label for="PageSize">' . __('Reports Page Size') .':</label>
+		<select name="PageSize">';
 
-if (isset($_POST['PageSize']) and $_POST['PageSize']=='A4'){
-	echo '<option selected = "selected" value = "A4">' . __('A4') . '</option>';
+if(isset($_POST['PageSize']) and $_POST['PageSize']=='A4'){
+	echo '<option selected="selected" value="A4">' . __('A4') . '</option>';
 } else {
-	echo '<option value = "A4">' . __('A4') . '</option>';
+	echo '<option value="A4">' . __('A4') . '</option>';
 }
 
-if (isset($_POST['PageSize']) and $_POST['PageSize']=='A3'){
-	echo '<option selected = "selected" value = "A3">' . __('A3') . '</option>';
+if(isset($_POST['PageSize']) and $_POST['PageSize']=='A3'){
+	echo '<option selected="selected" value="A3">' . __('A3') . '</option>';
 } else {
-	echo '<option value = "A3">' . __('A3') . '</option>';
+	echo '<option value="A3">' . __('A3') . '</option>';
 }
 
-if (isset($_POST['PageSize']) and $_POST['PageSize']=='A3_landscape'){
-	echo '<option selected = "selected" value = "A3_landscape">' . __('A3') . ' ' . __('landscape') . '</option>';
+if(isset($_POST['PageSize']) and $_POST['PageSize']=='A3_landscape'){
+	echo '<option selected="selected" value="A3_landscape">' . __('A3') . ' ' . __('landscape') . '</option>';
 } else {
-	echo '<option value = "A3_landscape">' . __('A3') . ' ' . __('landscape') . '</option>';
+	echo '<option value="A3_landscape">' . __('A3') . ' ' . __('landscape') . '</option>';
 }
 
-if (isset($_POST['PageSize']) and $_POST['PageSize']=='letter'){
-	echo '<option selected = "selected" value = "letter">' . __('Letter') . '</option>';
+if(isset($_POST['PageSize']) and $_POST['PageSize']=='letter'){
+	echo '<option selected="selected" value="letter">' . __('Letter') . '</option>';
 } else {
-	echo '<option value = "letter">' . __('Letter') . '</option>';
+	echo '<option value="letter">' . __('Letter') . '</option>';
 }
 
-if (isset($_POST['PageSize']) and $_POST['PageSize']=='letter_landscape'){
-	echo '<option selected = "selected" value = "letter_landscape">' . __('Letter') . ' ' . __('landscape') . '</option>';
+if(isset($_POST['PageSize']) and $_POST['PageSize']=='letter_landscape'){
+	echo '<option selected="selected" value="letter_landscape">' . __('Letter') . ' ' . __('landscape') . '</option>';
 } else {
-	echo '<option value = "letter_landscape">' . __('Letter') . ' ' . __('landscape') . '</option>';
+	echo '<option value="letter_landscape">' . __('Letter') . ' ' . __('landscape') . '</option>';
 }
 
-if (isset($_POST['PageSize']) and $_POST['PageSize']=='legal'){
-	echo '<option selected = "selected" value = "legal">' . __('Legal') . '</option>';
+if(isset($_POST['PageSize']) and $_POST['PageSize']=='legal'){
+	echo '<option selected="selected" value="legal">' . __('Legal') . '</option>';
 } else {
-	echo '<option value = "legal">' . __('Legal') . '</option>';
+	echo '<option value="legal">' . __('Legal') . '</option>';
 }
-if (isset($_POST['PageSize']) and $_POST['PageSize']=='legal_landscape'){
-	echo '<option selected = "selected" value = "legal_landscape">' . __('Legal') . ' ' . __('landscape') . '</option>';
+if(isset($_POST['PageSize']) and $_POST['PageSize']=='legal_landscape'){
+	echo '<option selected="selected" value="legal_landscape">' . __('Legal') . ' ' . __('landscape') . '</option>';
 } else {
-	echo '<option value = "legal_landscape">' . __('Legal') . ' ' . __('landscape') . '</option>';
+	echo '<option value="legal_landscape">' . __('Legal') . ' ' . __('landscape') . '</option>';
 }
 
 echo '</select>
 	</field>';
 
 echo '<field>
-		<label for = "Theme">' . __('Theme') . ':</label>
-		<select name = "Theme">';
+		<label for="Theme">' . __('Theme') . ':</label>
+		<select name="Theme">';
 
 $ThemeDirectory = dir('css/');
 
 
 while (false != ($ThemeName = $ThemeDirectory->read())){
 
-	if (is_dir('css/' . $ThemeName) and $ThemeName != '.' and $ThemeName != '..' and $ThemeName != '.svn'){
+	if (is_dir('css/' . $ThemeName) AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != '.svn'){
 
 		if (isset($_POST['Theme']) and $_POST['Theme'] == $ThemeName){
-			echo '<option selected = "selected" value = "' . $ThemeName . '">' . $ThemeName . '</option>';
-		} elseif (!isset($_POST['Theme']) and ($Theme == $ThemeName)) {
-			echo '<option selected = "selected" value = "' . $ThemeName . '">' . $ThemeName . '</option>';
+			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName . '</option>';
+		} else if (!isset($_POST['Theme']) and ($Theme==$ThemeName)) {
+			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName . '</option>';
 		} else {
-			echo '<option value = "' . $ThemeName . '">' . $ThemeName . '</option>';
+			echo '<option value="' . $ThemeName . '">' . $ThemeName . '</option>';
 		}
 	}
 }
@@ -276,16 +277,16 @@ echo '</select>
 	</field>';
 
 echo '<field>
-	<label for = "UserLanguage">' . __('Language') . ':</label>
-	<select name = "UserLanguage">';
+	<label for="UserLanguage">' . __('Language') . ':</label>
+	<select name="UserLanguage">';
 
 foreach ($LanguagesArray as $LanguageEntry => $LanguageName){
 	if (isset($_POST['UserLanguage']) and $_POST['UserLanguage'] == $LanguageEntry){
-		echo '<option selected = "selected" value = "' . $LanguageEntry . '">' . $LanguageName['LanguageName']  . '</option>';
+		echo '<option selected="selected" value="' . $LanguageEntry . '">' . $LanguageName['LanguageName']  . '</option>';
 	} elseif (!isset($_POST['UserLanguage']) and $LanguageEntry == $DefaultLanguage) {
-		echo '<option selected = "selected" value = "' . $LanguageEntry . '">' . $LanguageName['LanguageName']  . '</option>';
+		echo '<option selected="selected" value="' . $LanguageEntry . '">' . $LanguageName['LanguageName']  . '</option>';
 	} else {
-		echo '<option value = "' . $LanguageEntry . '">' . $LanguageName['LanguageName']  . '</option>';
+		echo '<option value="' . $LanguageEntry . '">' . $LanguageName['LanguageName']  . '</option>';
 	}
 }
 echo '</select>
@@ -293,7 +294,7 @@ echo '</select>
 
 echo '</fieldset>
 	<div class="centre">
-		<input type = "submit" name = "submit" value = "' . __('Enter Information') . '" />
+		<input type="submit" name="submit" value="' . __('Enter Information') . '" />
 	</div>
 	</form>';
 

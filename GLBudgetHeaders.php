@@ -7,26 +7,26 @@ $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLBudgets';
 include('includes/header.php');
 
-echo '<form action = "', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method = "post" id="createbudget">';
-echo '<input type = "hidden" name="FormID" value = "', $_SESSION['FormID'], '" />';
+echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post" id="createbudget">';
+echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 echo '<p class="page_title_text" >
-		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', __('Budgets'), '" alt = "', __('Budgets'), '" />', ' ', $Title, '
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', __('Budgets'), '" alt="', __('Budgets'), '" />', ' ', $Title, '
 	</p>';
 
 if (isset($_POST['Submit']) or isset($_POST['Update'])) {
 	$InputError = 0;
 
 	if ($_POST['StartPeriod'] > $_POST['EndPeriod']) {
-	prnMsg(__('The end period cannot be before the start period'), 'error');
+		prnMsg(__('The end period cannot be before the start period'), 'error');
 		$InputError = 1;
-}
+	}
 
 	if ($InputError == 0) {
-	if ($_POST['Primary'] == 1) {
+		if ($_POST['Primary'] == 1) {
 			$SQL = "UPDATE glbudgetheaders SET `current`=0";
 			$Result = DB_query($SQL);
-}
+		}
 		if (isset($_POST['Submit'])) {
 			$InsertSQL = "INSERT INTO glbudgetheaders (`id`,
 														`owner`,
@@ -36,7 +36,7 @@ if (isset($_POST['Submit']) or isset($_POST['Update'])) {
 														`endperiod`,
 														`current`
 													) VALUES (
-														null,
+														NULL,
 														'" . $_POST['Owner'] . "',
 														'" . $_POST['Name'] . "',
 														'" . $_POST['Description'] . "',
@@ -64,7 +64,7 @@ if (isset($_POST['Submit']) or isset($_POST['Update'])) {
 			}
 			foreach ($AccountsArray as $Account) {
 				foreach ($PeriodsArray as $Period) {
-					$InsertDetailsSQL = "INSERT INTO glbudgetdetails VALUES (null,
+					$InsertDetailsSQL = "INSERT INTO glbudgetdetails VALUES (NULL,
 																			'" . $HeaderNo . "',
 																			'" . $Account . "',
 																			'" . $Period . "',
@@ -101,7 +101,7 @@ if (isset($_GET['Edit'])) {
 					`endperiod`,
 					`current`
 				FROM glbudgetheaders
-				WHERE id = '" . $_GET['Edit'] . "'";
+				WHERE id='" . $_GET['Edit'] . "'";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
 
@@ -114,10 +114,10 @@ if (isset($_GET['Edit'])) {
 	echo '<fieldset>
 			<legend>', __('Edit Budget Details'), '</legend>
 			<field>
-				<label for = "ID">', __('ID'), '</label>
+				<label for="ID">', __('ID'), '</label>
 				<div class="fieldtext">', $_GET['Edit'], '</div>
 			</field>';
-	echo '<input type = "hidden" name="ID" value = "', $_GET['Edit'], '" />';
+	echo '<input type="hidden" name="ID" value="', $_GET['Edit'], '" />';
 } else {
 	$_POST['Owner'] = $_SESSION['UserID'];
 	$_POST['Name'] = '';
@@ -134,39 +134,39 @@ $SQL = "SELECT userid, realname FROM www_users";
 $Result = DB_query($SQL);
 
 echo '<field>
-		<label for = "Owner">', __('Budget Owner'), '</label>
+		<label for="Owner">', __('Budget Owner'), '</label>
 		<select name="Owner">';
 while ($MyRow = DB_fetch_array($Result)) {
 	if ($MyRow['userid'] == $_POST['Owner']) {
-	echo '<option selected = "selected" value = "', $MyRow['userid'], '">', $MyRow['realname'], ' (', $MyRow['userid'], ')</option>';
-} else {
-		echo '<option value = "', $MyRow['userid'], '">', $MyRow['realname'], ' (', $MyRow['userid'], ')</option>';
+		echo '<option selected="selected" value="', $MyRow['userid'], '">', $MyRow['realname'], ' (', $MyRow['userid'], ')</option>';
+	} else {
+		echo '<option value="', $MyRow['userid'], '">', $MyRow['realname'], ' (', $MyRow['userid'], ')</option>';
 	}
 }
 echo '</select>
 	</field>';
 
 echo '<field>
-		<label for = "Name">', __('Name of budget'), '</label>
-		<input type = "text" name="Name" size = "100" value = "', $_POST['Name'], '" />
+		<label for="Name">', __('Name of budget'), '</label>
+		<input type="text" name="Name" size="100" value="', $_POST['Name'], '" />
 	</field>';
 
 echo '<field>
-		<label for = "Description">', __('Budget Description'), '</label>
-		<textarea cols = "100" rows = "10" name="Description">', $_POST['Description'], '</textarea>
+		<label for="Description">', __('Budget Description'), '</label>
+		<textarea cols="100" rows="10" name="Description">', $_POST['Description'], '</textarea>
 	</field>';
 
 $SQL = "SELECT periodno, lastdate_in_period FROM periods";
 $Result = DB_query($SQL);
 
 echo '<field>
-		<label for = "StartPeriod">', __('Start Period'), '</label>
+		<label for="StartPeriod">', __('Start Period'), '</label>
 		<select name="StartPeriod">';
 while ($MyRow = DB_fetch_array($Result)) {
 	if ($MyRow['periodno'] == $_POST['StartPeriod']) {
-	echo '<option selected = "selected" value = "', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
-} else {
-		echo '<option value = "', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
+		echo '<option selected="selected" value="', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
+	} else {
+		echo '<option value="', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
 	}
 }
 echo '</select>
@@ -176,27 +176,27 @@ $SQL = "SELECT periodno, lastdate_in_period FROM periods";
 $Result = DB_query($SQL);
 
 echo '<field>
-		<label for = "EndPeriod">', __('End Period'), '</label>
+		<label for="EndPeriod">', __('End Period'), '</label>
 		<select name="EndPeriod">';
 while ($MyRow = DB_fetch_array($Result)) {
 	if ($MyRow['periodno'] == $_POST['EndPeriod']) {
-	echo '<option selected = "selected" value = "', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
-} else {
-		echo '<option value = "', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
+		echo '<option selected="selected" value="', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
+	} else {
+		echo '<option value="', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
 	}
 }
 echo '</select>
 	</field>';
 
 echo '<field>
-		<label for = "Primary">', __('Default Budget for reports'), '</label>
+		<label for="Primary">', __('Default Budget for reports'), '</label>
 		<select name="Primary">';
 if ($_POST['Primary'] == 1) {
-	echo '<option selected = "selected" value = "1">', __('Yes'), '</option>';
-	echo '<option value = "0">', __('No'), '</option>';
+	echo '<option selected="selected" value="1">', __('Yes'), '</option>';
+	echo '<option value="0">', __('No'), '</option>';
 } else {
-	echo '<option value = "1">', __('Yes'), '</option>';
-	echo '<option selected = "selected" value = "0">', __('No'), '</option>';
+	echo '<option value="1">', __('Yes'), '</option>';
+	echo '<option selected="selected" value="0">', __('No'), '</option>';
 }
 echo '</select>
 	</field>';
@@ -205,11 +205,11 @@ echo '</fieldset>';
 
 if (isset($_GET['Edit'])) {
 	echo '<div class="centre">
-			<input type = "submit" name="Update" value = "', __('Update Details'), '" />
+			<input type="submit" name="Update" value="', __('Update Details'), '" />
 		</div>';
 } else {
 	echo '<div class="centre">
-			<input type = "submit" name="Submit" value = "', __('Save Details'), '" />
+			<input type="submit" name="Submit" value="', __('Save Details'), '" />
 		</div>';
 }
 
@@ -241,8 +241,8 @@ if (DB_num_rows($Result) > 0) {
 	echo '<tbody>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($MyRow['current'] == 0) {
-	$Current = __('No');
-} else {
+			$Current = __('No');
+		} else {
 			$Current = __('Yes');
 		}
 		echo '<tr class="striped_row">

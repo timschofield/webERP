@@ -12,22 +12,22 @@ echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $The
 		__('Tax Authorities Maintenance') . '" />' . ' ' .
 		__('Tax Authorities Maintenance') . '</p>';
 
-if (isset($_POST['SelectedTaxAuthID'])) {
+if(isset($_POST['SelectedTaxAuthID'])) {
 	$SelectedTaxAuthID =$_POST['SelectedTaxAuthID'];
-} elseif (isset($_GET['SelectedTaxAuthID'])) {
+} elseif(isset($_GET['SelectedTaxAuthID'])) {
 	$SelectedTaxAuthID =$_GET['SelectedTaxAuthID'];
 }
 
-if (isset($_POST['submit'])) {
+if(isset($_POST['submit'])) {
 
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
-	if ( trim( $_POST['Description'] ) == '' ) {
+	if( trim( $_POST['Description'] ) == '' ) {
 		$InputError = 1;
 		prnMsg( __('The tax type description may not be empty'), 'error');
 	}
 
-	if (isset($SelectedTaxAuthID)) {
+	if(isset($SelectedTaxAuthID)) {
 
 		/*SelectedTaxAuthID could also exist if submit had not been clicked this code
 		would not run in this case cos submit is false of course  see the
@@ -48,7 +48,8 @@ if (isset($_POST['submit'])) {
 
 		$Msg = __('The tax authority for record has been updated');
 
-	} elseif ($InputError !=1) {
+	} elseif($InputError !=1) {
+
 	/*Selected tax authority is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new tax authority form */
 
 		$SQL = "INSERT INTO taxauthorities (
@@ -89,9 +90,9 @@ if (isset($_POST['submit'])) {
 					taxcategories";
 
 			$InsertResult = DB_query($SQL);
-}
+	}
 	//run the SQL from either of the above possibilites
-	if (isset($InputError) and $InputError !=1) {
+	if(isset($InputError) and $InputError !=1) {
 		unset($_POST['TaxGLCode']);
 		unset($_POST['PurchTaxGLCode']);
 		unset($_POST['Description']);
@@ -100,29 +101,29 @@ if (isset($_POST['submit'])) {
 
 	prnMsg($Msg);
 
-} elseif (isset($_GET['delete'])) {
+} elseif(isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
-// PREVENT DELETES if DEPENDENT RECORDS IN OTHER TABLES
+// PREVENT DELETES IF DEPENDENT RECORDS IN OTHER TABLES
 
-	$SQL =  "SELECT COUNT(*)
+	$SQL= "SELECT COUNT(*)
 			FROM taxgrouptaxes
-		WHERE taxauthid = '" . $SelectedTaxAuthID . "'";
+		WHERE taxauthid='" . $SelectedTaxAuthID . "'";
 
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_row($Result);
-	if ($MyRow[0]>0) {
-	prnmsg(__('Cannot delete this tax authority because there are tax groups defined that use it'),'warn');
-} else {
+	if($MyRow[0]>0) {
+		prnmsg(__('Cannot delete this tax authority because there are tax groups defined that use it'),'warn');
+	} else {
 		/*Cascade deletes in TaxAuthLevels */
-		$Result = DB_query("DELETE FROM taxauthrates WHERE taxauthority =  '" . $SelectedTaxAuthID . "'");
-		$Result = DB_query("DELETE FROM taxauthorities WHERE taxid =  '" . $SelectedTaxAuthID . "'");
+		$Result = DB_query("DELETE FROM taxauthrates WHERE taxauthority= '" . $SelectedTaxAuthID . "'");
+		$Result = DB_query("DELETE FROM taxauthorities WHERE taxid= '" . $SelectedTaxAuthID . "'");
 		prnMsg(__('The selected tax authority record has been deleted'),'success');
 		unset ($SelectedTaxAuthID);
 	} // end of related records testing
 }
 
-if (!isset($SelectedTaxAuthID)) {
+if(!isset($SelectedTaxAuthID)) {
 
 /* It could still be the second time the page has been run and a record has been selected for modification - SelectedTaxAuthID will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters then none of the above are true and the list of tax authorities will be displayed with links to delete or edit each. These will call the same page again and allow update/input or deletion of the records*/
 
@@ -136,7 +137,7 @@ if (!isset($SelectedTaxAuthID)) {
 				bankswift
 			FROM taxauthorities";
 
-	$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR and SEEK ASSISTANCE') . ': ' . __('The defined tax authorities could not be retrieved because');
+	$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The defined tax authorities could not be retrieved because');
 	$Result = DB_query($SQL, $ErrMsg);
 
 	echo '<table class="selection">
@@ -150,12 +151,12 @@ if (!isset($SelectedTaxAuthID)) {
 				<th class="SortedColumn" >' . __('Bank Account') . '</th>
 				<th class="SortedColumn" >' . __('Bank Act Type') . '</th>
 				<th class="SortedColumn" >' . __('Bank Swift') . '</th>
-				<th colspan = "4">&nbsp;</th>
+				<th colspan="4">&nbsp;</th>
 			</tr>
 		</thead>
 		<tbody>';
 
-	while ($MyRow = DB_fetch_row($Result)) {
+	while($MyRow = DB_fetch_row($Result)) {
 		echo  '<tr class="striped_row">
 				<td class="number">', $MyRow[0], '</td>
 				<td>', $MyRow[1], '</td>
@@ -171,24 +172,24 @@ if (!isset($SelectedTaxAuthID)) {
 			</tr>';
 
 	}
-	//END while LIST LOOP
+	//END WHILE LIST LOOP
 
 	//end of ifs and buts!
 
 	echo '</tbody></table>';
 }
 
-if (isset($SelectedTaxAuthID)) {
+if(isset($SelectedTaxAuthID)) {
 	echo '<div class="centre">
 			<a href="' .  htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">' . __('Review all defined tax authority records') . '</a>
 		</div>';
 }
 
 
-echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<input type = "hidden" name="FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-if (isset($SelectedTaxAuthID)) {
+if(isset($SelectedTaxAuthID)) {
 	//editing an existing tax authority
 
 	$SQL = "SELECT taxglcode,
@@ -199,7 +200,7 @@ if (isset($SelectedTaxAuthID)) {
 				bankacctype,
 				bankswift
 			FROM taxauthorities
-			WHERE taxid = '" . $SelectedTaxAuthID . "'";
+			WHERE taxid='" . $SelectedTaxAuthID . "'";
 
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
@@ -213,7 +214,7 @@ if (isset($SelectedTaxAuthID)) {
 	$_POST['BankSwift']	= $MyRow['bankswift'];
 
 
-	echo '<input type = "hidden" name="SelectedTaxAuthID" value = "' . $SelectedTaxAuthID . '" />';
+	echo '<input type="hidden" name="SelectedTaxAuthID" value="' . $SelectedTaxAuthID . '" />';
 
 	echo '<fieldset>
 			<legend>', __('Edit Tax Authority Details'), '</legend>';
@@ -221,7 +222,7 @@ if (isset($SelectedTaxAuthID)) {
 }  //end of if $SelectedTaxAuthID only do the else when a new record is being entered
 else {
 
-	if (!isset($_POST['Description'])) {
+	if(!isset($_POST['Description'])) {
 		$_POST['Description']='';
 	}
 	echo '<fieldset>
@@ -231,25 +232,25 @@ else {
 $SQL = "SELECT accountcode,
 				accountname
 		FROM chartmaster INNER JOIN accountgroups
-		ON chartmaster.group_ = accountgroups.groupname
-		WHERE accountgroups.pandl = 0
+		ON chartmaster.group_=accountgroups.groupname
+		WHERE accountgroups.pandl=0
 		ORDER BY accountcode";
 $Result = DB_query($SQL);
 
 echo '<field>
-		<label for = "Description">' . __('Tax Type Description') . ':</label>
-		<input type = "text" pattern = "(?!^ +$)[^><+-]+" title="" placeholder = "'.__('Within 20 characters').'" required = "required" name="Description" size = "21" maxlength = "20" value = "' . $_POST['Description'] . '" />
+		<label for="Description">' . __('Tax Type Description') . ':</label>
+		<input type="text" pattern="(?!^ +$)[^><+-]+" title="" placeholder="'.__('Within 20 characters').'" required="required" name="Description" size="21" maxlength="20" value="' . $_POST['Description'] . '" />
 		<fieldhelp>'.__('No illegal characters allowed and should not be blank').'</fieldhelp>
 	</field>';
 
 echo '<field>
-		<label for = "PurchTaxGLCode">' . __('Input tax GL Account') . ':</label>
+		<label for="PurchTaxGLCode">' . __('Input tax GL Account') . ':</label>
 		<select name="PurchTaxGLCode">';
-while ($MyRow = DB_fetch_array($Result)) {
-	if (isset($_POST['PurchTaxGLCode']) and $MyRow['accountcode']==$_POST['PurchTaxGLCode']) {
-		echo '<option selected = "selected" value = "';
+while($MyRow = DB_fetch_array($Result)) {
+	if(isset($_POST['PurchTaxGLCode']) and $MyRow['accountcode']==$_POST['PurchTaxGLCode']) {
+		echo '<option selected="selected" value="';
 	} else {
-		echo '<option value = "';
+		echo '<option value="';
 	}
 	echo $MyRow['accountcode'] . '">' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' ('.$MyRow['accountcode'].')' . '</option>';
 } //end while loop
@@ -259,51 +260,51 @@ echo '</select>
 DB_data_seek($Result,0);
 
 echo '<field>
-		<label for = "TaxGLCode">' . __('Output tax GL Account') . ':</label>
+		<label for="TaxGLCode">' . __('Output tax GL Account') . ':</label>
 		<select name="TaxGLCode">';
-while ($MyRow = DB_fetch_array($Result)) {
-	if (isset($_POST['TaxGLCode']) and $MyRow['accountcode']==$_POST['TaxGLCode']) {
-		echo '<option selected = "selected" value = "';
+while($MyRow = DB_fetch_array($Result)) {
+	if(isset($_POST['TaxGLCode']) and $MyRow['accountcode']==$_POST['TaxGLCode']) {
+		echo '<option selected="selected" value="';
 	} else {
-		echo '<option value = "';
+		echo '<option value="';
 	}
 	echo $MyRow['accountcode'] . '">' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' ('.$MyRow['accountcode'].')' . '</option>';
 } //end while loop
-if (!isset($_POST['Bank'])) {
+if(!isset($_POST['Bank'])) {
 	$_POST['Bank']='';
 }
-if (!isset($_POST['BankAccType'])) {
+if(!isset($_POST['BankAccType'])) {
 	$_POST['BankAccType']='';
 }
-if (!isset($_POST['BankAcc'])) {
+if(!isset($_POST['BankAcc'])) {
 	$_POST['BankAcc']='';
 }
-if (!isset($_POST['BankSwift'])) {
+if(!isset($_POST['BankSwift'])) {
 	$_POST['BankSwift']='';
 }
 echo '</select>
 	</field>';
 
 echo '<field>
-		<label for = "Bank">' . __('Bank Name') . ':</label>
-		<input type = "text" name="Bank" size = "41" maxlength = "40" value = "' . $_POST['Bank'] . '" placeholder = "'.__('Not more than 40 chacraters').'" />
+		<label for="Bank">' . __('Bank Name') . ':</label>
+		<input type="text" name="Bank" size="41" maxlength="40" value="' . $_POST['Bank'] . '" placeholder="'.__('Not more than 40 chacraters').'" />
 	</field>
 	<field>
-		<label for = "BankAccType">' . __('Bank Account Type') . ':</label>
-		<input type = "text" name="BankAccType" size = "15" maxlength = "20" value = "' . $_POST['BankAccType'] . '" placeholder = "'.__('No more than 20 characters').'" />
+		<label for="BankAccType">' . __('Bank Account Type') . ':</label>
+		<input type="text" name="BankAccType" size="15" maxlength="20" value="' . $_POST['BankAccType'] . '" placeholder="'.__('No more than 20 characters').'" />
 	</field>
 	<field>
-		<label for = "BankAcc">' . __('Bank Account') . ':</label>
-		<input type = "text" name="BankAcc" size = "21" maxlength = "20" value = "' . $_POST['BankAcc'] . '" placeholder = "'.__('No more than 20 characters').'" />
+		<label for="BankAcc">' . __('Bank Account') . ':</label>
+		<input type="text" name="BankAcc" size="21" maxlength="20" value="' . $_POST['BankAcc'] . '" placeholder="'.__('No more than 20 characters').'" />
 	</field>
 	<field>
-		<label for = "BankSwift">' . __('Bank Swift No') . ':</label>
-		<input type = "text" name="BankSwift" size = "15" maxlength = "14" value = "' . $_POST['BankSwift'] . '" placeholder = "'.__('No more than 15 characters').'" />
+		<label for="BankSwift">' . __('Bank Swift No') . ':</label>
+		<input type="text" name="BankSwift" size="15" maxlength="14" value="' . $_POST['BankSwift'] . '" placeholder="'.__('No more than 15 characters').'" />
 	</field>
 	</fieldset>';
 
 echo '<div class="centre">
-		<input type = "submit" name="submit" value = "' . __('Enter Information') . '" />
+		<input type="submit" name="submit" value="' . __('Enter Information') . '" />
 	</div>
 </form>';
 

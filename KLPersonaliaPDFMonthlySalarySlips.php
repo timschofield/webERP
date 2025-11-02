@@ -9,6 +9,10 @@ include('includes/KLDefines.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 
+use Dompdf\Dompdf;
+
+include('/includes/SetDomPDFOptions.php');
+
 if (isset($_POST['submit'])) {
 	submit($_POST['Company'], $_POST['PeriodOfFile'], $_POST['SalaryType']);
 } else {
@@ -170,17 +174,14 @@ function submit($Company, $PeriodOfFile, $SalaryType) {
 			}
 			
 			// Initialize dompdf and output the PDF
-			$options = new \Dompdf\Options();
-			$options->set('isHtml5ParserEnabled', true);
-			$options->set('isRemoteEnabled', true);
-			$dompdf = new \Dompdf\Dompdf($options);
-			$dompdf->loadHtml($HTML);
-			$dompdf->setPaper('A4', 'portrait');
-			$dompdf->render();
+			$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
+			$DomPDF->loadHtml($HTML);
+			$DomPDF->setPaper($_SESSION['PageSize'], 'portrait');
+			$DomPDF->render();
 			
 			// download the pdf file
 			$FileName = $CoreFileName . '.pdf';
-			$dompdf->stream($FileName, array('Attachment' => true));
+			$DomPDF->stream($FileName, array('Attachment' => true));
 		
 		}else{
 			include('includes/header.php');

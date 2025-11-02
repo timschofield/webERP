@@ -21,16 +21,16 @@ if (isset($_GET['BackupFile'])) {
 			$DeleteResult = unlink($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/' . $BackupFile);
 
 			if ($DeleteResult == true) {
-	prnMsg(__('Deleted') . ' companies/' . $_SESSION['DatabaseName'] . '/' . $BackupFile, 'info');
+				prnMsg(__('Deleted') . ' companies/' . $_SESSION['DatabaseName'] . '/' . $BackupFile, 'info');
 				$DeletedFiles = true;
-} else {
+			} else {
 				prnMsg(__('Unable to delete') . ' companies/' . $_SESSION['DatabaseName'] . '/' . $BackupFile, 'warn');
 			}
 		}
 	}
 	if ($DeletedFiles) {
-	prnMsg(__('All backup files on the server have been deleted'), 'success');
-} else {
+		prnMsg(__('All backup files on the server have been deleted'), 'success');
+	} else {
 		prnMsg(__('No backup files on the server were deleted'), 'info');
 	}
 } else {

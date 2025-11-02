@@ -14,17 +14,17 @@ Use the variables $_POST['PrintPDF'], to ask the user if he wants to download/pr
 
 If user has selected $_POST['PrintPDF'] use code similar to:
 
-$dompdf = new Dompdf(['chroot' => __DIR__]);
-	$dompdf->loadHtml($HTML);
+$DomPDF = new Dompdf(['chroot' => __DIR__]);
+	$DomPDF->loadHtml($HTML);
 
 	// (Optional) Setup the paper size and orientation
-	$dompdf->setPaper($_SESSION['PageSize'], 'landscape');
+	$DomPDF->setPaper($_SESSION['PageSize'], 'landscape');
 
 	// Render the HTML as PDF
-	$dompdf->render();
+	$DomPDF->render();
 
 	// Output the generated PDF to Browser
-	$dompdf->stream($_SESSION['DatabaseName'] . '_NameOfReport_' . date('Y-m-d') . '.pdf', array(
+	$DomPDF->stream($_SESSION['DatabaseName'] . '_NameOfReport_' . date('Y-m-d') . '.pdf', array(
 		"Attachment" => false
 	));
 
