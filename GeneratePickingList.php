@@ -6,6 +6,8 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
+include('/includes/SetDomPDFOptions.php');
+
 include('includes/SQL_CommonFunctions.php');
 
 /* $Title is set in several parts of this script. */
@@ -315,15 +317,15 @@ for ( $i = 0; $i < $TotalOrderCount; $i++ ){
 $HTML .= '</body></html>';
 
 // Output PDF
-$dompdf = new Dompdf(['chroot' => __DIR__]);
-$dompdf->loadHtml($HTML);
+$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
+$DomPDF->loadHtml($HTML);
 
 // (Optional) Setup the paper size and orientation
-$dompdf->setPaper($_SESSION['PageSize'], 'landscape');
+$DomPDF->setPaper($_SESSION['PageSize'], 'landscape');
 
 // Render the HTML as PDF
-$dompdf->render();
+$DomPDF->render();
 
 // Output the generated PDF to Browser
-$dompdf->stream($_SESSION['DatabaseName'] . '_PickingLists_' . date('Y-m-d') . '.pdf', array("Attachment" => false));
+$DomPDF->stream($_SESSION['DatabaseName'] . '_PickingLists_' . date('Y-m-d') . '.pdf', array("Attachment" => false));
 exit();

@@ -5,6 +5,8 @@ require (__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
+include('/includes/SetDomPDFOptions.php');
+
 if (isset($_POST['Process'])) {
 	// Prepare HTML for DomPDF
 	$HTML = '<html><head><meta charset="UTF-8"><style>
@@ -109,17 +111,17 @@ if (isset($_POST['Process'])) {
 
 	// Setup DomPDF
 	$FileName = $_SESSION['DatabaseName'] . '_StockTransfer_' . date('Y-m-d H-m-s') . '.pdf';
-	$dompdf = new Dompdf(['chroot' => __DIR__]);
-	$dompdf->loadHtml($HTML);
+	$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
+	$DomPDF->loadHtml($HTML);
 
 	// (Optional) Setup the paper size and orientation
-	$dompdf->setPaper($_SESSION['PageSize'], 'landscape');
+	$DomPDF->setPaper($_SESSION['PageSize'], 'landscape');
 
 	// Render the HTML as PDF
-	$dompdf->render();
+	$DomPDF->render();
 
 	// Output the generated PDF to Browser
-	$dompdf->stream($FileName, array("Attachment" => false));
+	$DomPDF->stream($FileName, array("Attachment" => false));
 
 }
 else {

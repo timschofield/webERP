@@ -27,6 +27,8 @@ if (!isset($IsIncluded)) {// Runs normally if this script is NOT included in ano
 
 use Dompdf\Dompdf;
 
+include('/includes/SetDomPDFOptions.php');
+
 $GeneralTitle = __('Balance Sheet');
 $Title2 = __('Statement of Financial Position'); // Name as IAS.
 $ViewTopic = 'GeneralLedger';
@@ -475,17 +477,17 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	if (isset($_POST['PrintPDF'])) {
 		$HTML .= '</body></html>';
-		$dompdf = new Dompdf(['chroot' => __DIR__]);
-		$dompdf->loadHtml($HTML);
+		$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
+		$DomPDF->loadHtml($HTML);
 
 		// (Optional) Setup the paper size and orientation
-		$dompdf->setPaper($_SESSION['PageSize'], 'portrait');
+		$DomPDF->setPaper($_SESSION['PageSize'], 'portrait');
 
 		// Render the HTML as PDF
-		$dompdf->render();
+		$DomPDF->render();
 
 		// Output the generated PDF to Browser
-		$dompdf->stream($Title . date('Y-m-d') . '.pdf', array(
+		$DomPDF->stream($Title . date('Y-m-d') . '.pdf', array(
 			"Attachment" => false
 		));
 	} else {

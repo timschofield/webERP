@@ -117,13 +117,13 @@ if (isset($WO) && isset($StockId) && $WO != '') {
 		$HTML .= '</body>
 				</html>';
 
-		$dompdf = new Dompdf($options); // Pass the options object defined in SetDomPDFOptions.php containing common options
-
-		$dompdf->loadHtml($HTML);
-		$dompdf->setPaper('A4', 'portrait');
-		$dompdf->render();
+		// Output to PDF using Dompdf
+		$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
+		$DomPDF->loadHtml($HTML);
+		$DomPDF->setPaper($_SESSION['PageSize'], 'portrait');
+		$DomPDF->render();
 		$filename = 'WO-' . $WO . '-' . $StockId . '-' . date('Y-m-d') . '.pdf';
-		$dompdf->stream($filename, ['Attachment' => false]);
+		$DomPDF->stream($filename, ['Attachment' => false]);
 		exit();
 	} else {
 		$Title = __('WO Item production Slip');
