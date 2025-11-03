@@ -437,8 +437,6 @@ if (isset($_POST['ProcessTransfer'])) {
 			$i++;
 		} /*end of foreach TransferItem */
 
-		$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' .
-				  __('Unable to COMMIT the Stock Transfer transaction');
 		DB_Txn_Commit();
 
 		unset($_SESSION['Transfer']->LineItem);
