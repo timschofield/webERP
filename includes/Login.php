@@ -15,7 +15,7 @@ if (KLwebERPScriptCalledFromTEST()) {
 	// the current script filename contains TEST, we are on TEST database
 	$TextLogin = 'TEST webERP';
 	$CSS = 'login-TEST.css';
-}else{
+} else {
 	// the current script filename does not contain TEST, we are on production database
 	$TextLogin = 'KL / Blink webERP';
 	$CSS = 'login.css';

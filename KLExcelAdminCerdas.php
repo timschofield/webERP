@@ -245,7 +245,7 @@ function submit($TypeOfShop, $TypeOfFile) {
 			if ($_POST['Format'] == 'xlsx') {
 				header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 				$File .= '.xlsx';
-			} else if ($_POST['Format'] == 'ods') {
+			} elseif ($_POST['Format'] == 'ods') {
 				header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
 				$File .= '.ods';
 			}
@@ -263,7 +263,7 @@ function submit($TypeOfShop, $TypeOfFile) {
 
 			if ($_POST['Format'] == 'xlsx') {
 				$ObjWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($SpreadSheet);
-			} else if ($_POST['Format'] == 'ods') {
+			} elseif ($_POST['Format'] == 'ods') {
 				$ObjWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($SpreadSheet);
 			}
 			$ObjWriter->save('php://output');

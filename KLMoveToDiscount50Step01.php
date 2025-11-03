@@ -14,7 +14,7 @@ include('includes/KLEmails.php');
 
 if (isset($_GET['SelectedMovement'])){
 	$SelectedMovement =mb_strtoupper($_GET['SelectedMovement']);
-} elseif(isset($_POST['SelectedMovement'])){
+} elseif (isset($_POST['SelectedMovement'])){
 	$SelectedMovement =mb_strtoupper($_POST['SelectedMovement']);
 }
 
@@ -56,42 +56,42 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		$Errors[$i] = 'StockId';
 		$i++;
-	}elseif ($_POST['DiscountCategory'] != '50') {
+	} elseif ($_POST['DiscountCategory'] != '50') {
 		$InputError = 1;
 		$Errors[$i] = 'DiscountCategory';
 		$i++;
 		prnMsg(__('The Discount Type must be 50 (so far, only 50% discount available for Discount Category)'),'error');
-	}elseif (GetTotalItemsMovingToDiscount('50') >= MAX_ITEMS_MOVING_DISC50) {
+	} elseif (GetTotalItemsMovingToDiscount('50') >= MAX_ITEMS_MOVING_DISC50) {
 		$InputError = 1;
 		$Errors[$i] = 'MaxItemsMovingToDiscount';
 		$i++;
 		prnMsg('Too many items moving to Discount 50% at the same time. Maximum = '. MAX_ITEMS_MOVING_DISC50,'error');
-	}elseif (ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_DISCOUNT_50)) {
+	} elseif (ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_DISCOUNT_50)) {
 		$InputError = 1;
 		$Errors[$i] = 'AlreadyDiscount50';
 		$i++;
 		prnMsg(__('This item is already in 50% DISCOUNT category. No need to move it.'),'error');
-	}elseif ($MyRow['klchangingprice'] == 1) {
+	} elseif ($MyRow['klchangingprice'] == 1) {
 		$InputError = 1;
 		$Errors[$i] = 'ChangingPrice';
 		$i++;
 		prnMsg(__('This item is already in Change Price procedure. Finish or delete this process first'),'error');
-	}elseif ($MyRow['klmovingdiscount50'] == 1) {
+	} elseif ($MyRow['klmovingdiscount50'] == 1) {
 		$InputError = 1;
 		$Errors[$i] = 'MovingDiscount50';
 		$i++;
 		prnMsg(__('This item is already in Move To 50% Discount procedure. No need to do it twice'),'error');
-	}elseif ($MyRow['klmovingdiscount20'] == 1) {
+	} elseif ($MyRow['klmovingdiscount20'] == 1) {
 		$InputError = 1;
 		$Errors[$i] = 'MovingDiscount20';
 		$i++;
 		prnMsg(__('This item is already in Move To 20% Discount procedure. Finish or delete this process first.'),'error');
-	}elseif ($MyRow['klmovingdiscount80'] == 1) {
+	} elseif ($MyRow['klmovingdiscount80'] == 1) {
 		$InputError = 1;
 		$Errors[$i] = 'MovingDiscount80';
 		$i++;
 		prnMsg(__('This item is already in Move To 80% Discount procedure. Finish or delete this process first.'),'error');
-	}elseif ($MyRow['discontinued'] == 1) {
+	} elseif ($MyRow['discontinued'] == 1) {
 		$InputError = 1;
 		$Errors[$i] = 'Discontinued';
 		$i++;

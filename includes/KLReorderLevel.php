@@ -303,7 +303,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $UpdateDB, $RootPath, 
 					// No need to do anything!!!
 					$RebalancingLocationFrom = "";
 					$Strategy = "No shop with available stock. No RL changed";
-				}else{
+				} else {
 					// let's distribute available stock between the shops with RL > 0.
 					// if RL = 0 we suppose we do not want it there for any reason 
 					$QtyToDistribute = QtyAvailable($MyRow['stockid'], "ALLSHOPS");
@@ -317,17 +317,17 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $UpdateDB, $RootPath, 
 
 					if (ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_TEST)){
 						$OrderBy = " loc.alltestitems DESC, ";
-					}elseif (ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_STABLE)){
+					} elseif (ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_STABLE)){
 						$OrderBy = " loc.allstableitems DESC, ";
-					}elseif (ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING)){
+					} elseif (ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING)){
 						$OrderBy = " loc.allnopoitems DESC, ";
-					}elseif (ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_DISCOUNT_20)){
+					} elseif (ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_DISCOUNT_20)){
 						$OrderBy = " loc.alldisc20items DESC, ";
-					}elseif (ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_DISCOUNT_50)){
+					} elseif (ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_DISCOUNT_50)){
 						$OrderBy = " loc.alldisc50items DESC, ";
-					}elseif (ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_DISCOUNT_80)){
+					} elseif (ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_DISCOUNT_80)){
 						$OrderBy = " loc.alldisc80items DESC, ";
-					}else{
+					} else {
 						$OrderBy = "";
 					}
 					// Optimized DistributionSQL query - eliminates correlated subquery for better performance
@@ -391,11 +391,11 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $UpdateDB, $RootPath, 
 							}
 						}
 						$ItemsRebalanced++;
-					}else{
+					} else {
 						$Strategy = "No shop to distribute";
 					}
 				}
-			}else{
+			} else {
 				// We have some overstock location. When transferrng from TOKO to kantor will be rebalanced.
 				// No need to do anything, as the overstock item in that location will return to kantor 
 				// and from kantor will be sent to the location needing it.
@@ -453,7 +453,7 @@ function WorstLocationForItem($StockID, $Kind, $maxdays){
 	$QuantityCondition = "";
 	if ($Kind == "OVERSTOCK"){
 		$QuantityCondition = " AND ls.quantity > ls.reorderlevel";
-	}elseif ($Kind == "AVAILABLE"){
+	} elseif ($Kind == "AVAILABLE"){
 		$QuantityCondition = " AND ls.quantity > 0 ";
 	}
 	
@@ -483,7 +483,7 @@ function WorstLocationForItem($StockID, $Kind, $maxdays){
 	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
 		$Location = $MyRow['loccode'];
-	}else{
+	} else {
 		$Location = "";
 	}
 	return $Location;
@@ -532,7 +532,7 @@ function QtyAvailable($StockID, $Location){
 	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
 		$Qty = $MyRow['total'] ?? 0;
-	}else{
+	} else {
 		$Qty = 0;
 	}
 	return $Qty;
@@ -556,7 +556,7 @@ function ActiveLocationsForItem($StockID){
 	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
 		$Qty = (int)($MyRow['total'] ?? 0);
-	}else{
+	} else {
 		$Qty = 0;
 	}
 	return $Qty;
@@ -687,13 +687,13 @@ to the shops with RL > 0.
 
 	if ($ShopType == "SHOPKL") {
 		$WhereCat = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . " ";
-	}elseif ($ShopType == "SHOPBL") {
+	} elseif ($ShopType == "SHOPBL") {
 		$WhereCat = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . " ";
-	}elseif ($ShopType == "OUTKL") {
+	} elseif ($ShopType == "OUTKL") {
 		$WhereCat = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_ONLY_DISCOUNT . " ";
-	}elseif ($ShopType == "OUTBL") {
+	} elseif ($ShopType == "OUTBL") {
 		$WhereCat = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_ONLY_DISCOUNT . " ";
-	}else{
+	} else {
 		$WhereCat = " ";
 	}
 	
@@ -744,10 +744,10 @@ to the shops with RL > 0.
 
 						$CurrentNewRL = MaxRLCorrectionSomeModels($MyRow['stockid'], $MyDistribution['loccode'], $NewRL);
 
-						if($MyDistribution['oldrl'] < $CurrentNewRL){
+						if ($MyDistribution['oldrl'] < $CurrentNewRL){
 							SetReorderLevel("TopSalesLowRL", $MyRow['stockid'], $MyDistribution['loccode'], $MyDistribution['oldrl'], $CurrentNewRL, $UpdateDB);
 							if ($ShowMessages){
-								if($ShowHeader){
+								if ($ShowHeader){
 									$TableTitleText = 'Set RL minimum to ' . $NewRL . 
 													' for Top Sales '. $StartTopItems . '-'. $EndTopItems . 
 													' with Stock Available > '. $MinStockAvailable .
@@ -792,7 +792,7 @@ to the shops with RL > 0.
 			$i++;
 		}
 		if ($ShowMessages){
-			if(!$ShowHeader){ // This implies the table was opened and body started
+			if (!$ShowHeader){ // This implies the table was opened and body started
 				echo '</tbody></table></div>';
 			}
 		}
@@ -811,11 +811,11 @@ to the shops with RL > 0.
 function MaxTopSalesForTypeOfShop($ShopType, $NumDays){
 	if ($ShopType == "SHOPKL") {
 		$WhereCat = " AND sm.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . " ";
-	}elseif ($ShopType == "SHOPBL") {
+	} elseif ($ShopType == "SHOPBL") {
 		$WhereCat = " AND sm.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . " ";
-	}elseif ($ShopType == "SHOPOU") {
+	} elseif ($ShopType == "SHOPOU") {
 		$WhereCat = " AND sm.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . " ";
-	}else{
+	} else {
 		$WhereCat = " ";
 	}
 	
@@ -828,7 +828,7 @@ function MaxTopSalesForTypeOfShop($ShopType, $NumDays){
 	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
 		return (int)($MyRow['maxtopsales'] ?? 0);
-	}else{
+	} else {
 		return 0;
 	}
 }
@@ -861,11 +861,11 @@ function SetRLForLowSalesHighRL($ShopType, $BottomPercentTopSales, $OldRL, $maxR
 
 	if ($ShopType == "SHOPKL") {
 		$WhereCat = " AND sm.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . " ";
-	}elseif ($ShopType == "SHOPBL") {
+	} elseif ($ShopType == "SHOPBL") {
 		$WhereCat = " AND sm.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . " ";
-	}elseif ($ShopType == "SHOPOU") {
+	} elseif ($ShopType == "SHOPOU") {
 		$WhereCat = " AND sm.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . " ";
-	}else{
+	} else {
 		$WhereCat = " ";
 	}
 
@@ -980,14 +980,14 @@ function SetReorderLevel($Reason, $StockID, $loccode, $OldRL, $NewRL, $UpdateDB)
 				$SQL = "UPDATE locstock
 						SET reorderlevel = '" . $NewRL ."'
 						WHERE stockid = '". $StockID ."'";
-			}elseif ($loccode == "SHOPS"){
+			} elseif ($loccode == "SHOPS"){
 				$SQL = "UPDATE locstock
 						SET reorderlevel = '" . $NewRL ."'
 						WHERE stockid = '". $StockID ."'
 							AND loccode IN (SELECT locations.loccode
 											FROM locations
 											WHERE locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . ")";
-			}else{
+			} else {
 				$SQL = "UPDATE locstock
 						SET reorderlevel = '" . $NewRL ."'
 						WHERE stockid = '". $StockID ."'
@@ -1035,7 +1035,7 @@ function OnlineReorderLevelAdjustments($ShowMessages, $UpdateDB, $RootPath, $Ema
 	}
 	
 	// set all RL=0 for toko online
-	if($UpdateDB){
+	if ($UpdateDB){
 		$RLSQL = "UPDATE locstock
 					SET reorderlevel = 0 
 					WHERE reorderlevel > 0 AND loccode = ". CODE_ONLINE_SHOP ."";
@@ -1103,7 +1103,7 @@ function OnlineReorderLevelAdjustments($ShowMessages, $UpdateDB, $RootPath, $Ema
 		if ($ShowMessages){
 			echo '</tbody></table></div>';
 		}
-	}else{
+	} else {
 		if ($ShowMessages){
 			prnMsg(__('No Online Shop orders to be processed at this time.'),'info');
 		}
@@ -1217,11 +1217,11 @@ function AdjustPackagingGudang($GudangCode, $FactorGudangPackaging, $ShowMessage
 **************************************************************************************************************/
 function AdjustPackaging($DaysSales, $ShopType, $ShowMessages, $UpdateDB, $RootPath, $EmailText){
 	
-	if($ShopType == 'SHOPKL'){
+	if ($ShopType == 'SHOPKL'){
 		$ListOfItems = LIST_ITEMS_KAPAL_LAUT_PACKAGING;
-	}elseif ($ShopType == 'SHOPBL'){
+	} elseif ($ShopType == 'SHOPBL'){
 		$ListOfItems = LIST_ITEMS_BLINK_PACKAGING;
-	}else{
+	} else {
 		return;
 	}
 

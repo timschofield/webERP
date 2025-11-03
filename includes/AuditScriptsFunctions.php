@@ -9,7 +9,7 @@ function RecordRunningTime($Title, $UserName){
 
     if (isset($Title)) {
         $TitleScriptRunning = $Title;
-    }else{
+    } else {
         $TitleScriptRunning = "Undefined title";
     }
     

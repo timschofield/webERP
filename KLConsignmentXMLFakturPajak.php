@@ -10,12 +10,12 @@ include('includes/KLDefines.php');
 include('includes/KLUIGeneralFunctions.php');
 
 // The default company to Invoice from (PTADU).
-if(!isset($_POST['CompanyFrom'])) {
+if (!isset($_POST['CompanyFrom'])) {
 	$_POST['CompanyFrom'] = 'PTADU';
 }
 
 // The default company to Invoice to (PTSMH).
-if(!isset($_POST['CompanyTo'])) {
+if (!isset($_POST['CompanyTo'])) {
 	$_POST['CompanyTo'] = 'PTSMH';
 }
 
@@ -25,7 +25,7 @@ if (!isset($_POST['EndDate'])){
 }
 
 // The default draft or Invoice should be draft.
-if(!isset($_POST['DraftOrInvoice'])) {
+if (!isset($_POST['DraftOrInvoice'])) {
 	$_POST['DraftOrInvoice'] = 'DRAFT';
 }
 
@@ -46,7 +46,7 @@ function submit($CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice) {
 
 	//first off validate inputs sensible
 
-	if(!$InputError){
+	if (!$InputError){
 		$SQL = "SELECT klconsignment.stockid,
 						stockmaster.description,
 					SUM(klconsignment.qty) AS qty,

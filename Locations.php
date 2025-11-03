@@ -590,22 +590,22 @@ while ($MyRow = DB_fetch_array($Result)) {
 	}
 */
 	// KL RICARD Custom fields
-	if($MyRow['stockreadytosell'] == 1) {
+	if ($MyRow['stockreadytosell'] == 1) {
 		$ReadyToSell = __('Yes');
 	} else {
 		$ReadyToSell = __('No');
 	}
-	if($MyRow['partnercode'] == 'NORETAIL') {
+	if ($MyRow['partnercode'] == 'NORETAIL') {
 		$PartnerCode = '';
-	}else{
+	} else {
 		$PartnerCode = $MyRow['partnercode'];
 	}
-	if($MyRow['onlinepartnercode'] == 'NOONLINE') {
+	if ($MyRow['onlinepartnercode'] == 'NOONLINE') {
 		$OnlinePartnerCode = '';
-	}else{
+	} else {
 		$OnlinePartnerCode = $MyRow['onlinepartnercode'];
 	}
-	if($MyRow['stockavailableforonline'] == 1) {
+	if ($MyRow['stockavailableforonline'] == 1) {
 		$AvailableForOnline = __('Yes');
 	} else {
 		$AvailableForOnline = __('No');
@@ -828,61 +828,61 @@ if (!isset($_GET['delete'])) {
 		$_POST['GLAccountCode'] = '';
 	}
 	// KL RICARD 
-	if(!isset($_POST['Priority'])) {
+	if (!isset($_POST['Priority'])) {
 		$_POST['Priority'] = 5;
 	}
-	if(!isset($_POST['SmartDispatchFrom'])) {
+	if (!isset($_POST['SmartDispatchFrom'])) {
 		$_POST['SmartDispatchFrom'] = 'KANTO';
 	}
-	if(!isset($_POST['SmartDispatchMaxModels'])) {
+	if (!isset($_POST['SmartDispatchMaxModels'])) {
 		$_POST['SmartDispatchMaxModels'] = 999;
 	}
-	if(!isset($_POST['SmartDispatchMinModels'])) {
+	if (!isset($_POST['SmartDispatchMinModels'])) {
 		$_POST['SmartDispatchMinModels'] = 1;
 	}
-	if(!isset($_POST['KLyearlyRent'])) {
+	if (!isset($_POST['KLyearlyRent'])) {
 		$_POST['KLyearlyRent'] = 0;
 	}
-	if(!isset($_POST['KLPOSCashAccount'])) {
+	if (!isset($_POST['KLPOSCashAccount'])) {
 		$_POST['KLPOSCashAccount'] = '';
 	}
-	if(!isset($_POST['KLPOSTag'])) {
+	if (!isset($_POST['KLPOSTag'])) {
 		$_POST['KLPOSTag'] = 0;
 	}
-	if(!isset($_POST['StockReadyToSell'])) {
+	if (!isset($_POST['StockReadyToSell'])) {
 		$_POST['StockReadyToSell'] = 0;
 	}
-	if(!isset($_POST['StockAvailableForOnline'])) {
+	if (!isset($_POST['StockAvailableForOnline'])) {
 		$_POST['StockAvailableForOnline'] = 0;
 	}
-	if(!isset($_POST['AllTestItems'])) {
+	if (!isset($_POST['AllTestItems'])) {
 		$_POST['AllTestItems'] = 0;
 	}
-	if(!isset($_POST['AllStableItems'])) {
+	if (!isset($_POST['AllStableItems'])) {
 		$_POST['AllStableItems'] = 1;
 	}
-	if(!isset($_POST['AllNoPoItems'])) {
+	if (!isset($_POST['AllNoPoItems'])) {
 		$_POST['AllNoPoItems'] = 0;
 	}
-	if(!isset($_POST['AllDisc20Items'])) {
+	if (!isset($_POST['AllDisc20Items'])) {
 		$_POST['AllDisc20Items'] = 1;
 	}
-	if(!isset($_POST['AllDisc50Items'])) {
+	if (!isset($_POST['AllDisc50Items'])) {
 		$_POST['AllDisc50Items'] = 1;
 	}
-	if(!isset($_POST['AllDisc80Items'])) {
+	if (!isset($_POST['AllDisc80Items'])) {
 		$_POST['AllDisc80Items'] = 1;
 	}
-	if(!isset($_POST['PackagingFrom'])) {
+	if (!isset($_POST['PackagingFrom'])) {
 		$_POST['PackagingFrom'] = '';
 	}
-	if(!isset($_POST['RLFactorForPackaging'])) {
+	if (!isset($_POST['RLFactorForPackaging'])) {
 		$_POST['RLFactorForPackaging'] = 5.5;
 	}
-	if(!isset($_POST['RLDaysForPackaging'])) {
+	if (!isset($_POST['RLDaysForPackaging'])) {
 		$_POST['RLDaysForPackaging'] = 7;
 	}
-	if(!isset($_POST['DepartmentID'])) {
+	if (!isset($_POST['DepartmentID'])) {
 		$_POST['DepartmentID'] = '';
 	}
 	// KL RICARD END
@@ -969,7 +969,7 @@ if (!isset($_GET['delete'])) {
 
 	$ZonesResult = DB_query("SELECT code, description FROM locationzones ORDER BY description");
 	while ($MyRow=DB_fetch_array($ZonesResult)) {
-		if($_POST['Zone']==$MyRow['code']) {
+		if ($_POST['Zone']==$MyRow['code']) {
 			echo '<option selected="selected" value="' . $MyRow['code'] . '">' . $MyRow['description'] . '</option>';
 		} else {
 			echo '<option value="' . $MyRow['code'] . '">' . $MyRow['description'] . '</option>';
@@ -984,7 +984,7 @@ if (!isset($_GET['delete'])) {
 
 	$TypesResult = DB_query("SELECT code, description FROM locationtypes ORDER BY description");
 	while ($MyRow=DB_fetch_array($TypesResult)) {
-		if($_POST['TypeLoc']==$MyRow['code']) {
+		if ($_POST['TypeLoc']==$MyRow['code']) {
 			echo '<option selected="selected" value="' . $MyRow['code'] . '">' . $MyRow['description'] . '</option>';
 		} else {
 			echo '<option value="' . $MyRow['code'] . '">' . $MyRow['description'] . '</option>';
@@ -998,7 +998,7 @@ if (!isset($_GET['delete'])) {
 
 	$TypesResult = DB_query("SELECT partnercode, partnername FROM klretailpartners ORDER BY partnername");
 	while ($MyRow=DB_fetch_array($TypesResult)) {
-		if($_POST['PartnerCode']==$MyRow['partnercode']) {
+		if ($_POST['PartnerCode']==$MyRow['partnercode']) {
 			echo '<option selected="selected" value="' . $MyRow['partnercode'] . '">' . $MyRow['partnername'] . '</option>';
 		} else {
 			echo '<option value="' . $MyRow['partnercode'] . '">' . $MyRow['partnername'] . '</option>';
@@ -1012,7 +1012,7 @@ if (!isset($_GET['delete'])) {
 
 	$TypesResult = DB_query("SELECT onlinepartnercode, onlinepartnername FROM klonlinepartners ORDER BY onlinepartnername");
 	while ($MyRow=DB_fetch_array($TypesResult)) {
-		if($_POST['OnlinePartnerCode']==$MyRow['onlinepartnercode']) {
+		if ($_POST['OnlinePartnerCode']==$MyRow['onlinepartnercode']) {
 			echo '<option selected="selected" value="' . $MyRow['onlinepartnercode'] . '">' . $MyRow['onlinepartnername'] . '</option>';
 		} else {
 			echo '<option value="' . $MyRow['onlinepartnercode'] . '">' . $MyRow['onlinepartnername'] . '</option>';
@@ -1023,7 +1023,7 @@ if (!isset($_GET['delete'])) {
 	echo '<field>
 			<label for="StockReadyToSell">' . __('With Stock ready To Sell?') . ':</label>
 			<select name="StockReadyToSell">';
-	if($_POST['StockReadyToSell']==1) {
+	if ($_POST['StockReadyToSell']==1) {
 		echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
 		echo '<option value="0">' . __('No') . '</option>';
 	} else {
@@ -1035,7 +1035,7 @@ if (!isset($_GET['delete'])) {
 	echo '<field>
 			<label for="StockAvailableForOnline">' . __('With Stock Available for Shop Online?') . ':</label>
 			<select name="StockAvailableForOnline">';
-	if($_POST['StockAvailableForOnline']==1) {
+	if ($_POST['StockAvailableForOnline']==1) {
 		echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
 		echo '<option value="0">' . __('No') . '</option>';
 	} else {
@@ -1237,7 +1237,7 @@ function UpdateOnlinePartnerPaypalSettingsInOpenCart($NewLocationType, $NewOnlin
 			$MyRow = DB_fetch_array($Result);
 
 			prnMsg('Remind to update PayPal setting for Online Partner ' . $NewOnlinePartnerCode . ' in OpenCart', 'warning');
-		}else{
+		} else {
 			prnMsg('The ONLINE location should have a valid KL Online Partner', 'error');
 		}
 	}

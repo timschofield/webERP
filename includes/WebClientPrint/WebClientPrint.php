@@ -93,7 +93,7 @@ class WebClientPrint {
         $dataPRINTERS = '';
         $dataPRINTERSINFO = '';
             
-        if(file_exists($cacheFileName)){
+        if (file_exists($cacheFileName)){
             $cache_info = parse_ini_file($cacheFileName);
             
             $dataWCPP_VER = $cache_info[self::WCP_CACHE_WCPP_VER];
@@ -105,11 +105,11 @@ class WebClientPrint {
             $dataWCPP_VER = self::WCP_CACHE_WCPP_VER.'='.'"'.$val.'"';
             $dataPRINTERS = self::WCP_CACHE_PRINTERS.'='.'"'.$dataPRINTERS.'"';
             $dataPRINTERSINFO = self::WCP_CACHE_PRINTERSINFO.'='.'"'.$dataPRINTERSINFO.'"';
-        } else if ($key === self::WCP_CACHE_PRINTERS){
+        } elseif ($key === self::WCP_CACHE_PRINTERS){
             $dataWCPP_VER = self::WCP_CACHE_WCPP_VER.'='.'"'.$dataWCPP_VER.'"';
             $dataPRINTERS = self::WCP_CACHE_PRINTERS.'='.'"'.$val.'"';
             $dataPRINTERSINFO = self::WCP_CACHE_PRINTERSINFO.'='.'"'.$dataPRINTERSINFO.'"';
-        } else if ($key === self::WCP_CACHE_PRINTERSINFO){
+        } elseif ($key === self::WCP_CACHE_PRINTERSINFO){
             $dataWCPP_VER = self::WCP_CACHE_WCPP_VER.'='.'"'.$dataWCPP_VER.'"';
             $dataPRINTERS = self::WCP_CACHE_PRINTERS.'='.'"'.$dataPRINTERS.'"';
             $dataPRINTERSINFO = self::WCP_CACHE_PRINTERSINFO.'='.'"'.$val.'"';
@@ -137,19 +137,19 @@ class WebClientPrint {
             throw new Exception('WebClientPrint FileName cache is missing, please specify it.');
         }
         $cacheFileName = (Utils::strEndsWith(self::$wcpCacheFolder, '/')?self::$wcpCacheFolder:self::$wcpCacheFolder.'/').$sid.'.wcpcache';
-        if(file_exists($cacheFileName)){
+        if (file_exists($cacheFileName)){
             $cache_info = parse_ini_file($cacheFileName, FALSE, INI_SCANNER_RAW);
                 
-            if($key===self::WCP_CACHE_WCPP_VER || $key===self::WCP_CACHE_WCPP_INSTALLED){
+            if ($key===self::WCP_CACHE_WCPP_VER || $key===self::WCP_CACHE_WCPP_INSTALLED){
                 return $cache_info[self::WCP_CACHE_WCPP_VER];
-            }else if($key===self::WCP_CACHE_PRINTERS){
+            } elseif ($key===self::WCP_CACHE_PRINTERS){
                 return $cache_info[self::WCP_CACHE_PRINTERS];
-            }else if($key===self::WCP_CACHE_PRINTERSINFO){
+            } elseif ($key===self::WCP_CACHE_PRINTERSINFO){
                 return $cache_info[self::WCP_CACHE_PRINTERSINFO];
-            }else{
+            } else {
                 return '';
             }
-        }else{
+        } else {
             return '';
         }
     }
@@ -260,7 +260,7 @@ class WebClientPrint {
         
         parse_str($queryString, $qs);
     
-        if(isset($qs[self::GEN_DETECT_WCPP_SCRIPT])){
+        if (isset($qs[self::GEN_DETECT_WCPP_SCRIPT])){
             
             $curSID = $qs[self::GEN_DETECT_WCPP_SCRIPT];
             $dynamicIframeId = 'i'.substr(uniqid(), 0, 3);
@@ -275,12 +275,12 @@ class WebClientPrint {
             
             return $s2;
             
-        }else if(isset($qs[self::GEN_WCP_SCRIPT_URL])){
+        } elseif (isset($qs[self::GEN_WCP_SCRIPT_URL])){
             
             $clientPrintJobUrl = base64_decode($qs[self::GEN_WCP_SCRIPT_URL]);
             if (strpos($clientPrintJobUrl, '?')>0){
                 $clientPrintJobUrl .= '&';
-            }else{
+            } else {
                 $clientPrintJobUrl .= '?';
             }
             $clientPrintJobUrl .= self::CLIENT_PRINT_JOB;
@@ -355,27 +355,27 @@ class WebClientPrint {
     public static function GetProcessRequestType($queryString){
         parse_str($queryString, $qs);
     
-        if(isset($qs[self::SID])){
-            if(isset($qs[self::PING])){
+        if (isset($qs[self::SID])){
+            if (isset($qs[self::PING])){
                 return self::ClientSetWcppVersion;
-            } else if(isset($qs[self::WCPP_SET_VERSION])){
+            } elseif (isset($qs[self::WCPP_SET_VERSION])){
                 return self::ClientSetWcppVersion;
-            } else if(isset($qs[self::WCPP_SET_PRINTERS])){
+            } elseif (isset($qs[self::WCPP_SET_PRINTERS])){
                 return self::ClientSetInstalledPrinters;
-            } else if(isset($qs[self::WCPP_SET_PRINTERSINFO])){
+            } elseif (isset($qs[self::WCPP_SET_PRINTERSINFO])){
                 return self::ClientSetInstalledPrintersInfo;
-            } else if(isset($qs[self::WCP_SCRIPT_AXD_GET_WCPPVERSION])){
+            } elseif (isset($qs[self::WCP_SCRIPT_AXD_GET_WCPPVERSION])){
                 return self::ClientGetWcppVersion;
-            } else if(isset($qs[self::WCP_SCRIPT_AXD_GET_PRINTERS])){
+            } elseif (isset($qs[self::WCP_SCRIPT_AXD_GET_PRINTERS])){
                 return self::ClientGetInstalledPrinters;
-            } else if(isset($qs[self::WCP_SCRIPT_AXD_GET_PRINTERSINFO])){
+            } elseif (isset($qs[self::WCP_SCRIPT_AXD_GET_PRINTERSINFO])){
                 return self::ClientGetInstalledPrintersInfo;
-            } else if(isset($qs[self::GEN_WCP_SCRIPT_URL])){
+            } elseif (isset($qs[self::GEN_WCP_SCRIPT_URL])){
                 return self::GenPrintScript;
             } else {
                 return self::ClientGetWcppVersion;
             }
-        } else if(isset($qs[self::GEN_DETECT_WCPP_SCRIPT])){
+        } elseif (isset($qs[self::GEN_DETECT_WCPP_SCRIPT])){
             return self::GenWcppDetectScript;
         } else {
             throw new Exception('No valid ProcessRequestType was found in the specified QueryString.');
@@ -407,10 +407,10 @@ class Duplex
     const HORIZONTAL = 3;
     
     public static function parse($val){
-        if($val === 'DEF') return 0;
-        if($val === 'SIMPLEX') return 1;
-        if($val === 'VERTICAL') return 2;
-        if($val === 'HORIZONTAL') return 3;
+        if ($val === 'DEF') return 0;
+        if ($val === 'SIMPLEX') return 1;
+        if ($val === 'VERTICAL') return 2;
+        if ($val === 'HORIZONTAL') return 3;
         return 0;
     }
 }
@@ -684,11 +684,11 @@ class SerialPortParity{
     const MARK = 3;
     const SPACE = 4;
     public static function parse($val){
-        if($val === 'NONE') return 0;
-        if($val === 'ODD') return 1;
-        if($val === 'EVEN') return 2;
-        if($val === 'MARK') return 3;
-        if($val === 'SPACE') return 4;
+        if ($val === 'NONE') return 0;
+        if ($val === 'ODD') return 1;
+        if ($val === 'EVEN') return 2;
+        if ($val === 'MARK') return 3;
+        if ($val === 'SPACE') return 4;
         return 0;
     }
 }
@@ -702,10 +702,10 @@ class SerialPortStopBits{
     const TWO = 2;
     const ONE_POINT_FIVE = 3;
     public static function parse($val){
-        if($val === 'NONE') return 0;
-        if($val === 'ONE') return 1;
-        if($val === 'TWO') return 2;
-        if($val === 'ONE_POINT_FIVE') return 3;
+        if ($val === 'NONE') return 0;
+        if ($val === 'ONE') return 1;
+        if ($val === 'TWO') return 2;
+        if ($val === 'ONE_POINT_FIVE') return 3;
         return 0;
     }
 }
@@ -719,10 +719,10 @@ class SerialPortHandshake{
     const REQUEST_TO_SEND_XON_XOFF = 3;
     const XON_XOFF = 1;
     public static function parse($val){
-        if($val === 'NONE') return 0;
-        if($val === 'XON_XOFF') return 1;
-        if($val === 'REQUEST_TO_SEND') return 2;
-        if($val === 'REQUEST_TO_SEND_XON_XOFF') return 3;
+        if ($val === 'NONE') return 0;
+        if ($val === 'XON_XOFF') return 1;
+        if ($val === 'REQUEST_TO_SEND') return 2;
+        if ($val === 'REQUEST_TO_SEND_XON_XOFF') return 3;
         return 0;
     }
 }
@@ -786,21 +786,21 @@ class EncryptMetadata{
     }
     
     public function validateMetadata(){
-        if(Utils::isNullOrEmptyString($this->password)){
+        if (Utils::isNullOrEmptyString($this->password)){
             $this->password = Utils::genRandomString(33, 126, 32);
-        }else if (strlen($this->password) > 100){
+        } elseif (strlen($this->password) > 100){
             throw new Exception("Password cannot be greater than 100 ASCII chars/bytes.");
         }
         
-        if(Utils::isNullOrEmptyString($this->salt)){
+        if (Utils::isNullOrEmptyString($this->salt)){
             $this->salt = Utils::genRandomString(33, 126, 32);
-        }else if (strlen($this->salt) > 100){
+        } elseif (strlen($this->salt) > 100){
             throw new Exception("Salt cannot be greater than 100 ASCII chars/bytes.");
         }
 
-        if(Utils::isNullOrEmptyString($this->iv)){
+        if (Utils::isNullOrEmptyString($this->iv)){
             $this->iv = Utils::genRandomString(33, 126, 16);
-        }else if (strlen($this->iv) > 16){
+        } elseif (strlen($this->iv) > 16){
             throw new Exception("IV cannot be greater than 16 ASCII chars/bytes.");
         }
 
@@ -872,11 +872,11 @@ class PrintFile{
     public function serialize() {
         $file = str_replace('\\', 'BACKSLASHCHAR',$this->fileName );
         $pfc = '';
-        if($this->copies > 1){
+        if ($this->copies > 1){
             $pfc = 'PFC='.$this->copies;
         }
         $df = 'DEL=F';
-        if($this->deleteAfterPrinting){
+        if ($this->deleteAfterPrinting){
             $df = '';
         }
         
@@ -887,7 +887,7 @@ class PrintFile{
             $ext = substr($file, strrpos($file, '.'));
         }
         
-        if(Utils::isNullOrEmptyString($this->fileExtension)){
+        if (Utils::isNullOrEmptyString($this->fileExtension)){
             $file = $fn.$pfc.$df.$ext;
         } else {
             $file = $fn.$pfc.$df.$this->fileExtension;
@@ -895,7 +895,7 @@ class PrintFile{
         
         $fileContent = $this->getFileContent();
         
-        if($this->encryptMetadata != null &&
+        if ($this->encryptMetadata != null &&
            Utils::isNullOrEmptyString($this->encryptMetadata->publicKeyBase64) == false &&
            $this->fileIsPasswordProtected == false){
                 
@@ -914,7 +914,7 @@ class PrintFile{
     }
     
     public function getFileContent(){
-        if(!Utils::isNullOrEmptyString($this->filePath)){
+        if (!Utils::isNullOrEmptyString($this->filePath)){
             $handle = fopen($this->filePath, 'rb');
             $content = fread($handle, filesize($this->filePath));
             fclose($handle);
@@ -949,10 +949,10 @@ class PrintRotation
     const Rot270 = 3;
     
     public static function parse($val){
-        if($val === 'None') return 0;
-        if($val === 'Rot90') return 1;
-        if($val === 'Rot180') return 2;
-        if($val === 'Rot270') return 3;
+        if ($val === 'None') return 0;
+        if ($val === 'Rot90') return 1;
+        if ($val === 'Rot180') return 2;
+        if ($val === 'Rot270') return 3;
         return 0;
     }
 }
@@ -972,8 +972,8 @@ class Sizing
     const Fit = 1;
     
     public static function parse($val){
-        if($val === 'None') return 0;
-        if($val === 'Fit') return 1;
+        if ($val === 'None') return 0;
+        if ($val === 'Fit') return 1;
         return 0;
     }
 }
@@ -1078,7 +1078,7 @@ class PrintFilePDF extends PrintFile{
                     }
                 }
             }
-            else{
+            else {
                 throw new Exception("The specified PageRange is not valid.");
             }
         }
@@ -1114,7 +1114,7 @@ class PrintFilePDF extends PrintFile{
         $metadataLength += strlen(strval($metadataLength));
         $metadata .= strval($metadataLength);
         
-        if(!Utils::isNullOrEmptyString($this->filePath)){
+        if (!Utils::isNullOrEmptyString($this->filePath)){
             $handle = fopen($this->filePath, 'rb');
             $content = fread($handle, filesize($this->filePath));
             fclose($handle);
@@ -1213,7 +1213,7 @@ class PrintFileTIF extends PrintFile{
                     }
                 }
             }
-            else{
+            else {
                 throw new Exception("The specified PageRange is not valid.");
             }
         }
@@ -1234,7 +1234,7 @@ class PrintFileTIF extends PrintFile{
         $metadataLength += strlen(strval($metadataLength));
         $metadata .= strval($metadataLength);
         
-        if(!Utils::isNullOrEmptyString($this->filePath)){
+        if (!Utils::isNullOrEmptyString($this->filePath)){
             $handle = fopen($this->filePath, 'rb');
             $content = fread($handle, filesize($this->filePath));
             fclose($handle);
@@ -1261,8 +1261,8 @@ class PrintOrientation
     const Landscape = 1;
     
     public static function parse($val){
-        if($val === 'Portrait') return 0;
-        if($val === 'Landscape') return 1;
+        if ($val === 'Portrait') return 0;
+        if ($val === 'Landscape') return 1;
         return 0;
     }
 }
@@ -1295,11 +1295,11 @@ class TextAlignment
 
 
     public static function parse($val){
-        if($val === 'Left') return 0;
-        if($val === 'Center') return 1;
-        if($val === 'Right') return 2;
-        if($val === 'Justify') return 3;
-        if($val === 'None') return 4;
+        if ($val === 'Left') return 0;
+        if ($val === 'Center') return 1;
+        if ($val === 'Right') return 2;
+        if ($val === 'Justify') return 3;
+        if ($val === 'None') return 4;
         return 0;
     }
 }
@@ -1420,7 +1420,7 @@ class PrintFileTXT extends PrintFile{
         
         $content = $this->textContent;
         if (Utils::isNullOrEmptyString($content)){
-            if(!Utils::isNullOrEmptyString($this->filePath)){
+            if (!Utils::isNullOrEmptyString($this->filePath)){
                 $handle = fopen($this->filePath, 'rb');
                 $content = fread($handle, filesize($this->filePath));
                 fclose($handle);
@@ -1532,7 +1532,7 @@ class PrintFileDOC extends PrintFile{
         $metadata .= strval($metadataLength);
         
         
-        if(!Utils::isNullOrEmptyString($this->filePath)){
+        if (!Utils::isNullOrEmptyString($this->filePath)){
             $handle = fopen($this->filePath, 'rb');
             $content = fread($handle, filesize($this->filePath));
             fclose($handle);
@@ -1615,7 +1615,7 @@ class PrintFileXLS extends PrintFile{
         $metadataLength += strlen(strval($metadataLength));
         $metadata .= strval($metadataLength);
         
-        if(!Utils::isNullOrEmptyString($this->filePath)){
+        if (!Utils::isNullOrEmptyString($this->filePath)){
             $handle = fopen($this->filePath, 'rb');
             $content = fread($handle, filesize($this->filePath));
             fclose($handle);
@@ -1645,7 +1645,7 @@ class SecUtils{
             $rsa->setEncryptionMode(2);//ENCRYPTION_PKCS1
             return $rsa->encrypt($dataToEncrypt);
         }
-        else{
+        else {
             throw new Exception('Cannot verify the provided RSA Public Key.');
         }
     }
@@ -1872,14 +1872,14 @@ class ClientPrintJob{
             if ($this->printerCommandsCopies > 1){
                 $buffer .= 'PCC='.$this->printerCommandsCopies.Utils::SER_SEP;
             }
-            if($this->formatHexValues){
+            if ($this->formatHexValues){
                 $buffer .= Utils::formatHexValues ($this->printerCommands);
             } else {
                 $buffer .= $this->printerCommands;
             }
-        } else if (isset ($this->printFile)){
+        } elseif (isset ($this->printFile)){
             $buffer = $this->printFile->serialize();
-        } else if (isset ($this->printFileGroup)){
+        } elseif (isset ($this->printFileGroup)){
             $buffer = 'wcpPFG:';
             $zip = new ZipArchive;
             $cacheFileName = (Utils::strEndsWith(WebClientPrint::$wcpCacheFolder, '/')?WebClientPrint::$wcpCacheFolder:WebClientPrint::$wcpCacheFolder.'/').'PFG'.uniqid().'.zip';
@@ -1887,15 +1887,15 @@ class ClientPrintJob{
             if ($res === TRUE) {
                 foreach ($this->printFileGroup as $printFile) {
                     $file = $printFile->fileName;
-                    if($printFile->copies > 1){
+                    if ($printFile->copies > 1){
                         $pfc = 'PFC='.$printFile->copies;
                         $file = substr($file, 0, strrpos($file, '.')).$pfc.substr($file, strrpos($file, '.'));
                     }  
-                    if(is_a($printFile, 'PrintFilePDF')) $file .= '.wpdf';
-                    if(is_a($printFile, 'PrintFileTXT')) $file .= '.wtxt';
-                    if(is_a($printFile, 'PrintFileDOC')) $file .= '.wdoc';
-                    if(is_a($printFile, 'PrintFileXLS')) $file .= '.wxls';
-                    if(is_a($printFile, 'PrintFileTIF')) $file .= '.wtif';
+                    if (is_a($printFile, 'PrintFilePDF')) $file .= '.wpdf';
+                    if (is_a($printFile, 'PrintFileTXT')) $file .= '.wtxt';
+                    if (is_a($printFile, 'PrintFileDOC')) $file .= '.wdoc';
+                    if (is_a($printFile, 'PrintFileXLS')) $file .= '.wxls';
+                    if (is_a($printFile, 'PrintFileTIF')) $file .= '.wtif';
                     
                     $zip->addFromString($file, $printFile->getFileContent());
                 }
@@ -1962,14 +1962,14 @@ class ClientPrintJobGroup{
                     if ($cpj->printerCommandsCopies > 1){
                         $cpjBuffer .= 'PCC='.$cpj->printerCommandsCopies.Utils::SER_SEP;
                     }
-                    if($cpj->formatHexValues){
+                    if ($cpj->formatHexValues){
                         $cpjBuffer .= Utils::formatHexValues ($cpj->printerCommands);
                     } else {
                         $cpjBuffer .= $cpj->printerCommands;
                     }
-                } else if (isset ($cpj->printFile)){
+                } elseif (isset ($cpj->printFile)){
                     $cpjBuffer = $cpj->printFile->serialize();
-                } else if (isset ($cpj->printFileGroup)){
+                } elseif (isset ($cpj->printFileGroup)){
                     $cpjBuffer = 'wcpPFG:';
                     $zip = new ZipArchive;
                     $cacheFileName = (Utils::strEndsWith(WebClientPrint::$wcpCacheFolder, '/')?WebClientPrint::$wcpCacheFolder:WebClientPrint::$wcpCacheFolder.'/').'PFG'.uniqid().'.zip';
@@ -1977,15 +1977,15 @@ class ClientPrintJobGroup{
                     if ($res === TRUE) {
                         foreach ($cpj->printFileGroup as $printFile) {
                             $file = $printFile->fileName;
-                            if($printFile->copies > 1){
+                            if ($printFile->copies > 1){
                                 $pfc = 'PFC='.$printFile->copies;
                                 $file = substr($file, 0, strrpos($file, '.')).$pfc.substr($file, strrpos($file, '.'));
                             }
-                            if(is_a($printFile, 'PrintFilePDF')) $file .= '.wpdf';
-                            if(is_a($printFile, 'PrintFileTXT')) $file .= '.wtxt';
-                            if(is_a($printFile, 'PrintFileDOC')) $file .= '.wdoc';
-                            if(is_a($printFile, 'PrintFileXLS')) $file .= '.wxls';
-                            if(is_a($printFile, 'PrintFileTIF')) $file .= '.wtif';
+                            if (is_a($printFile, 'PrintFilePDF')) $file .= '.wpdf';
+                            if (is_a($printFile, 'PrintFileTXT')) $file .= '.wtxt';
+                            if (is_a($printFile, 'PrintFileDOC')) $file .= '.wdoc';
+                            if (is_a($printFile, 'PrintFileXLS')) $file .= '.wxls';
+                            if (is_a($printFile, 'PrintFileTIF')) $file .= '.wtif';
                     
                             $zip->addFromString($file, $printFile->getFileContent());
                         }

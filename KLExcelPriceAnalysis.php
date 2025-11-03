@@ -125,7 +125,7 @@ function submit($ListCategories, $DaysTopSales) {
 			if ($_POST['Format'] == 'xlsx') {
 				header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 				$File = 'KL-PriceAnalysis-' . date('Y-m-d'). '.xlsx';
-			} else if ($_POST['Format'] == 'ods') {
+			} elseif ($_POST['Format'] == 'ods') {
 				header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
 				$File = 'KL-PriceAnalysis-' . date('Y-m-d'). '.ods';
 			}
@@ -143,12 +143,12 @@ function submit($ListCategories, $DaysTopSales) {
 			if ($_POST['Format'] == 'xlsx') {
 				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($SpreadSheet);
 				$objWriter->save('php://output');
-			} else if ($_POST['Format'] == 'ods') {
+			} elseif ($_POST['Format'] == 'ods') {
 				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($SpreadSheet);
 				$objWriter->save('php://output');
 			}
 
-		}else{
+		} else {
 			$Title = __('Excel file for Price Analysis');
 			include('includes/header.php');
 			prnMsg('No items selected to analyse');

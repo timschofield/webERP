@@ -32,7 +32,7 @@ if (isset($_POST['Modify'])) {
 
 	//first off validate inputs sensible
 	// KL RICARD: For some version issues, we can't use this check
-	//if($_POST['DisplayRecordsMax'] <= 0) {
+	//if ($_POST['DisplayRecordsMax'] <= 0) {
 	//	$InputError = 1;
 	//	prnMsg(__('The Maximum Number of Records on Display entered must not be negative') . '. ' . __('0 will default to system setting'),'error');
 	//}
@@ -80,7 +80,7 @@ if (isset($_POST['Modify'])) {
 							showfieldhelp='" . $_POST['ShowFieldHelp'] . "',
 							pdflanguage='" . $_POST['PDFLanguage'] . "'
 						WHERE userid = '" . $_SESSION['UserID'] . "'";
-			}else{
+			} else {
 				$SQL = "UPDATE www_users
 						SET email='". $_POST['email'] ."'
 						WHERE userid = '" . $_SESSION['UserID'] . "'";
@@ -101,7 +101,7 @@ if (isset($_POST['Modify'])) {
 							pdflanguage='" . $_POST['PDFLanguage'] . "',
 							password='" . CryptPass($_POST['Password']) . "'
 						WHERE userid = '" . $_SESSION['UserID'] . "'";
-			}else{
+			} else {
 				$SQL = "UPDATE www_users
 						SET email='". $_POST['email'] ."',
 							password='" . CryptPass($_POST['Password']) . "'
@@ -173,12 +173,12 @@ if ($KL_SystemAdmin){
 	echo '<field>
 			<label for="Language">', __('Language'), ':</label>
 			<select name="Language">';
-	if(!isset($_POST['Language'])) {
+	if (!isset($_POST['Language'])) {
 		$_POST['Language'] = $_SESSION['Language'];
 	}
 	foreach($LanguagesArray as $LanguageEntry => $LanguageName) {
 		echo '<option ';
-		if(isset($_POST['Language']) AND $_POST['Language'] == $LanguageEntry) {
+		if (isset($_POST['Language']) AND $_POST['Language'] == $LanguageEntry) {
 			echo 'selected="selected" ';
 		}
 		echo 'value="', $LanguageEntry, '">', $LanguageName['LanguageName'], '</option>';
@@ -194,9 +194,9 @@ if ($KL_SystemAdmin){
 	$ThemeDirectories = scandir($PathPrefix . 'css/');
 
 	foreach ($ThemeDirectories as $ThemeName) {
-		if(is_dir('css/' . $ThemeName) AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != '.svn') {
+		if (is_dir('css/' . $ThemeName) AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != '.svn') {
 
-			if($_SESSION['Theme'] == $ThemeName) {
+			if ($_SESSION['Theme'] == $ThemeName) {
 				echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName . '</option>';
 			} else {
 				echo '<option value="' . $ThemeName . '">' . $ThemeName . '</option>';
@@ -253,7 +253,7 @@ if ($KL_SystemAdmin){
 	echo '<field>
 			<label for="ShowFieldHelp">', __('Display field help'), ':</label>
 			<select id="ShowFieldHelp" name="ShowFieldHelp">';
-	if($_POST['ShowFieldHelp']==0) {
+	if ($_POST['ShowFieldHelp']==0) {
 		echo '<option selected="selected" value="0">', __('No'), '</option>',
 			'<option value="1">', __('Yes'), '</option>';
 	} else {
@@ -264,14 +264,14 @@ if ($KL_SystemAdmin){
 		<fieldhelp>', __('Show field help when available'), '</fieldhelp>
 	</field>';
 	// PDF Language Support:
-	if(!isset($_POST['PDFLanguage'])) {
+	if (!isset($_POST['PDFLanguage'])) {
 		$_POST['PDFLanguage']=$_SESSION['PDFLanguage'];
 	}
 	echo '<field>
 			<label for="PDFLanguage">', __('PDF Language Support'), ': </label>
 			<select name="PDFLanguage">';
 	for($i=0; $i<count($PDFLanguages); $i++) {
-		if($_POST['PDFLanguage'] == $i) {
+		if ($_POST['PDFLanguage'] == $i) {
 			echo '<option selected="selected" value="', $i, '">', $PDFLanguages[$i], '</option>';
 		} else {
 			echo '<option value="', $i, '">', $PDFLanguages[$i], '</option>';

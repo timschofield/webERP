@@ -10,7 +10,7 @@ include('includes/KLEmails.php');
 
 if (!isset($_GET['UserID']) OR $_GET['UserID']==''){
 	prnMsg( __('Script needs an User ID to delete it') , 'error');
-}else{
+} else {
 	DeleteWeberpUser($_GET['UserID'], $KL_SystemAdmin);
 }
 

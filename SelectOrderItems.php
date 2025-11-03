@@ -1047,7 +1047,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			if (isset($_POST['ItemDue_' . $OrderLine->LineNumber])){
 				$_POST['ItemDue_' . $OrderLine->LineNumber] = ConvertSQLDate($_POST['ItemDue_' . $OrderLine->LineNumber]);
 			}
-			else{
+			else {
 				$_POST['ItemDue_' . $OrderLine->LineNumber] = DateAdd (date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
 			}
 
@@ -1062,7 +1062,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					if ($Price == 0){
 						$_POST['GPPercent_' . $OrderLine->LineNumber] = 0;
 					}
-					else{
+					else {
 						if (isset($_POST['Discount_' . $OrderLine->LineNumber]) AND is_numeric(filter_number_format($_POST['Discount_' . $OrderLine->LineNumber]))) {
 							if ($_POST['Discount_' . $OrderLine->LineNumber] < 100) {//to avoid divided by zero error
 								$_POST['GPPercent_' . $OrderLine->LineNumber] = (($Price*(1-(filter_number_format($_POST['Discount_' . $OrderLine->LineNumber])/100))) - $OrderLine->StandardCost*$ExRate)/($Price *(1-filter_number_format($_POST['Discount_' . $OrderLine->LineNumber])/100)/100);

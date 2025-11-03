@@ -21,7 +21,7 @@ What section is named after Help Begin: and there can be multiple sections separ
 */
 
 //check for XSS
-if(strpos($_SERVER['REQUEST_URI'],'/%22%3E%3C')) {
+if (strpos($_SERVER['REQUEST_URI'],'/%22%3E%3C')) {
 	//if so chop off the XSS code and just return the appropriate URL
 	header('Location: ' . 'http' . (($_SERVER['SERVER_PORT'] == 443) ? 's' : '')  . '://' . $_SERVER['HTTP_HOST'] . substr($_SERVER['REQUEST_URI'],0,strpos($_SERVER['REQUEST_URI'],'/%22%3E%3C')));
 }
@@ -42,7 +42,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   if (!isset($_POST['Submit'])) {
 ?>
           <input type="submit" name="Submit" value="Markierte anzeigen" /><br/>
-					Klicken Sie auf einen Titel, um den Anschnitt anzuzeigen.  Markieren Sie Auswahlkästchen und drücken Sie dann auf "Markierte anzeigen", wenn Sie eine druckfähige Ausgabe erzeugen möchten.
+					Klicken Sie auf einen Titel, um den Anschnitt anzuzeigen.  Markieren Sie Auswahlkï¿½stchen und drï¿½cken Sie dann auf "Markierte anzeigen", wenn Sie eine druckfï¿½hige Ausgabe erzeugen mï¿½chten.
 					<br /><br /><br />
 <?php
   }
@@ -152,11 +152,11 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <li>Das Demosystem erproben</li>
                 <li>Einen Mandanten einrichten</li>
                 <li>Materialien einrichten</li>
-                <li>Materialbestände einpflegen</li>
-                <li>Problematik der Integration der Bestandsführung mit dem Hauptbuch</li>
+                <li>Materialbestï¿½nde einpflegen</li>
+                <li>Problematik der Integration der Bestandsfï¿½hrung mit dem Hauptbuch</li>
                 <li>Kundenstammdaten erfassen</li>
                 <li>Kundensalden aufnehmen</li>
-                <li>Das Sammelkonto für Debitorenforderungen</li>
+                <li>Das Sammelkonto fï¿½r Debitorenforderungen</li>
                 <li>Zum Schluss</li>
               </ul>
               <br />
@@ -175,7 +175,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   }
 ?>
               <ul>
-                <li>Navigation im Menü</li>
+                <li>Navigation im Menï¿½</li>
                 <li>Berichtswesen</li>
               </ul>
               <br />
@@ -185,17 +185,17 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectInventory" />
-              <a href="<?php echo htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?ViewTopic=Inventory'; ?>">Bestandsführung</a>
+              <a href="<?php echo htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?ViewTopic=Inventory'; ?>">Bestandsfï¿½hrung</a>
 <?php
   } else {
 ?>
-              <a href="#Inventory">Bestandsführung</a>
+              <a href="#Inventory">Bestandsfï¿½hrung</a>
 <?php
   }
 ?>
               <ul>
-                <li>Übersicht</li>
-                <li>Merkmale der Bestandsführung</li>
+                <li>ï¿½bersicht</li>
+                <li>Merkmale der Bestandsfï¿½hrung</li>
                 <li>Neue Materialien anlegen</li>
                 <li>Materialnummer</li>
                 <li>Materialbezeichnung</li>
@@ -203,11 +203,11 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <li>Optimale Bestellmenge</li>
                 <li>Volumen pro Verpackungseinheit</li>
                 <li>Gewicht pro Verpackungseinheit</li>
-                <li>Maßeinheiten</li>
-                <li>CZeitgemäß oder veraltet </li>
+                <li>Maï¿½einheiten</li>
+                <li>CZeitgemï¿½ï¿½ oder veraltet </li>
                 <li>Materialart</li>
                 <li>Sammelmaterialien einrichten</li>
-                <li>Chargen-, Seriennummern oder Lose überwachen</li>
+                <li>Chargen-, Seriennummern oder Lose ï¿½berwachen</li>
                 <li>mit Seriennummer</li>
                 <li>Barcode</li>
                 <li>Rabattgruppe</li>
@@ -216,22 +216,22 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <li>Materialkosten</li>
                 <li>Arbeitskosten</li>
                 <li>Gemeinkosten</li>
-                <li>Überlegungen zu den Standardkosten</li>
+                <li>ï¿½berlegungen zu den Standardkosten</li>
                 <li>Istkosten</li>
-                <li>Änderungen an den Arbeitskosten, Materialkosten oder Gemeinkosten</li>
+                <li>ï¿½nderungen an den Arbeitskosten, Materialkosten oder Gemeinkosten</li>
                 <li>Materialsuche</li>
-                <li>Materialstamm ändern</li>
-                <li>Änderung der Warengruppe</li>
-                <li>Änderung der Materialart </li>
+                <li>Materialstamm ï¿½ndern</li>
+                <li>ï¿½nderung der Warengruppe</li>
+                <li>ï¿½nderung der Materialart </li>
                 <li>Warengruppen</li>
-                <li>Warengruppen-Schlüssel</li>
+                <li>Warengruppen-Schlï¿½ssel</li>
                 <li>Warengruppen-Beschreibung</li>
                 <li>Konto Bestand</li>
                 <li>Konto Bestandskorrekturen</li>
                 <li>Konto Einkaufsabweichungen</li>
                 <li>Konto Fertigungsabweichungen</li>
                 <li>Ressourcentyp</li>
-                <li>Betriebsstätten (Lagerorte) pflegen</li>
+                <li>Betriebsstï¿½tten (Lagerorte) pflegen</li>
                 <li>Bestandskorrekturen</li>
                 <li>Umlagerungen</li>
                 <li>Bestandsauswertungen und -berichte</li>
@@ -258,13 +258,13 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   }
 ?>
               <ul>
-                <li>Übersicht</li>
+                <li>ï¿½bersicht</li>
                 <li>Merkmale der Debitorenbuchhaltung</li>
                 <li>Neue Kunden anlegen</li>
                 <li>Kundennummer</li>
                 <li>Kundenname</li>
                 <li>Adresszeilen 1, 2, 3, 4, 5 und 6</li>
-                <li>Währung</li>
+                <li>Wï¿½hrung</li>
                 <li>Rabattsatz</li>
                 <li>Skontoprozentsatz</li>
                 <li>Kunde seit</li>
@@ -276,16 +276,16 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <li>Name der Niederlassung</li>
                 <li>Nummer der Niederlassung</li>
                 <li>Kontakt / Telefon / Fax / Adresse</li>
-                <li>Verkäufer</li>
+                <li>Verkï¿½ufer</li>
                 <li>bezieht Waren vom Lager</li>
                 <li>Vordatieren nach dem (Tag im Monat)</li>
                 <li>Lieferfrist Tage</li>
                 <li>Telefon/Fax/Email</li>
                 <li>Steuergruppe</li>
-                <li>Aufträge für diese Niederlassung</li>
-                <li>Übliche Versandart</li>
+                <li>Auftrï¿½ge fï¿½r diese Niederlassung</li>
+                <li>ï¿½bliche Versandart</li>
                 <li>Postanschrift Zeilen 1, 2, 3 und 4</li>
-                <li>Änderungen an den Kundendaten</li>
+                <li>ï¿½nderungen an den Kundendaten</li>
                 <li>Versandarten</li>
               </ul>
               <br />
@@ -305,7 +305,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   }
 ?>
               <ul>
-                <li>Übersicht</li>
+                <li>ï¿½bersicht</li>
                 <li>Merkmale der Kreditorenbuchhaltung</li>
                 <li>Lieferanten (Kreditoren) anlegen</li>
                 <li>Lieferantennummer</li>
@@ -315,7 +315,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <li>Zahlungsbedingung</li>
                 <li>Bankangaben, Bankreferenz</li>
                 <li>Bankkontonummer</li>
-                <li>Lieferantenwährung</li>
+                <li>Lieferantenwï¿½hrung</li>
 		<li>Zahlungsmitteilung</li>
               </ul>
               <br />
@@ -325,19 +325,19 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectSalesPeople" />
-              <a href="<?php echo htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?ViewTopic=SalesPeople'; ?>">Verkäufer</a>
+              <a href="<?php echo htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?ViewTopic=SalesPeople'; ?>">Verkï¿½ufer</a>
 <?php
   } else {
 ?>
-              <a href="#SalesPeople">Verkäufer</a>
+              <a href="#SalesPeople">Verkï¿½ufer</a>
 <?php
   }
 ?>
               <ul>
-                <li>Verkäuferstammdaten</li>
-                <li>Verkäufer-Schlüssel</li>
+                <li>Verkï¿½uferstammdaten</li>
+                <li>Verkï¿½ufer-Schlï¿½ssel</li>
                 <li>Kommunikationsdaten</li>
-                <li>Provisionssätze und Grenzbetrag</li>
+                <li>Provisionssï¿½tze und Grenzbetrag</li>
               </ul>
               <br />
             </li>
@@ -374,9 +374,9 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   }
 ?>
               <ul>
-                <li>ZB-Schlüssel</li>
+                <li>ZB-Schlï¿½ssel</li>
                 <li>Beschreibung der Zahlungsbedingung</li>
-                <li>Fällig nach Anzahl Tage / Tage oder Tag im Folgemonat</li>
+                <li>Fï¿½llig nach Anzahl Tage / Tage oder Tag im Folgemonat</li>
               </ul>
               <br />
             </li>
@@ -395,7 +395,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
 ?>
               <ul>
                 <li>Credit Status Ratings</li>
-                <li>Status-Schlüssel</li>
+                <li>Status-Schlï¿½ssel</li>
                 <li>Beschreibung</li>
                 <li>Fakturasperre</li>
               </ul>
@@ -416,11 +416,11 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
 ?>
               <ul>
                 <li>Steuerberechnungen</li>
-                <li>Überblick</li>
+                <li>ï¿½berblick</li>
                 <li>Steuern einrichten</li>
                 <li>Beispiel 1: Eine Verkaufssteuer innerhalb eines Steuerstandortes - Zwei Steuerkategorien</li>
-                <li>Beispiel 2: Verkauf innerhalb eines Steuerstandortes - drei Steuersätze</li>
-                <li>Beispiel 3: Verkauf zwischen zwei Steuerstandorten - drei Steuersätze</li>
+                <li>Beispiel 2: Verkauf innerhalb eines Steuerstandortes - drei Steuersï¿½tze</li>
+                <li>Beispiel 3: Verkauf zwischen zwei Steuerstandorten - drei Steuersï¿½tze</li>
               </ul>
               <br />
             </li>
@@ -439,7 +439,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
 ?>
               <ul>
                 <li>Preise und Rabatte</li>
-                <li>Übersicht</li>
+                <li>ï¿½bersicht</li>
                 <li>Preise pflegen</li>
                 <li>Rabattstaffel</li>
               </ul>
@@ -460,21 +460,21 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
 ?>
               <ul>
                 <li>Fakturieren eines Kundenauftrages</li>
-                <li>Auftrag zum Fakturieren auswählen</li>
+                <li>Auftrag zum Fakturieren auswï¿½hlen</li>
                 <li>Erstellen der Faktura zum Kundenauftrag</li>
                 <li>Gutschriften</li>
-                <li>Erfassung von Zahlungseingängen</li>
+                <li>Erfassung von Zahlungseingï¿½ngen</li>
                 <li>Zahlungseingang - Debitor<ImportBankTrans.php/li>
                 <li>Zahlungseingang - Datum</li>
-                <li>Zahlungseingang - Währung und Umrechnungskurs</li>
+                <li>Zahlungseingang - Wï¿½hrung und Umrechnungskurs</li>
                 <li>Zahlungseingang - Zahlweg</li>
                 <li>Zahlungseingang - Betrag</li>
                 <li>Zahlungseingang - Skonto</li>
                 <li>Zahlungseingang - Ausgleichen mit der Rechnung</li>
                 <li>Kursdifferenzen</li>
-                <li>Zahlungseingänge verbuchen</li>
-                <li>Liste der Zahlungseingänge</li>
-                <li>Habenbeträge dem Debitorenkonto zuordnen</li>
+                <li>Zahlungseingï¿½nge verbuchen</li>
+                <li>Liste der Zahlungseingï¿½nge</li>
+                <li>Habenbetrï¿½ge dem Debitorenkonto zuordnen</li>
               </ul>
               <br />
             </li>
@@ -514,8 +514,8 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
               <ul>
                 <li>Customers - Reporting</li>
                 <li>Gerasterte Debitorensalden</li>
-                <li>Kontoauszüge</li>
-                <li>Auswertung der Kundenvorgänge</li>
+                <li>Kontoauszï¿½ge</li>
+                <li>Auswertung der Kundenvorgï¿½nge</li>
                 <li>Rechnungen und Gutschriften drucken</li>
               </ul>
               <br />
@@ -546,24 +546,24 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   if (!isset($_POST['Submit'])) {
 ?>
               <input type="checkbox" name="SelectSalesOrders" />
-              <a href="<?php echo htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?ViewTopic=SalesOrders'; ?>">Kundenaufträge</a>
+              <a href="<?php echo htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?ViewTopic=SalesOrders'; ?>">Kundenauftrï¿½ge</a>
 <?php
   } else {
 ?>
-              <a href="#SalesOrders">Kundenaufträge</a>
+              <a href="#SalesOrders">Kundenauftrï¿½ge</a>
 <?php
   }
 ?>
               <ul>
-                <li>Kundenaufträge</li>
-                <li>Funktionalität</li>
-                <li>Kundenaufträge erfassen</li>
+                <li>Kundenauftrï¿½ge</li>
+                <li>Funktionalitï¿½t</li>
+                <li>Kundenauftrï¿½ge erfassen</li>
                 <li>Auswahl des Kunden und der Niederlassung</li>
                 <li>Auswahl der Kundenauftragspositionen</li>
                 <li>Lieferangaben</li>
-                <li>Kundenauftrag ändern</li>
+                <li>Kundenauftrag ï¿½ndern</li>
 		<li>Angebote</li>
-		<li>Daueraufträge</li>
+		<li>Dauerauftrï¿½ge</li>
               </ul>
               <br />
             </li>
@@ -603,12 +603,12 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   }
 ?>
               <ul>
-                <li>Fertigung Überblick</li>
+                <li>Fertigung ï¿½berblick</li>
                 <li>Hauptbuch-Integration</li>
                 <li>Fertigungsauftrag anlegen</li>
                 <li>Ablieferungen zum Fertigungsauftrag</li>
                 <li>Entnahmen zum Fertigungsauftrag</li>
-                <li>Fertigungsaufträge abschließen</li>
+                <li>Fertigungsauftrï¿½ge abschlieï¿½en</li>
               </ul>
               <br />
             </li>
@@ -626,10 +626,10 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   }
 ?>
               <ul>
-                <li>Überblick</li>
+                <li>ï¿½berblick</li>
                 <li>Kontengruppen</li>
                 <li>Bankkonten</li>
-                <li>Zahlungsausgänge</li>
+                <li>Zahlungsausgï¿½nge</li>
                 <li>Einrichten der Hauptbuchintegration</li>
                 <li>Umsatzpositionen</li>
                 <li>Bestandsbuchungen</li>
@@ -653,7 +653,7 @@ if (!isset($_POST['Submit'])) {
   }
 ?>
               <ul>
-                <li>Einführung</li>
+                <li>Einfï¿½hrung</li>
                 <li>Reports Administration</li>
                 <li>Importing and Exporting Reports</li>
                 <li>Editing Copying Renaming Reports</li>
@@ -682,7 +682,7 @@ if (!isset($_POST['Submit'])) {
               <ul>
                 <li>Mehrsprachigkeit</li>
                 <li>Die System-Sprachdatei neu erstellen</li>
-                <li>Eine neue Sprache zum System hinzufügen</li>
+                <li>Eine neue Sprache zum System hinzufï¿½gen</li>
                 <li>Sprachdatei-Kopf bearbeiten</li>
                 <li>Sprachdatei-Module bearbeiten</li>
               </ul>
@@ -702,10 +702,10 @@ if (!isset($_POST['Submit'])) {
   }
 ?>
               <ul>
-                <li>Ergebnisrechnungssätze zu Standardkosten neu bewerten</li>
-                <li>Eine Kundennummer ändern</li>
-                <li>Eine Materialnummer ändern</li>
-                <li>Bestandsdatensätze erzeugen</li>
+                <li>Ergebnisrechnungssï¿½tze zu Standardkosten neu bewerten</li>
+                <li>Eine Kundennummer ï¿½ndern</li>
+                <li>Eine Materialnummer ï¿½ndern</li>
+                <li>Bestandsdatensï¿½tze erzeugen</li>
                 <li>Hauptbuchsalden nachbuchen</li>
               </ul>
               <br />
@@ -750,13 +750,13 @@ if (!isset($_POST['Submit'])) {
   }
 ?>
               <ul>
-                <li>Kundenaufträge</li>
+                <li>Kundenauftrï¿½ge</li>
                 <li>Preisfestlegung</li>
                 <li>Lieferangaben und Versandkosten</li>
-                <li>Kundenaufträge suchen</li>
+                <li>Kundenauftrï¿½ge suchen</li>
                 <li>Faktura</li>
                 <li>Forderungen / Debitorenkonten</li>
-                <li>Debitoren-Zahlungseingänge</li>
+                <li>Debitoren-Zahlungseingï¿½nge</li>
                 <li>Debitoren-Ausgleich</li>
                 <li>Umsatzauswertungen</li>
                 <li>Bestellungen</li>

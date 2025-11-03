@@ -121,7 +121,7 @@ function SetRLZeroAtPointOfSales($StockID){
 function round_multiple_of($n,$x=1) {
 	if ($x == 0){
 		return 0;
-	}else{
+	} else {
 		return round($n/$x)*$x;
 	}
 }
@@ -129,7 +129,7 @@ function round_multiple_of($n,$x=1) {
 function round_down_multiple_of($n,$x=1) {
 	if ($x == 0){
 		return 0;
-	}else{
+	} else {
 		return floor($n/$x)*$x;
 	}
 }
@@ -145,30 +145,30 @@ function IsPriceRoundedOK($n, $up="UP"){
 function round_price($n, $up="UP"){
 
 	$price = $n;
-	if($n <= PRICE_ROUNDING_LIMIT01){
-		if(!multiple_of($n, PRICE_ROUNDING_STEP01)){
-			if($up == "UP"){
+	if ($n <= PRICE_ROUNDING_LIMIT01){
+		if (!multiple_of($n, PRICE_ROUNDING_STEP01)){
+			if ($up == "UP"){
 				$price = round_multiple_of($n + (PRICE_ROUNDING_STEP01/2),PRICE_ROUNDING_STEP01);
-			}else{
+			} else {
 				$price = round_multiple_of($n - (PRICE_ROUNDING_STEP01/2), PRICE_ROUNDING_STEP01);
 			}
 		}
-	}elseif($n <= PRICE_ROUNDING_LIMIT02){
-		if(!multiple_of($n, PRICE_ROUNDING_STEP02)){
-			if($up == "UP"){
+	} elseif ($n <= PRICE_ROUNDING_LIMIT02){
+		if (!multiple_of($n, PRICE_ROUNDING_STEP02)){
+			if ($up == "UP"){
 				$price = round_multiple_of($n + (PRICE_ROUNDING_STEP02/2),PRICE_ROUNDING_STEP02);
-			}else{
+			} else {
 				$price = round_multiple_of($n - (PRICE_ROUNDING_STEP02/2), PRICE_ROUNDING_STEP02);
 			}
 		}
 		if (($price % PRICE_ROUNDING_COMMERCIAL_MODULE02) == 0){
 			$price = $price - PRICE_ROUNDING_COMMERCIAL_STEP02;
 		}
-	}else{
-		if(!multiple_of($n, PRICE_ROUNDING_STEP03)){
-			if($up == "UP"){
+	} else {
+		if (!multiple_of($n, PRICE_ROUNDING_STEP03)){
+			if ($up == "UP"){
 				$price = round_multiple_of($n + (PRICE_ROUNDING_STEP03/2),PRICE_ROUNDING_STEP03);
-			}else{
+			} else {
 				$price = round_multiple_of($n  - (PRICE_ROUNDING_STEP03/2), PRICE_ROUNDING_STEP03);
 			}
 		}
@@ -184,11 +184,11 @@ function correction_for_low_end_prices($n){
 	
 	if ($n <= SMALL_PRICE_CALCULATED_STEP01){
 		$n = SMALL_PRICE_CORRECTED_STEP01;
-	}else if ($n <= SMALL_PRICE_CALCULATED_STEP02){
+	} elseif ($n <= SMALL_PRICE_CALCULATED_STEP02){
 		$n = SMALL_PRICE_CORRECTED_STEP02;
-	}else if ($n <= SMALL_PRICE_CALCULATED_STEP03){
+	} elseif ($n <= SMALL_PRICE_CALCULATED_STEP03){
 		$n = SMALL_PRICE_CORRECTED_STEP03;
-	}else if ($n <= SMALL_PRICE_CALCULATED_STEP04){
+	} elseif ($n <= SMALL_PRICE_CALCULATED_STEP04){
 		$n = SMALL_PRICE_CORRECTED_STEP04;
 	}
 	return $n;
@@ -241,7 +241,7 @@ function UpdatePriceItem($StockID, $SalesType, $Currency, $Price, $StartDate, $S
 			
 	$ErrMsg = __('Could not add the new KL price');
 	$Result = DB_query($SQL,$ErrMsg);
-	if($ShowMessages){
+	if ($ShowMessages){
 		prnMsg(__('The ') . $SalesType . __(' price for '). $StockID .  ' has been set to '. locale_number_format($Price, 2) .  ' ' . $Currency,'success');
 	}
 }
@@ -249,23 +249,23 @@ function UpdatePriceItem($StockID, $SalesType, $Currency, $Price, $StartDate, $S
 function UpdateDiscountCategory($StockID, $NewCategory, $DiscountCode){
 	if ($NewCategory == "DISC8A"){
 		$reason = "KL Move To 80% Discount";
-	}else if ($NewCategory == "DISC8B"){
+	} elseif ($NewCategory == "DISC8B"){
 		$reason = "BLINK Move To 80% Discount";
-	}else if ($NewCategory == "DISC8G"){
+	} elseif ($NewCategory == "DISC8G"){
 		$reason = "GENERAL Move To 80% Discount";
-	}else if ($NewCategory == "DISC5A"){
+	} elseif ($NewCategory == "DISC5A"){
 		$reason = "KL Move To 50% Discount";
-	}else if ($NewCategory == "DISC5B"){
+	} elseif ($NewCategory == "DISC5B"){
 		$reason = "BLINK Move To 50% Discount";
-	}else if ($NewCategory == "DISC5G"){
+	} elseif ($NewCategory == "DISC5G"){
 		$reason = "GENERAL Move To 50% Discount";
-	}else if ($NewCategory == "DISC2A"){
+	} elseif ($NewCategory == "DISC2A"){
 		$reason = "KL Move To 20% Discount";
-	}else if ($NewCategory == "DISC2B"){
+	} elseif ($NewCategory == "DISC2B"){
 		$reason = "BLINK Move To 20% Discount";
-	}else if ($NewCategory == "DISC2G"){
+	} elseif ($NewCategory == "DISC2G"){
 		$reason = "GENERAL Move To 20% Discount";
-	}else{
+	} else {
 		$reason = "";
 	}
 

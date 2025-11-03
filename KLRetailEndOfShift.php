@@ -77,37 +77,37 @@ if (DB_num_rows($Result) != 0){
 		$TextInvoice = $MyRow['customerref'];
 		if ($MyRow['klpaidcash'] > 0){
 			$TextPayment = 'Cash: ' . number_format($MyRow['klpaidcash'],0);
-			if(!$FirstLinePrinted){
+			if (!$FirstLinePrinted){
 				$TextToPrint .= DoubleJustified($TextInvoice, $TextPayment, $LineLenghtCharA, " ");
 				$FirstLinePrinted = true;
-			}else{
+			} else {
 				$TextToPrint .=  $RightJustified . $TextPayment . $NewLine;
 			}
 		}
 		if ($MyRow['klpaidcreditcard'] > 0){
 			$TextPayment = 'Credit Card: ' . number_format($MyRow['klpaidcreditcard'],0);
-			if(!$FirstLinePrinted){
+			if (!$FirstLinePrinted){
 				$TextToPrint .= DoubleJustified($TextInvoice, $TextPayment, $LineLenghtCharA, " ");
 				$FirstLinePrinted = true;
-			}else{
+			} else {
 				$TextToPrint .=  $RightJustified . $TextPayment . $NewLine;
 			}
 		}
 		if ($MyRow['klreturnedgoods'] > 0){
 			$TextPayment = 'Returned Goods: ' . number_format($MyRow['klreturnedgoods'],0);
-			if(!$FirstLinePrinted){
+			if (!$FirstLinePrinted){
 				$TextToPrint .= DoubleJustified($TextInvoice, $TextPayment, $LineLenghtCharA, " ");
 				$FirstLinePrinted = true;
-			}else{
+			} else {
 				$TextToPrint .=  $RightJustified . $TextPayment . $NewLine;
 			}
 		}
 		if ($MyRow['klvouchers'] > 0){
 			$TextPayment = 'Voucher/Discount: ' . number_format($MyRow['klvouchers'],0);
-			if(!$FirstLinePrinted){
+			if (!$FirstLinePrinted){
 				$TextToPrint .= DoubleJustified($TextInvoice, $TextPayment, $LineLenghtCharA, " ");
 				$FirstLinePrinted = true;
-			}else{
+			} else {
 				$TextToPrint .=  $RightJustified . $TextPayment . $NewLine;
 			}
 		}
@@ -146,7 +146,7 @@ if (DB_num_rows($Result) != 0){
 			</tr>';
 	echo '</tbody></table>
 			</div>';
-}else{
+} else {
 	$TextToPrint .= $Emphasized . $CenteredJustified . "NO SALES TODAY" . $NewLine;
 }
 

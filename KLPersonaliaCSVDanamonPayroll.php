@@ -29,16 +29,16 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 	
 	if ($SalaryType == "MONTHLY"){
 		$PageTitle = __('Export CSV Danamon (between Danamon Payroll Accounts) Monthly Salary for '). ConvertSQLDate($PeriodOfFile);
-	}elseif($SalaryType == "THRONLY"){
+	} elseif ($SalaryType == "THRONLY"){
 		$PageTitle = __('Export CSV Danamon (between Danamon Payroll Accounts) THR Only for '). ConvertSQLDate($PeriodOfFile);
-	}else{
+	} else {
 		$InputErrorMessage = "The type of Salary " . $SalaryType . " is not accepted";
 		$InputError = true;
 	}
 
 	// The month selected should be last month for Monthly salaries
 	if ($SalaryType == "MONTHLY"){
-		if($PeriodNow != ($PeriodOfFile + 1)){
+		if ($PeriodNow != ($PeriodOfFile + 1)){
 			$InputErrorMessage = "The month selected to export Monthly Salary CSV File for Transfer between Danamon Payroll Accounts should be last month";
 			$InputError = true;
 		}
@@ -46,13 +46,13 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 		
 	// The month selected should be current month for THR Only salaries
 	if ($SalaryType == "THRONLY"){
-		if($PeriodNow != ($PeriodOfFile)){
+		if ($PeriodNow != ($PeriodOfFile)){
 			$InputErrorMessage = "The month selected to export THR Only CSV File for Transfer between Danamon Payroll Accounts should be current month";
 			$InputError = true;
 		}
 	}
 
-	if(!$InputError){
+	if (!$InputError){
 		$SQL = "SELECT bankaccount,
 						bankaccountholder,
 						bankcode,
@@ -90,7 +90,7 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 			header("Content-Type: text/csv");
 			if ($SalaryType == "MONTHLY"){
 				header("Content-Disposition: attachment; filename=GajiTransferDanamonPayroll-" . $Today . ".csv");
-			}else{
+			} else {
 				header("Content-Disposition: attachment; filename=THRTransferDanamonpayroll-" . $Today . ".csv");
 			}
 			$output = fopen("php://output", "w");
@@ -119,7 +119,7 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 
 				if ($SalaryType == "MONTHLY"){
 					$TextMessage = substr('Gaji' . ' '. $PeriodMonth,0,20);
-				}else{
+				} else {
 					$TextMessage = substr('THR' . ' '. $PeriodMonth,0,20);
 				}
 								
@@ -132,12 +132,12 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 				$i++;
 			}
 			fclose($output);
-		}else{
+		} else {
 			include('includes/header.php');
 			prnMsg('No data to export CSV File for Transfer between Danamon Payroll Accounts ');
 			include('includes/footer.php');
 		}
-	}else{
+	} else {
 		include('includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 

@@ -447,28 +447,28 @@ if ((!isset($_POST['SearchSuppliers']) or $_POST['SearchSuppliers'] == '') and (
 	$_POST['SuppDelAdd4'] = $_SESSION['PO' . $identifier]->SuppDelAdd4;
 	$_POST['SuppDelAdd5'] = $_SESSION['PO' . $identifier]->SuppDelAdd5;
 	$_POST['SuppDelAdd6'] = $_SESSION['PO' . $identifier]->SuppDelAdd6;
-	if(!isset($_POST['KLAgreedDeliveryDate'])){
+	if (!isset($_POST['KLAgreedDeliveryDate'])){
 		$_POST['KLAgreedDeliveryDate'] = $_SESSION['PO' . $identifier]->KLAgreedDeliveryDate;
 	}
-	if(!isset($_POST['DeliveryDate'])){
+	if (!isset($_POST['DeliveryDate'])){
 		$_POST['DeliveryDate'] = $_SESSION['PO' . $identifier]->DeliveryDate;
 	}
-	if(!isset($_POST['KLStatus'])){
+	if (!isset($_POST['KLStatus'])){
 		$_POST['KLStatus'] = $_SESSION['PO' . $identifier]->KLStatus;
 	}
-	if(!isset($_POST['KLPaymentDate'])){
+	if (!isset($_POST['KLPaymentDate'])){
 		$_POST['KLPaymentDate'] = $_SESSION['PO' . $identifier]->KLPaymentDate;
 	}
-	if(!isset($_POST['KLShipmentDate'])){
+	if (!isset($_POST['KLShipmentDate'])){
 		$_POST['KLShipmentDate'] = $_SESSION['PO' . $identifier]->KLShipmentDate;
 	}
-	if(!isset($_POST['KLShipmentAWB'])){
+	if (!isset($_POST['KLShipmentAWB'])){
 		$_POST['KLShipmentAWB'] = $_SESSION['PO' . $identifier]->KLShipmentAWB;
 	}
-	if(!isset($_POST['KLCustomsDate'])){
+	if (!isset($_POST['KLCustomsDate'])){
 		$_POST['KLArrivalDate'] = $_SESSION['PO' . $identifier]->KLArrivalDate;
 	}
-	if(!isset($_POST['KLArrivalDate'])){
+	if (!isset($_POST['KLArrivalDate'])){
 		$_POST['KLArrivalDate'] = $_SESSION['PO' . $identifier]->KLArrivalDate;
 	}
 

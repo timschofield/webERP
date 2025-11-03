@@ -36,7 +36,7 @@ if (isset($_POST['submit'])) {
 		prnMsg( __('The zone code cannot be an empty string'),'error');
 		$Errors[$i] = 'LocationZone';
 		$i++;
-	} elseif( trim($_POST['description'])==''){
+	} elseif ( trim($_POST['description'])==''){
 		$InputError = 1;
 		prnMsg(__('The zone description cannot be empty'),'error');
 		$Errors[$i] = 'LocationZone';
@@ -157,7 +157,7 @@ if (isset($_POST['submit'])) {
 }
 
 
-if(isset($_POST['Cancel'])){
+if (isset($_POST['Cancel'])){
 	unset($SelectedCode);
 	unset($_POST['code']);
 	unset($_POST['description']);
@@ -218,37 +218,37 @@ while ($MyRow = DB_fetch_array($Result)) {
 		echo '<tr class="OddTableRows">';
 		$k=1;
 	}
-	if($MyRow['smarttransferonweekday0'] == 1) {
+	if ($MyRow['smarttransferonweekday0'] == 1) {
 		$TransferOn0 = 'Yes';
 	} else {
 		$TransferOn0 = '';
 	}
-	if($MyRow['smarttransferonweekday1'] == 1) {
+	if ($MyRow['smarttransferonweekday1'] == 1) {
 		$TransferOn1 = 'Yes';
 	} else {
 		$TransferOn1 = '';
 	}
-	if($MyRow['smarttransferonweekday2'] == 1) {
+	if ($MyRow['smarttransferonweekday2'] == 1) {
 		$TransferOn2 = 'Yes';
 	} else {
 		$TransferOn2 = '';
 	}
-	if($MyRow['smarttransferonweekday3'] == 1) {
+	if ($MyRow['smarttransferonweekday3'] == 1) {
 		$TransferOn3 = 'Yes';
 	} else {
 		$TransferOn3 = '';
 	}
-	if($MyRow['smarttransferonweekday4'] == 1) {
+	if ($MyRow['smarttransferonweekday4'] == 1) {
 		$TransferOn4 = 'Yes';
 	} else {
 		$TransferOn4 = '';
 	}
-	if($MyRow['smarttransferonweekday5'] == 1) {
+	if ($MyRow['smarttransferonweekday5'] == 1) {
 		$TransferOn5 = 'Yes';
 	} else {
 		$TransferOn5 = '';
 	}
-	if($MyRow['smarttransferonweekday6'] == 1) {
+	if ($MyRow['smarttransferonweekday6'] == 1) {
 		$TransferOn6 = 'Yes';
 	} else {
 		$TransferOn6 = '';
@@ -354,25 +354,25 @@ if (! isset($_GET['delete'])) {
 	if (!isset($_POST['description'])) {
 		$_POST['description']='';
 	}
-	if(!isset($_POST['smarttransferonweekday0'])) {
+	if (!isset($_POST['smarttransferonweekday0'])) {
 		$_POST['smarttransferonweekday0'] = 0;
 	}
-	if(!isset($_POST['smarttransferonweekday1'])) {
+	if (!isset($_POST['smarttransferonweekday1'])) {
 		$_POST['smarttransferonweekday1'] = 1;
 	}
-	if(!isset($_POST['smarttransferonweekday2'])) {
+	if (!isset($_POST['smarttransferonweekday2'])) {
 		$_POST['smarttransferonweekday2'] = 1;
 	}
-	if(!isset($_POST['smarttransferonweekday3'])) {
+	if (!isset($_POST['smarttransferonweekday3'])) {
 		$_POST['smarttransferonweekday3'] = 1;
 	}
-	if(!isset($_POST['smarttransferonweekday4'])) {
+	if (!isset($_POST['smarttransferonweekday4'])) {
 		$_POST['smarttransferonweekday4'] = 1;
 	}
-	if(!isset($_POST['smarttransferonweekday5'])) {
+	if (!isset($_POST['smarttransferonweekday5'])) {
 		$_POST['smarttransferonweekday5'] = 1;
 	}
-	if(!isset($_POST['smarttransferonweekday6'])) {
+	if (!isset($_POST['smarttransferonweekday6'])) {
 		$_POST['smarttransferonweekday6'] = 1;
 	}
 
@@ -385,12 +385,12 @@ if (! isset($_GET['delete'])) {
 	echo '<tr>
 			<td>' . __('Allow KL Smart Transfers on Sunday?') . ':</td>
 			<td><select name="smarttransferonweekday0">';
-	if($_POST['smarttransferonweekday0']==1) {
+	if ($_POST['smarttransferonweekday0']==1) {
 		echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
 	} else {
 		echo '<option value="1">' . __('Yes') . '</option>';
 	}
-	if($_POST['smarttransferonweekday0']==0) {
+	if ($_POST['smarttransferonweekday0']==0) {
 		echo '<option selected="selected" value="0">' . __('No') . '</option>';
 	} else {
 		echo '<option value="0">' . __('No') . '</option>';
@@ -400,12 +400,12 @@ if (! isset($_GET['delete'])) {
 	echo '<tr>
 			<td>' . __('Allow KL Smart Transfers on Monday?') . ':</td>
 			<td><select name="smarttransferonweekday1">';
-	if($_POST['smarttransferonweekday1']==1) {
+	if ($_POST['smarttransferonweekday1']==1) {
 		echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
 	} else {
 		echo '<option value="1">' . __('Yes') . '</option>';
 	}
-	if($_POST['smarttransferonweekday1']==0) {
+	if ($_POST['smarttransferonweekday1']==0) {
 		echo '<option selected="selected" value="0">' . __('No') . '</option>';
 	} else {
 		echo '<option value="0">' . __('No') . '</option>';
@@ -415,12 +415,12 @@ if (! isset($_GET['delete'])) {
 	echo '<tr>
 			<td>' . __('Allow KL Smart Transfers on Tuesday?') . ':</td>
 			<td><select name="smarttransferonweekday2">';
-	if($_POST['smarttransferonweekday2']==1) {
+	if ($_POST['smarttransferonweekday2']==1) {
 		echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
 	} else {
 		echo '<option value="1">' . __('Yes') . '</option>';
 	}
-	if($_POST['smarttransferonweekday2']==0) {
+	if ($_POST['smarttransferonweekday2']==0) {
 		echo '<option selected="selected" value="0">' . __('No') . '</option>';
 	} else {
 		echo '<option value="0">' . __('No') . '</option>';
@@ -430,12 +430,12 @@ if (! isset($_GET['delete'])) {
 	echo '<tr>
 			<td>' . __('Allow KL Smart Transfers on Wednesday?') . ':</td>
 			<td><select name="smarttransferonweekday3">';
-	if($_POST['smarttransferonweekday3']==1) {
+	if ($_POST['smarttransferonweekday3']==1) {
 		echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
 	} else {
 		echo '<option value="1">' . __('Yes') . '</option>';
 	}
-	if($_POST['smarttransferonweekday3']==0) {
+	if ($_POST['smarttransferonweekday3']==0) {
 		echo '<option selected="selected" value="0">' . __('No') . '</option>';
 	} else {
 		echo '<option value="0">' . __('No') . '</option>';
@@ -445,12 +445,12 @@ if (! isset($_GET['delete'])) {
 	echo '<tr>
 			<td>' . __('Allow KL Smart Transfers on Thursday?') . ':</td>
 			<td><select name="smarttransferonweekday4">';
-	if($_POST['smarttransferonweekday4']==1) {
+	if ($_POST['smarttransferonweekday4']==1) {
 		echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
 	} else {
 		echo '<option value="1">' . __('Yes') . '</option>';
 	}
-	if($_POST['smarttransferonweekday4']==0) {
+	if ($_POST['smarttransferonweekday4']==0) {
 		echo '<option selected="selected" value="0">' . __('No') . '</option>';
 	} else {
 		echo '<option value="0">' . __('No') . '</option>';
@@ -460,12 +460,12 @@ if (! isset($_GET['delete'])) {
 	echo '<tr>
 			<td>' . __('Allow KL Smart Transfers on Friday?') . ':</td>
 			<td><select name="smarttransferonweekday5">';
-	if($_POST['smarttransferonweekday5']==1) {
+	if ($_POST['smarttransferonweekday5']==1) {
 		echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
 	} else {
 		echo '<option value="1">' . __('Yes') . '</option>';
 	}
-	if($_POST['smarttransferonweekday5']==0) {
+	if ($_POST['smarttransferonweekday5']==0) {
 		echo '<option selected="selected" value="0">' . __('No') . '</option>';
 	} else {
 		echo '<option value="0">' . __('No') . '</option>';
@@ -475,12 +475,12 @@ if (! isset($_GET['delete'])) {
 	echo '<tr>
 			<td>' . __('Allow KL Smart Transfers on Saturday?') . ':</td>
 			<td><select name="smarttransferonweekday6">';
-	if($_POST['smarttransferonweekday6']==1) {
+	if ($_POST['smarttransferonweekday6']==1) {
 		echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
 	} else {
 		echo '<option value="1">' . __('Yes') . '</option>';
 	}
-	if($_POST['smarttransferonweekday6']==0) {
+	if ($_POST['smarttransferonweekday6']==0) {
 		echo '<option selected="selected" value="0">' . __('No') . '</option>';
 	} else {
 		echo '<option value="0">' . __('No') . '</option>';

@@ -71,7 +71,7 @@ if (($StockID != '') AND ($ServiceCode != '')){
 
 	if (DB_num_rows($Result) == 0){
 		$Message = "Stock code can't be found";
-	}else{
+	} else {
 		if (($MyRow['discontinued'] == 1) 
 			OR (ItemInList($MyRow['categoryid'], LIST_STOCK_CATEGORIES_OUTLET))){
 			// for discounted or obsolete //
@@ -84,24 +84,24 @@ if (($StockID != '') AND ($ServiceCode != '')){
 				OR ($ServiceCode == "WIREBERKARAT") 
 				OR ($ServiceCode == "_LAINLAIN")){
 				$Message = "Service fee can't be calculated now. Send to office to be evaluated.";
-			}else{
+			} else {
 				if (($ServiceCode == "BERUBAHWARNA")
 					OR ($ServiceCode == "KOMPONENPECAH") 
 					OR ($ServiceCode == "KOMPONENRUSAK") 
 					OR ($ServiceCode == "PATRI") 
 					OR ($ServiceCode == "RANTAIPUTUS")){
 					$Message = "CAN'T be serviced.";
-				}else{
+				} else {
 					if ($MyRow['price'] <= RETAIL_PRICE_FOR_SERVICE_TIER_01){
 						$FeeService = $MyRow['pricetier01'];
-					}elseif ($MyRow['price'] <= RETAIL_PRICE_FOR_SERVICE_TIER_02){
+					} elseif ($MyRow['price'] <= RETAIL_PRICE_FOR_SERVICE_TIER_02){
 						$FeeService = $MyRow['pricetier02'];
-					}else{
+					} else {
 						$FeeService = $MyRow['pricetier03'];
 					}
 					if ($MyRow['klservicebyreplacement'] == 1){
 						$FeeReplacement = $MyRow['actualcost'] * FACTOR_SC_SERVICE_BY_REPLACEMENT;
-					}else{
+					} else {
 						$FeeReplacement = 0;
 					}
 					$Fee = round_multiple_of(max($FeeService, $FeeReplacement),10000);
@@ -112,24 +112,24 @@ if (($StockID != '') AND ($ServiceCode != '')){
 					}
 				}
 			}
-		}else{
+		} else {
 			if ($ServiceCode == "_LAINLAIN"){
 				$Message = "Service fee can't be calculated now. Send to office to be evaluated.";
-			}else{
+			} else {
 				if (($ServiceCode == "BERUBAHWARNA") 
 					AND (ItemInList($MyRow['categoryid'], LIST_STOCK_CATEGORIES_BLINK))){
 					$Message = "CAN'T be serviced.";
-				}else{
+				} else {
 					if ($MyRow['price'] <= RETAIL_PRICE_FOR_SERVICE_TIER_01){
 						$FeeService = $MyRow['pricetier01'];
-					}elseif ($MyRow['price'] <= RETAIL_PRICE_FOR_SERVICE_TIER_02){
+					} elseif ($MyRow['price'] <= RETAIL_PRICE_FOR_SERVICE_TIER_02){
 						$FeeService = $MyRow['pricetier02'];
-					}else{
+					} else {
 						$FeeService = $MyRow['pricetier03'];
 					}
 					if ($MyRow['klservicebyreplacement'] == 1){
 						$FeeReplacement = $MyRow['actualcost'] * FACTOR_SC_SERVICE_BY_REPLACEMENT;
-					}else{
+					} else {
 						$FeeReplacement = 0;
 					}
 					$Fee = round_multiple_of(max($FeeService, $FeeReplacement),10000);

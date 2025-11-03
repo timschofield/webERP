@@ -1513,7 +1513,7 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 
 					$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . __('The Consignment Sales Details could not be inserted because');
 					$Result = DB_query($SQL,$ErrMsg,'',true);
-				}else{
+				} else {
 					$AccountCOGS = GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType);
 				}
 				// KL RICARD End of Consignment sales for PTADU MODIFICATIONS
@@ -1981,7 +1981,7 @@ function MarkWebErpOrderInOpenCartAs($OrderNo, $Status, $AWB){
 			if ($Status == OPENCART_ORDER_STATUS_SHIPPED){
 				$ReasonChangeStatusId = "webERP --> Order shipped via " . $MyRow['shippername'] . " AWB# = " . $AWB;  
 				UpdateOpenCartOrderStatus($MyRow['customerref'], $Status, 1, $MyRow['shipvia'], $AWB, $ReasonChangeStatusId);
-			}else{
+			} else {
 				$ReasonChangeStatusId = "webERP --> Change of status";  
 				UpdateOpenCartOrderStatus($MyRow['customerref'], $Status, 1, "", "", $ReasonChangeStatusId);
 			}

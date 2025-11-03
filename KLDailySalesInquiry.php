@@ -67,7 +67,7 @@ $SQL = "SELECT 	orddate AS trandate,
 			
 if ($_SESSION['SalesmanLogin'] != '') {
 	$SQL .= " AND salesorders.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
-}elseif ($_POST['Salesperson']!='All') {
+} elseif ($_POST['Salesperson']!='All') {
 	$SQL .= " AND salesorders.salesperson='" . $_POST['Salesperson'] . "'";
 }
 
@@ -130,7 +130,7 @@ for ($i=0;$i<$ColumnCounter;$i++){
 $LastDayOfMonth = DayOfMonthFromSQLDate($EndDateSQL);
 for ($i=1;$i<=$LastDayOfMonth;$i++){
 		$ColumnCounter++;
-		if(isset($DaySalesArray[$i])) {
+		if (isset($DaySalesArray[$i])) {
 			echo '<td class="number" style="outline: 1px solid gray;">' . locale_number_format($DaySalesArray[$i]['Sales'],0) . '<br />' .  locale_number_format($DaySalesArray[$i]['GPPercent']*100,1) . '%</td>';
 		} else {
 			echo '<td class="number" style="outline: 1px solid gray;">' . locale_number_format(0,0) . '<br />' .  locale_number_format(0,1) . '%</td>';
@@ -140,7 +140,7 @@ for ($i=1;$i<=$LastDayOfMonth;$i++){
 						for ($j=1;$j<=7;$j++){
 								   echo '<th>' . $DayNumber. '</th>';
 							$DayNumber++;
-							if($DayNumber>$LastDayOfMonth){
+							if ($DayNumber>$LastDayOfMonth){
 								   break;
 							}
 						}

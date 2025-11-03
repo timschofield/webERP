@@ -10,12 +10,12 @@ include('includes/KLDefines.php');
 include('includes/KLUIGeneralFunctions.php');
 
 // The default company to Invoice from (PTADU).
-if(!isset($_POST['CompanyFrom'])) {
+if (!isset($_POST['CompanyFrom'])) {
 	$_POST['CompanyFrom'] = 'PTADU';
 }
 
 // The default company to Invoice to (PTSMH).
-if(!isset($_POST['CompanyTo'])) {
+if (!isset($_POST['CompanyTo'])) {
 	$_POST['CompanyTo'] = 'PTSMH';
 }
 
@@ -25,15 +25,15 @@ if (!isset($_POST['EndDate'])){
 }
 
 // The default draft or Invoice should be draft.
-if(!isset($_POST['DraftOrInvoice'])) {
+if (!isset($_POST['DraftOrInvoice'])) {
 	$_POST['DraftOrInvoice'] = 'DRAFT';
 }
 
-if(!isset($_POST['NomorSeriFP'])) {
+if (!isset($_POST['NomorSeriFP'])) {
 	$_POST['NomorSeriFP'] = '0000000000000';
 }
 
-if(!isset($_POST['DecimalDigits'])) {
+if (!isset($_POST['DecimalDigits'])) {
 	$_POST['DecimalDigits'] = 0;
 }
 
@@ -54,7 +54,7 @@ function submit($CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $NomorSeriF
 
 	//first off validate inputs sensible
 
-	if(!$InputError){
+	if (!$InputError){
 		$SQL = "SELECT klconsignment.stockid,
 						stockmaster.description,
 					SUM(klconsignment.qty) AS qty,
@@ -302,12 +302,12 @@ function submit($CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $NomorSeriF
 			fwrite($output, $OFLines);
 			fclose($output);
 			
-		}else{
+		} else {
 			include('includes/header.php');
 			prnMsg('No data to create a Faktur Pajak','warn');
 			include('includes/footer.php');
 		}
-	}else{
+	} else {
 		include('includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 

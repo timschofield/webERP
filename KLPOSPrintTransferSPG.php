@@ -54,7 +54,7 @@ if (!$InputError AND $TransferReference != ''){
 	$TextActionToPrint = 'Print Transfer number: ' . $TransferReference;
 	include('includes/KLSilentPrinting.php');
 	//################## PRINTING STUFF ##################### 
-}else{
+} else {
 	prnMsg($ErrorMessage,'error');
 }
 

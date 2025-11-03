@@ -139,19 +139,19 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 			}
 
 			// KL RICARD Add custom fields to SQL
-			if(!isset( $_SESSION['PO' . $identifier]->KLAgreedDeliveryDate)){
+			if (!isset( $_SESSION['PO' . $identifier]->KLAgreedDeliveryDate)){
 				$_SESSION['PO' . $identifier]->KLAgreedDeliveryDate = ConvertSQLDate('1000-01-01');
 			}
-			if(!isset( $_SESSION['PO' . $identifier]->KLPaymentDate)){
+			if (!isset( $_SESSION['PO' . $identifier]->KLPaymentDate)){
 				$_SESSION['PO' . $identifier]->KLPaymentDate = ConvertSQLDate('1000-01-01');
 			}
-			if(!isset( $_SESSION['PO' . $identifier]->KLShipmentDate)){
+			if (!isset( $_SESSION['PO' . $identifier]->KLShipmentDate)){
 				$_SESSION['PO' . $identifier]->KLShipmentDate = ConvertSQLDate('1000-01-01');
 			}
-			if(!isset( $_SESSION['PO' . $identifier]->KLCustomsDate)){
+			if (!isset( $_SESSION['PO' . $identifier]->KLCustomsDate)){
 				$_SESSION['PO' . $identifier]->KLCustomsDate = ConvertSQLDate('1000-01-01');
 			}
-			if(!isset( $_SESSION['PO' . $identifier]->KLArrivalDate)){
+			if (!isset( $_SESSION['PO' . $identifier]->KLArrivalDate)){
 				$_SESSION['PO' . $identifier]->KLArrivalDate = ConvertSQLDate('1000-01-01');
 			}
 

@@ -796,7 +796,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 						$PaymentItem->Narrative . "\n" ;
 		}
 		
-		if($emailToBeSent) {
+		if ($emailToBeSent) {
 			$GLAccountEmail = "kl-glcontrolledtx@kapal-laut.com";
 			$EmailSubject = __('GL transaction to be controlled'); 
 			$EmailText .= __('Email sent by webERP'). ' ' .date('d/M/Y H:i:s').'';

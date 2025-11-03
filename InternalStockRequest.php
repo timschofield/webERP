@@ -35,7 +35,7 @@ if ($KL_SPGSeniorOrSupport
 	if (isset($_POST['Department'])) {
 			$_SESSION['Request']->Department = $_POST['Department'];
 	}
-	else{
+	else {
 		if ($_SESSION['AllowedDepartment'] == 0) {
 			// any internal department allowed
 			$_POST['Department'] = '';
@@ -245,7 +245,7 @@ echo '<field>
 if ($KL_SPGSeniorOrSupport 
 	OR $KL_SPGJunior){
 		echo '<fieldtext>' . "Kantor KL". '</fieldtext>';
-}else{
+} else {
 	/* KL RICARD for our use, we prefer AND locationusers.canview=1 */
 	$SQL = "SELECT locations.loccode,
 				locationname

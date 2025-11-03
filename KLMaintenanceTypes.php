@@ -36,7 +36,7 @@ if (isset($_POST['submit'])) {
 		prnMsg( __('The maintenance code cannot be an empty string or spaces'),'error');
 		$Errors[$i] = 'MaintenanceType';
 		$i++;
-	} elseif( trim($_POST['Description'])==''){
+	} elseif ( trim($_POST['Description'])==''){
 		$InputError = 1;
 		prnMsg(__('The maintenance description cannot be empty'),'error');
 		$Errors[$i] = 'MaintenanceType';
@@ -119,7 +119,7 @@ if (isset($_POST['submit'])) {
 	} 
 }
 
-if(isset($_POST['Cancel'])){
+if (isset($_POST['Cancel'])){
 	unset($SelectedType);
 	unset($_POST['MaintenanceType']);
 	unset($_POST['Description']);

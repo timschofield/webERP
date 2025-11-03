@@ -59,7 +59,7 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . 
 		'</p>';
 
-	if(!$InputError){
+	if (!$InputError){
 	
 		$worksheet = $SpreadSheet->getActiveSheet();
 		
@@ -101,9 +101,9 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 				
 				if ($MyRow['manufacturers_id'] == "1"){
 					$ShopeeStoreId = SHOPEE_STOREID_KAPAL_LAUT;
-				}else if ($MyRow['manufacturers_id'] == "2"){
+				} elseif ($MyRow['manufacturers_id'] == "2"){
 					$ShopeeStoreId = SHOPEE_STOREID_BLINK;
-				}else{
+				} else {
 					$Error = "STORE";
 				}
 				
@@ -121,7 +121,7 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 					// Already exists, so only update the info with the newest shopee link and shopee product id if needed
 					ItemUpdateShopeeInfo($StockID, $EnabledShopee, $ShopeeProductId, $URLShopee);
 					$Action = "Update";
-				}else{
+				} else {
 					// does not exist, so need to insert a new row for the item
 					ItemInsertShopeeInfo($StockID, $EnabledShopee, $ShopeeProductId, $URLShopee);
 					$Action = "Insert";

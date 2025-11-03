@@ -31,9 +31,9 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 
 	if ($SalaryType == "MONTHLY"){
 		$PageTitle = __('Slip Gaji ') . $PeriodMonth;
-	}elseif($SalaryType == "THRONLY"){
+	} elseif ($SalaryType == "THRONLY"){
 		$PageTitle = __('Slip THR ') . $PeriodMonth;
-	}else{
+	} else {
 		$InputErrorMessage = "The type of Salary " . $SalaryType . " is not accepted";
 		$InputError = true;
 	}
@@ -42,7 +42,7 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 
 	// The month selected should be last month for Monthly salaries
 	if ($SalaryType == "MONTHLY"){
-		if($PeriodNow != ($PeriodOfFile + 1)){
+		if ($PeriodNow != ($PeriodOfFile + 1)){
 			$InputErrorMessage = "The month selected to export PDF Monthly Salary Slips should be last month";
 			$InputError = true;
 		}
@@ -50,13 +50,13 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 	
 	// The month selected should be current month for THR Only salaries
 	if ($SalaryType == "THRONLY"){
-		if($PeriodNow != ($PeriodOfFile)){
+		if ($PeriodNow != ($PeriodOfFile)){
 			$InputErrorMessage = "The month selected to export PDF THR Only Salary Slips should be this current month";
 			$InputError = true;
 		}
 	}
 
-	if(!$InputError){
+	if (!$InputError){
 		$TextAdmin = "";
 		
 		// populates $SQL and $Result with the data to extract the salary slips
@@ -70,7 +70,7 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 				// Prepare filename
 				if ($SalaryType == "MONTHLY"){
 					$CoreFileName = $MyRow['codename'] . '-SlipGaji-' . $YearMonth;
-				}else{
+				} else {
 					$CoreFileName = $MyRow['codename'] . '-SlipTHR-' . $YearMonth;
 				}
 				
@@ -110,10 +110,10 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 				if ($Company == 'PTBB'){
 					$SendFrom = 'accounting@bumibiru.com';
 					$SendTo = 'accounting@bumibiru.com'; // default SendTo address in case employee has no email
-				}elseif ($Company == 'PTSMH'){
+				} elseif ($Company == 'PTSMH'){
 					$SendFrom = 'accounting@ptsmh.com';
 					$SendTo = 'accounting@ptsmh.com'; // default SendTo address in case employee has no email
-				}else{
+				} else {
 					$SendFrom = 'accounting@ptadu.com';
 					$SendTo = 'accounting@ptadu.com'; // default SendTo address in case employee has no email
 				}
@@ -131,9 +131,9 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 														$PathFileName,
 														true);
 
-				if($ResultEmailEmployee){
+				if ($ResultEmailEmployee){
 					$TextAdmin = $TextAdmin . "Slip gaji for ". $MyRow['codename'] . " sent to " . $SendTo . " at " . date('d/M/Y H:i:s') ." \n";
-				}else{
+				} else {
 					$TextAdmin = $TextAdmin . "Email with slip gaji to ". $MyRow['codename'] . " FAILED. \n";
 				}
 				sleep(1);
@@ -148,10 +148,10 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 			if ($Company == 'PTBB'){
 				$SendFrom = 'accounting@bumibiru.com';
 				$SendTo = 'accounting@bumibiru.com';
-			}elseif ($Company == 'PTSMH'){
+			} elseif ($Company == 'PTSMH'){
 				$SendFrom = 'accounting@ptsmh.com';
 				$SendTo = 'accounting@ptsmh.com';
-			}else{
+			} else {
 				$SendFrom = 'accounting@ptadu.com';
 				$SendTo = 'accounting@ptadu.com';
 			}
@@ -163,16 +163,16 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 													'',
 													true);
 			
-			if($ResultEmailAdmin){
+			if ($ResultEmailAdmin){
 				prnMsg("Details of slip gaji distribution sent to " . $SendTo);
-			}else{
+			} else {
 				prnMsg("Details of slip gaji distribution email FAILED", "warn");
 			}
 
-		}else{
+		} else {
 			prnMsg('No data to send emails with Monthly Salary Slips', 'warn');
 		}
-	}else{
+	} else {
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 
 			'</p>';
@@ -216,7 +216,7 @@ function EmailTextForEmployee($Name, $Company, $SalaryType){
 	$Text = "Dear ". $Name . ",\n\n";
 	if ($SalaryType == "MONTHLY"){
 		$Text = $Text . "Terlampir adalah slip gaji anda bulan ini.\n"; 
-	}else{
+	} else {
 		$Text = $Text . "Terlampir adalah slip THR anda bulan ini.\n"; 
 	}
 	$Text = $Text . "Kami mengucapkan terima kasih atas kerja keras dan dedikasi yang telah anda berikan.\n"; 
@@ -225,9 +225,9 @@ function EmailTextForEmployee($Name, $Company, $SalaryType){
 	$Text = $Text . "Terima kasih,\n"; 
 	if ($Company == 'PTBB'){
 		$Text = $Text . "PT. Bumi Biru Admin Team"; 
-	}elseif ($Company == 'PTSMH'){
+	} elseif ($Company == 'PTSMH'){
 		$Text = $Text . "PT. Sungai Mutiara Hitam Admin Team"; 
-	}else{
+	} else {
 		$Text = $Text . "PT. Angin Dingin Utara Admin Team"; 
 	}
 	return $Text;

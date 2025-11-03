@@ -824,10 +824,10 @@ function KLPrintNameOfShop(){
 	if ($_SESSION['TypeLoc'] == "SHOPKL"){
 		$TextToPrint = $EmphasizedDoubleHeightDoubleWidth . "Kapal-Laut" . $NewLine . 
 						$Emphasized . "Your Essential Jewellery" . $NewLine;
-	} else if ($_SESSION['TypeLoc'] == "SHOPBL"){
+	} elseif ($_SESSION['TypeLoc'] == "SHOPBL"){
 		$TextToPrint = $EmphasizedDoubleHeightDoubleWidth . "Blink" . $NewLine . 
 						$Emphasized . "Fashion Jewellery" . $NewLine;
-	} else if ($_SESSION['TypeLoc'] == "SHOPOU"){
+	} elseif ($_SESSION['TypeLoc'] == "SHOPOU"){
 		$TextToPrint = $EmphasizedDoubleHeightDoubleWidth . "OUTLET by Kapal-Laut" . $NewLine;
 	} else {
 		$TextToPrint = $EmphasizedDoubleHeightDoubleWidth . "SHOP NAME NOT FOUND" . $NewLine;
@@ -1007,7 +1007,7 @@ function KLPrintReceiptCustomerFooter($Identifier, $OrderNo){
 	$TextToPrint .= $NewLine . $NewLine . $EmphasizedDoubleHeightDoubleWidth . $CenteredJustified;
 	if ($_SESSION['TypeLoc'] == "SHOPKL"){
 		$TextToPrint .= "kapal-laut.com" . $NewLine;
-	} else if ($_SESSION['TypeLoc'] == "SHOPBL"){
+	} elseif ($_SESSION['TypeLoc'] == "SHOPBL"){
 		$TextToPrint .= "blinkfashionjewellery.com" . $NewLine;
 	} else {
 		$TextToPrint .= "kapal-laut.com" . $NewLine;

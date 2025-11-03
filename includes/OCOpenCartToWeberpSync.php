@@ -141,7 +141,7 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun , $Em
 			if ($CustomerCode == "WEB-WH-IDR"){
 				$Quotation = 0; // wholesale customers in IDR, are exceptions: or they pay regularly by bank transfer or they paid / will pay in IDR at the shop at pick up time. 
 								// Either case we are aware of the order.
-			}else{
+			} else {
 				$Quotation = 1; // is NOT a firm order until we check the payments
 			}
 			$FreightCost = RoundPriceFromCart(GetTotalFromOrder("shipping", $MyRow['order_id']) * $MyRow['currency_value'],$MyRow['currency_code']);
@@ -155,7 +155,7 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun , $Em
 			$Area = GetAreaFromCustomer($CustomerCode);
 			$PaymentCode = $MyRow['payment_code'];
 			
-			if($DefaultShipVia == 10){
+			if ($DefaultShipVia == 10){
 				// if shipping is "Pickup From Store"
 				$ShippingAddress1 = "Pick up from store";
 				$ShippingAddress2 = "";
@@ -163,7 +163,7 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun , $Em
 				$ShippingZone	  = "";
 				$ShippingPostCode = "";
 				$ShippingCountry  = DB_escape_string($MyRow['shipping_country']);
-			}else{
+			} else {
 				// any other shipping method, we need the details
 				$ShippingAddress1 = DB_escape_string($MyRow['shipping_address_1']);
 				$ShippingAddress2 = DB_escape_string($MyRow['shipping_address_2']);
@@ -177,7 +177,7 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun , $Em
 				// First process order header
 				if (DataExistsInWebERP('salesorders', 'debtorno', $CustomerCode, 'customerref', $MyRow['order_id'])){
 					$Action = "Update";
-				}else{
+				} else {
 					$Action = "Insert";
 					do {
 						$OrderNo = GetNextSequenceNo(30);
@@ -288,7 +288,7 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun , $Em
 					$ItemsOrder++;
 					if ($Action == "Update"){
 						$Action = "Update";
-					}else{
+					} else {
 						$Price = RoundPriceFromCart($myitems['price'] * $MyRow['currency_value'],$MyRow['currency_code']);
 						$SQLInsert = "INSERT INTO salesorderdetails
 											(orderlineno,
@@ -341,32 +341,32 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun , $Em
 					if (strpos(strtoupper($CouponCode),"VBP-") !== false){ 
 						// the 100% VIP Cards
 						$CouponStockId = OPENCART_VIP_PLATINUM_CODE;
-					}else if (strpos(strtoupper($CouponCode),"VBE-") !== false){ 
+					} elseif (strpos(strtoupper($CouponCode),"VBE-") !== false){ 
 						// the 50% VIP cards
 						$CouponStockId = OPENCART_VIP_ELITE_CODE;
-					}else if (strpos(strtoupper($CouponCode),"VBG-") !== false){ 
+					} elseif (strpos(strtoupper($CouponCode),"VBG-") !== false){ 
 						// the 30% VIP Cards
 						$CouponStockId = OPENCART_VIP_GOLD_CODE;
-					}else if (strpos(strtoupper($CouponCode),"VBS-") !== false){
+					} elseif (strpos(strtoupper($CouponCode),"VBS-") !== false){
 						// the 15% VIP Cards
 						$CouponStockId = OPENCART_VIP_SILVER_CODE;
-					}else if (strpos(strtoupper($CouponCode),"VN1-") !== false){
+					} elseif (strpos(strtoupper($CouponCode),"VN1-") !== false){
 						// the 10% online cards
 						$CouponStockId = OPENCART_VIP_ONLINE_CODE;
-					}else if (strpos(strtoupper($CouponCode),"RF-") !== false){
+					} elseif (strpos(strtoupper($CouponCode),"RF-") !== false){
 						// customer refunds for any reason
 						$CouponStockId = OPENCART_CUSTOMER_REFUND_CODE;  
-					}else if (strpos(strtoupper($CouponCode),"WH-") !== false){
+					} elseif (strpos(strtoupper($CouponCode),"WH-") !== false){
 						// wholesale vouches for any reason
 						$CouponStockId = OPENCART_WHOLESALE_DISCOUNT;
-					}else{
+					} else {
 						// any other promotional discount
 						$CouponStockId = OPENCART_PROMOTION_DISCOUNT_CODE;
 					}
 					$CouponQty = 1;
 					if ($Action == "Update"){
 						$Action = "Update";
-					}else{
+					} else {
 						$SQLInsert = "INSERT INTO salesorderdetails
 											(orderlineno,
 											orderno,
@@ -410,24 +410,24 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun , $Em
 					$DiscountCode = GetTotalTitleFromOrder("discountrule", $MyRow['order_id']);
 					if (strpos(strtoupper($DiscountCode),"10") !== false){
 						$DiscountStockId = OPENCART_ONLINE_ORDER_DISCOUNT10;
-					}else if (strpos(strtoupper($DiscountCode),"20") !== false){
+					} elseif (strpos(strtoupper($DiscountCode),"20") !== false){
 						$DiscountStockId = OPENCART_ONLINE_ORDER_DISCOUNT20;
-					}else if (strpos(strtoupper($DiscountCode),"30") !== false){
+					} elseif (strpos(strtoupper($DiscountCode),"30") !== false){
 						$DiscountStockId = OPENCART_ONLINE_ORDER_DISCOUNT30;
-					}else if (strpos(strtoupper($DiscountCode),"40") !== false){
+					} elseif (strpos(strtoupper($DiscountCode),"40") !== false){
 						$DiscountStockId = OPENCART_ONLINE_ORDER_DISCOUNT40;
-					}else if (strpos(strtoupper($DiscountCode),"50") !== false){
+					} elseif (strpos(strtoupper($DiscountCode),"50") !== false){
 						$DiscountStockId = OPENCART_ONLINE_ORDER_DISCOUNT50;
-					}else if (strpos(strtoupper($DiscountCode),"60") !== false){
+					} elseif (strpos(strtoupper($DiscountCode),"60") !== false){
 						$DiscountStockId = OPENCART_ONLINE_ORDER_DISCOUNT60;
-					}else{
+					} else {
 						$DiscountStockId = OPENCART_WHOLESALE_DISCOUNT;
 					}
 					$DiscountQty = 1;
 					
 					if ($Action == "Update"){
 						$Action = "Update";
-					}else{
+					} else {
 						$SQLInsert = "INSERT INTO salesorderdetails
 											(orderlineno,
 											orderno,
@@ -471,7 +471,7 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun , $Em
 							</table>
 							</table>';
 				}
-			}else{
+			} else {
 				// Order does not belong to a valid customer for any reason, escape it
 				if ($ShowMessages){
 					prnMsg('Sales Order from ' . $MyRow['email'] .' is not valid as is not a valid currency code.', 'warn');
@@ -595,7 +595,7 @@ function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeR
 				// order currency and Paypal currency are the same
 				// AND has been paid OK
 				$PaymentOK = true;
-			}else{
+			} else {
 				prnMsg("HORROR: Currency mess in PayPal Payments", "warn");
 				$PaymentOK = false;
 			}
@@ -797,7 +797,7 @@ function SyncSnapPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun
 
 			if ($MyRow['currency_code'] == 'IDR'){
 				$Result = ProcessPaymentOnlineOrder($OrderNo, 'snap', $CustomerCode, $MyRow['total']);
-			}else{
+			} else {
 				$Result = "ERROR";
 			}
 			if ($Result != "ERROR"){
@@ -909,7 +909,7 @@ function EmailOrdersReadyToPrepare($ShowMessages, $EmailText){
 			/* FIELD MATCHING */
 			if (substr($MyRow['debtorno'],4,2) == "WH"){
 				$TypeCustomer = "WHOLESALE";
-			}else{
+			} else {
 				$TypeCustomer = "RETAIL";
 			}
 			$Address = BuildAddress($MyRow['customername'], 

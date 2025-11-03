@@ -21,13 +21,13 @@ if (!isset($_GET['Item']) or !isset($_GET['NewPrice']) or !isset($_GET['Action']
 if ($_GET['Action'] == "New"){
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .
 				__('Retail Price') . '" alt="" />' . ' ' . __('KL Set Initial Retail Prices for').' ' . $_GET['Item']. '.</p>';
-}else if ($_GET['Action'] == "Change"){
+} elseif ($_GET['Action'] == "Change"){
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .
 				__('Retail Price') . '" alt="" />' . ' ' . __('KL Change Retail Prices for').' ' . $_GET['Item']. '.</p>';
-}else if ($_GET['Action'] == "Finish"){
+} elseif ($_GET['Action'] == "Finish"){
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .
 				__('Retail Price') . '" alt="" />' . ' ' . __('KL Change Labels for item').' ' . $_GET['Item']. '.</p>';
-}else{
+} else {
 	echo '<br />';
 	prnMsg( __('Action unknown'), 'error');
 	include('includes/footer.php');

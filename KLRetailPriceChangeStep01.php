@@ -14,7 +14,7 @@ include('includes/KLUIGeneralFunctions.php');
 
 if (isset($_GET['SelectedPriceChange'])){
 	$SelectedPriceChange =mb_strtoupper($_GET['SelectedPriceChange']);
-} elseif(isset($_POST['SelectedPriceChange'])){
+} elseif (isset($_POST['SelectedPriceChange'])){
 	$SelectedPriceChange =mb_strtoupper($_POST['SelectedPriceChange']);
 }
 
@@ -48,7 +48,7 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		$Errors[$i] = 'StockId';
 		$i++;
-	}elseif ((ItemCodeQOH($_POST['Stockid'],'CODE_FULL', "ALL") != 0) 
+	} elseif ((ItemCodeQOH($_POST['Stockid'],'CODE_FULL', "ALL") != 0) 
 			AND (GetTotalItemsChangingPrice() >= MAX_ITEMS_CHANGING_PRICE) 
 			AND (!ItemInList($MyRow['categoryid'], LIST_STOCK_CATEGORIES_SETUP))
 			AND (!$KL_SystemAdmin)) {
@@ -56,37 +56,37 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'MaxItemsChangingPrice';
 		$i++;
 		prnMsg(__('Too many items changing price at the same time. Maximum = '). MAX_ITEMS_CHANGING_PRICE,'error');
-	}elseif (!is_numeric(filter_number_format($_POST['NewRetailPrice']))) {
+	} elseif (!is_numeric(filter_number_format($_POST['NewRetailPrice']))) {
 		$InputError = 1;
 		$Errors[$i] = 'NewRetailPrice';
 		$i++;
 		prnMsg(__('The new retail price must be a number'),'error');
-	}elseif (!IsPriceRoundedOK($_POST['NewRetailPrice'])){
+	} elseif (!IsPriceRoundedOK($_POST['NewRetailPrice'])){
 		$InputError = 1;
 		$Errors[$i] = 'NewRetailPrice';
 		$i++;
 		prnMsg(__('The new retail price is not a correct rounded number.'),'error');
-	}elseif ($MyRow['klchangingprice'] == 1) {
+	} elseif ($MyRow['klchangingprice'] == 1) {
 		$InputError = 1;
 		$Errors[$i] = 'klchangingprice';
 		$i++;
 		prnMsg(__('This item is already in changing price procedure.'),'error');
-	}elseif ($MyRow['klmovingdiscount20'] == 1) {
+	} elseif ($MyRow['klmovingdiscount20'] == 1) {
 		$InputError = 1;
 		$Errors[$i] = 'MovingDiscount20';
 		$i++;
 		prnMsg(__('This item is already in Move To 20% Discount procedure. Finish or delete this process first.'),'error');
-	}elseif ($MyRow['klmovingdiscount50'] == 1) {
+	} elseif ($MyRow['klmovingdiscount50'] == 1) {
 		$InputError = 1;
 		$Errors[$i] = 'MovingDiscount50';
 		$i++;
 		prnMsg(__('This item is already being Moved to 50% Discount procedure. Finish or delete this process first'),'error');
-	}elseif ($MyRow['klmovingdiscount80'] == 1) {
+	} elseif ($MyRow['klmovingdiscount80'] == 1) {
 		$InputError = 1;
 		$Errors[$i] = 'MovingDiscount80';
 		$i++;
 		prnMsg(__('This item is already being Moved to 80% Discount procedure. Finish or delete this process first'),'error');
-	}elseif ($MyRow['discontinued'] == 1) {
+	} elseif ($MyRow['discontinued'] == 1) {
 		$InputError = 1;
 		$Errors[$i] = 'Discontinued';
 		$i++;

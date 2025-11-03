@@ -268,10 +268,10 @@ if (!isset($_GET['delete'])) {
 		</field>';
 
 	// KL RICARD input 2 fields
-	if(!isset($_POST['KLRetentionPPH21'])) {
+	if (!isset($_POST['KLRetentionPPH21'])) {
 		$_POST['KLRetentionPPH21'] = 0;
 	}
-	if(!isset($_POST['KLRetentionPPH23'])) {
+	if (!isset($_POST['KLRetentionPPH23'])) {
 		$_POST['KLRetentionPPH23'] = 0;
 	}
 	echo '<field>

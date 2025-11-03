@@ -15,16 +15,16 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	$Title, '" /> ',// Icon title.
 	$Title, '</p>';// Page title.
 
-if(isset($_POST['ProcessCopyAuthority'])) {
+if (isset($_POST['ProcessCopyAuthority'])) {
 
 	$InputError =0;
 	
-	if($_POST['FromLocationID']==$_POST['ToLocationID']) {
+	if ($_POST['FromLocationID']==$_POST['ToLocationID']) {
 		prnMsg(__('Location FROM must be different from location TO'),'error');
 		$InputError =1;
 	}
 	
-	if($InputError ==0) {// no input errors
+	if ($InputError ==0) {// no input errors
 		$Result = DB_Txn_Begin();
 
 		$SQL = "UPDATE locstock SET reorderlevel = 0 WHERE loccode = '" . $_POST['ToLocationID'] . "'";

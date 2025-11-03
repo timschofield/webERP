@@ -42,16 +42,13 @@ if (!isset($_POST['Company']) OR $_POST['Company'] == 'ALL') {
 	$_POST['Company'] = 'ALL';
 	$Title = __('Horizontal Analysis of Statement of Comprehensive Income for KL Group');
 	$Table = 'chartmaster';
-}
-else if ($_POST['Company'] == 'PTADU') {
+} elseif ($_POST['Company'] == 'PTADU') {
 	$Title = __('Horizontal Analysis of Statement of Comprehensive Income for PT. Angin Dingin Utara');
 	$Table = 'chartmasterADU';
-}
-else if ($_POST['Company'] == 'PTSMH') {
+} elseif ($_POST['Company'] == 'PTSMH') {
 	$Title = __('Horizontal Analysis of Statement of Comprehensive Income for PT. Sungai Mutiara Hitam');
 	$Table = 'chartmasterSMH';
-}
-else if ($_POST['Company'] == 'PTBB') {
+} elseif ($_POST['Company'] == 'PTBB') {
 	$Title = __('Horizontal Analysis of Statement of Comprehensive Income for PT. Bumi Biru');
 	$Table = 'chartmasterBB';
 }

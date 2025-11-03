@@ -15,7 +15,7 @@ function KLDatabaseSelection(){
 		if (URLWithoutScriptNameContains("/TEST")){
 			// the current script filename contains TEST, we are on TEST code
 			$DefaultDatabase = 'test_erp';
-		}else{
+		} else {
 			// the current script filename does not contain TEST, we are on production code
 			$DefaultDatabase = 'kl_erp';
 		}
@@ -34,7 +34,7 @@ function KLThemeSelection(){
 			if (URLWithoutScriptNameContains("/TEST")){
 				// development environment with the test DB (safe)
 				$Theme = 'xenos'; 
-			}else{
+			} else {
 				// development environment with the production DB (risky)
 				$Theme = 'professional'; 
 			}
@@ -43,7 +43,7 @@ function KLThemeSelection(){
 			if (URLWithoutScriptNameContains("/TEST")){
 				// Training staff environment: we are on production code with the test DB 
 				$Theme = 'gel'; 
-			}else{
+			} else {
 				// Production environment: we are on production code with the real production DB 
 				$Theme = 'aguapop'; 
 			}

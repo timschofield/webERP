@@ -13,7 +13,7 @@ if (!isset($_GET['From'])){
 	prnMsg( __('This page must be given the gudang location code.'), 'error');
 	include('includes/footer.php');
 	exit();
-}else{
+} else {
 	$EmailText = "From: " . $_GET['From'] . " " . GetLocationNameFromCode($_GET['From']) . "\n";
 }
 
@@ -21,7 +21,7 @@ if (!isset($_GET['To'])){
 	prnMsg( __('This page must be given the destination location code.'), 'error');
 	include('includes/footer.php');
 	exit();
-}else{
+} else {
 	$LocationNameTo = GetLocationNameFromCode($_GET['To']);
 	$EmailText = $EmailText . "To: " . $_GET['To'] . " " . $LocationNameTo . "\n\n" ;
 }
@@ -33,7 +33,7 @@ while ($CheckParam){
 	$VarQty = 'Qty'.$NumParam;
 	if (isset($_GET[$VarItem])){
 		$EmailText = $EmailText . $_GET[$VarQty] . " x " . $_GET[$VarItem] . " " . GetItemDescriptionFromCode($_GET[$VarItem]) . "\n" ;
-	}else{
+	} else {
 		$CheckParam = false;
 	}
 	$NumParam++;

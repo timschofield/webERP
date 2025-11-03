@@ -155,13 +155,13 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 		if ($MyRowAccExp['klretentionpph21'] != 0){
 			// gross up method
 			$HutangPPH21 = round(($NetAmount / (1-($MyRowAccExp['klretentionpph21']/100)))-$NetAmount);
-		}else{
+		} else {
 			$HutangPPH21 = 0;
 		}
 		if ($MyRowAccExp['klretentionpph23'] != 0){
 			// gross up method
 			$HutangPPH23 = round(($NetAmount / (1-($MyRowAccExp['klretentionpph23']/100)))-$NetAmount);
-		}else{
+		} else {
 			$HutangPPH23 = 0;
 		}
 		// KL RICARD END pph21, pph23
@@ -242,9 +242,9 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 				$CompanyExpenses = GLAccountBelongsTo($AccountTo);
 				if ($CompanyExpenses == "PTADU"){
 					$AccountPPH21 = ACCOUNT_HUTANG_PPH21_PTADU;
-				}elseif ($CompanyExpenses == "PTSMH"){
+				} elseif ($CompanyExpenses == "PTSMH"){
 					$AccountPPH21 = ACCOUNT_HUTANG_PPH21_PTSMH;
-				}else{
+				} else {
 					$AccountPPH21 = ACCOUNT_HUTANG_PPH21_PTBB;
 				}
 				$SQLHutangPPH21="INSERT INTO `gltrans` (`counterindex`,
@@ -275,9 +275,9 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 				$CompanyExpenses = GLAccountBelongsTo($AccountTo);
 				if ($CompanyExpenses == "PTADU"){
 					$AccountPPH23 = ACCOUNT_HUTANG_PPH23_PTADU;
-				}elseif ($CompanyExpenses == "PTSMH"){
+				} elseif ($CompanyExpenses == "PTSMH"){
 					$AccountPPH23 = ACCOUNT_HUTANG_PPH23_PTSMH;
-				}else{
+				} else {
 					$AccountPPH23 = ACCOUNT_HUTANG_PPH23_PTBB;
 				}
 				$SQLHutangPPH23="INSERT INTO `gltrans` (`counterindex`,

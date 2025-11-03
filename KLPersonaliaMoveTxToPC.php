@@ -38,16 +38,16 @@ function submit($Company, $PeriodOfFile, $PaymentDate, $SalaryType) {
 
 	if ($SalaryType == "MONTHLY"){
 		$PageTitle = __('Move Monthly Salary to Petty Cash for '). MonthAndYearFromPeriodNo($PeriodOfFile);
-	}elseif($SalaryType == "THRONLY"){
+	} elseif ($SalaryType == "THRONLY"){
 		$PageTitle = __('Move THR Only to Petty Cash for '). MonthAndYearFromPeriodNo($PeriodOfFile);
-	}else{
+	} else {
 		$InputErrorMessage = "The type of Salary " . $SalaryType . " is not accepted";
 		$InputError = true;
 	}
 
 	// The month selected should be last month for Monthly salaries
 	if ($SalaryType == "MONTHLY"){
-		if($PeriodNow != ($PeriodOfFile + 1)){
+		if ($PeriodNow != ($PeriodOfFile + 1)){
 			$InputErrorMessage = "The month selected to Move Monthly Salaries Data to Petty Cash should be last month";
 			$InputError = true;
 		}
@@ -55,13 +55,13 @@ function submit($Company, $PeriodOfFile, $PaymentDate, $SalaryType) {
 	
 	// The month selected should be current month for THR Only salaries
 	if ($SalaryType == "THRONLY"){
-		if($PeriodNow != ($PeriodOfFile)){
+		if ($PeriodNow != ($PeriodOfFile)){
 			$InputErrorMessage = "The month selected to Move THR Only Data to Petty Cash should be this current month";
 			$InputError = true;
 		}
 	}
 
-	if(!$InputError){
+	if (!$InputError){
 		$SQL = "SELECT 	codename,
 						fullname,
 						position,
@@ -160,7 +160,7 @@ function submit($Company, $PeriodOfFile, $PaymentDate, $SalaryType) {
 					($MyRow['codename'] == 'Laia')){
 					// Dividends paid as lain2 to shareholders for PTADU goes to different GL than karyawan
 					MoveSalaryTxToPC($Company, $MyRow['paymentmethod'], "COMM-SHAREHOLDERS", $PaymentDate, $Lain2, $MyRow['codename']);
-				}else{
+				} else {
 					MoveSalaryTxToPC($Company, $MyRow['paymentmethod'], "OTHERS", $PaymentDate, $Lain2, $MyRow['codename']);
 				}
 				
@@ -195,10 +195,10 @@ function submit($Company, $PeriodOfFile, $PaymentDate, $SalaryType) {
 				</table>
 				</div>
 				</form>';
-		}else{
+		} else {
 			prnMsg('No data to Move Monthly Salaries Data to Petty Cash ');
 		}
-	}else{
+	} else {
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 
 			'</p>';
@@ -208,7 +208,7 @@ function submit($Company, $PeriodOfFile, $PaymentDate, $SalaryType) {
 
 function MoveSalaryTxToPC($Company, $PaymentMethod, $Expense, $PaymentDate, $Amount, $Receipt){
 	$PaymentMethod = strtoupper($PaymentMethod);
-	if($PaymentMethod != "CASH"){
+	if ($PaymentMethod != "CASH"){
 		$PaymentMethod = "BANK";
 	}
 	if ($Amount != 0){
@@ -241,7 +241,7 @@ function MoveSalaryTxToPC($Company, $PaymentMethod, $Expense, $PaymentDate, $Amo
 							 '',
 							 '" . $Receipt . "')";
 			DB_query($SQL,$InsertErrMsg,'',true);
-		}else{
+		} else {
 			prnMsg('ERROR CODE: PERS00001. Can not find the PC info for expense: '. $SQL, 'error');
 		}
 	}

@@ -17,13 +17,13 @@ function translate_via_google_translator($Text,$Target,$Source=false){
 		if (isset($obj['error'])){
 			$TranslatedText = "ERROR: " . $obj['error']['message'];
 		}
-		else{
+		else {
 			$TranslatedText = $obj['data']['translations'][0]['translatedText'];
 	//				if (isset($obj['data']['translations'][0]['detectedSourceLanguage'])) //this is set if only source is not available.
 	//					echo "Detecte Source Languge : ".$obj['data']['translations'][0]['detectedSourceLanguage']."n";
 		}
 	}
-	else{
+	else {
 		$TranslatedText = "UNKNOW ERROR";
 	}
 	$TranslatedText = KLTranslationFixes($TranslatedText, $Target);
@@ -31,7 +31,7 @@ function translate_via_google_translator($Text,$Target,$Source=false){
 }  
 
 function KLTranslationFixes($TranslatedText, $Target){
-	if($Target == 'id'){
+	if ($Target == 'id'){
 		$TranslatedText = str_replace("Finishing dipoles tinggi", "Finishing dipoles", $TranslatedText);
 
 		// Anting Anting 

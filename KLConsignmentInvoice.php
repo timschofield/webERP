@@ -15,12 +15,12 @@ use Dompdf\Dompdf;
 include('includes/SetDomPDFOptions.php');
 
 // The default company to Invoice from (PTADU).
-if(!isset($_POST['CompanyFrom'])) {
+if (!isset($_POST['CompanyFrom'])) {
 	$_POST['CompanyFrom']='PTADU';
 }
 
 // The default company to Invoice to (PTSMH).
-if(!isset($_POST['CompanyTo'])) {
+if (!isset($_POST['CompanyTo'])) {
 	$_POST['CompanyTo']='PTSMH';
 }
 
@@ -30,7 +30,7 @@ if (!isset($_POST['EndDate'])){
 }
 
 // The default draft or Invoice should be draft.
-if(!isset($_POST['DraftOrInvoice'])) {
+if (!isset($_POST['DraftOrInvoice'])) {
 	$_POST['DraftOrInvoice']='DRAFT';
 }
 
@@ -50,7 +50,7 @@ function submit($CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $DomPDFOpti
 	//initialise no input errors
 	$InputError = false;
 
-	if(!$InputError){
+	if (!$InputError){
 		$SQL = "SELECT klconsignment.stockid,
 						stockmaster.description,
 					SUM(klconsignment.qty) AS qty,
@@ -130,7 +130,7 @@ function submit($CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $DomPDFOpti
 				$HTML .= '<h1>PT. Angin Dingin Utara</h1>';
 				$HTML .= '<p>Jl. Raya Kesambi No. 1B, Kerobokan Kuta Utara, Badung - Bali</p>';
 				$HTML .= '<p>Ph. +62 812 381 6794</p>';
-			}elseif ($CompanyFrom == 'CASH'){
+			} elseif ($CompanyFrom == 'CASH'){
 				$HTML .= '<h1 style="font-size: 12pt;">CASH</h1>';
 			}
 			$HTML .= '</div>';
@@ -314,7 +314,7 @@ function submit($CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $DomPDFOpti
 						<td>PT. Angin Dingin Utara</td>
 					</tr>
 				</table>';
-			}elseif ($CompanyFrom == 'CASH'){
+			} elseif ($CompanyFrom == 'CASH'){
 				$HTML .= '<p>Payment by Cash</p>';
 			}
 			$HTML .= '</div>';
@@ -412,12 +412,12 @@ function submit($CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $DomPDFOpti
 				include('includes/footer.php');
 				exit();
 			}
-		}else{
+		} else {
 			include('includes/header.php');
 			prnMsg('No consignment sales to invoice');
 			include('includes/footer.php');
 		}
-	}else{
+	} else {
 		include('includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 

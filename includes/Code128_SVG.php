@@ -81,7 +81,7 @@
         foreach($val as $bar){
             $num=(int)$bar;
             $w=$bw*$num;
-            if(!($j % 2)){
+            if (!($j % 2)){
                 $img.= "<rect x='$x$unit' y='$y$unit' width='$w$unit' height='$bl$unit' fill='black' stroke-width='0' />\n";
             }
             $x += $w;

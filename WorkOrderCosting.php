@@ -553,7 +553,7 @@ if (isset($_POST['Close'])) {
 
 if ($WorkOrderRow['closed']==0){
 	$ReadOnly='';
-} else{
+} else {
 	$ReadOnly='readonly';
 	if (!isset($_POST['CloseComments'])) {
 		$_POST['CloseComments'] = $WorkOrderRow['closecomments'];

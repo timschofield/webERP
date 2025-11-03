@@ -60,7 +60,7 @@ function submit($SelectedFile) {
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 
 		'</p>';
 
-	if(!$InputError){
+	if (!$InputError){
 	
 		$ExcelSheetName = "template";
 		$SpreadSheet->setActiveSheetIndexByName($ExcelSheetName);
@@ -116,7 +116,7 @@ function submit($SelectedFile) {
 					// Already exists, so only update the info with the newest lazada link and lazada product id if needed
 					ItemUpdateLazadaInfo($StockID, $EnabledLazada, $LazadaProductId, $URLLazada);
 					$Action = "Update";
-				}else{
+				} else {
 					// does not exist, so need to insert a new row for the item
 					ItemInsertLazadaInfo($StockID, $EnabledLazada, $LazadaProductId, $URLLazada);
 					$Action = "Insert";

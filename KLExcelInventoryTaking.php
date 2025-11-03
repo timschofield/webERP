@@ -189,12 +189,12 @@ function submit($ListCategories, $Location) {
 
 			if ($_POST['Format'] == 'xlsx') {
 				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($SpreadSheet);
-			} else if ($_POST['Format'] == 'ods') {
+			} elseif ($_POST['Format'] == 'ods') {
 				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($SpreadSheet);
 			}
 			$objWriter->save('php://output');
 
-		}else{
+		} else {
 			$Title = __('Excel file for Inventory Taking');
 			include('includes/header.php');
 			prnMsg('Inventory Taking: No items to count');

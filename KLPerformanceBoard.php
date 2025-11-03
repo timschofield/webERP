@@ -27,14 +27,14 @@ if (!isset($_GET['Section'])){
 	$ProcessSection01 = true;
 	$ProcessSection02 = true;
 	$ProcessSection03 = true;
-}else{
+} else {
 	$ShowSectionInfo = true;
 		$Title = 'KL General Performance Board Section ' . $_GET['Section'];
 	if ($_GET['Section'] == '01'){
 		$ProcessSection01 = true;
-	}elseif($_GET['Section'] == '02'){
+	} elseif ($_GET['Section'] == '02'){
 		$ProcessSection02 = true;
-	}elseif($_GET['Section'] == '03'){
+	} elseif ($_GET['Section'] == '03'){
 		$ProcessSection03 = true;
 	}
 }
@@ -72,7 +72,7 @@ if ($_SESSION['UserID'] == "Ricard"){
 ***************************************************************************************/
 
 if ($ProcessSection01){
-	if($ShowSectionInfo){
+	if ($ShowSectionInfo){
 		$TableTitleText = "Sales Performance Board Section 01";
 		ShowTableTitle($TableTitleText);
 	}
@@ -187,7 +187,7 @@ if ($ProcessSection01){
 ***************************************************************************************/
 
 if ($ProcessSection02){
-	if($ShowSectionInfo){
+	if ($ShowSectionInfo){
 		$TableTitleText = "Transfers, Purchasing Performance Board Section 02";
 		ShowTableTitle($TableTitleText);
 	}
@@ -370,7 +370,7 @@ if ($ProcessSection02){
 ***************************************************************************************/
 
 if ($ProcessSection03){
-	if($ShowSectionInfo){
+	if ($ShowSectionInfo){
 		$TableTitleText = "Packaging, Displays, Petty Cash, Financial Performance Board Section 03";
 		ShowTableTitle($TableTitleText);
 	}

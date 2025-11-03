@@ -483,7 +483,7 @@ KL RICARD END No show the Dashboard */
 if ($KL_SPGSeniorOrSupport 
 	OR $KL_SPGJunior){
 	echo '<div class="ScriptTitle">', $_SESSION['locationname'], '</div>';
-}else{
+} else {
 	echo '<div class="ScriptTitle">', $Title, '</div>';
 }
 // KL RICARD END Show the location name for SPG users on every page

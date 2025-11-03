@@ -47,7 +47,7 @@ $Result = ProcessPaymentOnlineOrder($_GET['OrderNo'], $_GET['PaymentCode'], $_GE
 						
 if ($_GET['PaymentCode'] != "MANUAL_MARKETPLACE") {
 	$TitleTable = "Process of online order payment";
-}else{
+} else {
 	$TitleTable = "Mark the MarketPlace order as paid";
 }
 echo '<table class="selection"><tr><th colspan=2>' . $TitleTable . '</th></tr>';

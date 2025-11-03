@@ -74,7 +74,7 @@ function AverageCustomerBehaviourByValueInvoice($Typereport, $Brand, $NumDaysA){
 				WHERE dm.typeid = 2
 					AND loc.typeloc = '" . $Brand . "'
 				ORDER BY so_stats.invoicecount DESC";
-	}else{
+	} else {
 		return;
 	}
 	
@@ -121,7 +121,7 @@ function AverageCustomerBehaviourByValueInvoice($Typereport, $Brand, $NumDaysA){
 			if ($Typereport == "Shop"){
 				$Code = $MyRow['debtorno'];
 				$Name = $MyRow['name'];
-			}else{
+			} else {
 				return;
 			}
 			
@@ -358,7 +358,7 @@ function CashStatus($Year,
 			</tr>';
 	if ($BankToCashADU >= 0){
 		$Text = 'Total withdrawal from Danamon IDR PTADU to Brankas Kantor';
-	}else{
+	} else {
 		$Text = 'Total deposit from Brankas Kantor to Danamon IDR PTADU ';
 	}
 	echo '<tr>
@@ -391,7 +391,7 @@ function CashStatus($Year,
 			</tr>';
 	if ($ToBeMovedADU >= 0){
 		$Text = 'Cash ADU OVER goal in Brankas Kantor';
-	}else{
+	} else {
 		$Text = 'Cash ADU BELOW goal in Brankas Kantor';
 	}
 	echo '<tr>
@@ -402,7 +402,7 @@ function CashStatus($Year,
 	if ($ToBeTransferredADU != 0){
 		if ($ToBeTransferredADU > 0){
 			$Text = 'ACTION NEEDED -> Deposit from Brankas Kantor to Danamon IDR ADU';
-		}elseif ($ToBeTransferredADU < 0){
+		} elseif ($ToBeTransferredADU < 0){
 			$Text = 'ACTION NEEDED -> Withdrawal from Danamon IDR ADU to Brankas Kantor';
 		}
 		echo '<tr class="striped_row">
@@ -461,11 +461,11 @@ function CashStatus($Year,
 		elseif ($ShortageUSDuntilEndOfMonth > $SaldoADUDanamonUSD){
 			$ToBeExchanged = round_multiple_of($ShortageUSDuntilEndOfMonth, $USDMinPurchase);	
 		}
-		else{
+		else {
 			$ToBeExchanged = 0;	
 		}
 	}
-	else{
+	else {
 		$ToBeExchanged = 0;	
 	}
 	
@@ -473,7 +473,7 @@ function CashStatus($Year,
 		$ToBeTransferredToPayoneer = round_multiple_of(min($SaldoADUPayoneerUSDMax - $SaldoADUPayoneerUSD, 
 															$SaldoADUDanamonUSD - $SaldoADUDanamonUSDMin), $USDMinPurchase);	
 	}
-	else{
+	else {
 		$ToBeTransferredToPayoneer = 0;
 	}
 
@@ -672,7 +672,7 @@ function CashStatus($Year,
 			</tr>';
 	if ($BankToCashSMH >= 0){
 		$Text = 'Total withdrawal from Danamon/Mandiri IDR PTSMH to Brankas Kantor';
-	}else{
+	} else {
 		$Text = 'Total deposit from Brankas Kantor to Danamon/Mandiri IDR PTSMH ';
 	}
 	echo '<tr>
@@ -705,7 +705,7 @@ function CashStatus($Year,
 			</tr>';
 	if ($ToBeMovedSMH >= 0){
 		$Text = 'Cash SMH OVER goal in Brankas Kantor';
-	}else{
+	} else {
 		$Text = 'Cash SMH BELOW goal in Brankas Kantor';
 	}
 	echo '<tr>
@@ -716,7 +716,7 @@ function CashStatus($Year,
 	if ($ToBeTransferredSMH != 0){
 		if ($ToBeTransferredSMH > 0){
 			$Text = 'ACTION NEEDED -> Deposit from Brankas Kantor to Danamon IDR SMH';
-		}elseif ($ToBeTransferredSMH < 0){
+		} elseif ($ToBeTransferredSMH < 0){
 			$Text = 'ACTION NEEDED -> Withdrawal from Danamon IDR SMH to Brankas Kantor';
 		}
 		echo '<tr class="striped_row">
@@ -844,7 +844,7 @@ function CashStatus($Year,
 			</tr>';
 	if ($BankToCashBB >= 0){
 		$Text = 'Total withdrawal from Danamon IDR PTBB to Brankas Kantor';
-	}else{
+	} else {
 		$Text = 'Total deposit from Brankas Kantor to Danamon IDR PTBB ';
 	}
 	echo '<tr>
@@ -877,7 +877,7 @@ function CashStatus($Year,
 			</tr>';
 	if ($ToBeMovedBB >= 0){
 		$Text = 'Cash PTBB OVER goal in Brankas Kantor';
-	}else{
+	} else {
 		$Text = 'Cash PTBB BELOW goal in Brankas Kantor';
 	}
 	echo '<tr>
@@ -888,7 +888,7 @@ function CashStatus($Year,
 	if ($ToBeTransferredBB != 0){
 		if ($ToBeTransferredBB > 0){
 			$Text = 'ACTION NEEDED -> Deposit from Brankas Kantor to Danamon IDR BB';
-		}elseif ($ToBeTransferredBB < 0){
+		} elseif ($ToBeTransferredBB < 0){
 			$Text = 'ACTION NEEDED -> Withdrawal from Danamon IDR BB to Brankas Kantor';
 		}
 		echo '<tr class="striped_row">
@@ -967,7 +967,7 @@ function CashStatus($Year,
 		if ($ToBeDistributedToShareholders !=0){
 			if ($FreeSaldoBrankasShareholders >= 0){
 				$Text = 'ACTION NEEDED -> Distribute Cash from Brankas Shareholders to Shareholders';
-			}else{
+			} else {
 				$Text = 'ACTION NEEDED -> Get Cash from Shareholders to Brankas Shareholders';
 			}
 			echo '<tr class="striped_row">
@@ -1317,7 +1317,7 @@ function PeriodDifferenceSales($Typeperiod, $Typereport, $NumDaysA){
 		$TitleCurrent = $NumDaysA . ' Days This Year';
 		$TitlePrevious = $NumDaysA . ' Days '. $Typeperiod;
 	}
-	else{
+	else {
 		$YesterdayA  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 		$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA));
 		if ($Typeperiod == "YEAR"){
@@ -1326,13 +1326,13 @@ function PeriodDifferenceSales($Typeperiod, $Typereport, $NumDaysA){
 			$Title = __('Difference sales for ') . $Typereport . " during the last " . $NumDaysA . " days and same period last year";
 			$TitleCurrent = $NumDaysA . ' Days This Year';
 			$TitlePrevious = $NumDaysA . ' Days Last Year';
-		}elseif ($Typeperiod == "IMMEDIATE"){
+		} elseif ($Typeperiod == "IMMEDIATE"){
 			$YesterdayB  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1-$NumDaysA));
 			$StartDateB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-$NumDaysA));
 			$Title = __('Difference sales for ') . $Typereport .  " during the last " . $NumDaysA . " days and previous immediate same period";
 			$TitleCurrent = $NumDaysA . ' Last Days';
 			$TitlePrevious = $NumDaysA . ' Previous Days';
-		}else{
+		} else {
 			// comparing with a fixed year
 			$YesterdayB  = $Typeperiod . substr($YesterdayA, 4, 6);
 			$StartDateB = FormatDateForSQL(DateAdd(ConvertSQLDate($YesterdayB),'d',-$NumDaysA));
@@ -1489,10 +1489,10 @@ function PeriodDifferenceSales($Typeperiod, $Typereport, $NumDaysA){
 				$Name = $MyRow['name'];
 				if (($MyRow['salesA'] > 0) AND ($MyRow['yearlyrent'] > 0)){
 					$Rent = round(($MyRow['yearlyrent'] / 365 * $NumDaysA) / $MyRow['salesA'] * 100) . '%';
-				}else{
+				} else {
 					$Rent = "";
 				}
-			}else{
+			} else {
 				$Code = $MyRow['salesmancode'];
 				$Name = $MyRow['salesmanname'];
 				$Rent = "";
@@ -1500,7 +1500,7 @@ function PeriodDifferenceSales($Typeperiod, $Typereport, $NumDaysA){
 			
 			if ($MyRow['salesB'] != 0){
 				$Percent = (($MyRow['salesA'])-($MyRow['salesB']))/($MyRow['salesB']) * 100;
-			}else{
+			} else {
 				$Percent = 0;
 			}
 			$Trend = " ";
@@ -1827,7 +1827,7 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock, $ShowFullDetails){
 		$DailySoldItemsLastYearNextDays = NumItemsSoldPerBrand($Brand, $FromNextDaysLastYear, $ToNextDaysLastYear) / $NumDaysLastYear;
 		$ItemsToBeSoldNextDaysBasedOnTrendLastYear = $DailySoldItemsLastYearNextDays * ($TrendThisYear+1);
 		$EstimationDailyItemsToBeSoldNextDays = max($DailySoldItemsThisYearPastDays, $ItemsToBeSoldNextDaysBasedOnTrendLastYear);
-	}else{
+	} else {
 		$DisplayItems = 0; // for discounted items we don't want to keep enough for display, we want to get rid of them
 		$AvailableForSaleItems = $TotalItems ;
 		$EstimationDailyItemsToBeSoldNextDays = $DailySoldItemsThisYearPastDays;
@@ -1839,7 +1839,7 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock, $ShowFullDetails){
 	
 	if ($DaysStockForSaleIncludingPOWO < $OptimalDaysStock){
 		$ItemsToGetOptimalDaysStock = ($OptimalDaysStock - $DaysStockForSaleIncludingPOWO) * $EstimationDailyItemsToBeSoldNextDays; 
-	}else{
+	} else {
 		$ItemsToGetOptimalDaysStock = 0;
 	}
 	

@@ -43,7 +43,7 @@ function FieldToSelectFromTwoOptions($ValueOption1, $LabelOption1,
 		<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
 	$HTML .= 'name="' . $VariableName . '">';
-	if($SelectedValue == $ValueOption1) {
+	if ($SelectedValue == $ValueOption1) {
 		$HTML .= '<option selected="selected" value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
 				<option value="' . $ValueOption2 . '">' . $LabelOption2 . '</option>';
 	}
@@ -66,12 +66,12 @@ function FieldToSelectFromThreeOptions($ValueOption1, $LabelOption1,
 		<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
 	$HTML .= 'name="' . $VariableName . '">';
-	if($SelectedValue == $ValueOption1) {
+	if ($SelectedValue == $ValueOption1) {
 		$HTML .= '<option selected="selected" value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
 				<option value="' . $ValueOption2 . '">' . $LabelOption2 . '</option>
 				<option value="' . $ValueOption3 . '">' . $LabelOption3 . '</option>';
 	}
-	else if($SelectedValue == $ValueOption2) {
+	elseif ($SelectedValue == $ValueOption2) {
 		$HTML .= '<option selected="selected" value="' . $ValueOption2 . '">' . $LabelOption2 . '</option>
 				<option value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
 				<option value="' . $ValueOption3 . '">' . $LabelOption3 . '</option>';
@@ -97,19 +97,19 @@ function FieldToSelectFromFourOptions($ValueOption1, $LabelOption1,
 		<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
 	$HTML .= 'name="' . $VariableName . '">';
-	if($SelectedValue == $ValueOption1) {
+	if ($SelectedValue == $ValueOption1) {
 		$HTML .= '<option selected="selected" value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
 				<option value="' . $ValueOption2 . '">' . $LabelOption2 . '</option>
 				<option value="' . $ValueOption3 . '">' . $LabelOption3 . '</option>
 				<option value="' . $ValueOption4 . '">' . $LabelOption4 . '</option>';
 	}
-	else if($SelectedValue == $ValueOption2) {
+	elseif ($SelectedValue == $ValueOption2) {
 		$HTML .= '<option selected="selected" value="' . $ValueOption2 . '">' . $LabelOption2 . '</option>
 				<option value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
 				<option value="' . $ValueOption3 . '">' . $LabelOption3 . '</option>
 				<option value="' . $ValueOption4 . '">' . $LabelOption4 . '</option>';
 	}
-	else if($SelectedValue == $ValueOption3) {
+	elseif ($SelectedValue == $ValueOption3) {
 		$HTML .= '<option selected="selected" value="' . $ValueOption3 . '">' . $LabelOption3 . '</option>
 				<option value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
 				<option value="' . $ValueOption2 . '">' . $LabelOption2 . '</option>
@@ -138,28 +138,28 @@ function FieldToSelectFromFiveOptions($ValueOption1, $LabelOption1,
 		<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
 	$HTML .= 'name="' . $VariableName . '">';
-	if($SelectedValue == $ValueOption1) {
+	if ($SelectedValue == $ValueOption1) {
 		$HTML .= '<option selected="selected" value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
 				<option value="' . $ValueOption2 . '">' . $LabelOption2 . '</option>
 				<option value="' . $ValueOption3 . '">' . $LabelOption3 . '</option>
 				<option value="' . $ValueOption4 . '">' . $LabelOption4 . '</option>
 				<option value="' . $ValueOption5 . '">' . $LabelOption5 . '</option>';
 	}
-	else if($SelectedValue == $ValueOption2) {
+	elseif ($SelectedValue == $ValueOption2) {
 		$HTML .= '<option selected="selected" value="' . $ValueOption2 . '">' . $LabelOption2 . '</option>
 				<option value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
 				<option value="' . $ValueOption3 . '">' . $LabelOption3 . '</option>
 				<option value="' . $ValueOption4 . '">' . $LabelOption4 . '</option>
 				<option value="' . $ValueOption5 . '">' . $LabelOption5 . '</option>';
 	}
-	else if($SelectedValue == $ValueOption3) {
+	elseif ($SelectedValue == $ValueOption3) {
 		$HTML .= '<option selected="selected" value="' . $ValueOption3 . '">' . $LabelOption3 . '</option>
 				<option value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
 				<option value="' . $ValueOption2 . '">' . $LabelOption2 . '</option>
 				<option value="' . $ValueOption4 . '">' . $LabelOption4 . '</option>
 				<option value="' . $ValueOption5 . '">' . $LabelOption5 . '</option>';
 	}
-	else if($SelectedValue == $ValueOption4) {
+	elseif ($SelectedValue == $ValueOption4) {
 		$HTML .= '<option selected="selected" value="' . $ValueOption4 . '">' . $LabelOption4 . '</option>
 				<option value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
 				<option value="' . $ValueOption2 . '">' . $LabelOption2 . '</option>
@@ -216,7 +216,7 @@ function FieldToSelectOneBrand($VariableName, $SelectedValue, $Label = '', $Help
 
 function FieldToSelectOneDepartment($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 	
-	if($Filter == 'NOTKANTOR') {
+	if ($Filter == 'NOTKANTOR') {
 		$SQL = "SELECT departmentid,
 					description
 				FROM departments

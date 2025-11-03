@@ -19,7 +19,7 @@ use Neodynamic\SDK\Web\WebClientPrint;
 
 	function wcpGetPrintersOnSuccess(){
 		// Display client installed printers
-		if(arguments[0].length > 0){
+		if (arguments[0].length > 0){
 			var p=arguments[0].split("|");
 			var options = '';
 			for (var i = 0; i < p.length; i++) {
@@ -29,7 +29,7 @@ use Neodynamic\SDK\Web\WebClientPrint;
 			$('#installedPrinterName').html(options);
 			$('#installedPrinterName').focus();
 			$('#loadPrinters').hide();                                                        
-		}else{
+		} else {
 			alert("No printers are installed in your system.");
 		}
 	}
@@ -47,7 +47,7 @@ use Neodynamic\SDK\Web\WebClientPrint;
 //Get Absolute URL of this page
 $currentAbsoluteURL = (@$_SERVER["HTTPS"] == "on") ? "https://" : "http://";
 $currentAbsoluteURL .= $_SERVER["SERVER_NAME"];
-if($_SERVER["SERVER_PORT"] != "80" && $_SERVER["SERVER_PORT"] != "443")
+if ($_SERVER["SERVER_PORT"] != "80" && $_SERVER["SERVER_PORT"] != "443")
 {
 	$currentAbsoluteURL .= ":".$_SERVER["SERVER_PORT"];
 } 

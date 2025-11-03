@@ -158,7 +158,7 @@ function ChangeItemStockCategory($StockID, $OldCat, $NewCat){
 		$Result = DB_query($SQL, $ErrMsg, '', true);
 			
 		prnMsg('CHANGE OF Stock Category of ' . $StockID . ' QOH='. $QOH . ' SC=' . $UnitCost. ' changed from ' . $OldCat . ' to ' . $NewCat ,'success');
-	}else{
+	} else {
 		prnMsg('Item ' . $StockID . ' belongs to ' . $OldCatInStockMaster . ' not to ' . $OldCat,'error');
 	}
 

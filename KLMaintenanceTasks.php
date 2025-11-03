@@ -9,7 +9,7 @@ include('includes/KLGeneralFunctions.php');
 
 if (isset($_GET['SelectedIndex'])){
 	$SelectedIndex = $_GET['SelectedIndex'];
-} elseif(isset($_POST['SelectedIndex'])){
+} elseif (isset($_POST['SelectedIndex'])){
 	$SelectedIndex = $_POST['SelectedIndex'];
 }
 

@@ -30,12 +30,12 @@ $ProcessSection02 = false;
 if (!isset($_GET['Section'])){
 	$ProcessSection01 = true;
 	$ProcessSection02 = true;
-}else{
+} else {
 	$ShowSectionInfo = true;
 		$Title = 'KL General Control Board Section ' . $_GET['Section'];
 	if ($_GET['Section'] == '01'){
 		$ProcessSection01 = true;
-	}elseif($_GET['Section'] == '02'){
+	} elseif ($_GET['Section'] == '02'){
 		$ProcessSection02 = true;
 	}
 }
@@ -96,7 +96,7 @@ if ($_SESSION['UserID'] == "Ricard"){
 ***************************************************************************************/
 
 if ($ProcessSection01){
-	if($ShowSectionInfo){
+	if ($ShowSectionInfo){
 		prnMsg("Performing Control Panel Section 01",'info');
 	}
 
@@ -814,7 +814,7 @@ if ($ProcessSection01){
 ***************************************************************************************/
 
 if ($ProcessSection02){
-	if($ShowSectionInfo){
+	if ($ShowSectionInfo){
 		prnMsg("Performing Control Panel Section 02",'info');
 	}
 
