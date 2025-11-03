@@ -393,7 +393,7 @@ function InsertDebtorReceipt($Receipt, $User, $Password) {
 
 		$Result = api_DB_query($SQL,'', '', true);
 
-		if($Receipt['discountfx']!=0){
+		if ($Receipt['discountfx']!=0){
 			$SQL="INSERT INTO gltrans ( type,
 									typeno,
 									trandate,
@@ -694,7 +694,7 @@ function CreateCreditNote($Header,$LineDetails, $User, $Password) {
 
 			$Result = api_DB_query($SQL,'', '', true);
 
-		} else if ($LineRow['mbflag']=='A'){ /* it's an assembly */
+		} elseif ($LineRow['mbflag']=='A'){ /* it's an assembly */
 			/*Need to get the BOM for this part and make
 			stock moves for the components then update the Location stock balances */
 			$Assembly=true;

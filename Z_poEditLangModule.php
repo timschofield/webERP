@@ -222,9 +222,7 @@ if (isset($_POST['module'])) {
 
 if (!is_writable('./locale/' . $_SESSION['Language'])) {
 	prnMsg(__('You do not have write access to the required files please contact your system administrator'),'error');
-}
-else
-{
+} else {
 	echo '<br />
 		<table>
 		<tr>

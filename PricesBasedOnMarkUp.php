@@ -290,7 +290,7 @@ if (isset($_POST['UpdatePrices'])){
 				if (DB_num_rows($PrefSuppResult)==0){
 					prnMsg(__('There is no preferred supplier data for the item') . ' ' . $MyRow['stockid'] . ' ' . __('prices will not be updated for this item'),'warn');
 					$Cost = 0;
-				} elseif(DB_num_rows($PrefSuppResult)>1) {
+				} elseif (DB_num_rows($PrefSuppResult)>1) {
 					prnMsg(__('There is more than a single preferred supplier data for the item') . ' ' . $MyRow['stockid'] . ' ' . __('prices will not be updated for this item'),'warn');
 					$Cost = 0;
 				} else {

@@ -384,7 +384,7 @@ if (!isset($StockID)) {
 		//figure out the SQL required from the inputs available
 		if (isset($_POST['ClosedOrOpen']) and $_POST['ClosedOrOpen']=='Open_Only'){
 			$ClosedOrOpen = ' AND workorders.closed=0';
-		} elseif(isset($_POST['ClosedOrOpen']) AND $_POST['ClosedOrOpen'] == 'Closed_Only') {
+		} elseif (isset($_POST['ClosedOrOpen']) AND $_POST['ClosedOrOpen'] == 'Closed_Only') {
 			$ClosedOrOpen = ' AND workorders.closed=1';
 		} else {
 			$ClosedOrOpen = '';

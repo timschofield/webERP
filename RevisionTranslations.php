@@ -17,10 +17,10 @@ echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	__('Review Translated Descriptions') . '</p>';// Page title.
 
 //update database if update pressed
-if(isset($_POST['Submit'])) {
+if (isset($_POST['Submit'])) {
 	for ($i=1;$i<count($_POST);$i++) { //loop through the returned translations
 
-		if(isset($_POST['Revised' . $i]) AND ($_POST['Revised' . $i] == '1')) {
+		if (isset($_POST['Revised' . $i]) AND ($_POST['Revised' . $i] == '1')) {
 			$SQLUpdate="UPDATE stockdescriptiontranslations
 						SET needsrevision = '0',
 							descriptiontranslation = '". $_POST['DescriptionTranslation' .$i] ."',

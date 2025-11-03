@@ -166,7 +166,7 @@ while ($MyRow=DB_fetch_array($Result)){
 
 	$OpeningBal = $MyRow['localbalance']-$TransPostRow['localtotalpost']-$TransRow['localdebits']-$TransRow['localcredits'];
 	$ClosingBal = $MyRow['localbalance']-$TransPostRow['localtotalpost'];
-	if($OpeningBal != 0 OR $ClosingBal!= 0 OR $TransRow['localdebits']!= 0 OR $TransRow['localcredits']!= 0) {
+	if ($OpeningBal != 0 OR $ClosingBal!= 0 OR $TransRow['localdebits']!= 0 OR $TransRow['localcredits']!= 0) {
 
 		if (!isset($_POST['CreateCSV'])){
 			echo '<tr>

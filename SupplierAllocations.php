@@ -493,7 +493,7 @@ if (isset($_POST['AllocTrans'])){
 			<input type="reset" name="Cancel" value="' . __('Cancel') . '" />
 		</div>';
 
-} elseif(isset($_GET['SupplierID'])){
+} elseif (isset($_GET['SupplierID'])){
 
   /*page called with a supplier code  so show the transactions to allocate
   specific to the supplier selected */
@@ -634,7 +634,7 @@ if (isset($_POST['AllocTrans'])){
 	prnMsg(__('There are no allocations to be done'),'info');
   }
 
-} /* end of else if not a SupplierID or transaction called with the URL */
+} /* end of elseif not a SupplierID or transaction called with the URL */
 
 echo '</div>
       </form>';

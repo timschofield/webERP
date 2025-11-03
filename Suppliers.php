@@ -324,11 +324,9 @@ function Is_ValidAccount($ActNo) {
 
 if (isset($_GET['SupplierID'])) {
 	$SupplierID = mb_strtoupper($_GET['SupplierID']);
-}
-elseif (isset($_POST['SupplierID'])) {
+} elseif (isset($_POST['SupplierID'])) {
 	$SupplierID = mb_strtoupper($_POST['SupplierID']);
-}
-else {
+} else {
 	unset($SupplierID);
 }
 
@@ -663,8 +661,7 @@ if (isset($_POST['submit'])) {
 
 	}
 
-}
-elseif (isset($_POST['delete']) and $_POST['delete'] != '') {
+} elseif (isset($_POST['delete']) and $_POST['delete'] != '') {
 
 	//the link to delete a selected record was clicked instead of the submit button
 	$CancelDelete = 0;
@@ -982,8 +979,7 @@ KL RICARD END we don't associate salesman (SPG) as suppliers */
 		</fieldset>
 		<div class="centre"><input type="submit" name="submit" value="' . __('Insert New Supplier') . '" /></div>';
 	echo '</form>';
-}
-else {
+} else {
 
 	//SupplierID exists - either passed when calling the form or from the form itself
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';

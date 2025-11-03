@@ -174,7 +174,7 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 			prnMsg(__('Both the supplier discount percent and discount amount are non-zero. Only one or the other can be used. This discount record cannot be added.'),'error');
 		} elseif (Date1GreaterThanDate2($_POST['DiscountEffectiveFrom'], $_POST['DiscountEffectiveTo'])) {
 			prnMsg(__('The effective to date is prior to the effective from date. This discount record cannot be added.'),'error');
-		} elseif(filter_number_format($_POST['DiscountPercent']) == 0 AND filter_number_format($_POST['DiscountAmount']) == 0) {
+		} elseif (filter_number_format($_POST['DiscountPercent']) == 0 AND filter_number_format($_POST['DiscountAmount']) == 0) {
 			prnMsg(__('Some supplier discount narrative was entered but both the discount amount and the discount percent are zero. One of these must be none zero to create a valid supplier discount record. The supplier discount record was not added.'),'error');
 		} else {
 			/*It looks like a valid new discount entry has been entered - need to insert it into DB */
@@ -269,7 +269,7 @@ if ($Edit == false) {
 	if (DB_num_rows($PurchDataResult) == 0 and $StockID != '') {
 		prnMsg(__('There is no purchasing data set up for the part selected'), 'info');
 		$NoPurchasingData = 1;
-	} else if ($StockID != '') {
+	} elseif ($StockID != '') {
 
 		echo '<table cellpadding="2" class="selection">
 			<thead>

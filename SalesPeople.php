@@ -10,10 +10,10 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('SPG Maintenance');
 $ViewTopic = 'SalesPeople';
 $BookMark = 'SalesPeople';
-if(isset($_GET['SelectedSalesPerson'])) {
+if (isset($_GET['SelectedSalesPerson'])) {
 	$BookMark = 'SalespeopleEdit';
 }// For Edit's screen.
-if(isset($_GET['delete'])) {
+if (isset($_GET['delete'])) {
 	$BookMark = 'SalespeopleDelete';
 }// For Delete's ERROR Message Report.
 include('includes/header.php');
@@ -22,7 +22,7 @@ include('includes/KLEmails.php');
 
 if (isset($_GET['SelectedSalesPerson'])){
 	$SelectedSalesPerson =mb_strtoupper($_GET['SelectedSalesPerson']);
-} elseif(isset($_POST['SelectedSalesPerson'])){
+} elseif (isset($_POST['SelectedSalesPerson'])){
 	$SelectedSalesPerson =mb_strtoupper($_POST['SelectedSalesPerson']);
 }
 

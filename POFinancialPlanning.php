@@ -21,7 +21,7 @@ function submit($Country, $Currency, $RootPath, $Title) {
 
 	if ($Currency != 'All'){
 		$WhereCurrency 	= " AND suppliers.currcode = '". $Currency ."' ";
-	}else{
+	} else {
 		$WhereCurrency = ' ';
 	}
 
@@ -177,7 +177,7 @@ function submit($Country, $Currency, $RootPath, $Title) {
 			</table>
 			</div>';
 
-	}else{
+	} else {
 		prnMsg('No active PO to show');
 	}
 }

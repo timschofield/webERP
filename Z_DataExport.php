@@ -15,14 +15,14 @@ function stripcomma($str) { //because we're using comma as a delimiter
 
 /*
 function NULLToZero( &$Field ) {
-    if( is_null($Field) )
+    if ( is_null($Field) )
         return '0';
     else
         return $Field;
 }
 
 function NULLToPrice( &$Field ) {
-    if( is_null($Field) )
+    if ( is_null($Field) )
         return '-1';
     else
         return $Field;
@@ -85,7 +85,7 @@ if ( isset($_POST['pricelist']) ) {
 			ORDER BY stkmoveno DESC LIMIT 1";
 		$ResultQty = DB_query($SQLQty, $ErrMsg);
 		if ( $ResultQty ) {
-			if( DB_num_rows($ResultQty) > 0 ) {
+			if ( DB_num_rows($ResultQty) > 0 ) {
 				$Row = DB_fetch_row($ResultQty);
 				$Qty = $Row[0];
 			}

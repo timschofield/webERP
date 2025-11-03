@@ -35,17 +35,17 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	$Title, '</p>';// Page title.
 
 // Merges gets into posts:
-if(isset($_GET['CashFlowsActivity'])) {// Select period from.
+if (isset($_GET['CashFlowsActivity'])) {// Select period from.
 	$_POST['CashFlowsActivity'] = $_GET['CashFlowsActivity'];
 }
 
-if(isset($_POST['SelectedAccount'])) {
+if (isset($_POST['SelectedAccount'])) {
 	$SelectedAccount = $_POST['SelectedAccount'];
-} elseif(isset($_GET['SelectedAccount'])) {
+} elseif (isset($_GET['SelectedAccount'])) {
 	$SelectedAccount = $_GET['SelectedAccount'];
 }
 
-if(isset($_POST['submit'])) {
+if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
@@ -55,12 +55,12 @@ if(isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 
-	if(mb_strlen($_POST['AccountName']) >50) {
+	if (mb_strlen($_POST['AccountName']) >50) {
 		$InputError = 1;
 		prnMsg(__('The account name must be fifty characters or less long'), 'warn');
 	}
 
-	if(isset($SelectedAccount) AND $InputError != 1) {
+	if (isset($SelectedAccount) AND $InputError != 1) {
 
 		$SQL = "UPDATE
 					chartmaster SET accountname='" . $_POST['AccountName'] . "',
@@ -72,7 +72,7 @@ if(isset($_POST['submit'])) {
 		$Result = DB_query($SQL, $ErrMsg);
 
 		prnMsg(__('The general ledger account has been updated'),'success');
-	} elseif($InputError != 1) {
+	} elseif ($InputError != 1) {
 
 		/*SelectedAccount is null cos no item selected on first time round so must be adding a	record must be submitting new entries */
 
@@ -103,7 +103,7 @@ if(isset($_POST['submit'])) {
 	unset($_POST['CashFlowsActivity']);
 	unset($SelectedAccount);
 
-} elseif(isset($_GET['delete'])) {
+} elseif (isset($_GET['delete'])) {
 	//the link to delete a selected record was clicked instead of the submit button
 
 	$SQL= "SELECT COUNT(*)
@@ -112,7 +112,7 @@ if(isset($_POST['submit'])) {
 			AND amount <> 0";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_row($Result);
-	if($MyRow[0] > 0) {
+	if ($MyRow[0] > 0) {
 		$CancelDelete = 1;
 		prnMsg(__('Cannot delete this account because GL transactions have been created using this account and at least one period has postings to it'), 'warn');
 		echo '<br />' . __('There are') . ' ' . $MyRow[0] . ' ' . __('chart details that require this account code');
@@ -126,7 +126,7 @@ if(isset($_POST['submit'])) {
 		$Result = DB_query($SQL, $ErrMsg);
 
 		$MyRow = DB_fetch_row($Result);
-		if($MyRow[0] > 0) {
+		if ($MyRow[0] > 0) {
 			$CancelDelete = 1;
 			prnMsg(__('Cannot delete this account because transactions have been created using this account'), 'warn');
 			echo '<br />' . __('There are') . ' ' . $MyRow[0] . ' ' . __('transactions that require this account code');
@@ -146,7 +146,7 @@ if(isset($_POST['submit'])) {
 			$Result = DB_query($SQL, $ErrMsg);
 
 			$MyRow = DB_fetch_row($Result);
-			if($MyRow[0] > 0) {
+			if ($MyRow[0] > 0) {
 				$CancelDelete = 1;
 				prnMsg(__('Cannot delete this account because it is used as one of the company default accounts'), 'warn');
 
@@ -159,7 +159,7 @@ if(isset($_POST['submit'])) {
 				$Result = DB_query($SQL, $ErrMsg);
 
 				$MyRow = DB_fetch_row($Result);
-				if($MyRow[0] > 0) {
+				if ($MyRow[0] > 0) {
 					$CancelDelete = 1;
 					prnMsg(__('Cannot delete this account because it is used as one of the tax authority accounts'), 'warn');
 				} else {
@@ -171,7 +171,7 @@ if(isset($_POST['submit'])) {
 					$Result = DB_query($SQL, $ErrMsg);
 
 					$MyRow = DB_fetch_row($Result);
-					if($MyRow[0] > 0) {
+					if ($MyRow[0] > 0) {
 						$CancelDelete = 1;
 						prnMsg(__('Cannot delete this account because it is used by one of the sales GL posting interface records'), 'warn');
 					} else {
@@ -183,7 +183,7 @@ if(isset($_POST['submit'])) {
 						$Result = DB_query($SQL, $ErrMsg);
 
 						$MyRow = DB_fetch_row($Result);
-						if($MyRow[0]>0) {
+						if ($MyRow[0]>0) {
 							$CancelDelete = 1;
 							prnMsg(__('Cannot delete this account because it is used by one of the cost of sales GL posting interface records'), 'warn');
 
@@ -199,7 +199,7 @@ if(isset($_POST['submit'])) {
 							$Result = DB_query($SQL, $ErrMsg);
 
 							$MyRow = DB_fetch_row($Result);
-							if($MyRow[0]>0) {
+							if ($MyRow[0]>0) {
 								$CancelDelete = 1;
 								prnMsg(__('Cannot delete this account because it is used by one of the stock GL posting interface records'), 'warn');
 							} else {
@@ -210,7 +210,7 @@ if(isset($_POST['submit'])) {
 								$Result = DB_query($SQL, $ErrMsg);
 
 								$MyRow = DB_fetch_row($Result);
-								if($MyRow[0]>0) {
+								if ($MyRow[0]>0) {
 									$CancelDelete = 1;
 									prnMsg(__('Cannot delete this account because it is used by one the defined bank accounts'), 'warn');
 								} else {
@@ -232,12 +232,12 @@ if(isset($_POST['submit'])) {
 	}
 }
 
-if(!isset($_GET['delete'])) {
+if (!isset($_GET['delete'])) {
 
 	echo '<form method="post" id="GLAccounts" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	if(isset($SelectedAccount)) {// Edit an existing account.
+	if (isset($SelectedAccount)) {// Edit an existing account.
 		echo '<input type="hidden" name="SelectedAccount" value="' . $SelectedAccount . '" />';
 		$SQL = "SELECT accountcode, accountname, group_, controlled, cashflowsactivity FROM chartmaster WHERE accountcode='" . $SelectedAccount ."'";
 		$Result = DB_query($SQL);
@@ -279,7 +279,7 @@ if(!isset($_GET['delete'])) {
 			<select required="required" name="Group">';
 	while($MyRow = DB_fetch_array($Result)) {
 		echo '<option';
-		if(isset($_POST['Group']) and $MyRow[0]==$_POST['Group']) {
+		if (isset($_POST['Group']) and $MyRow[0]==$_POST['Group']) {
 			echo ' selected="selected"';
 		}
 		echo ' value="', $MyRow[0], '">', $MyRow[0], '</option>';
@@ -330,7 +330,7 @@ if(!isset($_GET['delete'])) {
 } //end if record deleted no point displaying form to add record
 
 
-if(!isset($SelectedAccount)) {
+if (!isset($SelectedAccount)) {
 /* It could still be the second time the page has been run and a record has been selected for modification - SelectedAccount will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters
 then none of the above are true and the list of ChartMaster will be displayed with
 links to delete or edit each. These will call the same page again and allow update/input
@@ -389,7 +389,7 @@ or deletion of the records*/
 
 echo '<br />';
 
-if(isset($SelectedAccount)) {
+if (isset($SelectedAccount)) {
 	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Show All Accounts') . '</a></div>';
 }
 

@@ -582,8 +582,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		</div>' . '</form>';
 	}
 
-}
-else {
+} else {
 
 	include('includes/header.php');
 

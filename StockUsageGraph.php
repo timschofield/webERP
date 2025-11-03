@@ -17,7 +17,7 @@ $graph->SetDrawYGrid(true);
 $graph->SetMarginsPixels(60, 40, 40, 40);
 $graph->SetDataType('text-data');
 
-if($_GET['StockLocation'] == 'All') {
+if ($_GET['StockLocation'] == 'All') {
     if (!empty($_SESSION['StockUsageShowZeroWithinPeriodRange'])) {
         $CurrentPeriod = GetPeriod(date($_SESSION['DefaultDateFormat']));
 

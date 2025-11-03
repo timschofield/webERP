@@ -30,7 +30,7 @@ if ($_SESSION['SalesmanLogin'] !=  '') {
 	$SQL = "SELECT salesman FROM custbranch WHERE debtorno = '" . $CustomerID . "'";
 	$ErrMsg = __('Failed to retrieve sales data');
 	$Result = DB_query($SQL, $ErrMsg);
-	if(DB_num_rows($Result)>0) {
+	if (DB_num_rows($Result)>0) {
 		while($MyRow = DB_fetch_array($Result)) {
 			if ($_SESSION['SalesmanLogin'] == $MyRow['salesman']){
 				$ViewAllowed = true;
@@ -54,7 +54,7 @@ if (isset($_GET['Status'])) {
 		$_POST['Status'] = $_GET['Status'];
 	}
 } elseif (isset($_POST['Status'])) {
-	if($_POST['Status'] == '' or $_POST['Status'] == 1 or $_POST['Status'] == 0) {
+	if ($_POST['Status'] == '' or $_POST['Status'] == 1 or $_POST['Status'] == 0) {
 		$Status = $_POST['Status'];
 	} else {
 		prnMsg(__('The balance status should be all or zero balance or not zero balance'), 'error');

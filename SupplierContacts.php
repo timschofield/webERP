@@ -236,7 +236,7 @@ if (! isset($_GET['delete'])) {
 	if (!isset($_POST['Tel'])) {
 		$_POST['Tel']='';
 	}
-	if(!isset($_POST['Fax'])) {
+	if (!isset($_POST['Fax'])) {
 		$_POST['Fax']='';
 	}
 	if (!isset($_POST['Mobile'])) {

@@ -82,7 +82,7 @@ if (isset($_POST['Submit']) OR isset($_POST['Update'])) {
 
 		prnMsg(__('A new factoring company for') . ' ' . $_POST['FactorName'] . ' ' . __('has been added to the database'),'success');
 
-	}elseif ($InputError == 0 and isset($_POST['Update'])) {
+	} elseif ($InputError == 0 and isset($_POST['Update'])) {
 		$SQL = "UPDATE factorcompanies SET coyname='" . $_POST['FactorName'] . "',
 				address1='" . $_POST['Address1'] . "',
 				address2='" . $_POST['Address2'] . "',

@@ -535,8 +535,7 @@ if (isset($_POST['submit'])) {
 								'" . filter_number_format($_POST['Leeway']) . "')";
 	$Result = DB_query($SQL);
 
-}
-else { // End of if submit isset
+} else { // End of if submit isset
 	// Display form if submit has not been hit
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
 

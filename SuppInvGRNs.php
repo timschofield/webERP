@@ -297,7 +297,7 @@ if (!isset($_GET['Modify'])){
 				<td class="number">', locale_number_format($GRNTmp->OrderPrice, $_SESSION['SuppTrans']->CurrDecimalPlaces), '</td>
 				<td class="number">', locale_number_format($GRNTmp->OrderPrice * ($GRNTmp->QtyRecd - $GRNTmp->Prev_QuantityInv), $_SESSION['SuppTrans']->CurrDecimalPlaces), '</td>
 				<td class="centre"><input';
-			if(isset($_POST['SelectAll'])) {
+			if (isset($_POST['SelectAll'])) {
 				echo ' checked';
 			}
 			echo ' name=" GRNNo_', $GRNTmp->GRNNo, '" type="checkbox" /></td>

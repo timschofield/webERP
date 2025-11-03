@@ -130,8 +130,7 @@ if (!isset($_GET['WO']) and !isset($_POST['WO'])) {
 }
 if (isset($_GET['WO'])) {
 	$SelectedWO = $_GET['WO'];
-}
-elseif (isset($_POST['WO'])) {
+} elseif (isset($_POST['WO'])) {
 	$SelectedWO = $_POST['WO'];
 }
 $Title = __('Print Work Order Number') . ' ' . $SelectedWO;
@@ -354,7 +353,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		if (isset($IssuedAlreadyRow[$RequirementsRow['stockid']])){
 			$Issued = $IssuedAlreadyRow[$RequirementsRow['stockid']];
 			unset($IssuedAlreadyRow[$RequirementsRow['stockid']]);
-		}else{
+		} else {
 			$Issued = 0;
 		}
 		$WOLine[$i]['item'] = $RequirementsRow['stockid'];

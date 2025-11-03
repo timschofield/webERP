@@ -274,11 +274,11 @@ echo '<field>
 echo '<field>
 		<label for="CustType">', '<b>' . __('OR') . ' </b>' . __('Choose a Type'), ':</label>
 		<field>';
-if(isset($_POST['CustType'])) {
+if (isset($_POST['CustType'])) {
 	// Show Customer Type drop down list
 	$Result2 = DB_query("SELECT typeid, typename FROM debtortype ORDER BY typename");
 	// Error if no customer types setup
-	if(DB_num_rows($Result2) == 0) {
+	if (DB_num_rows($Result2) == 0) {
 		$DataError = 1;
 		echo '<a href="' . $RootPath . '/CustomerTypes.php" target="_parent">' . __('Setup Types') . '</a>';
 		echo '<field><td colspan="2">' . prnMsg(__('No Customer types defined'), 'error','',true) . '</td></field>';
@@ -287,7 +287,7 @@ if(isset($_POST['CustType'])) {
 		echo '<select name="CustType">
 				<option value="ALL">' . __('Any') . '</option>';
 		while ($MyRow = DB_fetch_array($Result2)) {
-			if($_POST['CustType'] == $MyRow['typename']) {
+			if ($_POST['CustType'] == $MyRow['typename']) {
 				echo '<option selected="selected" value="' . $MyRow['typename'] . '">' . $MyRow['typename'] . '</option>';
 			}// $_POST['CustType'] == $MyRow['typename']
 			else {
@@ -302,7 +302,7 @@ if(isset($_POST['CustType'])) {
 	// No option selected="selected" yet, so show Customer Type drop down list
 	$Result2 = DB_query("SELECT typeid, typename FROM debtortype ORDER BY typename");
 	// Error if no customer types setup
-	if(DB_num_rows($Result2) == 0) {
+	if (DB_num_rows($Result2) == 0) {
 		$DataError = 1;
 		echo '<a href="' . $RootPath . '/CustomerTypes.php" target="_parent">' . __('Setup Types') . '</a>';
 		echo '<field><td colspan="2">' . prnMsg(__('No Customer types defined'), 'error','',true) . '</td></field>';
@@ -324,7 +324,7 @@ echo '<field>
 		<label for="Area">' . '<b>' . __('OR') . ' </b>' . __('Choose an Area') . ':</label>';
 $Result2 = DB_query("SELECT areacode, areadescription FROM areas");
 // Error if no sales areas setup
-if(DB_num_rows($Result2) == 0) {
+if (DB_num_rows($Result2) == 0) {
 	$DataError = 1;
 	echo '<a href="' . $RootPath . '/Areas.php" target="_parent">' . __('Setup Areas') . '</a>';
 	echo '<field><td colspan="2">' . prnMsg(__('No Sales Areas defined'), 'error','',true) . '</td></field>';
@@ -333,7 +333,7 @@ if(DB_num_rows($Result2) == 0) {
 	echo '<select name="Area">';
 	echo '<option value="ALL">' . __('Any') . '</option>';
 	while ($MyRow = DB_fetch_array($Result2)) {
-		if(isset($_POST['Area']) AND $_POST['Area'] == $MyRow['areacode']) {
+		if (isset($_POST['Area']) AND $_POST['Area'] == $MyRow['areacode']) {
 			echo '<option selected="selected" value="' . $MyRow['areacode'] . '">' . $MyRow['areadescription'] . '</option>';
 		} else {
 			echo '<option value="' . $MyRow['areacode'] . '">' . $MyRow['areadescription'] . '</option>';

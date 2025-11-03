@@ -81,7 +81,7 @@ if (isset($_POST['submit'])) {
 		$_POST['X_MonthsAuditTrail'] < 0 ) {
 		$InputError = 1;
 		prnMsg(__('The number of months of audit trail to keep must be zero or a positive number less than 100 months'),'error');
-	}elseif (mb_strlen($_POST['X_DefaultTaxCategory']) > 1 OR !is_numeric($_POST['X_DefaultTaxCategory']) OR
+	} elseif (mb_strlen($_POST['X_DefaultTaxCategory']) > 1 OR !is_numeric($_POST['X_DefaultTaxCategory']) OR
 		$_POST['X_DefaultTaxCategory'] < 1 ) {
 		$InputError = 1;
 		prnMsg(__('DefaultTaxCategory must be between 1 and 9'),'error');
@@ -89,17 +89,17 @@ if (isset($_POST['submit'])) {
 		$_POST['X_DefaultDisplayRecordsMax'] < 1 ) {
 		$InputError = 1;
 		prnMsg(__('Default maximum number of records to display must be between 1 and 500'),'error');
-	}elseif (mb_strlen($_POST['X_MaxImageSize']) > 4 OR !is_numeric($_POST['X_MaxImageSize']) OR
+	} elseif (mb_strlen($_POST['X_MaxImageSize']) > 4 OR !is_numeric($_POST['X_MaxImageSize']) OR
 		$_POST['X_MaxImageSize'] < 1 ) {
 		$InputError = 1;
 		prnMsg(__('The maximum size of item image files must be between 1 KB and 9999 KB'),'error');
-	}elseif (mb_strlen($_POST['X_FrequentlyOrderedItems']) > 2 OR !is_numeric($_POST['X_FrequentlyOrderedItems'])) {
+	} elseif (mb_strlen($_POST['X_FrequentlyOrderedItems']) > 2 OR !is_numeric($_POST['X_FrequentlyOrderedItems'])) {
 		$InputError = 1;
 		prnMsg(__('The number of frequently ordered items to display must be numeric'),'error');
-	}elseif (strlen($_POST['X_SmtpSetting']) != 1 OR !is_numeric($_POST['X_SmtpSetting'])){
+	} elseif (strlen($_POST['X_SmtpSetting']) != 1 OR !is_numeric($_POST['X_SmtpSetting'])){
 		$InputError = 1;
 		prnMsg(__('The SMTP setting should be selected as Yes or No'),'error');
-	}elseif (strlen($_POST['X_QualityLogSamples']) != 1 OR !is_numeric($_POST['X_QualityLogSamples'])){
+	} elseif (strlen($_POST['X_QualityLogSamples']) != 1 OR !is_numeric($_POST['X_QualityLogSamples'])){
 		$InputError = 1;
 		prnMsg(__('The Quality Log Samples setting should be selected as Yes or No'),'error');
 	} elseif (mb_strstr($_POST['X_QualityProdSpecText'], "'") OR mb_strlen($_POST['X_QualityProdSpecText']) > 5000) {
@@ -117,15 +117,15 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['DefaultDateFormat'] != $_POST['X_DefaultDateFormat'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_DefaultDateFormat']."' WHERE confname = 'DefaultDateFormat'";
 		}
-		if($DefaultTheme != $_POST['X_DefaultTheme']) {// If not equal, update the default theme.
+		if ($DefaultTheme != $_POST['X_DefaultTheme']) {// If not equal, update the default theme.
 			// BEGIN: Update the config.php file:
 			$FileHandle = fopen($PathPrefix . 'config.php', 'r');
-			if($FileHandle) {
+			if ($FileHandle) {
 				$Content = fread($FileHandle, filesize('config.php'));
 				$Content = str_replace(' ;\n', ';\n', $Content);// Clean space before the end-of-php-line.
 				$Content = str_replace('\''.$DefaultTheme .'\';', '\''.$_POST['X_DefaultTheme'].'\';', $Content);
 				$FileHandle = fopen($PathPrefix . 'config.php','w');
-				if(!fwrite($FileHandle,$Content)) {
+				if (!fwrite($FileHandle,$Content)) {
 					prnMsg(__('Cannot write to the configuration file.'), 'error');
 				} else {
 					prnMsg(__('The configuration file was updated.'), 'info');
@@ -393,7 +393,7 @@ if (isset($_POST['submit'])) {
 				$Result = DB_query($Line, $ErrMsg);
 			}
 			DB_Txn_Commit();
-		} elseif(sizeof($SQL)==1) {
+		} elseif (sizeof($SQL)==1) {
 			$Result = DB_query($SQL, $ErrMsg);
 		}
 
@@ -475,7 +475,7 @@ if (is_writable('config.php')) {
 			<select name="X_DefaultTheme">';
 	$ThemeDirectories = scandir($PathPrefix . 'css');// List directories inside ~/css. Each diretory is a theme.
 	foreach($ThemeDirectories as $ThemeName) {
-		if(is_dir('css/'.$ThemeName) AND $ThemeName!='.' AND $ThemeName!='..' AND $ThemeName!='.svn') {
+		if (is_dir('css/'.$ThemeName) AND $ThemeName!='.' AND $ThemeName!='..' AND $ThemeName!='.svn') {
 			echo '<option';
 			if ($DefaultTheme == $ThemeName) {
 				echo ' selected="selected"';
@@ -726,7 +726,7 @@ $Result = DB_query($SQL, $ErrMsg);
 echo '<field>
 		<label for="X_DefaultPriceList">' . __('Default Price List') . ':</label>
 		<select name="X_DefaultPriceList">';
-if( DB_num_rows($Result) == 0 ) {
+if ( DB_num_rows($Result) == 0 ) {
 	echo '<option selected="selected" value="">' . __('Unavailable');
 } else {
 	while( $Row = DB_fetch_array($Result) ) {
@@ -744,7 +744,7 @@ $Result = DB_query($SQL, $ErrMsg);
 echo '<field>
 		<label for="X_Default_Shipper">' . __('Default Shipper') . ':</label>
 		<select name="X_Default_Shipper">';
-if( DB_num_rows($Result) == 0 ) {
+if ( DB_num_rows($Result) == 0 ) {
 	echo '<option selected="selected" value="">' . __('Unavailable') . '</option>';
 } else {
 	while( $Row = DB_fetch_array($Result) ) {
@@ -811,7 +811,7 @@ $Result = DB_query($SQL, $ErrMsg);
 echo '<field>
 		<label for="X_DefaultTaxCategory">' . __('Default Tax Category') . ':</label>
 		<select name="X_DefaultTaxCategory">';
-if( DB_num_rows($Result) == 0 ) {
+if ( DB_num_rows($Result) == 0 ) {
 	echo '<option selected="selected" value="">' . __('Unavailable') . '</option>';
 } else {
 	while( $Row = DB_fetch_array($Result) ) {

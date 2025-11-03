@@ -21,13 +21,13 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 //try to set some sensible defaults
 $LatestWeekEndingDate = date($_SESSION['DefaultDateFormat'],mktime(0,0,0,date('n'),date('j')-(date('w')+$_SESSION['LastDayOfWeek'])+7,date('Y')));
 
-if(isset($_GET['SelectedEmployee'])) {
+if (isset($_GET['SelectedEmployee'])) {
 	if ($_GET['SelectedEmployee']=='NewSelection'){
 		unset($SelectedEmployee);
 	} else {
 		$SelectedEmployee = $_GET['SelectedEmployee'];
 	}
-} elseif(isset($_POST['SelectedEmployee'])) {
+} elseif (isset($_POST['SelectedEmployee'])) {
 	$SelectedEmployee = $_POST['SelectedEmployee'];
 } else {
 	$CheckUserResult = DB_query("SELECT id FROM employees WHERE userid='" . $_SESSION['UserID'] . "'");
@@ -71,7 +71,7 @@ if (isset($SelectedEmployee)) { //Get the employee's details
 }
 
 
-if((isset($_POST['Enter']) OR isset($_POST['ApproveTimesheet']) OR isset($_POST['SubmitForApproval'])) AND isset($SelectedEmployee) AND isset($_POST['WeekEnding'])) {
+if ((isset($_POST['Enter']) OR isset($_POST['ApproveTimesheet']) OR isset($_POST['SubmitForApproval'])) AND isset($SelectedEmployee) AND isset($_POST['WeekEnding'])) {
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
 
@@ -281,7 +281,7 @@ if((isset($_POST['Enter']) OR isset($_POST['ApproveTimesheet']) OR isset($_POST[
 	}//end of inserts and reset of data
 } //end of the update/inserts
 
-if(isset($_POST['SubmitForApproval'])) {
+if (isset($_POST['SubmitForApproval'])) {
 
 	$WeekTimeTotalResult = DB_query("SELECT employeeid,
 									SUM(day1+day2+day3+day4+day5+day6+day7) as totalweekhours
@@ -329,7 +329,7 @@ if(isset($_POST['SubmitForApproval'])) {
 	}
 } // end submit for approval
 
-if(isset($_POST['ApproveTimesheet'])) {
+if (isset($_POST['ApproveTimesheet'])) {
 	//need to check again we have the full week!
 	$WeekTimeTotalResult = DB_query("SELECT employeeid,
 											employees.stockid,
@@ -503,7 +503,7 @@ if(isset($_POST['ApproveTimesheet'])) {
 	} //end of if the timesheet has a full working week
 } // end approval
 
-if(!isset($SelectedEmployee) AND in_array(20, $_SESSION['AllowedPageSecurityTokens'])) {
+if (!isset($SelectedEmployee) AND in_array(20, $_SESSION['AllowedPageSecurityTokens'])) {
 
 /* It could still be the second time the page has been run and a record has been selected for modification - SelectedEmployee will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters then none of the above are true and the list of employees will be displayed with links to select one. These will call the same page again and allow input of the timesheet or deletion of the records*/
 
@@ -558,11 +558,11 @@ if(!isset($SelectedEmployee) AND in_array(20, $_SESSION['AllowedPageSecurityToke
 	echo '<br />';
 } elseif (in_array(20, $_SESSION['AllowedPageSecurityTokens']) AND isset($SelectedEmployee)) {
 	echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedEmployee=NewSelection">' . __('Select a different employee') . '</a>';
-} elseif(!isset($SelectedEmployee)) {
+} elseif (!isset($SelectedEmployee)) {
 	prnMsg(__('Only employees set up to enter timesheets can use this script - please see the timesheet administrator'),'info');
 }
 
-if(isset($_GET['Delete'])) {
+if (isset($_GET['Delete'])) {
 	$DeleteTimesheetRow = DB_query("DELETE FROM timesheets WHERE id='" . $_GET['Delete'] . "'");
 	prnMsg(__('Timesheet row deleted'),'success');
 }

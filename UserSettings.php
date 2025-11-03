@@ -23,7 +23,7 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 // KL RICARD Only show one option, no weird languages we don't use
 $PDFLanguages = array(__('Latin Western Languages - Times'));
 
-if(isset($_POST['Modify'])) {
+if (isset($_POST['Modify'])) {
 	// no input errors assumed initially before we test
 	$InputError = 0;
 
@@ -39,22 +39,22 @@ if(isset($_POST['Modify'])) {
 	// KL RICARD END 
 	
 	//!!!for the demo only - enable this check so password is not changed
-	if($AllowDemoMode AND $_POST['Password'] != '') {
+	if ($AllowDemoMode AND $_POST['Password'] != '') {
 		$InputError = 1;
 		prnMsg(__('Cannot change password in the demo or others would be locked out!'),'warn');
 	}
 
  	$UpdatePassword = 'N';
 
-	if($_POST['PasswordCheck'] != '') {
-		if(mb_strlen($_POST['Password']) < 5) {
+	if ($_POST['PasswordCheck'] != '') {
+		if (mb_strlen($_POST['Password']) < 5) {
 			$InputError = 1;
 			prnMsg(__('The password entered must be at least 5 characters long'),'error');
-		} elseif(mb_strstr($_POST['Password'],$_SESSION['UserID'])!= false) {
+		} elseif (mb_strstr($_POST['Password'],$_SESSION['UserID'])!= false) {
 			$InputError = 1;
 			prnMsg(__('The password cannot contain the user id'), 'error');
 		}
-		if($_POST['Password'] != $_POST['PasswordCheck']) {
+		if ($_POST['Password'] != $_POST['PasswordCheck']) {
 			$InputError = 1;
 			prnMsg(__('The password and password confirmation fields entered do not match'), 'error');
 		} else {
@@ -62,13 +62,13 @@ if(isset($_POST['Modify'])) {
 		}
 	}
 
-	if($InputError != 1) {
+	if ($InputError != 1) {
 		// no errors
 		if (isset($_POST['Language']) && !checkLanguageChoice($_POST['Language'])) {
 			$_POST['Language'] = $DefaultLanguage;
 		}
 
-		if($UpdatePassword != 'Y') {
+		if ($UpdatePassword != 'Y') {
 			// KL RICARD Only KL_SystemAdmin is allowed to change his settings. Other users only password and email
 			if ($KL_SystemAdmin){
 				$SQL = "UPDATE www_users
@@ -133,7 +133,7 @@ $SQL = "SELECT
 $Result = DB_query($SQL);
 $MyRow = DB_fetch_array($Result);
 
-if(!isset($_POST['email'])) {
+if (!isset($_POST['email'])) {
 	$_POST['email'] = $MyRow['email'];
 }
 $_POST['ShowPageHelp'] = $MyRow['showpagehelp'];
@@ -208,10 +208,10 @@ if ($KL_SystemAdmin){
 }
 // KL RICARD END: Only KL_SystemAdmin is allowed to change his settings, other users only email and password. 
 
-if(!isset($_POST['PasswordCheck'])) {
+if (!isset($_POST['PasswordCheck'])) {
 	$_POST['PasswordCheck']='';
 }
-if(!isset($_POST['Password'])) {
+if (!isset($_POST['Password'])) {
 	$_POST['Password']='';
 }
 

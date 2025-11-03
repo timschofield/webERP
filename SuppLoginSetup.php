@@ -208,42 +208,42 @@ echo '<field>
 		<label for="PageSize">' . __('Reports Page Size') .':</label>
 		<select name="PageSize">';
 
-if(isset($_POST['PageSize']) and $_POST['PageSize']=='A4'){
+if (isset($_POST['PageSize']) and $_POST['PageSize']=='A4'){
 	echo '<option selected="selected" value="A4">' . __('A4') . '</option>';
 } else {
 	echo '<option value="A4">' . __('A4') . '</option>';
 }
 
-if(isset($_POST['PageSize']) and $_POST['PageSize']=='A3'){
+if (isset($_POST['PageSize']) and $_POST['PageSize']=='A3'){
 	echo '<option selected="selected" value="A3">' . __('A3') . '</option>';
 } else {
 	echo '<option value="A3">' . __('A3') . '</option>';
 }
 
-if(isset($_POST['PageSize']) and $_POST['PageSize']=='A3_landscape'){
+if (isset($_POST['PageSize']) and $_POST['PageSize']=='A3_landscape'){
 	echo '<option selected="selected" value="A3_landscape">' . __('A3') . ' ' . __('landscape') . '</option>';
 } else {
 	echo '<option value="A3_landscape">' . __('A3') . ' ' . __('landscape') . '</option>';
 }
 
-if(isset($_POST['PageSize']) and $_POST['PageSize']=='letter'){
+if (isset($_POST['PageSize']) and $_POST['PageSize']=='letter'){
 	echo '<option selected="selected" value="letter">' . __('Letter') . '</option>';
 } else {
 	echo '<option value="letter">' . __('Letter') . '</option>';
 }
 
-if(isset($_POST['PageSize']) and $_POST['PageSize']=='letter_landscape'){
+if (isset($_POST['PageSize']) and $_POST['PageSize']=='letter_landscape'){
 	echo '<option selected="selected" value="letter_landscape">' . __('Letter') . ' ' . __('landscape') . '</option>';
 } else {
 	echo '<option value="letter_landscape">' . __('Letter') . ' ' . __('landscape') . '</option>';
 }
 
-if(isset($_POST['PageSize']) and $_POST['PageSize']=='legal'){
+if (isset($_POST['PageSize']) and $_POST['PageSize']=='legal'){
 	echo '<option selected="selected" value="legal">' . __('Legal') . '</option>';
 } else {
 	echo '<option value="legal">' . __('Legal') . '</option>';
 }
-if(isset($_POST['PageSize']) and $_POST['PageSize']=='legal_landscape'){
+if (isset($_POST['PageSize']) and $_POST['PageSize']=='legal_landscape'){
 	echo '<option selected="selected" value="legal_landscape">' . __('Legal') . ' ' . __('landscape') . '</option>';
 } else {
 	echo '<option value="legal_landscape">' . __('Legal') . ' ' . __('landscape') . '</option>';
@@ -265,7 +265,7 @@ while (false != ($ThemeName = $ThemeDirectory->read())){
 
 		if (isset($_POST['Theme']) and $_POST['Theme'] == $ThemeName){
 			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName . '</option>';
-		} else if (!isset($_POST['Theme']) and ($Theme==$ThemeName)) {
+		} elseif (!isset($_POST['Theme']) and ($Theme==$ThemeName)) {
 			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName . '</option>';
 		} else {
 			echo '<option value="' . $ThemeName . '">' . $ThemeName . '</option>';

@@ -71,8 +71,7 @@ if (!isset($_POST['Show'])) {
 			<input type="submit" name="Show" value="' . __('Show transactions') . '" />
 		</div>';
 	echo '</form>';
-}
-else {
+} else {
 
 	$SQL = "SELECT gltrans.counterindex,
 					gltrans.typeno,

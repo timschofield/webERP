@@ -361,7 +361,7 @@ if (isset($_POST['Close'])) {
 
 			if ($TotalOnHand >= $WORow['qtyrecd']){
 				$ProportionOnHand = 1;
-			}else {
+			} else {
 				$ProportionOnHand = 1 - (($WORow['qtyrecd']- $TotalOnHand)/$WORow['qtyrecd']);
 			}
 

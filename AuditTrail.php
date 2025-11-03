@@ -86,7 +86,7 @@ while ($Tables = DB_fetch_row($TableResult)) {
 echo '</select>
 	</field>';
 
-if(!isset($_POST['ContainingText'])){
+if (!isset($_POST['ContainingText'])){
 	$_POST['ContainingText']='';
 }
 // Show the text
@@ -158,7 +158,7 @@ if (isset($_POST['View'])) {
 
 	if (mb_strlen($ContainingText) > 0) {
 	    $ContainingText = " AND querystring LIKE '%" . $ContainingText . "%' ";
-	}else{
+	} else {
 	    $ContainingText = "";
 	}
 

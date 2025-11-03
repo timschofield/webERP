@@ -124,7 +124,7 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1){
 if (isset($_POST['JustSelectedACustomer']) AND !isset($SelectedCustomer)){
 	/*Need to figure out the number of the form variable that the user clicked on */
 	for ($i=1; $i < count($_POST); $i++){ //loop through the returned customers
-		if(isset($_POST['SubmitCustomerSelection'.$i])){
+		if (isset($_POST['SubmitCustomerSelection'.$i])){
 			break;
 		}
 	}
@@ -836,7 +836,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			   echo '<option selected="selected" value="WriteOff">' . __('Goods written off') . '</option>
 					<option value="Return">' . __('Goods returned to store') . '</option>
 					<option value="ReverseOverCharge">' . __('Reverse an Overcharge') . '</option>';
-		} elseif($_POST['CreditType']=='ReverseOverCharge'){
+		} elseif ($_POST['CreditType']=='ReverseOverCharge'){
 		  	echo '<option selected="selected" value="ReverseOverCharge">' . __('Reverse Overcharge Only') . '</option>
 				<option value="Return">' . __('Goods Returned To Store') . '</option>
 				<option value="WriteOff">' . __('Good written off') . '</option>';
@@ -1024,7 +1024,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	#end of while loop
 			  echo '</table>';
 		 }#end if SearchResults to show
-	} /*end if part searching required */ elseif(!isset($_POST['ProcessCredit'])) { /*quick entry form */
+	} /*end if part searching required */ elseif (!isset($_POST['ProcessCredit'])) { /*quick entry form */
 
 /*FORM VARIABLES TO POST TO THE CREDIT NOTE 10 AT A TIME WITH PART CODE AND QUANTITY */
 	     echo '<table class="selection">';
@@ -1382,7 +1382,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 					$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('Location stock record could not be updated because');
 					$Result = DB_query($SQL, $ErrMsg, '', true);
 
-				} else if ($CreditLine->MBflag=='A'){ /* its an assembly */
+				} elseif ($CreditLine->MBflag=='A'){ /* its an assembly */
 					/*Need to get the BOM for this part and make stock moves
 					for the componentsand of course update the Location stock
 					balances for all the components*/

@@ -19,19 +19,19 @@ if (isset($_POST['PeriodFrom'])){$_POST['PeriodFrom'] = ConvertSQLDate($_POST['P
 if (isset($_POST['PeriodTo'])){$_POST['PeriodTo'] = ConvertSQLDate($_POST['PeriodTo']);}
 
 // Merges gets into posts:
-if(isset($_GET['PeriodFrom'])) {
+if (isset($_GET['PeriodFrom'])) {
 	$_POST['PeriodFrom'] = $_GET['PeriodFrom'];
 }
-if(isset($_GET['PeriodTo'])) {
+if (isset($_GET['PeriodTo'])) {
 	$_POST['PeriodTo'] = $_GET['PeriodTo'];
 }
-if(isset($_GET['ShowDetails'])) {
+if (isset($_GET['ShowDetails'])) {
 	$_POST['ShowDetails'] = $_GET['ShowDetails'];
 }
 
 // Validates the data submitted in the form:
-if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo'])) {
-	if(Date1GreaterThanDate2($_POST['PeriodFrom'], $_POST['PeriodTo'])) {
+if (isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo'])) {
+	if (Date1GreaterThanDate2($_POST['PeriodFrom'], $_POST['PeriodTo'])) {
 		// The beginning is after the end.
 		$_POST['NewReport'] = 'on';
 		prnMsg(__('The beginning of the period should be before or equal to the end of the period. Please reselect the reporting period.'), 'error');
@@ -39,7 +39,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo'])) {
 }
 
 // Main code:
-if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewReport']) {
+if (isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewReport']) {
 	// If PeriodFrom and PeriodTo are set and it is not a NewReport, generates the report:
 	echo '<div class="sheet">', // Division to identify the report block.
 		'<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/reports.png" title="', // Icon image.
@@ -71,7 +71,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 	$TotalGlTax = 0;
 	$PeriodFrom = FormatDateForSQL($_POST['PeriodFrom']);
 	$PeriodTo = FormatDateForSQL($_POST['PeriodTo']);
-	if($_POST['ShowDetails']) {// Parameters: PeriodFrom, PeriodTo, ShowDetails=on.
+	if ($_POST['ShowDetails']) {// Parameters: PeriodFrom, PeriodTo, ShowDetails=on.
 		echo		'<th>', __('Date'), '</th>',
 					'<th>', __('Purchase Invoice'), '</th>',
 					'<th>', __('Reference'), '</th>',
@@ -101,8 +101,8 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 				ORDER BY supptrans.supplierno, supptrans.trandate";
 		$Result = DB_query($SQL);
 		foreach($Result as $MyRow) {
-			if($MyRow['supplierno'] != $SupplierId) {// If different, prints supplier totals:
-				if($SupplierId != '') {// If NOT the first line.
+			if ($MyRow['supplierno'] != $SupplierId) {// If different, prints supplier totals:
+				if ($SupplierId != '') {// If NOT the first line.
 					echo '<tr>',
 							'<td colspan="3">&nbsp;</td>',
 							'<td class="number">', locale_number_format($SupplierOvAmount, $_SESSION['CompanyRecord']['decimalplaces']), '</td>',
@@ -239,7 +239,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 	// Select period from:
 			'<field>',
 				'<label for="PeriodFrom">', __('Period from'), '</label>';
-	if(!isset($_POST['PeriodFrom'])) {
+	if (!isset($_POST['PeriodFrom'])) {
 		$_POST['PeriodFrom'] = date($_SESSION['DefaultDateFormat'], strtotime("-1 year", time()));// One year before current date.
 	}
 	echo '<td><input type="date" id="PeriodFrom" maxlength="10" name="PeriodFrom" required="required" size="11" value="', FormatDateForSQL($_POST['PeriodFrom']), '" />',
@@ -248,7 +248,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 			// Select period to:
 			'<field>',
 				'<label for="PeriodTo">', __('Period to'), '</label>';
-	if(!isset($_POST['PeriodTo'])) {
+	if (!isset($_POST['PeriodTo'])) {
 		$_POST['PeriodTo'] = date($_SESSION['DefaultDateFormat']);
 	}
 	echo 		'<input type="date" id="PeriodTo" maxlength="10" name="PeriodTo" required="required" size="11" value="', FormatDateForSQL($_POST['PeriodTo']), '" />',

@@ -87,7 +87,7 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 		}
 		include($PathPrefix . 'includes/footer.php');
 		exit();
-	} elseif($ErrNo == 0) {
+	} elseif ($ErrNo == 0) {
 		if ($SQLArray[0] == 'INSERT' OR $SQLArray[0] == 'UPDATE') {
 			/// @todo store in the session the table name, so that we can later check it when the user calls `DB_Last_Insert_ID`
 			$_SESSION['LastInsertId'] = mysql_insert_id($db);

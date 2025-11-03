@@ -34,8 +34,8 @@ $ResultTypes = DB_query($SQL);
 echo '<option value="All">' . __('All') . '</option>';
 while($MyRow=DB_fetch_array($ResultTypes)) {
 	echo '<option';
-	if(isset($_POST['TransType'])) {
-		if($MyRow['typeid'] == $_POST['TransType']) {
+	if (isset($_POST['TransType'])) {
+		if ($MyRow['typeid'] == $_POST['TransType']) {
 		     echo ' selected="selected"' ;
 		}
 	}
@@ -136,7 +136,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] !=  ''){
 						</td>
 					</tr>';
 
-		} elseif($_POST['TransType']==11) { /* credit notes */
+		} elseif ($_POST['TransType']==11) { /* credit notes */
 			echo '<tr class="striped_row">
 						<td>', __($MyRow['typename']), '</td>
 						<td>', $MyRow['transno'], '</td>

@@ -38,7 +38,7 @@ if (isset($_POST['submit'])) {
 		prnMsg( __('The sales type (price list) code cannot be an empty string or spaces'),'error');
 		$Errors[$i] = 'SalesType';
 		$i++;
-	} elseif( trim($_POST['Sales_Type'])==''){
+	} elseif ( trim($_POST['Sales_Type'])==''){
 		$InputError = 1;
 		prnMsg(__('The sales type (price list) description cannot be empty'),'error');
 		$Errors[$i] = 'SalesType';
@@ -166,7 +166,7 @@ if (isset($_POST['submit'])) {
 }
 
 
-if(isset($_POST['Cancel'])){
+if (isset($_POST['Cancel'])){
 	unset($SelectedType);
 	unset($_POST['TypeAbbrev']);
 	unset($_POST['Sales_Type']);

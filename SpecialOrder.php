@@ -270,10 +270,10 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 	} elseif ($_SESSION['SPL'.$identifier]->LinesOnOrder <=0){
 		$InputError=1;
 		prnMsg(__('The purchase order can not be committed to the database because there are no lines entered on this order'),'error');
-	}elseif (mb_strlen($_POST['QuotationRef'])<3){
+	} elseif (mb_strlen($_POST['QuotationRef'])<3){
 		$InputError=1;
 		prnMsg( __('The reference for this order is less than 3 characters') . ' - ' . __('a reference more than 3 characters is required before the order can be added'),'error');
-	}elseif ($_POST['Initiator']==''){
+	} elseif ($_POST['Initiator']==''){
 		$InputError=1;
 		prnMsg( __('The person entering this order must be specified in the initiator field') . ' - ' . __('a blank initiator is not allowed'),'error');
 	}

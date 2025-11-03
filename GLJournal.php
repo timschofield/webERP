@@ -77,7 +77,7 @@ if (isset($_POST['JournalProcessDate'])) {
 	if (!Is_Date($_POST['JournalProcessDate'])) {
 		prnMsg(__('The date entered was not valid please enter the date to process the journal in the format') . $_SESSION['DefaultDateFormat'], 'warn');
 		$_POST['CommitBatch'] = 'Do not do it the date is wrong';
-	}else{
+	} else {
 		$_SESSION['JournalDetail']->JnlDate = $_POST['JournalProcessDate'];
 	}
 }
@@ -339,14 +339,12 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == __('Accept and Pro
 	include('includes/footer.php');
 	exit();
 
-}
-elseif (isset($_GET['Delete'])) {
+} elseif (isset($_GET['Delete'])) {
 
 	/* User hit delete the line from the journal */
 	$_SESSION['JournalDetail']->Remove_GLEntry($_GET['Delete']);
 
-}
-elseif (isset($_POST['Process']) and $_POST['Process'] == __('Accept')) { //user hit submit a new GL Analysis line into the journal
+} elseif (isset($_POST['Process']) and $_POST['Process'] == __('Accept')) { //user hit submit a new GL Analysis line into the journal
 	if ($_POST['GLCode'] !=  '') {
 		$Extract = explode(' - ', $_POST['GLCode']);
 		$_POST['GLCode'] = $Extract[0];
@@ -473,8 +471,7 @@ echo '<fieldset>
 if ($_POST['JournalType'] == 'Reversing') {
 	echo '<option selected="selected" value = "Reversing">' . __('Reversing') . '</option>';
 	echo '<option value = "Normal">' . __('Normal') . '</option>';
-}
-else {
+} else {
 	echo '<option value = "Reversing">' . __('Reversing') . '</option>';
 	echo '<option selected="selected" value = "Normal">' . __('Normal') . '</option>';
 }
@@ -619,8 +616,7 @@ if ($DebitTotal !=  $CreditTotal) {
 }
 if ($DebitTotal > $CreditTotal) {
 	echo ' ' . __('Credit') . '</td></tr>';
-}
-else if ($DebitTotal < $CreditTotal) {
+} elseif ($DebitTotal < $CreditTotal) {
 	echo ' ' . __('Debit') . '</td></tr>';
 }
 echo '</table>
@@ -639,11 +635,9 @@ if (abs($_SESSION['JournalDetail']->JournalTotal) < 0.001 and $_SESSION['Journal
 			<input type="submit" name="CommitBatch" value="', __('Accept and Process Journal') , '" /><br />
 		</div>';
 		
-}
-elseif (count($_SESSION['JournalDetail']->GLEntries) > 0) {
+} elseif (count($_SESSION['JournalDetail']->GLEntries) > 0) {
 	prnMsg(__('The journal must balance ie debits equal to credits before it can be processed') , 'warn');
-}
-else {
+} else {
 	/* KL RICARD Do not show load from a template option
 	echo '<div class="centre">
 			<input type="submit" name="LoadTemplate" value="', __('Load from a template') , '" />

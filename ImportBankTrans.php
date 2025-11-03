@@ -387,7 +387,7 @@ if (isset($_POST['ProcessBankTrans'])) {
 										__('The SQL that failed to insert the supplier payment GL entry to the bank account was'),
 										true);
 
-				} elseif($_SESSION['Trans'][$i]->GLTotal == $_SESSION['Trans'][$i]->Amount) {
+				} elseif ($_SESSION['Trans'][$i]->GLTotal == $_SESSION['Trans'][$i]->Amount) {
 					//its a GL payment
 					$TransType = 1; //gl payment
 					$TransNo = GetNextTransNo(1);

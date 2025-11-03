@@ -47,7 +47,7 @@ function textSet(idEdit, text) {
 function comboKey(idEdit, idSel) {
 	if (window.event.keyCode == 13 || window.event.keyCode == 32)
 		textSet(idEdit,idSel.value);
-	else if (window.event.keyCode == 27) {
+	elseif (window.event.keyCode == 27) {
 		mouseSelect(0);
 		document.getElementById(idEdit).focus();
 	}

@@ -249,15 +249,15 @@ else {
 
 	if (!isset($_POST['Status']) OR $_POST['Status']=='Pending_Authorised_Completed'){
 		$StatusCriteria = " AND (purchorders.status='Pending' OR purchorders.status='Authorised' OR purchorders.status='Printed' OR purchorders.status='Completed') ";
-	}elseif ($_POST['Status']=='Authorised'){
+	} elseif ($_POST['Status']=='Authorised'){
 		$StatusCriteria = " AND (purchorders.status='Authorised' OR purchorders.status='Printed')";
-	}elseif ($_POST['Status']=='Pending'){
+	} elseif ($_POST['Status']=='Pending'){
 		$StatusCriteria = " AND purchorders.status='Pending' ";
-	}elseif ($_POST['Status']=='Rejected'){
+	} elseif ($_POST['Status']=='Rejected'){
 		$StatusCriteria = " AND purchorders.status='Rejected' ";
-	}elseif ($_POST['Status']=='Cancelled'){
+	} elseif ($_POST['Status']=='Cancelled'){
 		$StatusCriteria = " AND purchorders.status='Cancelled' ";
-	} elseif($_POST['Status']=='Completed'){
+	} elseif ($_POST['Status']=='Completed'){
 		$StatusCriteria = " AND purchorders.status='Completed' ";
 	}
 	if (isset($OrderNumber) AND $OrderNumber != '') {

@@ -23,7 +23,7 @@ $SalesOrdersResult = DB_query('SELECT orderno, stkcode FROM salesorderdetails OR
 
 while ($SalesOrderDetails = DB_fetch_array($SalesOrdersResult)) {
 
-	if($OrderNo != $SalesOrderDetails['orderno']) {
+	if ($OrderNo != $SalesOrderDetails['orderno']) {
 		$LineNo = 0;
 	} else {
 		$LineNo++;

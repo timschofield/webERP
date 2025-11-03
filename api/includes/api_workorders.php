@@ -155,7 +155,7 @@ function VerifyBatch($batch, $stockid, $Location, $i, $Errors) {
 	if ($MyRow[0]!=1) {
 		$Errors[$i] = ItemNotControlled;
 		return $Errors;
-	} else if ($MyRow[1]==1) {
+	} elseif ($MyRow[1]==1) {
 		$Errors[$i] = ItemSerialised;
 		return $Errors;
 	}
