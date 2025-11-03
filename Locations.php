@@ -566,7 +566,7 @@ if (!isset($_GET['delete'])) {
 		$_POST['AllowInvoicing'] = 1;// If not set, set value to "Yes".
 	}
 	if (!isset($_POST['GLAccountCode'])) {
-		$_POST['GLAccountCode'] = 1;
+		$_POST['GLAccountCode'] = '';
 	}
 
 	echo '<field>
