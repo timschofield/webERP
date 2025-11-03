@@ -136,7 +136,6 @@ if (isset($_POST['Submit']) AND $InputError==False){
 			}
 		}
 	}
-	$ErrMsg = __('CRITICAL ERROR') . '! ' . __('Unable to COMMIT Location Transfer transaction');
 	DB_Txn_Commit();
 
 	$TextToPrint = KLPrintReturnTransferToKantor($_POST['Trf_ID']);
