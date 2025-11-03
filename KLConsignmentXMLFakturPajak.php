@@ -111,8 +111,6 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 			$ResultCompanyTo = DB_query($SQLCompanyTo);
 			$MyCompanyTo= DB_fetch_array($ResultCompanyTo);
 
-			$NomorFaktur = $NomorSeriFP;
-			
 			$TaxInvoiceDate = $EndDateSQL;
 			$TaxInvoiceOpt = 'Normal';
 			$TrxCode = '04';
@@ -187,15 +185,15 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 				$Code = '000000';
 				$Name = $MyRow['description'];
 				$Unit = 'UM.0021';
-				$Price = round(($MyRow['consignmentsale']/$MyRow['qty']) / ((100 + PPN_PERCENT) / 100),0);
-				$Qty = round($MyRow['qty'],0);
+				$Price = round(($MyRow['consignmentsale'] / $MyRow['qty']) / ((100 + PPN_PERCENT) / 100), 0);
+				$Qty = round($MyRow['qty'], 0);
 				$TotalDiscount = 0;
 				$TaxBase = $Price * $Qty;
 				// Weird system of CoreTax to account for PPN as 12% when in reality it is 11%
 				// We guess will be fixed in the future, but for now we need to do this.
-				$OtherTaxBase = round($TaxBase / 12 * 11,2);
+				$OtherTaxBase = round($TaxBase / 12 * 11, 2);
 				$VATRate = 12;
-				$VAT = round($OtherTaxBase * $VATRate / 100,2);
+				$VAT = round($OtherTaxBase * $VATRate / 100, 2);
 				$STLGRate = 0;
 				$STLG = 0;
 
@@ -216,7 +214,6 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 				$GoodService->addChild('STLG', number_format($STLG, 0, '.', ''));
 				
 			}
-					
 
 			if ($DraftOrInvoice == 'INVOICE'){
 				DB_Txn_Begin();
@@ -253,12 +250,12 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 		echo $xmlOutput;
 		include('includes/footer.php');
 			
-		}else{
+		} else {
 			include('includes/header.php');
 			prnMsg('No data to create a Faktur Pajak','warn');
 			include('includes/footer.php');
 		}
-	}else{
+	} else {
 		include('includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 
@@ -269,8 +266,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 } // End of function submit()
 
 
-function display($Title)
-{
+function display($Title) {
 	include('includes/header.php');
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">

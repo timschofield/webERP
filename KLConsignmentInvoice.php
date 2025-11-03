@@ -55,9 +55,10 @@ function submit($CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $DomPDFOpti
 						stockmaster.description,
 					SUM(klconsignment.qty) AS qty,
 					SUM(klconsignment.qty * klconsignment.consignmentprice) AS consignmentsale
-				FROM klconsignment,stockmaster
-				WHERE klconsignment.stockid = stockmaster.stockid
-					AND companycode = '" . $CompanyFrom . "'
+				FROM klconsignment
+				INNER JOIN stockmaster 
+					ON stockmaster.stockid = klconsignment.stockid
+				WHERE companycode = '" . $CompanyFrom . "'
 					AND partnercode = '" . $CompanyTo . "'
 					AND invoicedtopartner = '1000-01-01'
 					AND saledate <= '" . $EndDate . "'
@@ -128,7 +129,7 @@ function submit($CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $DomPDFOpti
 			if ($CompanyFrom == 'PTADU'){
 				$HTML .= '<h1>PT. Angin Dingin Utara</h1>';
 				$HTML .= '<p>Jl. Raya Kesambi No. 1B, Kerobokan Kuta Utara, Badung - Bali</p>';
-				$HTML .= '<p>Ph. +62 812 381 6795</p>';
+				$HTML .= '<p>Ph. +62 812 381 6794</p>';
 			}elseif ($CompanyFrom == 'CASH'){
 				$HTML .= '<h1 style="font-size: 12pt;">CASH</h1>';
 			}
@@ -280,8 +281,8 @@ function submit($CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $DomPDFOpti
 				</tr>';
 			
 			if ($CompanyFrom == 'PTADU'){
-				$TotalGoods = $TotalInvoice / ((100 + PPN_PERCENT) / 100);
-				$TotalPPN = $TotalInvoice - $TotalGoods;
+				$TotalGoods = round($TotalInvoice / ((100 + PPN_PERCENT) / 100));
+				$TotalPPN = round($TotalInvoice - $TotalGoods);
 				
 				$HTML .= '<tr>
 					<td colspan="5" class="num">Total Goods:</td>
