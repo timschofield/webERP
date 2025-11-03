@@ -124,7 +124,7 @@ while ($MyRow=DB_fetch_array($Result)) {
 		while ($LineRow=DB_fetch_array($LineResult)) {
 			if ($LineRow['decimalplaces']!=NULL){
 				$DecimalPlaces = $LineRow['decimalplaces'];
-			}else {
+			} else {
 				$DecimalPlaces = 2;
 			}
 			echo '<tr>

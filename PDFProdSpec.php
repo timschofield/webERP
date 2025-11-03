@@ -9,11 +9,9 @@ include (__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['KeyValue'])) {
 	$SelectedProdSpec = $_GET['KeyValue'];
-}
-elseif (isset($_POST['KeyValue'])) {
+} elseif (isset($_POST['KeyValue'])) {
 	$SelectedProdSpec = $_POST['KeyValue'];
-}
-else {
+} else {
 	$SelectedProdSpec = '';
 }
 
@@ -208,8 +206,7 @@ if (isset($SelectedProdSpec) and $SelectedProdSpec != '') {
 	$FileName = $_SESSION['DatabaseName'] . '_ProductSpecification_' . date('Y-m-d') . '.pdf';
 
 	$DomPDF->stream($FileName, array("Attachment" => false));
-}
-else {
+} else {
 
 	$Title = __('Select Product Specification To Print');
 	$ViewTopic = 'QualityAssurance';

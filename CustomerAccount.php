@@ -30,7 +30,7 @@ if ($_SESSION['SalesmanLogin'] != '') {
 	$SQL = "SELECT salesman FROM custbranch WHERE debtorno = '" . $CustomerID . "'";
 	$ErrMsg = __('Failed to retrieve sales data');
 	$Result = DB_query($SQL, $ErrMsg);
-	if(DB_num_rows($Result)>0) {
+	if (DB_num_rows($Result)>0) {
 		while($MyRow = DB_fetch_array($Result)) {
 			if ($_SESSION['SalesmanLogin'] == $MyRow['salesman']) {
 				$ViewAllowed = true;
@@ -215,10 +215,10 @@ echo '<div class="noPrint centre">
 echo '<table width="100%">
 		<tr><th colspan="2">', __('Customer Statement For'), ': ', stripslashes($CustomerID), ' - ', $CustomerRecord['name'], '</th></tr>
 		<tr><td colspan="2">', $CustomerRecord['address1'], '</td></tr>';
-if($CustomerRecord['address2']!='') {// If not empty, output this line.
+if ($CustomerRecord['address2']!='') {// If not empty, output this line.
 	echo '<tr><td colspan="2">', $CustomerRecord['address2'], '</td></tr>';
 }
-if($CustomerRecord['address3']!='') {// If not empty, output this line.
+if ($CustomerRecord['address3']!='') {// If not empty, output this line.
 	echo '<tr><td colspan="2">', $CustomerRecord['address3'], '</td></tr>';
 }
 echo '	<tr><td colspan="2">', $CustomerRecord['address4'], '</td></tr>

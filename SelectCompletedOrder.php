@@ -236,7 +236,7 @@ if (isset($_POST['SearchParts']) AND $_POST['SearchParts']!=''){
 		  	echo '<br />' . __('For the part') . ': ' . $SelectedStockItem . ' ' . __('and') . ' <input type="hidden" name="SelectedStockItem" value="' . $SelectedStockItem . '" />';
 		}
 	}
-} else if ((isset($_POST['SearchOrders']) AND Is_Date($_POST['OrdersAfterDate'])==1) OR (isset($CustomerGet))) {
+} elseif ((isset($_POST['SearchOrders']) AND Is_Date($_POST['OrdersAfterDate'])==1) OR (isset($CustomerGet))) {
 
 	//figure out the SQL required from the inputs available
 	if (isset($OrderNumber)) {

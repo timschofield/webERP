@@ -31,7 +31,7 @@ if ($LineItem->Serialised==1){
 						<th>' .  __('Serial No') . '</th>
 					</tr>';
 	$ListTableHeader=$Tableheader;
-} else if ($LineItem->Serialised==0 and $Perishable==1){
+} elseif ($LineItem->Serialised==0 and $Perishable==1){
 	$Tableheader = '<tr>
 						<th>' .  __('Batch/Roll/Bundle'). ' #</th>
 						<th>' .  __('Available'). '</th>
@@ -83,7 +83,7 @@ foreach ($LineItem->SerialItems as $Bundle){
 
 	if ($LineItem->Serialised==0 and $Perishable==0){
 		echo '<td class="number">' . locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces) . '</td>';
-	} else if ($LineItem->Serialised==0 and $Perishable==1){
+	} elseif ($LineItem->Serialised==0 and $Perishable==1){
 		echo '<td class="number">' . locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces) . '</td>';
 		echo '<td class="number">' . $Bundle->ExpiryDate . '</td>';
 	}
@@ -143,7 +143,7 @@ if ($EditControlled){
 
 		if ($LineItem->Serialised==1){
 			echo '<input type="hidden" name="Qty' . $StartAddingAt .'" value=1></tr>';
-		} else if ($LineItem->Serialised==0 and $Perishable==1) {
+		} elseif ($LineItem->Serialised==0 and $Perishable==1) {
 			echo '<td><input type="text" class="number" name="Qty' . $StartAddingAt .'" size="11" value="'. locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces). '" maxlength="10" /></td></tr>';
 		} else {
 			echo '<td><input type="text" class="number" name="Qty' . $StartAddingAt .'" size="11"
@@ -156,7 +156,7 @@ if ($EditControlled){
 
 if (isset($_SESSION['Transfer']->StockLocationFrom)) {
 	$Location=$_SESSION['Transfer']->StockLocationFrom;
-} else if (isset($_SESSION['Items']->Location)) {
+} elseif (isset($_SESSION['Items']->Location)) {
 	$Location=$_SESSION['Items']->Location;
 }
 
@@ -179,7 +179,7 @@ while ($MyRow=DB_fetch_array($Result)){
 
 	if ($LineItem->Serialised==1){
 		echo '<input type="hidden" name="Qty' . ($StartAddingAt+$RowNumber) .'" value="1" /></tr>';
-	} else if ($LineItem->Serialised==0 and $Perishable==1) {
+	} elseif ($LineItem->Serialised==0 and $Perishable==1) {
 		if (isset($LineItem->SerialItems[$MyRow['serialno']])) {
 			echo '<td class="number">' . locale_number_format($MyRow['quantity']-$LineItem->SerialItems[$MyRow['serialno']]->BundleQty,$LineItem->DecimalPlaces) . '</td>';
 		} else {

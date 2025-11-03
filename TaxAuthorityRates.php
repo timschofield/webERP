@@ -12,14 +12,14 @@ echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $The
 		__('Tax Rates Maintenance') . '" />' . ' ' .
 		__('Tax Rates Maintenance') . '</p>';
 
-if(isset($_POST['TaxAuthority'])) {
+if (isset($_POST['TaxAuthority'])) {
 	$TaxAuthority = $_POST['TaxAuthority'];
 }
-if(isset($_GET['TaxAuthority'])) {
+if (isset($_GET['TaxAuthority'])) {
 	$TaxAuthority = $_GET['TaxAuthority'];
 }
 
-if(!isset($TaxAuthority)) {
+if (!isset($TaxAuthority)) {
 	prnMsg(__('This page can only be called after selecting the tax authority to edit the rates for') . '. ' .
 		__('Please select the Rates link from the tax authority page') . '<br /><a href="' .
 		$RootPath . '/TaxAuthorities.php">' . __('click here') . '</a> ' .
@@ -28,7 +28,7 @@ if(!isset($TaxAuthority)) {
 	exit();
 }
 
-if(isset($_POST['UpdateRates'])) {
+if (isset($_POST['UpdateRates'])) {
 	$TaxRatesResult = DB_query("SELECT taxauthrates.taxcatid,
 										taxauthrates.taxrate,
 										taxauthrates.dispatchtaxprovince
@@ -74,7 +74,7 @@ $TaxRatesResult = DB_query("SELECT taxauthrates.taxcatid,
 							ORDER BY taxauthrates.dispatchtaxprovince,
 							taxauthrates.taxcatid");
 
-if(DB_num_rows($TaxRatesResult)>0) {
+if (DB_num_rows($TaxRatesResult)>0) {
 	echo '<div class="centre"><h1>' . $MyRow[0] . '</h1></div>';// TaxAuthorityRates table title.
 
 	echo '<table class="selection">

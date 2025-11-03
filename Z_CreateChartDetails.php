@@ -31,7 +31,7 @@ $SQL = "SELECT chartmaster.accountcode, MIN(periods.periodno) AS startperiod
 
 $ChartDetailsNotSetUpResult = DB_query($SQL,__('Could not test to see that all chart detail records properly initiated'));
 
-if(DB_num_rows($ChartDetailsNotSetUpResult)>0){
+if (DB_num_rows($ChartDetailsNotSetUpResult)>0){
 
 	/*Now insert the chartdetails records that do not already exist */
 	$SQL = "INSERT INTO chartdetails (accountcode, period)

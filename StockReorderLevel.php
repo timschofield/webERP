@@ -11,7 +11,7 @@ if (isset($_GET['StockID'])){
 	$StockID = trim(mb_strtoupper($_GET['StockID']));
 } elseif (isset($_POST['StockID'])){
 	$StockID = trim(mb_strtoupper($_POST['StockID']));
-}else{
+} else {
 	$StockID = '';
 }
 

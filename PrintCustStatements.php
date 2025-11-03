@@ -369,8 +369,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCust']) and $_POST['FromCust
 	// Output the generated PDF to Browser
 	$DomPDF->stream($PdfFileName, array("Attachment" => false));
 
-}
-else { // The option to print PDF was not hit
+} else { // The option to print PDF was not hit
 	$Result = DB_query("SELECT debtorno FROM debtorsmaster ORDER BY debtorno");
 	while ($MyRow = DB_fetch_array($Result)) {
 		$DebtorsArray[] = $MyRow['debtorno'];

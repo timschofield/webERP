@@ -37,7 +37,7 @@ if (isset($_POST['submit']) ) {
 	} elseif (mb_strlen($_POST['Note']) >200) {
 		$InputError = 1;
 		prnMsg( __('The contacts notes must be two hundred characters or less long'), 'error');
-	} elseif( trim($_POST['Note']) == '' ) {
+	} elseif ( trim($_POST['Note']) == '' ) {
 		$InputError = 1;
 		prnMsg( __('The contacts notes may not be empty'), 'error');
 	}

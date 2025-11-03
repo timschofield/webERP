@@ -109,7 +109,7 @@ but there is no physical stock movement - it makes sense honest ??? */
 $CurrentPeriod = GetPeriod(date($_SESSION['DefaultDateFormat']));
 
 if (isset($_POST['ShowUsage'])){
-	if($_POST['StockLocation']=='All'){
+	if ($_POST['StockLocation']=='All'){
 		$SQL = "SELECT periods.periodno,
 				periods.lastdate_in_period,
 				canview,

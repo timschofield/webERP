@@ -718,7 +718,7 @@ function EnsureSQLDateFormat($Date) {
 	$Date = mb_substr($Date, 0, 10); // chop off the time stuff
 	if ($Date == '1000-01-01'){
 		return true; // The date is "no date", but in the correct SQL format
-	}else{
+	} else {
 		$DateTime = DateTime::createFromFormat('Y-m-d', $Date);
 		if ($DateTime && $DateTime->format('Y-m-d') === $Date) {
 			return true; // The date is in the correct SQL format
@@ -852,7 +852,7 @@ function LastDayOfMonth($DateEntry) {
 
 		$DateStamp =  mktime(0, 0, 0, $DateArray[1] + 1, 0, $DateArray[0]);
 
-	}elseif (($_SESSION['DefaultDateFormat'] == 'd/m/Y') OR $_SESSION['DefaultDateFormat'] == 'd.m.Y'){
+	} elseif (($_SESSION['DefaultDateFormat'] == 'd/m/Y') OR $_SESSION['DefaultDateFormat'] == 'd.m.Y'){
 		if (mb_strlen($DateArray[2]) == 2) {
 			if ((int)$DateArray[2] <= 60) {
 				$DateArray[2] = '20' . $DateArray[2];
@@ -982,7 +982,7 @@ function CalcDueDate($TranDate, $DayInFollowingMonth, $DaysBeforeDue){
 			$MonthDue = $DateArray[1];
 			$YearDue = $DateArray[2];
 
-		} elseif($DayInFollowingMonth >= 29) { //take the last day of month
+		} elseif ($DayInFollowingMonth >= 29) { //take the last day of month
 			if ($DayInFollowingMonth <= 31) {
 				$DayDue = 0;
 			} else {
@@ -1002,7 +1002,7 @@ function CalcDueDate($TranDate, $DayInFollowingMonth, $DaysBeforeDue){
 			$MonthDue = $DateArray[0];
 			$YearDue = $DateArray[2];
 
-		} elseif($DayInFollowingMonth >= 29) { //take the last day of month
+		} elseif ($DayInFollowingMonth >= 29) { //take the last day of month
 			if ($DayInFollowingMonth <= 31) {
 				$DayDue = 0;
 			} else {
@@ -1021,7 +1021,7 @@ function CalcDueDate($TranDate, $DayInFollowingMonth, $DaysBeforeDue){
 			$MonthDue = $DateArray[1];
 			$YearDue = $DateArray[0];
 
-		} elseif($DayInFollowingMonth >= 29) { //take the last day of month
+		} elseif ($DayInFollowingMonth >= 29) { //take the last day of month
 
 			if ($DayInFollowingMonth <= 31) {
 				$DayDue = 0;
@@ -1218,7 +1218,7 @@ function CalcEarliestDispatchDate() {
 
 		$EarliestDispatch = Mktime(0, 0, 0, Date('m', $EarliestDispatch), Date('d', $EarliestDispatch) + 2, Date('y', $EarliestDispatch));
 
-	}else {
+	} else {
 
 		$EarliestDispatch = Mktime(0, 0, 0, Date('m'), Date('d'), Date('y'));
 	}
@@ -1364,7 +1364,7 @@ function GetPeriod($TransDate, $UseProhibit = true) {
 				}
 			}
 		}
-	} else if (!PeriodExists(mktime(0, 0, 0, Date('m',$TransDate) + 1, Date('d',$TransDate), Date('Y',$TransDate)))) {
+	} elseif (!PeriodExists(mktime(0, 0, 0, Date('m',$TransDate) + 1, Date('d',$TransDate), Date('Y',$TransDate)))) {
 		/* Make sure the following months period exists */
 		$SQL = "SELECT MAX(lastdate_in_period), MAX(periodno) from periods";
 		$Result = DB_query($SQL);

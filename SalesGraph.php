@@ -51,14 +51,14 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	$Periods = DB_query($SQL);
 
 	while ($MyRow=DB_fetch_array($Periods)){
-		if(isset($_POST['FromPeriod']) AND $_POST['FromPeriod']!=''){
-			if( $_POST['FromPeriod']== $MyRow['periodno']){
+		if (isset($_POST['FromPeriod']) AND $_POST['FromPeriod']!=''){
+			if ( $_POST['FromPeriod']== $MyRow['periodno']){
 				echo '<option selected="selected" value="' . $MyRow['periodno'] . '">' .MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 			} else {
 				echo '<option value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 			}
 		} else {
-			if($MyRow['lastdate_in_period']==$DefaultFromDate){
+			if ($MyRow['lastdate_in_period']==$DefaultFromDate){
 				echo '<option selected="selected" value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 			} else {
 				echo '<option value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
@@ -82,7 +82,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 
 	while ($MyRow=DB_fetch_array($Periods)){
 
-		if($MyRow['periodno']==$DefaultToPeriod){
+		if ($MyRow['periodno']==$DefaultToPeriod){
 			echo '<option selected="selected" value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 		} else {
 			echo '<option value ="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
@@ -108,13 +108,13 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	echo '<field>
 			<label for="SalesArea">' . __('For Sales Area/Region:')  . '</label>
 			<select name="SalesArea">';
-	if($_POST['SalesArea']=='All'){
+	if ($_POST['SalesArea']=='All'){
 		echo '<option selected="selected" value="All">' . __('All') . '</option>';
 	} else {
 		echo '<option value="All">' . __('All') . '</option>';
 	}
 	while ($MyRow=DB_fetch_array($AreasResult)){
-		if($MyRow['areacode']==$_POST['SalesArea']){
+		if ($MyRow['areacode']==$_POST['SalesArea']){
 			echo '<option selected="selected" value="' . $MyRow['areacode'] . '">' . $MyRow['areadescription'] . '</option>';
 		} else {
 			echo '<option value="' . $MyRow['areacode'] . '">' . $MyRow['areadescription'] . '</option>';
@@ -131,13 +131,13 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	echo '<field>
 			<LABEL FOR="CategoryID">' . __('For Stock Category')  . ':</LABEL>
 			<select name="CategoryID">';
-	if($_POST['CategoryID']=='All'){
+	if ($_POST['CategoryID']=='All'){
 		echo '<option selected="selected" value="All">' . __('All') . '</option>';
 	} else {
 		echo '<option value="All">' . __('All') . '</option>';
 	}
 	while ($MyRow=DB_fetch_array($CategoriesResult)){
-		if($MyRow['categoryid']==$_POST['CategoryID']){
+		if ($MyRow['categoryid']==$_POST['CategoryID']){
 			echo '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
 		} else {
 			echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
@@ -156,7 +156,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 			<label for="SalesmanCode">' . __('For Salesperson:') . '</label>
 			<select name="SalesmanCode">';
 
-	if($_POST['SalesmanCode']=='All'){
+	if ($_POST['SalesmanCode']=='All'){
 		echo '<option selected="selected" value="All">' . __('All') . '</option>';
 	} else {
 		echo '<option value="All">' . __('All') . '</option>';

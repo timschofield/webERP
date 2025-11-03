@@ -12,21 +12,21 @@ $BookMark = 'GLCashFlowsSetup';
 include('includes/header.php');
 
 // Merges gets into posts:
-if(isset($_GET['Action'])) {
+if (isset($_GET['Action'])) {
 	$_POST['Action'] = $_GET['Action'];
 }
-if(isset($_GET['PeriodProfitAccount'])) {
+if (isset($_GET['PeriodProfitAccount'])) {
 	$_POST['PeriodProfitAccount'] = $_GET['PeriodProfitAccount'];
 }
-if(isset($_GET['RetainedEarningsAccount'])) {
+if (isset($_GET['RetainedEarningsAccount'])) {
 	$_POST['RetainedEarningsAccount'] = $_GET['RetainedEarningsAccount'];
 }
 // Do selected action:
 switch($_POST['Action']) {
 	case 'Update':
 		// Updates config accounts:
-		if($_SESSION['PeriodProfitAccount'] != $_POST['PeriodProfitAccount'] ) {
-			if(DB_query(
+		if ($_SESSION['PeriodProfitAccount'] != $_POST['PeriodProfitAccount'] ) {
+			if (DB_query(
 				"UPDATE config SET confvalue = '" . $_POST['PeriodProfitAccount'] . "' WHERE confname = 'PeriodProfitAccount'",
 				__('Can not update chartmaster.cashflowsactivity because')
 				)) {
@@ -34,8 +34,8 @@ switch($_POST['Action']) {
 				prnMsg(__('The net profit of the period GL account was updated'), 'success');
 			}
 		}
-		if($_SESSION['RetainedEarningsAccount'] != $_POST['RetainedEarningsAccount'] ) {
-			if(DB_query(
+		if ($_SESSION['RetainedEarningsAccount'] != $_POST['RetainedEarningsAccount'] ) {
+			if (DB_query(
 				"UPDATE companies SET retainedearnings = '" . $_POST['RetainedEarningsAccount'] . "' WHERE coycode = 1",
 				__('Can not update chartmaster.cashflowsactivity because')
 				)) {
@@ -48,7 +48,7 @@ switch($_POST['Action']) {
 		$Sql = "UPDATE `chartmaster` SET `cashflowsactivity`='-1';";
 		$ErrMsg = __('Can not update chartmaster.cashflowsactivity because');
 		$Result = DB_query($Sql, $ErrMsg);
-		if($Result) {
+		if ($Result) {
 			prnMsg(__('The cash flow activity was reset in all accounts'), 'success');
 		}
 		break;// END Reset.
@@ -132,7 +132,7 @@ switch($_POST['Action']) {
 			$Result = DB_query($Sql, $ErrMsg);
 			// RChacon: Count replacements.
 		}
-		if($Result) {
+		if ($Result) {
 			prnMsg(__('The cash flow activity was updated in some accounts'), 'success');// RChacon: Show replacements done.
 		}
 		break;// END Automatic.
@@ -169,9 +169,9 @@ $GLAccounts = DB_query($Sql);
 echo		'<field>
 				<label for="PeriodProfitAccount">', __('Net profit for the period GL account'), ':</label>
 	 			<select id="PeriodProfitAccount" name="PeriodProfitAccount" required="required">';
-if(!isset($_SESSION['PeriodProfitAccount']) OR $_SESSION['PeriodProfitAccount']=='') {
+if (!isset($_SESSION['PeriodProfitAccount']) OR $_SESSION['PeriodProfitAccount']=='') {
 	$Result = DB_fetch_array(DB_query("SELECT confvalue FROM `config` WHERE confname ='PeriodProfitAccount'"));
-	if($Result == NULL) {// If $Result is NULL (false, 0, or the empty; because we use "==", instead of "==="), the parameter NOT exists so creates it.
+	if ($Result == NULL) {// If $Result is NULL (false, 0, or the empty; because we use "==", instead of "==="), the parameter NOT exists so creates it.
 		echo		'<option value="">', __('Select...'), '</option>';
 		// Creates a configuration parameter for the net profit for the period GL account:
 		$Sql = "INSERT INTO `config` (confname, confvalue) VALUES ('PeriodProfitAccount', '" . $Result['accountcode'] . "')";
@@ -192,9 +192,9 @@ echo				'</select>
 echo		'<field>
 				<label for="RetainedEarningsAccount">', __('Retained earnings GL account'), ':</label>
 	 			<select id="RetainedEarningsAccount" name="RetainedEarningsAccount" required="required">';
-if(!isset($_SESSION['RetainedEarningsAccount']) OR $_SESSION['RetainedEarningsAccount']=='') {
+if (!isset($_SESSION['RetainedEarningsAccount']) OR $_SESSION['RetainedEarningsAccount']=='') {
 	$Result = DB_fetch_array(DB_query("SELECT retainedearnings FROM `companies` WHERE `coycode`=1"));
-	if($Result == NULL) {// If $Result is NULL (false, 0, or the empty; because we use "==", instead of "==="), the parameter NOT exists.
+	if ($Result == NULL) {// If $Result is NULL (false, 0, or the empty; because we use "==", instead of "==="), the parameter NOT exists.
 		echo		'<option value="">', __('Select...'), '</option>';
 		$_SESSION['RetainedEarningsAccount'] = '';
 	} else {// If $Result is NOT NULL, the parameter exists so gets it.

@@ -12,12 +12,12 @@ echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $The
 		__('Dispatch Tax Province Maintenance') . '" />' . ' ' .
 		__('Dispatch Tax Province Maintenance') . '</p>';
 
-if( isset($_GET['SelectedTaxProvince']) )
+if ( isset($_GET['SelectedTaxProvince']) )
 	$SelectedTaxProvince = $_GET['SelectedTaxProvince'];
-elseif(isset($_POST['SelectedTaxProvince']))
+elseif (isset($_POST['SelectedTaxProvince']))
 	$SelectedTaxProvince = $_POST['SelectedTaxProvince'];
 
-if(isset($_POST['submit'])) {
+if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
 
@@ -28,16 +28,16 @@ if(isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 
-	if(ContainsIllegalCharacters($_POST['TaxProvinceName'])) {
+	if (ContainsIllegalCharacters($_POST['TaxProvinceName'])) {
 		$InputError = 1;
 		prnMsg( __('The tax province name cannot contain any of the illegal characters') . ' ' . '" \' - &amp; or a space','error');
 	}
-	if(trim($_POST['TaxProvinceName']) == '') {
+	if (trim($_POST['TaxProvinceName']) == '') {
 		$InputError = 1;
 		prnMsg( __('The tax province name may not be empty'), 'error');
 	}
 
-	if($_POST['SelectedTaxProvince']!='' AND $InputError !=1) {
+	if ($_POST['SelectedTaxProvince']!='' AND $InputError !=1) {
 
 		/*SelectedTaxProvince could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 		// Check the name does not clash
@@ -46,7 +46,7 @@ if(isset($_POST['submit'])) {
 				AND taxprovincename " . LIKE . " '" . $_POST['TaxProvinceName'] . "'";
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_row($Result);
-		if( $MyRow[0] > 0 ) {
+		if ( $MyRow[0] > 0 ) {
 			$InputError = 1;
 			prnMsg( __('The tax province cannot be renamed because another with the same name already exists.'),'error');
 		} else {
@@ -54,7 +54,7 @@ if(isset($_POST['submit'])) {
 			$SQL = "SELECT taxprovincename FROM taxprovinces
 						WHERE taxprovinceid = '" . $SelectedTaxProvince . "'";
 			$Result = DB_query($SQL);
-			if( DB_num_rows($Result) != 0 ) {
+			if ( DB_num_rows($Result) != 0 ) {
 				// This is probably the safest way there is
 				$MyRow = DB_fetch_row($Result);
 				$OldTaxProvinceName = $MyRow[0];
@@ -63,7 +63,7 @@ if(isset($_POST['submit'])) {
 					WHERE taxprovincename ".LIKE." '".$OldTaxProvinceName."'";
 				$ErrMsg = __('Could not update tax province');
 				$Result = DB_query($SQL, $ErrMsg);
-				if(!$Result) {
+				if (!$Result) {
 					prnMsg(__('Tax province name changed'),'success');
 				}
 			} else {
@@ -71,14 +71,14 @@ if(isset($_POST['submit'])) {
 				prnMsg( __('The tax province no longer exists'),'error');
 			}
 		}
-	} elseif($InputError !=1) {
+	} elseif ($InputError !=1) {
 		/*SelectedTaxProvince is null cos no item selected on first time round so must be adding a record*/
 		$SQL = "SELECT count(*) FROM taxprovinces
 				WHERE taxprovincename " .LIKE. " '".$_POST['TaxProvinceName'] ."'";
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_row($Result);
 
-		if( $MyRow[0] > 0 ) {
+		if ( $MyRow[0] > 0 ) {
 
 			$InputError = 1;
 			prnMsg( __('The tax province cannot be created because another with the same name already exists'),'error');
@@ -99,7 +99,7 @@ if(isset($_POST['submit'])) {
 			$Result = DB_query($SQL, $ErrMsg);
 		}
 
-		if(!$Result) {
+		if (!$Result) {
 			prnMsg(__('Errors were encountered adding this tax province'),'error');
 		} else {
 			prnMsg(__('New tax province added'),'success');
@@ -109,14 +109,14 @@ if(isset($_POST['submit'])) {
 	unset ($_POST['SelectedTaxProvince']);
 	unset ($_POST['TaxProvinceName']);
 
-} elseif(isset($_GET['delete'])) {
+} elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'stockmaster'
 	// Get the original name of the tax province the ID is just a secure way to find the tax province
 	$SQL = "SELECT taxprovincename FROM taxprovinces
 		WHERE taxprovinceid = '" . $SelectedTaxProvince . "'";
 	$Result = DB_query($SQL);
-	if( DB_num_rows($Result) == 0 ) {
+	if ( DB_num_rows($Result) == 0 ) {
 		// This is probably the safest way there is
 		prnMsg( __('Cannot delete this tax province because it no longer exists'),'warn');
 	} else {
@@ -125,7 +125,7 @@ if(isset($_POST['submit'])) {
 		$SQL= "SELECT COUNT(*) FROM locations WHERE taxprovinceid = '" . $SelectedTaxProvince . "'";
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_row($Result);
-		if($MyRow[0]>0) {
+		if ($MyRow[0]>0) {
 			prnMsg( __('Cannot delete this tax province because at least one stock location is defined to be inside this province'),'warn');
 			echo '<br />' . __('There are') . ' ' . $MyRow[0] . ' ' . __('stock locations that refer to this tax province') . '</font>';
 		} else {
@@ -143,7 +143,7 @@ if(isset($_POST['submit'])) {
 	unset ($_POST['TaxProvinceName']);
 }
 
-if(!isset($SelectedTaxProvince)) {
+if (!isset($SelectedTaxProvince)) {
 
 /* An tax province could be posted when one has been edited and is being updated
 or GOT when selected for modification
@@ -182,18 +182,18 @@ or deletion of the records*/
 } //end of ifs and buts!
 
 
-if(isset($SelectedTaxProvince)) {
+if (isset($SelectedTaxProvince)) {
 	echo '<div class="centre">
 			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Review Tax Provinces') . '</a>
 		</div>';
 }
 
-if(! isset($_GET['delete'])) {
+if (! isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	if(isset($SelectedTaxProvince)) {
+	if (isset($SelectedTaxProvince)) {
 		//editing an existing section
 
 		$SQL = "SELECT taxprovinceid,
@@ -202,7 +202,7 @@ if(! isset($_GET['delete'])) {
 				WHERE taxprovinceid='" . $SelectedTaxProvince . "'";
 
 		$Result = DB_query($SQL);
-		if( DB_num_rows($Result) == 0 ) {
+		if ( DB_num_rows($Result) == 0 ) {
 			prnMsg( __('Could not retrieve the requested tax province, please try again.'),'warn');
 			unset($SelectedTaxProvince);
 		} else {

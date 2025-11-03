@@ -9,7 +9,7 @@ include('includes/header.php');
 
 if (isset($_GET['SelectedReason'])){
 	$SelectedReason = $_GET['SelectedReason'];
-} elseif(isset($_POST['SelectedReason'])){
+} elseif (isset($_POST['SelectedReason'])){
 	$SelectedReason = $_POST['SelectedReason'];
 }
 

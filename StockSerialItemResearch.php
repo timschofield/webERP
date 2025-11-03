@@ -14,7 +14,7 @@ echo '<p class="page_title_text">
 //validate the submission
 if (isset($_POST['serialno'])) {
 	$SerialNo = trim($_POST['serialno']);
-} elseif(isset($_GET['serialno'])) {
+} elseif (isset($_GET['serialno'])) {
 	$SerialNo = trim($_GET['serialno']);
 } else {
 	$SerialNo = '';

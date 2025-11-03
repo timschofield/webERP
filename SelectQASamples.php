@@ -15,7 +15,7 @@ if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate'])
 
 if (isset($_GET['SelectedSampleID'])){
 	$SelectedSampleID =mb_strtoupper($_GET['SelectedSampleID']);
-} elseif(isset($_POST['SelectedSampleID'])){
+} elseif (isset($_POST['SelectedSampleID'])){
 	$SelectedSampleID =mb_strtoupper($_POST['SelectedSampleID']);
 }
 
@@ -209,7 +209,7 @@ if (isset($_POST['submit'])) {
 							AND showoncert='1'
 							AND testvalue=''");
 		$MyRow = DB_fetch_row($Result);
-		if($MyRow[0]>0 AND $_POST['Cert']=='1') {
+		if ($MyRow[0]>0 AND $_POST['Cert']=='1') {
 			 $_POST['Cert']='0';
 			 $Msg = __('Test Results have not all been entered.  This Lot is not able to be used for a a Certificate of Analysis');
 			 prnMsg($Msg , 'error');
@@ -219,7 +219,7 @@ if (isset($_POST['submit'])) {
 							AND showoncert='1'
 							AND isinspec='0'");
 		$MyRow = DB_fetch_row($Result);
-		if($MyRow[0]>0 AND $_POST['Cert']=='1') {
+		if ($MyRow[0]>0 AND $_POST['Cert']=='1') {
 			 $Msg = __('Some Results are out of Spec');
 			 prnMsg($Msg , 'warning');
 		}
@@ -237,7 +237,7 @@ if (isset($_POST['submit'])) {
 			$Result = DB_query("SELECT prodspeckey, lotkey FROM qasamples
 							WHERE sampleid = '".$SelectedSampleID."'");
 			$MyRow = DB_fetch_row($Result);
-			if($MyRow[0]>'') {
+			if ($MyRow[0]>'') {
 				$SQL = "UPDATE qasamples SET cert='0'
 						WHERE sampleid <> '".$SelectedSampleID . "'
 						AND prodspeckey='" . $MyRow[0] . "'

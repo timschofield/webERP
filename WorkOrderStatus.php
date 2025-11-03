@@ -132,14 +132,14 @@ echo '<table cellpadding="2" class="selection">
 		if (isset($IssuedAlreadyRow[$RequirementsRow['stockid']])){
 			$Issued = $IssuedAlreadyRow[$RequirementsRow['stockid']];
 			unset($IssuedAlreadyRow[$RequirementsRow['stockid']]);
-		}else{
+		} else {
 			$Issued = 0;
 		}
 		echo '<td class="number">'.locale_number_format($WORow['qtyreqd']*$RequirementsRow['qtypu'],$RequirementsRow['decimalplaces']).'</td>
 			<td class="number">'.locale_number_format($Issued,$RequirementsRow['decimalplaces']).'</td></tr>';
 	}
 	/* Now do any additional issues of items not in the BOM */
-	if(isset($IssuedAlreadyRow) AND count($IssuedAlreadyRow)>0){
+	if (isset($IssuedAlreadyRow) AND count($IssuedAlreadyRow)>0){
 		$AdditionalStocks = implode("','",array_keys($IssuedAlreadyRow));
 		$RequirementsSQL = "SELECT stockid,
 						description,

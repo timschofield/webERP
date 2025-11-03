@@ -126,7 +126,7 @@ if ($LineItem->Serialised==1){
 							<th>' .  __('Expiry Date'). '<th>
 						</tr>';
 	}
-} else if ($LineItem->Serialised==0 AND $Perishable==1){
+} elseif ($LineItem->Serialised==0 AND $Perishable==1){
 	$TableHeader = '<tr>
 						<th>' .  __('Batch/Roll/Bundle'). ' #</th>
 						<th>' .  __('Quantity'). '</th>

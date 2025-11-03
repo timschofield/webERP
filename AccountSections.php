@@ -13,7 +13,7 @@ include('includes/header.php');
 	$SQL = "SELECT sectionid FROM accountsection WHERE sectionid=1";
 	$Result = DB_query($SQL);
 
-	if( DB_num_rows($Result) == 0 ) {
+	if ( DB_num_rows($Result) == 0 ) {
 		$SQL = "INSERT INTO accountsection (sectionid,
 											sectionname)
 									VALUES (1,
@@ -24,7 +24,7 @@ include('includes/header.php');
 	$SQL = "SELECT sectionid FROM accountsection WHERE sectionid=2";
 	$Result = DB_query($SQL);
 
-	if( DB_num_rows($Result) == 0 ) {
+	if ( DB_num_rows($Result) == 0 ) {
 		$SQL = "INSERT INTO accountsection (sectionid,
 											sectionname)
 									VALUES (2,
@@ -36,7 +36,7 @@ include('includes/header.php');
 
 $Errors = array();
 
-if(isset($_POST['submit'])) {
+if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
 
@@ -53,39 +53,39 @@ if(isset($_POST['submit'])) {
 					WHERE sectionid='".$_POST['SectionID']."'";
 		$Result = DB_query($SQL);
 
-		if((DB_num_rows($Result) != 0 AND !isset($_POST['SelectedSectionID']))) {
+		if ((DB_num_rows($Result) != 0 AND !isset($_POST['SelectedSectionID']))) {
 			$InputError = 1;
 			prnMsg( __('The account section already exists in the database'),'error');
 			$Errors[$i] = 'SectionID';
 			$i++;
 		}
 	}
-	if(ContainsIllegalCharacters($_POST['SectionName'])) {
+	if (ContainsIllegalCharacters($_POST['SectionName'])) {
 		$InputError = 1;
 		prnMsg( __('The account section name cannot contain any illegal characters') . ' ' . '" \' - &amp; or a space','error');
 		$Errors[$i] = 'SectionName';
 		$i++;
 	}
-	if(mb_strlen($_POST['SectionName']) == 0) {
+	if (mb_strlen($_POST['SectionName']) == 0) {
 		$InputError = 1;
 		prnMsg( __('The account section name must contain at least one character'),'error');
 		$Errors[$i] = 'SectionName';
 		$i++;
 	}
-	if(isset($_POST['SectionID']) AND (!is_numeric($_POST['SectionID']))) {
+	if (isset($_POST['SectionID']) AND (!is_numeric($_POST['SectionID']))) {
 		$InputError = 1;
 		prnMsg( __('The section number must be an integer'),'error');
 		$Errors[$i] = 'SectionID';
 		$i++;
 	}
-	if(isset($_POST['SectionID']) AND mb_strpos($_POST['SectionID'],".")>0) {
+	if (isset($_POST['SectionID']) AND mb_strpos($_POST['SectionID'],".")>0) {
 		$InputError = 1;
 		prnMsg( __('The section number must be an integer'),'error');
 		$Errors[$i] = 'SectionID';
 		$i++;
 	}
 
-	if(isset($_POST['SelectedSectionID']) AND $_POST['SelectedSectionID'] != '' AND $InputError != 1) {
+	if (isset($_POST['SelectedSectionID']) AND $_POST['SelectedSectionID'] != '' AND $InputError != 1) {
 
 		/*SelectedSectionID could also exist if submit had not been clicked this code would not run in this case cos submit is false of course see the delete code below*/
 
@@ -93,7 +93,7 @@ if(isset($_POST['submit'])) {
 				WHERE sectionid = '" . $_POST['SelectedSectionID'] . "'";
 
 		$Msg = __('Record Updated');
-	} elseif($InputError != 1) {
+	} elseif ($InputError != 1) {
 
 	/*SelectedSectionID is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new account section form */
 
@@ -105,7 +105,7 @@ if(isset($_POST['submit'])) {
 		$Msg = __('Record inserted');
 	}
 
-	if($InputError != 1) {
+	if ($InputError != 1) {
 		//run the SQL from either of the above possibilites
 		$Result = DB_query($SQL);
 		prnMsg($Msg,'success');
@@ -114,14 +114,14 @@ if(isset($_POST['submit'])) {
 		unset ($_POST['SectionName']);
 	}
 
-} elseif(isset($_GET['delete'])) {
+} elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'accountgroups'
 	$SQL= "SELECT COUNT(sectioninaccounts) AS sections FROM accountgroups WHERE sectioninaccounts='" . $_GET['SelectedSectionID'] . "'";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
-	if($MyRow['sections']>0) {
+	if ($MyRow['sections']>0) {
 		prnMsg( __('Cannot delete this account section because general ledger accounts groups have been created using this section'),'warn');
 		echo '<div>',
 			'<br />', __('There are'), ' ', $MyRow['sections'], ' ', __('general ledger accounts groups that refer to this account section'),
@@ -146,7 +146,7 @@ if(isset($_POST['submit'])) {
 	unset ($_POST['SectionName']);
 }
 
-if(!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) {
+if (!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) {
 
 /*	An account section could be posted when one has been edited and is being updated
 	or GOT when selected for modification
@@ -186,7 +186,7 @@ if(!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) {
 				<td class="text">', $MyRow['sectionname'], '</td>
 				<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'].'?SelectedSectionID='.urlencode($MyRow['sectionid']), ENT_QUOTES, 'UTF-8'), '">', __('Edit'), '</a></td>
 				<td class="noPrint">';
-		if( $MyRow['sectionid'] == '1' or $MyRow['sectionid'] == '2' ) {
+		if ( $MyRow['sectionid'] == '1' or $MyRow['sectionid'] == '2' ) {
 			echo '<b>', __('Restricted'), '</b>';
 		} else {
 			echo '<a href="', htmlspecialchars($_SERVER['PHP_SELF'].'?SelectedSectionID='.urlencode($MyRow['sectionid']).'&delete=1', ENT_QUOTES, 'UTF-8'), '">', __('Delete'), '</a>';
@@ -199,16 +199,16 @@ if(!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) {
 } //end of ifs and buts!
 
 
-if(isset($_POST['SelectedSectionID']) or isset($_GET['SelectedSectionID'])) {
+if (isset($_POST['SelectedSectionID']) or isset($_GET['SelectedSectionID'])) {
 	echo '<a class="toplink" href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . __('Review Account Sections') . '</a>';
 }
 
-if(! isset($_GET['delete'])) {
+if (! isset($_GET['delete'])) {
 
 	echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" id="AccountSections" method="post">',
 		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />';
 
-	if(isset($_GET['SelectedSectionID'])) {
+	if (isset($_GET['SelectedSectionID'])) {
 		//editing an existing section
 
 		$SQL = "SELECT sectionid,
@@ -217,7 +217,7 @@ if(! isset($_GET['delete'])) {
 			WHERE sectionid='" . $_GET['SelectedSectionID'] ."'";
 
 		$Result = DB_query($SQL);
-		if( DB_num_rows($Result) == 0 ) {
+		if ( DB_num_rows($Result) == 0 ) {
 			prnMsg( __('Could not retrieve the requested section please try again.'),'warn');
 			unset($_GET['SelectedSectionID']);
 		} else {
@@ -238,13 +238,13 @@ if(! isset($_GET['delete'])) {
 
 	} else {
 
-		if(!isset($_POST['SelectedSectionID'])) {
+		if (!isset($_POST['SelectedSectionID'])) {
 			$_POST['SelectedSectionID']='';
 		}
-		if(!isset($_POST['SectionID'])) {
+		if (!isset($_POST['SectionID'])) {
 			$_POST['SectionID']='';
 		}
-		if(!isset($_POST['SectionName'])) {
+		if (!isset($_POST['SectionName'])) {
 			$_POST['SectionName']='';
 		}
 		echo '<fieldset>

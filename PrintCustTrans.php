@@ -62,8 +62,8 @@ if (isset($PrintPDF)
 				FROM bankaccounts
 				WHERE bankaccounts.invoice = '1'";
 		$Result = DB_query($SQL, '', '', false, false);
-		if(DB_error_no()!=1) {
-			if(DB_num_rows($Result)==1) {
+		if (DB_error_no()!=1) {
+			if (DB_num_rows($Result)==1) {
 				$MyRowBank = DB_fetch_array($Result);
 				$DefaultBankAccountNumber = __('Account') .': ' .$MyRowBank['bankaccountnumber'];
 				$DefaultBankAccountCode = __('Bank Code:') .' ' .$MyRowBank['bankaccountcode'];
@@ -152,7 +152,7 @@ if (isset($PrintPDF)
 						ON debtorsmaster.currcode=currencies.currabrev
 						WHERE debtortrans.type=10
 						AND debtortrans.transno='" . $FromTransNo . "'";
-			if(isset($_POST['PrintEDI']) AND $_POST['PrintEDI']=='No') {
+			if (isset($_POST['PrintEDI']) AND $_POST['PrintEDI']=='No') {
 				$SQL .= ' AND debtorsmaster.ediinvoices=0';
 			}
 		} else {
@@ -203,7 +203,7 @@ if (isset($PrintPDF)
 						ON debtorsmaster.currcode=currencies.currabrev
 						WHERE debtortrans.type=11
 						AND debtortrans.transno='" . $FromTransNo . "'";
-			if(isset($_POST['PrintEDI']) AND $_POST['PrintEDI']=='No') {
+			if (isset($_POST['PrintEDI']) AND $_POST['PrintEDI']=='No') {
 				$SQL .= ' AND debtorsmaster.ediinvoices=0';
 			}
 		}
@@ -482,14 +482,14 @@ if (isset($PrintPDF)
 							$HTML .= '<tr class="striped_row"><td></td><td colspan="6">' . $Narrative . '</td></tr>';
 						}
 						// Serial/controlled stock lines if you want to show them
-						if($MyRow2['controlled']==1) {
+						if ($MyRow2['controlled']==1) {
 							$GetControlMovts = DB_query("
 								SELECT
 									moveqty,
 									serialno
 								FROM stockserialmoves
 								WHERE stockmoveno='" . $MyRow2['stkmoveno'] . "'");
-							if($MyRow2['serialised']==1) {
+							if ($MyRow2['serialised']==1) {
 								while($ControlledMovtRow = DB_fetch_array($GetControlMovts)) {
 									$HTML .= '<tr><td></td><td colspan="6">' . $ControlledMovtRow['serialno'] . '</td></tr>';
 								}

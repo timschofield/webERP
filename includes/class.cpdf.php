@@ -113,7 +113,7 @@ if (!class_exists('Cpdf', false)) {
 			}
 			$this->SetFontSize($Height);// Public function SetFontSize() in tcpdf/tcpdf.php.
 
-			if($Width==0) {
+			if ($Width==0) {
 				$Width = $this->w - $this->rMargin - $this->x;// Line_width = Page_width - Right_margin - Cell_horizontal_coordinate($XPos).
 			}
 			$wmax=($Width-2*$this->cMargin);
@@ -129,10 +129,10 @@ if (!class_exists('Cpdf', false)) {
 					$b2='LR';
 				} else {
 					$b2='';
-					if(is_int(mb_strpos($border,'L',0,'UTF-8'))) {
+					if (is_int(mb_strpos($border,'L',0,'UTF-8'))) {
 						$b2.='L';
 					}
-					if(is_int(mb_strpos($border,'R',0,'UTF-8'))) {
+					if (is_int(mb_strpos($border,'R',0,'UTF-8'))) {
 						$b2.='R';
 					}
 					$b=is_int(mb_strpos($border,'T',0,'UTF-8')) ? $b2.'T' : $b2;
@@ -146,7 +146,7 @@ if (!class_exists('Cpdf', false)) {
 			while($i<$nb) {
 
 				$c=mb_substr($s, $i, 1, 'UTF-8');
-				if($c===' ' AND $i>0) {
+				if ($c===' ' AND $i>0) {
 					$sep=$i;
 					$ls=$l;
 					$ns++;
@@ -154,23 +154,23 @@ if (!class_exists('Cpdf', false)) {
 				if (isset($cw[$i])) {
 					$l += $cw[$i];
 				}
-				if($l>$wmax){
+				if ($l>$wmax){
 					break;
 				} else {
 					$i++;
 				}
 			}
-			if($sep==-1) {
-				if($i==0) {
+			if ($sep==-1) {
+				if ($i==0) {
 					$i++;
 				}
 
-				if(isset($this->ws) and $this->ws>0) {
+				if (isset($this->ws) and $this->ws>0) {
 					$this->ws=0;
 					$this->_out('0 Tw');
 				}
 			} else {
-				if($Align=='J') {
+				if ($Align=='J') {
 					$this->ws=($ns>1) ? ($wmax-$ls)/($ns-1) : 0;
 					$this->_out(sprintf('%.3f Tw',$this->ws*$this->k));
 				}

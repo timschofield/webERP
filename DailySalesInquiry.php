@@ -128,7 +128,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$LastDayOfMonth = DayOfMonthFromSQLDate($EndDateSQL);
 	for ($i=1;$i<=$LastDayOfMonth;$i++){
 		$ColumnCounter++;
-		if(isset($DaySalesArray[$i])) {
+		if (isset($DaySalesArray[$i])) {
 			$HTML .= '<td class="number" style="outline: 1px solid gray;">' . locale_number_format($DaySalesArray[$i]['Sales'],0) . '<br />' .  locale_number_format($DaySalesArray[$i]['GPPercent']*100,1) . '%</td>';
 		} else {
 			$HTML .= '<td class="number" style="outline: 1px solid gray;">' . locale_number_format(0,0) . '<br />' .  locale_number_format(0,1) . '%</td>';
@@ -138,7 +138,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 						for ($j=1;$j<=7;$j++){
 								   $HTML .= '<th>' . $DayNumber. '</th>';
 							$DayNumber++;
-							if($DayNumber>$LastDayOfMonth){
+							if ($DayNumber>$LastDayOfMonth){
 								   break;
 							}
 						}
@@ -236,7 +236,7 @@ $HTML .= '</table>';
 	echo '<field>
 			<label for="Salesperson">' . __('Salesperson') . ':</label>';
 
-	if($_SESSION['SalesmanLogin'] != '') {
+	if ($_SESSION['SalesmanLogin'] != '') {
 		echo '<td>';
 		echo $_SESSION['UsersRealName'];
 		echo '</td>';

@@ -189,7 +189,7 @@ if (isset($_POST['Update'])
 		if (mb_strlen($_POST['VoyageRef'])<2){
 			prnMsg( __('A reference to the voyage (or HAWB in the case of air-freight) of more than 2 characters is expected'), 'error');
 		}
-	} elseif(mb_strlen($_SESSION['Shipment']->Vessel)<2
+	} elseif (mb_strlen($_SESSION['Shipment']->Vessel)<2
 			OR mb_strlen($_SESSION['Shipment']->VoyageRef)<2){
 		prnMsg(__('Cannot add purchase order lines to the shipment unless the shipment is first initiated - hit update to setup the shipment first'),'info');
 		$InputError = 1;
@@ -274,7 +274,7 @@ if (isset($_GET['Add'])
 
 	if ($MyRow['stdcostunit']==0){
 		$StandardCost = $MyRow['stdcost'];
-	}else {
+	} else {
 		$StandardCost = $MyRow['stdcostunit'];
 	}
 

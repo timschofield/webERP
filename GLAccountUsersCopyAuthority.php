@@ -12,16 +12,16 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	$Title, '" /> ',// Icon title.
 	$Title, '</p>';// Page title.
 
-if(isset($_POST['ProcessCopyAuthority'])) {
+if (isset($_POST['ProcessCopyAuthority'])) {
 
 	$InputError = 0;
 
-	if($_POST['FromUserID'] == $_POST['ToUserID']) {
+	if ($_POST['FromUserID'] == $_POST['ToUserID']) {
 		prnMsg(__('User FROM must be different from user TO'), 'error');
 		$InputError = 1;
 	}
 
-	if($InputError == 0) {// no input errors
+	if ($InputError == 0) {// no input errors
 		DB_Txn_Begin();
 
 		$SQL = "DELETE FROM glaccountusers WHERE UPPER(userid) = UPPER('" . $_POST['ToUserID'] . "')";
@@ -54,7 +54,7 @@ echo '<field>';
 echo '<label for="FromUserID">' . __('Select User to copy the Authority FROM') . ':</label>';
 echo '<select id="FromUserID" name="FromUserID">';
 
-if($_SESSION['AccessLevel'] == 8) {
+if ($_SESSION['AccessLevel'] == 8) {
 	// if system admin can access to anyone.
 	$Result = DB_query("SELECT userid,
 								realname
@@ -81,7 +81,7 @@ echo '<field>';
 echo '<label for="ToUserID">' . __('Select User to copy the Authority TO') . ':</label>';
 echo '<select id="ToUserID" name="ToUserID">';
 
-if($_SESSION['AccessLevel'] == 8) {
+if ($_SESSION['AccessLevel'] == 8) {
 	// if system admin can access to anyone.
 	$Result = DB_query("SELECT userid,
 								realname

@@ -346,7 +346,7 @@ function ChangeColumnName($OldName, $Table, $Type, $Null, $Default, $NewName, $A
 	if (DB_num_rows($OldResult) > 0 and DB_num_rows($NewResult) == 0) {
 		if (strtoupper($Type) == 'TIMESTAMP') {
 			$Default = "DEFAULT CURRENT_TIMESTAMP";
-		}else{
+		} else {
 			$Default = "DEFAULT '" . $Default . "'";
 		}
 		if ($AutoIncrement == '') {
@@ -594,7 +594,7 @@ function UpdateField($Table, $Field, $NewValue, $Criteria) {
 		} else {
 			OutputResult(__('The field') . ' ' . $Field . ' ' . __('is already correct'), 'info');
 		}
-	} else if (isset($SQLFile)) {
+	} elseif (isset($SQLFile)) {
 		$Response = executeSQL("UPDATE " . $Table . " SET " . $Field . "='" . $NewValue . "' WHERE " . $Criteria, false);
 	}
 }
@@ -738,7 +738,7 @@ function OutputResult($Msg, $Status) {
 	if ($Status == 'error') {
 		$_SESSION['Updates']['Errors']++;
 		$_SESSION['Updates']['Messages'][] = $Msg;
-	} else if ($Status == 'success') {
+	} elseif ($Status == 'success') {
 		$_SESSION['Updates']['Successes']++;
 	} else {
 		$_SESSION['Updates']['Warnings']++;

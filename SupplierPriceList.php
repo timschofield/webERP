@@ -9,7 +9,7 @@ $ViewTopic = 'PurchaseOrdering';
 $BookMark = 'SupplierPriceList';
 include('includes/header.php');
 
-if(isset($_POST['StockSearch'])) {
+if (isset($_POST['StockSearch'])) {
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/magnifier.png" title="', // Icon image.
 		__('Search'), '" /> ', // Icon title.
@@ -23,10 +23,10 @@ if(isset($_POST['StockSearch'])) {
 			<field>
 				<label for="StockCat">' . __('In Stock Category') . ':</label>
 				<select name="StockCat">';
-	if(!isset($_POST['StockCat'])) {
+	if (!isset($_POST['StockCat'])) {
 		$_POST['StockCat'] = '';
 	}
-	if($_POST['StockCat'] == 'All') {
+	if ($_POST['StockCat'] == 'All') {
 		echo '<option selected="selected" value="All">' . __('All') . '</option>';
 	} else {
 		echo '<option value="All">' . __('All') . '</option>';
@@ -37,7 +37,7 @@ if(isset($_POST['StockSearch'])) {
 			ORDER BY categorydescription";
 	$Result1 = DB_query($SQL);
 	while($MyRow1 = DB_fetch_array($Result1)) {
-		if($MyRow1['categoryid'] == $_POST['StockCat']) {
+		if ($MyRow1['categoryid'] == $_POST['StockCat']) {
 			echo '<option selected="selected" value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 		} else {
 			echo '<option value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
@@ -47,7 +47,7 @@ if(isset($_POST['StockSearch'])) {
 		</field>';
 	echo '<field>
 			<label for="Keywords">' . __('Enter partial') . '<b> ' . __('Description') . '</b>:</label>';
-	if(isset($_POST['Keywords'])) {
+	if (isset($_POST['Keywords'])) {
 		echo '<input type="search" name="Keywords" value="' . $_POST['Keywords'] . '" autofocus="autofocus" size="34" maxlength="25" />';
 	} else {
 		echo '<input type="search" name="Keywords" size="34" maxlength="25" autofocus="autofocus" placeholder="Enter part of the item description" />';
@@ -56,7 +56,7 @@ if(isset($_POST['StockSearch'])) {
 
 	echo '<field>
 			<label for="StockCode">'.'<b>' . __('OR') . ' </b>' .  __('Enter partial') . ' <b>' . __('Stock Code') . '</b>:</label>';
-	if(isset($_POST['StockCode'])) {
+	if (isset($_POST['StockCode'])) {
 		echo '<input type="text" name="StockCode" value="' . $_POST['StockCode'] . '" size="15" maxlength="18" />';
 	} else {
 		echo '<input type="text" name="StockCode" size="15" maxlength="18" />';
@@ -71,19 +71,19 @@ if(isset($_POST['StockSearch'])) {
 	exit();
 }
 
-if(isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR isset($_POST['Previous'])) {
-	if(!isset($_POST['Go']) AND !isset($_POST['Next']) AND !isset($_POST['Previous'])) {
+if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR isset($_POST['Previous'])) {
+	if (!isset($_POST['Go']) AND !isset($_POST['Next']) AND !isset($_POST['Previous'])) {
 		// if Search then set to first page
 		$_POST['PageOffset'] = 1;
 	}
-	if($_POST['Keywords'] AND $_POST['StockCode']) {
+	if ($_POST['Keywords'] AND $_POST['StockCode']) {
 		prnMsg(__('Stock description keywords have been used in preference to the Stock code extract entered'), 'info');
 	}
-	if($_POST['Keywords']) {
+	if ($_POST['Keywords']) {
 		//insert wildcard characters in spaces
 		$_POST['Keywords'] = mb_strtoupper($_POST['Keywords']);
 		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
-		if($_POST['StockCat'] == 'All') {
+		if ($_POST['StockCat'] == 'All') {
 			$SQL = "SELECT stockmaster.stockid,
 							stockmaster.description,
 							SUM(locstock.quantity) AS qoh,
@@ -126,9 +126,9 @@ if(isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR is
 							stockmaster.decimalplaces
 						ORDER BY stockmaster.stockid";
 		}
-	} elseif(isset($_POST['StockCode'])) {
+	} elseif (isset($_POST['StockCode'])) {
 		$_POST['StockCode'] = mb_strtoupper($_POST['StockCode']);
-		if($_POST['StockCat'] == 'All') {
+		if ($_POST['StockCat'] == 'All') {
 			$SQL = "SELECT stockmaster.stockid,
 							stockmaster.description,
 							stockmaster.mbflag,
@@ -171,8 +171,8 @@ if(isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR is
 					stockmaster.decimalplaces
 				ORDER BY stockmaster.stockid";
 		}
-	} elseif(!isset($_POST['StockCode']) AND !isset($_POST['Keywords'])) {
-		if($_POST['StockCat'] == 'All') {
+	} elseif (!isset($_POST['StockCode']) AND !isset($_POST['Keywords'])) {
+		if ($_POST['StockCat'] == 'All') {
 			$SQL = "SELECT stockmaster.stockid,
 					stockmaster.description,
 					stockmaster.mbflag,
@@ -216,42 +216,42 @@ if(isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR is
 	}
 	$ErrMsg = __('No stock items were returned by the SQL because');
 	$SearchResult = DB_query($SQL, $ErrMsg);
-	if(DB_num_rows($SearchResult) == 0) {
+	if (DB_num_rows($SearchResult) == 0) {
 		prnMsg(__('No stock items were returned by this search please re-enter alternative criteria to try again'), 'info');
 	}
 	unset($_POST['Search']);
 }
 /* end query for list of records */
 /* display list if there is more than one record */
-if(isset($SearchResult) AND !isset($_POST['Select'])) {
+if (isset($SearchResult) AND !isset($_POST['Select'])) {
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . __('Search') . '" alt="" />' . ' ' . __('Search for Inventory Items'). '</p>';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">
 		<div>
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<input type="hidden" value="' . $_POST['SupplierID'] . '" name="SupplierID" />';
 	$ListCount = DB_num_rows($SearchResult);
-	if($ListCount > 0) {
+	if ($ListCount > 0) {
 		// If the user hit the search button and there is more than one item to show
 		$ListPageMax = ceil($ListCount / $_SESSION['DisplayRecordsMax']);
-		if(isset($_POST['Next'])) {
-			if($_POST['PageOffset'] < $ListPageMax) {
+		if (isset($_POST['Next'])) {
+			if ($_POST['PageOffset'] < $ListPageMax) {
 				$_POST['PageOffset'] = $_POST['PageOffset'] + 1;
 			}
 		}
-		if(isset($_POST['Previous'])) {
-			if($_POST['PageOffset'] > 1) {
+		if (isset($_POST['Previous'])) {
+			if ($_POST['PageOffset'] > 1) {
 				$_POST['PageOffset'] = $_POST['PageOffset'] - 1;
 			}
 		}
-		if($_POST['PageOffset'] > $ListPageMax) {
+		if ($_POST['PageOffset'] > $ListPageMax) {
 			$_POST['PageOffset'] = $ListPageMax;
 		}
-		if($ListPageMax > 1) {
+		if ($ListPageMax > 1) {
 			echo '<div class="centre"><br />&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . __('of') . ' ' . $ListPageMax . ' ' . __('pages') . '. ' . __('Go to Page') . ': ';
 			echo '<select name="PageOffset">';
 			$ListPage = 1;
 			while($ListPage <= $ListPageMax) {
-				if($ListPage == $_POST['PageOffset']) {
+				if ($ListPage == $_POST['PageOffset']) {
 					echo '<option value=' . $ListPage . ' selected>' . $ListPage . '</option>';
 				} else {
 					echo '<option value=' . $ListPage . '>' . $ListPage . '</option>';
@@ -279,7 +279,7 @@ if(isset($SearchResult) AND !isset($_POST['Select'])) {
 			<tbody>';
 
 		$RowIndex = 0;
-		if(DB_num_rows($SearchResult) <> 0) {
+		if (DB_num_rows($SearchResult) <> 0) {
 			DB_data_seek($SearchResult, ($_POST['PageOffset'] - 1) * $_SESSION['DisplayRecordsMax']);
 		}
 		while(($MyRow = DB_fetch_array($SearchResult)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
@@ -304,7 +304,7 @@ if(isset($SearchResult) AND !isset($_POST['Select'])) {
 }
 
 foreach ($_POST as $key=>$Value) {
-	if(mb_substr($key,0,6)=='Update') {
+	if (mb_substr($key,0,6)=='Update') {
 		$Index = mb_substr($key,6,mb_strlen($key)-6);
 		$StockID = $_POST['StockID'.$Index];
 		$Price = filter_number_format($_POST['Price'.$Index]);// Convert data from user format to database number format.
@@ -312,7 +312,7 @@ foreach ($_POST as $key=>$Value) {
 		$ConversionFactor = $_POST['ConversionFactor'.$Index];
 		$SupplierDescription = $_POST['SupplierDescription'.$Index];
 		$LeadTime = $_POST['LeadTime'.$Index];
-		if(isset($_POST['Preferred'.$Index])) {
+		if (isset($_POST['Preferred'.$Index])) {
 			$Preferred = 1;
 			$PreferredSQL = "UPDATE purchdata SET preferred=0
 									WHERE stockid='" . $StockID . "'";
@@ -336,8 +336,8 @@ foreach ($_POST as $key=>$Value) {
 								AND stockid='" . $StockID . "'";
 		$Result = DB_query($SQL);
 	}
-	if(mb_substr($key,0,6)=='Insert') {
-		if(isset($_POST['Preferred0'])) {
+	if (mb_substr($key,0,6)=='Insert') {
+		if (isset($_POST['Preferred0'])) {
 			$Preferred=1;
 		} else {
 			$Preferred=0;
@@ -370,17 +370,17 @@ foreach ($_POST as $key=>$Value) {
 	}
 }
 
-if(isset($_GET['SupplierID'])) {
+if (isset($_GET['SupplierID'])) {
 	$SupplierID = trim(mb_strtoupper($_GET['SupplierID']));
-} elseif(isset($_POST['SupplierID'])) {
+} elseif (isset($_POST['SupplierID'])) {
 	$SupplierID = trim(mb_strtoupper($_POST['SupplierID']));
 }
 
-if(isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier'])) { /*NOT EDITING AN EXISTING BUT SUPPLIER selected OR ENTERED*/
+if (isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier'])) { /*NOT EDITING AN EXISTING BUT SUPPLIER selected OR ENTERED*/
 	$SQL = "SELECT suppliers.suppname, suppliers.currcode FROM suppliers WHERE supplierid='".$SupplierID."'";
 	$ErrMsg = __('The supplier details for the selected supplier could not be retrieved because');
 	$SuppSelResult = DB_query($SQL, $ErrMsg);
-	if(DB_num_rows($SuppSelResult) == 1) {
+	if (DB_num_rows($SuppSelResult) == 1) {
 		$MyRow = DB_fetch_array($SuppSelResult);
 		$SuppName = $MyRow['suppname'];
 		$CurrCode = $MyRow['currcode'];
@@ -389,11 +389,11 @@ if(isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier'])
 		unset($SupplierID);
 	}
 } else {
-	if($NoPurchasingData=0) {
+	if ($NoPurchasingData=0) {
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' .
 			$Title . ' ' . __('For Stock Code') . ' - ' . $StockID . '</p><br />';
 	}
-	if(!isset($_POST['SearchSupplier'])) {
+	if (!isset($_POST['SearchSupplier'])) {
 		echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 			'/images/supplier.png" title="', // Icon image.
 			__('Search for a supplier'), '" /> ', // Icon title.
@@ -422,11 +422,11 @@ if(isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier'])
 	}
 }
 
-if(isset($_POST['SearchSupplier'])) {
-	if($_POST['Keywords'] == '' AND $_POST['SupplierCode'] == '') {
+if (isset($_POST['SearchSupplier'])) {
+	if ($_POST['Keywords'] == '' AND $_POST['SupplierCode'] == '') {
 		$_POST['Keywords'] = ' ';
 	}
-	if(mb_strlen($_POST['Keywords']) > 0) {
+	if (mb_strlen($_POST['Keywords']) > 0) {
 		//insert wildcard characters in spaces
 		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 
@@ -437,7 +437,7 @@ if(isset($_POST['SearchSupplier'])) {
 					suppliers.address2,
 					suppliers.address3
 					FROM suppliers WHERE suppliers.suppname " . LIKE  . " '".$SearchString."'";
-	} elseif(mb_strlen($_POST['SupplierCode']) > 0) {
+	} elseif (mb_strlen($_POST['SupplierCode']) > 0) {
 		$SQL = "SELECT suppliers.supplierid,
 				suppliers.suppname,
 				suppliers.currcode,
@@ -451,7 +451,7 @@ if(isset($_POST['SearchSupplier'])) {
 	$SuppliersResult = DB_query($SQL, $ErrMsg);
 } //end of if search
 
-if(isset($SuppliersResult)) {
+if (isset($SuppliersResult)) {
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/supplier.png" title="', // Icon image.
 		__('Search'), '" /> ', // Icon title.
@@ -485,9 +485,9 @@ if(isset($SuppliersResult)) {
           <br />';
 	include('includes/footer.php');
 	exit();
-}// END if(isset($SuppliersResult)).
+}// END if (isset($SuppliersResult)).
 
-if(isset($_POST['SupplierID'])) {
+if (isset($_POST['SupplierID'])) {
 	$MyRow = DB_fetch_array(DB_query("SELECT suppname FROM `suppliers` WHERE `supplierid`='" . $_POST['SupplierID'] . "'"));// Retrieve supplier's name from database.
 	$SuppName = $MyRow['suppname'];
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
@@ -544,7 +544,7 @@ if(isset($_POST['SupplierID'])) {
 			<th>', __('Save'), '</th>
 		</tr>';// RChacon: Sortable by StockID, Description, Suppliers_Description, Suppliers_Description ?
 
-	if(isset($_POST['Select'])) {
+	if (isset($_POST['Select'])) {
 		$StockSQL = "SELECT description, units FROM stockmaster WHERE stockid='" . $_POST['Select'] . "'";
 		$StockResult = DB_query($StockSQL);
 		$StockRow = DB_fetch_array($StockResult);
@@ -555,7 +555,7 @@ if(isset($_POST['SupplierID'])) {
 				<td><input type="text" class="number" size="11" value="0.0000" name="Price0" /></td>
 				<td><select name="SuppUOM0">';
 		while($UOMRow=DB_fetch_array($UOMResult)) {
-			if($UOMRow['unitname']==$StRowoc['units']) {
+			if ($UOMRow['unitname']==$StRowoc['units']) {
 				echo '<option selected="selected" value="'.$UOMRow['unitname'].'">' . $UOMRow['unitname'] . '</option>';
 			} else {
 				echo '<option value="'.$UOMRow['unitname'].'">' . $UOMRow['unitname'] . '</option>';
@@ -584,7 +584,7 @@ if(isset($_POST['SupplierID'])) {
 				<td><select name="SuppUOM'.$RowCounter.'">';
 		DB_data_seek($UOMResult, 0);
 		while($UOMRow=DB_fetch_array($UOMResult)) {
-			if($UOMRow['unitname']==$MyRow['suppliersuom']) {
+			if ($UOMRow['unitname']==$MyRow['suppliersuom']) {
 				echo '<option selected="selected" value="'.$UOMRow['unitname'].'">' . $UOMRow['unitname'] . '</option>';
 			} else {
 				echo '<option value="'.$UOMRow['unitname'].'">' . $UOMRow['unitname'] . '</option>';
@@ -594,7 +594,7 @@ if(isset($_POST['SupplierID'])) {
 				<td><input class="number" name="ConversionFactor'. $RowCounter. '" size="11" type="text" value="' . $MyRow['conversionfactor'] . '" /></td>
 				<td><input maxlength="50" name="SupplierDescription'. $RowCounter. '" size="30" type="text" value="' . $MyRow['supplierdescription'] . '" /></td>
 				<td><input class="number" name="LeadTime'. $RowCounter. '" size="11" type="text" value="' . $MyRow['leadtime'] . '" /></td>';
-		if($MyRow['preferred'] == 1) {
+		if ($MyRow['preferred'] == 1) {
 			echo '<td><input checked="checked" name="Preferred'. $RowCounter. '" type="checkbox" /></td>';
 		} else {
 			echo '<td><input name="Preferred'. $RowCounter. '" type="checkbox" /></td>';

@@ -193,7 +193,7 @@ $MailMessage =  '<html>
 					<td colspan="4"> <b>' . $MyRow['deladd1'] . '</td>
 				</tr>';
 
-if(mb_strlen(trim($MyRow['deladd2']))) {
+if (mb_strlen(trim($MyRow['deladd2']))) {
       $MailMessage .= '<tr>
 						<td> <b>' . $MyRow['deladd2'] . '</td>
 					</tr>
@@ -213,7 +213,7 @@ if(mb_strlen(trim($MyRow['deladd2']))) {
 }
 $MailMessage .= '</table>
 				<table border="1" width="50%"><tr>';
-if($_GET['POLine'] == 1){
+if ($_GET['POLine'] == 1){
 	$MailMessage .= '<td>' . __('PO Line') . '</td>';
 }
 	$MailMessage .= '<td>' . __('Stock Code') . '</td>
@@ -248,13 +248,13 @@ if($_GET['POLine'] == 1){
 		 		$DscCode[$i] = $MyRow2['description'];
 		 		$QtyCode[$i] = $DisplayQty ;
 		 		$POLine[$i]  = $MyRow2['poline'];
-				if($MyRow2['itemdue'] =='') {
+				if ($MyRow2['itemdue'] =='') {
 		 			$ItemDue[$i] = date('M d, Y',strtotime($DeliveryDate));
 				} else {
 					$ItemDue[$i] = date('M d, Y',strtotime($MyRow2['itemdue']));
 				}
 			$MailMessage .= '<tr>';
-			if($_GET['POLine'] == 1){
+			if ($_GET['POLine'] == 1){
 				$MailMessage .= '<td align="right">' . $POLine[$i] . '</td>';
 			}
 			$MailMessage .= '<td>' . $MyRow2['stkcode'] . '</td>
@@ -275,7 +275,7 @@ if($_GET['POLine'] == 1){
 						$MailMessage,
 						'',
 						false);
-if($Result){
+if ($Result){
 	echo ' ' .__('The following E-Mail was sent to') . ' ' . $MailTo . ' :';
 }
 
@@ -338,7 +338,7 @@ echo '<html>
 	<table border="1" width="60%" cellpadding="2" cellspacing="2">
 	<tr>';
 
-if($_GET['POLine'] == 1){
+if ($_GET['POLine'] == 1){
 	echo '<td align="center">' . __('PO Line') . '</td>';
 }
 echo '<td align="center">' . __('Stock Code') . '</td>
@@ -349,7 +349,7 @@ echo '<td align="center">' . __('Stock Code') . '</td>
 
 for( $j=0; $j<$i; $j++){
 	echo '<tr>';
-	if($_GET['POLine']){
+	if ($_GET['POLine']){
 		echo '<td align="right">' . $POLine[$j] . '</td>';
 	}
 	echo '<td>' . $StkCode[$j] . '</td>

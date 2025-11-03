@@ -38,8 +38,7 @@ if (isset($_GET['SelectedCustomer'])) {
 
 if ( isset($_GET['Quotations']) ) {
 	$_POST['Quotations'] = $_GET['Quotations'];
-}
-else if ( !isset($_POST['Quotations']) ) {
+} elseif ( !isset($_POST['Quotations']) ) {
 	$_POST['Quotations'] = '';
 }
 
@@ -675,13 +674,13 @@ if (isset($StockItemsResult)
 	 }
 
 	//figure out the SQL required from the inputs available
-	if( $_POST['Quotations'] == 'Orders_Only' ) {
+	if ( $_POST['Quotations'] == 'Orders_Only' ) {
 		$Quotations = 0;
 	}
-	elseif( $_POST['Quotations'] == 'Quotes_Only' ) {
+	elseif ( $_POST['Quotations'] == 'Quotes_Only' ) {
 		$Quotations = 1;
 	}
-	elseif( $_POST['Quotations'] == 'Overdue_Only' ) {
+	elseif ( $_POST['Quotations'] == 'Overdue_Only' ) {
 		$Quotations = "0 AND itemdue < CURRENT_DATE";
 	}
 	else {
@@ -710,7 +709,7 @@ if (isset($StockItemsResult)
 		$OrderDateTo = '';
 	}
 
-	if(!isset($_POST['StockLocation'])) {
+	if (!isset($_POST['StockLocation'])) {
 		$_POST['StockLocation'] = $_SESSION['UserStockLocation'];
 	}
 

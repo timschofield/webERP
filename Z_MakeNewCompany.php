@@ -27,7 +27,7 @@ if (! is_writeable('./companies/')){
 
 if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 
-	if(mb_strlen($_POST['NewDatabase'])>32
+	if (mb_strlen($_POST['NewDatabase'])>32
 		OR ContainsIllegalCharacters($_POST['NewDatabase'])){
 		prnMsg(__('Company database must not contain spaces illegal characters') . ' ' . '" \' - &amp; or a space','error');
 	} else {
@@ -166,7 +166,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 				prnMsg('_FILES[LogoFile] ' . __('is not set'), 'info');
 			}
 
-			if($_FILES['LogoFile']['name'] !=''){
+			if ($_FILES['LogoFile']['name'] !=''){
 				prnMsg('_FILES[LogoFile][name] ' . __('is not blank'), 'info');
 			} else  {
 				prnMsg('_FILES[LogoFile][name] ' . __('is blank'), 'info');

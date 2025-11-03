@@ -108,7 +108,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	$Balance = DB_fetch_array($TabBalance);
 
-	if( !isset($Balance['0'])){
+	if ( !isset($Balance['0'])){
 		$Balance['0'] = 0;
 	}
 
@@ -127,7 +127,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	$BalanceNotAut = DB_fetch_array($TabBalanceNotAut);
 
-	if( !isset($BalanceNotAut['0'])){
+	if ( !isset($BalanceNotAut['0'])){
 		$BalanceNotAut['0'] = 0;
 	}
 

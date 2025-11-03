@@ -191,8 +191,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		echo $HTML;
 		include ('includes/footer.php');
 	}
-}
-else {
+} else {
 	$Title = __('Stock Transaction Listing');
 	$ViewTopic = 'Inventory';
 	$BookMark = '';

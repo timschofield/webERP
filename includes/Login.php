@@ -39,7 +39,7 @@ echo '<body>
 
 if (isset($_COOKIE['Login'])) {
 	$DefaultCompany = $_COOKIE['Login'];
-}else{
+} else {
 	$DefaultCompany = $DefaultDatabase;
 }
 
@@ -93,7 +93,7 @@ if ($AllowDemoMode == true) {
 if ($AllowCompanySelectionBox === 'Hide') {
 	// do not show input or selection box
 	echo '<input type="hidden" name="CompanyNameField"  value="' . $DefaultCompany . '" />';
-} else if ($AllowCompanySelectionBox === 'ShowInputBox') {
+} elseif ($AllowCompanySelectionBox === 'ShowInputBox') {
 	// show input box
 	echo '<input type="text" required="required" autofocus="autofocus" name="CompanyNameField"  value="' . $DefaultCompany . '" />';
 } else {
@@ -131,7 +131,7 @@ if ($AllowCompanySelectionBox != 'Hide') {
 		if (!isset($ShowLogoAtLogin) OR ($ShowLogoAtLogin == true)) {
 			if ($CompanyInfo['has_png_logo']) {
 				echo '<li class="option" id="' . $CompanyEntry . '" ><img id="optionlogo" src="companies/' . $CompanyEntry . '/logo.png" /><span id="optionlabel">', $CompanyInfo['name'], '</span></li>';
-			} else if ($CompanyInfo['has_jpg_logo']) {
+			} elseif ($CompanyInfo['has_jpg_logo']) {
 				echo '<li class="option" id="' . $CompanyEntry . '" ><img id="optionlogo" src="companies/' . $CompanyEntry . '/logo.jpg" /><span id="optionlabel">', $CompanyInfo['name'], '</span></li>';
 			}
 		} else {

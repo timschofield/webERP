@@ -153,7 +153,7 @@ if (isset($_POST['submit'])) {
 			// Rename worksheet
 			if ($TabToShow=='All'){
 				$SpreadSheet->getActiveSheet()->setTitle('All Accounts');
-			}else{
+			} else {
 				$SpreadSheet->getActiveSheet()->setTitle($TabToShow);
 			}
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
@@ -176,12 +176,12 @@ if (isset($_POST['submit'])) {
 			if ($_POST['Format'] == 'xlsx') {
 				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($SpreadSheet);
 				$objWriter->save('php://output');
-			} else if ($_POST['Format'] == 'ods') {
+			} elseif ($_POST['Format'] == 'ods') {
 				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($SpreadSheet);
 				$objWriter->save('php://output');
 			}
 
-		}else{
+		} else {
 			$Title = __('Excel file for Petty Cash Expenses Analysis');
 			include('includes/header.php');
 			prnMsg('There is no data to analyse');

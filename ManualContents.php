@@ -22,7 +22,7 @@ $PageSecurity = 0;
 /*
 session_start();
 $Language = $_SESSION['Language'];
-if(isset($_GET['Language'])) {// Set an other language for manual.
+if (isset($_GET['Language'])) {// Set an other language for manual.
 	$Language = $_GET['Language'];
 }
 */
@@ -68,11 +68,11 @@ $_GET['Bookmark'] = isset($_GET['Bookmark']) ? $_GET['Bookmark'] : '';
 $_GET['ViewTopic'] = isset($_GET['ViewTopic']) ? $_GET['ViewTopic'] : '';
 
 //all sections of manual listed here
-if(((!isset($_POST['Submit'])) and (empty($_GET['ViewTopic']))) || ((isset($_POST['Submit'])) and (isset($_POST['SelectTableOfContents'])))) {
+if (((!isset($_POST['Submit'])) and (empty($_GET['ViewTopic']))) || ((isset($_POST['Submit'])) and (isset($_POST['SelectTableOfContents'])))) {
 	echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">';
 	// if not submittws then coming into manual to look at TOC
 	// if SelectTableOfContents set then user wants it displayed
-	if(!isset($_POST['Submit'])) {
+	if (!isset($_POST['Submit'])) {
 		echo '<p>', __('Click on a link to view a page'), '</p>';
 	}
 	echo '<h1>';
@@ -83,15 +83,15 @@ if(((!isset($_POST['Submit'])) and (empty($_GET['ViewTopic']))) || ((isset($_POS
 		echo '<ul>
 			<li class="toc"';
 		// List topic title:
-		if(!isset($_POST['Submit'])) {
+		if (!isset($_POST['Submit'])) {
 			echo ' style="list-style-type:none;">';
 		}
 		echo '<a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?ViewTopic=', $Title, '">', $SubLinks[0], '</a></li>';
 		// List topic content:
-		if(count($SubLinks) > 1) {
+		if (count($SubLinks) > 1) {
 			echo '<ul>';
 			foreach($SubLinks as $k => $SubName) {
-				if($k == 0) {// Skip first array element $SubLinks[0].
+				if ($k == 0) {// Skip first array element $SubLinks[0].
 					continue;
 				}
 				echo '<li>', $SubName, '</li>';
@@ -107,7 +107,7 @@ if(((!isset($_POST['Submit'])) and (empty($_GET['ViewTopic']))) || ((isset($_POS
 		'</form>';
 }
 
-if(!isset($_GET['ViewTopic'])) {
+if (!isset($_GET['ViewTopic'])) {
 	$_GET['ViewTopic'] = '';
 }
 
@@ -131,7 +131,7 @@ foreach($TOC_Array['TableOfContents'] as $Name => $FullName) {
 
 // Output the footer part:
 $ManualFooter = 'locale/' . $Language . '/Manual/ManualFooter.html';
-if(file_exists($ManualFooter)) {// Use locale ManualHeader.html if exists. Each language can have its own page footer.
+if (file_exists($ManualFooter)) {// Use locale ManualHeader.html if exists. Each language can have its own page footer.
 	include($ManualFooter);
 } else {// Default page footer:
 	echo '<div class="right">

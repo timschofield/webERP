@@ -328,7 +328,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 		</tfoot>';
 
 	// show the success message
-	if($SucessfullyAuthorized > 0) {
+	if ($SucessfullyAuthorized > 0) {
 		prnMsg($SucessfullyAuthorized . ' ' . __('Expenses have been correctly authorised'), 'success');
 	} else {
 		prnMsg(__('No expenses were authorised'), 'warning');

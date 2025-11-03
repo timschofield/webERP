@@ -9,7 +9,7 @@ include('includes/header.php');
 
 if (isset($_GET['SelectedShipper'])){
 	$SelectedShipper = $_GET['SelectedShipper'];
-} else if (isset($_POST['SelectedShipper'])){
+} elseif (isset($_POST['SelectedShipper'])){
 	$SelectedShipper = $_POST['SelectedShipper'];
 }
 
@@ -31,7 +31,7 @@ if ( isset($_POST['submit']) ) {
 		prnMsg( __('The shipper\'s name must be forty characters or less long'), 'error');
 		$Errors[$i] = 'ShipperName';
 		$i++;
-	} elseif( trim($_POST['ShipperName']) == '' ) {
+	} elseif ( trim($_POST['ShipperName']) == '' ) {
 		$InputError = 1;
 		prnMsg( __('The shipper\'s name may not be empty'), 'error');
 		$Errors[$i] = 'ShipperName';

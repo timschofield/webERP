@@ -9,8 +9,7 @@ include('includes/header.php');
 
 if (isset($_POST['Period'])) {
 	$SelectedPeriod = $_POST['Period'];
-}
-elseif (isset($_GET['Period'])) {
+} elseif (isset($_GET['Period'])) {
 	$SelectedPeriod = $_GET['Period'];
 }
 

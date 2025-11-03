@@ -87,7 +87,7 @@ if (isset($_SESSION['Contract'.$identifier]) AND
 /*User hit the button to enter line items -
   then meta refresh to Contract_Items.php*/
 	$InputError = false;
-	if(mb_strlen($_SESSION['Contract'.$identifier]->ContractRef)<5){
+	if (mb_strlen($_SESSION['Contract'.$identifier]->ContractRef)<5){
 		prnMsg(__('The contract reference must be entered (and be longer than 5 characters) before the requirements of the contract can be setup'),'warn');
 		$InputError = true;
 	}
@@ -178,7 +178,7 @@ if (isset($_GET['ModifyContractRef'])){
 if (isset($_POST['CancelContract'])) {
 /*The cancel button on the header screen - to delete the contract */
 	$OK_to_delete = true; //assume this in the first instance
-	if(!isset($_SESSION['ExistingContract']) OR $_SESSION['ExistingContract']!= 0) {
+	if (!isset($_SESSION['ExistingContract']) OR $_SESSION['ExistingContract']!= 0) {
 		/* need to check that not already ordered by the customer - status = 100  */
 		if ($_SESSION['Contract'.$identifier]->Status==2) {
 			$OK_to_delete = false;
@@ -245,7 +245,7 @@ if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){
 		prnMsg(__('The contract reference is expected to be more than 2 characters long. Please alter the contract reference before proceeding.'),'error');
 		$InputError = true;
 	}
-	if(ContainsIllegalCharacters($_POST['ContractRef'])){
+	if (ContainsIllegalCharacters($_POST['ContractRef'])){
 		prnMsg(__('The contract reference cannot contain any spaces, slashes, or inverted commas. Please alter the contract reference before proceeding.'),'error');
 		$InputError = true;
 	}
@@ -461,7 +461,7 @@ if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){
 	} //end of adding a new contract
 }//end of commital to database
 
-if(isset($_POST['CreateQuotation']) AND !$InputError){
+if (isset($_POST['CreateQuotation']) AND !$InputError){
 //Create a quotation for the contract as entered
 //First need to create the item in stockmaster
 

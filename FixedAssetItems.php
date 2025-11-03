@@ -511,7 +511,7 @@ if (isset($_POST['ClearImage']) ) {
 		if (file_exists ($File) ) {
 			//workaround for many variations of permission issues that could cause unlink fail
 			@unlink($File);
-			if(is_file($ImageFile)) {
+			if (is_file($ImageFile)) {
                prnMsg(__('You do not have access to delete this item image file.'),'error');
 			} else {
 				$AssetImgLink = __('No Image');
@@ -626,7 +626,7 @@ if (isset($AssetRow)){
 			<td class="number">' . locale_number_format(-$AssetRow['cost']+$AssetRow['accumdepn']+$AssetRow['disposalproceeds'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		</tr>';
 
-	}else{
+	} else {
 		echo'<tr>
 			<td>' . __('Net Book Value') . ':</td>
 			<td class="number">' . locale_number_format($AssetRow['cost']-$AssetRow['accumdepn'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -642,7 +642,7 @@ if (isset($AssetRow)){
 					ORDER BY periods.lastdate_in_period DESC");
 
 	$LastDepnRun = DB_fetch_row($Result);
-	if(DB_num_rows($Result)==0){
+	if (DB_num_rows($Result)==0){
 		$LastRunDate = __('Not Yet Run');
 	} else {
 		$LastRunDate = ConvertSQLDate($LastDepnRun[0]);

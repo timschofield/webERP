@@ -143,9 +143,9 @@ if (($MyRow['mbflag']=='D' AND $MyRow['stocktype'] != 'L')
 		  </form>'; // Close the form
    if ($MyRow['mbflag']=='D'){
 		echo '<br />' . $StockID .' ' . __('is a service item');
-   } else if ($MyRow['mbflag']=='A'){
+   } elseif ($MyRow['mbflag']=='A'){
 		echo '<br />' . $StockID  .' '  . __('is an assembly part');
-   } else if ($MyRow['mbflag']=='K'){
+   } elseif ($MyRow['mbflag']=='K'){
 		echo '<br />' . $StockID . ' ' . __('is a kit set part');
    }
    prnMsg(__('Cost information cannot be modified for kits assemblies or service items') . '. ' . __('Please select a different part'),'warn');

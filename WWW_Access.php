@@ -14,13 +14,13 @@ echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	__('Access Permissions Maintenance') . '" /> ' .// Icon title.
 	__('Access Permissions Maintenance') . '</p>';// Page title.
 
-if($AllowDemoMode) {
+if ($AllowDemoMode) {
 	prnMsg(__('The the system is in demo mode and the security model administration is disabled'), 'warn');
 	include('includes/footer.php');
 	exit();
 }
 
-if(isset($_GET['SelectedRole'])) {
+if (isset($_GET['SelectedRole'])) {
 	$SelectedRole = $_GET['SelectedRole'];
 } elseif (isset($_POST['SelectedRole'])) {
 	$SelectedRole = $_POST['SelectedRole'];
@@ -46,7 +46,7 @@ if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 	// else it is either an add or remove of a page token
 	unset($SQL);
 	if (isset($_POST['SecRoleName']) ){ // Update or Add Security Headings
-		if(isset($SelectedRole)) { // Update Security Heading
+		if (isset($SelectedRole)) { // Update Security Heading
 			$SQL = "UPDATE securityroles SET secrolename = '" . $_POST['SecRoleName'] . "'
 					WHERE secroleid = '".$SelectedRole . "'";
 			$ErrMsg = __('The update of the security role description failed because');
@@ -60,7 +60,7 @@ if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 		unset($SelectedRole);
 	} elseif (isset($SelectedRole) ) {
 		$PageTokenId = $_GET['PageToken'];
-		if( isset($_GET['add']) ) { // updating Security Groups add a page token
+		if ( isset($_GET['add']) ) { // updating Security Groups add a page token
 			$SQL = "INSERT INTO securitygroups (secroleid,
 											tokenid)
 									VALUES ('".$SelectedRole."',
@@ -81,7 +81,7 @@ if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 	// Need to exec the query
 	if (isset($SQL) AND $InputError != 1 ) {
 		$Result = DB_query($SQL, $ErrMsg);
-		if( $Result ) {
+		if ( $Result ) {
 			prnMsg( $ResMsg,'success');
 		}
 	}
@@ -160,7 +160,7 @@ if (isset($SelectedRole)) {
 }
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-if( isset($_POST['SelectedRole'])) {
+if ( isset($_POST['SelectedRole'])) {
 	echo '<input type="hidden" name="SelectedRole" value="' . $_POST['SelectedRole'] . '" />';
 }
 echo '<fieldset>';

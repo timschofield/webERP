@@ -953,7 +953,7 @@ if (!isset($_GET['delete'])) {
 			<input maxlength="20" name="BrPostAddr5" size="21" tabindex="27" type="text" value="', $_POST['BrPostAddr5'].'" />
 		</field>';
 
-	if(!isset($_POST['CustBranchCode'])) {
+	if (!isset($_POST['CustBranchCode'])) {
 		$_POST['CustBranchCode']='';
 	}
 	echo '<field>

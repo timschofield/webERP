@@ -20,31 +20,31 @@ include('includes/header.php');
  */
 $FixedTokens = array(0, 1, 9, 12, 15, 18);
 
-if($AllowDemoMode) {
+if ($AllowDemoMode) {
 	prnMsg(__('The the system is in demo mode and the security model administration is disabled'), 'warn');
 	include('includes/footer.php');
 	exit();
 }
 
 // Merge gets into posts:
-if(isset($_GET['TokenId'])) {
+if (isset($_GET['TokenId'])) {
 	$_POST['TokenId'] = $_GET['TokenId'];
 }
-if(isset($_GET['TokenDescription'])) {
+if (isset($_GET['TokenDescription'])) {
 	$_POST['TokenDescription'] = $_GET['TokenDescription'];
 }
 
 // Set defaults for form fields if not set
-if(!isset($_POST['TokenId'])) {
+if (!isset($_POST['TokenId'])) {
 	$_POST['TokenId'] = '';
 }
-if(!isset($_POST['TokenDescription'])) {
+if (!isset($_POST['TokenDescription'])) {
 	$_POST['TokenDescription'] = '';
 }
 
 if (isset($_GET['Delete'])) {
 	$Result = DB_query("SELECT script FROM scripts WHERE pagesecurity='" . $_POST['TokenId'] . "'");
-	if(DB_num_rows($Result) > 0) {
+	if (DB_num_rows($Result) > 0) {
 		$List = '';
 		while($ScriptRow = DB_fetch_array($Result)) {
 			$List .= ' ' . $ScriptRow['script'];
@@ -52,7 +52,7 @@ if (isset($_GET['Delete'])) {
 		prnMsg(__('This security token is currently used by the following scripts and cannot be deleted') . ':' . $List, 'error');
 	} else {
 		$Result = DB_query("DELETE FROM securitytokens WHERE tokenid='" . $_POST['TokenId'] . "'");
-		if($Result) {
+		if ($Result) {
 			prnMsg(__('The security token was deleted successfully'), 'success');
 		}
 	}
@@ -62,36 +62,36 @@ if (isset($_GET['Delete'])) {
 
 // Validate the data sent:
 $InputError = 0;
-if(isset($_POST['Insert']) or isset($_POST['Update'])) {
-	if(!is_numeric($_POST['TokenId'])) {
+if (isset($_POST['Insert']) or isset($_POST['Update'])) {
+	if (!is_numeric($_POST['TokenId'])) {
 		prnMsg(__('The token ID is expected to be a number. Please enter a number for the token ID'), 'error');
 		$InputError = 1;
 	}
-	if(mb_strlen($_POST['TokenId']) == 0) {
+	if (mb_strlen($_POST['TokenId']) == 0) {
 		prnMsg(__('A token ID must be entered'), 'error');
 		$InputError = 1;
 	}
-	if(mb_strlen($_POST['TokenDescription']) == 0) {
+	if (mb_strlen($_POST['TokenDescription']) == 0) {
 		prnMsg(__('A token description must be entered'), 'error');
 		$InputError = 1;
 	}
 	if (isset($_POST['Insert'])) {
 		$Result = DB_query("SELECT tokenid FROM securitytokens WHERE tokenid='" . $_POST['TokenId'] . "'");
-		if(DB_num_rows($Result) != 0) {
+		if (DB_num_rows($Result) != 0) {
 			prnMsg( __('This token ID has already been used. Please use a new one') , 'warn');
 			$InputError = 1;
 		}
-		if($InputError == 0) {
+		if ($InputError == 0) {
 			$Result = DB_query("INSERT INTO securitytokens values('" . $_POST['TokenId'] . "', '" . $_POST['TokenDescription'] . "')");
-			if($Result) {prnMsg(__('The security token was inserted successfully'), 'success');}
+			if ($Result) {prnMsg(__('The security token was inserted successfully'), 'success');}
 			$_POST['TokenId'] = '';
 			$_POST['TokenDescription'] = '';
 		}
 	}
 	if (isset($_POST['Update'])) {
-		if($InputError == 0) {
+		if ($InputError == 0) {
 			$Result = DB_query("UPDATE securitytokens SET tokenname='" . $_POST['TokenDescription'] . "' WHERE tokenid='" . $_POST['TokenId'] . "'");
-			if($Result) {prnMsg(__('The security token was updated successfully'), 'success');}
+			if ($Result) {prnMsg(__('The security token was updated successfully'), 'success');}
 			$_POST['TokenId'] = '';
 			$_POST['TokenDescription'] = '';
 		}
@@ -137,7 +137,7 @@ echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8
 
 echo '<fieldset>';
 // Edit or New Security Token form table:
-if(isset($_GET['Edit'])) {
+if (isset($_GET['Edit'])) {
 	$Result = DB_query("SELECT tokenid, tokenname FROM securitytokens WHERE tokenid='" . $_POST['TokenId'] . "'");
 	$MyRow = DB_fetch_array($Result);
 

@@ -46,7 +46,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 
 function prnMsg($Msg, $Type = 'info', $Prefix = '', $Return = false) {
 	global $Messages;
-    if($Return){
+    if ($Return){
         $Prefix = $Type == 'info'
             ? __('INFORMATION') . ' ' . __('Message')
             : ($Type == 'warning' || $Type == 'warn'
@@ -271,10 +271,10 @@ function PrintDetail($pdf,$Text,$YLim,$XPos,&$YPos,$Width,$FontSize,$NPFunc=null
 		$LeftOvers = stripslashes($LeftOvers);
 		while(mb_strlen($LeftOvers)>1) {
 			if ($YPos < $YLim) {// If the description line reaches the bottom margin, do PageHeader(), PageInclude(), etc.
-				if($NPFunc!=null) {
+				if ($NPFunc!=null) {
 					$NPFunc();
 				}
-				if($NPInc!=null) {
+				if ($NPInc!=null) {
 					include($NPInc);
 				}
 			}
@@ -865,7 +865,7 @@ function SendEmailBySmtp($MailObj, $From, $To, $Subject, $Body, $Attachments=arr
 
 function SendEmailByStandardMailFunction($From, $To, $Subject, $Body, $Attachments=array()) {
 	// If no attachments, use simple mail function
-	if(empty($Attachments)) {
+	if (empty($Attachments)) {
 		$result = mail($To, $Subject, $Body, "From: $From\r\n");
 		return $result;
 	} else {
@@ -886,7 +886,7 @@ function SendEmailByStandardMailFunction($From, $To, $Subject, $Body, $Attachmen
 		// Attach each file
 		$allFilesExist = true;
 		foreach($Attachments as $Attachment) {
-			if(file_exists($Attachment)) {
+			if (file_exists($Attachment)) {
 				$file_content = file_get_contents($Attachment);
 				$message .= "--$boundary\r\n";
 				$message .= "Content-Type: application/octet-stream; name=\"" . basename($Attachment) . "\"\r\n";
@@ -900,7 +900,7 @@ function SendEmailByStandardMailFunction($From, $To, $Subject, $Body, $Attachmen
 		$message .= "--$boundary--";
 
 		// Only attempt to send if all files existed
-		if($allFilesExist) {
+		if ($allFilesExist) {
 			// Send the email with attachments
 			$result = mail($To, $Subject, $message, $headers);
 			return $result;
@@ -917,9 +917,9 @@ function ShowDebugBackTrace($DebugMessage, $SQL){
 
 	if ($Debug == 1) {
 		$Trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
-	}else if ($Debug >= 2) {
+	} elseif ($Debug >= 2) {
 		$Trace = debug_backtrace();
-	}else {
+	} else {
 		// Should not happen. Safety check
 		return;
 	}

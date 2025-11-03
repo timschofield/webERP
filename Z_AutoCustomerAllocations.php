@@ -139,7 +139,7 @@ function ProcessAllocation() {
 							'" . $_SESSION['Alloc']->AllocTrans . "',
 							'" . $AllocnItem->ID . "'
 						)";
-				if( !$Result = DB_query($SQL) ) {
+				if ( !$Result = DB_query($SQL) ) {
 					$Error = __('Could not insert allocation record');
 				}
 			}
@@ -153,7 +153,7 @@ function ProcessAllocation() {
 					alloc = '" . $NewAllocTotal . "',
 					settled = '" . $Settled . "'
 					WHERE id = '" . $AllocnItem->ID."'";
-			if( !$Result = DB_query($SQL) ) {
+			if ( !$Result = DB_query($SQL) ) {
 				$Error = __('Could not update difference on exchange');
 			}
 		}
@@ -169,7 +169,7 @@ function ProcessAllocation() {
 				settled='" . $Settled . "'
 				WHERE id = '" . $_SESSION['Alloc']->AllocTrans . "'";
 
-		if( !$Result = DB_query($SQL) ) {
+		if ( !$Result = DB_query($SQL) ) {
 			$Error = __('Could not update receipt or credit note');
 		}
 
@@ -198,7 +198,7 @@ function ProcessAllocation() {
 								'',
 								'" . $MovtInDiffOnExch . "'
 							)";
-				if( !$Result = DB_query($SQL) ) {
+				if ( !$Result = DB_query($SQL) ) {
 					$Error = __('Could not update exchange difference in General Ledger');
 				}
 
@@ -218,7 +218,7 @@ function ProcessAllocation() {
 									'',
 									'" . -$MovtInDiffOnExch . "')";
 
-				if( !$Result = DB_query($SQL) ) {
+				if ( !$Result = DB_query($SQL) ) {
 					$Error = __('Could not update debtors control in General Ledger');
 				}
 			}

@@ -12,8 +12,7 @@ if (isset($_GET['SupplierID'])) { // Links to Manual before header.php
 	$ViewTopic = 'AccountsPayable';
 	$BookMark = 'SupplierPayments';
 	$PageTitleText = __('Enter a Payment to, or Receipt from the Supplier');
-}
-else {
+} else {
 	$ViewTopic = 'GeneralLedger';
 	$BookMark = 'BankAccountPayments';
 	$PageTitleText = __('Bank Account Payments Entry');
@@ -39,8 +38,7 @@ if (isset($_POST['PaymentCancelled'])) {
 if (empty($_GET['identifier'])) {
 	$identifier = date('U'); // Unique session identifier to ensure that there is no conflict with other order entry session on the same machine.
 
-}
-else {
+} else {
 	$identifier = $_GET['identifier'];
 }
 
@@ -58,8 +56,7 @@ if ((isset($_POST['UpdateHeader']) AND $_POST['BankAccount'] == '') OR (isset($_
 
 	prnMsg(__('A bank account must be selected to make this payment from') , 'warn');
 	$BankAccountEmpty = true;
-}
-else {
+} else {
 	$BankAccountEmpty = false;
 }
 
@@ -176,8 +173,7 @@ if (isset($_POST['BankAccount']) AND $_POST['BankAccount'] != '') {
 		$DefaultFunctionalRate = false;
 	}
 
-}
-else {
+} else {
 
 	$_SESSION['PaymentDetail' . $identifier]->AccountCurrency = $_SESSION['CompanyRecord']['currencydefault'];
 	$_SESSION['PaymentDetail' . $identifier]->CurrDecimalPlaces = $_SESSION['CompanyRecord']['decimalplaces'];
@@ -305,8 +301,7 @@ if (isset($_POST['supptrans_transtext'])) {
 
 if (isset($_POST['Amount']) AND $_POST['Amount'] != '') {
 	$_SESSION['PaymentDetail' . $identifier]->Amount = filter_number_format($_POST['Amount']);
-}
-else {
+} else {
 	if (!isset($_SESSION['PaymentDetail' . $identifier]->Amount)) {
 		$_SESSION['PaymentDetail' . $identifier]->Amount = 0;
 	}
@@ -314,8 +309,7 @@ else {
 
 if (isset($_POST['Discount']) AND $_POST['Discount'] != '') {
 	$_SESSION['PaymentDetail' . $identifier]->Discount = filter_number_format($_POST['Discount']);
-}
-else {
+} else {
 	if (!isset($_SESSION['PaymentDetail' . $identifier]->Discount)) {
 		$_SESSION['PaymentDetail' . $identifier]->Discount = 0;
 	}
@@ -802,8 +796,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 	include('includes/footer.php');
 	exit();
 
-}
-elseif (isset($_GET['Delete'])) {
+} elseif (isset($_GET['Delete'])) {
 	/* User hit delete the receipt entry from the batch */
 	$_SESSION['PaymentDetail' . $identifier]->Remove_GLItem($_GET['Delete']);
 	//recover the bank account relative setting
@@ -816,8 +809,7 @@ elseif (isset($_GET['Delete'])) {
 	$_POST['BankTransRef'] = $_SESSION['PaymentDetail' . $identifier]->BankTransRef;
 	$_POST['Narrative'] = $_SESSION['PaymentDetail' . $identifier]->Narrative;
 
-}
-elseif (isset($_POST['Process']) AND !$BankAccountEmpty) { //user hit submit a new GL Analysis line into the payment
+} elseif (isset($_POST['Process']) AND !$BankAccountEmpty) { //user hit submit a new GL Analysis line into the payment
 	if (!empty($_POST['Cheque'])) {
 		$ChequeNoSQL = "SELECT transno FROM supptrans WHERE chequeno='" . $_POST['Cheque'] . "'";
 		$ChequeNoResult = DB_query($ChequeNoSQL);
@@ -976,8 +968,7 @@ if (DB_num_rows($AccountsResults) == 0) {
 	prnMsg(__('Bank Accounts have not yet been defined. You must first') . ' <a href="' . $RootPath . '/BankAccounts.php">' . __('define the bank accounts') . '</a> ' . __('and general ledger accounts to be affected') , 'warn');
 	include('includes/footer.php');
 	exit();
-}
-else {
+} else {
 	echo '<option value=""></option>';
 	while ($MyRow = DB_fetch_array($AccountsResults)) {
 		/*list the bank account names */
@@ -1012,8 +1003,7 @@ if (DB_num_rows($Result) == 0) {
 	prnMsg(__('No currencies are defined yet. Payments cannot be entered until a currency is defined') , 'error');
 	echo '</td>
 		</field>';
-}
-else {
+} else {
 	include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
 	if ($_SESSION['PaymentDetail' . $identifier]->SupplierID == '') {
 		echo '<select name="Currency" onchange="ReloadForm(UpdateHeader)" required="required">';
@@ -1123,8 +1113,7 @@ if (!isset($_POST['ChequeNum'])) {
 }
 if (!empty($Errors)) {
 	$ErrClass = 'class="error"';
-}
-else {
+} else {
 	$ErrClass = '';
 }
 
@@ -1349,8 +1338,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors'] == 1 AND $_SESSION['PaymentDe
 		echo '<div class="centre"><input type="submit" name="CommitBatch" value="' . __('Accept and Process Payment') . '" /></div>';
 	}
 
-}
-else {
+} else {
 	/*a supplier is selected or the GL link is not active then set out
 	 the fields for entry of receipt amt and disc */
 

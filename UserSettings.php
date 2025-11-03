@@ -21,7 +21,7 @@ $PDFLanguages = array(
 	__('Free Serif')
 );
 
-if(isset($_POST['Modify'])) {
+if (isset($_POST['Modify'])) {
 	// no input errors assumed initially before we test
 	$InputError = 0;
 
@@ -29,28 +29,28 @@ if(isset($_POST['Modify'])) {
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
-	if($_POST['DisplayRecordsMax'] <= 0) {
+	if ($_POST['DisplayRecordsMax'] <= 0) {
 		$InputError = 1;
 		prnMsg(__('The Maximum Number of Records on Display entered must not be negative') . '. ' . __('0 will default to system setting'),'error');
 	}
 
 	//!!!for the demo only - enable this check so password is not changed
-	if($AllowDemoMode AND $_POST['Password'] != '') {
+	if ($AllowDemoMode AND $_POST['Password'] != '') {
 		$InputError = 1;
 		prnMsg(__('Cannot change password in the demo or others would be locked out!'),'warn');
 	}
 
  	$UpdatePassword = 'N';
 
-	if($_POST['PasswordCheck'] != '') {
-		if(mb_strlen($_POST['Password']) < 5) {
+	if ($_POST['PasswordCheck'] != '') {
+		if (mb_strlen($_POST['Password']) < 5) {
 			$InputError = 1;
 			prnMsg(__('The password entered must be at least 5 characters long'),'error');
-		} elseif(mb_strstr($_POST['Password'],$_SESSION['UserID'])!= false) {
+		} elseif (mb_strstr($_POST['Password'],$_SESSION['UserID'])!= false) {
 			$InputError = 1;
 			prnMsg(__('The password cannot contain the user id'), 'error');
 		}
-		if($_POST['Password'] != $_POST['PasswordCheck']) {
+		if ($_POST['Password'] != $_POST['PasswordCheck']) {
 			$InputError = 1;
 			prnMsg(__('The password and password confirmation fields entered do not match'), 'error');
 		} else {
@@ -58,13 +58,13 @@ if(isset($_POST['Modify'])) {
 		}
 	}
 
-	if($InputError != 1) {
+	if ($InputError != 1) {
 		// no errors
 		if (isset($_POST['Language']) && !checkLanguageChoice($_POST['Language'])) {
 			$_POST['Language'] = $DefaultLanguage;
 		}
 
-		if($UpdatePassword != 'Y') {
+		if ($UpdatePassword != 'Y') {
 			$SQL = "UPDATE www_users
 					SET displayrecordsmax='" . $_POST['DisplayRecordsMax'] . "',
 						theme='" . $_POST['Theme'] . "',
@@ -113,7 +113,7 @@ $SQL = "SELECT
 $Result = DB_query($SQL);
 $MyRow = DB_fetch_array($Result);
 
-if(!isset($_POST['email'])) {
+if (!isset($_POST['email'])) {
 	$_POST['email'] = $MyRow['email'];
 }
 $_POST['ShowPageHelp'] = $MyRow['showpagehelp'];
@@ -144,12 +144,12 @@ echo '<field>
 echo '<field>
 		<label for="Language">', __('Language'), ':</label>
 		<select name="Language">';
-if(!isset($_POST['Language'])) {
+if (!isset($_POST['Language'])) {
 	$_POST['Language'] = $_SESSION['Language'];
 }
 foreach($LanguagesArray as $LanguageEntry => $LanguageName) {
 	echo '<option ';
-	if(isset($_POST['Language']) AND $_POST['Language'] == $LanguageEntry) {
+	if (isset($_POST['Language']) AND $_POST['Language'] == $LanguageEntry) {
 		echo 'selected="selected" ';
 	}
 	echo 'value="', $LanguageEntry, '">', $LanguageName['LanguageName'], '</option>';
@@ -165,9 +165,9 @@ echo '<field>
 $ThemeDirectories = scandir($PathPrefix . 'css/');
 
 foreach ($ThemeDirectories as $ThemeName) {
-	if(is_dir('css/' . $ThemeName) AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != '.svn') {
+	if (is_dir('css/' . $ThemeName) AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != '.svn') {
 
-		if($_SESSION['Theme'] == $ThemeName) {
+		if ($_SESSION['Theme'] == $ThemeName) {
 			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName . '</option>';
 		} else {
 			echo '<option value="' . $ThemeName . '">' . $ThemeName . '</option>';
@@ -175,10 +175,10 @@ foreach ($ThemeDirectories as $ThemeName) {
 	}
 }
 
-if(!isset($_POST['PasswordCheck'])) {
+if (!isset($_POST['PasswordCheck'])) {
 	$_POST['PasswordCheck']='';
 }
-if(!isset($_POST['Password'])) {
+if (!isset($_POST['Password'])) {
 	$_POST['Password']='';
 }
 echo '</select>
@@ -220,7 +220,7 @@ echo '</select>
 echo '<field>
 		<label for="ShowFieldHelp">', __('Display field help'), ':</label>
 		<select id="ShowFieldHelp" name="ShowFieldHelp">';
-if($_POST['ShowFieldHelp']==0) {
+if ($_POST['ShowFieldHelp']==0) {
 	echo '<option selected="selected" value="0">', __('No'), '</option>',
 		 '<option value="1">', __('Yes'), '</option>';
 } else {
@@ -231,14 +231,14 @@ echo '</select>
 	<fieldhelp>', __('Show field help when available'), '</fieldhelp>
 </field>';
 // PDF Language Support:
-if(!isset($_POST['PDFLanguage'])) {
+if (!isset($_POST['PDFLanguage'])) {
 	$_POST['PDFLanguage']=$_SESSION['PDFLanguage'];
 }
 echo '<field>
 		<label for="PDFLanguage">', __('PDF Language Support'), ': </label>
 		<select name="PDFLanguage">';
 for($i=0; $i<count($PDFLanguages); $i++) {
-	if($_POST['PDFLanguage'] == $i) {
+	if ($_POST['PDFLanguage'] == $i) {
 		echo '<option selected="selected" value="', $i, '">', $PDFLanguages[$i], '</option>';
 	} else {
 		echo '<option value="', $i, '">', $PDFLanguages[$i], '</option>';

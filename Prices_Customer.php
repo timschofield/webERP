@@ -25,7 +25,7 @@ if (isset($_POST['EndDate'])){$_POST['EndDate'] = ConvertSQLDate($_POST['EndDate
 
 if (isset($_GET['Item'])){
 	$Item = $_GET['Item'];
-}elseif (isset($_POST['Item'])){
+} elseif (isset($_POST['Item'])){
 	$Item = $_POST['Item'];
 }
 
@@ -142,7 +142,7 @@ if (isset($_POST['submit'])) {
 			} else {
 				$Msg = __('The price could not be added because') . ' - ' . DB_error_msg();
 			}
-		}else {
+		} else {
 			ReSequenceEffectiveDates ($Item, $SalesType, $CurrCode, $_SESSION['CustomerID']);
 			unset($_POST['EndDate']);
 			unset($_POST['StartDate']);

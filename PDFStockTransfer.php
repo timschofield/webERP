@@ -123,8 +123,7 @@ if (isset($_POST['Process'])) {
 	// Output the generated PDF to Browser
 	$DomPDF->stream($FileName, array("Attachment" => false));
 
-}
-else {
+} else {
 	if (isset($_POST['TransferNo'])) {
 		if (is_numeric($_POST['TransferNo'])) {
 			$_GET['TransferNo'] = $_POST['TransferNo'];

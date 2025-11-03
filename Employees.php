@@ -14,30 +14,30 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	__('Employee'), '" /> ',// Icon title.
 	__('Employee Maintenance'), '</p>';// Page title.
 
-if(isset($_GET['SelectedEmployee'])) {
+if (isset($_GET['SelectedEmployee'])) {
 	$SelectedEmployee = $_GET['SelectedEmployee'];
-} elseif(isset($_POST['SelectedEmployee'])) {
+} elseif (isset($_POST['SelectedEmployee'])) {
 	$SelectedEmployee = $_POST['SelectedEmployee'];
 }
 
-if(isset($_POST['submit'])) {
+if (isset($_POST['submit'])) {
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
 
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
 
-	if(trim($_POST['Surname']) == '') {
+	if (trim($_POST['Surname']) == '') {
 		$InputError = 1;
 		prnMsg(__('The employee\'s surname must not be empty'), 'error');
 	}
-	if($_POST['FirstName'] =='') {
+	if ($_POST['FirstName'] =='') {
 		$InputError = 1;
 		prnMsg(__('The employee\'s first name must not be empty'), 'error');
 	}
 	//end of checking the input
 
-	if(isset($SelectedEmployee) AND $InputError !=1) {
+	if (isset($SelectedEmployee) AND $InputError !=1) {
 
 
 		$SQL = "UPDATE employees SET surname='" . $_POST['Surname'] . "',
@@ -55,7 +55,7 @@ if(isset($_POST['submit'])) {
 
 		prnMsg(__('The employee record has been updated'),'success');
 
-	} elseif($InputError !=1) {
+	} elseif ($InputError !=1) {
 
 		/*SelectedEmployee is null cos no employee selected on first time round so must be adding a	record must be submitting a new employee form */
 
@@ -89,7 +89,7 @@ if(isset($_POST['submit'])) {
 	unset($_POST['Email']);
 	unset($SelectedEmployee);
 
-} elseif(isset($_GET['delete'])) {
+} elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
 	$CancelDelete = 0;
@@ -99,13 +99,13 @@ if(isset($_POST['submit'])) {
 	$SQL= "SELECT COUNT(*) FROM timesheets WHERE employeeid='". $SelectedEmployee . "'";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_row($Result);
-	if($MyRow[0]>0) {
+	if ($MyRow[0]>0) {
 		$CancelDelete = 1;
 		prnMsg(__('Cannot delete this employee because timesheets have been created for this person'),'warn');
 		echo __('There are') . ' ' . $MyRow[0] . ' ' . __('timesheet records for this person');
 	}
 */
-	if(! $CancelDelete) {
+	if (! $CancelDelete) {
 		$Result = DB_query("DELETE FROM employees WHERE id='" . $SelectedEmployee . "'");
 
 		prnMsg(__('Employee') . ' ' . $SelectedEmployee . ' ' . __('has been deleted') . '!', 'success');
@@ -122,7 +122,7 @@ if (isset($SelectedEmployee)) {
 */
 
 
-if(!isset($SelectedEmployee)) {
+if (!isset($SelectedEmployee)) {
 
 /* It could still be the second time the page has been run and a record has been selected for modification - SelectedEmployee will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters
 then none of the above are true and the list of employees will be displayed with
@@ -181,17 +181,17 @@ or deletion of the records*/
 //end of ifs and buts!
 
 echo '<br />';
-if(isset($SelectedEmployee)) {
+if (isset($SelectedEmployee)) {
 	echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Review Employees') . '</a>';
 }
 echo '<br />';
 
-if(!isset($_GET['delete'])) {
+if (!isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	if(isset($SelectedEmployee)) {
+	if (isset($SelectedEmployee)) {
 		//editing an existing Location
 
 		$SQL = "SELECT id,
@@ -225,31 +225,31 @@ if(!isset($_GET['delete'])) {
 				<fieldtext>' . $SelectedEmployee . '</fieldtext>
 			</field>';
 	} else {//end of if $SelectedEmployee only do the else when a new record is being entered
-		if(!isset($_POST['LocCode'])) {
+		if (!isset($_POST['LocCode'])) {
 			$_POST['SelectedEmployee'] = '';
 		}
 		echo '<fieldset>
 				<legend>' . __('New Employee details') . '</legend>';
 	}
-	if(!isset($_POST['Surname'])) {
+	if (!isset($_POST['Surname'])) {
 		$_POST['Surname'] = '';
 	}
-	if(!isset($_POST['FirstName'])) {
+	if (!isset($_POST['FirstName'])) {
 		$_POST['FirstName'] = '';
 	}
-	if(!isset($_POST['StockID'])) {
+	if (!isset($_POST['StockID'])) {
 		$_POST['StockID'] = ' ';
 	}
-	if(!isset($_POST['NormalHours'])) {
+	if (!isset($_POST['NormalHours'])) {
 		$_POST['NormalHours'] = '40';
 	}
-	if(!isset($_POST['Manager'])) {
+	if (!isset($_POST['Manager'])) {
 		$_POST['Manager'] = '';
 	}
-	if(!isset($_POST['UserID'])) {
+	if (!isset($_POST['UserID'])) {
 		$_POST['UserID'] = '';
 	}
-	if(!isset($_POST['Email'])) {
+	if (!isset($_POST['Email'])) {
 		$_POST['Email'] = '';
 	}
 
@@ -274,7 +274,7 @@ if(!isset($_GET['delete'])) {
 										WHERE stockcategory.stocktype='L'
 										ORDER BY stockid");
 	while ($MyRow=DB_fetch_array($LabourTypeItemsResult)) {
-		if($_POST['StockID']==$MyRow['stockid']) {
+		if ($_POST['StockID']==$MyRow['stockid']) {
 			echo '<option selected="selected" value="' , $MyRow['stockid'] , '">' , $MyRow['description'] , '</option>';
 		} else {
 			echo '<option value="' , $MyRow['stockid'] . '">' , $MyRow['description'] , '</option>';
@@ -301,13 +301,13 @@ if(!isset($_GET['delete'])) {
 								FROM employees
 								WHERE id != '" . $SelectedEmployee . "'
 								ORDER BY surname");
-	if($_POST['Manager']==''){
+	if ($_POST['Manager']==''){
 		echo '<option selected="selected" value="0">' , __('Not Managed') , '</option>';
 	} else {
 		echo '<option value="0">' , __('Not Managed') , '</option>';
 	}
 	while ($MyRow=DB_fetch_array($ManagersResult)) {
-		if($_POST['Manager']==$MyRow['id']) {
+		if ($_POST['Manager']==$MyRow['id']) {
 			echo '<option selected="selected" value="' , $MyRow['id'] , '">' , $MyRow['managername'] , '</option>';
 		} else {
 			echo '<option value="' , $MyRow['id'] , '">' , $MyRow['managername'] , '</option>';
@@ -320,14 +320,14 @@ if(!isset($_GET['delete'])) {
 	echo '<field>
 			<label for="UserID">' , __('webERP User') , ':' , '</label>
 			<select name="UserID" title=""/>';
-	if($_POST['UserID']==''){
+	if ($_POST['UserID']==''){
 		echo '<option selected="selected" value="">' , __('Not a webERP User') , '</option>';
 	} else {
 		echo '<option value="">' , __('Not a webERP User') , '</option>';
 	}
 	$UsersResult = DB_query("SELECT userid, realname FROM www_users");
 	while ($MyRow=DB_fetch_array($UsersResult)) {
-		if($_POST['UserID']==$MyRow['userid']) {
+		if ($_POST['UserID']==$MyRow['userid']) {
 			echo '<option selected="selected" value="' . $MyRow['userid'] . '">' . $MyRow['realname'] . '</option>';
 		} else {
 			echo '<option value="' . $MyRow['userid'] . '">' . $MyRow['realname'] . '</option>';

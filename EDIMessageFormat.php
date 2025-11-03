@@ -21,7 +21,7 @@ if (isset($_GET['MessageType'])){
 
 if (isset($_GET['SelectedMessageLine'])){
 	$SelectedMessageLine = $_GET['SelectedMessageLine'];
-}elseif (isset($_POST['SelectedMessageLine'])){
+} elseif (isset($_POST['SelectedMessageLine'])){
 	$SelectedMessageLine = $_POST['SelectedMessageLine'];
 }
 

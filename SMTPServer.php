@@ -52,7 +52,7 @@ if (isset($_POST['submit']) AND $_POST['MailServerSetting']==1) {//If there are 
 	prnMsg(__('The settings for the SMTP server have been successfully updated'), 'success');
 	echo '<br />';
 
-}elseif(isset($_POST['submit']) and $_POST['MailServerSetting']==0){//There is no data setup yet
+} elseif (isset($_POST['submit']) and $_POST['MailServerSetting']==0){//There is no data setup yet
 	$SQL = "INSERT INTO emailsettings(host,
 		 				port,
 						heloaddress,
@@ -89,7 +89,7 @@ if (isset($_POST['submit']) AND $_POST['MailServerSetting']==1) {//If there are 
 		if (DB_num_rows($Result)!=0){
 			$MailServerSetting = 1;
 			$MyRow=DB_fetch_array($Result);
-		}else{
+		} else {
 			DB_free_result($Result);
 			$MailServerSetting = 0;
 			$MyRow['host']='';

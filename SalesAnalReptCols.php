@@ -88,7 +88,7 @@ if (isset($_POST['submit'])) {
 	if (isset($_POST['ColID']) AND !is_numeric($_POST['ColID'])){
 		$InputError = 1;
 		prnMsg(__('The column number must be numeric'),'error');
-	} elseif(isset($_POST['ColID']) AND $_POST['ColID'] >10){
+	} elseif (isset($_POST['ColID']) AND $_POST['ColID'] >10){
 		$InputError = 1;
 		prnMsg(__('The column number must be less than 11'),'error');
 	}

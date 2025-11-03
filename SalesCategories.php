@@ -11,7 +11,7 @@ include('includes/ImageFunctions.php');
 
 if (isset($_GET['SelectedCategory'])) {
 	$SelectedCategory = mb_strtoupper($_GET['SelectedCategory']);
-} else if (isset($_POST['SelectedCategory'])) {
+} elseif (isset($_POST['SelectedCategory'])) {
 	$SelectedCategory = mb_strtoupper($_POST['SelectedCategory']);
 }
 

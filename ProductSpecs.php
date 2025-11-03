@@ -9,12 +9,12 @@ include('includes/header.php');
 
 if (isset($_GET['SelectedQATest'])){
 	$SelectedQATest =mb_strtoupper($_GET['SelectedQATest']);
-} elseif(isset($_POST['SelectedQATest'])){
+} elseif (isset($_POST['SelectedQATest'])){
 	$SelectedQATest =mb_strtoupper($_POST['SelectedQATest']);
 }
 if (isset($_GET['KeyValue'])){
 	$KeyValue =mb_strtoupper($_GET['KeyValue']);
-} elseif(isset($_POST['KeyValue'])){
+} elseif (isset($_POST['KeyValue'])){
 	$KeyValue =mb_strtoupper($_POST['KeyValue']);
 } else {
 	$KeyValue = '';

@@ -31,65 +31,65 @@ $BookMark = 'GLStatements';
 include('includes/header.php');
 
 // Merges gets into posts:
-if(isset($_GET['PeriodFrom'])) {
+if (isset($_GET['PeriodFrom'])) {
 	$_POST['PeriodFrom'] = $_GET['PeriodFrom'];
 }
-if(isset($_GET['PeriodTo'])) {
+if (isset($_GET['PeriodTo'])) {
 	$_POST['PeriodTo'] = $_GET['PeriodTo'];
 }
-if(isset($_GET['Period'])) {
+if (isset($_GET['Period'])) {
 	$_POST['Period'] = $_GET['Period'];
 }
-if(isset($_GET['ShowBudget'])) {
+if (isset($_GET['ShowBudget'])) {
 	$_POST['ShowBudget'] = $_GET['ShowBudget'];
 }
-if(isset($_GET['ShowZeroBalance'])) {
+if (isset($_GET['ShowZeroBalance'])) {
 	$_POST['ShowZeroBalance'] = $_GET['ShowZeroBalance'];
 }
-if(isset($_GET['ShowFinancialPosition'])) {
+if (isset($_GET['ShowFinancialPosition'])) {
 	$_POST['ShowFinancialPosition'] = $_GET['ShowFinancialPosition'];
 }
-if(isset($_GET['ShowComprehensiveIncome'])) {
+if (isset($_GET['ShowComprehensiveIncome'])) {
 	$_POST['ShowComprehensiveIncome'] = $_GET['ShowComprehensiveIncome'];
 }
-if(isset($_GET['ShowChangesInEquity'])) {
+if (isset($_GET['ShowChangesInEquity'])) {
 	$_POST['ShowChangesInEquity'] = $_GET['ShowChangesInEquity'];
 }
-if(isset($_GET['ShowCashFlows'])) {
+if (isset($_GET['ShowCashFlows'])) {
 	$_POST['ShowCashFlows'] = $_GET['ShowCashFlows'];
 }
-if(isset($_GET['ShowNotes'])) {
+if (isset($_GET['ShowNotes'])) {
 	$_POST['ShowNotes'] = $_GET['ShowNotes'];
 }
-if(isset($_GET['NewReport'])) {
+if (isset($_GET['NewReport'])) {
 	$_POST['NewReport'] = $_GET['NewReport'];
 }
 
 // Sets PeriodFrom and PeriodTo from Period:
-if(isset($_POST['Period']) and $_POST['Period'] != '') {
+if (isset($_POST['Period']) and $_POST['Period'] != '') {
 	$_POST['PeriodFrom'] = ReportPeriod($_POST['Period'], 'From');
 	$_POST['PeriodTo'] = ReportPeriod($_POST['Period'], 'To');
 }
 
 // Validates the data submitted in the form:
-if(isset($_POST['PeriodFrom']) and $_POST['PeriodFrom'] > $_POST['PeriodTo']) {
+if (isset($_POST['PeriodFrom']) and $_POST['PeriodFrom'] > $_POST['PeriodTo']) {
 	// The beginning is after the end.
 	$_POST['NewReport'] = 'on';
 	prnMsg(__('The beginning of the period should be before or equal to the end of the period. Please reselect the reporting period.'), 'error');
 }
-if(isset($_POST['PeriodTo']) and $_POST['PeriodTo']-$_POST['PeriodFrom']+1 > 12) {
+if (isset($_POST['PeriodTo']) and $_POST['PeriodTo']-$_POST['PeriodFrom']+1 > 12) {
 	// The reporting period is greater than 12 months.
 	$_POST['NewReport'] = 'on';
 	prnMsg(__('The period should be 12 months or less in duration. Please select an alternative period range.'), 'error');
 }
-if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !($_POST['ShowFinancialPosition']) AND !($_POST['ShowComprehensiveIncome']) AND !($_POST['ShowChangesInEquity']) AND !($_POST['ShowCashFlows']) AND !($_POST['ShowNotes'])) {
+if (isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !($_POST['ShowFinancialPosition']) AND !($_POST['ShowComprehensiveIncome']) AND !($_POST['ShowChangesInEquity']) AND !($_POST['ShowCashFlows']) AND !($_POST['ShowNotes'])) {
 	// No financial statement was selected.
 	$_POST['NewReport'] = 'on';
 	prnMsg(__('You must select at least one financial statement. Please select financial statements.'), 'error');
 }
 
 // Main code:
-if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewReport']) {
+if (isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewReport']) {
 	// If PeriodFrom and PeriodTo are set and it is not a NewReport, generates the report:
 
 	echo '<div class="sheet">';// Division to identify the report block.
@@ -179,14 +179,14 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 				'<label for="PeriodFrom">', __('Select period from'), '</label>
 		 		<select id="PeriodFrom" name="PeriodFrom" required="required">';
 	$Periods = DB_query('SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno ASC');
-	if(!isset($_POST['PeriodFrom'])) {
+	if (!isset($_POST['PeriodFrom'])) {
 		$_POST['ShowBudget'] = '';
 		$_POST['ShowZeroBalance'] = '';
 		$_POST['ShowFinancialPosition'] = '';
 		$_POST['ShowComprehensiveIncome'] = '';
 		$_POST['ShowCashFlows'] = '';
 		$BeginMonth = ($_SESSION['YearEnd']==12 ? 1 : $_SESSION['YearEnd']+1);// Sets January as the month that follows December.
-		if($BeginMonth <= date('n')) {// It is a month in the current year.
+		if ($BeginMonth <= date('n')) {// It is a month in the current year.
 			$BeginDate = mktime(0, 0, 0, $BeginMonth, 1, date('Y'));
 		} else {// It is a month in the previous year.
 			$BeginDate = mktime(0, 0, 0, $BeginMonth, 1, date('Y')-1);
@@ -203,7 +203,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 			'<field>',
 				'<label for="PeriodTo">', __('Select period to'), '</label>
 		 		<select id="PeriodTo" name="PeriodTo" required="required">';
-	if(!isset($_POST['PeriodTo'])) {
+	if (!isset($_POST['PeriodTo'])) {
 		$_POST['PeriodTo'] = GetPeriod(date($_SESSION['DefaultDateFormat']));
 	}
 	DB_data_seek($Periods, 0);
@@ -214,7 +214,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 				<fieldhelp>', __('Select the end of the reporting period'), '</fieldhelp>
 			</field>';
 	// OR Select period:
-	if(!isset($_POST['Period'])) {
+	if (!isset($_POST['Period'])) {
 		$_POST['Period'] = '';
 	}
 	echo '<field>
@@ -247,7 +247,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 			 	<fieldhelp>', __('Check this box to show the statement of comprehensive income'), '</fieldhelp
 			</field>';
 	// Show the statement of changes in equity:
-	if(file_exists('GLChangesInEquity.php')) {// Provisional, to be replaced by a rights verification.
+	if (file_exists('GLChangesInEquity.php')) {// Provisional, to be replaced by a rights verification.
 		echo
 			'<field>
 				<label for="ShowChangesInEquity">', __('Show the statement of changes in equity'), '</label>
@@ -262,7 +262,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 			 	<fieldhelp>', __('Check this box to show the statement of cash flows'), '</fieldhelp>
 			</field>';
 	// Show the notes:
-	if(file_exists('GLNotes.php')) {// Provisional, to be replaced by a rights verification.
+	if (file_exists('GLNotes.php')) {// Provisional, to be replaced by a rights verification.
 		echo
 			'<field>
 				<label for="ShowNotes">', __('Show the notes'), '</label>

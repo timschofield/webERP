@@ -726,7 +726,7 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
 			'&amp;height=100'.
 			'" alt="" />';
 	} else {
-		if( !empty($TempID) AND file_exists($_SESSION['part_pics_dir'] . '/' .$TempID.'.' . $Ext) ) {
+		if ( !empty($TempID) AND file_exists($_SESSION['part_pics_dir'] . '/' .$TempID.'.' . $Ext) ) {
 			$StockImgLink = '<img src="' . $_SESSION['part_pics_dir'] . '/' . $TempID . '.' . $Ext . '" height="100" width="100" />';
 			if (isset($_POST['ClearImage']) ) {
 				//workaround for many variations of permission issues that could cause unlink fail

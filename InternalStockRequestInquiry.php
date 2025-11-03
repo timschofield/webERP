@@ -284,7 +284,7 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 
 }
 
-if(isset($StockItemsResult)){
+if (isset($StockItemsResult)){
 
 	if (isset($StockItemsResult)
 	AND DB_num_rows($StockItemsResult)>1) {
@@ -317,7 +317,7 @@ if(isset($StockItemsResult)){
 
 }
 
-} elseif(isset($_POST['Search']) OR isset($StockID)) {//lets show the search result here
+} elseif (isset($_POST['Search']) OR isset($StockID)) {//lets show the search result here
 	if (isset($StockItemsResult) AND DB_num_rows($StockItemsResult) == 1) {
 		$StockID = DB_fetch_array($StockItemsResult);
 		$StockID = $StockID[0];
@@ -487,7 +487,7 @@ if(isset($StockItemsResult)){
 						<td>' . locale_number_format($MyRow['quantity'],$MyRow['decimalplaces']) . '</td>
 						<td>' . $MyRow['uom'] . '</td>
 						<td>' . $Comp . '</td>';
-			} elseif(!isset($ID)) {
+			} elseif (!isset($ID)) {
 					$Html .= '<tr class="striped_row">
 						<td>' . $MyRow['dispatchid'] . '</td>
 						<td>' . $MyRow['locationname'] . '</td>

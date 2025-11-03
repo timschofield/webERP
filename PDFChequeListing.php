@@ -127,7 +127,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 			if ($CheckRow[0] > 0) {
 				$AccountName = $GLRow['accountname'];
-			}else{
+			} else {
 				$AccountName = __('Other GL Accounts');
 			}
 			$HTML .= '<tr class="striped_row">

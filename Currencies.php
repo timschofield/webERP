@@ -71,7 +71,7 @@ if (isset($_POST['submit'])) {
 	   prnMsg(__('The number of decimal places to display for amounts in this currency must be numeric'),'error');
 		$Errors[$i] = 'DecimalPlaces';
 		$i++;
-	}elseif (filter_number_format($_POST['DecimalPlaces'])<0) {
+	} elseif (filter_number_format($_POST['DecimalPlaces'])<0) {
 		$InputError = 1;
 	   prnMsg(__('The number of decimal places to display for amounts in this currency must be positive or zero'),'error');
 		$Errors[$i] = 'DecimalPlaces';
@@ -186,7 +186,7 @@ if (isset($_POST['submit'])) {
 
 			/* If some adjustment has to be done, do it! */
 			$DifferenceToAdjust = $NewBalanceInFucntionalCurrency - $OldBalanceInFunctionalCurrency;
-			if($OldRate !=  $NewRate) {
+			if ($OldRate !=  $NewRate) {
 
 				$SQL = "INSERT INTO gltrans (
 								type,
@@ -335,7 +335,7 @@ or deletion of the records*/
 		// Lets show the country flag
 		$ImageFile = mb_strtoupper($MyRow['currabrev']) . '.gif';
 
-		if(!file_exists('images/flags/' . $ImageFile)) {
+		if (!file_exists('images/flags/' . $ImageFile)) {
 			$ImageFile =  'blank.gif';
 		}
 		if ($MyRow['webcart'] == 1) {

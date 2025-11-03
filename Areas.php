@@ -8,8 +8,7 @@ include ('includes/header.php');
 
 if (isset($_GET['SelectedArea'])) {
 	$SelectedArea = mb_strtoupper($_GET['SelectedArea']);
-}
-elseif (isset($_POST['SelectedArea'])) {
+} elseif (isset($_POST['SelectedArea'])) {
 	$SelectedArea = mb_strtoupper($_POST['SelectedArea']);
 }
 
@@ -98,8 +97,7 @@ if (isset($_POST['submit'])) {
 		prnMsg($Msg, 'success');
 	}
 
-}
-elseif (isset($_GET['delete'])) {
+} elseif (isset($_GET['delete'])) {
 	//the link to delete a selected record was clicked instead of the submit button
 	$CancelDelete = 0;
 

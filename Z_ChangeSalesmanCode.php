@@ -34,7 +34,7 @@ if (isset($_POST['ProcessSalesmanChange'])){
 		include('includes/footer.php');
 		exit();
 	}
-	else if (ContainsIllegalCharacters($_POST['NewSalesmanCode'])) {
+	elseif (ContainsIllegalCharacters($_POST['NewSalesmanCode'])) {
 		prnMsg(__('The new salesman code to change the old code to contains illegal characters - no changes will be made'), 'error');
 		include('includes/footer.php');
 		exit();
