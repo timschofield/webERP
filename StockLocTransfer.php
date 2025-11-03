@@ -144,9 +144,9 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 						}
 					}
 					// Check the accumulated quantity for each item
-					if(isset($StockIDAccQty[$_POST['StockID'.$i]])){
+					if (isset($StockIDAccQty[$_POST['StockID'.$i]])){
 						$StockIDAccQty[$_POST['StockID'.$i]] += filter_number_format($_POST['StockQTY' . $i]);
-						if($MyRow[0] < $StockIDAccQty[$_POST['StockID'.$i]]){
+						if ($MyRow[0] < $StockIDAccQty[$_POST['StockID'.$i]]){
 							$InputError = true;
 							$ErrorMessage .=__('The part code entered of'). ' ' . $_POST['StockID'.$i] . ' '.__('does not have enough stock available for transter due to accumulated quantity is over quantity on hand.') . '<br />';
 							$_POST['LinesCounter'] -= 10;
@@ -173,7 +173,7 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 	 } //end if the transfer is not a duplicated
 }
 
-if(isset($_POST['Submit']) AND $InputError==false){
+if (isset($_POST['Submit']) AND $InputError==false){
 
 	$ErrMsg = __('CRITICAL ERROR') . '! ' . __('Unable to BEGIN Location Transfer transaction');
 
@@ -181,7 +181,7 @@ if(isset($_POST['Submit']) AND $InputError==false){
 
 	for ($i=0;$i < $_POST['LinesCounter'];$i++){
 
-		if($_POST['StockID' . $i] != ''){
+		if ($_POST['StockID' . $i] != ''){
 			$DecimalsSql = "SELECT decimalplaces
 							FROM stockmaster
 							WHERE stockid='" . $_POST['StockID' . $i] . "'";
@@ -218,7 +218,7 @@ if(isset($_POST['Submit']) AND $InputError==false){
 		$Trf_ID = $_POST['Trf_ID'];
 	}
 
-	if(!isset($Trf_ID)){
+	if (!isset($Trf_ID)){
 		$Trf_ID = GetNextTransNo(16);
 	}
 
@@ -297,7 +297,7 @@ if(isset($_POST['Submit']) AND $InputError==false){
 			</tr>';
 
 	$j=0; /* row counter for reindexing */
-	if(isset($_POST['LinesCounter'])){
+	if (isset($_POST['LinesCounter'])){
 
 		for ($i=0;$i < $_POST['LinesCounter'];$i++){
 			if (!isset($_POST['StockID'. $i])){

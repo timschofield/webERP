@@ -267,8 +267,7 @@ if (!isset($_GET['Prid']) and !isset($_SESSION['ProcessingPick'])) {
 		include('includes/footer.php');
 		exit();
 	} //valid order returned from the entered pick number
-}
-else {
+} else {
 	/* if processing, a dispatch page has been called and ${$StkItm->LineNumber} would have been set from the post
 	set all the necessary session variables changed by the POST  */
 	if (isset($_POST['ShipVia'])) {
@@ -655,8 +654,7 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] !=  '') {
 
 	echo '<a href="' . $RootPath . '/SelectPickingLists.php">' . __('Select another pick list for processing') . '</a><br /><br />';
 	/*end of process invoice */
-}
-else {
+} else {
 	/*Process Invoice not set so allow input of invoice data */
 
 	if (!isset($_POST['Consignment'])) {

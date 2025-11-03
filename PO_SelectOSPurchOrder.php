@@ -16,22 +16,19 @@ if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate'])
 
 if (isset($_GET['SelectedStockItem'])) {
 	$SelectedStockItem = trim($_GET['SelectedStockItem']);
-}
-elseif (isset($_POST['SelectedStockItem'])) {
+} elseif (isset($_POST['SelectedStockItem'])) {
 	$SelectedStockItem = trim($_POST['SelectedStockItem']);
 }
 
 if (isset($_GET['OrderNumber'])) {
 	$OrderNumber = $_GET['OrderNumber'];
-}
-elseif (isset($_POST['OrderNumber'])) {
+} elseif (isset($_POST['OrderNumber'])) {
 	$OrderNumber = $_POST['OrderNumber'];
 }
 
 if (isset($_GET['SelectedSupplier'])) {
 	$SelectedSupplier = trim($_GET['SelectedSupplier']);
-}
-elseif (isset($_POST['SelectedSupplier'])) {
+} elseif (isset($_POST['SelectedSupplier'])) {
 	$SelectedSupplier = trim($_POST['SelectedSupplier']);
 }
 
@@ -188,12 +185,12 @@ if (!isset($OrderNumber) or $OrderNumber == '') {
 	$UserLocations = DB_num_rows($ResultStkLocs);
 	$AllListed = false;
 	while ($MyRow = DB_fetch_array($ResultStkLocs)) {
-		if(!isset($LocQty)){
+		if (!isset($LocQty)){
 			$LocQty = $MyRow['total'];
 		}
 		if (isset($_POST['StockLocation'])) {//The user has selected location
 			if ($_POST['StockLocation'] == 'ALLLOC'){//user have selected all locations
-				if($AllListed === false) {//it's the first loop
+				if ($AllListed === false) {//it's the first loop
 					echo '<option selected="selected" value="ALLLOC">' . __('All') . '</option>';
 					echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 					$AllListed = true;
@@ -203,7 +200,7 @@ if (!isset($OrderNumber) or $OrderNumber == '') {
 
 			} else {//user have not selected all locations; There are two possibilities that users have right, but not choose all; or vice visa
 				if ($MyRow['total'] == $UserLocations) { //user have allloc right
-					if($AllListed === false){//first loop
+					if ($AllListed === false){//first loop
 						echo '<option value="ALLLOC">' . __('All') . '</option>';
 						$AllListed = true;
 					}
@@ -215,8 +212,8 @@ if (!isset($OrderNumber) or $OrderNumber == '') {
 				}
 			}
 		} else {//users have not selected locations
-			if($MyRow['total'] == $UserLocations){//users have right to submit All locations
-				if($AllListed === false){//first loop
+			if ($MyRow['total'] == $UserLocations){//users have right to submit All locations
+				if ($AllListed === false){//first loop
 					echo '<option selected="selected" value="ALLLOC">' . __('All') . '</option>';//default value is all
 					echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 					$AllListed = true;
@@ -243,7 +240,7 @@ if (!isset($OrderNumber) or $OrderNumber == '') {
 	} else {
 		echo '<option value="Pending_Authorised">' . __('Pending and Authorised') . '</option>';
 	}
-	if(isset($_POST['Status'])){
+	if (isset($_POST['Status'])){
 		if ($_POST['Status'] == 'Pending') {
 			echo '<option selected="selected" value="Pending">' . __('Pending') . '</option>';
 		} else {

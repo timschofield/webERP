@@ -61,12 +61,12 @@ if (isset($_POST['submit']) and !isset($_POST['SubmitCategory'])) {
 	$SQL = "SELECT stockid FROM stockmaster WHERE categoryid='".$_POST['stockcategory']."'";
 	$ErrMsg = __('Failed to retrieve stock category data');
 	$Result = DB_query($SQL, $ErrMsg);
-	if(DB_num_rows($Result)>0){
+	if (DB_num_rows($Result)>0){
 		$SQL="UPDATE stockmaster
 				SET discountcategory='".$_POST['DiscountCategory']."'
 				WHERE categoryid='".$_POST['stockcategory']."'";
 		$Result = DB_query($SQL);
-	}else{
+	} else {
 		prnMsg(__('There are no stock defined for this stock category, you must define stock for it first'),'error');
 		include('includes/footer.php');
 		exit();

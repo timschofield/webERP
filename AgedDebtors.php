@@ -8,22 +8,22 @@ use Dompdf\Dompdf;
 
 include('includes/SetDomPDFOptions.php');
 
-if(isset($_POST['PrintPDF']) or isset($_POST['View'])
+if (isset($_POST['PrintPDF']) or isset($_POST['View'])
 	and isset($_POST['FromCriteria'])
 	and mb_strlen($_POST['FromCriteria'])>=1
 	and isset($_POST['ToCriteria'])
 	and mb_strlen($_POST['ToCriteria'])>=1) {
 
 	/*Now figure out the aged analysis for the customer range under review */
-	if($_SESSION['SalesmanLogin'] !=  '') {
+	if ($_SESSION['SalesmanLogin'] !=  '') {
 		$_POST['Salesman'] = $_SESSION['SalesmanLogin'];
 	}
-	if(trim($_POST['Salesman'])!= '') {
+	if (trim($_POST['Salesman'])!= '') {
 		$SalesLimit = " AND debtorsmaster.debtorno IN (SELECT DISTINCT debtorno FROM custbranch WHERE salesman = '".$_POST['Salesman']."') ";
 	} else {
 		$SalesLimit = "";
 	}
-	if($_POST['All_Or_Overdues']=='All') {
+	if ($_POST['All_Or_Overdues']=='All') {
 		$SQL = "SELECT debtorsmaster.debtorno,
 				debtorsmaster.name,
 				currencies.currency,
@@ -92,7 +92,7 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 				HAVING
 					ROUND(ABS(SUM(debtortrans.balance)),currencies.decimalplaces) > 0";
 
-	} elseif($_POST['All_Or_Overdues']=='OverduesOnly') {
+	} elseif ($_POST['All_Or_Overdues']=='OverduesOnly') {
 
 		$SQL = "SELECT debtorsmaster.debtorno,
 				debtorsmaster.name,
@@ -173,7 +173,7 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 					END
 				) > 0.01";
 
-	} elseif($_POST['All_Or_Overdues']=='HeldOnly') {
+	} elseif ($_POST['All_Or_Overdues']=='HeldOnly') {
 
 		$SQL = "SELECT debtorsmaster.debtorno,
 					debtorsmaster.name,
@@ -318,7 +318,7 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 					<td class="number">' . $DisplayOverdue2 . '</td>
 				</tr>';
 
-		if($_POST['DetailedReport']=='Yes') {
+		if ($_POST['DetailedReport']=='Yes') {
 
 			$SQL = "SELECT systypes.typename,
 						debtortrans.transno,
@@ -362,7 +362,7 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 						AND debtortrans.debtorno = '" . $AgedAnalysis['debtorno'] . "'
 						AND ABS(debtortrans.balance)>0.004";
 
-			if($_SESSION['SalesmanLogin'] !=  '') {
+			if ($_SESSION['SalesmanLogin'] !=  '') {
 				$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 			}
 
@@ -474,7 +474,7 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
-	if((!isset($_POST['FromCriteria']) or !isset($_POST['ToCriteria']))) {
+	if ((!isset($_POST['FromCriteria']) or !isset($_POST['ToCriteria']))) {
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
@@ -505,9 +505,9 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 			</field>
 			<field>
 				<label for="Salesman">' . __('Only Show Customers Of') . ':' . '</label>';
-		if($_SESSION['SalesmanLogin'] !=  '') {
+		if ($_SESSION['SalesmanLogin'] !=  '') {
 			echo '<fieldtext>', $_SESSION['UsersRealName'], '</fieldtext>';
-		}else{
+		} else {
 			echo '<select tabindex="4" name="Salesman">';
 
 			$SQL = "SELECT salesmancode, salesmanname FROM salesman";
@@ -530,7 +530,7 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 
 		$Result = DB_query($SQL);
 		while ($MyRow=DB_fetch_array($Result)) {
-			  if($MyRow['currabrev'] == $_SESSION['CompanyRecord']['currencydefault']) {
+			  if ($MyRow['currabrev'] == $_SESSION['CompanyRecord']['currencydefault']) {
 				echo '<option selected="selected" value="' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
 			  } else {
 				  echo '<option value="' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';

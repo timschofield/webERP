@@ -35,7 +35,7 @@ $PathToDefault = './locale/' . $DefaultLanguage . '.utf8/LC_MESSAGES/messages.po
 
 if (isset($_POST['submit']) AND isset($_POST['NewLanguage'])) {
 
-	if(mb_strlen($_POST['NewLanguage'])<5
+	if (mb_strlen($_POST['NewLanguage'])<5
 		OR mb_strlen($_POST['NewLanguage'])>5
 		OR mb_substr($_POST['NewLanguage'],2,1)!='_'){
 

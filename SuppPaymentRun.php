@@ -192,8 +192,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 	// Output PDF inline in browser
 	$DomPDF->stream($FileName, array('Attachment' => false));
 
-}
-else {
+} else {
 	$Title = __('Payment Run');
 	$ViewTopic = 'AccountsPayable';
 	$BookMark = '';

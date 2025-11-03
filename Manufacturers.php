@@ -66,7 +66,7 @@ if (isset($_POST['submit'])) {
 				$_POST['ManufacturersImage'] = '';
 			}
 		}
-		if( isset($_POST['ManufacturersImage'])){
+		if ( isset($_POST['ManufacturersImage'])){
 			foreach ($SupportedImgExt as $Ext) {
 				$File = $_SESSION['part_pics_dir'] . '/BRAND-' . $SelectedManufacturer . '.' . $Ext;
 				if (file_exists ($File) ) {
@@ -84,7 +84,7 @@ if (isset($_POST['submit'])) {
 				if (file_exists ($File) ) {
 					@unlink($File);
 					$_POST['ManufacturersImage'] = '';
-					if(is_file($ImageFile)) {
+					if (is_file($ImageFile)) {
 						prnMsg(__('You do not have access to delete this item image file.'),'error');
 					}
 				}
@@ -328,7 +328,7 @@ if (!isset($_GET['delete'])) {
 					'&amp;height=100'.
 					'" alt="" />';
 			} else {
-				if( isset($SelectedManufacturer) AND  !empty($SelectedManufacturer) AND file_exists($ImageFile) ) {
+				if ( isset($SelectedManufacturer) AND  !empty($SelectedManufacturer) AND file_exists($ImageFile) ) {
 					$BrandImgLink = '<img src="' . $ImageFile . '" height="100" width="100" />';
 				} else {
 					$BrandImgLink = __('No Image');

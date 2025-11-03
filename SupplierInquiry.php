@@ -15,7 +15,7 @@ if (isset($_POST['TransAfterDate'])){$_POST['TransAfterDate'] = ConvertSQLDate($
 
 // always figure out the SQL required from the inputs available
 
-if(!isset($_GET['SupplierID']) AND !isset($_SESSION['SupplierID'])) {
+if (!isset($_GET['SupplierID']) AND !isset($_SESSION['SupplierID'])) {
 	echo '<br />' . __('To display the enquiry a Supplier must first be selected from the Supplier selection screen') .
 		 '<br />
 			<div class="centre">
@@ -24,16 +24,16 @@ if(!isset($_GET['SupplierID']) AND !isset($_SESSION['SupplierID'])) {
 	include('includes/footer.php');
 	exit();
 } else {
-	if(isset($_GET['SupplierID'])) {
+	if (isset($_GET['SupplierID'])) {
 		$_SESSION['SupplierID'] = $_GET['SupplierID'];
 	}
 	$SupplierID = $_SESSION['SupplierID'];
 }
 
-if(isset($_GET['FromDate'])) {
+if (isset($_GET['FromDate'])) {
 	$_POST['TransAfterDate']=$_GET['FromDate'];
 }
-if(!isset($_POST['TransAfterDate']) OR !Is_Date($_POST['TransAfterDate'])) {
+if (!isset($_POST['TransAfterDate']) OR !Is_Date($_POST['TransAfterDate'])) {
 	$_POST['TransAfterDate'] = date($_SESSION['DefaultDateFormat'],mktime(0,0,0,date('m')-12,date('d'),date('Y')));
 }
 
@@ -80,7 +80,7 @@ $SQL = "SELECT suppliers.suppname,
 $ErrMsg = __('The supplier details could not be retrieved by the SQL because');
 $SupplierResult = DB_query($SQL, $ErrMsg);
 
-if(DB_num_rows($SupplierResult) == 0) {
+if (DB_num_rows($SupplierResult) == 0) {
 
 	/*Because there is no balance - so just retrieve the header information about the Supplier - the choice is do one query to get the balance and transactions for those Suppliers who have a balance and two queries for those who don't have a balance OR always do two queries - I opted for the former */
 
@@ -107,7 +107,7 @@ if(DB_num_rows($SupplierResult) == 0) {
 
 $SupplierRecord = DB_fetch_array($SupplierResult);
 
-if($NIL_BALANCE == true) {
+if ($NIL_BALANCE == true) {
 	$SupplierRecord['balance'] = 0;
 	$SupplierRecord['due'] = 0;
 	$SupplierRecord['overdue1'] = 0;
@@ -122,12 +122,12 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		__('All amounts stated in'), ': ', $SupplierRecord['currcode'], ' - ', $CurrencyName[$SupplierRecord['currcode']], '<br />',
 		__('Terms'), ': ', $SupplierRecord['terms'], '</p>';// Page title.
 
-if(isset($_GET['HoldType']) AND isset($_GET['HoldTrans'])) {
-	if($_GET['HoldStatus'] == __('Hold')) {
+if (isset($_GET['HoldType']) AND isset($_GET['HoldTrans'])) {
+	if ($_GET['HoldStatus'] == __('Hold')) {
 		$SQL = "UPDATE supptrans SET hold=1
 				WHERE type='" . $_GET['HoldType'] . "'
 				AND transno='" . $_GET['HoldTrans'] . "'";
-	} elseif($_GET['HoldStatus'] == __('Release')) {
+	} elseif ($_GET['HoldStatus'] == __('Release')) {
 		$SQL = "UPDATE supptrans SET hold=0
 				WHERE type='" . $_GET['HoldType'] . "'
 				AND transno='" . $_GET['HoldTrans'] . "'";
@@ -189,7 +189,7 @@ $SQL = "SELECT supptrans.id,
 $ErrMsg = __('No transactions were returned by the SQL because');
 $TransResult = DB_query($SQL, $ErrMsg);
 
-if(DB_num_rows($TransResult) == 0) {
+if (DB_num_rows($TransResult) == 0) {
 	echo '<br /><div class="centre">' . __('There are no transactions to display since') . ' ' . $_POST['TransAfterDate'];
 	echo '</div>';
 	include('includes/footer.php');
@@ -225,9 +225,9 @@ $AuthRow = DB_fetch_array($AuthResult);
 $j = 1;
 
 while($MyRow = DB_fetch_array($TransResult)) {
-	if($MyRow['hold'] == 0 AND $MyRow['settled'] == 0) {
+	if ($MyRow['hold'] == 0 AND $MyRow['settled'] == 0) {
 		$HoldValue = __('Hold');
-	} elseif($MyRow['settled'] == 1) {
+	} elseif ($MyRow['settled'] == 1) {
 		$HoldValue = '';
 	} else {
 		$HoldValue = __('Release');
@@ -235,7 +235,7 @@ while($MyRow = DB_fetch_array($TransResult)) {
 
 	// Comment: All table-row (tag tr) must have 10 table-datacells (tag td).
 
-	if($MyRow['hold'] == 1) {
+	if ($MyRow['hold'] == 1) {
 		echo '<tr style="backgroud-color:#DD99BB">';
 	} else {
 		echo '<tr class="striped_row">';
@@ -255,16 +255,16 @@ while($MyRow = DB_fetch_array($TransResult)) {
 	$GLEntriesTD1 = '<td class="noPrint"><a href="' . $RootPath . '/GLTransInquiry.php?TypeID=' . $MyRow['type'] . '&amp;TransNo=' . $MyRow['transno'] . '" target="_blank" title="' . __('Click to view the GL entries') . '"><img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/gl.png" width="16" /> ' . __('GL Entries') . '</a></td>';
 
 	// Now prints columns 9 and 10:
-	if($MyRow['type'] == 20) {// It is a Purchase Invoice (systype = 20).
-		if($_SESSION['CompanyRecord']['gllink_creditors'] == true) {// Show a link to GL transactions inquiry:
-/*			if($MyRow['totalamount'] - $MyRow['allocated'] == 0) {// The transaction is settled so don't show option to hold:*/
-			if($MyRow['totalamount'] == $MyRow['allocated']) {// The transaction is settled so don't show option to hold:
+	if ($MyRow['type'] == 20) {// It is a Purchase Invoice (systype = 20).
+		if ($_SESSION['CompanyRecord']['gllink_creditors'] == true) {// Show a link to GL transactions inquiry:
+/*			if ($MyRow['totalamount'] - $MyRow['allocated'] == 0) {// The transaction is settled so don't show option to hold:*/
+			if ($MyRow['totalamount'] == $MyRow['allocated']) {// The transaction is settled so don't show option to hold:
 				echo '<td class="noPrint"><a href="', $RootPath, '/PaymentAllocations.php?SuppID=', $MyRow['supplierno'], '&amp;InvID=', $MyRow['suppreference'], '" title="', __('Click to view payments'), '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/money_delete.png" width="16"/> ', __('Payments'), '</a></td>';// Payment column (column 9).
 			} else {// The transaction is NOT settled so show option to hold:
-				if($AuthRow['offhold'] == 0) {
+				if ($AuthRow['offhold'] == 0) {
 					echo '<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES,'UTF-8'), '?HoldType=', $MyRow['type'], '&amp;HoldTrans=', $MyRow['transno'], '&amp;HoldStatus=', $HoldValue, '&amp;FromDate=', $_POST['TransAfterDate'], '">', $HoldValue, '</a></td>';// Column 9.
 				} else {
-					if($HoldValue == __('Release')) {
+					if ($HoldValue == __('Release')) {
 						echo '<td class="noPrint">', $HoldValue , '</a></td>';// Column 9.
 					} else {
 						echo '<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES,'UTF-8'), '?HoldType=', $MyRow['type'], '&amp;HoldTrans=', $MyRow['transno'], '&amp;HoldStatus=', $HoldValue, '&amp;FromDate=', $_POST['TransAfterDate'], '">', $HoldValue, '</a></td>';// Column 9.
@@ -274,8 +274,8 @@ while($MyRow = DB_fetch_array($TransResult)) {
 			echo $GLEntriesTD1;// Column 10.
 
 		} else {// Do NOT show a link to GL transactions inquiry:
-/*			if($MyRow['totalamount'] - $MyRow['allocated'] == 0) {// The transaction is settled so don't show option to hold:*/
-			if($MyRow['totalamount'] == $MyRow['allocated']) {// The transaction is settled so don't show option to hold:
+/*			if ($MyRow['totalamount'] - $MyRow['allocated'] == 0) {// The transaction is settled so don't show option to hold:*/
+			if ($MyRow['totalamount'] == $MyRow['allocated']) {// The transaction is settled so don't show option to hold:
 				echo '<td class="noPrint">&nbsp;</td>',// Column 9.
 					'<td class="noPrint">&nbsp;</td>';// Column 10.
 			} else {// The transaction is NOT settled so show option to hold:
@@ -288,7 +288,7 @@ while($MyRow = DB_fetch_array($TransResult)) {
 
 	} else {// It is NOT a Purchase Invoice (a credit note or a payment).
 		echo '<td class="noPrint"><a href="', $RootPath, '/SupplierAllocations.php?AllocTrans=', $MyRow['id'], '" title="', __('Click to allocate funds'), '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/allocation.png" /> ', __('Allocation'), '</a></td>';// Allocation column (column 9).
-		if($_SESSION['CompanyRecord']['gllink_creditors'] == true) {// Show a link to GL transactions inquiry:
+		if ($_SESSION['CompanyRecord']['gllink_creditors'] == true) {// Show a link to GL transactions inquiry:
 			echo $GLEntriesTD1;// Column 10.
 		} else {// Do NOT show a link to GL transactions inquiry:
 			echo '<td class="noPrint">&nbsp;</td>';// Column 10.

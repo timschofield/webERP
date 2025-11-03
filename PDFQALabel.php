@@ -7,8 +7,7 @@ include('includes/SetDomPDFOptions.php');
 
 if (isset($_GET['GRNNo'])) {
 	$GRNNo = $_GET['GRNNo'];
-}
-else {
+} else {
 	$GRNNo = '';
 }
 
@@ -133,8 +132,7 @@ if ($NoOfGRNs > 0) {
 	// Output the generated PDF to Browser
 	$DomPDF->stream($FileName, array("Attachment" => false));
 
-}
-else {
+} else {
 	$Title = __('GRN Error');
 	include ('includes/header.php');
 	prnMsg(__('There were no GRNs to print'), 'warn');

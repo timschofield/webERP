@@ -20,7 +20,7 @@ if ($_GET['Customers']!='All'){
 	$Result = DB_query($SQL);
 	$MyRow=DB_fetch_array($Result);
 	$Customers=$MyRow["0"];
-}else{
+} else {
 	$Customers='All';
 }
 

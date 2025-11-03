@@ -24,7 +24,7 @@ if (isset($_GET['StockID'])) {
 	unset($StockID);
 }
 echo '<a href="'. $RootPath . '/SelectWorkOrder.php" class="toplink">' . __('Back to Work Orders'). '</a>';
-if(isset($SelectedWO)){
+if (isset($SelectedWO)){
 
 	echo '<a href="'. $RootPath . '/WorkOrderCosting.php?WO=' .  $SelectedWO . '" class="toplink">' . __('Back to Costing'). '</a>';
 }
@@ -95,7 +95,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 
 	$QuantityReceived = 0;
 
-	if($WORow['controlled']==1){ //controlled
+	if ($WORow['controlled']==1){ //controlled
 		if ($WORow['serialised']==1){ //serialised
 			for ($i=0;$i<$_POST['CountOfInputs'];$i++){
 				if ($_SESSION['DefineControlledOnWOEntry']==1){
@@ -110,7 +110,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 			}
 		} else { //controlled but not serialised - just lot/batch control
 			for ($i=0;$i<$_POST['CountOfInputs'];$i++){
-				if(isset($_POST['Qty' . $i]) AND trim($_POST['Qty' . $i]) != '' AND !is_numeric($_POST['Qty' . $i])) {
+				if (isset($_POST['Qty' . $i]) AND trim($_POST['Qty' . $i]) != '' AND !is_numeric($_POST['Qty' . $i])) {
 					$InputError = true;
 					prnMsg(__('The quantity entered is not numeric - a number is expected'),'error');
 				}
@@ -121,7 +121,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 		} //end of lot/batch control
 
 		if (!empty($_POST['ExpiryDate'])){
-			if(!is_date($_POST['ExpiryDate'])){
+			if (!is_date($_POST['ExpiryDate'])){
 				$InputError = true;
 				prnMsg(__('The Expiry Date should be in date format'),'error');
 			}
@@ -500,7 +500,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 								$QualityText ='';
 							}
 
-							if(empty($_POST['ExpiryDate'])){
+							if (empty($_POST['ExpiryDate'])){
 									$SQL = "INSERT INTO stockserialitems (stockid,
 																	loccode,
 																	serialno,
@@ -511,7 +511,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 													'" . $_POST['SerialNo' . $i] . "',
 													1,
 													'" . $QualityText . "')";
-							}else{// Store expiry date for perishable product
+							} else {// Store expiry date for perishable product
 
 								$SQL = "INSERT INTO stockserialitems(stockid,
 																	loccode,
@@ -585,8 +585,8 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 										WHERE stockid='" . $_POST['StockID'] . "'
 										AND loccode = '" . $_POST['IntoLocation'] . "'
 										AND serialno = '" . $_POST['BatchRef' .$i] . "'";
-						} else if($_POST['Qty' . $i]>0) {//only the positive quantity can be insert into database;
-							if(empty($_POST['ExpiryDate'])){
+						} elseif ($_POST['Qty' . $i]>0) {//only the positive quantity can be insert into database;
+							if (empty($_POST['ExpiryDate'])){
 								$SQL = "INSERT INTO stockserialitems (stockid,
 																loccode,
 																serialno,
@@ -599,7 +599,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 												'" . $_POST['QualityText'] . "')";
 
 
-							}else{  //If it's a perishable product, add expiry date
+							} else {  //If it's a perishable product, add expiry date
 
 								$SQL = "INSERT INTO stockserialitems (stockid,
 																loccode,
@@ -825,7 +825,7 @@ echo '<table class="selection">
 			<td>' . __('Date Received') . ':</td>
 			<td>' . date($_SESSION['DefaultDateFormat']) . '</td>';
 		//add expiry date for perishable product
-		if($WORow['perishable']==1){
+		if ($WORow['perishable']==1){
 			echo '<td>' . __('Expiry Date') . ':<td>
 				  <td><input maxlength="10" size="11" name="ExpiryDate" type="date" required /></td>';
 		}
@@ -858,7 +858,7 @@ echo '</select></td>
 echo '<fieldset>
 		<legend>', __('Receive Work Order Items'), '</legend>';
 
-if($WORow['controlled']==1){ //controlled
+if ($WORow['controlled']==1){ //controlled
 	$LotSNRefLength =mb_strlen($WORow['nextlotsnref']);
 	$EndOfTextPartPointer = 0;
 	if (is_numeric($WORow['nextlotsnref'])){

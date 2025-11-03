@@ -299,8 +299,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 		$Result = DB_query($SQL);
 	}
 
-}
-else { /*The option to print PDF was not hit */
+} else { /*The option to print PDF was not hit */
 
 	$Title = __('Inventory Comparison Report');
 	$ViewTopic = 'Inventory';

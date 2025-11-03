@@ -96,7 +96,7 @@ if (isset($_POST['Submit'])) {
 			$tmpDbg = __('The sql that failed was') . ':';
 			foreach ($SQL as $stmt ) {
 				$Result = DB_query($stmt, $TmpErr,$tmpDbg,true);
-				if(!$Result) {
+				if (!$Result) {
 					$InputError = 1;
 					break;
 				}

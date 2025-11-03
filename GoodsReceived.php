@@ -90,7 +90,7 @@ if (!isset($_POST['ProcessGoodsReceived'])) {
 	} else {
 		if (isset($_POST['DefaultReceivedDate']) AND is_date($_POST['DefaultReceivedDate'])) {
 			$_SESSION['PO' . $identifier]->DefaultReceivedDate = $_POST['DefaultReceivedDate'];
-		} elseif(isset($_POST['DefaultReceivedDate']) AND !is_date($_POST['DefaultReceivedDate'])) {
+		} elseif (isset($_POST['DefaultReceivedDate']) AND !is_date($_POST['DefaultReceivedDate'])) {
 			prnMsg(__('The default received date is not a date format'),'error');
 			$_POST['DefaultReceivedDate'] = date($_SESSION['DefaultDateFormat']);
 		}
@@ -344,7 +344,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 
 	$Changes=0;
 	$LineNo=1;
-	if(DB_num_rows($Result)==0) {//Those goods must have been received by another user. So should destroy the session data and show warning to users
+	if (DB_num_rows($Result)==0) {//Those goods must have been received by another user. So should destroy the session data and show warning to users
 		prnMsg(__('This order has been changed or invoiced since this delivery was started to be actioned').' . '.__('Processing halted'),'error');
 		echo '<div class="centre"><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php">' .
 			__('Select a different purchase order for receiving goods against') . '</a></div>';
@@ -411,7 +411,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				$MyRow = DB_fetch_row($Result);
-				if($MyRow[1] != 'D') {
+				if ($MyRow[1] != 'D') {
 					if ($OrderLine->QtyReceived==0) { //its the first receipt against this line
 						$_SESSION['PO'.$identifier]->LineItems[$OrderLine->LineNo]->StandardCost = $MyRow[0];
 					}
@@ -422,7 +422,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 					$_SESSION['PO'.$identifier]->LineItems[$OrderLine->LineNo]->StandardCost = (($CurrentStandardCost * $OrderLine->ReceiveQty) + ($_SESSION['PO'.$identifier]->LineItems[$OrderLine->LineNo]->StandardCost * $OrderLine->QtyReceived)) / ($OrderLine->ReceiveQty + $OrderLine->QtyReceived);
 				} elseif ($MyRow[1] == 'D') { //it's a dummy part which without stock.
 					$Dummy = true;
-					if($OrderLine->QtyReceived == 0) {//There is
+					if ($OrderLine->QtyReceived == 0) {//There is
 						$_SESSION['PO'.$identifier]->LineItems[$OrderLine->LineNo]->StandardCost = $LocalCurrencyPrice;
 					}
 				}

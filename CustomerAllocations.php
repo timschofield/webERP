@@ -90,7 +90,7 @@ if (isset($_POST['UpdateDatabase'])) {
 			if ($AllocnItem->PrevAllocRecordID !=  'NA') {
 			// original allocation has changed so delete the old allocation record
 				$SQL = "DELETE FROM custallocns WHERE id = '" . $AllocnItem->PrevAllocRecordID . "'";
-				if( !$Result = DB_query($SQL) ) {
+				if ( !$Result = DB_query($SQL) ) {
 					$Error = __('Could not delete old allocation record');
 				}
 			 }
@@ -108,7 +108,7 @@ if (isset($_POST['UpdateDatabase'])) {
 							'" . $_SESSION['Alloc']->AllocTrans . "',
 							'" . $AllocnItem->ID . "'
 						)";
-				if( !$Result = DB_query($SQL) ) {
+				if ( !$Result = DB_query($SQL) ) {
 					$Error = __('Could not change allocation record');
 				}
 			}
@@ -121,7 +121,7 @@ if (isset($_POST['UpdateDatabase'])) {
 					alloc = '" . $NewAllocTotal . "',
 					settled = '" . $Settled . "'
 					WHERE id = '" . $AllocnItem->ID."'";
-			if( !$Result = DB_query($SQL) ) {
+			if ( !$Result = DB_query($SQL) ) {
 				$Error = __('Could not update difference on exchange');
 			}
 		}
@@ -137,7 +137,7 @@ if (isset($_POST['UpdateDatabase'])) {
 				settled='" . $Settled . "'
 				WHERE id = '" . $_POST['AllocTrans']."'";
 
-		if( !$Result = DB_query($SQL) ) {
+		if ( !$Result = DB_query($SQL) ) {
 			$Error = __('Could not update receipt or credit note');
 		}
 
@@ -166,7 +166,7 @@ if (isset($_POST['UpdateDatabase'])) {
 								'',
 								'" . $MovtInDiffOnExch . "'
 							)";
-				if( !$Result = DB_query($SQL) ) {
+				if ( !$Result = DB_query($SQL) ) {
 					$Error = __('Could not update exchange difference in General Ledger');
 				}
 
@@ -187,7 +187,7 @@ if (isset($_POST['UpdateDatabase'])) {
 							'',
 							'" . -$MovtInDiffOnExch . "'
 						)";
-				if( !$Result = DB_query($SQL) ) {
+				if ( !$Result = DB_query($SQL) ) {
 					$Error = __('Could not update debtors control in General Ledger');
 				}
 			}

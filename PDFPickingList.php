@@ -61,7 +61,7 @@ if (isset($_POST['Process'])) {
 			AND salesorders.fromstkloc=locations.loccode
 			AND salesorders.orderno='" . $_GET['TransNo'] . "'";
 	}
-	else if (isset($_POST['TransDate']) || (isset($_GET['TransNo']) and $_GET['TransNo'] !=  'Preview')) {
+	elseif (isset($_POST['TransDate']) || (isset($_GET['TransNo']) and $_GET['TransNo'] !=  'Preview')) {
 		/* We are printing picking lists for all orders on a day */
 		$SQL = "SELECT salesorders.debtorno,
 					salesorders.orderno,
@@ -270,8 +270,7 @@ if (isset($_POST['Process'])) {
 
 	}
 	/* Show selection screen if we have no orders to work with */
-}
-else {
+} else {
 	if ((!isset($_GET['TransNo']) or $_GET['TransNo'] == '') and !isset($_POST['TransDate'])) {
 		$Title = __('Select Picking Lists');
 		$ViewTopic = 'Sales';

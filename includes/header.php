@@ -131,11 +131,11 @@ $CompanyLogo = '';
 /// @todo move the scanning for a logo file to a dedicated function
 if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/logo.png')) {
 	$CompanyLogo = $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/logo.png';
-} else if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/logo.jpeg')) {
+} elseif (file_exists('companies/' . $_SESSION['DatabaseName'] . '/logo.jpeg')) {
 	$CompanyLogo = $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/logo.jpeg';
-} else if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/logo.jpg')) {
+} elseif (file_exists('companies/' . $_SESSION['DatabaseName'] . '/logo.jpg')) {
 	$CompanyLogo = $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/logo.jpg';
-} else if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/logo.gif')) {
+} elseif (file_exists('companies/' . $_SESSION['DatabaseName'] . '/logo.gif')) {
 	$CompanyLogo = $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/logo.gif';
 }
 

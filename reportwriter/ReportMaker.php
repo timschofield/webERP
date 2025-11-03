@@ -90,13 +90,13 @@ if (!isset($_GET['action']) OR (!isset($_POST['ReportID']))) {
 		case RPT_BTN_REPLACE:
 			if ($_POST['todo']=='Replace') $AllowOverwrite = true; else $AllowOverwrite = false;
 			$success = SaveNewReport($ReportID, $AllowOverwrite);
-			if($success['result']=='success') { // Reload criteria page
+			if ($success['result']=='success') { // Reload criteria page
 				$ReportID = $success['ReportID'];
 				$Prefs = FetchReportDetails($ReportID);  //fetch the defaults
 				$Title=RPT_CRITERIA;
 				$IncludePage = 'forms/ReportsFilter.html.php';
 			} else { // an error message was sent so reload save form
-				if($success['default']==false) $ShowReplace = true; else $ShowReplace = false;
+				if ($success['default']==false) $ShowReplace = true; else $ShowReplace = false;
 				$Prefs['reportname'] = $_POST['ReportName'];
 				$Title=RPT_PAGESAVE;
 				$IncludePage = 'forms/ReportsSave.html.php';
@@ -138,7 +138,7 @@ if (!isset($_GET['action']) OR (!isset($_POST['ReportID']))) {
 				$Prefs['filterdesc'] = $success['filterdesc']; // fetch the filter message
 				$ReportData = BuildDataArray($ReportID, $sql, $Prefs);
 				// Check for the report returning with data
-				if(!$ReportData) $usrMsg[] = array('message'=>RPT_NODATA.' The failing sql='.$sql,'level'=>'warn');
+				if (!$ReportData) $usrMsg[] = array('message'=>RPT_NODATA.' The failing sql='.$sql,'level'=>'warn');
 			} else { // Houston, we have a problem, sql build failed
 				$usrMsg[] = array('message'=>$success['message'], 'level'=>$success['level']);
 			}

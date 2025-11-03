@@ -23,12 +23,12 @@ $InputError = 0;
 
 if (isset($_GET['Item'])){
 	$Item = trim(mb_strtoupper($_GET['Item']));
-}elseif (isset($_POST['Item'])){
+} elseif (isset($_POST['Item'])){
 	$Item = trim(mb_strtoupper($_POST['Item']));
 }
 if (isset($_GET['Related'])){
 	$Related = trim(mb_strtoupper($_GET['Related']));
-}elseif (isset($_POST['Related'])){
+} elseif (isset($_POST['Related'])){
 	$Related = trim(mb_strtoupper($_POST['Related']));
 }
 

@@ -16,7 +16,7 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 
 include('includes/SQL_CommonFunctions.php');
 
-if(isset($_POST['ProcessGLAccountCode'])) {
+if (isset($_POST['ProcessGLAccountCode'])) {
 
 	$InputError =0;
 
@@ -24,17 +24,17 @@ if(isset($_POST['ProcessGLAccountCode'])) {
 
 /*First check the code exists */
 	$Result = DB_query("SELECT accountcode FROM chartmaster WHERE accountcode='" . $_POST['OldAccountCode'] . "'");
-	if(DB_num_rows($Result)==0) {
+	if (DB_num_rows($Result)==0) {
 		prnMsg(__('The GL account code') . ': ' . $_POST['OldAccountCode'] . ' ' . __('does not currently exist as a GL account code in the system'),'error');
 		$InputError =1;
 	}
 
-	if(ContainsIllegalCharacters($_POST['NewAccountCode'])) {
+	if (ContainsIllegalCharacters($_POST['NewAccountCode'])) {
 		prnMsg(__('The new GL account code to change the old code to contains illegal characters - no changes will be made'),'error');
 		$InputError =1;
 	}
 
-	if($_POST['NewAccountCode']=='') {
+	if ($_POST['NewAccountCode']=='') {
 		prnMsg(__('The new GL account code to change the old code to must be entered as well'),'error');
 		$InputError =1;
 	}
@@ -42,14 +42,14 @@ if(isset($_POST['ProcessGLAccountCode'])) {
 
 /*Now check that the new code doesn't already exist */
 	$Result = DB_query("SELECT accountcode FROM chartmaster WHERE accountcode='" . $_POST['NewAccountCode'] . "'");
-	if(DB_num_rows($Result)!=0) {
+	if (DB_num_rows($Result)!=0) {
 		echo '<br /><br />';
 		prnMsg(__('The replacement GL account code') . ': ' . $_POST['NewAccountCode'] . ' ' . __('already exists as a GL account code in the system') . ' - ' . __('a unique GL account code must be entered for the new code'),'error');
 		$InputError =1;
 	}
 
 
-	if($InputError ==0) {// no input errors
+	if ($InputError ==0) {// no input errors
 		DB_Txn_Begin();
 		echo '<br />' . __('Adding the new chartmaster record');
 		$SQL = "INSERT INTO chartmaster (accountcode,

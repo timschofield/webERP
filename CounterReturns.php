@@ -198,9 +198,9 @@ if (isset($_POST['search']) OR isset($_POST['Next']) OR isset($_POST['Prev'])) {
 
 	if ($_POST['Keywords']!='' AND $_POST['StockCode']=='') {
 		$Msg='<div class="page_help_text">' . __('Item description has been used in search') . '.</div>';
-	} else if ($_POST['StockCode']!='' AND $_POST['Keywords']=='') {
+	} elseif ($_POST['StockCode']!='' AND $_POST['Keywords']=='') {
 		$Msg='<div class="page_help_text">' . __('Item Code has been used in search') . '.</div>';
-	} else if ($_POST['Keywords']=='' AND $_POST['StockCode']=='') {
+	} elseif ($_POST['Keywords']=='' AND $_POST['StockCode']=='') {
 		$Msg='<div class="page_help_text">' . __('Stock Category has been used in search') . '.</div>';
 	}
 	if (isset($_POST['Keywords']) AND mb_strlen($_POST['Keywords'])>0) {
@@ -239,7 +239,7 @@ if (isset($_POST['search']) OR isset($_POST['Next']) OR isset($_POST['Prev'])) {
 					ORDER BY stockmaster.stockid";
 		}
 
-	} else if (mb_strlen($_POST['StockCode'])>0) {
+	} elseif (mb_strlen($_POST['StockCode'])>0) {
 
 		$_POST['StockCode'] = mb_strtoupper($_POST['StockCode']);
 		$SearchString = '%' . $_POST['StockCode'] . '%';
@@ -422,11 +422,11 @@ if ($_SESSION['Items' . $identifier]->DefaultCurrency != $_SESSION['CompanyRecor
 					$_SESSION['Items' . $identifier]->GetTaxes(($_SESSION['Items' . $identifier]->LineCounter - 1));
 				}
 
-			} else if ($MyRow['mbflag']=='G') {
+			} elseif ($MyRow['mbflag']=='G') {
 				prnMsg(__('Phantom assemblies cannot be returned, these items exist only as bills of materials used in other manufactured items. The following item has not been added to the return:') . ' ' . $NewItem, 'warn');
-			} else if ($MyRow['controlled']==1) {
+			} elseif ($MyRow['controlled']==1) {
 				prnMsg(__('The system does not currently cater for counter returns of lot controlled or serialised items'),'warn');
-			} else if ($NewItemQty<=0) {
+			} elseif ($NewItemQty<=0) {
 				prnMsg(__('Only items entered with a positive quantity can be added to the return'),'warn');
 			} else { /*Its not a kit set item*/
 				include('includes/SelectOrderItems_IntoCart.php');
@@ -481,7 +481,7 @@ if ((isset($_SESSION['Items' . $identifier])) OR isset($NewItem)) {
 
 			if ($Quantity<0 or $Price <0 or $DiscountPercentage >100 or $DiscountPercentage <0) {
 				prnMsg(__('The item could not be updated because you are attempting to set the quantity returned to less than 0 or the price less than 0 or the discount more than 100% or less than 0%'),'warn');
-			} else if ($ReturnItemLine->Quantity !=$Quantity
+			} elseif ($ReturnItemLine->Quantity !=$Quantity
 						OR $ReturnItemLine->Price != $Price
 						OR abs($ReturnItemLine->DiscountPercent -$DiscountPercentage/100) >0.001
 						OR $ReturnItemLine->Narrative != $Narrative
@@ -601,7 +601,7 @@ if (isset($NewItemArray) AND isset($_POST['SelectingReturnItems'])) {
 /*Now figure out if the item is a kit set - the field MBFlag='K'*/
 
 	foreach($NewItemArray as $NewItem => $NewItemQty) {
-		if($NewItemQty > 0)	{
+		if ($NewItemQty > 0)	{
 			$SQL = "SELECT stockmaster.mbflag
 					FROM stockmaster
 					WHERE stockmaster.stockid='". $NewItem ."'";
@@ -999,7 +999,7 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != '') {
 				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('Location stock record could not be updated because');
 				$Result = DB_query($SQL, $ErrMsg, '', true);
 
-			} else if ($MBFlag=='A') { /* its an assembly */
+			} elseif ($MBFlag=='A') { /* its an assembly */
 				/*Need to get the BOM for this part and make
 				stock moves for the components then update the Location stock balances */
 				$Assembly=true;

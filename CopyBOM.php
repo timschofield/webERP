@@ -23,7 +23,7 @@ if (isset($_POST['Submit'])) {
 	$NewStockID = '';
 	$InputError = 0; //assume the best
 
-	if($NewOrExisting == 'N') {
+	if ($NewOrExisting == 'N') {
 		$NewStockID = $_POST['ToStockID'];
 		if (mb_strlen($NewStockID)==0 OR $NewStockID==''){
 			$InputError = 1;
@@ -35,7 +35,7 @@ if (isset($_POST['Submit'])) {
 	if ($InputError==0) {
 		DB_Txn_Begin();
 
-		if($NewOrExisting == 'N') {
+		if ($NewOrExisting == 'N') {
 	      /* duplicate rows into stockmaster */
 			$SQL = "INSERT INTO stockmaster( stockid,
 									categoryid,
@@ -134,7 +134,7 @@ if (isset($_POST['Submit'])) {
 					WHERE parent='".$StockID."';";
 		$Result = DB_query($SQL);
 
-		if($NewOrExisting == 'N') {
+		if ($NewOrExisting == 'N') {
 			$SQL = "INSERT INTO locstock (loccode,
 								            stockid,
 								            quantity,

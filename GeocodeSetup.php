@@ -8,8 +8,7 @@ include ('includes/header.php');
 
 if (isset($_GET['SelectedParam'])) {
 	$SelectedParam = $_GET['SelectedParam'];
-}
-elseif (isset($_POST['SelectedParam'])) {
+} elseif (isset($_POST['SelectedParam'])) {
 	$SelectedParam = $_POST['SelectedParam'];
 }
 
@@ -99,8 +98,7 @@ if (isset($_POST['submit'])) {
 	if ($Msg != '') {
 		prnMsg($Msg, 'success');
 	}
-}
-elseif (isset($_GET['delete'])) {
+} elseif (isset($_GET['delete'])) {
 	//the link to delete a selected record was clicked instead of the submit button
 	$SQL = "DELETE FROM geocode_param WHERE geocodeid = '" . $_GET['delete'] . "' LIMIT 1";
 	$Result = DB_query($SQL);

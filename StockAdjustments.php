@@ -36,7 +36,7 @@ if (isset($_GET['StockID'])){
 	$NewAdjustment = true;
 	$StockID = trim(mb_strtoupper($_GET['StockID']));
 } elseif (isset($_POST['StockID'])){
-	if($_POST['StockID'] != $_SESSION['Adjustment' . $identifier]->StockID){
+	if ($_POST['StockID'] != $_SESSION['Adjustment' . $identifier]->StockID){
 		$NewAdjustment = true;
 		$StockID = trim(mb_strtoupper($_POST['StockID']));
 	}
@@ -106,13 +106,13 @@ if (isset($_POST['Quantity'])){
 } else {
 	$_POST['Quantity']=0;
 }
-if($_POST['Quantity'] != 0){//To prevent from serilised quantity changing to zero
+if ($_POST['Quantity'] != 0){//To prevent from serilised quantity changing to zero
 	$_SESSION['Adjustment' . $identifier]->Quantity = filter_number_format($_POST['Quantity']);
-	if(count($_SESSION['Adjustment' . $identifier]->SerialItems) == 0 AND $_SESSION['Adjustment' . $identifier]->Controlled == 1 ){/* There is no quantity available for controlled items */
+	if (count($_SESSION['Adjustment' . $identifier]->SerialItems) == 0 AND $_SESSION['Adjustment' . $identifier]->Controlled == 1 ){/* There is no quantity available for controlled items */
 		$_SESSION['Adjustment' . $identifier]->Quantity = 0;
 	}
 }
-if(isset($_GET['OldIdentifier'])){
+if (isset($_GET['OldIdentifier'])){
 	$_SESSION['Adjustment'.$identifier]->StockLocation=$_SESSION['Adjustment'.$_GET['OldIdentifier']]->StockLocation;
 }
 
@@ -163,7 +163,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 	} elseif (!is_numeric($_SESSION['Adjustment' . $identifier]->Quantity)){
 		prnMsg( __('The quantity entered must be numeric'),'error');
 		$InputError = true;
-	} elseif(strlen(substr(strrchr($_SESSION['Adjustment'.$identifier]->Quantity, "."), 1))>$_SESSION['Adjustment' . $identifier]->DecimalPlaces){
+	} elseif (strlen(substr(strrchr($_SESSION['Adjustment'.$identifier]->Quantity, "."), 1))>$_SESSION['Adjustment' . $identifier]->DecimalPlaces){
 		prnMsg(__('The decimal places input is more than the decimals of this item defined,the defined decimal places is ').' '.$_SESSION['Adjustment' . $identifier]->DecimalPlaces.' '.__('and the input decimal places is ').' '.strlen(substr(strrchr($_SESSION['Adjustment'.$identifier]->Quantity, "."), 1)),'error');
 		$InputError = true;
 	} elseif ($_SESSION['Adjustment' . $identifier]->Quantity==0){
@@ -449,7 +449,7 @@ echo '</select>
 if (isset($_SESSION['Adjustment' . $identifier]) AND !isset($_SESSION['Adjustment' . $identifier]->Narrative)) {
 	$_SESSION['Adjustment' . $identifier]->Narrative = '';
 	$Narrative ='';
-} elseif(isset($_SESSION['Adjustment'.$identifier]->Narrative)) {
+} elseif (isset($_SESSION['Adjustment'.$identifier]->Narrative)) {
 	$Narrative = $_SESSION['Adjustment'.$identifier]->Narrative;
 } else {
 	$Narrative ='';

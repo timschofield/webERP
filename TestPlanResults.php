@@ -14,7 +14,7 @@ if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate'])
 
 if (isset($_GET['SelectedSampleID'])){
 	$SelectedSampleID =mb_strtoupper($_GET['SelectedSampleID']);
-} elseif(isset($_POST['SelectedSampleID'])){
+} elseif (isset($_POST['SelectedSampleID'])){
 	$SelectedSampleID =mb_strtoupper($_POST['SelectedSampleID']);
 }
 
@@ -339,7 +339,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 						WHERE testid = '".$MyRow['testid']."'
 						AND keyval='".$MyRow['prodspeckey']."'");
 			$MyRow2 = DB_fetch_row($Result2);
-			if($MyRow2[0]>0) {
+			if ($MyRow2[0]>0) {
 				$ManuallyAdded=0;
 			} else {
 				$ManuallyAdded=1;
@@ -398,7 +398,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 					}
 				}
 			}
-			if($MyRow2[0]>'') {
+			if ($MyRow2[0]>'') {
 				//test already exists on CopyToSample
 				if ($_POST['OverRide']=='on') {
 					$UpdSQLl = "UPDATE sampleresults
@@ -647,7 +647,7 @@ if (isset($_POST['submit'])) {
 						AND showoncert='1'
 						AND testvalue=''");
 	$MyRow = DB_fetch_row($Result);
-	if($MyRow[0]>0) {
+	if ($MyRow[0]>0) {
 		$SQL = "UPDATE qasamples SET identifier='" . $_POST['Identifier'] . "',
 									comments='" . $_POST['Comments'] . "',
 									cert='0'

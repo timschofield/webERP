@@ -374,8 +374,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		SendEmailFromWebERP($From, $To, $Subject, $Body, $Attachment);
 	}
 
-}
-else {
+} else {
 
 	$Title = __('Delivery Differences Report');
 	$ViewTopic = 'Sales';

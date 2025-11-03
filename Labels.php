@@ -158,7 +158,7 @@ if (isset($_POST['SelectedLabelID'])){
 									'" . $_POST['FontSize'] . "',
 									'" . $_POST['Barcode'] . "')");
 	}
-} elseif(isset($_GET['SelectedLabelID'])){
+} elseif (isset($_GET['SelectedLabelID'])){
 	$SelectedLabelID =$_GET['SelectedLabelID'];
 	if (isset($_GET['DeleteField'])){ //then process any deleted fields
 		$Result = DB_query("DELETE FROM labelfields WHERE labelfieldid='" . $_GET['DeleteField'] . "'");

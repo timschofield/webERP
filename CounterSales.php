@@ -33,7 +33,7 @@ if (isset($_SESSION['Items'.$identifier]) AND isset($_POST['CustRef'])) {
 	$_SESSION['Items'.$identifier]->Email = $_POST['Email'];
 	if ($_SESSION['SalesmanLogin'] != '') {
 		$_SESSION['Items' . $identifier]->SalesPerson = $_SESSION['SalesmanLogin'];
-	}else{
+	} else {
 		$_SESSION['Items' . $identifier]->SalesPerson = $_POST['SalesPerson'];
 	}
 }
@@ -229,9 +229,9 @@ if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Previous']
 
 	if ($_POST['Keywords']!='' AND $_POST['StockCode']=='') {
 		$Msg = __('Item description has been used in search');
-	} else if ($_POST['StockCode']!='' AND $_POST['Keywords']=='') {
+	} elseif ($_POST['StockCode']!='' AND $_POST['Keywords']=='') {
 		$Msg = __('Item Code has been used in search');
-	} else if ($_POST['Keywords']=='' AND $_POST['StockCode']=='') {
+	} elseif ($_POST['Keywords']=='' AND $_POST['StockCode']=='') {
 		$Msg = __('Stock Category has been used in search');
 	}
 	if (isset($_POST['Keywords']) AND mb_strlen($_POST['Keywords'])>0) {
@@ -268,7 +268,7 @@ if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Previous']
 					ORDER BY stockmaster.stockid";
 		}
 
-	} else if (mb_strlen($_POST['StockCode'])>0) {
+	} elseif (mb_strlen($_POST['StockCode'])>0) {
 
 		$_POST['StockCode'] = mb_strtoupper($_POST['StockCode']);
 		$SearchString = '%' . $_POST['StockCode'] . '%';
@@ -427,7 +427,7 @@ if ($_SESSION['Items'.$identifier]->DefaultCurrency != $_SESSION['CompanyRecord'
 			break;	/* break out of the loop if nothing in the quick entry fields*/
 		}
 
-		if(!Is_Date($NewItemDue)) {
+		if (!Is_Date($NewItemDue)) {
 			prnMsg(__('An invalid date entry was made for ') . ' ' . $NewItem . ' ' . __('The date entry') . ' ' . $NewItemDue . ' ' . __('must be in the format') . ' ' . $_SESSION['DefaultDateFormat'],'warn');
 			//Attempt to default the due date to something sensible?
 			$NewItemDue = DateAdd (date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
@@ -465,11 +465,11 @@ if ($_SESSION['Items'.$identifier]->DefaultCurrency != $_SESSION['CompanyRecord'
 					$_SESSION['Items'.$identifier]->GetTaxes(($_SESSION['Items'.$identifier]->LineCounter - 1));
 				}
 
-			} else if ($MyRow['mbflag']=='G') {
+			} elseif ($MyRow['mbflag']=='G') {
 				prnMsg(__('Phantom assemblies cannot be sold, these items exist only as bills of materials used in other manufactured items. The following item has not been added to the order:') . ' ' . $NewItem, 'warn');
-			} else if ($MyRow['controlled']==1) {
+			} elseif ($MyRow['controlled']==1) {
 				prnMsg(__('The system does not currently cater for counter sales of lot controlled or serialised items'),'warn');
-			} else if ($NewItemQty<=0) {
+			} elseif ($NewItemQty<=0) {
 				prnMsg(__('Only items entered with a positive quantity can be added to the sale'),'warn');
 			} else { /*Its not a kit set item*/
 				include('includes/SelectOrderItems_IntoCart.php');
@@ -522,7 +522,7 @@ if ((isset($_SESSION['Items'.$identifier])) OR isset($NewItem)) {
 
 			if ($Quantity<0 OR $Price < 0 OR $DiscountPercentage >100 OR $DiscountPercentage <0) {
 				prnMsg(__('The item could not be updated because you are attempting to set the quantity ordered to less than 0 or the price less than 0 or the discount more than 100% or less than 0%'),'warn');
-			} else if ($OrderLine->Quantity !=$Quantity
+			} elseif ($OrderLine->Quantity !=$Quantity
 						OR $OrderLine->Price != $Price
 						OR abs($OrderLine->DiscountPercent -$DiscountPercentage/100) >0.001
 						OR $OrderLine->Narrative != $Narrative
@@ -644,7 +644,7 @@ if (isset($NewItemArray) AND isset($_POST['SelectingOrderItems'])) {
 	$AlreadyWarnedAboutCredit = false;
 
 	foreach($NewItemArray as $NewItem => $NewItemQty) {
-		if($NewItemQty > 0)	{
+		if ($NewItemQty > 0)	{
 			$SQL = "SELECT stockmaster.mbflag
 					FROM stockmaster
 					WHERE stockmaster.stockid='". $NewItem ."'";
@@ -1012,7 +1012,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 					prnMsg( __('Invoicing the selected order would result in negative stock. The system parameters are set to prohibit negative stocks from occurring. This invoice cannot be created until the stock on hand is corrected.'),'error',$OrderLine->StockID . ' ' . $CheckNegRow['description'] . ' - ' . __('Negative Stock Prohibited'));
 					$NegativesFound = true;
 				}
-			} else if ($CheckNegRow['mbflag']=='A') {
+			} elseif ($CheckNegRow['mbflag']=='A') {
 
 				/*Now look for assembly components that would go negative */
 				$SQL = "SELECT bom.component,
@@ -1378,7 +1378,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('Location stock record could not be updated because');
 				$Result = DB_query($SQL, $ErrMsg, '', true);
 
-			} else if ($MBFlag=='A') { /* its an assembly */
+			} elseif ($MBFlag=='A') { /* its an assembly */
 				/*Need to get the BOM for this part and make
 				stock moves for the components then update the Location stock balances */
 				$Assembly=true;
@@ -2244,7 +2244,7 @@ if (!isset($_POST['ProcessSale'])) {
 		{
 			prnMsg( __('There are no available item(s) retrieved from the database'),'warn');
 		}
-		else if(!isset($_SESSION['ItemList']) || $ItemCount != count($_SESSION['ItemList']))
+		elseif (!isset($_SESSION['ItemList']) || $ItemCount != count($_SESSION['ItemList']))
 		{
 			unset($_SESSION['ItemList']);
 

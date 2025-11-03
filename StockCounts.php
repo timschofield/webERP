@@ -118,7 +118,7 @@ if ($_GET['Action'] == 'Enter') {
 		prnMsg($Added . __(' Stock Counts Entered'), 'success' );
 		unset($_POST['EnterCounts']);
 	} // end of if enter counts button hit
-	else if(isset($_FILES['userfile']) and $_FILES['userfile']['name'])
+	elseif (isset($_FILES['userfile']) and $_FILES['userfile']['name'])
 	{
 		//initialize
 		$FieldTarget = count($FieldHeadings);
@@ -190,11 +190,11 @@ if ($_GET['Action'] == 'Enter') {
 				$InputError = 1;
 				prnMsg(__('The reference field must be 20 characters or less long'),'error');
 			}
-			else if (!is_numeric($MyRow[1])) {
+			elseif (!is_numeric($MyRow[1])) {
 				$InputError = 1;
 				prnMsg(__('The quantity counted must be numeric') ,'error');
 			}
-			else if ($MyRow[1] < 0) {
+			elseif ($MyRow[1] < 0) {
 				$InputError = 1;
 				prnMsg(__('The quantity counted must be zero or a positive number'),'error');
 			}

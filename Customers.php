@@ -50,7 +50,7 @@ if (isset($_POST['submit'])) {
 		prnMsg( __('The customer number already exists in the database'),'error');
 		$Errors[$i] = 'DebtorNo';
 		$i++;
-	}elseif (mb_strlen($_POST['CustName']) > 40 OR mb_strlen($_POST['CustName'])==0) {
+	} elseif (mb_strlen($_POST['CustName']) > 40 OR mb_strlen($_POST['CustName'])==0) {
 		$InputError = 1;
 		prnMsg( __('The customer name must be entered and be forty characters or less long'),'error');
 		$Errors[$i] = 'CustName';
@@ -350,7 +350,7 @@ if (isset($_POST['submit'])) {
 	} //end if Delete Customer
 }
 
-if(isset($_POST['Reset'])){
+if (isset($_POST['Reset'])){
 	unset($_POST['CustName']);
 	unset($_POST['Address1']);
 	unset($_POST['Address2']);
@@ -403,7 +403,7 @@ if (isset($_POST['Add'])){
 	$Add = $_GET['Add'];
 }
 
-if(isset($_POST['AddContact']) AND (isset($_POST['AddContact'])!= '')){
+if (isset($_POST['AddContact']) AND (isset($_POST['AddContact'])!= '')){
 	echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/AddCustomerContacts.php?DebtorNo=' .$DebtorNo.'">';
 }
 
@@ -821,7 +821,7 @@ if (!isset($DebtorNo)) {
 		foreach ($CountriesArray as $CountryEntry => $CountryName){
 			if (isset($_POST['Address6']) AND (strtoupper($_POST['Address6']) == strtoupper($CountryName))){
 				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName  . '</option>';
-			}elseif (!isset($_POST['Address6']) AND $CountryName == "") {
+			} elseif (!isset($_POST['Address6']) AND $CountryName == "") {
 				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName  . '</option>';
 			} else {
 				echo '<option value="' . $CountryName . '">' . $CountryName  . '</option>';

@@ -58,7 +58,7 @@ if ((isset($_POST['BatchInput'])
 	echo '<br />';
 	prnMsg(__('A bank account must be selected for this receipt'), 'warn');
 	$BankAccountEmpty=true;
-} else if(isset($_GET['NewReceipt'])) {
+} elseif (isset($_GET['NewReceipt'])) {
 	$BankAccountEmpty=true;
 } else {
 	$BankAccountEmpty=false;
@@ -158,7 +158,7 @@ if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch' . $identifier])){
 	if ($_POST['Currency']==$_SESSION['ReceiptBatch' . $identifier]->AccountCurrency){
 		$_SESSION['ReceiptBatch' . $identifier]->ExRate = 1; //ex rate between receipt currency and account currency
 		$SuggestedExRate=1;
-	} elseif(isset($_POST['Currency'])) {
+	} elseif (isset($_POST['Currency'])) {
 		/*Get the exchange rate between the functional currency and the receipt currency*/
 		$Result = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_SESSION['ReceiptBatch' . $identifier]->Currency . "'");
 		$MyRow = DB_fetch_array($Result);
@@ -300,7 +300,7 @@ if (isset($_POST['CommitBatch'])){
 				<th>', __('Customer Name'), '</th>
 				<th class="text">', __('GL Code'), '</th>
 				<th class="number">', __('Amount of Receipt'), '</th>';
-	if(isset($ReceiptItem) AND $ReceiptItem->GLCode =='') {
+	if (isset($ReceiptItem) AND $ReceiptItem->GLCode =='') {
 		echo '<th class="noPrint">&nbsp;</th>';
 	}
 	echo '</tr>
@@ -872,13 +872,13 @@ if (!isset($_SESSION['ReceiptBatch' . $identifier]->FunctionalExRate)){
 	$_SESSION['ReceiptBatch' . $identifier]->FunctionalExRate=1;
 }
 if ($_SESSION['ReceiptBatch' . $identifier]->AccountCurrency !=  $_SESSION['ReceiptBatch' . $identifier]->Currency AND isset($_SESSION['ReceiptBatch' . $identifier]->AccountCurrency)) {
-	if($_SESSION['ReceiptBatch' . $identifier]->ExRate==1 AND isset($SuggestedExRate)) {
+	if ($_SESSION['ReceiptBatch' . $identifier]->ExRate==1 AND isset($SuggestedExRate)) {
 		$_SESSION['ReceiptBatch' . $identifier]->ExRate = $SuggestedExRate;
-	} elseif($_POST['Currency'] !=  $_POST['PreviousCurrency'] AND isset($SuggestedExRate)) {//the user has changed the currency, then we should revise suggested rate
+	} elseif ($_POST['Currency'] !=  $_POST['PreviousCurrency'] AND isset($SuggestedExRate)) {//the user has changed the currency, then we should revise suggested rate
 		$_SESSION['ReceiptBatch' . $identifier]->ExRate = $SuggestedExRate;
 	}
 
-	if(isset($SuggestedExRate)) {
+	if (isset($SuggestedExRate)) {
 		$SuggestedExRateText = '<b>' . __('Suggested rate:') . ' 1 ' . $_SESSION['ReceiptBatch' . $identifier]->AccountCurrency . ' = ' . locale_number_format($SuggestedExRate,8) . ' ' . $_SESSION['ReceiptBatch' . $identifier]->Currency . '</b>';
 	} else {
 		$SuggestedExRateText = '<b>1 ' . $_SESSION['ReceiptBatch' . $identifier]->AccountCurrency . ' = ? ' . $_SESSION['ReceiptBatch' . $identifier]->Currency . '</b>';
@@ -890,12 +890,12 @@ if ($_SESSION['ReceiptBatch' . $identifier]->AccountCurrency !=  $_SESSION['Rece
 		</field>';
 }
 
-if($_SESSION['ReceiptBatch' . $identifier]->AccountCurrency !=  $_SESSION['CompanyRecord']['currencydefault'] AND isset($_SESSION['ReceiptBatch' . $identifier]->AccountCurrency)) {
+if ($_SESSION['ReceiptBatch' . $identifier]->AccountCurrency !=  $_SESSION['CompanyRecord']['currencydefault'] AND isset($_SESSION['ReceiptBatch' . $identifier]->AccountCurrency)) {
 
-	if($_SESSION['ReceiptBatch' . $identifier]->FunctionalExRate==1 AND isset($SuggestedFunctionalExRate)) {
+	if ($_SESSION['ReceiptBatch' . $identifier]->FunctionalExRate==1 AND isset($SuggestedFunctionalExRate)) {
 		$_SESSION['ReceiptBatch' . $identifier]->FunctionalExRate = $SuggestedFunctionalExRate;
 	}
-	if(isset($SuggestedFunctionalExRate)) {
+	if (isset($SuggestedFunctionalExRate)) {
 		$SuggestedFunctionalExRateText = '<b>' . __('Suggested rate:') . ' 1 ' . $_SESSION['CompanyRecord']['currencydefault'] . ' = ' . locale_number_format($SuggestedFunctionalExRate,8) . ' ' . $_SESSION['ReceiptBatch' . $identifier]->AccountCurrency . '</b>';
 	} else {
 		$SuggestedFunctionalExRateText = '<b>1 ' . $_SESSION['CompanyRecord']['currencydefault'] . ' = ? ' . $_SESSION['ReceiptBatch']->AccountCurrency . '</b>';

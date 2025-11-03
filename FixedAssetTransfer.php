@@ -184,7 +184,7 @@ if (isset($_POST['Search'])) {
 		$ThisDropDownName	= 'Location' . $MyRow['assetid'];
 		while ($LocationRow=DB_fetch_array($LocationResult)) {
 
-			if(isset($_POST[$ThisDropDownName]) AND ($_POST[$ThisDropDownName] == $LocationRow['locationid'])) {
+			if (isset($_POST[$ThisDropDownName]) AND ($_POST[$ThisDropDownName] == $LocationRow['locationid'])) {
 				echo '<option selected="selected" value="' . $LocationRow['locationid'].'">' . $LocationRow['locationdescription'] . '</option>';
 			} elseif ($LocationRow['locationid'] == $MyRow['ItemAssetLocation']) {
 				echo '<option selected="selected" value="'.$LocationRow['locationid'].'">' . $LocationRow['locationdescription'] . '</option>';

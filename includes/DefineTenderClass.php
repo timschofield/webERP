@@ -56,7 +56,7 @@ class Tender {
 			/// @todo drop this IF - it's handled within SendEmailFromWebERP
 			if ($_SESSION['SmtpSetting']==0) {
 				$Result = mail($Supplier->EmailAddress, $Subject, $EmailText, $Headers);
-			}else{
+			} else {
 				$Result = SendEmailFromWebERP($_SESSION['PurchasingManagerEmail'],
 											$Supplier->EmailAddress,
 											$Subject,

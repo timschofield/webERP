@@ -33,8 +33,7 @@ if (isset($_GET['SelectedTag'])) {
 		$Ref = $MyRow['tagref'];
 		$Description = $MyRow['tagdescription'];
 	}
-}
-else {
+} else {
 	$Description = '';
 	$_GET['SelectedTag'] = '';
 }
@@ -68,8 +67,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 if (isset($_GET['Action']) AND $_GET['Action'] == 'edit') {
 	echo '<fieldset>
 			<legend>', __('Edit Tag details') , '</legend>';
-}
-else {
+} else {
 	echo '<fieldset>
 			<legend>', __('Create Tag details') , '</legend>';
 }
@@ -84,8 +82,7 @@ echo '<field>
 echo '<div class="centre">';
 if (isset($_GET['Action']) AND $_GET['Action'] == 'edit') {
 	echo '<input type="submit" name="update" value="' . __('Update') . '" />';
-}
-else {
+} else {
 	echo '<input type="submit" name="submit" value="' . __('Insert') . '" />';
 }
 echo '</div>

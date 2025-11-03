@@ -46,7 +46,7 @@ if (isset($_POST['BackToHeader'])){
 }
 
 
-if(isset($_GET['Delete'])){
+if (isset($_GET['Delete'])){
 	if ($_SESSION['Contract'.$identifier]->Status!= 2) {
 		$_SESSION['Contract'.$identifier]->Remove_ContractRequirement($_GET['Delete']);
 	} else {

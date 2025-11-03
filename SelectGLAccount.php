@@ -89,7 +89,7 @@ if (!isset($AccountID)) {
 		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	if(mb_strlen($Msg)>1){
+	if (mb_strlen($Msg)>1){
 		prnMsg($Msg,'info');
 	}
 

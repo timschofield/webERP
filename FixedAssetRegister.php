@@ -247,8 +247,7 @@ if (isset($_POST['submit']) or isset($_POST['PrintPDF']) or isset($_POST['Spread
 		echo $HTML;
 		include('includes/footer.php');
 	}
-}
-else {
+} else {
 	$Title = __('Fixed Asset Register');
 
 	$ViewTopic = 'FixedAssets';

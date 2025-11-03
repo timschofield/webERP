@@ -154,7 +154,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 } //end of if search
 
 
-if(isset($_GET['Delete'])){
+if (isset($_GET['Delete'])){
 	if ($_SESSION['Contract'.$identifier]->Status!= 2) {
 		$_SESSION['Contract'.$identifier]->Remove_ContractComponent($_GET['Delete']);
 	} else {

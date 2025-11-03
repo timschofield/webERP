@@ -128,7 +128,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 			$_SESSION['PO'.$identifier]->OrderNo =  GetNextTransNo(18);
 
 			/*Insert to purchase order header record */
-			if(!isset( $_SESSION['PO' . $identifier]->DeliveryDate)){
+			if (!isset( $_SESSION['PO' . $identifier]->DeliveryDate)){
 				$_SESSION['PO' . $identifier]->DeliveryDate = ConvertSQLDate('1000-01-01');
 			}
 			$SQL = "INSERT INTO purchorders ( orderno,
@@ -304,7 +304,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 						$ErrMsg =  __('The purchase order detail line could not be deleted because');
 						$Result = DB_query($SQL, $ErrMsg, '', true);
 					}
-				} else if ($POLine->PODetailRec=='') {
+				} elseif ($POLine->PODetailRec=='') {
 						/*When the purchase order line is an existing record the auto-increment
 						 * field PODetailRec is given to the session for that POLine
 						 * So it will only be a new POLine if PODetailRec is empty
@@ -394,8 +394,8 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 /* Always do the stuff below if not looking for a supplierid */
 
-if(isset($_GET['Delete'])){
-	if($_SESSION['PO'.$identifier]->Some_Already_Received($_GET['Delete'])==0){
+if (isset($_GET['Delete'])){
+	if ($_SESSION['PO'.$identifier]->Some_Already_Received($_GET['Delete'])==0){
 		$_SESSION['PO'.$identifier]->remove_from_order($_GET['Delete']);
 		include('includes/PO_UnsetFormVbls.php');
 	} else {
@@ -403,7 +403,7 @@ if(isset($_GET['Delete'])){
 	}
 }
 
-if(isset($_GET['Complete'])){
+if (isset($_GET['Complete'])){
 	$_SESSION['PO'.$identifier]->LineItems[$_GET['Complete']]->Completed=1;
 }
 
@@ -1233,10 +1233,10 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){ 
 	if (!isset($Offset)) {
 		$Offset = 0;
 	}
-	if($Offset < 0){
+	if ($Offset < 0){
 		$Offset = 0;
 	}
-	if($Offset > $ListPageMax) {
+	if ($Offset > $ListPageMax) {
 		$Offset = $ListPageMax;
 	}
 
@@ -1335,12 +1335,12 @@ if (!isset($_GET['Edit'])) {
 
 if (isset($SearchResult)) {
 	$PageBar = '<tr><td><input type="hidden" name="currpage" value="'.$Offset.'">';
-	if($Offset>0)
+	if ($Offset>0)
 		$PageBar .= '<input type="submit" name="Prev" value="'.__('Prev').'" />';
 	else
 		$PageBar .= '<input type="submit" name="Prev" value="'.__('Prev').'" disabled="disabled"/>';
 	$PageBar .= '</td><td class="centre" colspan="4"><input type="submit" value="'.__('Order some').'" name="NewItem"/></td><td>';
-	if($Offset<$ListPageMax)
+	if ($Offset<$ListPageMax)
 		$PageBar .= '<input type="submit" name="Next" value="'.__('Next').'" />';
 	else
 		$PageBar .= '<input type="submit" name="Next" value="'.__('Next').'" disabled="disabled"/>';

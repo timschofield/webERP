@@ -34,8 +34,7 @@ if (!isset($_GET['OrderNo']) AND !isset($_POST['OrderNo'])) {
 
 if (isset($_GET['OrderNo'])) {
 	$OrderNo = $_GET['OrderNo'];
-}
-elseif (isset($_POST['OrderNo'])) {
+} elseif (isset($_POST['OrderNo'])) {
 	$OrderNo = $_POST['OrderNo'];
 }
 $Title = __('Print Purchase Order Number') . ' ' . $OrderNo;
@@ -53,8 +52,7 @@ $ViewingOnly = 0;
 
 if (isset($_GET['ViewingOnly']) AND $_GET['ViewingOnly'] != '') {
 	$ViewingOnly = $_GET['ViewingOnly'];
-}
-elseif (isset($_POST['ViewingOnly']) AND $_POST['ViewingOnly'] != '') {
+} elseif (isset($_POST['ViewingOnly']) AND $_POST['ViewingOnly'] != '') {
 	$ViewingOnly = $_POST['ViewingOnly'];
 }
 

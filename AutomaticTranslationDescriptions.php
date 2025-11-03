@@ -33,7 +33,7 @@ $SQL = "SELECT stockmaster.stockid,
 				language_id";
 $Result = DB_query($SQL);
 
-if(DB_num_rows($Result) !=  0) {
+if (DB_num_rows($Result) !=  0) {
 	echo '<p class="page_title_text"><strong>' . __('Description Automatic Translation for empty translations') . '</strong></p>';
 	echo '<table class="selection">';
 	$TableHeader = '<tr>

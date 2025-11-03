@@ -10,7 +10,7 @@ if (isset($_POST['AddBatches'])){
 		$LoopMax = 10;
 	}
 	for ($i=0;$i < $LoopMax;$i++){
-	if(isset($_POST['SerialNo' . $i]) and mb_strlen($_POST['SerialNo' . $i])>0){
+	if (isset($_POST['SerialNo' . $i]) and mb_strlen($_POST['SerialNo' . $i])>0){
 			$ExistingBundleQty = ValidBundleRef($StockID, $LocationOut, $_POST['SerialNo' . $i]);
 			if ($ExistingBundleQty >0){
 				$AddThisBundle = true;

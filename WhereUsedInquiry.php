@@ -92,7 +92,7 @@ if (isset($StockID)) {
 
 			if ($MyRow['discontinued'] == 1){
 				$Status = __('Obsolete');
-			}else{
+			} else {
 				$Status = __('Current');
 			}
 			echo '<tr class="striped_row">

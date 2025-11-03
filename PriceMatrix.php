@@ -21,7 +21,7 @@ if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
-	if(isset($_POST['StockID'])){
+	if (isset($_POST['StockID'])){
 		$StockID = trim(strtoupper($_POST['StockID']));
 	}
 	if (!is_numeric(filter_number_format($_POST['QuantityBreak']))){
@@ -51,10 +51,10 @@ if (isset($_POST['submit'])) {
 	}
 
 
-	if(Is_Date($_POST['EndDate'])){
+	if (Is_Date($_POST['EndDate'])){
 		$SQLEndDate = FormatDateForSQL($_POST['EndDate']);
 	}
-	if(Is_Date($_POST['StartDate'])){
+	if (Is_Date($_POST['StartDate'])){
 		$SQLStartDate = FormatDateForSQL($_POST['StartDate']);
 	}
 	$SQL = "SELECT COUNT(salestype)
@@ -197,11 +197,11 @@ while ($MyRow = DB_fetch_array($Result)){
 
 echo '</select>
 	</field>';
-if(isset($_GET['StockID'])){
+if (isset($_GET['StockID'])){
 	$StockID = trim($_GET['StockID']);
-}elseif(isset($_POST['StockID'])){
+} elseif (isset($_POST['StockID'])){
 	$StockID = trim(strtoupper($_POST['StockID']));
-}elseif(!isset($StockID)){
+} elseif (!isset($StockID)){
 	prnMsg(__('You must select a stock item first before set a price maxtrix'),'error');
 	include('includes/footer.php');
 	exit();

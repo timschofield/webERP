@@ -151,8 +151,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		echo $HTML;
 		include ('includes/footer.php');
 	}
-}
-else { // The option to print PDF was not hit so display form
+} else { // The option to print PDF was not hit so display form
 	$Title = __('MRP Reschedule Reporting');
 	$ViewTopic = 'MRP';
 	$BookMark = '';

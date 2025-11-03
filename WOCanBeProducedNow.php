@@ -110,7 +110,7 @@ function submit($RootPath, $Location) {
 
 				if ($MyComponent['qoh'] >= $ComponentNeeded){
 					$Available = "OK";
-				}else{
+				} else {
 					$Available = "";
 					$ItemCanBeproduced = false;
 				}
@@ -136,7 +136,7 @@ function submit($RootPath, $Location) {
 			if ($ItemCanBeproduced){
 				$Action = 'Produce ' . locale_number_format($QtyPending,0) . ' x ' . $MyItem['stockid'] . ' for WO ' . locale_number_format($MyItem['wo'],0);
 				$ComponentLink = '<a href="' . $RootPath . '/PrintWOItemSlip.php?StockId=' . $MyItem['stockid'] . '&WO='. $MyItem['wo'] . '&Location=' . $Location . '" target="_blank">' . $Action . '</a>';
-			}else{
+			} else {
 				$ComponentLink = "";
 			}
 				echo '<tr class="striped_row">
@@ -157,7 +157,7 @@ function submit($RootPath, $Location) {
 		}
 		echo '</table>';
 
-	}else{
+	} else {
 		prnMsg('No items waiting to be produced in ' . $Location);
 	}
 

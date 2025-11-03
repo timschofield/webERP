@@ -1009,7 +1009,7 @@ function InvoiceSalesOrder($OrderNo, $User, $Password) {
 
 			$Result = api_DB_query($SQL,'', '', true);
 
-		} else if ($OrderLineRow['mbflag']=='A'){ /* its an assembly */
+		} elseif ($OrderLineRow['mbflag']=='A'){ /* its an assembly */
 			/*Need to get the BOM for this part and make
 			stock moves for the components then update the Location stock balances */
 			$Assembly=true;
@@ -1494,7 +1494,7 @@ function GetCurrentPeriod () {
 				}
 			}
 		}
-	} else if (!PeriodExists(mktime(0,0,0,Date('m',$TransDate)+1,Date('d',$TransDate),Date('Y',$TransDate)))) {
+	} elseif (!PeriodExists(mktime(0,0,0,Date('m',$TransDate)+1,Date('d',$TransDate),Date('Y',$TransDate)))) {
 		/* Make sure the following months period exists */
 		$SQL = "SELECT MAX(lastdate_in_period), MAX(periodno) from periods";
 		$Result = DB_query($SQL);

@@ -40,8 +40,7 @@ if (isset($_GET['Reports']) and count($ScriptArray) < 7) {
 	asort($ScriptArray);
 	$UpdateSQL = "UPDATE dashboard_users SET scripts='" . implode(',', $ScriptArray) . "' WHERE userid = '" . $_SESSION['UserID'] . "' ";
 	$UpdateResult = DB_query($UpdateSQL);
-}
-else if (isset($_POST['Reports']) and count($ScriptArray) == 7) {
+} elseif (isset($_POST['Reports']) and count($ScriptArray) == 7) {
 	prnMsg(__('A maximum of 6 reports is allowd on each users dashboard') , 'warn');
 }
 $SQL = "SELECT id,

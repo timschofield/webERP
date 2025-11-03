@@ -35,7 +35,7 @@ echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/s
 
 if (isset($_GET['SelectedCategory'])){
 	$SelectedCategory = mb_strtoupper($_GET['SelectedCategory']);
-} else if (isset($_POST['SelectedCategory'])){
+} elseif (isset($_POST['SelectedCategory'])){
 	$SelectedCategory = mb_strtoupper($_POST['SelectedCategory']);
 }
 

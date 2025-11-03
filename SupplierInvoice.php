@@ -25,8 +25,7 @@ if (isset($_POST['TranDate'])){$_POST['TranDate'] = ConvertSQLDate($_POST['TranD
 
 if (empty($_GET['identifier'])) {
 	$identifier = date('U');
-}
-else {
+} else {
 	$identifier = $_GET['identifier'];
 }
 
@@ -35,8 +34,7 @@ if (!isset($_SESSION['SuppTrans']->SupplierName)) {
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_row($Result);
 	$SupplierName = $MyRow[0];
-}
-else {
+} else {
 	$SupplierName = $_SESSION['SuppTrans']->SupplierName;
 }
 
@@ -126,8 +124,7 @@ if (isset($_GET['SupplierID']) AND $_GET['SupplierID'] != '') {
 
 	$_SESSION['SuppTrans']->InvoiceOrCredit = 'Invoice';
 
-}
-elseif (!isset($_SESSION['SuppTrans'])) {
+} elseif (!isset($_SESSION['SuppTrans'])) {
 
 	prnMsg(__('To enter a supplier invoice the supplier must first be selected from the supplier selection screen') , 'warn');
 	echo '<br /><a href="' . $RootPath . '/SelectSupplier.php">' . __('Select A Supplier to Enter an Invoice For') . '</a>';
@@ -964,8 +961,7 @@ if (!isset($_POST['PostInvoice'])) {
 	}
 
 	echo '</form>';
-}
-else { // $_POST['PostInvoice'] is set so do the postings -and dont show the button to process
+} else { // $_POST['PostInvoice'] is set so do the postings -and dont show the button to process
 	/*First do input reasonableness checks
 	 then do the updates and inserts to process the invoice entered */
 	$TaxTotal = 0;

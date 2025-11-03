@@ -98,7 +98,7 @@ if (isset($_POST['Submit'])) {
 			$ErrMsg = __('The department could not be inserted');
 			foreach ($SQL as $SQLStatement ) {
 				$Result = DB_query($SQLStatement, $ErrMsg, '', true);
-				if(!$Result) {
+				if (!$Result) {
 					$InputError = 1;
 					break;
 				}

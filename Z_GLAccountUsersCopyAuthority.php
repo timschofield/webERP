@@ -15,16 +15,16 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	__('Copy Authority of GL Accounts from one user to another'), '" /> ',// Icon title.
 	__('Copy Authority of GL Accounts from one user to another'), '</p>';// Page title.
 
-if(isset($_POST['ProcessCopyAuthority'])) {
+if (isset($_POST['ProcessCopyAuthority'])) {
 
 	$InputError =0;
 
-	if($_POST['FromUserID']==$_POST['ToUserID']) {
+	if ($_POST['FromUserID']==$_POST['ToUserID']) {
 		prnMsg(__('User FROM must be different from user TO'),'error');
 		$InputError =1;
 	}
 
-	if($InputError ==0) {// no input errors
+	if ($InputError ==0) {// no input errors
 		DB_Txn_Begin();
 
 		echo '<br />' . __('Deleting the current authority to view / update the GL Accounts of user') . ' ' .  $_POST['ToUserID'];
