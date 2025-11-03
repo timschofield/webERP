@@ -11,12 +11,12 @@ include('includes/KLUIGeneralFunctions.php');
 
 // The default company to Invoice from (PTADU).
 if(!isset($_POST['CompanyFrom'])) {
-	$_POST['CompanyFrom']='PTADU';
+	$_POST['CompanyFrom'] = 'PTADU';
 }
 
 // The default company to Invoice to (PTSMH).
 if(!isset($_POST['CompanyTo'])) {
-	$_POST['CompanyTo']='PTSMH';
+	$_POST['CompanyTo'] = 'PTSMH';
 }
 
 // default date to invoice is until Yesterday
@@ -26,21 +26,17 @@ if (!isset($_POST['EndDate'])){
 
 // The default draft or Invoice should be draft.
 if(!isset($_POST['DraftOrInvoice'])) {
-	$_POST['DraftOrInvoice']='DRAFT';
-}
-
-if(!isset($_POST['NomorSeriFP'])) {
-	$_POST['NomorSeriFP']='0000000000000';
+	$_POST['DraftOrInvoice'] = 'DRAFT';
 }
 
 if (isset($_POST['submit'])) {
-	submit($Title, $_POST['CompanyFrom'], $_POST['CompanyTo'], $_POST['EndDate'], $_POST['DraftOrInvoice'], $_POST['NomorSeriFP']);
+	submit($_POST['CompanyFrom'], $_POST['CompanyTo'], $_POST['EndDate'], $_POST['DraftOrInvoice']);
 } else {
 	display($Title);
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $NomorSeriFP) {
+function submit($CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice) {
 
 	$EndDate = ConvertSQLDate($EndDate);
 	$EndDateSQL = FormatDateForSQL($EndDate);
@@ -285,7 +281,6 @@ function display($Title) {
 	echo FieldToSelectFromTwoOptions('DRAFT', 'Draft', 
 									'INVOICE', 'Invoice',
 									'DraftOrInvoice', $_POST['DraftOrInvoice'], __('Draft or Invoice'), '', '', 3, true, false);
-	echo FieldToSelectOneText("NomorSeriFP", $_POST['NomorSeriFP'], 14, 13, 'Nomor Seri Faktur Pajak', '', '', 4, true, false);
 	echo '</fieldset>';
 
 	echo OneButtonCenteredForm("submit", $Title, 6, false, false);
