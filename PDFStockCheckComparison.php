@@ -161,7 +161,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 					$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				} //END INSERT GL TRANS
-				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('Unable to COMMIT transaction while adjusting stock in StockCheckAdjustmet report');
+
 				DB_Txn_Commit();
 
 			} // end if $StockQtyDifference !=0

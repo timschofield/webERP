@@ -216,7 +216,7 @@ if (isset($_POST['Submit']) AND $InputError==false){
 			/* KL RICARD End modification */
 		}
 	}
-	$ErrMsg = __('CRITICAL ERROR') . '! ' . __('Unable to COMMIT Location Transfer transaction');
+
 	DB_Txn_Commit();
 
 	prnMsg( __('The inventory transfer records have been created successfully'),'success');
