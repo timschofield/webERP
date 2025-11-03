@@ -72,7 +72,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 	if ($_POST['NumberMonthsHolding']>10){
 		$NumberMonthsHolding=$_POST['NumberMonthsHolding']-10;
 	}
-	else{
+	else {
 		$NumberMonthsHolding=$_POST['NumberMonthsHolding'];
 	}
 
@@ -179,7 +179,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 			$NumberMonths=$_POST['NumberMonthsHolding']-10;
 			$MaxMthSales = ($SalesRow['prd1']+$SalesRow['prd2']+$SalesRow['prd3']+$SalesRow['prd4']+$SalesRow['prd5'])/5;
 		}
-		else{
+		else {
 			$NumberMonths=$_POST['NumberMonthsHolding'];
 			$MaxMthSales = max($SalesRow['prd1'], $SalesRow['prd2'], $SalesRow['prd3'], $SalesRow['prd4'], $SalesRow['prd5']);
 		}

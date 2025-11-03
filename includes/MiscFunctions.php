@@ -63,7 +63,7 @@ function prnMsg($Msg, $Type = 'info', $Prefix = '', $Return = false) {
 				</div>
 			</div>';
     }
-    else{
+    else {
         $Messages[] = array($Msg, $Type, $Prefix);
     }
 }

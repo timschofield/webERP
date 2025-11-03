@@ -43,7 +43,7 @@ if (isset($_POST['AddContractChgToInvoice'])){
 	$InputError = false;
 	if ($_POST['ContractRef'] == ''){
 		$_POST['ContractRef'] = $_POST['ContractSelection'];
-	} else{
+	} else {
 		$Result = DB_query("SELECT contractref FROM contracts
 							WHERE status=2
 							AND contractref='" . $_POST['ContractRef'] . "'");

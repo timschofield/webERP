@@ -1040,7 +1040,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			if (isset($_POST['ItemDue_' . $OrderLine->LineNumber])){
 				$_POST['ItemDue_' . $OrderLine->LineNumber] = ConvertSQLDate($_POST['ItemDue_' . $OrderLine->LineNumber]);
 			}
-			else{
+			else {
 				$_POST['ItemDue_' . $OrderLine->LineNumber] = DateAdd (date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
 			}
 
