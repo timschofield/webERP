@@ -56,11 +56,15 @@ include('includes/KLPOSGeneral.php');
 include('includes/KLEmails.php');
 
 include('includes/WebClientPrint/WebClientPrint.php');
-use Neodynamic\SDK\Web\WebClientPrint;
 include('includes/KLESCPOSCommands.php');
 
 include('includes/KLPOSInit.php');
 
+if (!isset($_SESSION['SalesmanLogin']) or $_SESSION['SalesmanLogin'] == '') {
+	prnMsg(__('You are not properly logged in. Please logout and login before processing any sale.'), 'error);');
+	include('includes/footer.php');
+	exit();
+}
 
 if (empty($_GET['identifier'])) {
 	$identifier = GetPOSIdentifier();
@@ -434,11 +438,12 @@ if (count($_SESSION['Items' . $identifier]->LineItems) > 0 and !isset($_POST['Pr
 	/////////////////////////////////////////////////
 	// Buttons confirm / recalculate the sale
 	/////////////////////////////////////////////////
-	echo '<br /><div class="centre">
+	echo '<br />
+			<div class="centre">
 				<input type="submit" name="Recalculate" value="' . __('Re-Calculate') . '" />
 				<input type="submit" name="ProcessSale" value="' . __('Process The Sale') . '" />
-				</div>
-				<hr />';
+			</div>
+		<hr />';
 
 } # end of if lines
 
@@ -543,31 +548,31 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 	}
 
 	// payment must be cash OR credit card, but not both (no splited payments)
-	if (($TotalReceivedCash != 0) && ($TotalReceivedCreditCard != 0)) {
+	if (($TotalReceivedCash != 0) and ($TotalReceivedCreditCard != 0)) {
 		prnMsg(__('Splitted Payments Cash - Credit Card are not allowed.'), 'error');
 		$InputError = true;
 	}
 
 	// if CC is used, only 1 CC is allowed per invoice (no splitted payments)
-	if (($TotalReceivedCash == 0) && ($PaymentSystemsUsed > 1)) {
+	if (($TotalReceivedCash == 0) and ($PaymentSystemsUsed > 1)) {
 		prnMsg(__('Splited payments by several credit Cards are not allowed.'), 'error');
 		$InputError = true;
 	}
 
 	// if returned goods, then we also request invvoice number
-	if (($_POST['AmountReturnedGoods'] != 0) && ($_POST['ReturnedGoodsOldInvoice'] == '')) {
+	if (($_POST['AmountReturnedGoods'] != 0) and ($_POST['ReturnedGoodsOldInvoice'] == '')) {
 		prnMsg(__('If customer returned items, invoice of returned items must be reported'), 'error');
 		$InputError = true;
 	}
 
 	// if returned goods, then we also request item codes
-	if (($_POST['AmountReturnedGoods'] != 0) && ($_POST['ReturnedGoodsItems'] == '')) {
+	if (($_POST['AmountReturnedGoods'] != 0) and ($_POST['ReturnedGoodsItems'] == '')) {
 		prnMsg(__('If customer returned items, the codes or returned items must be reported'), 'error');
 		$InputError = true;
 	}
 
 	// if vouchers were presented, we need the code of the voucher
-	if (($_POST['AmountVouchers'] != 0) && ($_POST['VoucherCode'] == '')) {
+	if (($_POST['AmountVouchers'] != 0) and ($_POST['VoucherCode'] == '')) {
 		prnMsg(__('If voucher or discount was used, the code of voucher or discount must be reported'), 'error');
 		$InputError = true;
 	}
@@ -588,14 +593,13 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 			prnMsg('Too much shopping bags used. Used = ' . $TotalNumberOfShoppingBags . ' Items sold = ' . $TotalNumberOfItems, 'error');
 			$InputError = true;
 		}
-	} elseif ($TotalNumberOfBoxes > 0 || $TotalNumberOfPouchBags > 0 || $TotalNumberOfShoppingBags > 0) {
+	} elseif ($TotalNumberOfBoxes > 0 or $TotalNumberOfPouchBags > 0 or $TotalNumberOfShoppingBags > 0) {
 		// Handle case where packaging is used but no items are sold (should ideally not happen if LineCounter check passes)
 		prnMsg('Packaging used but no items sold.', 'error');
 		$InputError = true;
 	}
 
-
-	if ($InputError == false) { //all good so let's get on with the processing
+	if (!$InputError) { //all good so let's get on with the processing
 
 		/* Now Get the where the sale is to from the branches table */
 
@@ -928,11 +932,18 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 				// when a retail partner sells PTADU items COGS should go to PTADU
 				$AccountCOGS = ACCOUNT_COGS_ADU;
 
+				$StandardCost = round($OrderLine->StandardCost, 0);
+				$Compensation = 0;
+
+				/*
+				// Obsolete since 2019. Since then, compensation is always 100.
 				if ($Area == $_SESSION['AreaSalesCashOthers']) {
 					// Not reported sales do not have COGS corrections
 					$StandardCost = round($OrderLine->StandardCost, 0);
 					$Compensation = 0;
 				} else {
+					$StandardCost = round($OrderLine->StandardCost, 0);
+					$Compensation = 0;
 					// reported Sales can have some COGS corrections and adjustments
 					if ($_SESSION['HPPCompensation'] == 100) {
 						// if HPPCompensation = 100, then do not have COGS corrections
@@ -948,7 +959,9 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 							$Compensation = round(-$OrderLine->StandardCost, 0); // Compensation is negative standard cost
 						}
 					}
-				}
+					
+				} */
+
 				$StandardCostLine = round($StandardCost * $OrderLine->Quantity);
 
 				InsertIntoGLTrans("10",
