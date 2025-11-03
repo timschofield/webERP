@@ -79,7 +79,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 		} else {
 			$PrintLink = '';
 		}		
-	}else{
+	} else {
 		// the other items of the transfer
 		$Transfer = '';
 		$TransferDate = '';
@@ -149,7 +149,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 		$CurrentTransfer = $MyRow['transno'];
 		$Transfer = locale_number_format($MyRow['transno'],0);
 		$FromTo = $MyRow['reference'];
-	}else{
+	} else {
 		// the other items of the transfer
 		$Transfer = '';
 		$FromTo = '';

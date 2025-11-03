@@ -15,7 +15,7 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	__('Change ALL GL Account Code SUFFIX'), '" /> ',// Icon title.
 	__('Change ALL GL Account Code SUFFIX'), '</p>';// Page title.
 
-if(isset($_POST['ProcessGLAccountCode'])) {
+if (isset($_POST['ProcessGLAccountCode'])) {
 	$InputError =0;
 	$_POST['NewSuffix'] = mb_strtoupper($_POST['NewSuffix']);
 	$LenghtOldSuffix = strlen($_POST['OldSuffix']);

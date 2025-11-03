@@ -113,9 +113,9 @@ if (!isset($_POST['FromDate'])
 	$Range = max(abs($MaxValue), abs($MinValue));
 	if ($Range < 5){
 		$PrecisionY = 2;
-	}else if ($Range < 50){
+	} elseif ($Range < 50){
 		$PrecisionY = 1;
-	}else{
+	} else {
 		$PrecisionY = 0;
 	}
 

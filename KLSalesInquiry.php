@@ -168,7 +168,7 @@ function submit($PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName,
 
 		$WhereSalesman .= " AND salesorders.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 
-	}elseif ($_POST['Salesman'] != 'All') {
+	} elseif ($_POST['Salesman'] != 'All') {
 
         $WhereSalesman = " AND salesorders.salesperson = '" . $_POST['Salesman'] . "'";
     }
@@ -865,7 +865,7 @@ function submit($PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName,
 				// KL Ricard MOD: Hide costs
 				if ($KL_SystemAdmin){
 					$Cost = $MyRow['extcost'];
-				}else{
+				} else {
 					$Cost = 0;
 				}
 			    if ($_POST['DateType'] == 'Order') {
@@ -1030,7 +1030,7 @@ function submit($PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName,
 				// KL RICARD MOD: Hide costs
 				if ($KL_SystemAdmin){
 					$Cost = $MyRow['extcost'];
-				}else{
+				} else {
 					$Cost = 0;
 				}
 				printf('    %-30s | %-40s | %12s | %14s | %14s | %14s |  %-40s',

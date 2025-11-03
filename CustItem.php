@@ -137,7 +137,7 @@ if ($Edit == false) {
 	if (DB_num_rows($CustItemResult) == 0 and $StockId != '') {
 		prnMsg(__('There is no customer data set up for the part selected'), 'info');
 		$NoCustItemData = 1;
-	} else if ($StockId != '') {
+	} elseif ($StockId != '') {
 
 		echo '<table cellpadding="2">
 				<thead>

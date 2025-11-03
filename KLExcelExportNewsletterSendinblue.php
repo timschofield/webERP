@@ -90,7 +90,7 @@ function submit($MarkExported) {
 			if ($_POST['Format'] == 'xlsx') {
 				header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 				$File = 'KL-NewsletterSubscribers-' . date('Y-m-d'). '.xlsx';
-			} else if ($_POST['Format'] == 'ods') {
+			} elseif ($_POST['Format'] == 'ods') {
 				header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
 				$File = 'KL-NewsletterSubscribers-' . date('Y-m-d'). '.ods';
 			}
@@ -108,7 +108,7 @@ function submit($MarkExported) {
 			if ($_POST['Format'] == 'xlsx') {
 				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($SpreadSheet);
 				$objWriter->save('php://output');
-			} else if ($_POST['Format'] == 'ods') {
+			} elseif ($_POST['Format'] == 'ods') {
 				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($SpreadSheet);
 				$objWriter->save('php://output');
 			}
@@ -120,7 +120,7 @@ function submit($MarkExported) {
 				$ResultUpdate = DB_query_oc($SQL,'','',true);
 			}
 
-		}else{
+		} else {
 			$Title = __('Excel file for Sendinblue: Export Newsletter Subscribers');
 			include('includes/header.php');
 			prnMsg('No Newsletter Subscribers Data to export to Sendinblue');

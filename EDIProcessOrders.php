@@ -396,7 +396,7 @@ while (false !== ($OrderFile=readdir($DirHandle))) { /*there are files in the in
 				$PAI_C534 = explode(':',mb_substr($LineText,4));
 				if ($PAI_C534[0]=='1'){
 					$EmailText .= "\n" . __('Payment will be effected by a direct payment for this order');
-				} elseif($PAI_C534[0]=='OA'){
+				} elseif ($PAI_C534[0]=='OA'){
 					$EmailText .= "\n" . __('This order to be settled in accordance with the normal account trading terms');
 				}
 				if ($PAI_C534[1]=='20'){

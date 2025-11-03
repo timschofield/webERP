@@ -62,9 +62,9 @@ function SaveUploadedCompanyLogo($DatabaseName, $Path_To_Root)
 	$ImageFileType = strtolower(pathinfo($TargetFile, PATHINFO_EXTENSION));
 
 	// Check if image file is an actual image or fake image
-	if(isset($_POST["install"])) {
+	if (isset($_POST["install"])) {
 		$check = getimagesize($_FILES["LogoFile"]["tmp_name"]);
-		if($check !== false) {
+		if ($check !== false) {
 			$UploadOK = 1;
 		} else {
 			echo '<div class="warning">' . __('Logo file is not an image.') . '</div>';

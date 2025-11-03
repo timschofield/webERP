@@ -103,27 +103,27 @@ function submit($ListCategories, $ListLocations) {
 						$Type = TypeOfItem($MyRow['stockid']);
 						if ($Type == "Ring"){
 							$TotalRingByLoc++;
-						}elseif ($Type == "ToeRing"){
+						} elseif ($Type == "ToeRing"){
 							$TotalToeRingByLoc++;
-						}elseif ($Type == "Bead"){
+						} elseif ($Type == "Bead"){
 							$TotalBeadByLoc++;
-						}elseif ($Type == "Earring"){
+						} elseif ($Type == "Earring"){
 							$TotalEarringByLoc++;
-						}elseif ($Type == "EarCuff"){
+						} elseif ($Type == "EarCuff"){
 							$TotalEarCuffByLoc++;
-						}elseif ($Type == "Bracelet"){
+						} elseif ($Type == "Bracelet"){
 							$TotalBraceletByLoc++;
-						}elseif ($Type == "Anklet"){
+						} elseif ($Type == "Anklet"){
 							$TotalAnkletByLoc++;
-						}elseif ($Type == "Pendant"){
+						} elseif ($Type == "Pendant"){
 							$TotalPendantByLoc++;
-						}elseif ($Type == "Necklace"){
+						} elseif ($Type == "Necklace"){
 							$TotalNecklaceByLoc++;
-						}elseif ($Type == "Bag"){
+						} elseif ($Type == "Bag"){
 							$TotalBagByLoc++;
-						}elseif ($Type == "Tali"){
+						} elseif ($Type == "Tali"){
 							$TotalTaliByLoc++;
-						}else{
+						} else {
 							$TotalUnknownByLoc++;
 						}
 					}
@@ -191,27 +191,27 @@ function submit($ListCategories, $ListLocations) {
 					$Type = TypeOfItem($MyRow['stockid']);
 					if ($Type == "Ring"){
 						$TotalRingByLoc++;
-					}elseif ($Type == "ToeRing"){
+					} elseif ($Type == "ToeRing"){
 						$TotalToeRingByLoc++;
-					}elseif ($Type == "Bead"){
+					} elseif ($Type == "Bead"){
 						$TotalBeadByLoc++;
-					}elseif ($Type == "Earring"){
+					} elseif ($Type == "Earring"){
 						$TotalEarringByLoc++;
-					}elseif ($Type == "EarCuff"){
+					} elseif ($Type == "EarCuff"){
 						$TotalEarCuffByLoc++;
-					}elseif ($Type == "Bracelet"){
+					} elseif ($Type == "Bracelet"){
 						$TotalBraceletByLoc++;
-					}elseif ($Type == "Anklet"){
+					} elseif ($Type == "Anklet"){
 						$TotalAnkletByLoc++;
-					}elseif ($Type == "Pendant"){
+					} elseif ($Type == "Pendant"){
 						$TotalPendantByLoc++;
-					}elseif ($Type == "Necklace"){
+					} elseif ($Type == "Necklace"){
 						$TotalNecklaceByLoc++;
-					}elseif ($Type == "Bag"){
+					} elseif ($Type == "Bag"){
 						$TotalBagByLoc++;
-					}elseif ($Type == "Tali"){
+					} elseif ($Type == "Tali"){
 						$TotalTaliByLoc++;
-					}else{
+					} else {
 						$TotalUnknownByLoc++;
 					}
 				}

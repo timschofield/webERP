@@ -92,14 +92,14 @@ include('includes/KLUIGeneralFunctions.php');
 					// already changed the price, so now it's time to see if labels have been printed and finish the process
 					$NewPriceLink = 'Done';
 					$NewLabelsPrinted = '<a href="' . $RootPath . '/KLChangeRetailPrice.php?Item=' . $MyRow['stockid'] . '&NewPrice='. $MyRow['newretailprice'] .  '&Action=Finish">' . 'Printed' . '</a>';
-				}else{
+				} else {
 					// the category is still the old one. We still need to change it!
 					// if we have ONLY stock in kantor (or in locations not needing procedure) and NO transit, all the QOH is at kantor
 					// We can apply the new discount category
 					$NewPriceLink = '<a href="' . $RootPath . '/KLChangeRetailPrice.php?Item=' . $MyRow['stockid'] . '&NewPrice='. $MyRow['newretailprice'] .  '&Action=Change">' . 'Change to ' . locale_number_format($MyRow['newretailprice'],0) . '</a>';
 					$NewLabelsPrinted = '';
 				}
-			}else{
+			} else {
 				$NewPriceLink = '';
 				$NewLabelsPrinted = '';
 			}	
@@ -121,7 +121,7 @@ include('includes/KLUIGeneralFunctions.php');
 		echo '</tbody>
 			</table>
 			</div>';
-	}else{
+	} else {
 		prnMsg("No items in process of price change at the moment", "success");
 	}
 

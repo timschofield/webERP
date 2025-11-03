@@ -28,7 +28,7 @@ if (!isset($_POST['FromDate'])){
 		// get the first date only
 		$MyRow = DB_fetch_array($Result);
 		$_POST['FromDate'] = ConvertSQLDate($MyRow['orddate']);
-	}else{
+	} else {
 		$_POST['FromDate'] = date($_SESSION['DefaultDateFormat']);
 	}
 }
@@ -68,7 +68,7 @@ function submit($CountriesForRetail, $TypeCustomers, $MarkExported, $FromDate, $
 		
 		if ($TypeCustomers == "WEB"){
 			$SQLCustomers = " AND salesorders.debtorno LIKE 'WEB%'";
-		}else{
+		} else {
 			$SQLCustomers = " AND salesorders.debtorno NOT LIKE 'WEB%'";
 		}
 		
@@ -145,7 +145,7 @@ function submit($CountriesForRetail, $TypeCustomers, $MarkExported, $FromDate, $
 					
 					if ($MyRow['vipcards'] == 0){
 						$SpreadSheet->getActiveSheet()->setCellValue('H'.$i, 'N');
-					}else{
+					} else {
 						$SpreadSheet->getActiveSheet()->setCellValue('H'.$i, 'Y');
 					}
 					
@@ -180,7 +180,7 @@ function submit($CountriesForRetail, $TypeCustomers, $MarkExported, $FromDate, $
 			if ($_POST['Format'] == 'xlsx') {
 				header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 				$File = 'KL-webERPCustomers-' . date('Y-m-d'). '.xlsx';
-			} else if ($_POST['Format'] == 'ods') {
+			} elseif ($_POST['Format'] == 'ods') {
 				header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
 				$File = 'KL-webERPCustomers-' . date('Y-m-d'). '.ods';
 			}
@@ -198,7 +198,7 @@ function submit($CountriesForRetail, $TypeCustomers, $MarkExported, $FromDate, $
 			if ($_POST['Format'] == 'xlsx') {
 				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($SpreadSheet);
 				$objWriter->save('php://output');
-			} else if ($_POST['Format'] == 'ods') {
+			} elseif ($_POST['Format'] == 'ods') {
 				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($SpreadSheet);
 				$objWriter->save('php://output');
 			}
@@ -216,7 +216,7 @@ function submit($CountriesForRetail, $TypeCustomers, $MarkExported, $FromDate, $
 			}
 			DB_Txn_Commit();
 
-		}else{
+		} else {
 			$Title = __('Excel file for Sendinblue: Export webERP Customers');
 			include('includes/header.php');
 			prnMsg('No webERP Customer Data to export to Sendinblue');

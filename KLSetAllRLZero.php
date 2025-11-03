@@ -19,11 +19,11 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	$_POST['FromLocationID'] = '';
 }
 
-if(isset($_POST['ProcessReorderLevelZero'])) {
+if (isset($_POST['ProcessReorderLevelZero'])) {
 
 	$InputError =0;
 
-	if($InputError ==0) {// no input errors
+	if ($InputError ==0) {// no input errors
 		DB_Txn_Begin();
 
 		$SQL = "UPDATE locstock SET reorderlevel = 0 WHERE loccode = '" . $_POST['FromLocationID'] . "'";

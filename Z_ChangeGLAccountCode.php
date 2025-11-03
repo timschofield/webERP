@@ -26,7 +26,7 @@ include('includes/SQL_CommonFunctions.php');
 include('includes/KLGeneralFunctions.php');
 // RICARD KL END: Use the function ChangeGLAcoountCode
 
-if(isset($_POST['ProcessGLAccountCode'])) {
+if (isset($_POST['ProcessGLAccountCode'])) {
 
 	$InputError =0;
 

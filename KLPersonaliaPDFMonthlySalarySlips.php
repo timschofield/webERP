@@ -31,16 +31,16 @@ function submit($Company, $PeriodOfFile, $SalaryType) {
 
 	if ($SalaryType == "MONTHLY"){
 		$PageTitle = __('Export PDF Monthly Salary Slips for ') . $PeriodMonth;
-	}elseif($SalaryType == "THRONLY"){
+	} elseif ($SalaryType == "THRONLY"){
 		$PageTitle = __('Export PDF THR Only Slips for ') . $PeriodMonth;
-	}else{
+	} else {
 		$InputErrorMessage = "The type of Salary " . $SalaryType . " is not accepted";
 		$InputError = true;
 	}
 
 	// The month selected should be last month for Monthly salaries
 	if ($SalaryType == "MONTHLY"){
-		if($PeriodNow != ($PeriodOfFile + 1)){
+		if ($PeriodNow != ($PeriodOfFile + 1)){
 			$InputErrorMessage = "The month selected to export PDF Monthly Salary Slips should be last month";
 			$InputError = true;
 		}
@@ -48,13 +48,13 @@ function submit($Company, $PeriodOfFile, $SalaryType) {
 	
 	// The month selected should be current month for THR Only salaries
 	if ($SalaryType == "THRONLY"){
-		if($PeriodNow != ($PeriodOfFile)){
+		if ($PeriodNow != ($PeriodOfFile)){
 			$InputErrorMessage = "The month selected to export PDF THR Only Salary Slips should be this current month";
 			$InputError = true;
 		}
 	}
 
-	if(!$InputError){
+	if (!$InputError){
 		// populates $SQL and $Result with the data to extract the salary slips
 		include('includes/KLPersonaliaSQLSalarySlips.php');
 
@@ -64,7 +64,7 @@ function submit($Company, $PeriodOfFile, $SalaryType) {
 		
 			if ($SalaryType == "MONTHLY"){
 				$CoreFileName = $Company . '-MonthlySalarySlips-' . $PeriodMonth;
-			}else{
+			} else {
 				$CoreFileName = $Company . '-THROnlySalarySlips-' . $PeriodMonth;
 			}
 			
@@ -97,16 +97,16 @@ function submit($Company, $PeriodOfFile, $SalaryType) {
 					if (strtoupper($MyRow['bankcode']) == 'DANAMON'){
 						$EmployeesByBankTransferPayroll++;
 						$AmountByBankTransferPayroll += $TotalBawaPulang;
-					}else{
+					} else {
 						$EmployeesByBankTransferLLG++;
 						$AmountByBankTransferLLG += $TotalBawaPulang;
 					}
-				}elseif (strtoupper($MyRow['paymentmethod']) == 'CHECK'){
+				} elseif (strtoupper($MyRow['paymentmethod']) == 'CHECK'){
 					$EmployeesByCheck++;
 					$Check[$EmployeesByCheck]['Name'] = $MyRow['codename'];
 					$Check[$EmployeesByCheck]['Amount'] = $TotalBawaPulang;
 					$AmountByCheck += $TotalBawaPulang;
-				}elseif (strtoupper($MyRow['paymentmethod']) == 'CASH'){
+				} elseif (strtoupper($MyRow['paymentmethod']) == 'CASH'){
 					$EmployeesByCash++;
 					$Cash[$EmployeesByCash]['Name'] = $MyRow['codename'];
 					$Cash[$EmployeesByCash]['Amount'] = $TotalBawaPulang;
@@ -183,12 +183,12 @@ function submit($Company, $PeriodOfFile, $SalaryType) {
 			$FileName = $CoreFileName . '.pdf';
 			$DomPDF->stream($FileName, array('Attachment' => true));
 		
-		}else{
+		} else {
 			include('includes/header.php');
 			prnMsg('No data to export PDF Monthly Salary Slips', 'info');
 			include('includes/footer.php');
 		}
-	}else{
+	} else {
 		include('includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 

@@ -35,7 +35,7 @@ function CalcFreightCost ($TotalValue,
 		// No Currency ==> ERROR
 		$ParameterError = true;
 	}
-	if($ParameterError){
+	if ($ParameterError){
 		return array ("NOT AVAILABLE", "NOT AVAILABLE");
 	}
 	// All parameters are OK, so we move ahead...

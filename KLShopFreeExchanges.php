@@ -11,7 +11,7 @@ include('includes/KLEmails.php');
 
 if (isset($_GET['SelectedExchange'])){
 	$SelectedExchange =mb_strtoupper($_GET['SelectedExchange']);
-} elseif(isset($_POST['SelectedExchange'])){
+} elseif (isset($_POST['SelectedExchange'])){
 	$SelectedExchange =mb_strtoupper($_POST['SelectedExchange']);
 }
 
@@ -33,17 +33,17 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'ItemFromEmpty';
 		$i++;
 		prnMsg(__('The Item FROM must be one valid code'),'error');
-	}elseif ($_POST['ItemTo'] == '') {
+	} elseif ($_POST['ItemTo'] == '') {
 		$InputError = 1;
 		$Errors[$i] = 'ItemToEmpty';
 		$i++;
 		prnMsg(__('The Item TO must be one valid code'),'error');
-	}elseif ($_POST['InvoiceNumber'] == '') {
+	} elseif ($_POST['InvoiceNumber'] == '') {
 		$InputError = 1;
 		$Errors[$i] = 'InvoiceNumber';
 		$i++;
 		prnMsg(__('Yellow Invoice Number can not be empty'),'error');
-	}elseif ($_POST['ItemFrom'] == $_POST['ItemTo']) {
+	} elseif ($_POST['ItemFrom'] == $_POST['ItemTo']) {
 		$InputError = 1;
 		$Errors[$i] = 'SameItem';
 		$i++;

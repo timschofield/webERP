@@ -32,16 +32,16 @@ function submit($Company, $PeriodOfFile, $SalaryType, $Format, $Title) {
 
 	if ($SalaryType == "MONTHLY"){
 		$PageTitle = __('Export PPh21 Monthly Info for '). $PeriodMonth;
-	}elseif($SalaryType == "THRONLY"){
+	} elseif ($SalaryType == "THRONLY"){
 		$PageTitle = __('Export PPh21 THR Only Info for '). $PeriodMonth;
-	}else{
+	} else {
 		$InputErrorMessage = "The type of Salary " . $SalaryType . " is not accepted";
 		$InputError = true;
 	}
 
 	// The month selected should be last month for Monthly salaries
 	if ($SalaryType == "MONTHLY"){
-		if($PeriodNow != ($PeriodOfFile + 1)){
+		if ($PeriodNow != ($PeriodOfFile + 1)){
 			$InputErrorMessage = "The month selected to export PPh21 Monthly Salary Slips should be last month";
 			$InputError = true;
 		}
@@ -49,13 +49,13 @@ function submit($Company, $PeriodOfFile, $SalaryType, $Format, $Title) {
 	
 	// The month selected should be current month for THR Only salaries
 	if ($SalaryType == "THRONLY"){
-		if($PeriodNow != ($PeriodOfFile)){
+		if ($PeriodNow != ($PeriodOfFile)){
 			$InputErrorMessage = "The month selected to export PPh21 THR Only Salary Slips should be this current month";
 			$InputError = true;
 		}
 	}
 	
-	if(!$InputError){
+	if (!$InputError){
 		$SQL = "SELECT codename,
 						fullname,
 						zonepph21,
@@ -174,14 +174,14 @@ function submit($Company, $PeriodOfFile, $SalaryType, $Format, $Title) {
                 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
                 if ($SalaryType == "MONTHLY"){
                     $File ='InfoPPH21-' .  $Company . '-' . $PeriodMonth. '.xlsx';
-                }else{
+                } else {
                     $File ='InfoPPH21-THR-' .  $Company . '-' . $PeriodMonth. '.xlsx';
                 }
             } else {
                 header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
                 if ($SalaryType == "MONTHLY"){
                     $File ='InfoPPH21-' .  $Company . '-' . $PeriodMonth. '.ods';
-                }else{
+                } else {
                     $File ='InfoPPH21-THR-' .  $Company . '-' . $PeriodMonth. '.ods';
                 }
             }
@@ -198,17 +198,17 @@ function submit($Company, $PeriodOfFile, $SalaryType, $Format, $Title) {
 
             if ($Format == 'xlsx') {
                 $objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($SpreadSheet);
-        	} else if ($Format == 'ods') {
+        	} elseif ($Format == 'ods') {
                 $objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($SpreadSheet);
             }
 			$objWriter->save('php://output');
 
-		}else{
+		} else {
 			include('includes/header.php');
 			prnMsg('No data to export for PPH21 deduction calculation');
 			include('includes/footer.php');
 		}
-	}else{
+	} else {
 		include('includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' .  $_SESSION['Theme'] . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 

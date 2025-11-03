@@ -62,7 +62,7 @@ function submit($TypeOfShop) {
 		if ($TypeOfShop == 1){
 			$NameOfShop = "Kapal-Laut";
 			$Brand = "Kapal-Laut. Your Essential Jewellery";
-		}else{
+		} else {
 			$NameOfShop = "Blink";
 			$Brand = "Blink Fashion Jewellery";
 		}
@@ -186,7 +186,7 @@ function submit($TypeOfShop) {
 					
 					if ($TextSizeGrouping != ""){
 						$NamaVariant = "Ukuran";
-					}else{
+					} else {
 						$NamaVariant = "";
 					}
 
@@ -208,9 +208,9 @@ function submit($TypeOfShop) {
 
 					if ($MyRow['unitsdimension'] == 'mm'){
 						$FactorLenght = 10;
-					}elseif ($MyRow['unitsdimension'] == 'cm'){
+					} elseif ($MyRow['unitsdimension'] == 'cm'){
 						$FactorLenght = 1;
-					}else{
+					} else {
 						// should be meter
 						$FactorLenght = 0.1;
 					}
@@ -295,7 +295,7 @@ function submit($TypeOfShop) {
 			if ($_POST['Format'] == 'xlsx') {
 				header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 				$File ='LAZADA-' .  $NameOfShop . '-' . date('Y-m-d-H-i-s'). '.xlsx';
-			} else if ($_POST['Format'] == 'ods') {
+			} elseif ($_POST['Format'] == 'ods') {
 				header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
 				$File ='LAZADA-' .  $NameOfShop . '-' . date('Y-m-d-H-i-s'). '.ods';
 			}
@@ -313,12 +313,12 @@ function submit($TypeOfShop) {
 			if ($_POST['Format'] == 'xlsx') {
 				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($SpreadSheet);
 				$objWriter->save('php://output');
-			} else if ($_POST['Format'] == 'ods') {
+			} elseif ($_POST['Format'] == 'ods') {
 				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($SpreadSheet);
 				$objWriter->save('php://output');
 			}
 
-		}else{
+		} else {
 			$Title = "Excel file for uploading products to Lazada";
 			include('includes/header.php');
 			prnMsg('No products to upload');

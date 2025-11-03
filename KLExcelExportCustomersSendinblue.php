@@ -27,7 +27,7 @@ if (!isset($_POST['FromDate'])){
 		// get the first date only
 		$MyRow = DB_fetch_array($Result);
 		$_POST['FromDate'] = ConvertSQLDate($MyRow['orddate']);
-	}else{
+	} else {
 		$_POST['FromDate'] = date($_SESSION['DefaultDateFormat']);
 	}
 }
@@ -144,7 +144,7 @@ function submit($CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 				
 				if ($MyRow['vipcards'] == 0){
 					$SpreadSheet->getActiveSheet()->setCellValue('H'.$i, 'N');
-				}else{
+				} else {
 					$SpreadSheet->getActiveSheet()->setCellValue('H'.$i, 'Y');
 				}
 				
@@ -177,7 +177,7 @@ function submit($CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 			if ($_POST['Format'] == 'xlsx') {
 				header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 				$File = 'KL-RetailCustomers-' . date('Y-m-d'). '.xlsx';
-			} else if ($_POST['Format'] == 'ods') {
+			} elseif ($_POST['Format'] == 'ods') {
 				header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
 				$File = 'KL-RetailCustomers-' . date('Y-m-d'). '.ods';
 			}
@@ -195,7 +195,7 @@ function submit($CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 			if ($_POST['Format'] == 'xlsx') {
 				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($SpreadSheet);
 				$objWriter->save('php://output');
-			} else if ($_POST['Format'] == 'ods') {
+			} elseif ($_POST['Format'] == 'ods') {
 				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($SpreadSheet);
 				$objWriter->save('php://output');
 			}
@@ -213,7 +213,7 @@ function submit($CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 			}
 			DB_Txn_Commit();
 
-		}else{
+		} else {
 			$Title = __('Excel file for Sendinblue: Export Retail Customer');
 			include('includes/header.php');
 			prnMsg('No Retail Customer Data to export to Sendinblue');

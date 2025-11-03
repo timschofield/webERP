@@ -28,16 +28,16 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 	
 	if ($SalaryType == "MONTHLY"){
 		$PageTitle = __('Export CSV Danamon Cash Connect Monthly Salary for '). ConvertSQLDate($PeriodOfFile);
-	}elseif($SalaryType == "THRONLY"){
+	} elseif ($SalaryType == "THRONLY"){
 		$PageTitle = __('Export CSV Danamon Cash Connect THR Only for '). ConvertSQLDate($PeriodOfFile);
-	}else{
+	} else {
 		$InputErrorMessage = "The type of Salary " . $SalaryType . " is not accepted";
 		$InputError = true;
 	}
 
 	// The month selected should be last month for Monthly salaries
 	if ($SalaryType == "MONTHLY"){
-		if($PeriodNow != ($PeriodOfFile + 1)){
+		if ($PeriodNow != ($PeriodOfFile + 1)){
 			$InputErrorMessage = "The month selected to export Monthly Salary CSV File for Transfer Danamon Cash Connect should be last month";
 			$InputError = true;
 		}
@@ -45,13 +45,13 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 		
 	// The month selected should be current month for THR Only salaries
 	if ($SalaryType == "THRONLY"){
-		if($PeriodNow != ($PeriodOfFile)){
+		if ($PeriodNow != ($PeriodOfFile)){
 			$InputErrorMessage = "The month selected to export THR Only CSV File for Transfer LLG Danamon should be current month";
 			$InputError = true;
 		}
 	}
 
-	if(!$InputError){
+	if (!$InputError){
 		$SQL = "SELECT bankaccount,
 						bankaccountholder,
 						bankcode,
@@ -90,7 +90,7 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 				$HeaderDisposition = "Content-Disposition: attachment; filename=GajiTransferDanamon-" . $Today . ".csv";
 				$FromAccountDescriptionHeader = "Monthly Salaries " . $PeriodMonth;
 				$ToAccountDescrption = substr('Gaji' . ' '. $PeriodMonth,0,60);
-			}else{
+			} else {
 				$HeaderDisposition = "Content-Disposition: attachment; filename=THRTransferDanamon-" . $Today . ".csv";
 				$FromAccountDescriptionHeader = "THR Salaries " . $PeriodMonth;
 				$ToAccountDescrption = substr('THR' . ' '. $PeriodMonth,0,60);
@@ -98,9 +98,9 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 			
 			if ($Company == "PTADU"){
 				$DebitAccount = DANAMON_ACCOUNT_GAJI_PTADU;
-			}elseif ($Company == "PTSMH"){
+			} elseif ($Company == "PTSMH"){
 				$DebitAccount = DANAMON_ACCOUNT_GAJI_PTSMH;
-			}else{
+			} else {
 				$DebitAccount = DANAMON_ACCOUNT_GAJI_PTBB;
 			}
 
@@ -189,7 +189,7 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 							"" . $Separator . 
 							"" . $Separator . 
 							"" . $EOL;
-				}else{
+				} else {
 					// other banks transfer
 					$Line =	"D" . $Separator . 
 							"LAC" . $Separator . 
@@ -236,12 +236,12 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 				$i++;
 			}
 			fclose($output);
-		}else{
+		} else {
 			include('includes/header.php');
 			prnMsg('No data to export CSV File for Transfer Cash Connect ');
 			include('includes/footer.php');
 		}
-	}else{
+	} else {
 		include('includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 

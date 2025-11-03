@@ -28,11 +28,11 @@ $ProcessSection02 = false;
 if (!isset($_GET['Section'])){
 	$ProcessSection01 = true;
 	$ProcessSection02 = true;
-}else{
+} else {
 	$ShowSectionInfo = true;
 	if ($_GET['Section'] == '01'){
 		$ProcessSection01 = true;
-	}elseif($_GET['Section'] == '02'){
+	} elseif ($_GET['Section'] == '02'){
 		$ProcessSection02 = true;
 	}
 }
@@ -63,7 +63,7 @@ if ($_SESSION['UserID'] == "Ricard"){
 * SECTION 1         
 ***************************************************************************************/
 if ($ProcessSection01){
-	if($ShowSectionInfo){
+	if ($ShowSectionInfo){
 		prnMsg("Performing Control Panel Section 01",'info');
 	}
 	/***************************************************************************************
@@ -190,7 +190,7 @@ if ($ProcessSection01){
 ***************************************************************************************/
 
 if ($ProcessSection02){
-	if($ShowSectionInfo){
+	if ($ShowSectionInfo){
 		prnMsg("Performing Control Panel Section 02",'info');
 	}
 
@@ -589,7 +589,7 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath){
 						</tr>';
 			}
 		}
-		if(!$ShowHeader){
+		if (!$ShowHeader){
 			echo '</tbody>
 				</table>
 				</div>';
@@ -636,8 +636,8 @@ function PriceWrongRounding($RootPath){
 			$RoundedDown = round_price($MyRow['retailprice'], "DOWN");
 			$RoundedUp = round_price($MyRow['retailprice'], "UP");
 			
-			if(!IsPriceRoundedOK($MyRow['retailprice'])){
-				if($ShowHeader){
+			if (!IsPriceRoundedOK($MyRow['retailprice'])){
+				if ($ShowHeader){
 					$TableTitleText = __('Items with WRONG rounding retail price.');
 					ShowTableTitle($TableTitleText);
 					echo '<div>';
@@ -678,7 +678,7 @@ function PriceWrongRounding($RootPath){
 						</tr>';
 			}
 		}
-		if(!$ShowHeader){
+		if (!$ShowHeader){
 			echo '</tbody>
 				</table>
 				</div>';
@@ -719,7 +719,7 @@ function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath){
 	if (DB_num_rows($Result) != 0){
 			$ShowHeader = true;
 		while ($MyRow = DB_fetch_array($Result)) {
-			if($ShowHeader){
+			if ($ShowHeader){
 				$TableTitleText = __('Items with prices older than ') . $Years . ' years';
 				ShowTableTitle($TableTitleText);
 				echo '<div>';
@@ -767,7 +767,7 @@ function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath){
 					<td class="number">' . $PriceBLink . '</td>
 					</tr>';
 		}
-		if(!$ShowHeader){
+		if (!$ShowHeader){
 			echo '</tbody>
 				</table>
 				</div>';

@@ -114,7 +114,7 @@ if (isset($_GET['SupplierID']) and $_GET['SupplierID']!=''){
 										FROM locations
 										WHERE loccode = '" . $_SESSION['UserStockLocation'] . "'");
 
-	if(DB_num_rows($LocalTaxProvinceResult)==0){
+	if (DB_num_rows($LocalTaxProvinceResult)==0){
 		prnMsg(__('The tax province associated with your user account has not been set up in this database. Tax calculations are based on the tax group of the supplier and the tax province of the user entering the invoice. The system administrator should redefine your account with a valid default stocking location and this location should refer to a valid tax province'),'error');
 		include('includes/footer.php');
 		exit();
@@ -655,10 +655,10 @@ then do the updates and inserts to process the credit note entered */
 	} elseif (DateDiff(date($_SESSION['DefaultDateFormat']), $_SESSION['SuppTrans']->TranDate, 'd') < 0){
 		$InputError = true;
 		prnMsg(__('The credit note as entered cannot be processed because the date is after today') . '. ' . __('Purchase credit notes are expected to have a date prior to or today'),'error');
-	}elseif ($_SESSION['SuppTrans']->ExRate <= 0){
+	} elseif ($_SESSION['SuppTrans']->ExRate <= 0){
 		$InputError = true;
 		prnMsg(__('The credit note as entered cannot be processed because the exchange rate for the credit note has been entered as a negative or zero number') . '. ' . __('The exchange rate is expected to show how many of the suppliers currency there are in 1 of the local currency'),'warn');
-	}elseif ($_SESSION['SuppTrans']->OvAmount < round($TotalShiptValue + $TotalGLValue + $TotalAssetValue + $TotalGRNValue,$_SESSION['SuppTrans']->CurrDecimalPlaces)){
+	} elseif ($_SESSION['SuppTrans']->OvAmount < round($TotalShiptValue + $TotalGLValue + $TotalAssetValue + $TotalGRNValue,$_SESSION['SuppTrans']->CurrDecimalPlaces)){
 		prnMsg(__('The credit note total as entered is less than the sum of the shipment charges') . ', ' . __('the general ledger entries (if any) and the charges for goods received') . '. ' . __('There must be a mistake somewhere') . ', ' . __('the credit note as entered will not be processed'),'error');
 		$InputError = true;
 	} else {
@@ -1221,7 +1221,7 @@ then do the updates and inserts to process the credit note entered */
 
 		foreach ($_SESSION['SuppTrans']->Contracts as $Contract){
 
-			if($Contract->AnticipatedCost ==true){
+			if ($Contract->AnticipatedCost ==true){
 				$Anticipated =1;
 			} else {
 				$Anticipated =0;

@@ -45,7 +45,7 @@ if (KLwebERPScriptCalledFromTEST()){
 	$webERPType = 'webERP TEST';
 	$EmailTo = 'webmaster@kapal-laut.com';
 	$EmailSubject = 'TEST ' . $EmailSubject;
-}else{
+} else {
 	$webERPType = 'webERP';
 }
 

@@ -104,7 +104,7 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level) {
 		while ($MyRow=DB_fetch_array($Result)) {
 
 			$Level1 = str_repeat('-&nbsp;',$Level-1).$Level;
-			if( $MyRow['mbflag']=='B'
+			if ( $MyRow['mbflag']=='B'
 				OR $MyRow['mbflag']=='K'
 				OR $MyRow['mbflag']=='D') {
 
@@ -179,7 +179,7 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level) {
 /* SelectedParent could come from a post or a get */
 if (isset($_GET['SelectedParent'])){
 	$SelectedParent = $_GET['SelectedParent'];
-}else if (isset($_POST['SelectedParent'])){
+} elseif (isset($_POST['SelectedParent'])){
 	$SelectedParent = $_POST['SelectedParent'];
 }
 
@@ -252,7 +252,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			$Errors[$i] = 'Quantity';
 			$i++;
 		}
-		if(!Date1GreaterThanDate2($_POST['EffectiveTo'], $_POST['EffectiveAfter'])){
+		if (!Date1GreaterThanDate2($_POST['EffectiveTo'], $_POST['EffectiveAfter'])){
 			$InputError = 1;
 			prnMsg(__('The effective to date must be a date after the effective after date') . '<br />' . __('The effective to date is') . ' ' . DateDiff($_POST['EffectiveTo'], $_POST['EffectiveAfter'], 'd') . ' ' . __('days before the effective after date') . '! ' . __('No updates have been performed') . '.<br />' . __('Effective after was') . ': ' . $_POST['EffectiveAfter'] . ' ' . __('and effective to was') . ': ' . $_POST['EffectiveTo'],'error');
 			$Errors[$i] = 'EffectiveAfter';
@@ -260,7 +260,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			$Errors[$i] = 'EffectiveTo';
 			$i++;
 		}
-		if($_POST['AutoIssue']==1 AND isset($_POST['Component'])){
+		if ($_POST['AutoIssue']==1 AND isset($_POST['Component'])){
 			$SQL = "SELECT controlled FROM stockmaster WHERE stockid='" . $_POST['Component'] . "'";
 			$CheckControlledResult = DB_query($SQL);
 			$CheckControlledRow = DB_fetch_row($CheckControlledResult);
@@ -392,7 +392,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 	} //BOM editing/insertion ifs
 
 
-	if(isset($_GET['ReSelect'])) {
+	if (isset($_GET['ReSelect'])) {
 		$SelectedParent = $_GET['ReSelect'];
 	}
 
@@ -440,7 +440,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 	$ErrMsg = __('Could not retrieve the description of the parent part because');
 	$Result = DB_query($SQL, $ErrMsg);
 	$ix = 0;
-	if( DB_num_rows($Result) > 0 ) {
+	if ( DB_num_rows($Result) > 0 ) {
      echo '<table class="selection">';
 	 echo '<tr><td><div class="centre">' . __('Manufactured parent items').' : ';
 	 while ($MyRow = DB_fetch_array($Result)){
@@ -462,7 +462,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 	$ErrMsg = __('Could not retrieve the description of the parent part because');
 	$Result = DB_query($SQL, $ErrMsg);
-	if( DB_num_rows($Result) > 0 ) {
+	if ( DB_num_rows($Result) > 0 ) {
         echo '<table class="selection">';
 		echo '<tr><td><div class="centre">' . __('Assembly parent items').' : ';
 	 	$ix = 0;
@@ -486,7 +486,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 	$ErrMsg = __('Could not retrieve the description of the parent part because');
 	$Result = DB_query($SQL, $ErrMsg);
-	if( DB_num_rows($Result) > 0 ) {
+	if ( DB_num_rows($Result) > 0 ) {
         echo '<table class="selection">';
 		echo '<tr><td><div class="centre">' . __('Kit sets').' : ';
 	 	$ix = 0;
@@ -509,7 +509,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 	$ErrMsg = __('Could not retrieve the description of the parent part because');
 	$Result = DB_query($SQL, $ErrMsg);
-	if( DB_num_rows($Result) > 0 ) {
+	if ( DB_num_rows($Result) > 0 ) {
 		echo '<table class="selection">
 				<tr>
 					<td><div class="centre">' . __('Phantom').' : ';
@@ -548,7 +548,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 						<th>' . __('Qty On Hand') . '</th>
 					</tr>';
 	echo $TableHeader;
-	if(count($BOMTree) == 0) {
+	if (count($BOMTree) == 0) {
 		echo '<tr class="striped_row">
 				<td colspan="8">' . __('No materials found.') . '</td>
 			</tr>';

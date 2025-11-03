@@ -238,37 +238,37 @@ function isFamily($StockID, $Family){
 function TypeOfItem($StockID){
 	if (isRing($StockID)){
 		$Type = "Ring";
-	}elseif (isToeRing($StockID)){
+	} elseif (isToeRing($StockID)){
 		$Type = "ToeRing";
-	}elseif (isBead($StockID)){
+	} elseif (isBead($StockID)){
 		$Type = "Bead";
-	}elseif (isBrooche($StockID)){
+	} elseif (isBrooche($StockID)){
 		$Type = "Brooche";
-	}elseif (isEarring($StockID)){
+	} elseif (isEarring($StockID)){
 		$Type = "Earring";
-	}elseif (isPiercing($StockID)){
+	} elseif (isPiercing($StockID)){
 		$Type = "Piercing";
-	}elseif (isEarcuff($StockID)){
+	} elseif (isEarcuff($StockID)){
 		$Type = "EarCuff";
-	}elseif (isFaceMask($StockID)){
+	} elseif (isFaceMask($StockID)){
 		$Type = "Face Mask";
-	}elseif (isJewelleryRoll($StockID)){
+	} elseif (isJewelleryRoll($StockID)){
 		$Type = "Jewellery Roll";
-	}elseif (isBracelet($StockID)){
+	} elseif (isBracelet($StockID)){
 		$Type = "Bracelet";
-	}elseif (isAnklet($StockID)){
+	} elseif (isAnklet($StockID)){
 		$Type = "Anklet";
-	}elseif (isPendant($StockID)){
+	} elseif (isPendant($StockID)){
 		$Type = "Pendant";
-	}elseif (isNecklace($StockID)){
+	} elseif (isNecklace($StockID)){
 		$Type = "Necklace";
-	}elseif (isPlasticBag($StockID)){
+	} elseif (isPlasticBag($StockID)){
 		$Type = "Bag";
-	}elseif (isBag($StockID)){
+	} elseif (isBag($StockID)){
 		$Type = "Bag";
-	}elseif (isTali($StockID)){
+	} elseif (isTali($StockID)){
 		$Type = "Tali";
-	}else{
+	} else {
 		$Type = "Unknown";
 	}
 	return $Type;
@@ -277,13 +277,13 @@ function TypeOfItem($StockID){
 function CodeModelRing($StockID){
 	if (strlen($StockID) == 6){
 		$CodeModel = $StockID;
-	}else{
-		if((substr($StockID, -2,1) == "0") 
+	} else {
+		if ((substr($StockID, -2,1) == "0") 
 			OR (substr($StockID, -2,1) == "1")
 			OR (substr($StockID, -2,1) == "2")){
 			// ring with sizes! We need to cut the 3 last characters -XX
 			$CodeModel = (substr($StockID, 0,strlen($StockID)-3));
-		}else{
+		} else {
 			$CodeModel = $StockID;
 		}
 	}
@@ -293,13 +293,13 @@ function CodeModelRing($StockID){
 function RingSize($StockID){
 	if (strlen($StockID) == 6){
 		$Size = "FR";
-	}else{
-		if((substr($StockID, -2,1) == "0") 
+	} else {
+		if ((substr($StockID, -2,1) == "0") 
 			OR (substr($StockID, -2,1) == "1")
 			OR (substr($StockID, -2,1) == "2")){
 			// ring with sizes! We need to get the 2 last characters -XX
 			$Size = substr($StockID, strlen($StockID)-2,2);
-		}else{
+		} else {
 			$Size = "FR";
 		}
 	}
@@ -309,7 +309,7 @@ function RingSize($StockID){
 function NumberSize($StockID){
 	if (strlen($StockID) == 6){
 		$Size = "NO SIZE";
-	}else if((substr($StockID, -2,1) == "0") 
+	} elseif ((substr($StockID, -2,1) == "0") 
 		OR (substr($StockID, -2,1) == "1")
 		OR (substr($StockID, -2,1) == "2")
 		OR (substr($StockID, -2,1) == "3")
@@ -321,7 +321,7 @@ function NumberSize($StockID){
 		OR (substr($StockID, -2,1) == "9")){
 		// number sizes! We need to get the 2 last characters -XX
 		$Size = substr($StockID, strlen($StockID)-2,2);
-	} else{
+	} else {
 		$Size = "NO SIZE";
 	}
 	return $Size;
@@ -330,17 +330,17 @@ function NumberSize($StockID){
 function ClassicalSize($StockID){
 	if (strlen($StockID) == 6){
 		$Size = "NO SIZE";
-	}else if (substr($StockID, -3,3) == "-XS"){
+	} elseif (substr($StockID, -3,3) == "-XS"){
 		$Size = "XS";
-	}else if (substr($StockID, -2,2) == "-S"){
+	} elseif (substr($StockID, -2,2) == "-S"){
 		$Size = "S";
-	}else if (substr($StockID, -2,2) == "-M"){
+	} elseif (substr($StockID, -2,2) == "-M"){
 		$Size = "M";
-	}else if (substr($StockID, -2,2) == "-L"){
+	} elseif (substr($StockID, -2,2) == "-L"){
 		$Size = "L";
-	}else if (substr($StockID, -3,3) == "-XL"){
+	} elseif (substr($StockID, -3,3) == "-XL"){
 		$Size = "XL";
-	}else{
+	} else {
 		$Size = "NO SIZE";
 	}
 	return $Size;
@@ -355,23 +355,23 @@ function ItemCodeQOH($StockID, $CodeDetail, $Where){
 
 	if ($CodeDetail == 'CODE_FULL'){
 		$SQL .= "AND  stockid = '". $StockID ."'";
-	}elseif ($CodeDetail == 'CODE_FULL_WITH_RINGS'){
+	} elseif ($CodeDetail == 'CODE_FULL_WITH_RINGS'){
 		if (isRing($StockID)){
 			$SQL .= "AND stockid LIKE '". $StockID ."%'";
-		}else{
+		} else {
 			$SQL .= "AND stockid = '". $StockID ."'";
 		}
-	}else{
+	} else {
 		$SQL .= "AND stockid LIKE '". $StockID ."%'";
 	}
 
 	if ($Where == "ALL_SHOPS"){
 		$SQL .= " AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . " "; 
-	}elseif ($Where == "ALL_SHOPS_AND_ONLINE"){
+	} elseif ($Where == "ALL_SHOPS_AND_ONLINE"){
 		$SQL .= " AND locations.typeloc IN " . LIST_ALL_SHOPS_BY_TYPE . " "; 
-	}elseif ($Where == "ALL"){
+	} elseif ($Where == "ALL"){
 		$SQL .= " "; 
-	}else{
+	} else {
 		$SQL .= " AND locstock.loccode = '". $Where . "'"; 
 	}
 
@@ -379,7 +379,7 @@ function ItemCodeQOH($StockID, $CodeDetail, $Where){
 	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
 		$Qty = $MyRow['total'];
-	}else{
+	} else {
 		$Qty = 0;
 	}
 	return $Qty;
@@ -390,13 +390,13 @@ function ItemCodeQuantityInvoiced($StockID,$FromDate,$ToDate,$Debtorno,$CodeDeta
 
 	if ($CodeDetail == 'CODE_FULL'){
 		$WhereCondition = "AND salesorderdetails.stkcode = '". $StockID ."'";
-	}elseif ($CodeDetail == 'CODE_FULL_WITH_RINGS'){
+	} elseif ($CodeDetail == 'CODE_FULL_WITH_RINGS'){
 		if (isRing($StockID)){
 			$WhereCondition = "AND salesorderdetails.stkcode LIKE '". $StockID ."%'";
-		}else{
+		} else {
 			$WhereCondition = "AND salesorderdetails.stkcode = '". $StockID ."'";
 		}
-	}else{
+	} else {
 		$WhereCondition = "AND salesorderdetails.stkcode LIKE '". $StockID ."%'";
 	}
 
@@ -424,13 +424,13 @@ function ItemCodeAvgPriceInvoiced($StockID,$FromDate,$ToDate,$Debtorno,$CodeDeta
 	
 	if ($CodeDetail == 'CODE_FULL'){
 		$WhereCondition = "AND salesorderdetails.stkcode = '". $StockID ."'";
-	}elseif ($CodeDetail == 'CODE_FULL_WITH_RINGS'){
+	} elseif ($CodeDetail == 'CODE_FULL_WITH_RINGS'){
 		if (isRing($StockID)){
 			$WhereCondition = "AND salesorderdetails.stkcode LIKE '". $StockID ."%'";
-		}else{
+		} else {
 			$WhereCondition = "AND salesorderdetails.stkcode = '". $StockID ."'";
 		}
-	}else{
+	} else {
 		$WhereCondition = "AND salesorderdetails.stkcode LIKE '". $StockID ."%'";
 	}
 	
@@ -461,13 +461,13 @@ function ItemCodeQOO_PurchaseOrders($StockID, $CodeDetail){
 
 	if ($CodeDetail == 'CODE_FULL'){
 		$WhereCondition = "WHERE purchorderdetails.itemcode = '". $StockID ."'";
-	}elseif ($CodeDetail == 'CODE_FULL_WITH_RINGS'){
+	} elseif ($CodeDetail == 'CODE_FULL_WITH_RINGS'){
 		if (isRing($StockID)){
 			$WhereCondition = "WHERE purchorderdetails.itemcode LIKE '". $StockID ."%'";
-		}else{
+		} else {
 			$WhereCondition = "WHERE purchorderdetails.itemcode = '". $StockID ."'";
 		}
-	}else{
+	} else {
 		$WhereCondition = "WHERE purchorderdetails.itemcode LIKE '". $StockID ."%'";
 	}
 
@@ -491,13 +491,13 @@ function ItemCodeQOO_WorkOrders($StockID,$CodeDetail){
 
 	if ($CodeDetail == 'CODE_FULL'){
 		$WhereCondition = "AND woitems.stockid = '". $StockID ."'";
-	}elseif ($CodeDetail == 'CODE_FULL_WITH_RINGS'){
+	} elseif ($CodeDetail == 'CODE_FULL_WITH_RINGS'){
 		if (isRing($StockID)){
 			$WhereCondition = "AND woitems.stockid LIKE '". $StockID ."%'";
-		}else{
+		} else {
 			$WhereCondition = "AND woitems.stockid = '". $StockID ."'";
 		}
-	}else{
+	} else {
 		$WhereCondition = "AND woitems.stockid LIKE '". $StockID ."%'";
 	}
 
@@ -513,19 +513,19 @@ function ItemCodeQOO_WorkOrders($StockID,$CodeDetail){
 }
 
 function locale_number_format_zero_blank($num,$dec){
-	if($num == 0){
+	if ($num == 0){
 		return '';
-	}else{
+	} else {
 		return locale_number_format($num,$dec);
 	}
 }
 
 function locale_number_format_kpi($num){
-	if(abs($num) >= 100){
+	if (abs($num) >= 100){
 		return locale_number_format($num,0);
-	}elseif(abs($num) >= 10){
+	} elseif (abs($num) >= 10){
 		return locale_number_format($num,1);
-	}else{
+	} else {
 		return locale_number_format($num,2);
 	}
 }
@@ -566,7 +566,7 @@ function ItemInList($Item, $List){
 	// http://www.php.net/manual/en/function.strpos.php for details on ===	
 	if (strpos(strtolower($List), strtolower($Item)) === false){
 		return false;
-	}else{
+	} else {
 		return true;
 	}
 }
@@ -617,7 +617,7 @@ function ReviseEmailAddress($email){
 	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
 		$revisedemail = substr($email,0,$atposition+1).$MyRow['fixeddomain'] ;
-	}else{
+	} else {
 		// seems OK. At least we can't detect an error
 		$revisedemail = $email;
 	}
@@ -819,15 +819,15 @@ function InsertIntoGLTrans($Type, $Typeno, $Trandate, $Period, $Account, $Narrat
 function GLAccountBelongsTo($Account){
 	if (ItemInList("AD", $Account)){
 		$Company = "PTADU";
-	}else if (ItemInList("SM", $Account)){
+	} elseif (ItemInList("SM", $Account)){
 		$Company = "PTSMH";
-	}else if (ItemInList("BB", $Account)){
+	} elseif (ItemInList("BB", $Account)){
 		$Company = "PTBB";
-	}else if (ItemInList("IK", $Account)){
+	} elseif (ItemInList("IK", $Account)){
 		$Company = "POIK";
-	}else if (ItemInList("PI", $Account)){
+	} elseif (ItemInList("PI", $Account)){
 		$Company = "POPI";
-	}else{
+	} else {
 		$Company = "CASH";
 	}
 	return $Company;
@@ -842,7 +842,7 @@ function isBankAccount($GLAccount){
 	if (DB_num_rows($Result) == 0){
 		return false;
 	}
-	else{
+	else {
 		return true;
 	}
 }
@@ -855,13 +855,13 @@ function FindWebsiteBrand($StockID, $Category, $Description){
 	if (ItemInList($Category, LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_ALL_DISCOUNT)){
 		// if belongs to one of the KL categories, so Brand is KL
 		$Brand = 1;	
-	}else if (ItemInList($Category, LIST_STOCK_CATEGORIES_BLINK_INCLUDING_ALL_DISCOUNT)){
+	} elseif (ItemInList($Category, LIST_STOCK_CATEGORIES_BLINK_INCLUDING_ALL_DISCOUNT)){
 		// if belongs to one of the BL categories, so Brand is BL
 		$Brand = 2;	
-	}else if (ItemInList($Category, LIST_STOCK_CATEGORIES_GENERAL_INCLUDING_ALL_DISCOUNT)){
+	} elseif (ItemInList($Category, LIST_STOCK_CATEGORIES_GENERAL_INCLUDING_ALL_DISCOUNT)){
 		// if belongs to one of the General categories, so Brand is KL
 		$Brand = 1;	
-	}else{
+	} else {
 		//should be a discounted item, we keep the previous brand if still available, otherwise we continue messing around
 		$SQL = "SELECT manufacturers_id
 				FROM salescatprod 
@@ -871,12 +871,12 @@ function FindWebsiteBrand($StockID, $Category, $Description){
 			// assign the current brand
 			$MyRow = DB_fetch_array($Result);
 			$Brand = $MyRow['manufacturers_id'];	
-		}else{
+		} else {
 			// we check the description, if we get any info
 				if (mb_stristr($Description, "silver") != false){
 					// description contains "silver", should be KL
 					$Brand = 1;	
-				}else{
+				} else {
 					// description does not contain "silver", should be Blink
 					$Brand = 2;	
 				}			
@@ -892,7 +892,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 		$FunctionalExRate = 1;
 		$ExRate = 1;
 		$Currency = "IDR";
-	}else{
+	} else {
 		return "ERROR";
 	}
 
@@ -934,7 +934,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 				WHERE klonlinepartners.onlinepartnercode = '" . $OnlinePartner . "'";
 		$ErrMsg ='Could not get the GL Transfers and Commissions for online shop payments because';
 		$ResultAccounts = DB_query($SQLAccounts,$ErrMsg);
-		if(DB_num_rows($ResultAccounts) != 0){
+		if (DB_num_rows($ResultAccounts) != 0){
 			$MyRowAccounts = DB_fetch_array($ResultAccounts);
 			if ($PaymentCode == "bank_mandiri"){
 				// bank Mandiri direct transfer has no commissions 
@@ -942,37 +942,37 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 				$GLAccountCommission = "";
 				$GLAccountCommissionPPN = "";
 				$Commission = 0;
-			}elseif ($PaymentCode == "bank_bca"){
+			} elseif ($PaymentCode == "bank_bca"){
 				// bank bca direct transfer has no commissions 
 				$GLAccountTransfer = $MyRowAccounts['accounttransferbca'];
 				$GLAccountCommission = "";
 				$GLAccountCommissionPPN = "";
 				$Commission = 0;
-			}elseif ($PaymentCode == "bank_danamon"){
+			} elseif ($PaymentCode == "bank_danamon"){
 				// bank Danamon direct transfer has no commissions
 				$GLAccountTransfer = $MyRowAccounts['accounttransferdanamon'];
 				$GLAccountCommission = "";
 				$GLAccountCommissionPPN = "";
 				$Commission = 0;
-			}elseif  ($PaymentCode == "snap"){
+			} elseif  ($PaymentCode == "snap"){
 				// MidTrans has commissions but we can't integrate them. We account full order, later manually we process commissions
 				$GLAccountTransfer = $MyRowAccounts['accountmidtransidr'];
 				$GLAccountCommission = "";
 				$GLAccountCommissionPPN = "";
 				$Commission = 0;
-			}elseif  ($PaymentCode == "xenditmandiriva"){
+			} elseif  ($PaymentCode == "xenditmandiriva"){
 				// Xendit transfer via mandiri has commissions
 				$GLAccountTransfer = $MyRowAccounts['accountxenditidr'];
 				$GLAccountCommission = $MyRowAccounts['accountxenditcomissionidr'];
 				$GLAccountCommissionPPN = $MyRowAccounts['accountcomissionppn'];
 				$Commission = round($MyRowAccounts['comissionxenditflattransfer'],0);
-			}elseif  ($PaymentCode == "xenditcc"){
+			} elseif  ($PaymentCode == "xenditcc"){
 				// Xendit transfer via CC has commissions
 				$GLAccountTransfer = $MyRowAccounts['accountxenditidr'];
 				$GLAccountCommission = $MyRowAccounts['accountxenditcomissionidr'];
 				$GLAccountCommissionPPN = $MyRowAccounts['accountcomissionppn'];
 				$Commission = round(($MyRowAccounts['comissionxenditflatcc'] + ($TotalAmount * ($MyRowAccounts['comissionxenditpercentcc']/100))) ,0);
-			}elseif  ($PaymentCode == "tokopedia"){
+			} elseif  ($PaymentCode == "tokopedia"){
 				// Tokopedia payments  has commissions
 				$GLAccountTransfer = $MyRowAccounts['accounttokopediaidr'];
 				$GLAccountCommission = $MyRowAccounts['accounttokopediacomissionidr'];
@@ -986,7 +986,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 															$CommissionTokopediaPercent,
 															$CommissionTokopediaFreeShippingPerItem,
 															$CommissionTokopediaFreeShippingMaximum);
-			}elseif  ($PaymentCode == "shopee"){
+			} elseif  ($PaymentCode == "shopee"){
 				// Shopee payments  has commissions
 				$GLAccountTransfer = $MyRowAccounts['accountshopeeidr'];
 				$GLAccountCommission = $MyRowAccounts['accountshopeecomissionidr'];
@@ -1000,7 +1000,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 														$CommissionShopeePercent,
 														$CommissionShopeeFreeShippingPerItem,
 														$CommissionShopeeFreeShippingMaximum);
-			}elseif  ($PaymentCode == "lazada"){
+			} elseif  ($PaymentCode == "lazada"){
 				// Lazada payments  has commissions
 				$GLAccountTransfer = $MyRowAccounts['accountlazadaidr'];
 				$GLAccountCommission = $MyRowAccounts['accountlazadacomissionidr'];
@@ -1181,7 +1181,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 							quotation = '0',
 							confirmeddate = CURRENT_DATE
 					WHERE salesorders.orderno='" . $OrderNo . "'";
-		}else{
+		} else {
 			$SQL = "UPDATE salesorders
 						SET quotation = '0',
 							confirmeddate = CURRENT_DATE
@@ -1200,7 +1200,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 
 		$Result = DB_Txn_Commit();
 
-	}else{
+	} else {
 		// marketplace customers MANUAL_MARKETPLACE, just mark the order as paid
 		// accounting has been done manually
 		$Result = DB_Txn_Begin();
@@ -1221,24 +1221,24 @@ function ItemImagesURL($StockID, $NumberOfImage, $PackagingAlreadyFound, $TypeOf
 	if ($NumberOfImage == 1){
 		// main image
 		$URL = PATH_TO_CATALOG_IMAGES . $StockID.'.jpg';
-	}elseif ($NumberOfImage == 999){
+	} elseif ($NumberOfImage == 999){
 		// last image of the lot MUST be a packaging image if still not found a packaging image
 		if (($TypeOfPackaging != "") AND ($TypeOfPackaging != "NO-PACKAGING")){
 			$URL = PATH_TO_CATALOG_PACKAGING_IMAGES . $TypeOfPackaging.'.jpg';
 			$PackagingImage =  true;
-		}else{
+		} else {
 			$URL = "";
 		}
-	}else{
+	} else {
 		// extra images
 		$NumberOfImage = $NumberOfImage - 1;
 		if (file_exists($_SESSION['part_pics_dir'] . '/' . $StockID.'.'.$NumberOfImage.'.jpg')){
 			$URL = PATH_TO_CATALOG_IMAGES . $StockID.'.'.$NumberOfImage.'.jpg';
-		}else{
+		} else {
 			if (($TypeOfPackaging != "") AND ($TypeOfPackaging != "NO-PACKAGING")){
 				$URL = PATH_TO_CATALOG_PACKAGING_IMAGES . $TypeOfPackaging.'.jpg';
 				$PackagingImage =  true;
-			}else{
+			} else {
 				$URL = "";
 			}
 		}
@@ -1252,7 +1252,7 @@ function DataExistsInWebERP($Table, $f1, $v1, $f2 = '', $v2 = ''){
 		$SQL = "SELECT COUNT(*)
 				FROM " . $Table . "
 				WHERE " . $f1 . " = '" . $v1 . "'";
-	}else{
+	} else {
 		/* Primary key is 2 fields */
 		$SQL = "SELECT COUNT(*)
 				FROM " . $Table . "
@@ -1262,10 +1262,10 @@ function DataExistsInWebERP($Table, $f1, $v1, $f2 = '', $v2 = ''){
 	$ErrMsg =__('Could not check existence of data in webERP because');
 	$Result = DB_query($SQL,$ErrMsg);
 
-	if(DB_num_rows($Result) != 0){
+	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
 		$Exists = ($MyRow[0] > 0);
-	}else{
+	} else {
 		$Exists = false;
 	}
 	return $Exists;
@@ -1277,7 +1277,7 @@ function DataExistsInArchive($Table, $f1, $v1, $f2 = '', $v2 = ''){
 		$SQL = "SELECT COUNT(*)
 				FROM " . $Table . "
 				WHERE " . $f1 . " = '" . $v1 . "'";
-	}else{
+	} else {
 		/* Primary key is 2 fields */
 		$SQL = "SELECT COUNT(*)
 				FROM " . $Table . "
@@ -1287,10 +1287,10 @@ function DataExistsInArchive($Table, $f1, $v1, $f2 = '', $v2 = ''){
 	$ErrMsg =__('Could not check existence of data in webERP because');
 	$Result = DB_query_archive($SQL,$ErrMsg);
 
-	if(DB_num_rows($Result) != 0){
+	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
 		$Exists = ($MyRow[0] > 0);
-	}else{
+	} else {
 		$Exists = false;
 	}
 	return $Exists;
@@ -1335,7 +1335,7 @@ function NumberOfShops($ShopType){
 				WHERE typeloc = '" . $ShopType . "'";
 				
 	// Handle discount shop queries (SHOPOK, SHOPOB, SHOPOG)
-	}elseif ($ShopType == "SHOPOK"){
+	} elseif ($ShopType == "SHOPOK"){
 		/* Optimized query for Kapal-Laut discount shops:
 		 * - Leverages uk_locations_typeloc_loccode index for typeloc filtering
 		 * - Efficient discount flag checking with OR conditions
@@ -1347,7 +1347,7 @@ function NumberOfShops($ShopType){
 						OR alldisc50items > 0
 						OR alldisc80items > 0)";
 						
-	}elseif ($ShopType == "SHOPOB"){
+	} elseif ($ShopType == "SHOPOB"){
 		/* Optimized query for Blink discount shops:
 		 * - Leverages uk_locations_typeloc_loccode index for typeloc filtering
 		 * - Efficient discount flag checking with OR conditions
@@ -1359,7 +1359,7 @@ function NumberOfShops($ShopType){
 						OR alldisc50items > 0
 						OR alldisc80items > 0)";
 						
-	}elseif ($ShopType == "SHOPOG"){
+	} elseif ($ShopType == "SHOPOG"){
 		/* Optimized query for General discount shops:
 		 * - Uses uk_locations_typeloc_loccode index with IN clause for multiple types
 		 * - More efficient than multiple OR conditions for typeloc
@@ -1370,7 +1370,7 @@ function NumberOfShops($ShopType){
 					AND (alldisc20items > 0
 						OR alldisc50items > 0
 						OR alldisc80items > 0)";
-	}else{
+	} else {
 		// Invalid shop type - return 0
 		return 0;
 	}
@@ -1386,7 +1386,7 @@ function NumberOfShops($ShopType){
 function NumberOfRegularShopsSellingDiscount($ShopType){
 	if ($ShopType == "SHOPKL"){
 		$Categories = "AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_ONLY_DISCOUNT . "";
-	} else if ($ShopType == "SHOPBL"){
+	} elseif ($ShopType == "SHOPBL"){
 		$Categories = "AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_ONLY_DISCOUNT . "";
 	} else {
 		return 0;
@@ -1404,7 +1404,7 @@ function NumberOfRegularShopsSellingDiscount($ShopType){
 	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
 		return $MyRow[0];
-	}else{
+	} else {
 		return 0;
 	}
 }
@@ -1413,7 +1413,7 @@ function DeleteWeberpUser($SelectedUser, $AdminRole){
 	// a regular user can't delete some users, so we check if the user is a super user or not
 	if ($SelectedUser == "Ricard"){
 		prnMsg('User '. $SelectedUser . ' cannot be deleted as is a super user','error');
-	}elseif ((($SelectedUser == "Laia")
+	} elseif ((($SelectedUser == "Laia")
 				OR ($SelectedUser == "Garbi")	
 				OR ($SelectedUser == "Ike1")	
 				OR ($SelectedUser == "Fathus")	
@@ -1422,10 +1422,10 @@ function DeleteWeberpUser($SelectedUser, $AdminRole){
 				OR ($SelectedUser == "Revi"))
 			AND (!$AdminRole )){
 		prnMsg('You do not have enough rights to delete user '. $SelectedUser ,'error');
-	}else{
+	} else {
 		$SQL="SELECT userid FROM audittrail where userid = '" . $SelectedUser ."'";
 		$Result=DB_query($SQL);
-		if(DB_num_rows($Result)!=0) {
+		if (DB_num_rows($Result)!=0) {
 			prnMsg(__('Cannot delete user as entries still exist in the audit trail'), 'error');
 		} else {
 			$SQL="DELETE FROM locationusers WHERE userid = '" . $SelectedUser . "'";
@@ -1466,17 +1466,17 @@ function DeleteWeberpUser($SelectedUser, $AdminRole){
 function GetDayNameFromWeekDay($WeekDay){
 	if ($WeekDay == 1){
 		return "Sunday";
-	}elseif ($WeekDay == 2){
+	} elseif ($WeekDay == 2){
 		return "Monday";
-	}elseif ($WeekDay == 3){
+	} elseif ($WeekDay == 3){
 		return "Tuesday";
-	}elseif ($WeekDay == 4){
+	} elseif ($WeekDay == 4){
 		return "Wednesday";
-	}elseif ($WeekDay == 5){
+	} elseif ($WeekDay == 5){
 		return "Thursday";
-	}elseif ($WeekDay == 6){
+	} elseif ($WeekDay == 6){
 		return "Friday";
-	}elseif ($WeekDay == 7){
+	} elseif ($WeekDay == 7){
 		return "Saturday";
 	}
 }
@@ -1515,17 +1515,17 @@ function TotalItemsToBeReceivedByPO($Brand){
 
 	if ($Brand == "SHOPKL"){
 		$CategoryFilter = LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_SETUP;
-	}elseif ($Brand == "SHOPBL"){
+	} elseif ($Brand == "SHOPBL"){
 		$CategoryFilter = LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP;
-	}elseif ($Brand == "SHOPOK"){
+	} elseif ($Brand == "SHOPOK"){
 		$CategoryFilter = LIST_STOCK_CATEGORIES_KAPAL_LAUT_ONLY_DISCOUNT;
-	}elseif ($Brand == "SHOPOB"){
+	} elseif ($Brand == "SHOPOB"){
 		$CategoryFilter = LIST_STOCK_CATEGORIES_BLINK_ONLY_DISCOUNT;
-	}elseif ($Brand == "SHOPOG"){
+	} elseif ($Brand == "SHOPOG"){
 		$CategoryFilter = LIST_STOCK_CATEGORIES_GENERAL_ONLY_DISCOUNT;
-	}elseif ($Brand == "SHOPOU"){
+	} elseif ($Brand == "SHOPOU"){
 		$CategoryFilter = LIST_STOCK_CATEGORIES_OUTLET;
-	}else{
+	} else {
 		return 0;
 	}
 
@@ -1564,9 +1564,9 @@ function TotalItemsToBeReceivedByWO($Brand){
 
 	if ($Brand == "SHOPKL"){
 		$CategoryFilter = LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_SETUP;
-	}elseif ($Brand == "SHOPBL"){
+	} elseif ($Brand == "SHOPBL"){
 		$CategoryFilter = LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP;
-	}else{
+	} else {
 		return 0;
 	}
 
@@ -1605,15 +1605,15 @@ function TotalModels($Brand){
 
 	if ($Brand == "SHOPKL"){
 		$CategoryFilter = LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_SETUP;
-	}elseif ($Brand == "SHOPBL"){
+	} elseif ($Brand == "SHOPBL"){
 		$CategoryFilter = LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP;
-	}elseif ($Brand == "SHOPOK"){
+	} elseif ($Brand == "SHOPOK"){
 		$CategoryFilter = LIST_STOCK_CATEGORIES_KAPAL_LAUT_ONLY_DISCOUNT;
-	}elseif ($Brand == "SHOPOB"){
+	} elseif ($Brand == "SHOPOB"){
 		$CategoryFilter = LIST_STOCK_CATEGORIES_BLINK_ONLY_DISCOUNT;
-	}elseif ($Brand == "SHOPOG"){
+	} elseif ($Brand == "SHOPOG"){
 		$CategoryFilter = LIST_STOCK_CATEGORIES_GENERAL_ONLY_DISCOUNT;
-	}else{
+	} else {
 		$CategoryFilter = LIST_STOCK_CATEGORIES_OUTLET;
 	}
 
@@ -1647,15 +1647,15 @@ function TotalItems($Brand){
 
 	if ($Brand == "SHOPKL"){
 		$CategoryFilter = LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_SETUP;
-	}elseif ($Brand == "SHOPBL"){
+	} elseif ($Brand == "SHOPBL"){
 		$CategoryFilter = LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP;
-	}elseif ($Brand == "SHOPOK"){
+	} elseif ($Brand == "SHOPOK"){
 		$CategoryFilter = LIST_STOCK_CATEGORIES_KAPAL_LAUT_ONLY_DISCOUNT;
-	}elseif ($Brand == "SHOPOB"){
+	} elseif ($Brand == "SHOPOB"){
 		$CategoryFilter = LIST_STOCK_CATEGORIES_BLINK_ONLY_DISCOUNT;
-	}elseif ($Brand == "SHOPOG"){
+	} elseif ($Brand == "SHOPOG"){
 		$CategoryFilter = LIST_STOCK_CATEGORIES_GENERAL_ONLY_DISCOUNT;
-	}else{
+	} else {
 		$CategoryFilter = LIST_STOCK_CATEGORIES_OUTLET;
 	}
 
@@ -1684,9 +1684,9 @@ function TotalDisplayItems($Brand){
 
 	if ($Brand == "SHOPKL"){
 		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT ."";
-	}else if ($Brand == "SHOPBL"){
+	} elseif ($Brand == "SHOPBL"){
 		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK ."";
-	}else{
+	} else {
 		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."";
 	} 
 
@@ -1715,15 +1715,15 @@ function NumItemsSoldPerBrand($Brand, $FromDate, $ToDate){
 	
 	if ($Brand == "SHOPKL"){
 		$CategoryFilter = LIST_STOCK_CATEGORIES_KAPAL_LAUT;
-	}elseif ($Brand == "SHOPBL"){
+	} elseif ($Brand == "SHOPBL"){
 		$CategoryFilter = LIST_STOCK_CATEGORIES_BLINK;
-	}elseif ($Brand == "SHOPOK"){
+	} elseif ($Brand == "SHOPOK"){
 		$CategoryFilter = LIST_STOCK_CATEGORIES_KAPAL_LAUT_ONLY_DISCOUNT;
-	}elseif ($Brand == "SHOPOB"){
+	} elseif ($Brand == "SHOPOB"){
 		$CategoryFilter = LIST_STOCK_CATEGORIES_BLINK_ONLY_DISCOUNT;
-	}elseif ($Brand == "SHOPOG"){
+	} elseif ($Brand == "SHOPOG"){
 		$CategoryFilter = LIST_STOCK_CATEGORIES_GENERAL_ONLY_DISCOUNT;
-	}else{
+	} else {
 		$CategoryFilter = LIST_STOCK_CATEGORIES_OUTLET;
 	}
 
@@ -1751,17 +1751,17 @@ function NumItemsSoldPerBrand($Brand, $FromDate, $ToDate){
 function BrandTextFromCode($Brand){
 	if ($Brand == "SHOPKL"){
 		$BrandText = "Kapal-Laut";
-	}elseif ($Brand == "SHOPBL"){
+	} elseif ($Brand == "SHOPBL"){
 		$BrandText = "Blink";
-	}elseif ($Brand == "SHOPOU"){
+	} elseif ($Brand == "SHOPOU"){
 		$BrandText = "Outlet";
-	}elseif ($Brand == "SHOPOK"){
+	} elseif ($Brand == "SHOPOK"){
 		$BrandText = "Outlet Kapal-Laut";
-	}elseif ($Brand == "SHOPOB"){
+	} elseif ($Brand == "SHOPOB"){
 		$BrandText = "Outlet Blink";
-	}elseif ($Brand == "SHOPOG"){
+	} elseif ($Brand == "SHOPOG"){
 		$BrandText = "Outlet General";
-	}else{
+	} else {
 		$BrandText = "ERROR";
 	}
 	return $BrandText;
@@ -1772,11 +1772,11 @@ function OptimumOrderQuantity($QtyNeeded, $Eoq, $PanSize){
 		if ($PanSize == 0){
 			$OptimumOrderQuantity = max($Eoq, $QtyNeeded);
 		}
-		else{
+		else {
 			$OptimumOrderQuantity = max($Eoq, ceil($QtyNeeded / $PanSize) * $PanSize);
 		}
 	}
-	else{
+	else {
 		$OptimumOrderQuantity = 0;
 	}
 	return $OptimumOrderQuantity;
@@ -1786,31 +1786,31 @@ function OptimumOrderQuantity($QtyNeeded, $Eoq, $PanSize){
 function ChangeGLAcoountCode($NewGL, $OldGL) {
 	/*First check the code exists */
 	$Result = DB_query("SELECT accountcode FROM chartmaster WHERE accountcode='" . $OldGL . "'");
-	if(DB_num_rows($Result) == 0) {
+	if (DB_num_rows($Result) == 0) {
 		prnMsg(__('The GL account code') . ': ' . $OldGL . ' ' . __('does not currently exist as a GL account code in the system'), 'error');
 		$InputError = 1;
 	}
 
-	if(ContainsIllegalCharacters($NewGL)) {
+	if (ContainsIllegalCharacters($NewGL)) {
 		prnMsg(__('The new GL account code to change the old code to contains illegal characters - no changes will be made'), 'error');
 		$InputError = 1;
 	}
 
-	if($NewGL == '') {
+	if ($NewGL == '') {
 		prnMsg(__('The new GL account code to change the old code to must be entered as well'), 'error');
 		$InputError = 1;
 	}
 
 	/*Now check that the new code doesn't already exist */
 	$Result = DB_query("SELECT accountcode FROM chartmaster WHERE accountcode='" . $NewGL . "'");
-	if(DB_num_rows($Result) != 0) {
+	if (DB_num_rows($Result) != 0) {
 		echo '<br /><br />';
 		prnMsg(__('The replacement GL account code') . ': ' . $NewGL . ' ' . __('already exists as a GL account code in the system') . ' - ' . 
 			__('a unique GL account code must be entered for the new code'), 'error');
 		$InputError = 1;
 	}
 
-	if($InputError == 0) {// no input errors
+	if ($InputError == 0) {// no input errors
 		DB_Txn_Begin();
 		echo '<br />' . __('Adding the new chartmaster record');
 		$SQL = "INSERT INTO chartmaster (accountcode,
@@ -1983,7 +1983,7 @@ function GetNumberOfRecordsInTable($TableName, $Database) {
 	$SQL = "SELECT COUNT(*) AS total FROM " . $TableName;
 	if ($Database == 'Production') {
 		$Result = DB_query($SQL);
-	}else if ($Database == 'Archive') {
+	} elseif ($Database == 'Archive') {
 		$Result = DB_query_archive($SQL);
 	}
 	if (DB_num_rows($Result) > 0) {

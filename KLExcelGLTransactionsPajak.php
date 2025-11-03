@@ -199,7 +199,7 @@ function submit($PartnerCode, $FromDate, $ToDate) {
 		if ($_POST['Format'] == 'xlsx') {
 			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 			$File = $PartnerCode . '-GL-' . FormatDateForSQL($FromDate). '-' . FormatDateForSQL($ToDate) . '.xlsx';
-		} else if ($_POST['Format'] == 'ods') {
+		} elseif ($_POST['Format'] == 'ods') {
 			header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
 			$File = $PartnerCode . '-GL-' . FormatDateForSQL($FromDate). '-' . FormatDateForSQL($ToDate) . '.ods';
 		}
@@ -216,7 +216,7 @@ function submit($PartnerCode, $FromDate, $ToDate) {
 
 		if ($_POST['Format'] == 'xlsx') {
 			$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($SpreadSheet);
-		} else if ($_POST['Format'] == 'ods') {
+		} elseif ($_POST['Format'] == 'ods') {
 			$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($SpreadSheet);
 		}
 		$objWriter->save('php://output');

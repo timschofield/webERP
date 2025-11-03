@@ -302,7 +302,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 			prnMsg(__('Accessing webERP TEST but connecting to Production Database. Logout and login again.'),'error');
 			include($PathPrefix . 'includes/footer.php');
 		}
-	}else{
+	} else {
 		/* The script is not from TEST*/
 		if ($_SESSION['DatabaseName'] != "kl_erp"){
 			/* If DB is not kl_erp we have a problem and should stop*/

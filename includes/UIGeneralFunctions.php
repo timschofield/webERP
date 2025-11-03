@@ -231,7 +231,7 @@ function FieldToSelectOnePeriod($VariableName, $SelectedValue, $Label = '', $Hel
 
 	if ($Filter == 'NEWER_OR_EQUAL_THAN_SELECTED') {
 		$WhereSQL = " WHERE periodno >= " . $SelectedValue . " ";
-	}else {
+	} else {
 		$WhereSQL = " ";
 	}
 
@@ -310,11 +310,11 @@ function FieldToSelectOneSalesPerson($VariableName, $SelectedValue, $Label = '',
 	$HTML .= 'name="' . $VariableName . '">
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
 
-	if($_SESSION['SalesmanLogin'] != '') {
+	if ($_SESSION['SalesmanLogin'] != '') {
 		/* If the user is a salesman, then the salesperson is fixed */
 		$HTML .=  '<fieldtext>' . $_SESSION['UsersRealName'] . '</fieldtext>
 				</field>';
-	}else{
+	} else {
 
 		if ($Filter == 'CURRENT') {
 			$SQL = "SELECT salesmancode, 
@@ -323,7 +323,7 @@ function FieldToSelectOneSalesPerson($VariableName, $SelectedValue, $Label = '',
 					WHERE current = 1
 					ORDER BY salesmancode";
 		}
-		else{
+		else {
 			$SQL = "SELECT salesmancode, 
 						salesmanname 
 					FROM salesman

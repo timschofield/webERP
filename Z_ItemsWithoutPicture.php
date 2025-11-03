@@ -27,8 +27,8 @@ if (DB_num_rows($Result) != 0){
 	while ($MyRow = DB_fetch_array($Result)) {
         $Glob = (glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
 		$ImageFile = reset($Glob);
-		if(!file_exists($ImageFile) ) {
-			if($PrintHeader){
+		if (!file_exists($ImageFile) ) {
+			if ($PrintHeader){
 				$TableHeader = '<tr>
 								<th>' . '#' . '</th>
 								<th>' . __('Category') . '</th>

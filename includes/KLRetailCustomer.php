@@ -10,7 +10,7 @@ function RetailCustomerAnalysisBySex($NumDays, $ListShops){
 		$Yesterday  = date('Y-m-d');
 		$StartDate  = date('Y-m-d');
 		$TableTitleText = __('Retail Customers By Sex during today ');
-	}else{
+	} else {
 		$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 		$StartDate  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 		$TableTitleText = 'Retail Customers By Sex during the last ' . locale_number_format($NumDays,0) . ' days ' ;
@@ -18,7 +18,7 @@ function RetailCustomerAnalysisBySex($NumDays, $ListShops){
 
 	if ($ListShops == 'ALL'){
 		$WhereListShops = " ";
-	}else{
+	} else {
 		$WhereListShops = " AND salesorders.fromstkloc IN (" . $ListShops . ") ";
 	}
 	
@@ -108,7 +108,7 @@ function RetailCustomerAnalysisByCountry($NumDays, $TypeOfShops, $ShopArea, $Min
 		// today only
 		$Yesterday  = date('Y-m-d');
 		$StartDate  = date('Y-m-d');
-	}else{
+	} else {
 		$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 		$StartDate  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 	}
@@ -116,13 +116,13 @@ function RetailCustomerAnalysisByCountry($NumDays, $TypeOfShops, $ShopArea, $Min
 	if ($TypeOfShops == 'ALL'){
 		$WhereListShops = " ";
 		$NameOfShops = "ALL";
-	}elseif ($TypeOfShops == 'KAPAL-LAUT'){
+	} elseif ($TypeOfShops == 'KAPAL-LAUT'){
 		$WhereListShops = " AND locations.typeloc = 'SHOPKL' ";
 		$NameOfShops = "KAPAL-LAUT";
-	}elseif ($TypeOfShops == 'BLINK'){
+	} elseif ($TypeOfShops == 'BLINK'){
 		$WhereListShops = " AND locations.typeloc = 'SHOPBL' ";
 		$NameOfShops = "BLINK";
-	}elseif ($TypeOfShops == 'OUTLET'){
+	} elseif ($TypeOfShops == 'OUTLET'){
 		$WhereListShops = " AND locations.typeloc = 'SHOPOU' ";
 		$NameOfShops = "OUTLET";
 	}
@@ -130,7 +130,7 @@ function RetailCustomerAnalysisByCountry($NumDays, $TypeOfShops, $ShopArea, $Min
 	if ($ShopArea == 'ALL'){
 		$WhereShopArea = " ";
 		$NameOfArea = "ALL Zones";
-	}else{
+	} else {
 		$WhereShopArea = " AND locations.zone ='" . $ShopArea . "' ";
 		$NameOfArea = $ShopArea . " Zone";
 	}
@@ -213,12 +213,12 @@ function RetailCustomerAnalysisByCountry($NumDays, $TypeOfShops, $ShopArea, $Min
 					<td class="number">' . locale_number_format($MyRow['numberofcustomers'],0) . '</td>
 					<td class="number">' . locale_number_format(($NumberCases > 0) ? ($MyRow['numberofcustomers']/$NumberCases)*100 : 0,1).'%' . '</td>
 					</tr>';
-			}else{
+			} else {
 				$TotalOtherCountries += $MyRow['numberofcustomers'];
 			}
 		
 		}
-		if($TotalOtherCountries > 0){
+		if ($TotalOtherCountries > 0){
 			echo '<tr class="striped_row">
 				<td>' . 'Other Countries' . '</td>
 				<td class="number">' . locale_number_format($TotalOtherCountries,0) . '</td>
@@ -237,7 +237,7 @@ function EmailHarvested($NumDays, $TypeOfShops){
 		// today only
 		$Yesterday  = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
 		$StartDate  = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
-	}else{
+	} else {
 		$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 		$StartDate  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 	}
@@ -245,13 +245,13 @@ function EmailHarvested($NumDays, $TypeOfShops){
 	if ($TypeOfShops == 'ALL'){
 		$WhereListShops = " ";
 		$NameOfShops = "ALL";
-	}elseif ($TypeOfShops == 'KAPAL-LAUT'){
+	} elseif ($TypeOfShops == 'KAPAL-LAUT'){
 		$WhereListShops = " AND locations.typeloc = 'SHOPKL' ";
 		$NameOfShops = "KAPAL-LAUT";
-	}elseif ($TypeOfShops == 'BLINK'){
+	} elseif ($TypeOfShops == 'BLINK'){
 		$WhereListShops = " AND locations.typeloc = 'SHOPBL' ";
 		$NameOfShops = "BLINK";
-	}elseif ($TypeOfShops == 'OUTLET'){
+	} elseif ($TypeOfShops == 'OUTLET'){
 		$WhereListShops = " AND locations.typeloc = 'SHOPOU' ";
 		$NameOfShops = "OUTLET";
 	}
@@ -316,7 +316,7 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops){
 		// today only
 		$Yesterday  = date('Y-m-d');
 		$StartDate  = date('Y-m-d');
-	}else{
+	} else {
 		$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 		$StartDate  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 	}
@@ -324,13 +324,13 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops){
 	if ($TypeOfShops == 'ALL'){
 		$WhereListShops = " ";
 		$NameOfShops = "ALL";
-	}elseif ($TypeOfShops == 'KAPAL-LAUT'){
+	} elseif ($TypeOfShops == 'KAPAL-LAUT'){
 		$WhereListShops = " AND locations.typeloc = 'SHOPKL' ";
 		$NameOfShops = "KAPAL-LAUT";
-	}elseif ($TypeOfShops == 'BLINK'){
+	} elseif ($TypeOfShops == 'BLINK'){
 		$WhereListShops = " AND locations.typeloc = 'SHOPBL' ";
 		$NameOfShops = "BLINK";
-	}elseif ($TypeOfShops == 'OUTLET'){
+	} elseif ($TypeOfShops == 'OUTLET'){
 		$WhereListShops = " AND locations.typeloc = 'SHOPOU' ";
 		$NameOfShops = "OUTLET";
 	}
@@ -568,14 +568,14 @@ function RetailCustomerDataQualitySPG($SPG, $NumDays){
 		// today only
 		$Yesterday  = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
 		$StartDate  = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
-	}else{
+	} else {
 		$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 		$StartDate  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 	}
 
 	if ($SPG != "ALL"){
 		$WhereSPG = " AND salesman.salesmancode = " . $SPG . " ";
-	}else{
+	} else {
 		$WhereSPG = " ";
 	}
 	$SQL = "SELECT salesorders.salesperson,

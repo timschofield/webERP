@@ -118,7 +118,7 @@ if (isset($_POST['submit'])) {
 
 			$Msg = __('The product specification group record has been updated') . '.';
 		}
-	} else if ($InputError !=1) {
+	} elseif ($InputError !=1) {
 
 	/*Selected group is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new product spec group form */
 

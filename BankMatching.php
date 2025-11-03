@@ -305,7 +305,7 @@ if ($InputError != 1
 						<td><input type="checkbox" name="Unclear_', $i, '" /><input type="hidden" name="BankTrans_', $i, '" value="', $MyRow['banktransid'], '" /></td>
 					</tr>';
 
-		} else{
+		} else {
 			echo '<tr class="striped_row">
 					<td>', $MyRow['ref'], '</td>
 					<td>', $MyRow['banktranstype'], '</td>

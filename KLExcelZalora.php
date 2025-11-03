@@ -128,7 +128,7 @@ function submit($FromPrice, $ToPrice) {
 			if ($_POST['Format'] == 'xlsx') {
 				header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 				$File = 'KL-Products-Zalora-' . date('Y-m-d'). '.xlsx';
-			} else if ($_POST['Format'] == 'ods') {
+			} elseif ($_POST['Format'] == 'ods') {
 				header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
 				$File = 'KL-Products-Zalora-' . date('Y-m-d'). '.ods';
 			}
@@ -146,12 +146,12 @@ function submit($FromPrice, $ToPrice) {
 			if ($_POST['Format'] == 'xlsx') {
 				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($SpreadSheet);
 				$objWriter->save('php://output');
-			} else if ($_POST['Format'] == 'ods') {
+			} elseif ($_POST['Format'] == 'ods') {
 				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($SpreadSheet);
 				$objWriter->save('php://output');
 			}
 
-		}else{
+		} else {
 			prnMsg('No Products selected for Zalora');
 		}
 	}

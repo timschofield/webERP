@@ -1,97 +1,98 @@
 <?php
 
-if (($KL_SPGSeniorOrSupport OR $KL_SPGJunior)
-	AND (!isset($_SESSION['cashsalecustomer']))){
+if (($KL_SPGSeniorOrSupport or $KL_SPGJunior)
+	and (!isset($_SESSION['cashsalecustomer']))){
 	/*Get the default customer-branch combo from the user's default location record */
-	$SQL = "SELECT 	locations.cashsalecustomer,
-					locations.cashsalebranch,
-					locations.locationname,
-					locations.deladd1,
-					locations.deladd2,
-					locations.deladd3,
-					locations.deladd4,
-					locations.deladd5,
-					locations.klposcashaccount,
-					locations.klpostag,
-					locations.taxprovinceid,
-					locations.typeloc,
-					debtorsmaster.name,
-					debtorsmaster.salestype,
-					debtorsmaster.currcode,
-					debtorsmaster.customerpoline,
-					klretailpartners.partnercode,
-					klretailpartners.partnername,
-					klretailpartners.partneraddress,
-					klretailpartners.partnernpwp,
-					klretailpartners.ppn,
-					klretailpartners.areasalescreditcard,
-					klretailpartners.areasalescash,
-					klretailpartners.areasalescashothers,
-					klretailpartners.cashsalesreported,
-					klretailpartners.counterinvoicea,
-					klretailpartners.counterinvoiceb,
-					klretailpartners.counterinvoicec,
-					klretailpartners.hppcompensation,
-					klretailpartners.accountposreceivable,
-					klretailpartners.accounthppcompensation,
-					klretailpartners.percentconsignmentptadu,
-					klretailpartners.accountconsignmentsalesptadu,
-					klretailpartners.accountconsignmentcogspartner,
-					klretailpartners.accountcomissioncreditcard,
-					klretailpartners.accountbankdanamon,
-					klretailpartners.comissionccdanamon,
-					klretailpartners.comissionamexdanamon,
-					klretailpartners.settlementdelaydanamon,
-					klretailpartners.accountbankbni,
-					klretailpartners.comissionccbni,
-					klretailpartners.comissionamexbni,
-					klretailpartners.settlementdelaybni,
-					klretailpartners.accountbankmandiri,
-					klretailpartners.comissionccmandiri,
-					klretailpartners.comissionamexmandiri,
-					klretailpartners.settlementdelaymandiri,
-					klretailpartners.accountbankbca,
-					klretailpartners.comissionccbca,
-					klretailpartners.comissionamexbca,
-					klretailpartners.settlementdelaybca,
-					klretailpartners.accountbankbri,
-					klretailpartners.comissionccbri,
-					klretailpartners.comissionamexbri,
-					klretailpartners.settlementdelaybri,
-					klretailpartners.accountcomissionwechat,
-					klretailpartners.accountwechat,
-					klretailpartners.comissionwechat,
-					klretailpartners.settlementdelaywechat,
-					klretailpartners.accountcomissionqris,
-					klretailpartners.accountqrismandiri,
-					klretailpartners.comissionqrismandiri,
-					klretailpartners.settlementdelayqrismandiri,
-					klretailpartners.accountqrisbri,
-					klretailpartners.comissionqrisbri,
-					klretailpartners.settlementdelayqrisbri,
-					custbranch.brname,
-					custbranch.braddress1,
-					custbranch.specialinstructions,
-					custbranch.salesman,
-					custbranch.taxgroupid,
-					holdreasons.dissallowinvoices,
-					salestypes.sales_type,
-					paymentterms.terms
-			 FROM locations,
-					debtorsmaster,
-					klretailpartners,
-					holdreasons,
-					salestypes,
-					paymentterms,
-					custbranch
-			 WHERE debtorsmaster.salestype = salestypes.typeabbrev
-				AND debtorsmaster.holdreason = holdreasons.reasoncode
-				AND debtorsmaster.paymentterms = paymentterms.termsindicator
-				AND debtorsmaster.debtorno = locations.cashsalecustomer
-				AND locations.partnercode = klretailpartners.partnercode
-				AND custbranch.debtorno = locations.cashsalecustomer
-				AND custbranch.branchcode = locations.cashsalebranch
-				AND loccode='" . $_SESSION['UserStockLocation'] ."'";
+	$SQL = "SELECT 
+				l.cashsalecustomer,
+				l.cashsalebranch,
+				l.locationname,
+				l.deladd1,
+				l.deladd2,
+				l.deladd3,
+				l.deladd4,
+				l.deladd5,
+				l.klposcashaccount,
+				l.klpostag,
+				l.taxprovinceid,
+				l.typeloc,
+				dm.name,
+				dm.salestype,
+				dm.currcode,
+				dm.customerpoline,
+				krp.partnercode,
+				krp.partnername,
+				krp.partneraddress,
+				krp.partnernpwp,
+				krp.ppn,
+				krp.areasalescreditcard,
+				krp.areasalescash,
+				krp.areasalescashothers,
+				krp.cashsalesreported,
+				krp.counterinvoicea,
+				krp.counterinvoiceb,
+				krp.counterinvoicec,
+				krp.hppcompensation,
+				krp.accountposreceivable,
+				krp.accounthppcompensation,
+				krp.percentconsignmentptadu,
+				krp.accountconsignmentsalesptadu,
+				krp.accountconsignmentcogspartner,
+				krp.accountcomissioncreditcard,
+				krp.accountbankdanamon,
+				krp.comissionccdanamon,
+				krp.comissionamexdanamon,
+				krp.settlementdelaydanamon,
+				krp.accountbankbni,
+				krp.comissionccbni,
+				krp.comissionamexbni,
+				krp.settlementdelaybni,
+				krp.accountbankmandiri,
+				krp.comissionccmandiri,
+				krp.comissionamexmandiri,
+				krp.settlementdelaymandiri,
+				krp.accountbankbca,
+				krp.comissionccbca,
+				krp.comissionamexbca,
+				krp.settlementdelaybca,
+				krp.accountbankbri,
+				krp.comissionccbri,
+				krp.comissionamexbri,
+				krp.settlementdelaybri,
+				krp.accountcomissionwechat,
+				krp.accountwechat,
+				krp.comissionwechat,
+				krp.settlementdelaywechat,
+				krp.accountcomissionqris,
+				krp.accountqrismandiri,
+				krp.comissionqrismandiri,
+				krp.settlementdelayqrismandiri,
+				krp.accountqrisbri,
+				krp.comissionqrisbri,
+				krp.settlementdelayqrisbri,
+				cb.brname,
+				cb.braddress1,
+				cb.specialinstructions,
+				cb.salesman,
+				cb.taxgroupid,
+				hr.dissallowinvoices,
+				st.sales_type,
+				pt.terms
+			FROM locations l
+			INNER JOIN debtorsmaster dm
+				ON dm.debtorno = l.cashsalecustomer
+			INNER JOIN klretailpartners krp
+				ON krp.partnercode = l.partnercode
+			INNER JOIN custbranch cb
+				ON cb.debtorno = l.cashsalecustomer 
+				AND cb.branchcode = l.cashsalebranch
+			INNER JOIN holdreasons hr
+				ON hr.reasoncode = dm.holdreason
+			INNER JOIN salestypes st
+				ON st.typeabbrev = dm.salestype
+			INNER JOIN paymentterms pt
+				ON pt.termsindicator = dm.paymentterms
+			WHERE l.loccode = '" . $_SESSION['UserStockLocation'] . "'";
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result)==0) {
@@ -158,7 +159,7 @@ if (($KL_SPGSeniorOrSupport OR $KL_SPGJunior)
 		$_SESSION['AccountComissionCreditCard'] = $MyRow['accountcomissioncreditcard'];
 		$_SESSION['AccountBankDanamon'] = $MyRow['accountbankdanamon'];
 		$_SESSION['ComissionCCDanamon'] = $MyRow['comissionccdanamon'];
-		$_SESSION['ComissionAmexDanamon'] = $MyRow['comissionamexdnamon'];
+		$_SESSION['ComissionAmexDanamon'] = $MyRow['comissionamexdanamon'];
 		$_SESSION['SettlementDelayDanamon'] = $MyRow['settlementdelaydanamon'];
 		$_SESSION['AccountBankBNI'] = $MyRow['accountbankbni'];
 		$_SESSION['ComissionCCBNI'] = $MyRow['comissionccbni'];
@@ -174,7 +175,7 @@ if (($KL_SPGSeniorOrSupport OR $KL_SPGJunior)
 		$_SESSION['SettlementDelayBCA'] = $MyRow['settlementdelaybca'];
 		$_SESSION['AccountBankBRI'] = $MyRow['accountbankbri'];
 		$_SESSION['ComissionCCBRI'] = $MyRow['comissionccbri'];
-		$_SESSION['ComissionAmexBRI'] = $MyRow['comissionamexbrri'];
+		$_SESSION['ComissionAmexBRI'] = $MyRow['comissionamexbri'];
 		$_SESSION['SettlementDelayBRI'] = $MyRow['settlementdelaybri'];
 		$_SESSION['AccountComissionWeChat'] = $MyRow['accountcomissionwechat'];
 		$_SESSION['AccountWeChat'] = $MyRow['accountwechat'];
@@ -187,6 +188,5 @@ if (($KL_SPGSeniorOrSupport OR $KL_SPGJunior)
 		$_SESSION['AccountQRISBRI'] = $MyRow['accountqrisbri'];
 		$_SESSION['ComissionQRISBRI'] = $MyRow['comissionqrisbri'];
 		$_SESSION['SettlementDelayQRISBRI'] = $MyRow['settlementdelayqrisbri'];
-
 	}
 }

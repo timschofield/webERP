@@ -42,7 +42,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 							AND prices.startdate <= CURRENT_DATE
 							AND prices.enddate > CURRENT_DATE
 							AND prices.debtorno = ''";
-	}elseif ($_POST['LabelID'] == 'CodeSticker'){
+	} elseif ($_POST['LabelID'] == 'CodeSticker'){
 		$SQLPrice = "0 AS price, ";
 		$MainWhere = "	WHERE stockmaster.stockid = stockmaster.stockid ";
 	}
@@ -53,7 +53,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 					WHERE locstock.stockid = prices.stockid
 						AND locstock.loccode = '" . $_POST['Location'] . "') AS qoh,
 					0 AS intransit ";
-	}else{
+	} else {
 		$SQLQOH = $_POST['LabelsPerItem'] . " AS qoh,
 					0 AS intransit ";
 	}
@@ -72,17 +72,17 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 								FROM klchangeprice
 								WHERE klchangeprice.stockid = prices.stockid
 									AND klchangeprice.endprocessdate = CURRENT_DATE)";
-		}elseif ($_POST['ChangeToday'] == "ChangeDisc20"){
+		} elseif ($_POST['ChangeToday'] == "ChangeDisc20"){
 			$SQLChange = " AND EXISTS (SELECT *
 										FROM klmovetodiscount20
 										WHERE klmovetodiscount20.stockid = prices.stockid
 											AND klmovetodiscount20.endprocessdate = CURRENT_DATE)";
-		}elseif ($_POST['ChangeToday'] == "ChangeDisc50"){
+		} elseif ($_POST['ChangeToday'] == "ChangeDisc50"){
 			$SQLChange = " AND EXISTS (SELECT *
 										FROM klmovetodiscount50
 										WHERE klmovetodiscount50.stockid = prices.stockid
 											AND klmovetodiscount50.endprocessdate = CURRENT_DATE)";
-		}elseif ($_POST['ChangeToday'] == "ChangeDisc80"){
+		} elseif ($_POST['ChangeToday'] == "ChangeDisc80"){
 			$SQLChange = " AND EXISTS (SELECT *
 										FROM klmovetodiscount80
 										WHERE klmovetodiscount80.stockid = prices.stockid
@@ -95,7 +95,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 								OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . "
 								OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . "
 								OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL . ")";
-	}else{
+	} else {
 		$SQLStockCategory = " AND stockmaster.categoryid = '" . $_POST['StockCategory'] . "' ";
 	}
 
@@ -156,7 +156,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 			$Intransit = 0;
 		}
 		$LabelsToPrint = $LabelRow['qoh'] - $Intransit;
-		if($LabelsToPrint < 0){
+		if ($LabelsToPrint < 0){
 			$LabelsToPrint = 0;
 		}
 		if ($LabelsToPrint > 0){
@@ -238,7 +238,7 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 		$ResolutionDPI = 203; // uses imperial system so 200 are really 203. LOL
 		$XResolution = 25.4 / $ResolutionDPI; // 25.4mm per inch / resolution points per inch
 		$CodeFontSize = 7;
-	}elseif ($_POST['LabelID'] == 'CodeSticker'){
+	} elseif ($_POST['LabelID'] == 'CodeSticker'){
 		// Code Stickers for stock bags only
 		$PageLayout = array(50.0, 25.0);
 		
@@ -250,14 +250,14 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 		$ResolutionDPI = 203; // uses imperial system so 200 are really 203. LOL
 		$XResolution = 25.4 / $ResolutionDPI * 2; // 25.4mm per inch / resolution points per inch
 		$CodeFontSize = 12;
-	}else{
+	} else {
 		// not coded yet
 		return;
 	}
 
 	if ($_POST['LabelID'] == 'T570'){
 		$CoreFileName = "Pricetags";
-	}else{
+	} else {
 		$CoreFileName = "CodeStickers";
 	}
 	if ($_POST['Location'] != "None"){
@@ -320,7 +320,7 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 			elseif (ItemInList($_POST['Category' . $i], LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_SETUP_ALL_DISCOUNT)){
 				$LogoFile = 'companies/' . $_SESSION['DatabaseName'] . '/LogoLabelKL.jpg';
 			}
-			else{
+			else {
 				$LogoFile = '';
 			}
 
@@ -330,7 +330,7 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 					$LogoYPosition = 1.0;
 					$LogoHeight = 4.5;
 				}
-				else{
+				else {
 					$LogoXPosition = 12.0;
 					$LogoYPosition = 1.0;
 					$LogoHeight = 4.0;
@@ -342,13 +342,13 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 					$LogoYPosition = 1.0;
 					$LogoHeight = 6.0;
 				}
-				else{
+				else {
 					$LogoXPosition = 14.0;
 					$LogoYPosition = 1.0;
 					$LogoHeight = 6.0;
 				}
 			}
-			else{
+			else {
 				//not code yet
 				return;
 			}
@@ -367,13 +367,13 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 					$DiscountedPrice = "NOW: " . locale_number_format($_POST['Price' . $i] * (1 - ($PercentageDiscount)), 0) . 
 						' ' . CURRENCY_CODE;
 					$Price = "WAS: " . locale_number_format($_POST['Price' . $i], 0) . ' ' . CURRENCY_CODE;
-				}else{
+				} else {
 					// no discount, price discounted by fixed price
 					$PercentageDiscount = 0;
 					$DiscountedPrice = "ONLY: " . locale_number_format($_POST['Price' . $i], 0) . ' ' . CURRENCY_CODE;
 					$Price = "";
 				}
-			}else{
+			} else {
 				// define prices for not discounted items
 				$Price = locale_number_format($_POST['Price' . $i], 0) . ' ' . CURRENCY_CODE;
 			}
@@ -393,7 +393,7 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 						$pdf->SetXY($PriceXPosition, $PriceYPosition);
 						$pdf->SetFont($PriceFont, $PriceFontStyle, $PriceFontSize);
 						$pdf->Cell($PriceWidth, 0, $DiscountedPrice, 0, 0, $PriceAlignment);
-					}else{
+					} else {
 						//Print the logo
 						$pdf->Image($LogoFile, $LogoXPosition, $LogoYPosition, 0, $LogoHeight, 'JPG', '', '', 
 							true, 203, '', false, false, 0, false, false, false);
@@ -405,14 +405,14 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 					// print the barcode
 					$pdf->write1DBarcode($StockID, 'C128', $BarcodeXPosition, $BarcodeYPosition, 
 						$BarcodeLenght, $BarcodeWidth, $XResolution, $BarcodeStyle, 'N');
-				}elseif ($_POST['LabelID'] == 'CodeSticker'){
+				} elseif ($_POST['LabelID'] == 'CodeSticker'){
 					//Print the logo
 					$pdf->Image($LogoFile, $LogoXPosition, $LogoYPosition, 0, $LogoHeight, 'JPG', '', '', 
 						true, 203, '', false, false, 0, false, false, false);
 					// print the barcode
 					$pdf->write1DBarcode($StockID, 'C128', $BarcodeXPosition, $BarcodeYPosition, 
 						$BarcodeLenght, $BarcodeWidth, $XResolution, $BarcodeStyle, 'N');
-				}else{
+				} else {
 					//not code yet
 					return;
 				}

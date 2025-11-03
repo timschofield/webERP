@@ -212,12 +212,12 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 			$EmailSubject = "SPG Username Updated : ". $Param1;
 			if ($Param2 != ''){
 				$PassText = 'Password :'. ' '. $Param2 ;
-			}else{
+			} else {
 				$PassText = 'Password NOT changed';
 			}
 			if ($Param5 != 0){
 				$BlockText = 'Account: Closed';
-			}else{
+			} else {
 				$BlockText = 'Account: Open';
 			}
 			$EmailText = $EmailSubject . "\n\n" .
@@ -232,7 +232,7 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 			$EmailSubject = "SPG Username Created : ". $Param1;
 			if ($Param5 != 0){
 				$BlockText = 'Account: Closed';
-			}else{
+			} else {
 				$BlockText = 'Account: Open';
 			}
 			$EmailText = $EmailSubject . "\n\n" .
@@ -394,8 +394,8 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 
 	if ($ShowDetails == "ShortConfirmation"){
 		prnMsg("Email sent to " . $EmailAddress . " about " . $EmailSubject,'info');
-	}elseif ($ShowDetails == "FullConfirmation"){
-	}else{
+	} elseif ($ShowDetails == "FullConfirmation"){
+	} else {
 		// Silent mode
 		// Nothing to show :-)
 	}

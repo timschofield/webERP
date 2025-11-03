@@ -117,7 +117,7 @@ function submit($TypeOfFile) {
 				$ActiveSheet->setCellValue('Z1', 'Variant Image Url');
 				$MaxColumn = 'Z';
 				$StartingRow = 2;
-			}elseif($TypeOfFile == "FSQOH"){
+			} elseif ($TypeOfFile == "FSQOH"){
 				$ActiveSheet->setTitle(('FORSTOK QOH'));
 				$ActiveSheet->setCellValue('A6', 'SKU');
 				$ActiveSheet->setCellValue('B6', 'Name');
@@ -127,7 +127,7 @@ function submit($TypeOfFile) {
 				$ActiveSheet->setCellValue('F6', 'Note');
 				$MaxColumn = 'F';
 				$StartingRow = 7;
-			}elseif($TypeOfFile == "FSPrice"){
+			} elseif ($TypeOfFile == "FSPrice"){
 				$ActiveSheet->setTitle(('FORSTOK Price'));
 				$ActiveSheet->setCellValue('A1', 'SKU');
 				$ActiveSheet->setCellValue('B1', 'Product Name');
@@ -171,7 +171,7 @@ function submit($TypeOfFile) {
 				$OnlySize = ClassicalSize($StockID);
 				if ($OnlySize != "NO SIZE"){
 					$NamaVariant = "Ukuran";
-				}else{
+				} else {
 					$NamaVariant = "";
 					$OnlySize = "";
 				}
@@ -199,9 +199,9 @@ function submit($TypeOfFile) {
 */
 				if ($MyRow['unitsdimension'] == 'mm'){
 					$FactorLenght = 10;
-				}elseif ($MyRow['unitsdimension'] == 'cm'){
+				} elseif ($MyRow['unitsdimension'] == 'cm'){
 					$FactorLenght = 1;
-				}else{
+				} else {
 					// should be meter
 					$FactorLenght = 0.1;
 				}
@@ -243,12 +243,12 @@ function submit($TypeOfFile) {
 					$ActiveSheet->setCellValue('W'.$i, $Url_6);
 					$ActiveSheet->setCellValue('X'.$i, $Url_7);
 					$ActiveSheet->setCellValue('Y'.$i, $Url_8);
-				}elseif($TypeOfFile == "FSQOH"){
+				} elseif ($TypeOfFile == "FSQOH"){
 					$ActiveSheet->setCellValue('A'.$i, $StockID);
 					$ActiveSheet->setCellValue('B'.$i, $Name);
 					$ActiveSheet->setCellValue('C'.$i, $QOH);
 					$ActiveSheet->setCellValue('D'.$i, $QOH);
-				}elseif($TypeOfFile == "FSPrice"){
+				} elseif ($TypeOfFile == "FSPrice"){
 					// one row per channel (1st Tokopedia aka TikTok, 2nd Shopee)
 					$ActiveSheet->setCellValue('A'.$i, $StockID);
 					$ActiveSheet->setCellValue('B'.$i, $Name);
@@ -282,7 +282,7 @@ function submit($TypeOfFile) {
 			if ($_POST['Format'] == 'xlsx') {
 				header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 				$File = "FORSTOK" . '-' .  $TypeOfFile . '-' . date('Y-m-d-H-i-s'). '.xlsx';
-			} else if ($_POST['Format'] == 'ods') {
+			} elseif ($_POST['Format'] == 'ods') {
 				header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
 				$File = "FORSTOK" . '-' .  $TypeOfFile . '-' . date('Y-m-d-H-i-s'). '.ods';
 			}
@@ -300,12 +300,12 @@ function submit($TypeOfFile) {
 			if ($_POST['Format'] == 'xlsx') {
 				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($SpreadSheet);
 				$objWriter->save('php://output');
-			} else if ($_POST['Format'] == 'ods') {
+			} elseif ($_POST['Format'] == 'ods') {
 				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($SpreadSheet);
 				$objWriter->save('php://output');
 			}
 
-		}else{
+		} else {
 			$Title = "Excel file for uploading products to FORSTOK";
 			include('includes/header.php');
 			prnMsg('No products to upload to FORSTOK');

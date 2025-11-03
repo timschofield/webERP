@@ -76,7 +76,7 @@ if (DB_num_rows($Result) != 0){
 		// if we have some kind of description, long enough, we can move ahead. Otherwise, we miss the descriptiob
 		if (strlen($MyRow['description']) >= 8){
 			// if we have picture, then we can publish online, otherwise not yet!
-			if(file_exists($_SESSION['part_pics_dir'] . '/' .$MyRow['stockid'].'.jpg') ) {
+			if (file_exists($_SESSION['part_pics_dir'] . '/' .$MyRow['stockid'].'.jpg') ) {
 				// From the brand we know if it gors to KL online shop or Blink online shop
 
 				if ($Brand == 1){
@@ -86,25 +86,25 @@ if (DB_num_rows($Result) != 0){
 						InsertWebsiteSalesCategory($MyRow['stockid'], $WebsiteCategory, $Brand, false, $FeaturedAsTopSales, $UpdateDB);
 						$WebsiteDescription = FindWebsiteDescription($WebsiteCategory);
 						$ItemsAdded++;
-					}else{
+					} else {
 						$WebsiteDescription = 'NO KAPAL-LAUT CATEGORY';
 					}
-				}else{
+				} else {
 					// Blink brand detected ;-)
 					$WebsiteCategory = WebsiteCategoryBlinkJewellery($MyRow['stockid'], $MyRow['description'], $MyRow['longdescription'], $MyRow['categoryid']);
 					if ($WebsiteCategory > 0){ 
 						InsertWebsiteSalesCategory($MyRow['stockid'], $WebsiteCategory, $Brand, false, $FeaturedAsTopSales, $UpdateDB);
 						$WebsiteDescription = FindWebsiteDescription($WebsiteCategory);
 						$ItemsAdded++;
-					}else{
+					} else {
 						$WebsiteDescription = 'NO BLINK CATEGORY';
 					}
 				}
-			}else{
+			} else {
 				$WebsiteDescription = 'NO PICTURE';
 				$WebsiteCategory = 0;
 			}
-		}else{
+		} else {
 			$WebsiteDescription = 'NO DESCRIPTION';
 			$WebsiteCategory = 0;
 		}
@@ -113,7 +113,7 @@ if (DB_num_rows($Result) != 0){
 		}
 		if ($Brand == 1){
 			$BrandText = "KL";
-		}elseif ($Brand == 2){
+		} elseif ($Brand == 2){
 			$BrandText = "Blink";
 		}
 		echo '<tr class="striped_row">
@@ -141,7 +141,7 @@ include('includes/footer.php');
 *********************************************************************************************************/
 
 function DeleteWebsiteSalesCategories($StockID, $UpdateDB){
-	if($UpdateDB){
+	if ($UpdateDB){
 		$SQL =	"DELETE FROM salescatprod 
 					WHERE stockid ='" .  $StockID . "'";
 		$ErrMsg =__('Could not delete the previous website category for the item because');
@@ -152,47 +152,47 @@ function DeleteWebsiteSalesCategories($StockID, $UpdateDB){
 function UpdateWeight($StockID, $UpdateDB){
 	if (isRing($StockID)){
 		$Weight = STANDARD_RING_WEIGHT;
-	}elseif (isToeRing($StockID)){
+	} elseif (isToeRing($StockID)){
 		$Weight = STANDARD_RING_WEIGHT;
-	}elseif (isBead($StockID)){
+	} elseif (isBead($StockID)){
 		$Weight = STANDARD_BEAD_WEIGHT;
-	}elseif (isBrooche($StockID)){
+	} elseif (isBrooche($StockID)){
 		$Weight = STANDARD_BROOCHE_WEIGHT;
-	}elseif (isEarring($StockID)){
+	} elseif (isEarring($StockID)){
 		$Weight = STANDARD_EARRING_WEIGHT;
-	}elseif (isEarcuff($StockID)){
+	} elseif (isEarcuff($StockID)){
 		$Weight = STANDARD_EARRING_WEIGHT;
-	}elseif (isPiercing($StockID)){
+	} elseif (isPiercing($StockID)){
 		$Weight = STANDARD_PIERCING_WEIGHT;
-	}elseif (isBracelet($StockID)){
+	} elseif (isBracelet($StockID)){
 		$Weight = STANDARD_BRACELET_WEIGHT;
-	}elseif (isAnklet($StockID)){
+	} elseif (isAnklet($StockID)){
 		$Weight = STANDARD_BRACELET_WEIGHT;
-	}elseif (isPendant($StockID)){
+	} elseif (isPendant($StockID)){
 		$Weight = STANDARD_PENDANT_WEIGHT;
-	}elseif (isNecklace($StockID)){
+	} elseif (isNecklace($StockID)){
 		$Weight = STANDARD_NECKLACE_WEIGHT;
-	}elseif (isFoulard($StockID)){
+	} elseif (isFoulard($StockID)){
 		$Weight = STANDARD_FOULARD_WEIGHT;
-	}elseif (isFaceMask($StockID)){
+	} elseif (isFaceMask($StockID)){
 		$Weight = STANDARD_FACEMASK_WEIGHT;
-	}elseif (isJewelleryBox($StockID)){
+	} elseif (isJewelleryBox($StockID)){
 		$Weight = STANDARD_JEWEL_BOX_WEIGHT;
-	}elseif (isJewelleryRoll($StockID)){
+	} elseif (isJewelleryRoll($StockID)){
 		$Weight = STANDARD_JEWEL_ROLL_WEIGHT;
-	}elseif (isBag($StockID)){
+	} elseif (isBag($StockID)){
 		$Weight = STANDARD_BAG_WEIGHT;
-	}elseif (isPlasticBag($StockID)){
+	} elseif (isPlasticBag($StockID)){
 		$Weight = STANDARD_BAG_WEIGHT;
-	}elseif (isTali($StockID)){
+	} elseif (isTali($StockID)){
 		$Weight = STANDARD_TALI_WEIGHT;
-	}elseif (isKeyRing($StockID)){
+	} elseif (isKeyRing($StockID)){
 		$Weight = STANDARD_KEYHOLDER_WEIGHT;
-	}else{
+	} else {
 		$Weight = 0;
 	}
 	
-	if($UpdateDB){
+	if ($UpdateDB){
 		$SQL = "UPDATE stockmaster 
 				SET grossweight = " . $Weight . "
 				WHERE stockid =	'" . $StockID . "'";
@@ -207,79 +207,79 @@ function UpdateVolume($StockID, $UpdateDB){
 		$Length = BOX_S_LENGTH;
 		$Width  = BOX_S_WIDTH;
 		$Height = BOX_S_HEIGHT;
-	}elseif (isToeRing($StockID)){
+	} elseif (isToeRing($StockID)){
 		$Length = BOX_S_LENGTH;
 		$Width  = BOX_S_WIDTH;
 		$Height = BOX_S_HEIGHT;
-	}elseif (isBead($StockID)){
+	} elseif (isBead($StockID)){
 		$Length = BOX_S_LENGTH;
 		$Width  = BOX_S_WIDTH;
 		$Height = BOX_S_HEIGHT;
-	}elseif (isBrooche($StockID)){
+	} elseif (isBrooche($StockID)){
 		$Length = BOX_M_LENGTH;
 		$Width  = BOX_M_WIDTH;
 		$Height = BOX_M_HEIGHT;
-	}elseif (isEarring($StockID)){
+	} elseif (isEarring($StockID)){
 		$Length = BOX_S_LENGTH;
 		$Width  = BOX_S_WIDTH;
 		$Height = BOX_S_HEIGHT;
-	}elseif (isEarcuff($StockID)){
+	} elseif (isEarcuff($StockID)){
 		$Length = BOX_S_LENGTH;
 		$Width  = BOX_S_WIDTH;
 		$Height = BOX_S_HEIGHT;
-	}elseif (isPiercing($StockID)){
+	} elseif (isPiercing($StockID)){
 		$Length = BOX_S_LENGTH;
 		$Width  = BOX_S_WIDTH;
 		$Height = BOX_S_HEIGHT;
-	}elseif (isBracelet($StockID)){
+	} elseif (isBracelet($StockID)){
 		$Length = BOX_M_LENGTH;
 		$Width  = BOX_M_WIDTH;
 		$Height = BOX_M_HEIGHT;
-	}elseif (isAnklet($StockID)){
+	} elseif (isAnklet($StockID)){
 		$Length = BOX_M_LENGTH;
 		$Width  = BOX_M_WIDTH;
 		$Height = BOX_M_HEIGHT;
-	}elseif (isPendant($StockID)){
+	} elseif (isPendant($StockID)){
 		$Length = BOX_M_LENGTH;
 		$Width  = BOX_M_WIDTH;
 		$Height = BOX_M_HEIGHT;
-	}elseif (isNecklace($StockID)){
+	} elseif (isNecklace($StockID)){
 		$Length = BOX_M_LENGTH;
 		$Width  = BOX_M_WIDTH;
 		$Height = BOX_M_HEIGHT;
-	}elseif (isFaceMask($StockID)){
+	} elseif (isFaceMask($StockID)){
 		$Length = BOX_M_LENGTH;
 		$Width  = BOX_M_WIDTH;
 		$Height = BOX_M_HEIGHT;
-	}elseif (isJewelleryRoll($StockID)){
+	} elseif (isJewelleryRoll($StockID)){
 		$Length = BOX_L_LENGTH;
 		$Width  = BOX_L_WIDTH;
 		$Height = BOX_L_HEIGHT;
-	}elseif (isJewelleryBox($StockID)){
+	} elseif (isJewelleryBox($StockID)){
 		$Length = BOX_L_LENGTH;
 		$Width  = BOX_L_WIDTH;
 		$Height = BOX_L_HEIGHT;
-	}elseif (isBag($StockID)){
+	} elseif (isBag($StockID)){
 		$Length = BOX_XL_LENGTH;
 		$Width  = BOX_XL_WIDTH;
 		$Height = BOX_XL_HEIGHT;
-	}elseif (isPlasticBag($StockID)){
+	} elseif (isPlasticBag($StockID)){
 		$Length = BOX_XL_LENGTH;
 		$Width  = BOX_XL_WIDTH;
 		$Height = BOX_XL_HEIGHT;
-	}elseif (isTali($StockID)){
+	} elseif (isTali($StockID)){
 		$Length = BOX_S_LENGTH;
 		$Width  = BOX_S_WIDTH;
 		$Height = BOX_S_HEIGHT;
-	}elseif (isKeyRing($StockID)){
+	} elseif (isKeyRing($StockID)){
 		$Length = BOX_S_LENGTH;
 		$Width  = BOX_S_WIDTH;
 		$Height = BOX_S_HEIGHT;
-	}elseif ($StockID = "WKPC01"){
+	} elseif ($StockID = "WKPC01"){
 		$Length = BOX_XS_LENGTH;
 		$Width  = BOX_XS_WIDTH;
 		$Height = BOX_XS_HEIGHT;
-	}else{
+	} else {
 		$Length = BOX_M_LENGTH;
 		$Width  = BOX_M_WIDTH;
 		$Height = BOX_M_HEIGHT;
@@ -287,7 +287,7 @@ function UpdateVolume($StockID, $UpdateDB){
 	
 	$Volume = round(($Length/1000)*($Width/1000)*($Height/1000),4,PHP_ROUND_HALF_UP); // dimensions in mm and volume in m3
 	
-	if($UpdateDB){
+	if ($UpdateDB){
 		$SQL = "UPDATE stockmaster 
 				SET volume = " . $Volume . ",
 					length =  " . $Length . ",
@@ -306,19 +306,19 @@ function UpdateVolumeByPackaging($StockID, $Packaging, $UpdateDB){
 		$Length = BOX_XS_LENGTH;
 		$Width  = BOX_XS_WIDTH;
 		$Height = BOX_XS_HEIGHT;
-	}elseif ($TypePackaging == "S"){
+	} elseif ($TypePackaging == "S"){
 		$Length = BOX_S_LENGTH;
 		$Width  = BOX_S_WIDTH;
 		$Height = BOX_S_HEIGHT;
-	}elseif ($TypePackaging == "M"){
+	} elseif ($TypePackaging == "M"){
 		$Length = BOX_M_LENGTH;
 		$Width  = BOX_M_WIDTH;
 		$Height = BOX_M_HEIGHT;
-	}elseif ($TypePackaging == "L"){
+	} elseif ($TypePackaging == "L"){
 		$Length = BOX_L_LENGTH;
 		$Width  = BOX_L_WIDTH;
 		$Height = BOX_L_HEIGHT;
-	}else{
+	} else {
 		$Length = BOX_M_LENGTH;
 		$Width  = BOX_M_WIDTH;
 		$Height = BOX_M_HEIGHT;
@@ -326,7 +326,7 @@ function UpdateVolumeByPackaging($StockID, $Packaging, $UpdateDB){
 	
 	$Volume = round(($Length/1000)*($Width/1000)*($Height/1000),4,PHP_ROUND_HALF_UP); // dimensions in mm and volume in m3
 	
-	if($UpdateDB){
+	if ($UpdateDB){
 		$SQL = "UPDATE stockmaster 
 				SET volume = " . $Volume . ",
 					length =  " . $Length . ",
@@ -343,44 +343,44 @@ function UpdatePackaging($StockID, $Category, $Brand, $UpdateDB){
 
 	if (isRing($StockID)){
 		$Packaging = "-S";
-	}elseif (isToeRing($StockID)){
+	} elseif (isToeRing($StockID)){
 		$Packaging = "-S";
-	}elseif (isBead($StockID)){
+	} elseif (isBead($StockID)){
 		$Packaging = "-S";
-	}elseif (isBrooche($StockID)){
+	} elseif (isBrooche($StockID)){
 		$Packaging = "-M";
-	}elseif (isEarring($StockID)){
+	} elseif (isEarring($StockID)){
 		$Packaging = "-S";
-	}elseif (isEarcuff($StockID)){
+	} elseif (isEarcuff($StockID)){
 		$Packaging = "-S";
-	}elseif (isPiercing($StockID)){
+	} elseif (isPiercing($StockID)){
 		$Packaging = "-S";
-	}elseif (isBracelet($StockID)){
+	} elseif (isBracelet($StockID)){
 		$Packaging = "-M";
-	}elseif (isAnklet($StockID)){
+	} elseif (isAnklet($StockID)){
 		$Packaging = "-M";
-	}elseif (isPendant($StockID)){
+	} elseif (isPendant($StockID)){
 		$Packaging = "-M";
-	}elseif (isNecklace($StockID)){
+	} elseif (isNecklace($StockID)){
 		$Packaging = "-M";
-	}elseif (isFaceMask($StockID)){
+	} elseif (isFaceMask($StockID)){
 		$Packaging = "-M";
-	}elseif (isJewelleryRoll($StockID)){
+	} elseif (isJewelleryRoll($StockID)){
 		$Packaging = "-L";
-	}elseif (isTali($StockID)){
+	} elseif (isTali($StockID)){
 		$Packaging = "-S";
-	}elseif (isKeyRing($StockID)){
+	} elseif (isKeyRing($StockID)){
 		$Packaging = "-S";
-	}else{
+	} else {
 		$Packaging = "";
 	}
 
 	if ($Packaging != ""){
 		if ($Brand == 1){
 			$Packaging = "SET-PACK-KL". $Packaging;	
-		}elseif ($Brand == 2){
+		} elseif ($Brand == 2){
 			$Packaging = "SET-PACK-BL". $Packaging;	
-		}else{
+		} else {
 			$Packaging = "";
 		}
 	}
@@ -423,7 +423,7 @@ function WebsiteCategorySilverJewellery($StockID, $Description, $Long, $Category
 		if (isSlimRing($StockID)){
 			$WebCat = KL_SLIMRINGS;
 		}
-		else{
+		else {
 			$WebCat = KL_RINGS;	
 		}
 	}

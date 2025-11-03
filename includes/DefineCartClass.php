@@ -299,7 +299,7 @@ class Cart {
 
 	function AllDummyLineItems(){
 		foreach ($this->LineItems as $StockItem) {
-			if($StockItem->MBflag !='D'){
+			if ($StockItem->MBflag !='D'){
 				return false;
 			}
 		}

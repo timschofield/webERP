@@ -124,7 +124,7 @@ if (isset($_POST['submit'])) {
 		prnMsg(__('The cost is expected to be numeric'),'error');
 		$Errors[$i] = 'Cost';
 		$i++;
-	}elseif ($_POST['Cost'] < 0){
+	} elseif ($_POST['Cost'] < 0){
 		$InputError = 1;
 		prnMsg(__('The cost is expected to be positive'),'error');
 		$Errors[$i] = 'Cost';
@@ -135,7 +135,7 @@ if (isset($_POST['submit'])) {
 		prnMsg(__('The Accumulated Depreciation is expected to be numeric'),'error');
 		$Errors[$i] = 'AccumDepn';
 		$i++;
-	}elseif ($_POST['AccumDepn'] < 0){
+	} elseif ($_POST['AccumDepn'] < 0){
 		$InputError = 1;
 		prnMsg(__('The Accumulated Depreciation is expected to be positive'),'error');
 		$Errors[$i] = 'AccumDepn';
@@ -622,7 +622,7 @@ if (isset($_POST['ClearImage']) ) {
 		if (file_exists ($File) ) {
 			//workaround for many variations of permission issues that could cause unlink fail
 			@unlink($File);
-			if(is_file($ImageFile)) {
+			if (is_file($ImageFile)) {
                prnMsg(__('You do not have access to delete this item image file.'),'error');
 			} else {
 				$AssetImgLink = __('No Image');
@@ -744,7 +744,7 @@ if (isset($AssetRow)){
 			<div class="fieldvalue">' . locale_number_format(-$AssetRow['cost']+$AssetRow['accumdepn']+$AssetRow['disposalproceeds'],$_SESSION['CompanyRecord']['decimalplaces']) . '</div>
 		</field>';
 
-	}else{
+	} else {
 		echo'<field>
 			<label>' . __('Net Book Value') . ':</label>
 			<div class="fieldvalue">' . locale_number_format($AssetRow['cost']-$AssetRow['accumdepn'],$_SESSION['CompanyRecord']['decimalplaces']) . '</div>
@@ -760,7 +760,7 @@ if (isset($AssetRow)){
 					ORDER BY periods.lastdate_in_period DESC");
 
 	$LastDepnRun = DB_fetch_row($Result);
-	if(DB_num_rows($Result)==0){
+	if (DB_num_rows($Result)==0){
 		$LastRunDate = __('Not Yet Run');
 	} else {
 		$LastRunDate = ConvertSQLDate($LastDepnRun[0]);

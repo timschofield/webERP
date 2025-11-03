@@ -31,15 +31,15 @@ if ($_GET['Action'] == "New"){
 	$Title = 'Set the ' . $_GET['Discount'] . '% Discount Code';
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .
 				__('retail Price') . '" alt="" />' . $Title . '.</p>';
-}else if ($_GET['Action'] == "Change"){
+} elseif ($_GET['Action'] == "Change"){
 	$Title = 'Change the ' . $_GET['Discount'] . '% Discount Code';
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .
 				__('retail Price') . '" alt="" />' . $Title . '.</p>';
-}else if ($_GET['Action'] == "Finish"){
+} elseif ($_GET['Action'] == "Finish"){
 	$Title = 'Change the ' . $_GET['Discount'] . '% Discount Labels';
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .
 				__('retail Price') . '" alt="" />' . $Title . '.</p>';
-}else{
+} else {
 	echo '<br />';
 	prnMsg( __('Action unknown'), 'error');
 	include('includes/footer.php');
@@ -52,27 +52,27 @@ if (ItemInLIst($_GET['Category'], LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_ALL
 	// it is a KL item
 	if ($_GET['Discount'] == "20"){
 		$NewCategory = "DISC2A";
-	}elseif($_GET['Discount'] == "50"){
+	} elseif ($_GET['Discount'] == "50"){
 		$NewCategory = "DISC5A";
-	}else{
+	} else {
 		$NewCategory = "DISC8A";
 	}
-}elseif (ItemInLIst($_GET['Category'], LIST_STOCK_CATEGORIES_BLINK_INCLUDING_ALL_DISCOUNT)){
+} elseif (ItemInLIst($_GET['Category'], LIST_STOCK_CATEGORIES_BLINK_INCLUDING_ALL_DISCOUNT)){
 	// it is a BLINK item
 	if ($_GET['Discount'] == "20"){
 		$NewCategory = "DISC2B";
-	}elseif($_GET['Discount'] == "50"){
+	} elseif ($_GET['Discount'] == "50"){
 		$NewCategory = "DISC5B";
-	}else{
+	} else {
 		$NewCategory = "DISC8B";
 	}
-}else{
+} else {
 	// it is a GENERAL item
 	if ($_GET['Discount'] == "20"){
 		$NewCategory = "DISC2G";
-	}elseif($_GET['Discount'] == "50"){
+	} elseif ($_GET['Discount'] == "50"){
 		$NewCategory = "DISC5G";
-	}else{
+	} else {
 		$NewCategory = "DISC8G";
 	}
 }
@@ -90,10 +90,10 @@ if ($_GET['Action'] == "Finish"){
 	if ($_GET['Discount'] == "20"){
 		SetMoveDiscount20Flag(0, $_GET['Item']);
 		SetEndDateMoveDiscount20($_GET['Item']);
-	}elseif($_GET['Discount'] == "50"){
+	} elseif ($_GET['Discount'] == "50"){
 		SetMoveDiscount50Flag(0, $_GET['Item']);
 		SetEndDateMoveDiscount50($_GET['Item']);
-	}else{
+	} else {
 		SetMoveDiscount80Flag(0, $_GET['Item']);
 		SetEndDateMoveDiscount80($_GET['Item']);
 	}

@@ -92,14 +92,14 @@ include('includes/KLUIGeneralFunctions.php');
 					// already changed the category, so now it's time to see if labels have been printed and finish the process
 					$NewDiscountCategory = 'Done';
 					$NewLabelsPrinted = '<a href="' . $RootPath . '/KLChangeToDiscount.php?Item=' . $MyRow['stockid'] . '&Discount='. $MyRow['discountcategory'] . '&Category='. $MyRow['categoryid'] . '&Action=Finish">' . 'Printed' . '</a>';
-				}else{
+				} else {
 					// the category is still the old one. We still need to change it!
 					// if we have ONLY stock in kantor (or in locations not needing procedure) and NO transit, all the QOH is at kantor
 					// We can apply the new discount category
 					$NewDiscountCategory = '<a href="' . $RootPath . '/KLChangeToDiscount.php?Item=' . $MyRow['stockid'] . '&Discount='. $MyRow['discountcategory'] . '&Category='. $MyRow['categoryid'] . '&Action=Change">' . 'Move to 80%' . '</a>';
 					$NewLabelsPrinted = '';
 				}
-			}else{
+			} else {
 				$NewDiscountCategory = '';
 				$NewLabelsPrinted = '';
 			}
@@ -122,7 +122,7 @@ include('includes/KLUIGeneralFunctions.php');
 		echo '</tbody>';
 		echo '</table>';
 		echo '</div>';
-	}else{
+	} else {
 		prnMsg("No items to be moved to 80% discount at the moment", "success");
 	}
 

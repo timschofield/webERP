@@ -45,7 +45,7 @@ if ($Language == "ENGLISH"){
 	$Text0410 = 'Do not hesitate to contact us for any further detail you might need.';
 	$Text0420 = 'Many thanks for your purchase.';
 	$Text0430 = 'Many thanks.';
-}else{
+} else {
 	$Text0010 = 'Hai';
 	$Text0020 = 'Pada'; 
 	$Text0030 = 'anda mendaftar pada online shop kami, tapi kami menyadari anda belum meyelesaikan proses pembelian anda.';
@@ -123,7 +123,7 @@ if ($_GET['EmailType']=='NoOrderPlaced'){
 					<td>' . DB_escape_string($MyRow['customername']) . '
 					</td>
 				</tr>';
-	if(mb_strlen(trim($MyRow['address1']))) {
+	if (mb_strlen(trim($MyRow['address1']))) {
 		  $MailMessage .= '
 				<tr>
 					<td>
@@ -132,7 +132,7 @@ if ($_GET['EmailType']=='NoOrderPlaced'){
 					</td>
 				</tr>';
 	}
-	if(mb_strlen(trim($MyRow['address2']))) {
+	if (mb_strlen(trim($MyRow['address2']))) {
 		  $MailMessage .= '
 				<tr>
 					<td>
@@ -141,7 +141,7 @@ if ($_GET['EmailType']=='NoOrderPlaced'){
 					</td>
 				</tr>';
 	}
-	if(mb_strlen(trim($MyRow['address3']))) {
+	if (mb_strlen(trim($MyRow['address3']))) {
 		  $MailMessage .= '
 				<tr>
 					<td>
@@ -150,7 +150,7 @@ if ($_GET['EmailType']=='NoOrderPlaced'){
 					</td>
 				</tr>';
 	}
-	if(mb_strlen(trim($MyRow['address4']))) {
+	if (mb_strlen(trim($MyRow['address4']))) {
 		  $MailMessage .= '
 				<tr>
 					<td>
@@ -159,7 +159,7 @@ if ($_GET['EmailType']=='NoOrderPlaced'){
 					</td>
 				</tr>';
 	}
-	if(mb_strlen(trim($MyRow['address5']))) {
+	if (mb_strlen(trim($MyRow['address5']))) {
 		  $MailMessage .= '
 				<tr>
 					<td>
@@ -168,7 +168,7 @@ if ($_GET['EmailType']=='NoOrderPlaced'){
 					</td>
 				</tr>';
 	}
-	if(mb_strlen(trim($MyRow['address6']))) {
+	if (mb_strlen(trim($MyRow['address6']))) {
 		  $MailMessage .= '
 				<tr>
 					<td>
@@ -217,7 +217,7 @@ if ($_GET['EmailType']=='RemindBankTransfer'){
 					</td>
 				</tr>';
 		$MailMessage .= '<br/>';
-	}elseif  ($_GET['PaymentCode'] == "xenditmandiriva"){
+	} elseif  ($_GET['PaymentCode'] == "xenditmandiriva"){
 		// Xendit transfer via mandiri
 		  $MailMessage .= '
 				<tr>
@@ -239,7 +239,7 @@ if ($_GET['EmailType']=='RemindBankTransfer'){
 					</td>
 				</tr>';
 		$MailMessage .= '<br/>';
-	}elseif  ($_GET['PaymentCode'] == "xenditcc"){
+	} elseif  ($_GET['PaymentCode'] == "xenditcc"){
 		// Xendit transfer via CC 
 		  $MailMessage .= '
 				<tr>
@@ -269,28 +269,28 @@ if ($_GET['EmailType']=='PaymentConfirmation'){
 }
 
 if ($_GET['EmailType']=='TrackingConfirmation'){
-	if($MyRow['shippername'] == 'Pick up from store') {
+	if ($MyRow['shippername'] == 'Pick up from store') {
 		$MailMessage .= '
 			<tr>
 				<td colspan="4">
 					' . $Text0160 . '
 				</td>
 			</tr>';
-	}else{
+	} else {
 		$MailMessage .= '
 			<tr>
 				<td colspan="4">
 					<p>' . $Text0170 . ' ' . DB_escape_string($MyRow['shippername']) . '. ' . $Text0180 .':' . DB_escape_string($MyRow['consignment']) .'</p>
 				</td>
 			</tr>';
-		if($MyRow['shippername'] == 'EMS'){
+		if ($MyRow['shippername'] == 'EMS'){
 			$MailMessage .= '
 				<tr>
 					<td colspan="4">
 						' . $Text0190 . ' http://ems.posindonesia.co.id/index.php' . '
 					</td>
 				</tr>';
-		}else{
+		} else {
 			$MailMessage .= '
 				<tr>
 					<td colspan="4">
@@ -340,7 +340,7 @@ if (($_GET['EmailType']=='PaymentConfirmation')
 					<td>' . DB_escape_string($MyRow['customername']) . '
 					</td>
 				</tr>';
-	if(mb_strlen(trim($MyRow['deladd1']))) {
+	if (mb_strlen(trim($MyRow['deladd1']))) {
 		  $MailMessage .= '
 				<tr>
 					<td>
@@ -349,7 +349,7 @@ if (($_GET['EmailType']=='PaymentConfirmation')
 					</td>
 				</tr>';
 	}
-	if(mb_strlen(trim($MyRow['deladd2']))) {
+	if (mb_strlen(trim($MyRow['deladd2']))) {
 		  $MailMessage .= '
 				<tr>
 					<td>
@@ -358,7 +358,7 @@ if (($_GET['EmailType']=='PaymentConfirmation')
 					</td>
 				</tr>';
 	}
-	if(mb_strlen(trim($MyRow['deladd3']))) {
+	if (mb_strlen(trim($MyRow['deladd3']))) {
 		  $MailMessage .= '
 				<tr>
 					<td>
@@ -367,7 +367,7 @@ if (($_GET['EmailType']=='PaymentConfirmation')
 					</td>
 				</tr>';
 	}
-	if(mb_strlen(trim($MyRow['deladd4']))) {
+	if (mb_strlen(trim($MyRow['deladd4']))) {
 		  $MailMessage .= '
 				<tr>
 					<td>
@@ -376,7 +376,7 @@ if (($_GET['EmailType']=='PaymentConfirmation')
 					</td>
 				</tr>';
 	}
-	if(mb_strlen(trim($MyRow['deladd5']))) {
+	if (mb_strlen(trim($MyRow['deladd5']))) {
 		  $MailMessage .= '
 				<tr>
 					<td>
@@ -385,7 +385,7 @@ if (($_GET['EmailType']=='PaymentConfirmation')
 					</td>
 				</tr>';
 	}
-	if(mb_strlen(trim($MyRow['deladd6']))) {
+	if (mb_strlen(trim($MyRow['deladd6']))) {
 		  $MailMessage .= '
 				<tr>
 					<td>
@@ -463,18 +463,18 @@ if (($_GET['EmailType']=='PaymentConfirmation')
 				<td colspan="4" align="right">' . $Text0340 . '</td>
 				<td align="right">' . locale_number_format($MyRow['freightcost'],$MyRow['decimalplaces']) . '</td>
 			</tr>';
-	}else{
+	} else {
 		if ($MyRow['shippername'] == 'Pick up from store'){
 			$MailMessage .=  '
 				<tr>
 					<td colspan="4" align="right">' . $Text0350 . '</td>
 				</tr>';
-		}elseif ($MyRow['shippername'] == 'Wholesale Order Shipping'){
+		} elseif ($MyRow['shippername'] == 'Wholesale Order Shipping'){
 			$MailMessage .=  '
 				<tr>
 					<td colspan="4" align="right">' . $Text0365 . '</td>
 				</tr>';
-		}else{
+		} else {
 			$MailMessage .=  '
 				<tr>
 					<td colspan="4" align="right">' . $Text0360 . ' ' . $_SESSION['ShopName'] . '</td>

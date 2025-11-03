@@ -64,7 +64,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 			OR $KL_SPGJunior){
 			$MenuItems[$MyRow['modulelink']][$MyRow['menusection']]['Caption'][] = __('KL Shop Transfer - Receive Transfer FROM kantor');
 			$MenuItems[$MyRow['modulelink']][$MyRow['menusection']]['URL'][] = $MyRow['url'];
-		}else{
+		} else {
 			$MenuItems[$MyRow['modulelink']][$MyRow['menusection']]['Caption'][] = __($MyRow['caption']);
 			$MenuItems[$MyRow['modulelink']][$MyRow['menusection']]['URL'][] = $MyRow['url'];
 		}

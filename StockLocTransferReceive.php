@@ -21,15 +21,15 @@ include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.php');
 
-if(isset($_GET['NewTransfer'])) {
+if (isset($_GET['NewTransfer'])) {
 	unset($_SESSION['Transfer']);
 }
-if(isset($_SESSION['Transfer']) and $_SESSION['Transfer']->TrfID == '') {
+if (isset($_SESSION['Transfer']) and $_SESSION['Transfer']->TrfID == '') {
 	unset($_SESSION['Transfer']);
 }
 
 
-if(isset($_POST['ProcessTransfer'])) {
+if (isset($_POST['ProcessTransfer'])) {
 	/*Ok Time To Post transactions to Inventory Transfers, and Update Posted variable & received Qty's  to LocTransfers */
 
 	$PeriodNo = GetPeriod($_SESSION['Transfer']->TranDate);
@@ -39,27 +39,27 @@ if(isset($_POST['ProcessTransfer'])) {
 	$i = 0;
 	$TotalQuantity = 0;
 	foreach ($_SESSION['Transfer']->TransferItem AS $TrfLine) {
-		if(is_numeric(filter_number_format($_POST['Qty' . $i]))) {
+		if (is_numeric(filter_number_format($_POST['Qty' . $i]))) {
 		/*Update the quantity received from the inputs */
 			$_SESSION['Transfer']->TransferItem[$i]->Quantity = round(filter_number_format($_POST['Qty' . $i]), $_SESSION['Transfer']->TransferItem[$i]->DecimalPlaces);
-		} elseif($_POST['Qty' . $i] == '') {
+		} elseif ($_POST['Qty' . $i] == '') {
 			$_SESSION['Transfer']->TransferItem[$i]->Quantity = 0;
 		} else {
 			prnMsg(__('The quantity entered for') . ' ' . $TrfLine->StockID . ' ' . __('is not numeric') . '. ' .
 				   __('All quantities must be numeric'), 'error');
 			$InputError = true;
 		}
-		if(filter_number_format($_POST['Qty' . $i]) < 0) {
+		if (filter_number_format($_POST['Qty' . $i]) < 0) {
 			prnMsg(__('The quantity entered for') . ' ' . $TrfLine->StockID . ' ' . __('is negative') . '. ' .
 				   __('All quantities must be for positive numbers greater than zero'), 'error');
 			$InputError = true;
 		}
-		if($TrfLine->PrevRecvQty + $TrfLine->Quantity > $TrfLine->ShipQty) {
+		if ($TrfLine->PrevRecvQty + $TrfLine->Quantity > $TrfLine->ShipQty) {
 			prnMsg(__('The Quantity entered plus the Quantity Previously Received can not be greater than the Total Quantity shipped for') .
 				   ' ' . $TrfLine->StockID, 'error');
 			$InputError = true;
 		}
-		if(isset($_POST['CancelBalance' . $i]) and $_POST['CancelBalance' . $i] == 1) {
+		if (isset($_POST['CancelBalance' . $i]) and $_POST['CancelBalance' . $i] == 1) {
 			$_SESSION['Transfer']->TransferItem[$i]->CancelBalance = 1;
 		} else {
 			 $_SESSION['Transfer']->TransferItem[$i]->CancelBalance = 0;
@@ -67,18 +67,18 @@ if(isset($_POST['ProcessTransfer'])) {
 		$TotalQuantity += $TrfLine->Quantity;
 		$i++;
 	} /*end loop to validate and update the SESSION['Transfer'] data */
-	if($TotalQuantity < 0) {
+	if ($TotalQuantity < 0) {
 		prnMsg(__('All quantities entered are less than zero') . '. ' . __('Please correct that and try again'), 'error');
 		$InputError = true;
 	}
 
-	if(!$InputError) {
+	if (!$InputError) {
 		/*All inputs must be sensible so make the stock movement records and update the locations stocks */
 
 		DB_Txn_Begin(); // The Txn should affect the full transfer
 
 		foreach ($_SESSION['Transfer']->TransferItem AS $TrfLine) {
-			if($TrfLine->Quantity >= 0) {
+			if ($TrfLine->Quantity >= 0) {
 				/* Need to get the current location quantity will need it later for the stock movement */
 				$SQL = "SELECT locstock.quantity
 						FROM locstock
@@ -86,7 +86,7 @@ if(isset($_POST['ProcessTransfer'])) {
 							AND loccode= '" . $_SESSION['Transfer']->StockLocationFrom . "'";
 
 				$Result = DB_query($SQL, __('Could not retrieve the stock quantity at the dispatch stock location prior to this transfer being processed'));
-				if(DB_num_rows($Result) == 1) {
+				if (DB_num_rows($Result) == 1) {
 					$LocQtyRow = DB_fetch_row($Result);
 					$QtyOnHandPrior = $LocQtyRow[0];
 				} else {
@@ -126,7 +126,7 @@ if(isset($_POST['ProcessTransfer'])) {
 				$StkMoveNo = DB_Last_Insert_ID('stockmoves', 'stkmoveno');
 
 				/*Insert the StockSerialMovements and update the StockSerialItems  for controlled items*/
-				if($TrfLine->Controlled == 1) {
+				if ($TrfLine->Controlled == 1) {
 					foreach($TrfLine->SerialItems as $Item) {
 						/*We need to add or update the StockSerialItem record and the StockSerialMoves as well */
 						/*First need to check if the serial items already exists or not in the location from */
@@ -139,7 +139,7 @@ if(isset($_POST['ProcessTransfer'])) {
 						$Result = DB_query($SQL, __('Could not determine if the serial item exists'));
 						$SerialItemExistsRow = DB_fetch_row($Result);
 
-						if($SerialItemExistsRow[0] == 1) {
+						if ($SerialItemExistsRow[0] == 1) {
 
 							$SQL = "UPDATE stockserialitems
 									SET quantity= quantity - " . $Item->BundleQty . "
@@ -195,7 +195,7 @@ if(isset($_POST['ProcessTransfer'])) {
 						AND loccode= '" . $_SESSION['Transfer']->StockLocationTo . "'";
 
 				$Result = DB_query($SQL, __('Could not retrieve the quantity on hand at the location being transferred to'));
-				if(DB_num_rows($Result) == 1) {
+				if (DB_num_rows($Result) == 1) {
 					$LocQtyRow = DB_fetch_row($Result);
 					$QtyOnHandPrior = $LocQtyRow[0];
 				} else {
@@ -204,10 +204,10 @@ if(isset($_POST['ProcessTransfer'])) {
 				}
 
 				// Insert outgoing inventory GL transaction if any of the locations has a GL account code:
-				if(($_SESSION['Transfer']->StockLocationFromAccount != '' OR $_SESSION['Transfer']->StockLocationToAccount != '') AND
+				if (($_SESSION['Transfer']->StockLocationFromAccount != '' OR $_SESSION['Transfer']->StockLocationToAccount != '') AND
 					($_SESSION['Transfer']->StockLocationFromAccount != $_SESSION['Transfer']->StockLocationToAccount)) {
 					// Get the account code:
-					if($_SESSION['Transfer']->StockLocationFromAccount != '') {
+					if ($_SESSION['Transfer']->StockLocationFromAccount != '') {
 						$AccountCode = $_SESSION['Transfer']->StockLocationFromAccount;
 					} else {
 						$StockGLCode = GetStockGLCode($TrfLine->StockID);// Get Category's account codes.
@@ -275,7 +275,7 @@ if(isset($_POST['ProcessTransfer'])) {
 				$StkMoveNo = DB_Last_Insert_ID('stockmoves', 'stkmoveno');
 
 				/*Insert the StockSerialMovements and update the StockSerialItems  for controlled items*/
-				if($TrfLine->Controlled == 1) {
+				if ($TrfLine->Controlled == 1) {
 					foreach($TrfLine->SerialItems as $Item) {
 					/*We need to add or update the StockSerialItem record and the StockSerialMoves as well */
 
@@ -291,7 +291,7 @@ if(isset($_POST['ProcessTransfer'])) {
 						$SerialItemExistsRow = DB_fetch_row($Result);
 
 
-						if($SerialItemExistsRow[0] == 1) {
+						if ($SerialItemExistsRow[0] == 1) {
 
 							$SQL = "UPDATE stockserialitems SET
 								quantity= quantity + '" . $Item->BundleQty . "'
@@ -355,10 +355,10 @@ if(isset($_POST['ProcessTransfer'])) {
 				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				// Insert incoming inventory GL transaction if any of the locations has a GL account code:
-				if(($_SESSION['Transfer']->StockLocationFromAccount != '' OR $_SESSION['Transfer']->StockLocationToAccount != '') AND
+				if (($_SESSION['Transfer']->StockLocationFromAccount != '' OR $_SESSION['Transfer']->StockLocationToAccount != '') AND
 					($_SESSION['Transfer']->StockLocationFromAccount != $_SESSION['Transfer']->StockLocationToAccount)) {
 					// Get the account code:
-					if($_SESSION['Transfer']->StockLocationToAccount != '') {
+					if ($_SESSION['Transfer']->StockLocationToAccount != '') {
 						$AccountCode = $_SESSION['Transfer']->StockLocationToAccount;
 					} else {
 						$StockGLCode = GetStockGLCode($TrfLine->StockID);// Get Category's account codes.
@@ -398,7 +398,7 @@ if(isset($_POST['ProcessTransfer'])) {
 					   __('has been created from') . ' ' . $_SESSION['Transfer']->StockLocationFromName . ' ' . __('to') . ' ' .
 					   $_SESSION['Transfer']->StockLocationToName . ' ' . __('for a quantity of') . ' ' . $TrfLine->Quantity, 'success');
 
-				if($TrfLine->CancelBalance == 1) {
+				if ($TrfLine->CancelBalance == 1) {
 					RecordItemCancelledInTransfer($_SESSION['Transfer']->TrfID, $TrfLine->StockID, $TrfLine->Quantity);
 					$SQL = "UPDATE loctransfers SET recqty = recqty + '" . round($TrfLine->Quantity, $TrfLine->DecimalPlaces) . "',
 						shipqty = recqty + '" . round($TrfLine->Quantity, $TrfLine->DecimalPlaces) . "',
@@ -416,7 +416,7 @@ if(isset($_POST['ProcessTransfer'])) {
 				unset($_SESSION['Transfer']->LineItem[$i]);
 				unset($_POST['Qty' . $i]);
 			} /*end if Quantity >= 0 */
-			if($TrfLine->CancelBalance == 1) {
+			if ($TrfLine->CancelBalance == 1) {
 				$SQL = "UPDATE loctransfers SET shipqty = recqty
 						WHERE reference = '" . $_SESSION['Transfer']->TrfID . "'
 						AND stockid = '" . $TrfLine->StockID . "'";
@@ -456,7 +456,7 @@ if(isset($_POST['ProcessTransfer'])) {
 
 } /*end of PRocess Transfer */
 
-if(isset($_GET['Trf_ID'])) {
+if (isset($_GET['Trf_ID'])) {
 
 	unset($_SESSION['Transfer']);
 
@@ -488,7 +488,7 @@ if(isset($_GET['Trf_ID'])) {
 	$ErrMsg = __('The details of transfer number') . ' ' . $_GET['Trf_ID'] . ' ' . __('could not be retrieved because') . ' ';
 	$Result = DB_query($SQL, $ErrMsg);
 
-	if(DB_num_rows($Result) == 0) {
+	if (DB_num_rows($Result) == 0) {
 		echo '<h3>' . __('Transfer') . ' #' . $_GET['Trf_ID'] . ' ' . __('Does Not Exist') . '</h3><br />';
 		include('includes/footer.php');
 		exit();
@@ -524,7 +524,7 @@ if(isset($_GET['Trf_ID'])) {
 
 } /* $_GET['Trf_ID'] is set */
 
-if(isset($_SESSION['Transfer'])) {
+if (isset($_SESSION['Transfer'])) {
 	//Begin Form for receiving shipment
 
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' .
@@ -564,14 +564,14 @@ if(isset($_SESSION['Transfer'])) {
 			<td>' . $TrfLine->ItemDescription . '</td>';
 
 		echo '<td class="number">' . locale_number_format($TrfLine->ShipQty, $TrfLine->DecimalPlaces) . '</td>';
-		if(isset($_POST['Qty' . $i]) AND is_numeric(filter_number_format($_POST['Qty' . $i]))) {
+		if (isset($_POST['Qty' . $i]) AND is_numeric(filter_number_format($_POST['Qty' . $i]))) {
 
 			$_SESSION['Transfer']->TransferItem[$i]->Quantity = round(filter_number_format($_POST['Qty' . $i]), $TrfLine->DecimalPlaces);
 
 			$Qty = round(filter_number_format($_POST['Qty' . $i]), $TrfLine->DecimalPlaces);
 
-		} else if($TrfLine->Controlled == 1) {
-			if(sizeOf($TrfLine->SerialItems) == 0) {
+		} elseif ($TrfLine->Controlled == 1) {
+			if (sizeOf($TrfLine->SerialItems) == 0) {
 				$Qty = 0;
 			} else {
 				$Qty = $TrfLine->Quantity;
@@ -581,7 +581,7 @@ if(isset($_SESSION['Transfer'])) {
 		}
 		echo '<td class="number">' . locale_number_format($TrfLine->PrevRecvQty, $TrfLine->DecimalPlaces) . '</td>';
 
-		if($TrfLine->Controlled == 1) {
+		if ($TrfLine->Controlled == 1) {
 			echo '<td class="number"><input type="hidden" name="Qty' . $i . '" value="' .
 				 locale_number_format($Qty, $TrfLine->DecimalPlaces) . '" /><a href="' . $RootPath .
 				 '/StockTransferControlled.php?TransferItem=' . $i . '" />' . $Qty . '</a></td>';
@@ -595,8 +595,8 @@ if(isset($_SESSION['Transfer'])) {
 		echo '<td><input type="checkbox" name="CancelBalance' . $i . '" value="1" /></td>';
 
 
-		if($TrfLine->Controlled == 1) {
-			if($TrfLine->Serialised == 1) {
+		if ($TrfLine->Controlled == 1) {
+			if ($TrfLine->Serialised == 1) {
 				echo '<td><a href="' . $RootPath . '/StockTransferControlled.php?TransferItem=' . $i . '">' .
 					 __('Enter Serial Numbers') . '</a></td>';
 			} else {
@@ -637,11 +637,11 @@ if(isset($_SESSION['Transfer'])) {
 			<td>' . __('Select Location Receiving Into') . ':</td>
 			<td>';
 	echo '<select name="RecLocation" onchange="ReloadForm(form1.RefreshTransferList)">';
-	if(!isset($_POST['RecLocation'])) {
+	if (!isset($_POST['RecLocation'])) {
 		$_POST['RecLocation'] = $_SESSION['UserStockLocation'];
 	}
 	while ($MyRow = DB_fetch_array($LocResult)) {
-		if($MyRow['loccode'] == $_POST['RecLocation']) {
+		if ($MyRow['loccode'] == $_POST['RecLocation']) {
 			echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 		} else {
 // KL RICARD let's find who is using this script to block "To" locations if it's SPG ot SPG Support
@@ -671,7 +671,7 @@ if(isset($_SESSION['Transfer'])) {
 			ORDER BY reference";
 
 	$TrfResult = DB_query($SQL);
-	if(DB_num_rows($TrfResult) > 0) {
+	if (DB_num_rows($TrfResult) > 0) {
 		$LocSql = "SELECT locationname FROM locations WHERE loccode='" . $_POST['RecLocation'] . "'";
 		$LocResult = DB_query($LocSql);
 		$LocRow = DB_fetch_array($LocResult);
@@ -693,7 +693,7 @@ if(isset($_SESSION['Transfer'])) {
 					</tr>';
 		}
 		echo '</table>';
-	} else if(!isset($_POST['ProcessTransfer'])) {
+	} elseif (!isset($_POST['ProcessTransfer'])) {
 		prnMsg(__('There are no incoming transfers to this location'), 'info');
 	}
 	echo '</div>

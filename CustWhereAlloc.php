@@ -9,7 +9,7 @@ $ViewTopic = 'ARInquiries';
 $BookMark = 'WhereAllocated';
 include('includes/header.php');
 
-if(isset($_GET['TransNo']) AND isset($_GET['TransType'])) {
+if (isset($_GET['TransNo']) AND isset($_GET['TransType'])) {
 	$_POST['TransNo'] = (int)$_GET['TransNo'];
 	$_POST['TransType'] = (int)$_GET['TransType'];
 	$_POST['ShowResults'] = true;
@@ -27,18 +27,18 @@ echo '<fieldset>
 			<label for="TransType">' . __('Type') . ':</label>
 			<select tabindex="1" name="TransType">';
 
-if(!isset($_POST['TransType'])) {
+if (!isset($_POST['TransType'])) {
 	$_POST['TransType']='10';
 }
-if($_POST['TransType']==10) {
+if ($_POST['TransType']==10) {
 	 echo '<option selected="selected" value="10">' . __('Invoice') . '</option>
 			<option value="12">' . __('Receipt') . '</option>
 			<option value="11">' . __('Credit Note') . '</option>';
-} elseif($_POST['TransType'] == 12) {
+} elseif ($_POST['TransType'] == 12) {
 	echo '<option selected="selected" value="12">' . __('Receipt') . '</option>
 			<option value="10">' . __('Invoice') . '</option>
 			<option value="11">' . __('Credit Note') . '</option>';
-} elseif($_POST['TransType'] == 11) {
+} elseif ($_POST['TransType'] == 11) {
 	echo '<option selected="selected" value="11">' . __('Credit Note') . '</option>
 		<option value="10">' . __('Invoice') . '</option>
 		<option value="12">' . __('Receipt') . '</option>';
@@ -47,7 +47,7 @@ if($_POST['TransType']==10) {
 echo '</select>
 	</field>';
 
-if(!isset($_POST['TransNo'])) {$_POST['TransNo']='';}
+if (!isset($_POST['TransNo'])) {$_POST['TransNo']='';}
 echo '<field>
 		<label for="TransNo">' . __('Transaction Number').':</label>
 		<input tabindex="2" type="text" class="number" name="TransNo"  required="required" maxlength="10" size="10" value="'. $_POST['TransNo'] . '" />
@@ -57,12 +57,12 @@ echo '<field>
 		<input tabindex="3" type="submit" name="ShowResults" value="' . __('Show How Allocated') . '" />
 	</div>';
 
-if(isset($_POST['ShowResults']) AND  $_POST['TransNo']=='') {
+if (isset($_POST['ShowResults']) AND  $_POST['TransNo']=='') {
 	echo '<br />';
 	prnMsg(__('The transaction number to be queried must be entered first'),'warn');
 }
 
-if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
+if (isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 
 /*First off get the DebtorTransID of the transaction (invoice normally) selected */
 	$SQL = "SELECT debtortrans.id,
@@ -77,13 +77,13 @@ if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 			WHERE type='" . $_POST['TransType'] . "'
 			AND transno = '" . $_POST['TransNo']."'";
 
-	if($_SESSION['SalesmanLogin'] != '') {
+	if ($_SESSION['SalesmanLogin'] != '') {
 			$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 	}
 	$Result = DB_query($SQL );
 	$GrandTotal = 0;
 	$Rows = DB_num_rows($Result);
-	if($Rows>=1) {
+	if ($Rows>=1) {
 		while($MyRow = DB_fetch_array($Result)) {
 		$GrandTotal +=$MyRow['totamt'];
 		$Rate = $MyRow['rate'];
@@ -100,10 +100,10 @@ if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 					custallocns.amt
 				FROM debtortrans
 				INNER JOIN custallocns ";
-		if($_POST['TransType']==12 OR $_POST['TransType'] == 11) {
+		if ($_POST['TransType']==12 OR $_POST['TransType'] == 11) {
 
 			$TitleInfo = ($_POST['TransType'] == 12)?__('Receipt'):__('Credit Note');
-			if($MyRow['totamt']<0) {
+			if ($MyRow['totamt']<0) {
 				$SQL .= "ON debtortrans.id = custallocns.transid_allocto
 					WHERE custallocns.transid_allocfrom = '" . $AllocToID . "'";
 			} else {
@@ -122,9 +122,9 @@ if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 		$ErrMsg = __('The customer transactions for the selected criteria could not be retrieved because');
 		$TransResult = DB_query($SQL, $ErrMsg);
 
-		if(DB_num_rows($TransResult)==0) {
+		if (DB_num_rows($TransResult)==0) {
 
-			if($MyRow['totamt']<0 AND ($_POST['TransType']==12 OR $_POST['TransType'] == 11)) {
+			if ($MyRow['totamt']<0 AND ($_POST['TransType']==12 OR $_POST['TransType'] == 11)) {
 					prnMsg(__('This transaction was a receipt of funds and there can be no allocations of receipts or credits to a receipt. This inquiry is meant to be used to see how a payment which is entered as a negative receipt is settled against credit notes or receipts'),'info');
 			} else {
 				prnMsg(__('There are no allocations made against this transaction'),'info');
@@ -160,9 +160,9 @@ if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 
 			while($MyRow=DB_fetch_array($TransResult)) {
 
-				if($MyRow['type']==11) {
+				if ($MyRow['type']==11) {
 					$TransType = __('Credit Note');
-				} elseif($MyRow['type'] == 10) {
+				} elseif ($MyRow['type'] == 10) {
 					$TransType = __('Invoice');
 				} else {
 					$TransType = __('Receipt');
@@ -178,7 +178,7 @@ if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 					</tr>';
 
 				$RowCounter++;
-				if($RowCounter == 12) {
+				if ($RowCounter == 12) {
 					$RowCounter=1;
 					echo $TableHeader;
 				}
@@ -223,7 +223,7 @@ if ($_POST['TransType']== 12) {
 }
 echo '</div>';
 echo '</form>';
-if(isset($Printer)) {
+if (isset($Printer)) {
 	echo '<div class="centre noPrint">
 			<button onclick="javascript:window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
 				'/images/printer.png" /> ', __('Print'), '</button>', // "Print" button.

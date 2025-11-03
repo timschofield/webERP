@@ -66,7 +66,7 @@ function submit($ListCategories, $FromDate, $ToDate, $CodeDetail) {
 					WHERE stockmaster.discontinued = 0
 						AND stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')
 					ORDER BY stockmaster.stockid";
-		}elseif($CodeDetail == 'CODE_FULL_WITH_RINGS'){
+		} elseif ($CodeDetail == 'CODE_FULL_WITH_RINGS'){
 			$SQL = "SELECT CASE WHEN SUBSTRING(stockmaster.stockid,3,2) = 'AN' THEN SUBSTRING(stockmaster.stockid,1,6) ELSE stockmaster.stockid END AS stockid,
 							stockmaster.description,
 							stockmaster.categoryid,
@@ -84,7 +84,7 @@ function submit($ListCategories, $FromDate, $ToDate, $CodeDetail) {
 						AND stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')
 					GROUP BY stockid
 					ORDER BY stockid";
-		}else{
+		} else {
 			$SQL = "SELECT SUBSTRING(stockmaster.stockid,1,6) AS stockid,
 							COUNT(stockmaster.stockid) AS flavours,
 							AVG (stockmaster.actualcost) AS standardcost
@@ -133,18 +133,18 @@ function submit($ListCategories, $FromDate, $ToDate, $CodeDetail) {
 
 			if ($CodeDetail == 'CODE_FULL'){
 				$SpreadSheet->getActiveSheet()->setCellValue('E1', 'ALL CODES');
-			}elseif ($CodeDetail == 'CODE_FULL_WITH_RINGS'){
+			} elseif ($CodeDetail == 'CODE_FULL_WITH_RINGS'){
 				$SpreadSheet->getActiveSheet()->setCellValue('E1', 'RINGS GROUPED');
-			}else{
+			} else {
 				$SpreadSheet->getActiveSheet()->setCellValue('E1', '6 LETTER CODES');
 			}
 
 			$SpreadSheet->getActiveSheet()->setCellValue('A5', 'ITEM CODE');
 			if ($CodeDetail == 'CODE_FULL'){
 				$ColumnTitle = 'DESCRIPTION';
-			}elseif ($CodeDetail == 'CODE_FULL_WITH_RINGS'){
+			} elseif ($CodeDetail == 'CODE_FULL_WITH_RINGS'){
 				$ColumnTitle = 'TEXT';
-			}else{
+			} else {
 				$ColumnTitle = 'FLAVOURS';
 			}
 			$SpreadSheet->getActiveSheet()->setCellValue('B5', $ColumnTitle);
@@ -192,10 +192,10 @@ function submit($ListCategories, $FromDate, $ToDate, $CodeDetail) {
 					if ($CodeDetail == 'CODE_FULL'){
 						$SpreadSheet->getActiveSheet()->setCellValue('B'.$i, $MyRow['description']);
 						$SpreadSheet->getActiveSheet()->setCellValue('C'.$i, $MyRow['categoryid']);
-					}elseif ($CodeDetail == 'CODE_FULL_WITH_RINGS'){
+					} elseif ($CodeDetail == 'CODE_FULL_WITH_RINGS'){
 						$SpreadSheet->getActiveSheet()->setCellValue('B'.$i, $MyRow['description']);
 						$SpreadSheet->getActiveSheet()->setCellValue('C'.$i, $MyRow['categoryid']);
-					}else{
+					} else {
 						$SpreadSheet->getActiveSheet()->setCellValue('B'.$i, round($MyRow['flavours'],0));
 					}
 
@@ -297,7 +297,7 @@ function submit($ListCategories, $FromDate, $ToDate, $CodeDetail) {
 			if ($_POST['Format'] == 'xlsx') {
 				header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 				$File = 'KL-SalesAnalysis-' . date('Y-m-d'). '.xlsx';
-			} else if ($_POST['Format'] == 'ods') {
+			} elseif ($_POST['Format'] == 'ods') {
 				header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
 				$File = 'KL-SalesAnalysis-' . date('Y-m-d'). '.ods';
 			}
@@ -314,13 +314,13 @@ function submit($ListCategories, $FromDate, $ToDate, $CodeDetail) {
 
 			if ($_POST['Format'] == 'xlsx') {
 				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($SpreadSheet);
-			} else if ($_POST['Format'] == 'ods') {
+			} elseif ($_POST['Format'] == 'ods') {
 				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($SpreadSheet);
 			}
 			$objWriter->save('php://output');
 			exit(); // Ensure no further output is sent
 
-		}else{
+		} else {
 			$Title = __('Excel file for Sales Analysis');
 			include('includes/header.php');
 			prnMsg('No items selected to analyse');

@@ -242,7 +242,7 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 			unset($_POST['Notes']);
 		}
 
-		if(!isset ($Days)){
+		if (!isset ($Days)){
 			$Days = 30;
 		 }
 
@@ -350,7 +350,7 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 				<td>' . $ReceiptText . '</td>
 				<td>' . $AuthorisedDate . '</td>
 				</tr>';
-		}else*/ {
+		} else*/ {
 			echo '<tr class="striped_row">
 				<td>' . ConvertSQLDate($MyRow['date']) . '</td>
 				<td>', $ExpenseCodeDes, '</td>

@@ -12,9 +12,9 @@ function Get_SQL_to_PHP_time_difference() {
 	$diff = $NowSQL->diff($NowPHP);
 	if ($NowSQL < $NowPHP){
 		$Offset = -$diff->h;
-	}elseif ($NowSQL > $NowPHP){
+	} elseif ($NowSQL > $NowPHP){
 		$Offset = 24-$diff->h;
-	}else{
+	} else {
 		$Offset = 0;
 	}
 	return $Offset;
@@ -32,9 +32,9 @@ function Get_SQL_OC_to_PHP_time_difference() {
 	$diff = $NowSQL->diff($NowPHP);
 	if ($NowSQL < $NowPHP){
 		$Offset = -$diff->h;
-	}elseif ($NowSQL > $NowPHP){
+	} elseif ($NowSQL > $NowPHP){
 		$Offset = 24-$diff->h;
-	}else{
+	} else {
 		$Offset = 0;
 	}
 	return $Offset;
@@ -62,9 +62,9 @@ function PrintTimeInformation() {
 function CheckLastTimeRun($Script){
 	if ($Script == 'OpenCartToWeberp'){
 		$ConfigName = 'OpenCartToWeberp_LastRun';
-	}elseif ($Script == 'WeberpToOpenCartHourly'){
+	} elseif ($Script == 'WeberpToOpenCartHourly'){
 		$ConfigName = 'WeberpToOpenCartHourly_LastRun';
-	}elseif ($Script == 'WeberpToOpenCartDaily'){
+	} elseif ($Script == 'WeberpToOpenCartDaily'){
 		$ConfigName = 'WeberpToOpenCartDaily_LastRun';
 	}
 	$SQL = "SELECT confvalue
@@ -87,14 +87,14 @@ function SetLastTimeRun($Script){
 		$SQL = "UPDATE config
 				SET confvalue = '" . $ServerNow ."'
 				WHERE confname = 'OpenCartToWeberp_LastRun'";
-	}elseif ($Script == 'WeberpToOpenCartHourly'){
+	} elseif ($Script == 'WeberpToOpenCartHourly'){
 		// Updating from webERP to OC: Check the time zone used in webERP DB 
 		$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference());
 		$_SESSION['WeberpToOpenCartHourly_LastRun'] = $ServerNow;
 		$SQL = "UPDATE config
 				SET confvalue = '" . $ServerNow ."'
 				WHERE confname = 'WeberpToOpenCartHourly_LastRun'";
-	}elseif ($Script == 'WeberpToOpenCartDaily'){
+	} elseif ($Script == 'WeberpToOpenCartDaily'){
 		// Updating from webERP to OC: Check the time zone used in webERP DB 
 		$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference());
 		$_SESSION['WeberpToOpenCartDaily_LastRun'] = $ServerNow;
@@ -112,7 +112,7 @@ function DataExistsInOpenCart($Table, $f1, $v1, $f2 = '', $v2 = ''){
 		$SQL = "SELECT COUNT(*)
 				FROM " . $Table . "
 				WHERE " . $f1 . " = '" . $v1 . "'";
-	}else{
+	} else {
 		/* Primary key is 2 fields */
 		$SQL = "SELECT COUNT(*)
 				FROM " . $Table . "
@@ -122,10 +122,10 @@ function DataExistsInOpenCart($Table, $f1, $v1, $f2 = '', $v2 = ''){
 	$ErrMsg =__('Could not check existence of data in OpenCart because');
 	$Result = DB_query_oc($SQL,$ErrMsg);
 
-	if(DB_num_rows($Result) != 0){
+	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
 		$Exists = ($MyRow[0] > 0);
-	}else{
+	} else {
 		$Exists = false;
 	}
 	return $Exists;
@@ -137,10 +137,10 @@ function GetOpenCartProductId($model){
 			WHERE model = '" . $model . "'";
 	$ErrMsg =__('Could not get the ProductId in OpenCart because');
 	$Result = DB_query_oc($SQL,$ErrMsg);
-	if(DB_num_rows($Result) != 0){
+	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
 		return $MyRow[0];
-	}else{
+	} else {
 		return '';
 	}
 }
@@ -151,10 +151,10 @@ function GetManufacturerFromProductId($ProductId){
 			WHERE product_id = '" . $ProductId . "'";
 	$ErrMsg =__('Could not get the ManufacturerId in OpenCart because');
 	$Result = DB_query_oc($SQL,$ErrMsg);
-	if(DB_num_rows($Result) != 0){
+	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
 		return $MyRow[0];
-	}else{
+	} else {
 		return '';
 	}
 }
@@ -166,10 +166,10 @@ function GetOpenCartLanguageId($language){
 			WHERE locale LIKE '%" . $language . "%'";
 	$ErrMsg =__('Could not get the LanguageId in OpenCart because');
 	$Result = DB_query_oc($SQL,$ErrMsg);
-	if(DB_num_rows($Result) != 0){
+	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
 		return $MyRow[0];
-	}else{
+	} else {
 		return '';
 	}
 }
@@ -180,10 +180,10 @@ function GetWeberpCustomerIdFromEmail($email){
 			WHERE email = '" . $email . "'";
 	$ErrMsg =__('Could not get the CustomerId in webERP because');
 	$Result = DB_query($SQL,$ErrMsg);
-	if(DB_num_rows($Result) != 0){
+	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
 		return $MyRow[0];
-	}else{
+	} else {
 		return '';
 	}
 }
@@ -195,10 +195,10 @@ function GetWeberpComissionFlatDOKU(){
 				AND locations.loccode = " . CODE_ONLINE_SHOP . "";
 	$ErrMsg ='Could not get the Commission Flat DOKU in webERP because';
 	$Result = DB_query($SQL,$ErrMsg);
-	if(DB_num_rows($Result) != 0){
+	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
 		$Com = $MyRow['comissionflatdoku'];
-	}else{
+	} else {
 		$Com = 0;
 	}
 	return $Com;
@@ -211,10 +211,10 @@ function GetWeberpComissionCCDOKU(){
 				AND locations.loccode = " . CODE_ONLINE_SHOP . "";
 	$ErrMsg ='Could not get the Commission CC DOKU in webERP because';
 	$Result = DB_query($SQL,$ErrMsg);
-	if(DB_num_rows($Result) != 0){
+	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
 		$Com = $MyRow['comissionccdoku'];
-	}else{
+	} else {
 		$Com = 0;
 	}
 	return $Com;
@@ -230,7 +230,7 @@ function GetWeberpCustomerIdFromCustomerGroupAndCurrency($CustomerGroup, $Curren
 		OR ($CustomerGroup == "7")){
 		// it is wholesale
 		$CustomerId = WEBERP_ONLINE_WHOLESALE_CUSTOMER_CODE_PREFIX . $Currency;
-	}else{
+	} else {
 		// it is retail or guest
 		$CustomerId = WEBERP_ONLINE_RETAIL_CUSTOMER_CODE_PREFIX . $Currency;
 	}
@@ -244,10 +244,10 @@ function GetWeberpForeignCurrencySurchargeFactor($Location){
 				AND locations.loccode = '" . $Location . "'";
 	$ErrMsg ='Could not get the online Foreign Currency Surcharge factor in webERP because';
 	$Result = DB_query($SQL,$ErrMsg);
-	if(DB_num_rows($Result) != 0){
+	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
 		$Factor = $MyRow['foreigncurrencysurchargefactor'];
-	}else{
+	} else {
 		$Factor = 1;
 	}
 	return $Factor;
@@ -267,18 +267,18 @@ function GetWeberpGLAccountPayPalFromCustomer($CustomerCode){
 			WHERE klonlinepartners.onlinepartnercode = '" . $OnlinePartner . "'";
 	$ErrMsg ='Could not get the Online account GL Account for ' . $OnlinePartner . ' in webERP because';
 	$Result = DB_query($SQL,$ErrMsg);
-	if(DB_num_rows($Result) != 0){
+	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
-		if($Currency == "AUD"){
+		if ($Currency == "AUD"){
 			$GLAccount = $MyRow['accountpaypalaud'];
-		}elseif($Currency == "USD"){
+		} elseif ($Currency == "USD"){
 			$GLAccount = $MyRow['accountpaypalusd'];
-		}elseif($Currency == "EUR"){
+		} elseif ($Currency == "EUR"){
 			$GLAccount = $MyRow['accountpaypaleur'];
-		}elseif($Currency == "IDR"){
+		} elseif ($Currency == "IDR"){
 			$GLAccount = $MyRow['accountdokuidr'];
 		}
-	}else{
+	} else {
 		$GLAccount = '';
 	}
 	// in Paypal there is no IDR yet, so we pay by bank trasnfer and record payment manually in webERP
@@ -298,18 +298,18 @@ function GetWeberpGLCommissionAccountPayPalFromCustomer($CustomerCode){
 			WHERE klonlinepartners.onlinepartnercode = '" . $OnlinePartner . "'";
 	$ErrMsg ='Could not get the PayPal Comission GL Account for ' . $Currency . ' in webERP because';
 	$Result = DB_query($SQL,$ErrMsg);
-	if(DB_num_rows($Result) != 0){
+	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
-		if($Currency == "AUD"){
+		if ($Currency == "AUD"){
 			$GLAccount = $MyRow['accountpaypalcomissionaud'];
-		}elseif($Currency == "USD"){
+		} elseif ($Currency == "USD"){
 			$GLAccount = $MyRow['accountpaypalcomissionusd'];
-		}elseif($Currency == "EUR"){
+		} elseif ($Currency == "EUR"){
 			$GLAccount = $MyRow['accountpaypalcomissioneur'];
-		}elseif($Currency == "IDR"){
+		} elseif ($Currency == "IDR"){
 			$GLAccount = $MyRow['accountdokucomissionidr'];
 		}
-	}else{
+	} else {
 		$GLAccount = '';
 	}
 	// in Paypal there is no IDR yet, so we pay by bank trasnfer and record payment manually in webERP
@@ -324,10 +324,10 @@ function GetWeberpOrderNo($CustomerId, $OrderId){
 				AND customerref = '" . $OrderId . "'";
 	$ErrMsg =__('Could not get the OrderNo in webERP because');
 	$Result = DB_query($SQL,$ErrMsg);
-	if(DB_num_rows($Result) != 0){
+	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
 		return $MyRow[0];
-	}else{
+	} else {
 		return '';
 	}
 }
@@ -338,10 +338,10 @@ function GetOnlineOrderNoFromWeberp($OrderId){
 			WHERE orderno = '" . $OrderId . "'";
 	$ErrMsg =__('Could not get the Online Order No in webERP because');
 	$Result = DB_query($SQL,$ErrMsg);
-	if(DB_num_rows($Result) != 0){
+	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
 		return $MyRow[0];
-	}else{
+	} else {
 		return '';
 	}
 }
@@ -352,10 +352,10 @@ function GetWeberpCustomerCurrency($CustomerId){
 			WHERE debtorno = '" . $CustomerId . "'";
 	$ErrMsg =__('Could not get the CustomerCurrency in webERP because');
 	$Result = DB_query($SQL,$ErrMsg);
-	if(DB_num_rows($Result) != 0){
+	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
 		return $MyRow[0];
-	}else{
+	} else {
 		return '';
 	}
 }
@@ -366,10 +366,10 @@ function GetWeberpCurrencyRate($CurrencyCode){
 			WHERE currabrev = '" . $CurrencyCode . "'";
 	$ErrMsg =__('Could not get the Currency Rate in webERP because');
 	$Result = DB_query($SQL,$ErrMsg);
-	if(DB_num_rows($Result) != 0){
+	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
 		return $MyRow[0];
-	}else{
+	} else {
 		return '';
 	}
 }
@@ -381,10 +381,10 @@ function GetTotalTitleFromOrder($Concept, $OrderId){
 				AND code = '" . $Concept . "'";
 	$ErrMsg =__('Could not get the '. $Concept . ' title from OpenCart because');
 	$Result = DB_query_oc($SQL,$ErrMsg);
-	if(DB_num_rows($Result) != 0){
+	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
 		return $MyRow[0];
-	}else{
+	} else {
 		return 0;
 	}
 }
@@ -396,10 +396,10 @@ function GetTotalFromOrder($Concept, $OrderId){
 				AND code = '" . $Concept . "'";
 	$ErrMsg =__('Could not get the '. $Concept . ' total from OpenCart because');
 	$Result = DB_query_oc($SQL,$ErrMsg);
-	if(DB_num_rows($Result) != 0){
+	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
 		return $MyRow[0];
-	}else{
+	} else {
 		return 0;
 	}
 }
@@ -412,10 +412,10 @@ function ItemOnlineQOH($StockID){
 				AND locations.stockavailableforonline = '1'";
 	$ErrMsg =__('Could not get the QOH available in webERP for OpenCart because');
 	$Result = DB_query($SQL,$ErrMsg);
-	if(DB_num_rows($Result) != 0){
+	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
 		return $MyRow[0];
-	}else{
+	} else {
 		return 0;
 	}
 }
@@ -425,10 +425,10 @@ function GetOnlinePriceList(){
 			FROM debtorsmaster
 			WHERE debtorsmaster.debtorno = '" . WEBERP_ONLINE_RETAIL_CUSTOMER_CODE_PREFIX . OPENCART_DEFAULT_CURRENCY . "'";
 	$Result = DB_query($SQL);
-	if(DB_num_rows($Result) != 0){
+	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
 		return array($MyRow['salestype'], OPENCART_DEFAULT_CURRENCY);
-	}else{
+	} else {
 		return array(0,0);
 	}
 }
@@ -461,7 +461,7 @@ function MaintainOpenCartDiscountForItem($ProductId, $Price, $DiscountCategory, 
 				WHERE product_id = '" . $ProductId . "'";
 		$DeleteErrMsg = __('The SQL to delete the product discount in Opencart table ') . ' ' . WEBERP_DISCOUNTS_IN_OPENCART_TABLE . ' ' . ('failed');
 		DB_query_oc($SQL,$DeleteErrMsg,'',true);
-	}else{
+	} else {
 		// ProductId has some discount in webERP
 		// so replicate all the discounts in OpenCart
 		$SQL = "SELECT quantitybreak,
@@ -472,14 +472,14 @@ function MaintainOpenCartDiscountForItem($ProductId, $Price, $DiscountCategory, 
 				ORDER BY quantitybreak";
 		$ErrMsg =__('Could not get the discount matrix in webERP because');
 		$Result = DB_query($SQL,$ErrMsg);
-		if(DB_num_rows($Result) != 0){
+		if (DB_num_rows($Result) != 0){
 			while ($MyRow = DB_fetch_array($Result)){
 				$DiscountedPrice = round($Price * (1 - $MyRow['discountrate']),0);
 				UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $MyRow['quantitybreak'], $Priority, $DiscountedPrice);
 				// Now we add the item to the category discount 
 				if ($ManufacturerId == 1){
 					AssignSalesCategoryToProductInOpenCart($ProductId, KL_OUTLET, false);
-				}else{
+				} else {
 					AssignSalesCategoryToProductInOpenCart($ProductId, BLINK_OUTLET, false);
 				}
 			}
@@ -498,7 +498,7 @@ function UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $Quantity, $Prio
 
 		$ErrMsg =__('Could not get the product discount in OpenCart because');
 		$Result = DB_query_oc($SQL,$ErrMsg);
-		if(DB_num_rows($Result) != 0){
+		if (DB_num_rows($Result) != 0){
 			// There is already a discount, so we need to update it
 			$SQL = "UPDATE oc_product_discount
 					SET quantity = '" . $Quantity . "',
@@ -509,7 +509,7 @@ function UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $Quantity, $Prio
 						AND customer_group_id = '" . $CustomerGroupId ."'";
 			$UpdateErrMsg = __('The SQL to update the product discount in Opencart failed');
 			DB_query_oc($SQL,$UpdateErrMsg,'',true);
-		}else{
+		} else {
 			// there is no discount in OpenCart yet, so we need to create one
 			$SQL = "INSERT INTO oc_product_discount
 						(product_id,
@@ -527,7 +527,7 @@ function UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $Quantity, $Prio
 			$InsertErrMsg = __('The SQL to insert the product discount in Opencart failed');
 			DB_query_oc($SQL,$InsertErrMsg,'',true);
 		}
-	}else{
+	} else {
 		/* use the table product_special */
 		$SQL = "SELECT product_special_id
 				FROM oc_product_special
@@ -536,7 +536,7 @@ function UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $Quantity, $Prio
 
 		$ErrMsg =__('Could not get the product special in OpenCart because');
 		$Result = DB_query_oc($SQL,$ErrMsg);
-		if(DB_num_rows($Result) != 0){
+		if (DB_num_rows($Result) != 0){
 			// There is already a special, so we need to update it
 			$SQL = "UPDATE oc_product_special
 					SET priority = '" . $Priority . "',
@@ -545,7 +545,7 @@ function UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $Quantity, $Prio
 						AND customer_group_id = '" . $CustomerGroupId ."'";
 			$UpdateErrMsg = __('The SQL to update the product special in Opencart failed');
 			DB_query_oc($SQL,$UpdateErrMsg,'',true);
-		}else{
+		} else {
 			// there is no special in OpenCart yet, so we need to create one
 			$SQL = "INSERT INTO oc_product_special
 						(product_id,
@@ -572,10 +572,10 @@ function GetOpenCartSettingId($Store, $Code, $Key){
 				AND `key` = '" . $Key . "'";
 	$ErrMsg =__('Could not get the SettingId in OpenCart because');
 	$Result = DB_query_oc($SQL,$ErrMsg);
-	if(DB_num_rows($Result) != 0){
+	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
 		return $MyRow[0];
-	}else{
+	} else {
 		return 0;
 	}
 }
@@ -652,12 +652,12 @@ function GetWeberpItemBrand($webERPCategoryId, $ManufacturerId){
 	if (ItemInList($webERPCategoryId, LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_ALL_DISCOUNT)
 		OR ($ManufacturerId == 1)){
 		$ItemBrand = "KL";
-	}elseif (ItemInList($webERPCategoryId, LIST_STOCK_CATEGORIES_BLINK_INCLUDING_ALL_DISCOUNT)
+	} elseif (ItemInList($webERPCategoryId, LIST_STOCK_CATEGORIES_BLINK_INCLUDING_ALL_DISCOUNT)
 		OR ($ManufacturerId == 2)){
 		$ItemBrand = "BL";
-	}elseif (ItemInList($webERPCategoryId, LIST_STOCK_CATEGORIES_GENERAL_INCLUDING_ALL_DISCOUNT)){
+	} elseif (ItemInList($webERPCategoryId, LIST_STOCK_CATEGORIES_GENERAL_INCLUDING_ALL_DISCOUNT)){
 		$ItemBrand = "GE";
-	}else{
+	} else {
 		// should never happen
 		$ItemBrand = "KL";
 	}
@@ -915,7 +915,7 @@ function GetPaypalReturnDataInArray($RawData){
 	$MainArray = explode(',', str_replace(array('{', '}', '"'), "", $RawData));
 	foreach ($MainArray as $i => $Value) {
 		$TmpArray = explode(':', $Value);
-		if(sizeof($TmpArray) > 1) {
+		if (sizeof($TmpArray) > 1) {
 			$ResponseArray[$TmpArray[0]] = $TmpArray[1];
 		}
 	}
@@ -934,7 +934,7 @@ function MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, $StoreId, $LanguageId){
 					AND language_id = '" .  $LanguageId . "'";
 		$ErrMsg =__('Could not get the SEO URL in Opencart because');
 		$Result = DB_query_oc($SQL,$ErrMsg);
-		if(DB_num_rows($Result) != 0){
+		if (DB_num_rows($Result) != 0){
 			// if we have it, we update it
 			$MyRow = DB_fetch_array($Result);
 			$SeoUrlId = $MyRow['seo_url_id'];
@@ -944,7 +944,7 @@ function MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, $StoreId, $LanguageId){
 							keyword ='" . $SEOKeyword . "'
 						WHERE seo_url_id = '" . $SeoUrlId . "'";
 			DB_query_oc($SQLUpdate,$ErrMsg,'',true);
-		}else{
+		} else {
 			// otherwise we insert it
 			$ErrMsg = __('The MaintainSeoUrl function failed');
 			$SQLInsert = "INSERT INTO oc_seo_url
@@ -975,7 +975,7 @@ function UpdateOpenCartOrderStatus($OrderId, $StatusId, $Notify, $Carrier, $AWB,
 	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
 		$CarrierPowerTrack = $MyRow['powertrack_code'];
-	}else{
+	} else {
 		$CarrierPowerTrack = "";
 	}
 
@@ -1082,7 +1082,7 @@ function GetWeberpShippingMethod($OpenCartShippingMethod){
 	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
 		$WeberpShipping = $MyRow['shipper_id'];
-	}else{
+	} else {
 		$WeberpShipping = OPENCART_DEFAULT_SHIPVIA;
 	}
 	return $WeberpShipping;
@@ -1100,27 +1100,27 @@ function GetGoogleProductFeedStatus($StockID, $SalesCategory, $Quantity){
 function GetGoogleProductFeedCategory($StockID, $SalesCategory){
 	if (isRing($StockID)){
 		$Category = "Clothing & Accessories > Jewellery & Watches > Rings";
-	}elseif (isToeRing($StockID)){
+	} elseif (isToeRing($StockID)){
 		$Category = "Clothing & Accessories > Jewellery & Watches > Rings";
-	}elseif (isEarring($StockID)){
+	} elseif (isEarring($StockID)){
 		$Category = "Clothing & Accessories > Jewellery & Watches > Earrings";
-	}elseif (isEarcuff($StockID)){
+	} elseif (isEarcuff($StockID)){
 		$Category = "Clothing & Accessories > Jewellery & Watches > Earrings";
-	}elseif (isPiercing($StockID)){
+	} elseif (isPiercing($StockID)){
 		$Category = "Clothing & Accessories > Jewellery & Watches > Piercings";
-	}elseif (isBracelet($StockID)){
+	} elseif (isBracelet($StockID)){
 		$Category = "Clothing & Accessories > Jewellery & Watches > Bracelets";
-	}elseif (isAnklet($StockID)){
+	} elseif (isAnklet($StockID)){
 		$Category = "Clothing & Accessories > Jewellery & Watches > Anklets";
-	}elseif (isPendant($StockID)){
+	} elseif (isPendant($StockID)){
 		$Category = "Clothing & Accessories > Jewellery & Watches > Necklaces";
-	}elseif (isNecklace($StockID)){
+	} elseif (isNecklace($StockID)){
 		$Category = "Clothing & Accessories > Jewellery & Watches > Necklaces";
-	}elseif (isPlasticBag($StockID)){
+	} elseif (isPlasticBag($StockID)){
 		$Category = "Clothing & Accessories > Handbags, Wallets & Cases > Handbags";
-	}elseif (isTali($StockID)){
+	} elseif (isTali($StockID)){
 		$Category = "Clothing & Accessories > Jewellery & Watches > Necklaces";
-	}else{
+	} else {
 		$Category = "Clothing & Accessories > Jewellery & Watches";
 	}
 	return $Category;
@@ -1136,7 +1136,7 @@ function CreateTagsForItem($LanguageId, $Description, $LongDescription, $SalesCa
 		$SQL = "SELECT tagname AS tagtext
 				FROM stocktags
 				ORDER BY tagname";
-	}else{
+	} else {
 		$SQL = "SELECT tagnamebahasa AS tagtext
 				FROM stocktags
 				ORDER BY tagnamebahasa";
@@ -1152,7 +1152,7 @@ function CreateTagsForItem($LanguageId, $Description, $LongDescription, $SalesCa
 				if ($ListOfTags == ""){
 					// the very first one
 					$ListOfTags = $MyRow['tagtext'];
-				}else{
+				} else {
 					$ListOfTags = $ListOfTags. $Separator . $MyRow['tagtext'];
 				}
 			}
@@ -1186,10 +1186,10 @@ function GetOpenCartStatusTextFromCode($StatusId){
 				AND order_status_id = '" . $StatusId . "'";
 	$ErrMsg =__('Could not get the Status name in OpenCart because');
 	$Result = DB_query_oc($SQL,$ErrMsg);
-	if(DB_num_rows($Result) != 0){
+	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
 		return $MyRow[0];
-	}else{
+	} else {
 		return "Abandoned";
 	}	
 }
@@ -1197,17 +1197,17 @@ function GetOpenCartStatusTextFromCode($StatusId){
 function GetPaymentMethodTextFromCode($PaymentCode){
 	if ($PaymentCode == "bank_mandiri"){
 		$PaymentMethodText = "TT Mandiri";
-	}else if ($PaymentCode == "bank_bca"){
+	} elseif ($PaymentCode == "bank_bca"){
 		$PaymentMethodText = "TT BCA";
-	}else if ($PaymentCode == "bank_danamon"){
+	} elseif ($PaymentCode == "bank_danamon"){
 		$PaymentMethodText = "TT Danamon";
-	}else if ($PaymentCode == "xenditmandiriva"){
+	} elseif ($PaymentCode == "xenditmandiriva"){
 		$PaymentMethodText = "Xendit VA";
-	}else if ($PaymentCode == "xenditcc"){
+	} elseif ($PaymentCode == "xenditcc"){
 		$PaymentMethodText = "Xendit CC";
-	}else if ($PaymentCode == "snap"){
+	} elseif ($PaymentCode == "snap"){
 		$PaymentMethodText = "MidTrans";
-	}else{
+	} else {
 		$PaymentMethodText = "";
 	}
 	return $PaymentMethodText;
@@ -1228,7 +1228,7 @@ function MaintainPackagingImage($ProductId, $KLPackaging){
 					AND sort_order = '" . OPENCART_PACKAGING_SET_IMAGE_SORT_ORDER . "'";
 		$ErrMsg =__('Could not get the packaging image in Opencart because');
 		$Result = DB_query_oc($SQL,$ErrMsg);
-		if(DB_num_rows($Result) != 0){
+		if (DB_num_rows($Result) != 0){
 			// if we have it, we update it
 			$MyRow = DB_fetch_array($Result);
 			$ProductImageId = $MyRow['product_image_id'];
@@ -1238,7 +1238,7 @@ function MaintainPackagingImage($ProductId, $KLPackaging){
 							image ='" . $KLPackagingImage . "'
 						WHERE product_image_id = '" . $ProductImageId . "'";
 			DB_query_oc($SQLUpdate,$ErrMsg,'',true);
-		}else{
+		} else {
 			// otherwise we insert it
 			$ErrMsg = __('The MaintainPackagingImage function failed');
 			$SQLInsert = "INSERT INTO oc_product_image
@@ -1256,7 +1256,7 @@ function MaintainPackagingImage($ProductId, $KLPackaging){
 }
 
 function InsertWebsiteSalesCategory($StockID, $WebsiteCategory, $Manufacturers_id, $MultipleCategories, $Featured, $UpdateDB){
-	if($UpdateDB){
+	if ($UpdateDB){
 		
 		if (!$MultipleCategories){
 			// if don't allow an item in multiple sales categories, then delete the existing ones
@@ -1273,7 +1273,7 @@ function InsertWebsiteSalesCategory($StockID, $WebsiteCategory, $Manufacturers_i
 					AND salescatprod.salescatid = '" . $WebsiteCategory . "'";	
 		$Result = DB_query($SQLCheck);
 
-		if(DB_num_rows($Result) == 0){
+		if (DB_num_rows($Result) == 0){
 			$SQL = "INSERT INTO salescatprod (
 						salescatid ,
 						stockid,

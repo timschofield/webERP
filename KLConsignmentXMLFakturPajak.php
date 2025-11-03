@@ -10,13 +10,13 @@ include('includes/KLDefines.php');
 include('includes/KLUIGeneralFunctions.php');
 
 // The default company to Invoice from (PTADU).
-if(!isset($_POST['CompanyFrom'])) {
-	$_POST['CompanyFrom']='PTADU';
+if (!isset($_POST['CompanyFrom'])) {
+	$_POST['CompanyFrom'] = 'PTADU';
 }
 
 // The default company to Invoice to (PTSMH).
-if(!isset($_POST['CompanyTo'])) {
-	$_POST['CompanyTo']='PTSMH';
+if (!isset($_POST['CompanyTo'])) {
+	$_POST['CompanyTo'] = 'PTSMH';
 }
 
 // default date to invoice is until Yesterday
@@ -25,22 +25,18 @@ if (!isset($_POST['EndDate'])){
 }
 
 // The default draft or Invoice should be draft.
-if(!isset($_POST['DraftOrInvoice'])) {
-	$_POST['DraftOrInvoice']='DRAFT';
-}
-
-if(!isset($_POST['NomorSeriFP'])) {
-	$_POST['NomorSeriFP']='0000000000000';
+if (!isset($_POST['DraftOrInvoice'])) {
+	$_POST['DraftOrInvoice'] = 'DRAFT';
 }
 
 if (isset($_POST['submit'])) {
-	submit($Title, $_POST['CompanyFrom'], $_POST['CompanyTo'], $_POST['EndDate'], $_POST['DraftOrInvoice'], $_POST['NomorSeriFP']);
+	submit($_POST['CompanyFrom'], $_POST['CompanyTo'], $_POST['EndDate'], $_POST['DraftOrInvoice']);
 } else {
 	display($Title);
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $NomorSeriFP) {
+function submit($CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice) {
 
 	$EndDate = ConvertSQLDate($EndDate);
 	$EndDateSQL = FormatDateForSQL($EndDate);
@@ -50,7 +46,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 
 	//first off validate inputs sensible
 
-	if(!$InputError){
+	if (!$InputError){
 		$SQL = "SELECT klconsignment.stockid,
 						stockmaster.description,
 					SUM(klconsignment.qty) AS qty,
@@ -111,8 +107,6 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 			$ResultCompanyTo = DB_query($SQLCompanyTo);
 			$MyCompanyTo= DB_fetch_array($ResultCompanyTo);
 
-			$NomorFaktur = $NomorSeriFP;
-			
 			$TaxInvoiceDate = $EndDateSQL;
 			$TaxInvoiceOpt = 'Normal';
 			$TrxCode = '04';
@@ -187,15 +181,15 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 				$Code = '000000';
 				$Name = $MyRow['description'];
 				$Unit = 'UM.0021';
-				$Price = round(($MyRow['consignmentsale']/$MyRow['qty']) / ((100 + PPN_PERCENT) / 100),0);
-				$Qty = round($MyRow['qty'],0);
+				$Price = round(($MyRow['consignmentsale'] / $MyRow['qty']) / ((100 + PPN_PERCENT) / 100), 0);
+				$Qty = round($MyRow['qty'], 0);
 				$TotalDiscount = 0;
 				$TaxBase = $Price * $Qty;
 				// Weird system of CoreTax to account for PPN as 12% when in reality it is 11%
 				// We guess will be fixed in the future, but for now we need to do this.
-				$OtherTaxBase = round($TaxBase / 12 * 11,2);
+				$OtherTaxBase = round($TaxBase / 12 * 11, 2);
 				$VATRate = 12;
-				$VAT = round($OtherTaxBase * $VATRate / 100,2);
+				$VAT = round($OtherTaxBase * $VATRate / 100, 2);
 				$STLGRate = 0;
 				$STLG = 0;
 
@@ -216,7 +210,6 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 				$GoodService->addChild('STLG', number_format($STLG, 0, '.', ''));
 				
 			}
-					
 
 			if ($DraftOrInvoice == 'INVOICE'){
 				DB_Txn_Begin();
@@ -253,12 +246,12 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 		echo $xmlOutput;
 		include('includes/footer.php');
 			
-		}else{
+		} else {
 			include('includes/header.php');
 			prnMsg('No data to create a Faktur Pajak','warn');
 			include('includes/footer.php');
 		}
-	}else{
+	} else {
 		include('includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 
@@ -269,8 +262,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 } // End of function submit()
 
 
-function display($Title)
-{
+function display($Title) {
 	include('includes/header.php');
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
@@ -289,7 +281,6 @@ function display($Title)
 	echo FieldToSelectFromTwoOptions('DRAFT', 'Draft', 
 									'INVOICE', 'Invoice',
 									'DraftOrInvoice', $_POST['DraftOrInvoice'], __('Draft or Invoice'), '', '', 3, true, false);
-	echo FieldToSelectOneText("NomorSeriFP", $_POST['NomorSeriFP'], 14, 13, 'Nomor Seri Faktur Pajak', '', '', 4, true, false);
 	echo '</fieldset>';
 
 	echo OneButtonCenteredForm("submit", $Title, 6, false, false);

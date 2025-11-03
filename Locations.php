@@ -28,13 +28,13 @@ include('includes/CountriesArray.php');
 include('includes/OCOpenCartGeneralFunctions.php');
 // KL RICARD END
 
-if(isset($_GET['SelectedLocation'])) {
+if (isset($_GET['SelectedLocation'])) {
 	$SelectedLocation = $_GET['SelectedLocation'];
-} elseif(isset($_POST['SelectedLocation'])) {
+} elseif (isset($_POST['SelectedLocation'])) {
 	$SelectedLocation = $_POST['SelectedLocation'];
 }
 
-if(isset($_POST['submit'])) {
+if (isset($_POST['submit'])) {
 	$_POST['Managed']='off';
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
@@ -43,13 +43,13 @@ if(isset($_POST['submit'])) {
 	ie the page has called itself with some user input */
 
 	$_POST['LocCode']=mb_strtoupper($_POST['LocCode']);
-	if(trim($_POST['LocCode']) == '') {
+	if (trim($_POST['LocCode']) == '') {
 		$InputError = 1;
 		prnMsg(__('The location code may not be empty'), 'error');
 	}
-	if($_POST['CashSaleCustomer']!='') {
+	if ($_POST['CashSaleCustomer']!='') {
 
-		if($_POST['CashSaleBranch']=='') {
+		if ($_POST['CashSaleBranch']=='') {
 			prnMsg(__('A cash sale customer and branch are necessary to fully setup the counter sales functionality'),'error');
 			$InputError =1;
 		} else {//customer branch is set too ... check it ties up with a valid customer
@@ -58,17 +58,17 @@ if(isset($_POST['submit'])) {
 					AND branchcode='" . $_POST['CashSaleBranch'] . "'";
 
 			$Result = DB_query($SQL);
-			if(DB_num_rows($Result)==0) {
+			if (DB_num_rows($Result)==0) {
 				$InputError = 1;
 				prnMsg(__('The cash sale customer for this location must be defined with both a valid customer code and a valid branch code for this customer'),'error');
 			}
 		}
 	}//end of checking the customer - branch code entered
 
-	if(isset($SelectedLocation) AND $InputError !=1) {
+	if (isset($SelectedLocation) AND $InputError !=1) {
 
 		/* Set the managed field to 1 if it is checked, otherwise 0 */
-		if(isset($_POST['Managed']) and $_POST['Managed'] == 'on') {
+		if (isset($_POST['Managed']) and $_POST['Managed'] == 'on') {
 			$_POST['Managed'] = 1;
 		} else {
 			$_POST['Managed'] = 0;
@@ -176,10 +176,10 @@ if(isset($_POST['submit'])) {
 		unset($_POST['DepartmentID']);
 
 
-	} elseif($InputError !=1) {
+	} elseif ($InputError !=1) {
 
 		/* Set the managed field to 1 if it is checked, otherwise 0 */
-		if($_POST['Managed'] == 'on') {
+		if ($_POST['Managed'] == 'on') {
 			$_POST['Managed'] = 1;
 		} else {
 			$_POST['Managed'] = 0;
@@ -372,13 +372,13 @@ if(isset($_POST['submit'])) {
 
 	$DispTaxProvincesResult = DB_query("SELECT taxprovinceid FROM locations");
 	$TaxCatsResult = DB_query("SELECT taxcatid FROM taxcategories");
-	if(DB_num_rows($TaxCatsResult) > 0) {// This will only work if there are levels else we get an error on seek.
+	if (DB_num_rows($TaxCatsResult) > 0) {// This will only work if there are levels else we get an error on seek.
 
 		while ($MyRow=DB_fetch_row($DispTaxProvincesResult)) {
 			/*Check to see there are TaxAuthRates records set up for this TaxProvince */
 			$NoTaxRates = DB_query("SELECT taxauthority FROM taxauthrates WHERE dispatchtaxprovince='" . $MyRow[0] . "'");
 
-			if(DB_num_rows($NoTaxRates) < $NoTaxAuths[0]) {
+			if (DB_num_rows($NoTaxRates) < $NoTaxAuths[0]) {
 
 				/*First off delete any tax authoritylevels already existing */
 				$DelTaxAuths = DB_query("DELETE FROM taxauthrates WHERE dispatchtaxprovince='" . $MyRow[0] . "'");
@@ -401,7 +401,7 @@ if(isset($_POST['submit'])) {
 	}
 
 
-} elseif(isset($_GET['delete'])) {
+} elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
 	$CancelDelete = 0;
@@ -410,7 +410,7 @@ if(isset($_POST['submit'])) {
 	$SQL= "SELECT COUNT(*) FROM salesorders WHERE fromstkloc='". $SelectedLocation . "'";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_row($Result);
-	if($MyRow[0]>0) {
+	if ($MyRow[0]>0) {
 		$CancelDelete = 1;
 		prnMsg(__('Cannot delete this location because sales orders have been created delivering from this location'),'warn');
 		echo __('There are') . ' ' . $MyRow[0] . ' ' . __('sales orders with this Location code');
@@ -418,7 +418,7 @@ if(isset($_POST['submit'])) {
 		$SQL= "SELECT COUNT(*) FROM stockmoves WHERE stockmoves.loccode='" . $SelectedLocation . "'";
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_row($Result);
-		if($MyRow[0]>0) {
+		if ($MyRow[0]>0) {
 			$CancelDelete = 1;
 			prnMsg(__('Cannot delete this location because stock movements have been created using this location'),'warn');
 			echo '<br />' . __('There are') . ' ' . $MyRow[0] . ' ' . __('stock movements with this Location code');
@@ -429,7 +429,7 @@ if(isset($_POST['submit'])) {
 					AND locstock.quantity !=0";
 			$Result = DB_query($SQL);
 			$MyRow = DB_fetch_row($Result);
-			if($MyRow[0]>0) {
+			if ($MyRow[0]>0) {
 				$CancelDelete = 1;
 				prnMsg(__('Cannot delete this location because location stock records exist that use this location and have a quantity on hand not equal to 0'),'warn');
 				echo '<br /> ' . __('There are') . ' ' . $MyRow[0] . ' ' . __('stock items with stock on hand at this location code');
@@ -438,7 +438,7 @@ if(isset($_POST['submit'])) {
 						WHERE www_users.defaultlocation='" . $SelectedLocation . "'";
 				$Result = DB_query($SQL);
 				$MyRow = DB_fetch_row($Result);
-				if($MyRow[0]>0) {
+				if ($MyRow[0]>0) {
 					$CancelDelete = 1;
 					prnMsg(__('Cannot delete this location because it is the default location for a user') . '. ' . __('The user record must be modified first'),'warn');
 					echo '<br /> ' . __('There are') . ' ' . $MyRow[0] . ' ' . __('users using this location as their default location');
@@ -447,7 +447,7 @@ if(isset($_POST['submit'])) {
 							WHERE bom.loccode='" . $SelectedLocation . "'";
 					$Result = DB_query($SQL);
 					$MyRow = DB_fetch_row($Result);
-					if($MyRow[0]>0) {
+					if ($MyRow[0]>0) {
 						$CancelDelete = 1;
 						prnMsg(__('Cannot delete this location because it is the default location for a bill of material') . '. ' . __('The bill of materials must be modified first'),'warn');
 						echo '<br /> ' . __('There are') . ' ' . $MyRow[0] . ' ' . __('bom components using this location');
@@ -456,7 +456,7 @@ if(isset($_POST['submit'])) {
 								WHERE workcentres.location='" . $SelectedLocation . "'";
 						$Result = DB_query($SQL);
 						$MyRow = DB_fetch_row($Result);
-						if($MyRow[0]>0) {
+						if ($MyRow[0]>0) {
 							$CancelDelete = 1;
 							prnMsg(__('Cannot delete this location because it is used by some work centre records'),'warn');
 							echo '<br />' . __('There are') . ' ' . $MyRow[0] . ' ' . __('works centres using this location');
@@ -465,7 +465,7 @@ if(isset($_POST['submit'])) {
 									WHERE workorders.loccode='" . $SelectedLocation . "'";
 							$Result = DB_query($SQL);
 							$MyRow = DB_fetch_row($Result);
-							if($MyRow[0]>0) {
+							if ($MyRow[0]>0) {
 								$CancelDelete = 1;
 								prnMsg(__('Cannot delete this location because it is used by some work order records'),'warn');
 								echo '<br />' . __('There are') . ' ' . $MyRow[0] . ' ' . __('work orders using this location');
@@ -474,7 +474,7 @@ if(isset($_POST['submit'])) {
 										WHERE custbranch.defaultlocation='" . $SelectedLocation . "'";
 								$Result = DB_query($SQL);
 								$MyRow = DB_fetch_row($Result);
-								if($MyRow[0]>0) {
+								if ($MyRow[0]>0) {
 									$CancelDelete = 1;
 									prnMsg(__('Cannot delete this location because it is used by some branch records as the default location to deliver from'),'warn');
 									echo '<br /> ' . __('There are') . ' ' . $MyRow[0] . ' ' . __('branches set up to use this location by default');
@@ -482,7 +482,7 @@ if(isset($_POST['submit'])) {
 									$SQL= "SELECT COUNT(*) FROM purchorders WHERE intostocklocation='" . $SelectedLocation . "'";
 									$Result = DB_query($SQL);
 									$MyRow = DB_fetch_row($Result);
-									if($MyRow[0]>0) {
+									if ($MyRow[0]>0) {
 										$CancelDelete = 1;
 										prnMsg(__('Cannot delete this location because it is used by some purchase order records as the location to receive stock into'),'warn');
 										echo '<br /> ' . __('There are') . ' ' . $MyRow[0] . ' ' . __('purchase orders set up to use this location as the receiving location');
@@ -495,7 +495,7 @@ if(isset($_POST['submit'])) {
 			}
 		}
 	}
-	if(! $CancelDelete) {
+	if (! $CancelDelete) {
 
 		/* need to figure out if this location is the only one in the same tax province */
 		$Result = DB_query("SELECT taxprovinceid FROM locations
@@ -504,7 +504,7 @@ if(isset($_POST['submit'])) {
 		$Result = DB_query("SELECT COUNT(taxprovinceid) FROM locations
 							WHERE taxprovinceid='" .$TaxProvinceRow[0] . "'");
 		$TaxProvinceCount = DB_fetch_row($Result);
-		if($TaxProvinceCount[0]==1) {
+		if ($TaxProvinceCount[0]==1) {
 		/* if its the only location in this tax authority then delete the appropriate records in TaxAuthLevels */
 			$Result = DB_query("DELETE FROM taxauthrates
 								WHERE dispatchtaxprovince='" . $TaxProvinceRow[0] . "'");
@@ -521,7 +521,7 @@ if(isset($_POST['submit'])) {
 	unset($_GET['delete']);
 }
 
-if(!isset($SelectedLocation)) {
+if (!isset($SelectedLocation)) {
 
 /* It could still be the second time the page has been run and a record has been selected for modification - SelectedLocation will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters
 then none of the above are true and the list of Locations will be displayed with
@@ -553,7 +553,7 @@ or deletion of the records*/
 			ORDER BY locationname";
 	$Result = DB_query($SQL);
 
-	if(DB_num_rows($Result)==0) {
+	if (DB_num_rows($Result)==0) {
 		prnMsg(__('There are no locations that match up with a tax province record to display. Check that tax provinces are set up for all dispatch locations'),'error');
 	}
 
@@ -583,29 +583,29 @@ or deletion of the records*/
 
 while ($MyRow = DB_fetch_array($Result)) {
 /* warehouse management not implemented ... yet
-	if($MyRow['managed'] == 1) {
+	if ($MyRow['managed'] == 1) {
 		$MyRow['managed'] = __('Yes');
 	} else {
 		$MyRow['managed'] = __('No');
 	}
 */
 	// KL RICARD Custom fields
-	if($MyRow['stockreadytosell'] == 1) {
+	if ($MyRow['stockreadytosell'] == 1) {
 		$ReadyToSell = __('Yes');
 	} else {
 		$ReadyToSell = __('No');
 	}
-	if($MyRow['partnercode'] == 'NORETAIL') {
+	if ($MyRow['partnercode'] == 'NORETAIL') {
 		$PartnerCode = '';
-	}else{
+	} else {
 		$PartnerCode = $MyRow['partnercode'];
 	}
-	if($MyRow['onlinepartnercode'] == 'NOONLINE') {
+	if ($MyRow['onlinepartnercode'] == 'NOONLINE') {
 		$OnlinePartnerCode = '';
-	}else{
+	} else {
 		$OnlinePartnerCode = $MyRow['onlinepartnercode'];
 	}
-	if($MyRow['stockavailableforonline'] == 1) {
+	if ($MyRow['stockavailableforonline'] == 1) {
 		$AvailableForOnline = __('Yes');
 	} else {
 		$AvailableForOnline = __('No');
@@ -654,16 +654,16 @@ while ($MyRow = DB_fetch_array($Result)) {
 
 //end of ifs and buts!
 
-if(isset($SelectedLocation)) {
+if (isset($SelectedLocation)) {
 	echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Review Records') . '</a>';
 }
 
-if(!isset($_GET['delete'])) {
+if (!isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	if(isset($SelectedLocation)) {
+	if (isset($SelectedLocation)) {
 		//editing an existing Location
 		// KL RICARD add custom fields to SQL
 		$SQL = "SELECT loccode,
@@ -768,7 +768,7 @@ if(!isset($_GET['delete'])) {
 				<fieldtext>' . $_POST['LocCode'] . '</fieldtext>
 			</field>';
 	} else {//end of if $SelectedLocation only do the else when a new record is being entered
-		if(!isset($_POST['LocCode'])) {
+		if (!isset($_POST['LocCode'])) {
 			$_POST['LocCode'] = '';
 		}
 		echo '<fieldset>
@@ -779,110 +779,110 @@ if(!isset($_GET['delete'])) {
 				<fieldhelp>' . __('Enter up to five characters for the inventory location code') . '</fieldhelp
 			</field>';
 	}
-	if(!isset($_POST['LocationName'])) {
+	if (!isset($_POST['LocationName'])) {
 		$_POST['LocationName'] = '';
 	}
-	if(!isset($_POST['Contact'])) {
+	if (!isset($_POST['Contact'])) {
 		$_POST['Contact'] = '';
 	}
-	if(!isset($_POST['DelAdd1'])) {
+	if (!isset($_POST['DelAdd1'])) {
 		$_POST['DelAdd1'] = ' ';
 	}
-	if(!isset($_POST['DelAdd2'])) {
+	if (!isset($_POST['DelAdd2'])) {
 		$_POST['DelAdd2'] = '';
 	}
-	if(!isset($_POST['DelAdd3'])) {
+	if (!isset($_POST['DelAdd3'])) {
 		$_POST['DelAdd3'] = '';
 	}
-	if(!isset($_POST['DelAdd4'])) {
+	if (!isset($_POST['DelAdd4'])) {
 		$_POST['DelAdd4'] = '';
 	}
-	if(!isset($_POST['DelAdd5'])) {
+	if (!isset($_POST['DelAdd5'])) {
 		$_POST['DelAdd5'] = '';
 	}
-	if(!isset($_POST['DelAdd6'])) {
+	if (!isset($_POST['DelAdd6'])) {
 		$_POST['DelAdd6'] = '';
 	}
-	if(!isset($_POST['Tel'])) {
+	if (!isset($_POST['Tel'])) {
 		$_POST['Tel'] = '';
 	}
-	if(!isset($_POST['Fax'])) {
+	if (!isset($_POST['Fax'])) {
 		$_POST['Fax'] = '';
 	}
-	if(!isset($_POST['Email'])) {
+	if (!isset($_POST['Email'])) {
 		$_POST['Email'] = '';
 	}
-	if(!isset($_POST['CashSaleCustomer'])) {
+	if (!isset($_POST['CashSaleCustomer'])) {
 		$_POST['CashSaleCustomer'] = '';
 	}
-	if(!isset($_POST['CashSaleBranch'])) {
+	if (!isset($_POST['CashSaleBranch'])) {
 		$_POST['CashSaleBranch'] = '';
 	}
-	if(!isset($_POST['Managed'])) {
+	if (!isset($_POST['Managed'])) {
 		$_POST['Managed'] = 0;
 	}
-	if(!isset($_POST['AllowInvoicing'])) {
+	if (!isset($_POST['AllowInvoicing'])) {
 		$_POST['AllowInvoicing'] = 1;// If not set, set value to "Yes".
 	}
-	if(!isset($_POST['GLAccountCode'])) {
+	if (!isset($_POST['GLAccountCode'])) {
 		$_POST['GLAccountCode'] = '';
 	}
 	// KL RICARD 
-	if(!isset($_POST['Priority'])) {
+	if (!isset($_POST['Priority'])) {
 		$_POST['Priority'] = 5;
 	}
-	if(!isset($_POST['SmartDispatchFrom'])) {
+	if (!isset($_POST['SmartDispatchFrom'])) {
 		$_POST['SmartDispatchFrom'] = 'KANTO';
 	}
-	if(!isset($_POST['SmartDispatchMaxModels'])) {
+	if (!isset($_POST['SmartDispatchMaxModels'])) {
 		$_POST['SmartDispatchMaxModels'] = 999;
 	}
-	if(!isset($_POST['SmartDispatchMinModels'])) {
+	if (!isset($_POST['SmartDispatchMinModels'])) {
 		$_POST['SmartDispatchMinModels'] = 1;
 	}
-	if(!isset($_POST['KLyearlyRent'])) {
+	if (!isset($_POST['KLyearlyRent'])) {
 		$_POST['KLyearlyRent'] = 0;
 	}
-	if(!isset($_POST['KLPOSCashAccount'])) {
+	if (!isset($_POST['KLPOSCashAccount'])) {
 		$_POST['KLPOSCashAccount'] = '';
 	}
-	if(!isset($_POST['KLPOSTag'])) {
+	if (!isset($_POST['KLPOSTag'])) {
 		$_POST['KLPOSTag'] = 0;
 	}
-	if(!isset($_POST['StockReadyToSell'])) {
+	if (!isset($_POST['StockReadyToSell'])) {
 		$_POST['StockReadyToSell'] = 0;
 	}
-	if(!isset($_POST['StockAvailableForOnline'])) {
+	if (!isset($_POST['StockAvailableForOnline'])) {
 		$_POST['StockAvailableForOnline'] = 0;
 	}
-	if(!isset($_POST['AllTestItems'])) {
+	if (!isset($_POST['AllTestItems'])) {
 		$_POST['AllTestItems'] = 0;
 	}
-	if(!isset($_POST['AllStableItems'])) {
+	if (!isset($_POST['AllStableItems'])) {
 		$_POST['AllStableItems'] = 1;
 	}
-	if(!isset($_POST['AllNoPoItems'])) {
+	if (!isset($_POST['AllNoPoItems'])) {
 		$_POST['AllNoPoItems'] = 0;
 	}
-	if(!isset($_POST['AllDisc20Items'])) {
+	if (!isset($_POST['AllDisc20Items'])) {
 		$_POST['AllDisc20Items'] = 1;
 	}
-	if(!isset($_POST['AllDisc50Items'])) {
+	if (!isset($_POST['AllDisc50Items'])) {
 		$_POST['AllDisc50Items'] = 1;
 	}
-	if(!isset($_POST['AllDisc80Items'])) {
+	if (!isset($_POST['AllDisc80Items'])) {
 		$_POST['AllDisc80Items'] = 1;
 	}
-	if(!isset($_POST['PackagingFrom'])) {
+	if (!isset($_POST['PackagingFrom'])) {
 		$_POST['PackagingFrom'] = '';
 	}
-	if(!isset($_POST['RLFactorForPackaging'])) {
+	if (!isset($_POST['RLFactorForPackaging'])) {
 		$_POST['RLFactorForPackaging'] = 5.5;
 	}
-	if(!isset($_POST['RLDaysForPackaging'])) {
+	if (!isset($_POST['RLDaysForPackaging'])) {
 		$_POST['RLDaysForPackaging'] = 7;
 	}
-	if(!isset($_POST['DepartmentID'])) {
+	if (!isset($_POST['DepartmentID'])) {
 		$_POST['DepartmentID'] = '';
 	}
 	// KL RICARD END
@@ -920,9 +920,9 @@ if(!isset($_GET['delete'])) {
 			<label for="DelAdd6">' . __('Country') . ':</label>
 			<select name="DelAdd6">';
 		foreach ($CountriesArray as $CountryEntry => $CountryName) {
-			if(isset($_POST['DelAdd6']) AND (strtoupper($_POST['DelAdd6']) == strtoupper($CountryName))) {
+			if (isset($_POST['DelAdd6']) AND (strtoupper($_POST['DelAdd6']) == strtoupper($CountryName))) {
 				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName . '</option>';
-			} elseif(!isset($_POST['Address6']) AND $CountryName == "") {
+			} elseif (!isset($_POST['Address6']) AND $CountryName == "") {
 				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName . '</option>';
 			} else {
 				echo '<option value="' . $CountryName . '">' . $CountryName . '</option>';
@@ -951,7 +951,7 @@ if(!isset($_GET['delete'])) {
 
 	$TaxProvinceResult = DB_query("SELECT taxprovinceid, taxprovincename FROM taxprovinces");
 	while ($MyRow=DB_fetch_array($TaxProvinceResult)) {
-		if($_POST['TaxProvince']==$MyRow['taxprovinceid']) {
+		if ($_POST['TaxProvince']==$MyRow['taxprovinceid']) {
 			echo '<option selected="selected" value="' . $MyRow['taxprovinceid'] . '">' . $MyRow['taxprovincename'] . '</option>';
 		} else {
 			echo '<option value="' . $MyRow['taxprovinceid'] . '">' . $MyRow['taxprovincename'] . '</option>';
@@ -969,7 +969,7 @@ if(!isset($_GET['delete'])) {
 
 	$ZonesResult = DB_query("SELECT code, description FROM locationzones ORDER BY description");
 	while ($MyRow=DB_fetch_array($ZonesResult)) {
-		if($_POST['Zone']==$MyRow['code']) {
+		if ($_POST['Zone']==$MyRow['code']) {
 			echo '<option selected="selected" value="' . $MyRow['code'] . '">' . $MyRow['description'] . '</option>';
 		} else {
 			echo '<option value="' . $MyRow['code'] . '">' . $MyRow['description'] . '</option>';
@@ -984,7 +984,7 @@ if(!isset($_GET['delete'])) {
 
 	$TypesResult = DB_query("SELECT code, description FROM locationtypes ORDER BY description");
 	while ($MyRow=DB_fetch_array($TypesResult)) {
-		if($_POST['TypeLoc']==$MyRow['code']) {
+		if ($_POST['TypeLoc']==$MyRow['code']) {
 			echo '<option selected="selected" value="' . $MyRow['code'] . '">' . $MyRow['description'] . '</option>';
 		} else {
 			echo '<option value="' . $MyRow['code'] . '">' . $MyRow['description'] . '</option>';
@@ -998,7 +998,7 @@ if(!isset($_GET['delete'])) {
 
 	$TypesResult = DB_query("SELECT partnercode, partnername FROM klretailpartners ORDER BY partnername");
 	while ($MyRow=DB_fetch_array($TypesResult)) {
-		if($_POST['PartnerCode']==$MyRow['partnercode']) {
+		if ($_POST['PartnerCode']==$MyRow['partnercode']) {
 			echo '<option selected="selected" value="' . $MyRow['partnercode'] . '">' . $MyRow['partnername'] . '</option>';
 		} else {
 			echo '<option value="' . $MyRow['partnercode'] . '">' . $MyRow['partnername'] . '</option>';
@@ -1012,7 +1012,7 @@ if(!isset($_GET['delete'])) {
 
 	$TypesResult = DB_query("SELECT onlinepartnercode, onlinepartnername FROM klonlinepartners ORDER BY onlinepartnername");
 	while ($MyRow=DB_fetch_array($TypesResult)) {
-		if($_POST['OnlinePartnerCode']==$MyRow['onlinepartnercode']) {
+		if ($_POST['OnlinePartnerCode']==$MyRow['onlinepartnercode']) {
 			echo '<option selected="selected" value="' . $MyRow['onlinepartnercode'] . '">' . $MyRow['onlinepartnername'] . '</option>';
 		} else {
 			echo '<option value="' . $MyRow['onlinepartnercode'] . '">' . $MyRow['onlinepartnername'] . '</option>';
@@ -1023,7 +1023,7 @@ if(!isset($_GET['delete'])) {
 	echo '<field>
 			<label for="StockReadyToSell">' . __('With Stock ready To Sell?') . ':</label>
 			<select name="StockReadyToSell">';
-	if($_POST['StockReadyToSell']==1) {
+	if ($_POST['StockReadyToSell']==1) {
 		echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
 		echo '<option value="0">' . __('No') . '</option>';
 	} else {
@@ -1035,7 +1035,7 @@ if(!isset($_GET['delete'])) {
 	echo '<field>
 			<label for="StockAvailableForOnline">' . __('With Stock Available for Shop Online?') . ':</label>
 			<select name="StockAvailableForOnline">';
-	if($_POST['StockAvailableForOnline']==1) {
+	if ($_POST['StockAvailableForOnline']==1) {
 		echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
 		echo '<option value="0">' . __('No') . '</option>';
 	} else {
@@ -1051,12 +1051,12 @@ if(!isset($_GET['delete'])) {
 	echo '<field>
 			<label for="InternalRequest">' . __('Allow internal requests from this location?') . ':</label>
 			<select name="InternalRequest">';
-	if($_POST['InternalRequest']==1) {
+	if ($_POST['InternalRequest']==1) {
 		echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
 	} else {
 		echo '<option value="1">' . __('Yes') . '</option>';
 	}
-	if($_POST['InternalRequest']==0) {
+	if ($_POST['InternalRequest']==0) {
 		echo '<option selected="selected" value="0">' . __('No') . '</option>';
 	} else {
 		echo '<option value="0">' . __('No') . '</option>';
@@ -1067,12 +1067,12 @@ if(!isset($_GET['delete'])) {
 	echo '<field>
 			<label for="UsedForWO">' . __('Use for Work Order Productions?') . ':</label>
 			<select name="UsedForWO">';
-	if($_POST['UsedForWO']==1) {
+	if ($_POST['UsedForWO']==1) {
 		echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
 	} else {
 		echo '<option value="1">' . __('Yes') . '</option>';
 	}
-	if($_POST['UsedForWO']==0) {
+	if ($_POST['UsedForWO']==0) {
 		echo '<option selected="selected" value="0">' . __('No') . '</option>';
 	} else {
 		echo '<option value="0">' . __('No') . '</option>';
@@ -1237,7 +1237,7 @@ function UpdateOnlinePartnerPaypalSettingsInOpenCart($NewLocationType, $NewOnlin
 			$MyRow = DB_fetch_array($Result);
 
 			prnMsg('Remind to update PayPal setting for Online Partner ' . $NewOnlinePartnerCode . ' in OpenCart', 'warning');
-		}else{
+		} else {
 			prnMsg('The ONLINE location should have a valid KL Online Partner', 'error');
 		}
 	}

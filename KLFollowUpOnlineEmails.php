@@ -44,7 +44,7 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 				WHERE debtorsmaster.debtorno = custbranch.debtorno
 					AND debtorsmaster.debtorno='" . $_GET['TransNo'] . "'";
 					
-	}elseif ($_GET['EmailType']=='RemindBankTransfer'){
+	} elseif ($_GET['EmailType']=='RemindBankTransfer'){
 		$MailSubject = $_SESSION['ShopName'] . ' ' . __('Bank Transfer Confirmation needed for Order') . ': ' . locale_number_format($_GET['CustomerOrder'],0) . ' (' . locale_number_format($_GET['TransNo'],0) . ')';
 		$SQL = "SELECT salesorders.debtorno,
 						salesorders.customerref,
@@ -85,7 +85,7 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 					AND currencies.currabrev=debtorsmaster.currcode 
 					AND salesorders.orderno='" . $_GET['TransNo'] . "'";
 					
-	}elseif ($_GET['EmailType']=='PaymentConfirmation'){
+	} elseif ($_GET['EmailType']=='PaymentConfirmation'){
 		$MailSubject = $_SESSION['ShopName'] . ' ' . __('Payment Confirmation for Order') . ': ' . locale_number_format($_GET['CustomerOrder'],0) . ' (' . locale_number_format($_GET['TransNo'],0) . ')';
 		$SQL = "SELECT salesorders.debtorno,
 					salesorders.customerref,
@@ -130,7 +130,7 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 				AND (debtortrans.type = 12 AND salesorders.klemailtrackingconfirm = '1000-01-01') 
 				AND salesorders.orderno='" . $_GET['TransNo'] . "'";
 		
-	}elseif ($_GET['EmailType']=='TrackingConfirmation'){
+	} elseif ($_GET['EmailType']=='TrackingConfirmation'){
 		$MailSubject = $_SESSION['ShopName'] . ' ' . __('Shipment Confirmation for Order') . ': ' . locale_number_format($_GET['CustomerOrder'],0) . ' (' . locale_number_format($_GET['TransNo'],0) . ')';
 		$SQL = "SELECT salesorders.debtorno,
 						salesorders.customerref,
@@ -174,7 +174,7 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 					AND debtortrans.order_=salesorders.orderno
 					AND (debtortrans.type = 10) 
 					AND salesorders.orderno='" . $_GET['TransNo'] . "'";
-	}elseif ($_GET['EmailType']=='ThankYouOrder'){
+	} elseif ($_GET['EmailType']=='ThankYouOrder'){
 		$MailSubject = $_SESSION['ShopName'] . ' ' . __(' Thank You!') ;
 		$SQL = "SELECT salesorders.debtorno,
 						salesorders.customerref,
@@ -233,7 +233,7 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 		$MyRow = DB_fetch_array($Result);
 		$DeliverBlind = $MyRow['deliverblind'];
 		$DeliveryDate = $MyRow['salesorders.deliverydate'];
-	}else{
+	} else {
 		prnMsg( __('Found too many Orders with Number') . ' : ' . $_GET['TransNo'] . ' ', 'error');
 		include('includes/footer.php');
 		exit();
@@ -255,11 +255,11 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 					</html>';
 
 	// find email address "to" 
-	if($_SESSION['ShopMode']=='test'){
+	if ($_SESSION['ShopMode']=='test'){
 		// do not bother customers if we are doing tests with their data
 		$MailTo = $_SESSION['ShopManagerEmail'];
 		$SendEmail = true;
-	}else{
+	} else {
 		$MailTo = $MyRow['contactemail'];
 		$SendEmail = false;
 	}
@@ -278,7 +278,7 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 	}
 	echo $MailMessage . "<br />";
 
-}else{
+} else {
 	// No thanks email, so nothing had to be done.
 	echo '<h1>NO Thank you Email for order ' . $_GET['TransNo'] . '</h1><br />';
 }
@@ -302,7 +302,7 @@ if ($_GET['EmailType']=='RemindBankTransfer'){
 }
 
 if ($_GET['EmailType']=='PaymentConfirmation'){
-	if($_SESSION['ShopMode']!='test'){
+	if ($_SESSION['ShopMode']!='test'){
 		// send a confirmation to team, so they prepare a new order ASAP, if it is NOT a test
 		// now only for orders that are imported into webERP as quotation, payment processed in webERP manually and we don't want to bother the customer
 		$MailTo = "kl-onlinesupport@kapal-laut.com";

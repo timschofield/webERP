@@ -10,13 +10,13 @@ include('includes/KLDefines.php');
 include('includes/KLUIGeneralFunctions.php');
 
 // The default company to Invoice from (PTADU).
-if(!isset($_POST['CompanyFrom'])) {
-	$_POST['CompanyFrom']='PTADU';
+if (!isset($_POST['CompanyFrom'])) {
+	$_POST['CompanyFrom'] = 'PTADU';
 }
 
 // The default company to Invoice to (PTSMH).
-if(!isset($_POST['CompanyTo'])) {
-	$_POST['CompanyTo']='PTSMH';
+if (!isset($_POST['CompanyTo'])) {
+	$_POST['CompanyTo'] = 'PTSMH';
 }
 
 // default date to invoice is until Yesterday
@@ -25,26 +25,26 @@ if (!isset($_POST['EndDate'])){
 }
 
 // The default draft or Invoice should be draft.
-if(!isset($_POST['DraftOrInvoice'])) {
-	$_POST['DraftOrInvoice']='DRAFT';
+if (!isset($_POST['DraftOrInvoice'])) {
+	$_POST['DraftOrInvoice'] = 'DRAFT';
 }
 
-if(!isset($_POST['NomorSeriFP'])) {
-	$_POST['NomorSeriFP']='0000000000000';
+if (!isset($_POST['NomorSeriFP'])) {
+	$_POST['NomorSeriFP'] = '0000000000000';
 }
 
-if(!isset($_POST['DecimalDigits'])) {
-	$_POST['DecimalDigits']=0;
+if (!isset($_POST['DecimalDigits'])) {
+	$_POST['DecimalDigits'] = 0;
 }
 
 if (isset($_POST['submit'])) {
-	submit($Title, $_POST['CompanyFrom'], $_POST['CompanyTo'], $_POST['EndDate'], $_POST['DraftOrInvoice'], $_POST['NomorSeriFP'], $_POST['DecimalDigits']);
+	submit($_POST['CompanyFrom'], $_POST['CompanyTo'], $_POST['EndDate'], $_POST['DraftOrInvoice'], $_POST['NomorSeriFP'], $_POST['DecimalDigits']);
 } else {
 	display($Title);
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $NomorSeriFP, $DecimalDigits) {
+function submit($CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $NomorSeriFP, $DecimalDigits) {
 
 	$EndDate = ConvertSQLDate($EndDate);
 	$EndDateSQL = FormatDateForSQL($EndDate);
@@ -54,14 +54,15 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 
 	//first off validate inputs sensible
 
-	if(!$InputError){
+	if (!$InputError){
 		$SQL = "SELECT klconsignment.stockid,
 						stockmaster.description,
 					SUM(klconsignment.qty) AS qty,
 					SUM(klconsignment.qty * klconsignment.consignmentprice) AS consignmentsale
-				FROM klconsignment,stockmaster
-				WHERE klconsignment.stockid = stockmaster.stockid
-					AND companycode = '" . $CompanyFrom . "'
+				FROM klconsignment
+				INNER JOIN stockmaster 
+					ON stockmaster.stockid = klconsignment.stockid
+				WHERE companycode = '" . $CompanyFrom . "'
 					AND partnercode = '" . $CompanyTo . "'
 					AND (fakturpajakdate = '1000-01-01'
 						OR fakturpajakdate = '" . $EndDateSQL . "')
@@ -277,22 +278,6 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 				$NomorTelepon = '-';
 			}
 
-			$LTLine = $BOL . 
-					$LineType . $Separator . 
-					$NPWP . $Separator . 
-					$Nama . $Separator . 
-					$Jalan . $Separator . 
-					$Blok . $Separator . 
-					$Nomor . $Separator . 
-					$RT . $Separator . 
-					$RW . $Separator . 
-					$Kecamatan . $Separator . 
-					$Kelurahan . $Separator . 
-					$Kabupaten . $Separator . 
-					$Propinsi . $Separator . 
-					$KodePos . $Separator . 
-					$NomorTelepon . $EOL; 
-					
 			if ($DraftOrInvoice == 'INVOICE'){
 				DB_Txn_Begin();
 				$SQL = "UPDATE klconsignment
@@ -314,16 +299,15 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 			fwrite($output, $InitialLine2);
 			fwrite($output, $InitialLine3);
 			fwrite($output, $FKLine);
-//			fwrite($output, $LTLine);
 			fwrite($output, $OFLines);
 			fclose($output);
 			
-		}else{
+		} else {
 			include('includes/header.php');
 			prnMsg('No data to create a Faktur Pajak','warn');
 			include('includes/footer.php');
 		}
-	}else{
+	} else {
 		include('includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 

@@ -108,14 +108,14 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				$QOO = GetQuantityOnOrder($MyRow['stkcode'], 'ALL');
 			break;
 		}
-		if(is_numeric($QOH) and is_numeric($QOO)){
+		if (is_numeric($QOH) and is_numeric($QOO)){
 			$DaysOfStock = ($QOH + $QOO) / ($MyRow['totalinvoiced'] / $_POST['NumberOfDays']);
-		}elseif(is_numeric($QOH)){
+		} elseif (is_numeric($QOH)){
 			$DaysOfStock = $QOH/ ($MyRow['totalinvoiced'] / $_POST['NumberOfDays']);
-		}elseif(is_numeric($QOO)){
+		} elseif (is_numeric($QOO)){
 			$DaysOfStock = $QOO/ ($MyRow['totalinvoiced'] / $_POST['NumberOfDays']);
 
-		}else{
+		} else {
 			$DaysOfStock = 0;
 		}
 		if ($DaysOfStock < $_POST['MaxDaysOfStock']){

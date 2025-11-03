@@ -53,14 +53,14 @@ if (isset($urlParts['query'])){
         //get request type
         $reqType = WebClientPrint::GetProcessRequestType($query);
         
-        if($reqType == WebClientPrint::GenPrintScript ||
+        if ($reqType == WebClientPrint::GenPrintScript ||
            $reqType == WebClientPrint::GenWcppDetectScript){
             //Let WebClientPrint to generate the requested script
             
             //Get Absolute URL of this file
             $currentAbsoluteURL = (@$_SERVER["HTTPS"] == "on") ? "https://" : "http://";
             $currentAbsoluteURL .= $_SERVER["SERVER_NAME"];
-            if($_SERVER["SERVER_PORT"] != "80" && $_SERVER["SERVER_PORT"] != "443")
+            if ($_SERVER["SERVER_PORT"] != "80" && $_SERVER["SERVER_PORT"] != "443")
             {
                 $currentAbsoluteURL .= ":".$_SERVER["SERVER_PORT"];
             } 
@@ -73,24 +73,24 @@ if (isset($urlParts['query'])){
             echo WebClientPrint::generateScript($currentAbsoluteURL, $query);
             return;
         } 
-        else if ($reqType == WebClientPrint::ClientSetWcppVersion)
+        elseif ($reqType == WebClientPrint::ClientSetWcppVersion)
         {
             //This request is a ping from the WCPP utility
             //so store the session ID indicating this user has the WCPP installed
             //also store the WCPP Version if available
-            if(isset($qs[WebClientPrint::WCPP_SET_VERSION]) && strlen($qs[WebClientPrint::WCPP_SET_VERSION]) > 0){
+            if (isset($qs[WebClientPrint::WCPP_SET_VERSION]) && strlen($qs[WebClientPrint::WCPP_SET_VERSION]) > 0){
                 WebClientPrint::cacheAdd($sid, WebClientPrint::WCP_CACHE_WCPP_VER, $qs[WebClientPrint::WCPP_SET_VERSION]);
             }
             return;
         }
-        else if ($reqType == WebClientPrint::ClientSetInstalledPrinters)
+        elseif ($reqType == WebClientPrint::ClientSetInstalledPrinters)
         {
             //WCPP Utility is sending the installed printers at client side
             //so store this info with the specified session ID
             WebClientPrint::cacheAdd($sid, WebClientPrint::WCP_CACHE_PRINTERS, strlen($qs[WebClientPrint::WCPP_SET_PRINTERS]) > 0 ? $qs[WebClientPrint::WCPP_SET_PRINTERS] : '');
             return;
         }
-        else if ($reqType == WebClientPrint::ClientSetInstalledPrintersInfo)
+        elseif ($reqType == WebClientPrint::ClientSetInstalledPrintersInfo)
         {
             //WCPP Utility is sending the installed printers at client side with detailed info
             //so store this info with the specified session ID
@@ -100,7 +100,7 @@ if (isset($urlParts['query'])){
             WebClientPrint::cacheAdd($sid, WebClientPrint::WCP_CACHE_PRINTERSINFO, $printersInfo);
             return;
         }
-        else if ($reqType == WebClientPrint::ClientGetWcppVersion)
+        elseif ($reqType == WebClientPrint::ClientGetWcppVersion)
         {
             //return the WCPP version for the specified Session ID (sid) if any
             ob_start();
@@ -109,7 +109,7 @@ if (isset($urlParts['query'])){
             echo WebClientPrint::cacheGet($sid, WebClientPrint::WCP_CACHE_WCPP_VER);
             return;    
         }
-        else if ($reqType == WebClientPrint::ClientGetInstalledPrinters)
+        elseif ($reqType == WebClientPrint::ClientGetInstalledPrinters)
         {
             //return the installed printers for the specified Session ID (sid) if any
             ob_start();
@@ -118,7 +118,7 @@ if (isset($urlParts['query'])){
             echo base64_decode(WebClientPrint::cacheGet($sid, WebClientPrint::WCP_CACHE_PRINTERS));
             return;
         }    
-        else if ($reqType == WebClientPrint::ClientGetInstalledPrintersInfo)
+        elseif ($reqType == WebClientPrint::ClientGetInstalledPrintersInfo)
         {
             //return the installed printers with detailed info for the specified Session ID (sid) if any
             ob_start();

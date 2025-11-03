@@ -16,7 +16,7 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	__('Change A Location Code'), '" /> ',// Icon title.
 	__('Change A Location Code'), '</p>';// Page title.
 
-if(isset($_POST['ProcessLocationChange'])) {
+if (isset($_POST['ProcessLocationChange'])) {
 
 	$InputError =0;
 
@@ -24,39 +24,39 @@ if(isset($_POST['ProcessLocationChange'])) {
 
 /*First check the location code exists */
 	$Result = DB_query("SELECT loccode FROM locations WHERE loccode='" . $_POST['OldLocationID'] . "'");
-	if(DB_num_rows($Result)==0) {
+	if (DB_num_rows($Result)==0) {
 		prnMsg(__('The location code') . ': ' . $_POST['OldLocationID'] . ' ' . __('does not currently exist as a location code in the system'),'error');
 		$InputError =1;
 	}
 
-	if(ContainsIllegalCharacters($_POST['NewLocationID'])) {
+	if (ContainsIllegalCharacters($_POST['NewLocationID'])) {
 		prnMsg(__('The new location code to change the old code to contains illegal characters - no changes will be made'),'error');
 		$InputError =1;
 	}
 
-	if($_POST['NewLocationID']=='') {
+	if ($_POST['NewLocationID']=='') {
 		prnMsg(__('The new location code to change the old code to must be entered as well'),'error');
 		$InputError =1;
 	}
 
-	if(ContainsIllegalCharacters($_POST['NewLocationName'])) {
+	if (ContainsIllegalCharacters($_POST['NewLocationName'])) {
 		prnMsg(__('The new location name to change the old name to contains illegal characters - no changes will be made'),'error');
 		$InputError =1;
 	}
 
-	if($_POST['NewLocationName']=='') {
+	if ($_POST['NewLocationName']=='') {
 		prnMsg(__('The new location name to change the old name to must be entered as well'),'error');
 		$InputError =1;
 	}
 /*Now check that the new code doesn't already exist */
 	$Result = DB_query("SELECT loccode FROM locations WHERE loccode='" . $_POST['NewLocationID'] . "'");
-	if(DB_num_rows($Result)!=0) {
+	if (DB_num_rows($Result)!=0) {
 		echo '<br /><br />';
 		prnMsg(__('The replacement location code') . ': ' . $_POST['NewLocationID'] . ' ' . __('already exists as a location code in the system') . ' - ' . __('a unique location code must be entered for the new code'),'error');
 		$InputError =1;
 	}
 
-	if($InputError ==0) {// no input errors
+	if ($InputError ==0) {// no input errors
 		DB_Txn_Begin();
 		DB_IgnoreForeignKeys();
 
@@ -166,7 +166,7 @@ if(isset($_POST['ProcessLocationChange'])) {
 		//check if MRP tables exist before assuming
 
 		$Result = DB_query("SELECT COUNT(*) FROM mrpparameters",'','',false,false);
-		if(DB_error_no()==0) {
+		if (DB_error_no()==0) {
 			echo '<br />' . __('Changing MRP parameters information');
 			$SQL = "UPDATE mrpparameters SET location='" . $_POST['NewLocationID'] . "' WHERE location='" . $_POST['OldLocationID'] . "'";
 			$ErrMsg = __('The SQL to update the mrpparameters records failed');

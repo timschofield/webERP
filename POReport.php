@@ -64,7 +64,7 @@ if (isset($_POST['submit'])) {
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') .
 		'" alt="" />' . ' ' . $Title . '</p>';
 	submit($PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$SupplierName,$SupplierNameOp,$SaveSummaryType);
-} else if (isset($_POST['submitcsv'])) {
+} elseif (isset($_POST['submitcsv'])) {
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') .
 		'" alt="" />' . ' ' . $Title . '</p>';
 	submitcsv($PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$SupplierName,$SupplierNameOp,$SaveSummaryType);
@@ -145,10 +145,10 @@ function submit($PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$SupplierNam
 	# that had used the IF statement to create a field called linestatus
 	if ($_POST['LineStatus'] != 'All') {
 		if ($_POST['DateType'] == 'Order') {
-			$WhereLineStatus = " AND IF(purchorderdetails.quantityord = purchorderdetails.qtyinvoiced ||
+			$WhereLineStatus = " AND if (purchorderdetails.quantityord = purchorderdetails.qtyinvoiced ||
 			  purchorderdetails.completed = 1,'Completed','Open') = '" . $_POST['LineStatus'] . "'";
 		} else {
-			$WhereLineStatus = " AND IF(grns.qtyrecd - grns.quantityinv <> 0,'Open','Completed') = '"
+			$WhereLineStatus = " AND if (grns.qtyrecd - grns.quantityinv <> 0,'Open','Completed') = '"
 			. $_POST['LineStatus'] . "'";
 		}
 	}
@@ -174,7 +174,7 @@ function submit($PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$SupplierNam
 							   purchorderdetails.qtyinvoiced,
 							   (purchorderdetails.quantityord * purchorderdetails.unitprice) as extprice,
 							   (purchorderdetails.quantityord * purchorderdetails.stdcostunit) as extcost,
-							   IF(purchorderdetails.quantityord = purchorderdetails.qtyinvoiced ||
+							   if (purchorderdetails.quantityord = purchorderdetails.qtyinvoiced ||
 								  purchorderdetails.completed = 1,'Completed','Open') as linestatus,
 							   suppliers.suppname,
 							   stockmaster.decimalplaces,
@@ -204,7 +204,7 @@ function submit($PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$SupplierNam
 							   grns.quantityinv as qtyinvoiced,
 							   (grns.qtyrecd * purchorderdetails.unitprice) as extprice,
 							   (grns.qtyrecd * grns.stdcostunit) as extcost,
-							   IF(grns.qtyrecd - grns.quantityinv <> 0,'Open','Completed') as linestatus,
+							   if (grns.qtyrecd - grns.quantityinv <> 0,'Open','Completed') as linestatus,
 							   suppliers.suppname,
 							   stockmaster.decimalplaces,
 							   stockmaster.description
@@ -869,10 +869,10 @@ function submitcsv( $PartNumber,
 	# that had used the IF statement to create a field called linestatus
 	if ($_POST['LineStatus'] != 'All') {
 		if ($_POST['DateType'] == 'Order') {
-			$WhereLineStatus = " AND IF(purchorderdetails.quantityord = purchorderdetails.qtyinvoiced ||
+			$WhereLineStatus = " AND if (purchorderdetails.quantityord = purchorderdetails.qtyinvoiced ||
 			  purchorderdetails.completed = 1,'Completed','Open') = '" . $_POST['LineStatus'] . "'";
 		 } else {
-			$WhereLineStatus = " AND IF(grns.qtyrecd - grns.quantityinv <> 0,'Open','Completed') = '"
+			$WhereLineStatus = " AND if (grns.qtyrecd - grns.quantityinv <> 0,'Open','Completed') = '"
 			. $_POST['LineStatus'] . "'";
 		 }
 	}
@@ -898,7 +898,7 @@ function submitcsv( $PartNumber,
 							   purchorderdetails.qtyinvoiced,
 							   (purchorderdetails.quantityord * purchorderdetails.unitprice) as extprice,
 							   (purchorderdetails.quantityord * purchorderdetails.stdcostunit) as extcost,
-							   IF(purchorderdetails.quantityord = purchorderdetails.qtyinvoiced ||
+							   if (purchorderdetails.quantityord = purchorderdetails.qtyinvoiced ||
 								  purchorderdetails.completed = 1,'Completed','Open') as linestatus,
 							   suppliers.suppname,
 							   stockmaster.decimalplaces,
@@ -928,7 +928,7 @@ function submitcsv( $PartNumber,
 							   grns.quantityinv as qtyinvoiced,
 							   (grns.qtyrecd * purchorderdetails.unitprice) as extprice,
 							   (grns.qtyrecd * grns.stdcostunit) as extcost,
-							   IF(grns.qtyrecd - grns.quantityinv <> 0,'Open','Completed') as linestatus,
+							   if (grns.qtyrecd - grns.quantityinv <> 0,'Open','Completed') as linestatus,
 							   suppliers.suppname,
 							   stockmaster.decimalplaces,
 							   stockmaster.description

@@ -216,7 +216,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 			include($PathPrefix . 'includes/footer.php');
 			exit();
 		}
-	}else{
+	} else {
 		/* The script is not from TEST*/
 		if ($_SESSION['DatabaseName'] != "kl_erp"){
 			/* If DB is not kl_erp we have a problem and should stop*/

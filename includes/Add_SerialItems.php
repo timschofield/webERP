@@ -7,10 +7,10 @@
 ********************************************/
 if ( (isset($_POST['AddBatches']) AND $_POST['AddBatches']!='')) {
 	for ($i=0;$i < 10;$i++){
-		if(isset($_POST['SerialNo' . $i]) AND mb_strlen($_POST['SerialNo' . $i])>0){
+		if (isset($_POST['SerialNo' . $i]) AND mb_strlen($_POST['SerialNo' . $i])>0){
 			/* add input quantity validation, the quantity left due to wrong decimal places is very annoying for controlled items */
-			if(is_numeric(filter_number_format($_POST['Qty'.$i]))){
-				if(strlen(substr(strrchr(filter_number_format($_POST['Qty'.$i]), "."), 1))>$DecimalPlaces){
+			if (is_numeric(filter_number_format($_POST['Qty'.$i]))){
+				if (strlen(substr(strrchr(filter_number_format($_POST['Qty'.$i]), "."), 1))>$DecimalPlaces){
 					echo '<br/>';
 					prnMsg(__('Please correct input quantity ').' '.$_POST['Qty'.$i].' '.__('to').' '.$DecimalPlaces.' '.__('decimalplaces'),'error');
 					$AddThisBundle = false;
@@ -29,7 +29,7 @@ if ( (isset($_POST['AddBatches']) AND $_POST['AddBatches']!='')) {
 			if ($ItemMustExist){
 				$ExistingBundleQty = ValidBundleRef($StockID, $LocationOut, $_POST['SerialNo' . $i]);
 				if ($ExistingBundleQty >0 OR ($ExistingBundleQty==1 and $IsCredit=true)){
-					if(!isset($AddThisBundle)){
+					if (!isset($AddThisBundle)){
 						$AddThisBundle = true;
 					}
 					/*If the user enters a duplicate serial number the later one over-writes
@@ -52,7 +52,7 @@ if ( (isset($_POST['AddBatches']) AND $_POST['AddBatches']!='')) {
 									__('The entered quantity will be reduced to the remaining amount left of this batch/bundle/roll'),
 									'warn');
 							$_POST['Qty' . $i] = $InOutModifier*$ExistingBundleQty;
-							if(!isset($AddThisBundle)){
+							if (!isset($AddThisBundle)){
 								$AddThisBundle = true;
 							}
 						}
@@ -76,7 +76,7 @@ if ( (isset($_POST['AddBatches']) AND $_POST['AddBatches']!='')) {
 			else {
 				//Serialised items can not exist w/ Qty > 0 if we have an $NewQty of 1
 				//Serialised items must exist w/ Qty = 1 if we have $NewQty of -1
-				if(!isset($SerialError)){
+				if (!isset($SerialError)){
 					$SerialError = false;
 				}
 				$NewQty = ($InOutModifier>0?1:-1) * filter_number_format($_POST['Qty' . $i]);
@@ -189,7 +189,7 @@ if (isset($_POST['EntryType'])
 		if ($LineItem->Serialised == 1){
 		//for Serialised items, we are expecting the line to contain either just the serial no
 		//OR a comma delimited file w/ the serial no FIRST
-			if(trim($Pieces[0]) != ""){
+			if (trim($Pieces[0]) != ""){
 				$Valid=false;
 				if (mb_strlen($Pieces[0]) <= 0 ){
 					$Valid=false;
@@ -206,7 +206,7 @@ if (isset($_POST['EntryType'])
 			}
 		} else {
 		//for controlled only items, we must receive: BatchID, Qty in a comma delimited  file
-			if($Pieces[0] != '' AND $Pieces[1] != '' AND is_numeric(filter_number_format($Pieces[1])) AND filter_number_format($Pieces[1]) > 0 ){
+			if ($Pieces[0] != '' AND $Pieces[1] != '' AND is_numeric(filter_number_format($Pieces[1])) AND filter_number_format($Pieces[1]) > 0 ){
 			/*If the user enters a duplicate batch number the later one over-writes
 			the first entered one - no warning given though ? */
 					//$LineItem->SerialItems[$Pieces[0]] = new SerialItem ($Pieces[0],  $Pieces[1] );
@@ -286,7 +286,7 @@ if (isset($_GET['REVALIDATE']) || isset($_POST['REVALIDATE'])) {
 	$LineItem->SerialItems = array(); // and then reset it so we can add back to it.
 	foreach ($OrigLineItem->SerialItems as $Item){
 		if ($OrigLineItem->Serialised == 1){
-			if(trim($Item->BundleRef) != ""){
+			if (trim($Item->BundleRef) != ""){
 				$Valid=false;
 				if (mb_strlen($Item->BundleRef) <= 0 ){
 					$Valid=false;
@@ -303,7 +303,7 @@ if (isset($_GET['REVALIDATE']) || isset($_POST['REVALIDATE'])) {
 			}
 		} else {
 		//for controlled only items, we must receive: BatchID, Qty in a comma delimited  file
-			if($Item->BundleRef != "" AND $Item->BundleQty != "" AND is_numeric($Item->BundleQty) AND $Item->BundleQty > 0 ){
+			if ($Item->BundleRef != "" AND $Item->BundleQty != "" AND is_numeric($Item->BundleQty) AND $Item->BundleQty > 0 ){
 			/*If the user enters a duplicate batch number the later one over-writes
 			the first entered one - no warning given though ? */
 					//$LineItem->SerialItems[$Pieces[0]] = new SerialItem ($Pieces[0],  $Pieces[1] );

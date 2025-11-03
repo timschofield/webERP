@@ -428,7 +428,7 @@ if (isset($_POST['PrintPDF']) && $_POST['Part'] != '') {
 
 } /*end of else not PrintPDF */
 // query for list of record(s)
-if(isset($_POST['Go']) OR isset($_POST['Next']) OR isset($_POST['Previous'])) {
+if (isset($_POST['Go']) OR isset($_POST['Next']) OR isset($_POST['Previous'])) {
 	$_POST['Search']='Search';
 }
 if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR isset($_POST['Previous'])) {

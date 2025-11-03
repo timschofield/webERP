@@ -335,10 +335,10 @@ if (isset($SelectedUser)) {
 	echo '<input type="hidden" name="Salesman" value="' . $_POST['Salesman'] . '" />';
 }
 
-if(!isset($_POST['Password'])) {
+if (!isset($_POST['Password'])) {
 	$_POST['Password']='';
 }
-if(!isset($_POST['Salesman'])) {
+if (!isset($_POST['Salesman'])) {
 	$_POST['Salesman']='';
 	$SalesmanName = '';
 }

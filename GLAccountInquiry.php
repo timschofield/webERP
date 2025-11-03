@@ -15,15 +15,13 @@ __('General Ledger Account Inquiry') , '</p>'; // Page title.
 
 if (isset($_POST['Account'])) {
 	$SelectedAccount = $_POST['Account'];
-}
-elseif (isset($_GET['Account'])) {
+} elseif (isset($_GET['Account'])) {
 	$SelectedAccount = $_GET['Account'];
 }
 
 if (isset($_POST['Period'])) {
 	$SelectedPeriod = $_POST['Period'];
-}
-elseif (isset($_GET['Period'])) {
+} elseif (isset($_GET['Period'])) {
 	$SelectedPeriod = array(
 		$_GET['Period']
 	);
@@ -37,14 +35,12 @@ if (isset($_GET['Show'])) {
 if (isset($SelectedPeriod)) { //If it was called from itself (in other words an inquiry was run and we wish to leave the periods selected unchanged
 	$FirstPeriodSelected = min($SelectedPeriod);
 	$LastPeriodSelected = max($SelectedPeriod);
-}
-elseif (isset($_GET['PeriodTo'])) { //If it was called from the Trial Balance/P&L or Balance sheet, select the just last period
+} elseif (isset($_GET['PeriodTo'])) { //If it was called from the Trial Balance/P&L or Balance sheet, select the just last period
 	$FirstPeriodSelected = $_GET['PeriodTo'];
 	$LastPeriodSelected = $_GET['PeriodTo'];
 	$SelectedPeriod[0] = $_GET['PeriodTo'];
 	$SelectedPeriod[1] = $_GET['PeriodTo'];
-}
-else { // Otherwise just highlight the current period
+} else { // Otherwise just highlight the current period
 	$FirstPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']));
 	$LastPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']));
 }

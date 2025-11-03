@@ -174,9 +174,9 @@ function barcode_outimage($Text, $bars, $scale = 1, $mode = "png",
     if ($mode=='jpg' || $mode=='jpeg'){
 	header("Content-Type: image/jpeg; name=\"barcode.jpg\"");
 	imagejpeg($im);
-    } else if ($mode=='gif'){
+    } elseif ($mode=='gif'){
 	header("Content-Type: image/gif; name=\"barcode.gif\"");
-	imagegif($im);
+	imagegif ($im);
     } else {
 	header("Content-Type: image/png; name=\"barcode.png\"");
 	imagepng($im);
@@ -269,7 +269,7 @@ function barcode_outhtml($Code, $bars, $scale = 1, $Total_y = 0, $space = ''){
 	    //hoher strich
 	    $val=ord($val)-ord('a')+1;
 	    $h=$height2;
-	}else $h=$height;
+	} else $h=$height;
 	$w=$val*$scale;
 	if ($w>0) $out.='<img src="black.png" height="'.$h.'" width="'.$w.'" align="top" />';
 	$width=true;
@@ -362,7 +362,7 @@ function barcode_encode($Code,$encoding){
 		){
 	/* use built-in EAN-Encoder */
 	$bars=barcode_encode_ean($Code, $encoding);
-    } else if (file_exists($genbarcode_loc)){
+    } elseif (file_exists($genbarcode_loc)){
 	/* use genbarcode */
 	$bars=barcode_encode_genbarcode($Code, $encoding);
     } else {
@@ -480,7 +480,7 @@ function barcode_encode_ean($ean, $encoding = "EAN-13"){
 	if ($a>0) $Text.=" ";
 	$Text.="$pos:12:{$ean[$a]}";
 	if ($a==0) $pos+=12;
-	else if ($a==6) $pos+=12;
+	elseif ($a==6) $pos+=12;
 	else $pos+=7;
     }
 

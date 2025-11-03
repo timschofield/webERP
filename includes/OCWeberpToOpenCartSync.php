@@ -196,9 +196,9 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 
 			if ($MyRow['unitsdimension'] == 'mm'){
 				$FactorLenght = 10;
-			}elseif ($MyRow['unitsdimension'] == 'cm'){
+			} elseif ($MyRow['unitsdimension'] == 'cm'){
 				$FactorLenght = 1;
-			}else{
+			} else {
 				// should be meter
 				$FactorLenght = 0.1;
 			}
@@ -215,11 +215,11 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 				if ($Quantity > 0){
 					/* It's current and we have stock available, should be available in website */
 					$Status = 1;
-				}else{
+				} else {
 					/* It's current but we don't have stock available, should not be available in website */
 					$Status = 0;
 				}
-			}else{
+			} else {
 				/* It's an obsolete item, not available in website */
 				$Status = 0;
 			}
@@ -243,12 +243,12 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 				$StoreText = "KL";
 				$StoreName = META_STORE_NAME_KL;
 				$GoogleBrand = GOOGLE_BRAND_KL;
-			}elseif ($ItemBrand == "BL"){
+			} elseif ($ItemBrand == "BL"){
 				$StoreId = OPENCART_STORE_BLINK;
 				$StoreText = "Blink";
 				$StoreName = META_STORE_NAME_BL;
 				$GoogleBrand = GOOGLE_BRAND_BLINK;
-			}elseif ($ItemBrand == "GE"){
+			} elseif ($ItemBrand == "GE"){
 				// it's a general item, so we assign first to KL.
 				$StoreId = OPENCART_STORE_KAPAL_LAUT;
 				$StoreText = "KL";
@@ -313,7 +313,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 								)";
 					$ResultUpdate = DB_query_oc($SQLInsert,$UpdateErrMsg,'',true);
 				}
-			}else{
+			} else {
 				$Action = "Insert";
 
 				$SQLInsert = "INSERT INTO oc_product
@@ -425,9 +425,9 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 				OR ($DiscountCategory == 50) OR (ItemInLIst($ItemCategory, LIST_STOCK_CATEGORIES_DISCOUNT_50))){
 				if ($ItemBrand == "KL"){
 					$SalesCatId = 129; // Category Outlet-Discount Kapal-Laut
-				}elseif ($ItemBrand == "BL"){
+				} elseif ($ItemBrand == "BL"){
 					$SalesCatId = 128; // Category Outlet-Discount Blink
-				}elseif ($ItemBrand == "GE"){
+				} elseif ($ItemBrand == "GE"){
 					// it's a general item, so we assign to KL.
 					$SalesCatId = 129; // Category Outlet-Discount Kapal-Laut
 				}
@@ -443,7 +443,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 				AssignAcessRightsProductsToCustomerGroupInOpenCart($ProductId, OPENCART_CUSTOMER_GROUP_WHOLESALE_NO_MINIMUM);
 				AssignAcessRightsProductsToCustomerGroupInOpenCart($ProductId, OPENCART_CUSTOMER_GROUP_WHOLESALE);
 				AssignAcessRightsProductsToCustomerGroupInOpenCart($ProductId, OPENCART_CUSTOMER_GROUP_WHOLESALE_ONLY_DISCOUNTED);
-			}elseif (($DiscountCategory == 80) OR (ItemInLIst($ItemCategory, LIST_STOCK_CATEGORIES_DISCOUNT_80))){
+			} elseif (($DiscountCategory == 80) OR (ItemInLIst($ItemCategory, LIST_STOCK_CATEGORIES_DISCOUNT_80))){
 				/* it is a 80% discount items, should not be available to anyone. Being strict it is not needed
 				as it is marked as disabled, but to keep data consistent, we revoke rights*/
 				RevokeAcessRightsProductsToCustomerGroupInOpenCart($ProductId, OPENCART_CUSTOMER_GROUP_GUEST);
@@ -451,7 +451,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 				RevokeAcessRightsProductsToCustomerGroupInOpenCart($ProductId, OPENCART_CUSTOMER_GROUP_WHOLESALE_NO_MINIMUM);
 				RevokeAcessRightsProductsToCustomerGroupInOpenCart($ProductId, OPENCART_CUSTOMER_GROUP_WHOLESALE);
 				RevokeAcessRightsProductsToCustomerGroupInOpenCart($ProductId, OPENCART_CUSTOMER_GROUP_WHOLESALE_ONLY_DISCOUNTED);
-			}else{
+			} else {
 				/* if it is not a discounted item, it should not be available to wholesale only discounted items*/
 				AssignAcessRightsProductsToCustomerGroupInOpenCart($ProductId, OPENCART_CUSTOMER_GROUP_GUEST);
 				AssignAcessRightsProductsToCustomerGroupInOpenCart($ProductId, OPENCART_CUSTOMER_GROUP_RETAIL);
@@ -577,9 +577,9 @@ function SyncProductSalesCategories($ShowMessages, $LastTimeRun , $EmailText= ''
 			$SalesCatId = $MyRow['salescatid'];
 			$ManufacturerId = $MyRow['manufacturers_id'];
 			$Featured = $MyRow['featured'];
-			if($Featured == 1){
+			if ($Featured == 1){
 				$PrintFeatured = "Yes";
-			}else{
+			} else {
 				$PrintFeatured = "No";
 			}
 			
@@ -758,7 +758,7 @@ function SyncProductQOH($ShowMessages, $LastTimeRun , $EmailText=''){
 			$Quantity = ItemOnlineQOH($MyRow['stockid']);
 			if ($Quantity > 0){
 				$Status = 1;
-			}else{
+			} else {
 				$Status = 0;
 			}
 
@@ -855,13 +855,13 @@ function SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun , $EmailText='
 				// discounted items are not enabled in marketplaces
 				$Action = "Disable Outlet";
 				$EnabledMarketplaces = "0";
-			}else{
+			} else {
 				// is not discount item, so we can decide depending on QOH
 				$QOH = ItemMarketplaceQOH($MyRow['stockid']);
 				if ($QOH > 0) {
 					$Action = "Enable";
 					$EnabledMarketplaces = "1";
-				}else{
+				} else {
 					$Action = "Disable QOH";
 					$EnabledMarketplaces = "0";
 				}
@@ -953,7 +953,7 @@ function SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun , $EmailText='
 			if ($TokopediaEnabled){
 				$Link .= '1';
 				$TextTokopediaEnabled = "Enabled";
-			}else{
+			} else {
 				$Link .= '0';
 				$TextTokopediaEnabled = "Disabled";
 			}
@@ -965,7 +965,7 @@ function SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun , $EmailText='
 			if ($ShopeeEnabled){
 				$Link .= '1';
 				$TextShopeeEnabled = "Enabled";
-			}else{
+			} else {
 				$Link .= '0';
 				$TextShopeeEnabled = "Disabled";
 			}
@@ -977,7 +977,7 @@ function SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun , $EmailText='
 			if ($LazadaEnabled){
 				$Link .= '1';
 				$TextLazadaEnabled = "Enabled";
-			}else{
+			} else {
 				$Link .= '0';
 				$TextLazadaEnabled = "Disabled";
 			}
@@ -998,7 +998,7 @@ function SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun , $EmailText='
 								product_link = '" . $Link . "'
 							WHERE product_id = '" . $ProductId . "'";
 				$ResultUpdate = DB_query_oc($SQLUpdate,$UpdateErrMsg,'',true);
-			}else{
+			} else {
 				$Action = "Insert";
 
 				$SQLInsert = "INSERT INTO oc_product_link
@@ -1132,10 +1132,10 @@ function SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun , $Email
 			if ($ItemBrand == "KL"){
 				$StoreId = OPENCART_STORE_KAPAL_LAUT;
 				$StoreName = META_STORE_NAME_KL;
-			}elseif ($ItemBrand == "BL"){
+			} elseif ($ItemBrand == "BL"){
 				$StoreId = OPENCART_STORE_BLINK;
 				$StoreName = META_STORE_NAME_BL;
-			}elseif ($ItemBrand == "GE"){
+			} elseif ($ItemBrand == "GE"){
 				$StoreId = OPENCART_STORE_KAPAL_LAUT;
 				$StoreName = META_STORE_NAME_KL;
 			}
@@ -1172,7 +1172,7 @@ function SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun , $Email
 										AND language_id = '" . $LanguageId . "'";
 						DB_query_oc($SQLUpdate,$UpdateErrMsg,'',true);
 
-					}else{
+					} else {
 						$Action = "Insert";
 						$SQLInsert = "INSERT INTO oc_product_description
 										(product_id,
@@ -1365,7 +1365,7 @@ function SyncCurrencies($ShowMessages, $LastTimeRun , $EmailText= ''){
 			if ($MyRow['rate'] != 1){
 				// foreign currencies
 				$Rate = ($MyRow['rate'] * GetWeberpForeignCurrencySurchargeFactor(OPENCART_DEFAULT_LOCATION));
-			}else{
+			} else {
 				// functional currency
 				$Rate = 1;
 			}
@@ -1376,7 +1376,7 @@ function SyncCurrencies($ShowMessages, $LastTimeRun , $EmailText= ''){
 									date_modified 	= '" . $ServerNow . "'
 								WHERE code 	= '" . $Currency . "'";
 				$ResultUpdate = DB_query_oc($SQLUpdate,$UpdateErrMsg,'',true);
-			}else{
+			} else {
 				$Action = "Insert";
 				$SQLInsert = "INSERT INTO oc_currency
 								(title,

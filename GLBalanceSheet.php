@@ -46,16 +46,13 @@ if (!isset($_POST['Company']) OR $_POST['Company'] == 'ALL') {
 	$_POST['Company'] = 'ALL';
 	$Title = __('Balance Sheet for KL Group');
 	$Table = 'chartmaster';
-}
-else if ($_POST['Company'] == 'PTADU') {
+} elseif ($_POST['Company'] == 'PTADU') {
 	$Title = __('Balance Sheet for PT. Angin Dingin Utara');
 	$Table = 'chartmasterADU';
-}
-else if ($_POST['Company'] == 'PTSMH') {
+} elseif ($_POST['Company'] == 'PTSMH') {
 	$Title = __('Balance Sheet for PT. Sungai Mutiara Hitam');
 	$Table = 'chartmasterSMH';
-}
-else if ($_POST['Company'] == 'PTBB') {
+} elseif ($_POST['Company'] == 'PTBB') {
 	$Title = __('Balance Sheet for PT. Bumi Biru');
 	$Table = 'chartmasterBB';
 }
@@ -63,13 +60,13 @@ else if ($_POST['Company'] == 'PTBB') {
 // KL RICARD END: prepare the data for each company
 
 // Merges GETs into POSTs:
-if(isset($_GET['PeriodTo'])) {
+if (isset($_GET['PeriodTo'])) {
 	$_POST['PeriodTo'] = $_GET['PeriodTo'];
 }
-if(isset($_GET['ShowDetail'])) {// Select period from.
+if (isset($_GET['ShowDetail'])) {// Select period from.
 	$_POST['ShowDetail'] = $_GET['ShowDetail'];
 }
-if(isset($_GET['ShowZeroBalance'])) {// Select period from.
+if (isset($_GET['ShowZeroBalance'])) {// Select period from.
 	$_POST['ShowZeroBalance'] = $_GET['ShowZeroBalance'];
 }
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
@@ -225,11 +222,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 //				$AccountBalance = $ThisYearRetainedEarningsRow['retainedearnings'];
 //				$LYAccountBalance = $LastYearRetainedEarningsRow['retainedearnings'];
 //			}
-//		}else{
+//		} else {
 			if ($MyRow['accountcode'] == $RetainedEarningsAct) {
 				$AccountBalance = -$ThisYearAccumulatedAdjustment;
 				$LYAccountBalance = -$LastYearAccumulatedAdjustment;
-			}else{
+			} else {
 				$ThisYearAccumulatedAdjustment += $ThisYearActuals[$MyRow['accountcode']];
 				$LastYearAccumulatedAdjustment += $LastYearActuals[$MyRow['accountcode']];
 			}
@@ -573,7 +570,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	echo '<field>
 			<label for="ShowDetail">', __('Detail or summary'), '</label>
 			<select name="ShowDetail" required="required" title="" >';
-	if($_POST['ShowDetail'] == 'Summary') {
+	if ($_POST['ShowDetail'] == 'Summary') {
 		echo	'<option selected="selected" value="Summary">', __('Summary'), '</option>
 				<option value="Detailed">', __('All Accounts'), '</option>';
 	} else {

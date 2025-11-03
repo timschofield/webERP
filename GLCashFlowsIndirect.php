@@ -32,7 +32,7 @@ function CashFlowsActivityName($Activity) {
 
 function colDebitCredit($Amount) {
 	// Function to display in debit or Credit columns in a HTML table.
-	if($Amount < 0) {
+	if ($Amount < 0) {
 		return '<td class="number">' . locale_number_format($Amount, $_SESSION['CompanyRecord']['decimalplaces']) . '</td><td>&nbsp;</td>';// Outflow.
 	} else {
 		return '<td>&nbsp;</td><td class="number">' . locale_number_format($Amount, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>';// Inflow.
@@ -51,39 +51,39 @@ if (!isset($IsIncluded)) {// Runs normally if this script is NOT included in ano
 }
 
 // Merges gets into posts:
-if(isset($_GET['PeriodFrom']) AND is_numeric($_GET['PeriodFrom'])) {
+if (isset($_GET['PeriodFrom']) AND is_numeric($_GET['PeriodFrom'])) {
 	$_POST['PeriodFrom'] = $_GET['PeriodFrom'];
 }
-if(isset($_GET['PeriodTo']) AND is_numeric($_GET['PeriodTo'])) {
+if (isset($_GET['PeriodTo']) AND is_numeric($_GET['PeriodTo'])) {
 	$_POST['PeriodTo'] = $_GET['PeriodTo'];
 }
-if(isset($_GET['ShowZeroBalance'])) {
+if (isset($_GET['ShowZeroBalance'])) {
 	$_POST['ShowZeroBalance'] = $_GET['ShowZeroBalance'];
 }
-if(isset($_GET['ShowCash'])) {
+if (isset($_GET['ShowCash'])) {
 	$_POST['ShowCash'] = $_GET['ShowCash'];
 }
 
 // Sets PeriodFrom and PeriodTo from Period:
-if(isset($_POST['Period']) and $_POST['Period'] != '') {
+if (isset($_POST['Period']) and $_POST['Period'] != '') {
 	$_POST['PeriodFrom'] = ReportPeriod($_POST['Period'], 'From');
 	$_POST['PeriodTo'] = ReportPeriod($_POST['Period'], 'To');
 }
 
 // Validates the data submitted in the form:
-if(isset($_POST['PeriodFrom']) and $_POST['PeriodFrom'] > $_POST['PeriodTo']) {
+if (isset($_POST['PeriodFrom']) and $_POST['PeriodFrom'] > $_POST['PeriodTo']) {
 	// The beginning is after the end.
 	$_POST['NewReport'] = 'on';
 	prnMsg(__('The beginning of the period should be before or equal to the end of the period. Please reselect the reporting period.'), 'error');
 }
-if(isset($_POST['PeriodTo']) and $_POST['PeriodTo']-$_POST['PeriodFrom']+1 > 12) {
+if (isset($_POST['PeriodTo']) and $_POST['PeriodTo']-$_POST['PeriodFrom']+1 > 12) {
 	// The reporting period is greater than 12 months.
 	$_POST['NewReport'] = 'on';
 	prnMsg(__('The period should be 12 months or less in duration. Please select an alternative period range.'), 'error');
 }
 
 // Main code:
-if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewReport']) {
+if (isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewReport']) {
 	// If PeriodFrom and PeriodTo are set and it is not a NewReport, generates the report:
 
 	echo '<div class="sheet">';// Division to identify the report block.
@@ -116,7 +116,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 				<td class="text" colspan="6">',// Prints an explanation of signs in actual and relative changes:
 					'<br /><b>', __('Notes'), ':</b><br />',
 					__('Cash flows signs: a negative number indicates a cash flow used in activities; a positive number indicates a cash flow provided by activities.'), '<br />';
-	if($_POST['ShowCash']) {
+	if ($_POST['ShowCash']) {
 		echo		__('Cash and cash equivalents signs: a negative number indicates a cash outflow; a positive number indicates a cash inflow.'), '<br />';
 	}
 	echo		'</td>
@@ -129,19 +129,19 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 	$LastTotal = 0;
 
 	// Gets the net profit for the period GL account:
-	if(!isset($_SESSION['PeriodProfitAccount'])) {
+	if (!isset($_SESSION['PeriodProfitAccount'])) {
 		$_SESSION['PeriodProfitAccount'] = '';
 		$MyRow = DB_fetch_array(DB_query("SELECT confvalue FROM `config` WHERE confname ='PeriodProfitAccount'"));
-		if($MyRow) {
+		if ($MyRow) {
 			$_SESSION['PeriodProfitAccount'] = $MyRow['confvalue'];
 		}
 	}
 	// Gets the retained earnings GL account:
-	if(!isset($_SESSION['RetainedEarningsAccount'])) {
+	if (!isset($_SESSION['RetainedEarningsAccount'])) {
 		$_SESSION['RetainedEarningsAccount'] = '';
 		$Result = DB_query("SELECT retainedearnings FROM companies WHERE coycode = 1");
 		$MyRow = DB_fetch_array($Result);
-		if($MyRow) {
+		if ($MyRow) {
 			$_SESSION['RetainedEarningsAccount'] = $MyRow['retainedearnings'];
 		}
 	}
@@ -214,7 +214,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 	// Looks for an account without setting up:
 	$NeedSetup = false;
 	while($MyRow = DB_fetch_array($Result)) {
-		if($MyRow['cashflowsactivity'] == -1) {
+		if ($MyRow['cashflowsactivity'] == -1) {
 			$NeedSetup = true;
 			echo '<tr><td colspan="6">&nbsp;</td></tr>';
 			break;
@@ -222,7 +222,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 	}
 	DB_data_seek($Result,0);
 	while($MyRow = DB_fetch_array($Result)) {
-		if($IdSection <> $MyRow['cashflowsactivity']) {
+		if ($IdSection <> $MyRow['cashflowsactivity']) {
 			// Prints section total:
 			echo '<tr>
 		    	<td class="text" colspan="2">', CashFlowsActivityName($IdSection), '</td>',
@@ -238,7 +238,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 		    		<td class="text" colspan="6"><br /><h2>', CashFlowsActivityName($IdSection), '</h2></td>
 		    	</tr>';
 		}
-		if($MyRow['ActualAmount']<>0
+		if ($MyRow['ActualAmount']<>0
 			OR $MyRow['LastAmount']<>0 OR isset($_POST['ShowZeroBalance'])) {
 
 			echo '<tr class="striped_row">
@@ -267,7 +267,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 			colDebitCredit($LastTotal),
 		'</tr>';
 	// Prints Cash and cash equivalents at beginning of period:
-	if($_POST['ShowCash']) {
+	if ($_POST['ShowCash']) {
 		// Prints a detail of Cash and cash equivalents at beginning of period (Parameters: PeriodFrom, PeriodTo, ShowZeroBalance=on/off, ShowCash=ON):
 		echo '<tr><td colspan="6">&nbsp;</td></tr>';
 		$ActualBeginning = 0;
@@ -286,7 +286,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 				ORDER BY gltotals.account";
 		$Result = DB_query($Sql);
 		while($MyRow = DB_fetch_array($Result)) {
-			if($MyRow['ActualAmount']<>0
+			if ($MyRow['ActualAmount']<>0
 				OR $MyRow['LastAmount']<>0 OR isset($_POST['ShowZeroBalance'])) {
 
 				echo '<tr class="striped_row">
@@ -320,7 +320,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 			colDebitCredit($LastBeginning),
 		'</tr>';
 	// Prints Cash and cash equivalents at end of period:
-	if($_POST['ShowCash']) {
+	if ($_POST['ShowCash']) {
 		// Prints a detail of Cash and cash equivalents at end of period (Parameters: PeriodFrom, PeriodTo, ShowZeroBalance=on/off, ShowCash=ON):
 		echo '<tr><td colspan="6">&nbsp;</td></tr>';
 		// Calculate ending balance by summing all periods up to PeriodTo from gltotals
@@ -337,7 +337,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 				ORDER BY gltotals.account";
 		$Result = DB_query($Sql);
 		while($MyRow = DB_fetch_array($Result)) {
-			if($MyRow['ActualAmount']<>0
+			if ($MyRow['ActualAmount']<>0
 				OR $MyRow['LastAmount']<>0 OR isset($_POST['ShowZeroBalance'])) {
 
 				echo '<tr class="striped_row">
@@ -356,7 +356,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 			colDebitCredit($LastTotal+$LastBeginning),
 		'</tr>';
 	// Prints 'Cash or cash equivalent' section if selected (Parameters: PeriodFrom, PeriodTo, ShowZeroBalance=on/off, ShowCash=ON):
-	if($_POST['ShowCash']) {
+	if ($_POST['ShowCash']) {
 		// Prints 'Cash or cash equivalent' section title:
 		echo '<tr><td colspan="6">&nbsp</td><tr>
 			<tr>
@@ -379,7 +379,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 			gltotals.account";
 		$Result = DB_query($Sql);
 		while($MyRow = DB_fetch_array($Result)) {
-			if($MyRow['ActualAmount']<>0
+			if ($MyRow['ActualAmount']<>0
 				OR $MyRow['LastAmount']<>0 OR isset($_POST['ShowZeroBalance'])) {
 
 				echo '<tr class="striped_row">
@@ -411,7 +411,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 			'<input name="ShowZeroBalance" type="hidden" value="', $_POST['ShowZeroBalance'], '" />',
 			'<input name="ShowCash" type="hidden" value="', $_POST['ShowCash'], '" />',
 			'<div class="centre noPrint">'; // Form buttons:
-		if($NeedSetup) {
+		if ($NeedSetup) {
 			echo '<button onclick="window.location=\'GLCashFlowsSetup.php\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/maintenance.png" /> ', __('Run Setup'), '</button>'; // "Run Setup" button.
 		}
 		echo	'<button onclick="window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" /> ', __('Print'), '</button>', // "Print" button.
@@ -433,7 +433,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />'; // Input table:
 		// Input table:
 
-	if(!isset($_POST['PeriodTo'])) {
+	if (!isset($_POST['PeriodTo'])) {
 		$_POST['ShowZeroBalance'] = '';
 		$_POST['ShowCash'] = '';
 	}
@@ -462,14 +462,14 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 	$Period = GetPeriod($FromDate);
 
 	while ($MyRow=DB_fetch_array($Periods)) {
-		if(isset($_POST['PeriodFrom']) AND $_POST['PeriodFrom']!='') {
-			if( $_POST['PeriodFrom']== $MyRow['periodno']) {
+		if (isset($_POST['PeriodFrom']) AND $_POST['PeriodFrom']!='') {
+			if ( $_POST['PeriodFrom']== $MyRow['periodno']) {
 				echo '<option selected="selected" value="' . $MyRow['periodno'] . '">' .MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 			} else {
 				echo '<option value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 			}
 		} else {
-			if($MyRow['lastdate_in_period']== $DefaultFromDate) {
+			if ($MyRow['lastdate_in_period']== $DefaultFromDate) {
 				echo '<option selected="selected" value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 			} else {
 				echo '<option value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
@@ -482,7 +482,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 	</field>';
 
 	// Select period to:
-	if(!isset($_POST['PeriodTo'])) {
+	if (!isset($_POST['PeriodTo'])) {
 		$PeriodSQL = "SELECT periodno
 						FROM periods
 						WHERE MONTH(lastdate_in_period) = MONTH(CURRENT_DATE())
@@ -503,7 +503,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 	</field>';
 
 	// OR Select period:
-	if(!isset($_POST['Period'])) {
+	if (!isset($_POST['Period'])) {
 		$_POST['Period'] = '';
 	}
 

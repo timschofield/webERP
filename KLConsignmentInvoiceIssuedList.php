@@ -11,7 +11,7 @@ include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 
 // The default company to Invoice from (PTADU).
-if(!isset($_POST['CompanyFrom'])) {
+if (!isset($_POST['CompanyFrom'])) {
 	$_POST['CompanyFrom']='PTADU';
 }
 
@@ -43,7 +43,7 @@ function submit($Title, $CompanyFrom, $StartDate, $EndDate) {
 	//initialise no input errors
 	$InputError = false;
 	
-	if(!$InputError){
+	if (!$InputError){
 		// get the conignment sales for the period
 		
 		$SQL = "SELECT klconsignment.partnercode,

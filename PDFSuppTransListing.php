@@ -167,8 +167,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		include ('includes/footer.php');
 	}
 
-}
-else { /*The option to print PDF was not hit */
+} else { /*The option to print PDF was not hit */
 	$Title = __('Supplier Transaction Listing');
 	$ViewTopic = 'AccountsPayable';
 	$BookMark = '';

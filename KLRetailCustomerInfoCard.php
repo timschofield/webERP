@@ -13,7 +13,7 @@ include('includes/KLPOSGeneral.php');
 
 if (isset($_GET['SelectedOrder'])){
 	$SelectedOrder =mb_strtoupper($_GET['SelectedOrder']);
-} elseif(isset($_POST['SelectedOrder'])){
+} elseif (isset($_POST['SelectedOrder'])){
 	$SelectedOrder =mb_strtoupper($_POST['SelectedOrder']);
 }
 

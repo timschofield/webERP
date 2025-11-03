@@ -102,7 +102,7 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 	} //end if the transfer is not a duplicated
 }
 
-if(isset($_POST['Submit']) AND $InputError==False){
+if (isset($_POST['Submit']) AND $InputError==False){
 
 	$ErrMsg = __('CRITICAL ERROR') . '! ' . __('Unable to BEGIN Location Transfer transaction');
 
@@ -110,7 +110,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 
 	for ($i = 0; $i < $_POST['LinesCounter']; $i++){
 
-		if($_POST['StockID' . $i] != ''){
+		if ($_POST['StockID' . $i] != ''){
 			$DecimalsSql = "SELECT decimalplaces
 							FROM stockmaster
 							WHERE stockid = '" . $_POST['StockID' . $i] . "'";
@@ -159,7 +159,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 		$Trf_ID = $_POST['Trf_ID'];
 	}
 
-	if(!isset($Trf_ID)){
+	if (!isset($Trf_ID)){
 		$Trf_ID = GetNextTransNo(16);
 	}
 
@@ -195,7 +195,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 		</thead>
 		<tbody>';
 	$j=0; /* row counter for reindexing */
-	if(isset($_POST['LinesCounter'])){
+	if (isset($_POST['LinesCounter'])){
 
 		for ($i=0;$i < $_POST['LinesCounter'];$i++){
 			if (!isset($_POST['StockID'. $i])){

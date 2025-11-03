@@ -777,103 +777,103 @@ function HourlySales($numDays, $RootPath){
 			if ($MyRow['sales07'] != 0){
 				$Sales07 = locale_number_format_zero_blank($MyRow['sales07']/$TotalSales*100,0).'%';
 				$Total07 += $MyRow['sales07'];
-			}else{
+			} else {
 				$Sales07 = '';
 			}		
 			if ($MyRow['sales08'] != 0){
 				$Sales08 = locale_number_format_zero_blank($MyRow['sales08']/$TotalSales*100,0).'%';
 				$Total08 += $MyRow['sales08'];
-			}else{
+			} else {
 				$Sales08 = '';
 			}		
 			if ($MyRow['sales09'] != 0){
 				$Sales09 = locale_number_format_zero_blank($MyRow['sales09']/$TotalSales*100,0).'%';
 				$Total09 += $MyRow['sales09'];
-			}else{
+			} else {
 				$Sales09 = '';
 			}		
 			if ($MyRow['sales10'] != 0){
 				$Sales10 = locale_number_format_zero_blank($MyRow['sales10']/$TotalSales*100,0).'%';
 				$Total10 += $MyRow['sales10'];
-			}else{
+			} else {
 				$Sales10 = '';
 			}		
 			if ($MyRow['sales11'] != 0){
 				$Sales11 = locale_number_format_zero_blank($MyRow['sales11']/$TotalSales*100,0).'%';
 				$Total11 += $MyRow['sales11'];
-			}else{
+			} else {
 				$Sales11 = '';
 			}		
 			if ($MyRow['sales12'] != 0){
 				$Sales12 = locale_number_format_zero_blank($MyRow['sales12']/$TotalSales*100,0).'%';
 				$Total12 += $MyRow['sales12'];
-			}else{
+			} else {
 				$Sales12 = '';
 			}		
 			if ($MyRow['sales13'] != 0){
 				$Sales13 = locale_number_format_zero_blank($MyRow['sales13']/$TotalSales*100,0).'%';
 				$Total13 += $MyRow['sales13'];
-			}else{
+			} else {
 				$Sales13 = '';
 			}		
 			if ($MyRow['sales14'] != 0){
 				$Sales14 = locale_number_format_zero_blank($MyRow['sales14']/$TotalSales*100,0).'%';
 				$Total14 += $MyRow['sales14'];
-			}else{
+			} else {
 				$Sales14 = '';
 			}		
 			if ($MyRow['sales15'] != 0){
 				$Sales15 = locale_number_format_zero_blank($MyRow['sales15']/$TotalSales*100,0).'%';
 				$Total15 += $MyRow['sales15'];
-			}else{
+			} else {
 				$Sales15 = '';
 			}		
 			if ($MyRow['sales16'] != 0){
 				$Sales16 = locale_number_format_zero_blank($MyRow['sales16']/$TotalSales*100,0).'%';
 				$Total16 += $MyRow['sales16'];
-			}else{
+			} else {
 				$Sales16 = '';
 			}		
 			if ($MyRow['sales17'] != 0){
 				$Sales17 = locale_number_format_zero_blank($MyRow['sales17']/$TotalSales*100,0).'%';
 				$Total17 += $MyRow['sales17'];
-			}else{
+			} else {
 				$Sales17 = '';
 			}		
 			if ($MyRow['sales18'] != 0){
 				$Sales18 = locale_number_format_zero_blank($MyRow['sales18']/$TotalSales*100,0).'%';
 				$Total18 += $MyRow['sales18'];
-			}else{
+			} else {
 				$Sales18 = '';
 			}		
 			if ($MyRow['sales19'] != 0){
 				$Sales19 = locale_number_format_zero_blank($MyRow['sales19']/$TotalSales*100,0).'%';
 				$Total19 += $MyRow['sales19'];
-			}else{
+			} else {
 				$Sales19 = '';
 			}		
 			if ($MyRow['sales20'] != 0){
 				$Sales20 = locale_number_format_zero_blank($MyRow['sales20']/$TotalSales*100,0).'%';
 				$Total20 += $MyRow['sales20'];
-			}else{
+			} else {
 				$Sales20 = '';
 			}		
 			if ($MyRow['sales21'] != 0){
 				$Sales21 = locale_number_format_zero_blank($MyRow['sales21']/$TotalSales*100,0).'%';
 				$Total21 += $MyRow['sales21'];
-			}else{
+			} else {
 				$Sales21 = '';
 			}		
 			if ($MyRow['sales22'] != 0){
 				$Sales22 = locale_number_format_zero_blank($MyRow['sales22']/$TotalSales*100,0).'%';
 				$Total22 += $MyRow['sales22'];
-			}else{
+			} else {
 				$Sales22 = '';
 			}		
 			if ($MyRow['sales23'] != 0){
 				$Sales23 = locale_number_format_zero_blank($MyRow['sales23']/$TotalSales*100,0).'%';
 				$Total23 += $MyRow['sales23'];
-			}else{
+			} else {
 				$Sales23 = '';
 			}		
 
@@ -1004,7 +1004,7 @@ function DaysOfWeekSales($numDays, $RootPath){
 	$Result = DB_query($SQL);
 	if ($MyRow = DB_fetch_array($Result)){
 		$TotalSales = $MyRow['TotalSales'];
-	}else{
+	} else {
 		return;
 	}
 

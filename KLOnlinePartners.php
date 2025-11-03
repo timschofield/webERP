@@ -16,13 +16,13 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	__('Setup'), '" /> ',// Icon title.
 	__('KL Online Partners Maintenance'), '</p>';// Page title.
 
-if(isset($_GET['SelectedPartner'])) {
+if (isset($_GET['SelectedPartner'])) {
 	$SelectedPartner = $_GET['SelectedPartner'];
-} elseif(isset($_POST['SelectedPartner'])) {
+} elseif (isset($_POST['SelectedPartner'])) {
 	$SelectedPartner = $_POST['SelectedPartner'];
 }
 
-if(isset($_POST['submit'])) {
+if (isset($_POST['submit'])) {
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
 
@@ -30,12 +30,12 @@ if(isset($_POST['submit'])) {
 	ie the page has called itself with some user input */
 
 	$_POST['OnlinePartnerCode']=mb_strtoupper($_POST['OnlinePartnerCode']);
-	if(trim($_POST['OnlinePartnerCode']) == '') {
+	if (trim($_POST['OnlinePartnerCode']) == '') {
 		$InputError = 1;
 		prnMsg(__('The Partner Code code may not be empty'), 'error');
 	}
 
-	if(isset($SelectedPartner) AND $InputError !=1) {
+	if (isset($SelectedPartner) AND $InputError !=1) {
 
 		$SQL = "UPDATE klonlinepartners 
 				SET onlinepartnername ='" . $_POST['OnlinePartnerName'] . "',
@@ -128,7 +128,7 @@ if(isset($_POST['submit'])) {
 		unset($_POST['ComissionShopeeFreeShippingMaximum']);
 		unset($_POST['ComissionLazadaPercent']);
 
-	} elseif($InputError !=1) {
+	} elseif ($InputError !=1) {
 
 		/*SelectedPartner is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new Location form */
 
@@ -265,19 +265,19 @@ if(isset($_POST['submit'])) {
 		unset($_POST['ComissionLazadaPercent']);
 	}
 
-} elseif(isset($_GET['delete'])) {
+} elseif (isset($_GET['delete'])) {
 	//the link to delete a selected record was clicked instead of the submit button
 	$CancelDelete = 0;
 	// PREVENT DELETES IF DEPENDENT RECORDS
 	$SQL= "SELECT COUNT(*) FROM locations WHERE onlinepartnercode='". $SelectedPartner . "'";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_row($Result);
-	if($MyRow[0]>0) {
+	if ($MyRow[0]>0) {
 		$CancelDelete = 1;
 		prnMsg(__('Cannot delete this online partner because there are locations related to it.'),'warn');
 		echo __('There are') . ' ' . $MyRow[0] . ' ' . __('locations using this online partner');
 	}
-	if(! $CancelDelete) {
+	if (! $CancelDelete) {
 		$Result = DB_query("DELETE FROM klonlinepartners WHERE onlinepartnercode='" . $SelectedPartner . "'");
 		prnMsg(__('Online Partner') . ' ' . $SelectedPartner . ' ' . __('has been deleted') . '!', 'success');
 		unset ($SelectedPartner);
@@ -286,7 +286,7 @@ if(isset($_POST['submit'])) {
 	unset($_GET['delete']);
 }
 
-if(!isset($SelectedPartner)) {
+if (!isset($SelectedPartner)) {
 
 /* It could still be the second time the page has been run and a record has been selected for modification - SelectedPartner will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters
 then none of the above are true and the list of Locations will be displayed with
@@ -302,7 +302,7 @@ or deletion of the records*/
 			ORDER BY onlinepartnername";
 	$Result = DB_query($SQL);
 
-	if(DB_num_rows($Result)==0) {
+	if (DB_num_rows($Result)==0) {
 		prnMsg(__('There are no online partners'),'error');
 	}
 
@@ -337,18 +337,18 @@ or deletion of the records*/
 //end of ifs and buts!
 
 echo '<br />';
-if(isset($SelectedPartner)) {
+if (isset($SelectedPartner)) {
 	echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Review Records') . '</a>';
 }
 echo '<br />';
 
-if(!isset($_GET['delete'])) {
+if (!isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	if(isset($SelectedPartner)) {
+	if (isset($SelectedPartner)) {
 		//editing an existing Location
 
 		$SQL = "SELECT onlinepartnercode,
@@ -451,7 +451,7 @@ if(!isset($_GET['delete'])) {
 				<td>' . $_POST['OnlinePartnerCode'] . '</td>
 			</tr>';
 	} else {//end of if $SelectedPartner only do the else when a new record is being entered
-		if(!isset($_POST['OnlinePartnerCode'])) {
+		if (!isset($_POST['OnlinePartnerCode'])) {
 			$_POST['OnlinePartnerCode'] = '';
 		}
 		echo '<table class="selection">
@@ -463,124 +463,124 @@ if(!isset($_GET['delete'])) {
 				<td><input type="text" autofocus="autofocus" required="required" title="' . __('Enter up to 10 characters for the online partner code') . '" data-type="no-illegal-chars" name="OnlinePartnerCode" value="' . $_POST['OnlinePartnerCode'] . '" size="11" maxlength="10" /></td>
 			</tr>';
 	}
-	if(!isset($_POST['OnlinePartnerName'])) {
+	if (!isset($_POST['OnlinePartnerName'])) {
 		$_POST['OnlinePartnerName'] = '';
 	}
-	if(!isset($_POST['PayPalAccount'])) {
+	if (!isset($_POST['PayPalAccount'])) {
 		$_POST['PayPalAccount'] = ' ';
 	}
-	if(!isset($_POST['PayPalTest'])) {
+	if (!isset($_POST['PayPalTest'])) {
 		$_POST['PayPalTest'] = 1;
 	}
-	if(!isset($_POST['PayPalUsername'])) {
+	if (!isset($_POST['PayPalUsername'])) {
 		$_POST['PayPalUsername'] = '';
 	}
-	if(!isset($_POST['PayPalPassword'])) {
+	if (!isset($_POST['PayPalPassword'])) {
 		$_POST['PayPalPassword'] = '';
 	}
-	if(!isset($_POST['PayPalSignature'])) {
+	if (!isset($_POST['PayPalSignature'])) {
 		$_POST['PayPalSignature'] = '';
 	}
-	if(!isset($_POST['AccountTransferMandiri'])) {
+	if (!isset($_POST['AccountTransferMandiri'])) {
 		$_POST['AccountTransferMandiri'] = '';
 	}
-	if(!isset($_POST['AccountDokuIDR'])) {
+	if (!isset($_POST['AccountDokuIDR'])) {
 		$_POST['AccountDokuIDR'] = '';
 	}
-	if(!isset($_POST['AccountDokuComissionIDR'])) {
+	if (!isset($_POST['AccountDokuComissionIDR'])) {
 		$_POST['AccountDokuComissionIDR'] = '';
 	}
-	if(!isset($_POST['ComissionFlatDoku'])) {
+	if (!isset($_POST['ComissionFlatDoku'])) {
 		$_POST['ComissionFlatDoku'] = 0;
 	}
-	if(!isset($_POST['ComissionCCDoku'])) {
+	if (!isset($_POST['ComissionCCDoku'])) {
 		$_POST['ComissionCCDoku'] = 0;
 	}
-	if(!isset($_POST['AccountPayPalAUD'])) {
+	if (!isset($_POST['AccountPayPalAUD'])) {
 		$_POST['AccountPayPalAUD'] = '';
 	}
-	if(!isset($_POST['AccountPayPalComissionAUD'])) {
+	if (!isset($_POST['AccountPayPalComissionAUD'])) {
 		$_POST['AccountPayPalComissionAUD'] = '';
 	}
-	if(!isset($_POST['AccountPayPalUSD'])) {
+	if (!isset($_POST['AccountPayPalUSD'])) {
 		$_POST['AccountPayPalUSD'] = '';
 	}
-	if(!isset($_POST['AccountPayPalComissionUSD'])) {
+	if (!isset($_POST['AccountPayPalComissionUSD'])) {
 		$_POST['AccountPayPalComissionUSD'] = '';
 	}
-	if(!isset($_POST['AccountPayPalEUR'])) {
+	if (!isset($_POST['AccountPayPalEUR'])) {
 		$_POST['AccountPayPalEUR'] = '';
 	}
-	if(!isset($_POST['AccountPayPalComissionEUR'])) {
+	if (!isset($_POST['AccountPayPalComissionEUR'])) {
 		$_POST['AccountPayPalComissionEUR'] = '';
 	}
-	if(!isset($_POST['ForeignCurrencySurchargeFactor'])) {
+	if (!isset($_POST['ForeignCurrencySurchargeFactor'])) {
 		$_POST['ForeignCurrencySurchargeFactor'] = 0;
 	}
-	if(!isset($_POST['AccountXenditIDR'])) {
+	if (!isset($_POST['AccountXenditIDR'])) {
 		$_POST['AccountXenditIDR'] = '';
 	}
-	if(!isset($_POST['AccountXenditComissionIDR'])) {
+	if (!isset($_POST['AccountXenditComissionIDR'])) {
 		$_POST['AccountXenditComissionIDR'] = '';
 	}
-	if(!isset($_POST['ComissionXenditFlatTransfer'])) {
+	if (!isset($_POST['ComissionXenditFlatTransfer'])) {
 		$_POST['ComissionXenditFlatTransfer'] = 0;
 	}
-	if(!isset($_POST['ComissionXenditFlatCC'])) {
+	if (!isset($_POST['ComissionXenditFlatCC'])) {
 		$_POST['ComissionXenditFlatCC'] = 0;
 	}
-	if(!isset($_POST['ComissionXenditPercentCC'])) {
+	if (!isset($_POST['ComissionXenditPercentCC'])) {
 		$_POST['ComissionXenditPercentCC'] = 0;
 	}
-	if(!isset($_POST['AccountXenditIDR'])) {
+	if (!isset($_POST['AccountXenditIDR'])) {
 		$_POST['AccountXenditIDR'] = '';
 	}
-	if(!isset($_POST['AccountXenditComissionIDR'])) {
+	if (!isset($_POST['AccountXenditComissionIDR'])) {
 		$_POST['AccountXenditComissionIDR'] = '';
 	}
-	if(!isset($_POST['AccountMidtransIDR'])) {
+	if (!isset($_POST['AccountMidtransIDR'])) {
 		$_POST['AccountMidtransIDR'] = '';
 	}
-	if(!isset($_POST['AccountTokopediaIDR'])) {
+	if (!isset($_POST['AccountTokopediaIDR'])) {
 		$_POST['AccountTokopediaIDR'] = '';
 	}
-	if(!isset($_POST['AccountTokopediaComissionIDR'])) {
+	if (!isset($_POST['AccountTokopediaComissionIDR'])) {
 		$_POST['AccountTokopediaComissionIDR'] = '';
 	}
-	if(!isset($_POST['AccountShopeeIDR'])) {
+	if (!isset($_POST['AccountShopeeIDR'])) {
 		$_POST['AccountShopeeIDR'] = '';
 	}
-	if(!isset($_POST['AccountShopeeComissionIDR'])) {
+	if (!isset($_POST['AccountShopeeComissionIDR'])) {
 		$_POST['AccountShopeeComissionIDR'] = '';
 	}
-	if(!isset($_POST['AccountLazadaIDR'])) {
+	if (!isset($_POST['AccountLazadaIDR'])) {
 		$_POST['AccountLazadaIDR'] = '';
 	}
-	if(!isset($_POST['AccountLazadaComissionIDR'])) {
+	if (!isset($_POST['AccountLazadaComissionIDR'])) {
 		$_POST['AccountLazadaComissionIDR'] = '';
 	}
-	if(!isset($_POST['AccountComissionPPN'])) {
+	if (!isset($_POST['AccountComissionPPN'])) {
 		$_POST['AccountComissionPPN'] = 0;
 	}
-	if(!isset($_POST['ComissionTokopediaPercent'])) {
+	if (!isset($_POST['ComissionTokopediaPercent'])) {
 		$_POST['ComissionTokopediaPercent'] = 0;
 	}
-	if(!isset($_POST['ComissionTokopediaFreeShippingPerItem'])) {
+	if (!isset($_POST['ComissionTokopediaFreeShippingPerItem'])) {
 		$_POST['ComissionTokopediaFreeShippingPerItem'] = 0;
 	}
-	if(!isset($_POST['ComissionTokopediaFreeShippingMaximum'])) {
+	if (!isset($_POST['ComissionTokopediaFreeShippingMaximum'])) {
 		$_POST['ComissionTokopediaFreeShippingMaximum'] = 0;
 	}
-	if(!isset($_POST['ComissionShopeePercent'])) {
+	if (!isset($_POST['ComissionShopeePercent'])) {
 		$_POST['ComissionShopeePercent'] = 0;
 	}
-	if(!isset($_POST['ComissionShopeeFreeShippingPerItem'])) {
+	if (!isset($_POST['ComissionShopeeFreeShippingPerItem'])) {
 		$_POST['ComissionShopeeFreeShippingPerItem'] = 0;
 	}
-	if(!isset($_POST['ComissionShopeeFreeShippingMaximum'])) {
+	if (!isset($_POST['ComissionShopeeFreeShippingMaximum'])) {
 		$_POST['ComissionShopeeFreeShippingMaximum'] = 0;
 	}
-	if(!isset($_POST['ComissionLazadaPercent'])) {
+	if (!isset($_POST['ComissionLazadaPercent'])) {
 		$_POST['ComissionLazadaPercent'] = 0;
 	}
 
@@ -600,7 +600,7 @@ if(!isset($_GET['delete'])) {
 		<td><select name="AccountComissionPPN">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountComissionPPN']==$MyRow['accountcode']) {
+		if ($_POST['AccountComissionPPN']==$MyRow['accountcode']) {
 			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
 			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
@@ -617,7 +617,7 @@ if(!isset($_GET['delete'])) {
 		<td><select name="AccountTransferMandiri">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountTransferMandiri']==$MyRow['accountcode']) {
+		if ($_POST['AccountTransferMandiri']==$MyRow['accountcode']) {
 			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
 			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
@@ -630,7 +630,7 @@ if(!isset($_GET['delete'])) {
 		<td><select name="AccountTransferBCA">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountTransferBCA']==$MyRow['accountcode']) {
+		if ($_POST['AccountTransferBCA']==$MyRow['accountcode']) {
 			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
 			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
@@ -643,7 +643,7 @@ if(!isset($_GET['delete'])) {
 		<td><select name="AccountTransferDanamon">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountTransferDanamon']==$MyRow['accountcode']) {
+		if ($_POST['AccountTransferDanamon']==$MyRow['accountcode']) {
 			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
 			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
@@ -661,12 +661,12 @@ if(!isset($_GET['delete'])) {
 	echo '<tr>
 			<td>' . __('Test Account?') . ':</td>
 			<td><select name="PayPalTest">';
-	if($_POST['PayPalTest']==1) {
+	if ($_POST['PayPalTest']==1) {
 		echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
 	} else {
 		echo '<option value="1">' . __('Yes') . '</option>';
 	}
-	if($_POST['PayPalTest']==0) {
+	if ($_POST['PayPalTest']==0) {
 		echo '<option selected="selected" value="0">' . __('No') . '</option>';
 	} else {
 		echo '<option value="0">' . __('No') . '</option>';
@@ -690,7 +690,7 @@ if(!isset($_GET['delete'])) {
 		<td><select name="AccountPayPalAUD">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountPayPalAUD']==$MyRow['accountcode']) {
+		if ($_POST['AccountPayPalAUD']==$MyRow['accountcode']) {
 			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
 			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
@@ -702,7 +702,7 @@ if(!isset($_GET['delete'])) {
 		<td><select name="AccountPayPalComissionAUD">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountPayPalComissionAUD']==$MyRow['accountcode']) {
+		if ($_POST['AccountPayPalComissionAUD']==$MyRow['accountcode']) {
 			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
 			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
@@ -715,7 +715,7 @@ if(!isset($_GET['delete'])) {
 		<td><select name="AccountPayPalUSD">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountPayPalUSD']==$MyRow['accountcode']) {
+		if ($_POST['AccountPayPalUSD']==$MyRow['accountcode']) {
 			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
 			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
@@ -727,7 +727,7 @@ if(!isset($_GET['delete'])) {
 		<td><select name="AccountPayPalComissionUSD">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountPayPalComissionUSD']==$MyRow['accountcode']) {
+		if ($_POST['AccountPayPalComissionUSD']==$MyRow['accountcode']) {
 			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
 			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
@@ -740,7 +740,7 @@ if(!isset($_GET['delete'])) {
 		<td><select name="AccountPayPalEUR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountPayPalEUR']==$MyRow['accountcode']) {
+		if ($_POST['AccountPayPalEUR']==$MyRow['accountcode']) {
 			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
 			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
@@ -752,7 +752,7 @@ if(!isset($_GET['delete'])) {
 		<td><select name="AccountPayPalComissionEUR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountPayPalComissionEUR']==$MyRow['accountcode']) {
+		if ($_POST['AccountPayPalComissionEUR']==$MyRow['accountcode']) {
 			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
 			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
@@ -769,7 +769,7 @@ if(!isset($_GET['delete'])) {
 		<td><select name="AccountMidtransIDR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountMidtransIDR']==$MyRow['accountcode']) {
+		if ($_POST['AccountMidtransIDR']==$MyRow['accountcode']) {
 			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
 			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
@@ -792,7 +792,7 @@ if(!isset($_GET['delete'])) {
 		<td><select name="AccountTokopediaIDR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountTokopediaIDR']==$MyRow['accountcode']) {
+		if ($_POST['AccountTokopediaIDR']==$MyRow['accountcode']) {
 			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
 			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
@@ -804,7 +804,7 @@ if(!isset($_GET['delete'])) {
 		<td><select name="AccountTokopediaComissionIDR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountTokopediaComissionIDR']==$MyRow['accountcode']) {
+		if ($_POST['AccountTokopediaComissionIDR']==$MyRow['accountcode']) {
 			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
 			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
@@ -836,7 +836,7 @@ if(!isset($_GET['delete'])) {
 		<td><select name="AccountShopeeIDR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountShopeeIDR']==$MyRow['accountcode']) {
+		if ($_POST['AccountShopeeIDR']==$MyRow['accountcode']) {
 			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
 			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
@@ -848,7 +848,7 @@ if(!isset($_GET['delete'])) {
 		<td><select name="AccountShopeeComissionIDR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountShopeeComissionIDR']==$MyRow['accountcode']) {
+		if ($_POST['AccountShopeeComissionIDR']==$MyRow['accountcode']) {
 			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
 			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
@@ -880,7 +880,7 @@ if(!isset($_GET['delete'])) {
 		<td><select name="AccountLazadaIDR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountLazadaIDR']==$MyRow['accountcode']) {
+		if ($_POST['AccountLazadaIDR']==$MyRow['accountcode']) {
 			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
 			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
@@ -892,7 +892,7 @@ if(!isset($_GET['delete'])) {
 		<td><select name="AccountLazadaComissionIDR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountLazadaComissionIDR']==$MyRow['accountcode']) {
+		if ($_POST['AccountLazadaComissionIDR']==$MyRow['accountcode']) {
 			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
 			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
@@ -914,7 +914,7 @@ if(!isset($_GET['delete'])) {
 		<td><select name="AccountDokuIDR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountDokuIDR']==$MyRow['accountcode']) {
+		if ($_POST['AccountDokuIDR']==$MyRow['accountcode']) {
 			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
 			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
@@ -926,7 +926,7 @@ if(!isset($_GET['delete'])) {
 		<td><select name="AccountDokuComissionIDR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountDokuComissionIDR']==$MyRow['accountcode']) {
+		if ($_POST['AccountDokuComissionIDR']==$MyRow['accountcode']) {
 			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
 			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
@@ -953,7 +953,7 @@ if(!isset($_GET['delete'])) {
 		<td><select name="AccountXenditIDR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountXenditIDR']==$MyRow['accountcode']) {
+		if ($_POST['AccountXenditIDR']==$MyRow['accountcode']) {
 			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
 			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
@@ -966,7 +966,7 @@ if(!isset($_GET['delete'])) {
 		<td><select name="AccountXenditComissionIDR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountXenditComissionIDR']==$MyRow['accountcode']) {
+		if ($_POST['AccountXenditComissionIDR']==$MyRow['accountcode']) {
 			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
 			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';

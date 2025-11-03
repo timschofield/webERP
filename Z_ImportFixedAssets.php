@@ -141,7 +141,7 @@ if (isset($_FILES['SelectedAssetFile']['name'])) { //start file processing
 			prnMsg(__('The depreciation rate is expected to be numeric'),'error');
 			echo '<br />' . __('Row:') . $Row . ' - ' . __('Invalid Depreciation Rate:') . ' ' . $DepnRate;
 			$InputError=true;
-		}elseif ($DepnRate<0 OR $DepnRate>100){
+		} elseif ($DepnRate<0 OR $DepnRate>100){
 			prnMsg(__('The depreciation rate is expected to be a number between 0 and 100'),'error');
 			echo '<br />' .  __('Row:') . $Row . ' - ' .__('Invalid Depreciation Rate:') . ' ' . $DepnRate;
 			$InputError=true;

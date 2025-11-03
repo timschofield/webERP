@@ -129,7 +129,7 @@ if (isset($_POST['submit'])) {
 	}
 
 	//run the SQL from either of the above possibilites
-	if( $InputError !=1 ) {
+	if ( $InputError !=1 ) {
 		$ErrMsg = __('The bank account could not be inserted or modified because');
 		$Result = DB_query($SQL, $ErrMsg);
 

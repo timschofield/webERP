@@ -46,7 +46,7 @@ if (DB_num_rows($Result) != 0){
 /*		// Exception for DRAR items
 		if (substr($MyRow['stockid'], 0,4) == "DRAR"){
 			$CodePreffix = substr($MyRow['stockid'], 0,4);
-		}else{
+		} else {
 			$CodePreffix = substr($MyRow['stockid'], 0,6);
 		}
 

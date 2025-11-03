@@ -22,7 +22,7 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 		<br/>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-if(!isset($_POST['SalaryType'])) {
+if (!isset($_POST['SalaryType'])) {
 	$_POST['SalaryType']='MONTHLY';
 }
 
@@ -72,9 +72,9 @@ function submit($PeriodSelectedByUser, $SelectedFile, $SalaryType, $RootPath) {
 
 	if ($SalaryType == "MONTHLY"){
 		$PageTitle = __('Importing Excel with Monthly Salary Information for '). MonthAndYearFromPeriodNo($ExcelPeriod);
-	}elseif($SalaryType == "THRONLY"){
+	} elseif ($SalaryType == "THRONLY"){
 		$PageTitle = __('Importing Excel with THR ONLY Salary Information for '). MonthAndYearFromPeriodNo($ExcelPeriod);
-	}else{
+	} else {
 		prnMsg("The type of Salary " . $SalaryType . " is not accepted", "warn");
 		$InputError = true;
 	}
@@ -83,14 +83,14 @@ function submit($PeriodSelectedByUser, $SelectedFile, $SalaryType, $RootPath) {
 			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 
 		'</p>';
 
-	if($ExcelPeriod != $PeriodSelectedByUser){
+	if ($ExcelPeriod != $PeriodSelectedByUser){
 		prnMsg("The month selected by the user " . MonthAndYearFromPeriodNo($PeriodSelectedByUser) . " is not the same as the month of the Excel file " .  MonthAndYearFromPeriodNo($ExcelPeriod),"warn");
 		$InputError = true;
 	}
 
 	// The month selected should be last month for Monthly salaries
 	if ($SalaryType == "MONTHLY"){
-		if($PeriodNow != ($PeriodSelectedByUser + 1)){
+		if ($PeriodNow != ($PeriodSelectedByUser + 1)){
 			prnMsg("The month selected by the user and the Excel file should be last month","warn");
 //			$InputError = true;
 		}
@@ -98,13 +98,13 @@ function submit($PeriodSelectedByUser, $SelectedFile, $SalaryType, $RootPath) {
 	
 	// The month selected should be current month for THR Only salaries
 	if ($SalaryType == "THRONLY"){
-		if($PeriodNow != ($PeriodSelectedByUser)){
+		if ($PeriodNow != ($PeriodSelectedByUser)){
 			prnMsg("The month selected by the user and the Excel file should be this current month","warn");
 			$InputError = true;
 		}
 	}
 	
-	if(!$InputError){
+	if (!$InputError){
 	
 		// let's delete the previous records of that month for test purposes
 		$SQL = "DELETE FROM salariescalculated
@@ -151,7 +151,7 @@ function submit($PeriodSelectedByUser, $SelectedFile, $SalaryType, $RootPath) {
 					$BankCode = $worksheet->getCell('G'.$Row)->getCalculatedValue();
 					$BankAccount = $worksheet->getCell('H'.$Row)->getCalculatedValue();
 					$BankAccountHolder = $worksheet->getCell('I'.$Row)->getCalculatedValue();
-				}else{
+				} else {
 					$BankCode = "";
 					$BankAccount = "";
 					$BankAccountHolder = "";
@@ -186,7 +186,7 @@ function submit($PeriodSelectedByUser, $SelectedFile, $SalaryType, $RootPath) {
 					$PotonganAbsen = EnsureNumberIsNegativeNumber($worksheet->getCell('AR'.$Row)->getCalculatedValue());
 					$PotonganLain2 = EnsureNumberIsNegativeNumber($worksheet->getCell('AS'.$Row)->getCalculatedValue());
 					$PotonganLain2Notes = $worksheet->getCell('AT'.$Row)->getCalculatedValue();
-				}else{
+				} else {
 					$UpahPokok = 0;
 					$TunjanganMakan = 0;
 					$TunjanganTransport = 0;
@@ -229,7 +229,7 @@ function submit($PeriodSelectedByUser, $SelectedFile, $SalaryType, $RootPath) {
 				
 				if ($PaymentMethod == "CASH"){
 					$Bulatan = AdjustBulatan($TotalBawaPulang, 500);
-				}else{
+				} else {
 					$Bulatan = 0;
 				}
 				$TotalBawaPulang += $Bulatan;

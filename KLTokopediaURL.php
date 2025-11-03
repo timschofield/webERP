@@ -56,7 +56,7 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . 
 		'</p>';
 
-	if(!$InputError){
+	if (!$InputError){
 	
 		$worksheet = $SpreadSheet->getActiveSheet();
 		
@@ -97,7 +97,7 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 				// Already exists, so only update the info with the newest tokopedia link and tokopedia product id if needed
 				ItemUpdateTokopediaInfo($StockID, $EnabledTokopedia, $TokopediaProductId, $URLTokopedia);
 				$Action = "Update";
-			}else{
+			} else {
 				// does not exist, so need to insert a new row for the item
 				ItemInsertTokopediaInfo($StockID, $EnabledTokopedia, $TokopediaProductId, $URLTokopedia);
 				$Action = "Insert";

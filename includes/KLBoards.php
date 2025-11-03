@@ -358,7 +358,7 @@ function AverageSales($TypeReport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 		$StartDateF = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysF-365));
 		$StartDateSort = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysSort-365));
 		$StartDateMTD=FormatDateForSQL(Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,Date('m'),1,Date('Y'))));
-	}else{
+	} else {
 		$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 		$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA));
 		$StartDateB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysB));
@@ -381,7 +381,7 @@ function AverageSales($TypeReport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 
 	if ($Shop == "All"){
 		$SQLByShop = "";
-	}else{
+	} else {
 		$SQLByShop = " AND salesorders.debtorno =  '". $Shop . "' ";
 	}
 
@@ -418,7 +418,7 @@ function AverageSales($TypeReport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 				) s ON dm.debtorno = s.debtorno
 				WHERE dm.typeid = 2
 				ORDER BY COALESCE(s.salesSort, 0) DESC";
-	}elseif ($TypeReport == "Online"){
+	} elseif ($TypeReport == "Online"){
 		// Optimized SQL using conditional aggregation
 		// Note: Assumes MySQL syntax. Adjust for other DBs if needed (e.g., CROSS APPLY for SQL Server).
 		$SQL = "SELECT
@@ -452,7 +452,7 @@ function AverageSales($TypeReport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 				) s ON dm.debtorno = s.debtorno
 				WHERE dm.typeid IN (9, 10)
 				ORDER BY dm.debtorno";
-	}else{
+	} else {
 		// Optimized SQL using conditional aggregation
 		$SQL = "SELECT
 					sm.salesmancode,
@@ -1038,11 +1038,11 @@ function FinishedStockDistribution($Kind, $ByReport){
 
 	if ($Kind == "FORSALE"){
 		$Operator1 = " AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_IN_SHOPS_NOT_FOR_SALE ."";
-	}elseif ($Kind == "DISPLAYS"){
+	} elseif ($Kind == "DISPLAYS"){
 		$Operator1 =  "	AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_DISPLAYS . " ";
-	}elseif ($Kind == "PACKAGING"){
+	} elseif ($Kind == "PACKAGING"){
 		$Operator1 =  "	AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_PACKAGING . " ";
-	}else{
+	} else {
 		$Operator1 =  "	";
 	}
 	
@@ -1065,7 +1065,7 @@ function FinishedStockDistribution($Kind, $ByReport){
 					$Operator1 . "
 				GROUP BY locstock.loccode, locations.locationname
 				ORDER BY locations.locationname";
-	}elseif ($ByReport == "STOCKCATEGORY") {
+	} elseif ($ByReport == "STOCKCATEGORY") {
 		$SQL = "SELECT stockcategory.categoryid,
 					stockcategory.categorydescription,
 					SUM(locstock.reorderlevel) AS optimalstock,
@@ -1081,7 +1081,7 @@ function FinishedStockDistribution($Kind, $ByReport){
 					$Operator1 . "
 				GROUP BY stockcategory.categoryid, stockcategory.categorydescription
 				ORDER BY stockcategory.categorydescription";
-	}else{
+	} else {
 		return false;
 	}
 
@@ -1199,7 +1199,7 @@ function FinishedStockDistribution($Kind, $ByReport){
 					$PercentModels =locale_number_format(($Totalpcs/$MyRow1['realmodels']),1);
 				}
 			}
-		}else{
+		} else {
 			$TotalModels = "";
 			$PercentModels = "";
 		}
@@ -1518,11 +1518,11 @@ function GetTopSalesField($TopItemsDays){
 
 	if ($TopItemsDays == 30){
 		$TopSalesField = "topsales30";
-	}elseif ($TopItemsDays == 60){
+	} elseif ($TopItemsDays == 60){
 		$TopSalesField = "topsales60";
-	}elseif ($TopItemsDays == 90){
+	} elseif ($TopItemsDays == 90){
 		$TopSalesField = "topsales90";
-	}else{
+	} else {
 		$TopSalesField = "topsales60"; // if wrong input assumes 60.
 	}
 	return $TopSalesField;
@@ -1551,10 +1551,10 @@ function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath){
 												AND s.stockid = bom.component
 												AND stP.categoryid NOT IN " . LIST_STOCK_CATEGORIES_OUTLET . "
 												AND stP.discontinued = 0)";
-	}elseif ($ParentCategory == "DISCOUNT"){
+	} elseif ($ParentCategory == "DISCOUNT"){
 		$WhereParentCategory = " AND stP.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . " ";
 		$OnlyDiscountExists = " ";
-	}else{
+	} else {
 		$WhereParentCategory = " ";
 		$OnlyDiscountExists = " ";
 	}
@@ -1588,10 +1588,10 @@ function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath){
 		if ($ParentCategory == "ONLYDISCOUNT"){
 			$TableTitleText = __('Components ready to WO in kantor used ONLY for Discount items');
 			$BusinessConcept = "COMP-ONLY-DISC-ITEM-IDR";
-		}elseif ($ParentCategory == "DISCOUNT"){
+		} elseif ($ParentCategory == "DISCOUNT"){
 			$TableTitleText = __('Components ready to WO in kantor used for Discount items');
 			$BusinessConcept = "COMP-DISC-ITEM-IDR";
-		}else{
+		} else {
 			$TableTitleText = __('Components ready to WO in kantor for any items');
 			$BusinessConcept = "COMP-ANY-ITEM-IDR";
 		}
@@ -1705,7 +1705,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 								WHERE packagingused.stockid = stockmaster.stockid
 									AND packagingused.date >= '". $FromForecastDateLastYear ."'
 									AND packagingused.date <= '". $ToForecastDateLastYear ."') AS qusedlastyear,";
-	}else{
+	} else {
 			$SQL = $SQL . "	(SELECT SUM(qtyinvoiced)
 								FROM salesorderdetails, salesorders
 								WHERE salesorderdetails.orderno = salesorders.orderno
@@ -1751,9 +1751,9 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			$ForecastUsedThisYear = ceil($DailyUse * ($DaysMinimumStock));
 			if (ItemInList($MyRow['stockid'], LIST_ITEMS_KAPAL_LAUT_PACKAGING)){
 				$ForecastUsedLastYear = ceil($MyRow['qusedlastyear'] * (1 + $TrendThisYearKL));
-			}elseif (ItemInList($MyRow['stockid'], LIST_ITEMS_BLINK_PACKAGING)){
+			} elseif (ItemInList($MyRow['stockid'], LIST_ITEMS_BLINK_PACKAGING)){
 				$ForecastUsedLastYear = ceil($MyRow['qusedlastyear'] * (1 + $TrendThisYearBL));
-			}else{
+			} else {
 				$ForecastUsedLastYear = ceil($MyRow['qusedlastyear'] * (1 + $TrendThisYearOU));
 			}
 			$ForecastUsageNextDays = max( $ForecastUsedThisYear, $ForecastUsedLastYear);
@@ -1765,12 +1765,12 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			if (isPackagingPaperInsideBox($MyRow['stockid'])){
 				if (ItemInList($MyRow['stockid'], LIST_ITEMS_KAPAL_LAUT_PACKAGING)){
 					$MinQOHGudang = $NumberOfOpenShopsKL * $MyRow['eoq'] * FACTOR_GUDANG_PACKAGING_PAPER_INSIDE_BOX;
-				}elseif (ItemInList($MyRow['stockid'], LIST_ITEMS_BLINK_PACKAGING)){
+				} elseif (ItemInList($MyRow['stockid'], LIST_ITEMS_BLINK_PACKAGING)){
 					$MinQOHGudang = $NumberOfOpenShopsBL * $MyRow['eoq'] * FACTOR_GUDANG_PACKAGING_PAPER_INSIDE_BOX;
-				}else{
+				} else {
 					$MinQOHGudang = $NumberOfOpenShopsOU * $MyRow['eoq'] * FACTOR_GUDANG_PACKAGING_PAPER_INSIDE_BOX;
 				}
-			}else{
+			} else {
 				$MinQOHGudang = $MyRow['sumrl'] * FACTOR_GUDANG_PACKAGING;
 			}
 
@@ -1787,12 +1787,12 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			if ($MinQOHGudang < $MyRow['qohgudang']){
 				// we have enough in gudang, don't need to add some to keep in gudang
 				$QtyNeeded = max(0, ($ForecastUsageNextDays - $QOH - $MyRow['qoo']));
-			}else{
+			} else {
 				// we don't have enough in gudang, we need to get some to keep in gudang
-				if($MyRow['qoo'] < ($MinQOHGudang - $MyRow['qohgudang'])){
+				if ($MyRow['qoo'] < ($MinQOHGudang - $MyRow['qohgudang'])){
 					// if we don't have enough QOO to cover the deficit in gudang
 					$QtyNeeded = max(0, ($ForecastUsageNextDays - $QOH - $MyRow['qoo']),($MinQOHGudang-$MyRow['qohgudang']-$MyRow['qoo']));
-				}else{
+				} else {
 					$QtyNeeded = max(0, ($ForecastUsageNextDays - $QOH - $MyRow['qoo']));
 				}
 			}
@@ -1812,7 +1812,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 												'Trend retail against last year for Kapal-Laut = '. ($TrendThisYearKL*100).'%, Blink = '. ($TrendThisYearBL*100).'%';	
 												
 							ShowTableSubTitle($TableSubTitleText);
-						}else{
+						} else {
 							$TableTitleText = 'Shop packaging with insufficient stock for the next ' . ($DaysMinimumStock) . ' days.';
 							ShowTableTitle($TableTitleText);
 						}
@@ -1820,7 +1820,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					if ($Category == 'ZAPON'){
 						if ($ShowAll){
 							$TableTitleText = 'Online Promotion items order status';
-						}else{
+						} else {
 							$TableTitleText = 'Online Promotion items with insufficient stock for the next ' . $DaysMinimumStock . ' days.';
 						}
 						ShowTableTitle($TableTitleText);
@@ -1849,7 +1849,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 									</tr>
 									</thead>
 									<tbody>';
-					}else{
+					} else {
 						$TableHeader = '<thead>
 										<tr>
 										<th class="SortedColumn">' . __('#') . '</th>
@@ -1909,7 +1909,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 						<td class="number">' . locale_number_format_zero_blank($MyRow['qoo'],0) . '</td>
 						<td class="number">' . locale_number_format_zero_blank($QtyToOrder,0) . '</td>
 						</tr>';
-				}else{
+				} else {
 					echo '<tr class="striped_row">
 						<td class="number">' . $i . '</td>
 						<td>' . $CodeLink . '</td>
@@ -1965,7 +1965,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					<td class="number">' . locale_number_format_zero_blank($PendingQOO,0) . '</td>
 					<td class="number">' . locale_number_format_zero_blank($OptimumOrder,0) . '</td>
 					</tr>';
-			}else{
+			} else {
 				echo '<tr class="striped_row">
 						<td class="number">' . "" . '</td>
 					<td>' . "TOTAL" . '</td>
@@ -2139,7 +2139,7 @@ function LocationInformationReview($RootPath){
 			$CodeLink = '<a href="' . $RootPath . '/Locations.php?SelectedLocation=' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</a>';
 			if ($MyRow['stockavailableforonline'] ==  1){
 				$StockOnline = "Yes";
-			}else{
+			} else {
 				$StockOnline = "No";
 			}
 
@@ -2180,9 +2180,9 @@ function LocationInformationReview($RootPath){
 function GetDescriptionFromFlagItemsForSaleAllowed($CodeFlag){
 	if ($CodeFlag ==  2){
 		return "All";
-	}else if ($CodeFlag ==  1){
+	} elseif ($CodeFlag ==  1){
 		return "Some";
-	}else{
+	} else {
 		return "None";
 	}
 }
@@ -2316,7 +2316,7 @@ function PackagingToBeRefilledFromGudang($LocCode, $ShowAll, $ShowLinkEmail, $Ro
 				$TableResult[$NumItems]['show'] = true;
 				$ShowHeader = true;
 				$ShowReport = true;
-			}else{
+			} else {
 				$TableResult[$NumItems]['show'] = false;
 			}
 		}
@@ -2329,7 +2329,7 @@ function PackagingToBeRefilledFromGudang($LocCode, $ShowAll, $ShowLinkEmail, $Ro
 		while ($i <= $NumItems) {
 			// IF we are SHORT of that packaging material in that location...
 			// Or we show All the the packaging items in that location
-			if($ShowHeader){
+			if ($ShowHeader){
 				$TableTitleText = 'Packaging needed at ' . $LocationName . ' from ' . $ParentGudangName . '. Last transfer: ' . $LastPackagingTransferDate;
 				ShowTableTitle($TableTitleText);
 				echo '<div>';
@@ -2359,9 +2359,9 @@ function PackagingToBeRefilledFromGudang($LocCode, $ShowAll, $ShowLinkEmail, $Ro
 			if ($TableResult[$i]['toship'] > 0){
 				if ($TableResult[$i]['qoh'] == 0){
 					$Reason = "QOH = 0";
-				}elseif ($TableResult[$i]['rl'] > $TableResult[$i]['qoh']){
+				} elseif ($TableResult[$i]['rl'] > $TableResult[$i]['qoh']){
 					$Reason = "QOH below RL";
-				}else{
+				} else {
 					$Reason = "Top up";
 				}
 				echo '<tr class="striped_row">
@@ -2412,16 +2412,16 @@ function PackagingToBeRefilledFromGudang($LocCode, $ShowAll, $ShowLinkEmail, $Ro
 * Returns: (float) The rounded quantity suitable for transfer.
 **************************************************************************************************************/
 function RoundPackagingTransfer($StockID, $n){
-	if(isPackagingPaperInsideBox($StockID)){
+	if (isPackagingPaperInsideBox($StockID)){
 		$n = ceil($n/TRANSFER_ROUNDING_PAPER_INSIDE_BOX)*TRANSFER_ROUNDING_PAPER_INSIDE_BOX;
-	}else{
+	} else {
 		if ($n < TRANSFER_ROUNDING_LIMIT01){
 			$n = ceil($n/TRANSFER_ROUNDING_STEP01)*TRANSFER_ROUNDING_STEP01;
-		}elseif ($n < TRANSFER_ROUNDING_LIMIT02){
+		} elseif ($n < TRANSFER_ROUNDING_LIMIT02){
 			$n = ceil($n/TRANSFER_ROUNDING_STEP02)*TRANSFER_ROUNDING_STEP02;
-		}elseif ($n < TRANSFER_ROUNDING_LIMIT03){
+		} elseif ($n < TRANSFER_ROUNDING_LIMIT03){
 			$n = ceil($n/TRANSFER_ROUNDING_STEP03)*TRANSFER_ROUNDING_STEP03;
-		}else{
+		} else {
 			$n = ceil($n/TRANSFER_ROUNDING_STEP04)*TRANSFER_ROUNDING_STEP04;
 		}
 	}
@@ -2485,7 +2485,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		$ShipmentAWB = '';
 		$TableTitleText = 'POs in Negotiations with supplier';
 		$SQLFilterKLStatus = " AND purchorders.klstatus = '1000' ";
-	}else if ($TypeOfCode == "ON PRODUCTION"){
+	} elseif ($TypeOfCode == "ON PRODUCTION"){
 		$DateField1 = "agreeddeliverydate";
 		$FieldName1 = "Agreed Delivery";
 		$DateField2 = "deliverydate";
@@ -2493,7 +2493,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		$ShipmentAWB = '';
 		$TableTitleText = 'POs on Production by supplier';
 		$SQLFilterKLStatus = " AND purchorders.klstatus = '2000' ";
-	}else if ($TypeOfCode == "FINISHED BUT NOT PAID"){
+	} elseif ($TypeOfCode == "FINISHED BUT NOT PAID"){
 		$DateField1 = "deliverydate";
 		$FieldName1 = "Delivery Date";
 		$DateField2 = "paymentdate";
@@ -2501,7 +2501,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		$ShipmentAWB = '';
 		$TableTitleText = 'POs finished by supplier but not fully paid';
 		$SQLFilterKLStatus = " AND purchorders.klstatus = '3000' ";
-	}else if ($TypeOfCode == "STILL NOT FULLY PAID"){
+	} elseif ($TypeOfCode == "STILL NOT FULLY PAID"){
 		$DateField1 = "deliverydate";
 		$FieldName1 = "Delivery Date";
 		$DateField2 = "paymentdate";
@@ -2516,7 +2516,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 									OR (purchorders.klstatus < '4000' AND suppliers.paymentterms = 'O3')
 									OR (purchorders.klstatus < '4000' AND suppliers.paymentterms = 'O4')
 									OR (purchorders.klstatus < '4000' AND suppliers.paymentterms = 'O5')) ";
-	}else if ($TypeOfCode == "BALI PAID BUT NOT RECEIVED IN KANTOR"){
+	} elseif ($TypeOfCode == "BALI PAID BUT NOT RECEIVED IN KANTOR"){
 		$DateField1 = "paymentdate";
 		$FieldName1 = "Payment Date";
 		$DateField2 = "arrivaldate";
@@ -2524,7 +2524,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		$ShipmentAWB = '';
 		$TableTitleText = 'Bali POs paid but not delivered in kantor';
 		$SQLFilterKLStatus = " AND (purchorders.klstatus = '4000' AND suppliers.paymentterms = 'B1') ";
-	}else if ($TypeOfCode == "BALI RECEIVED IN KANTOR BUT NOT PAID"){
+	} elseif ($TypeOfCode == "BALI RECEIVED IN KANTOR BUT NOT PAID"){
 		$DateField1 = "arrivaldate";
 		$FieldName1 = "Arrival Date";
 		$DateField2 = "paymentdate";
@@ -2532,7 +2532,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		$ShipmentAWB = '';
 		$TableTitleText = 'Bali POs delivered in kantor but not paid yet';
 		$SQLFilterKLStatus = " AND (purchorders.klstatus = '6000' AND suppliers.paymentterms = 'B2') ";
-	}else if ($TypeOfCode == "PAID NOT SHIPPED BY SUPPLIER"){
+	} elseif ($TypeOfCode == "PAID NOT SHIPPED BY SUPPLIER"){
 		$DateField1 = "paymentdate";
 		$FieldName1 = "Payment Date";
 		$DateField2 = "shipmentdate";
@@ -2541,7 +2541,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		$TableTitleText = 'Overseas POs paid but not shipped directly by supplier';
 		$SQLFilterKLStatus = " AND (   (purchorders.klstatus = '4000' AND suppliers.paymentterms = 'O1')
 									OR (purchorders.klstatus = '4000' AND suppliers.paymentterms = 'O3')) ";
-	}else if ($TypeOfCode == "PAID NOT RECEIVED IN AYE CARGO"){
+	} elseif ($TypeOfCode == "PAID NOT RECEIVED IN AYE CARGO"){
 		$DateField1 = "paymentdate";
 		$FieldName1 = "Payment Date";
 		$DateField2 = "shipmentdate";
@@ -2550,7 +2550,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		$TableTitleText = 'Overseas POs paid to supplier but not received by Aye Cargo';
 		$SQLFilterKLStatus = " AND (   (purchorders.klstatus = '4000' AND suppliers.paymentterms = 'O2')
 									OR (purchorders.klstatus = '4000' AND suppliers.paymentterms = 'O5')) ";
-	}else if ($TypeOfCode == "PAID NOT RECEIVED IN WANGFOONG CARGO"){
+	} elseif ($TypeOfCode == "PAID NOT RECEIVED IN WANGFOONG CARGO"){
 		$DateField1 = "paymentdate";
 		$FieldName1 = "Payment Date";
 		$DateField2 = "shipmentdate";
@@ -2558,7 +2558,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		$ShipmentAWB = '';
 		$TableTitleText = 'Overseas POs paid to supplier but not received by Wangfoong Cargo';
 		$SQLFilterKLStatus = " AND (purchorders.klstatus = '4000' AND suppliers.paymentterms = 'O4') ";
-	}else if ($TypeOfCode == "IN AYE CARGO BUT NOT SHIPPED"){
+	} elseif ($TypeOfCode == "IN AYE CARGO BUT NOT SHIPPED"){
 		$DateField1 = "paymentdate";
 		$FieldName1 = "Payment Date";
 		$DateField2 = "shipmentdate";
@@ -2567,7 +2567,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		$TableTitleText = 'Overseas POs waiting to be shipped by Aye Cargo';
 		$SQLFilterKLStatus = " AND (   (purchorders.klstatus = '4500' AND suppliers.paymentterms = 'O2')
 									OR (purchorders.klstatus = '4500' AND suppliers.paymentterms = 'O5')) ";
-	}else if ($TypeOfCode == "IN WANGFOONG CARGO BUT NOT SHIPPED"){
+	} elseif ($TypeOfCode == "IN WANGFOONG CARGO BUT NOT SHIPPED"){
 		$DateField1 = "paymentdate";
 		$FieldName1 = "Payment Date";
 		$DateField2 = "shipmentdate";
@@ -2575,7 +2575,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		$ShipmentAWB = '';
 		$TableTitleText = 'Overseas POs waiting to be shipped by Wangfoong Cargo';
 		$SQLFilterKLStatus = " AND (purchorders.klstatus = '4500' AND suppliers.paymentterms = 'O4') ";
-	}else if ($TypeOfCode == "SHIPPED IN TRANSIT"){
+	} elseif ($TypeOfCode == "SHIPPED IN TRANSIT"){
 		$DateField1 = "shipmentdate";
 		$FieldName1 = "Shipment Date";
 		$DateField2 = "customsdate";
@@ -2587,7 +2587,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 									OR (purchorders.klstatus = '5000' AND suppliers.paymentterms = 'O3')
 									OR (purchorders.klstatus = '5000' AND suppliers.paymentterms = 'O4')
 									OR (purchorders.klstatus = '5000' AND suppliers.paymentterms = 'O5')) ";
-	}else if ($TypeOfCode == "CUSTOMS CLEARANCE"){
+	} elseif ($TypeOfCode == "CUSTOMS CLEARANCE"){
 		$DateField1 = "customsdate";
 		$FieldName1 = "Customs Date";
 		$DateField2 = "arrivaldate";
@@ -2599,7 +2599,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 									OR (purchorders.klstatus = '5500' AND suppliers.paymentterms = 'O3')
 									OR (purchorders.klstatus = '5500' AND suppliers.paymentterms = 'O4')
 									OR (purchorders.klstatus = '5500' AND suppliers.paymentterms = 'O5')) ";
-	}else if ($TypeOfCode == "RECEIVED IN KANTOR"){
+	} elseif ($TypeOfCode == "RECEIVED IN KANTOR"){
 		$DateField1 = "arrivaldate";
 		$FieldName1 = "Arrival Date";
 		$DateField2 = "arrivaldate";
@@ -2611,7 +2611,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 									OR (purchorders.klstatus = '6000' AND suppliers.paymentterms = 'O3')
 									OR (purchorders.klstatus = '6000' AND suppliers.paymentterms = 'O4')
 									OR (purchorders.klstatus = '6000' AND suppliers.paymentterms = 'O5')) ";
-	}else if ($TypeOfCode == "ARRIVING IN NEXT DAYS"){
+	} elseif ($TypeOfCode == "ARRIVING IN NEXT DAYS"){
 		$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',+$maxdays));
 		$DateField1 = "arrivaldate";
 		$FieldName1 = "Planned Arrival";
@@ -2622,7 +2622,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		$SQLFilterKLStatus = " AND purchorders.klstatus >= '1000'
 			AND purchorders.klstatus <= '6000'
 			AND purchorders." . $DateField1 ." <  '". $StartDate ."'";
-	}else{
+	} else {
 		return;
 	}
 
@@ -2631,12 +2631,12 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		if ($TypeOfProduct == "PACKAGING"){
 			$TableTitleText = "Packaging " . $TableTitleText;
 			$SQLFilterProduct = " AND stockmaster.categoryid = 'SHPACK' ";
-		}elseif ($TypeOfProduct == "OTHERS"){
+		} elseif ($TypeOfProduct == "OTHERS"){
 			$TableTitleText = "Other " . $TableTitleText;
 			$SQLFilterProduct = " AND (stockmaster.categoryid = 'SHDISP'
 									OR stockmaster.categoryid = 'SHCONS'
 									OR stockmaster.categoryid = 'SHOTHE')";
-		}elseif ($TypeOfProduct == "FORSALE"){
+		} elseif ($TypeOfProduct == "FORSALE"){
 			$TableTitleText = "Items FOR SALE " . $TableTitleText;
 			$SQLFilterProduct = " AND stockmaster.categoryid != 'SHPACK'
 								AND stockmaster.categoryid != 'SHDISP'
@@ -2737,7 +2737,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 
 			if (isset($Payments[$MyRow['supplierno']])){
 				// we already have info in memory about the supplier - using cached data
-			}else{
+			} else {
 				// the first time we find this supplier, let's get the balance
 				// This query leverages any existing indexes on supptrans.supplierno
 				$SupplierSQL = "SELECT COALESCE(SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc), 0) AS balance
@@ -2772,12 +2772,12 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 				if ($SupplierBalanceIDR >= $ValueOrderIDR){
 					// we have enough balance to cover the order, no payment needed
 					$PaymentOrderIDR = 0;
-				}else{
+				} else {
 					$PaymentOrderIDR = max(0, $ValueOrderIDR - $SupplierBalanceIDR);
 					$AcumIDR += $PaymentOrderIDR;
 					$TotalValueAllPayments += $PaymentOrderIDR;
 				}
-			}elseif	($MyRow['currcode'] == 'USD'){
+			} elseif	($MyRow['currcode'] == 'USD'){
 				$ValueOrderUSD = $orderValue;
 				$TotalValueOrderUSD += $ValueOrderUSD;
 				// Enhanced division by zero protection and currency conversion
@@ -2790,7 +2790,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 				if ($SupplierBalanceUSD >= $ValueOrderUSD){
 					// we have enough balance to cover the order, no payment needed
 					$PaymentOrderUSD = 0;
-				}else{
+				} else {
 					$PaymentOrderUSD = max(0, $ValueOrderUSD - $SupplierBalanceUSD);
 					$AcumUSD += $PaymentOrderUSD;
 					// Enhanced division by zero protection
@@ -2798,7 +2798,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 						$TotalValueAllPayments += ($PaymentOrderUSD / $exchangeRate);
 					}
 				}
-			}elseif	($MyRow['currcode'] == 'THB'){
+			} elseif	($MyRow['currcode'] == 'THB'){
 				$ValueOrderTHB = $orderValue;
 				$TotalValueOrderTHB += $ValueOrderTHB;
 				// Enhanced division by zero protection and currency conversion
@@ -2811,7 +2811,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 				if ($SupplierBalanceTHB >= $ValueOrderTHB){
 					// we have enough balance to cover the order, no payment needed
 					$PaymentOrderTHB = 0;
-				}else{
+				} else {
 					$PaymentOrderTHB = max(0, $ValueOrderTHB - $SupplierBalanceTHB);
 					$AcumTHB += $PaymentOrderTHB;
 					// Enhanced division by zero protection
@@ -2822,7 +2822,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 			}
 			if ($FieldName2 == ""){
 				$Date2 = "";
-			}else{
+			} else {
 				$Date2 = ConvertSQLDate($MyRow['reportdate2']);
 			}
 			echo '<tr class="striped_row">
@@ -3346,7 +3346,7 @@ function RecentlyClosedTransferStatus($maxdays, $RootPath){
 	if (DB_num_rows($Result) > 0){
 		if ($maxdays == 1){
 			$TableTitleText = __('List of Transfers Closed today ');
-		}else{
+		} else {
 			$TableTitleText = __('List of Transfers Closed during last ') . $maxdays  . ' days';
 		}
 		ShowTableTitle($TableTitleText);
@@ -3423,7 +3423,7 @@ function SQLFilterStockmasterForOnlineShop($Type){
 				AND stockmaster.stockid NOT LIKE 'KLBE%'
 				AND stockmaster.stockid NOT LIKE 'GOTA%'
 				AND stockmaster.stockid NOT LIKE 'TM-%' ";
-	}else if ($Type == "KL+BL"){
+	} elseif ($Type == "KL+BL"){
 		$SQL = " stockmaster.categoryid IN " . ONLINESHOP_AVAILABLE_STOCK_KL_BLINK . "
 				AND stockmaster.discontinued = 0
 				AND SUBSTR(stockmaster.stockid, -2, 2) != '-D'
@@ -3572,7 +3572,7 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $
 							</tr>
 							</thead>
 							<tbody>';
-		}else{
+		} else {
 			$TableHeader = '<thead>
 							<tr>
 								<th class="SortedColumn">' . __('#') . '</th>
@@ -3625,12 +3625,12 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $
 						<td class="number">' . locale_number_format($MyRow['stdcost'],0) . '</td>
 						<td class="number">' . $StdCostText . '</td>
 						</tr>';
-			}else{
-				if($Mode == "UPDATEALL"){
+			} else {
+				if ($Mode == "UPDATEALL"){
 					// UPDATEALL
 					$StdCostText = locale_number_format($NewStdCost,0);
 					ChangeItemStandardCost($MyRow['stockid'], $NewStdCost, $MyRow['stdcost'], $MyRow['qoh']);
-				}else{
+				} else {
 					// SHOWLINK
 					$StdCostText = '<a href="' . $RootPath . '/KLUpdateStandardCost.php?StockId=' . $MyRow['stockid'] . '&NewCost=' . round($NewStdCost,0) .'">' . locale_number_format($NewStdCost,0) . '</a>';
 				}
@@ -3713,7 +3713,7 @@ function OnlineMarketPlacePaymentPending($Days, $RootPath){
 	if ($Days == 0){
 		$TableTitleText = "All Marketplace Online Orders with Payment Pending";
 		$WhereStatement = "";
-	}else{
+	} else {
 		$TableTitleText = "Delayed Marketplace Online Orders Payment Pending for more than " . $Days . " days";
 		$WhereStatement = " AND salesorders.orddate <= '" . $StartDate . "' ";
 	}
@@ -3785,14 +3785,14 @@ function OnlineMarketPlacePaymentPending($Days, $RootPath){
 				$PaymentTokopedia = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $MyRow['orderno'] . '&PaymentCode=' . 'tokopedia' . '&CustomerCode=' . $MyRow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
 				$PaymentManual = '';
 				$TotalTokopediaValue += $PaymentValue;
-			}else{
+			} else {
 				$PaymentTokopedia = '';
 			}
 			if ($MyRow['debtorno'] == "SHOPEE"){
 				$PaymentShopee = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $MyRow['orderno'] . '&PaymentCode=' . 'shopee' . '&CustomerCode=' . $MyRow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
 				$PaymentManual = '';
 				$TotalShopeeValue += $PaymentValue;
-			}else{
+			} else {
 				$PaymentShopee = '';
 			}
 			$DecimalPlaces = $MyRow['decimalplaces'];
@@ -3879,11 +3879,11 @@ function MaintenanceTasksDistribution($Status, $NumDays, $UserIsSystemAdmin){
 	if ($Status == "OPEN"){
 		$WhereStatus = "WHERE klmaintenancetasks.closed = 0";
 		$Title = 'Open Maintenance Tasks distribution';
-	}elseif ($Status == "CLOSED"){
+	} elseif ($Status == "CLOSED"){
 		$WhereStatus = "WHERE klmaintenancetasks.closed = 1
 							AND closedate >= '" . $FromDate . "'";
 		$Title = 'Closed Maintenance Tasks distribution during the last ' . $NumDays . ' days';
-	}elseif ($Status == "TOTAL"){
+	} elseif ($Status == "TOTAL"){
 		$WhereStatus = "WHERE klmaintenancetasks.closed = 0
 							OR (klmaintenancetasks.closed = 1
 								AND closedate >= '" . $FromDate . "')";
@@ -3957,7 +3957,7 @@ function MaintenanceTasksDistribution($Status, $NumDays, $UserIsSystemAdmin){
 				$TotalIssuesAC += $IssuesAC;
 				$TotalIssuesLocation += $IssuesAC;
 				$TotalIssues += $IssuesAC;
-			}else{
+			} else {
 				$IssuesAC = '';
 			}
 			if (isset($Row['BOCOR'])){
@@ -3965,7 +3965,7 @@ function MaintenanceTasksDistribution($Status, $NumDays, $UserIsSystemAdmin){
 				$TotalIssuesBOCOR += $IssuesBOCOR;
 				$TotalIssuesLocation += $IssuesBOCOR;
 				$TotalIssues += $IssuesBOCOR;
-			}else{
+			} else {
 				$IssuesBOCOR = '';
 			}
 			if (isset($Row['FURNITURE'])){
@@ -3973,7 +3973,7 @@ function MaintenanceTasksDistribution($Status, $NumDays, $UserIsSystemAdmin){
 				$TotalIssuesFURNITURE += $IssuesFURNITURE;
 				$TotalIssuesLocation += $IssuesFURNITURE;
 				$TotalIssues += $IssuesFURNITURE;
-			}else{
+			} else {
 				$IssuesFURNITURE = '';
 			}
 			if (isset($Row['IT'])){
@@ -3981,7 +3981,7 @@ function MaintenanceTasksDistribution($Status, $NumDays, $UserIsSystemAdmin){
 				$TotalIssuesIT += $IssuesIT;
 				$TotalIssuesLocation += $IssuesIT;
 				$TotalIssues += $IssuesIT;
-			}else{
+			} else {
 				$IssuesIT = '';
 			}
 			if (isset($Row['KANOPI'])){
@@ -3989,7 +3989,7 @@ function MaintenanceTasksDistribution($Status, $NumDays, $UserIsSystemAdmin){
 				$TotalIssuesKANOPI += $IssuesKANOPI;
 				$TotalIssuesLocation += $IssuesKANOPI;
 				$TotalIssues += $IssuesKANOPI;
-			}else{
+			} else {
 				$IssuesKANOPI = '';
 			}
 			if (isset($Row['LAMPU'])){
@@ -3997,7 +3997,7 @@ function MaintenanceTasksDistribution($Status, $NumDays, $UserIsSystemAdmin){
 				$TotalIssuesLAMPU += $IssuesLAMPU;
 				$TotalIssuesLocation += $IssuesLAMPU;
 				$TotalIssues += $IssuesLAMPU;
-			}else{
+			} else {
 				$IssuesLAMPU = '';
 			}
 			if (isset($Row['LISTRIK'])){
@@ -4005,7 +4005,7 @@ function MaintenanceTasksDistribution($Status, $NumDays, $UserIsSystemAdmin){
 				$TotalIssuesLISTRIK += $IssuesLISTRIK;
 				$TotalIssuesLocation += $IssuesLISTRIK;
 				$TotalIssues += $IssuesLISTRIK;
-			}else{
+			} else {
 				$IssuesLISTRIK = '';
 			}
 			if (isset($Row['PAINT'])){
@@ -4013,7 +4013,7 @@ function MaintenanceTasksDistribution($Status, $NumDays, $UserIsSystemAdmin){
 				$TotalIssuesPAINT += $IssuesPAINT;
 				$TotalIssuesLocation += $IssuesPAINT;
 				$TotalIssues += $IssuesPAINT;
-			}else{
+			} else {
 				$IssuesPAINT = '';
 			}
 			if (isset($Row['PINTUKACA'])){
@@ -4021,7 +4021,7 @@ function MaintenanceTasksDistribution($Status, $NumDays, $UserIsSystemAdmin){
 				$TotalIssuesPINTUKACA += $IssuesPINTUKACA;
 				$TotalIssuesLocation += $IssuesPINTUKACA;
 				$TotalIssues += $IssuesPINTUKACA;
-			}else{
+			} else {
 				$IssuesPINTUKACA = '';
 			}
 			if (isset($Row['TOILET'])){
@@ -4029,7 +4029,7 @@ function MaintenanceTasksDistribution($Status, $NumDays, $UserIsSystemAdmin){
 				$TotalIssuesTOILET += $IssuesTOILET;
 				$TotalIssuesLocation += $IssuesTOILET;
 				$TotalIssues += $IssuesTOILET;
-			}else{
+			} else {
 				$IssuesTOILET = '';
 			}
 			if (isset($Row['WALLPAPER'])){
@@ -4037,7 +4037,7 @@ function MaintenanceTasksDistribution($Status, $NumDays, $UserIsSystemAdmin){
 				$TotalIssuesWALLPAPER += $IssuesWALLPAPER;
 				$TotalIssuesLocation += $IssuesWALLPAPER;
 				$TotalIssues += $IssuesWALLPAPER;
-			}else{
+			} else {
 				$IssuesWALLPAPER = '';
 			}
 			if (isset($Row['_DLL'])){
@@ -4045,7 +4045,7 @@ function MaintenanceTasksDistribution($Status, $NumDays, $UserIsSystemAdmin){
 				$TotalIssuesDLL += $IssuesDLL;
 				$TotalIssuesLocation += $IssuesDLL;
 				$TotalIssues += $IssuesDLL;
-			}else{
+			} else {
 				$IssuesDLL = '';
 			}
 			echo '<tr class="striped_row">
@@ -4087,9 +4087,9 @@ function MaintenanceTasksDistribution($Status, $NumDays, $UserIsSystemAdmin){
 		if ($UserIsSystemAdmin){
 			if ($Status == "OPEN"){
 				InsertKPI("MAINTENANCE-OPEN", $TotalIssues);
-			}elseif ($Status == "CLOSED"){
+			} elseif ($Status == "CLOSED"){
 				InsertKPI("MAINTENANCE-CLOSED-" . $NumDays, $TotalIssues);
-			}elseif ($Status == "TOTAL"){
+			} elseif ($Status == "TOTAL"){
 				InsertKPI("MAINTENANCE-ALL-" . $NumDays, $TotalIssues);
 			}
 		}

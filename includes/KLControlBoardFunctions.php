@@ -220,8 +220,8 @@ function ActiveItemsWithoutPicture($RootPath){
 
 	if (DB_num_rows($Result) != 0){
 		while ($MyRow = DB_fetch_array($Result)) {
-			if(!file_exists($_SESSION['part_pics_dir'] . '/' .$MyRow['stockid'].'.jpg') ) {
-				if($ShowHeader){
+			if (!file_exists($_SESSION['part_pics_dir'] . '/' .$MyRow['stockid'].'.jpg') ) {
+				if ($ShowHeader){
 					$TableTitleText = __('Current Items without picture in webERP and QOH > 0');
 					ShowTableTitle($TableTitleText);
 					echo '<div>';
@@ -323,15 +323,15 @@ function CategoryItemsMissingInShops($Category, $ShopType, $NumberOfTestExecuted
 
 	if (ItemInList($Category, LIST_STOCK_CATEGORIES_TEST)){
 		$Condition = " AND locations.alltestitems = '2' ";
-	}elseif (ItemInList($Category, LIST_STOCK_CATEGORIES_STABLE)){
+	} elseif (ItemInList($Category, LIST_STOCK_CATEGORIES_STABLE)){
 		$Condition = " AND locations.allstableitems = '2' ";
-	}elseif (ItemInList($Category, LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING)){
+	} elseif (ItemInList($Category, LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING)){
 		$Condition = " AND locations.allnopoitems = '2' ";
-	}elseif (ItemInLIst($Category, LIST_STOCK_CATEGORIES_DISCOUNT_20)){
+	} elseif (ItemInLIst($Category, LIST_STOCK_CATEGORIES_DISCOUNT_20)){
 		$Condition = " AND locations.alldisc20items = '2' ";
-	}elseif (ItemInLIst($Category, LIST_STOCK_CATEGORIES_DISCOUNT_50)){
+	} elseif (ItemInLIst($Category, LIST_STOCK_CATEGORIES_DISCOUNT_50)){
 		$Condition = " AND locations.alldisc50items = '2' ";
-	}elseif (ItemInLIst($Category, LIST_STOCK_CATEGORIES_DISCOUNT_80)){
+	} elseif (ItemInLIst($Category, LIST_STOCK_CATEGORIES_DISCOUNT_80)){
 		$Condition = " AND locations.alldisc80items = '2' ";
 	}
 	
@@ -365,7 +365,7 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $WhereisQOH, $RootPat
 						WHERE l.stockid = stockmaster.stockid
 							AND l.loccode IN " . LIST_KANTOR . ")";
 		$TitleQOH = "QOH Kantor";
-	}else{
+	} else {
 		$TableTitleText = GetCategoryNameFromCode($Category) . __(' items NOT in ') . $Shop . ' with QOH >= ' . $MinQOH .' in TOTAL' . $Exclusions;
 		$SQLQty = "(SELECT SUM(l.quantity)
 						FROM locstock l
@@ -777,7 +777,7 @@ function GoodsJustArrived($Kind, $Location, $numdays, $RootPath){
 	$ShopsOU = NumberOfShops("SHOPOU");
 	if ($Kind == "PO"){
 		$Type = 25;
-	}elseif ($Kind == "WO"){
+	} elseif ($Kind == "WO"){
 		$Type = 26;
 	}
 	$SQL = "SELECT stockmoves.stockid, 
@@ -807,7 +807,7 @@ function GoodsJustArrived($Kind, $Location, $numdays, $RootPath){
 	if (DB_num_rows($Result) != 0){
 		if ($Kind == "PO"){
 			$TableTitleText = $Kind . __(' Finished Goods just arrived at ') . $Location . ' during the last '. $numdays . ' days';
-		}elseif ($Kind == "WO"){
+		} elseif ($Kind == "WO"){
 			$TableTitleText = $Kind . __(' Goods just produced at ') . $Location . ' during the last '. $numdays . ' days';
 		}
 		ShowTableTitle($TableTitleText);
@@ -859,13 +859,13 @@ function GoodsJustArrived($Kind, $Location, $numdays, $RootPath){
 			if (ItemInList($MyRow['categoryid'], LIST_STOCK_CATEGORIES_KAPAL_LAUT)){
 				$TypeOfShop = 'SHOPKL';
 				$ShopsToSetRL = $ShopsKL;
-			}elseif (ItemInList($MyRow['categoryid'], LIST_STOCK_CATEGORIES_BLINK)){
+			} elseif (ItemInList($MyRow['categoryid'], LIST_STOCK_CATEGORIES_BLINK)){
 				$TypeOfShop = 'SHOPBL';
 				$ShopsToSetRL = $ShopsBL;
-			}elseif (ItemInList($MyRow['categoryid'], LIST_STOCK_CATEGORIES_OUTLET)){
+			} elseif (ItemInList($MyRow['categoryid'], LIST_STOCK_CATEGORIES_OUTLET)){
 				$TypeOfShop = 'SHOPOU';
 				$ShopsToSetRL = $ShopsOU;
-			}else{
+			} else {
 				$ShopsToSetRL = 0;
 			}
 
@@ -874,7 +874,7 @@ function GoodsJustArrived($Kind, $Location, $numdays, $RootPath){
 				OR (ItemInList($MyRow['categoryid'], LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING))
 				OR (ItemInList($MyRow['categoryid'], LIST_STOCK_CATEGORIES_OUTLET))) {
 				$ManualLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $MyRow['stockid'] . '">' . 'Manual' . '</a>';
-			}else{
+			} else {
 				$ManualLink = '';
 			}
 
@@ -890,7 +890,7 @@ function GoodsJustArrived($Kind, $Location, $numdays, $RootPath){
 			$LinkRL5All = '';
 			$LinkRL5Some = '';
 
-			if($ShopsToSetRL != 0){
+			if ($ShopsToSetRL != 0){
 				if ($MyRow['qtytotal'] >= 0){
 					$LinkRL1All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $MyRow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=1' . '">' . '1' . '</a>';
 					$LinkRL1Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $MyRow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=1' . '">' . '1' . '</a>';
@@ -1521,22 +1521,22 @@ function ItemsInKLProcessAndRLNotZero($RootPath){
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 			if ($MyRow['klchangingprice'] == 1){
 				$ItemChangingPrice = "Yes";
-			}else{
+			} else {
 				$ItemChangingPrice = "";
 			}
 			if ($MyRow['klmovingdiscount20'] == 1){
 				$ItemMovingToDiscount20 = "Yes";
-			}else{
+			} else {
 				$ItemMovingToDiscount20 = "";
 			}
 			if ($MyRow['klmovingdiscount50'] == 1){
 				$ItemMovingToDiscount50 = "Yes";
-			}else{
+			} else {
 				$ItemMovingToDiscount50 = "";
 			}
 			if ($MyRow['klmovingdiscount80'] == 1){
 				$ItemMovingToDiscount80 = "Yes";
-			}else{
+			} else {
 				$ItemMovingToDiscount80 = "";
 			}
 			echo '<tr class="striped_row">
@@ -1639,7 +1639,7 @@ function ItemsInSetup($Check, $Category, $RootPath){
 							AND stockid = sm.stockid
 					)
 				ORDER BY sm.stockid";
-	}elseif($Check == "NeedDescription"){
+	} elseif ($Check == "NeedDescription"){
 		$TableTitleText = GetCategoryNameFromCode($Category) . " Items needing descriptions";
 		$SQL = "SELECT sm.stockid,
 					sm.description,
@@ -1664,7 +1664,7 @@ function ItemsInSetup($Check, $Category, $RootPath){
 					AND LENGTH(sm.description) <= 2
 				ORDER BY sm.stockid";
 
-	}elseif($Check == "NeedPrice"){
+	} elseif ($Check == "NeedPrice"){
 		$TableTitleText = GetCategoryNameFromCode($Category) . " Items needing price";
 		$SQL = "SELECT sm.stockid,
 					sm.description,
@@ -1688,7 +1688,7 @@ function ItemsInSetup($Check, $Category, $RootPath){
 							AND currabrev = 'IDR'
 					)
 				ORDER BY sm.stockid";
-	}elseif($Check == "WithReorderLevel"){
+	} elseif ($Check == "WithReorderLevel"){
 		$TableTitleText = GetCategoryNameFromCode($Category) . " Items with RL (items in SETUP should not have RL set)";
 		$SQL = "SELECT sm.stockid,
 					sm.description,
@@ -1718,7 +1718,7 @@ function ItemsInSetup($Check, $Category, $RootPath){
 						HAVING SUM(reorderlevel) > 0
 					)
 				ORDER BY sm.stockid";
-	}else{
+	} else {
 		$TableTitleText = GetCategoryNameFromCode($Category) . " Items in SETUP";
 		$SQL = "SELECT sm.stockid,
 					sm.description,
@@ -1779,7 +1779,7 @@ function ItemsInSetup($Check, $Category, $RootPath){
 				$i++;
 			}
 		}
-		if(!$ShowHeader){
+		if (!$ShowHeader){
 			echo '</tbody>
 					</table>
 					</div>';
@@ -1803,7 +1803,7 @@ function ItemsInWrongShops($ShopType, $RootPath){
 						AND NOT (stockmaster.categoryid = 'DISC5G' AND locations.alldisc50items > 0)
 						AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_IN_SHOPS_NOT_FOR_SALE;
 
-    }elseif ($ShopType == "SHOPBL"){
+    } elseif ($ShopType == "SHOPBL"){
         $TableTitleText = 'Items not allowed on BLINK shops';
         // Optimization: Replaced complex "AND NOT ((... OR ...))" with simpler "AND NOT (...) AND NOT (...)" blocks.
         $Condition =  " AND locations.typeloc = 'SHOPBL'
@@ -1817,7 +1817,7 @@ function ItemsInWrongShops($ShopType, $RootPath){
 						AND NOT (stockmaster.categoryid = 'DISC5G' AND locations.alldisc50items > 0)
 						AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_IN_SHOPS_NOT_FOR_SALE;
 
-    }elseif ($ShopType == "SHOPOU"){
+    } elseif ($ShopType == "SHOPOU"){
         $TableTitleText = 'KL or Blink full priced items on OUTLET shops';
         // Simplified boolean logic for consistency
         $Condition =  " AND locations.typeloc = 'SHOPOU'
@@ -1825,12 +1825,12 @@ function ItemsInWrongShops($ShopType, $RootPath){
 						AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_GENERAL_INCLUDING_ALL_DISCOUNT . "
 						AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_IN_SHOPS_NOT_FOR_SALE;
 
-    }elseif ($ShopType == "DEFECTIVE"){
+    } elseif ($ShopType == "DEFECTIVE"){
         $TableTitleText = 'Discounted -D items on KL or Blink shops';
         $Condition =  " AND UPPER(RIGHT(stockmaster.stockid,2)) = '-D'
 						AND (locations.typeloc = 'SHOPKL'
 							OR locations.typeloc = 'SHOPBL')";
-    }else{
+    } else {
         //error_
         return;
     }
@@ -2094,8 +2094,8 @@ function ItemsShouldBeInWebsite(){
 	$ShowHeader = true;
 	if (DB_num_rows($Result) != 0){
 		while ($MyRow = DB_fetch_array($Result)) {
-			if(file_exists($_SESSION['part_pics_dir'] . '/' .$MyRow['stockid'].'.jpg') ) {
-				if($ShowHeader){
+			if (file_exists($_SESSION['part_pics_dir'] . '/' .$MyRow['stockid'].'.jpg') ) {
+				if ($ShowHeader){
 					$TableTitleText = __('Items with picture but not available in Online Shop');
 					ShowTableTitle($TableTitleText);
 					echo '<div>';
@@ -2169,7 +2169,7 @@ function ItemsWithStockLocationButNoStockAvailable($Location, $NameLocation, $Mi
 		$i = 1;
 		while ($MyRow = DB_fetch_array($Result)) {
 			$PositionTopSales = PositionTopSalesItem($MyRow['stockid'], 60);
-			if($PositionTopSales <= $MaxTopSalesItems){
+			if ($PositionTopSales <= $MaxTopSalesItems){
 				if ($ShowHeader){
 					$TableTitleText = $MaxTopSalesItems .__(' Top Sales Items (Exclude No More Purchasing, Discount) with stock at ') . $NameLocation . ' but KL Stock Available (Toko + Kantor) <= ' . $MinAvailable;
 					ShowTableTitle($TableTitleText);
@@ -2444,45 +2444,45 @@ No pending transfer regarding this item
 		$Message = 'KAPAL-LAUT';
 		$ConditionCategory =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . ")";
 		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPKL' ";
-	}elseif ($TypeOfShop == "SHOPKLDISCOUNT20"){
+	} elseif ($TypeOfShop == "SHOPKLDISCOUNT20"){
 		$Message = 'KAPAL-LAUT with 20% Discount';
 		$ConditionCategory =  " AND stockmaster.categoryid = 'DISC2A' ";
 		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPKL' 
 								AND locations.alldisc20items = 2 ";
-	}elseif ($TypeOfShop == "SHOPKLDISCOUNT50"){
+	} elseif ($TypeOfShop == "SHOPKLDISCOUNT50"){
 		$Message = 'KAPAL-LAUT with 50% Discount';
 		$ConditionCategory =  " AND stockmaster.categoryid = 'DISC5A' ";
 		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPKL' 
 								AND locations.alldisc50items = 2 ";
-	}elseif ($TypeOfShop == "SHOPKLDISCOUNT80"){
+	} elseif ($TypeOfShop == "SHOPKLDISCOUNT80"){
 		$Message = 'KAPAL-LAUT with 80% Discount';
 		$ConditionCategory =  " AND stockmaster.categoryid = 'DISC8A' ";
 		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPKL' 
 								AND locations.alldisc80items = 2 ";
-	}elseif ($TypeOfShop == "SHOPBL"){
+	} elseif ($TypeOfShop == "SHOPBL"){
 		$Message = 'BLINK';
 		$ConditionCategory =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . ")";
 		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPBL' ";
-	}elseif ($TypeOfShop == "SHOPBLDISCOUNT20"){
+	} elseif ($TypeOfShop == "SHOPBLDISCOUNT20"){
 		$Message = 'BLINK with 20% Discount';
 		$ConditionCategory =  " AND stockmaster.categoryid = 'DISC2B' ";
 		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPBL' 
 								AND locations.alldisc20items = 2 ";
-	}elseif ($TypeOfShop == "SHOPBLDISCOUNT50"){
+	} elseif ($TypeOfShop == "SHOPBLDISCOUNT50"){
 		$Message = 'BLINK with 50% Discount';
 		$ConditionCategory =  " AND stockmaster.categoryid = 'DISC5B' ";
 		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPBL' 
 								AND locations.alldisc50items = 2 ";
-	}elseif ($TypeOfShop == "SHOPBLDISCOUNT80"){
+	} elseif ($TypeOfShop == "SHOPBLDISCOUNT80"){
 		$Message = 'BLINK with 80% Discount';
 		$ConditionCategory =  " AND stockmaster.categoryid = 'DISC8B' ";
 		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPBL' 
 								AND locations.alldisc80items = 2 ";
-	}elseif ($TypeOfShop == "SHOPOU"){
+	} elseif ($TypeOfShop == "SHOPOU"){
 		$Message = 'OUTLET';
 		$ConditionCategory =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . ")";
 		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPOU' ";
-	}else{
+	} else {
 		//error_
 		return;
 	}
@@ -2574,7 +2574,7 @@ No pending transfer regarding this item
 			$LinkRL4Some = '';
 			$LinkRL5All = '';
 			$LinkRL5Some = '';
-			if($ShopsToSetRL != 0){
+			if ($ShopsToSetRL != 0){
 				if ($MyRow['QtyKantor'] >= 0){
 					$LinkRL1All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $MyRow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=1' . '">' . '1' . '</a>';
 					$LinkRL1Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $MyRow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=1' . '">' . '1' . '</a>';
@@ -2914,7 +2914,7 @@ function OnlineItemsOnProcess($RootPath){
 				// We just checked all items in the order, and it is not the first one
 				if ($OrderReadyForShipment){
 					$Status = "ORDER READY FOR SHIPMENT";
-				}else{
+				} else {
 					$Status = "ORDER IN PROCESS";
 				}
 				echo '<tr class="striped_row">
@@ -2938,11 +2938,11 @@ function OnlineItemsOnProcess($RootPath){
 			if (($MyRow['qtyready'] >= $MyRow['qtyorder']) OR (!ItemInList($MyRow['categoryid'], ONLINESHOP_AVAILABLE_STOCK_CATEGORIES))){
 				// item ready to ship
 				$Status = "";
-			}elseif($MyRow['qtyorder'] > $MyRow['qohkantor']){
+			} elseif ($MyRow['qtyorder'] > $MyRow['qohkantor']){
 				// QOH kantor not enough to cover the order, so we need to get some from the shops
 				$Status = "Needs return from shops";
 				$OrderReadyForShipment = false;
-			}else{
+			} else {
 				// QOH kantor enough to cover the requirements of the order
 				$Status = "In process kantor";
 				$OrderReadyForShipment = false;
@@ -2965,7 +2965,7 @@ function OnlineItemsOnProcess($RootPath){
 		// status of the last order online
 		if ($OrderReadyForShipment){
 			$Status = "ORDER READY FOR SHIPMENT";
-		}else{
+		} else {
 			$Status = "ORDER IN PROCESS";
 		}
 		echo '<tr class="striped_row">
@@ -3029,7 +3029,7 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath){
 					debtorsmaster.name,
 					salesorders.orddate
 				ORDER BY salesorders.orderno";			
-	}else{
+	} else {
 		$SQL = "SELECT salesorders.orderno,	
 					salesorders.customerref,
 					salesorders.klemailpaymentconfirm,
@@ -3098,7 +3098,7 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath){
 				$EmailLinkText4 = 'Do NOT send';
 				$EmailLink3 = '<a href="' . $RootPath . '/KLFollowUpOnlineEmails.php?TransNo=' . $MyRow['orderno'] . '&EmailType=' . $EmailType3. '&CustomerOrder=' . $MyRow['customerref'] . '">'. $EmailLinkText3 .'</a>';
 				$EmailLink4 = '<a href="' . $RootPath . '/KLFollowUpOnlineEmails.php?TransNo=' . $MyRow['orderno'] . '&EmailType=' . $EmailType4. '&CustomerOrder=' . $MyRow['customerref'] . '">'. $EmailLinkText4 .'</a>';
-			}else{
+			} else {
 				$EmailLink3 = ConvertSQLDate($MyRow['klemailthankyouorder']);
 				$EmailLink4 = ConvertSQLDate($MyRow['klemailthankyouorder']);
 			}
@@ -3109,7 +3109,7 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath){
 				$EmailLink2 = '<a href="' . $RootPath . '/KLFollowUpOnlineEmails.php?TransNo=' . $MyRow['orderno'] . '&EmailType=' . $EmailType2. '&CustomerOrder=' . $MyRow['customerref'] . '">'. $EmailLinkText .'</a>';
 				$EmailLink3 = 'Tracking Confirmation first';
 				$EmailLink4 = 'Tracking Confirmation first';
-			}else{
+			} else {
 				$EmailLink2 = ConvertSQLDate($MyRow['klemailtrackingconfirm']);
 			}
 			
@@ -3120,7 +3120,7 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath){
 				$EmailLink2 = 'Payment Confirmation first';
 				$EmailLink3 = 'Payment Confirmation first';
 				$EmailLink4 = 'Payment Confirmation first';
-			}else{
+			} else {
 				$EmailLink1 = ConvertSQLDate($MyRow['klemailpaymentconfirm']);
 			}
 
@@ -3251,8 +3251,8 @@ function OpenCartItemsWithoutPicture($RootPath ){
 
 	if (DB_num_rows($Result) != 0){
 		while ($MyRow = DB_fetch_array($Result)) {
-			if(!file_exists(ABSOLUTE_PATH_OPENCART_IMAGES .$MyRow['stockid'].'.jpg') ) {
-				if($ShowHeader){
+			if (!file_exists(ABSOLUTE_PATH_OPENCART_IMAGES .$MyRow['stockid'].'.jpg') ) {
+				if ($ShowHeader){
 					$TableTitleText = __('Online Shop Items without picture');
 					ShowTableTitle($TableTitleText);
 					echo '<div>';
@@ -3291,27 +3291,27 @@ function OutstandingOrders($customertype, $Ordertype, $RootPath){
 		$Namefield = " debtorsmaster.name ";
 		$Titletext = "Outstanding Retail";
 		$WebsiteIDName = "";
-	}elseif ($customertype == "Consignment"){
+	} elseif ($customertype == "Consignment"){
 		$Whereclause = " AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_CONSIGNMENT . ")";
 		$Namefield = " debtorsmaster.name ";
 		$Titletext = "Outstanding Consignment";
 		$WebsiteIDName = "";
-	}elseif ($customertype == "Wholesale"){
+	} elseif ($customertype == "Wholesale"){
 		$Whereclause = " AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_WHOLESALE . ")";
 		$Namefield = " debtorsmaster.name ";
 		$Titletext = "Outstanding Wholesale";
 		$WebsiteIDName = "";
-	}elseif ($customertype == "Online"){
+	} elseif ($customertype == "Online"){
 		$Whereclause = " AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_WEBSITE . ")";
 		$Namefield = " salesorders.deliverto AS name ";
 		$Titletext = "Outstanding Online";
 		$WebsiteIDName = "#KL-Website";
-	}elseif ($customertype == "MarketPlace"){
+	} elseif ($customertype == "MarketPlace"){
 		$Whereclause = " AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_MARKETPLACE . ")";
 		$Namefield = " salesorders.deliverto AS name ";
 		$Titletext = "Outstanding MarketPlace";
 		$WebsiteIDName = "#KL-Website";
-	}else{
+	} else {
 		$Namefield = " debtorsmaster.name ";
 		$Whereclause = " ";
 		$Titletext = __('Outstanding');
@@ -3321,10 +3321,10 @@ function OutstandingOrders($customertype, $Ordertype, $RootPath){
 	if ($Ordertype == "Quotation"){
 		$Whereclause = $Whereclause . " AND salesorders.quotation = 1 ";
 		$Titletext = $Titletext . " Quotations";
-	}elseif  ($Ordertype == "Order"){
+	} elseif  ($Ordertype == "Order"){
 		$Whereclause = $Whereclause . " AND salesorders.quotation = 0 ";
 		$Titletext = $Titletext . " Orders";
-	}else{
+	} else {
 		$Titletext = __(' Orders and Quotations');
 	}
 	
@@ -3370,7 +3370,7 @@ function OutstandingOrders($customertype, $Ordertype, $RootPath){
 			$CodeLink = '<a href="' . $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $MyRow['orderno'] . '">' . $MyRow['orderno'] . '</a>';
 			if ($customertype == "Online"){
 				$WebsiteID = locale_number_format($MyRow['customerref']);
-			}else{
+			} else {
 				$WebsiteID = "";
 			}
 
@@ -3409,19 +3409,19 @@ function over_or_below_limit($Request, $Sign, $Limit, $RootPath){
 		$SQL = "SELECT COUNT(*)
 				FROM stockmaster
 				WHERE stockmaster.klchangingprice != 0";
-	}elseif ($Request =="Items moving to 20% discount"){
+	} elseif ($Request =="Items moving to 20% discount"){
 		$SQL = "SELECT COUNT(*)
 				FROM stockmaster
 				WHERE stockmaster.klmovingdiscount20 != 0";
-	}elseif ($Request =="Items moving to 50% discount"){
+	} elseif ($Request =="Items moving to 50% discount"){
 		$SQL = "SELECT COUNT(*)
 				FROM stockmaster
 				WHERE stockmaster.klmovingdiscount50 != 0";
-	}elseif ($Request =="Items moving to 80% discount"){
+	} elseif ($Request =="Items moving to 80% discount"){
 		$SQL = "SELECT COUNT(*)
 				FROM stockmaster
 				WHERE stockmaster.klmovingdiscount80 != 0";
-	}elseif ($Request =="Items changing price or moving category"){
+	} elseif ($Request =="Items changing price or moving category"){
 		$SQL = "SELECT COUNT(*)
 				FROM stockmaster
 				WHERE stockmaster.klchangingprice != 0
@@ -3605,9 +3605,9 @@ function PettyCashBalance($TypeUser){
 
 	if ($TypeUser == 'Authorizer'){
 		$WhereUser = "AND pctabs.authorizer LIKE '%" . $_SESSION['UserID'] . "%'";
-	}elseif($TypeUser == 'User'){
+	} elseif ($TypeUser == 'User'){
 		$WhereUser = "AND pctabs.usercode = '". $_SESSION['UserID'] ."'";
-	}else{
+	} else {
 		$WhereUser = "";
 	}
 
@@ -3626,7 +3626,7 @@ function PettyCashBalance($TypeUser){
 		
 		if ($TypeUser == "Authorizer"){
 			$TableTitleText = __('Petty Cash Accounts you AUTHORIZE with balance too Low or Too High');
-		}else{
+		} else {
 			$TableTitleText = __('Petty Cash Balance you USE with balance too Low or Too High');
 		}
 		ShowTableTitle($TableTitleText);
@@ -3663,7 +3663,7 @@ function PettyCashToBeAuthorized($AuthorizationType){
 		$TableTitleText = "Petty Cash Assignations to be Authorized";
 		$SQLAuthority = "AND pctabs.authorizer LIKE '%" . $_SESSION['UserID'] . "%'
 						AND pcashdetails.codeexpense = 'ASSIGNCASH'";
-	}else{
+	} else {
 		$TableTitleText = "Petty Cash Expenses to be Authorized";
 		$SQLAuthority = "AND pctabs.authorizerexpenses LIKE '%" . $_SESSION['UserID'] . "%'
 						AND pcashdetails.codeexpense != 'ASSIGNCASH'";
@@ -3849,7 +3849,7 @@ function SPGNotReportingSalesInDays($maxdays){
 		while ($MyRow = DB_fetch_array($Result)) {
 			if (isset($MyRow['lastsale'])){
 				$Day = ConvertSQLDate($MyRow['lastsale']);
-			}else{
+			} else {
 				$Day = "No sale yet";
 			}
 			echo '<tr class="striped_row">
@@ -3951,7 +3951,7 @@ function TransferWithWrongInformation($maxdays, $RootPath){
 				$ErrMsg =  __('CRITICAL ERROR') . '! ' . __('Unable to fix the wrong information');
 				$ResultFix = DB_query($SQL, $ErrMsg, '', true);
 				$Action = "Fixed"; 
-			}else{
+			} else {
 				$SQL = "DELETE FROM loctransfers 
 						WHERE loctransferid = '".$MyRow['loctransferid'] . "'";
 				$ErrMsg =  __('CRITICAL ERROR') . '! ' . __('Unable to delete the wrong information');
@@ -3987,7 +3987,7 @@ function UsersNotLoggingIn($maxdays, $Type, $RootPath){
 	
 	if ($Type=='SPGSUPPORT'){
 		$WhereType = " AND fullaccess = 22";
-	}else{
+	} else {
 		$WhereType = " AND fullaccess != 22";
 	}
 	
@@ -4004,7 +4004,7 @@ function UsersNotLoggingIn($maxdays, $Type, $RootPath){
 	if (DB_num_rows($Result) != 0){
 		if ($Type=='SPGSUPPORT'){
 			$TableTitleText = __('SPG Support webERP users not logging in for more than ') . $maxdays . __(' days.');
-		}else{
+		} else {
 			$TableTitleText = __('Regular webERP users not logging in for more than ') . $maxdays . __(' days.');
 		}
 		ShowTableTitle($TableTitleText);
@@ -4206,11 +4206,11 @@ function OpenCartOrdersByStatus($Status, $RootPath ){
 			if ($ShowHeader){
 				if ($Status == OPENCART_ORDER_STATUS_PENDING){
 					$StatusText = "Pending";
-				}else if ($Status == OPENCART_ORDER_STATUS_PROCESSING){
+				} elseif ($Status == OPENCART_ORDER_STATUS_PROCESSING){
 					$StatusText = "Processing";
-				}else if ($Status == OPENCART_ORDER_STATUS_SHIPPED){
+				} elseif ($Status == OPENCART_ORDER_STATUS_SHIPPED){
 					$StatusText = "Shipped";
-				}else{
+				} else {
 					$StatusText = "Unknown";
 				}
 				$TableTitleText = $StatusText .' OpenCart Online Orders';
@@ -4231,7 +4231,7 @@ function OpenCartOrdersByStatus($Status, $RootPath ){
 			}
 			if ($MyRow['currency_code'] == "IDR"){
 				$RoundingDecimals = 0;
-			}else{
+			} else {
 				$RoundingDecimals = 2;
 			}
 			echo '<tr class="striped_row">
@@ -4339,7 +4339,7 @@ function CalculateTransferFromBankToDanamon($Company,
 											$SaldoMax,
 											$TransferBlock,
 											$Period){
-	if($TransferNeededDanamon > 0){
+	if ($TransferNeededDanamon > 0){
 		$Saldo = GetGLAccountBalance($Account, $Period);
 		if ($Saldo >= $SaldoMax){
 			$AvailableForTransfer = $Saldo - $SaldoMin;

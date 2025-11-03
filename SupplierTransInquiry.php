@@ -102,7 +102,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 	if  ($_POST['TransType']!='All')  {
 		$SQL .= " AND type = " . $_POST['TransType'];
 	}
-	if($_POST['SupplierNo'] != "")
+	if ($_POST['SupplierNo'] != "")
 	{
 		$SQL .= " AND supptrans.supplierno LIKE '%".$_POST['SupplierNo']."%'";
 	}

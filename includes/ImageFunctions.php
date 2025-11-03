@@ -24,7 +24,7 @@ function GetImageLink($ImageFile, $Item, $Width, $Height, $AltText, $Class = "")
                                                     '&StockID=' . urlencode($Item) .
 													'" alt="' . htmlspecialchars($AltText, ENT_QUOTES) . '" />';
 		}
-    } else if (file_exists($ImageFile)) {
+    } elseif (file_exists($ImageFile)) {
         $ImageLink = '<img class="StockImage" src="' . $ImageFile .
                                             '" width="' . $Width .
                                             '" height="' . $Height . '" />';

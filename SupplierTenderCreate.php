@@ -156,7 +156,7 @@ if (isset($_GET['Edit'])) {
 	echo '</table>';
 	include('includes/footer.php');
 	exit();
-} else if (isset($_GET['ID']) or (isset($_SESSION['tender' . $identifier]->TenderId))) {
+} elseif (isset($_GET['ID']) or (isset($_SESSION['tender' . $identifier]->TenderId))) {
 	$Title = __('Edit an Existing Supplier Tender Request');
 	$ViewTopic = 'SupplierTenders';
 	$BookMark = 'EditTender';

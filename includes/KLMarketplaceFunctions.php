@@ -225,7 +225,7 @@ function CreateTextSize($StockID, $language, $IncludeTextDescription) {
 	if ($IncludeTextDescription) {
 		if ($Size == "NO SIZE") {
 			$TextSize = "";
-		} else if ($Size == "FR") {
+		} elseif ($Size == "FR") {
 			$TextSize = "Free Size";
 		} else {
 			if ($language == "ID") {
@@ -565,9 +565,9 @@ function FindShopeeCategory($StockID, $Name, $Description) {
 	} elseif (isEarring($StockID)) {
 		if (ItemInList("stud", $Description)) {
 			$ShopeeCat = SHOPEE_CATEGORY_EARRING_STUD;
-		} else if (ItemInList("hoop", $Description)) {
+		} elseif (ItemInList("hoop", $Description)) {
 			$ShopeeCat = SHOPEE_CATEGORY_EARRING_HOOP;
-		} else if (ItemInList("hook", $Description)) {
+		} elseif (ItemInList("hook", $Description)) {
 			$ShopeeCat = SHOPEE_CATEGORY_EARRING_HOOK;
 		} else {
 			$ShopeeCat = SHOPEE_CATEGORY_EARRING;
@@ -577,7 +577,7 @@ function FindShopeeCategory($StockID, $Name, $Description) {
 	} elseif (isBracelet($StockID)) {
 		if (ItemInList("bangle", $Description)) {
 			$ShopeeCat = SHOPEE_CATEGORY_BANGLE;
-		} else if (ItemInList("pearl", $Description)) {
+		} elseif (ItemInList("pearl", $Description)) {
 			$ShopeeCat = SHOPEE_CATEGORY_BRACELET_PEARL;
 		} else {
 			$ShopeeCat = SHOPEE_CATEGORY_BRACELET;
@@ -593,7 +593,7 @@ function FindShopeeCategory($StockID, $Name, $Description) {
 	} elseif (isNecklace($StockID)) {
 		if (ItemInList("choker", $Description)) {
 			$ShopeeCat = SHOPEE_CATEGORY_CHOKER;
-		} else if (ItemInList("pearl", $Description)) {
+		} elseif (ItemInList("pearl", $Description)) {
 			$ShopeeCat = SHOPEE_CATEGORY_NECKLACE_PEARL;
 		} else {
 			$ShopeeCat = SHOPEE_CATEGORY_NECKLACE;

@@ -35,7 +35,7 @@ if (isset($_POST['submit'])) {
 		prnMsg( __('The type code cannot be an empty string'),'error');
 		$Errors[$i] = 'LocationZone';
 		$i++;
-	} elseif( trim($_POST['description'])==''){
+	} elseif ( trim($_POST['description'])==''){
 		$InputError = 1;
 		prnMsg(__('The type description cannot be empty'),'error');
 		$Errors[$i] = 'LocationZone';
@@ -127,7 +127,7 @@ if (isset($_POST['submit'])) {
 }
 
 
-if(isset($_POST['Cancel'])){
+if (isset($_POST['Cancel'])){
 	unset($SelectedCode);
 	unset($_POST['code']);
 	unset($_POST['description']);

@@ -31,20 +31,20 @@ function KLPrepareGroupSmartStockTransfers($Group, $EmailText){
 	if ($Group == "1050-SmartStockTransfersKL"){
 		$ShopType = "SHOPKL";
 		$EmailText .= 'Smart Stock Transfers for Kapal-Laut Shops' . "\n";
-	}elseif ($Group == "1060-SmartStockTransfersBL"){
+	} elseif ($Group == "1060-SmartStockTransfersBL"){
 		$ShopType = "SHOPBL";
 		$EmailText .= 'Smart Stock Transfers for Blink Shops' . "\n";
-	}elseif ($Group == "1070-SmartStockTransfersOU"){
+	} elseif ($Group == "1070-SmartStockTransfersOU"){
 		$ShopType = "SHOPOU";
 		$EmailText .= 'Smart Stock Transfers for Outlet Shops' . "\n";
-	}else{
+	} else {
 		$EmailText .= 'Type Of Shop not defined' . "\n";
 	}
 	
 	/* Parameters */
 	if (KLwebERPScriptCalledFromTEST()){
 		$ReportType = "ReportOnly"; // To NOT create proper transfers, just the paperwork to test it
-	}else{
+	} else {
 		$ReportType = "Batch"; // To create proper transfers
 	}
 
@@ -133,7 +133,7 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 		$ToPriceList = 'RT';
 		$ToDecimalPlaces = 0;
 
-	}else{
+	} else {
 		// if the trasnfer is going somewhere not being KANTO, we need to get the parameters
 		$SQLto = "SELECT locationname,
 					cashsalecustomer,
@@ -166,7 +166,7 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 	if ($Strategy == 'All') {
 		$WhereCategory = " AND tols.reorderlevel > tols.quantity ";
 		$StrategyText = "Items needed at " . $ToLocCode . " with stock available at " . $FromLocCode . " ";
-	}else{
+	} else {
 		$WhereCategory = " ";
 		$StrategyText = "Items with overstock at " . $FromLocCode . " returning to " . $ToLocCode;
 	}
@@ -205,7 +205,7 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 	if (DB_error_no() != 0) {
 		$EmailText .= "Smart Stock Dispatch ERROR " . __('The Stock Dispatch report could not be retrieved by the SQL because') . ' ' . DB_error_msg() . "\n";
 		$EmailText .= "SQL = " . $SQL . "\n";
-	}else{
+	} else {
 		// Let's do the calculation for the available items for transfer and load them into TableResult array
 		$Now = date('Y-m-d H-i-s');
 		$EmailText .= "Models candidates to be included in transfer: " . DB_num_rows($Result) . "\n";
@@ -229,14 +229,14 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 			if ($Strategy == 'OverFrom') {
 				// send items with overstock at FROM, no matter qty needed at TO.
 				$ShipQty = $AvailableShipQtyAtFrom;
-			}else{
+			} else {
 				// Send all items with overstock at FROM needed at TO
 				$ShipQty = 0;
 				if ($AvailableShipQtyAtFrom > 0) {
 					if ($AvailableShipQtyAtFrom >= $NeededQtyAtTo) {
 						// We can ship all the needed qty at TO location
 						$ShipQty = $NeededQtyAtTo;
-					}else{
+					} else {
 						// We can't ship all the needed qty at TO location, but at least can ship some
 						$ShipQty = $AvailableShipQtyAtFrom;
 					}
@@ -264,10 +264,10 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 
 					$EmailText .= $MyRow['stockid'] . " x " . $ShipQty . "\n";
 
-				}else{
+				} else {
 					$EmailText .= $MyRow['stockid'] . " x " . $NeededQtyAtTo . " rejected no picture" . "\n";
 				}
-			}else{
+			} else {
 				if ($NeededQtyAtTo <= 0){
 					$EmailText .= $MyRow['stockid'] .
 											  " x " .
@@ -275,7 +275,7 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 											  " Already in transit = " .
 											  $InTransitQuantityAtTo .
 											  "\n";
-				}else{
+				} else {
 					$EmailText .= $MyRow['stockid'] .
 											  " x " .
 											  $NeededQty .
@@ -303,10 +303,10 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 				$LineHeight = 19;
 
 				// Create Transfer Number
-				if(!isset($Trf_ID) and $ReportType == 'Batch') {
+				if (!isset($Trf_ID) and $ReportType == 'Batch') {
 					$Trf_ID = GetNextTransNo(16);
 					$EmailText .= "Transfer # " . $Trf_ID . "\n";
-				}else{
+				} else {
 					$Trf_ID = '';
 					$EmailText .= "Report only. No transfer created.\n";
 				}
@@ -340,7 +340,7 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 
 					if ($TableResult[$ModelInTransfer]['discountcategory'] != ""){
 						$DiscountLine = ' -> ' . __('Discount Category') . ':' . $TableResult[$ModelInTransfer]['discountcategory'];
-					}else{
+					} else {
 						$DiscountLine = '';
 					}
 					if ($DefaultPrice != 0){
@@ -453,24 +453,24 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 											$PathFileName,
 											true);
 
-				if($Result){
+				if ($Result){
 					$EmailText .= date('d/M/Y H:i:s') . " Email Sent " . $FileName . "\n";
-				}else{
+				} else {
 					$EmailText .= date('d/M/Y H:i:s') . " Email FAILED " . $FileName . "\n";
 				}
 				// we don't need to sleep as this is a heavy process script, so from email to email there is already a few secs
 				// and we don't risk to be considered spam by the server and blocked
 				// sleep(2);
 				// End of preparation of PDF, email and transfer records
-			}else{
+			} else {
 				// NOT Enough models available for transfer
 				if ($Strategy == 'All'){
 					$EmailText .= "Less than " . $MinModelsPerDispatch . " Items for this transfer with Strategy All" . "\n";
-				}else{
+				} else {
 					$EmailText .= "Less than " . $MinModelsPerDispatch . " Items for this transfer with Strategy OverFrom" . "\n";
 				}
 			}
-		}else{
+		} else {
 			// No models to be dispatched
 			$EmailText .= "No Items available for this transfer" . "\n";
 		}
@@ -547,7 +547,7 @@ function PrintHeaderSmartStockDispatch(&$pdf, &$YPos, &$PageNumber, $Page_Height
 	$pdf->addTextWrap(95, $YPos, 50, $FontSize, '');
 	if ($Strategy == 'OverFrom') {
 		$pdf->addTextWrap(200, $YPos, 200, $FontSize, __('Overstock items at ') . $FromLocation);
-	}else{
+	} else {
 		$pdf->addTextWrap(200, $YPos, 200, $FontSize, __('Items needed at ') . $ToLocation);
 	}
 	$YPos -= (2 * $LineHeight);

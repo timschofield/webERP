@@ -95,7 +95,7 @@ if ($Serialised == 1 and $Perishable==0){
 						<th></th>
 						<th>' . __('Serial Number') . '</th>
 					</tr>';
-} else if ($Serialised == 1 and $Perishable==1){
+} elseif ($Serialised == 1 and $Perishable==1){
 	$Tableheader = '<tr>
 			<th>' . __('Serial Number') . '</th>
 			<th>' . __('Expiry Date') . '</th>
@@ -104,7 +104,7 @@ if ($Serialised == 1 and $Perishable==0){
 			<th>' . __('Serial Number') . '</th>
 			<th>' . __('Expiry Date') . '</th>
 			</tr>';
-} else if ($Serialised == 0 and $Perishable==0){
+} elseif ($Serialised == 0 and $Perishable==0){
 	$Tableheader = '<tr>
 						<th>' . __('Batch/Bundle Ref') . '</th>
 						<th>' . __('Quantity On Hand') . '</th>
@@ -115,7 +115,7 @@ if ($Serialised == 1 and $Perishable==0){
 						<th>' . __('Batch/Bundle Ref') . '</th>
 						<th>' . __('Quantity On Hand') . '</th>
 					</tr>';
-} else if ($Serialised == 0 and $Perishable==1){
+} elseif ($Serialised == 0 and $Perishable==1){
 	$Tableheader = '<tr>
 						<th>' . __('Batch/Bundle Ref') . '</th>
 						<th>' . __('Quantity On Hand') . '</th>
@@ -144,14 +144,14 @@ while ($MyRow=DB_fetch_array($LocStockResult)) {
 	if ($Serialised == 1 and $Perishable==0){
 		echo '<td>' . $MyRow['serialno'] . '</td>';
 		echo '<th></th>';
-	} else if ($Serialised == 1 and $Perishable==1) {
+	} elseif ($Serialised == 1 and $Perishable==1) {
 		echo '<td>' . $MyRow['serialno'] . '</td>
 				<td>' . ConvertSQLDate($MyRow['expirationdate']). '</td>';
-	} else if ($Serialised == 0 and $Perishable==0) {
+	} elseif ($Serialised == 0 and $Perishable==0) {
 		echo '<td>' . $MyRow['serialno'] . '</td>
 			<td class="number">' . locale_number_format($MyRow['quantity'],$DecimalPlaces) . '</td>';
 		echo '<th></th>';
-	} else if ($Serialised == 0 and $Perishable==1){
+	} elseif ($Serialised == 0 and $Perishable==1){
 		echo '<td>' . $MyRow['serialno'] . '</td>
 			<td class="number">' . locale_number_format($MyRow['quantity'],$DecimalPlaces). '</td>
 			<td>' . ConvertSQLDate($MyRow['expirationdate']). '</td>

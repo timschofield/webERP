@@ -55,7 +55,7 @@ function GetQuantityOnHand($StockID, $Location) {
 									AND locationusers.canupd = 1 ";
 		$ErrMsg = __('The quantity on hand for this product in locations the user can update cannot be retrieved because');
 	}
-	else{
+	else {
 		// Just 1 location to consider
 		$WhereLocation = " AND locstock.loccode = '" . $Location . "'";
 		$UserAllowedLocations = '';
@@ -69,7 +69,7 @@ function GetQuantityOnHand($StockID, $Location) {
 	$Result = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($Result) == 0) {
 		return 0;
-	}else{
+	} else {
 		$MyRow = DB_fetch_array($Result);
 		return (float)$MyRow['qoh'];
 	}
@@ -150,7 +150,7 @@ function GetQuantityOnOrderDueToPurchaseOrders($StockID, $Location) {
 	// All locations to be considered
 		$WhereLocation = "";
 		$ErrMsg = __('The quantity on order due to purchase orders for') . ' ' . $StockID . ' ' . __('to be received into all locations cannot be retrieved because');
-	}else{
+	} else {
 		// Just 1 location to consider
 		$WhereLocation = " AND purchorders.intostocklocation = '" . $Location . "'";
 		$ErrMsg = __('The quantity on order due to purchase orders for') . ' ' . $StockID . ' ' . __('to be received into') . ' ' . $Location . ' ' . __('cannot be retrieved because');
@@ -204,7 +204,7 @@ function GetQuantityOnOrderDueToWorkOrders($StockID, $Location){
 		// All locations to be considered
 		$WhereLocation = '';
 		$ErrMsg = __('The quantity on order due to work orders for') . ' ' . $StockID . ' ' . __('to be received into all locations cannot be retrieved because');
-	}else{
+	} else {
 		// Just 1 location to consider
 		$WhereLocation = " AND workorders.loccode = '" . $Location . "'";
 		$ErrMsg = __('The quantity on order due to work orders for') . ' ' . $StockID . ' ' . __('to be received into') . ' ' . $Location . ' ' . __('cannot be retrieved because');
@@ -277,7 +277,7 @@ function GetDemandQuantityDueToOutstandingSalesOrders($StockID, $Location) {
 									AND locationusers.canupd = 1 ";
 		$ErrMsg = __('The quantity demanded for this product in locations the user can update cannot be retrieved because');
 	}
-	else{
+	else {
 		// Just 1 location to consider
 		$WhereLocation = " AND salesorders.fromstkloc = '" . $Location . "'";
 		$UserAllowedLocations = '';
@@ -298,7 +298,7 @@ function GetDemandQuantityDueToOutstandingSalesOrders($StockID, $Location) {
 	if (DB_num_rows($Result) == 0) {
 		return 0;
 	}
-	else{
+	else {
 		$MyRow = DB_fetch_array($Result);
 		return (float)$MyRow['demand'];
 	}
@@ -352,7 +352,7 @@ function GetDemandQuantityAsComponentInAssemblyItems($StockID, $Location){
 									AND locationusers.canupd = 1 ";
 		$ErrMsg = __('The quantity demanded for this product as a component in BOM in locations the user can update cannot be retrieved because');
 	}
-	else{
+	else {
 		// Just 1 location to consider
 		$WhereLocation = " AND salesorders.fromstkloc = '" . $Location . "'";
 		$UserAllowedLocations = '';
@@ -378,7 +378,7 @@ function GetDemandQuantityAsComponentInAssemblyItems($StockID, $Location){
 	if (DB_num_rows($Result) == 0) {
 		return 0;
 	}
-	else{
+	else {
 		$MyRow = DB_fetch_array($Result);
 		return (float)$MyRow['demand'];
 	}
@@ -411,7 +411,7 @@ function GetDemandQuantityAsComponentInWorkOrders($StockID, $Location) {
 		// All locations to be considered
 		$WhereLocation = '';
 		$ErrMsg = __('The workorder component demand for this product cannot be retrieved because');
-	}else{
+	} else {
 		// Just 1 location to consider
 		$WhereLocation = " AND workorders.loccode='" . $Location . "'";
 		$ErrMsg = __('The workorder component demand for this product from') . ' ' . $Location . ' ' . __('cannot be retrieved because');
@@ -440,7 +440,7 @@ function GetDemandQuantityAsComponentInWorkOrders($StockID, $Location) {
 									AND locationusers.canupd = 1 ";
 		$ErrMsg = __('The quantity demanded for this product as a component in work orders in locations the user can update cannot be retrieved because');
 	}
-	else{
+	else {
 		// Just 1 location to consider
 		$WhereLocation = " AND workorders.loccode = '" . $Location . "'";
 		$UserAllowedLocations = '';
@@ -463,7 +463,7 @@ function GetDemandQuantityAsComponentInWorkOrders($StockID, $Location) {
 	if (DB_num_rows($Result) == 0) {
 		return 0;
 	}
-	else{
+	else {
 		$MyRow = DB_fetch_array($Result);
 		return (float)$MyRow['demand'];
 	}

@@ -70,41 +70,41 @@ function KLCronJobChecks($Group, $RootPath, $EmailText= ''){
 	if ($Group == "0010-HourlySyncOpenCart"){
 		$EmailText = WeberpToOpenCartHourlySync(false , true, $EmailText);
 		$EmailText = OpenCartToWeberpSync(false , $EmailText);
-	}elseif ($Group == "0100-CleanDB"){
+	} elseif ($Group == "0100-CleanDB"){
 		$EmailText = KL_DailyCleanDB(false, $EmailText);
-	}elseif ($Group == "0200-Obsolete"){
+	} elseif ($Group == "0200-Obsolete"){
 		$EmailText = KL_DailySetObsoleteNoStock(false, $EmailText);
-	}elseif ($Group == "0250-TopSales"){
+	} elseif ($Group == "0250-TopSales"){
 		$EmailText = SetTopSalesRanking(false, $EmailText);
-	}elseif ($Group == "0300-EmailsToStaff"){
+	} elseif ($Group == "0300-EmailsToStaff"){
 		$EmailText = KL_DailyEmailsToStaff($EmailText);
-	}elseif ($Group == "0400-OnlineRLAdjustments"){
+	} elseif ($Group == "0400-OnlineRLAdjustments"){
 		$EmailText = KL_DailyRLAdjustmentsForOnline(false, true, $RootPath, $EmailText); // Updates RL 
-	}elseif ($Group == "0500-RLForTopSalesKL"){
+	} elseif ($Group == "0500-RLForTopSalesKL"){
 		$EmailText = KL_DailyRLAdjustmentsForKL(false, true, $RootPath, $EmailText); // Updates RL 
-	}elseif ($Group == "0600-RLForTopSalesBL"){
+	} elseif ($Group == "0600-RLForTopSalesBL"){
 		$EmailText = KL_DailyRLAdjustmentsForBlink(false, true, $RootPath, $EmailText); // Updates RL 
-	}elseif ($Group == "0700-RLForTopSalesOU"){
+	} elseif ($Group == "0700-RLForTopSalesOU"){
 		$EmailText = KL_DailyRLAdjustmentsForOutlet(false, true, $RootPath, $EmailText); // Updates RL 
-	}elseif ($Group == "0800-RLRebalancing"){
+	} elseif ($Group == "0800-RLRebalancing"){
 		$EmailText = KL_DailyRLRebalancing(false, true, $RootPath, $EmailText); // Updates RL 
-	}elseif ($Group == "0900-RLZeroNotAvailable"){
+	} elseif ($Group == "0900-RLZeroNotAvailable"){
 		$EmailText = KL_DailyRLZeroNotAvailable(false, true, $RootPath, $EmailText); // Updates RL 
-	}elseif ($Group == "1000-RLAdjustPackaging"){
+	} elseif ($Group == "1000-RLAdjustPackaging"){
 		$EmailText = KL_DailyRLAdjustmentsForPackaging(false, true, $RootPath, $EmailText); // Updates RL 
-	}elseif ($Group == "1050-SmartStockTransfersKL"){
+	} elseif ($Group == "1050-SmartStockTransfersKL"){
 		$EmailText = KLPrepareGroupSmartStockTransfers($Group, $EmailText); // prepares the Smart Stock Transfers for KL
-	}elseif ($Group == "1060-SmartStockTransfersBL"){
+	} elseif ($Group == "1060-SmartStockTransfersBL"){
 		$EmailText = KLPrepareGroupSmartStockTransfers($Group, $EmailText); // prepares the Smart Stock Transfers for BL 
-	}elseif ($Group == "1070-SmartStockTransfersOU"){
+	} elseif ($Group == "1070-SmartStockTransfersOU"){
 		$EmailText = KLPrepareGroupSmartStockTransfers($Group, $EmailText); // prepares the Smart Stock Transfers for OU
-	}elseif ($Group == "1100-OptimizeDB"){
+	} elseif ($Group == "1100-OptimizeDB"){
 		$EmailText = KL_DailyOptimizationDatabase(5, false, $EmailText);
-	}elseif ($Group == "1200-DailySyncOpenCart"){
+	} elseif ($Group == "1200-DailySyncOpenCart"){
 		$EmailText = KL_DailyCleanOpenCartDB(false , $EmailText);
 		$EmailText = WeberpToOpenCartDailySync(false , $EmailText);
 		$EmailText = OpenCartToWeberpSync(false , $EmailText);
-	}else{
+	} else {
 		$EmailText = $EmailText . "Group " . $Group . " not found." . "\n";
 	}
 
@@ -288,7 +288,7 @@ function KL_DailyOptimizationDatabase($TablesPerDay, $ShowMessages, $EmailText =
 		while ($MyRow = DB_fetch_array($Result)) {
 			if ($Skip < $startIndex){
 				$Skip++;
-			}else{
+			} else {
 				$TableName = $MyRow[0];
 				$OptimizeSQL = "OPTIMIZE TABLE " . $TableName . "";
 				$OptimizeResult = DB_query($OptimizeSQL,$ErrMsg);
@@ -304,7 +304,7 @@ function KL_DailyOptimizationDatabase($TablesPerDay, $ShowMessages, $EmailText =
 				}
 			}
 		}
-	}else{
+	} else {
 		$Text = 'DB optimization. DB has no tables' . "\n" . $SQL;
 	}
 
@@ -860,13 +860,13 @@ function SetTopSalesByGroup($Group, $NumDays, $ShowMessages, $EmailText){
 
 	if ($Group == "KAPAL-LAUT"){
 		$ListCategories = LIST_STOCK_CATEGORIES_KAPAL_LAUT;
-	}elseif ($Group == "BLINK"){
+	} elseif ($Group == "BLINK"){
 		$ListCategories = LIST_STOCK_CATEGORIES_BLINK;
-	}elseif ($Group == "OUTLET"){
+	} elseif ($Group == "OUTLET"){
 		$ListCategories = LIST_STOCK_CATEGORIES_OUTLET;
-	}elseif ($Group == "GENERAL"){
+	} elseif ($Group == "GENERAL"){
 		$ListCategories = LIST_STOCK_CATEGORIES_GENERAL;
-	}else{
+	} else {
 		return;
 	}
 	

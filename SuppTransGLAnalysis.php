@@ -46,7 +46,7 @@ if (isset($_POST['AddGLCodeToTrans']) and $_POST['AddGLCodeToTrans'] == __('Ente
 	if (DB_num_rows($Result) == 0 and $_POST['GLCode'] != '') {
 		prnMsg(__('The account code entered is not a valid code') . '. ' . __('This line cannot be added to the transaction') . '.<br />' . __('You can use the selection box to select the account you want'), 'error');
 		$InputError = true;
-	} else if ($_POST['GLCode'] != '') {
+	} elseif ($_POST['GLCode'] != '') {
 		$MyRow = DB_fetch_row($Result);
 		$GLActName = $MyRow[1];
 		if (!is_numeric(filter_number_format($_POST['Amount']))) {

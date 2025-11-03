@@ -191,8 +191,7 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component, $Level) {
 /* SelectedParent could come from a post or a get */
 if (isset($_GET['SelectedParent'])) {
 	$SelectedParent = $_GET['SelectedParent'];
-}
-elseif (isset($_POST['SelectedParent'])) {
+} elseif (isset($_POST['SelectedParent'])) {
 	$SelectedParent = $_POST['SelectedParent'];
 }
 
@@ -315,27 +314,23 @@ if (isset($_POST['ComponentSearch']) or isset($_POST['Next']) or isset($_POST['P
 /* SelectedComponent could also come from a post or a get */
 if (isset($_GET['SelectedComponent'])) {
 	$SelectedComponent = $_GET['SelectedComponent'];
-}
-elseif (isset($_POST['SelectedComponent'])) {
+} elseif (isset($_POST['SelectedComponent'])) {
 	$SelectedComponent = $_POST['SelectedComponent'];
 }
 
 /* delete function requires Location to be set */
 if (isset($_GET['Location'])) {
 	$Location = $_GET['Location'];
-}
-elseif (isset($_POST['Location'])) {
+} elseif (isset($_POST['Location'])) {
 	$Location = $_POST['Location'];
-}
-else {
+} else {
 	$Location = $_SESSION['UserStockLocation'];
 }
 
 /* delete function requires WorkCentre to be set */
 if (isset($_GET['WorkCentre'])) {
 	$WorkCentre = $_GET['WorkCentre'];
-}
-elseif (isset($_POST['WorkCentre'])) {
+} elseif (isset($_POST['WorkCentre'])) {
 	$WorkCentre = $_POST['WorkCentre'];
 }
 
@@ -1064,8 +1059,7 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 	// end of BOM maintenance code - look at the parent selection form if not relevant
 	// ----------------------------------------------------------------------------------
 
-}
-elseif (isset($_POST['Search'])) {
+} elseif (isset($_POST['Search'])) {
 	// Work around to auto select
 	if ($_POST['Keywords'] == '' and $_POST['StockCode'] == '') {
 		$_POST['StockCode'] = '%';

@@ -166,7 +166,7 @@ while ($MyRow=DB_fetch_array($LocStockResult)) {
 			echo '<td><a target="_blank" href="' . $RootPath . '/StockSerialItems.php?Serialised=Yes&amp;Location=' . $MyRow['loccode'] . '&amp;StockID=' .$StockID . '">' . __('Serial Numbers') . '</tr>';
 		} elseif ($Controlled==1){
 			echo '<td><a target="_blank" href="' . $RootPath . '/StockSerialItems.php?Location=' . $MyRow['loccode'] . '&amp;StockID=' .$StockID . '">' . __('Batches') . '</a></td></tr>';
-		}else{
+		} else {
 			echo '</tr>';
 		}
 

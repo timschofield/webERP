@@ -259,7 +259,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 					$_SESSION['LogoFile'] = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoKLBlink.png';
 				} elseif (file_exists($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/LogoKLBlink.jpg')) {
 					$_SESSION['LogoFile'] = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoKLBlink.jpg';
-				}else{
+				} else {
 					$_SESSION['LogoFile'] = 'companies/' .  $_SESSION['DatabaseName'] . '/LogoPTADU.jpg';
 				}
 			}

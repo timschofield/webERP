@@ -90,8 +90,7 @@ if (DB_num_rows($Result) == 0) {
 		</div>';
 	include ('includes/footer.php');
 	exit();
-}
-elseif (DB_num_rows($Result) == 1) {
+} elseif (DB_num_rows($Result) == 1) {
 
 	$ListCount = 1;
 
@@ -237,8 +236,7 @@ if (DB_num_rows($Result) > 0) {
 			WHERE salesorders.orderno = '" . $_GET['TransNo'] . "'";
 	$Result = DB_query($SQL);
 
-}
-else {
+} else {
 	$Title = __('Print Packing Slip Error');
 	include ('includes/header.php');
 	echo '<p>' . __('There were no outstanding items on the order to deliver. A dispatch note cannot be printed') . '<br /><a href="' . $RootPath . '/SelectSalesOrder.php">' . __('Print Another Packing Slip/Order') . '</a>' . '<br />' . '<a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';

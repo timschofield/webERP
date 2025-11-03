@@ -13,7 +13,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$FromDate = FormatDateForSQL(DateAdd(date($_SESSION['DefaultDateFormat']),'d', -filter_number_format($_POST['NumberOfDays'])));
 	if ($_POST['StockCat']=='All'){
 		$WhereStockCat = "";
-	}else{
+	} else {
 		$WhereStockCat = " AND stockmaster.categoryid = '" . $_POST['StockCat'] ."'";
 	}
 
@@ -48,7 +48,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 									AND stockmoves.qty >0)
 				GROUP BY stockmaster.stockid
 				ORDER BY stockmaster.stockid";
-	}else{
+	} else {
 		$WhereLocation = '';
 		if (sizeof($_POST['Location']) == 1) {
 			$WhereLocation = " AND locstock.loccode ='" . $_POST['Location'][0] . "' ";
@@ -236,7 +236,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$LocationResult = DB_query($SQL);
 	$i=0;
 	while ($MyRow = DB_fetch_array($LocationResult)) {
-		if(isset($_POST['Location'][$i]) AND $MyRow['loccode'] == $_POST['Location'][$i]){
+		if (isset($_POST['Location'][$i]) AND $MyRow['loccode'] == $_POST['Location'][$i]){
 		echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 		$i++;
 		} else {

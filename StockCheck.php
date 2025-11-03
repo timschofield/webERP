@@ -158,8 +158,7 @@ if (isset($_POST['PrintPDF'])) {
 	// Output PDF inline in browser
 	$DomPDF->stream($FileName, array('Attachment' => false));
 
-}
-else { /*The option to print PDF was not hit */
+} else { /*The option to print PDF was not hit */
 
 	$Title = __('Stock Check Sheets');
 	$ViewTopic = 'Inventory';
