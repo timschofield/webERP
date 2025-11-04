@@ -1304,3 +1304,59 @@ function KLPrintReturnTransferToKantor($Reference){
 
 	return $TextToPrint;
 }
+
+function KLPrintCustomerServiceReceiptHeader($StockID, $Description, $Fee, $Message1, $Message2, $Warranty){
+	include('includes/KLESCPOSCommands.php');
+	
+	$TextToPrint = $InitPrinter . $CenteredJustified;
+	// name of shop
+	$TextToPrint .= KLPrintNameOfShop();
+	$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . 'SERVICE RECEIPT' . $NewLine;
+	// warning if it is a TEST
+	$TextToPrint .= KLPrintReceiptTestWarning("SERVICE RECEIPT"). $NewLine . $CenteredJustified;
+	$TextToPrint .= DisplayDateTime() . $NewLine;
+	$TextToPrint .= 'SPG Code: ' . $_SESSION['SalesmanLogin'] . $NewLine;
+	$TextToPrint .= 'Shop Code: ' . substr($_SESSION['UserStockLocation'],3,2) . $NewLine . $NewLine;
+	$TextToPrint .= $LeftJustified;
+	$TextToPrint .= 'Item code: ' . $StockID . $NewLine;
+	$TextToPrint .= 'Item description: ' . $Description . $NewLine . $NewLine;
+	$TextToPrint .= $Message1 . ' ' . $Message2 . $NewLine . $NewLine;
+	if ($Warranty == 'NO' and $Fee > 0){
+		$TextToPrint .= 'Fee: ' . number_format($Fee) . ' IDR' . $NewLine . $NewLine;
+	}
+
+	return $TextToPrint;
+}
+
+function KLPrintCustomerServiceReceiptCustomerFooter(){
+	include('includes/KLESCPOSCommands.php');
+	
+	$TextToPrint .= 'We will contact you in a few days, blah, blah, blah: ' . $NewLine . $NewLine;
+
+	// warning if it is a TEST
+	$TextToPrint .= KLPrintReceiptTestWarning("SERVICE RECEIPT"). $NewLine . $LeftJustified;
+	$TextToPrint .= $NewLine;
+	$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . $CenteredJustified . "CUSTOMER COPY" . $NewLine;
+	$TextToPrint .= $CutPaper;
+
+	return $TextToPrint;
+}
+
+function KLPrintCustomerServiceReceiptShopFooter($ServiceCode){
+	include('includes/KLESCPOSCommands.php');
+	
+	$TextToPrint .= $LeftJustified;
+	$TextToPrint .= 'Customer name: ' . $NewLine . $NewLine;
+	$TextToPrint .= 'Customer phone: ' . $NewLine . $NewLine;
+	$TextToPrint .= 'Customer email: ' . $NewLine . $NewLine;
+
+	$TextToPrint .= 'Service Code: ' . $ServiceCode . $NewLine;
+
+	// warning if it is a TEST
+	$TextToPrint .= KLPrintReceiptTestWarning("SERVICE RECEIPT"). $NewLine . $LeftJustified;
+	$TextToPrint .= $NewLine;
+	$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . $CenteredJustified . "SHOP COPY" . $NewLine;
+	$TextToPrint .= $CutPaper;
+
+	return $TextToPrint;
+}
