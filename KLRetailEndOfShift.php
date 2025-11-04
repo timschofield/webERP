@@ -11,7 +11,6 @@ include('includes/KLPOSGeneral.php');
 include('includes/KLUIGeneralFunctions.php');
 
 include('includes/WebClientPrint/WebClientPrint.php');
-use Neodynamic\SDK\Web\WebClientPrint;
 include('includes/KLESCPOSCommands.php');
 
 $Today = date('Y-m-d');

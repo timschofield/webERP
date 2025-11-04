@@ -19,7 +19,6 @@ include('includes/KLEmails.php');
 include('includes/KLPOSGeneral.php');
 
 include('includes/WebClientPrint/WebClientPrint.php');
-use Neodynamic\SDK\Web\WebClientPrint;
 include('includes/KLESCPOSCommands.php');
 
 if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){

@@ -10,10 +10,9 @@ include('includes/StockFunctions.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLPOSGeneral.php');
-include('includes/KLESCPOSCommands.php');
 
 include('includes/WebClientPrint/WebClientPrint.php');
-use Neodynamic\SDK\Web\WebClientPrint;
+include('includes/KLESCPOSCommands.php');
 
 $InputError = false;
 $ErrorMessage = '';
