@@ -970,7 +970,7 @@ function KLPrintReceiptHeader($Identifier, $OrderNo){
 *   $OrderNo - The order number
 * Returns: The formatted footer text for the customer receipt copy
 **************************************************************************************************************/
-function KLPrintReceiptCustomerFooter($Identifier, $OrderNo){
+function KLPrintReceiptCustomerFooter($Identifier){
 
 	include('includes/KLESCPOSCommands.php');
 	
@@ -1040,7 +1040,7 @@ function KLPrintReceiptCustomerFooter($Identifier, $OrderNo){
 *   $OrderNo - The order number
 * Returns: The formatted footer text for the shop receipt copy
 **************************************************************************************************************/
-function KLPrintReceiptShopFooter($Identifier, $OrderNo){
+function KLPrintReceiptShopFooter(){
 
 	include('includes/KLESCPOSCommands.php');
 
@@ -1205,11 +1205,11 @@ function DoubleJustified($Left, $Right, $Lenght, $Fillchar){
 function GetItemPackagingDescription($StockID){
 	$ErrMsg = __('Can not retrieve the packaging description because');
 
-$SQL = "SELECT klp.packagingdescription 
-		FROM stockmaster AS sm
-		INNER JOIN klpackaging AS klp 
-			ON klp.packagingcode = sm.klpackaging
-		WHERE sm.stockid = '" . $StockID . "'";
+	$SQL = "SELECT klp.packagingdescription 
+			FROM stockmaster AS sm
+			INNER JOIN klpackaging AS klp 
+				ON klp.packagingcode = sm.klpackaging
+			WHERE sm.stockid = '" . $StockID . "'";
 	$Result = DB_query($SQL, $ErrMsg, '', true);
 	if (DB_num_rows($Result) == 0){
 		// no packaging description found, return empty string
