@@ -66,6 +66,7 @@ $SQL = "SELECT salesorders.customerref,
 				salesorders.branchcode,
 				locations.taxprovinceid,
 				locations.locationname,
+				currencies.currency,
 				currencies.decimalplaces AS currdecimalplaces
 			FROM salesorders INNER JOIN debtorsmaster
 			ON salesorders.debtorno=debtorsmaster.debtorno
@@ -148,7 +149,7 @@ foreach ($CompanyAddress as $line) {
 
 $HTML .= '<div class="header">
 <div class="subheader">' . __('Quotation No.') . ': ' . $_GET['QuotationNo'] . '</div>
-<div class="small">' . __('Date') . ': ' . date('Y-m-d', strtotime($MyRow['quotedate'])) . '</div>
+<div class="small">' . __('Date') . ': ' . date($_SESSION['DefaultDateFormat'], strtotime($MyRow['quotedate'])) . '</div>
 <div class="small">' . __('Customer') . ': ' . htmlspecialchars($MyRow['name']) . '</div>
 <div class="small">' . __('Customer Ref') . ': ' . htmlspecialchars($MyRow['customerref']) . '</div>
 <div class="small">' . __('Deliver To') . ': ' . htmlspecialchars($MyRow['deliverto']) . '</div>
@@ -205,12 +206,12 @@ while ($MyRow2 = DB_fetch_array($Result)) {
 	<tr>
 		<td>' . htmlspecialchars($MyRow2['stkcode']) . '</td>
 		<td>' . htmlspecialchars($MyRow2['description']) . '<br /><span class="small">' . nl2br(htmlspecialchars($MyRow2['narrative'])) . '</span></td>
-		<td style="text-align:right;">' . $DisplayQty . '</td>
-		<td style="text-align:right;">' . $DisplayPrice . '</td>
-		<td style="text-align:right;">' . $DisplayDiscount . '</td>
-		<td style="text-align:right;">' . $DisplayTaxClass . '</td>
-		<td style="text-align:right;">' . $DisplayTaxAmount . '</td>
-		<td style="text-align:right;">' . $DisplayTotal . '</td>
+		<td class="number">' . $DisplayQty . '</td>
+		<td class="number">' . $DisplayPrice . '</td>
+		<td class="number">' . $DisplayDiscount . '</td>
+		<td class="number">' . $DisplayTaxClass . '</td>
+		<td class="number">' . $DisplayTaxAmount . '</td>
+		<td class="number">' . $DisplayTotal . '</td>
 	</tr>';
 }
 
@@ -230,18 +231,20 @@ if ($ListCount == 0){
 $HTML .= '
 <table style="width:60%; margin-left:auto; margin-bottom:20px;">
 	<tr>
-		<th style="text-align:right;">' . __('Quotation Excluding Tax') . '</th>
-		<td style="text-align:right;">' . locale_number_format($QuotationTotalEx,$MyRow['currdecimalplaces']) . '</td>
+		<th class="number">' . __('Quotation Excluding Tax') . '</th>
+		<td class="number">' . locale_number_format($QuotationTotalEx,$MyRow['currdecimalplaces']) . '</td>
 	</tr>
 	<tr>
-		<th style="text-align:right;">' . __('Total Tax') . '</th>
-		<td style="text-align:right;">' . locale_number_format($TaxTotal,$MyRow['currdecimalplaces']) . '</td>
+		<th class="number">' . __('Total Tax') . '</th>
+		<td class="number">' . locale_number_format($TaxTotal,$MyRow['currdecimalplaces']) . '</td>
 	</tr>
 	<tr>
-		<th style="text-align:right;">' . __('Quotation Including Tax') . '</th>
-		<td style="text-align:right;">' . locale_number_format($QuotationTotal,$MyRow['currdecimalplaces']) . '</td>
+		<th class="number">' . __('Quotation Including Tax') . '</th>
+		<td class="number">' . locale_number_format($QuotationTotal,$MyRow['currdecimalplaces']) . '</td>
 	</tr>
 </table>';
+
+$HTML .= '<div class="subheader">' . __('All amounts are stated in') . ' ' . $MyRow['currency'] . '</div>';
 
 // Notes
 if (mb_strlen(trim($MyRow['comments'])) > 1) {
