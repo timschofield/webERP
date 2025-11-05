@@ -21,14 +21,14 @@ If (!isset($_GET['EmailType']) OR $_GET['EmailType']==''){
 
 if ($_GET['EmailType']!='NoSendThankYou'){
 	// if we send an email different than "no send thank you email", we have to prepare the mail text
-	$Headers = "From: " . $_SESSION['ShopName'] . " <" . strip_tags($_SESSION['ShopManagerEmail']) . ">\r\n";
-	$Headers .= "Reply-To: " . $_SESSION['ShopName'] . " <". strip_tags($_SESSION['ShopManagerEmail']) . ">\r\n";
-	$Headers .= "Cc: " . $_SESSION['ShopName'] . " <". strip_tags($_SESSION['ShopManagerEmail']) . ">\r\n";
+	$Headers = "From: " .  " <" . strip_tags($_SESSION['ShopManagerEmail']) . ">\r\n";
+	$Headers .= "Reply-To: " .  " <". strip_tags($_SESSION['ShopManagerEmail']) . ">\r\n";
+	$Headers .= "Cc: " .  " <". strip_tags($_SESSION['ShopManagerEmail']) . ">\r\n";
 	$Headers .= "MIME-Version: 1.0\r\n";
 	$Headers .= "Content-Type: text/html; charset=utf-8\r\n";
 
 	if ($_GET['EmailType']=='NoOrderPlaced'){
-		$MailSubject = $_SESSION['ShopName'] . ' ' . __('Customer Registration');
+		$MailSubject = __('Customer Registration');
 		$SQL = "SELECT debtorsmaster.debtorno,
 						debtorsmaster.name AS customername,
 						debtorsmaster.clientsince,
@@ -45,7 +45,7 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 					AND debtorsmaster.debtorno='" . $_GET['TransNo'] . "'";
 					
 	} elseif ($_GET['EmailType']=='RemindBankTransfer'){
-		$MailSubject = $_SESSION['ShopName'] . ' ' . __('Bank Transfer Confirmation needed for Order') . ': ' . locale_number_format($_GET['CustomerOrder'],0) . ' (' . locale_number_format($_GET['TransNo'],0) . ')';
+		$MailSubject = __('Bank Transfer Confirmation needed for Order') . ': ' . locale_number_format($_GET['CustomerOrder'],0) . ' (' . locale_number_format($_GET['TransNo'],0) . ')';
 		$SQL = "SELECT salesorders.debtorno,
 						salesorders.customerref,
 						salesorders.comments,
@@ -86,7 +86,7 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 					AND salesorders.orderno='" . $_GET['TransNo'] . "'";
 					
 	} elseif ($_GET['EmailType']=='PaymentConfirmation'){
-		$MailSubject = $_SESSION['ShopName'] . ' ' . __('Payment Confirmation for Order') . ': ' . locale_number_format($_GET['CustomerOrder'],0) . ' (' . locale_number_format($_GET['TransNo'],0) . ')';
+		$MailSubject = __('Payment Confirmation for Order') . ': ' . locale_number_format($_GET['CustomerOrder'],0) . ' (' . locale_number_format($_GET['TransNo'],0) . ')';
 		$SQL = "SELECT salesorders.debtorno,
 					salesorders.customerref,
 					salesorders.comments,
@@ -131,7 +131,7 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 				AND salesorders.orderno='" . $_GET['TransNo'] . "'";
 		
 	} elseif ($_GET['EmailType']=='TrackingConfirmation'){
-		$MailSubject = $_SESSION['ShopName'] . ' ' . __('Shipment Confirmation for Order') . ': ' . locale_number_format($_GET['CustomerOrder'],0) . ' (' . locale_number_format($_GET['TransNo'],0) . ')';
+		$MailSubject = __('Shipment Confirmation for Order') . ': ' . locale_number_format($_GET['CustomerOrder'],0) . ' (' . locale_number_format($_GET['TransNo'],0) . ')';
 		$SQL = "SELECT salesorders.debtorno,
 						salesorders.customerref,
 						salesorders.comments,
@@ -175,7 +175,7 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 					AND (debtortrans.type = 10) 
 					AND salesorders.orderno='" . $_GET['TransNo'] . "'";
 	} elseif ($_GET['EmailType']=='ThankYouOrder'){
-		$MailSubject = $_SESSION['ShopName'] . ' ' . __(' Thank You!') ;
+		$MailSubject = __(' Thank You!');
 		$SQL = "SELECT salesorders.debtorno,
 						salesorders.customerref,
 						salesorders.comments,
