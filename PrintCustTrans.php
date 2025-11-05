@@ -567,17 +567,12 @@ if (isset($_GET['View']) and $_GET['View'] == 'Yes') {
 	if ($_GET['Email']!='') {
 		$ConfirmationText = __('Please find attached the') . $InvOrCredit . '_' . ($FromTransNo-1);
 		$EmailSubject = $PdfFileName;
-		/// @todo drop this IF - it's handled within SendEmailFromWebERP
-		if ($_SESSION['SmtpSetting']==0) {
-			mail($_GET['Email'],$EmailSubject,$ConfirmationText);
-		} else {
-			$Success = SendEmailFromWebERP($_SESSION['CompanyRecord']['email'],
-								array($_GET['Email'] =>  ''),
-								$EmailSubject,
-								$ConfirmationText,
-								array($PdfFileName)
-							);
-		}
+		$Success = SendEmailFromWebERP($_SESSION['CompanyRecord']['email'],
+							array($_GET['Email'] =>  ''),
+							$EmailSubject,
+							$ConfirmationText,
+							array($PdfFileName)
+						);
 	}
 	unlink($PdfFileName);
 
