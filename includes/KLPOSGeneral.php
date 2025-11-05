@@ -1331,7 +1331,7 @@ function KLPrintCustomerServiceReceiptHeader($StockID, $Description, $Fee, $Mess
 function KLPrintCustomerServiceReceiptCustomerFooter(){
 	include('includes/KLESCPOSCommands.php');
 	
-	$TextToPrint .= 'We will contact you in a few days, blah, blah, blah: ' . $NewLine . $NewLine;
+	$TextToPrint .= 'We will contact you in 3-5 working days.' . $NewLine . $NewLine;
 
 	// warning if it is a TEST
 	$TextToPrint .= KLPrintReceiptTestWarning("SERVICE RECEIPT"). $NewLine . $LeftJustified;
@@ -1349,6 +1349,7 @@ function KLPrintCustomerServiceReceiptShopFooter($ServiceCode){
 	$TextToPrint .= 'Customer name: ' . $NewLine . $NewLine;
 	$TextToPrint .= 'Customer phone: ' . $NewLine . $NewLine;
 	$TextToPrint .= 'Customer email: ' . $NewLine . $NewLine;
+	$TextToPrint .= 'Pick up date: ' . $NewLine . $NewLine;
 
 	$TextToPrint .= 'Service Code: ' . $ServiceCode . $NewLine;
 
