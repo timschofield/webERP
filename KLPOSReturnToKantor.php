@@ -120,13 +120,15 @@ if (isset($_POST['Submit']) AND $InputError==False){
 								shipqty,
 								shipdate,
 								shiploc,
-								recloc)
+								recloc,
+								reason)
 						VALUES ('" . $_POST['Trf_ID'] . "',
 							'" . $_POST['StockID' . $i] . "',
 							'" . round(filter_number_format($_POST['StockQTY' . $i]), $DecimalRow['decimalplaces']) . "',
 							'" . date('Y-m-d H-i-s') . "',
 							'" . $_POST['FromStockLocation']  ."',
-							'" . $_POST['ToStockLocation'] . "')";
+							'" . $_POST['ToStockLocation'] . "',
+							'" . (isset($_POST['ReasonReturn' . $i]) ? $_POST['ReasonReturn' . $i] : '') . "')";
 			$ErrMsg = __('CRITICAL ERROR') . '! ' . __('Unable to enter Location Transfer record for'). ' '.$_POST['StockID' . $i];
 			$ResultLocShip = DB_query($SQL, $ErrMsg);
 
@@ -183,12 +185,13 @@ if (isset($_POST['Submit']) AND $InputError==False){
 				<th colspan="4"><h3>' . __('Return Transfer from Shop to Kantor') . '</h3></th>
 			</tr>';
 	echo '<tr>
-			<th colspan="4"><input type="hidden" name="Trf_ID" value="' . $Trf_ID . '" /><h3>' .  __('Return Transfer from Shop to Kantor').' # '. $Trf_ID. '</h3></th>
+			<th colspan="5"><input type="hidden" name="Trf_ID" value="' . $Trf_ID . '" /><h3>' .  __('Return Transfer from Shop to Kantor').' # '. $Trf_ID. '</h3></th>
 		</tr>';
 	echo '<tr>
 			<th class="SortedColum">' . __('Code') . '</th>
 			<th class="SortedColum">' . __('Quantity') . '</th>
-			<th colspan="2"></th>
+			<th class="SortedColum">' . __('Reason for Return') . '</th>
+			<th colspan="3"></th>
 		</tr>
 		</thead>
 		<tbody>';
@@ -206,6 +209,29 @@ if (isset($_POST['Submit']) AND $InputError==False){
 			echo '<tr>
 					<td><input type="text" name="StockID' . $j .'" size="21"  maxlength="20" value="' . $_POST['StockID' . $i] . '" /></td>
 					<td><input type="text" name="StockQTY' . $j .'" size="10" maxlength="10" class="number" value="' . locale_number_format($_POST['StockQTY' . $i],'Variable') . '" /></td>
+					<td><select name="ReasonReturn' . $j .'">';
+			
+			echo '<option value="">' . __('Select Reason') . '</option>';
+			
+			// Add hard-coded options first
+			$SelectedRequested = (isset($_POST['ReasonReturn' . $i]) && $_POST['ReasonReturn' . $i] == 'REQUESTED') ? 'selected="selected"' : '';
+			$SelectedOthers = (isset($_POST['ReasonReturn' . $i]) && $_POST['ReasonReturn' . $i] == 'OTHERS') ? 'selected="selected"' : '';
+			echo '<option value="REQUESTED" ' . $SelectedRequested . '>' . __('Requested by Shop Support Team') . '</option>';
+			echo '<option value="OTHERS" ' . $SelectedOthers . '>' . __('Other reasons') . '</option>';
+			
+			// Get return reasons from database
+			$ReasonSQL = "SELECT servicecode,
+							servicedescription
+						FROM klservicetypes
+						ORDER BY servicedescription";
+			$ReasonResult = DB_query($ReasonSQL);
+			
+			while ($ReasonRow = DB_fetch_array($ReasonResult)) {
+				$Selected = (isset($_POST['ReasonReturn' . $i]) && $_POST['ReasonReturn' . $i] == $ReasonRow['servicecode']) ? 'selected="selected"' : '';
+				echo '<option value="' . $ReasonRow['servicecode'] . '" ' . $Selected . '>Service: ' . $ReasonRow['servicedescription'] . '</option>';
+			}
+			
+			echo '</select></td>
 					<td>' . __('Delete') . '<input type="checkbox" name="Delete' . $j .'" /></td>
 				</tr>';
 			$j++;
@@ -223,6 +249,29 @@ if (isset($_POST['Submit']) AND $InputError==False){
 	echo '<tr>
 			<td><input type="text" name="StockID' . $j .'" autofocus="autofocus" size="21"  maxlength="20" value="' . $_POST['StockID' . $j] . '" /></td>
 			<td><input type="text" name="StockQTY' . $j .'" size="10" maxlength="10" class="number" value="' . locale_number_format($_POST['StockQTY' . $j]) . '" /></td>
+			<td><select name="ReasonReturn' . $j .'">';
+	
+	echo '<option value="">' . __('Select Reason') . '</option>';
+	
+	// Add hard-coded options first for new row
+	$SelectedRequestedNew = (isset($_POST['ReasonReturn' . $j]) && $_POST['ReasonReturn' . $j] == 'REQUESTED') ? 'selected="selected"' : '';
+	$SelectedOthersNew = (isset($_POST['ReasonReturn' . $j]) && $_POST['ReasonReturn' . $j] == 'OTHERS') ? 'selected="selected"' : '';
+	echo '<option value="REQUESTED" ' . $SelectedRequestedNew . '>' . __('Requested by Shop Support Team') . '</option>';
+	echo '<option value="OTHERS" ' . $SelectedOthersNew . '>' . __('Other reasons') . '</option>';
+	
+	// Get return reasons from database for new row
+	$ReasonSQL = "SELECT servicecode,
+					servicedescription
+				FROM klservicetypes
+				ORDER BY servicedescription";
+	$ReasonResult = DB_query($ReasonSQL);
+	
+	while ($ReasonRow = DB_fetch_array($ReasonResult)) {
+		$Selected = (isset($_POST['ReasonReturn' . $j]) && $_POST['ReasonReturn' . $j] == $ReasonRow['servicecode']) ? 'selected="selected"' : '';
+		echo '<option value="' . $ReasonRow['servicecode'] . '" ' . $Selected . '>Service: ' . $ReasonRow['servicedescription'] . '</option>';
+	}
+	
+	echo '</select></td>
 		</tr>';
 	$j++;
 

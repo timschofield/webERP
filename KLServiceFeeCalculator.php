@@ -191,12 +191,13 @@ if (($StockID != '') AND ($ServiceCode != '')){
 	$TextToPrint .= KLPrintCustomerServiceReceiptHeader($StockID, $MyRow['description'], $Fee, $Message1, $Message2, $Warranty);
 	$TextToPrint .= KLPrintCustomerServiceReceiptShopFooter($ServiceCode);
 
+	//################## PRINTING STUFF ##################### 
 	$identifier=GetPOSIdentifier();
 	$FileName = GetFilenameFromPOSIdentifier($identifier);  
 	file_put_contents($FileName, $TextToPrint);
 	$TextActionToPrint = 'Print the Service Receipts';
-
 	include('includes/KLSilentPrinting.php');
+	//################## PRINTING STUFF ##################### 
 
 }
 
