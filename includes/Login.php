@@ -119,7 +119,8 @@ if ($AllowCompanySelectionBox === 'Hide') {
 
 if ($AllowCompanySelectionBox != 'Hide') {
 	echo '<label for="CompanySelect">', __('Company'), ':</label>';
-	echo '<input type="text" id="CompanySelect" readonly value="' . $CompanyName[$DefaultCompany] . '" />';
+	$DefaultCompanyName = isset($CompanyName[$DefaultCompany]) ? $CompanyName[$DefaultCompany] : $DefaultCompany;
+	echo '<input type="text" id="CompanySelect" readonly value="' . $DefaultCompanyName . '" />';
 	if (!isset($ShowLogoAtLogin) OR ($ShowLogoAtLogin == true)) {
 		echo '<ol id="dropdownlist" class="dropdownlist" style="padding-bottom:10px;">';
 	} else {
