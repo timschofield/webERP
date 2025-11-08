@@ -28,6 +28,8 @@ if ($LanguagesArray[$DefaultLanguage]['Direction'] == 'rtl') {
 }
 echo '</head>';
 
+$_SESSION['FormID'] = sha1(uniqid(mt_rand(), true));
+
 echo '<body>
 	<div id="container">
 		<div id="login_logo">
@@ -35,7 +37,8 @@ echo '<body>
 		</div>
 		<div id="login_box">
 			<form action="' . $RootPath . '/index.php" name="LogIn" method="post" class="noPrint">
-			<input type="hidden" name="FormID" value="', sha1(uniqid(mt_rand(), true)), '" />';
+			<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />
+			<input type="hidden" name="NewLogin" value="Yes" />';
 
 if (isset($_COOKIE['Login'])) {
 	$DefaultCompany = $_COOKIE['Login'];

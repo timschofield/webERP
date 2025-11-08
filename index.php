@@ -3,7 +3,9 @@
 $PageSecurity = 0;
 
 require(__DIR__ . '/includes/session.php');
-
+if (isset($_POST['NewLogin']) and !isset($_SESSION['FormID'])) {
+	$_SESSION['FormID'] = sha1(uniqid(mt_rand(), true));
+}
 /*The module link codes are hard coded in a switch statement below to determine the options to show for each tab */
 include('includes/MainMenuLinksArray.php');
 
