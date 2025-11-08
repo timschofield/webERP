@@ -4,6 +4,7 @@
 KL RICARD MODIFICATIONS:
 - not use items from categories SHCONS, SHPACK
 - send email if destination = location SERDE (to be destroyed)
+- added Reason to loctransfers table
 ***************************************************************************************/
 
 // StockDispatch.php - Report of parts with overstock at one location that can be transferred
@@ -160,9 +161,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	// Header
 	if ($_POST['Strategy'] == 'OverFrom') {
 		$Strategy = __('Overstock items at ') . $FromLocation;
-	}
-	else {
+		$Reason = 'DISPATCH_OVERSTOCK'; // KL RICARD - added Reason to loctransfers table		
+	} else {
 		$Strategy = __('Items needed at ') . $ToLocation;
+		$Reason = 'DISPATCH_NEEDED_BY_RL'; // KL RICARD - added Reason to loctransfers table
 	}
 	$HTML .= '<meta name="author" content="WebERP " . $Version">
 					<meta name="Creator" content="webERP https://www.weberp.org">
@@ -232,18 +234,21 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		if ($ShipQty > 0) {
 			if ($_POST['ReportType'] == 'Batch') {
 				// Insert loctransfers record
+				// KL RICARD - added Reason to loctransfers table
 				$SQL2 = "INSERT INTO loctransfers (reference,
 					stockid,
 					shipqty,
 					shipdate,
 					shiploc,
-					recloc)
+					recloc,
+					reason)
 				VALUES ('" . $Trf_ID . "',
 					'" . $MyRow['stockid'] . "',
 					'" . $ShipQty . "',
 					'" . $Now . "',
 					'" . $_POST['FromLocation'] . "',
-					'" . $_POST['ToLocation'] . "')";
+					'" . $_POST['ToLocation'] . "',
+					'" . $Reason . "')";
 				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('Unable to enter Location Transfer record for') . ' ' . $MyRow['stockid'];
 				$ResultLocShip = DB_query($SQL2, $ErrMsg);
 				/* KL RICARD Send emails to team if transfer from / to special location */

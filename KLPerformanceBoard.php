@@ -277,6 +277,10 @@ if ($ProcessSection02){
 		QualityIssuesByReason(30, $RootPath);
 		TimeNeededForExecution("QualityIssuesByReason", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		TransferReasons(30, $RootPath);
+		TimeNeededForExecution("TransferReasons", $StartTime, $KL_SystemAdmin);
+		$NumberOfTestExecuted++;
+
 	}
 
 	if ($KL_SystemAdmin){

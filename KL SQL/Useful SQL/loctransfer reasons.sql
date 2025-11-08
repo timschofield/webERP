@@ -9,4 +9,47 @@ UPDATE `klservicetypes`
 SET `servicecode` = CONCAT('SERV_', `servicecode`)
 WHERE `servicecode` NOT LIKE 'SERV_%';
 
+ALTER TABLE `klkpidescriptions` CHANGE `kpicode` `kpicode` VARCHAR(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL;
+ALTER TABLE `klkpi` CHANGE `kpicode` `kpicode` VARCHAR(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL;
+
+INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-DISPATCH_OVERSTOCK-30-PCS', 'Manual Dispatch Overstock');
+INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-DISPATCH_NEEDED_BY_RL-30-PCS', 'Manual Dispatch Needed by Reorder Level');
+INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-SMART_NEEDED_BY_RL-30-PCS', 'Daily Cron Job From Kantor Needed in Shop by Reorder Level');
+INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-SMART_RETURN_OVERSTOCK-30-PCS', 'Daily Cron Job Return Overstock from Shop to Kantor');
+INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-SERV__LAINLAIN-30-PCS', 'Servis Lain Lain');
+INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-SERV_BENTUKBENGKOK-30-PCS', 'Bentuk perak bengkok');
+INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-SERV_CRYSTALLEPAS-30-PCS', 'Crystal / sircon lepas');
+INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-SERV_BERUBAHWARNA-30-PCS', 'Item Berubah Warna');
+INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-SERV_KARETLONGGAR-30-PCS', 'Karet / Elastis longgar');
+INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-SERV_KOMPONENLEPAS-30-PCS', 'Komponen lepas');
+INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-SERV_KOMPONENPECAH-30-PCS', 'Komponen pecah');
+INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-SERV_KOMPONENRUSAK-30-PCS', 'Komponen rusak');
+INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-SERV_PATRI-30-PCS', 'Las / Patri');
+INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-SERV_LOCKRUSAK-30-PCS', 'Lock (lobster) Rusak');
+INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-SERV_MAGNETLEPAS-30-PCS', 'Magnet Lepas');
+INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-SERV_PERAKKOTOR-30-PCS', 'Perak kotor');
+INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-SERV_KURANGSHINNY-30-PCS', 'Perak kurang shinny');
+INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-SERV_RANTAIPUTUS-30-PCS', 'Rantai perak putus');
+INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-SERV_TALILUSUH-30-PCS', 'Tali Putus/Rusak');
+INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-SERV_WIREBERKARAT-30-PCS', 'Wire berkarat');
+INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-REQUESTED_SS-30-PCS', 'Requested by Shop Support Team');
+INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-OTHERS_SPG-30-PCS', 'Return from shop by any other reason');
+INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-TOTAL-30-PCS', 'Total items transferred in last 30 days');
+
+
 COMMIT;
+
+
+TABLE `loctransfers` (
+  `loctransferid` int(11) NOT NULL,
+  `reference` int(11) NOT NULL DEFAULT 0,
+  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `shipqty` double NOT NULL DEFAULT 0,
+  `recqty` double NOT NULL DEFAULT 0,
+  `shipdate` datetime NOT NULL DEFAULT '1000-01-01 00:00:00',
+  `recdate` datetime NOT NULL DEFAULT '1000-01-01 00:00:00',
+  `shiploc` varchar(7) NOT NULL DEFAULT '',
+  `recloc` varchar(7) NOT NULL DEFAULT '',
+  `pendingqty` double GENERATED ALWAYS AS (`shipqty` - `recqty`) STORED,
+  `reason` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Stores Shipments To And From Locations';

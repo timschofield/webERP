@@ -38,6 +38,7 @@ RoundPackagingTransfer - Rounds packaging transfer quantity
 SQLFilterStockmasterForOnlineShop - Provides SQL filtering for online shop
 ShowTotalItemsMoving - Shows total items moving to discount
 StockAdjustmentsByReason - Shows stock adjustments by reason during the last X days
+TransferReasons - Shows location transfers by reason during the last X days
 TransfersDelayed - Shows transfers delayed more than specified days
 WrongStandardCost - Shows items with wrong standard cost
 **************************************************************************************************/
@@ -4233,7 +4234,75 @@ function StockAdjustmentsByReason($Days){
 	echo '</tfooter>
 		</table>
 		</div>';
-}	
+}
+
+/**************************************************************************************************************
+* Brief description: Displays a table summarizing location transfers, grouped by the reason for transfer,
+* within a specified number of past days. It shows the total quantity transferred for each reason,
+* the daily average, and uses GetItemTransferReason function to get transfer reason descriptions.
+* Parameters:
+*   - $Days (int): The number of past days to analyze for location transfers.
+*   - $RootPath (string): The root path of the application, used for generating links.
+* Returns: None
+**************************************************************************************************************/
+function TransferReasons($Days){
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$Days));
+
+	$SQL = "SELECT reason,
+				SUM(shipqty) AS totaltransferred
+			FROM loctransfers
+			WHERE shipdate >= '" . $StartDate . "'
+				AND reason IS NOT NULL
+				AND reason != ''
+			GROUP BY reason
+			ORDER BY totaltransferred DESC";
+
+	$TotalTransferred = 0;
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
+		$TableTitleText = __('# Items transferred by Reason during the last ') . $Days . ' days';
+		ShowTableTitle($TableTitleText);
+		echo '<div>';
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . __('Reason Description') . '</th>
+						<th class="SortedColumn">' . __('# Items transferred') . '</th>
+						<th class="SortedColumn">' . __('Daily Average') . '</th>
+				</tr>
+				</thead>
+				<tbody>';
+		while ($MyRow = DB_fetch_array($Result)) {
+			$ReasonDescription = GetItemTransferReason($MyRow['reason']);
+			echo '<tr class="striped_row">
+					<td>' . $ReasonDescription . '</td>
+					<td class="number">' . locale_number_format($MyRow['totaltransferred'],0) . '</td>
+					<td class="number">' . locale_number_format($MyRow['totaltransferred'] / $Days, 1) . '</td>
+				</tr>';
+
+			$TotalTransferred += $MyRow['totaltransferred'];
+
+			if ($Days == 30) {
+				InsertKPI('TRANS-'.$MyRow['reason'].'-30-PCS', $MyRow['totaltransferred']);
+			}
+		}
+	}
+
+	if ($Days == 30) {
+		InsertKPI('TRANS-TOTAL-30-PCS', $TotalTransferred);
+	}
+
+	echo '</tbody>
+		<tfooter>';
+	echo '<tr class="striped_row">
+			<td>Total</td>
+			<td class="number">' . locale_number_format($TotalTransferred, 0) . '</td>
+			<td class="number">' . locale_number_format($TotalTransferred / $Days, 1) . '</td>
+		</tr>';
+	 echo '</tfooter>
+		</table>
+		</div>';
+}
 
 function TimeNeededForExecution($FunctionName, $StartTime, $AuthorizedRole) {
 	if ($AuthorizedRole) {

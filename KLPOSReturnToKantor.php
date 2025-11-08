@@ -216,8 +216,8 @@ if (isset($_POST['Submit']) AND $InputError==False){
 			// Add hard-coded options first
 			$SelectedRequested = (isset($_POST['ReasonReturn' . $i]) && $_POST['ReasonReturn' . $i] == 'REQUESTED') ? 'selected="selected"' : '';
 			$SelectedOthers = (isset($_POST['ReasonReturn' . $i]) && $_POST['ReasonReturn' . $i] == 'OTHERS') ? 'selected="selected"' : '';
-			echo '<option value="REQUESTED" ' . $SelectedRequested . '>' . __('Requested by Shop Support Team') . '</option>';
-			echo '<option value="OTHERS" ' . $SelectedOthers . '>' . __('Other reasons') . '</option>';
+			echo '<option value="REQUESTED_SS" ' . $SelectedRequested . '>' . __('Requested by Shop Support Team') . '</option>';
+			echo '<option value="OTHERS_SPG" ' . $SelectedOthers . '>' . __('Return by any other reason') . '</option>';
 			
 			// Get return reasons from database
 			$ReasonSQL = "SELECT servicecode,

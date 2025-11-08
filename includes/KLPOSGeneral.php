@@ -10,7 +10,6 @@ FUNCTION LIST (in alphabetical order):
 - DoubleJustified: Helper function for receipt printing to align text left and right
 - GetFilenameFromPOSIdentifier: Converts a POS identifier to a filename
 - GetItemPackagingDescription: Retrieves packaging description for a product
-- GetItemTransferReason: Retrieves transfer reason description from service types table
 - GetPOSIdentifier: Generates a unique identifier for POS transactions
 - InsertItemSoldIntoSalesAnalysis: Records sales data in the sales analysis tables
 - KapalLautRetailAreaSelection: Determines the sales area based on payment method
@@ -1222,29 +1221,6 @@ function GetItemPackagingDescription($StockID){
 }
 
 /**************************************************************************************************************
-* Brief description: Retrieves transfer reason description from service types table
-* Parameters:
-*   $Reason - The reason code to look up
-* Returns: The service description or empty string if not found
-**************************************************************************************************************/
-function GetItemTransferReason($Reason){
-	$ErrMsg = __('Can not retrieve the transfer reason description because');
-
-	$SQL = "SELECT servicedescription 
-			FROM klservicetypes
-			WHERE servicecode = '" . $Reason . "'";
-	$Result = DB_query($SQL, $ErrMsg, '', true);
-	if (DB_num_rows($Result) == 0){
-		// no reason description found, return empty string
-		return '';
-	} else {
-		$MyRow = DB_fetch_row($Result);
-		return $MyRow[0];
-	}
-}
-
-
-/**************************************************************************************************************
 * Brief description: Generates the text for a receipt for a return transfer of items to the main office (Kantor)
 * Parameters:
 *   $Reference - The reference number of the transfer
@@ -1302,7 +1278,7 @@ function KLPrintReturnTransferToKantor($Reference){
 					' x ' . $MyRow['stockid'] . 
 					' - (QOH = ' . GetQuantityOnHand($MyRow['stockid'], $_SESSION['UserStockLocation']) . ')';
 				
-				if (isset($MyRow['reason']) && substr($MyRow['reason'], 0, 5) == 'SERV_'){
+				if (isset($MyRow['reason']) and substr($MyRow['reason'], 0, 5) == 'SERV_'){
 					$ReasonDescription = GetItemTransferReason($MyRow['reason']);
 					if ($ReasonDescription != ''){
 						$TextToPrint .= ' - ' . $ReasonDescription;
