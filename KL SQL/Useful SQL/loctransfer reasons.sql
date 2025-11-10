@@ -36,6 +36,12 @@ INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-REQ
 INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-OTHERS_SPG-30-PCS', 'Return from shop by any other reason');
 INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-TOTAL-30-PCS', 'Total items transferred in last 30 days');
 
+UPDATE `klservicetypes` SET `servicedescription` = 'Barang kotor' WHERE `klservicetypes`.`servicedescription` = 'Perak kotor';
+UPDATE `klservicetypes` SET `servicecode` = 'SERV_KOTOR' WHERE `klservicetypes`.`servicedescription` = 'Barang kotor';
+UPDATE `klkpidescriptions` SET `kpicode` = 'TRANS-SERV_BARANGKOTOR-30-PCS', `kpidescription` = 'Barang kotor' WHERE `klkpidescriptions`.`kpicode` = 'TRANS-SERV_PERAKKOTOR-30-PCS'
+
+INSERT INTO `klservicetypes` (`servicecode`, `servicedescription`, `pricetier01`, `pricetier02`, `pricetier03`) VALUES ('SERV_PRICETAGRUSAK', 'Pricetag rusak', '50000.0000', '75000.0000', '100000.0000')
+INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-SERV_PRICETAGRUSAK-30-PCS', 'Pricetag rusak');
 
 COMMIT;
 
