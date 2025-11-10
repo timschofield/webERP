@@ -485,18 +485,19 @@ function CheckNegativeStock($RootPath){
 	/* Check if there is any negative stock */
 
 	$Total = 0;
-	$SQL = "SELECT stockmaster.stockid,			
-				   stockmaster.description,			
-				   stockmaster.decimalplaces,			
-				   locations.locationname,			
-				   locstock.quantity			
-			FROM stockmaster INNER JOIN locstock 			
-			ON stockmaster.stockid=locstock.stockid			
-			INNER JOIN locations 			
-			ON locstock.loccode = locations.loccode			
-			WHERE locstock.quantity < 0			
-			ORDER BY stockmaster.stockid";
-				
+	$SQL = "SELECT sm.stockid,
+				sm.description,
+				sm.decimalplaces,
+				l.locationname,
+				ls.quantity
+			FROM locstock AS ls
+			INNER JOIN stockmaster AS sm
+				ON sm.stockid = ls.stockid
+			INNER JOIN locations AS l
+				ON l.loccode = ls.loccode
+			WHERE ls.quantity < 0
+			ORDER BY ls.stockid";
+
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		$TableTitleText = __('Items with Negative Stock');
