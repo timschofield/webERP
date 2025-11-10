@@ -101,15 +101,15 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 		$OnOrderRow = DB_fetch_array($OnOrderResult);
 
 		$Shortage = $MyRow['reorderlevel'] - $MyRow['quantity'] - $OnOrderRow['quantityonorder'];
-		$HTML .= '<tr>
-				<td>' . $MyRow['stockid'] . '</td>
-				<td>' . $MyRow['description'] . '</td>
-				<td>' . $MyRow['loccode'] . '</td>
-				<td class="number">' . locale_number_format($MyRow['quantity'], $MyRow['decimalplaces']) . '</td>
-				<td class="number">' . locale_number_format($MyRow['reorderlevel'], $MyRow['decimalplaces']) . '</td>
-				<td class="number">' . locale_number_format($OnOrderRow['quantityonorder'], $MyRow['decimalplaces']) . '</td>
-				<td class="number">' . locale_number_format($Shortage, $MyRow['decimalplaces']) . '</td>
-			</tr>';
+		$HTML .= '<tr class="striped_row">
+					<td>' . $MyRow['stockid'] . '</td>
+					<td>' . $MyRow['description'] . '</td>
+					<td>' . $MyRow['locationname'] . ' (' . $MyRow['loccode'] . ') ' . '</td>
+					<td class="number">' . locale_number_format($MyRow['quantity'], $MyRow['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($MyRow['reorderlevel'], $MyRow['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($OnOrderRow['quantityonorder'], $MyRow['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($Shortage, $MyRow['decimalplaces']) . '</td>
+				</tr>';
 	}
 
 	if (isset($_POST['PrintPDF']) or isset($_POST['Email'])) {
