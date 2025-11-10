@@ -140,10 +140,10 @@ or deletion of the records*/
 	$Result = DB_query($SQL);
 
 	echo '<table class="selection">
-		<tr><th>' .  __('Shipper ID'). '</th><th>' .  __('Shipper Name'). '</th></tr>';
+		<tr><th>' .  __('Shipper ID'). '</th><th>' .  __('Shipper Name'). '</th>
 			<th class="ascending">' .  __('OpenCart Text'). '</th>
 			<th class="ascending">' .  __('PowerTrack Code'). '</th>
-
+		</tr>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
 		printf('<tr class="striped_row">
