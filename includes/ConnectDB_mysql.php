@@ -94,15 +94,18 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 		}
 
 		if (isset($_SESSION['MonthsAuditTrail']) AND $_SESSION['MonthsAuditTrail']>0 AND DB_affected_rows($Result)>0) {
-			if (($SQLArray[0] == 'INSERT' or $SQLArray[0] == 'UPDATE' or $SQLArray[0] == 'DELETE') and $SQLArray[2] != 'audittrail') { // to ensure the auto delete of audit trail history is not logged
+			if (($SQLArray[0] == 'INSERT' or $SQLArray[0] == 'UPDATE' or $SQLArray[0] == 'DELETE') 
+				and ($SQLArray[0] == 'DELETE' and $SQLArray[2] != 'audittrail') // to ensure the auto delete of audit trail history is not logged
+				and ($SQLArray[0] == 'UPDATE' and $SQLArray[1] != 'sessions') //  update sessions and session_data keep clogging the aduit trail without any real benefit, so don't store them
+				and ($SQLArray[0] == 'UPDATE' and $SQLArray[1] != 'session_data')) { 
 				$AuditSQL = "INSERT INTO audittrail (transactiondate,
-								userid,
-								querystring)
-					VALUES('" . Date('Y-m-d H:i:s') . "',
-						'" . trim($_SESSION['UserID']) . "',
-						'" . DB_escape_string($SQL) . "')";
+									userid,
+									querystring)
+						VALUES('" . Date('Y-m-d H:i:s') . "',
+							'" . trim($_SESSION['UserID']) . "',
+							'" . preg_replace('/\s+/', ' ', DB_escape_string($SQL)) . "')";
 
-				$AuditResult = mysql_query($AuditSQL, $db);
+				mysql_query($AuditSQL, $db);
 			}
 		}
 	}
