@@ -120,9 +120,9 @@ if (isset($_POST['submit'])) {
 						AND cal2.manufacturingflag='1'
 						GROUP BY cal2.calendardate";
 	$Resultdate = DB_query($CalendarSQL);
-	$MyRowdate=DB_fetch_array($Resultdate);
+	$MyRowdate = DB_fetch_array($Resultdate);
 	// If find date based on manufacturing calendar, change date in array
-	if ($MyRowdate[0] !=  0){
+	if ($MyRowdate && $MyRowdate[0] != 0) {
 		$DateArray[0] = $MyRowdate[1];
 	}
 
@@ -146,9 +146,9 @@ if (isset($_POST['submit'])) {
 							AND cal2.manufacturingflag='1'
 							GROUP BY cal2.calendardate";
 		$Resultdate = DB_query($CalendarSQL);
-		$MyRowdate=DB_fetch_array($Resultdate);
+		$MyRowdate = DB_fetch_array($Resultdate);
 		// If find date based on manufacturing calendar, change date in array
-		if ($MyRowdate[0] !=  0){
+		if ($MyRowdate && $MyRowdate[0] != 0) {
 			$DateArray[$i] = $MyRowdate[1];
 		}
 		$Date = date('Y-m-d',$Date);
