@@ -2449,17 +2449,17 @@ No pending transfer regarding this item
 		$Message = 'KAPAL-LAUT with 20% Discount';
 		$ConditionCategory =  " AND stockmaster.categoryid = 'DISC2A' ";
 		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPKL' 
-								AND locations.alldisc20items = 2 ";
+								AND locations.alldisc20items > 0 ";
 	} elseif ($TypeOfShop == "SHOPKLDISCOUNT50"){
 		$Message = 'KAPAL-LAUT with 50% Discount';
 		$ConditionCategory =  " AND stockmaster.categoryid = 'DISC5A' ";
 		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPKL' 
-								AND locations.alldisc50items = 2 ";
+								AND locations.alldisc50items > 0 ";
 	} elseif ($TypeOfShop == "SHOPKLDISCOUNT80"){
 		$Message = 'KAPAL-LAUT with 80% Discount';
 		$ConditionCategory =  " AND stockmaster.categoryid = 'DISC8A' ";
 		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPKL' 
-								AND locations.alldisc80items = 2 ";
+								AND locations.alldisc80items > 0 ";
 	} elseif ($TypeOfShop == "SHOPBL"){
 		$Message = 'BLINK';
 		$ConditionCategory =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . ")";
@@ -2468,17 +2468,17 @@ No pending transfer regarding this item
 		$Message = 'BLINK with 20% Discount';
 		$ConditionCategory =  " AND stockmaster.categoryid = 'DISC2B' ";
 		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPBL' 
-								AND locations.alldisc20items = 2 ";
+								AND locations.alldisc20items > 0 ";
 	} elseif ($TypeOfShop == "SHOPBLDISCOUNT50"){
 		$Message = 'BLINK with 50% Discount';
 		$ConditionCategory =  " AND stockmaster.categoryid = 'DISC5B' ";
 		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPBL' 
-								AND locations.alldisc50items = 2 ";
+								AND locations.alldisc50items > 0 ";
 	} elseif ($TypeOfShop == "SHOPBLDISCOUNT80"){
 		$Message = 'BLINK with 80% Discount';
 		$ConditionCategory =  " AND stockmaster.categoryid = 'DISC8B' ";
 		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPBL' 
-								AND locations.alldisc80items = 2 ";
+								AND locations.alldisc80items > 0 ";
 	} elseif ($TypeOfShop == "SHOPOU"){
 		$Message = 'OUTLET';
 		$ConditionCategory =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . ")";
