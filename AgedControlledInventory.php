@@ -87,6 +87,7 @@ echo '</tbody>
 			<tr class="total_row">
 				<td colspan="3"><b>', __('Total'), '</b></td>
 				<td class="number"><b>', locale_number_format($TotalQty,2), '</b></td>
+				<td></td>
 				<td class="number"><b>', locale_number_format($TotalVal,2), '</b></td>
 				<td colspan="3"></td>
 			</tr>
