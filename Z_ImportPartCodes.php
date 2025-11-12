@@ -12,8 +12,7 @@ include('api/includes/api_php.php');
 
 if (isset($_POST['update'])) {
 	$fp = fopen($_FILES['ImportFile']['tmp_name'], "r");
-   	$buffer = fgets($fp, 4096);
-   	$FieldNames = explode(',', $buffer);
+   	$FieldNames = fgetcsv($fp, 4096, ",");
    	$SuccessStyle='style="color:green; font-weight:bold"';
    	$FailureStyle='style="color:red; font-weight:bold"';
    	echo '<table>
@@ -27,8 +26,7 @@ if (isset($_POST['update'])) {
 	//$user = new xmlrpcval($webERPUser);
 	//$password = new xmlrpcval($weberppassword);
  	while (!feof ($fp)) {
-    	$buffer = fgets($fp, 4096);
-    	$FieldValues = explode(',', $buffer);
+    	$FieldValues = fgetcsv($fp, 4096);
     	if ($FieldValues[0]!='') {
     		for ($i=0; $i<sizeof($FieldValues); $i++) {
     			$ItemDetails[$FieldNames[$i]]=$FieldValues[$i];

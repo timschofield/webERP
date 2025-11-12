@@ -1926,8 +1926,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 		/************************************************************************************/
 
 		$HeaderText = KLPrintReceiptHeader($identifier, $OrderNo);
-		$CustomerFooter = KLPrintReceiptCustomerFooter($identifier, $OrderNo);
-		$ShopFooter = KLPrintReceiptShopFooter($identifier, $OrderNo);
+		$CustomerFooter = KLPrintReceiptCustomerFooter($identifier);
+		$ShopFooter = KLPrintReceiptShopFooter();
 		$Receipt = $HeaderText . $CustomerFooter . $HeaderText . $ShopFooter;
 
 		//################## PRINTING STUFF #####################

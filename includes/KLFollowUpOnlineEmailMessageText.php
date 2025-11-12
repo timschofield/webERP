@@ -208,7 +208,6 @@ if ($_GET['EmailType']=='RemindBankTransfer'){
 					</td>
 				</tr>
 				</table>';
-		$MailMessage .=  ShowBankDetails($_GET['PaymentCode'], $MyRow['currcode'], $_GET['TransNo'], $Language);
 		$MailMessage .= '
 				<table cellpadding="2" cellspacing="2">
 				<tr>
@@ -477,7 +476,7 @@ if (($_GET['EmailType']=='PaymentConfirmation')
 		} else {
 			$MailMessage .=  '
 				<tr>
-					<td colspan="4" align="right">' . $Text0360 . ' ' . $_SESSION['ShopName'] . '</td>
+					<td colspan="4" align="right">' . $Text0360  . '</td>
 				</tr>';
 		}
 	}

@@ -5,7 +5,7 @@
 /////////////////////////////////////////////////////////////////////
 
 // Add page break only if this is not the first salary slip
-if (!isset($isFirstSlip) || $isFirstSlip !== true) {
+if (isset($isFirstSlip) and $isFirstSlip == false) {
     $HTML .= '<div class="page-break"></div>';
 }
 

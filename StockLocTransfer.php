@@ -3,6 +3,7 @@
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
 - send email if destination = location SERDE (to be destroyed)
+- add reason field to loctransfers table
 ***************************************************************************************/
 
 /* Inventory Transfer - Bulk Dispatch */
@@ -186,7 +187,7 @@ if (isset($_POST['Submit']) AND $InputError==false){
 	$ErrMsg = __('CRITICAL ERROR') . '! ' . __('Unable to BEGIN Location Transfer transaction');
 
 	DB_Txn_Begin();
-
+	$Reason = 'MANUAL';
 	for ($i=0;$i < $_POST['LinesCounter'];$i++){
 
 		if ($_POST['StockID' . $i] != ''){
@@ -200,13 +201,15 @@ if (isset($_POST['Submit']) AND $InputError==false){
 								shipqty,
 								shipdate,
 								shiploc,
-								recloc)
+								recloc,
+								reason)
 						VALUES ('" . $_POST['Trf_ID'] . "',
 							'" . $_POST['StockID' . $i] . "',
 							'" . round(filter_number_format($_POST['StockQTY' . $i]), $DecimalRow['decimalplaces']) . "',
 							'" . date('Y-m-d H-i-s') . "',
 							'" . $_POST['FromStockLocation']  ."',
-							'" . $_POST['ToStockLocation'] . "')";
+							'" . $_POST['ToStockLocation'] . "',
+							'" . $Reason . "')";
 			$ErrMsg = __('CRITICAL ERROR') . '! ' . __('Unable to enter Location Transfer record for'). ' '.$_POST['StockID' . $i];
 			$ResultLocShip = DB_query($SQL, $ErrMsg);
 			/* KL RICARD Send emails to team if transfer from / to special location */
@@ -216,7 +219,7 @@ if (isset($_POST['Submit']) AND $InputError==false){
 			/* KL RICARD End modification */
 		}
 	}
-	$ErrMsg = __('CRITICAL ERROR') . '! ' . __('Unable to COMMIT Location Transfer transaction');
+
 	DB_Txn_Commit();
 
 	prnMsg( __('The inventory transfer records have been created successfully'),'success');

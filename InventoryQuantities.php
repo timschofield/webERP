@@ -19,6 +19,19 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
 	}
 
+	$WhereCategory = ' ';
+	$CatDescription = ' ';
+	if ($_POST['StockCat'] != 'All') {
+		$WhereCategory = " AND stockmaster.categoryid='" . $_POST['StockCat'] . "'";
+		$SQL= "SELECT categoryid,
+					categorydescription
+				FROM stockcategory
+				WHERE categoryid='" . $_POST['StockCat'] . "' ";
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_row($Result);
+		$CatDescription = $MyRow[1];
+	}
+
 	$HTML .= '<meta name="author" content="WebERP">
 					<meta name="Creator" content="webERP https://www.weberp.org">
 				</head>
@@ -36,23 +49,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 							<th>' . __('Description') . '</th>
 							<th>' . __('Location') . '</th>
 							<th>' . __('Quantity') . '</th>
-							<th>' . __('Reorder') . '<br />' . __('Level') . '</th>
+							<th>' . __('Reorder Level') . '</th>
 						</tr>
 					</thead>
 					<tbody>';
-
-	$WhereCategory = ' ';
-	$CatDescription = ' ';
-	if ($_POST['StockCat'] != 'All') {
-		$WhereCategory = " AND stockmaster.categoryid='" . $_POST['StockCat'] . "'";
-		$SQL= "SELECT categoryid,
-					categorydescription
-				FROM stockcategory
-				WHERE categoryid='" . $_POST['StockCat'] . "' ";
-		$Result = DB_query($SQL);
-		$MyRow = DB_fetch_row($Result);
-		$CatDescription = $MyRow[1];
-	}
 
 	if ($_POST['Selection'] == 'All') {
 		$SQL = "SELECT locstock.stockid,
@@ -127,7 +127,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '<tr class="striped_row">
 					<td>' . $MyRow['stockid'] . '</td>
 					<td>' . $MyRow['description'] . '</td>
-					<td>' . $MyRow['loccode'] . '</td>
+					<td>' . $MyRow['locationname'] . ' (' . $MyRow['loccode'] . ')</td>
 					<td class="number">' . locale_number_format($MyRow['quantity'], $MyRow['decimalplaces']) . '</td>
 					<td class="number">' . locale_number_format($MyRow['reorderlevel'], $MyRow['decimalplaces']) . '</td>
 				</tr>';

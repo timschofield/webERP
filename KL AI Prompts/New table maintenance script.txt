@@ -1,0 +1,5 @@
+Create a new script to maintain the table klkpidescriptions:
+
+use PaymentTerms.php as example of script.
+
+New script must be called KLKPIDescriptions.php

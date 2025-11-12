@@ -970,7 +970,7 @@ function KLPrintReceiptHeader($Identifier, $OrderNo){
 *   $OrderNo - The order number
 * Returns: The formatted footer text for the customer receipt copy
 **************************************************************************************************************/
-function KLPrintReceiptCustomerFooter($Identifier, $OrderNo){
+function KLPrintReceiptCustomerFooter($Identifier){
 
 	include('includes/KLESCPOSCommands.php');
 	
@@ -1040,7 +1040,7 @@ function KLPrintReceiptCustomerFooter($Identifier, $OrderNo){
 *   $OrderNo - The order number
 * Returns: The formatted footer text for the shop receipt copy
 **************************************************************************************************************/
-function KLPrintReceiptShopFooter($Identifier, $OrderNo){
+function KLPrintReceiptShopFooter(){
 
 	include('includes/KLESCPOSCommands.php');
 
@@ -1205,11 +1205,11 @@ function DoubleJustified($Left, $Right, $Lenght, $Fillchar){
 function GetItemPackagingDescription($StockID){
 	$ErrMsg = __('Can not retrieve the packaging description because');
 
-$SQL = "SELECT klp.packagingdescription 
-		FROM stockmaster AS sm
-		INNER JOIN klpackaging AS klp 
-			ON klp.packagingcode = sm.klpackaging
-		WHERE sm.stockid = '" . $StockID . "'";
+	$SQL = "SELECT klp.packagingdescription 
+			FROM stockmaster AS sm
+			INNER JOIN klpackaging AS klp 
+				ON klp.packagingcode = sm.klpackaging
+			WHERE sm.stockid = '" . $StockID . "'";
 	$Result = DB_query($SQL, $ErrMsg, '', true);
 	if (DB_num_rows($Result) == 0){
 		// no packaging description found, return empty string
@@ -1219,7 +1219,6 @@ $SQL = "SELECT klp.packagingdescription
 		return $MyRow[0];
 	}
 }
-
 
 /**************************************************************************************************************
 * Brief description: Generates the text for a receipt for a return transfer of items to the main office (Kantor)
@@ -1252,6 +1251,7 @@ function KLPrintReturnTransferToKantor($Reference){
 					shipqty,
 					shiploc,
 					recloc,
+					reason,
 					decimalplaces
 			FROM loctransfers
 			INNER JOIN stockmaster
@@ -1276,8 +1276,16 @@ function KLPrintReturnTransferToKantor($Reference){
 				$NumberOfItems += $MyRow['shipqty'];
 				$TextToPrint .= round(filter_number_format($MyRow['shipqty']), $MyRow['decimalplaces']) .
 					' x ' . $MyRow['stockid'] . 
-					' - (QOH = ' . GetQuantityOnHand($MyRow['stockid'], $_SESSION['UserStockLocation']) . ')' .
-					$NewLine;
+					' - (QOH = ' . GetQuantityOnHand($MyRow['stockid'], $_SESSION['UserStockLocation']) . ')';
+				
+				if (isset($MyRow['reason']) and substr($MyRow['reason'], 0, 5) == 'SERV_'){
+					$ReasonDescription = GetItemTransferReason($MyRow['reason']);
+					if ($ReasonDescription != ''){
+						$TextToPrint .= ' - ' . $ReasonDescription;
+					}
+				}
+				
+				$TextToPrint .= $NewLine;
 			}
 		}
 		if ($CorrectTransfer){
@@ -1300,6 +1308,64 @@ function KLPrintReturnTransferToKantor($Reference){
 	
 	// warning if it is a TEST
 	$TextToPrint .= KLPrintReceiptTestWarning("RETURN TRANSFER"). $NewLine . $LeftJustified;
+	$TextToPrint .= $CutPaper;
+
+	return $TextToPrint;
+}
+
+function KLPrintCustomerServiceReceiptHeader($StockID, $Description, $Fee, $Message1, $Message2, $Warranty){
+	include('includes/KLESCPOSCommands.php');
+	
+	$TextToPrint = $InitPrinter . $CenteredJustified;
+	// name of shop
+	$TextToPrint .= KLPrintNameOfShop();
+	$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . 'SERVICE RECEIPT' . $NewLine;
+	// warning if it is a TEST
+	$TextToPrint .= KLPrintReceiptTestWarning("SERVICE RECEIPT"). $NewLine . $CenteredJustified;
+	$TextToPrint .= DisplayDateTime() . $NewLine;
+	$TextToPrint .= 'SPG Code: ' . $_SESSION['SalesmanLogin'] . $NewLine;
+	$TextToPrint .= 'Shop Code: ' . substr($_SESSION['UserStockLocation'],3,2) . $NewLine . $NewLine;
+	$TextToPrint .= $LeftJustified;
+	$TextToPrint .= 'Item code: ' . $StockID . $NewLine;
+	$TextToPrint .= 'Item description: ' . $Description . $NewLine . $NewLine;
+	$TextToPrint .= $Message1 . ' ' . $Message2 . $NewLine . $NewLine;
+	if ($Warranty == 'NO' and $Fee > 0){
+		$TextToPrint .= 'Fee: ' . number_format($Fee) . ' IDR' . $NewLine . $NewLine;
+	}
+
+	return $TextToPrint;
+}
+
+function KLPrintCustomerServiceReceiptCustomerFooter(){
+	include('includes/KLESCPOSCommands.php');
+	
+	$TextToPrint .= 'Pick up date: ' . $NewLine . $NewLine;
+	$TextToPrint .= 'We will contact you in 3-5 working days.' . $NewLine . $NewLine;
+
+	// warning if it is a TEST
+	$TextToPrint .= KLPrintReceiptTestWarning("SERVICE RECEIPT"). $NewLine . $LeftJustified;
+	$TextToPrint .= $NewLine;
+	$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . $CenteredJustified . "CUSTOMER COPY" . $NewLine;
+	$TextToPrint .= $CutPaper;
+
+	return $TextToPrint;
+}
+
+function KLPrintCustomerServiceReceiptShopFooter($ServiceCode){
+	include('includes/KLESCPOSCommands.php');
+	
+	$TextToPrint .= $LeftJustified;
+	$TextToPrint .= 'Customer name: ' . $NewLine . $NewLine;
+	$TextToPrint .= 'Customer phone: ' . $NewLine . $NewLine;
+	$TextToPrint .= 'Customer email: ' . $NewLine . $NewLine;
+	$TextToPrint .= 'Pick up date: ' . $NewLine . $NewLine;
+
+	$TextToPrint .= 'Service Code: ' . $ServiceCode . $NewLine;
+
+	// warning if it is a TEST
+	$TextToPrint .= KLPrintReceiptTestWarning("SERVICE RECEIPT"). $NewLine . $LeftJustified;
+	$TextToPrint .= $NewLine;
+	$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . $CenteredJustified . "SHOP COPY" . $NewLine;
 	$TextToPrint .= $CutPaper;
 
 	return $TextToPrint;

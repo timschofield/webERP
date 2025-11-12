@@ -561,7 +561,8 @@ function ArchiveTableLoctransfersObsoletes($ArchiveToPeriod) {
 				loctransfers.shipdate,
 				loctransfers.recdate,
 				loctransfers.shiploc,
-				loctransfers.recloc
+				loctransfers.recloc,
+				loctransfers.reason
 			FROM loctransfers
 			INNER JOIN stockmaster 
 				ON loctransfers.stockid = stockmaster.stockid
@@ -582,7 +583,8 @@ function ArchiveTableLoctransfersObsoletes($ArchiveToPeriod) {
 									shipdate,
 									recdate,
 									shiploc,
-									recloc
+									recloc,
+									reason
 								) VALUES (
 								'" . $MyRow['loctransferid'] . "',
 								'" . DB_escape_string($MyRow['reference'] ?? '') . "',
@@ -592,7 +594,8 @@ function ArchiveTableLoctransfersObsoletes($ArchiveToPeriod) {
 								'" . $MyRow['shipdate'] . "',
 								'" . $MyRow['recdate'] . "',
 								'" . DB_escape_string($MyRow['shiploc'] ?? '') . "',
-								'" . DB_escape_string($MyRow['recloc'] ?? '') . "')";
+								'" . DB_escape_string($MyRow['recloc'] ?? '') . "',
+								'" . DB_escape_string($MyRow['reason'] ?? '') . "')";
 				DB_query_archive($SQLInsert, $ErrMsg, '');
 				$RecordCounter++;
 			}	

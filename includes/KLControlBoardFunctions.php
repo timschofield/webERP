@@ -65,6 +65,7 @@
 * PettyCashBalance - Checks petty cash balance
 * PettyCashBalanceControl - Controls petty cash balance accounts
 * PettyCashToBeAuthorized - Lists petty cash to be authorized
+* PicturesToMoveToObsolete - Moves pictures of obsolete items to obsolete folder
 * POStatusControl - Controls purchase order status
 * PurchaseOrdersWrongPlannedDates - Lists purchase orders with wrong planned dates
 * RecentlyClosedTransferStatus - Lists recently closed transfers
@@ -485,18 +486,19 @@ function CheckNegativeStock($RootPath){
 	/* Check if there is any negative stock */
 
 	$Total = 0;
-	$SQL = "SELECT stockmaster.stockid,			
-				   stockmaster.description,			
-				   stockmaster.decimalplaces,			
-				   locations.locationname,			
-				   locstock.quantity			
-			FROM stockmaster INNER JOIN locstock 			
-			ON stockmaster.stockid=locstock.stockid			
-			INNER JOIN locations 			
-			ON locstock.loccode = locations.loccode			
-			WHERE locstock.quantity < 0			
-			ORDER BY stockmaster.stockid";
-				
+	$SQL = "SELECT sm.stockid,
+				sm.description,
+				sm.decimalplaces,
+				l.locationname,
+				ls.quantity
+			FROM locstock AS ls
+			INNER JOIN stockmaster AS sm
+				ON sm.stockid = ls.stockid
+			INNER JOIN locations AS l
+				ON l.loccode = ls.loccode
+			WHERE ls.quantity < 0
+			ORDER BY ls.stockid";
+
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		$TableTitleText = __('Items with Negative Stock');
@@ -2448,17 +2450,17 @@ No pending transfer regarding this item
 		$Message = 'KAPAL-LAUT with 20% Discount';
 		$ConditionCategory =  " AND stockmaster.categoryid = 'DISC2A' ";
 		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPKL' 
-								AND locations.alldisc20items = 2 ";
+								AND locations.alldisc20items > 0 ";
 	} elseif ($TypeOfShop == "SHOPKLDISCOUNT50"){
 		$Message = 'KAPAL-LAUT with 50% Discount';
 		$ConditionCategory =  " AND stockmaster.categoryid = 'DISC5A' ";
 		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPKL' 
-								AND locations.alldisc50items = 2 ";
+								AND locations.alldisc50items > 0 ";
 	} elseif ($TypeOfShop == "SHOPKLDISCOUNT80"){
 		$Message = 'KAPAL-LAUT with 80% Discount';
 		$ConditionCategory =  " AND stockmaster.categoryid = 'DISC8A' ";
 		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPKL' 
-								AND locations.alldisc80items = 2 ";
+								AND locations.alldisc80items > 0 ";
 	} elseif ($TypeOfShop == "SHOPBL"){
 		$Message = 'BLINK';
 		$ConditionCategory =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . ")";
@@ -2467,17 +2469,17 @@ No pending transfer regarding this item
 		$Message = 'BLINK with 20% Discount';
 		$ConditionCategory =  " AND stockmaster.categoryid = 'DISC2B' ";
 		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPBL' 
-								AND locations.alldisc20items = 2 ";
+								AND locations.alldisc20items > 0 ";
 	} elseif ($TypeOfShop == "SHOPBLDISCOUNT50"){
 		$Message = 'BLINK with 50% Discount';
 		$ConditionCategory =  " AND stockmaster.categoryid = 'DISC5B' ";
 		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPBL' 
-								AND locations.alldisc50items = 2 ";
+								AND locations.alldisc50items > 0 ";
 	} elseif ($TypeOfShop == "SHOPBLDISCOUNT80"){
 		$Message = 'BLINK with 80% Discount';
 		$ConditionCategory =  " AND stockmaster.categoryid = 'DISC8B' ";
 		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPBL' 
-								AND locations.alldisc80items = 2 ";
+								AND locations.alldisc80items > 0 ";
 	} elseif ($TypeOfShop == "SHOPOU"){
 		$Message = 'OUTLET';
 		$ConditionCategory =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . ")";
@@ -4353,4 +4355,72 @@ function CalculateTransferFromBankToDanamon($Company,
 		} 
 	}
 	return $TransferNeededDanamon;
+}
+
+function PicturesToMoveToObsolete($MovePictures, $RootPath){
+
+	$SQL = "SELECT stockmaster.stockid,
+				stockmaster.description
+			FROM stockmaster
+			WHERE stockmaster.discontinued = 1
+				AND stockmaster.date_updated < DATE_SUB(CURDATE(), INTERVAL 365 DAY)
+			ORDER BY stockmaster.stockid";
+	$Result = DB_query($SQL);
+
+	if (DB_num_rows($Result) != 0){
+		echo '<p class="page_title_text"><strong>' . __('Obsolete Items for more than 1 year with picture in webERP to be moved to folder Obsolete') . '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+						<th>' . '#' . '</th>
+						<th>' . __('Item Code') . '</th>
+						<th>' . __('Description') . '</th>
+						<th>' . __('Picture') . '</th>
+						</tr>';
+		echo $TableHeader;
+
+		$DestinationDir = $_SESSION['part_pics_dir'] . '/Obsolete/';
+		$i = 1;
+		while ($MyRow = DB_fetch_array($Result)) {
+			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '" target="_blank">' . $MyRow['stockid'] . '</a>';
+			$SourceFile = $_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.jpg';
+			if (file_exists($SourceFile) ) {
+				if ($MovePictures == true){
+					// move the picture to the obsolete folder
+					$DestinationFile = $DestinationDir . $MyRow['stockid'] . '.jpg';
+					rename($SourceFile, $DestinationFile);	
+				}				
+				echo '<tr class="striped_row">
+						<td class="number">', $i, '</td>
+						<td>', $CodeLink, '</td>
+						<td>', $MyRow['description'], '</td>
+						<td>', $MyRow['stockid'] . '.jpg', '</td>
+					</tr>';
+				$i++;
+			}
+			$multipleimage = 1;
+			while ($multipleimage <= 9){
+				$suffix = '.' . $multipleimage . '.jpg';
+				$SourceFile = $_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . $suffix;
+				if (file_exists($SourceFile) ) {
+					if ($MovePictures == true){
+						// move the picture to the obsolete folder
+						$DestinationFile = $DestinationDir . $MyRow['stockid'] . '.jpg';
+						rename($SourceFile, $DestinationFile);	
+					}				
+					echo '<tr class="striped_row">
+							<td class="number">', $i, '</td>
+							<td>', $CodeLink, '</td>
+							<td>', $MyRow['description'], '</td>
+							<td>', $MyRow['stockid'] . $suffix , '</td>
+						</tr>';
+					$i++;
+				}
+				$multipleimage++;
+			}	
+		}
+		echo '</table>
+				</div>
+				</form>';
+	}
 }

@@ -53,16 +53,11 @@ class Tender {
 		$Subject=(__('Tender received from').' '.$_SESSION['CompanyRecord']['coyname'] );
 		$Headers = 'From: '. $_SESSION['PurchasingManagerEmail']. "\r\n" . 'Reply-To: ' . $_SESSION['PurchasingManagerEmail'] . "\r\n" . 'X-Mailer: PHP/' . phpversion();
 		foreach ($this->Suppliers as $Supplier) {
-			/// @todo drop this IF - it's handled within SendEmailFromWebERP
-			if ($_SESSION['SmtpSetting']==0) {
-				$Result = mail($Supplier->EmailAddress, $Subject, $EmailText, $Headers);
-			} else {
-				$Result = SendEmailFromWebERP($_SESSION['PurchasingManagerEmail'],
-											$Supplier->EmailAddress,
-											$Subject,
-											$EmailText
-										);
-			}
+			$Result = SendEmailFromWebERP($_SESSION['PurchasingManagerEmail'],
+										$Supplier->EmailAddress,
+										$Subject,
+										$EmailText
+									);
 		}
 	}
 

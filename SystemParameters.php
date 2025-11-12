@@ -1,4 +1,10 @@
 <?php
+/*******************************************************************************************************
+ * 
+ * KL RICARD: Added ShopMode and ShopManagerEmail to the system parameter to enable web shop mode
+ * Moved from the old and deprecated WebERP eCommerce module ShopParameters.php
+ *
+ * *****************************************************************************************************/
 
 /* This script is for maintenance of the system parameters. */
 
@@ -385,7 +391,14 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['LastDayOfWeek'] != $_POST['X_LastDayOfWeek']){
 			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_LastDayOfWeek'] . "' WHERE confname='LastDayOfWeek'";
 		}
-
+// KL RICARD
+		if ($_SESSION['ShopMode'] != $_POST['X_ShopMode'] ) {
+			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopMode']."' WHERE confname = 'ShopMode'";
+		}
+		if ($_SESSION['ShopManagerEmail'] != $_POST['X_ShopManagerEmail'] ) {
+			$SQL[] = "UPDATE config SET confvalue = '" . DB_escape_string($_POST['X_ShopManagerEmail']) ."' WHERE confname = 'ShopManagerEmail'";
+		}
+// KL RICARD END
 		$ErrMsg =  __('The system configuration could not be updated because');
 		if (sizeof($SQL) > 1 ) {
 			DB_Txn_Begin();
@@ -1365,6 +1378,36 @@ echo '</select>
 		</select>
 		<fieldhelp>' .  __('Timesheet entry default to weeks ending on this day').'</fieldhelp>
 	</field>';
+
+echo '</fieldset><br />';
+
+// KL RICARD: Moved from ShopParameters.php It is the only setting we are using to check if the Opencart shop is in test or live mode
+echo '<fieldset>
+		<legend>' . __('KL Opencart Online Shop Settings') . '</legend>';
+
+// Status of online shop
+echo '<field>
+		<label for="X_ShopMode">' . __('Test or Live Mode') . ':</label>
+		<select name="X_ShopMode">';
+		if ($_SESSION['ShopMode']== 'test' OR $AllowDemoMode){
+			echo '<option selected="selected" value="test">' . __('Test') . '</option>
+				<option value="live">' . __('Live') . '</option>';
+		} else {
+			echo '<option value="test">' . __('Test') . '</option>
+				<option selected="selected" value="live">' . __('Live') . '</option>';
+		}
+		echo '</select>
+		<fieldhelp>' . __('Must change this to live mode when the shop is active. No PayPal or credit card transactions will be processed in test mode') . '</fieldhelp>
+	</field>';
+
+//Shop Manager Email
+echo '<field>
+		<label for="X_ShopManagerEmail">' . __('Online Shop Manager Email') . ':</label>
+		<input type="email" name="X_ShopManagerEmail" required="required" size="40" maxlength="50" value="' . $_SESSION['ShopManagerEmail'] . '" />
+		<fieldhelp>' . __('Enter the email address of the online shop manager.') . '</fieldhelp>
+	</field>';
+
+// KL RICARD: End move
 
 	echo '</fieldset>
 	</fieldset>';

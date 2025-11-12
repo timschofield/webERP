@@ -166,9 +166,11 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 	if ($Strategy == 'All') {
 		$WhereCategory = " AND tols.reorderlevel > tols.quantity ";
 		$StrategyText = "Items needed at " . $ToLocCode . " with stock available at " . $FromLocCode . " ";
+		$Reason = 'SMART_NEEDED_BY_RL';
 	} else {
 		$WhereCategory = " ";
 		$StrategyText = "Items with overstock at " . $FromLocCode . " returning to " . $ToLocCode;
+		$Reason = 'SMART_RETURN_OVERSTOCK';
 	}
 
 	$SQL = "SELECT tols.stockid,
@@ -363,13 +365,15 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 															shipqty,
 															shipdate,
 															shiploc,
-															recloc)
+															recloc,
+															reason)
 								VALUES ('" . $Trf_ID . "',
 									'" . $TableResult[$ModelInTransfer]['stockid'] . "',
 									'" . $TableResult[$ModelInTransfer]['shipqty'] . "',
 									'" . $Now . "',
 									'" . $FromLocCode . "',
-									'" . $ToLocCode . "')";
+									'" . $ToLocCode . "',
+									'" . $Reason . "')";
 						$ErrMsg = __('CRITICAL ERROR') . '! ' . 
 								__('Unable to enter Location Transfer record for') . ' ' . 
 								$TableResult[$ModelInTransfer]['stockid'];

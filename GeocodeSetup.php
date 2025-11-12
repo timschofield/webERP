@@ -42,18 +42,15 @@ if (isset($_POST['submit'])) {
 
 		/*SelectedParam could also exist if submit had not been clicked this code would not run in this case cos submit is false of course see the delete code below*/
 
-		if (isset($_POST['GeoCode_Key']) and isset($_POST['GeoCode_Key'])) {
+		if (isset($SelectedParam)) {
 			$SQL = "UPDATE geocode_param SET
-					geocode_key='" . $_POST['GeoCode_Key'] . "',
 					center_long='" . $_POST['Center_Long'] . "',
 					center_lat='" . $_POST['Center_Lat'] . "',
 					map_height='" . $_POST['Map_Height'] . "',
-					map_width='" . $_POST['Map_Width'] . "',
-					map_host='" . $_POST['Map_Host'] . "'
+					map_width='" . $_POST['Map_Width'] . "'
 					WHERE geocodeid = '" . $SelectedParam . "'";
 		}
 		$Msg = __('The geocode status record has been updated');
-
 	}
 	elseif ($InputError != 1) {
 
@@ -62,19 +59,15 @@ if (isset($_POST['submit'])) {
 		if (isset($_POST['GeoCode_Key']) and $_POST['GeoCode_Key'] > 0) {
 
 			$SQL = "INSERT INTO geocode_param (geocodeid,
-												geocode_key,
 												center_long,
 												center_lat,
 												map_height,
-												map_width,
-												map_host)
+												map_width)
 					VALUES ('',
-							'" . $_POST['GeoCode_Key'] . "',
 							'" . $_POST['Center_Long'] . "',
 							'" . $_POST['Center_Lat'] . "',
 							'" . $_POST['Map_Height'] . "',
-							'" . $_POST['Map_Width'] . "',
-							'" . $_POST['Map_Host'] . "')";
+							'" . $_POST['Map_Width'] . "')";
 		}
 		else {
 			$SQL = "INSERT INTO geocode_param (geocodeid,

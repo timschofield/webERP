@@ -34,6 +34,7 @@ GetDayNameFromWeekDay             - Converts a day number to day name
 GetDefaultLocationFromUser        - Gets the default location code for a user
 GetItemDescriptionFromCode        - Gets the description of a stock item
 GetItemStandardCostFromCode       - Gets the standard cost of a stock item
+GetItemTransferReason             - Retrieves transfer reason description from service types table
 GetKPIDescription                 - Retrieves the description for a given KPI code
 GetLastKPIValue                   - Gets the most recent KPI value for a class/concept
 GetLocationNameFromCode           - Gets the location name from a location code
@@ -57,7 +58,7 @@ isFamily                          - Checks if an item belongs to a specific fami
 isFoulard                         - Checks if an item is a foulard
 isJewelleryBox                    - Checks if an item is a jewellery box
 isJewelleryRoll                   - Checks if an item is a jewellery roll
-isKeyRing                       - Checks if an item is a key holder
+isKeyRing                         - Checks if an item is a key holder
 isNecklace                        - Checks if an item is a necklace
 isPackagingBox                    - Checks if an item is a packaging box
 isPackagingPaperInsideBox         - Checks if an item is packaging paper for inside a box
@@ -1991,4 +1992,43 @@ function GetNumberOfRecordsInTable($TableName, $Database) {
 		return $Row['total'];
 	}
 	return 0;
+}
+
+/**************************************************************************************************************
+* Brief description: Retrieves transfer reason description from service types table
+* Parameters:
+*   $Reason - The reason code to look up
+* Returns: The service description or empty string if not found
+**************************************************************************************************************/
+function GetItemTransferReason($Reason){
+	$ErrMsg = __('Can not retrieve the transfer reason description because');
+
+	if ($Reason == 'DISPATCH_OVERSTOCK'){
+		// from StockDispatch.php
+		return 'Manual Dispatch Overstock';
+	} elseif ($Reason == 'DISPATCH_NEEDED_BY_RL'){
+		// from StockDispatch.php
+		return 'Manual Dispatch Needed by Reorder Level';
+	} elseif ($Reason == 'SMART_NEEDED_BY_RL'){
+		// from KLSmartStockTransfers.php
+		return 'Daily Cron Job From Kantor Needed in Shop by Reorder Level';
+	} elseif ($Reason == 'SMART_RETURN_OVERSTOCK'){
+		// from KLSmartStockTransfers.php
+		return 'Daily Cron Job Return Overstock from Shop to Kantor';
+	} elseif (substr($Reason, 0, 5) == 'SERV_'){
+		$SQL = "SELECT servicedescription 
+				FROM klservicetypes
+				WHERE servicecode = '" . $Reason . "'";
+		$Result = DB_query($SQL, $ErrMsg, '', true);
+		if (DB_num_rows($Result) == 0){
+			// no reason description found, return empty string
+			return '';
+		} else {
+			$MyRow = DB_fetch_row($Result);
+			return $MyRow[0];
+		}
+	} else {	
+		// not reason code found
+		return '';
+	}
 }

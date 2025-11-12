@@ -85,21 +85,21 @@ function SetLastTimeRun($Script){
 		$ServerNow = GetServerTimeNow(Get_SQL_OC_to_PHP_time_difference());
 		$_SESSION['OpenCartToWeberp_LastRun'] = $ServerNow;
 		$SQL = "UPDATE config
-				SET confvalue = '" . $ServerNow ."'
+				SET confvalue = '" . $_SESSION['OpenCartToWeberp_LastRun'] ."'
 				WHERE confname = 'OpenCartToWeberp_LastRun'";
 	} elseif ($Script == 'WeberpToOpenCartHourly'){
 		// Updating from webERP to OC: Check the time zone used in webERP DB 
 		$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference());
 		$_SESSION['WeberpToOpenCartHourly_LastRun'] = $ServerNow;
 		$SQL = "UPDATE config
-				SET confvalue = '" . $ServerNow ."'
+				SET confvalue = '" . $_SESSION['WeberpToOpenCartHourly_LastRun'] ."'
 				WHERE confname = 'WeberpToOpenCartHourly_LastRun'";
 	} elseif ($Script == 'WeberpToOpenCartDaily'){
 		// Updating from webERP to OC: Check the time zone used in webERP DB 
 		$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference());
 		$_SESSION['WeberpToOpenCartDaily_LastRun'] = $ServerNow;
 		$SQL = "UPDATE config
-				SET confvalue = '" . $ServerNow ."'
+				SET confvalue = '" . $_SESSION['WeberpToOpenCartDaily_LastRun'] ."'
 				WHERE confname = 'WeberpToOpenCartDaily_LastRun'";
 	}
 	$ErrMsg =__('Could not update Last Run Time of this script because');
