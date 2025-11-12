@@ -19,6 +19,8 @@ UPDATE `menuitems` SET `menusection` = 'Transactions', `sequence` = '233' WHERE 
 UPDATE `menuitems` SET `modulelink` = 'system', `menusection` = 'Transactions', `sequence` = '234' WHERE `menuitems`.`modulelink` = 'FA' AND `menuitems`.`menusection` = 'Maintenance' AND `menuitems`.`caption` = 'KL Maintenance Types Maintenace';
 UPDATE `menuitems` SET `caption` = 'KL Test Silent Printing' WHERE `menuitems`.`modulelink` = 'system' AND `menuitems`.`menusection` = 'Transactions' AND `menuitems`.`caption` = 'Test Silent Printing';
 
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('KLMoveObsoletePictures.php', '15', 'Moves pictures from items that are obsolete to Obsolete folder');
+INSERT INTO `menuitems` (`modulelink`, `menusection`, `caption`, `url`, `sequence`) VALUES ('Utilities', 'Transactions', 'KL Move Obsolete Pictures', '/KLMoveObsoletePictures.php', '234');
 
 
 COMMIT;

@@ -65,6 +65,7 @@
 * PettyCashBalance - Checks petty cash balance
 * PettyCashBalanceControl - Controls petty cash balance accounts
 * PettyCashToBeAuthorized - Lists petty cash to be authorized
+* PicturesToMoveToObsolete - Moves pictures of obsolete items to obsolete folder
 * POStatusControl - Controls purchase order status
 * PurchaseOrdersWrongPlannedDates - Lists purchase orders with wrong planned dates
 * RecentlyClosedTransferStatus - Lists recently closed transfers
@@ -4354,4 +4355,72 @@ function CalculateTransferFromBankToDanamon($Company,
 		} 
 	}
 	return $TransferNeededDanamon;
+}
+
+function PicturesToMoveToObsolete($MovePictures, $RootPath){
+
+	$SQL = "SELECT stockmaster.stockid,
+				stockmaster.description
+			FROM stockmaster
+			WHERE stockmaster.discontinued = 1
+				AND stockmaster.date_updated < DATE_SUB(CURDATE(), INTERVAL 365 DAY)
+			ORDER BY stockmaster.stockid";
+	$Result = DB_query($SQL);
+
+	if (DB_num_rows($Result) != 0){
+		echo '<p class="page_title_text"><strong>' . __('Obsolete Items for more than 1 year with picture in webERP to be moved to folder Obsolete') . '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+						<th>' . '#' . '</th>
+						<th>' . __('Item Code') . '</th>
+						<th>' . __('Description') . '</th>
+						<th>' . __('Picture') . '</th>
+						</tr>';
+		echo $TableHeader;
+
+		$DestinationDir = $_SESSION['part_pics_dir'] . '/Obsolete/';
+		$i = 1;
+		while ($MyRow = DB_fetch_array($Result)) {
+			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '" target="_blank">' . $MyRow['stockid'] . '</a>';
+			$SourceFile = $_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.jpg';
+			if (file_exists($SourceFile) ) {
+				if ($MovePictures == true){
+					// move the picture to the obsolete folder
+					$DestinationFile = $DestinationDir . $MyRow['stockid'] . '.jpg';
+					rename($SourceFile, $DestinationFile);	
+				}				
+				echo '<tr class="striped_row">
+						<td class="number">', $i, '</td>
+						<td>', $CodeLink, '</td>
+						<td>', $MyRow['description'], '</td>
+						<td>', $MyRow['stockid'] . '.jpg', '</td>
+					</tr>';
+				$i++;
+			}
+			$multipleimage = 1;
+			while ($multipleimage <= 9){
+				$suffix = '.' . $multipleimage . '.jpg';
+				$SourceFile = $_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . $suffix;
+				if (file_exists($SourceFile) ) {
+					if ($MovePictures == true){
+						// move the picture to the obsolete folder
+						$DestinationFile = $DestinationDir . $MyRow['stockid'] . '.jpg';
+						rename($SourceFile, $DestinationFile);	
+					}				
+					echo '<tr class="striped_row">
+							<td class="number">', $i, '</td>
+							<td>', $CodeLink, '</td>
+							<td>', $MyRow['description'], '</td>
+							<td>', $MyRow['stockid'] . $suffix , '</td>
+						</tr>';
+					$i++;
+				}
+				$multipleimage++;
+			}	
+		}
+		echo '</table>
+				</div>
+				</form>';
+	}
 }

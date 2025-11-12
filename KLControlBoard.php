@@ -1402,6 +1402,10 @@ if ($ProcessSection02){
 		OpenCartItemsWithoutPicture($RootPath );
 		TimeNeededForExecution("OpenCartItemsWithoutPicture", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
+		PicturesToMoveToObsolete(false, $RootPath);
+		TimeNeededForExecution("PicturesToMoveToObsolete", $StartTime, $KL_SystemAdmin);
+		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin
