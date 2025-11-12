@@ -152,6 +152,7 @@ if (!isset($_GET['delete'])) {
 
 	if (isset($Id)) {
 		//editing an existing
+		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . __('Notes for Customer').': <b>' .$DebtorNo . '</b></p>';
 
 		$SQL = "SELECT noteid,
 						debtorno,
