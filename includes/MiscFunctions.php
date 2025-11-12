@@ -956,3 +956,26 @@ function ShowDebugBackTrace($DebugMessage, $SQL){
 	echo '</table>
 		</div>';
 }
+
+function SQLToBeAudited($SQLArray){
+	// Determine if the SQL operation should be audited
+	// $SQLArray already comes exploded by spaces and uppercased
+	if (($SQLArray[0] == 'INSERT' or $SQLArray[0] == 'UPDATE' or $SQLArray[0] == 'DELETE')) {
+		if (TableToBeSkippedInAudit($SQLArray, 'AUDITTRAIL')
+			or TableToBeSkippedInAudit($SQLArray, 'SESSIONS')
+			or TableToBeSkippedInAudit($SQLArray, 'SESSION_DATA')) {
+			return false;
+		} else {
+			return true;
+		}
+	} else {
+		return false;
+	}
+}
+
+function TableToBeSkippedInAudit($SQLArray, $TableName){
+	// check if the table involved in the SQL is the one to be skipped
+	// $SQLArray already comes exploded by spaces and uppercased
+	return ((($SQLArray[0] == 'INSERT' or $SQLArray[0] == 'DELETE') and $SQLArray[2] == $TableName)
+			or ($SQLArray[0] == 'UPDATE' and $SQLArray[1] == $TableName));
+}

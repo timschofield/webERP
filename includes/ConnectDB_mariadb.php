@@ -63,7 +63,7 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 	$Result = mysqli_query($db, $SQL);
 	$ErrNo = DB_error_no();
 
-	$SQLArray = explode(' ', strtoupper(ltrim($SQL)));
+	$SQLArray = explode(' ', preg_replace('/\s+/', ' ',strtoupper(ltrim($SQL))));
 
 	if ($ErrNo != 0 AND $TrapErrors) {
 		require_once($PathPrefix . 'includes/header.php');
@@ -98,7 +98,7 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 		}
 
 		if (isset($_SESSION['MonthsAuditTrail']) AND $_SESSION['MonthsAuditTrail']>0 AND DB_affected_rows($Result)>0) {
-			if (($SQLArray[0] == 'INSERT' or $SQLArray[0] == 'UPDATE' or $SQLArray[0] == 'DELETE') and $SQLArray[2] != 'audittrail') { // to ensure the auto delete of audit trail history is not logged
+			if (SQLToBeAudited($SQLArray)) {
 				$AuditSQL = "INSERT INTO audittrail (transactiondate,
 									userid,
 									querystring)
@@ -106,7 +106,7 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 							'" . trim($_SESSION['UserID']) . "',
 							'" . DB_escape_string($SQL) . "')";
 
-				$AuditResult = mysqli_query($db, $AuditSQL);
+				mysqli_query($db, $AuditSQL);
 			}
 		}
 	}

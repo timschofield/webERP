@@ -47,7 +47,7 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 	global $db;
 
 	$Result = pg_query($db, $SQL);
-	$SQLArray = explode(' ', strtoupper(ltrim($SQL)));
+	$SQLArray = explode(' ', preg_replace('/\s+/', ' ',strtoupper(ltrim($SQL))));
 
 	if (!$Result AND $TrapErrors) {
 		require_once($PathPrefix . 'includes/header.php');
