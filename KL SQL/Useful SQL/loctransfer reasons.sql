@@ -40,22 +40,7 @@ UPDATE `klservicetypes` SET `servicedescription` = 'Barang kotor' WHERE `klservi
 UPDATE `klservicetypes` SET `servicecode` = 'SERV_KOTOR' WHERE `klservicetypes`.`servicedescription` = 'Barang kotor';
 UPDATE `klkpidescriptions` SET `kpicode` = 'TRANS-SERV_BARANGKOTOR-30-PCS', `kpidescription` = 'Barang kotor' WHERE `klkpidescriptions`.`kpicode` = 'TRANS-SERV_PERAKKOTOR-30-PCS'
 
-INSERT INTO `klservicetypes` (`servicecode`, `servicedescription`, `pricetier01`, `pricetier02`, `pricetier03`) VALUES ('SERV_PRICETAGRUSAK', 'Pricetag rusak', '50000.0000', '75000.0000', '100000.0000')
+INSERT INTO `klservicetypes` (`servicecode`, `servicedescription`, `pricetier01`, `pricetier02`, `pricetier03`) VALUES ('SERV_PRICETAGRUSAK', 'Pricetag rusak', '50000.0000', '75000.0000', '100000.0000');
 INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-SERV_PRICETAGRUSAK-30-PCS', 'Pricetag rusak');
 
 COMMIT;
-
-
-TABLE `loctransfers` (
-  `loctransferid` int(11) NOT NULL,
-  `reference` int(11) NOT NULL DEFAULT 0,
-  `stockid` varchar(20) NOT NULL DEFAULT '',
-  `shipqty` double NOT NULL DEFAULT 0,
-  `recqty` double NOT NULL DEFAULT 0,
-  `shipdate` datetime NOT NULL DEFAULT '1000-01-01 00:00:00',
-  `recdate` datetime NOT NULL DEFAULT '1000-01-01 00:00:00',
-  `shiploc` varchar(7) NOT NULL DEFAULT '',
-  `recloc` varchar(7) NOT NULL DEFAULT '',
-  `pendingqty` double GENERATED ALWAYS AS (`shipqty` - `recqty`) STORED,
-  `reason` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Stores Shipments To And From Locations';
