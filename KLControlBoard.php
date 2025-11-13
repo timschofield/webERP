@@ -1390,18 +1390,25 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SystemAdmin
-		OR $KL_SalesDirector
-		OR $KL_CustomerService
+	if ($KL_SalesDirector
 		OR $KL_ITSupport){
 		$StartTime = microtime(true);
 		ImagesWithoutProduct($RootPath);
 		TimeNeededForExecution("ImagesWithoutProduct", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+	}
+
+	if ($KL_SalesDirector
+		OR $KL_CustomerService
+		OR $KL_ITSupport){
 		$StartTime = microtime(true);
 		OpenCartItemsWithoutPicture($RootPath );
 		TimeNeededForExecution("OpenCartItemsWithoutPicture", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+	}
+
+	if ($KL_SalesDirector
+		OR $KL_ITSupport){
 		$StartTime = microtime(true);
 		PicturesToMoveToObsolete(false, $RootPath);
 		TimeNeededForExecution("PicturesToMoveToObsolete", $StartTime, $KL_SystemAdmin);

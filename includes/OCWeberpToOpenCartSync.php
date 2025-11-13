@@ -1695,3 +1695,51 @@ function RevokeAcessRightsProductsToCustomerGroupInOpenCart($ProductId, $Custome
 				
 	$ResultDelete = DB_query_oc($SQL,$DeleteErrMsg,'',true);
 }
+
+function FlagWebERPObsoleteItemsInOpenCart($RootPath){
+
+	$SQL = "SELECT stockmaster.stockid,
+				stockmaster.description
+			FROM stockmaster
+			WHERE stockmaster.discontinued = 1
+				AND stockmaster.date_updated < DATE_SUB(CURDATE(), INTERVAL 365 DAY)
+			ORDER BY stockmaster.stockid";
+	$Result = DB_query($SQL);
+
+	if (DB_num_rows($Result) != 0){
+		echo '<p class="page_title_text"><strong>' . __('Obsolete Items for more than 1 year to be marked as obsolete in OpenCart') . '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+						<th>' . '#' . '</th>
+						<th>' . __('Item Code') . '</th>
+						<th>' . __('Description') . '</th>
+						</tr>';
+		echo $TableHeader;
+
+		$i = 1;
+		while ($MyRow = DB_fetch_array($Result)) {
+			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '" target="_blank">' . $MyRow['stockid'] . '</a>';
+			// Check if the item exists in OpenCart, as could be obsolete in webERP but never existed in OpenCart
+			if (DataExistsInOpenCart('oc_product', 'model', $MyRow['stockid'])){
+				// Let's get the OpenCart primary key for product
+				$ProductId = GetOpenCartProductId($MyRow['stockid']);
+
+				$SQLUpdate = "UPDATE oc_product SET
+								status = '0'
+							WHERE product_id = '" . $ProductId . "'";
+				DB_query_oc($SQLUpdate, '', '', true);
+
+				echo '<tr class="striped_row">
+						<td class="number">', $i, '</td>
+						<td>', $CodeLink, '</td>
+						<td>', $MyRow['description'], '</td>
+					</tr>';
+				$i++;
+			}
+		}
+		echo '</table>
+				</div>
+				</form>';
+	}
+}
