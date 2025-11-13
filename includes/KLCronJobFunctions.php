@@ -20,6 +20,7 @@ KL_DailyCleanDB - Runs all database cleaning operations daily
 KL_DailyEmailsToStaff - Sends various emails to staff members
 KL_DailyOptimizationDatabase - Optimizes database tables in small batches
 KL_DailySetObsoleteNoStock - Sets items with zero stock in specific categories to obsolete
+MovePicturesToObsolete - Moves pictures of obsolete items to the Obsolete folder
 PurgeAuditScriptsTable - Removes old entries from the audit scripts table
 PurgeAuditTrailTable - Removes old entries from the audit trail table
 PurgeKLTable - Generic function to purge old records from Kapal-Laut tables
@@ -242,6 +243,7 @@ function KL_DailySetObsoleteNoStock($ShowMessages, $EmailText = ''){
 	$EmailText = SetObsoleteForCategoryWithoutStock("DISC8B", $ShowMessages, $EmailText);
 	$EmailText = SetObsoleteForCategoryWithoutStock("DISC8G", $ShowMessages, $EmailText);
 //	$EmailText = PurgeRelatedItemsFromObsolete($ShowMessages, $EmailText);
+	$EmailText = MovePicturesToObsolete(true, $EmailText);
 	return $EmailText;
 }
 
@@ -928,5 +930,68 @@ function ShowOrEmail($ShowMessages, $EmailText, $Text){
 	if ($EmailText !=''){
 		$EmailText = $EmailText . $Text . "\n"; 
 	}	
+	return $EmailText;
+}
+
+
+/**************************************************************************************************************
+* Moves pictures of obsolete items to the Obsolete folder
+*
+* @param bool $MovePictures - Whether to actually move pictures or just list them
+* @param string $EmailText - Email text to append results to
+*
+* @return string - Updated email text containing results of operations
+**************************************************************************************************************/
+function MovePicturesToObsolete($MovePictures, $EmailText){
+
+	$SQL = "SELECT stockmaster.stockid,
+				stockmaster.description
+			FROM stockmaster
+			WHERE stockmaster.discontinued = 1
+				AND stockmaster.date_updated < DATE_SUB(CURDATE(), INTERVAL 365 DAY)
+			ORDER BY stockmaster.stockid";
+	$Result = DB_query($SQL);
+
+	$EmailText .= "\n" . 'Obsolete Items for more than 1 year with picture in webERP to be moved to folder Obsolete' . "\n";
+	$i = 0;
+
+	if (DB_num_rows($Result) != 0){
+
+		$DestinationDir = $_SESSION['part_pics_dir'] . '/Obsolete/';
+		// Ensure the destination directory exists
+		if (!file_exists($DestinationDir)) {
+			mkdir($DestinationDir, 0777, true);
+		}
+		while ($MyRow = DB_fetch_array($Result)) {
+			// create the source file name for the main picture
+			$SourceFile = $_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.jpg';
+			if (file_exists($SourceFile) ) {
+				if ($MovePictures == true){
+					// move the picture to the obsolete folder
+					$DestinationFile = $DestinationDir . $MyRow['stockid'] . '.jpg';
+					rename($SourceFile, $DestinationFile);	
+				}				
+				$EmailText .= $MyRow['stockid'] . ' --> ' . $MyRow['stockid'] . '.jpg' . "\n";
+				$i++;
+			}
+			$MultipleImage = 1;
+			while ($MultipleImage <= 9) {
+				// create the source file name for the multiple images, if they exists.
+				$Suffix = '.' . $MultipleImage . '.jpg';
+				$SourceFile = $_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . $Suffix;
+				if (file_exists($SourceFile)) {
+					if ($MovePictures == true){
+						// move the picture to the obsolete folder
+						$DestinationFile = $DestinationDir . $MyRow['stockid'] . $Suffix;
+						rename($SourceFile, $DestinationFile);	
+					}				
+					$EmailText .= $MyRow['stockid'] . ' --> ' . $MyRow['stockid'] . $Suffix . "\n";
+					$i++;
+				}
+				$MultipleImage++;
+			}	
+		}
+	}
+	$EmailText .= 'Images moved to obsolete: ' . $i . "\n";
 	return $EmailText;
 }

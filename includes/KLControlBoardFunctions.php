@@ -1062,13 +1062,13 @@ function ImagesWithoutProduct($RootPath){
 	$ShowHeader = true;
 	$i= 0;
 	// get all images in part_pics folder
-	$suffix = ".jpg";
+	$Suffix = ".jpg";
 	$ImageFiles = getDirectoryTree($_SESSION['part_pics_dir']);
 	foreach ($ImageFiles as $File) {
 		if ($File != '.ftpquota' AND
 			$File != 'Obsolete' AND
 			$File != 'part_pics'){
-			$StockID = substr($File, 0, strpos($File, $suffix));
+			$StockID = substr($File, 0, strpos($File, $Suffix));
 			if (strpos($StockID, '.1') !== false){
 				$StockID = substr($File, 0, strpos($StockID, '.1'));
 			}
@@ -4368,28 +4368,37 @@ function PicturesToMoveToObsolete($MovePictures, $RootPath){
 	$Result = DB_query($SQL);
 
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text"><strong>' . __('Obsolete Items for more than 1 year with picture in webERP to be moved to folder Obsolete') . '</strong></p>';
-		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-						<th>' . '#' . '</th>
-						<th>' . __('Item Code') . '</th>
-						<th>' . __('Description') . '</th>
-						<th>' . __('Picture') . '</th>
-						</tr>';
-		echo $TableHeader;
 
 		$DestinationDir = $_SESSION['part_pics_dir'] . '/Obsolete/';
+		// Ensure the destination directory exists
+		if (!file_exists($DestinationDir)) {
+			mkdir($DestinationDir, 0777, true);
+		}
 		$i = 1;
+		$ShowHeader = true;
 		while ($MyRow = DB_fetch_array($Result)) {
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '" target="_blank">' . $MyRow['stockid'] . '</a>';
+			// create the source file name for the main picture
 			$SourceFile = $_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.jpg';
 			if (file_exists($SourceFile) ) {
 				if ($MovePictures == true){
 					// move the picture to the obsolete folder
 					$DestinationFile = $DestinationDir . $MyRow['stockid'] . '.jpg';
 					rename($SourceFile, $DestinationFile);	
-				}				
+				}
+				if ($ShowHeader) {
+					echo '<p class="page_title_text"><strong>' . __('Obsolete Items for more than 1 year with picture in webERP to be moved to folder Obsolete') . '</strong></p>';
+					echo '<div>';
+					echo '<table class="selection">';
+					$TableHeader = '<tr>
+									<th>' . '#' . '</th>
+									<th>' . __('Item Code') . '</th>
+									<th>' . __('Description') . '</th>
+									<th>' . __('Picture') . '</th>
+									</tr>';
+					echo $TableHeader;
+					$ShowHeader = false;
+				}
 				echo '<tr class="striped_row">
 						<td class="number">', $i, '</td>
 						<td>', $CodeLink, '</td>
@@ -4398,29 +4407,32 @@ function PicturesToMoveToObsolete($MovePictures, $RootPath){
 					</tr>';
 				$i++;
 			}
-			$multipleimage = 1;
-			while ($multipleimage <= 9){
-				$suffix = '.' . $multipleimage . '.jpg';
-				$SourceFile = $_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . $suffix;
-				if (file_exists($SourceFile) ) {
+			$MultipleImage = 1;
+			while ($MultipleImage <= 9) {
+				// create the source file name for the multiple images, if they exists.
+				$Suffix = '.' . $MultipleImage . '.jpg';
+				$SourceFile = $_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . $Suffix;
+				if (file_exists($SourceFile)) {
 					if ($MovePictures == true){
 						// move the picture to the obsolete folder
-						$DestinationFile = $DestinationDir . $MyRow['stockid'] . '.jpg';
+						$DestinationFile = $DestinationDir . $MyRow['stockid'] . $Suffix;
 						rename($SourceFile, $DestinationFile);	
 					}				
 					echo '<tr class="striped_row">
 							<td class="number">', $i, '</td>
 							<td>', $CodeLink, '</td>
 							<td>', $MyRow['description'], '</td>
-							<td>', $MyRow['stockid'] . $suffix , '</td>
+							<td>', $MyRow['stockid'] . $Suffix , '</td>
 						</tr>';
 					$i++;
 				}
-				$multipleimage++;
+				$MultipleImage++;
 			}	
 		}
-		echo '</table>
-				</div>
-				</form>';
+		if (!$ShowHeader){
+			echo '</table>
+					</div>
+					</form>';
+		}
 	}
 }
