@@ -546,38 +546,6 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		flush();
 
 		DB_IgnoreForeignKeys();
-		$Errors = 0;
-		if (!PopulateSQLDataBySQLFile($Path_To_Root. '/install/sql/demo.sql', $DBType)) {
-			$Errors++;
-			echo '<div class="error">' . __('There was an error populating the database with demo data') . '</div>';
-		}
-
-		/// @todo this could just be pushed into demo.sql - and checked for presence by the scripts in /build
-		$SQL = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('FirstLogIn','0')";
-		$Result = DB_query($SQL, '', '', false, false);
-		/// @todo echo error (warning?) if failure
-		if (DB_error_no() == 0) {
-			//echo '<div class="success">' . __('...') . '</div>';
-		} else {
-			$Errors++;
-			echo '<div class="error">' . __('There was an error updating the FirstLogIn setting') . ' - ' . DB_error_msg() . '</div>';
-		}
-		DB_ReinstateForeignKeys();
-
-		/// @todo there is no guarantee that all the db updates have been applied to the single SQL files making up
-		///       the installer - that is left to the person preparing the release to verify...
-		$SQL = "INSERT INTO config VALUES('DBUpdateNumber', " . HighestFileName($Path_To_Root) . ")";
-		$Result = DB_query($SQL, '', '', false, false);
-		if (DB_error_no() == 0) {
-			echo '<div class="success">' . __('The database update revision has been inserted') . '</div>';
-		} else {
-			$Errors++;
-			echo '<div class="error">' . __('There was an error inserting the DB revision number') . ' - ' . DB_error_msg() . '</div>';
-		}
-
-		foreach (glob($Path_To_Root . '/companies/weberpdemo/part_pics/*.jp*') as $JpegFile) {
-			copy($Path_To_Root . "/companies/weberpdemo/part_pics/" . basename($JpegFile), $CompanyDir . '/part_pics/' . basename($JpegFile));
-		}
 
 		/// @todo is there need to disable foreign keys for this insert?
 		DB_IgnoreForeignKeys();
@@ -643,6 +611,38 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 			echo '<div class="error">' . __('There was an error inserting the admin user') . ' - ' . DB_error_msg() . '</div>';
 		}
 		DB_ReinstateForeignKeys();
+		$Errors = 0;
+		if (!PopulateSQLDataBySQLFile($Path_To_Root. '/install/sql/demo.sql', $DBType)) {
+			$Errors++;
+			echo '<div class="error">' . __('There was an error populating the database with demo data') . '</div>';
+		}
+
+		/// @todo this could just be pushed into demo.sql - and checked for presence by the scripts in /build
+		$SQL = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('FirstLogIn','0')";
+		$Result = DB_query($SQL, '', '', false, false);
+		/// @todo echo error (warning?) if failure
+		if (DB_error_no() == 0) {
+			//echo '<div class="success">' . __('...') . '</div>';
+		} else {
+			$Errors++;
+			echo '<div class="error">' . __('There was an error updating the FirstLogIn setting') . ' - ' . DB_error_msg() . '</div>';
+		}
+		DB_ReinstateForeignKeys();
+
+		/// @todo there is no guarantee that all the db updates have been applied to the single SQL files making up
+		///       the installer - that is left to the person preparing the release to verify...
+		$SQL = "INSERT INTO config VALUES('DBUpdateNumber', " . HighestFileName($Path_To_Root) . ")";
+		$Result = DB_query($SQL, '', '', false, false);
+		if (DB_error_no() == 0) {
+			echo '<div class="success">' . __('The database update revision has been inserted') . '</div>';
+		} else {
+			$Errors++;
+			echo '<div class="error">' . __('There was an error inserting the DB revision number') . ' - ' . DB_error_msg() . '</div>';
+		}
+
+		foreach (glob($Path_To_Root . '/companies/weberpdemo/part_pics/*.jp*') as $JpegFile) {
+			copy($Path_To_Root . "/companies/weberpdemo/part_pics/" . basename($JpegFile), $CompanyDir . '/part_pics/' . basename($JpegFile));
+		}
 		flush();
 
 		/// @todo display a warning message if there was any query failure
@@ -687,10 +687,11 @@ function PopulateSQLDataBySQLFile($File, $DBType) {
 
 		$SQLScriptFile[$i - 1] = trim($SQLScriptFile[$i - 1]);
 
+//		if (mb_substr($SQLScriptFile[$i - 1], 0 ,2) != '--') {
+
 		/// @todo ignore lines that start with `--` or USE or /* or CREATE DATABASE
 
 		$SQL.= ' ' . $SQLScriptFile[$i - 1];
-
 		// check if this line kicks off a function definition - pg chokes otherwise
 		/// @todo we can disable this filter if on mysql/mariadb
 		/// @todo use a regexp
@@ -712,6 +713,7 @@ function PopulateSQLDataBySQLFile($File, $DBType) {
 			$SQL = '';
 		}
 		flush();
+//		}
 
 	} //end of for loop around the lines of the sql script
 
