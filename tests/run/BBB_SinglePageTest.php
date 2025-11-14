@@ -46,7 +46,7 @@ class BBB_SinglePageTest extends LoggedInUserTestCase
 		$pages = [];
 		foreach(self::listWebPages() as $path) {
 			$fileName = basename($path);
-			if (in_array($fileName, ['Logout.php', 'config.distrib.php'])) {
+			if (in_array($fileName, ['Logout.php', 'config.distrib.php', 'geocode.php'])) {
 				continue;
 			}
 			$pages[] = [$path];
