@@ -2012,7 +2012,7 @@ function GetItemTransferReason($Reason){
 	} elseif ($Reason == 'SMART_NEEDED_BY_RL'){
 		// from KLSmartStockTransfers.php
 		return 'Daily Cron Job From Kantor Needed in Shop by Reorder Level';
-	} elseif ($Reason == 'SMART_RETURN_OVERSTOCK'){
+	} elseif ($Reason == 'SMART_RETURN_OVER'){
 		// from KLSmartStockTransfers.php
 		return 'Daily Cron Job Return Overstock from Shop to Kantor';
 	} elseif (substr($Reason, 0, 5) == 'SERV_'){
