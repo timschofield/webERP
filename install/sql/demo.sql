@@ -21248,3 +21248,5 @@ INSERT INTO `qatests` (`name`, `method`, `groupby`, `units`, `type`, `defaultval
 ('Sterility Test', 'USP Sterility', 'Microbiological', 'Pass/Fail', 'Text', 'Pass', 0, 1, 1, 1, 1),
 ('Hardness Test', 'Hardness Tester', 'Mechanical', 'Kg/cm²', 'Range', '5-10', 1, 1, 1, 1, 1);
 
+INSERT INTO `dashboard_scripts` VALUES (1,'total_dashboard.php',1,'Shows total for sales, purchase and outstanding orders'),(2,'customer_orders.php',1,'Shows latest customer orders have been placed.'),(3,'unpaid_invoice.php',1,'Shows Outstanding invoices'),(4,'latest_po.php',1,'Shows latest Purchase orders'),(5,'latest_po_auth.php',1,'Shows Purchase orders to authorise'),(6,'latest_stock_status.php',1,'Shows latest stock status'),(7,'work_orders.php',1,'Shows latest work orders'),(8,'mrp_dashboard.php',1,'Shows latest MRP'),(9,'bank_trans.php',1,'Shows latest bank transactions');
+INSERT INTO `dashboard_users` VALUES (1,'admin','1,2,3,6,7,9');
