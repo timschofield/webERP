@@ -1,5 +1,7 @@
 <?php
 
+/// @deprecated seems unused
+
 /**
  * This function retrieves the reports given a certain group id as defined in /reports/admin/defaults.php
  * in the associative array $ReportGroups[]. It will fetch the reports belonging solely to the group

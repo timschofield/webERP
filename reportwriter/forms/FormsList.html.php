@@ -1,4 +1,11 @@
-<?php echo '<html lang="' . str_replace('_', '-', substr($Language, 0, 5)) . ">"; ?>
+<?php
+
+if (!isset($PathPrefix)) {
+	header('Location: ../../');
+	exit();
+}
+
+echo '<html lang="' . str_replace('_', '-', substr($Language, 0, 5)) . ">"; ?>
 <head></head>
 <body>
 <form name="formhome" method="post" action="FormMaker.php<?php echo $QueryString; ?>">

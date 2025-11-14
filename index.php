@@ -216,13 +216,13 @@ echo '</ul>
 </fieldset>'; // MaintenanceDive ===HJ===
 include('includes/footer.php');
 
+/**
+* This function retrieves the reports given a certain group id as defined in /reports/admin/defaults.php
+* in the associative array $ReportGroups[]. It will fetch the reports belonging solely to the group
+* specified to create a list of links for insertion into a table to choose a report. Two table sections will
+* be generated, one for standard reports and the other for custom reports.
+ */
 function GetRptLinks($GroupID) {
-	/*
-	This function retrieves the reports given a certain group id as defined in /reports/admin/defaults.php
-	in the acssociative array $ReportGroups[]. It will fetch the reports belonging solely to the group
-	specified to create a list of links for insertion into a table to choose a report. Two table sections will
-	be generated, one for standard reports and the other for custom reports.
-	*/
 	global $RootPath;
 	if (!isset($_SESSION['FormGroups'])) {
 		$_SESSION['FormGroups'] = array('gl:chk' => __('Bank Checks'), // Bank checks grouped with the gl report group
