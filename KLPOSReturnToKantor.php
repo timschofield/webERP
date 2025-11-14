@@ -214,8 +214,8 @@ if (isset($_POST['Submit']) AND $InputError==False){
 			echo '<option value="">' . __('Select Reason') . '</option>';
 			
 			// Add hard-coded options first
-			$SelectedRequested = (isset($_POST['ReasonReturn' . $i]) && $_POST['ReasonReturn' . $i] == 'REQUESTED') ? 'selected="selected"' : '';
-			$SelectedOthers = (isset($_POST['ReasonReturn' . $i]) && $_POST['ReasonReturn' . $i] == 'OTHERS') ? 'selected="selected"' : '';
+			$SelectedRequested = (isset($_POST['ReasonReturn' . $i]) && $_POST['ReasonReturn' . $i] == 'REQUESTED_SS') ? 'selected="selected"' : '';
+			$SelectedOthers = (isset($_POST['ReasonReturn' . $i]) && $_POST['ReasonReturn' . $i] == 'OTHERS_SPG') ? 'selected="selected"' : '';
 			echo '<option value="REQUESTED_SS" ' . $SelectedRequested . '>' . __('Requested by Shop Support Team') . '</option>';
 			echo '<option value="OTHERS_SPG" ' . $SelectedOthers . '>' . __('Return by any other reason') . '</option>';
 			
@@ -254,10 +254,10 @@ if (isset($_POST['Submit']) AND $InputError==False){
 	echo '<option value="">' . __('Select Reason') . '</option>';
 	
 	// Add hard-coded options first for new row
-	$SelectedRequestedNew = (isset($_POST['ReasonReturn' . $j]) && $_POST['ReasonReturn' . $j] == 'REQUESTED') ? 'selected="selected"' : '';
-	$SelectedOthersNew = (isset($_POST['ReasonReturn' . $j]) && $_POST['ReasonReturn' . $j] == 'OTHERS') ? 'selected="selected"' : '';
-	echo '<option value="REQUESTED" ' . $SelectedRequestedNew . '>' . __('Requested by Shop Support Team') . '</option>';
-	echo '<option value="OTHERS" ' . $SelectedOthersNew . '>' . __('Other reasons') . '</option>';
+	$SelectedRequestedNew = (isset($_POST['ReasonReturn' . $j]) && $_POST['ReasonReturn' . $j] == 'REQUESTED_SS') ? 'selected="selected"' : '';
+	$SelectedOthersNew = (isset($_POST['ReasonReturn' . $j]) && $_POST['ReasonReturn' . $j] == 'OTHERS_SPG') ? 'selected="selected"' : '';
+	echo '<option value="REQUESTED_SS" ' . $SelectedRequestedNew . '>' . __('Requested by Shop Support Team') . '</option>';
+	echo '<option value="OTHERS_SPG" ' . $SelectedOthersNew . '>' . __('Other reasons') . '</option>';
 	
 	// Get return reasons from database for new row
 	$ReasonSQL = "SELECT servicecode,

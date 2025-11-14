@@ -1307,7 +1307,7 @@ function InsertKPI($KPICode, $Value){
 				value)
 			VALUES 
 				('" . $Date . "',
-				'" . mb_substr($KPICode, 0, 30) . "',
+				'" . mb_substr($KPICode, 0, 40) . "',
 				'" . (float)$Value . "')";
 		$ErrMsg = 'Error in function InsertKPI()';
 		DB_query($SQL, $ErrMsg, '', true);
@@ -2009,6 +2009,15 @@ function GetItemTransferReason($Reason){
 	} elseif ($Reason == 'DISPATCH_NEEDED_BY_RL'){
 		// from StockDispatch.php
 		return 'Manual Dispatch Needed by Reorder Level';
+	} elseif ($Reason == 'MANUAL'){
+		// from StockLocTransfer.php
+		return 'Manual Transfer';
+	} elseif ($Reason == 'OTHERS_SPG'){
+		// from KLPOSReturnToKantor.php
+		return 'Return by SPG for other reasons';
+	} elseif ($Reason == 'REQUESTED_SS'){
+		// from KLPOSReturnToKantor.php
+		return 'Requested by Shop Support from Shop';
 	} elseif ($Reason == 'SMART_NEEDED_BY_RL'){
 		// from KLSmartStockTransfers.php
 		return 'Daily Cron Job From Kantor Needed in Shop by Reorder Level';
@@ -2025,7 +2034,7 @@ function GetItemTransferReason($Reason){
 			return '';
 		} else {
 			$MyRow = DB_fetch_row($Result);
-			return $MyRow[0];
+			return 'Service: ' . $MyRow[0];
 		}
 	} else {	
 		// not reason code found
