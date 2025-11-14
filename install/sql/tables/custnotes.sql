@@ -1,5 +1,5 @@
 CREATE TABLE `custnotes` (
-  `noteid` tinyint NOT NULL AUTO_INCREMENT,
+  `noteid` int NOT NULL AUTO_INCREMENT,
   `debtorno` varchar(10) NOT NULL DEFAULT '0',
   `href` varchar(100) NOT NULL,
   `note` text NOT NULL,
