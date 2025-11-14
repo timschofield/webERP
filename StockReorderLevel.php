@@ -62,25 +62,26 @@ echo '<table class="selection">
 	</thead>
 	<tbody>';
 
-while ($MyRow=DB_fetch_array($LocStockResult)) {
+while ($MyRow = DB_fetch_array($LocStockResult)) {
 
 	if (isset($_POST['UpdateData'])
-		AND $_POST['Old_' . $MyRow['loccode']]!= filter_number_format($_POST[$MyRow['loccode']])
-		AND is_numeric(filter_number_format($_POST[$MyRow['loccode']]))
-		AND filter_number_format($_POST[$MyRow['loccode']])>=0){
+		and isset($_POST['Old_' . $MyRow['loccode']])
+		and $_POST['Old_' . $MyRow['loccode']] != filter_number_format($_POST[$MyRow['loccode']])
+		and is_numeric(filter_number_format($_POST[$MyRow['loccode']]))
+		and filter_number_format($_POST[$MyRow['loccode']]) >= 0) {
 
-	   $MyRow['reorderlevel'] = filter_number_format($_POST[$MyRow['loccode']]);
-	   $SQL = "UPDATE locstock SET reorderlevel = '" . filter_number_format($_POST[$MyRow['loccode']]) . "'
-	   		WHERE stockid = '" . $StockID . "'
-			AND loccode = '"  . $MyRow['loccode'] ."'";
-	   $UpdateReorderLevel = DB_query($SQL);
+		$MyRow['reorderlevel'] = filter_number_format($_POST[$MyRow['loccode']]);
+		$SQL = "UPDATE locstock SET reorderlevel = '" . filter_number_format($_POST[$MyRow['loccode']]) . "'
+				WHERE stockid = '" . $StockID . "'
+				AND loccode = '"  . $MyRow['loccode'] ."'";
+		$UpdateReorderLevel = DB_query($SQL);
 
 	}
-	if ($MyRow['canupd']==1) {
-		$UpdateCode='<input title="'.__('Input safety stock quantity').'" type="text" class="number" name="' . $MyRow['loccode'] . '" maxlength="10" size="10" value="' . $MyRow['reorderlevel'] . '" />
-			';
+	if ($MyRow['canupd'] == 1){
+		$UpdateCode = '<input title="'.__('Input safety stock quantity').'" type="text" class="number" name="' . $MyRow['loccode'] . '" maxlength="10" size="10" value="' . $MyRow['reorderlevel'] . '" />
+			<input type="hidden" name="Old_' . $MyRow['loccode'] . '" value="' . $MyRow['reorderlevel'] . '" />';
 	} else {
-		$UpdateCode='<input type="hidden" name="' . $MyRow['loccode'] . '">' . $MyRow['reorderlevel'] . '<input type="hidden" name="' . $MyRow['loccode'] . '" value="' . $MyRow['reorderlevel'] . '" />';
+		$UpdateCode = '<input type="hidden" name="' . $MyRow['loccode'] . '">' . $MyRow['reorderlevel'] . '<input type="hidden" name="' . $MyRow['loccode'] . '" value="' . $MyRow['reorderlevel'] . '" />';
 	}
 	echo '<tr class="striped_row">
 			<td>', $MyRow['locationname'], '</td>
