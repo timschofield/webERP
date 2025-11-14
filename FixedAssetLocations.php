@@ -92,17 +92,18 @@ $Result = DB_query($SQL);
 
 if (DB_num_rows($Result) > 0) {
 	echo '<table class="selection">
-		<thead>
-		<tr>
-			<th class="SortedColumn">' . __('Location ID') . '</th>
-			<th class="SortedColumn">' . __('Location Description') . '</th>
-			<th class="SortedColumn">' . __('Parent Location') . '</th>
-			</tr>
-		</thead>
+			<thead>
+				<tr>
+					<th class="SortedColumn">' . __('Location ID') . '</th>
+					<th class="SortedColumn">' . __('Location Description') . '</th>
+					<th class="SortedColumn">' . __('Parent Location') . '</th>
+					<th></th>
+				</tr>
+			</thead>
 		<tbody>';
 
 	while ($MyRow=DB_fetch_array($Result)) {
-		echo '<tr>
+		echo '<tr class="striped_row">
 				<td>' . $MyRow['locationid'] . '</td>
 				<td>' . $MyRow['locationdescription'] . '</td>';
 		if ($MyRow['parentlocationid'] != '') {
