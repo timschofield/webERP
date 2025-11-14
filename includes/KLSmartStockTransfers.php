@@ -170,7 +170,7 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 	} else {
 		$WhereCategory = " ";
 		$StrategyText = "Items with overstock at " . $FromLocCode . " returning to " . $ToLocCode;
-		$Reason = 'SMART_RETURN_OVERSTOCK';
+		$Reason = 'SMART_RETURN_OVER';
 	}
 
 	$SQL = "SELECT tols.stockid,

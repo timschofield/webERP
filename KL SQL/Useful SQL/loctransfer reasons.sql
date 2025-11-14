@@ -15,7 +15,7 @@ ALTER TABLE `klkpi` CHANGE `kpicode` `kpicode` VARCHAR(40) CHARACTER SET utf8mb4
 INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-DISPATCH_OVERSTOCK-30-PCS', 'Manual Dispatch Overstock');
 INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-DISPATCH_NEEDED_BY_RL-30-PCS', 'Manual Dispatch Needed by Reorder Level');
 INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-SMART_NEEDED_BY_RL-30-PCS', 'Daily Cron Job From Kantor Needed in Shop by Reorder Level');
-INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-SMART_RETURN_OVERSTOCK-30-PCS', 'Daily Cron Job Return Overstock from Shop to Kantor');
+INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-SMART_RETURN_OVER-30-PCS', 'Daily Cron Job Return Overstock from Shop to Kantor');
 INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-SERV__LAINLAIN-30-PCS', 'Servis Lain Lain');
 INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-SERV_BENTUKBENGKOK-30-PCS', 'Bentuk perak bengkok');
 INSERT INTO `klkpidescriptions` (`kpicode`, `kpidescription`) VALUES ('TRANS-SERV_CRYSTALLEPAS-30-PCS', 'Crystal / sircon lepas');
