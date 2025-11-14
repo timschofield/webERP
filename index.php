@@ -26,7 +26,12 @@ $Title = __('Main Menu');
 $SQL = "SELECT value FROM session_data WHERE userid='" . $_SESSION['UserID'] . "' AND field='module'";
 $Result = DB_query($SQL);
 $MyRow = DB_fetch_array($Result);
-$_SESSION['Module'] = $MyRow['value'];
+if (DB_num_rows($Result) > 0) {
+	$MyRow = DB_fetch_array($Result);
+	$_SESSION['Module'] = $MyRow['value'];
+} else {
+	$_SESSION['Module'] = 'Sales';
+}
 if (isset($_GET['Application']) and ($_GET['Application'] != '')) {
 	/*This is sent by this page (to itself) when the user clicks on a tab */
 	$_SESSION['Module'] = $_GET['Application'];
