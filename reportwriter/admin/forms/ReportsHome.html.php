@@ -1,4 +1,11 @@
-<h2 align="center"><?php echo $FormParams['heading']; ?></h2>
+<?php
+
+if (!isset($PathPrefix)) {
+	header('Location: ../../../');
+	exit();
+}
+
+?><h2 align="center"><?php echo $FormParams['heading']; ?></h2>
 <form name="reporthome" method="post" action="ReportCreator.php?action=step2">
 	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
   <table align="center"  border="0" cellspacing="0" cellpadding="0">

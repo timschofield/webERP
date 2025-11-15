@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 04, 2025 at 08:55 AM
--- Server version: 11.4.8-MariaDB-log
--- PHP Version: 8.4.11
+-- Generation Time: Nov 13, 2025 at 09:53 AM
+-- Server version: 11.4.9-MariaDB-log
+-- PHP Version: 8.4.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -1220,7 +1220,7 @@ CREATE TABLE `klfreeexchanges` (
 
 CREATE TABLE `klkpi` (
   `date` date NOT NULL DEFAULT '1000-01-01',
-  `kpicode` varchar(30) NOT NULL DEFAULT '',
+  `kpicode` varchar(40) NOT NULL,
   `value` decimal(20,2) NOT NULL DEFAULT 0.00
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -1231,7 +1231,7 @@ CREATE TABLE `klkpi` (
 --
 
 CREATE TABLE `klkpidescriptions` (
-  `kpicode` varchar(30) NOT NULL,
+  `kpicode` varchar(40) NOT NULL,
   `kpidescription` varchar(80) NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -1456,40 +1456,48 @@ CREATE TABLE `klretailpartners` (
   `areasalescreditcard` varchar(3) NOT NULL DEFAULT '',
   `areasalescash` varchar(3) NOT NULL DEFAULT '',
   `areasalescashothers` varchar(3) NOT NULL DEFAULT '',
-  `cashsalesreported` decimal(5,2) NOT NULL DEFAULT 100.00 COMMENT '% of cash sales reported',
-  `hppcompensation` decimal(5,2) NOT NULL DEFAULT 100.00 COMMENT '% of HPP to be assigned to reported sales. 100 means NO compensation.',
-  `accountposreceivable` varchar(20) NOT NULL DEFAULT '',
-  `accounthppcompensation` varchar(20) NOT NULL DEFAULT '',
-  `accountbankdanamon` varchar(20) NOT NULL DEFAULT '',
-  `settlementdelaydanamon` int(11) NOT NULL DEFAULT 1 COMMENT 'Number of days after POS retail sale to get the settlement of funds',
-  `accountbankbni` varchar(20) NOT NULL DEFAULT '',
-  `settlementdelaybni` int(11) NOT NULL DEFAULT 1 COMMENT 'Number of days after POS retail sale to get the settlement of funds',
-  `accountbankmandiri` varchar(20) NOT NULL DEFAULT '',
-  `settlementdelaymandiri` int(11) NOT NULL DEFAULT 1 COMMENT 'Number of days after POS retail sale to get the settlement of funds',
-  `accountbankbca` varchar(20) NOT NULL DEFAULT '',
-  `settlementdelaybca` int(11) NOT NULL DEFAULT 1 COMMENT 'Number of days after POS retail sale to get the settlement of funds',
-  `accountcomissioncreditcard` varchar(20) NOT NULL DEFAULT '',
-  `comissionccdanamon` decimal(5,2) NOT NULL DEFAULT 0.00,
-  `comissionamexdanamon` decimal(5,2) NOT NULL DEFAULT 0.00,
-  `comissionccbni` decimal(5,2) NOT NULL DEFAULT 0.00,
-  `comissionamexbni` decimal(5,2) NOT NULL DEFAULT 0.00,
-  `comissionccmandiri` decimal(5,2) NOT NULL DEFAULT 0.00,
-  `comissionccbca` decimal(5,2) NOT NULL DEFAULT 0.00,
-  `comissionamexbca` decimal(5,2) NOT NULL DEFAULT 0.00,
-  `percentconsignmentptadu` decimal(5,2) NOT NULL DEFAULT 0.00,
-  `accountconsignmentsalesptadu` varchar(20) NOT NULL DEFAULT '',
-  `accountconsignmentcogspartner` varchar(20) NOT NULL DEFAULT '',
   `counterinvoicea` smallint(6) NOT NULL DEFAULT 0,
   `counterinvoiceb` smallint(6) NOT NULL DEFAULT 0,
   `counterinvoicec` smallint(6) NOT NULL DEFAULT 0,
-  `accountwechat` varchar(20) NOT NULL DEFAULT '',
-  `settlementdelaywechat` int(11) NOT NULL DEFAULT 1 COMMENT 'Number of days after POS retail sale to get the settlement of funds',
-  `comissionwechat` decimal(5,2) NOT NULL DEFAULT 0.00,
+  `cashsalesreported` decimal(5,2) NOT NULL DEFAULT 100.00 COMMENT '% of cash sales reported',
+  `percentconsignmentptadu` decimal(5,2) NOT NULL DEFAULT 0.00,
+  `accountconsignmentsalesptadu` varchar(20) NOT NULL,
+  `accountconsignmentcogspartner` varchar(20) NOT NULL,
+  `hppcompensation` decimal(5,2) NOT NULL DEFAULT 100.00 COMMENT '% of HPP to be assigned to reported sales. 100 means NO compensation.',
+  `accounthppcompensation` varchar(20) NOT NULL,
+  `accountposreceivable` varchar(20) NOT NULL DEFAULT '',
+  `accountcomissioncreditcard` varchar(20) NOT NULL,
+  `accountbankdanamon` varchar(20) NOT NULL DEFAULT '',
+  `comissionccdanamon` decimal(5,2) NOT NULL DEFAULT 0.00,
+  `comissionamexdanamon` decimal(5,2) NOT NULL DEFAULT 0.00,
+  `settlementdelaydanamon` int(11) NOT NULL DEFAULT 1 COMMENT 'Number of days after POS retail sale to get the settlement of funds',
+  `accountbankbni` varchar(20) NOT NULL DEFAULT '',
+  `comissionccbni` decimal(5,2) NOT NULL DEFAULT 0.00,
+  `comissionamexbni` decimal(5,2) NOT NULL DEFAULT 0.00,
+  `settlementdelaybni` int(11) NOT NULL DEFAULT 1 COMMENT 'Number of days after POS retail sale to get the settlement of funds',
+  `accountbankmandiri` varchar(20) NOT NULL DEFAULT '',
+  `comissionccmandiri` decimal(5,2) NOT NULL DEFAULT 0.00,
+  `comissionamexmandiri` decimal(5,2) NOT NULL DEFAULT 0.00,
+  `settlementdelaymandiri` int(11) NOT NULL DEFAULT 1 COMMENT 'Number of days after POS retail sale to get the settlement of funds',
+  `accountbankbca` varchar(20) NOT NULL DEFAULT '',
+  `comissionccbca` decimal(5,2) NOT NULL DEFAULT 0.00,
+  `comissionamexbca` decimal(5,2) NOT NULL DEFAULT 0.00,
+  `settlementdelaybca` int(11) NOT NULL DEFAULT 1 COMMENT 'Number of days after POS retail sale to get the settlement of funds',
+  `accountbankbri` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'GL account for Bank BRI QRIS transactions',
+  `comissionccbri` decimal(5,2) NOT NULL COMMENT '% of Credit card comission paid to bri',
+  `comissionamexbri` decimal(5,2) NOT NULL COMMENT '% of Credit card comission paid to American Express by bri',
+  `settlementdelaybri` int(11) NOT NULL DEFAULT 1 COMMENT 'Number of days after POS retail sale to get the settlement of funds',
   `accountcomissionwechat` varchar(20) NOT NULL DEFAULT '',
-  `accountqrismandiri` varchar(20) NOT NULL DEFAULT '',
-  `settlementdelayqrismandiri` int(11) NOT NULL DEFAULT 1 COMMENT 'Number of days after POS retail sale to get the settlement of funds',
+  `accountwechat` varchar(20) NOT NULL,
+  `comissionwechat` decimal(5,2) NOT NULL DEFAULT 0.00,
+  `settlementdelaywechat` int(11) NOT NULL DEFAULT 1 COMMENT 'Number of days after POS retail sale to get the settlement of funds',
+  `accountcomissionqris` varchar(20) NOT NULL DEFAULT '',
+  `accountqrismandiri` varchar(20) NOT NULL,
   `comissionqrismandiri` decimal(5,2) NOT NULL DEFAULT 0.00,
-  `accountcomissionqrismandiri` varchar(20) NOT NULL DEFAULT ''
+  `settlementdelayqrismandiri` int(11) NOT NULL DEFAULT 1 COMMENT 'Number of days after POS retail sale to get the settlement of funds',
+  `accountqrisbri` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'GL account for Bank BRI QRIS transactions',
+  `comissionqrisbri` decimal(5,2) NOT NULL COMMENT '% of Credit card comission paid to bri',
+  `settlementdelayqrisbri` int(11) NOT NULL DEFAULT 1 COMMENT 'Number of days after POS retail sale to get the settlement of funds'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1792,7 +1800,8 @@ CREATE TABLE `loctransfers` (
   `recdate` datetime NOT NULL DEFAULT '1000-01-01 00:00:00',
   `shiploc` varchar(7) NOT NULL DEFAULT '',
   `recloc` varchar(7) NOT NULL DEFAULT '',
-  `pendingqty` double GENERATED ALWAYS AS (`shipqty` - `recqty`) STORED
+  `pendingqty` double GENERATED ALWAYS AS (`shipqty` - `recqty`) STORED,
+  `reason` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Stores Shipments To And From Locations';
 
 -- --------------------------------------------------------
@@ -5236,7 +5245,8 @@ ALTER TABLE `salesanalysis`
   ADD KEY `idx_salesanalysis_typeabbrev` (`typeabbrev`),
   ADD KEY `idx_salesanalysis_area` (`area`),
   ADD KEY `idx_salesanalysis_budgetoractual` (`budgetoractual`),
-  ADD KEY `idx_salesanalysis_salesperson` (`salesperson`);
+  ADD KEY `idx_salesanalysis_salesperson` (`salesperson`),
+  ADD KEY `salesanalysis_composite_idx` (`area`,`typeabbrev`,`periodno`,`budgetoractual`,`cust`,`custbranch`,`stockid`,`stkcategory`,`salesperson`);
 
 --
 -- Indexes for table `salescat`
@@ -6384,8 +6394,7 @@ ALTER TABLE `pickreqdetails`
 -- Constraints for table `pickserialdetails`
 --
 ALTER TABLE `pickserialdetails`
-  ADD CONSTRAINT `pickserialdetails_ibfk_1` FOREIGN KEY (`detailno`) REFERENCES `pickreqdetails` (`detailno`),
-  ADD CONSTRAINT `pickserialdetails_ibfk_2` FOREIGN KEY (`stockid`,`serialno`) REFERENCES `stockserialitems` (`stockid`, `serialno`);
+  ADD CONSTRAINT `pickserialdetails_ibfk_1` FOREIGN KEY (`detailno`) REFERENCES `pickreqdetails` (`detailno`);
 
 --
 -- Constraints for table `timesheets`

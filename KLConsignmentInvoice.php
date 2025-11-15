@@ -129,7 +129,7 @@ function submit($CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $DomPDFOpti
 			if ($CompanyFrom == 'PTADU'){
 				$HTML .= '<h1>PT. Angin Dingin Utara</h1>';
 				$HTML .= '<p>Jl. Raya Kesambi No. 1B, Kerobokan Kuta Utara, Badung - Bali</p>';
-				$HTML .= '<p>Ph. +62 812 381 6794</p>';
+				$HTML .= '<p>Ph. +62 81 138 319 950</p>';
 			} elseif ($CompanyFrom == 'CASH'){
 				$HTML .= '<h1 style="font-size: 12pt;">CASH</h1>';
 			}

@@ -425,6 +425,9 @@ if (isset($SearchResult)) {
 		$RowIndex = 0;
 		echo '<tbody>';
 		while (($MyRow = DB_fetch_array($SearchResult)) and ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
+			if ($MyRow['brname'] == null) {
+				$MyRow['brname'] = '';
+			}
 			echo '<tr class="striped_row">
 					<td><button type="submit" name="SubmitCustomerSelection[', htmlspecialchars($MyRow['debtorno'], ENT_QUOTES, 'UTF-8', false), ']" value="', htmlspecialchars($MyRow['branchcode'], ENT_QUOTES, 'UTF-8', false), '" >', $MyRow['debtorno'], ' ', $MyRow['branchcode'], '</button></td>
 					<td class="text">', htmlspecialchars($MyRow['name'], ENT_QUOTES, 'UTF-8', false), '</td>
@@ -530,7 +533,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 				);
 				$context = stream_context_create($opts);
 				$buffer = @file_get_contents($request_url, false, $context);
-				
+
 				if ($buffer !== false) {
 					$json = json_decode($buffer, true);
 					if (!empty($json) && isset($json[0]['lat']) && isset($json[0]['lon'])) {
@@ -563,7 +566,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 		else {
 			echo '<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>';
 			echo '<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>';
-			
+
 			echo '<table cellpadding="4">
 					<thead>
 						<tr>
@@ -583,17 +586,17 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 			// OpenStreetMap with Leaflet
 			echo '<script>
 			var map = L.map(\'map\').setView([' . $Lat . ', ' . $Lng . '], 14);
-			
+
 			L.tileLayer(\'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png\', {
 				attribution: \'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors\',
 				maxZoom: 19
 			}).addTo(map);
-			
+
 			var marker = L.marker([' . $Lat . ', ' . $Lng . ']).addTo(map);
-			marker.bindPopup(\'<div style="overflow: auto;"><div><b>' . htmlspecialchars($BranchName, ENT_QUOTES, 'UTF-8') . '</b></div><div>' . 
-				htmlspecialchars($MyRow2['braddress1'], ENT_QUOTES, 'UTF-8') . '</div><div>' . 
-				htmlspecialchars($MyRow2['braddress2'], ENT_QUOTES, 'UTF-8') . '</div><div>' . 
-				htmlspecialchars($MyRow2['braddress3'], ENT_QUOTES, 'UTF-8') . '</div><div>' . 
+			marker.bindPopup(\'<div style="overflow: auto;"><div><b>' . htmlspecialchars($BranchName, ENT_QUOTES, 'UTF-8') . '</b></div><div>' .
+				htmlspecialchars($MyRow2['braddress1'], ENT_QUOTES, 'UTF-8') . '</div><div>' .
+				htmlspecialchars($MyRow2['braddress2'], ENT_QUOTES, 'UTF-8') . '</div><div>' .
+				htmlspecialchars($MyRow2['braddress3'], ENT_QUOTES, 'UTF-8') . '</div><div>' .
 				htmlspecialchars($MyRow2['braddress4'], ENT_QUOTES, 'UTF-8') . '</div></div>\').openPopup();
 			</script>';
 		}
@@ -842,6 +845,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 						<td>', $MyRow[5], '</td>
 						<td><a href="' . $RootPath . '/AddCustomerTypeNotes.php?Id=', urlencode($MyRow[0]), '&amp;DebtorType=', urlencode($MyRow[1]), '">', __('Edit'), '</a></td>
 						<td><a href="' . $RootPath . '/AddCustomerTypeNotes.php?Id=', urlencode($MyRow[0]), '&amp;DebtorType=', urlencode($MyRow[1]), '&amp;delete=1">', __('Delete'), '</a></td>
+						<td></td>
 					</tr>';
 			} // END WHILE LIST LOOP
 			echo '</tbody>';

@@ -1,4 +1,11 @@
-<h2 align="center"><?php echo $FormParams['heading'].$reportname.' - '.RPT_BTN_CRIT; ?></h2>
+<?php
+
+if (!isset($PathPrefix)) {
+	header('Location: ../../../');
+	exit();
+}
+
+?><h2 align="center"><?php echo $FormParams['heading'].$reportname.' - '.RPT_BTN_CRIT; ?></h2>
 <form name="CritFieldForm" method="post" action="ReportCreator.php?action=step7">
   <input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>">
   <input name="ReportID" type="hidden" value="<?php echo $ReportID; ?>">

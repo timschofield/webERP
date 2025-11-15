@@ -1,5 +1,5 @@
 CREATE TABLE `stockcategory` (
-  `categoryid` char(6) NOT NULL DEFAULT '',
+  `categoryid` varchar(6) NOT NULL DEFAULT '',
   `categorydescription` char(20) NOT NULL DEFAULT '',
   `stocktype` char(1) NOT NULL DEFAULT 'F',
   `stockact` varchar(20) NOT NULL DEFAULT '0',
