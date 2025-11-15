@@ -51,9 +51,21 @@ if (isset($_GET['Delete'])) {
 		}
 		prnMsg(__('This security token is currently used by the following scripts and cannot be deleted') . ':' . $List, 'error');
 	} else {
-		$Result = DB_query("DELETE FROM securitytokens WHERE tokenid='" . $_POST['TokenId'] . "'");
-		if ($Result) {
-			prnMsg(__('The security token was deleted successfully'), 'success');
+		$Result = DB_query("SELECT securityroles.secrolename 
+							FROM securitygroups 
+							INNER JOIN securityroles ON securitygroups.secroleid = securityroles.secroleid 
+							WHERE securitygroups.tokenid='" . $_POST['TokenId'] . "'");
+		if (DB_num_rows($Result) > 0) {
+			$List = '';
+			while($GroupRow = DB_fetch_array($Result)) {
+				$List .= ' ' . $GroupRow['secrolename'];
+			}
+			prnMsg(__('This security token is currently used by the following user roles and cannot be deleted') . ':' . $List, 'error');
+		} else {
+			$Result = DB_query("DELETE FROM securitytokens WHERE tokenid='" . $_POST['TokenId'] . "'");
+			if ($Result) {
+				prnMsg(__('The security token was deleted successfully'), 'success');
+			}
 		}
 	}
 	$_POST['TokenId'] = '';
