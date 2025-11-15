@@ -1309,6 +1309,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors'] == 1 AND $_SESSION['PaymentDe
 				<th>' . __('GL Account') . '</th>
 				<th>' . __('Narrative') . '</th>
 				<th>' . __('Tag') . '</th>
+				<th></th>
 			</tr>';
 
 		$PaymentTotal = 0;
@@ -1316,7 +1317,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors'] == 1 AND $_SESSION['PaymentDe
 
 			$TagDescriptions = GetDescriptionsFromTagArray($PaymentItem->Tag);
 
-			echo '<tr>
+			echo '<tr class="striped_row">
 				<td>' . $PaymentItem->Cheque . '</td>
 				<td class="number">' . locale_number_format($PaymentItem->Amount, $_SESSION['PaymentDetail' . $identifier]->CurrDecimalPlaces) . '</td>
 				<td>' . $PaymentItem->GLCode . ' - ' . $PaymentItem->GLActName . '</td>
@@ -1326,15 +1327,15 @@ if ($_SESSION['CompanyRecord']['gllink_creditors'] == 1 AND $_SESSION['PaymentDe
 				</tr>';
 			$PaymentTotal += $PaymentItem->Amount;
 		}
-		echo '<tr>
+		echo '<tr class="total_row">
 				<td></td>
 				<td class="number"><b>' . locale_number_format($PaymentTotal, $_SESSION['PaymentDetail' . $identifier]->CurrDecimalPlaces) . '</b></td>
 				<td></td>
 				<td></td>
 				<td></td>
+				<td></td>
 			</tr>
-			</table>
-			<br />';
+			</table>';
 		echo '<div class="centre"><input type="submit" name="CommitBatch" value="' . __('Accept and Process Payment') . '" /></div>';
 	}
 
