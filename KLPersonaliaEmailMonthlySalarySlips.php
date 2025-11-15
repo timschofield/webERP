@@ -63,8 +63,6 @@ function submit($Company, $PeriodOfFile, $SalaryType) {
 		include('includes/KLPersonaliaSQLSalarySlips.php');
 		
 		if (DB_num_rows($Result) != 0){
-			// Initialize DomPDF
-			
 
 			while ($MyRow = DB_fetch_array($Result)) {
 				// Prepare filename
