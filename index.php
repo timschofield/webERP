@@ -25,7 +25,6 @@ if (isset($_POST['CompanyNameField'])) {
 $Title = __('Main Menu');
 $SQL = "SELECT value FROM session_data WHERE userid='" . $_SESSION['UserID'] . "' AND field='module'";
 $Result = DB_query($SQL);
-$MyRow = DB_fetch_array($Result);
 if (DB_num_rows($Result) > 0) {
 	$MyRow = DB_fetch_array($Result);
 	$_SESSION['Module'] = $MyRow['value'];
