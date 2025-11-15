@@ -38,6 +38,9 @@ if (!isset($_POST['BeforeDate']) or !Is_date($_POST['BeforeDate'])) {
 if (!isset($_POST['AfterDate']) or !Is_date($_POST['AfterDate'])) {
 	$_POST['AfterDate'] = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, date('m') - 3, date('d'), date('y')));
 }
+if (!isset($_POST['StockLocation'])) {
+	$_POST['StockLocation'] = $_SESSION['DefaultFactoryLocation'];
+}
 
 echo '<fieldset>
 		<legend>', __('Inquiry Criteria'), '</legend>
