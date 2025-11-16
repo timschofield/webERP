@@ -7,6 +7,7 @@ CREATE TABLE `stockserialitems` (
   `qualitytext` text NOT NULL,
   `createdate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`stockid`,`serialno`,`loccode`),
+  UNIQUE KEY `stockid_serialno` (`stockid`,`serialno`),  -- ⭐ NEW
   KEY `StockID` (`stockid`),
   KEY `LocCode` (`loccode`),
   KEY `serialno` (`serialno`),
