@@ -427,7 +427,7 @@ msgstr "Futa"
 
 #: AccountGroups.php:323
 msgid "The account group details to be edited could not be retrieved"
-msgstr ""
+msgstr "Maelezo ya kikundi cha akaunti ya kuhaririwa hayakuweza kupatikana"
 
 #: AccountGroups.php:326
 msgid "The account group name does not exist in the database"
@@ -1199,7 +1199,7 @@ msgstr "Jumla"
 
 #: AgedDebtors.php:247
 msgid "The customer details could not be retrieved"
-msgstr ""
+msgstr "Maelezo ya mteja hayakuweza kupatikana"
 
 #: AgedDebtors.php:264
 msgid "Aged Customer Balances For Customers from"
@@ -1230,7 +1230,7 @@ msgstr "kwa"
 
 #: AgedDebtors.php:265 AgedSuppliers.php:119
 msgid "And Trading in"
-msgstr ""
+msgstr "Na biashara katika"
 
 #: AgedDebtors.php:270
 msgid "And Has at Least 1 Branch Serviced By Sales Person #"
@@ -1315,12 +1315,12 @@ msgstr "Ya sasa"
 
 #: AgedDebtors.php:280 AgedSuppliers.php:129
 msgid "Due Now"
-msgstr ""
+msgstr "Inatakiwa sasa"
 
 #: AgedDebtors.php:281 AgedDebtors.php:282 AgedSuppliers.php:130
 #: AgedSuppliers.php:131
 msgid "Days Over"
-msgstr ""
+msgstr "Siku zilizopita"
 
 #: AgedDebtors.php:367
 msgid "The details of outstanding transactions for customer"
@@ -1496,7 +1496,7 @@ msgstr "Msambazaji"
 
 #: AgedSuppliers.php:289 AgedSuppliers.php:291
 msgid "Aged Creditor Analysis"
-msgstr ""
+msgstr "Uchambuzi wa wadai wazee"
 
 #: AgedSuppliers.php:297
 msgid "Aged Supplier Analysis"
@@ -2427,7 +2427,7 @@ msgstr "Watumiaji wa Akaunti ya Benki"
 
 #: BankAccountUsers.php:12
 msgid "Select another bank account"
-msgstr ""
+msgstr "Chagua akaunti nyingine ya benki"
 
 #: BankAccountUsers.php:16
 msgid "Bank Account Authorised Users"
@@ -2781,7 +2781,7 @@ msgstr "imechapishwa"
 
 #: BankReconciliation.php:102
 msgid "Select Accoutnt"
-msgstr ""
+msgstr "Chagua akaunti"
 
 #: BankReconciliation.php:123 DailyBankTransactions.php:59 Payments.php:976
 #: RegularPaymentsSetup.php:246 SuppPaymentRun.php:299
@@ -2917,11 +2917,11 @@ msgstr "Uundaji wa tempbom umeshindwa kwa sababu"
 
 #: BOMExtendedQty.php:199
 msgid "Extended Quantity BOM Listing For"
-msgstr ""
+msgstr "Orodha ya kiasi kilichopanuliwa cha BOM kwa"
 
 #: BOMExtendedQty.php:200
 msgid "Build Quantity:"
-msgstr ""
+msgstr "Kiasi cha ujenzi:"
 
 #: BOMExtendedQty.php:206 BOMIndented.php:178 BOMIndentedReverse.php:161
 #: InventoryQuantities.php:33 MRPDemands.php:290 MRPDemands.php:377
@@ -3032,7 +3032,7 @@ msgstr "Uhaba"
 
 #: BOMExtendedQty.php:274
 msgid "BOM Extended Quantity"
-msgstr ""
+msgstr "Kiasi kilichopanuliwa cha BOM"
 
 #: BOMExtendedQty.php:286
 msgid "Quantity Extended BOM Listing"
@@ -3060,7 +3060,7 @@ msgstr "Onyesha Upungufu Pekee"
 
 #: BOMIndented.php:172
 msgid "Indented BOM Listing For"
-msgstr ""
+msgstr "Orodha ya BOM yenye uingizaji kwa"
 
 #: BOMIndented.php:181 BOMIndentedReverse.php:164 BOMListing.php:65
 #: BOMs.php:462 BOMs.php:528 BOMs.php:979 BOMs_SingleLevel.php:541
@@ -3083,7 +3083,7 @@ msgstr "Mahali"
 
 #: BOMIndented.php:182 BOMIndentedReverse.php:165 BOMListing.php:66
 msgid "Work"
-msgstr ""
+msgstr "Kazi"
 
 #: BOMIndented.php:182 BOMIndentedReverse.php:165 BOMListing.php:66
 #: FormDesigner.php:67
@@ -3099,7 +3099,7 @@ msgstr "UOM"
 
 #: BOMIndented.php:206
 msgid "Top Level Assembly"
-msgstr ""
+msgstr "Mkusanyiko wa kiwango cha juu"
 
 #: BOMIndented.php:270 BOMIndented.php:282
 msgid "Indented BOM Listing"
@@ -3123,7 +3123,7 @@ msgstr "Kiwango kimoja"
 
 #: BOMIndentedReverse.php:155
 msgid "Reverse Indented BOM Listing for Component"
-msgstr ""
+msgstr "Orodha ya BOM yenye uingizaji wa kinyume kwa kipengele"
 
 #: BOMIndentedReverse.php:239 BOMIndentedReverse.php:251
 msgid "Reverse Indented BOM Listing"
@@ -3257,7 +3257,7 @@ msgstr "hakuna vipengele vilivyoelezwa kwa ajili yake"
 
 #: BOMInquiry.php:169
 msgid "Select another BOM"
-msgstr ""
+msgstr "Chagua BOM nyingine"
 
 #: BOMInquiry.php:177
 msgid "per"
@@ -3320,7 +3320,7 @@ msgstr "Muswada wa uorodheshaji wa Nyenzo hauna miswada ya kuripoti"
 
 #: BOMListing.php:55
 msgid "Bill Of Material Listing for Parts Between"
-msgstr ""
+msgstr "Orodha ya muhtasari wa vifaa kwa sehemu kati ya"
 
 #: BOMListing.php:55 DailyBankTransactions.php:149 DebtorsAtPeriodEnd.php:65
 #: GLJournalInquiry.php:45 PDFCustomerList.php:264 PDFCustomerList.php:286
@@ -3340,7 +3340,7 @@ msgstr "na"
 
 #: BOMListing.php:61
 msgid "Component Part"
-msgstr ""
+msgstr "Sehemu ya kipengele"
 
 #: BOMListing.php:63 BOMs.php:591 BOMs.php:983 BOMs_SingleLevel.php:545
 #: BOMs_SingleLevel.php:750 WhereUsedInquiry.php:85
@@ -4172,7 +4172,7 @@ msgstr "Anwani ya barua pepe haijaundwa ipasavyo"
 
 #: CompanyPreferences.php:48
 msgid "Cannot write to the Companies.php file"
-msgstr ""
+msgstr "Haiwezi kuandika kwenye faili la Companies.php"
 
 #: CompanyPreferences.php:81
 msgid "The company preferences could not be updated because"
@@ -8360,11 +8360,11 @@ msgstr "imeshindwa kuweka msimbo wa kijiografia"
 
 #: CustomerBranches.php:125 SelectCustomer.php:550 Suppliers.php:459
 msgid "No results found"
-msgstr ""
+msgstr "Hakuna matokeo yaliyopatikana"
 
 #: CustomerBranches.php:129 SelectCustomer.php:554 Suppliers.php:463
 msgid "Connection failed"
-msgstr ""
+msgstr "Muunganisho umeshindwa"
 
 #: CustomerBranches.php:174
 msgid "branch has been updated."
@@ -8963,7 +8963,7 @@ msgstr "Manenomsingi ya jina la mteja yametumika kwa upendeleo kwa dondoo la msi
 
 #: CustomerReceipt.php:650
 msgid "The searched customer records requested cannot be retrieved"
-msgstr ""
+msgstr "Kumbukumbu za wateja zilizotafutwa haziwezi kupatikana"
 
 #: CustomerReceipt.php:658 SelectCustomer.php:119
 msgid "No customer records contain the selected text"
@@ -9766,7 +9766,7 @@ msgstr "Mizani Huletwa Mbele"
 
 #: DailyBankTransactions.php:223 DailyBankTransactions.php:232
 msgid "Balances Carried Forward"
-msgstr ""
+msgstr "Mizani iliyopelekwa mbele"
 
 #: DailyBankTransactions.php:241 GLJournalInquiry.php:183
 msgid "Select Another Date"
@@ -9958,7 +9958,7 @@ msgstr "Mteja Balances For Customers between"
 
 #: DebtorsAtPeriodEnd.php:73
 msgid "FX"
-msgstr ""
+msgstr "Ubadilishaji wa sarafu"
 
 #: DebtorsAtPeriodEnd.php:104
 msgid "Total balances"
@@ -10431,7 +10431,7 @@ msgstr "Msimbo wa Aina ya Punguzo"
 
 #: DiscountCategories.php:110
 msgid "Discount Category Details"
-msgstr ""
+msgstr "Maelezo ya kikundi cha punguzo"
 
 #: DiscountCategories.php:116 DiscountCategories.php:122
 #: DiscountCategories.php:177
@@ -10697,7 +10697,7 @@ msgstr "inachakatwa"
 
 #: EDIProcessOrders.php:195
 msgid "This message is not an edi order"
-msgstr ""
+msgstr "Ujumbe huu si agizo la EDI"
 
 #: EDIProcessOrders.php:206
 msgid "Customer EDI Ref"
@@ -10709,7 +10709,7 @@ msgstr "EDI Ujumbe Ref"
 
 #: EDIProcessOrders.php:209
 msgid "This message is not an EDI order"
-msgstr ""
+msgstr "Ujumbe huu si agizo la EDI"
 
 #: EDIProcessOrders.php:218
 msgid "This message is a standard order"
@@ -10829,15 +10829,15 @@ msgstr "Hakuna uthibitisho unaohitajika kwa mteja"
 
 #: EDIProcessOrders.php:328
 msgid "Delivery date"
-msgstr ""
+msgstr "Tarehe ya utoaji"
 
 #: EDIProcessOrders.php:338
 msgid "Orig,.order date"
-msgstr ""
+msgstr "Tarehe ya agizo la awali"
 
 #: EDIProcessOrders.php:342
 msgid "Promised delivery date"
-msgstr ""
+msgstr "Tarehe ya utoaji iliyoahidiwa"
 
 #: EDIProcessOrders.php:345
 msgid "Promotion start date"
@@ -10879,15 +10879,15 @@ msgstr "Uthibitishaji wa muda wa tarehe ya kuongoza"
 
 #: EDIProcessOrders.php:384
 msgid "Departure date"
-msgstr ""
+msgstr "Tarehe ya kuondoka"
 
 #: EDIProcessOrders.php:387
 msgid "Arrival date"
-msgstr ""
+msgstr "Tarehe ya kuwasili"
 
 #: EDIProcessOrders.php:390
 msgid "Rate of exchange date / time"
-msgstr ""
+msgstr "Tarehe / muda wa kiwango cha ubadilishaji"
 
 #: EDIProcessOrders.php:398
 msgid "Payment will be effected by a direct payment for this order"
@@ -11005,7 +11005,7 @@ msgstr "Uidhinishaji"
 
 #: EDIProcessOrders.php:501
 msgid "VAT registration number"
-msgstr ""
+msgstr "Nambari ya usajili wa VAT"
 
 #: EDIProcessOrders.php:522
 msgid "The Buyer reference was specified as an EAN International Article Numbering Association code"
@@ -11061,63 +11061,63 @@ msgstr "Agizo hili halikuweza kuchakatwa zaidi"
 
 #: EDIProcessOrders.php:618
 msgid "The buyer ediref code was specified as"
-msgstr ""
+msgstr "Msimbo wa ediref wa mnunuzi ulitajwa kama"
 
 #: EDIProcessOrders.php:618
 msgid "or several that match this ediref code. This order could not be processed further"
-msgstr ""
+msgstr "au kadhaa zinazofanana na msimbo huu wa ediref. Agizo hili halikuweza kushughulikiwa zaidi"
 
 #: EDIProcessOrders.php:665
 msgid "Details of transport"
-msgstr ""
+msgstr "Maelezo ya usafirishaji"
 
 #: EDIProcessOrders.php:671
 msgid "Terms of delivery or transport"
-msgstr ""
+msgstr "Masharti ya utoaji au usafirishaji"
 
 #: EDIProcessOrders.php:693
 msgid "Place of terms of delivery (LOC/1)"
-msgstr ""
+msgstr "Mahali pa masharti ya utoaji (LOC/1)"
 
 #: EDIProcessOrders.php:696
 msgid "Place of terms of delivery (LOC/7)"
-msgstr ""
+msgstr "Mahali pa masharti ya utoaji (LOC/7)"
 
 #: EDIProcessOrders.php:723
 msgid "Line item"
-msgstr ""
+msgstr "Kipengele cha mstari"
 
 #: EDIProcessOrders.php:764 EDIProcessOrders.php:827
 msgid "Additional product id"
-msgstr ""
+msgstr "Kitambulisho cha ziada cha bidhaa"
 
 #: EDIProcessOrders.php:777
 msgid "Item description"
-msgstr ""
+msgstr "Maelezo ya kipengele"
 
 #: EDIProcessOrders.php:800
 msgid "Monetary amount"
-msgstr ""
+msgstr "Kiasi cha fedha"
 
 #: EDIProcessOrders.php:811
 msgid "Price details"
-msgstr ""
+msgstr "Maelezo ya bei"
 
 #: EDIProcessOrders.php:816
 msgid "Package"
-msgstr ""
+msgstr "Kifurushi"
 
 #: EDIProcessOrders.php:831
 msgid "Package identification"
-msgstr ""
+msgstr "Utambulisho wa kifurushi"
 
 #: EDIProcessOrders.php:843
 msgid "Duty/tax/fee details"
-msgstr ""
+msgstr "Maelezo ya ushuru/kodi/ada"
 
 #: EDIProcessOrders.php:856
 msgid "Measurements"
-msgstr ""
+msgstr "Vipimo"
 
 #: EDIProcessOrders.php:870
 msgid "Section control/Order line count"
@@ -11125,11 +11125,11 @@ msgstr "Section control/Agizo line count"
 
 #: EDIProcessOrders.php:881
 msgid "Control total"
-msgstr ""
+msgstr "Jumla ya udhibiti"
 
 #: EDIProcessOrders.php:965
 msgid "The order cannot be created because"
-msgstr ""
+msgstr "Agizo haliwezi kuundwa kwa sababu"
 
 #: EDIProcessOrders.php:1008 includes/DefineCartClass.php:185
 msgid "The order line for"
@@ -11164,11 +11164,11 @@ msgstr "Agizo number: "
 
 #: EDIProcessOrders.php:1013
 msgid " has been created from edi orders."
-msgstr ""
+msgstr " limeundwa kutoka kwa maagizo ya EDI."
 
 #: EDIProcessOrders.php:1016 EDIProcessOrders.php:1020
 msgid "Message trailer"
-msgstr ""
+msgstr "Mkia wa ujumbe"
 
 #: EDIProcessOrders.php:1049
 msgid "EDI Order Message Error"
@@ -12243,7 +12243,7 @@ msgstr "Thamani ya Utupaji"
 
 #: FixedAssetRegister.php:104
 msgid "Disposal Date"
-msgstr ""
+msgstr "Tarehe ya utupaji"
 
 #: FixedAssetRegister.php:175 PDFBankingSummary.php:145
 #: POFinancialPlanning.php:158 includes/PDFSalesAnalysis.php:68
@@ -12264,7 +12264,7 @@ msgstr "YOTE"
 
 #: FixedAssetRegister.php:315 SelectAsset.php:122
 msgid "Asset Disposal Status"
-msgstr ""
+msgstr "Hali ya utupaji wa mali"
 
 #: FixedAssetRegister.php:320 FixedAssetRegister.php:325
 #: FixedAssetRegister.php:330 ProductSpecs.php:378 QATests.php:450
@@ -12277,7 +12277,7 @@ msgstr "Inayotumika"
 #: FixedAssetRegister.php:331 SelectAsset.php:128 SelectAsset.php:132
 #: SelectAsset.php:136
 msgid "Disposed"
-msgstr ""
+msgstr "Imetupwa"
 
 #: FixedAssetRegister.php:347
 msgid "Enter the start date to show the cost and accumulated depreciation from"
@@ -12298,7 +12298,7 @@ msgstr "Chapisha kama PDF"
 #: FixedAssetRegister.php:358 GLTrialBalance.php:523 InventoryPlanning.php:437
 #: InventoryValuation.php:336
 msgid "Spreadsheet"
-msgstr ""
+msgstr "Laha hesabu"
 
 #: FixedAssetTransfer.php:5
 msgid "Change Asset Location"
@@ -12833,11 +12833,11 @@ msgstr "Bin"
 
 #: GeneratePickingList.php:225
 msgid "Qty To Pick"
-msgstr ""
+msgstr "Kiasi cha kuchukua"
 
 #: GeneratePickingList.php:226
 msgid "Qty Available"
-msgstr ""
+msgstr "Kiasi kilichopatikana"
 
 #: GeneratePickingList.php:227 PickingLists.php:333
 msgid "Qty Picked"
@@ -12916,7 +12916,7 @@ msgstr "Sanidi usanidi wa Geocoding ya Wateja na Wasambazaji"
 
 #: GeocodeSetup.php:130
 msgid "OpenStreetMap is used for geocoding and map display. No API key is required."
-msgstr ""
+msgstr "OpenStreetMap inatumika kwa uwekaji alama za kijiografia na kuonyesha ramani. Hakuna ufunguo wa API unaohitajika."
 
 #: GeocodeSetup.php:131
 msgid "Find the lat/long for your map center point at "
@@ -12924,7 +12924,7 @@ msgstr "Tafuta urefu wa mwisho wa kituo chako cha ramani"
 
 #: GeocodeSetup.php:132
 msgid "Set the maps centre point using the Center Longitude and Center Latitude. Set the maps screen size using the height and width in pixels (px). Note: Geocode Key and Map Host fields are no longer used with OpenStreetMap but are kept for backward compatibility."
-msgstr ""
+msgstr "Weka nukta ya katikati ya ramani kwa kutumia Longitudo ya Kati na Latitudo ya Kati. Weka ukubwa wa skrini ya ramani kwa kutumia urefu na upana katika pikseli (px). Kumbuka: Sehemu za Ufunguo wa Geocode na Mwenyeji wa Ramani hazitumiwi tena na OpenStreetMap lakini zimewekwa kwa upatanisho wa nyuma."
 
 #: GeocodeSetup.php:137
 msgid "Geocode ID"
@@ -12992,7 +12992,7 @@ msgstr "Onyesha Ramani ya Wasambazaji"
 
 #: geo_displaymap_customers.php:8 geo_displaymap_suppliers.php:8
 msgid "An error occurred in retrieving the geocode information"
-msgstr ""
+msgstr "Hitilafu imetokea wakati wa kupata taarifa za uwekaji alama za kijiografia"
 
 #: geo_displaymap_customers.php:15
 msgid "Geocoded Customers Report"
@@ -13012,7 +13012,7 @@ msgstr "Urejeshaji wa Picha ya Hisa ...."
 
 #: GetStockImage.php:135
 msgid "The Image could not be retrieved because the GD extension is missing"
-msgstr ""
+msgstr "Picha haikuweza kupatikana kwa sababu kiendelezi cha GD hakipo"
 
 #: GetStockImage.php:137
 msgid "The Image could not be retrieved because it does not exist"
@@ -13085,7 +13085,7 @@ msgstr "kwa kipindi"
 
 #: GLAccountCSV.php:191
 msgid "The opening balance for account"
-msgstr ""
+msgstr "Mizani ya ufunguzi kwa akaunti"
 
 #: GLAccountCSV.php:197 GLAccountCSV.php:200 GLAccountInquiry.php:234
 #: GLAccountReport.php:119
@@ -13170,11 +13170,11 @@ msgstr "Grafu ya Eneo Lililopangwa kwa Rafu"
 
 #: GLAccountGraph.php:137
 msgid "Display Type"
-msgstr ""
+msgstr "Aina ya onyesho"
 
 #: GLAccountGraph.php:139
 msgid "Variation"
-msgstr ""
+msgstr "Tofauti"
 
 #: GLAccountGraph.php:145
 msgid "Invert Graph"
@@ -13271,15 +13271,15 @@ msgstr "Debit"
 
 #: GLAccountInquiry.php:226
 msgid "Could not retrieve the brought forward balance for account"
-msgstr ""
+msgstr "Haikuweza kupata mizani iliyoletwa mbele kwa akaunti"
 
 #: GLAccountInquiry.php:259
 msgid "Could not retrieve the GL total for account"
-msgstr ""
+msgstr "Haikuweza kupata jumla ya GL kwa akaunti"
 
 #: GLAccountInquiry.php:259
 msgid "and period"
-msgstr ""
+msgstr "na kipindi"
 
 #: GLAccountInquiry.php:272
 msgid "Total for period"
@@ -13298,7 +13298,7 @@ msgstr "Uhamisho wa akaunti kwa kila ununuzi"
 
 #: GLAccountInquiry.php:286
 msgid "Movement per GL Totals record"
-msgstr ""
+msgstr "Mwendo kwa kumbukumbu ya jumla za GL"
 
 #: GLAccountInquiry.php:286
 msgid "Period difference"
@@ -13314,7 +13314,7 @@ msgstr "Imeshindwa kupata data ya kupokea benki"
 
 #: GLAccountInquiry.php:396
 msgid "There are differences between the sum of the transactions and the recorded movements in the GL Totals table"
-msgstr ""
+msgstr "Kuna tofauti kati ya jumla ya miamala na harakati zilizorekodiwa katika jedwali la jumla za GL"
 
 #: GLAccountInquiry.php:396
 msgid "A log of the account differences for the periods report shows below"
@@ -13330,7 +13330,7 @@ msgstr "Kuorodheshwa kwa Kipindi"
 
 #: GLAccountReport.php:114
 msgid "The brought forward balance for account"
-msgstr ""
+msgstr "Mizani iliyoletwa mbele kwa akaunti"
 
 #: GLAccountReport.php:244 InventoryPlanning.php:90 InventoryPlanning.php:244
 #: InventoryPlanning.php:246 InventoryPlanningPrefSupplier.php:214
@@ -13342,7 +13342,7 @@ msgstr "Ripoti ya Mipango ya Mali"
 
 #: GLAccountReport.php:333
 msgid "PDF Report"
-msgstr ""
+msgstr "Ripoti ya PDF"
 
 #: GLAccountReport.php:334 SalesCommissionReports.php:244
 #: SalesCommissionStatements.php:244
@@ -13403,7 +13403,7 @@ msgstr "Akaunti mpya ya leja ya jumla imeongezwa"
 
 #: GLAccounts.php:104
 msgid "Cannot delete this account because GL transactions have been created using this account and at least one period has postings to it"
-msgstr ""
+msgstr "Haiwezi kufuta akaunti hii kwa sababu miamala ya GL imeundwa kwa kutumia akaunti hii na angalau kipindi kimoja kina machapisho kwake"
 
 #: GLAccounts.php:105
 msgid "chart details that require this account code"
@@ -13542,7 +13542,7 @@ msgstr "SQL ya kufuta mamlaka katika rekodi ya watumiaji wa akaunti ya gl imeshi
 
 #: GLAccountUsersCopyAuthority.php:30
 msgid "Deleting the previous authority to view / update the GL Accounts of user"
-msgstr ""
+msgstr "Inafuta mamlaka ya awali ya kuangalia / kusasisha akaunti za GL za mtumiaji"
 
 #: GLAccountUsersCopyAuthority.php:37 Z_GLAccountUsersCopyAuthority.php:42
 msgid "The SQL to insert the auhority in glaccountusers record failed"
@@ -13550,12 +13550,12 @@ msgstr "SQL ya kuingiza mamlaka katika rekodi ya watumiaji wa akaunti ya gl imes
 
 #: GLAccountUsersCopyAuthority.php:39
 msgid "Copied the authority to view / update the GL Accounts from user"
-msgstr ""
+msgstr "Imenakili mamlaka ya kuangalia / kusasisha akaunti za GL kutoka kwa mtumiaji"
 
 #: GLAccountUsersCopyAuthority.php:39 GLBankAccountUsersCopyAuthority.php:39
 #: LocationUsersCopyAuthority.php:39
 msgid "to user"
-msgstr ""
+msgstr "kwa mtumiaji"
 
 #: GLAccountUsersCopyAuthority.php:51
 msgid "Copy GL Account Authority"
@@ -13661,7 +13661,7 @@ msgstr "Taarifa ya Hali ya Kifedha"
 
 #: GLBalanceSheet.php:129
 msgid "HTML View"
-msgstr ""
+msgstr "Mtazamo wa HTML"
 
 #: GLBalanceSheet.php:133
 msgid "Balance Sheet as at"
@@ -13699,23 +13699,23 @@ msgstr "Onyesha Karatasi ya Mizani"
 
 #: GLBankAccountUsersCopyAuthority.php:5
 msgid "Copy Authority of Bank Accounts from one user to another"
-msgstr ""
+msgstr "Nakili mamlaka ya akaunti za benki kutoka kwa mtumiaji mmoja hadi mwingine"
 
 #: GLBankAccountUsersCopyAuthority.php:28
 msgid "The SQL to delete the auhority in bankaccountusers record failed"
-msgstr ""
+msgstr "SQL ya kufuta mamlaka katika rekodi ya bankaccountusers imeshindwa"
 
 #: GLBankAccountUsersCopyAuthority.php:30
 msgid "Deleting the previous authority to view / update the Bank Accounts of user"
-msgstr ""
+msgstr "Inafuta mamlaka ya awali ya kuangalia / kusasisha akaunti za benki za mtumiaji"
 
 #: GLBankAccountUsersCopyAuthority.php:37
 msgid "The SQL to insert the auhority in bankaccountusers record failed"
-msgstr ""
+msgstr "SQL ya kuingiza mamlaka katika rekodi ya bankaccountusers imeshindwa"
 
 #: GLBankAccountUsersCopyAuthority.php:39
 msgid "Copied the authority to view / update the Bank Accounts from user"
-msgstr ""
+msgstr "Imenakili mamlaka ya kuangalia / kusasisha akaunti za benki kutoka kwa mtumiaji"
 
 #: GLBankAccountUsersCopyAuthority.php:51
 msgid "Copy Bank Account Authority"
@@ -13727,23 +13727,23 @@ msgstr "Unda Bajeti za GL"
 
 #: GLBudgetHeaders.php:14 GLBudgets.php:47
 msgid "Budgets"
-msgstr ""
+msgstr "Bajeti"
 
 #: GLBudgetHeaders.php:21
 msgid "The end period cannot be before the start period"
-msgstr ""
+msgstr "Kipindi cha mwisho hakiwezi kuwa kabla ya kipindi cha kuanza"
 
 #: GLBudgetHeaders.php:88
 msgid "The budget header information has been successfully saved"
-msgstr ""
+msgstr "Taarifa ya kichwa cha bajeti imehifadhiwa kwa mafanikio"
 
 #: GLBudgetHeaders.php:90
 msgid "There was a problem saving the budget header information"
-msgstr ""
+msgstr "Kulikuwa na tatizo katika kuhifadhi taarifa ya kichwa cha bajeti"
 
 #: GLBudgetHeaders.php:115
 msgid "Edit Budget Details"
-msgstr ""
+msgstr "Hariri maelezo ya bajeti"
 
 #: GLBudgetHeaders.php:125 GLBudgetHeaders.php:126
 #: includes/MiscFunctions.php:561 includes/MiscFunctions.php:633
@@ -13752,87 +13752,87 @@ msgstr "Mwaka huu wa Fedha"
 
 #: GLBudgetHeaders.php:130
 msgid "Create New Budget"
-msgstr ""
+msgstr "Unda bajeti mpya"
 
 #: GLBudgetHeaders.php:137
 msgid "Budget Owner"
-msgstr ""
+msgstr "Mmiliki wa bajeti"
 
 #: GLBudgetHeaders.php:150
 msgid "Name of budget"
-msgstr ""
+msgstr "Jina la bajeti"
 
 #: GLBudgetHeaders.php:155
 msgid "Budget Description"
-msgstr ""
+msgstr "Maelezo ya bajeti"
 
 #: GLBudgetHeaders.php:163
 msgid "Start Period"
-msgstr ""
+msgstr "Kipindi cha kuanza"
 
 #: GLBudgetHeaders.php:179
 msgid "End Period"
-msgstr ""
+msgstr "Kipindi cha mwisho"
 
 #: GLBudgetHeaders.php:192
 msgid "Default Budget for reports"
-msgstr ""
+msgstr "Bajeti chaguo-msingi kwa ripoti"
 
 #: GLBudgetHeaders.php:208
 msgid "Update Details"
-msgstr ""
+msgstr "Sasisha maelezo"
 
 #: GLBudgetHeaders.php:212
 msgid "Save Details"
-msgstr ""
+msgstr "Hifadhi maelezo"
 
 #: GLBudgetHeaders.php:232
 msgid "Owner"
-msgstr ""
+msgstr "Mmiliki"
 
 #: GLBudgetHeaders.php:234
 msgid "Start From Period"
-msgstr ""
+msgstr "Anza kutoka kipindi"
 
 #: GLBudgetHeaders.php:235
 msgid "End In Period"
-msgstr ""
+msgstr "Mwisho katika kipindi"
 
 #: GLBudgetHeaders.php:236
 msgid "Is Primary?"
-msgstr ""
+msgstr "Ni ya msingi?"
 
 #: GLBudgets.php:7
 msgid "Enter GL Budget amounts"
-msgstr ""
+msgstr "Ingiza kiasi cha bajeti ya GL"
 
 #: GLBudgets.php:36
 msgid "The budget figures were update successfully"
-msgstr ""
+msgstr "Takwimu za bajeti zimesasishwa kwa mafanikio"
 
 #: GLBudgets.php:38
 msgid "There was a problem updating the budget figures"
-msgstr ""
+msgstr "Kulikuwa na tatizo katika kusasisha takwimu za bajeti"
 
 #: GLBudgets.php:47
 msgid "Select Budget"
-msgstr ""
+msgstr "Chagua bajeti"
 
 #: GLBudgets.php:51
 msgid "Select a Budget"
-msgstr ""
+msgstr "Chagua bajeti"
 
 #: GLBudgets.php:58
 msgid "Budget to enter amounts in"
-msgstr ""
+msgstr "Bajeti ya kuingiza kiasi ndani yake"
 
 #: GLBudgets.php:79
 msgid "Enter Budget Amounts"
-msgstr ""
+msgstr "Ingiza kiasi cha bajeti"
 
 #: GLBudgets.php:83
 msgid "General ledger account selection"
-msgstr ""
+msgstr "Uchaguzi wa akaunti ya daftari kuu"
 
 #: GLBudgets.php:132 GLJournal.php:520 RegularPaymentsSetup.php:317
 msgid "Select a general ledger account code"
@@ -13852,11 +13852,11 @@ msgstr "Akaunti Inayofuata"
 
 #: GLBudgets.php:169
 msgid "Budget values for account"
-msgstr ""
+msgstr "Thamani za bajeti kwa akaunti"
 
 #: GLBudgets.php:223
 msgid "Update Budget"
-msgstr ""
+msgstr "Sasisha bajeti"
 
 #: GLCashFlowsIndirect.php:25
 msgid "Operating activities"
@@ -13968,11 +13968,11 @@ msgstr "Teua kisanduku hiki ili kuonyesha akaunti za pesa taslimu na zinazolinga
 
 #: GLCashFlowsIndirect.php:530
 msgid "PDF Cash Flow Statement"
-msgstr ""
+msgstr "Taarifa ya mtiririko wa pesa ya PDF"
 
 #: GLCashFlowsIndirect.php:531
 msgid "Show Cash Flow Statement"
-msgstr ""
+msgstr "Onyesha taarifa ya mtiririko wa pesa"
 
 #: GLCashFlowsSetup.php:9
 msgid "Cash Flows Activities Maintenance"
@@ -14356,7 +14356,7 @@ msgstr "Taarifa ya mapato kamili"
 
 #: GLProfit_Loss.php:64 GLProfit_Loss.php:68
 msgid "General Ledger Profit Loss Inquiry"
-msgstr ""
+msgstr "Ulizo wa faida na hasara ya daftari kuu"
 
 #: GLProfit_Loss.php:77 GLProfit_Loss.php:86 GLTrialBalance.php:75
 msgid "Period Budget"
@@ -14408,11 +14408,11 @@ msgstr "webERP ni mfumo wa msingi wa accrual (sio mfumo wa msingi wa pesa). Mifu
 
 #: GLProfit_Loss.php:644 GLTrialBalance.php:502
 msgid "Budget To Show Comparisons With"
-msgstr ""
+msgstr "Bajeti ya kuonyesha ulinganisho na"
 
 #: GLProfit_Loss.php:657 GLTrialBalance.php:514
 msgid "Select the budget to make comparisons with."
-msgstr ""
+msgstr "Chagua bajeti ya kufanya ulinganisho nayo."
 
 #: GLProfit_Loss.php:680
 msgid "PDF P & L Account"
@@ -14548,19 +14548,19 @@ msgstr "Lebo iliyochaguliwa imefutwa"
 
 #: GLTags.php:46
 msgid "The tag was inserted correctly"
-msgstr ""
+msgstr "Lebo imeingizwa kwa usahihi"
 
 #: GLTags.php:48
 msgid "The tag could not be inserted"
-msgstr ""
+msgstr "Lebo haikuweza kuingizwa"
 
 #: GLTags.php:57
 msgid "The tag was updated correctly"
-msgstr ""
+msgstr "Lebo imesasishwa kwa usahihi"
 
 #: GLTags.php:59
 msgid "The tag could not be updated"
-msgstr ""
+msgstr "Lebo haikuweza kusasishwa"
 
 #: GLTags.php:70
 msgid "Edit Tag details"
@@ -14612,11 +14612,11 @@ msgstr "Salio la Jaribio la mwezi wa"
 
 #: GLTrialBalance.php:66
 msgid " and for the "
-msgstr ""
+msgstr " na kwa "
 
 #: GLTrialBalance.php:66
 msgid " months to "
-msgstr ""
+msgstr " miezi hadi "
 
 #: GLTrialBalance.php:72
 msgid "Month Actual"
@@ -15294,19 +15294,19 @@ msgstr "Mchakato huu utaunda miamala ya benki kwa miamala ILIYOCHAMBUWA PEKEE il
 
 #: index.php:44 index.php:71
 msgid "Menu Options"
-msgstr ""
+msgstr "Chaguo za menyu"
 
 #: index.php:48
 msgid "View or Amend outstanding offers"
-msgstr ""
+msgstr "Angalia au rekebisha matoleo yaliyobaki"
 
 #: index.php:53
 msgid "Create a new offer"
-msgstr ""
+msgstr "Unda toleo jipya"
 
 #: index.php:58
 msgid "View any open tenders without an offer"
-msgstr ""
+msgstr "Angalia zabuni zozote zilizo wazi bila toleo"
 
 #: index.php:75 WWW_Users.php:877
 msgid "Account Status"
@@ -15871,21 +15871,21 @@ msgstr "Ongeza kwa Mahitaji"
 #: InventoryPlanning.php:59 InventoryPlanningPrefSupplier.php:98
 #: StockCheck.php:91
 msgid "The inventory quantities could not be retrieved"
-msgstr ""
+msgstr "Kiasi cha hesabu ya mali hazikuweza kupatikana"
 
 #: InventoryPlanning.php:98 InventoryPlanning.php:99 InventoryPlanning.php:100
 #: InventoryPlanning.php:101 InventoryPlanning.php:102
 #: PrintCustOrder_generic.php:195
 msgid "Qty"
-msgstr ""
+msgstr "Kiasi"
 
 #: InventoryPlanning.php:103
 msgid "MTD"
-msgstr ""
+msgstr "MTD"
 
 #: InventoryPlanning.php:104
 msgid "ms stk"
-msgstr ""
+msgstr "akiba ms"
 
 #: InventoryPlanning.php:106 InventoryPlanningPrefSupplier.php:59
 msgid "Cust Ords"
@@ -15902,7 +15902,7 @@ msgstr "Pendekeza Agizo"
 #: InventoryPlanning.php:159 InventoryPlanningPrefSupplier.php:136
 #: PurchaseByPrefSupplier.php:434
 msgid "The sales quantities could not be retrieved"
-msgstr ""
+msgstr "Kiasi cha mauzo hazikuweza kupatikana"
 
 #: InventoryPlanning.php:320
 msgid "Category ID"
@@ -16079,7 +16079,7 @@ msgstr "Panga upya"
 
 #: InventoryQuantities.php:103
 msgid "The Inventory Quantity report could not be retrieved"
-msgstr ""
+msgstr "Ripoti ya kiasi cha hesabu ya mali haikuweza kupatikana"
 
 #: InventoryQuantities.php:107
 msgid "Print Inventory Quantities Report"
@@ -16111,7 +16111,7 @@ msgstr "Sehemu Zenye Maeneo Nyingi Pekee"
 
 #: InventoryValuation.php:60 MailInventoryValuation.php:52
 msgid "The inventory valuation could not be retrieved"
-msgstr ""
+msgstr "Tathmini ya hesabu ya mali haikuweza kupatikana"
 
 #: InventoryValuation.php:64 MailInventoryValuation.php:145
 #: MailInventoryValuation.php:190
@@ -16541,27 +16541,27 @@ msgstr "Tumia kigezo hiki kuashiria kama eneo hili la orodha linaruhusu au kukat
 
 #: LocationUsersCopyAuthority.php:5
 msgid "Copy Authority of Locations from one user to another"
-msgstr ""
+msgstr "Nakili mamlaka ya maeneo kutoka kwa mtumiaji mmoja hadi mwingine"
 
 #: LocationUsersCopyAuthority.php:28
 msgid "The SQL to delete the auhority in locationusers record failed"
-msgstr ""
+msgstr "SQL ya kufuta mamlaka katika rekodi ya locationusers imeshindwa"
 
 #: LocationUsersCopyAuthority.php:30
 msgid "Deleting the previous authority to view / update the Locations of user"
-msgstr ""
+msgstr "Inafuta mamlaka ya awali ya kuangalia / kusasisha maeneo ya mtumiaji"
 
 #: LocationUsersCopyAuthority.php:37
 msgid "The SQL to insert the auhority in locationusers record failed"
-msgstr ""
+msgstr "SQL ya kuingiza mamlaka katika rekodi ya locationusers imeshindwa"
 
 #: LocationUsersCopyAuthority.php:39
 msgid "Copied the authority to view / update the Locations from user"
-msgstr ""
+msgstr "Imenakili mamlaka ya kuangalia / kusasisha maeneo kutoka kwa mtumiaji"
 
 #: LocationUsersCopyAuthority.php:51
 msgid "Copy Location Authority"
-msgstr ""
+msgstr "Nakili mamlaka ya eneo"
 
 #: LocationUsers.php:5
 msgid "Inventory Location Authorised Users Maintenance"
@@ -16628,27 +16628,27 @@ msgstr "Wape Watumiaji"
 
 #: LoggedInUsers.php:5
 msgid "Users currently logged in"
-msgstr ""
+msgstr "Watumiaji walioingia sasa hivi"
 
 #: LoggedInUsers.php:11
 msgid "Logged In Users"
-msgstr ""
+msgstr "Watumiaji walioingia"
 
 #: LoggedInUsers.php:30
 msgid "Session"
-msgstr ""
+msgstr "Kipindi"
 
 #: LoggedInUsers.php:35
 msgid "Logged in"
-msgstr ""
+msgstr "Ameingia"
 
 #: LoggedInUsers.php:36
 msgid "Script name"
-msgstr ""
+msgstr "Jina la hati"
 
 #: LoggedInUsers.php:37
 msgid "Script time"
-msgstr ""
+msgstr "Muda wa hati"
 
 #: MailingGroupMaintenance.php:5
 msgid "Mailing Group Maintenance"
@@ -16684,7 +16684,7 @@ msgstr "Imeshindwa kufuta kikundi cha barua ambacho ni kitambulisho"
 
 #: MailingGroupMaintenance.php:85
 msgid "The group id has users associated with it. Please remove these first and try again"
-msgstr ""
+msgstr "Kitambulisho cha kikundi kina watumiaji waliohusishwa nacho. Tafadhali ondoa hawa kwanza kisha jaribu tena"
 
 #: MailingGroupMaintenance.php:90
 msgid "The group id must be numeric"
@@ -16751,7 +16751,7 @@ msgstr "Uthamini wa Mali"
 
 #: MailInventoryValuation.php:24
 msgid "There are no members of the \"InventoryValuationRecipients\" email group"
-msgstr ""
+msgstr "There are no members ya — \"InventoryValuationRecipients\" email kikundi"
 
 #: MailInventoryValuation.php:170
 msgid "Please find herewith the stock valuation report"
@@ -16759,12 +16759,12 @@ msgstr "Tafadhali pata hapa ripoti ya uthamini wa hisa"
 
 #: MailInventoryValuation.php:171
 msgid "Please find attached the Inventory Valuation report, generated by user"
-msgstr ""
+msgstr "Tafadhali pata kiambatisho cha ripoti ya tathmini ya hesabu ya mali, iliyotengenezwa na mtumiaji"
 
 #: MailInventoryValuation.php:182 PrintCustTrans.php:582 ReorderLevel.php:177
 #: SuppPriceList.php:247
 msgid "Send Report By Email"
-msgstr ""
+msgstr "Tuma ripoti kwa barua pepe"
 
 #: MailInventoryValuation.php:186
 msgid "Print Inventory Valuation"
@@ -16776,7 +16776,7 @@ msgstr "Ripoti ya uthamini wa Mali imetumwa"
 
 #: MailInventoryValuation.php:191
 msgid "There are errors and the emails were not sent"
-msgstr ""
+msgstr "Kuna makosa na barua pepe hazikutumwa"
 
 #: MailSalesReport_csv.php:30 MailSalesReport.php:30
 msgid "There are no members of the Sales Analysis Report Recipients email group"
@@ -16808,7 +16808,7 @@ msgstr "Hitilafu katika kutekeleza nambari ya ripoti ya mauzo ya kiotomatiki"
 
 #: MaintenanceReminders.php:7
 msgid "Send maintenance reminders"
-msgstr ""
+msgstr "Tuma vikumbusho vya matengenezo"
 
 #: MaintenanceReminders.php:24 MaintenanceReminders.php:31
 msgid "You have the following maintenance task(s) falling due or over-due:"
@@ -16828,11 +16828,11 @@ msgstr "Inastahili:"
 
 #: MaintenanceReminders.php:93
 msgid "Reminder sent to"
-msgstr ""
+msgstr "Kikumbusho kimetumwa kwa"
 
 #: MaintenanceReminders.php:98
 msgid "There are no reminders to be sent"
-msgstr ""
+msgstr "Hakuna vikumbusho vya kutuma"
 
 #: MaintenanceTasks.php:5
 msgid "Fixed Asset Maintenance Tasks"
@@ -16953,7 +16953,7 @@ msgstr "Nenda Chini"
 
 #: ManualContents.php:76
 msgid "Click on a link to view a page"
-msgstr ""
+msgstr "Bofya kiungo ili kuangalia ukurasa"
 
 #: ManualContents.php:106
 msgid "Display Checked"
@@ -17081,7 +17081,7 @@ msgstr "Tarehe ya Utengenezaji"
 
 #: MRPCalendar.php:224
 msgid "Manufacturing Day"
-msgstr ""
+msgstr "Siku ya utengenezaji"
 
 #: MRPCalendar.php:260
 msgid "Create MRP Calendar"
@@ -17521,7 +17521,7 @@ msgstr "Kupitia"
 
 #: MRPPlannedPurchaseOrders.php:96
 msgid "The MRP planned purchase orders could not be retrieved"
-msgstr ""
+msgstr "Maagizo ya ununuzi yaliyopangwa ya MRP hayakuweza kupatikana"
 
 #: MRPPlannedPurchaseOrders.php:100
 msgid "Print MRP Planned Purchase Orders"
@@ -17596,7 +17596,7 @@ msgstr "Tarehe ya kukatwa"
 
 #: MRPPlannedWorkOrders.php:94
 msgid "The MRP planned work orders could not be retrieved"
-msgstr ""
+msgstr "Maagizo ya kazi yaliyopangwa ya MRP hayakuweza kupatikana"
 
 #: MRPPlannedWorkOrders.php:98 MRPPlannedWorkOrders.php:233
 msgid "MRP Planned Work Orders"
@@ -17616,15 +17616,15 @@ msgstr "Hesabu ya Kuunganisha"
 
 #: MRPPlannedWorkOrders.php:188
 msgid "Unit Cost:"
-msgstr ""
+msgstr "Gharama ya kipimo:"
 
 #: MRPPlannedWorkOrders.php:191
 msgid "M/B:"
-msgstr ""
+msgstr "M/B:"
 
 #: MRPPlannedWorkOrders.php:195
 msgid "Number of Work Orders:"
-msgstr ""
+msgstr "Idadi ya maagizo ya kazi:"
 
 #: MRPPlannedWorkOrders.php:196
 msgid "Total Extended Cost:"
@@ -17636,7 +17636,7 @@ msgstr "Ripoti ya Maagizo ya Kazi Iliyopangwa ya MRP"
 
 #: MRPReport.php:25
 msgid "The MRP calculation must be run before this report will have any output. MRP requires set up of many parameters, including, EOQ, lead times, minimums, bills of materials, demand types, etc."
-msgstr ""
+msgstr "Hesabu ya MRP lazima iendeshwe kabla ripoti hii haitakuwa na matokeo yoyote. MRP inahitaji usanidi wa vigezo vingi, ikijumuisha, EOQ, muda wa uongozaji, viwango vya chini, orodha za vifaa, aina za mahitaji, n.k."
 
 #: MRPReport.php:33
 msgid "Print MRP Report Warning"
@@ -17648,7 +17648,7 @@ msgstr "Ripoti ya MRP"
 
 #: MRPReport.php:122
 msgid "The MRP Report could not be retrieved"
-msgstr ""
+msgstr "Ripoti ya MRP haikuweza kupatikana"
 
 #: MRPReport.php:286 MRPShortages.php:133 PurchaseByPrefSupplier.php:404
 #: StockCheck.php:120 StockLocStatus.php:185 StockStatus.php:112
@@ -17715,7 +17715,7 @@ msgstr "Ukurasa"
 
 #: MRPReschedules.php:31
 msgid "The MRP reschedules could not be retrieved"
-msgstr ""
+msgstr "Mipango mipya ya MRP haikuweza kupatikana"
 
 #: MRPReschedules.php:35 MRPReschedules.php:146 MRPReschedules.php:148
 msgid "MRP Reschedules"
@@ -17775,7 +17775,7 @@ msgstr "MRP Ziada"
 
 #: MRPShortages.php:99
 msgid "The MRP shortages and excesses could not be retrieved"
-msgstr ""
+msgstr "Upungufu na wingi wa MRP havikuweza kupatikana"
 
 #: MRPShortages.php:103
 msgid "MRP Shortages and Excesses"
@@ -17799,7 +17799,7 @@ msgstr "Ext. Ziada"
 
 #: MRPShortages.php:187
 msgid "Number of Parts:"
-msgstr ""
+msgstr "Idadi ya sehemu:"
 
 #: MRPShortages.php:190
 msgid "Total Extended Shortage:"
@@ -18117,7 +18117,7 @@ msgstr "Hakuna maelezo ya uthamini ya GRNs ambayo hayajalipwa yaliyorejeshwa"
 
 #: OutstandingGRNs.php:77
 msgid "Outstanding GRN Report"
-msgstr ""
+msgstr "Ripoti ya GRN zilizobaki"
 
 #: OutstandingGRNs.php:85 PDFSuppTransListing.php:91 POFinancialPlanning.php:61
 #: PO_Header.php:560 PO_OrderDetails.php:98 POReport.php:509 POReport.php:547
@@ -18605,7 +18605,7 @@ msgstr "Wakati huu kulipa"
 
 #: Payments.php:1388
 msgid "Amount to allocate"
-msgstr ""
+msgstr "Kiasi cha kugawa"
 
 #: Payments.php:1404
 msgid "Pay"
@@ -18977,7 +18977,7 @@ msgstr "Kichupo cha Pesa ndogo"
 
 #: PcAuthorizeCash.php:63
 msgid "Detail of tab cash assignments for the last"
-msgstr ""
+msgstr "Maelezo ya mgawanyo wa pesa wa kichupo kwa"
 
 #: PcAuthorizeCash.php:118 PcAuthorizeExpenses.php:158
 msgid "PettyCash"
@@ -19005,7 +19005,7 @@ msgstr "Lazima Kwanza Uteue Kichupo cha Pesa Ndogo Ili Kuidhinisha"
 
 #: PcAuthorizeExpenses.php:65
 msgid "Detail of tab expenses for the last "
-msgstr ""
+msgstr "Maelezo ya gharama za kichupo kwa "
 
 #: PcAuthorizeExpenses.php:97 PcClaimExpensesFromTab.php:465
 #: PcClaimExpensesFromTab.php:632 PcReportExpense.php:75 PcReportTab.php:165
@@ -19023,7 +19023,7 @@ msgstr "Gharama zimeidhinishwa kwa usahihi"
 
 #: PcAuthorizeExpenses.php:334
 msgid "No expenses were authorised"
-msgstr ""
+msgstr "Hakuna gharama zilizoidhinishwa"
 
 #: PcAuthorizeExpenses.php:353
 msgid "Authorise expenses on petty cash tab"
@@ -19532,7 +19532,7 @@ msgstr "Chagua Kukubali Kuchapisha"
 
 #: PDFAck.php:15
 msgid "Select an Acknowledgement to Print before calling this page"
-msgstr ""
+msgstr "Chagua uthibitisho wa kuchapisha kabla ya kuita ukurasa huu"
 
 #: PDFAck.php:19
 msgid "Acknowledgements"
@@ -19576,7 +19576,7 @@ msgstr "Shukrani kwa Wateja"
 
 #: PDFAck.php:217
 msgid "Acknowledgement No"
-msgstr ""
+msgstr "Namba ya uthibitisho"
 
 #: PDFAck.php:242 PO_Items.php:913 SpecialOrder.php:668
 msgid "Total Excluding Tax"
@@ -19596,7 +19596,7 @@ msgstr "Vidokezo:"
 
 #: PDFAck.php:263
 msgid "Terms & Conditions"
-msgstr ""
+msgstr "Masharti na hali"
 
 #: PDFBankingSummary.php:31
 msgid "An error occurred getting the header information about the receipt batch number"
@@ -19632,11 +19632,11 @@ msgstr "Nambari ya Muhtasari wa Benki"
 
 #: PDFBankingSummary.php:97
 msgid "Date of Banking"
-msgstr ""
+msgstr "Tarehe ya benki"
 
 #: PDFBankingSummary.php:98
 msgid "Banked into"
-msgstr ""
+msgstr "Imewekwa benki katika"
 
 #: PDFBankingSummary.php:98
 msgid "Account Number"
@@ -19644,7 +19644,7 @@ msgstr "Akaunti Number"
 
 #: PDFBankingSummary.php:108
 msgid "Bank Details"
-msgstr ""
+msgstr "Maelezo ya benki"
 
 #: PDFBankingSummary.php:145
 msgid "BANKED"
@@ -19678,11 +19678,11 @@ msgstr "Tafadhali jaribu tena kuchagua kipindi tofauti cha tarehe au akaunti"
 
 #: PDFChequeListing.php:81
 msgid "Payments Summary"
-msgstr ""
+msgstr "Muhtasari wa malipo"
 
 #: PDFChequeListing.php:89
 msgid "Reference / General Ledger Posting Details"
-msgstr ""
+msgstr "Rejeleo / maelezo ya uchapishaji wa daftari kuu"
 
 #: PDFChequeListing.php:113
 msgid "An error occurred getting the GL transactions"
@@ -19734,15 +19734,15 @@ msgstr "Cheti cha Uchambuzi"
 
 #: PDFCOA.php:184
 msgid "Lot:"
-msgstr ""
+msgstr "Kundi:"
 
 #: PDFCOA.php:185
 msgid "Date:"
-msgstr ""
+msgstr "Tarehe:"
 
 #: PDFCOA.php:186
 msgid "Item:"
-msgstr ""
+msgstr "Kipengele:"
 
 #: PDFCustomerList.php:18 PDFCustomerList.php:230
 msgid "Customer List"
@@ -19758,7 +19758,7 @@ msgstr "kiwango hiki cha shughuli lazima kibainishwe katika sarafu ya ndani"
 
 #: PDFCustomerList.php:226
 msgid "The customer List could not be retrieved"
-msgstr ""
+msgstr "Orodha ya wateja haikuweza kupatikana"
 
 #: PDFCustomerList.php:232
 msgid "This report has no output because there were no customers retrieved"
@@ -19766,43 +19766,43 @@ msgstr "Ripoti hii haina pato kwa sababu hapakuwa na wateja waliorejeshwa"
 
 #: PDFCustomerList.php:251
 msgid "Customers List for"
-msgstr ""
+msgstr "Orodha ya wateja kwa"
 
 #: PDFCustomerList.php:254
 msgid "All Territories"
-msgstr ""
+msgstr "Maeneo yote"
 
 #: PDFCustomerList.php:257
 msgid "Territory"
-msgstr ""
+msgstr "Eneo"
 
 #: PDFCustomerList.php:259
 msgid "Territories"
-msgstr ""
+msgstr "Maeneo"
 
 #: PDFCustomerList.php:274
 msgid "and for"
-msgstr ""
+msgstr "na kwa"
 
 #: PDFCustomerList.php:281
 msgid "Salespeople"
-msgstr ""
+msgstr "Wauza bidhaa"
 
 #: PDFCustomerList.php:304
 msgid "Act Code"
-msgstr ""
+msgstr "Msimbo wa kitendo"
 
 #: PDFCustomerList.php:305
 msgid "Postal Address"
-msgstr ""
+msgstr "Anwani ya posta"
 
 #: PDFCustomerList.php:307
 msgid "Branch Contact Information"
-msgstr ""
+msgstr "Taarifa za mawasiliano ya tawi"
 
 #: PDFCustomerList.php:308
 msgid "Branch Delivery Address"
-msgstr ""
+msgstr "Anwani ya utoaji wa tawi"
 
 #: PDFCustomerList.php:329
 msgid "Could not retrieve the activity of the branch because"
@@ -19898,15 +19898,15 @@ msgstr "Mteja Receipts"
 
 #: PDFCustTransListing.php:78
 msgid "input on"
-msgstr ""
+msgstr "iliyoingizwa siku ya"
 
 #: PDFCustTransListing.php:86
 msgid "Trans Date"
-msgstr ""
+msgstr "Tarehe ya muamala"
 
 #: PDFCustTransListing.php:87
 msgid "Net Amount"
-msgstr ""
+msgstr "Kiasi safi"
 
 #: PDFCustTransListing.php:89 dashboard/latest_po_auth.php:45
 msgid "Total Amount"
@@ -19948,23 +19948,23 @@ msgstr "Tafadhali jaribu tena kuchagua kipindi tofauti cha tarehe"
 
 #: PDFDeliveryDifferences.php:172 PDFDIFOT.php:126
 msgid "For Inventory Category"
-msgstr ""
+msgstr "Kwa kikundi cha hesabu ya mali"
 
 #: PDFDeliveryDifferences.php:178 PDFDIFOT.php:131
 msgid "Deliveries ex"
-msgstr ""
+msgstr "Utoaji kutoka"
 
 #: PDFDeliveryDifferences.php:183
 msgid "Variances Between Orders and Deliveries Listing"
-msgstr ""
+msgstr "Orodha ya tofauti kati ya maagizo na utoaji"
 
 #: PDFDeliveryDifferences.php:192 PDFDIFOT.php:163
 msgid "Item and Description"
-msgstr ""
+msgstr "Kipengele na maelezo"
 
 #: PDFDeliveryDifferences.php:196 PDFDIFOT.php:167
 msgid "Inv Date"
-msgstr ""
+msgstr "Tarehe ya ankara"
 
 #: PDFDeliveryDifferences.php:219 PDFDIFOT.php:199
 msgid "Total number of differences"
@@ -20018,7 +20018,7 @@ msgstr "Hitilafu ya Ripoti ya DIFOT"
 
 #: PDFDIFOT.php:155
 msgid "Days Between Requested Delivery Date and Invoice Date"
-msgstr "Days Between Requested Delivery Date and Ankara Date"
+msgstr "Siku kati ya tarehe ya utoaji iliyoombwa na tarehe ya ankara"
 
 #: PDFDIFOT.php:291 PDFDIFOT.php:299
 msgid "Delivery In Full On Time (DIFOT) Report"
@@ -20087,11 +20087,11 @@ msgstr "Jarida la Leja Mkuu"
 
 #: PDFGLJournal.php:70
 msgid "Job Reference"
-msgstr ""
+msgstr "Rejeleo la kazi"
 
 #: PDFGLJournal.php:128
 msgid "No valid action selected"
-msgstr ""
+msgstr "No valid action selected"
 
 #: PDFGrn.php:76 PDFQALabel.php:48
 msgid "Could not get the supplier of the selected GRN"
@@ -20111,7 +20111,7 @@ msgstr "Kitengo cha Wasambazaji"
 
 #: PDFGrn.php:120
 msgid "Our Qty"
-msgstr ""
+msgstr "Our Qty"
 
 #: PDFGrn.php:121 PO_Items.php:857
 msgid "Our Unit"
@@ -20139,7 +20139,7 @@ msgstr "Mauzo ya Faida ya Chini"
 
 #: PDFLowGP.php:30
 msgid "Items with low GP"
-msgstr ""
+msgstr "Items na low GP"
 
 #: PDFLowGP.php:32 PDFSellThroughSupportClaim.php:30
 msgid "Low GP Sales Between"
@@ -20155,7 +20155,7 @@ msgstr "Tarehe zilizowekwa lazima ziwe katika muundo"
 
 #: PDFLowGP.php:68
 msgid "The low GP items could not be retrieved"
-msgstr ""
+msgstr "— low GP items hazikuweza kupatikana"
 
 #: PDFLowGP.php:73
 msgid "No low GP items retrieved"
@@ -20321,11 +20321,11 @@ msgstr "Masuala ya Utaratibu wa Kazi"
 
 #: PDFPeriodStockTransListing.php:112
 msgid "Other"
-msgstr ""
+msgstr "Other"
 
 #: PDFPeriodStockTransListing.php:140
 msgid "Transaction No"
-msgstr ""
+msgstr "Muamala No"
 
 #: PDFPeriodStockTransListing.php:212
 msgid "Enter the date from which the transactions are to be listed"
@@ -20384,11 +20384,11 @@ msgstr "Ghala"
 
 #: PDFPickingList.php:228
 msgid "Quantity To Pick"
-msgstr ""
+msgstr "Kiasi Hadi Pick"
 
 #: PDFPickingList.php:229
 msgid "Previously Delivered"
-msgstr ""
+msgstr "Previously Delivered"
 
 #: PDFPriceList.php:67 PDFPriceList.php:336 PDFPriceList.php:338
 msgid "Prices By Inventory Category"
@@ -20434,7 +20434,7 @@ msgstr "Tarehe ya kutekelezwa lazima iwekwe katika umbizo"
 
 #: PDFPriceList.php:198 SuppPriceList.php:126 Z_DataExport.php:64
 msgid "The Price List could not be retrieved"
-msgstr ""
+msgstr "— Bei List hazikuweza kupatikana"
 
 #: PDFPriceList.php:202
 msgid "Print Price List Error"
@@ -20531,7 +20531,7 @@ msgstr "Tazama Orodha ya Bei"
 
 #: PDFPrintLabel.php:46
 msgid "The Price Labels could not be retrieved"
-msgstr ""
+msgstr "— Bei Labels hazikuweza kupatikana"
 
 #: PDFPrintLabel.php:50
 msgid "There were no price labels to print out for the category specified"
@@ -20559,7 +20559,7 @@ msgstr "Chapisha Lebo za Bei"
 
 #: PDFPrintLabel.php:275
 msgid "The GD module for PHP is required to print barcode labels. Your PHP installation is not capable currently. You will most likely experience problems with this script until the GD module is installed."
-msgstr ""
+msgstr "— GD module kwa PHP is required hadi chapisha barcode labels. Your PHP installation is not capable currently. You will most likely experience problems na this script until — GD module is installed."
 
 #: PDFPrintLabel.php:285
 msgid "Label Criteria"
@@ -20659,7 +20659,7 @@ msgstr "Kulikuwa na tatizo la kurejesha maelezo ya mstari wa nukuu kwa Nambari y
 
 #: PDFQuotation.php:149
 msgid "Quotation No."
-msgstr ""
+msgstr "Quotation No."
 
 #: PDFQuotation.php:221
 msgid "There were no items on the quotation"
@@ -20728,7 +20728,7 @@ msgstr "Malipo haya"
 
 #: PDFRemittanceAdvice.php:116
 msgid "The details of the payment to the supplier could not be retrieved"
-msgstr ""
+msgstr "— maelezo ya — malipo hadi — muuzaji hazikuweza kupatikana"
 
 #: PDFRemittanceAdvice.php:133
 msgid "Total Payment:"
@@ -20752,7 +20752,7 @@ msgstr "Uza Kupitia Ripoti ya Madai ya Usaidizi"
 
 #: PDFSellThroughSupportClaim.php:28
 msgid "Sell Through Support Report"
-msgstr ""
+msgstr "Ripoti ya Sell Through Support"
 
 #: PDFSellThroughSupportClaim.php:33
 msgid "Sell Through Support Claim"
@@ -20760,7 +20760,7 @@ msgstr "Uza Kupitia Madai ya Usaidizi"
 
 #: PDFSellThroughSupportClaim.php:84
 msgid "The sell through support items to claim could not be retrieved"
-msgstr ""
+msgstr "— sell through support items hadi claim hazikuweza kupatikana"
 
 #: PDFSellThroughSupportClaim.php:90
 msgid "No sell through support items retrieved"
@@ -20796,11 +20796,11 @@ msgstr "Malipo Angalia Ulinganisho"
 
 #: PDFStockCheckComparison.php:42
 msgid "The inventory check file could not be retrieved"
-msgstr ""
+msgstr "— inventory check file hazikuweza kupatikana"
 
 #: PDFStockCheckComparison.php:57
 msgid "The inventory counts file could not be retrieved"
-msgstr ""
+msgstr "— inventory counts file hazikuweza kupatikana"
 
 #: PDFStockCheckComparison.php:106 PDFStockCheckComparison.php:140
 #: PDFStockCheckComparison.php:158
@@ -20829,15 +20829,15 @@ msgstr "karatasi za kuangalia hesabu"
 
 #: PDFStockCheckComparison.php:198
 msgid "and select the option to create new Inventory Check"
-msgstr ""
+msgstr "na chagua — option hadi unda mpya Inventory Check"
 
 #: PDFStockCheckComparison.php:220
 msgid "System QOH"
-msgstr ""
+msgstr "System QOH"
 
 #: PDFStockCheckComparison.php:221
 msgid "Counted Qty"
-msgstr ""
+msgstr "Counted Qty"
 
 #: PDFStockCheckComparison.php:223 Tax.php:308 Z_CheckDebtorsControl.php:78
 #: Z_CheckGLTransBalance.php:17
@@ -20846,7 +20846,7 @@ msgstr "Tofauti"
 
 #: PDFStockCheckComparison.php:234
 msgid "The inventory counts could not be retrieved"
-msgstr ""
+msgstr "— inventory counts hazikuweza kupatikana"
 
 #: PDFStockCheckComparison.php:249
 msgid "No counts entered"
@@ -20910,23 +20910,23 @@ msgstr "Uhamisho wa Mahali pa Malipo BOL"
 
 #: PDFStockLocTransfer.php:67
 msgid "Ship Qty"
-msgstr ""
+msgstr "Ship Qty"
 
 #: PDFStockLocTransfer.php:68
 msgid "Receive Qty"
-msgstr ""
+msgstr "Receive Qty"
 
 #: PDFStockLocTransfer.php:82
 msgid "Ship Location"
-msgstr ""
+msgstr "Ship Eneo"
 
 #: PDFStockLocTransfer.php:83
 msgid "Receive Location"
-msgstr ""
+msgstr "Receive Eneo"
 
 #: PDFStockLocTransfer.php:84
 msgid "Transfer Reference"
-msgstr ""
+msgstr "Transfer Rejeleo"
 
 #: PDFStockLocTransfer.php:108
 msgid "Reprint transfer docket"
@@ -20970,7 +20970,7 @@ msgstr "Fomu ya Uhamisho wa Hisa"
 
 #: PDFStockTransfer.php:26
 msgid "To Location/Reference"
-msgstr ""
+msgstr "Hadi Location/Reference"
 
 #: PDFStockTransfer.php:52
 msgid "Print Stock Transfer - Error"
@@ -21006,15 +21006,15 @@ msgstr "Chapisha Dokezo la Uhamisho wa Hisa"
 
 #: PDFSuppTransListing.php:85
 msgid "Date of Transactions"
-msgstr ""
+msgstr "Tarehe ya Transactions"
 
 #: PDFSuppTransListing.php:95
 msgid "GST"
-msgstr ""
+msgstr "GST"
 
 #: PDFSuppTransListing.php:125
 msgid "Total Transactions"
-msgstr ""
+msgstr "Jumla Transactions"
 
 #: PDFSuppTransListing.php:163 PDFSuppTransListing.php:170
 #: PDFSuppTransListing.php:175
@@ -21055,7 +21055,7 @@ msgstr "Haijaweza Kupata Nambari ya Agizo la Kazini"
 
 #: PDFWOPrint.php:277
 msgid "Produced At"
-msgstr ""
+msgstr "Produced Katika"
 
 #: PDFWOPrint.php:288
 msgid "Work Order Details"
@@ -21064,7 +21064,7 @@ msgstr "Work Agizo Details"
 #: PDFWOPrint.php:290 includes/PDFGrnHeader.php:29
 #: includes/PDFStockTransferHeader.php:35
 msgid "Item Number"
-msgstr ""
+msgstr "Kipengele Nambari"
 
 #: PDFWOPrint.php:292 PrintCustOrder_generic.php:269 SelectQASamples.php:86
 #: SelectQASamples.php:145
@@ -21079,7 +21079,7 @@ msgstr "Inahitajika Na"
 
 #: PDFWOPrint.php:296
 msgid "Packing Qty"
-msgstr ""
+msgstr "Packing Qty"
 
 #: PDFWOPrint.php:310
 msgid "Material Requirements for this Work Order"
@@ -21087,7 +21087,7 @@ msgstr "Material Requirements for this Work Agizo"
 
 #: PDFWOPrint.php:317
 msgid "Issued"
-msgstr ""
+msgstr "Issued"
 
 #: PDFWOPrint.php:529
 msgid "Order Printiing Options"
@@ -21395,7 +21395,7 @@ msgstr "Mzabuni Salio"
 
 #: POFinancialPlanning.php:69 POFinancialPlanning.php:162
 msgid "Pending in"
-msgstr ""
+msgstr "Pending katika"
 
 #: POFinancialPlanning.php:142
 msgid "Total Supplier"
@@ -21403,19 +21403,19 @@ msgstr "Total Mzabuni"
 
 #: POFinancialPlanning.php:170
 msgid "Total All Suppliers"
-msgstr ""
+msgstr "Jumla All Wauzaji"
 
 #: POFinancialPlanning.php:201
 msgid "For Suppliers in Country"
-msgstr ""
+msgstr "Kwa Wauzaji katika Country"
 
 #: POFinancialPlanning.php:207
 msgid "All Countries"
-msgstr ""
+msgstr "All Countries"
 
 #: POFinancialPlanning.php:215
 msgid "Using Currency"
-msgstr ""
+msgstr "Using Sarafu"
 
 #: POFinancialPlanning.php:222 SalesCommissionReports.php:155
 #: SalesCommissionStatements.php:155
@@ -21424,7 +21424,7 @@ msgstr "Sarafu Zote"
 
 #: POFinancialPlanning.php:229
 msgid "Show POs financial status"
-msgstr ""
+msgstr "Show POs financial hali"
 
 #: PO_Header.php:9
 msgid "Modify Purchase Order"
@@ -22187,7 +22187,7 @@ msgstr "Nunua Nambari ya Agizo"
 
 #: PO_PDFPurchOrder.php:141
 msgid "To allow a reprint, you must modify the order and enable printing again."
-msgstr ""
+msgstr "Hadi allow a reprint, you must modify — agizo na enable printing again."
 
 #: PO_PDFPurchOrder.php:143
 msgid "Print This Order as a Copy"
@@ -22947,11 +22947,11 @@ msgstr "Bei za Bidhaa"
 
 #: Prices.php:21
 msgid "There are no sales types setup. Click"
-msgstr ""
+msgstr "There are no mauzo types setup. Click"
 
 #: Prices.php:23
 msgid "to create them"
-msgstr ""
+msgstr "hadi unda them"
 
 #: Prices.php:69 RelatedItemsUpdate.php:48
 msgid "An item must first be selected before this page is called"
@@ -23011,15 +23011,15 @@ msgstr "Angalia No."
 
 #: PrintCheque.php:69 PrintCheque.php:82 PrintCheque.php:97
 msgid "Date Paid"
-msgstr ""
+msgstr "Tarehe Paid"
 
 #: PrintCheque.php:70
 msgid "Payee"
-msgstr ""
+msgstr "Payee"
 
 #: PrintCheque.php:73
 msgid "Address 3-6"
-msgstr ""
+msgstr "Address 3-6"
 
 #: PrintCheque.php:83 PrintCheque.php:98
 msgid "Vendor No."
@@ -23167,11 +23167,11 @@ msgstr "Kulikuwa na tatizo katika kurejesha maelezo ya agizo la Nambari ya Agizo
 
 #: PrintCustOrder_generic.php:198
 msgid "Supplied"
-msgstr ""
+msgstr "Supplied"
 
 #: PrintCustOrder_generic.php:199
 msgid "Prev Delivered"
-msgstr ""
+msgstr "Prev Delivered"
 
 #: PrintCustOrder_generic.php:250
 msgid "Could not retrieve the components of the ordered assembly item"
@@ -23207,15 +23207,15 @@ msgstr "Mteja Ufungashaji Slip"
 
 #: PrintCustOrder.php:188
 msgid "To Supply"
-msgstr ""
+msgstr "Hadi Supply"
 
 #: PrintCustOrder.php:189
 msgid "Prev. Supplied"
-msgstr ""
+msgstr "Prev. Supplied"
 
 #: PrintCustOrder.php:213
 msgid "Generated by webERP on"
-msgstr ""
+msgstr "Generated na webERP kwenye"
 
 #: PrintCustOrder.php:245
 msgid "There were no outstanding items on the order to deliver. A dispatch note cannot be printed"
@@ -23274,7 +23274,7 @@ msgstr "Shughuli Zilizosalia"
 
 #: PrintCustStatements.php:321
 msgid "Aged Analysis"
-msgstr ""
+msgstr "Uchambuzi wa Aged"
 
 #: PrintCustStatements.php:325
 msgid "Past Due"
@@ -23403,7 +23403,7 @@ msgstr "MKOPO JUMLA"
 
 #: PrintCustTrans.php:566
 msgid "Please find attached the"
-msgstr ""
+msgstr "Please find attached —"
 
 #: PrintCustTrans.php:609
 msgid "Select Invoices/Credit Notes To Print"
@@ -23451,11 +23451,11 @@ msgstr "Ikiwa ankara moja tu inahitajika"
 
 #: PrintCustTrans.php:675
 msgid "enter the invoice number"
-msgstr ""
+msgstr "enter — ankara nambari"
 
 #: PrintCustTrans.php:675
 msgid "as both the start and end numbers"
-msgstr ""
+msgstr "as both — anza na mwisho numbers"
 
 #: PrintCustTrans.php:682
 msgid "The last credit note created was number"
@@ -23467,7 +23467,7 @@ msgstr "Masafa mfuatano yanaweza kuchapishwa kwa kutumia njia sawa na ya ankara 
 
 #: PrintCustTrans.php:682
 msgid "A range is printed from the start to the end number inclusive"
-msgstr ""
+msgstr "A range is printed kutoka — anza hadi — mwisho nambari inclusive"
 
 #: PrintWOItemSlip.php:39
 msgid "The SQL to find the details of the item to produce failed"
@@ -23538,139 +23538,139 @@ msgstr "Sahihi"
 
 #: ProdSpecGroups.php:5
 msgid "Product Spec Groups Maintenance"
-msgstr ""
+msgstr "Bidhaa Spec Groups Maintenance"
 
 #: ProdSpecGroups.php:11 ProdSpecGroups.php:196
 msgid "Product Specification Groups"
-msgstr ""
+msgstr "Bidhaa Specification Groups"
 
 #: ProdSpecGroups.php:35
 msgid "The group name must exist"
-msgstr ""
+msgstr "— kikundi jina must exist"
 
 #: ProdSpecGroups.php:41
 msgid "The group name must be fifty characters or less long"
-msgstr ""
+msgstr "— kikundi jina must be fifty characters or less long"
 
 #: ProdSpecGroups.php:47
 msgid "The group by number must be a positive numeric value"
-msgstr ""
+msgstr "— kikundi na nambari must be a positive numeric thamani"
 
 #: ProdSpecGroups.php:53
 msgid "The labels field is required and must be 240 characters or less long"
-msgstr ""
+msgstr "— labels field is required na must be 240 characters or less long"
 
 #: ProdSpecGroups.php:59
 msgid "The header title must be 100 characters or less long"
-msgstr ""
+msgstr "— header title must be 100 characters or less long"
 
 #: ProdSpecGroups.php:65
 msgid "The trailer text must be 240 characters or less long"
-msgstr ""
+msgstr "— trailer text must be 240 characters or less long"
 
 #: ProdSpecGroups.php:71
 msgid "Number of columns must be either 2 or 3"
-msgstr ""
+msgstr "Nambari ya columns must be either 2 or 3"
 
 #: ProdSpecGroups.php:81
 msgid "The number of labels (comma separated) must match the number of columns"
-msgstr ""
+msgstr "— nambari ya labels (comma separated) must match — nambari ya columns"
 
 #: ProdSpecGroups.php:104
 msgid "Cannot change the group name because QA tests have been created referring to this group name"
-msgstr ""
+msgstr "Cannot change — kikundi jina because QA tests have been created referring hadi this kikundi jina"
 
 #: ProdSpecGroups.php:105
 msgid "QA tests that refer to this group name"
-msgstr ""
+msgstr "QA tests that refer hadi this kikundi jina"
 
 #: ProdSpecGroups.php:119
 msgid "The product specification group record has been updated"
-msgstr ""
+msgstr "— bidhaa specification kikundi record has been updated"
 
 #: ProdSpecGroups.php:140
 msgid "The product specification group record has been added"
-msgstr ""
+msgstr "— bidhaa specification kikundi record has been added"
 
 #: ProdSpecGroups.php:170
 msgid "Cannot delete this product specification group because QA tests have been created referring to this group"
-msgstr ""
+msgstr "Cannot futa this bidhaa specification kikundi because QA tests have been created referring hadi this kikundi"
 
 #: ProdSpecGroups.php:171
 msgid "QA tests that refer to this group"
-msgstr ""
+msgstr "QA tests that refer hadi this kikundi"
 
 #: ProdSpecGroups.php:177
 msgid "The product specification group record has been deleted"
-msgstr ""
+msgstr "— bidhaa specification kikundi record has been deleted"
 
 #: ProdSpecGroups.php:199 ProdSpecGroups.php:265
 msgid "Group ID"
-msgstr ""
+msgstr "Kikundi ID"
 
 #: ProdSpecGroups.php:201
 msgid "Group By No."
-msgstr ""
+msgstr "Kikundi Na No."
 
 #: ProdSpecGroups.php:202 ProdSpecGroups.php:295
 msgid "Header Title"
-msgstr ""
+msgstr "Header Title"
 
 #: ProdSpecGroups.php:204
 msgid "Num Cols"
-msgstr ""
+msgstr "Num Cols"
 
 #: ProdSpecGroups.php:220
 msgid "Are you sure you wish to delete this product specification group?"
-msgstr ""
+msgstr "Are you sure you wish hadi futa this bidhaa specification kikundi?"
 
 #: ProdSpecGroups.php:229
 msgid "Show all Product Specification Group Definitions"
-msgstr ""
+msgstr "Show all Bidhaa Specification Kikundi Definitions"
 
 #: ProdSpecGroups.php:263
 msgid "Update Product Specification Group."
-msgstr ""
+msgstr "Sasisha Bidhaa Specification Kikundi."
 
 #: ProdSpecGroups.php:279
 msgid "New Product Specification Group."
-msgstr ""
+msgstr "Mpya Bidhaa Specification Kikundi."
 
 #: ProdSpecGroups.php:285
 msgid "A descriptive name to identify this product specification group"
-msgstr ""
+msgstr "A descriptive jina hadi identify this bidhaa specification kikundi"
 
 #: ProdSpecGroups.php:289
 msgid "Group By Number"
-msgstr ""
+msgstr "Kikundi Na Nambari"
 
 #: ProdSpecGroups.php:291
 msgid "A numeric value used for ordering groups"
-msgstr ""
+msgstr "A numeric thamani used kwa ordering groups"
 
 #: ProdSpecGroups.php:297
 msgid "Optional header title for this group"
-msgstr ""
+msgstr "Optional header title kwa this kikundi"
 
 #: ProdSpecGroups.php:301
 msgid "Trailer Text"
-msgstr ""
+msgstr "Trailer Text"
 
 #: ProdSpecGroups.php:303
 msgid "Optional trailer text for this group"
-msgstr ""
+msgstr "Optional trailer text kwa this kikundi"
 
 #: ProdSpecGroups.php:307
 msgid "Number of Columns"
-msgstr ""
+msgstr "Nambari ya Columns"
 
 #: ProdSpecGroups.php:312
 msgid "Select 2 or 3 columns for this group. If you select 3 columns the Testing Method on the group will display"
-msgstr ""
+msgstr "Chagua 2 or 3 columns kwa this kikundi. If you chagua 3 columns — Testing Method kwenye — kikundi will display"
 
 #: ProdSpecGroups.php:318
 msgid "Comma separated list of column labels - must match the number of columns"
-msgstr ""
+msgstr "Comma separated list ya column labels - must match — nambari ya columns"
 
 #: ProductSpecs.php:5
 msgid "Product Specifications Maintenance"
@@ -23870,7 +23870,7 @@ msgstr "Onyesha Vipengee"
 
 #: PurchaseByPrefSupplier.php:392
 msgid "The supplier inventory quantities could not be retrieved"
-msgstr ""
+msgstr "— muuzaji inventory quantities hazikuweza kupatikana"
 
 #: PurchaseByPrefSupplier.php:405
 msgid "Supp Ords"
@@ -24298,11 +24298,11 @@ msgstr "ASTM, ISO, UL au nyinginezo"
 
 #: QATests.php:259 QATests.php:260
 msgid "Setup Product Spec Groups"
-msgstr ""
+msgstr "Setup Bidhaa Spec Groups"
 
 #: QATests.php:260
 msgid "No Product Spec Groups defined"
-msgstr ""
+msgstr "No Bidhaa Spec Groups defined"
 
 #: QATests.php:266 QATests.php:442
 msgid "Group By"
@@ -24552,7 +24552,7 @@ msgstr "Ushauri Unaofanywa Mara kwa Mara"
 
 #: RecurringSalesOrdersProcess.php:703
 msgid "Failed to send email advice for this order to"
-msgstr ""
+msgstr "Failed hadi send email advice kwa this agizo hadi"
 
 #: RecurringSalesOrdersProcess.php:707
 msgid "No email advice was sent for this order because the location has no email contact defined with a valid email address"
@@ -24856,7 +24856,7 @@ msgstr "Inahitajika"
 
 #: ReorderLevel.php:161
 msgid "Please find attached the Reorder level report, generated by user"
-msgstr ""
+msgstr "Please find attached — Reorder level ripoti, generated na mtumiaji"
 
 #: ReorderLevel.php:185 ReorderLevel.php:194
 msgid "Reorder Level Reporting"
@@ -26988,7 +26988,7 @@ msgstr "Jina la mteja lililoombwa haliwezi kurejeshwa kwa sababu"
 
 #: SelectCustomer.php:149
 msgid "Select a menu option to operate using this customer"
-msgstr ""
+msgstr "Chagua a menu option hadi operate using this mteja"
 
 #: SelectCustomer.php:154
 msgid "Customer Inquiries"
@@ -27040,11 +27040,11 @@ msgstr "Hii inaruhusu amana zilizopokelewa kutoka kwa mteja kulinganishwa na ank
 
 #: SelectCustomer.php:190
 msgid "Allocate Receipts OR Credit Notes"
-msgstr ""
+msgstr "Allocate Receipts OR Mkopo Notes"
 
 #: SelectCustomer.php:193
 msgid "Job Cards"
-msgstr ""
+msgstr "Kadi za kazi"
 
 #: SelectCustomer.php:196
 msgid "Enter a Receipt From This Customer"
@@ -27201,19 +27201,19 @@ msgstr "Ongeza Anwani Mpya"
 
 #: SelectCustomer.php:780 SelectCustomer.php:826
 msgid "date"
-msgstr ""
+msgstr "tarehe"
 
 #: SelectCustomer.php:781
 msgid "note"
-msgstr ""
+msgstr "note"
 
 #: SelectCustomer.php:782
 msgid "hyperlink"
-msgstr ""
+msgstr "hyperlink"
 
 #: SelectCustomer.php:783
 msgid "priority"
-msgstr ""
+msgstr "priority"
 
 #: SelectCustomer.php:786
 msgid "Add New Note"
@@ -27603,7 +27603,7 @@ msgstr "Tafuta Vitu vya Mali"
 
 #: SelectProduct.php:48
 msgid "There are no stock categories currently defined. Please use the link below to set them up"
-msgstr ""
+msgstr "There are no akiba categories currently defined. Please use — link below hadi set them up"
 
 #: SelectProduct.php:61
 msgid "Item Inquiries"
@@ -29174,11 +29174,11 @@ msgstr "Mipangilio ya Seva ya SMTP"
 
 #: SMTPServer.php:34
 msgid "The connection to the SMPT server cannot be made"
-msgstr ""
+msgstr "— connection hadi — SMPT server cannot be made"
 
 #: SMTPServer.php:38
 msgid "The connection to the SMPT server has been made"
-msgstr ""
+msgstr "— connection hadi — SMPT server has been made"
 
 #: SMTPServer.php:49
 msgid "The email setting information failed to update"
@@ -29194,7 +29194,7 @@ msgstr "Mipangilio ya barua pepe imeshindwa kuingizwa"
 
 #: SMTPServer.php:71
 msgid "The settings for the SMTP server have been successfully inserted"
-msgstr ""
+msgstr "— settings kwa — SMTP server have been successfully inserted"
 
 #: SMTPServer.php:86
 msgid "The email settings information cannot be retrieved"
@@ -29556,7 +29556,7 @@ msgstr "Malighafi"
 
 #: StockCategories.php:24
 msgid "There are no Tax Categories defined for this company. To define Tax Categories click"
-msgstr ""
+msgstr "There are no Kodi Categories defined kwa this company. Hadi define Kodi Categories click"
 
 #: StockCategories.php:32
 msgid "Show All Stock Categories"
@@ -29821,11 +29821,11 @@ msgstr "Jumla ya Kategoria"
 
 #: StockCheck.php:30 StockCheck.php:61
 msgid "The inventory quantities could not be added to the freeze file"
-msgstr ""
+msgstr "— inventory quantities could not be added hadi — freeze file"
 
 #: StockCheck.php:41
 msgid "The old quantities could not be deleted from the freeze file"
-msgstr ""
+msgstr "— old quantities could not be deleted kutoka — freeze file"
 
 #: StockCheck.php:64
 msgid "Stock Check Freeze Update"
@@ -29853,11 +29853,11 @@ msgstr "Karatasi za Hesabu za Hisa"
 
 #: StockCheck.php:121
 msgid "Net Quantity"
-msgstr ""
+msgstr "Net Kiasi"
 
 #: StockCheck.php:123
 msgid "Counted Quantity"
-msgstr ""
+msgstr "Counted Kiasi"
 
 #: StockCheck.php:162
 msgid "Stock Check Sheets"
@@ -30471,7 +30471,7 @@ msgstr "Usambazaji wa Hisa"
 
 #: StockDispatch.php:162 includes/PDFStockLocTransferHeader.php:18
 msgid "Transfer No"
-msgstr ""
+msgstr "Transfer No"
 
 #: StockDispatch.php:165 StockDispatch.php:389
 msgid "Dispatch Percent"
@@ -30479,7 +30479,7 @@ msgstr "Asilimia ya Usambazaji"
 
 #: StockDispatch.php:166
 msgid "Strategy"
-msgstr ""
+msgstr "Strategy"
 
 #: StockDispatch.php:174
 msgid "QOH-From"
@@ -30648,7 +30648,7 @@ msgstr "Makundi"
 
 #: StockLocStatus.php:224 StockLocStatus.php:241
 msgid "Not Controlled"
-msgstr ""
+msgstr "Not Controlled"
 
 #: StockLocTransfer.php:7
 msgid "Inventory Location Transfer Shipment"
@@ -31630,7 +31630,7 @@ msgstr "Matumizi"
 
 #: StockUsageGraph.php:98 StockUsage.php:143
 msgid "The stock usage for the selected criteria could not be retrieved"
-msgstr ""
+msgstr "— akiba usage kwa — selected criteria hazikuweza kupatikana"
 
 #: StockUsageGraph.php:102
 msgid "Stock Usage Graph Problem"
@@ -32835,7 +32835,7 @@ msgstr "Kiasi cha ankara kutoka kwa rekodi ya bidhaa zilizopokelewa haikuweza ku
 msgid ""
 "The invoice could not be mapped to the\n"
 "\t\t\t\t\tgoods received record because"
-msgstr ""
+msgstr "— ankara could not be mapped hadi the\n\t\t\t\t\tgoods received record because"
 
 #: SupplierInvoice.php:1565
 msgid "The stock movement record for the delivery could not have the cost updated to the actual cost"
@@ -32995,7 +32995,7 @@ msgstr "Nambari ya mtoa huduma tayari ipo kwenye hifadhidata"
 
 #: Suppliers.php:357
 msgid "The supplier name must be entered and has maximum 40 characters)"
-msgstr ""
+msgstr "— muuzaji jina must be entered na has maximum 40 characters)"
 
 #: Suppliers.php:363 Z_ImportSuppliers.php:155
 msgid "The Supplier Code cannot be empty"
@@ -33083,7 +33083,7 @@ msgstr "Rekodi ya wasambazaji kwa"
 
 #: Suppliers.php:713
 msgid "There are no supplier types setup. These must be created first"
-msgstr ""
+msgstr "There are no muuzaji types setup. These must be created first"
 
 #: Suppliers.php:723
 msgid "Create Supplier Details"
@@ -33091,28 +33091,28 @@ msgstr "Unda Maelezo ya Wasambazaji"
 
 #: Suppliers.php:729
 msgid "max 10 characters"
-msgstr ""
+msgstr "max 10 characters"
 
 #: Suppliers.php:730
 msgid "The supplier id cannot be blank (max 10 characters)"
-msgstr ""
+msgstr "— muuzaji id cannot be blank (max 10 characters)"
 
 #: Suppliers.php:735
 msgid "max 40 characters"
-msgstr ""
+msgstr "max 40 characters"
 
 #: Suppliers.php:736
 msgid "The supplier name should not be blank (max 40 characters)"
-msgstr ""
+msgstr "— muuzaji jina should not be blank (max 40 characters)"
 
 #: Suppliers.php:740 Suppliers.php:741 Suppliers.php:745 Suppliers.php:746
 #: Suppliers.php:750 Suppliers.php:751 Suppliers.php:760 Suppliers.php:761
 msgid "Max 39 characters"
-msgstr ""
+msgstr "Max 39 characters"
 
 #: Suppliers.php:755 Suppliers.php:756
 msgid "Max 49 characters"
-msgstr ""
+msgstr "Max 49 characters"
 
 #: Suppliers.php:781 Suppliers.php:786
 msgid "only number + - ( and ) allowed"
@@ -33716,7 +33716,7 @@ msgstr "Ripoti ya Uendeshaji wa malipo"
 
 #: SuppPaymentRun.php:39
 msgid "Suppliers from"
-msgstr ""
+msgstr "Wauzaji kutoka"
 
 #: SuppPaymentRun.php:39
 msgid "and Due By"
@@ -33728,15 +33728,15 @@ msgstr "Kitambulisho cha msambazaji"
 
 #: SuppPaymentRun.php:46
 msgid "Tran Date"
-msgstr ""
+msgstr "Tran Tarehe"
 
 #: SuppPaymentRun.php:50
 msgid "Diff On Exch"
-msgstr ""
+msgstr "Diff Kwenye Exch"
 
 #: SuppPaymentRun.php:122
 msgid "The details of supplier invoices due could not be retrieved"
-msgstr ""
+msgstr "— maelezo ya muuzaji invoices due hazikuweza kupatikana"
 
 #: SuppPaymentRun.php:125
 msgid "There are no outstanding supplier invoices to pay"
@@ -33744,7 +33744,7 @@ msgstr "Hakuna ankara za wasambazaji ambazo hazijalipwa za kulipa"
 
 #: SuppPaymentRun.php:151
 msgid "could not be processed"
-msgstr ""
+msgstr "could not be processed"
 
 #: SuppPaymentRun.php:172
 msgid "Grand Total Payments Due"
@@ -33752,11 +33752,11 @@ msgstr "Jumla ya Malipo Yanayodaiwa"
 
 #: SuppPaymentRun.php:174
 msgid "Total Payments"
-msgstr ""
+msgstr "Jumla Payments"
 
 #: SuppPaymentRun.php:175
 msgid "Total Diff On Exch"
-msgstr ""
+msgstr "Jumla Diff Kwenye Exch"
 
 #: SuppPaymentRun.php:195
 msgid "Payment Run"
@@ -33796,7 +33796,7 @@ msgstr "Malipo Yanayotokana Na"
 
 #: SuppPaymentRun.php:287
 msgid "The bank accounts could not be retrieved"
-msgstr ""
+msgstr "— benki akaunti hazikuweza kupatikana"
 
 #: SuppPaymentRun.php:292
 msgid "Pay From Account"
@@ -34053,7 +34053,7 @@ msgstr "Idadi ya juu chaguomsingi ya rekodi za kuonyesha lazima iwe kati ya 1 na
 
 #: SystemParameters.php:95
 msgid "The maximum size of item image files must be between 1 KB and 9999 KB"
-msgstr ""
+msgstr "— maximum size ya kipengele image files must be between 1 KB na 9999 KB"
 
 #: SystemParameters.php:98
 msgid "The number of frequently ordered items to display must be numeric"
@@ -34101,7 +34101,7 @@ msgstr "Chaguzi za Usanidi"
 
 #: SystemParameters.php:419
 msgid "Db Maintenance"
-msgstr ""
+msgstr "Db Maintenance"
 
 #: SystemParameters.php:422
 msgid "Perform Database Maintenance At Logon"
@@ -34117,7 +34117,7 @@ msgstr "Ruhusu Ufikiaji wa SysAdmin Pekee"
 
 #: SystemParameters.php:451
 msgid "Runs DB_Maintenance function in ConnectDB_XXXX.php at regular intervals (checked every user login). [Allow Sysadmin Access Only] allows only users with security role Administrator to login."
-msgstr ""
+msgstr "Runs DB_Maintenance function katika ConnectDB_XXXX.php katika regular intervals (checked every mtumiaji login). [Allow Sysadmin Access Only] allows only users na security role Administrator hadi login."
 
 #: SystemParameters.php:460
 msgid "Default Date Format"
@@ -34650,11 +34650,11 @@ msgstr "Upeo wa Saizi katika KB ya picha zilizopakiwa"
 
 #: SystemParameters.php:993
 msgid "The input should be between 1 and 2048"
-msgstr ""
+msgstr "— input should be between 1 na 2048"
 
 #: SystemParameters.php:993
 msgid "1 to 2048"
-msgstr ""
+msgstr "1 hadi 2048"
 
 #: SystemParameters.php:994
 msgid "Picture files of items can be uploaded to the server. The system will check that files uploaded are less than this size (in KB) before they will be allowed to be uploaded. Large pictures will make the system slow and will be difficult to view in the stock maintenance screen."
@@ -34914,7 +34914,7 @@ msgstr "Anwani ya Barua pepe ya Meneja wa Mali"
 
 #: SystemParameters.php:1298
 msgid "The email address for the inventory manager, where notifications of all manual stock adjustments created are sent by the system. Leave blank if no emails should be sent to the inventory manager for manual stock adjustments"
-msgstr ""
+msgstr "— email address kwa — inventory manager, where notifications ya all manual akiba adjustments created are sent na — system. Leave blank if no emails should be sent hadi — inventory manager kwa manual akiba adjustments"
 
 #: SystemParameters.php:1302
 msgid "Using Smtp Mail"
@@ -35393,11 +35393,11 @@ msgstr "Ripoti ya Kodi"
 
 #: Tax.php:33
 msgid "For Periods"
-msgstr ""
+msgstr "Kwa Periods"
 
 #: Tax.php:59
 msgid "The accounts receivable transaction details could not be retrieved"
-msgstr ""
+msgstr "— akaunti receivable muamala maelezo hazikuweza kupatikana"
 
 #: Tax.php:70
 msgid "Tax on Sales"
@@ -35409,7 +35409,7 @@ msgstr "Jumla ya Matokeo"
 
 #: Tax.php:152
 msgid "The accounts payable transaction details could not be retrieved"
-msgstr ""
+msgstr "— akaunti payable muamala maelezo hazikuweza kupatikana"
 
 #: Tax.php:163
 msgid "Tax on Purchases"
@@ -35417,7 +35417,7 @@ msgstr "Kodi ya Manunuzi"
 
 #: Tax.php:217
 msgid "The petty cash transaction details could not be retrieved"
-msgstr ""
+msgstr "— petty cash muamala maelezo hazikuweza kupatikana"
 
 #: Tax.php:227
 msgid "Tax on Petty Cash Expenses"
@@ -35441,7 +35441,7 @@ msgstr "Marekebisho ya Ushuru unaolipwa kwa Forodha, FBT, burudani n.k lazima pi
 
 #: Tax.php:319
 msgid "This information excludes tax on journal entries/payments/receipts. All tax should be entered through the correct modules."
-msgstr ""
+msgstr "This information excludes kodi kwenye journal entries/payments/receipts. All kodi should be entered through — correct modules."
 
 #: Tax.php:341
 msgid "Taxation Reporting Error"
@@ -35801,7 +35801,7 @@ msgstr "Jedwali la saa limewasilishwa"
 
 #: Timesheets.php:327
 msgid "Failed to send the submission email to the manager."
-msgstr ""
+msgstr "Failed hadi send — submission email hadi — manager."
 
 #: Timesheets.php:354
 msgid "This timesheet cannot be submitted until a cost is set up for the item defined for this employee"
@@ -35901,7 +35901,7 @@ msgstr "Vipengee vya Juu Kutafuta"
 
 #: TopItems.php:67
 msgid "Top sales items list"
-msgstr ""
+msgstr "Top mauzo items list"
 
 #: TopItems.php:82 includes/PDFTopItemsHeader.php:55
 msgid "Value Sales"
@@ -36117,7 +36117,7 @@ msgstr "na toleo la hifadhidata ni"
 
 #: UpgradeDatabase.php:69
 msgid "No database updates have been done as you selected to apply these manually - upgrade SQL scripts are in the sql/mysql/ directory in the distribution"
-msgstr ""
+msgstr "No database updates have been done as you selected hadi apply these manually - upgrade SQL scripts are katika — sql/mysql/ directory katika — distribution"
 
 #: UpgradeDatabase.php:72
 msgid "If there are any failures then please check with your system administrator. Please read all notes carefully to ensure they are expected"
@@ -37474,7 +37474,7 @@ msgstr "Matengenezo ya Watumiaji"
 
 #: WWW_Users.php:29
 msgid "Demo mode is currently active, which disables the security model administration"
-msgstr ""
+msgstr "Demo mode is currently active, which disables — security model administration"
 
 #: WWW_Users.php:36 reportwriter/languages/en_US/reports.php:242
 msgid "Purchases"
@@ -37546,7 +37546,7 @@ msgstr "Rekodi ya mtumiaji iliyochaguliwa imesasishwa"
 
 #: WWW_Users.php:265
 msgid "The user insertion could not be processed because"
-msgstr ""
+msgstr "— mtumiaji insertion could not be processed because"
 
 #: WWW_Users.php:267
 msgid "A new user record has been inserted"
@@ -37594,11 +37594,11 @@ msgstr "The Ununuzi Orders Authority could not be deleted because"
 
 #: WWW_Users.php:348
 msgid "The Sessions User could not be deleted because"
-msgstr ""
+msgstr "— Sessions Mtumiaji could not be deleted because"
 
 #: WWW_Users.php:352
 msgid "The Session Data User could not be deleted because"
-msgstr ""
+msgstr "— Session Data Mtumiaji could not be deleted because"
 
 #: WWW_Users.php:356
 msgid "The User could not be deleted because"
@@ -37610,7 +37610,7 @@ msgstr "Mtumiaji Amefutwa"
 
 #: WWW_Users.php:376
 msgid "Timeout"
-msgstr ""
+msgstr "Timeout"
 
 #: WWW_Users.php:381
 msgid "Last Visit"
@@ -37630,7 +37630,7 @@ msgstr "Hakuna rekodi ya kuingia"
 
 #: WWW_Users.php:427
 msgid "mins"
-msgstr ""
+msgstr "mins"
 
 #: WWW_Users.php:438
 msgid "Are you sure you wish to delete this user?"
@@ -37674,15 +37674,15 @@ msgstr "Barua pepe halali inahitajika"
 
 #: WWW_Users.php:577
 msgid "Timeout after"
-msgstr ""
+msgstr "Timeout after"
 
 #: WWW_Users.php:578
 msgid "minutes"
-msgstr ""
+msgstr "minutes"
 
 #: WWW_Users.php:579
 msgid "Log the user out after this interval of non-use"
-msgstr ""
+msgstr "Log — mtumiaji out after this interval ya non-use"
 
 #: WWW_Users.php:597
 msgid "User Can Create Tenders"
@@ -38799,11 +38799,11 @@ msgstr "Onyesha faili ya kiolezo cha sql iliyotolewa"
 
 #: Z_CreateCompanyTemplateFile.php:211
 msgid "Company Template Submission"
-msgstr ""
+msgstr "Company Template Submission"
 
 #: Z_CreateCompanyTemplateFile.php:212
 msgid "Please find company template"
-msgstr ""
+msgstr "Please find company template"
 
 #: Z_CreateCompanyTemplateFile.php:224
 msgid "Running the create a new company template script will export all account groups, account codes and tax set up tables including tax groups, tax authorities, tax rates etc. However, no transactions or private data will be exported. There is opportunity to prevent specific general ledger accounts from being exported where these are considered private - again no transactional or balance data is exported and you can inspect the contents of the sql file. The template file will be emailed automatically to the webERP project"
@@ -38863,27 +38863,27 @@ msgstr "The Mteja List could not be retrieved by the SQL"
 
 #: Z_DataExport.php:229
 msgid "The Salesman List could not be retrieved"
-msgstr ""
+msgstr "— Salesman List hazikuweza kupatikana"
 
 #: Z_DataExport.php:266
 msgid "The Image List could not be retrieved"
-msgstr ""
+msgstr "— Image List hazikuweza kupatikana"
 
 #: Z_DataExport.php:294
 msgid "The Security Token List could not be retrieved"
-msgstr ""
+msgstr "— Security Token List hazikuweza kupatikana"
 
 #: Z_DataExport.php:318
 msgid "The Security Role List could not be retrieved"
-msgstr ""
+msgstr "— Security Role List hazikuweza kupatikana"
 
 #: Z_DataExport.php:342
 msgid "The Security Group List could not be retrieved"
-msgstr ""
+msgstr "— Security Kikundi List hazikuweza kupatikana"
 
 #: Z_DataExport.php:382
 msgid "The Security User List could not be retrieved"
-msgstr ""
+msgstr "— Security Mtumiaji List hazikuweza kupatikana"
 
 #: Z_DataExport.php:435
 msgid "Data Exports"
@@ -39793,11 +39793,11 @@ msgstr "Msimbo wa akaunti"
 
 #: Z_ImportGLTransactions.php:110
 msgid "The date"
-msgstr ""
+msgstr "— tarehe"
 
 #: Z_ImportGLTransactions.php:110
 msgid "is not in the correct format"
-msgstr ""
+msgstr "is not katika — correct format"
 
 #: Z_ImportGLTransactions.php:119
 msgid "All transactions must be in the same period"
@@ -40206,7 +40206,7 @@ msgstr "Huduma ya kuhariri kichwa cha faili ya lugha"
 
 #: Z_poEditLangHeader.php:30 Z_poEditLangRemaining.php:38
 msgid "You do not have read access to the required files please contact your system administrator"
-msgstr ""
+msgstr "You do not have read access hadi — required files please contact your system administrator"
 
 #: Z_poEditLangHeader.php:46
 msgid "Writing the language file header"
@@ -40812,7 +40812,7 @@ msgstr "masasisho yamefaulu"
 
 #: Z_UpgradeDatabase.php:165
 msgid "Log out of"
-msgstr ""
+msgstr "Log out ya"
 
 #: Z_UpgradeDatabase.php:166
 msgid "You need to logout and log back in for these changes to take affect"
@@ -41507,31 +41507,31 @@ msgstr "Hakuna shughuli iliyopatikana ya kugawa"
 
 #: api/includes/api_errorcodes.php:359
 msgid "Invalid OV Discount"
-msgstr ""
+msgstr "Invalid OV Punguzo"
 
 #: api/includes/api_errorcodes.php:360
 msgid "Incorrect Location Code Length"
-msgstr ""
+msgstr "Incorrect Eneo Msimbo Length"
 
 #: api/includes/api_errorcodes.php:361
 msgid "Location Code Already Exists"
-msgstr ""
+msgstr "Eneo Msimbo Already Exists"
 
 #: api/includes/api_errorcodes.php:362
 msgid "Location Code Does not Exist"
-msgstr ""
+msgstr "Eneo Msimbo Does not Exist"
 
 #: api/includes/api_errorcodes.php:363
 msgid "Incorrect Location Name Length"
-msgstr ""
+msgstr "Incorrect Eneo Jina Length"
 
 #: api/includes/api_errorcodes.php:364
 msgid "Tax Province ID Not Setup"
-msgstr ""
+msgstr "Kodi Province ID Not Setup"
 
 #: api/includes/api_errorcodes.php:365
 msgid "Invalid Controlled"
-msgstr ""
+msgstr "Invalid Controlled"
 
 #: api/includes/api_login.php:99
 msgid "** Error Code Not Defined **"
@@ -41564,7 +41564,7 @@ msgstr "Chaguo hili la kukokotoa hutumika kuingia katika mbinu za API za hifadhi
 
 #: api/includes/api_xml-rpc_definition.php:56
 msgid "NOTE: using this function means that the User Name and Password fields in the following functions are not required.  When calling those functions, leave the last two parameters off, and send along a session cookie."
-msgstr ""
+msgstr "NOTE: using this function means that — Mtumiaji Jina na Password fields katika — following functions are not required. When calling those functions, leave — last two parameters off, na send along a session cookie."
 
 #: api/includes/api_xml-rpc_definition.php:57 install/pages/page_3.php:75
 msgid "Database Name"
@@ -41572,7 +41572,7 @@ msgstr "Jina la Hifadhidata"
 
 #: api/includes/api_xml-rpc_definition.php:58
 msgid "The name of the database to use for the requests to come. "
-msgstr ""
+msgstr "— jina ya — database hadi use kwa — requests hadi come."
 
 #: api/includes/api_xml-rpc_definition.php:60
 #: api/includes/api_xml-rpc_definition.php:701
@@ -41822,7 +41822,7 @@ msgstr "Nenosiri la weberp linalohusishwa na jina hili la mtumiaji."
 
 #: api/includes/api_xml-rpc_definition.php:63
 msgid "This function returns an array. The fist element of it is an integer. "
-msgstr ""
+msgstr "This function returns an array. — fist element ya it is an integer."
 
 #: api/includes/api_xml-rpc_definition.php:64
 #: api/includes/api_xml-rpc_definition.php:98
@@ -41836,7 +41836,7 @@ msgstr "Vinginevyo msimbo wa hitilafu utarejeshwa."
 
 #: api/includes/api_xml-rpc_definition.php:66
 msgid "When the login is successful, a session cookie is also returned in the HTTP headers"
-msgstr ""
+msgstr "When — login is successful, a session cookie is also returned katika — HTTP headers"
 
 #: api/includes/api_xml-rpc_definition.php:94
 msgid "This function is used to logout from the API methods. "
@@ -42515,7 +42515,7 @@ msgstr "Aina ya mauzo ya bidhaa kwenye hifadhidata."
 
 #: api/includes/api_xml-rpc_definition.php:1178
 msgid "Returns the sales price for the stock item whose ID is passed in the function"
-msgstr ""
+msgstr "Returns — mauzo bei kwa — akiba kipengele whose ID is passed katika — function"
 
 #: api/includes/api_xml-rpc_definition.php:1209
 msgid "Creates a customer receipt from the details passed to the method as an associative array"
@@ -43243,16 +43243,16 @@ msgstr "Ikifaulu chaguo hili la kukokotoa litarejesha sifuri, na thamani ya mali
 
 #: api/includes/api_xml-rpc_definition.php:3461
 msgid "This function returns a list of created Orders."
-msgstr ""
+msgstr "This function returns a list ya created Maagizo."
 
 #: api/includes/api_xml-rpc_definition.php:3466
 msgid "This function returns an array of one order codes. "
-msgstr ""
+msgstr "This function returns an array ya one agizo codes."
 
 #: api/includes/api_xml-rpc_definition.php:3494
 #: api/includes/api_xml-rpc_definition.php:3608
 msgid "This function takes an order number and returns an array of key/value pairs."
-msgstr ""
+msgstr "This function takes an agizo nambari na returns an array ya key/value pairs."
 
 #: api/includes/api_xml-rpc_definition.php:3497
 #: api/includes/api_xml-rpc_definition.php:3611
@@ -43262,20 +43262,20 @@ msgstr "The Agizo No to identify the order in the database."
 #: api/includes/api_xml-rpc_definition.php:3502
 #: api/includes/api_xml-rpc_definition.php:3616
 msgid "If successful this function returns a set of key/value pairs containing the details of this order. "
-msgstr ""
+msgstr "If successful this function returns a set ya key/value pairs containing — maelezo ya this agizo."
 
 #: api/includes/api_xml-rpc_definition.php:3503
 #: api/includes/api_xml-rpc_definition.php:3617
 msgid "The key will be identical with field name from the salesorders table. All fields will be in the set regardless of whether the value was set."
-msgstr ""
+msgstr "— key will be identical na field jina kutoka — salesorders table. All fields will be katika — set regardless ya whether — thamani was set."
 
 #: api/includes/api_xml-rpc_definition.php:3566
 msgid "This function is used to retrieve the details of an orderr from the webERP database."
-msgstr ""
+msgstr "This function is used hadi retrieve — maelezo ya an orderr kutoka — webERP database."
 
 #: api/includes/api_xml-rpc_definition.php:3577
 msgid "This function returns an array of order IDs, which may be integers or strings. "
-msgstr ""
+msgstr "This function returns an array ya agizo IDs, which may be integers or strings."
 
 #: api/includes/api_xml-rpc_definition.php:3645
 msgid "Returns (possibly translated) error text from error codes"
@@ -43364,11 +43364,11 @@ msgstr "Maagizo ya hivi karibuni ya kazi"
 
 #: doc/Manual/ManualAPIFunctions.php:33
 msgid "Method name"
-msgstr ""
+msgstr "Method jina"
 
 #: doc/Manual/ManualAPIFunctions.php:33
 msgid "  -  "
-msgstr ""
+msgstr "-"
 
 #: includes/Add_SerialItemsOut.php:21 includes/Add_SerialItems.php:41
 #: includes/Add_SerialItems.php:227 includes/Add_SerialItems.php:324
@@ -43447,25 +43447,25 @@ msgstr "Hati.pdf"
 #: includes/ConnectDB_mariadb.php:23 includes/ConnectDB_mysqli.php:23
 #: includes/ConnectDB_mysql.php:23
 msgid "to try logging in again"
-msgstr ""
+msgstr "hadi try logging katika again"
 
 #: includes/ConnectDB_mariadb.php:28 includes/ConnectDB_mysqli.php:28
 #: includes/ConnectDB_mysql.php:20
 msgid "The configuration in the file config.php for the database user name and password do not provide the information required to connect to the database server"
-msgstr ""
+msgstr "— configuration katika — file config.php kwa — database mtumiaji jina na password do not provide — information required hadi connect hadi — database server"
 
 #: includes/ConnectDB_mariadb.php:41 includes/ConnectDB_mariadb.php:48
 #: includes/ConnectDB_mysqli.php:41 includes/ConnectDB_mysqli.php:48
 #: includes/ConnectDB_mysql.php:37 includes/ConnectDB_mysql.php:44
 msgid "The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name"
-msgstr ""
+msgstr "— company jina entered does not correspond hadi a database kwenye — database server specified katika — config.php configuration file. Try logging katika na a different company jina"
 
 #: includes/ConnectDB_mariadb.php:42 includes/ConnectDB_mariadb.php:49
 #: includes/ConnectDB_mysqli.php:42 includes/ConnectDB_mysqli.php:49
 #: includes/ConnectDB_mysql.php:38 includes/ConnectDB_mysql.php:45
 #: includes/ConnectDB.php:16 includes/ConnectDB_postgres.php:34
 msgid "Back to login page"
-msgstr ""
+msgstr "Back hadi login page"
 
 #: includes/ConnectDB_mariadb.php:73 includes/ConnectDB_mysqli.php:73
 #: includes/ConnectDB_mysql.php:69 includes/ConnectDB_postgres.php:57
@@ -43475,142 +43475,142 @@ msgstr "Hitilafu imetokea katika kurejesha maelezo"
 #: includes/ConnectDB_mariadb.php:76 includes/ConnectDB_mysqli.php:76
 #: includes/ConnectDB_mysql.php:72
 msgid "Database Error"
-msgstr ""
+msgstr "Database Error"
 
 #: includes/ConnectDB_mariadb.php:87 includes/ConnectDB_mysqli.php:87
 #: includes/ConnectDB_mysql.php:83
 msgid "Error Rolling Back Transaction"
-msgstr ""
+msgstr "Error Rolling Back Muamala"
 
 #: includes/ConnectDB_mariadb.php:87 includes/ConnectDB_mysqli.php:87
 #: includes/ConnectDB_mysql.php:83
 msgid "Database Rollback Error"
-msgstr ""
+msgstr "Database Rollback Error"
 
 #: includes/ConnectDB_mariadb.php:89 includes/ConnectDB_mysqli.php:89
 #: includes/ConnectDB_mysql.php:85 includes/ConnectDB_postgres.php:73
 msgid "Rolling Back Transaction OK"
-msgstr ""
+msgstr "Rolling Back Muamala OK"
 
 #: includes/ConnectDB_mariadb.php:89 includes/ConnectDB_mysqli.php:89
 #: includes/ConnectDB_mysql.php:85 includes/ConnectDB_postgres.php:73
 msgid "Database Rollback Due to Error Above"
-msgstr ""
+msgstr "Database Rollback Due hadi Error Above"
 
 #: includes/ConnectDB_mariadb.php:188 includes/ConnectDB_mysqli.php:188
 #: includes/ConnectDB_mysql.php:182
 msgid "The system has just run the regular database administration and optimisation routine."
-msgstr ""
+msgstr "— system has just run — regular database administration na optimisation routine."
 
 #: includes/ConnectDB.php:15
 msgid "The company database being logged into cannot contain any of the illegal characters"
-msgstr ""
+msgstr "— company database being logged into cannot contain any ya — illegal characters"
 
 #: includes/ConnectDB.php:23
 msgid "The company name entered ("
-msgstr ""
+msgstr "— company jina entered ("
 
 #: includes/ConnectDB.php:24
 msgid "Check the company name entered ("
-msgstr ""
+msgstr "Check — company jina entered ("
 
 #: includes/ConnectDB.php:25
 msgid "The company name abbreviation entered at login must also have a company directory defined. See your system administrator"
-msgstr ""
+msgstr "— company jina abbreviation entered katika login must also have a company directory defined. See your system administrator"
 
 #: includes/ConnectDB_postgres.php:33
 msgid "The company name entered together with the configuration in the file config.php for the database user name and password do not provide the information required to connect to the database."
-msgstr ""
+msgstr "— company jina entered together na — configuration katika — file config.php kwa — database mtumiaji jina na password do not provide — information required hadi connect hadi — database."
 
 #: includes/ConnectDB_postgres.php:33
 msgid " Try logging in with an alternative company name."
-msgstr ""
+msgstr "Try logging katika na an alternative company jina."
 
 #: includes/ConnectDB_postgres.php:60
 msgid "DB ERROR:"
-msgstr ""
+msgstr "DB ERROR:"
 
 #: includes/ConnectDB_postgres.php:71
 msgid "Error Rolling Back Transaction!!"
-msgstr ""
+msgstr "Error Rolling Back Muamala!!"
 
 #: includes/ConnectDB_postgres.php:71
 msgid "DB Database Rollback Error"
-msgstr ""
+msgstr "DB Database Rollback Error"
 
 #: includes/ConnectDB_postgres.php:156
 msgid "The system has just run the regular database administration and optimisation routine"
-msgstr ""
+msgstr "— system has just run — regular database administration na optimisation routine"
 
 #: includes/ConstructSQLForUserDefinedSalesReport.php:144
 msgid "The report does not have any output columns"
-msgstr ""
+msgstr "— ripoti does not have any output columns"
 
 #: includes/ConstructSQLForUserDefinedSalesReport.php:144
 msgid "You need to set up the data columns that you wish to show in the report"
-msgstr ""
+msgstr "Ripoti ya You need hadi set up — data columns that you wish hadi show katika —"
 
 #: includes/ConstructSQLForUserDefinedSalesReport.php:144
 msgid "No Columns"
-msgstr ""
+msgstr "No Columns"
 
 #: includes/ConstructSQLForUserDefinedSalesReport.php:145
 msgid "Enter Columns for this report"
-msgstr ""
+msgstr "Ripoti ya Enter Columns kwa this"
 
 #: includes/ConstructSQLForUserDefinedSalesReport.php:152
 msgid "The report cannot have more than 10 columns in it"
-msgstr ""
+msgstr "— ripoti cannot have more than 10 columns katika it"
 
 #: includes/ConstructSQLForUserDefinedSalesReport.php:152
 msgid "Please delete one or more columns before attempting to run it"
-msgstr ""
+msgstr "Please futa one or more columns before attempting hadi run it"
 
 #: includes/ConstructSQLForUserDefinedSalesReport.php:152
 msgid "Too Many Columns"
-msgstr ""
+msgstr "Too Many Columns"
 
 #: includes/ConstructSQLForUserDefinedSalesReport.php:153
 #: includes/ConstructSQLForUserDefinedSalesReport.php:231
 msgid "Maintain Columns for this report"
-msgstr ""
+msgstr "Ripoti ya Maintain Columns kwa this"
 
 #: includes/ConstructSQLForUserDefinedSalesReport.php:230
 #: includes/ConstructSQLForUserDefinedSalesReport.php:255
 msgid "Calculated fields must use columns defined in the report specification"
-msgstr ""
+msgstr "Calculated fields must use columns defined katika — ripoti specification"
 
 #: includes/ConstructSQLForUserDefinedSalesReport.php:230
 msgid "The numerator column number entered for this calculation is not defined in the report"
-msgstr ""
+msgstr "Ripoti ya — numerator column nambari entered kwa this calculation is not defined katika —"
 
 #: includes/ConstructSQLForUserDefinedSalesReport.php:230
 msgid "Calculation With Undefined Column"
-msgstr ""
+msgstr "Calculation Na Undefined Column"
 
 #: includes/ConstructSQLForUserDefinedSalesReport.php:255
 msgid "The denominator column number entered for this calculation is not defined in the report"
-msgstr ""
+msgstr "Ripoti ya — denominator column nambari entered kwa this calculation is not defined katika —"
 
 #: includes/ConstructSQLForUserDefinedSalesReport.php:255
 msgid "Calculation With Undefined Denominator"
-msgstr ""
+msgstr "Calculation Na Undefined Denominator"
 
 #: includes/ConstructSQLForUserDefinedSalesReport.php:295
 msgid "There was a problem running the SQL to retrieve the sales analysis information"
-msgstr ""
+msgstr "There was a problem running — SQL hadi retrieve — mauzo uchambuzi information"
 
 #: includes/ConstructSQLForUserDefinedSalesReport.php:301
 msgid "The user defined sales analysis SQL did not return any rows"
-msgstr ""
+msgstr "— mtumiaji defined mauzo uchambuzi SQL did not return any rows"
 
 #: includes/ConstructSQLForUserDefinedSalesReport.php:301
 msgid "have another look at the criteria specified"
-msgstr ""
+msgstr "have nyingine look katika — criteria specified"
 
 #: includes/ConstructSQLForUserDefinedSalesReport.php:301
 msgid "Nothing To Report"
-msgstr ""
+msgstr "Ripoti ya Nothing Hadi"
 
 #: includes/Contract_Readin.php:30
 msgid "The contract cannot be retrieved because"
@@ -45250,23 +45250,23 @@ msgstr "Kushughulikia"
 
 #: includes/DateFunctions.php:411 includes/DateFunctions.php:464
 msgid "The date does not appear to be in a valid format. The date being converted from SQL format was:"
-msgstr ""
+msgstr "— tarehe does not appear hadi be katika a valid format. — tarehe being converted kutoka SQL format was:"
 
 #: includes/DateFunctions.php:1243
 msgid "An error occurred in adding a new period number"
-msgstr ""
+msgstr "An error occurred katika adding a mpya kipindi nambari"
 
 #: includes/DateFunctions.php:1248
 msgid "An error occurred in adding a new period number to the gltotals table"
-msgstr ""
+msgstr "An error occurred katika adding a mpya kipindi nambari hadi — gltotals table"
 
 #: includes/DateFunctions.php:1319
 msgid "Could not insert first period"
-msgstr ""
+msgstr "Could not insert first kipindi"
 
 #: includes/DateFunctions.php:1320
 msgid "Could not insert second period"
-msgstr ""
+msgstr "Could not insert second kipindi"
 
 #: includes/DefineCartClass.php:223
 msgid "The order line number"
@@ -45407,11 +45407,11 @@ msgstr "Hitilafu katika kufuta kipengee"
 
 #: includes/EDIVariableSubstitution.php:21
 msgid "The variable"
-msgstr ""
+msgstr "— variable"
 
 #: includes/EDIVariableSubstitution.php:21
 msgid "is set to"
-msgstr ""
+msgstr "is set hadi"
 
 #: includes/footer.php:37 includes/MiscFunctions.php:51
 msgid "INFORMATION"
@@ -45431,11 +45431,11 @@ msgstr "toleo"
 
 #: includes/FreightCalculation.php:71
 msgid "The freight calculation for the destination city cannot be performed because"
-msgstr ""
+msgstr "— freight calculation kwa — destination city cannot be performed because"
 
 #: includes/GenPickingListHeader.php:13
 msgid "Pick List-NOT USED FOR SHIPMENT"
-msgstr ""
+msgstr "Pick List-NOT USED Kwa SHIPMENT"
 
 #: includes/GenPickingListHeader.php:53 includes/PDFPickingListHeader.php:52
 #: includes/PDFSalesOrder_generic.php:58
@@ -45445,19 +45445,19 @@ msgstr "Mteja No."
 #: includes/GenPickingListHeader.php:54 includes/PDFPickingListHeader.php:53
 #: includes/PDFSalesOrder_generic.php:59
 msgid "Shipped by"
-msgstr ""
+msgstr "Shipped na"
 
 #: includes/GenPickingListHeader.php:83
 msgid "Open Quantity"
-msgstr ""
+msgstr "Open Kiasi"
 
 #: includes/GenPickingListHeader.php:85 includes/PDFPickingListHeader.php:78
 msgid "Actual Picked"
-msgstr ""
+msgstr "Actual Picked"
 
 #: includes/GenPickingListHeader.php:98
 msgid "NOT A PACKING LIST.      DO NOT USE FOR SHIPMENT.      DRIVER DO NOT ACCEPT"
-msgstr ""
+msgstr "NOT A PACKING LIST. DO NOT USE Kwa SHIPMENT. DRIVER DO NOT ACCEPT"
 
 #: includes/GetConfig.php:10
 msgid "Could not get the configuration parameters from the database because"
@@ -45481,7 +45481,7 @@ msgstr "TATIZO MUHIMU"
 
 #: includes/GetPrice.php:22
 msgid "There is a problem in retrieving the pricing information for part"
-msgstr ""
+msgstr "There is a problem katika retrieving — pricing information kwa part"
 
 #: includes/GetPrice.php:22
 msgid "and for Customer"
@@ -45489,39 +45489,39 @@ msgstr "and for Mteja"
 
 #: includes/GetPrice.php:22
 msgid "the error message returned by the SQL server was"
-msgstr ""
+msgstr "— error message returned na — SQL server was"
 
 #: includes/GetPrice.php:89
 msgid "There is an error to retrieve price from price matrix for stock"
-msgstr ""
+msgstr "There is an error hadi retrieve bei kutoka bei matrix kwa akiba"
 
 #: includes/GetPrice.php:89
 msgid "and the error message returned by SQL server is "
-msgstr ""
+msgstr "na — error message returned na SQL server is"
 
 #: includes/GetPrice.php:100
 msgid "Failed to retrieve price from price matrix"
-msgstr ""
+msgstr "Failed hadi retrieve bei kutoka bei matrix"
 
 #: includes/GetPrice.php:108
 msgid "There are no prices set up for"
-msgstr ""
+msgstr "There are no prices set up kwa"
 
 #: includes/GetSalesTransGLCodes.php:10
 msgid "Can not retrieve the cost of sales GL code because"
-msgstr ""
+msgstr "Can not retrieve — cost ya mauzo GL msimbo because"
 
 #: includes/GetSalesTransGLCodes.php:122
 msgid "Could not determine the correct general ledger account to use for posting the cost of this sale. Go to the setup menu and define appropriate COGS (Cost Of Goods Sold) accounts. To enable this invoice to be posted it has been posted to default sales and COGS - account number 1"
-msgstr ""
+msgstr "Could not determine — correct general ledger akaunti hadi use kwa posting — cost ya this sale. Go hadi — setup menu na define appropriate COGS (Cost Ya Goods Sold) akaunti. Hadi enable this ankara hadi be posted it has been posted hadi chaguo-msingi mauzo na COGS - akaunti nambari 1"
 
 #: includes/GetSalesTransGLCodes.php:151
 msgid "There was a problem retrieving the sales general ledger code because"
-msgstr ""
+msgstr "There was a problem retrieving — mauzo general ledger msimbo because"
 
 #: includes/GetSalesTransGLCodes.php:268
 msgid "Could not determine the correct general ledger account to use for posting this sale to. Go to the setup menu and define appropriate Sale GL Posting accounts. To enable this invoice to be posted it has been posted to default sales and COGS - account number 1"
-msgstr ""
+msgstr "Could not determine — correct general ledger akaunti hadi use kwa posting this sale hadi. Go hadi — setup menu na define appropriate Sale GL Posting akaunti. Hadi enable this ankara hadi be posted it has been posted hadi chaguo-msingi mauzo na COGS - akaunti nambari 1"
 
 #: includes/GLFunctions.php:23
 msgid "Cannot insert a GL tag for the journal line because"
@@ -45716,204 +45716,204 @@ msgstr "Mwisho:"
 
 #: includes/InstallFunctions.php:41
 msgid "A default company logo has been generated"
-msgstr ""
+msgstr "A chaguo-msingi company logo has been generated"
 
 #: includes/InstallFunctions.php:43
 msgid "Failed generating default company logo."
-msgstr ""
+msgstr "Failed generating chaguo-msingi company logo."
 
 #: includes/InstallFunctions.php:70
 msgid "Logo file is not an image."
-msgstr ""
+msgstr "Logo file is not an image."
 
 #: includes/InstallFunctions.php:77
 msgid "Sorry, logo file already exists."
-msgstr ""
+msgstr "Sorry, logo file already exists."
 
 #: includes/InstallFunctions.php:83
 msgid "Sorry, your logo file is too large."
-msgstr ""
+msgstr "Sorry, your logo file is too large."
 
 #: includes/InstallFunctions.php:89
 msgid "Sorry, only JPG, JPEG, PNG & GIF logo files are allowed."
-msgstr ""
+msgstr "Sorry, only JPG, JPEG, PNG & GIF logo files are allowed."
 
 #: includes/InstallFunctions.php:95
 msgid "Sorry, your logo file was not uploaded."
-msgstr ""
+msgstr "Sorry, your logo file was not uploaded."
 
 #: includes/InstallFunctions.php:99
 msgid "Your logo has been successfully uploaded"
-msgstr ""
+msgstr "Your logo has been successfully uploaded"
 
 #: includes/InstallFunctions.php:101
 msgid "Your logo could not be uploaded. You must copy this to your companies directory later."
-msgstr ""
+msgstr "Your logo could not be uploaded. You must nakili this hadi your companies directory later."
 
 #: includes/InstallFunctions.php:119
 msgid "Unable to connect to the database to create the schema."
-msgstr ""
+msgstr "Unable hadi connect hadi — database hadi unda — schema."
 
 #: includes/InstallFunctions.php:134
 msgid "Failed to check for the available database character sets."
-msgstr ""
+msgstr "Failed hadi check kwa — available database character sets."
 
 #: includes/InstallFunctions.php:155
 msgid "Failed setting the database connection character set to"
-msgstr ""
+msgstr "Failed setting — database connection character set hadi"
 
 #: includes/InstallFunctions.php:171
 msgid "Failed to check for the presence of the database schema."
-msgstr ""
+msgstr "Failed hadi check kwa — presence ya — database schema."
 
 #: includes/InstallFunctions.php:188
 msgid "Failed creating the database"
-msgstr ""
+msgstr "Failed creating — database"
 
 #: includes/InstallFunctions.php:197
 msgid "Failed enumerating existing database tables"
-msgstr ""
+msgstr "Failed enumerating existing database tables"
 
 #: includes/InstallFunctions.php:215
 msgid "Would overwrite "
-msgstr ""
+msgstr "Would overwrite"
 
 #: includes/InstallFunctions.php:218
 msgid "Found"
-msgstr ""
+msgstr "Found"
 
 #: includes/InstallFunctions.php:218
 msgid "unrelated tables in the existing schema"
-msgstr ""
+msgstr "unrelated tables katika — existing schema"
 
 #: includes/InstallFunctions.php:225
 msgid "Unable to create the database schema."
-msgstr ""
+msgstr "Unable hadi unda — database schema."
 
 #: includes/InstallFunctions.php:244
 msgid "The company config directory can not be created as a file exists at its place"
-msgstr ""
+msgstr "— company config directory can not be created as a file exists katika its place"
 
 #: includes/InstallFunctions.php:252
 msgid "The company config directory exists and is not empty"
-msgstr ""
+msgstr "— company config directory exists na is not empty"
 
 #: includes/InstallFunctions.php:278
 msgid "The company config directory has been successfully created"
-msgstr ""
+msgstr "— company config directory has been successfully created"
 
 #: includes/InstallFunctions.php:280
 msgid "The company config directory was not created successfully"
-msgstr ""
+msgstr "— company config directory was not created successfully"
 
 #: includes/InstallFunctions.php:323
 msgid "Database tables could not be created"
-msgstr ""
+msgstr "Database tables could not be created"
 
 #: includes/InstallFunctions.php:325
 msgid "All database tables have been created"
-msgstr ""
+msgstr "All database tables have been created"
 
 #: includes/InstallFunctions.php:370 includes/InstallFunctions.php:613
 msgid "Administrator"
-msgstr ""
+msgstr "Administrator"
 
 #: includes/InstallFunctions.php:397
 msgid "The admin user has been inserted"
-msgstr ""
+msgstr "— admin mtumiaji has been inserted"
 
 #: includes/InstallFunctions.php:400 includes/InstallFunctions.php:643
 msgid "There was an error inserting the admin user"
-msgstr ""
+msgstr "There was an error inserting — admin mtumiaji"
 
 #: includes/InstallFunctions.php:441
 msgid "Your chosen chart of accounts could not be uploaded"
-msgstr ""
+msgstr "Your chosen chart ya akaunti could not be uploaded"
 
 #: includes/InstallFunctions.php:453
 msgid "Your chosen chart of accounts has been uploaded"
-msgstr ""
+msgstr "Your chosen chart ya akaunti has been uploaded"
 
 #: includes/InstallFunctions.php:459
 msgid "The admin user has been given permissions on all GL accounts"
-msgstr ""
+msgstr "— admin mtumiaji has been given permissions kwenye all GL akaunti"
 
 #: includes/InstallFunctions.php:462
 msgid "There was an error with creating permission for the admin user"
-msgstr ""
+msgstr "There was an error na creating permission kwa — admin mtumiaji"
 
 #: includes/InstallFunctions.php:469
 msgid "The default GL tag has been inserted"
-msgstr ""
+msgstr "— chaguo-msingi GL tag has been inserted"
 
 #: includes/InstallFunctions.php:472
 msgid "There was an error inserting the default GL tag"
-msgstr ""
+msgstr "There was an error inserting — chaguo-msingi GL tag"
 
 #: includes/InstallFunctions.php:487
 msgid "Database tables could not be populated"
-msgstr ""
+msgstr "Database tables could not be populated"
 
 #: includes/InstallFunctions.php:489
 msgid "All database tables have been populated"
-msgstr ""
+msgstr "All database tables have been populated"
 
 #: includes/InstallFunctions.php:498 includes/InstallFunctions.php:572
 msgid "The database update revision has been inserted"
-msgstr ""
+msgstr "— database sasisha revision has been inserted"
 
 #: includes/InstallFunctions.php:501 includes/InstallFunctions.php:538
 #: includes/InstallFunctions.php:575
 msgid "There was an error inserting the DB revision number"
-msgstr ""
+msgstr "There was an error inserting — DB revision nambari"
 
 #: includes/InstallFunctions.php:535
 msgid "The company record has been inserted"
-msgstr ""
+msgstr "— company record has been inserted"
 
 #: includes/InstallFunctions.php:545
 msgid "Populating the database with demo data."
-msgstr ""
+msgstr "Populating — database na demo data."
 
 #: includes/InstallFunctions.php:552
 msgid "There was an error populating the database with demo data"
-msgstr ""
+msgstr "There was an error populating — database na demo data"
 
 #: includes/InstallFunctions.php:563
 msgid "There was an error updating the FirstLogIn setting"
-msgstr ""
+msgstr "There was an error updating — FirstLogIn setting"
 
 #: includes/InstallFunctions.php:640
 msgid "The admin user has been inserted."
-msgstr ""
+msgstr "— admin mtumiaji has been inserted."
 
 #: includes/InstallFunctions.php:649
 msgid "Database now contains the demo data."
-msgstr ""
+msgstr "Database now contains — demo data."
 
 #: includes/InstallFunctions.php:740
 msgid "Database triggers could not be created"
-msgstr ""
+msgstr "Database triggers could not be created"
 
 #: includes/InstallFunctions.php:742
 msgid "All database triggers have been created"
-msgstr ""
+msgstr "All database triggers have been created"
 
 #: includes/InstallFunctions.php:756
 msgid "The sample configuration file does not exist."
-msgstr ""
+msgstr "— sample configuration file does not exist."
 
 #: includes/InstallFunctions.php:792
 msgid "Unable to read the sample configuration file."
-msgstr ""
+msgstr "Unable hadi read — sample configuration file."
 
 #: includes/InstallFunctions.php:799
 msgid "The configuration file exists and has not been overwritten"
-msgstr ""
+msgstr "— configuration file exists na has not been overwritten"
 
 #: includes/InstallFunctions.php:809
 msgid "The config.php file has been created based on your settings"
-msgstr ""
+msgstr "— config.php file has been created based kwenye your settings"
 
 #: includes/InstallFunctions.php:811
 msgid "Cannot write to the configuration file"
@@ -45921,15 +45921,15 @@ msgstr "Haiwezi kuandika kwa faili ya usanidi"
 
 #: includes/InstallFunctions.php:840
 msgid "The Companies.php file already exists"
-msgstr ""
+msgstr "— Companies.php file already exists"
 
 #: includes/InstallFunctions.php:844
 msgid "The Companies.php file has been created"
-msgstr ""
+msgstr "— Companies.php file has been created"
 
 #: includes/InstallFunctions.php:846
 msgid "Could not write the Companies.php file"
-msgstr ""
+msgstr "Could not write — Companies.php file"
 
 #: includes/LoginFunctions.php:44
 msgid "Could not retrieve user details on login because"
@@ -45965,7 +45965,7 @@ msgstr "na nenosiri"
 
 #: includes/Login.php:9
 msgid "weberp"
-msgstr ""
+msgstr "weberp"
 
 #: includes/Login.php:11
 msgid "Please login here"
@@ -46038,83 +46038,83 @@ msgstr "Robo Inayofuata"
 
 #: includes/MiscFunctions.php:814
 msgid "Email has been sent."
-msgstr ""
+msgstr "Email has been sent."
 
 #: includes/MiscFunctions.php:816
 msgid "Unknown error"
-msgstr ""
+msgstr "Unknown error"
 
 #: includes/MiscFunctions.php:817
 msgid "Email not sent. An error was encountered: "
-msgstr ""
+msgstr "Email not sent. An error was encountered:"
 
 #: includes/MiscFunctions.php:927
 msgid "in file"
-msgstr ""
+msgstr "katika file"
 
 #: includes/MiscFunctions.php:927
 msgid "on line"
-msgstr ""
+msgstr "kwenye line"
 
 #: includes/MiscFunctions.php:928
 msgid "Database SQL Failure"
-msgstr ""
+msgstr "Database SQL Failure"
 
 #: includes/MiscFunctions.php:932
 msgid "Function Call Stack"
-msgstr ""
+msgstr "Function Call Stack"
 
 #: includes/MiscFunctions.php:934
 msgid "Frame"
-msgstr ""
+msgstr "Frame"
 
 #: includes/MiscFunctions.php:935
 msgid "File"
-msgstr ""
+msgstr "File"
 
 #: includes/MiscFunctions.php:936 reportwriter/languages/en_US/reports.php:274
 msgid "Line"
-msgstr ""
+msgstr "Line"
 
 #: includes/MiscFunctions.php:937
 msgid "Function"
-msgstr ""
+msgstr "Function"
 
 #: includes/MiscFunctions.php:938
 msgid "Class"
-msgstr ""
+msgstr "Class"
 
 #: includes/MiscFunctions.php:939
 msgid "Arguments"
-msgstr ""
+msgstr "Arguments"
 
 #: includes/PDFGLJournalHeader.php:11
 msgid "Journal number "
-msgstr ""
+msgstr "Journal nambari"
 
 #: includes/PDFGLJournalHeader.php:12
 msgid "Journal Date "
-msgstr ""
+msgstr "Journal Tarehe"
 
 #: includes/PDFGLJournalHeader.php:23
 msgid "Tag Details"
-msgstr ""
+msgstr "Maelezo ya Tag"
 
 #: includes/PDFGrnHeader.php:20
 msgid "GRN number "
-msgstr ""
+msgstr "GRN nambari"
 
 #: includes/PDFGrnHeader.php:22
 msgid "PO number "
-msgstr ""
+msgstr "PO nambari"
 
 #: includes/PDFGrnHeader.php:32
 msgid "Date Recd"
-msgstr ""
+msgstr "Tarehe Recd"
 
 #: includes/PDFGrnHeader.php:35
 msgid "Qty in Suppliers UOM"
-msgstr ""
+msgstr "Qty katika Wauzaji UOM"
 
 #: includes/PDFGrnHeader.php:36
 msgid "Qty in Stock UOM"
@@ -46130,15 +46130,15 @@ msgstr "Payment Run (Print Only) For Mzabuni Codes between"
 
 #: includes/PDFPaymentRunPageHeader.php:26
 msgid "And Only Suppliers Trading in"
-msgstr ""
+msgstr "Na Only Wauzaji Trading katika"
 
 #: includes/PDFPaymentRunPageHeader.php:41
 msgid "Due"
-msgstr ""
+msgstr "Due"
 
 #: includes/PDFPaymentRunPageHeader.php:42
 msgid "Ex Diff"
-msgstr ""
+msgstr "Ex Diff"
 
 #: includes/PDFPaymentRun_PymtFooter.php:9
 msgid "Total Due For"
@@ -46173,19 +46173,19 @@ msgstr "Hakuna malipo yoyote yatakayochakatwa tangu leja ya jumla ichapishwe kwa
 
 #: includes/PDFPickingListHeader.php:76 includes/PDFSalesOrder_generic.php:97
 msgid "This Del"
-msgstr ""
+msgstr "This Del"
 
 #: includes/PDFPickingListHeader.php:77 includes/PDFSalesOrder_generic.php:98
 msgid "Prev Dels"
-msgstr ""
+msgstr "Prev Dels"
 
 #: includes/PDFProdSpecHeader.php:27
 msgid "Technical Data Sheet"
-msgstr ""
+msgstr "Technical Data Sheet"
 
 #: includes/PDFSalesAnalysis.php:458
 msgid "GRAND TOTAL"
-msgstr ""
+msgstr "GRAND Jumla"
 
 #: includes/PDFSalesOrder_generic.php:18
 msgid "Customer Copy"
@@ -46193,23 +46193,23 @@ msgstr "Mteja Copy"
 
 #: includes/PDFSalesOrder_generic.php:19 includes/PDFSalesOrder_generic.php:22
 msgid "This is not an invoice"
-msgstr ""
+msgstr "This is not an ankara"
 
 #: includes/PDFSalesOrder_generic.php:21
 msgid "Office Copy"
-msgstr ""
+msgstr "Office Nakili"
 
 #: includes/PDFSalesOrder_generic.php:78
 msgid "Your Ref"
-msgstr ""
+msgstr "Your Ref"
 
 #: includes/PDFStockLocTransferHeader.php:66
 msgid "Qty Shipped"
-msgstr ""
+msgstr "Qty Shipped"
 
 #: includes/PDFStockNegativesHeader.php:16
 msgid "Negative Stocks Listing"
-msgstr ""
+msgstr "Orodha ya Negative Stocks"
 
 #: includes/PDFStockTransferHeader.php:15
 msgid "Stock transfer number "
@@ -46217,15 +46217,15 @@ msgstr "Hisa transfer number "
 
 #: includes/PDFStockTransferHeader.php:38
 msgid "Transfer To"
-msgstr ""
+msgstr "Transfer Hadi"
 
 #: includes/PDFTopItemsHeader.php:28
 msgid "Search On Location"
-msgstr ""
+msgstr "Tafuta Kwenye Eneo"
 
 #: includes/PDFTopItemsHeader.php:31
 msgid "Number Of Items"
-msgstr ""
+msgstr "Nambari Ya Items"
 
 #: includes/PDFTopItemsHeader.php:35
 msgid "Top Items Sales Search Result"
@@ -46233,51 +46233,51 @@ msgstr "Top Items Mauzo Search Result"
 
 #: includes/PDFTopItemsHeader.php:53
 msgid "Total Inv"
-msgstr ""
+msgstr "Jumla Inv"
 
 #: includes/PO_ReadInOrder.php:165
 msgid "The lines on the purchase order cannot be retrieved because"
-msgstr ""
+msgstr "— lines kwenye — ununuzi agizo cannot be retrieved because"
 
 #: includes/SelectOrderItems_IntoCart.php:25
 msgid "is already on this order the system is set up to prevent the same item being on the order more than once. However you can change the quantity ordered of the existing line if necessary"
-msgstr ""
+msgstr "is already kwenye this agizo — system is set up hadi prevent — same kipengele being kwenye — agizo more than once. However you can change — kiasi ordered ya — existing line if necessary"
 
 #: includes/SelectOrderItems_IntoCart.php:53
 msgid "The details for"
-msgstr ""
+msgstr "— maelezo kwa"
 
 #: includes/SelectOrderItems_IntoCart.php:57
 msgid "could not be found in the database"
-msgstr ""
+msgstr "could not be found katika — database"
 
 #: includes/SelectOrderItems_IntoCart.php:57
 msgid "it has not been added to the order"
-msgstr ""
+msgstr "it has not been added hadi — agizo"
 
 #: includes/SelectOrderItems_IntoCart.php:57
 msgid "Item Does Not Exist"
-msgstr ""
+msgstr "Kipengele Does Not Exist"
 
 #: includes/SelectOrderItems_IntoCart.php:62
 msgid "could not be added to the order because it has been flagged as obsolete"
-msgstr ""
+msgstr "could not be added hadi — agizo because it has been flagged as obsolete"
 
 #: includes/SelectOrderItems_IntoCart.php:62
 msgid "Obsolete Item"
-msgstr ""
+msgstr "Obsolete Kipengele"
 
 #: includes/SelectOrderItems_IntoCart.php:180
 msgid "Sell through support available and applied of"
-msgstr ""
+msgstr "Sell through support available na applied ya"
 
 #: includes/SelectOrderItems_IntoCart.php:196
 msgid "No more lines can be added to this order the customer account is currently at or over their credit limit"
-msgstr ""
+msgstr "No more lines can be added hadi this agizo — mteja akaunti is currently katika or over their mkopo limit"
 
 #: includes/SelectOrderItems_IntoCart.php:236
 msgid "does not have a cost set up and order entry is set up to prohibit sales of items with no cost data entered"
-msgstr ""
+msgstr "does not have a cost set up na agizo entry is set up hadi prohibit mauzo ya items na no cost data entered"
 
 #: includes/session.php:139
 msgid "Failed to retrieve favorites"
@@ -46333,107 +46333,107 @@ msgstr "Fomu hii haikuwasilishwa ikiwa na kitambulisho sahihi"
 
 #: includes/SQL_CommonFunctions.php:19
 msgid "The transaction number could not be incremented"
-msgstr ""
+msgstr "— muamala nambari could not be incremented"
 
 #: includes/SQL_CommonFunctions.php:23
 msgid "The next transaction number could not be retrieved from the database because"
-msgstr ""
+msgstr "— next muamala nambari could not be retrieved kutoka — database because"
 
 #: includes/SQL_CommonFunctions.php:43
 msgid "The stock GL codes could not be retrieved because"
-msgstr ""
+msgstr "— akiba GL codes could not be retrieved because"
 
 #: includes/SQL_CommonFunctions.php:60
 msgid "The tax rate for this item could not be retrieved because"
-msgstr ""
+msgstr "— kodi kiwango kwa this kipengele could not be retrieved because"
 
 #: includes/SQL_CommonFunctions.php:90
 msgid "The taxes and rate for this tax group could not be retrieved because"
-msgstr ""
+msgstr "— taxes na kiwango kwa this kodi kikundi could not be retrieved because"
 
 #: includes/SQL_CommonFunctions.php:121
 msgid "The current account balance of the customer could not be retrieved because"
-msgstr ""
+msgstr "— current akaunti mizani ya — mteja could not be retrieved because"
 
 #: includes/SQL_CommonFunctions.php:147
 msgid "The value of outstanding orders for the customer could not be retrieved because"
-msgstr ""
+msgstr "— thamani ya outstanding maagizo kwa — mteja could not be retrieved because"
 
 #: includes/SQL_CommonFunctions.php:355
 msgid "The general ledger entries created do not balance. See your system administrator"
-msgstr ""
+msgstr "— general ledger entries created do not mizani. See your system administrator"
 
 #: includes/SQL_CommonFunctions.php:407
 msgid "The create of the qasamples record failed"
-msgstr ""
+msgstr "— unda ya — qasamples record failed"
 
 #: includes/SQL_CommonFunctions.php:429
 msgid "The create of the sampleresults record failed"
-msgstr ""
+msgstr "— unda ya — sampleresults record failed"
 
 #: includes/StockFunctions.php:38
 msgid "The quantity on hand for this product in all locations cannot be retrieved because"
-msgstr ""
+msgstr "— kiasi kwenye hand kwa this bidhaa katika all locations cannot be retrieved because"
 
 #: includes/StockFunctions.php:47
 msgid "The quantity on hand for this product in all locations the user can view cannot be retrieved because"
-msgstr ""
+msgstr "— kiasi kwenye hand kwa this bidhaa katika all locations — mtumiaji can angalia cannot be retrieved because"
 
 #: includes/StockFunctions.php:56
 msgid "The quantity on hand for this product in locations the user can update cannot be retrieved because"
-msgstr ""
+msgstr "— kiasi kwenye hand kwa this bidhaa katika locations — mtumiaji can sasisha cannot be retrieved because"
 
 #: includes/StockFunctions.php:62
 msgid "The quantity on hand for this product in the specified location cannot be retrieved because"
-msgstr ""
+msgstr "— kiasi kwenye hand kwa this bidhaa katika — specified eneo cannot be retrieved because"
 
 #: includes/StockFunctions.php:152 includes/StockFunctions.php:156
 msgid "The quantity on order due to purchase orders for"
-msgstr ""
+msgstr "— kiasi kwenye agizo due hadi ununuzi maagizo kwa"
 
 #: includes/StockFunctions.php:152 includes/StockFunctions.php:206
 msgid "to be received into all locations cannot be retrieved because"
-msgstr ""
+msgstr "hadi be received into all locations cannot be retrieved because"
 
 #: includes/StockFunctions.php:156 includes/StockFunctions.php:210
 msgid "to be received into"
-msgstr ""
+msgstr "hadi be received into"
 
 #: includes/StockFunctions.php:206 includes/StockFunctions.php:210
 msgid "The quantity on order due to work orders for"
-msgstr ""
+msgstr "— kiasi kwenye agizo due hadi work maagizo kwa"
 
 #: includes/StockFunctions.php:260
 msgid "The quantity demanded for this product in all locations cannot be retrieved because"
-msgstr ""
+msgstr "— kiasi demanded kwa this bidhaa katika all locations cannot be retrieved because"
 
 #: includes/StockFunctions.php:269
 msgid "The quantity demanded for this product in all locations the user can view cannot be retrieved because"
-msgstr ""
+msgstr "— kiasi demanded kwa this bidhaa katika all locations — mtumiaji can angalia cannot be retrieved because"
 
 #: includes/StockFunctions.php:278
 msgid "The quantity demanded for this product in locations the user can update cannot be retrieved because"
-msgstr ""
+msgstr "— kiasi demanded kwa this bidhaa katika locations — mtumiaji can sasisha cannot be retrieved because"
 
 #: includes/StockFunctions.php:284
 msgid "The quantity demanded for this product in the specified location cannot be retrieved because"
-msgstr ""
+msgstr "— kiasi demanded kwa this bidhaa katika — specified eneo cannot be retrieved because"
 
 #: includes/StockFunctions.php:335
 msgid "The quantity demanded for this product as a component in BOM in all locations cannot be retrieved because"
-msgstr ""
+msgstr "— kiasi demanded kwa this bidhaa as a component katika BOM katika all locations cannot be retrieved because"
 
 #: includes/StockFunctions.php:344
 msgid "The quantity demanded for this product as a component in BOM in all locations the user can view cannot be retrieved because"
-msgstr ""
+msgstr "— kiasi demanded kwa this bidhaa as a component katika BOM katika all locations — mtumiaji can angalia cannot be retrieved because"
 
 #: includes/StockFunctions.php:353
 msgid "The quantity demanded for this product as a component in BOM in locations the user can update cannot be retrieved because"
-msgstr ""
+msgstr "— kiasi demanded kwa this bidhaa as a component katika BOM katika locations — mtumiaji can sasisha cannot be retrieved because"
 
 #: includes/StockFunctions.php:359
 msgid "The quantity demanded for this product as a component in BOM in the specified location cannot be retrieved because"
-msgstr ""
+msgstr "— kiasi demanded kwa this bidhaa as a component katika BOM katika — specified eneo cannot be retrieved because"
 
 #: includes/StockFunctions.php:413
 msgid "The workorder component demand for this product cannot be retrieved because"
@@ -46445,19 +46445,19 @@ msgstr "Sehemu ya mpangilio wa kazi mahitaji ya bidhaa hii kutoka"
 
 #: includes/StockFunctions.php:423
 msgid "The quantity demanded for this product as a component in work orders in all locations cannot be retrieved because"
-msgstr ""
+msgstr "— kiasi demanded kwa this bidhaa as a component katika work maagizo katika all locations cannot be retrieved because"
 
 #: includes/StockFunctions.php:432
 msgid "The quantity demanded for this product as a component in work orders in all locations the user can view cannot be retrieved because"
-msgstr ""
+msgstr "— kiasi demanded kwa this bidhaa as a component katika work maagizo katika all locations — mtumiaji can angalia cannot be retrieved because"
 
 #: includes/StockFunctions.php:441
 msgid "The quantity demanded for this product as a component in work orders in locations the user can update cannot be retrieved because"
-msgstr ""
+msgstr "— kiasi demanded kwa this bidhaa as a component katika work maagizo katika locations — mtumiaji can sasisha cannot be retrieved because"
 
 #: includes/StockFunctions.php:447
 msgid "The quantity demanded for this product as a component in work orders in the specified location cannot be retrieved because"
-msgstr ""
+msgstr "— kiasi demanded kwa this bidhaa as a component katika work maagizo katika — specified eneo cannot be retrieved because"
 
 #: includes/UpgradeDB_mariadb.php:25 includes/UpgradeDB_mariadb.php:27
 #: includes/UpgradeDB_mariadb.php:30 includes/UpgradeDB_mysqli.php:25
@@ -46874,7 +46874,7 @@ msgstr "Sehemu ya kuongeza otomatiki kwenye jedwali"
 
 #: install/index.php:85
 msgid "WebERP Installation Wizard"
-msgstr ""
+msgstr "WebERP Installation Wizard"
 
 #: install/index.php:133
 msgid "Install"
@@ -46882,91 +46882,91 @@ msgstr "Sakinisha"
 
 #: install/index.php:138
 msgid "Restart webERP"
-msgstr ""
+msgstr "Restart webERP"
 
 #: install/index.php:143
 msgid "Restart the install wizard"
-msgstr ""
+msgstr "Restart — install wizard"
 
 #: install/pages/page_0.php:8
 msgid "Welcome to the webERP installer"
-msgstr ""
+msgstr "Welcome hadi — webERP installer"
 
 #: install/pages/page_0.php:117
 msgid "Language:"
-msgstr ""
+msgstr "Language:"
 
 #: install/pages/page_0.php:130
 msgid "For this installation to work, you need to be running PHP and mysql on your server"
-msgstr ""
+msgstr "Kwa this installation hadi work, you need hadi be running PHP na mysql kwenye your server"
 
 #: install/pages/page_0.php:132
 msgid "You will also need the following PHP extensions to be installed"
-msgstr ""
+msgstr "You will also need — following PHP extensions hadi be installed"
 
 #: install/pages/page_0.php:135
 msgid "A graphics extension"
-msgstr ""
+msgstr "A graphics extension"
 
 #: install/pages/page_0.php:136
 msgid "For translations to work"
-msgstr ""
+msgstr "Kwa translations hadi work"
 
 #: install/pages/page_0.php:137
 msgid "An extension to provide multi-byte string functionality"
-msgstr ""
+msgstr "An extension hadi provide multi-byte string functionality"
 
 #: install/pages/page_0.php:138
 msgid "Extension to provide connectivity with the database"
-msgstr ""
+msgstr "Extension hadi provide connectivity na — database"
 
 #: install/pages/page_0.php:139
 msgid "Used to decode xml files"
-msgstr ""
+msgstr "Used hadi decode xml files"
 
 #: install/pages/page_0.php:140
 msgid "For compression functionality"
-msgstr ""
+msgstr "Kwa compression functionality"
 
 #: install/pages/page_0.php:143
 msgid "These are all standard extensions, but if you are using an external web hosting company then check with them that they have the correct extensions installed."
-msgstr ""
+msgstr "These are all standard extensions, but if you are using an external web hosting company then check na them that they have — correct extensions installed."
 
 #: install/pages/page_1.php:24
 msgid "webERP is released under the GNU GPL v2 license"
-msgstr ""
+msgstr "webERP is released under — GNU GPL v2 license"
 
 #: install/pages/page_1.php:27
 msgid "I have read the license and agree to the terms and conditions within it"
-msgstr ""
+msgstr "I have read — license na agree hadi — terms na conditions within it"
 
 #: install/pages/page_2.php:8
 msgid "System Checks"
-msgstr ""
+msgstr "System Checks"
 
 #: install/pages/page_2.php:20
 msgid "Please set Cookies allowed in your web browser, otherwise webERP cannot run properly"
-msgstr ""
+msgstr "Please set Cookies allowed katika your web browser, otherwise webERP cannot run properly"
 
 #: install/pages/page_2.php:22
 msgid "Cookies are properly enabled in your browser"
-msgstr ""
+msgstr "Cookies are properly enabled katika your browser"
 
 #: install/pages/page_2.php:29
 msgid "You PHP version should be equal or greater than"
-msgstr ""
+msgstr "You PHP version should be equal or greater than"
 
 #: install/pages/page_2.php:31
 msgid "Your PHP version is suitable for webERP"
-msgstr ""
+msgstr "Your PHP version is suitable kwa webERP"
 
 #: install/pages/page_2.php:38
 msgid "The base webERP directory must be writable by the web server"
-msgstr ""
+msgstr "— base webERP directory must be writable na — web server"
 
 #: install/pages/page_2.php:40
 msgid "The base webERP directory is writable"
-msgstr ""
+msgstr "— base webERP directory is writable"
 
 #: install/pages/page_2.php:47
 msgid "The directory"
@@ -46974,11 +46974,11 @@ msgstr "Saraka"
 
 #: install/pages/page_2.php:47
 msgid "must be writable by the web server"
-msgstr ""
+msgstr "must be writable na — web server"
 
 #: install/pages/page_2.php:49
 msgid "The \"companies/\" directory is writable"
-msgstr ""
+msgstr "— \"companies/\" directory is writable"
 
 #: install/pages/page_2.php:61
 msgid "The GD extension should be installed in your PHP configuration"
@@ -46986,23 +46986,23 @@ msgstr "Kiendelezi cha GD kinapaswa kusakinishwa katika usanidi wako wa PHP"
 
 #: install/pages/page_2.php:63
 msgid "The GD extension is correctly installed"
-msgstr ""
+msgstr "— GD extension is correctly installed"
 
 #: install/pages/page_2.php:67
 msgid "The gettext extension is not available in your PHP"
-msgstr ""
+msgstr "— gettext extension is not available katika your PHP"
 
 #: install/pages/page_2.php:69
 msgid "The gettext extension is correctly installed"
-msgstr ""
+msgstr "— gettext extension is correctly installed"
 
 #: install/pages/page_2.php:76
 msgid "The mbstring extension is not available in your PHP"
-msgstr ""
+msgstr "— mbstring extension is not available katika your PHP"
 
 #: install/pages/page_2.php:78
 msgid "The mbstring extension is correctly installed"
-msgstr ""
+msgstr "— mbstring extension is correctly installed"
 
 #: install/pages/page_2.php:84
 msgid "The libxml extension is not available in your PHP"
@@ -47010,19 +47010,19 @@ msgstr "Kiendelezi cha libxml hakipatikani katika PHP yako"
 
 #: install/pages/page_2.php:86
 msgid "The libxml extension is correctly installed"
-msgstr ""
+msgstr "— libxml extension is correctly installed"
 
 #: install/pages/page_2.php:92
 msgid "You do not have the correct database extension installed for PHP (mysqli)"
-msgstr ""
+msgstr "You do not have — correct database extension installed kwa PHP (mysqli)"
 
 #: install/pages/page_2.php:94
 msgid "The database extension is correctly installed"
-msgstr ""
+msgstr "— database extension is correctly installed"
 
 #: install/pages/page_3.php:25
 msgid "Database connection working"
-msgstr ""
+msgstr "Database connection working"
 
 #: install/pages/page_3.php:40
 msgid "Database settings"
@@ -47030,15 +47030,15 @@ msgstr "Mipangilio ya hifadhidata"
 
 #: install/pages/page_3.php:42
 msgid "Please enter your database information below."
-msgstr ""
+msgstr "Please enter your database information below."
 
 #: install/pages/page_3.php:47
 msgid "DBMS Driver"
-msgstr ""
+msgstr "DBMS Driver"
 
 #: install/pages/page_3.php:62
 msgid "Select the Database Management System you are using"
-msgstr ""
+msgstr "Chagua — Database Management System you are using"
 
 #: install/pages/page_3.php:65
 msgid "Host Name"
@@ -47054,15 +47054,15 @@ msgstr "Kwa kawaida: localhost au 127.0.0.1"
 
 #: install/pages/page_3.php:70
 msgid "Database Port"
-msgstr ""
+msgstr "Database Port"
 
 #: install/pages/page_3.php:71
 msgid "The database port"
-msgstr ""
+msgstr "— database port"
 
 #: install/pages/page_3.php:72
 msgid "The port to use to connect to the database."
-msgstr ""
+msgstr "— port hadi use hadi connect hadi — database."
 
 #: install/pages/page_3.php:76
 msgid "The database name"
@@ -47070,7 +47070,7 @@ msgstr "Jina la hifadhidata"
 
 #: install/pages/page_3.php:77
 msgid "If your user name below does not have permissions to create a database then this database must be created and empty."
-msgstr ""
+msgstr "If your mtumiaji jina below does not have permissions hadi unda a database then this database must be created na empty."
 
 #: install/pages/page_3.php:81
 msgid "Database Prefix"
@@ -47078,7 +47078,7 @@ msgstr "Kiambishi awali cha Hifadhidata"
 
 #: install/pages/page_3.php:81
 msgid "Optional"
-msgstr ""
+msgstr "Optional"
 
 #: install/pages/page_3.php:82
 msgid "Useful with shared hosting"
@@ -47098,23 +47098,23 @@ msgstr "Jina halali la mtumiaji wa hifadhidata"
 
 #: install/pages/page_3.php:89
 msgid "If this user does not have permission to create databases, then the database entered above must exist and be empty."
-msgstr ""
+msgstr "If this mtumiaji does not have permission hadi unda databases, then — database entered above must exist na be empty."
 
 #: install/pages/page_3.php:93
 msgid "Database user password"
-msgstr ""
+msgstr "Database mtumiaji password"
 
 #: install/pages/page_3.php:94
 msgid "Enter the database user password if one exists"
-msgstr ""
+msgstr "Enter — database mtumiaji password if one exists"
 
 #: install/pages/page_3.php:98 install/pages/page_3.php:100
 msgid "Save details and test the connection"
-msgstr ""
+msgstr "Hifadhi maelezo na test — connection"
 
 #: install/pages/page_4.php:19
 msgid "Information saved successfully"
-msgstr ""
+msgstr "Information saved successfully"
 
 #: install/pages/page_4.php:24
 msgid "Administrator account settings"
@@ -47122,19 +47122,19 @@ msgstr "Mipangilio ya akaunti ya msimamizi"
 
 #: install/pages/page_4.php:26
 msgid "Please enter your administrator account details below."
-msgstr ""
+msgstr "Please enter your administrator akaunti maelezo below."
 
 #: install/pages/page_4.php:28
 msgid "The default user name is"
-msgstr ""
+msgstr "— chaguo-msingi mtumiaji jina is"
 
 #: install/pages/page_4.php:28
 msgid "which you can change below."
-msgstr ""
+msgstr "which you can change below."
 
 #: install/pages/page_4.php:38
 msgid "For example: admin@yoursite.com"
-msgstr ""
+msgstr "Kwa example: admin@yoursite.com"
 
 #: install/pages/page_4.php:45
 msgid "Re-enter Password"
@@ -47146,7 +47146,7 @@ msgstr "Mipangilio ya Kampuni"
 
 #: install/pages/page_5.php:23
 msgid "The full name of the company that you want to be used throughout webERP"
-msgstr ""
+msgstr "— full jina ya — company that you want hadi be used throughout webERP"
 
 #: install/pages/page_5.php:26
 msgid "Chart of Accounts"
@@ -47154,7 +47154,7 @@ msgstr "Chati ya Hesabu"
 
 #: install/pages/page_5.php:39
 msgid "Will be installed as starter Chart of Accounts. If installing the Demo data then this wont work and you will just get a standard set of accounts"
-msgstr ""
+msgstr "Will be installed as starter Chart ya Akaunti. If installing — Demo data then this wont work na you will just get a standard set ya akaunti"
 
 #: install/pages/page_5.php:49
 msgid "Time Zone"
@@ -47166,15 +47166,15 @@ msgstr "Faili ya nembo ya kampuni"
 
 #: install/pages/page_5.php:63
 msgid "A jpg file up to 10kb, and not greater than 170px x 80px"
-msgstr ""
+msgstr "A jpg file up hadi 10kb, na not greater than 170px x 80px"
 
 #: install/pages/page_5.php:64
 msgid "jpg/jpeg/png/gif files up to 10kb, and not greater than 170px x 80px"
-msgstr ""
+msgstr "jpg/jpeg/png/gif files up hadi 10kb, na not greater than 170px x 80px"
 
 #: install/pages/page_5.php:64
 msgid "If you do not select a file, the default webERP logo will be used"
-msgstr ""
+msgstr "If you do not chagua a file, — chaguo-msingi webERP logo will be used"
 
 #: install/pages/page_5.php:70
 msgid "Installation option"
@@ -47186,921 +47186,921 @@ msgstr "Sakinisha data ya onyesho?"
 
 #: install/pages/page_5.php:74
 msgid "webERP Demo site and data will be installed"
-msgstr ""
+msgstr "webERP Demo site na data will be installed"
 
 #: reportwriter/install/ReportListForm.php:14
 #: reportwriter/languages/en_US/reports.php:197
 msgid "Default Reports"
-msgstr ""
+msgstr "Chaguo-msingi Reports"
 
 #: reportwriter/install/ReportListLinks.php:14
 msgid "Standard Reports"
-msgstr ""
+msgstr "Standard Reports"
 
 #: reportwriter/languages/en_US/reports.php:11
 msgid "The name you entered is a default report. Please enter a new My Report name."
-msgstr ""
+msgstr "— jina you entered is a chaguo-msingi ripoti. Please enter a mpya My Ripoti jina."
 
 #: reportwriter/languages/en_US/reports.php:12
 msgid "This report name already exists! Press Replace to overwrite or enter a new name and press continue."
-msgstr ""
+msgstr "This ripoti jina already exists! Press Replace hadi overwrite or enter a mpya jina na press continue."
 
 #: reportwriter/languages/en_US/reports.php:13
 msgid "There is an error in your database selection. Check your database names and link equations."
-msgstr ""
+msgstr "There is an error katika your database selection. Check your database names na link equations."
 
 #: reportwriter/languages/en_US/reports.php:14
 msgid "There is an error in your database field or description. Please check and try again."
-msgstr ""
+msgstr "There is an error katika your database field or maelezo. Please check na try again."
 
 #: reportwriter/languages/en_US/reports.php:15
 msgid "There is an error in one of your data fields. Please check and try again."
-msgstr ""
+msgstr "There is an error katika one ya your data fields. Please check na try again."
 
 #: reportwriter/languages/en_US/reports.php:16
 msgid "A data field has been left empty located at sequence number: "
-msgstr ""
+msgstr "A data field has been left empty located katika sequence nambari:"
 
 #: reportwriter/languages/en_US/reports.php:17
 msgid "If you replace this report/form, the original report/form will be deleted!"
-msgstr ""
+msgstr "If you replace this report/form, — original report/form will be deleted!"
 
 #: reportwriter/languages/en_US/reports.php:18
 msgid "There was not any data in this report based on the criteria provided!"
-msgstr ""
+msgstr "There was not any data katika this ripoti based kwenye — criteria provided!"
 
 #: reportwriter/languages/en_US/reports.php:19
 msgid "You do not have any rows to show!"
-msgstr ""
+msgstr "You do not have any rows hadi show!"
 
 #: reportwriter/languages/en_US/reports.php:20
 msgid " was saved and copied to report: "
-msgstr ""
+msgstr "was saved na copied hadi ripoti:"
 
 #: reportwriter/languages/en_US/reports.php:21
 msgid "The report name has been updated!"
-msgstr ""
+msgstr "— ripoti jina has been updated!"
 
 #: reportwriter/languages/en_US/reports.php:22
 msgid "No form name was selected to perform this operation."
-msgstr ""
+msgstr "No form jina was selected hadi perform this operation."
 
 #: reportwriter/languages/en_US/reports.php:23
 msgid "No report or form was selected to perform this operation."
-msgstr ""
+msgstr "No ripoti or form was selected hadi perform this operation."
 
 #: reportwriter/languages/en_US/reports.php:24
 msgid "Either Report or Form type needs to be selected!"
-msgstr ""
+msgstr "Either Ripoti or Form aina needs hadi be selected!"
 
 #: reportwriter/languages/en_US/reports.php:25
 msgid "The name you entered is already in use. Please enter a new report name!"
-msgstr ""
+msgstr "— jina you entered is already katika use. Please enter a mpya ripoti jina!"
 
 #: reportwriter/languages/en_US/reports.php:26
 msgid "Press OK to delete this report."
-msgstr ""
+msgstr "Press OK hadi futa this ripoti."
 
 #: reportwriter/languages/en_US/reports.php:27
 msgid "Press OK to overwrite this report."
-msgstr ""
+msgstr "Press OK hadi overwrite this ripoti."
 
 #: reportwriter/languages/en_US/reports.php:29
 msgid "There are no fields to show!"
-msgstr ""
+msgstr "There are no fields hadi show!"
 
 #: reportwriter/languages/en_US/reports.php:30
 msgid "Enter a name for this form."
-msgstr ""
+msgstr "Enter a jina kwa this form."
 
 #: reportwriter/languages/en_US/reports.php:31
 msgid "Enter a name for this report."
-msgstr ""
+msgstr "Enter a jina kwa this ripoti."
 
 #: reportwriter/languages/en_US/reports.php:32
 msgid "(Leave blank to use default report name from import file)"
-msgstr ""
+msgstr "(Leave blank hadi use chaguo-msingi ripoti jina kutoka leta file)"
 
 #: reportwriter/languages/en_US/reports.php:33
 msgid "(maximum 30 characters)"
-msgstr ""
+msgstr "(maximum 30 characters)"
 
 #: reportwriter/languages/en_US/reports.php:34
 msgid "Enter the group this form is a part of:"
-msgstr ""
+msgstr "Enter — kikundi this form is a part ya:"
 
 #: reportwriter/languages/en_US/reports.php:35
 msgid "Enter the group this report is a part of:"
-msgstr ""
+msgstr "Enter — kikundi this ripoti is a part ya:"
 
 #: reportwriter/languages/en_US/reports.php:36
 msgid "Select a default report to import."
-msgstr ""
+msgstr "Chagua a chaguo-msingi ripoti hadi leta."
 
 #: reportwriter/languages/en_US/reports.php:37
 msgid "Or browse for a report to upload."
-msgstr ""
+msgstr "Or browse kwa a ripoti hadi upload."
 
 #: reportwriter/languages/en_US/reports.php:40
 msgid "The filesize exceeds the upload_max_filesize directive in your php.ini settings."
-msgstr ""
+msgstr "— filesize exceeds — upload_max_filesize directive katika your php.ini settings."
 
 #: reportwriter/languages/en_US/reports.php:41
 msgid "The filesize exceeds the MAX_FILE_SIZE directive in the webERP form."
-msgstr ""
+msgstr "— filesize exceeds — MAX_FILE_SIZE directive katika — webERP form."
 
 #: reportwriter/languages/en_US/reports.php:42
 msgid "The file was not completely uploaded. Please retry."
-msgstr ""
+msgstr "— file was not completely uploaded. Please retry."
 
 #: reportwriter/languages/en_US/reports.php:43
 msgid "No file was selected to upload."
-msgstr ""
+msgstr "No file was selected hadi upload."
 
 #: reportwriter/languages/en_US/reports.php:44
 msgid "Unknown php upload error, php returned error # "
-msgstr ""
+msgstr "Unknown php upload error, php returned error #"
 
 #: reportwriter/languages/en_US/reports.php:45
 msgid "This file is not reported by the server as a text file."
-msgstr ""
+msgstr "This file is not reported na — server as a text file."
 
 #: reportwriter/languages/en_US/reports.php:46
 msgid "The uploaded file does not contain any data!"
-msgstr ""
+msgstr "— uploaded file does not contain any data!"
 
 #: reportwriter/languages/en_US/reports.php:47
 msgid "webERP could not find a valid report to import in the uploaded file!"
-msgstr ""
+msgstr "webERP could not find a valid ripoti hadi leta katika — uploaded file!"
 
 #: reportwriter/languages/en_US/reports.php:48
 msgid " was successfully imported!"
-msgstr ""
+msgstr "was successfully imported!"
 
 #: reportwriter/languages/en_US/reports.php:49
 msgid "There was an unexpected error uploading the file!"
-msgstr ""
+msgstr "There was an unexpected error uploading — file!"
 
 #: reportwriter/languages/en_US/reports.php:52
 msgid "Abscissa"
-msgstr ""
+msgstr "Abscissa"
 
 #: reportwriter/languages/en_US/reports.php:55
 msgid "Align"
-msgstr ""
+msgstr "Align"
 
 #: reportwriter/languages/en_US/reports.php:57
 msgid "Bottom"
-msgstr ""
+msgstr "Bottom"
 
 #: reportwriter/languages/en_US/reports.php:58
 msgid "Break"
-msgstr ""
+msgstr "Break"
 
 #: reportwriter/languages/en_US/reports.php:59
 msgid "Center"
-msgstr ""
+msgstr "Center"
 
 #: reportwriter/languages/en_US/reports.php:61
 msgid "Color"
-msgstr ""
+msgstr "Color"
 
 #: reportwriter/languages/en_US/reports.php:62
 msgid "Custom Color (Range 0-255)"
-msgstr ""
+msgstr "Custom Color (Range 0-255)"
 
 #: reportwriter/languages/en_US/reports.php:63
 msgid "Custom"
-msgstr ""
+msgstr "Custom"
 
 #: reportwriter/languages/en_US/reports.php:67
 msgid "Fields"
-msgstr ""
+msgstr "Fields"
 
 #: reportwriter/languages/en_US/reports.php:68
 msgid "Fifth"
-msgstr ""
+msgstr "Fifth"
 
 #: reportwriter/languages/en_US/reports.php:69
 msgid "Filter"
-msgstr ""
+msgstr "Chuja"
 
 #: reportwriter/languages/en_US/reports.php:70
 msgid "Form"
-msgstr ""
+msgstr "Form"
 
 #: reportwriter/languages/en_US/reports.php:71
 msgid "Forms"
-msgstr ""
+msgstr "Forms"
 
 #: reportwriter/languages/en_US/reports.php:74
 msgid "Font"
-msgstr ""
+msgstr "Font"
 
 #: reportwriter/languages/en_US/reports.php:75
 msgid "Fourth"
-msgstr ""
+msgstr "Fourth"
 
 #: reportwriter/languages/en_US/reports.php:78
 msgid "Inactive"
-msgstr ""
+msgstr "Inactive"
 
 #: reportwriter/languages/en_US/reports.php:81
 msgid "Move"
-msgstr ""
+msgstr "Move"
 
 #: reportwriter/languages/en_US/reports.php:85
 msgid "Ordinate"
-msgstr ""
+msgstr "Ordinate"
 
 #: reportwriter/languages/en_US/reports.php:87
 msgid "Primary"
-msgstr ""
+msgstr "Primary"
 
 #: reportwriter/languages/en_US/reports.php:91
 msgid "Reports"
-msgstr ""
+msgstr "Reports"
 
 #: reportwriter/languages/en_US/reports.php:94
 msgid "Second"
-msgstr ""
+msgstr "Second"
 
 #: reportwriter/languages/en_US/reports.php:95
 msgid "Separator"
-msgstr ""
+msgstr "Separator"
 
 #: reportwriter/languages/en_US/reports.php:96
 msgid "Select a table..."
-msgstr ""
+msgstr "Chagua a table..."
 
 #: reportwriter/languages/en_US/reports.php:97
 msgid "Select a field..."
-msgstr ""
+msgstr "Chagua a field..."
 
 #: reportwriter/languages/en_US/reports.php:99
 msgid "Sixth"
-msgstr ""
+msgstr "Sixth"
 
 #: reportwriter/languages/en_US/reports.php:102
 msgid "Standard Color"
-msgstr ""
+msgstr "Standard Color"
 
 #: reportwriter/languages/en_US/reports.php:104
 msgid "Third"
-msgstr ""
+msgstr "Third"
 
 #: reportwriter/languages/en_US/reports.php:106
 msgid "Top"
-msgstr ""
+msgstr "Top"
 
 #: reportwriter/languages/en_US/reports.php:109
 msgid "Truncate"
-msgstr ""
+msgstr "Truncate"
 
 #: reportwriter/languages/en_US/reports.php:110
 msgid "Truncate Long Descriptions"
-msgstr ""
+msgstr "Truncate Long Descriptions"
 
 #: reportwriter/languages/en_US/reports.php:112
 msgid "Unprinted"
-msgstr ""
+msgstr "Unprinted"
 
 #: reportwriter/languages/en_US/reports.php:117
 msgid "Report/Form: "
-msgstr ""
+msgstr "Report/Form:"
 
 #: reportwriter/languages/en_US/reports.php:118
 msgid "Report and Form Builder - "
-msgstr ""
+msgstr "Ripoti na Form Builder -"
 
 #: reportwriter/languages/en_US/reports.php:119
 msgid "Menu"
-msgstr ""
+msgstr "Menu"
 
 #: reportwriter/languages/en_US/reports.php:120
 msgid "Step 2"
-msgstr ""
+msgstr "Step 2"
 
 #: reportwriter/languages/en_US/reports.php:121
 msgid "Step 3"
-msgstr ""
+msgstr "Step 3"
 
 #: reportwriter/languages/en_US/reports.php:122
 msgid "Step 4"
-msgstr ""
+msgstr "Step 4"
 
 #: reportwriter/languages/en_US/reports.php:123
 msgid "Step 5"
-msgstr ""
+msgstr "Step 5"
 
 #: reportwriter/languages/en_US/reports.php:124
 msgid "Step 6"
-msgstr ""
+msgstr "Step 6"
 
 #: reportwriter/languages/en_US/reports.php:125
 msgid "Reports Menu"
-msgstr ""
+msgstr "Reports Menu"
 
 #: reportwriter/languages/en_US/reports.php:126
 #: reportwriter/languages/en_US/reports.php:139
 msgid "Criteria Setup"
-msgstr ""
+msgstr "Criteria Setup"
 
 #: reportwriter/languages/en_US/reports.php:127
 msgid "Save Report"
-msgstr ""
+msgstr "Ripoti ya Hifadhi"
 
 #: reportwriter/languages/en_US/reports.php:128
 msgid "Report Page Setup"
-msgstr ""
+msgstr "Usanidi wa ukurasa wa ripoti"
 
 #: reportwriter/languages/en_US/reports.php:132
 msgid "Add New"
-msgstr ""
+msgstr "Ongeza Mpya"
 
 #: reportwriter/languages/en_US/reports.php:133
 msgid "Go Back"
-msgstr ""
+msgstr "Go Back"
 
 #: reportwriter/languages/en_US/reports.php:136
 msgid "Continue"
-msgstr ""
+msgstr "Continue"
 
 #: reportwriter/languages/en_US/reports.php:138
 msgid "Copy To My Reports"
-msgstr ""
+msgstr "Nakili Hadi My Reports"
 
 #: reportwriter/languages/en_US/reports.php:140
 msgid "Database Setup"
-msgstr ""
+msgstr "Database Setup"
 
 #: reportwriter/languages/en_US/reports.php:142
 msgid "Delete Report"
-msgstr ""
+msgstr "Ripoti ya Futa"
 
 #: reportwriter/languages/en_US/reports.php:144
 msgid "Export CSV"
-msgstr ""
+msgstr "Hamisha nje CSV"
 
 #: reportwriter/languages/en_US/reports.php:146
 msgid "Export PDF"
-msgstr ""
+msgstr "Hamisha nje PDF"
 
 #: reportwriter/languages/en_US/reports.php:147
 msgid "Finish"
-msgstr ""
+msgstr "Finish"
 
 #: reportwriter/languages/en_US/reports.php:148
 msgid "Field Setup"
-msgstr ""
+msgstr "Field Setup"
 
 #: reportwriter/languages/en_US/reports.php:149
 msgid "Import"
-msgstr ""
+msgstr "Leta"
 
 #: reportwriter/languages/en_US/reports.php:150
 msgid "Page Setup"
-msgstr ""
+msgstr "Usanidi wa ukurasa"
 
 #: reportwriter/languages/en_US/reports.php:151
 msgid "Properties"
-msgstr ""
+msgstr "Properties"
 
 #: reportwriter/languages/en_US/reports.php:152
 msgid "Replace"
-msgstr ""
+msgstr "Replace"
 
 #: reportwriter/languages/en_US/reports.php:154
 msgid "Rename"
-msgstr ""
+msgstr "Rename"
 
 #: reportwriter/languages/en_US/reports.php:159
 msgid "Accrual Basis"
-msgstr ""
+msgstr "Accrual Basis"
 
 #: reportwriter/languages/en_US/reports.php:160
 msgid "Report Filters: "
-msgstr ""
+msgstr "Ripoti Filters:"
 
 #: reportwriter/languages/en_US/reports.php:161
 msgid "Grouped by:"
-msgstr ""
+msgstr "Grouped na:"
 
 #: reportwriter/languages/en_US/reports.php:162
 msgid "Sorted by:"
-msgstr ""
+msgstr "Sorted na:"
 
 #: reportwriter/languages/en_US/reports.php:163
 msgid "Date Range:"
-msgstr ""
+msgstr "Tarehe Range:"
 
 #: reportwriter/languages/en_US/reports.php:164
 msgid "Filters:"
-msgstr ""
+msgstr "Filters:"
 
 #: reportwriter/languages/en_US/reports.php:165
 msgid "Administrator Page"
-msgstr ""
+msgstr "Administrator Page"
 
 #: reportwriter/languages/en_US/reports.php:166
 msgid "Border Line"
-msgstr ""
+msgstr "Border Line"
 
 #: reportwriter/languages/en_US/reports.php:167
 msgid "Box  Dimensions (mm)"
-msgstr ""
+msgstr "Box Dimensions (mm)"
 
 #: reportwriter/languages/en_US/reports.php:168
 msgid "Column 1"
-msgstr ""
+msgstr "Column 1"
 
 #: reportwriter/languages/en_US/reports.php:169
 msgid "Column 2"
-msgstr ""
+msgstr "Column 2"
 
 #: reportwriter/languages/en_US/reports.php:170
 msgid "Column 3"
-msgstr ""
+msgstr "Column 3"
 
 #: reportwriter/languages/en_US/reports.php:171
 msgid "Column 4"
-msgstr ""
+msgstr "Column 4"
 
 #: reportwriter/languages/en_US/reports.php:172
 msgid "Column 5"
-msgstr ""
+msgstr "Column 5"
 
 #: reportwriter/languages/en_US/reports.php:173
 msgid "Column 6"
-msgstr ""
+msgstr "Column 6"
 
 #: reportwriter/languages/en_US/reports.php:174
 msgid "Column 7"
-msgstr ""
+msgstr "Column 7"
 
 #: reportwriter/languages/en_US/reports.php:175
 msgid "Column 8"
-msgstr ""
+msgstr "Column 8"
 
 #: reportwriter/languages/en_US/reports.php:176
 msgid "Column 9"
-msgstr ""
+msgstr "Column 9"
 
 #: reportwriter/languages/en_US/reports.php:177
 msgid "Column 10"
-msgstr ""
+msgstr "Column 10"
 
 #: reportwriter/languages/en_US/reports.php:178
 msgid "Column 11"
-msgstr ""
+msgstr "Column 11"
 
 #: reportwriter/languages/en_US/reports.php:179
 msgid "Column 12"
-msgstr ""
+msgstr "Column 12"
 
 #: reportwriter/languages/en_US/reports.php:180
 msgid "Column 13"
-msgstr ""
+msgstr "Column 13"
 
 #: reportwriter/languages/en_US/reports.php:181
 msgid "Column 14"
-msgstr ""
+msgstr "Column 14"
 
 #: reportwriter/languages/en_US/reports.php:182
 msgid "Column 15"
-msgstr ""
+msgstr "Column 15"
 
 #: reportwriter/languages/en_US/reports.php:183
 msgid "Column 16"
-msgstr ""
+msgstr "Column 16"
 
 #: reportwriter/languages/en_US/reports.php:184
 msgid "Column 17"
-msgstr ""
+msgstr "Column 17"
 
 #: reportwriter/languages/en_US/reports.php:185
 msgid "Column 18"
-msgstr ""
+msgstr "Column 18"
 
 #: reportwriter/languages/en_US/reports.php:186
 msgid "Column 19"
-msgstr ""
+msgstr "Column 19"
 
 #: reportwriter/languages/en_US/reports.php:187
 msgid "Column 20"
-msgstr ""
+msgstr "Column 20"
 
 #: reportwriter/languages/en_US/reports.php:188
 msgid "Type of Criteria"
-msgstr ""
+msgstr "Aina ya Criteria"
 
 #: reportwriter/languages/en_US/reports.php:189
 msgid "Select report or form type to create:"
-msgstr ""
+msgstr "Chagua ripoti or form aina hadi unda:"
 
 #: reportwriter/languages/en_US/reports.php:190
 msgid "Column widths - mm (0 for same as prior column)"
-msgstr ""
+msgstr "Column widths - mm (0 kwa same as prior column)"
 
 #: reportwriter/languages/en_US/reports.php:192
 msgid "Default Date Selected"
-msgstr ""
+msgstr "Chaguo-msingi Tarehe Selected"
 
 #: reportwriter/languages/en_US/reports.php:193
 msgid "Date Fieldname (table.fieldname)"
-msgstr ""
+msgstr "Tarehe Fieldname (table.fieldname)"
 
 #: reportwriter/languages/en_US/reports.php:194
 msgid "Report Date Information"
-msgstr ""
+msgstr "Ripoti Tarehe Information"
 
 #: reportwriter/languages/en_US/reports.php:195
 msgid "For date-independent reports:<br />Uncheck all period range boxes<br />Leave Date Fieldname empty"
-msgstr ""
+msgstr "Kwa date-independent reports:<br />Uncheck all kipindi range boxes<br />Leave Tarehe Fieldname empty"
 
 #: reportwriter/languages/en_US/reports.php:196
 msgid "Date Field List<br />(check all that apply)"
-msgstr ""
+msgstr "Tarehe Field List<br />(check all that apply)"
 
 #: reportwriter/languages/en_US/reports.php:198
 msgid "End Position (mm)"
-msgstr ""
+msgstr "Mwisho Position (mm)"
 
 #: reportwriter/languages/en_US/reports.php:199
 msgid "Enter a New Field"
-msgstr ""
+msgstr "Enter a Mpya Field"
 
 #: reportwriter/languages/en_US/reports.php:200
 msgid "Field List"
-msgstr ""
+msgstr "Field List"
 
 #: reportwriter/languages/en_US/reports.php:201
 msgid "Fill"
-msgstr ""
+msgstr "Fill"
 
 #: reportwriter/languages/en_US/reports.php:202
 msgid "Select a Form to Output"
-msgstr ""
+msgstr "Chagua a Form hadi Output"
 
 #: reportwriter/languages/en_US/reports.php:203
 msgid "Form Selection"
-msgstr ""
+msgstr "Form Selection"
 
 #: reportwriter/languages/en_US/reports.php:204
 msgid "Grouping List"
-msgstr ""
+msgstr "Grouping List"
 
 #: reportwriter/languages/en_US/reports.php:206
 msgid "Current Image"
-msgstr ""
+msgstr "Current Image"
 
 #: reportwriter/languages/en_US/reports.php:207
 msgid "Image Selection"
-msgstr ""
+msgstr "Image Selection"
 
 #: reportwriter/languages/en_US/reports.php:208
 msgid "Select Stored Image"
-msgstr ""
+msgstr "Chagua Stored Image"
 
 #: reportwriter/languages/en_US/reports.php:209
 msgid "Image  Dimensions (mm)"
-msgstr ""
+msgstr "Image Dimensions (mm)"
 
 #: reportwriter/languages/en_US/reports.php:210
 msgid "Line Attributes"
-msgstr ""
+msgstr "Line Attributes"
 
 #: reportwriter/languages/en_US/reports.php:211
 msgid "Line Width (pts)"
-msgstr ""
+msgstr "Line Width (pts)"
 
 #: reportwriter/languages/en_US/reports.php:212
 msgid "Link Equation (SQL Syntax)<br />example: tablename1.fieldname1=tablename2.fieldname2"
-msgstr ""
+msgstr "Link Equation (SQL Syntax)<br />example: tablename1.fieldname1=tablename2.fieldname2"
 
 #: reportwriter/languages/en_US/reports.php:213
 msgid "My Reports"
-msgstr ""
+msgstr "My Reports"
 
 #: reportwriter/languages/en_US/reports.php:214
 msgid "No Border"
-msgstr ""
+msgstr "No Border"
 
 #: reportwriter/languages/en_US/reports.php:215
 msgid "No Fill"
-msgstr ""
+msgstr "No Fill"
 
 #: reportwriter/languages/en_US/reports.php:216
 msgid "Name to Display"
-msgstr ""
+msgstr "Jina hadi Display"
 
 #: reportwriter/languages/en_US/reports.php:218
 msgid "Report Filter Description"
-msgstr ""
+msgstr "Ripoti Chuja Maelezo"
 
 #: reportwriter/languages/en_US/reports.php:219
 msgid "Header Information / Formatting"
-msgstr ""
+msgstr "Header Information / Formatting"
 
 #: reportwriter/languages/en_US/reports.php:220
 msgid "Page Layout"
-msgstr ""
+msgstr "Mpangilio wa ukurasa"
 
 #: reportwriter/languages/en_US/reports.php:221
 msgid "Page Margins"
-msgstr ""
+msgstr "Ukingo wa ukurasa"
 
 #: reportwriter/languages/en_US/reports.php:222
 msgid "Rename Report"
-msgstr ""
+msgstr "Ripoti ya Rename"
 
 #: reportwriter/languages/en_US/reports.php:223
 msgid "Report Title 1"
-msgstr ""
+msgstr "Ripoti Title 1"
 
 #: reportwriter/languages/en_US/reports.php:224
 msgid "Report Title 2"
-msgstr ""
+msgstr "Ripoti Title 2"
 
 #: reportwriter/languages/en_US/reports.php:225
 msgid "Report Data"
-msgstr ""
+msgstr "Ripoti Data"
 
 #: reportwriter/languages/en_US/reports.php:226
 msgid "Report/Form Identification"
-msgstr ""
+msgstr "Report/Form Identification"
 
 #: reportwriter/languages/en_US/reports.php:227
 msgid "Report Import"
-msgstr ""
+msgstr "Ripoti Leta"
 
 #: reportwriter/languages/en_US/reports.php:228
 msgid "Sorting Information"
-msgstr ""
+msgstr "Sorting Information"
 
 #: reportwriter/languages/en_US/reports.php:229
 msgid "Start Position (Upper Left Corner in mm)"
-msgstr ""
+msgstr "Anza Position (Upper Left Corner katika mm)"
 
 #: reportwriter/languages/en_US/reports.php:230
 msgid "Table Name"
-msgstr ""
+msgstr "Table Jina"
 
 #: reportwriter/languages/en_US/reports.php:231
 msgid "Text Attributes"
-msgstr ""
+msgstr "Text Attributes"
 
 #: reportwriter/languages/en_US/reports.php:232
 msgid "Text to Display"
-msgstr ""
+msgstr "Text hadi Display"
 
 #: reportwriter/languages/en_US/reports.php:233
 msgid "Text Processing"
-msgstr ""
+msgstr "Text Processing"
 
 #: reportwriter/languages/en_US/reports.php:234
 msgid "Fieldname (table.fieldname)"
-msgstr ""
+msgstr "Fieldname (table.fieldname)"
 
 #: reportwriter/languages/en_US/reports.php:235
 msgid "Report Totals"
-msgstr ""
+msgstr "Ripoti Totals"
 
 #: reportwriter/languages/en_US/reports.php:236
 msgid "Enter fields to total (Table.Fieldname)"
-msgstr ""
+msgstr "Enter fields hadi jumla (Table.Fieldname)"
 
 #: reportwriter/languages/en_US/reports.php:249
 msgid "Financial Reports"
-msgstr ""
+msgstr "Financial Reports"
 
 #: reportwriter/languages/en_US/reports.php:266
 msgid "Data Line"
-msgstr ""
+msgstr "Data Line"
 
 #: reportwriter/languages/en_US/reports.php:267
 msgid "Data Block"
-msgstr ""
+msgstr "Data Block"
 
 #: reportwriter/languages/en_US/reports.php:268
 msgid "Data Table"
-msgstr ""
+msgstr "Data Table"
 
 #: reportwriter/languages/en_US/reports.php:269
 msgid "Data Total"
-msgstr ""
+msgstr "Data Jumla"
 
 #: reportwriter/languages/en_US/reports.php:270
 msgid "Fixed Text Field"
-msgstr ""
+msgstr "Fixed Text Field"
 
 #: reportwriter/languages/en_US/reports.php:272
 msgid "Image - JPG or PNG"
-msgstr ""
+msgstr "Image - JPG or PNG"
 
 #: reportwriter/languages/en_US/reports.php:273
 msgid "Rectangle"
-msgstr ""
+msgstr "Rectangle"
 
 #: reportwriter/languages/en_US/reports.php:275
 msgid "Company Data Line"
-msgstr ""
+msgstr "Company Data Line"
 
 #: reportwriter/languages/en_US/reports.php:276
 msgid "Company Data Block"
-msgstr ""
+msgstr "Company Data Block"
 
 #: reportwriter/languages/en_US/reports.php:277
 msgid "Page Number"
-msgstr ""
+msgstr "Nambari ya ukurasa"
 
 #: reportwriter/languages/en_US/reports.php:278
 msgid "Uppercase"
-msgstr ""
+msgstr "Uppercase"
 
 #: reportwriter/languages/en_US/reports.php:279
 msgid "Lowercase"
-msgstr ""
+msgstr "Lowercase"
 
 #: reportwriter/languages/en_US/reports.php:280
 msgid "Negate"
-msgstr ""
+msgstr "Negate"
 
 #: reportwriter/languages/en_US/reports.php:281
 msgid "Round (2 decimal)"
-msgstr ""
+msgstr "Round (2 decimal)"
 
 #: reportwriter/languages/en_US/reports.php:282
 msgid "Convert Dollars"
-msgstr ""
+msgstr "Convert Dollars"
 
 #: reportwriter/languages/en_US/reports.php:283
 msgid "Convert Euros"
-msgstr ""
+msgstr "Convert Euros"
 
 #: reportwriter/languages/en_US/reports.php:284
 msgid "Single Space"
-msgstr ""
+msgstr "Single Space"
 
 #: reportwriter/languages/en_US/reports.php:285
 msgid "Double Space"
-msgstr ""
+msgstr "Double Space"
 
 #: reportwriter/languages/en_US/reports.php:286
 msgid "Comma"
-msgstr ""
+msgstr "Comma"
 
 #: reportwriter/languages/en_US/reports.php:287
 msgid "Comma-Space"
-msgstr ""
+msgstr "Comma-Space"
 
 #: reportwriter/languages/en_US/reports.php:288
 msgid "Line Break"
-msgstr ""
+msgstr "Line Break"
 
 #: reportwriter/languages/en_US/reports.php:289
 msgid "Semicolon-space"
-msgstr ""
+msgstr "Semicolon-space"
 
 #: reportwriter/languages/en_US/reports.php:292
 msgid "Paper Size:"
-msgstr ""
+msgstr "Paper Size:"
 
 #: reportwriter/languages/en_US/reports.php:293
 msgid "Orientation:"
-msgstr ""
+msgstr "Orientation:"
 
 #: reportwriter/languages/en_US/reports.php:294
 msgid "mm"
-msgstr ""
+msgstr "mm"
 
 #: reportwriter/languages/en_US/reports.php:297
 msgid "A5"
-msgstr ""
+msgstr "A5"
 
 #: reportwriter/languages/en_US/reports.php:304
 msgid "Courier"
-msgstr ""
+msgstr "Courier"
 
 #: reportwriter/languages/en_US/reports.php:305
 msgid "Courier Bold"
-msgstr ""
+msgstr "Courier Bold"
 
 #: reportwriter/languages/en_US/reports.php:306
 msgid "Courier Bold Italic"
-msgstr ""
+msgstr "Courier Bold Italic"
 
 #: reportwriter/languages/en_US/reports.php:307
 msgid "Courier Italic"
-msgstr ""
+msgstr "Courier Italic"
 
 #: reportwriter/languages/en_US/reports.php:308
 msgid "Helvetica"
-msgstr ""
+msgstr "Helvetica"
 
 #: reportwriter/languages/en_US/reports.php:309
 msgid "Helvetica Bold"
-msgstr ""
+msgstr "Helvetica Bold"
 
 #: reportwriter/languages/en_US/reports.php:310
 msgid "Helvetica Bold Italic"
-msgstr ""
+msgstr "Helvetica Bold Italic"
 
 #: reportwriter/languages/en_US/reports.php:311
 msgid "Helvetica Italic"
-msgstr ""
+msgstr "Helvetica Italic"
 
 #: reportwriter/languages/en_US/reports.php:312
 msgid "Times"
-msgstr ""
+msgstr "Times"
 
 #: reportwriter/languages/en_US/reports.php:313
 msgid "Times Bold"
-msgstr ""
+msgstr "Times Bold"
 
 #: reportwriter/languages/en_US/reports.php:314
 msgid "Times Bold Italic"
-msgstr ""
+msgstr "Times Bold Italic"
 
 #: reportwriter/languages/en_US/reports.php:315
 msgid "Times Italic"
-msgstr ""
+msgstr "Times Italic"
 
 #: reportwriter/languages/en_US/reports.php:341
 msgid "Black"
-msgstr ""
+msgstr "Black"
 
 #: reportwriter/languages/en_US/reports.php:342
 msgid "Blue"
-msgstr ""
+msgstr "Blue"
 
 #: reportwriter/languages/en_US/reports.php:343
 msgid "Red"
-msgstr ""
+msgstr "Red"
 
 #: reportwriter/languages/en_US/reports.php:344
 msgid "Orange"
-msgstr ""
+msgstr "Orange"
 
 #: reportwriter/languages/en_US/reports.php:345
 msgid "Yellow"
-msgstr ""
+msgstr "Yellow"
 
 #: reportwriter/languages/en_US/reports.php:346
 msgid "Green"
-msgstr ""
+msgstr "Green"
 
 #: reportwriter/languages/en_US/reports.php:347
 msgid "White"
-msgstr ""
+msgstr "White"
 
 #: reportwriter/languages/en_US/reports.php:350
 msgid "Today"
-msgstr ""
+msgstr "Today"
 
 #: reportwriter/languages/en_US/reports.php:352
 msgid "This Week To Date"
-msgstr ""
+msgstr "This Week Hadi Tarehe"
 
 #: reportwriter/languages/en_US/reports.php:354
 msgid "This Month To Date"
-msgstr ""
+msgstr "This Month Hadi Tarehe"
 
 #: reportwriter/languages/en_US/reports.php:356
 msgid "This Quarter To Date"
-msgstr ""
+msgstr "This Quarter Hadi Tarehe"
 
 #: reportwriter/languages/en_US/reports.php:358
 msgid "This Year To Date"
-msgstr ""
+msgstr "This Year Hadi Tarehe"
 
 #: reportwriter/languages/en_US/reports.php:359
 msgid "Yesterday"
-msgstr ""
+msgstr "Yesterday"
 
 #: reportwriter/languages/en_US/reports.php:360
 msgid "Last Week"
-msgstr ""
+msgstr "Last Week"
 
 #: reportwriter/languages/en_US/reports.php:361
 msgid "Last Week To Date"
-msgstr ""
+msgstr "Last Week Hadi Tarehe"
 
 #: reportwriter/languages/en_US/reports.php:363
 msgid "Last Month To Date"
-msgstr ""
+msgstr "Last Month Hadi Tarehe"
 
 #: reportwriter/languages/en_US/reports.php:365
 msgid "Last Quarter To Date"
-msgstr ""
+msgstr "Last Quarter Hadi Tarehe"
 
 #: reportwriter/languages/en_US/reports.php:367
 msgid "Last Year To Date"
-msgstr ""
+msgstr "Last Year Hadi Tarehe"
 
 #: reportwriter/languages/en_US/reports.php:368
 msgid "Next Week"
-msgstr ""
+msgstr "Next Week"
 
 #~ msgid "The SQL that was used to retrieve the account groups of the parent account group and that failed in the process was"
 #~ msgstr "SQL ambayo ilitumiwa kurejesha vikundi vya akaunti vya kikundi cha akaunti kuu na ambayo haikufaulu katika mchakato ilikuwa"
