@@ -2,8 +2,6 @@
 
 require(__DIR__ . '/includes/session.php');
 
-$UpdateSecurity = 10;
-
 $Title = __('Stock Cost Update');
 $ViewTopic = 'Inventory';
 $BookMark = '';
@@ -162,14 +160,17 @@ echo '<input type="hidden" name="QOH" value="' . $MyRow['totalqoh'] .'" />';
 echo '<label>', __('Last Cost') .':</label>
 		<fieldtext>' . locale_number_format($MyRow['lastcost'],$_SESSION['StandardCostDecimalPlaces']) . '</fieldtext>
 	</field>';
+
+/* CostUpdate is NOT a script, but a flag maintained in the scripts table that allows the user role to update (or not) the standard costs of the items */
 if (! in_array($_SESSION['PageSecurityArray']['CostUpdate'],$_SESSION['AllowedPageSecurityTokens'])){
+	/* CostUpdate is not assigned to the user role, so just show the costs as text */ 
 	echo '<field>
 			<td>' . __('Cost') . ':</td>
 			<td class="number">' . locale_number_format($MyRow['materialcost']+$MyRow['labourcost']+$MyRow['overheadcost'],$_SESSION['StandardCostDecimalPlaces']) . '</td>
 		</field>
 		</table>';
 } else {
-
+	/* CostUpdate is assigned to the user role, so user can modify the costs */ 
 	if ($MyRow['mbflag']=='M'){
 		echo '<field>
 				<label for="MaterialCost">' . __('Standard Material Cost Per Unit') .':</label>
