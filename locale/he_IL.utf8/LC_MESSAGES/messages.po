@@ -33027,12 +33027,7 @@ msgstr "לא ניתן היה לעדכן את הכמות שחויבה מחוץ ל
 msgid ""
 "The invoice could not be mapped to the\n"
 "\t\t\t\t\tgoods received record because"
-msgstr "לא ניתן למפות את החשבונית אל
-					רשומת הסחורה שהתקבלה מכיוון ש"
-"לא ניתן היה למפות את החשבונית\n"
-"\t\t\t\t\tלרשומת הסחורה שהתקבלה מכיוון ש"
-"לא ניתן למפות את החשבונית\n"
-"\t\t\t\t\tלרשומת סחורה שהתקבלה כיוון ש"
+msgstr "לא ניתן היה למפות את החשבונית לרשומת קבלת הסחורה מכיוון"
 
 #: SupplierInvoice.php:1561
 msgid "The stock movement record for the delivery could not have the cost updated to the actual cost"
