@@ -6,8 +6,6 @@
  * the input of criteria screen
  */
 
-$PageSecurity = 1;
-
 require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
