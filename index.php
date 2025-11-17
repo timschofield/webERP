@@ -156,7 +156,7 @@ foreach ($MenuItems[$_SESSION['Module']]['Transactions']['Caption'] as $Caption)
 	}
 	if ((in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) and $PageSecurity != '')) {
 		echo '<li class="MenuItem">
-				<a href="', $RootPath, $MenuItems[$_SESSION['Module']]['Transactions']['URL'][$i], '">&bull; ', $Caption, '</a>
+				<a href="', $RootPath, $MenuItems[$_SESSION['Module']]['Transactions']['URL'][$i], '">&bull; ', __($Caption), '</a>
 			</li>';
 	}
 	++$i;
@@ -186,7 +186,7 @@ if (isset($MenuItems[$_SESSION['Module']]['Reports'])) {
 		if ((in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) or !isset($PageSecurity)) AND ($Caption != '')) {
 // KL RICARD END
 			echo '<li class="MenuItem">
-				<a href="' . $RootPath . $MenuItems[$_SESSION['Module']]['Reports']['URL'][$i] . '">&bull; ' . $Caption . '</a>
+				<a href="' . $RootPath . $MenuItems[$_SESSION['Module']]['Reports']['URL'][$i] . '">&bull; ' . __($Caption) . '</a>
 			</li>';
 		}
 		++$i;
@@ -220,7 +220,7 @@ if (isset($MenuItems[$_SESSION['Module']]['Maintenance'])) {
 			$PageSecurity = $_SESSION['PageSecurityArray'][$ScriptNameArray[0]];
 			if ((in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) or !isset($PageSecurity))) {
 				echo '<li class="MenuItem">
-						<a href="' . $RootPath . $MenuItems[$_SESSION['Module']]['Maintenance']['URL'][$i] . '">&bull; ' . $Caption . '</a>
+						<a href="' . $RootPath . $MenuItems[$_SESSION['Module']]['Maintenance']['URL'][$i] . '">&bull; ' . __($Caption) . '</a>
 					</li>';
 			}
 		}

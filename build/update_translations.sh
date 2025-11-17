@@ -56,7 +56,7 @@ if [ "$ACTION" = all ] || [ "$ACTION" = source_files ]; then
 	xgettext --no-wrap --from-code=utf-8 -L PHP --keyword=__ -o locale/en_GB.utf8/LC_MESSAGES/messages.pot ./*.php ./api/*.php ./api/includes/*.php ./dashboard/*.php \
 		./doc/Manual/*.php ./includes/*.php ./install/*.php ./install/pages/*.php ./reportwriter/*.php ./reportwriter/admin/*.php \
 		./reportwriter/admin/forms/*.php ./reportwriter/forms/*.php ./reportwriter/includes/*.php ./reportwriter/install/*.php \
-		./reportwriter/languages/en_US/*.php
+		./reportwriter/languages/en_US/*.php sql/updates/*.php
 
 	# msgmerge: Merges two Uniforum style .po files together
 	for TOUPDATE in $LOCALES; do
