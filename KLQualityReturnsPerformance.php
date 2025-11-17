@@ -24,7 +24,7 @@ if ($KL_SystemAdmin
 	$NumberOfTestExecuted++;
 	StockAdjustmentsByReason(90);
 	$NumberOfTestExecuted++;
-	StockAdjustmentsByItemAndReason(30, $RootPath);
+	StockAdjustmentsByItemAndReason(30);
 	$NumberOfTestExecuted++;
 	QualityIssuesByReason(30, $RootPath);
 	$NumberOfTestExecuted++;
@@ -245,46 +245,53 @@ function ReturnsBySPG($SPG, $NumDays) {
 	}
 }
 
-function StockAdjustmentsByItemAndReason($Days, $RootPath){
+function StockAdjustmentsByItemAndReason($Days){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$Days));
 
 	$SQL = "SELECT stockmoves.stockid,
-				stockadjustmentreasons.reasonname,
-				SUM(qty) AS totaladjusted
-			FROM stockmoves
-			INNER JOIN stockadjustments
-				ON stockmoves.transno = stockadjustments.transno
-				AND stockmoves.type = 17
-			INNER JOIN stockadjustmentreasons
-				ON stockadjustments.reasonid = stockadjustmentreasons.reasonid
-			WHERE stockmoves.trandate >= '" . $StartDate . "'
-			GROUP BY stockmoves.stockid,
-				stockadjustmentreasons.reasonid
-			ORDER BY stockmoves.stockid,
-				ABS(SUM(qty)) DESC";
-
+					stockmoves.trandate,
+					stockmoves.userid,
+					stockadjustmentreasons.reasonname,
+					SUM(stockmoves.qty) AS totaladjusted
+				FROM stockmoves
+				INNER JOIN stockadjustments
+					ON stockmoves.transno = stockadjustments.transno
+					AND stockmoves.type = 17
+				INNER JOIN stockadjustmentreasons
+					ON stockadjustments.reasonid = stockadjustmentreasons.reasonid
+				WHERE stockmoves.trandate >= '" . $StartDate . "'
+				GROUP BY stockmoves.stockid,
+					stockmoves.trandate,
+					stockmoves.userid,
+					stockadjustmentreasons.reasonname
+				ORDER BY stockmoves.stockid,
+					stockmoves.trandate,
+					stockmoves.userid,
+					stockadjustmentreasons.reasonname";
 	$TotalAdjusted = 0;
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		$TableTitleText = __('# stock adjustments by Item and Reason during the last ') . $Days . ' days';
+		$TableTitleText = __('# stock adjustments by Item, Reason and User during the last ') . $Days . ' ' . __('days');
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
 					<tr>
 						<th class="SortedColumn">' . __('Item Code') . '</th>
+						<th class="SortedColumn">' . __('User') . '</th>
+						<th class="SortedColumn">' . __('Date') . '</th>
 						<th class="SortedColumn">' . __('Reason') . '</th>
 						<th class="SortedColumn">' . __('Qty adjusted') . '</th>
-						<th class="SortedColumn">' . __('Daily Average') . '</th>
 					</tr>
 				</thead>
 				<tbody>';
 		while ($MyRow = DB_fetch_array($Result)) {
 			echo '<tr class="striped_row">
 					<td>' . $MyRow['stockid'] . '</td>
+					<td>' . $MyRow['userid'] . '</td>
+					<td>' . ConvertSQLDate($MyRow['trandate']). '</td>
 					<td>' . $MyRow['reasonname'] . '</td>
 					<td class="number">' . locale_number_format($MyRow['totaladjusted'],0) . '</td>
-					<td class="number">' . locale_number_format($MyRow['totaladjusted'] / $Days, 1) . '</td>
 				</tr>';
 
 			$TotalAdjusted += $MyRow['totaladjusted'];
@@ -293,13 +300,14 @@ function StockAdjustmentsByItemAndReason($Days, $RootPath){
 	echo '</tbody>
 		<tfooter>';
 	echo '<tr class="striped_row">
-			<td>Total</td>
+			<td>' . __('Total') . '</td>
+			<td></td>
+			<td></td>
 			<td></td>
 			<td class="number">' . locale_number_format($TotalAdjusted, 0) . '</td>
-			<td class="number">' . locale_number_format($TotalAdjusted / $Days, 1) . '</td>
 		</tr>';
-	
+
 	echo '</tfooter>
-		</table>
-		</div>';
-}	
+			</table>
+			</div>';
+}
