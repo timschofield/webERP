@@ -17,15 +17,15 @@ if ($KL_SystemAdmin) {
 
 }
 
-if ($KL_OperationalManager 
-	OR $KL_SalesDirector
+if ($KL_GeneralAffairsManager 
+	OR $KL_SalesTeamManager
 	OR $KL_ShopManager) {
 
 	SPGPerformanceMonthy();
 	$NumberOfTestExecuted++;
 }
 
-if ($KL_SalesDirector
+if ($KL_SalesTeamManager
 	OR $KL_ShopManager) {
 
 	SPGPerformanceWeekly();
@@ -33,16 +33,15 @@ if ($KL_SalesDirector
 }
 	
 if ($KL_SystemAdmin 
-	OR $KL_OperationalManager 
-	OR $KL_BusinessDevelopmentManager 
-	OR $KL_SalesDirector
+	OR $KL_GeneralAffairsManager 
+	OR $KL_SalesTeamManager
 	OR $KL_ShopManager) {
 
 	AverageSales("SPG", 30, 15, 10, 7, 5, 1, 7, "CurrentYear", "All");
 	$NumberOfTestExecuted++;
 }
 	
-if ($KL_OperationalManager 
+if ($KL_GeneralAffairsManager 
 	OR $KL_ShopManager) {
 
 	SPGPerformanceAllShops(15, 30, 45);
@@ -50,9 +49,8 @@ if ($KL_OperationalManager
 }
 	
 if ($KL_SystemAdmin 
-	OR $KL_OperationalManager 
-	OR $KL_BusinessDevelopmentManager 
-	OR $KL_SalesDirector) {
+	OR $KL_GeneralAffairsManager 
+	OR $KL_SalesTeamManager) {
 		
 	HourlySales(15, $RootPath);
 	$NumberOfTestExecuted++;

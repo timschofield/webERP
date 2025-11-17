@@ -385,11 +385,10 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 		$ConfirmationText = __('A stock adjustment for'). ' ' . $_SESSION['Adjustment' . $identifier]->StockID . ' -  ' . $_SESSION['Adjustment' . $identifier]->ItemDescription . ' '.__('has been created from location').' ' . $_SESSION['Adjustment' . $identifier]->StockLocation .' '. __('for a quantity of') . ' ' . locale_number_format($_SESSION['Adjustment' . $identifier]->Quantity,$_SESSION['Adjustment' . $identifier]->DecimalPlaces) . ' ' . $AdjustReason;
 		prnMsg( $ConfirmationText,'success');
 
-		// KL RICARD: Send email when stock adjustment is made except for KLSystemAdmin and KLBusinessDevelopmentManager
+		// KL RICARD: Send email when stock adjustment is made except for KL Partners
 		if (($_SESSION['InventoryManagerEmail']!='') 
-			OR (!$KL_SystemAdmin)
-			OR (!$KL_BusinessDevelopmentManager)){
-		// KL RICARD END Send email when stock adjustment is made except for KLSystemAdmin and KLBusinessDevelopmentManager
+			OR (!$KL_Partner)){
+		// KL RICARD END Send email when stock adjustment is made except for KL Partners
 			$ConfirmationText = $ConfirmationText . ' ' . __('by user') . ' ' . $_SESSION['UserID'] . ' ' . __('at') . ' ' . date('Y-m-d H:i:s');
 			$EmailSubject = __('Stock adjustment for'). ' ' . $_SESSION['Adjustment' . $identifier]->StockID;
 			SendEmailFromWebERP($SysAdminEmail,

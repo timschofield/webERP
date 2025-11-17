@@ -862,8 +862,8 @@ function submit($PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName,
 				$Linectr = 0;
 			while ($MyRow = DB_fetch_array($Result)) {
 			    $Linectr++;
-				// KL Ricard MOD: Hide costs
-				if ($KL_SystemAdmin){
+				// KL Ricard MOD: Hide costs for non KL partners
+				if ($KL_Partner){
 					$Cost = $MyRow['extcost'];
 				} else {
 					$Cost = 0;
