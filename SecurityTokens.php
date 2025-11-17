@@ -13,12 +13,19 @@ include('includes/header.php');
  * These security tokens ID are hardcoded in several webERP scripts.
  * 0: Main Index Page
  * 1: Order Entry / Customer access only
+ * 2: only used in DeliveryDetails.php. Seems wrong. Could be done without hardcoding.
+ * 3: only used in PickingLists.php. Seems wrong. Could be done without hardcoding.
+ * 5: only used in PriceMatrix.php. Prices.php. Seems wrong. Could be done without hardcoding.
  * 9: Supplier entry only
+ * 11: only used in api_stock.php. Seems wrong. Could be done without hardcoding.
  * 12: Prices
- * 15: System administration
+ * 15: System administration (LoginFunctions.php)
  * 18: Cost
+ * 19: only used in InternalStockRequestInquiry.php. Seems wrong. Could be done without hardcoding.
+ * 20: only used in TimeSheets.php. Seems wrong. Could be done without hardcoding.
  */
-$FixedTokens = array(0, 1, 9, 12, 15, 18);
+
+$FixedTokens = array(0, 1, 2, 3, 5, 9, 11, 12, 15, 18, 19, 20);
 
 if ($AllowDemoMode) {
 	prnMsg(__('The the system is in demo mode and the security model administration is disabled'), 'warn');
