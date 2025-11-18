@@ -138,7 +138,6 @@ if [ "$ADD_CREATE_TABLES_STATEMENTS" = true ]; then
 	# the `--column-statistics=0` option is needed when using mysqldump from mysql to access some mariadb versions
 
 	# @todo review the list of excluded tables:
-	#       - mrpplanedorders is probably a typo for mrpplannedorders
 	#       - are we missing tempbom, passbom, passbom2, bomlevels, mrpcalendar?
 	#       - table `buckets` is not in the std list of tables any more
 	mysqldump --column-statistics=0 -h"$MYSQL_HOST" -P"$MYSQL_PORT" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" \
@@ -146,7 +145,7 @@ if [ "$ADD_CREATE_TABLES_STATEMENTS" = true ]; then
 		--ignore-table="${MYSQL_DATABASE}.buckets" \
 		--ignore-table="${MYSQL_DATABASE}.levels" \
 		--ignore-table="${MYSQL_DATABASE}.mrpparameters" \
-		--ignore-table="${MYSQL_DATABASE}.mrpplanedorders" \
+		--ignore-table="${MYSQL_DATABASE}.mrpplannedorders" \
 		--ignore-table="${MYSQL_DATABASE}.mrprequirements" \
 		--ignore-table="${MYSQL_DATABASE}.mrpsupplies" \
 		"$MYSQL_DATABASE" | sed -r 's/ AUTO_INCREMENT=[0-9]*//g' | sed -r 's/ DEFAULT CHARSET=[^;]+;/;/g' >> "$TARGET_DIR/$TARGET_FILE"
@@ -212,11 +211,11 @@ if [ "$ACTION" = all ] || [ "$ACTION" = default ]; then
 fi
 
 if [ "$ACTION" = all ] || [ "$ACTION" = demo ]; then
-	# @todo review the list of excluded tables
+	# @todo review the list of excluded tables - see comment above
 	mysqldump --column-statistics=0 -h"$MYSQL_HOST" -P"$MYSQL_PORT" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" \
 		$MYSQL_DUMP_OPTIONS $SORT_ROWS_OPTION \
 		--ignore-table="${MYSQL_DATABASE}.mrpsupplies" \
-		--ignore-table="${MYSQL_DATABASE}.mrpplanedorders" \
+		--ignore-table="${MYSQL_DATABASE}.mrpplannedorders" \
 		--ignore-table="${MYSQL_DATABASE}.mrpparameters" \
 		--ignore-table="${MYSQL_DATABASE}.levels" \
 		--ignore-table="${MYSQL_DATABASE}.mrprequirements" \
