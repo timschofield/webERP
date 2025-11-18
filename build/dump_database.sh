@@ -2,21 +2,23 @@
 
 set -e
 
-# @todo add a cli option to insert a FirstLogin line in `config` table - needed when creating the demo dump
+# @todo add a cli option to insert a FirstLogin=0 line in `config` table - needed when creating the demo dump
+# @todo add a `-z` option to zip the created tarballs, making it easier to share them
 
 help() {
 	printf "Usage: dump_database.sh [OPIONS] ACTION
 
-Used to create
-a) an 'empty' database to use when creating a new company: default.sql, and
-b) a 'demo' database containing operational data for learning and testing: demo.sql.
+Used to create either
+a) an 'almost empty' database to use when creating a new company: default.sql,
+b) a 'demo' database containing operational data for learning and testing: demo.sql, or
+c) a _fully empty_ database, useful for comparing deviations in schema: : schemaonly.sql, or
 
-Action: either default, demo or all
+Action: either default, demo, schemaonly or all (which is default+demo)
 
 Options:
   -c        adds 'create schema' to the sql scripts it creates
   -d        adds 'drop table if exists' to the sql scripts it creates
-  -t        adds 'create tables' to the sql scripts it creates
+  -t        adds 'create tables' to the sql scripts it creates (for schemaonly, this always happens)
   -o \$DIR   use a custom directory for saving the files to
 
 Uses env vars: MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE
@@ -24,7 +26,7 @@ Uses env vars: MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABAS
 NB: the db user must have sufficient permissions to be able to execute mysqldump. You might need to use the admin
 user instead of the user used to run the application.
 
-NB: truncates table audittrail on the live db in use.
+NB: truncates table audittrail on the live db in use!
 "
 }
 
@@ -32,7 +34,7 @@ ADD_CREATE_SCHEMA_STATEMENTS=false
 ADD_CREATE_TABLES_STATEMENTS=false
 ADD_DROP_TABLES_OPTION='--skip-add-drop-table'
 SORT_ROWS_OPTION=
-MYSQL_DUMP_OPTIONS="--skip-set-charset --skip-create-options --no-create-info  --skip-extended-insert --single-transaction"
+MYSQL_DUMP_OPTIONS="--skip-set-charset --skip-create-options --no-create-info --skip-extended-insert --single-transaction"
 
 # parse cli options and arguments
 while getopts ":cdho:st" opt
@@ -78,14 +80,18 @@ if [ -z "$TARGET_DIR" ]; then
 fi
 
 ACTION="$1"
-if [ "$ACTION" != all ] && [ "$ACTION" != default ] && [ "$ACTION" != demo ]; then
-	echo "ERROR: please provide an argument. It must be either 'all', 'default' or 'demo'" >&2
+if [ "$ACTION" != all ] && [ "$ACTION" != default ] && [ "$ACTION" != demo ] && [ "$ACTION" != schemaonly ]; then
+	echo "ERROR: please provide an argument. It must be either 'all', 'default', 'demo' or 'schemaonly'" >&2
 	exit 1
 fi
 
 if [ "$ADD_CREATE_TABLES_STATEMENTS" != 'true' ] && [ "$ADD_DROP_TABLES_OPTION" = '--add-drop-table' ]; then
 	echo "ERROR: the option to add drop-tables statements only works when also adding create-table statements" >&2
 	exit 1
+fi
+
+if [ "$ACTION" = schemaonly ]; then
+	ADD_CREATE_TABLES_STATEMENTS=true
 fi
 
 mysql -h"$MYSQL_HOST" -P"$MYSQL_PORT" -u"$MYSQL_USER"  -p"$MYSQL_PASSWORD" "$MYSQL_DATABASE" < "$BASE_DIR/build/TruncateAuditTrail.sql"
@@ -103,6 +109,11 @@ if [ "$ADD_CREATE_SCHEMA_STATEMENTS" = true ]; then
 		echo "USE $MYSQL_DATABASE;" >> "$TARGET_DIR/default.sql"
 		echo "" >> "$TARGET_DIR/default.sql"
 	fi
+	if [ "$ACTION" = schemaonly ]; then
+		echo "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE;" > "$TARGET_DIR/default.sql"
+		echo "USE $MYSQL_DATABASE;" >> "$TARGET_DIR/default.sql"
+		echo "" >> "$TARGET_DIR/schemaonly.sql"
+	fi
 else
 	if [ "$ACTION" = all ] || [ "$ACTION" = demo ]; then
 		echo "" > "$TARGET_DIR/demo.sql"
@@ -110,10 +121,15 @@ else
 	if [ "$ACTION" = all ] || [ "$ACTION" = default ]; then
 		echo "" > "$TARGET_DIR/default.sql"
 	fi
+	if [ "$ACTION" = schemaonly ]; then
+		echo "" >> "$TARGET_DIR/schemaonly.sql"
+	fi
 fi
 
 if [ "$ADD_CREATE_TABLES_STATEMENTS" = true ]; then
-	if [ "$ACTION" = all ] || [ "$ACTION" = default ]; then
+	if [ "$ACTION" = schemaonly ]; then
+		TARGET_FILE=schemaonly.sql
+	elif [ "$ACTION" = all ] || [ "$ACTION" = default ]; then
 		TARGET_FILE=default.sql
 	else
 		TARGET_FILE=demo.sql
@@ -121,7 +137,10 @@ if [ "$ADD_CREATE_TABLES_STATEMENTS" = true ]; then
 
 	# the `--column-statistics=0` option is needed when using mysqldump from mysql to access some mariadb versions
 
-	# @todo review the list of excluded tables
+	# @todo review the list of excluded tables:
+	#       - mrpplanedorders is probably a typo for mrpplannedorders
+	#       - are we missing tempbom, passbom, passbom2, bomlevels, mrpcalendar?
+	#       - table `buckets` is not in the std list of tables any more
 	mysqldump --column-statistics=0 -h"$MYSQL_HOST" -P"$MYSQL_PORT" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" \
 	    --skip-set-charset --no-data $ADD_DROP_TABLES_OPTION \
 		--ignore-table="${MYSQL_DATABASE}.buckets" \
@@ -142,7 +161,14 @@ if [ "$ADD_CREATE_TABLES_STATEMENTS" = true ]; then
 fi
 
 if [ "$ACTION" = all ] || [ "$ACTION" = default ]; then
-	# @todo review the list of included tables
+	# @todo review the list of included tables - this list is longer than the one in install/sql/data, but it misses
+	#       menuitems, modules, prodspecgroups which are in there.
+	#       Compared to the one in install/sql/demo.sql, it misses modules, menuitems, chartmaster, periods,
+	#       departments, areas, workcentres, taxgrouptaxes, salesman, salestypes, debtortype, shippers, debtorsmaster,
+	#       custbranch, custontacts, custnotes, debtortypenotes, suppliertype, suppliers, suppliercontacts,
+	#       stockcategory, manufacturers, salescat, stockmaster, locstock, prices, bom, locationusers, glaccountusers,
+	#       tags, pctypetabs, pctabs, pcexpenses, pctags, fixedassetlocations, fixedassetcategories, fixedassets,
+	#       employees, qatests, dashboard_scripts, dashboard_users
 	mysqldump --column-statistics=0 -h"$MYSQL_HOST" -P"$MYSQL_PORT" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" \
 		$MYSQL_DUMP_OPTIONS $SORT_ROWS_OPTION "$MYSQL_DATABASE" \
 		accountgroups \
