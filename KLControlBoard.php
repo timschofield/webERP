@@ -55,6 +55,7 @@ if ($_SESSION['UserID'] == "Ricard"){
 //	$NumberOfTestExecuted = CategoryItemsMissingInShops("TESTKA", "SHOPKL", $NumberOfTestExecuted, $RootPath);
 
 /*	$KL_SystemAdmin = true;
+	$KL_Partner = true;
 	$KL_GeneralAffairsManager = true;
 	$KL_OperationalLeader = true;
 	$KL_AdministrationLeader = true;
@@ -70,6 +71,8 @@ if ($_SESSION['UserID'] == "Ricard"){
 	$KL_SPGJunior = true;
 	$KL_PettyCash = true;
 	$KL_ITSupport = true;
+	$KL_HRDManager = true;
+	$KL_MarketingManager = true;
 */
 //	phpinfo();
 
@@ -396,6 +399,7 @@ if ($ProcessSection01){
 					"111121101AD",   25000000,   75000000,
 					"111121110AD",   25000000,   75000000,
 					"111121115AD",   25000000,   75000000, 
+					"111121106AD",   25000000,   75000000, 
 					"111121121AD",     100000,    1000000,
 					"111121122AD",     100000,    1000000,
 					"111121125AD",     100000,    1000000,
@@ -407,10 +411,11 @@ if ($ProcessSection01){
 
 		$StartTime = microtime(true);
 		InternalBankTransfers("PTSMH", 
-					"111121105SM", 1000000000, 1500000000,
+					"111121105SM", 1000000000, 2000000000,
 					"111121100SM",   25000000,   75000000,
 					"111121110SM",   25000000,   75000000,
 					"111121115SM",   25000000,   75000000, 
+					"111121106SM",   25000000,   75000000, 
 					"", 0, 0, "", 0, 0,	"", 0, 0,
 					25000000,
 					0,
@@ -420,10 +425,11 @@ if ($ProcessSection01){
 
 		$StartTime = microtime(true);
 		InternalBankTransfers("PTBB", 
-					"111121105BB", 1000000000, 1500000000,
-					"111121101BB",   25000000,   75000000,
-					"111121110BB",   25000000,   75000000,
-					"111121115BB",   25000000,   75000000, 
+					"111121105BB",  750000000, 1500000000,
+					"111121101BB",   25000000,   50000000,
+					"111121110BB",   25000000,   50000000,
+					"111121115BB",   25000000,   50000000, 
+					"111121106BB",   25000000,   50000000, 
 					"", 0, 0, "", 0, 0,	"", 0, 0,
 					25000000,
 					0,

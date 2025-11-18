@@ -4257,7 +4257,8 @@ function InternalBankTransfers($Company,
 							$DanamonAccount, $DanamonMin, $DanamonMax,
 							$MandiriAccount, $MandiriMin, $MandiriMax,
 							$BCAAccount, $BCAMin, $BCAMax,
-							$BNIAccount, $BNIMin, $BNIMax, 
+							$BNIAccount, $BNIMin, $BNIMax,
+							$BRIAccount, $BRIMin, $BRIMax,
 							$TokopediaAccount, $TokopediaMin, $TokopediaMax, 
 							$ShopeeAccount, $ShopeeMin, $ShopeeMax, 
 							$MidtransAccount, $MidtransMin, $MidtransMax, 
@@ -4330,6 +4331,17 @@ function InternalBankTransfers($Company,
 															$TransferBlockFromBank,
 															$Period
 															);
+
+		$TransferNeededDanamon = CalculateTransferFromBankToDanamon($Company, 
+															$TransferNeededDanamon,
+															$BRIAccount, 
+															"BRI",
+															$BRIMin, 
+															$BRIMax,
+															$TransferBlockFromBank,
+															$Period
+															);
+
 	}
 }
 
