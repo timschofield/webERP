@@ -618,6 +618,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		}
 
 		/// @todo this could just be pushed into demo.sql - and checked for presence by the scripts in /build
+		/// @todo also, it should be an UPSERT
 		$SQL = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('FirstLogIn','0')";
 		$Result = DB_query($SQL, '', '', false, false);
 		/// @todo echo error (warning?) if failure
