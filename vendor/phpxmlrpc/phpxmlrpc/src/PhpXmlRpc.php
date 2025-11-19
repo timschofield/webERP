@@ -39,16 +39,15 @@ class PhpXmlRpc
         'unsupported_option' => 20, // client
         // the following 3 are meant to give greater insight than 'invalid_return'. They use the same code for BC,
         // but you can override their value in your own code
-        'invalid_xml' => 2, // client
+        'invalid_xml' => 2, // client (and server, when interop mode is enabled)
         'xml_not_compliant' => 2, // client
         'xml_parsing_error' => 2, // client
 
-        /// @todo verify: can these conflict with $xmlrpcerrxml?
-        'cannot_decompress' => 103,
-        'decompress_fail' => 104,
-        'dechunk_fail' => 105,
-        'server_cannot_decompress' => 106,
-        'server_decompress_fail' => 107,
+        'cannot_decompress' => 153,
+        'decompress_fail' => 154,
+        'dechunk_fail' => 155,
+        'server_cannot_decompress' => 156,
+        'server_decompress_fail' => 157,
     );
 
     /**
@@ -119,7 +118,7 @@ class PhpXmlRpc
     /**
      * @var string
      */
-    public static $xmlrpcVersion = "4.11.2";
+    public static $xmlrpcVersion = "4.11.5";
 
     /**
      * @var int
@@ -128,7 +127,10 @@ class PhpXmlRpc
     public static $xmlrpcerruser = 800;
     /**
      * @var int
-     * Let XML parse errors start at 100
+     * Let XML parse errors start at 100.
+     * The final code will be 100 + X, with X coming from https://www.php.net/manual/en/xml.error-codes.php.
+     * Values are known to go from 1 (XML_ERROR_NO_MEMORY) to 21 (XML_ERROR_EXTERNAL_ENTITY_HANDLING).
+     * Used only server-side
      */
     public static $xmlrpcerrxml = 100;
 
@@ -230,6 +232,7 @@ class PhpXmlRpc
         Encoder::setLogger($logger);
         Http::setLogger($logger);
         Request::setLogger($logger);
+        Response::setLogger($logger);
         Server::setLogger($logger);
         Value::setLogger($logger);
         Wrapper::setLogger($logger);
@@ -241,13 +244,18 @@ class PhpXmlRpc
      *
      * @return void
      *
-     * @tofo feature creep - allow switching back to the original set of codes; querying the current mode
+     * @todo feature creep - allow switching back to the original set of codes; querying the current mode
      */
     public static function useInteropFaults()
     {
         self::$xmlrpcerr = Interop::$xmlrpcerr;
 
         self::$xmlrpcerruser = -Interop::$xmlrpcerruser;
+    }
+
+    public static function isUsingInteropFaults()
+    {
+        return self::$xmlrpcerruser == -Interop::$xmlrpcerruser;
     }
 
     /**

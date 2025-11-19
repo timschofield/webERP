@@ -151,6 +151,7 @@ class Style
         $vAlign = $style->getAlignment()->getVertical();
         $wrap = $style->getAlignment()->getWrapText();
         $indent = $style->getAlignment()->getIndent();
+        $readOrder = $style->getAlignment()->getReadOrder();
 
         $this->writer->startElement('style:table-cell-properties');
         if (!empty($vAlign) || $wrap) {
@@ -172,7 +173,7 @@ class Style
 
         $this->writer->endElement();
 
-        if ($hAlign !== '' || !empty($indent)) {
+        if ($hAlign !== '' || !empty($indent) || $readOrder === Alignment::READORDER_RTL || $readOrder === Alignment::READORDER_LTR) {
             $this->writer
                 ->startElement('style:paragraph-properties');
             if ($hAlign !== '') {
@@ -181,6 +182,11 @@ class Style
             if (!empty($indent)) {
                 $indentString = sprintf('%.4f', $indent * self::INDENT_TO_INCHES) . 'in';
                 $this->writer->writeAttribute('fo:margin-left', $indentString);
+            }
+            if ($readOrder === Alignment::READORDER_RTL) {
+                $this->writer->writeAttribute('style:writing-mode', 'rl-tb');
+            } elseif ($readOrder === Alignment::READORDER_LTR) {
+                $this->writer->writeAttribute('style:writing-mode', 'lr-tb');
             }
             $this->writer->endElement();
         }
@@ -294,6 +300,21 @@ class Style
         $this->writer->writeAttribute(
             'style:name',
             sprintf('%s_%d_%d', self::ROW_STYLE_PREFIX, $sheetId, $rowDimension->getRowIndex())
+        );
+
+        $this->writeRowProperties($rowDimension);
+
+        // End
+        $this->writer->endElement(); // Close style:style
+    }
+
+    public function writeDefaultRowStyle(RowDimension $rowDimension, int $sheetId): void
+    {
+        $this->writer->startElement('style:style');
+        $this->writer->writeAttribute('style:family', 'table-row');
+        $this->writer->writeAttribute(
+            'style:name',
+            sprintf('%s%d', self::ROW_STYLE_PREFIX, $sheetId)
         );
 
         $this->writeRowProperties($rowDimension);

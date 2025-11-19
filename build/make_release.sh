@@ -9,7 +9,7 @@ Script used to build a 'release': runs various syntax checks, makes sure compose
 updates the translation files, creates database dumps and a tarball.
 
 Options:
-  -s \$ACTIONS  Skip executing one or more actions (separated by comma). Supported: check_php, composer, update_translations, dump_db, create_tarball
+  -s \$ACTIONS  Skip executing one or more actions (separated by comma). Supported: check_php, check_db_dumps, composer, update_translations, dump_db, create_tarball
 
 NB: some of the scripts used as part of the build process
 "
@@ -52,9 +52,11 @@ if [[ "$SKIP_ACTIONS" != *",check_php,"* ]]; then
 	"$BASE_DIR/build/check_syntax.sh" || exit 1
 fi
 
-#echo "Checking the sql files..."
-#"$BASE_DIR/build/check_install_sql_files.sh"
-#"$BASE_DIR/build/check_demo_db_dump.sh"
+if [[ "$SKIP_ACTIONS" != *",check_db_dumps,"* ]]; then
+	echo "Checking the db-dump sql files..."
+	#"$BASE_DIR/build/check_install_sql_files.sh"
+	"$BASE_DIR/build/check_demo_db_dump.sh"
+fi
 
 if [[ "$SKIP_ACTIONS" != *",composer,"* ]]; then
 	echo "Checking and updating composer configuration..."
