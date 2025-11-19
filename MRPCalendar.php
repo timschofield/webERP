@@ -85,7 +85,7 @@ function submit(&$ChangeDate)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_S
 				daynumber int(6) NOT NULL,
 				manufacturingflag smallint(6) NOT NULL default '1',
 				INDEX (daynumber),
-				PRIMARY KEY (calendardate)) DEFAULT CHARSET=utf8";
+				PRIMARY KEY (calendardate)) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
 	$ErrMsg = __('The SQL to create passbom failed with the message');
 	$Result = DB_query($SQL, $ErrMsg);
 

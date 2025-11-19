@@ -495,7 +495,7 @@ function CreateTable($Table, $SQL) {
 
 	if (DB_num_rows($Result) == 0) {
 		DB_IgnoreForeignKeys();
-		$Response = executeSQL($SQL . ' ENGINE=InnoDB DEFAULT CHARSET=utf8', false);
+		$Response = executeSQL($SQL . ' ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci', false);
 		DB_ReinstateForeignKeys();
 		if ($Response == 0) {
 			OutputResult(__('The table') . ' ' . $Table . ' ' . __('has been created'), 'success');

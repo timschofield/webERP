@@ -411,7 +411,7 @@ function UpdateMultiCompanyAccounts(){
 		  PRIMARY KEY (`accountcode`),
 		  KEY `AccountName` (`accountname`),
 		  KEY `Group_` (`group_`)
-		) ENGINE=InnoDB DEFAULT CHARSET=utf8";
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
 	$Result = DB_query($SQL);
 	prnMsg('      Recreated chartmasterADU table', 'info');
 
@@ -455,7 +455,7 @@ function UpdateMultiCompanyAccounts(){
 			PRIMARY KEY (`accountcode`),
 			KEY `AccountName` (`accountname`),
 			KEY `Group_` (`group_`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8";
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
 	$Result = DB_query($SQL);
 	prnMsg('      Recreated ChartmasterSM table', 'info');
 
@@ -500,7 +500,7 @@ function UpdateMultiCompanyAccounts(){
 			PRIMARY KEY (`accountcode`),
 			KEY `AccountName` (`accountname`),
 			KEY `Group_` (`group_`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8";
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
 	$Result = DB_query($SQL);
 	prnMsg('      Recreated ChartmasterBB table', 'info');
 
@@ -540,7 +540,7 @@ function UpdateMultiCompanyAccounts(){
 			PRIMARY KEY (`accountcode`),
 			KEY `AccountName` (`accountname`),
 			KEY `Group_` (`group_`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8";
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
 	$Result = DB_query($SQL);
 	prnMsg('      Recreated ChartmasterIK table', 'info');
 
@@ -568,7 +568,7 @@ function UpdateMultiCompanyAccounts(){
 			PRIMARY KEY (`accountcode`),
 			KEY `AccountName` (`accountname`),
 			KEY `Group_` (`group_`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8";
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
 	$Result = DB_query($SQL);
 	prnMsg('      Recreated ChartmasterPI table', 'info');
 
