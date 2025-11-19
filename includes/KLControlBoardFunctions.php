@@ -13,7 +13,6 @@
 * CategoryItemsMissingInShops - Lists category items missing in shops
 * CategoryItemsNotInShop - Lists items in a category not available in a specific shop
 * CheckNegativeStock - Checks for negative stock quantities
-* CheckPackagingToBeRefilled - Checks packaging that needs to be refilled
 * ComponentsToObsolete - Lists components that could be obsoleted
 * ConsumablesGoodsNotEnoughStock - Lists consumable goods with insufficient stock
 * CustomersDebtControl - Controls customer debt balances

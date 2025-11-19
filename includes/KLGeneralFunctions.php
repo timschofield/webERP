@@ -694,6 +694,17 @@ function GetLocationNameFromCode($LocCode){
 	return '';
 }
 
+function GetItemCategoryIdFromCode($StockID){
+	$ErrMsg = 'Error in function GetItemCategoryIdFromCode()';
+	$SQL="SELECT categoryid FROM stockmaster WHERE stockid = '" . $StockID . "'";
+	$Result = DB_query($SQL,$ErrMsg);
+	if (DB_num_rows($Result) > 0) {
+		$Row = DB_fetch_row($Result);
+		return $Row['0'];
+	}
+	return '';
+}
+
 function GetItemDescriptionFromCode($StockID){
 	$ErrMsg = 'Error in function GetItemDescriptionFromCode()';
 	$SQL="SELECT description FROM stockmaster WHERE stockid = '" . $StockID . "'";
@@ -2010,8 +2021,11 @@ function GetItemTransferReason($Reason){
 		// from StockDispatch.php
 		return 'Manual Dispatch Needed by Reorder Level';
 	} elseif ($Reason == 'MANUAL'){
-		// from StockLocTransfer.php
+		// from StockLocTransfer.php for all stock categories except packaging
 		return 'Manual Transfer';
+	} elseif ($Reason == 'PACKAGING'){
+		// from StockLocTransfer.php for stock category packaging
+		return 'Packaging Transfer';
 	} elseif ($Reason == 'OTHERS_SPG'){
 		// from KLPOSReturnToKantor.php
 		return 'Return by SPG for other reasons';
