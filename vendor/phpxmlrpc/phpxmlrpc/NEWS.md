@@ -1,3 +1,48 @@
+## XML-RPC for PHP version 4.11.5 - 2025/11/11
+
+* improved: make it easy to allow CORS requests to the demo server on hosts other than the altervista one
+
+* changed the default public demo server and debugger to be hosted at tanoconsulting.com
+
+
+## XML-RPC for PHP version 4.11.4 - 2025/10/3
+
+* improved: allow to force usage of HTTP 1.1. when using curl for calls, via usage of 'http11_only'
+
+* improved: when using "Interop" error codes, use error code -32700 when xml parsing fails server-side, instead of 100+X
+
+* improved: changed some error numbers to avoid conflicts - now errors related to http compression use the range 153-157,
+  while the range 103-107 is reserved for xml parsing errors
+
+* improved: added new methods: `Server::generatePayload($resp, $respCharset)`,
+  `Server::printPayload($payload, $respContentType, $respEncoding)` , `HTTP::setAcceptedStatusCodes($statusCodes)`
+  and `Wrapper::cloneClientForClosure($client)`. Made previously private method `Client::_try_multicall` protected.
+  Added to `Wrapper` protected members `$prefix = 'xmlrpc'` and `$allowedResponseClass`.
+  Allow '*' as argument for `Wrapper::holdObject()`.
+  All of this to help subclasses such as the Json-Rpc client, server, request and wrapper.
+
+* improved: prepared the debugger for json-rpc 2.0 support, which will be in an upcoming release of the PhpJsonRpc library
+
+* improved: the `server/codegen.php` demo file now works in 2 steps, to better exemplify real-world usage
+
+* fixed: the `client/parallel.php` demo was not sending separate requests when using curl "multi" mode
+
+* fixed: method `PhpXmlRpc::setLogger` was not resetting the Response Logger
+
+* fixed: the `vm.sh` script would not expose the http ports of the test container to the host
+
+
+## XML-RPC for PHP version 4.11.3 - 2025/10/3
+
+* improved: fixed deprecation warnings on PHP 8.5
+
+* improved: added CI testing on PHP 8.5
+
+* improved: teach the vm.sh script how to properly configure test envs using PHP 8.5
+
+* improved: do not hardcode `/tmp` as temporary dir in demo files
+
+
 ## XML-RPC for PHP version 4.11.2 - 2025/6/20
 
 * fixed: the Client would not honour the timeout when in Socket mode (issue #127, thanks to @dima-bzzz for PR #84)

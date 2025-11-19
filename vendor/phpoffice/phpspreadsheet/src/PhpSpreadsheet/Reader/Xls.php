@@ -140,7 +140,7 @@ class Xls extends XlsBase
     /**
      * REF structures. Only applies to BIFF8.
      *
-     * @var mixed[][]
+     * @var array<int, array{'externalBookIndex': int, 'firstSheetIndex': int, 'lastSheetIndex': int}>
      */
     protected array $ref;
 
@@ -292,6 +292,16 @@ class Xls extends XlsBase
     public function listWorksheetInfo(string $filename): array
     {
         return (new Xls\ListFunctions())->listWorksheetInfo2($filename, $this);
+    }
+
+    /**
+     * Return worksheet info (Name, Last Column Letter, Last Column Index, Total Rows, Total Columns).
+     *
+     * @return array<int, array{worksheetName: string, dimensionsMinR: int, dimensionsMinC: int, dimensionsMaxR: int, dimensionsMaxC: int, lastColumnLetter: string}>
+     */
+    public function listWorksheetDimensions(string $filename): array
+    {
+        return (new Xls\ListFunctions())->listWorksheetDimensions2($filename, $this);
     }
 
     /**
@@ -1254,6 +1264,8 @@ class Xls extends XlsBase
 
                         break;
                 }
+                $readOrder = (0xC0 & ord($recordData[8])) >> 6;
+                $objStyle->getAlignment()->setReadOrder($readOrder);
 
                 // offset:  9; size: 1; Flags used for attribute groups
 
@@ -2022,8 +2034,8 @@ class Xls extends XlsBase
 
                     // repeated option flags
                     // OpenOffice.org documentation 5.21
-                    $option = ord($recordData[$pos]);
                     /** @var int $pos */
+                    $option = ord($recordData[$pos]);
                     ++$pos;
 
                     /** @var int $limitpos */
@@ -2647,7 +2659,14 @@ class Xls extends XlsBase
             $useDefaultHeight = (0x8000 & self::getUInt2d($recordData, 6)) >> 15;
 
             if (!$useDefaultHeight) {
-                $this->phpSheet->getRowDimension($r + 1)->setRowHeight($height / 20);
+                if (
+                    $this->phpSheet->getDefaultRowDimension()->getRowHeight() > 0
+                ) {
+                    $this->phpSheet->getRowDimension($r + 1)
+                        ->setCustomFormat(true, ($height === 255) ? -1 : ($height / 20));
+                } else {
+                    $this->phpSheet->getRowDimension($r + 1)->setRowHeight($height / 20);
+                }
             }
 
             // offset: 8; size: 2; not used

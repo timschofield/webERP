@@ -1079,7 +1079,8 @@ class Xlsx extends BaseReader
                                             $childNode = $node->addChild('formula1');
                                             if ($childNode !== null) { // null should never happen
                                                 // see https://github.com/phpstan/phpstan/issues/8236
-                                                $childNode[0] = (string) $item->formula1->children(Namespaces::DATA_VALIDATIONS2)->f; // @phpstan-ignore-line
+                                                // resolved with Phpstan 2.1.23
+                                                $childNode[0] = (string) $item->formula1->children(Namespaces::DATA_VALIDATIONS2)->f;
                                             }
                                         }
                                     }
@@ -1204,7 +1205,10 @@ class Xlsx extends BaseReader
                                     $shapes = self::xpathNoFalse($vmlCommentsFile, '//v:shape');
                                     foreach ($shapes as $shape) {
                                         /** @var SimpleXMLElement $shape */
-                                        $shape->registerXPathNamespace('v', Namespaces::URN_VML);
+                                        $vmlNamespaces = $shape->getNamespaces();
+                                        $shape->registerXPathNamespace('v', $vmlNamespaces['v'] ?? Namespaces::URN_VML);
+                                        $shape->registerXPathNamespace('x', $vmlNamespaces['x'] ?? Namespaces::URN_EXCEL);
+                                        $shape->registerXPathNamespace('o', $vmlNamespaces['o'] ?? Namespaces::URN_MSOFFICE);
 
                                         if (isset($shape['style'])) {
                                             $style = (string) $shape['style'];
@@ -1229,6 +1233,7 @@ class Xlsx extends BaseReader
                                                 $clientData = $clientData[0];
 
                                                 if (isset($clientData['ObjectType']) && (string) $clientData['ObjectType'] == 'Note') {
+                                                    $clientData->registerXPathNamespace('x', $vmlNamespaces['x'] ?? Namespaces::URN_EXCEL);
                                                     $temp = $clientData->xpath('.//x:Row');
                                                     if (is_array($temp)) {
                                                         $row = $temp[0];
@@ -1277,7 +1282,7 @@ class Xlsx extends BaseReader
                                                 // Set comment properties
                                                 $comment = $docSheet->getComment([(int) $column + 1, (int) $row + 1]);
                                                 $comment->getFillColor()->setRGB($fillColor);
-                                                if (isset($drowingImages[$fillImageRelId])) {
+                                                if (isset($fillImageRelId, $drowingImages[$fillImageRelId])) {
                                                     $objDrawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
                                                     $objDrawing->setName($fillImageTitle);
                                                     $imagePath = str_replace(['../', '/xl/'], 'xl/', $drowingImages[$fillImageRelId]);
@@ -2200,22 +2205,78 @@ class Xlsx extends BaseReader
             return;
         }
 
-        $excel->getSecurity()->setLockRevision(self::getLockValue($xmlWorkbook->workbookProtection, 'lockRevision'));
-        $excel->getSecurity()->setLockStructure(self::getLockValue($xmlWorkbook->workbookProtection, 'lockStructure'));
-        $excel->getSecurity()->setLockWindows(self::getLockValue($xmlWorkbook->workbookProtection, 'lockWindows'));
+        $security = $excel->getSecurity();
+        $security->setLockRevision(
+            self::getLockValue($xmlWorkbook->workbookProtection, 'lockRevision')
+        );
+        $security->setLockStructure(
+            self::getLockValue($xmlWorkbook->workbookProtection, 'lockStructure')
+        );
+        $security->setLockWindows(
+            self::getLockValue($xmlWorkbook->workbookProtection, 'lockWindows')
+        );
 
         if ($xmlWorkbook->workbookProtection['revisionsPassword']) {
-            $excel->getSecurity()->setRevisionsPassword(
+            $security->setRevisionsPassword(
                 (string) $xmlWorkbook->workbookProtection['revisionsPassword'],
                 true
             );
         }
+        if ($xmlWorkbook->workbookProtection['revisionsAlgorithmName']) {
+            $security->setRevisionsAlgorithmName(
+                (string) $xmlWorkbook->workbookProtection['revisionsAlgorithmName']
+            );
+        }
+        if ($xmlWorkbook->workbookProtection['revisionsSaltValue']) {
+            $security->setRevisionsSaltValue(
+                (string) $xmlWorkbook->workbookProtection['revisionsSaltValue'],
+                false
+            );
+        }
+        if ($xmlWorkbook->workbookProtection['revisionsSpinCount']) {
+            $security->setRevisionsSpinCount(
+                (int) $xmlWorkbook->workbookProtection['revisionsSpinCount']
+            );
+        }
+        if ($xmlWorkbook->workbookProtection['revisionsHashValue']) {
+            if ($security->advancedRevisionsPassword()) {
+                $security->setRevisionsPassword(
+                    (string) $xmlWorkbook->workbookProtection['revisionsHashValue'],
+                    true
+                );
+            }
+        }
 
         if ($xmlWorkbook->workbookProtection['workbookPassword']) {
-            $excel->getSecurity()->setWorkbookPassword(
+            $security->setWorkbookPassword(
                 (string) $xmlWorkbook->workbookProtection['workbookPassword'],
                 true
             );
+        }
+
+        if ($xmlWorkbook->workbookProtection['workbookAlgorithmName']) {
+            $security->setWorkbookAlgorithmName(
+                (string) $xmlWorkbook->workbookProtection['workbookAlgorithmName']
+            );
+        }
+        if ($xmlWorkbook->workbookProtection['workbookSaltValue']) {
+            $security->setWorkbookSaltValue(
+                (string) $xmlWorkbook->workbookProtection['workbookSaltValue'],
+                false
+            );
+        }
+        if ($xmlWorkbook->workbookProtection['workbookSpinCount']) {
+            $security->setWorkbookSpinCount(
+                (int) $xmlWorkbook->workbookProtection['workbookSpinCount']
+            );
+        }
+        if ($xmlWorkbook->workbookProtection['workbookHashValue']) {
+            if ($security->advancedPassword()) {
+                $security->setWorkbookPassword(
+                    (string) $xmlWorkbook->workbookProtection['workbookHashValue'],
+                    true
+                );
+            }
         }
     }
 

@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com)
 and this project adheres to [Semantic Versioning](https://semver.org). Thia is always true of the master branch. Some earlier branches remain supported and security fixes are applied to them; if the security fix represents a breaking change, it may have to be applied as a minor or patch version.
 
-## TBD - 5.2.0
+## TBD - 5.3.0
 
 ### Added
 
@@ -30,6 +30,39 @@ and this project adheres to [Semantic Versioning](https://semver.org). Thia is a
 ### Fixed
 
 - Nothing yet.
+
+## 2025-10-25 - 5.2.0
+
+### Added
+
+- This release should be usable with Php8.5 Release Candidates without deprecation messages.
+- Option to display numbers with less precision. [Issue #4626](https://github.com/PHPOffice/PhpSpreadsheet/issues/4626) [PR #4640](https://github.com/PHPOffice/PhpSpreadsheet/pull/4640)
+- Offer Tcpdf Interface which throws exception rather than die. [PR #4666](https://github.com/PHPOffice/PhpSpreadsheet/pull/4666)
+- Xls Reader ListWorksheetDimensions method. [PR #4689](https://github.com/PHPOffice/PhpSpreadsheet/pull/4689)
+
+### Deprecated
+
+- Worksheet::getHashInt serves no useful purpose. No replacement.
+- Spreadsheet::getId serves no useful purpose. No replacement.
+
+### Fixed
+
+- Performance improvement when working with large amounts of cells. [Issue #4607](https://github.com/PHPOffice/PhpSpreadsheet/issues/4607) [PR #4609](https://github.com/PHPOffice/PhpSpreadsheet/pull/4609)
+- Minor improvements to Calculation coverage. [PR #4624](https://github.com/PHPOffice/PhpSpreadsheet/pull/4624)
+- Conditional formatting in extLst. [Issue #4629](https://github.com/PHPOffice/PhpSpreadsheet/issues/4629) [PR #4633](https://github.com/PHPOffice/PhpSpreadsheet/pull/4633)
+- Php8.5 deprecates use of null as array index. [PR #4634](https://github.com/PHPOffice/PhpSpreadsheet/pull/4634)
+- Wrapped cells and default row height. [Issue #4584](https://github.com/PHPOffice/PhpSpreadsheet/issues/4584) [PR #4645](https://github.com/PHPOffice/PhpSpreadsheet/pull/4645)
+- For Php8.5, replace one of our two uses of `__wakeup` with `__unserialize`, and eliminate the other. [PR #4639](https://github.com/PHPOffice/PhpSpreadsheet/pull/4639)
+- Use prefix _xlfn for BASE function. [Issue #4638](https://github.com/PHPOffice/PhpSpreadsheet/issues/4638) [PR #4641](https://github.com/PHPOffice/PhpSpreadsheet/pull/4641)
+- Warning messages with corrupt Xls file. [Issue #4647](https://github.com/PHPOffice/PhpSpreadsheet/issues/4647) [PR #4648](https://github.com/PHPOffice/PhpSpreadsheet/pull/4648)
+- Additional support for union and intersection. [PR #4596](https://github.com/PHPOffice/PhpSpreadsheet/pull/4596)
+- Missing array keys x,o,v for Xml Reader. [Issue #4668](https://github.com/PHPOffice/PhpSpreadsheet/issues/4668) [PR #4669](https://github.com/PHPOffice/PhpSpreadsheet/pull/4669)
+- Missing array key x for Xlsx Reader VML. [Issue #4505](https://github.com/PHPOffice/PhpSpreadsheet/issues/4505) [PR #4676](https://github.com/PHPOffice/PhpSpreadsheet/pull/4676)
+- Better support for Style Alignment Read Order. [Issue #850](https://github.com/PHPOffice/PhpSpreadsheet/issues/850) [PR #4655](https://github.com/PHPOffice/PhpSpreadsheet/pull/4655)
+- More sophisticated workbook password algorithms (Xlsx only). [Issue #4673](https://github.com/PHPOffice/PhpSpreadsheet/issues/4673) [PR #4675](https://github.com/PHPOffice/PhpSpreadsheet/pull/4675)
+- Xls Writer fix DIMENSIONS record. [Issue #4682](https://github.com/PHPOffice/PhpSpreadsheet/issues/4682) [PR #4687](https://github.com/PHPOffice/PhpSpreadsheet/pull/4687)
+- Xls Reader listWorksheetInfo process MULRK records. [PR #4689](https://github.com/PHPOffice/PhpSpreadsheet/pull/4689)
+- Make Reader Xls Escher generic. [PR #4690](https://github.com/PHPOffice/PhpSpreadsheet/pull/4690)
 
 ## 2025-09-03 - 5.1.0
 
