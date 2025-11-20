@@ -31,5 +31,5 @@ sudo chown -h kapal45:psacln symlinkfileorfolder changes the ownership to kapal4
 /var/www/vhosts/kapal-laut.com/ptadu.com/TEST/weberp/companies/test_erp/part_pics IS a SymLink /var/www/vhosts/kapal-laut.com/httpdocs/image/catalog/KL/part_pics
 
 /var/www/vhosts/kapal-laut.com/ptadu-development.com/weberp/companies/kl_erp IS a SymLink to /var/www/vhosts/kapal-laut.com/ptadu.com/weberp/companies/kl_erp 
-/var/www/vhosts/kapal-laut.com/ptadu-development.com/TEST/weberp/companies/kl_erp IS a SymLink to /var/www/vhosts/kapal-laut.com/ptadu.com/TEST/weberp/companies/kl_erp 
+/var/www/vhosts/kapal-laut.com/ptadu-development.com/TEST/weberp/companies/test_erp IS a SymLink to /var/www/vhosts/kapal-laut.com/ptadu.com/TEST/weberp/companies/test_erp 
 
