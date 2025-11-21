@@ -55,12 +55,13 @@ if ($_SESSION['UserID'] == "Ricard"){
 //	$NumberOfTestExecuted = CategoryItemsMissingInShops("TESTKA", "SHOPKL", $NumberOfTestExecuted, $RootPath);
 
 /*	$KL_SystemAdmin = true;
-	$KL_OperationalManager = true;
+	$KL_Partner = true;
+	$KL_GeneralAffairsManager = true;
 	$KL_OperationalLeader = true;
 	$KL_AdministrationLeader = true;
 	$KL_AdministrationTeam = true;
-	$KL_BusinessDevelopmentManager = true;
- 	$KL_SalesDirector = true;
+	$KL_PurchasingManager = true;
+ 	$KL_SalesTeamManager = true;
 	$KL_PurchasingTeam = true;
 	$KL_ShopSupportTeam = true;
 	$KL_ShopSupportLeader = true;
@@ -70,6 +71,8 @@ if ($_SESSION['UserID'] == "Ricard"){
 	$KL_SPGJunior = true;
 	$KL_PettyCash = true;
 	$KL_ITSupport = true;
+	$KL_HRDManager = true;
+	$KL_MarketingManager = true;
 */
 //	phpinfo();
 
@@ -103,8 +106,7 @@ if ($ProcessSection01){
 	/***************************************************************************************
 	* STANDARD COST
 	***************************************************************************************/
-	if ($KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector
+	if ($KL_PurchasingManager
 		OR $KL_PurchasingTeam){
 		$StartTime = microtime(true);
 		SuppliersWithoutBasicData($RootPath);
@@ -159,16 +161,14 @@ if ($ProcessSection01){
 	***************************************************************************************/
 
 	if ($KL_SystemAdmin
-		OR $KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector){
+		OR $KL_SalesTeamManager){
 		$StartTime = microtime(true);
 		$NumberOfTestExecuted = MinimumOutletStockAvailable(20, 80, 20, $NumberOfTestExecuted);
 		TimeNeededForExecution("MinimumOutletStockAvailable", $StartTime, $KL_SystemAdmin);
 	}
 
 	if ($KL_SystemAdmin
-		OR $KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector
+		OR $KL_SalesTeamManager
 		OR $KL_ShopSupportTeam){
 		
 		$StartTime = microtime(true);
@@ -213,9 +213,8 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_OperationalManager
-		OR $KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector){
+	if ($KL_GeneralAffairsManager
+		OR $KL_SalesTeamManager){
 
 		$StartTime = microtime(true);
 		ItemsChangingPriceDelayed(5, $RootPath);
@@ -236,8 +235,7 @@ if ($ProcessSection01){
 	}
 
 	if ($KL_SystemAdmin
-		OR $KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector
+		OR $KL_SalesTeamManager
 		OR $KL_ShopSupportLeader){
 		
 		$StartTime = microtime(true);
@@ -255,8 +253,7 @@ if ($ProcessSection01){
 
 	}
 
-	if ($KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector
+	if ($KL_PurchasingManager
 		OR $KL_PurchasingTeam){	
 
 		$StartTime = microtime(true);
@@ -281,8 +278,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector
+	if ($KL_PurchasingManager
 		OR $KL_PurchasingTeam 
 		OR $KL_ShopSupportLeader){	
 
@@ -399,10 +395,12 @@ if ($ProcessSection01){
 		OR $KL_AdministrationTeam){
 		$StartTime = microtime(true);
 		InternalBankTransfers("PTADU", 
-					"111121105AD", 1000000000, 2000000000,
+					"111121105AD",  750000000, 1500000000, 2000000000,
 					"111121101AD",   25000000,   75000000,
 					"111121110AD",   25000000,   75000000,
 					"111121115AD",   25000000,   75000000, 
+					"111121106AD",   25000000,   75000000, 
+					"111121117AD",    1000000,    5000000,
 					"111121121AD",     100000,    1000000,
 					"111121122AD",     100000,    1000000,
 					"111121125AD",     100000,    1000000,
@@ -414,10 +412,12 @@ if ($ProcessSection01){
 
 		$StartTime = microtime(true);
 		InternalBankTransfers("PTSMH", 
-					"111121105SM", 1000000000, 1500000000,
+					"111121105SM",  750000000, 1500000000, 2000000000,
 					"111121100SM",   25000000,   75000000,
 					"111121110SM",   25000000,   75000000,
 					"111121115SM",   25000000,   75000000, 
+					"111121106SM",   25000000,   75000000, 
+					"111121117SM",    1000000,    5000000,
 					"", 0, 0, "", 0, 0,	"", 0, 0,
 					25000000,
 					0,
@@ -427,10 +427,12 @@ if ($ProcessSection01){
 
 		$StartTime = microtime(true);
 		InternalBankTransfers("PTBB", 
-					"111121105BB", 1000000000, 1500000000,
-					"111121101BB",   25000000,   75000000,
-					"111121110BB",   25000000,   75000000,
-					"111121115BB",   25000000,   75000000, 
+					"111121105BB",  750000000, 1500000000, 2000000000,
+					"111121101BB",   25000000,   50000000,
+					"111121110BB",   25000000,   50000000,
+					"111121115BB",   25000000,   50000000, 
+					"111121106BB",   25000000,   50000000,
+					"", 0, 0, 
 					"", 0, 0, "", 0, 0,	"", 0, 0,
 					25000000,
 					0,
@@ -622,8 +624,7 @@ if ($ProcessSection01){
 	* STOCK CONTROL
 	***************************************************************************************/
 
-	if ($KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector
+	if ($KL_PurchasingManager
 		OR $KL_PurchasingTeam){
 		$StartTime = microtime(true);
 		ItemsInSetup("ReadyToTest", "SETKLA", $RootPath);
@@ -667,8 +668,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 	}
 	
-	if ($KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector
+	if ($KL_PurchasingManager
 		OR $KL_PurchasingTeam){
 		$StartTime = microtime(true);
 		ObsoleteComponentsInActiveBOM($RootPath);
@@ -676,8 +676,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector
+	if ($KL_PurchasingManager
 		OR $KL_PurchasingTeam){
 
 		$StartTime = microtime(true);
@@ -686,8 +685,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector){
+	if ($KL_PurchasingManager){
 
 		$StartTime = microtime(true);
 		GoodsJustArrived("PO", "KANTO", 3, $RootPath);
@@ -731,8 +729,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector){
+	if ($KL_SalesTeamManager){
 
 		$StartTime = microtime(true);
 		ItemsWithStockKantorButReorderLevelTokoZero("SHOPKL", $RootPath);
@@ -818,7 +815,7 @@ if ($ProcessSection02){
 		prnMsg("Performing Control Panel Section 02",'info');
 	}
 
-	if ($KL_OperationalManager
+	if ($KL_GeneralAffairsManager
 		OR $KL_ShopSupportLeader
 		OR $KL_PurchasingTeam){
 
@@ -828,8 +825,7 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector
+	if ($KL_PurchasingManager
 		OR $KL_PurchasingTeam){
 
 		$StartTime = microtime(true);
@@ -875,8 +871,7 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin
-		OR $KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector
+		OR $KL_PurchasingManager
 		OR $KL_PurchasingTeam){
 
 		$StartTime = microtime(true);
@@ -889,8 +884,7 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector
+	if ($KL_PurchasingManager
 		OR $KL_PurchasingTeam){
 		$StartTime = microtime(true);
 		ComponentsToObsolete(false, 0, $RootPath);
@@ -902,8 +896,7 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector
+	if ($KL_PurchasingManager
 		OR $KL_PurchasingTeam
 		OR $KL_ShopSupportLeader){
 		$StartTime = microtime(true);
@@ -912,8 +905,7 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector
+	if ($KL_PurchasingManager
 		OR $KL_PurchasingTeam
 		OR $KL_ShopSupportLeader){
 		$StartTime = microtime(true);
@@ -922,8 +914,7 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector
+	if ($KL_PurchasingManager
 		OR $KL_PurchasingTeam
 		OR $KL_ShopSupportLeader
 		OR $KL_ShopSupportTeam){
@@ -934,7 +925,7 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin 
-		OR $KL_OperationalManager){
+		OR $KL_GeneralAffairsManager){
 		$StartTime = microtime(true);
 		CheckPackagingToBeRefilled(false, false, $RootPath);
 		TimeNeededForExecution("CheckPackagingToBeRefilled", $StartTime, $KL_SystemAdmin);
@@ -949,9 +940,8 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin
-		OR $KL_OperationalManager
-		OR $KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector
+		OR $KL_GeneralAffairsManager
+		OR $KL_SalesTeamManager
 		OR $KL_PurchasingTeam 
 		OR $KL_ShopSupportTeam){
 		
@@ -964,8 +954,7 @@ if ($ProcessSection02){
 	/***************************************************************************************
 	* PACKAGING CONTROL
 	***************************************************************************************/
-	if ($KL_BusinessDevelopmentManager 
-		OR $KL_SalesDirector
+	if ($KL_PurchasingManager 
 		OR $KL_PurchasingTeam){
 
 		$StartTime = microtime(true);
@@ -981,8 +970,7 @@ if ($ProcessSection02){
 	/***************************************************************************************
 	* SALES CONTROL
 	***************************************************************************************/
-	if ($KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector){
+	if ($KL_SalesTeamManager){
 
 		ItemsInCategoryForMoreThanDays( 120, "SETKLA", $RootPath);
 		$NumberOfTestExecuted++;
@@ -1104,9 +1092,9 @@ if ($ProcessSection02){
 	* PO, Sales Orders
 	***************************************************************************************/
 
-	if ($KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector
+	if ($KL_PurchasingManager
 		OR $KL_PurchasingTeam){
+
 		$StartTime = microtime(true);
 		OldPOStillActive(90, $RootPath);
 		TimeNeededForExecution("OldPOStillActive", $StartTime, $KL_SystemAdmin);
@@ -1125,9 +1113,9 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 	
-	if ($KL_BusinessDevelopmentManager 
-		OR $KL_SalesDirector
+	if ($KL_PurchasingManager 
 		OR $KL_PurchasingTeam){
+
 		$StartTime = microtime(true);
 		PurchaseOrdersWrongPlannedDates($RootPath);
 		TimeNeededForExecution("PurchaseOrdersWrongPlannedDates", $StartTime, $KL_SystemAdmin);
@@ -1150,8 +1138,8 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 	
-	if ($KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector){
+	if ($KL_PurchasingManager){
+
 		$StartTime = microtime(true);
 		POStatusControl("FORSALE","STILL NOT FULLY PAID", 0, $PeriodNow, $RootPath);
 		TimeNeededForExecution("POStatusControl", $StartTime, $KL_SystemAdmin);
@@ -1162,9 +1150,9 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 	
-	if ($KL_BusinessDevelopmentManager 
-		OR $KL_SalesDirector
+	if ($KL_PurchasingManager 
 		OR $KL_PurchasingTeam){
+
 		$StartTime = microtime(true);
 		POStatusControl("","BALI PAID BUT NOT RECEIVED IN KANTOR", 0, $PeriodNow, $RootPath);
 		TimeNeededForExecution("POStatusControl", $StartTime, $KL_SystemAdmin);
@@ -1209,8 +1197,8 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector){
+	if ($KL_PurchasingManager){
+
 		$StartTime = microtime(true);
 		POStatusControl("","ARRIVING IN NEXT DAYS", 75, $PeriodNow, $RootPath);
 		TimeNeededForExecution("POStatusControl", $StartTime, $KL_SystemAdmin);
@@ -1218,7 +1206,8 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin 
-		OR $KL_AdministrationTeam){
+		OR $KL_CustomerService){
+
 		$StartTime = microtime(true);
 		OutstandingOrders("Retail", "Order", $RootPath);
 		TimeNeededForExecution("OutstandingOrders", $StartTime, $KL_SystemAdmin);
@@ -1233,11 +1222,10 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin 
-		OR $KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector
+		OR $KL_SalesTeamManager
 		OR $KL_AdministrationTeam
 		OR $KL_CustomerService
-		OR $KL_OperationalManager
+		OR $KL_GeneralAffairsManager
 		OR $KL_ShopSupportLeader
 		OR $KL_ShopSupportTeam){
 		$StartTime = microtime(true);
@@ -1247,10 +1235,9 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin 
-		OR $KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector
+		OR $KL_SalesTeamManager
 		OR $KL_CustomerService
-		OR $KL_OperationalManager){
+		OR $KL_GeneralAffairsManager){
 		$StartTime = microtime(true);
 		OutstandingOrders("Wholesale", "Quotation", $RootPath);
 		TimeNeededForExecution("OutstandingOrders", $StartTime, $KL_SystemAdmin);
@@ -1259,7 +1246,7 @@ if ($ProcessSection02){
 	
 	/*
 	if ($KL_SystemAdmin 
-		OR $KL_OperationalManager
+		OR $KL_GeneralAffairsManager
 		OR $KL_ShopSupportLeader){ 
 		OutstandingOrders("Consignment", "Order", $RootPath);
 		OutstandingOrders("Consignment", "Quotation", $RootPath);
@@ -1275,11 +1262,11 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin 
-		OR $KL_SalesDirector
+		OR $KL_SalesTeamManager
 		OR $KL_AdministrationTeam
 		OR $KL_CustomerService
 		OR $KL_ShopSupportLeader
-		OR $KL_OperationalManager){ 
+		OR $KL_GeneralAffairsManager){ 
 		$StartTime = microtime(true);
 		OnlineMarketPlacePaymentPending(10, $RootPath);
 		TimeNeededForExecution("OnlineMarketPlacePaymentPending", $StartTime, $KL_SystemAdmin);
@@ -1287,8 +1274,7 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin 
-		OR $KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector
+		OR $KL_SalesTeamManager
 		OR $KL_AdministrationTeam
 		OR $KL_CustomerService
 		OR $KL_ShopSupportTeam){ 
@@ -1313,7 +1299,7 @@ if ($ProcessSection02){
 	}
  
 	if ($KL_SystemAdmin 
-		OR $KL_SalesDirector
+		OR $KL_SalesTeamManager
 		OR $KL_CustomerService){
 		$StartTime = microtime(true);
 		OnlineQuotationsFollowUp($RootPath );
@@ -1336,8 +1322,6 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin
-		OR $KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector
 		OR $KL_CustomerService){
 		$StartTime = microtime(true);
 		OnlineOrdersFollowUp("KL-WEBSITE", 10, $RootPath);
@@ -1346,8 +1330,6 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin 
-		OR $KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector
 		OR $KL_AdministrationTeam
 		OR $KL_CustomerService
 		OR $KL_ShopSupportTeam){ 
@@ -1358,8 +1340,6 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin 
-		OR $KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector
 		OR $KL_CustomerService
 		OR $KL_ShopSupportTeam){ 
 		$StartTime = microtime(true);
@@ -1381,8 +1361,7 @@ if ($ProcessSection02){
 	***************************************************************************************/
 
 	if ($KL_ITSupport
-		OR $KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector
+		OR $KL_PurchasingManager
 		OR $KL_PurchasingTeam){
 		$StartTime = microtime(true);
 		ActiveItemsWithoutPicture($RootPath);
@@ -1390,7 +1369,7 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SalesDirector
+	if ($KL_PurchasingManager
 		OR $KL_ITSupport){
 		$StartTime = microtime(true);
 		ImagesWithoutProduct($RootPath);
@@ -1398,7 +1377,7 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SalesDirector
+	if ($KL_SalesTeamManager
 		OR $KL_CustomerService
 		OR $KL_ITSupport){
 		$StartTime = microtime(true);
@@ -1407,7 +1386,7 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SalesDirector
+	if ($KL_SalesTeamManager
 		OR $KL_ITSupport){
 		$StartTime = microtime(true);
 		PicturesToMoveToObsolete(false, $RootPath);
@@ -1416,8 +1395,7 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin
-		OR $KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector
+		OR $KL_SalesTeamManager
 		OR $KL_PurchasingTeam
 		OR $KL_CustomerService){
 		$StartTime = microtime(true);
@@ -1443,9 +1421,8 @@ if ($ProcessSection02){
 	}
 	
 	if ($KL_SystemAdmin 
-		OR $KL_OperationalManager 
-		OR $KL_BusinessDevelopmentManager 
-		OR $KL_SalesDirector
+		OR $KL_GeneralAffairsManager 
+		OR $KL_SalesTeamManager
 		OR $KL_ShopSupportLeader 
 		OR $KL_ShopManager){
 		$StartTime = microtime(true);
@@ -1473,16 +1450,15 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin 
-		OR $KL_BusinessDevelopmentManager 
-		OR $KL_SalesDirector
-		OR $KL_OperationalManager){
+		OR $KL_SalesTeamManager
+		OR $KL_GeneralAffairsManager){
 		$StartTime = microtime(true);
 		TransfersDelayed(4, $RootPath);
 		TimeNeededForExecution("TransfersDelayed", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_OperationalManager){
+	if ($KL_GeneralAffairsManager){
 		$StartTime = microtime(true);
 		ItemsCancelledInTransfers(3, $RootPath);
 		TimeNeededForExecution("ItemsCancelledInTransfers", $StartTime, $KL_SystemAdmin);
@@ -1497,9 +1473,8 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin 
-		OR $KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector
-		OR $KL_OperationalManager
+		OR $KL_PurchasingManager
+		OR $KL_SalesTeamManager
 		OR $KL_AdministrationLeader){
 		$StartTime = microtime(true);
 		PettyCashBalance('Authorizer');

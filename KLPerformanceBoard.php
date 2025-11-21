@@ -48,22 +48,6 @@ $yesterday_year = date('Y', strtotime("-1 days"));
 ***************************************************************************************/
 
 if ($_SESSION['UserID'] == "Ricard"){
-/*	$KL_SystemAdmin = true;
-	$KL_OperationalManager = true;
-	$KL_OperationalLeader = true;
-	$KL_AdministrationTeam = true;
-	$KL_BusinessDevelopmentManager = true;
- 	$KL_SalesDirector = true;
-	$KL_PurchasingTeam = true;
-	$KL_ShopSupportTeam = true;
-	$KL_ShopSupportLeader = true;
-	$KL_OnlineSales = true;
-	$KL_ShopManager = true;
-	$KL_SPGSeniorOrSupport = true;
-	$KL_SPGJunior = true;
-	$KL_PettyCash = true;
-	$KL_ITSupport = true;
-*/
 //	phpinfo();
 }
 
@@ -78,10 +62,9 @@ if ($ProcessSection01){
 	}
 
 	if ($KL_SystemAdmin
-		OR $KL_OperationalManager
-		OR $KL_SalesDirector
+		OR $KL_GeneralAffairsManager
+		OR $KL_SalesTeamManager
 		OR $KL_CustomerService
-		OR $KL_BusinessDevelopmentManager
 		OR $KL_ShopManager){
 		$StartTime = microtime(true);
 		AverageSales("Shop", 365, 180, 90, 30, 15, 1, 30, "CurrentYear", "All");
@@ -98,8 +81,7 @@ if ($ProcessSection01){
 	}
 
 	if ($KL_SystemAdmin
-		OR $KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector){
+		OR $KL_SalesTeamManager){
 		$StartTime = microtime(true);
 		PeriodDifferenceSales("IMMEDIATE", "Shop", 365);
 		TimeNeededForExecution("PeriodDifferenceSales_365", $StartTime, $KL_SystemAdmin);
@@ -107,9 +89,8 @@ if ($ProcessSection01){
 	}
 
 	if ($KL_SystemAdmin
-		OR $KL_OperationalManager
-		OR $KL_SalesDirector
-		OR $KL_BusinessDevelopmentManager){
+		OR $KL_GeneralAffairsManager
+		OR $KL_SalesTeamManager){
 		$StartTime = microtime(true);
 		PeriodDifferenceSales("YEAR", "Shop",  30);
 		TimeNeededForExecution("PeriodDifferenceSales_YEAR_30", $StartTime, $KL_SystemAdmin);
@@ -128,8 +109,7 @@ if ($ProcessSection01){
 	}
 
 	if ($KL_SystemAdmin
-		OR $KL_SalesDirector
-		OR $KL_BusinessDevelopmentManager){
+		OR $KL_SalesTeamManager){
 
 //		AverageSales("Online", 365, 180, 90, 30, 15, 1, 30, "CurrentYear", "All");
 //		$NumberOfTestExecuted++;
@@ -140,10 +120,9 @@ if ($ProcessSection01){
 	}
 
 	if ($KL_SystemAdmin 
-		OR $KL_OperationalManager
+		OR $KL_GeneralAffairsManager
 		OR $KL_ShopManager
-		OR $KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector){
+		OR $KL_SalesTeamManager){
 		$StartTime = microtime(true);
 		AverageCustomerBehaviourByValueInvoice("Shop", "SHOPKL", 30);
 		TimeNeededForExecution("AverageCustomerBehaviourByValueInvoice_SHOPKL", $StartTime, $KL_SystemAdmin);
@@ -158,9 +137,8 @@ if ($ProcessSection01){
 
 	if ($KL_SystemAdmin 
 		OR $KL_ShopManager
-		OR $KL_OperationalManager
-		OR $KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector){
+		OR $KL_GeneralAffairsManager
+		OR $KL_SalesTeamManager){
 		$StartTime = microtime(true);
 		GeneralCustomerBehaviour("SHOPKL", 30);
 		TimeNeededForExecution("GeneralCustomerBehaviour_SHOPKL", $StartTime, $KL_SystemAdmin);
@@ -174,7 +152,7 @@ if ($ProcessSection01){
 	}
 
 	if ($KL_SystemAdmin 
-		OR $KL_BusinessDevelopmentManager){
+		OR $KL_SalesTeamManager){
 		$StartTime = microtime(true);
 		DailySalesRecords(10, 365 * 2, "2024-08-04");
 		TimeNeededForExecution("DailySalesRecords", $StartTime, $KL_SystemAdmin);
@@ -193,9 +171,8 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin 
-		OR $KL_OperationalManager
-		OR $KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector){
+		OR $KL_GeneralAffairsManager
+		OR $KL_SalesTeamManager){
 		$StartTime = microtime(true);
 		LocationInformationReview($RootPath);
 		TimeNeededForExecution("LocationInformationReview", $StartTime, $KL_SystemAdmin);
@@ -203,9 +180,9 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin 
-		OR $KL_OperationalManager
+		OR $KL_GeneralAffairsManager
 		OR $KL_ShopManager
-		OR $KL_SalesDirector){
+		OR $KL_SalesTeamManager){
 		$StartTime = microtime(true);
 		ActiveTransfersByLocation();
 		TimeNeededForExecution("ActiveTransfersByLocation", $StartTime, $KL_SystemAdmin);
@@ -217,9 +194,8 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin 
-		OR $KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector
-		OR $KL_OperationalManager){
+		OR $KL_SalesTeamManager
+		OR $KL_GeneralAffairsManager){
 		$StartTime = microtime(true);
 		RecentlyClosedTransferStatus(1, $RootPath);
 		TimeNeededForExecution("RecentlyClosedTransferStatus", $StartTime, $KL_SystemAdmin);
@@ -231,8 +207,7 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin 
-		OR $KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector){
+		OR $KL_SalesTeamManager){
 		$StartTime = microtime(true);
 		FinishedStockDistribution("FORSALE", "LOCATION");
 		TimeNeededForExecution("FinishedStockDistribution_FORSALE_LOCATION", $StartTime, $KL_SystemAdmin);
@@ -303,8 +278,7 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin 
-		OR $KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector){
+		OR $KL_SalesTeamManager){
 		$StartTime = microtime(true);
 		PurchaseOrdersProcessTime(75);
 		TimeNeededForExecution("PurchaseOrdersProcessTime", $StartTime, $KL_SystemAdmin);
@@ -353,7 +327,7 @@ if ($ProcessSection02){
 	}
 */	
 	if ($KL_SystemAdmin OR
-		$KL_OperationalManager){
+		$KL_GeneralAffairsManager){
 		$StartTime = microtime(true);
 		POStatusControl("PACKAGING","ARRIVING IN NEXT DAYS", 75, $PeriodNow, $RootPath);
 		TimeNeededForExecution("POStatusControl_PACKAGING_ARRIVING", $StartTime, $KL_SystemAdmin);
@@ -395,8 +369,7 @@ if ($ProcessSection03){
 	
 	if ($KL_SystemAdmin  
 		OR $KL_ShopManager
-		OR $KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector){
+		OR $KL_SalesTeamManager){
 		$StartTime = microtime(true);
 		FinishedStockDistribution("DISPLAYS", "LOCATION");
 		TimeNeededForExecution("FinishedStockDistribution_DISPLAYS_LOCATION", $StartTime, $KL_SystemAdmin);
@@ -404,7 +377,7 @@ if ($ProcessSection03){
 	}
 
 	if ($KL_SystemAdmin
-		OR $KL_OperationalManager
+		OR $KL_GeneralAffairsManager
 		OR $KL_OperationalLeader
 		OR $KL_ShopManager){
 		$StartTime = microtime(true);
@@ -421,7 +394,7 @@ if ($ProcessSection03){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_OperationalManager
+	if ($KL_GeneralAffairsManager
 		OR $KL_OperationalLeader
 		OR $KL_ShopManager){
 		$StartTime = microtime(true);

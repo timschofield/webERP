@@ -42,20 +42,6 @@ if (!isset($_GET['Section'])){
 ***************************************************************************************/
 
 if ($_SESSION['UserID'] == "Ricard"){
-//	$KL_SystemAdmin = true;
-//	$KL_OperationalManager = true;
-//	$KL_OperationalLeader = true;
-//	$KL_AdministrationTeam = true;
-//	$KL_BusinessDevelopmentManager = true;
-//	$KL_PurchasingTeam = true;
-//	$KL_ShopSupportTeam = true;
-//	$KL_ShopSupportLeader = true;
-//	$KL_OnlineSales = true;
-//	$KL_ShopManager = true;
-//	$KL_SPGSeniorOrSupport = true;
-//	$KL_SPGJunior = true;
-//	$KL_PettyCash = true;
-//	$KL_ITSupport = true;
 //	phpinfo();
 }
 
@@ -74,8 +60,7 @@ if ($ProcessSection01){
 	TimeNeededForExecution("ShowTotalItemsMoving", $StartTime, $KL_SystemAdmin);
 	
 	if ($KL_SystemAdmin 
-		OR $KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector){
+		OR $KL_SalesTeamManager){
 		
 		$StartTime = microtime(true);
 		ItemsWithoutRetailPrice("SETKLA", MINIMUM_PRICE_FACTOR_KL, $RootPath);
@@ -130,8 +115,7 @@ if ($ProcessSection01){
 	}
 
 	if ($KL_SystemAdmin 
-		OR $KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector){
+		OR $KL_SalesTeamManager){
 		$StartTime = microtime(true);
 		$IssuesFound += PriceBelowStandard("SETKLA", MINIMUM_PRICE_FACTOR_KL, 0, $RootPath);
 		TimeNeededForExecution("PriceBelowStandard", $StartTime, $KL_SystemAdmin);
@@ -195,8 +179,7 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin 
-		OR $KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector){
+		OR $KL_SalesTeamManager){
 		$StartTime = microtime(true);
 		$IssuesFound += ItemsTooCheap("TESTKA", MINIMUM_PRICE_FACTOR_KL, MINIMUM_PRICE_FACTOR_TOPSALES_KL, 0, 50, 60, $RootPath);
 		TimeNeededForExecution("ItemsTooCheap", $StartTime, $KL_SystemAdmin);
@@ -251,8 +234,7 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin 
-		OR $KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector){
+		OR $KL_SalesTeamManager){
 		$StartTime = microtime(true);
 		$IssuesFound += PricesTooOld(3, 10, 20, $RootPath);
 		TimeNeededForExecution("PricesTooOld", $StartTime, $KL_SystemAdmin);

@@ -196,6 +196,9 @@ if (isset($_POST['Submit']) AND $InputError==false){
 							WHERE stockid='" . $_POST['StockID' . $i] . "'";
 			$DecimalResult = DB_query($DecimalsSql);
 			$DecimalRow = DB_fetch_array($DecimalResult);
+			if (GetItemCategoryIdFromCode($_POST['StockID' . $i]) == 'SHPACK'){
+				$Reason = 'PACKAGING';
+			}
 			$SQL = "INSERT INTO loctransfers (reference,
 								stockid,
 								shipqty,

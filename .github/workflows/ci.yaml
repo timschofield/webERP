@@ -17,10 +17,7 @@ jobs:
                     # NB: the order of options is picked to make the github page display nicer (test naming in left col)
                     - php: '8.5'
                       dbtype: mysql
-                      # As of 2025/09, 'latest' mysql version is 9.4. That is known to fail installation - see bug #703.
-                      # @todo re-enable testing with 'latest' as soon as that bug is fixed
-                      #dbversion: latest
-                      dbversion: 8.3
+                      dbversion: latest
                       operating-system: ubuntu-24.04
                       dbport: 3306
                     - php: '8.4'

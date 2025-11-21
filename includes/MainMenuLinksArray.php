@@ -37,9 +37,9 @@ $Result = DB_query($SQL);
 
 while ($MyRow = DB_fetch_array($Result)) {
 	if (($KL_SystemAdmin 
-			OR $KL_BusinessDevelopmentManager
-			OR $KL_OperationalManager
-			OR $KL_SalesDirector)
+			OR $KL_PurchasingManager
+			OR $KL_GeneralAffairsManager
+			OR $KL_SalesTeamManager)
 		AND ($MyRow['url'] == '/KLPerformanceBoard.php')) {
 			// divide the KL performance board into 3 sections
 			$MenuItems[$MyRow['modulelink']][$MyRow['menusection']]['Caption'][] = 	__('KL Performance Board Section 01');
@@ -49,8 +49,8 @@ while ($MyRow = DB_fetch_array($Result)) {
 			$MenuItems[$MyRow['modulelink']][$MyRow['menusection']]['Caption'][] = 	__('KL Performance Board Section 03');
 			$MenuItems[$MyRow['modulelink']][$MyRow['menusection']]['URL'][] = '/KLPerformanceBoard.php?Section=03';
 	}
-	elseif (($KL_BusinessDevelopmentManager
-			OR $KL_SalesDirector)
+	elseif (($KL_PurchasingManager
+			OR $KL_SalesTeamManager)
 			// divide the KL control board into 2 sections
 		AND ($MyRow['url'] == '/KLControlBoard.php')) {
 			$MenuItems[$MyRow['modulelink']][$MyRow['menusection']]['Caption'][] = 	__('KL Control Board Section 01');

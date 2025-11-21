@@ -127,10 +127,18 @@ function round_multiple_of($n,$x=1) {
 }
 
 function round_down_multiple_of($n,$x=1) {
-	if ($x == 0){
+	if ($x == 0) {
 		return 0;
 	} else {
 		return floor($n/$x)*$x;
+	}
+}
+
+function round_up_multiple_of($n,$x=1) {
+	if ($x == 0) {
+		return 0;
+	} else {
+		return ceil($n/$x)*$x;
 	}
 }
 

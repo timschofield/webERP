@@ -20,18 +20,16 @@ if ($KL_SystemAdmin){
 }
 
 if ($KL_SystemAdmin 
-	OR $KL_OperationalManager 
-	OR $KL_BusinessDevelopmentManager 
-	OR $KL_SalesDirector
+	OR $KL_GeneralAffairsManager 
+	OR $KL_SalesTeamManager
 	OR $KL_ShopManager){
 	RetailCustomerDataQualitySPG("ALL", 30);
 	$NumberOfTestExecuted++;
 }
 
 if ($KL_SystemAdmin 
-	OR $KL_OperationalManager 
-	OR $KL_BusinessDevelopmentManager 
-	OR $KL_SalesDirector
+	OR $KL_GeneralAffairsManager 
+	OR $KL_SalesTeamManager
 	OR $KL_ShopManager){
 	RetailCustomerAnalysisBySex(365, "ALL");
 	$NumberOfTestExecuted++;
@@ -43,9 +41,8 @@ if ($KL_SystemAdmin){
 }
 
 if ($KL_SystemAdmin 
-	OR $KL_OperationalManager 
-	OR $KL_BusinessDevelopmentManager 
-	OR $KL_SalesDirector
+	OR $KL_GeneralAffairsManager 
+	OR $KL_SalesTeamManager
 	OR $KL_ShopManager){
 
 	RetailCustomerAnalysisByCountry(90, "ALL", "ALL", 30, $CountriesForRetail);
@@ -72,9 +69,8 @@ if ($KL_SystemAdmin
 }
 
 if ($KL_SystemAdmin 
-	OR $KL_OperationalManager 
-	OR $KL_BusinessDevelopmentManager 
-	OR $KL_SalesDirector
+	OR $KL_GeneralAffairsManager 
+	OR $KL_SalesTeamManager
 	OR $KL_ShopManager){
 
 	RetailCustomerAnalysisByAge(90, "ALL");

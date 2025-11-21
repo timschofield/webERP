@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Gaetano Giunta
- * @copyright (C) 2006-2023 G. Giunta
+ * @copyright (C) 2006-2025 G. Giunta
  * @license code licensed under the BSD License: see file license.txt
  */
 
@@ -33,6 +33,12 @@ class Wrapper
     /** @var string */
     protected static $namespace = '\\PhpXmlRpc\\';
 
+    /** @var string */
+    protected static $prefix = 'xmlrpc';
+
+    /** @var null|string set to a namespaced class. If empty, static::$namespace . 'Response' will be used */
+    protected static $allowedResponseClass = null;
+
     /**
      * Given a string defining a php type or phpxmlrpc type (loosely defined: strings
      * accepted come from javadoc blocks), return corresponding phpxmlrpc type.
@@ -46,7 +52,7 @@ class Wrapper
      * @return string
      *
      * @todo support notation `something[]` as 'array'
-     * @todo check if nil support is enabled when finding null
+     * @todo check if nil support is enabled when finding null or void (which makes sense in php for return type)
      */
     public function php2XmlrpcType($phpType)
     {
@@ -315,6 +321,14 @@ class Wrapper
             }
         }
 
+        // for php 7+, we can take advantage of type declarations!
+        if (method_exists($func, 'getReturnType')) {
+            $returnType = $func->getReturnType();
+            if ($returnType !== null) {
+/// @todo
+            }
+        }
+
         // execute introspection of actual function prototype
         $params = array();
         $i = 0;
@@ -322,6 +336,12 @@ class Wrapper
             $params[$i] = array();
             $params[$i]['name'] = '$' . $paramObj->getName();
             $params[$i]['isoptional'] = $paramObj->isOptional();
+            if (method_exists($paramObj, 'getType')) {
+                $paramType = $paramObj->getType();
+                if ($paramType !== null) {
+/// @todo
+                }
+            }
             $i++;
         }
 
@@ -342,7 +362,8 @@ class Wrapper
      * @return array
      *
      * @todo support better docs with multiple types separated by pipes by creating multiple signatures
-     *       (this is questionable, as it might produce a big matrix of possible signatures with many such occurrences)
+     *       (this is questionable, as it might produce a big matrix of possible signatures with many such occurrences,
+     *       but it makes a lot of sense in a php >= 8 world)
      */
     protected function buildMethodSignatures($funcDesc)
     {
@@ -427,6 +448,7 @@ class Wrapper
             $encoderClass = static::$namespace.'Encoder';
             $responseClass = static::$namespace.'Response';
             $valueClass = static::$namespace.'Value';
+            $allowedResponseClass = static::$allowedResponseClass != '' ? static::$allowedResponseClass : $responseClass;
 
             // validate number of parameters received
             // this should be optional really, as we assume the server does the validation
@@ -453,7 +475,7 @@ class Wrapper
 
             $result = call_user_func_array($callable, $params);
 
-            if (! is_a($result, $responseClass)) {
+            if (! is_a($result, $allowedResponseClass)) {
                 // q: why not do the same for int, float, bool, string?
                 if ($funcDesc['returns'] == Value::$xmlrpcDateTime || $funcDesc['returns'] == Value::$xmlrpcBase64) {
                     $result = new $valueClass($result, $funcDesc['returns']);
@@ -487,7 +509,7 @@ class Wrapper
     {
         // determine name of new php function
 
-        $prefix = isset($extraOptions['prefix']) ? $extraOptions['prefix'] : 'xmlrpc';
+        $prefix = isset($extraOptions['prefix']) ? $extraOptions['prefix'] : static::$prefix;
 
         if ($newFuncName == '') {
             if (is_array($callable)) {
@@ -573,7 +595,8 @@ class Wrapper
         }
 
         // since we are building source code for later use, if we are given an object instance,
-        // we go out of our way and store a pointer to it in a static class var...
+        // we go out of our way and store a pointer to it in a static class var.
+        // NB: if the code is used in a _separate_ php request, then a class to Wrapper::holdObject() will be necessary!
         if (is_array($callable) && is_object($callable[0])) {
             static::holdObject($newFuncName, $callable[0]);
             $class = get_class($callable[0]);
@@ -581,7 +604,7 @@ class Wrapper
                 $class = '\\' . $class;
             }
             $innerCode .= "  /// @var $class \$obj\n";
-            $innerCode .= "  \$obj = PhpXmlRpc\\Wrapper::getHeldObject('$newFuncName');\n";
+            $innerCode .= "  \$obj = " . static::$namespace . "Wrapper::getHeldObject('$newFuncName');\n";
             $realFuncName = '$obj->' . $callable[1];
         } else {
             $realFuncName = $plainFuncName;
@@ -591,7 +614,8 @@ class Wrapper
             if ($i < (count($parsVariations) - 1))
                 $innerCode .= "  else\n";
         }
-        $innerCode .= "  if (is_a(\$retVal, '" . static::$namespace . "Response'))\n    return \$retVal;\n  else\n";
+        $allowedResponseClass = static::$allowedResponseClass != '' ? static::$allowedResponseClass : static::$namespace . 'Response';
+        $innerCode .= "  if (is_a(\$retVal, '" . $allowedResponseClass . "'))\n    return \$retVal;\n  else\n";
         /// q: why not do the same for int, float, bool, string?
         if ($funcDesc['returns'] == Value::$xmlrpcDateTime || $funcDesc['returns'] == Value::$xmlrpcBase64) {
             $innerCode .= "    return new " . static::$namespace . "Response(new " . static::$namespace . "Value(\$retVal, '{$funcDesc['returns']}'));";
@@ -725,7 +749,7 @@ class Wrapper
      *                                                          trusted servers ---
      *                            - mixed   return_on_fault     a php value to be returned when the xml-rpc call fails/returns
      *                                                          a fault response (by default the Response object is returned
-     *                                                          in this case).  If a string is used, '%faultCode%' and
+     *                                                          in this case). If a string is used, '%faultCode%' and
      *                                                          '%faultString%' tokens  will be substituted with actual error values
      *                            - bool    throw_on_fault      if true, throw an exception instead of returning a Response
      *                                                          in case of errors/faults;
@@ -862,7 +886,7 @@ class Wrapper
     protected function buildWrapMethodClosure($client, $methodName, array $extraOptions, $mSig)
     {
         // we clone the client, so that we can modify it a bit independently of the original
-        $clientClone = clone $client;
+        $clientClone = $this->cloneClientForClosure($client);
         $function = function() use($clientClone, $methodName, $extraOptions, $mSig)
         {
             $timeout = isset($extraOptions['timeout']) ? (int)$extraOptions['timeout'] : 0;
@@ -972,7 +996,8 @@ class Wrapper
         $decodePhpObjects = isset($extraOptions['decode_php_objs']) ? (bool)$extraOptions['decode_php_objs'] : false;
         $encodeNulls = isset($extraOptions['encode_nulls']) ? (bool)$extraOptions['encode_nulls'] : false;
         $clientCopyMode = isset($extraOptions['simple_client_copy']) ? (int)($extraOptions['simple_client_copy']) : 0;
-        $prefix = isset($extraOptions['prefix']) ? $extraOptions['prefix'] : 'xmlrpc';
+        $prefix = isset($extraOptions['prefix']) ? $extraOptions['prefix'] : static::$prefix;
+        $clientReturnType = isset($extraOptions['client_return_type']) ? $extraOptions['client_return_type'] : $prefix;
         $throwFault = false;
         $decodeFault = false;
         $faultResponse = null;
@@ -987,7 +1012,7 @@ class Wrapper
         if ($clientCopyMode < 2) {
             // client copy mode 0 or 1 == full / partial client copy in emitted code
             $verbatimClientCopy = !$clientCopyMode;
-            $innerCode = '  ' . str_replace("\n", "\n  ", $this->buildClientWrapperCode($client, $verbatimClientCopy, $prefix, static::$namespace));
+            $innerCode = '  ' . str_replace("\n", "\n  ", $this->buildClientWrapperCode($client, $verbatimClientCopy, $clientReturnType, static::$namespace));
             $innerCode .= "\$client->setDebug(\$debug);\n";
             $this_ = '';
         } else {
@@ -1111,7 +1136,8 @@ class Wrapper
         $verbatimClientCopy = isset($extraOptions['simple_client_copy']) ? !($extraOptions['simple_client_copy']) : true;
         $throwOnFault = isset($extraOptions['throw_on_fault']) ? (bool)$extraOptions['throw_on_fault'] : false;
         $buildIt = isset($extraOptions['return_source']) ? !($extraOptions['return_source']) : true;
-        $prefix = isset($extraOptions['prefix']) ? $extraOptions['prefix'] : 'xmlrpc';
+        $prefix = isset($extraOptions['prefix']) ? $extraOptions['prefix'] : static::$prefix;
+        $clientReturnType = isset($extraOptions['client_return_type']) ? $extraOptions['client_return_type'] : $prefix;
 
         $reqClass = static::$namespace . 'Request';
         $decoderClass = static::$namespace . 'Encoder';
@@ -1151,7 +1177,7 @@ class Wrapper
 
         $source = "class $xmlrpcClassName\n{\n  public \$client;\n\n";
         $source .= "  function __construct()\n  {\n";
-        $source .= '    ' . str_replace("\n", "\n    ", $this->buildClientWrapperCode($client, $verbatimClientCopy, $prefix, static::$namespace));
+        $source .= '    ' . str_replace("\n", "\n    ", $this->buildClientWrapperCode($client, $verbatimClientCopy, $clientReturnType, static::$namespace));
         $source .= "\$this->client = \$client;\n  }\n\n";
         $opts = array(
             'return_source' => true,
@@ -1208,7 +1234,7 @@ class Wrapper
      * Take care that no full checking of input parameters is done to ensure that valid php code is emitted.
      * @param Client $client
      * @param bool $verbatimClientCopy when true, copy the whole options of the client, except for 'debug' and 'return_type'
-     * @param string $prefix used for the return_type of the created client
+     * @param string $prefix used for the return_type of the created client (postfixed with 'vals')
      * @param string $namespace
      * @return string
      */
@@ -1233,7 +1259,7 @@ class Wrapper
     }
 
     /**
-     * @param string $index
+     * @param string $index use '*' as wildcard for an objet to be used whenever one with the appropriate index is not found
      * @param object $object
      * @return void
      */
@@ -1252,7 +1278,19 @@ class Wrapper
         if (isset(self::$objHolder[$index])) {
             return self::$objHolder[$index];
         }
+        if (isset(self::$objHolder['*'])) {
+            return self::$objHolder['*'];
+        }
 
         throw new ValueErrorException("No object held for index '$index'");
+    }
+
+    /**
+     * @param Client $client
+     * @return Client
+     */
+    protected function cloneClientForClosure($client)
+    {
+        return clone $client;
     }
 }

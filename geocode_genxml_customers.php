@@ -1,7 +1,5 @@
 <?php
 
-//$PageSecurity = 3;
-
 require(__DIR__ . '/includes/session.php');
 
 include('includes/SQL_CommonFunctions.php');

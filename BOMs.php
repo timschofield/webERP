@@ -577,7 +577,7 @@ if (isset($_GET['Add']) or isset($_GET['Edit'])) {
 
 	echo '<field>
 			<label for="Quantity">', __('Quantity') , ': </label>
-			<input type="text" class="number" name="Quantity" size="10" required="required" maxlength="8" value="', $_POST['Quantity'], '" />
+			<input type="text" class="number" name="Quantity" size="12" required="required" maxlength="12" value="', $_POST['Quantity'], '" />
 			', $ComponentRow['units'], '
 			<fieldhelp>', __('Enter the quantity of this component is to be included.') , '</fieldhelp>
 		</field>';

@@ -14,9 +14,8 @@ $begintime = time_start();
 $NumberOfTestExecuted = 0;
 
 if ($KL_SystemAdmin 
-	OR $KL_OperationalManager 
-	OR $KL_BusinessDevelopmentManager 
-	OR $KL_SalesDirector
+	OR $KL_GeneralAffairsManager 
+	OR $KL_SalesTeamManager
 	OR $KL_ShopManager){
 	HourlyPerformance(15,$RootPath);
 	$NumberOfTestExecuted++;

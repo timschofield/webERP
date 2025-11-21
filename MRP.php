@@ -135,7 +135,7 @@ if (isset($_POST['submit'])) {
 							leadtime smallint(6) NOT NULL default '0',
 							pansize double NOT NULL default '0',
 							shrinkfactor double NOT NULL default '0',
-							eoq double NOT NULL default '0') DEFAULT CHARSET=utf8";
+							eoq double NOT NULL default '0') DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
 	$Result = DB_query($SQL);
 	$SQL = "INSERT INTO levels (part,
 							level,
@@ -222,7 +222,7 @@ if (isset($_POST['submit'])) {
 											directdemand smallint,
 											whererequired char(20),
 											KEY part (part)
-															) DEFAULT CHARSET=utf8";
+															) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
 	$Result = DB_query($SQL, __('Create of mrprequirements failed because'));
 
 	prnMsg(__('Loading requirements from sales orders'), 'info');
@@ -349,7 +349,7 @@ if (isset($_POST['submit'])) {
 										orderno int(11),
 										mrpdate date,
 										updateflag smallint(6),
-										PRIMARY KEY (id)) DEFAULT CHARSET=utf8";
+										PRIMARY KEY (id)) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
 	$Result = DB_query($SQL, __('Create of mrpsupplies failed because'));
 
 	prnMsg(__('Loading supplies from purchase orders'), 'info');
@@ -463,7 +463,7 @@ if (isset($_POST['submit'])) {
 											orderno int(11),
 											mrpdate date,
 											updateflag smallint(6),
-											PRIMARY KEY (id)) DEFAULT CHARSET=utf8";
+											PRIMARY KEY (id)) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
 	$Result = DB_query($SQL, __('Create of mrpplannedorders failed because'));
 
 	// Find the highest and lowest level number
@@ -503,7 +503,7 @@ if (isset($_POST['submit'])) {
 						eoqflag varchar(5),
 						usemrpdemands varchar(5),
 						userldemands varchar(5),
-						leeway smallint) DEFAULT CHARSET=utf8";
+						leeway smallint) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
 	$Result = DB_query($SQL);
 	// Create entry for location field from $_POST['location'], which is an array
 	// since multiple locations can be selected

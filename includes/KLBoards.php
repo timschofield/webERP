@@ -1038,11 +1038,13 @@ function ErrorsInTransfers($maxdays, $RootPath){
 function FinishedStockDistribution($Kind, $ByReport){
 
 	if ($Kind == "FORSALE"){
-		$Operator1 = " AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_IN_SHOPS_NOT_FOR_SALE ."";
+		$Operator1 = " AND (stockcategory.categoryid  IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_SETUP_ALL_DISCOUNT ."
+						OR stockcategory.categoryid  IN " . LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP_ALL_DISCOUNT ."
+						OR stockcategory.categoryid  IN " . LIST_STOCK_CATEGORIES_GENERAL_INCLUDING_SETUP_ALL_DISCOUNT . ") ";
 	} elseif ($Kind == "DISPLAYS"){
-		$Operator1 =  "	AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_DISPLAYS . " ";
+		$Operator1 =  "	AND stockcategory.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_DISPLAYS . " ";
 	} elseif ($Kind == "PACKAGING"){
-		$Operator1 =  "	AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_PACKAGING . " ";
+		$Operator1 =  "	AND stockcategory.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_PACKAGING . " ";
 	} else {
 		$Operator1 =  "	";
 	}
@@ -1050,35 +1052,35 @@ function FinishedStockDistribution($Kind, $ByReport){
 	if ($ByReport == "LOCATION") {
 		$SQL = "SELECT locstock.loccode,
 					locations.locationname,
-					SUM(locstock.reorderlevel) AS optimalstock,
-					SUM(locstock.quantity) AS realstock,
-					SUM(CASE WHEN locstock.reorderlevel > 0 THEN 1 ELSE 0 END) AS optimalmodels,
+					COALESCE(SUM(locstock.reorderlevel), 0) AS optimalstock,
+					COALESCE(SUM(locstock.quantity), 0) AS realstock,
+ 					SUM(CASE WHEN locstock.reorderlevel > 0 THEN 1 ELSE 0 END) AS optimalmodels,
 					SUM(CASE WHEN locstock.quantity > 0 THEN 1 ELSE 0 END) AS realmodels
 				FROM stockcategory
 				INNER JOIN stockmaster
 					ON stockmaster.categoryid = stockcategory.categoryid
+					AND stockmaster.discontinued = 0
 				INNER JOIN locstock
 					ON locstock.stockid = stockmaster.stockid
 				INNER JOIN locations
 					ON locations.loccode = locstock.loccode
-				WHERE stockcategory.stocktype = 'F'
-					AND stockmaster.discontinued = 0" .
+				WHERE stockcategory.stocktype = 'F'" .
 					$Operator1 . "
 				GROUP BY locstock.loccode, locations.locationname
 				ORDER BY locations.locationname";
 	} elseif ($ByReport == "STOCKCATEGORY") {
 		$SQL = "SELECT stockcategory.categoryid,
 					stockcategory.categorydescription,
-					SUM(locstock.reorderlevel) AS optimalstock,
-					SUM(locstock.quantity) AS realstock,
+					COALESCE(SUM(locstock.reorderlevel), 0) AS optimalstock,
+					COALESCE(SUM(locstock.quantity), 0) AS realstock,
 					COUNT(DISTINCT CASE WHEN locstock.quantity > 0 THEN locstock.stockid END) AS realmodels
 				FROM stockcategory
-				INNER JOIN stockmaster
+				LEFT JOIN stockmaster
 					ON stockmaster.categoryid = stockcategory.categoryid
-				INNER JOIN locstock
+					AND stockmaster.discontinued = 0
+				LEFT JOIN locstock
 					ON locstock.stockid = stockmaster.stockid
-				WHERE stockcategory.stocktype = 'F'
-					AND stockmaster.discontinued = 0" .
+				WHERE stockcategory.stocktype = 'F'" .
 					$Operator1 . "
 				GROUP BY stockcategory.categoryid, stockcategory.categorydescription
 				ORDER BY stockcategory.categorydescription";

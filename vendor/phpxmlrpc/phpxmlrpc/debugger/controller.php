@@ -17,7 +17,12 @@
 // Make sure we set the correct charset type for output, so that we can display all characters
 header('Content-Type: text/html; charset=utf-8');
 
+global $inputcharset, $debug, $protocol, $run, $hasjsonrpcclient, $hasjsonrpc2, $wstype, $id, $host, $port, $path, $action,
+    $method, $methodsig, $payload, $alt_payload, $username, $password, $authtype, $verifyhost, $verifypeer, $cainfo, $proxy,
+    $proxyuser, $proxypwd, $timeout, $requestcompression, $responsecompression, $clientcookies;
+
 include __DIR__ . '/common.php';
+
 if ($action == '') {
     $action = 'list';
 }
@@ -66,7 +71,7 @@ if (defined('JSXMLRPC_BASEURL')) {
 <html lang="en">
 <head>
     <link rel="icon" type="image/vnd.microsoft.icon" href="favicon.ico">
-    <title><?php if (defined('DEFAULT_WSTYPE') && DEFAULT_WSTYPE == 1) echo 'JSON-RPC'; else echo 'XML-RPC'; ?> Debugger</title>
+    <title><?php if (defined('DEFAULT_WSTYPE') && (DEFAULT_WSTYPE == 1 || DEFAULT_WSTYPE == 2)) echo 'JSON-RPC'; else echo 'XML-RPC'; ?> Debugger</title>
     <meta name="robots" content="index,nofollow"/>
     <script type="text/javascript" language="Javascript">
         if (window.name != 'frmcontroller')
@@ -159,6 +164,20 @@ if (defined('JSXMLRPC_BASEURL')) {
                 displaydialogeditorbtn(true);//if (document.getElementById('methodpayloadbtn') != undefined) document.getElementById('methodpayloadbtn').disabled = false;
                 document.frmaction.method.disabled = false;
                 document.frmaction.methodpayload.rows = 10;
+                document.frmaction.id.disabled = false;
+                if (document.frmaction.id.value == '') {
+                    document.frmaction.id.value = '1';
+                }
+            }
+            else if (action == 'notification') {
+                document.frmaction.methodpayload.disabled = false;
+                displaydialogeditorbtn(true);//if (document.getElementById('methodpayloadbtn') != undefined) document.getElementById('methodpayloadbtn').disabled = false;
+                document.frmaction.method.disabled = false;
+                document.frmaction.methodpayload.rows = 10;
+                document.frmaction.id.disabled = true;
+                if (document.frmaction.id.value != '') {
+                    document.frmaction.id.value = '';
+                }
             }
             else {
                 document.frmaction.methodpayload.rows = 1;
@@ -166,12 +185,20 @@ if (defined('JSXMLRPC_BASEURL')) {
                     document.frmaction.methodpayload.disabled = true;
                     displaydialogeditorbtn(false); //if (document.getElementById('methodpayloadbtn') != undefined) document.getElementById('methodpayloadbtn').disabled = true;
                     document.frmaction.method.disabled = false;
+                    document.frmaction.id.disabled = false;
+                    if (document.frmaction.id.value == '') {
+                        document.frmaction.id.value = '1';
+                    }
                 }
                 else // list
                 {
                     document.frmaction.methodpayload.disabled = true;
                     displaydialogeditorbtn(false); //if (document.getElementById('methodpayloadbtn') != undefined) document.getElementById('methodpayloadbtn').disabled = false;
                     document.frmaction.method.disabled = true;
+                    document.frmaction.id.disabled = false;
+                    if (document.frmaction.id.value == '') {
+                        document.frmaction.id.value = '1';
+                    }
                 }
             }
         }
@@ -209,17 +236,32 @@ if (defined('JSXMLRPC_BASEURL')) {
         }
 
         function switchtransport(is_json) {
-            if (is_json == 0) {
-                document.getElementById("idcell").style.visibility = 'hidden';
-                document.frmjsonrpc.yes.checked = false;
-                document.frmxmlrpc.yes.checked = true;
-                document.frmaction.wstype.value = "0";
-            }
-            else {
+            if (is_json == 2) {
                 document.getElementById("idcell").style.visibility = 'visible';
-                document.frmjsonrpc.yes.checked = true;
+                document.getElementById("notificationcell").style.visibility = 'visible';
+                document.frmjsonrpc2.yes.checked = true;
+                document.frmjsonrpc1.yes.checked = false;
+                document.frmxmlrpc.yes.checked = false;
+                document.frmaction.wstype.value = "2";
+            } else if (is_json == 1) {
+                document.getElementById("idcell").style.visibility = 'visible';
+                document.getElementById("notificationcell").style.visibility = 'visible';
+                document.frmjsonrpc2.yes.checked = false;
+                document.frmjsonrpc1.yes.checked = true;
                 document.frmxmlrpc.yes.checked = false;
                 document.frmaction.wstype.value = "1";
+            }
+            else {
+                document.getElementById("idcell").style.visibility = 'hidden';
+                document.getElementById("notificationcell").style.visibility = 'hidden';
+                if (document.getElementById("actionnotification").checked) {
+                    document.getElementById("actionnotification").checked = false;
+                    document.getElementById("actionexecute").checked = true;
+                }
+                document.frmjsonrpc2.yes.checked = false;
+                document.frmjsonrpc1.yes.checked = false;
+                document.frmxmlrpc.yes.checked = true;
+                document.frmaction.wstype.value = "0";
             }
         }
 
@@ -234,7 +276,7 @@ if (defined('JSXMLRPC_BASEURL')) {
 
         function activateeditor() {
             var url = '<?php echo $editorurlpath; ?>visualeditor.html?params=<?php echo str_replace(array("\\", "'"), array( "\\\\", "\\'"), $alt_payload); ?>';
-            if (document.frmaction.wstype.value == "1")
+            if (document.frmaction.wstype.value == "1" || document.frmaction.wstype.value == "2")
                 url += '&type=jsonrpc';
             var wnd = window.open(url, '_blank', 'width=750, height=400, location=0, resizable=1, menubar=0, scrollbars=1');
         }
@@ -271,11 +313,13 @@ if (defined('JSXMLRPC_BASEURL')) {
     } ?>">
 <h1>XML-RPC
 <?php if ($hasjsonrpcclient) {
-    echo '<form name="frmxmlrpc" style="display: inline;" action="."><input name="yes" type="radio" onclick="switchtransport(0);"';
-    // q: does this if make sense at all?
-    if (!class_exists('\PhpXmlRpc\Client')) echo ' disabled="disabled"';
-    echo ' /></form> / <form name="frmjsonrpc" style="display: inline;" action="."><input name="yes" type="radio" onclick="switchtransport(1);"/></form>
-    JSON-RPC';
+    echo '<form name="frmxmlrpc" style="display: inline;" action="."><input name="yes" type="radio" onclick="switchtransport(0);"' .
+        // q: does this check make sense at all?
+        (!class_exists('\PhpXmlRpc\Client') ? ' disabled="disabled"' : '') . ' /></form>';
+    if ($hasjsonrpc2) {
+        echo ' / <form name="frmjsonrpc2" style="display: inline;" action="."><input name="yes" type="radio" onclick="switchtransport(2);"/></form>JSON-RPC 2.0 ';
+    }
+    echo ' / <form name="frmjsonrpc1" style="display: inline;" action="."><input name="yes" type="radio" onclick="switchtransport(1);"/></form>JSON-RPC 1.0 ';
 } ?>
 Debugger</h1><h3>(based on <a href="https://gggeek.github.io/phpxmlrpc/">PHPXMLRPC</a>, ver. <?php echo htmlspecialchars(\PhpXmlRpc\PhpXmlRpc::$xmlrpcVersion)?>
 <?php if (class_exists('\PhpXmlRpc\JsonRpc\PhpJsonRpc')) echo ' and <a href="https://gggeek.github.io/phpxmlrpc-jsonrpc/">PHPJOSNRPC</a>, ver. ' . htmlspecialchars(\PhpXmlRpc\JsonRpc\PhpJsonRpc::$jsonrpcVersion); ?>)</h3>
@@ -307,7 +351,8 @@ Debugger</h1><h3>(based on <a href="https://gggeek.github.io/phpxmlrpc/">PHPXMLR
             <td><h2>Action</h2></td>
             <td>List available methods<input type="radio" name="action" value="list"<?php if ($action == 'list') { echo ' checked="checked"'; } ?> onclick="switchaction();"/></td>
             <td>Describe method<input type="radio" name="action" value="describe"<?php if ($action == 'describe') { echo ' checked="checked"'; } ?> onclick="switchaction();"/></td>
-            <td>Execute method<input type="radio" name="action" value="execute"<?php if ($action == 'execute') { echo ' checked="checked"'; } ?> onclick="switchaction();"/></td>
+            <td>Execute method<input type="radio" name="action" id="actionexecute" value="execute"<?php if ($action == 'execute') { echo ' checked="checked"'; } ?> onclick="switchaction();"/></td>
+            <?php if ($hasjsonrpcclient) { ?><td id="notificationcell">Send notification <input type="radio" name="action" id="actionnotification" value="notification"<?php if ($action == 'notification') { echo ' checked="checked"'; } ?> onclick="switchaction();"/></td><?php } ?>
             <td>Generate stub for method call<input type="radio" name="action" value="wrap"<?php if ($action == 'wrap') { echo ' checked="checked"'; } ?> onclick="switchaction();"/></td>
         </tr>
     </table>
@@ -322,7 +367,7 @@ Debugger</h1><h3>(based on <a href="https://gggeek.github.io/phpxmlrpc/">PHPXMLR
                 <div id="methodpayloadbtn"></div>
             </td>
             <td><textarea id="methodpayload" name="methodpayload" rows="1" cols="40"><?php echo htmlspecialchars($payload, ENT_COMPAT, $inputcharset); ?></textarea></td>
-            <td class="labelcell" id="idcell">Msg id: <input type="text" name="id" size="3" value="<?php echo htmlspecialchars($id, ENT_COMPAT, $inputcharset); ?>"/></td>
+            <td class="labelcell" id="idcell">Req id: <input type="text" name="id" size="3" value="<?php echo htmlspecialchars($id, ENT_COMPAT, $inputcharset); ?>"/></td>
             <td><input type="hidden" name="wstype" value="<?php echo $wstype; ?>"/>
                 <input type="submit" value="Execute" onclick="return verifyserver();"/></td>
         </tr>

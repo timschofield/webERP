@@ -37,7 +37,7 @@ cd "$BASE_DIR";
 # @todo atm composer (2.8.11) generates warnings when run with php 8.5. We could check for both php version and composer
 #       version and, if the bad combination is found, run composer with php deprecation errors silenced - use eg.
 #       php -d error_level=... "$COMPOSER"
-#COMPOSER_VERSION="$($COMPOSER --version 2>/dev/null | sed 's/Composer version//' | awk {'print $1}')"
+#COMPOSER_VERSION="$($COMPOSER --version 2>/dev/null | sed 's/Composer version//' | awk '{print $1}')"
 #PHP_VERSION="$(php -r 'echo PHP_VERSION_ID;')"
 
 # @todo enable this after we remove the comments from composer.json
