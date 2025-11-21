@@ -4253,11 +4253,12 @@ function OpenCartOrdersByStatus($Status, $RootPath ){
 }
 
 function InternalBankTransfers($Company, 
-							$DanamonAccount, $DanamonMin, $DanamonMax,
+							$DanamonAccount, $DanamonMin, $DanamonMax, $DanamonOverExcess,
 							$MandiriAccount, $MandiriMin, $MandiriMax,
 							$BCAAccount, $BCAMin, $BCAMax,
 							$BNIAccount, $BNIMin, $BNIMax,
 							$BRIAccount, $BRIMin, $BRIMax,
+							$OCBCAccount, $OCBCMin, $OCBCMax,
 							$TokopediaAccount, $TokopediaMin, $TokopediaMax, 
 							$ShopeeAccount, $ShopeeMin, $ShopeeMax, 
 							$MidtransAccount, $MidtransMin, $MidtransMax, 
@@ -4341,6 +4342,28 @@ function InternalBankTransfers($Company,
 															$Period
 															);
 
+		$TransferNeededDanamon = CalculateTransferFromBankToDanamon($Company, 
+															$TransferNeededDanamon,
+															$OCBCAccount, 
+															"OCBC",
+															$OCBCMin, 
+															$OCBCMax,
+															$TransferBlockFromBank,
+															$Period
+															);
+
+	} elseif (($SaldoDanamon >= $DanamonOverExcess)){
+		// Danamon is over the excess balance... transfer from Danamon to OCBC for "cash storage"
+		// $TransferExcessDanamon = $SaldoDanamon - $DanamonOverExcess;
+		$TransferExcessDanamon = $SaldoDanamon - (($DanamonOverExcess + $DanamonMax) / 2);
+		// $TransferExcessDanamon = $SaldoDanamon - $DanamonMax;
+
+		$TransferExcessDanamon = CalculateExcessTransferFromDanamonToBank($Company, 
+															$TransferExcessDanamon,
+															"OCBC",
+															$TransferBlockFromBank
+															);
+
 	}
 }
 
@@ -4367,6 +4390,22 @@ function CalculateTransferFromBankToDanamon($Company,
 	}
 	return $TransferNeededDanamon;
 }
+
+function CalculateExcessTransferFromDanamonToBank($Company, 
+												$TransferExcessDanamon,
+												$AccountName,
+												$TransferBlock){
+	if ($TransferExcessDanamon > 0){
+		$Transfer = round_up_multiple_of($TransferExcessDanamon, $TransferBlock);
+		if ($Transfer > 0){
+			$WarningTitleText = "Transfer " . locale_number_format($Transfer, 0) . " IDR from Danamon " . $Company . " to " . $AccountName . " " . $Company;
+			ShowWarningTitle($WarningTitleText);
+			$TransferExcessDanamon = $TransferExcessDanamon - $Transfer;
+		}
+	}
+	return $TransferExcessDanamon;
+}
+
 
 function PicturesToMoveToObsolete($MovePictures, $RootPath){
 
