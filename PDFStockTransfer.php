@@ -7,6 +7,11 @@ use Dompdf\Dompdf;
 
 include('includes/SetDomPDFOptions.php');
 
+if (isset($_GET['TransferNo'])) {
+	$_POST['TransferNo'] = $_GET['TransferNo'];
+	$_POST['Process'] = 'Yes';
+}
+
 if (isset($_POST['Process'])) {
 	// Prepare HTML for DomPDF
 	$HTML = '<html><head><meta charset="UTF-8"><style>
