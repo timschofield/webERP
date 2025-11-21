@@ -395,7 +395,7 @@ if ($ProcessSection01){
 		OR $KL_AdministrationTeam){
 		$StartTime = microtime(true);
 		InternalBankTransfers("PTADU", 
-					"111121105AD", 1000000000, 2000000000,
+					"111121105AD",  750000000, 1500000000,
 					"111121101AD",   25000000,   75000000,
 					"111121110AD",   25000000,   75000000,
 					"111121115AD",   25000000,   75000000, 
@@ -411,7 +411,7 @@ if ($ProcessSection01){
 
 		$StartTime = microtime(true);
 		InternalBankTransfers("PTSMH", 
-					"111121105SM", 1000000000, 2000000000,
+					"111121105SM",  750000000, 1500000000,
 					"111121100SM",   25000000,   75000000,
 					"111121110SM",   25000000,   75000000,
 					"111121115SM",   25000000,   75000000, 
