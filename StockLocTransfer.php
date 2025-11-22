@@ -20,6 +20,7 @@ include('includes/StockFunctions.php');
 
 // KL RICARD
 include('includes/KLEmails.php');
+include('includes/KLGeneralFunctions.php');
 
 if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 /*Trap any errors in input */
