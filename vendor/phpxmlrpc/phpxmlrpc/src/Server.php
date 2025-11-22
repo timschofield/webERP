@@ -390,59 +390,13 @@ class Server
                 static::$_xmlrpcs_occurred_errors . "+++END+++");
         }
 
-        $header = $resp->xml_header($respCharset);
-        if ($this->debug > 0) {
-            $header .= $this->serializeDebug($respCharset);
-        }
-
-        // Do not create response serialization if it has already happened. Helps to build json magic
-        /// @todo what if the payload was created targeting a different charset than $respCharset?
-        ///       Also, if we do not call serialize(), the request will not set its content-type to have the charset declared
-        $payload = $resp->getPayload();
-        if (empty($payload)) {
-            $payload = $resp->serialize($respCharset);
-        }
-        $payload = $header . $payload;
+        $payload = $this->generatePayload($resp, $respCharset);
 
         if ($returnPayload) {
             return $payload;
         }
 
-        // if we get a warning/error that has output some text before here, then we cannot
-        // add a new header. We cannot say we are sending xml, either...
-        if (!headers_sent()) {
-            header('Content-Type: ' . $resp->getContentType());
-            // we do not know if client actually told us an accepted charset, but if it did we have to tell it what we did
-            header("Vary: Accept-Charset");
-
-            // http compression of output: only if we can do it, and we want to do it, and client asked us to,
-            // and php ini settings do not force it already
-            $phpNoSelfCompress = !ini_get('zlib.output_compression') && (ini_get('output_handler') != 'ob_gzhandler');
-            if ($this->compress_response && $respEncoding != '' && $phpNoSelfCompress) {
-                if (strpos($respEncoding, 'gzip') !== false && function_exists('gzencode')) {
-                    $payload = gzencode($payload);
-                    header("Content-Encoding: gzip");
-                    header("Vary: Accept-Encoding");
-                } elseif (strpos($respEncoding, 'deflate') !== false && function_exists('gzcompress')) {
-                    $payload = gzcompress($payload);
-                    header("Content-Encoding: deflate");
-                    header("Vary: Accept-Encoding");
-                }
-            }
-
-            // Do not output content-length header if php is compressing output for us: it will mess up measurements.
-            // Note that Apache/mod_php will add (and even alter!) the Content-Length header on its own, but only for
-            // responses up to 8000 bytes
-            if ($phpNoSelfCompress) {
-                header('Content-Length: ' . (int)strlen($payload));
-            }
-        } else {
-            /// @todo allow the user to easily subclass this in a way which allows the resp. headers to be already sent
-            ///       by now without flagging it as an error. Possibly check for presence of Content-Type header
-            $this->getLogger()->error('XML-RPC: ' . __METHOD__ . ': http headers already sent before response is fully generated. Check for php warning or error messages');
-        }
-
-        print $payload;
+        $this->printPayload($payload, $resp->getContentType(), $respEncoding);
 
         // return response, in case subclasses want it
         return $resp;
@@ -673,7 +627,7 @@ class Server
      * @return Response
      * @throws \Exception in case the executed method does throw an exception (and depending on server configuration)
      *
-     * @todo either rename this function or move the 'execute' part out of it...
+     * @todo either rename this function or, probably better, move the 'execute' part out of it...
      */
     public function parseRequest($data, $reqEncoding = '')
     {
@@ -726,10 +680,11 @@ class Server
 
         if ($_xh['isf'] == 3) {
             // (BC) we return XML error as a faultCode
+            // unless we are in "interop faults" mode
             preg_match('/^XML error ([0-9]+)/', $_xh['isf_reason'], $matches);
             return new static::$responseClass(
                 0,
-                PhpXmlRpc::$xmlrpcerrxml + (int)$matches[1],
+                (PhpXmlRpc::isUsingInteropFaults() ? PhpXmlRpc::$xmlrpcerr['invalid_xml'] : PhpXmlRpc::$xmlrpcerrxml + (int)$matches[1]),
                 $_xh['isf_reason']);
         } elseif ($_xh['isf']) {
             /// @todo separate better the various cases, as we have done in Request::parseResponse: invalid xml-rpc vs.
@@ -890,7 +845,7 @@ class Server
                         $r = call_user_func_array($func, array($methodName, $params, $this->user_data));
                         // mimic EPI behaviour: if we get an array that looks like an error, make it an error response
                         if (is_array($r) && array_key_exists('faultCode', $r) && array_key_exists('faultString', $r)) {
-                            $r = new static::$responseClass(0, (integer)$r['faultCode'], (string)$r['faultString']);
+                            $r = new static::$responseClass(0, (int)$r['faultCode'], (string)$r['faultString']);
                         } else {
                             // functions using EPI api should NOT return resp objects, so make sure we encode the
                             // return type correctly
@@ -966,6 +921,74 @@ class Server
         }
 
         return $r;
+    }
+
+    /**
+     * @param Response $resp
+     * @param string $respCharset
+     * @return string
+     */
+    protected function generatePayload($resp, $respCharset)
+    {
+        $header = $resp->xml_header($respCharset);
+        if ($this->debug > 0) {
+            $header .= $this->serializeDebug($respCharset);
+        }
+
+        // Do not create response serialization if it has already happened. Helps to build json magic
+        /// @todo what if the payload was created targeting a different charset than $respCharset?
+        ///       Also, if we do not call serialize(), the request will not set its content-type to have the charset declared
+        $payload = $resp->getPayload();
+        if (empty($payload)) {
+            $payload = $resp->serialize($respCharset);
+        }
+
+        return $header . $payload;
+    }
+
+    /**
+     * @param string $payload
+     * @param string $respContentType
+     * @param string $respEncoding
+     * @return void
+     */
+    protected function printPayload($payload, $respContentType, $respEncoding)
+    {
+        // if we get a warning/error that has output some text before here, then we cannot
+        // add a new header. We cannot say we are sending xml, either...
+        if (!headers_sent()) {
+            header('Content-Type: ' . $respContentType);
+            // we do not know if client actually told us an accepted charset, but if it did we have to tell it what we did
+            header("Vary: Accept-Charset");
+
+            // http compression of output: only if we can do it, and we want to do it, and client asked us to,
+            // and php ini settings do not force it already
+            $phpNoSelfCompress = !ini_get('zlib.output_compression') && (ini_get('output_handler') != 'ob_gzhandler');
+            if ($this->compress_response && $respEncoding != '' && $phpNoSelfCompress) {
+                if (strpos($respEncoding, 'gzip') !== false && function_exists('gzencode')) {
+                    $payload = gzencode($payload);
+                    header("Content-Encoding: gzip");
+                    header("Vary: Accept-Encoding");
+                } elseif (strpos($respEncoding, 'deflate') !== false && function_exists('gzcompress')) {
+                    $payload = gzcompress($payload);
+                    header("Content-Encoding: deflate");
+                    header("Vary: Accept-Encoding");
+                }
+            }
+
+            // Do not output content-length header if php is compressing output for us: it will mess up measurements.
+            // Note that Apache/mod_php will add (and even alter!) the Content-Length header on its own, but only for
+            // responses up to 8000 bytes
+            if ($phpNoSelfCompress) {
+                header('Content-Length: ' . (int)strlen($payload));
+            }
+        } else {
+            /// @todo allow the user to easily subclass this in a way which allows the resp. headers to be already sent
+            ///       by now without flagging it as an error. Possibly check for presence of Content-Type header
+            $this->getLogger()->error('XML-RPC: ' . __METHOD__ . ': http headers already sent before response is fully generated. Check for php warning or error messages');
+        }
+
+        print $payload;
     }
 
     /**
@@ -1135,6 +1158,7 @@ class Server
         // support for "standard" error codes
         if (PhpXmlRpc::$xmlrpcerr['unknown_method'] === Interop::$xmlrpcerr['unknown_method']) {
             $outAr['faults_interop'] = array(
+                // Note that, as of 2025/10, the following URL does not respond anymore
                 'specUrl' => 'http://xmlrpc-epi.sourceforge.net/specs/rfc.fault_codes.php',
                 'specVersion' => 20010516
             );
@@ -1309,6 +1333,7 @@ class Server
 
         $req = new Request($methName->scalarVal());
         foreach ($params as $i => $param) {
+            /// @todo allow support for named parameters, if this is a jsonrpc 2.0 call
             if (!$req->addParam($param)) {
                 $i++; // for error message, we count params from 1
                 return static::_xmlrpcs_multicall_error(new static::$responseClass(0,
@@ -1425,7 +1450,7 @@ class Server
         if (PHP_VERSION_ID >= 70400) {
             static::error_occurred($errString);
         } elseif ($errCode != E_STRICT) {
-                static::error_occurred($errString);
+            static::error_occurred($errString);
         }
 
         // Try to avoid as much as possible disruption to the previous error handling mechanism in place
