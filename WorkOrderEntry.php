@@ -478,7 +478,7 @@ if (isset($_SESSION['WorkOrder' . $Identifier]->NumberOfItems) and $_SESSION['Wo
 					$LotOrSN = __('Batches');
 				}
 				echo '<td>
-						<a href="', $RootPath, '/WOSerialNos.php?WO=', urlencode($_POST['WO']), '&StockID=', urlencode($WorkOrderItem->StockId), '&Description=', urlencode($DescriptionRow['description']), '&Serialised=', urlencode($WorkOrderItem->Serialised), '&NextSerialNo=', urlencode($WorkOrderItem->NextLotSerialNumbers), '">', $LotOrSN, '</a>
+						<a href="', $RootPath, '/WOSerialNos.php?identifier=', urlencode($Identifier), '&WO=', urlencode($_POST['WO']), '&StockID=', urlencode($WorkOrderItem->StockId), '&Description=', urlencode($DescriptionRow['description']), '&Serialised=', urlencode($WorkOrderItem->Serialised), '&NextSerialNo=', urlencode($WorkOrderItem->NextLotSerialNumbers), '">', $LotOrSN, '</a>
 					</td>';
 			}
 		} else {
