@@ -428,7 +428,7 @@ if (isset($WOItemsResult)) {
 }
 echo '</fieldset>';
 
-if (isset($_SESSION['WorkOrder' . $Identifier]->NumberOfItems) and $_SESSION['WorkOrder' . $Identifier]->NumberOfItems > 0) {
+if (count($_SESSION['WorkOrder' . $Identifier]->Items)  > 0) {
 	$i = 1;
 
 	echo '<table>
