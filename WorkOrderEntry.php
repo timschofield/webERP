@@ -467,7 +467,7 @@ if (isset($_SESSION['WorkOrder' . $Identifier]->NumberOfItems) and $_SESSION['Wo
 
 		echo '<td class="number">', locale_number_format(($WorkOrderItem->QuantityRequired - $WorkOrderItem->QuantityReceived), $WorkOrderItem->DecimalPlaces), '</td>';
 
-		if (isset($_POST['Controlled' . $i]) and $_POST['Controlled' . $i] == 1) {
+		if ($WorkOrderItem->Controlled == 1) { // Show batches/SNs link for newly added controlled items even before saving
 			echo '<td>
 					<input type="text" name="NextLotSNRef', $i, '" value="', $WorkOrderItem->NextLotSerialNumbers, '" />
 				</td>';
