@@ -24,6 +24,13 @@ if (isset($_GET['StockID'])){ //the page was called for the first time - get var
 	$Serialised = $_POST['Serialised'];
 	$NextSerialNo = $_POST['NextSerialNo'];
 }
+if (isset($_GET['identifier'])) {
+	$Identifier = $_GET['identifier'];
+} elseif (isset($_POST['identifier'])) {
+	$Identifier = $_POST['identifier'];
+} else {
+	$Identifier = '';
+}
 if (!isset($WO) OR $WO==''){
 	prnMsg(__('This page must to be called from the work order entry screen'),'error');
 	include('includes/footer.php');
@@ -238,6 +245,7 @@ if (isset($_POST['UpdateItems'])){
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<input type="hidden" name="identifier" value="' . htmlspecialchars($Identifier,ENT_QUOTES,'UTF-8') . '" />';
 
 echo '<input type="hidden" name="StockID" value="' . $StockID . '" />';
 echo '<input type="hidden" name="Description" value="' . $Description . '" />';
@@ -344,7 +352,7 @@ if (DB_num_rows($WOSerialNoResult)==0){
 
 } //end of if there are woserialno items defined
 
-echo '<br /><a href="' . $RootPath . '/WorkOrderEntry.php?WO=' . $WO . '">' . __('Back To Work Order') . ' ' . $WO  . '</a>';
+echo '<br /><a href="' . $RootPath . '/WorkOrderEntry.php?identifier=' . urlencode($Identifier) . '&WO=' . $WO . '">' . __('Back To Work Order') . ' ' . $WO  . '</a>';
 
 echo '</div>
       </form>';

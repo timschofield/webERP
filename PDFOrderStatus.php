@@ -238,7 +238,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 						<th>' . __('Status') . '</th>
 					</tr>';
 
-			$HTML .= '<tr>
+			$HTML .= '<tr class="striped_row">
 						<td>' . $MyRow['orderno'] . '</td>
 						<td>' . $MyRow['name'] . '</td>
 						<td>' . $MyRow['brname'] . '</td>
@@ -255,7 +255,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					</tr>';
 			/*Its not the first line */
 			$OrderNo = $MyRow['orderno'];
-			$HTML .= '<tr>
+			$HTML .= '<tr class="striped_row">
 						<th>' . __('Code') . '</th>
 						<th>' . __('Description') . '</th>
 						<th>' . __('Ordered') . '</th>
@@ -264,7 +264,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					</tr>';
 
 		}
-		$HTML .= '<tr>
+		$HTML .= '<tr class="striped_row">
 					<td>' . $MyRow['stkcode'] . '</td>
 					<td>' . $MyRow['description'] . '</td>
 					<td class="number">' . locale_number_format($MyRow['quantity'],$MyRow['decimalplaces']) . '</td>
