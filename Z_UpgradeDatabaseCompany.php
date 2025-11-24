@@ -4,7 +4,7 @@ $PageSecurity = 15;
 
 require(__DIR__ . '/includes/session.php');
 
-$Title = __('Database Upgrade (Customized Company)');
+$Title = __('Database Upgrade - Company-Specific');
 
 echo "<!DOCTYPE html>\n";
 echo '<html lang="' . str_replace('_', '-', substr($Language, 0, 5)) . '">
