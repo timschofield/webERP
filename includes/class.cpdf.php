@@ -102,9 +102,8 @@ if (!class_exists('Cpdf', false)) {
 					$Align = 'L'; break;
 				case 'right':
 					$Align = 'R'; break;
-				case 'center':
-					$Align = 'C'; break;
 				case 'centre':
+				case 'center':
 					$Align = 'C'; break;
 				case 'full':
 					$Align = 'J'; break;

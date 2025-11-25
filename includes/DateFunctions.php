@@ -107,6 +107,7 @@ function Is_date($DateEntry) {
 			return 0;
 		}
 	}
+	return 0;
 } //end of Is_Date function
 
 /**************************************************************************************************************
@@ -300,18 +301,14 @@ function DisplayDateTime() {
 	// Long date and time in locale format.
 	// Could be replaced by IntlDateFormatter (available on PHP 5.3.0 or later). See http://php.net/manual/en/class.intldateformatter.php
 	switch ($_SESSION['Language']) {
-		case 'en_GB.utf8':
-			$LongDateTime = GetWeekDayText(date('w')) . ' ' . date('j') . ' ' . GetMonthText(date('n')) . ' ' . date('Y') . ' ' . date('G:i');
-			break;
 		case 'en_US.utf8':
 			$LongDateTime = GetWeekDayText(date('w')) . ', ' . GetMonthText(date('n')) . ' ' . date('j') . ', ' . date('Y') . ' ' . date('G:i');
 			break;
 		case 'es_ES.utf8':
 			$LongDateTime = GetWeekDayText(date('w')) . ' ' . date('j') . ' de ' . GetMonthText(date('n')) . ' de ' . date('Y') . ' ' . date('G:i');
 			break;
+		case 'en_GB.utf8':
 		case 'fr_FR.utf8':
-			$LongDateTime = GetWeekDayText(date('w')) . ' ' . date('j') . ' ' . GetMonthText(date('n')) . ' ' . date('Y') . ' ' . date('G:i');
-			break;
 		default:
 			$LongDateTime = GetWeekDayText(date('w')) . ' ' . date('j') . ' ' . GetMonthText(date('n')) . ' ' . date('Y') . ' ' . date('G:i');
 			break;
@@ -430,7 +427,7 @@ function ConvertSQLDate($DateEntry) {
 		if (mb_strlen($DateArray[2]) > 4) {  /*chop off the time stuff */
 			$DateArray[2] = mb_substr($DateArray[2], 0, 2);
 		}
-		if ($_SESSION['DefaultDateFormat'] == 'd/m/Y'){
+		/*if ($_SESSION['DefaultDateFormat'] == 'd/m/Y'){
 			return $DateArray[2] . '/' . $DateArray[1] . '/' . $DateArray[0];
 		} elseif ($_SESSION['DefaultDateFormat'] == 'd.m.Y'){
 			return $DateArray[2] . '.' . $DateArray[1] . '.' . $DateArray[0];
@@ -440,7 +437,14 @@ function ConvertSQLDate($DateEntry) {
 			return $DateArray[0] . '/' . $DateArray[1] . '/' . $DateArray[2];
 		} elseif ($_SESSION['DefaultDateFormat'] == 'Y-m-d'){
 			return $DateArray[0] . '-' . $DateArray[1] . '-' . $DateArray[2];
-		}
+		}*/
+		return match($_SESSION['DefaultDateFormat']){
+			'd/m/Y' => $DateArray[2].'-0'.$DateArray[1].'-'.$DateArray[0],
+			'm/d/Y' => $DateArray[1].'/'.$DateArray[2].'/'.$DateArray[0],
+			'd.m.Y' => $DateArray[2].'/'.$DateArray[1].'/'.$DateArray[0],
+			'Y/m/d' => $DateArray[0].'/'.$DateArray[1].'/'.$DateArray[2],
+			default => $DateArray[0].'/'.$DateArray[1].'/'.$DateArray[2],
+		};
 	}
 } // end function ConvertSQLDate
 
@@ -485,7 +489,7 @@ function ConvertSQLDateTime($DateEntry) {
 		$Time = '00:00:00';
 	}
 
-	if ($_SESSION['DefaultDateFormat'] == 'd/m/Y'){
+	/*if ($_SESSION['DefaultDateFormat'] == 'd/m/Y'){
 		return $DateArray[2] . '/' . $DateArray[1] . '/' . $DateArray[0] . ' ' . $Time;
 	} elseif ($_SESSION['DefaultDateFormat'] == 'd.m.Y'){
 		return $DateArray[2] . '.' . $DateArray[1] . '.' . $DateArray[0] . ' ' . $Time;
@@ -493,7 +497,14 @@ function ConvertSQLDateTime($DateEntry) {
 		return $DateArray[1] . '/' . $DateArray[2] . '/' . $DateArray[0] . ' ' . $Time;
 	} elseif ($_SESSION['DefaultDateFormat'] == 'Y/m/d'){
 		return $DateArray[0] . '/' . $DateArray[1] . '/' . $DateArray[2] . ' ' . $Time;
-	}
+	}*/
+	return match($_SESSION['DefaultDateFormat']){
+		'd/m/Y' => $DateArray[2].'-0'.$DateArray[1].'-'.$DateArray[0],
+		'm/d/Y' => $DateArray[1].'/'.$DateArray[2].'/'.$DateArray[0],
+		'd.m.Y' => $DateArray[2].'/'.$DateArray[1].'/'.$DateArray[0],
+		'Y/m/d' => $DateArray[0].'/'.$DateArray[1].'/'.$DateArray[2],
+		default => $DateArray[0].'/'.$DateArray[1].'/'.$DateArray[2],
+	};
 
 } // end function ConvertSQLDate
 
@@ -564,7 +575,7 @@ and converts to a yyyymmdd - EANCOM format 102*/
 		return 0;
 	}
 
-	if (($_SESSION['DefaultDateFormat'] == 'd/m/Y') || ($_SESSION['DefaultDateFormat'] == 'd.m.Y')) {
+	/*if (($_SESSION['DefaultDateFormat'] == 'd/m/Y') || ($_SESSION['DefaultDateFormat'] == 'd.m.Y')) {
 		return $DateArray[2] . $DateArray[1] . $DateArray[0];
 
 	} elseif ($_SESSION['DefaultDateFormat'] == 'm/d/Y') {
@@ -573,7 +584,14 @@ and converts to a yyyymmdd - EANCOM format 102*/
 	} elseif ($_SESSION['DefaultDateFormat'] == 'Y/m/d') {
 		return $DateArray[1] . $DateArray[2] . $DateArray[0];
 
-	}
+	}*/
+	return match($_SESSION['DefaultDateFormat']){
+		'd/m/Y' => $DateArray[2].'-0'.$DateArray[1].'-'.$DateArray[0],
+		'm/d/Y' => $DateArray[1].'/'.$DateArray[2].'/'.$DateArray[0],
+		'd.m.Y' => $DateArray[2].'/'.$DateArray[1].'/'.$DateArray[0],
+		'Y/m/d' => $DateArray[0].'/'.$DateArray[1].'/'.$DateArray[2],
+		default => $DateArray[0].'/'.$DateArray[1].'/'.$DateArray[2],
+	};
 
 } // end function to convert DefaultDateFormat Date to EDI format 102
 

@@ -2,9 +2,6 @@
 function GetCommissionPeriods($SalesPerson, $Period, $Term) {
 	$ReturnPeriods = array();
 	switch ($Term) {
-		case 1:
-			$ReturnPeriods[] = $Period;
-		break;
 		case 2:
 			$From = FirstPeriodInFY($Period);
 			$EndPeriod = FirstPeriodInFY($Period);
@@ -26,6 +23,7 @@ function GetCommissionPeriods($SalesPerson, $Period, $Term) {
 				$From++;
 			}
 		break;
+		case 1:
 		default:
 			$ReturnPeriods[] = $Period;
 		break;

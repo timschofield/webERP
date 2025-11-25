@@ -216,7 +216,8 @@ if (!isset($_GET['OrderNumber']) and !isset($_SESSION['ProcessingOrder'])) {
 					$InOutModifier = 1;
 					while ($MySerial = DB_fetch_array($SerialItemsResult)) {
 						if (isset($MySerial['serialno'])) {
-							$_SESSION['Items' . $identifier]->LineItems[$MyRow['orderlineno']]->SerialItems[$MySerial['serialno']] = new SerialItem($MySerial['serialno'], ($InOutModifier > 0 ? 1 : 1) * filter_number_format($MySerial['moveqty']));
+							/*$_SESSION['Items' . $identifier]->LineItems[$MyRow['orderlineno']]->SerialItems[$MySerial['serialno']] = new SerialItem($MySerial['serialno'], ($InOutModifier > 0 ? 1 : 1) * filter_number_format($MySerial['moveqty']));*/
+							$_SESSION['Items' . $identifier]->LineItems[$MyRow['orderlineno']]->SerialItems[$MySerial['serialno']] = new SerialItem($MySerial['serialno'], filter_number_format($MySerial['moveqty']));
 						} else {
 							if ($_SESSION['RequirePickingNote'] == 1) {
 								$_SESSION['Items' . $identifier]->LineItems[$MyRow['orderlineno']]->QtyDispatched = $MySerial['qtypicked'];
@@ -478,8 +479,8 @@ It seems unfair to charge the customer twice for freight if the order
 was not fully delivered the first time ?? */
 
 if (!isset($_SESSION['Items' . $identifier]->FreightCost) or $_SESSION['Items' . $identifier]->FreightCost == 0) {
-	if ($_SESSION['DoFreightCalc'] == true) {
-		list($FreightCost, $BestShipper) = CalcFreightCost($_SESSION['Items' . $identifier]->total, $_SESSION['Items' . $identifier]->BrAdd2, $_SESSION['Items' . $identifier]->BrAdd3, $_SESSION['Items' . $identifier]->BrAdd4, $_SESSION['Items' . $identifier]->BrAdd5, $_SESSION['Items' . $identifier]->BrAdd6, $_SESSION['Items' . $identifier]->totalVolume, $_SESSION['Items' . $identifier]->totalWeight, $_SESSION['Items' . $identifier]->Location, $_SESSION['Items' . $identifier]->DefaultCurrency);
+	if ($_SESSION['DoFreightCalc']) {
+		[$FreightCost, $BestShipper] = CalcFreightCost($_SESSION['Items' . $identifier]->total, $_SESSION['Items' . $identifier]->BrAdd2, $_SESSION['Items' . $identifier]->BrAdd3, $_SESSION['Items' . $identifier]->BrAdd4, $_SESSION['Items' . $identifier]->BrAdd5, $_SESSION['Items' . $identifier]->BrAdd6, $_SESSION['Items' . $identifier]->totalVolume, $_SESSION['Items' . $identifier]->totalWeight, $_SESSION['Items' . $identifier]->Location, $_SESSION['Items' . $identifier]->DefaultCurrency);
 		$_SESSION['Items' . $identifier]->ShipVia = $BestShipper;
 	}
 	if (isset($FreightCost) and is_numeric($FreightCost)) {
@@ -516,7 +517,7 @@ echo '<tr>
 	<td class="number" colspan="2">', __('Order Freight Cost'), '</td>
 	<td class="number">', locale_number_format($_SESSION['Old_FreightCost'], $_SESSION['Items' . $identifier]->CurrDecimalPlaces), '</td>';
 
-if ($_SESSION['DoFreightCalc'] == true) {
+if ($_SESSION['DoFreightCalc']) {
 	echo '<td class="number" colspan="2">', __('Recalculated Freight Cost'), '</td>
 		<td class="number">', locale_number_format($FreightCost, $_SESSION['Items' . $identifier]->CurrDecimalPlaces), '</td>';
 } else {
@@ -861,7 +862,7 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 		if (mb_substr($OrderLine->StockID, 0, 6) == 'ASSET-') {
 			$IsAsset = true;
 			$HyphenOccursAt = mb_strpos($OrderLine->StockID, '-', 6);
-			if ($HyphenOccursAt == false) {
+			if (!$HyphenOccursAt) {
 				$AssetNumber = intval(mb_substr($OrderLine->StockID, 6));
 			} else {
 				$AssetNumber = intval(mb_substr($OrderLine->StockID, 6, mb_strlen($OrderLine->StockID) - $HyphenOccursAt - 1));

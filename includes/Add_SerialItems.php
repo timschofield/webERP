@@ -57,9 +57,10 @@ if ( (isset($_POST['AddBatches']) AND $_POST['AddBatches']!='')) {
 							}
 						}
 					}
-					if ($AddThisBundle==true){//the $InOutModifier should not appeared here. Otherwise, the users cannot remove the quantity but add it.
+					if ($AddThisBundle){//the $InOutModifier should not appeared here. Otherwise, the users cannot remove the quantity but add it.
 						if ($Perishable != 1){
-							$LineItem->SerialItems[$_POST['SerialNo' . $i]] = new SerialItem ($_POST['SerialNo' . $i], ($InOutModifier>0?1:1) * filter_number_format($_POST['Qty' . $i]));
+							/*$LineItem->SerialItems[$_POST['SerialNo' . $i]] = new SerialItem ($_POST['SerialNo' . $i], ($InOutModifier>0?1:1) * filter_number_format($_POST['Qty' . $i]));*/
+							$LineItem->SerialItems[$_POST['SerialNo' . $i]] = new SerialItem ($_POST['SerialNo' . $i], filter_number_format($_POST['Qty' . $i]));
 						} else {
 
 							$ExpiryDate = GetExpiryDate($StockID,$LocationOut, $_POST['SerialNo' . $i]);
@@ -237,7 +238,7 @@ if (isset($_POST['EntryType'])
 									$AddThisBundle = true;
 							}
 					}
-					if ($AddThisBundle==true){
+					if ($AddThisBundle){
 							$LineItem->SerialItems[$NewSerialNo] = new SerialItem ($NewSerialNo, $NewQty);
 					}
 			} /*end if ExistingBundleQty >0 */
@@ -334,7 +335,7 @@ if (isset($_GET['REVALIDATE']) || isset($_POST['REVALIDATE'])) {
 								$AddThisBundle = true;
 						}
 					}
-					if ($AddThisBundle==true){
+					if ($AddThisBundle){
 							$LineItem->SerialItems[$NewSerialNo] = new SerialItem ($NewSerialNo, $NewQty);
 					}
 			} /*end if ExistingBundleQty >0 */

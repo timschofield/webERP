@@ -403,15 +403,13 @@ function LogBackTrace($dest = 0) {
 						$Msg.= '[ ';
 						foreach ($val as $v2) {
 							if (gettype($v2) == 'array') {
-								$Msg.= '[ ';
-								foreach ($v2 as $v3) $Msg.= $v3;
-								$Msg.= ' ]';
+								$Msg = '[ ' . implode('', $v2) . ' ]';
 							} else {
 								$Msg.= $v2 . ', ';
 							}
 							$Msg.= ' ]';
-							break;
 						}
+						break;
 					case 'string':
 						$Msg.= $val . ', ';
 						break;
@@ -638,10 +636,6 @@ function ReportPeriod($PeriodName, $FromOrTo) {
 			}
 			$DateEnd = date($_SESSION['DefaultDateFormat'], YearEndDate($_SESSION['YearEnd'], 0));
 		break;
-		case __('Last Month'):
-			$DateStart = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $LastMonth, 1, $ThisYear));
-			$DateEnd = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $LastMonth, $TotalDaysLast, $ThisYear));
-		break;
 		case __('Last Quarter'):
 			$QtrStrt = intval(($ThisMonth - 1) / 3) * 3 - 2;
 			$QtrEnd = intval(($ThisMonth - 1) / 3) * 3 + 0;
@@ -688,6 +682,7 @@ function ReportPeriod($PeriodName, $FromOrTo) {
 			}
 			$DateEnd = date($_SESSION['DefaultDateFormat'], YearEndDate($_SESSION['YearEnd'], 1));
 		break;
+		case __('Last Month'):
 		default:
 			$DateStart = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $LastMonth, 1, $ThisYear));
 			$DateEnd = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $LastMonth, $TotalDaysLast, $ThisYear));

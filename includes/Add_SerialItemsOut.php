@@ -29,7 +29,7 @@ if (isset($_POST['AddBatches'])){
 						$AddThisBundle = true;
 					}
 				}
-				if ($AddThisBundle==true
+				if ($AddThisBundle
 					AND filter_number_format($_POST['Qty' . $i])>0){
 
 					$LineItem->SerialItems[$_POST['SerialNo' . $i]] = new SerialItem ($_POST['SerialNo' . $i],
