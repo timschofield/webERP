@@ -280,15 +280,15 @@ class PDF extends Cpdf {
 	}
 
 	function ProcessData($strData, $Process) {
-		switch ($Process) {
-			case "uc": return mb_strtoupper($strData);
-			case "lc": return strtolower($strData);
-			case "neg": return -$strData;
-			case "rnd2d": return locale_number_format($strData, $_SESSION['CompanyRecord']['decimalplaces']);
-			case "dlr": return '$ '.locale_number_format($strData, $_SESSION['CompanyRecord']['decimalplaces']);
-			case "euro": return chr(128).' '.locale_number_format($strData, $_SESSION['CompanyRecord']['decimalplaces']); // assumes standard FPDF fonts
-			default: return $strData; // do nothing if Process not recognized
-		}
+		return match ($Process) {
+			"uc"    => mb_strtoupper($strData),
+			"lc"    => strtolower($strData),
+			"neg"   => -$strData,
+			"rnd2d" => locale_number_format($strData, $_SESSION['CompanyRecord']['decimalplaces']),
+			"dlr"   => '$ ' . locale_number_format($strData, $_SESSION['CompanyRecord']['decimalplaces']),
+			"euro"  => chr(128) . ' ' . locale_number_format($strData, $_SESSION['CompanyRecord']['decimalplaces']),
+			default => $strData,
+		};
 	}
 
 } // end class

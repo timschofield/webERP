@@ -869,16 +869,12 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			if (isset($_POST[$QuickEntryQty])) {
 				$NewItemQty = filter_number_format($_POST[$QuickEntryQty]);
 			}
-			if (isset($_POST[$QuickEntryItemDue])) {
-				$NewItemDue = $_POST[$QuickEntryItemDue];
-			} else {
-				$NewItemDue = DateAdd (date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
-			}
-			if (isset($_POST[$QuickEntryPOLine])) {
-				$NewPOLine = $_POST[$QuickEntryPOLine];
-			} else {
-				$NewPOLine = 0;
-			}
+			  $NewItemDue = $_POST[$QuickEntryItemDue] ?? DateAdd(
+				  date($_SESSION['DefaultDateFormat']),
+				  'd',
+				  $_SESSION['Items' . $identifier]->DeliveryDays
+			  );
+			  $NewPOLine = $_POST[$QuickEntryPOLine] ?? 0;
 
 			if (!isset($NewItem)){
 				unset($NewItem);
@@ -1010,11 +1006,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 												FROM locations");
 			/*Now the asset has been added to the stock master we can add it to the sales order */
 			$NewItemDue = date($_SESSION['DefaultDateFormat']);
-			if (isset($_POST['POLine'])){
-				$NewPOLine = $_POST['POLine'];
-			} else {
-				$NewPOLine = 0;
-			}
+			$NewPOLine = $_POST['POLine'] ?? 0;
 			$NewItem = $AssetStockID;
 			include('includes/SelectOrderItems_IntoCart.php');
 		} //end if adding a fixed asset to the order

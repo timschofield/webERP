@@ -941,10 +941,10 @@ function ShowDebugBackTrace($DebugMessage, $SQL){
 		}
 		echo '<tr class="striped_row">
 			<td>' . $Index . '</td>
-			<td>' . (isset($Frame['file']) ? $Frame['file'] : 'N/A') . '</td>
-			<td>' . (isset($Frame['line']) ? $Frame['line'] : 'N/A') . '</td>
-			<td>' . (isset($Frame['function']) ? $Frame['function'] : 'N/A') . '</td>
-			<td>' . (isset($Frame['class']) ? $Frame['class'] : 'N/A') . '</td>
+			<td>' . ($Frame['file'] ?? 'N/A') . '</td>
+			<td>' . ($Frame['line'] ?? 'N/A') . '</td>
+			<td>' . ($Frame['function'] ?? 'N/A') . '</td>
+			<td>' . ($Frame['class'] ?? 'N/A') . '</td>
 			<td>' . $Parameters . '</td>
 		</tr>';
 	}

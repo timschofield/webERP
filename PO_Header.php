@@ -194,7 +194,7 @@ if (isset($_POST['EnterLines']) or isset($_POST['AllowRePrint'])) {
 	 *  ensure session variables updated then meta refresh to PO_Items.php*/
 
 	$_SESSION['PO' . $identifier]->Location = $_POST['StkLocation'];
-	$_SESSION['PO' . $identifier]->SupplierContact = isset($_POST['SupplierContact']) ? $_POST['SupplierContact'] : '';
+	$_SESSION['PO' . $identifier]->SupplierContact = $_POST['SupplierContact'] ?? '';
 	$_SESSION['PO' . $identifier]->DelAdd1 = $_POST['DelAdd1'];
 	$_SESSION['PO' . $identifier]->DelAdd2 = $_POST['DelAdd2'];
 	$_SESSION['PO' . $identifier]->DelAdd3 = $_POST['DelAdd3'];
@@ -616,11 +616,7 @@ if ($_SESSION['RequireSupplierSelection'] == 1 or !isset($_SESSION['PO' . $ident
 			</table>
 			</div>';
 
-		if (isset($_GET['Quantity'])) {
-			$Qty = $_GET['Quantity'];
-		} else {
-			$Qty = 1;
-		}
+		$Qty = $_GET['Quantity'] ?? 1;
 
 		$SQL = "SELECT stockmaster.controlled,
 						stockmaster.serialised,

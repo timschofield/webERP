@@ -97,19 +97,13 @@ if (!class_exists('Cpdf', false)) {
 			$this->x = $XPos;
 			$this->y = $this->h - $YPos - $Height;//RChacon: This -$Height is the difference in yPos between AddText() and AddTextWarp(). It is better "$this->y = $this->h-$YPos", but that requires to recode all the pdf generator scripts.
 
-			switch($Align) {// Translate from Pdf-Creator to TCPDF.
-				case 'left':
-					$Align = 'L'; break;
-				case 'right':
-					$Align = 'R'; break;
-				case 'centre':
-				case 'center':
-					$Align = 'C'; break;
-				case 'full':
-					$Align = 'J'; break;
-				default:
-					$Align = 'L';
-			}
+			$Align = match ($Align) {
+				'left'             => 'L',
+				'right'            => 'R',
+				'centre', 'center' => 'C',
+				'full'             => 'J',
+				default            => 'L',
+			};
 			$this->SetFontSize($Height);// Public function SetFontSize() in tcpdf/tcpdf.php.
 
 			if ($Width==0) {

@@ -214,16 +214,11 @@ if (!isset($SelectedBankAccount)) {
 			$DefaultBankAccount=__('Currency Default');
 		}
 
-		switch ($MyRow['importformat']) {
-			case 'MT940-ING':
-				$ImportFormat = 'ING MT940';
-				break;
-			case 'MT940-SCB':
-				$ImportFormat = 'SCB MT940';
-				break;
-			default:
-				$ImportFormat ='';
-		}
+		$ImportFormat = match ($MyRow['importformat']) {
+			'MT940-ING' => 'ING MT940',
+			'MT940-SCB' => 'SCB MT940',
+			default     => '',
+		};
 
 		echo '<tr class="striped_row">
 				<td>', $MyRow['accountcode'], '<br />', $MyRow['accountname'], '</td>
