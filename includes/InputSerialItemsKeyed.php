@@ -51,7 +51,7 @@ foreach ($LineItem->SerialItems as $Bundle){
 	echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $Bundle->BundleRef . '&amp;StockID=' . $LineItem->StockID . '&amp;LineNo=' . $LineNo .'&amp;identifier=' . $identifier . $CreditInvoice . '">' .  __('Delete'). '</a></td>
 		</tr>';
 
-	$TotalQuantity += $Bundle->BundleQty;
+	$TotalQuantity += (float)$Bundle->BundleQty; // ensure numeric accumulation precision
 }
 
 
