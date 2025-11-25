@@ -53,7 +53,11 @@ if (isset($_GET['PONumber']) AND $_GET['PONumber']<=0 AND !isset($_SESSION['PO'.
  set from the post to the quantity to be received */
 
 	foreach ($_SESSION['PO'.$identifier]->LineItems as $Line) {
-		$RecvQty = round(filter_number_format($_POST['RecvQty_' . $Line->LineNo]),$Line->DecimalPlaces);
+		if ($Line->Controlled==1 && isset($_POST['RecvQty_' . $Line->LineNo])) {
+			$RecvQty = filter_number_format($_POST['RecvQty_' . $Line->LineNo]); // preserve precise summed quantity for controlled items
+		} else {
+			$RecvQty = round(filter_number_format($_POST['RecvQty_' . $Line->LineNo]),$Line->DecimalPlaces);
+		}
 		if (!is_numeric($RecvQty)) {
 			$RecvQty = 0;
 		}
@@ -207,7 +211,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_POST['ProcessGo
 
 		if ($LnItm->Controlled == 1) {
 
-			echo '<input type="hidden" name="RecvQty_' . $LnItm->LineNo . '" autofocus="autofocus" value="' . locale_number_format($LnItm->ReceiveQty,$LnItm->DecimalPlaces) . '" /><a href="' . $RootPath . '/GoodsReceivedControlled.php?identifier=' . $identifier . '&amp;LineNo=' . $LnItm->LineNo . '">' . locale_number_format($LnItm->ReceiveQty,$LnItm->DecimalPlaces) . '</a></td>';
+			echo '<input type="hidden" name="RecvQty_' . $LnItm->LineNo . '" autofocus="autofocus" value="' . round($LnItm->ReceiveQty,$LnItm->DecimalPlaces) . '" /><a href="' . $RootPath . '/GoodsReceivedControlled.php?identifier=' . $identifier . '&amp;LineNo=' . $LnItm->LineNo . '">' . locale_number_format($LnItm->ReceiveQty,$LnItm->DecimalPlaces) . '</a></td>';
 
 		} else {
 			echo '<input type="text" class="number" name="RecvQty_' . $LnItm->LineNo . '" pattern="(?:^\d{1,3}(?:\.?\d{3})*(?:,\d{1,})?$)|(?:^\d{1,3}(?:,?\d{3})*(?:\.\d{1,})?$)|(?:^\d{1,3}(?:\s?\d{3})*(?:\.\d{1,})?$)|(?:^\d{1,3}(?:\s?\d{3})*(?:,\d{1,})?$)|(?:^(\d{1,2},)?(\d{2},)*(\d{3})(\.\d+)?|(\d{1,3})(\.\d+)?$)" title="' . __('Enter the quantity to receive against this order line as a number') . '"
