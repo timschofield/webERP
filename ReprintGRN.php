@@ -76,7 +76,7 @@ if (isset($_POST['Show'])) {
 	echo '<br />
 			<table class="selection">
 			<tr>
-				<th colspan="8"><h3>' . __('GRNs for Purchase Order No') .' ' . $_POST['PONumber'] . '</h3></th>
+				<th colspan="9"><h3>' . __('GRNs for Purchase Order No') .' ' . $_POST['PONumber'] . '</h3></th>
 			</tr>
 			<tr>
 				<th>' . __('Supplier') . '</th>
@@ -100,8 +100,8 @@ if (isset($_POST['Show'])) {
 			<td>' . $MyRow['deliverydate'] . '</td>
 			<td class="number">' . locale_number_format($MyRow['qtyrecd'], $MyRow['decimalplaces']) . '</td>
 			<td>' . $MyRow['suppinv'] . '</td>
-			<td><a href="' . $RootPath . '/PDFGrn.php?GRNNo=' . $MyRow['grnbatch'] .'&PONo=' . $_POST['PONumber'] . '">' . __('Reprint GRN ') . '</a>
-			&nbsp;<a href="' . $RootPath . '/PDFQALabel.php?GRNNo=' . $MyRow['grnbatch'] .'&PONo=' . $_POST['PONumber'] . '">' . __('Reprint Labels') . '</a></td>
+			<td><a href="' . $RootPath . '/PDFGrn.php?GRNNo=' . $MyRow['grnbatch'] .'&PONo=' . $_POST['PONumber'] . '" target="_blank">' . __('Reprint GRN ') . '</a>
+			&nbsp;<a href="' . $RootPath . '/PDFQALabel.php?GRNNo=' . $MyRow['grnbatch'] .'&PONo=' . $_POST['PONumber'] . '" target="_blank">' . __('Reprint Labels') . '</a></td>
 		</tr>';
 	}
 	echo '</table>';
