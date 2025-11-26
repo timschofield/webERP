@@ -58,7 +58,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
 	}
 
-	$HTML .= '<meta name="author" content="WebERP ' . $Version . '>
+	$HTML .= '<meta name="author" content="WebERP " . $Version">
 					<meta name="Creator" content="webERP //www.weberp.org">
 				</head>
 				<body>';
@@ -390,9 +390,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					</tr>';
 			}
 		}
-		$AccountPeriodActual = $ThisYearActuals[$MyRow['accountcode']];
+		$AccountPeriodActual = isset($ThisYearActuals[$MyRow['accountcode']]) ? $ThisYearActuals[$MyRow['accountcode']] : 0;
 		$AccountPeriodBudget = $PeriodBudgetRow['periodbudget'];
-		$AccountPeriodLY = $LastYearActuals[$MyRow['accountcode']];
+		$AccountPeriodLY = isset($LastYearActuals[$MyRow['accountcode']]) ? $LastYearActuals[$MyRow['accountcode']] : 0;
 		$PeriodProfitLossActual += $AccountPeriodActual;
 		$PeriodProfitLossBudget += $AccountPeriodBudget;
 		$PeriodProfitLossLY += $AccountPeriodLY;
