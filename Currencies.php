@@ -315,13 +315,19 @@ or deletion of the records*/
 			<th>' . __('Show in webSHOP')  . '</th>
 			<th>' . __('Exchange Rate') . '</th>
 			<th>' . __('1 / Ex Rate') . '</th>
-			<th>' . __('Ex Rate - ECB')  . '</th>
+			<th>' . __('Ex Rate - Live')  . '</th>
 			<th colspan="3">' . __('Maintenance')  . '</th>
 		</tr>';
 
 	/*Get published currency rates from Eurpoean Central Bank */
 	if ($_SESSION['UpdateCurrencyRatesDaily'] !=  '0') {
-		$CurrencyRatesArray = GetECBCurrencyRates();
+		if ($_SESSION['ExchangeRateFeed'] == 'ECB') {
+			$CurrencyRatesArray = GetECBCurrencyRates();
+		} elseif ($_SESSION['ExchangeRateFeed'] == 'DXR') {
+			$CurrencyRatesArray = GetDXRCurrencyRates();
+		} else {
+			$CurrencyRatesArray = array();
+		}
 	} else {
 		$CurrencyRatesArray = array();
 	}
@@ -348,7 +354,6 @@ or deletion of the records*/
 			$MyRow['rate'] = 1;
 		}
 		if (!array_key_exists($MyRow['currabrev'], $CurrencyRatesArray)) {
-			$CurrencyRatesArray[$FunctionalCurrency] = 0;
 			$CurrencyRatesArray[$MyRow['currabrev']] = 0;
 		}
 

@@ -632,9 +632,18 @@ echo '<field>
 
 echo '<field>
 		<label for="X_ExchangeRateFeed">' . __('Source Exchange Rates From') . ':</label>
-		<select name="X_ExchangeRateFeed">
-			<option value="ECB"' . ($_SESSION['ExchangeRateFeed'] != 'ECB' ? ' selected="selected"' : '') . '>' . __('European Central Bank') . '</option>
-		</select>
+		<select name="X_ExchangeRateFeed">';
+		if ($_SESSION['ExchangeRateFeed'] == 'ECB') {
+			echo '<option value="ECB" selected="selected">' . __('European Central Bank') . '</option>';
+		} else {
+			echo '<option value="ECB">' . __('European Central Bank') . '</option>';
+		}
+		if ($_SESSION['ExchangeRateFeed'] == 'DXR') {
+			echo '<option value="DXR" selected="selected">' . __('Daily Exchange Rates') . '</option>';
+		} else {
+			echo '<option value="DXR">' . __('Daily Exchange Rates') . '</option>';
+		}
+		echo '</select>
 		<fieldhelp>' . __('Specify the source to use for exchange rates') . '</fieldhelp>
 	</field>';
 
