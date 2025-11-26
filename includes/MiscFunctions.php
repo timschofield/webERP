@@ -142,6 +142,17 @@ class XmlElement {
 	var $children;
 }
 
+function GetDXRCurrencyRates() {
+	if (http_file_exists('https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/eur.json')) {
+		$Json = file_get_contents('https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/eur.json');
+		$Rates = json_decode($Json, true);
+		return array_change_key_case($Rates['eur'], CASE_UPPER);
+	} else {
+		$Json = '';
+		return array();
+	}
+}
+
 function GetECBCurrencyRates() {
 	/* See http://www.ecb.int/stats/exchange/eurofxref/html/index.en.html
 	for detail of the European Central Bank rates - published daily */
