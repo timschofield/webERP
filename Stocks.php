@@ -1169,7 +1169,8 @@ if (sizeof(glob($_SESSION['part_pics_dir'] . '/' . $StockID . '.{' . implode(","
 KL RICARD END: For some reason, the image is not being displayed, return to old code as previous to commit 02/01/2025 */	
 
 // KL RICARD: create $ImageFile the old way
-$ImageFile = reset((glob($_SESSION['part_pics_dir'] . '/' . $StockID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+$GlobResult = glob($_SESSION['part_pics_dir'] . '/' . $StockID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE);
+$ImageFile = reset($GlobResult);
 
 $StockImgLink = GetImageLink($ImageFile, $StockID, 64, 64, "", "");
 

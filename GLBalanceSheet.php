@@ -227,8 +227,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				$AccountBalance = -$ThisYearAccumulatedAdjustment;
 				$LYAccountBalance = -$LastYearAccumulatedAdjustment;
 			} else {
-				$ThisYearAccumulatedAdjustment += $ThisYearActuals[$MyRow['accountcode']];
-				$LastYearAccumulatedAdjustment += $LastYearActuals[$MyRow['accountcode']];
+				$ThisYearAccumulatedAdjustment += isset($ThisYearActuals[$MyRow['accountcode']]) ? $ThisYearActuals[$MyRow['accountcode']] : 0;
+				$LastYearAccumulatedAdjustment += isset($LastYearActuals[$MyRow['accountcode']]) ? $LastYearActuals[$MyRow['accountcode']] : 0;
 			}
 //		}
 		// KL RICARD END: adjustement for intercompany accounts

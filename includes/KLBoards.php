@@ -1134,33 +1134,33 @@ function FinishedStockDistribution($Kind, $ByReport){
 			// Fix division by zero errors
 			$PercentStock = "";
 			if ($MyRow['optimalstock'] != 0) {
-				$PercentStock = locale_number_format(($MyRow['realstock']/$MyRow['optimalstock']) * 100, 0) . "%";
+				$PercentStock = locale_number_format_zero_blank(($MyRow['realstock']/$MyRow['optimalstock']) * 100, 0) . "%";
 			}
 			
 			$PercentModels = "";
 			if ($MyRow['optimalmodels'] != 0) {
-				$PercentModels = locale_number_format(($MyRow['realmodels']/$MyRow['optimalmodels']) * 100, 0). "%";
+				$PercentModels = locale_number_format_zero_blank(($MyRow['realmodels']/$MyRow['optimalmodels']) * 100, 0). "%";
 			}
 			
 			$RealPcsModel = "";
 			if ($MyRow['realmodels'] != 0) {
-				$RealPcsModel = locale_number_format(($MyRow['realstock']/$MyRow['realmodels']), 1);
+				$RealPcsModel = locale_number_format_zero_blank(($MyRow['realstock']/$MyRow['realmodels']), 1);
 			}
 			
 			$OptimalPcsModel = "";
 			if ($MyRow['optimalmodels'] != 0) {
-				$OptimalPcsModel = locale_number_format(($MyRow['optimalstock']/$MyRow['optimalmodels']), 1);
+				$OptimalPcsModel = locale_number_format_zero_blank(($MyRow['optimalstock']/$MyRow['optimalmodels']), 1);
 			}
 			
 			if ($ByReport == "LOCATION"){
 				echo '<tr class="striped_row">
 							<td class="number">' . $i . '</td>
 							<td>' . $MyRow['locationname'] . '</td>
-							<td class="number">' . locale_number_format($MyRow['realstock'],0) . '</td>
-							<td class="number">' . locale_number_format($MyRow['optimalstock'],0) . '</td>
+							<td class="number">' . locale_number_format_zero_blank($MyRow['realstock'],0) . '</td>
+							<td class="number">' . locale_number_format_zero_blank($MyRow['optimalstock'],0) . '</td>
 							<td class="number">' . $PercentStock . '</td>
-							<td class="number">' . locale_number_format($MyRow['realmodels'],0) . '</td>
-							<td class="number">' . locale_number_format($MyRow['optimalmodels'],0) . '</td>
+							<td class="number">' . locale_number_format_zero_blank($MyRow['realmodels'],0) . '</td>
+							<td class="number">' . locale_number_format_zero_blank($MyRow['optimalmodels'],0) . '</td>
 							<td class="number">' . $PercentModels . '</td>
 							<td class="number">' . $RealPcsModel . '</td>
 							<td class="number">' . $OptimalPcsModel . '</td>
@@ -1170,10 +1170,10 @@ function FinishedStockDistribution($Kind, $ByReport){
 				echo '<tr class="striped_row">
 							<td class="number">' . $i . '</td>
 							<td>' . $MyRow['categorydescription'] . '</td>
-							<td class="number">' . locale_number_format($MyRow['realstock'],0) . '</td>
+							<td class="number">' . locale_number_format_zero_blank($MyRow['realstock'],0) . '</td>
 							<td class="number">' . '' . '</td>
 							<td class="number">' . '' . '</td>
-							<td class="number">' . locale_number_format($MyRow['realmodels'],0) . '</td>
+							<td class="number">' . locale_number_format_zero_blank($MyRow['realmodels'],0) . '</td>
 							<td class="number">' . '' . '</td>
 							<td class="number">' . '' . '</td>
 							<td class="number">' . $RealPcsModel . '</td>
@@ -1198,8 +1198,8 @@ function FinishedStockDistribution($Kind, $ByReport){
 			$Result1 = DB_query($SQL);
 			if (DB_num_rows($Result1) != 0){
 				while ($MyRow1 = DB_fetch_array($Result1)) {
-					$TotalModels = locale_number_format($MyRow1['realmodels'],0);
-					$PercentModels =locale_number_format(($Totalpcs/$MyRow1['realmodels']),1);
+					$TotalModels = locale_number_format_zero_blank($MyRow1['realmodels'],0);
+					$PercentModels =locale_number_format_zero_blank(($Totalpcs/$MyRow1['realmodels']),1);
 				}
 			}
 		} else {
@@ -1209,7 +1209,7 @@ function FinishedStockDistribution($Kind, $ByReport){
 		echo '<tr class="striped_row">
 					<td class="number">' . "" . '</td>
 					<td>' . "Total" . '</td>
-					<td class="number">' . locale_number_format($Totalpcs,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($Totalpcs,0) . '</td>
 					<td class="number">' . "" . '</td>
 					<td class="number">' . "" . '</td>
 					<td class="number">' . $TotalModels . '</td>
