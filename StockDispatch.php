@@ -164,7 +164,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$Reason = 'DISPATCH_OVERSTOCK'; // KL RICARD - added Reason to loctransfers table		
 	} else {
 		$Strategy = __('Items needed at ') . $ToLocation;
-		$Reason = 'DISPATCH_NEEDED_BY_RL'; // KL RICARD - added Reason to loctransfers table
+		$Reason = 'DISPATCH_NEEDED'; // KL RICARD - added Reason to loctransfers table
 	}
 	$HTML .= '<meta name="author" content="WebERP " . $Version">
 					<meta name="Creator" content="webERP https://www.weberp.org">

@@ -2017,7 +2017,7 @@ function GetItemTransferReason($Reason){
 	if ($Reason == 'DISPATCH_OVERSTOCK'){
 		// from StockDispatch.php
 		return 'Manual Dispatch Overstock';
-	} elseif ($Reason == 'DISPATCH_NEEDED_BY_RL'){
+	} elseif ($Reason == 'DISPATCH_NEEDED'){
 		// from StockDispatch.php
 		return 'Manual Dispatch Needed by Reorder Level';
 	} elseif ($Reason == 'MANUAL'){
