@@ -477,11 +477,13 @@ echo '</select>
 	</field>';
 
 /* KL RICARD Adjustments reasons */	
-if (isset($_SESSION['Adjustment' . $identifier]) AND !isset($_SESSION['Adjustment' . $identifier]->AdjustmentReason)) {
-	$_SESSION['Adjustment' . $identifier]->AdjustmentReason = 0;
+if (isset($_SESSION['Adjustment' . $identifier]) AND isset($_SESSION['Adjustment' . $identifier]->AdjustmentReason)) {
+	$AdjustmentReason = $_SESSION['Adjustment' . $identifier]->AdjustmentReason;
+} else {
+	$AdjustmentReason = 0;
 }
 
-echo FieldToSelectOneStockAdjustmentReason('AdjustmentReason', $_SESSION['Adjustment'.$identifier]->AdjustmentReason, 'Adjustment Reason', '', '', '', true, false);
+echo FieldToSelectOneStockAdjustmentReason('AdjustmentReason', $AdjustmentReason, 'Adjustment Reason', '', '', '', true, false);
 /* KL RICARD END Adjustments reasons */	
 
 if (isset($_SESSION['Adjustment' . $identifier]) AND !isset($_SESSION['Adjustment' . $identifier]->Narrative)) {
