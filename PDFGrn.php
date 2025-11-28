@@ -8,7 +8,7 @@ use Dompdf\Dompdf;
 include('includes/SetDomPDFOptions.php');
 
 // Get GRNNo
-$GRNNo = isset($_GET['GRNNo']) ? $_GET['GRNNo'] : '';
+$GRNNo = $_GET['GRNNo'] ?? '';
 
 // Load form design XML
 $FormDesign = simplexml_load_file($PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/GoodsReceived.xml');

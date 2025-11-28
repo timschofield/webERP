@@ -5,15 +5,15 @@
 
 function CashFlowsActivityName($Activity) {
 	// Converts the cash flow activity number to an activity text.
-	switch($Activity) {
-		case -1: return '<b>' . __('Not set up') . '</b>';
-		case 0: return __('No effect on cash flow');
-		case 1: return __('Operating activity');
-		case 2: return __('Investing activity');
-		case 3: return __('Financing activity');
-		case 4: return __('Cash or cash equivalent');
-		default: return '<b>' . __('Unknown') . '</b>';
-	}
+	return match ($Activity) {
+		-1      => '<b>' . __('Not set up') . '</b>',
+		0       => __('No effect on cash flow'),
+		1       => __('Operating activity'),
+		2       => __('Investing activity'),
+		3       => __('Financing activity'),
+		4       => __('Cash or cash equivalent'),
+		default => '<b>' . __('Unknown') . '</b>',
+	};
 }
 
 require(__DIR__ . '/includes/session.php');

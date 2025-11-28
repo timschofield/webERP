@@ -107,6 +107,7 @@ function Is_date($DateEntry) {
 			return 0;
 		}
 	}
+	return 0;
 } //end of Is_Date function
 
 /**************************************************************************************************************
@@ -212,47 +213,21 @@ function EndDateSQLFromPeriodNo($PeriodNo) {
 * Returns: String containing the month name
 **************************************************************************************************************/
 function GetMonthText($MonthNumber) {
-	switch ($MonthNumber) {
-		case 1:
-			$Month = __('January');
-			break;
-		case 2:
-			$Month = __('February');
-			break;
-		case 3:
-			$Month = __('March');
-			break;
-		case 4:
-			$Month = __('April');
-			break;
-		case 5:
-			$Month = __('May');
-			break;
-		case 6:
-			$Month = __('June');
-			break;
-		case 7:
-			$Month = __('July');
-			break;
-		case 8:
-			$Month = __('August');
-			break;
-		case 9:
-			$Month = __('September');
-			break;
-		case 10:
-			$Month = __('October');
-			break;
-		case 11:
-			$Month = __('November');
-			break;
-		case 12:
-			$Month = __('December');
-			break;
-		default:
-			$Month = __('error');
-			break;
-	}
+	$Month = match ($MonthNumber) {
+		1       => __('January'),
+		2       => __('February'),
+		3       => __('March'),
+		4       => __('April'),
+		5       => __('May'),
+		6       => __('June'),
+		7       => __('July'),
+		8       => __('August'),
+		9       => __('September'),
+		10      => __('October'),
+		11      => __('November'),
+		12      => __('December'),
+		default => __('error'),
+	};
 	return $Month;
 }
 
@@ -299,23 +274,17 @@ function GetWeekDayText($WeekDayNumber) {
 function DisplayDateTime() {
 	// Long date and time in locale format.
 	// Could be replaced by IntlDateFormatter (available on PHP 5.3.0 or later). See http://php.net/manual/en/class.intldateformatter.php
-	switch ($_SESSION['Language']) {
-		case 'en_GB.utf8':
-			$LongDateTime = GetWeekDayText(date('w')) . ' ' . date('j') . ' ' . GetMonthText(date('n')) . ' ' . date('Y') . ' ' . date('G:i');
-			break;
-		case 'en_US.utf8':
-			$LongDateTime = GetWeekDayText(date('w')) . ', ' . GetMonthText(date('n')) . ' ' . date('j') . ', ' . date('Y') . ' ' . date('G:i');
-			break;
-		case 'es_ES.utf8':
-			$LongDateTime = GetWeekDayText(date('w')) . ' ' . date('j') . ' de ' . GetMonthText(date('n')) . ' de ' . date('Y') . ' ' . date('G:i');
-			break;
-		case 'fr_FR.utf8':
-			$LongDateTime = GetWeekDayText(date('w')) . ' ' . date('j') . ' ' . GetMonthText(date('n')) . ' ' . date('Y') . ' ' . date('G:i');
-			break;
-		default:
-			$LongDateTime = GetWeekDayText(date('w')) . ' ' . date('j') . ' ' . GetMonthText(date('n')) . ' ' . date('Y') . ' ' . date('G:i');
-			break;
-	}
+	$LongDateTime = match ($_SESSION['Language']) {
+		'en_US.utf8' => GetWeekDayText(date('w')) . ', ' . GetMonthText(date('n')) . ' ' . date('j') . ', ' . date(
+				'Y'
+			) . ' ' . date('G:i'),
+		'es_ES.utf8' => GetWeekDayText(date('w')) . ' ' . date('j') . ' de ' . GetMonthText(date('n')) . ' de ' . date(
+				'Y'
+			) . ' ' . date('G:i'),
+		default      => GetWeekDayText(date('w')) . ' ' . date('j') . ' ' . GetMonthText(date('n')) . ' ' . date(
+				'Y'
+			) . ' ' . date('G:i'),
+	};
 	return $LongDateTime;
 }
 
@@ -430,7 +399,7 @@ function ConvertSQLDate($DateEntry) {
 		if (mb_strlen($DateArray[2]) > 4) {  /*chop off the time stuff */
 			$DateArray[2] = mb_substr($DateArray[2], 0, 2);
 		}
-		if ($_SESSION['DefaultDateFormat'] == 'd/m/Y'){
+		/*if ($_SESSION['DefaultDateFormat'] == 'd/m/Y'){
 			return $DateArray[2] . '/' . $DateArray[1] . '/' . $DateArray[0];
 		} elseif ($_SESSION['DefaultDateFormat'] == 'd.m.Y'){
 			return $DateArray[2] . '.' . $DateArray[1] . '.' . $DateArray[0];
@@ -440,7 +409,14 @@ function ConvertSQLDate($DateEntry) {
 			return $DateArray[0] . '/' . $DateArray[1] . '/' . $DateArray[2];
 		} elseif ($_SESSION['DefaultDateFormat'] == 'Y-m-d'){
 			return $DateArray[0] . '-' . $DateArray[1] . '-' . $DateArray[2];
-		}
+		}*/
+		return match($_SESSION['DefaultDateFormat']){
+			'd/m/Y' => $DateArray[2].'-0'.$DateArray[1].'-'.$DateArray[0],
+			'm/d/Y' => $DateArray[1].'/'.$DateArray[2].'/'.$DateArray[0],
+			'd.m.Y' => $DateArray[2].'/'.$DateArray[1].'/'.$DateArray[0],
+			'Y/m/d' => $DateArray[0].'/'.$DateArray[1].'/'.$DateArray[2],
+			default => $DateArray[0].'/'.$DateArray[1].'/'.$DateArray[2],
+		};
 	}
 } // end function ConvertSQLDate
 
@@ -485,7 +461,7 @@ function ConvertSQLDateTime($DateEntry) {
 		$Time = '00:00:00';
 	}
 
-	if ($_SESSION['DefaultDateFormat'] == 'd/m/Y'){
+	/*if ($_SESSION['DefaultDateFormat'] == 'd/m/Y'){
 		return $DateArray[2] . '/' . $DateArray[1] . '/' . $DateArray[0] . ' ' . $Time;
 	} elseif ($_SESSION['DefaultDateFormat'] == 'd.m.Y'){
 		return $DateArray[2] . '.' . $DateArray[1] . '.' . $DateArray[0] . ' ' . $Time;
@@ -493,7 +469,14 @@ function ConvertSQLDateTime($DateEntry) {
 		return $DateArray[1] . '/' . $DateArray[2] . '/' . $DateArray[0] . ' ' . $Time;
 	} elseif ($_SESSION['DefaultDateFormat'] == 'Y/m/d'){
 		return $DateArray[0] . '/' . $DateArray[1] . '/' . $DateArray[2] . ' ' . $Time;
-	}
+	}*/
+	return match($_SESSION['DefaultDateFormat']){
+		'd/m/Y' => $DateArray[2].'-0'.$DateArray[1].'-'.$DateArray[0],
+		'm/d/Y' => $DateArray[1].'/'.$DateArray[2].'/'.$DateArray[0],
+		'd.m.Y' => $DateArray[2].'/'.$DateArray[1].'/'.$DateArray[0],
+		'Y/m/d' => $DateArray[0].'/'.$DateArray[1].'/'.$DateArray[2],
+		default => $DateArray[0].'/'.$DateArray[1].'/'.$DateArray[2],
+	};
 
 } // end function ConvertSQLDate
 
@@ -564,7 +547,7 @@ and converts to a yyyymmdd - EANCOM format 102*/
 		return 0;
 	}
 
-	if (($_SESSION['DefaultDateFormat'] == 'd/m/Y') || ($_SESSION['DefaultDateFormat'] == 'd.m.Y')) {
+	/*if (($_SESSION['DefaultDateFormat'] == 'd/m/Y') || ($_SESSION['DefaultDateFormat'] == 'd.m.Y')) {
 		return $DateArray[2] . $DateArray[1] . $DateArray[0];
 
 	} elseif ($_SESSION['DefaultDateFormat'] == 'm/d/Y') {
@@ -573,7 +556,14 @@ and converts to a yyyymmdd - EANCOM format 102*/
 	} elseif ($_SESSION['DefaultDateFormat'] == 'Y/m/d') {
 		return $DateArray[1] . $DateArray[2] . $DateArray[0];
 
-	}
+	}*/
+	return match($_SESSION['DefaultDateFormat']){
+		'd/m/Y' => $DateArray[2].'-0'.$DateArray[1].'-'.$DateArray[0],
+		'm/d/Y' => $DateArray[1].'/'.$DateArray[2].'/'.$DateArray[0],
+		'd.m.Y' => $DateArray[2].'/'.$DateArray[1].'/'.$DateArray[0],
+		'Y/m/d' => $DateArray[0].'/'.$DateArray[1].'/'.$DateArray[2],
+		default => $DateArray[0].'/'.$DateArray[1].'/'.$DateArray[2],
+	};
 
 } // end function to convert DefaultDateFormat Date to EDI format 102
 
@@ -1069,60 +1059,65 @@ function DateAdd($DateToAddTo, $PeriodString, $NumberPeriods){
   }
 
 	if (($_SESSION['DefaultDateFormat'] == 'd/m/Y') OR ($_SESSION['DefaultDateFormat'] == 'd.m.Y')){
-
-		switch ($PeriodString) {
-		case 'd': //Days
-			return Date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, (int)$Date_Array[1], (int)$Date_Array[0] + $NumberPeriods , (int)$Date_Array[2]));
-			break;
-		case 'w': //weeks
-			return Date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, (int)$Date_Array[1], (int)$Date_Array[0] + ($NumberPeriods * 7), (int)$Date_Array[2]));
-			break;
-		case 'm': //months
-			return Date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, (int)$Date_Array[1] + $NumberPeriods, (int)$Date_Array[0], (int)$Date_Array[2]));
-			break;
-		case 'y': //years
-			return Date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, (int)$Date_Array[1], (int)$Date_Array[0], (int)$Date_Array[2] + $NumberPeriods));
-			break;
-		default:
-			return 0;
-		}
+		return match ($PeriodString) {
+			'd'     => Date(
+				$_SESSION['DefaultDateFormat'],
+				mktime(0, 0, 0, (int)$Date_Array[1], (int)$Date_Array[0] + $NumberPeriods, (int)$Date_Array[2])
+			),
+			'w'     => Date(
+				$_SESSION['DefaultDateFormat'],
+				mktime(0, 0, 0, (int)$Date_Array[1], (int)$Date_Array[0] + ($NumberPeriods * 7), (int)$Date_Array[2])
+			),
+			'm'     => Date(
+				$_SESSION['DefaultDateFormat'],
+				mktime(0, 0, 0, (int)$Date_Array[1] + $NumberPeriods, (int)$Date_Array[0], (int)$Date_Array[2])
+			),
+			'y'     => Date(
+				$_SESSION['DefaultDateFormat'],
+				mktime(0, 0, 0, (int)$Date_Array[1], (int)$Date_Array[0], (int)$Date_Array[2] + $NumberPeriods)
+			),
+			default => 0,
+		};
 	} elseif ($_SESSION['DefaultDateFormat'] == 'm/d/Y'){
-
-		switch ($PeriodString) {
-		case 'd':
-			return Date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, (int)$Date_Array[0], (int)$Date_Array[1] + $NumberPeriods, (int)$Date_Array[2]));
-			break;
-		case 'w':
-			return Date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, (int)$Date_Array[0], (int)$Date_Array[1] + ($NumberPeriods * 7), (int)$Date_Array[2]));
-			break;
-		case 'm':
-			return Date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, (int)$Date_Array[0] + $NumberPeriods, (int)$Date_Array[1], (int)$Date_Array[2]));
-			break;
-		case 'y':
-			return Date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, (int)$Date_Array[0], (int)$Date_Array[1], (int)$Date_Array[2] + $NumberPeriods));
-			break;
-		default:
-			return 0;
-		}
+		return match ($PeriodString) {
+			'd'     => Date(
+				$_SESSION['DefaultDateFormat'],
+				mktime(0, 0, 0, (int)$Date_Array[0], (int)$Date_Array[1] + $NumberPeriods, (int)$Date_Array[2])
+			),
+			'w'     => Date(
+				$_SESSION['DefaultDateFormat'],
+				mktime(0, 0, 0, (int)$Date_Array[0], (int)$Date_Array[1] + ($NumberPeriods * 7), (int)$Date_Array[2])
+			),
+			'm'     => Date(
+				$_SESSION['DefaultDateFormat'],
+				mktime(0, 0, 0, (int)$Date_Array[0] + $NumberPeriods, (int)$Date_Array[1], (int)$Date_Array[2])
+			),
+			'y'     => Date(
+				$_SESSION['DefaultDateFormat'],
+				mktime(0, 0, 0, (int)$Date_Array[0], (int)$Date_Array[1], (int)$Date_Array[2] + $NumberPeriods)
+			),
+			default => 0,
+		};
 	} elseif ($_SESSION['DefaultDateFormat'] == 'Y/m/d' OR $_SESSION['DefaultDateFormat'] == 'Y-m-d'){
-
-		switch ($PeriodString) {
-		case 'd':
-		/* Fix up the Y/m/d calculation */
-			return Date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, (int)$Date_Array[1], (int)$Date_Array[2] + $NumberPeriods, (int)$Date_Array[0]));
-			break;
-		case 'w':
-			return Date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, (int)$Date_Array[1], (int)$Date_Array[2] + ($NumberPeriods * 7), (int)$Date_Array[0]));
-			break;
-		case 'm':
-			return Date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, (int)$Date_Array[1] + $NumberPeriods, (int)$Date_Array[2], (int)$Date_Array[0]));
-			break;
-		case 'y':
-			return Date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, (int)$Date_Array[1], (int)$Date_Array[2], (int)$Date_Array[0] + $NumberPeriods));
-			break;
-		default:
-			return 0;
-		}
+		return match ($PeriodString) {
+			'd'     => Date(
+				$_SESSION['DefaultDateFormat'],
+				mktime(0, 0, 0, (int)$Date_Array[1], (int)$Date_Array[2] + $NumberPeriods, (int)$Date_Array[0])
+			),
+			'w'     => Date(
+				$_SESSION['DefaultDateFormat'],
+				mktime(0, 0, 0, (int)$Date_Array[1], (int)$Date_Array[2] + ($NumberPeriods * 7), (int)$Date_Array[0])
+			),
+			'm'     => Date(
+				$_SESSION['DefaultDateFormat'],
+				mktime(0, 0, 0, (int)$Date_Array[1] + $NumberPeriods, (int)$Date_Array[2], (int)$Date_Array[0])
+			),
+			'y'     => Date(
+				$_SESSION['DefaultDateFormat'],
+				mktime(0, 0, 0, (int)$Date_Array[1], (int)$Date_Array[2], (int)$Date_Array[0] + $NumberPeriods)
+			),
+			default => 0,
+		};
 	}
 }
 
@@ -1173,25 +1168,14 @@ function DateDiff($Date1, $Date2, $Period) {
 	$Difference = $Date1_Stamp - $Date2_Stamp;
 	/* Difference is the number of seconds between each date negative if Date 2 > Date 1 */
 
-	switch ($Period) {
-	case 'd':
-		return (int) ($Difference / (24 * 60 * 60));
-		break;
-	case 'w':
-		return (int) ($Difference / (24 * 60 * 60 * 7));
-		break;
-	case 'm':
-		return (int) ($Difference / (24 * 60 * 60 * 30));
-		break;
-	case 's':
-		return $Difference;
-		break;
-	case 'y':
-		return (int) ($Difference / (24 * 60 * 60 * 365.25));
-		break;
-	default:
-		return 0;
-	}
+	return match ($Period) {
+		'd'     => (int)($Difference / (24 * 60 * 60)),
+		'w'     => (int)($Difference / (24 * 60 * 60 * 7)),
+		'm'     => (int)($Difference / (24 * 60 * 60 * 30)),
+		's'     => $Difference,
+		'y'     => (int)($Difference / (24 * 60 * 60 * 365.25)),
+		default => 0,
+	};
 
 }
 

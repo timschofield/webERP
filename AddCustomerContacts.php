@@ -264,7 +264,7 @@ if (!isset($_GET['delete'])) {
 	echo '<field>
 			<label for="ContactNotes">', __('Notes'), '</label>
 			<textarea cols="40" name="ContactNotes" rows="3">',
-				( isset($_POST['ContactNotes']) ? $_POST['ContactNotes'] : '' ),
+				($_POST['ContactNotes'] ?? ''),
 				'</textarea>
 			<fieldhelp>', __('Any notes on this customer contact'), '</fieldhelp>
 		</field>';

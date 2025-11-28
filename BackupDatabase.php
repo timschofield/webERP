@@ -20,7 +20,7 @@ if (isset($_GET['BackupFile'])) {
 
 			$DeleteResult = unlink($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/' . $BackupFile);
 
-			if ($DeleteResult == true) {
+			if ($DeleteResult) {
 				prnMsg(__('Deleted') . ' companies/' . $_SESSION['DatabaseName'] . '/' . $BackupFile, 'info');
 				$DeletedFiles = true;
 			} else {

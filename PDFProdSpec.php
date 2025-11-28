@@ -160,19 +160,12 @@ if (isset($SelectedProdSpec) and $SelectedProdSpec != '') {
 			}
 			$HTML .= '<tr>';
 			for ($x = 0;$x < count($labels);$x++) {
-				switch ($x) {
-					case 0:
-						$DispValue = $MyRow['name'];
-					break;
-					case 1:
-						$DispValue = $Value;
-					break;
-					case 2:
-						$DispValue = $MyRow['method'];
-					break;
-					default:
-						$DispValue = '';
-				}
+				$DispValue = match ($x) {
+					0       => $MyRow['name'],
+					1       => $Value,
+					2       => $MyRow['method'],
+					default => '',
+				};
 				$HTML .= '<td style="text-align: ' . $Align[$x] . ';">' . htmlspecialchars($DispValue, ENT_QUOTES, 'UTF-8') . '</td>';
 			}
 			$HTML .= '</tr>';

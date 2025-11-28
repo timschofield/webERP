@@ -39,9 +39,9 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-
       <input type="hidden" name="StockID" value="' . $StockID . '">
       <input type="hidden" name="EntryType" value="SEQUENCE">';
 if ( isset($_GET['EditControlled']) ) {
-	$EditControlled = isset($_GET['EditControlled'])?$_GET['EditControlled']:false;
+	$EditControlled = $_GET['EditControlled'] ?? false;
 } elseif ( isset($_POST['EditControlled']) ){
-	$EditControlled = isset($_POST['EditControlled'])?$_POST['EditControlled']:false;
+	$EditControlled = $_POST['EditControlled'] ?? false;
 }
 echo '<tr>
 		<td valign="top">' .  __('Begin:') . '</td>

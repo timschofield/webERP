@@ -461,11 +461,7 @@ if (isset($AssetRow['disposaldate']) AND $AssetRow['disposaldate'] !='1000-01-01
 		</field>';
 }
 
-if (isset($_POST['Description'])) {
-	$Description = $_POST['Description'];
-} else {
-	$Description ='';
-}
+$Description = $_POST['Description'] ?? '';
 
 echo '<field>
 		<label for="Description">' . __('Asset Description') . ' (' . __('short') . '):</label>

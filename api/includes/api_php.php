@@ -20,11 +20,7 @@ if (!isset($WebErpSessionType)) {
 	}
 }
 
-if (isset($_SESSION['DatabaseName'])) {
-    $api_DatabaseName = $_SESSION['DatabaseName'];
-} else {
-    $api_DatabaseName = $DefaultDatabase;
-}
+$api_DatabaseName = $_SESSION['DatabaseName'] ?? $DefaultDatabase;
 
 include(__DIR__ . '/api_errorcodes.php');
 /* Include SQL_CommonFunctions.php, to use GetNextTransNo(). */

@@ -143,15 +143,15 @@ if (! isset($_GET['delete'])) {
 			</field>
 			<field>
 				<label for="LotKey">' . __('Lot') . ':</label>
-				<input type="text" required="required" name="LotKey" size="25" maxlength="25" value="' . (isset($_POST['LotKey'])? $_POST['LotKey']:'') . '" />
+				<input type="text" required="required" name="LotKey" size="25" maxlength="25" value="' . ($_POST['LotKey'] ?? '') . '" />
 			</field>
 			<field>
 				<label for="Identifier">' . __('Identifier') . ':</label>
-				<input type="text" name="Identifier" size="10" maxlength="10" value="' . (isset($_POST['Identifier'])? $_POST['Identifier']:'') . '" />
+				<input type="text" name="Identifier" size="10" maxlength="10" value="' . ($_POST['Identifier'] ?? '') . '" />
 			</field>
 			<field>
 				<label for="Comments">' . __('Comments') . ':</label>
-				<input type="text" name="Comments" size="30" maxlength="255" value="' . (isset($_POST['Comments'])? $_POST['Comments']:'') . '" />
+				<input type="text" name="Comments" size="30" maxlength="255" value="' . ($_POST['Comments'] ?? '') . '" />
 			</field>
 			<field>
 				<label for="Cert">' . __('Use for Cert?') . ':</label>
