@@ -260,7 +260,7 @@ function AverageKPIHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE
 						AND bh2.date >= '". $StartDateF . "'
 						AND bh2.date <= CURRENT_DATE) AS salesF
 			FROM klkpi bh1
-			INNNER JOIN klkpidescriptions
+			INNER JOIN klkpidescriptions
 				ON bh1.kpicode = klkpidescriptions.klkpicode
 			GROUP BY bh1.kpicode
 			ORDER BY bh1.kpicode";
@@ -1138,7 +1138,7 @@ function FinishedStockDistribution($Kind, $ByReport){
 			}
 			
 			$PercentModels = "";
-			if ($MyRow['optimalmodels'] != 0) {
+			if (isset($MyRow['optimalmodels']) and ($MyRow['optimalmodels'] != 0)) {
 				$PercentModels = locale_number_format_zero_blank(($MyRow['realmodels']/$MyRow['optimalmodels']) * 100, 0). "%";
 			}
 			
@@ -1148,7 +1148,7 @@ function FinishedStockDistribution($Kind, $ByReport){
 			}
 			
 			$OptimalPcsModel = "";
-			if ($MyRow['optimalmodels'] != 0) {
+			if (isset($MyRow['optimalmodels']) and ($MyRow['optimalmodels'] != 0)) {
 				$OptimalPcsModel = locale_number_format_zero_blank(($MyRow['optimalstock']/$MyRow['optimalmodels']), 1);
 			}
 			
