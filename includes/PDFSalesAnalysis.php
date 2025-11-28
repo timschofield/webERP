@@ -87,7 +87,7 @@ while ($MyRow = DB_fetch_array($Result)){
 								$TotalCalculation = $AccumLvl3[$Cols['colnumerator']] + $AccumLvl3[$Cols['coldenominator']];
 								break;
 							case '-':
-								$TotalCalculation = $AccumLvl3[$Cols['colnumerator']] + $AccumLvl3[$Cols['coldenominator']];
+								$TotalCalculation = $AccumLvl3[$Cols['colnumerator']] - $AccumLvl3[$Cols['coldenominator']];
 								break;
 							case '*':
 								$TotalCalculation = $AccumLvl3[$Cols['colnumerator']] * $Cols['constant'];
@@ -140,7 +140,7 @@ while ($MyRow = DB_fetch_array($Result)){
 								$TotalCalculation = $AccumLvl2[$Cols['colnumerator']] + $AccumLvl2[$Cols['coldenominator']];
 								break;
 							case '-':
-								$TotalCalculation = $AccumLvl2[$Cols['colnumerator']] + $AccumLvl2[$Cols['coldenominator']];
+								$TotalCalculation = $AccumLvl2[$Cols['colnumerator']] - $AccumLvl2[$Cols['coldenominator']];
 								break;
 							case '*':
 								$TotalCalculation = $AccumLvl2[$Cols['colnumerator']] * $Cols['constant'];
@@ -193,7 +193,7 @@ while ($MyRow = DB_fetch_array($Result)){
 								$TotalCalculation = $AccumLvl1[$Cols['colnumerator']] + $AccumLvl1[$Cols['coldenominator']];
 								break;
 							case '-':
-								$TotalCalculation = $AccumLvl1[$Cols['colnumerator']] + $AccumLvl1[$Cols['coldenominator']];
+								$TotalCalculation = $AccumLvl1[$Cols['colnumerator']] - $AccumLvl1[$Cols['coldenominator']];
 								break;
 							case '*':
 								$TotalCalculation = $AccumLvl1[$Cols['colnumerator']] * $Cols['constant'];
@@ -329,7 +329,7 @@ if ($LastLine['col5']!='0' && $LastLine['col7']!='0'){
 						$TotalCalculation = $AccumLvl3[$Cols['colnumerator']] + $AccumLvl3[$Cols['coldenominator']];
 						break;
 					case '-':
-						$TotalCalculation = $AccumLvl3[$Cols['colnumerator']] + $AccumLvl3[$Cols['coldenominator']];
+						$TotalCalculation = $AccumLvl3[$Cols['colnumerator']] - $AccumLvl3[$Cols['coldenominator']];
 						break;
 					case '*':
 						$TotalCalculation = $AccumLvl3[$Cols['colnumerator']] * $Cols['constant'];
@@ -380,7 +380,7 @@ if ($LastLine['col3']!='0' AND $LastLine['col5']!='0'){
 						$TotalCalculation = $AccumLvl2[$Cols['colnumerator']] + $AccumLvl2[$Cols['coldenominator']];
 						break;
 					case '-':
-						$TotalCalculation = $AccumLvl2[$Cols['colnumerator']] + $AccumLvl2[$Cols['coldenominator']];
+						$TotalCalculation = $AccumLvl2[$Cols['colnumerator']] - $AccumLvl2[$Cols['coldenominator']];
 						break;
 					case '*':
 						$TotalCalculation = $AccumLvl2[$Cols['colnumerator']] * $Cols['constant'];
@@ -429,7 +429,7 @@ if ($LastLine['col3']!='0'){
 					$TotalCalculation = $AccumLvl1[$Cols['colnumerator']] + $AccumLvl1[$Cols['coldenominator']];
 					break;
 				case '-':
-					$TotalCalculation = $AccumLvl1[$Cols['colnumerator']] + $AccumLvl1[$Cols['coldenominator']];
+					$TotalCalculation = $AccumLvl1[$Cols['colnumerator']] - $AccumLvl1[$Cols['coldenominator']];
 					break;
 				case '*':
 					$TotalCalculation = $AccumLvl1[$Cols['colnumerator']] * $Cols['constant'];
@@ -476,7 +476,7 @@ if ($Counter>0){
 				$TotalCalculation = $AccumLvl4[$Cols['colnumerator']] + $AccumLvl4[$Cols['coldenominator']];
 				break;
 			case '-':
-				$TotalCalculation = $AccumLvl4[$Cols['colnumerator']] + $AccumLvl4[$Cols['coldenominator']];
+				$TotalCalculation = $AccumLvl4[$Cols['colnumerator']] - $AccumLvl4[$Cols['coldenominator']];
 				break;
 			case '*':
 				$TotalCalculation = $AccumLvl4[$Cols['colnumerator']] * $Cols['constant'];
