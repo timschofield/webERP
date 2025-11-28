@@ -59,7 +59,7 @@ if ($NoOfGRNs > 0) {
 		$CheckControlledResult = DB_query($SQL, '<br />' . __('Could not determine if the item was controlled or not because') . ' ');
 		$ControlledRow = DB_fetch_row($CheckControlledResult);
 
-		if ($ControlledRow[0] == 1) {
+		if ($ControlledRow[0] == 1) { /* controlled item labels */
 			$SQL = "SELECT stockserialmoves.serialno
 					FROM stockmoves INNER JOIN stockserialmoves
 					ON stockmoves.stkmoveno = stockserialmoves.stockmoveno
@@ -69,53 +69,29 @@ if ($NoOfGRNs > 0) {
 			$GetStockMoveResult = DB_query($SQL, __('Could not retrieve the stock movement reference number which is required in order to retrieve details of the serial items that came in with this GRN'));
 			while ($SerialStockMoves = DB_fetch_array($GetStockMoveResult)) {
 				$HTML .= '
-					<div style="page-break-after:always; font-family:Arial, sans-serif;">
-						<img src="' . $_SESSION['LogoFile'] . '" style="position:absolute; left:' . $FormDesign->logo->x . 'px; top:' . $FormDesign->logo->y . 'px; width:' . $FormDesign->logo->width . 'px; height:' . $FormDesign->logo->height . 'px;" />
-						<div style="position:absolute; left:' . $FormDesign->ItemNbr->x . 'px; top:' . $FormDesign->ItemNbr->y . 'px; font-size:' . $FormDesign->ItemNbr->FontSize . 'pt;">
-							Item: ' . htmlspecialchars($MyRow['itemcode']) . '
-						</div>
-						<div style="position:absolute; left:' . $FormDesign->ItemDesc->x . 'px; top:' . $FormDesign->ItemDesc->y . 'px; font-size:' . $FormDesign->ItemDesc->FontSize . 'pt;">
-							Description: ' . htmlspecialchars($MyRow['itemdescription']) . '
-						</div>
-						<div style="position:absolute; left:' . $FormDesign->SupplierName->x . 'px; top:' . $FormDesign->SupplierName->y . 'px; font-size:' . $FormDesign->SupplierName->FontSize . 'pt;">
-							Supplier: ' . htmlspecialchars($SuppRow['suppname']) . '
-						</div>
-						<div style="position:absolute; left:' . $FormDesign->SupplierLot->x . 'px; top:' . $FormDesign->SupplierLot->y . 'px; font-size:' . $FormDesign->SupplierLot->FontSize . 'pt;">
-							Supplier Lot: ' . htmlspecialchars($SerialStockMoves['serialno']) . '
-						</div>
-						<div style="position:absolute; left:' . $FormDesign->Lot->x . 'px; top:' . $FormDesign->Lot->y . 'px; font-size:' . $FormDesign->Lot->FontSize . 'pt;">
-							Lot: ' . htmlspecialchars($SerialStockMoves['serialno']) . '
-						</div>
-						<div style="position:absolute; left:' . $FormDesign->ReceiptDate->x . 'px; top:' . $FormDesign->ReceiptDate->y . 'px; font-size:' . $FormDesign->ReceiptDate->FontSize . 'pt;">
-							Receipt Date: ' . htmlspecialchars($MyRow['deliverydate']) . '
-						</div>
-						<div style="position:absolute; left:' . $FormDesign->OrderNumber->x . 'px; top:' . $FormDesign->OrderNumber->y . 'px; font-size:' . $FormDesign->OrderNumber->FontSize . 'pt;">
-							P/O: ' . htmlspecialchars($MyRow['orderno']) . '
-						</div>
-					</div>
+					<table style="width:100%; font-family:Arial, sans-serif; page-break-after:always; border-collapse:collapse;">
+						<tr><img src="' . $_SESSION['LogoFile'] . '" style="width:200px; height:' . $FormDesign->logo->height . 'px;" /></td></tr>
+						<tr><td><strong>Item:</strong></td><td>' . htmlspecialchars($MyRow['itemcode']) . '</td></tr>
+						<tr><td><strong>Description:</strong></td><td>' . htmlspecialchars($MyRow['itemdescription']) . '</td></tr>
+						<tr><td><strong>Supplier:</strong></td><td>' . htmlspecialchars($SuppRow['suppname']) . '</td></tr>
+						<tr><td><strong>Supplier Lot:</strong></td><td>' . htmlspecialchars($SerialStockMoves['serialno']) . '</td></tr>
+						<tr><td><strong>Lot:</strong></td><td>' . htmlspecialchars($SerialStockMoves['serialno']) . '</td></tr>
+						<tr><td><strong>Receipt Date:</strong></td><td>' . htmlspecialchars($MyRow['deliverydate']) . '</td></tr>
+						<tr><td><strong>P/O:</strong></td><td>' . htmlspecialchars($MyRow['orderno']) . '</td></tr>
+					</table>
 				';
 			}
 		}
-		else {
+		else { /* non-controlled item labels */
 			$HTML .= '
-				<div style="page-break-after:always; font-family:Arial, sans-serif;">
-					<img src="' . $_SESSION['LogoFile'] . '" style="position:absolute; left:' . $FormDesign->logo->x . 'px; top:' . $FormDesign->logo->y . 'px; width:' . $FormDesign->logo->width . 'px; height:' . $FormDesign->logo->height . 'px;" />
-					<div style="position:absolute; left:' . $FormDesign->ItemNbr->x . 'px; top:' . $FormDesign->ItemNbr->y . 'px; font-size:' . $FormDesign->ItemNbr->FontSize . 'pt;">
-						Item: ' . htmlspecialchars($MyRow['itemcode']) . '
-					</div>
-					<div style="position:absolute; left:' . $FormDesign->ItemDesc->x . 'px; top:' . $FormDesign->ItemDesc->y . 'px; font-size:' . $FormDesign->ItemDesc->FontSize . 'pt;">
-						Description: ' . htmlspecialchars($MyRow['itemdescription']) . '
-					</div>
-					<div style="position:absolute; left:' . $FormDesign->SupplierName->x . 'px; top:' . $FormDesign->SupplierName->y . 'px; font-size:' . $FormDesign->SupplierName->FontSize . 'pt;">
-						Supplier: ' . htmlspecialchars($SuppRow['suppname']) . '
-					</div>
-					<div style="position:absolute; left:' . $FormDesign->ReceiptDate->x . 'px; top:' . $FormDesign->ReceiptDate->y . 'px; font-size:' . $FormDesign->ReceiptDate->FontSize . 'pt;">
-						Receipt Date: ' . htmlspecialchars(ConvertSQLDate($MyRow['deliverydate'])) . '
-					</div>
-					<div style="position:absolute; left:' . $FormDesign->OrderNumber->x . 'px; top:' . $FormDesign->OrderNumber->y . 'px; font-size:' . $FormDesign->OrderNumber->FontSize . 'pt;">
-						P/O: ' . htmlspecialchars($MyRow['orderno']) . '
-					</div>
-				</div>';
+				<table style="width:100%; font-family:Arial, sans-serif; page-break-after:always; border-collapse:collapse;">
+					<tr><img src="' . $_SESSION['LogoFile'] . '" style="width:200px; height:' . $FormDesign->logo->height . 'px;" /></td></tr>
+					<tr><td><strong>Item:</strong></td><td>' . htmlspecialchars($MyRow['itemcode']) . '</td></tr>
+					<tr><td><strong>Description:</strong></td><td>' . htmlspecialchars($MyRow['itemdescription']) . '</td></tr>
+					<tr><td><strong>Supplier:</strong></td><td>' . htmlspecialchars($SuppRow['suppname']) . '</td></tr>
+					<tr><td><strong>Receipt Date:</strong></td><td>' . htmlspecialchars(ConvertSQLDate($MyRow['deliverydate'])) . '</td></tr>
+					<tr><td><strong>P/O:</strong></td><td>' . htmlspecialchars($MyRow['orderno']) . '</td></tr>
+				</table>';
 		}
 	}
 

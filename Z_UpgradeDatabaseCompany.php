@@ -66,7 +66,7 @@ if (!isset($_POST['continue'])) {
 	echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<div class="page_help_text">' . __('You have the following database updates which are required.') . '<br />' . __('Please ensure that you have taken a backup of your current database before continuing.') . '</div><br />';
+	echo '<div class="page_help_text">' . __('The following company-specific database updates are required.') . '<br />' . __('Ensure you have a valid backup before continuing.') . '</div><br />';
 	echo '<table>
 		<tr>
 			<th></th>

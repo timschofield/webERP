@@ -12,6 +12,20 @@ if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromD
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
+
+	if ($_POST['CategoryID'] != 'All') {
+		$WhereCategory = " AND stockmaster.categoryid='" . $_POST['CategoryID'] . "'";
+		$SQL = "SELECT categoryid,
+					categorydescription
+				FROM stockcategory
+				WHERE categoryid='" . $_POST['CategoryID'] . "'";
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_row($Result);
+		$CategoryDescription = $MyRow[1];
+	} else {
+		$WhereCategory = "";
+		$CategoryDescription = __('All');
+	}
 	if ($_POST['CategoryID'] == 'All' AND $_POST['Location'] == 'All') {
 		$SQL = "SELECT salesorders.orderno,
 				  salesorders.debtorno,
@@ -184,20 +198,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 
 	$OrderNo =0; /*initialise */
-
-	if ($_POST['CategoryID'] != 'All') {
-		$WhereCategory = " AND stockmaster.categoryid='" . $_POST['CategoryID'] . "'";
-		$SQL = "SELECT categoryid,
-					categorydescription
-				FROM stockcategory
-				WHERE categoryid='" . $_POST['CategoryID'] . "'";
-		$Result = DB_query($SQL);
-		$MyRow = DB_fetch_row($Result);
-		$CategoryDescription = $MyRow[1];
-	} else {
-		$WhereCategory = "";
-		$CategoryDescription = __('All');
-	}
 
 	$HTML = '';
 
