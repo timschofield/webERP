@@ -147,8 +147,9 @@ then none of the above are true and the list of status codes will be displayed w
 links to close or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$SQL = "SELECT klmaintenancetasks.counterindex, 
+	$SQL = "SELECT klmaintenancetasks.counterindex,
 				klmaintenancetasks.loccode,
+				locations.zone,
 				locations.locationname,
 				klmaintenancetasks.maintenancetype,
 				klmaintenancetypes.description AS typedescription,
@@ -156,34 +157,36 @@ or deletion of the records*/
 				klmaintenancetasks.creationuser,
 				klmaintenancetasks.creationdate
 			FROM klmaintenancetasks
-				INNER JOIN locations 
-					ON locations.loccode=klmaintenancetasks.loccode 
-				INNER JOIN klmaintenancetypes 
-					ON klmaintenancetypes.maintenancetype=klmaintenancetasks.maintenancetype 
-				INNER JOIN locationusers 
-					ON locationusers.loccode=klmaintenancetasks.loccode 
+				INNER JOIN locations
+					ON locations.loccode=klmaintenancetasks.loccode
+				INNER JOIN klmaintenancetypes
+					ON klmaintenancetypes.maintenancetype=klmaintenancetasks.maintenancetype
+				INNER JOIN locationusers
+					ON locationusers.loccode=klmaintenancetasks.loccode
 						AND locationusers.userid='" .  $_SESSION['UserID'] . "'
 						AND locationusers.canupd=1
 			WHERE klmaintenancetasks.closed = 0
-			ORDER BY klmaintenancetasks.counterindex";
+			ORDER BY locations.zone, locations.locationname, klmaintenancetasks.counterindex";
 	$Result = DB_query($SQL);
 
 	echo '<table class="selection">
 		<tr>
-			<th>' .  '# Task'  . '</th>
+			<th>' .  'Zone'  . '</th>
 			<th>' .  'Location'  . '</th>
+			<th>' .  '# Task'  . '</th>
 			<th>' .  'Type'  . '</th>
 			<th>' .  'User'  . '</th>
 			<th>' .  'Date'  . '</th>
 			<th>' .  'Description'  . '</th>
-        </tr>';
+	       </tr>';
 
 	$k=0; //row colour counter
 	while ($MyRow=DB_fetch_array($Result)) {
 
 		$k = StartEvenOrOddRow($k);
-		echo '<td class="number">' . $MyRow['counterindex'] . '</td>
+		echo '<td>' . $MyRow['zone'] . '</td>
 				<td>' . $MyRow['locationname'] . '</td>
+				<td class="number">' . $MyRow['counterindex'] . '</td>
 				<td>' . $MyRow['typedescription'] . '</td>
 				<td>' . $MyRow['creationuser'] . '</td>
 				<td>' . ConvertSQLDateTime($MyRow['creationdate']) . '</td>
@@ -204,6 +207,7 @@ or deletion of the records*/
 		while ($MyUpdates=DB_fetch_array($Resultupdates)) {
 			$k = StartSameColourRow($k);
 			echo '<td>' . '' . '</td>
+					<td>' . '' . '</td>
 					<td>' . '' . '</td>
 					<td>' . '' . '</td>
 					<td>' . $MyUpdates['updateuser'] . '</td>

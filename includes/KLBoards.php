@@ -705,6 +705,7 @@ function MaintenanceTasksList($Status, $NumDays){
 	$SQL = "SELECT klmaintenancetasks.counterindex,
 				klmaintenancetasks.loccode,
 				locations.locationname,
+				locations.zone,
 				klmaintenancetasks.maintenancetype,
 				klmaintenancetypes.description AS typedescription,
 				klmaintenancetasks.description AS taskdescription,
@@ -722,7 +723,9 @@ function MaintenanceTasksList($Status, $NumDays){
 					AND locationusers.userid = '" .  $_SESSION['UserID'] . "'
 					AND locationusers.canview = 1 " .
 			$WhereStatus . "
-			ORDER BY klmaintenancetasks.counterindex";
+			ORDER BY locations.zone,
+				locations.locationname,
+				klmaintenancetasks.counterindex";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		ShowTableTitle($TableTitleText);
@@ -731,8 +734,9 @@ function MaintenanceTasksList($Status, $NumDays){
 		$TableHeader = '<thead>
 						<tr>
 							<th class="SortedColumn">' . __('#') . '</th>
-							<th class="SortedColumn">' . __('Task') . '</th>
+							<th class="SortedColumn">' . __('Zone') . '</th>
 							<th class="SortedColumn">' . __('Location') . '</th>
+							<th class="SortedColumn">' . __('Task') . '</th>
 							<th class="SortedColumn">' . __('Type') . '</th>
 							<th class="SortedColumn">' . __('Description') . '</th>
 							<th class="SortedColumn">' . __('Created By') . '</th>
@@ -758,8 +762,9 @@ function MaintenanceTasksList($Status, $NumDays){
 			}
 			echo '<tr class="striped_row">
 					<td class="number">' . $i . '</td>
-					<td class="number">' . locale_number_format($MyRow['counterindex'], 0) . '</td>
+					<td>' . $MyRow['zone'] . '</td>
 					<td>' . $MyRow['locationname'] . '</td>
+					<td class="number">' . locale_number_format($MyRow['counterindex'], 0) . '</td>
 					<td>' . $MyRow['maintenancetype'] . '</td>
 					<td>' . $MyRow['taskdescription'] . '</td>
 					<td>' . $MyRow['creationuser'] . '</td>
@@ -780,8 +785,9 @@ function MaintenanceTasksList($Status, $NumDays){
 			while ($MyUpdates = DB_fetch_array($ResultUpdates)) {
 				echo '<tr class="striped_row">
 						<td class="number">' . '' . '</td>
-						<td class="number">' . '' . '</td>
 						<td>' . '' . '</td>
+						<td>' . '' . '</td>
+						<td class="number">' . '' . '</td>
 						<td>' . '' . '</td>
 						<td>' . $MyUpdates['updatedescription'] . '</td>
 						<td>' . $MyUpdates['updateuser'] . '</td>
@@ -3894,19 +3900,20 @@ function MaintenanceTasksDistribution($Status, $NumDays, $UserIsSystemAdmin){
 	}
 	$TableResult = array();
 	// now populate the array with info
-	$SQL = "SELECT COUNT(counterindex) AS total, 
+	$SQL = "SELECT COUNT(counterindex) AS total,
 				klmaintenancetasks.loccode,
 				locations.locationname,
+				locations.zone,
 				klmaintenancetasks.maintenancetype
 			FROM klmaintenancetasks
-				INNER JOIN locations 
-					ON locations.loccode=klmaintenancetasks.loccode 
-				INNER JOIN klmaintenancetypes 
-					ON klmaintenancetypes.maintenancetype=klmaintenancetasks.maintenancetype 
-				INNER JOIN locationusers 
-					ON locationusers.loccode=klmaintenancetasks.loccode 
+				INNER JOIN locations
+					ON locations.loccode=klmaintenancetasks.loccode
+				INNER JOIN klmaintenancetypes
+					ON klmaintenancetypes.maintenancetype=klmaintenancetasks.maintenancetype
+				INNER JOIN locationusers
+					ON locationusers.loccode=klmaintenancetasks.loccode
 						AND locationusers.userid='" .  $_SESSION['UserID'] . "'
-						AND locationusers.canview=1 " . 
+						AND locationusers.canview=1 " .
 			$WhereStatus . "
 			GROUP BY klmaintenancetasks.loccode, klmaintenancetasks.maintenancetype
 			ORDER BY locationname, klmaintenancetasks.maintenancetype";
@@ -3914,9 +3921,11 @@ function MaintenanceTasksDistribution($Status, $NumDays, $UserIsSystemAdmin){
 	if (DB_num_rows($Result) != 0){
 		while ($MyRow = DB_fetch_array($Result)) {
 			$TableResult[$MyRow['loccode']]['locationname'] = $MyRow['locationname'];
+			$TableResult[$MyRow['loccode']]['zone'] = $MyRow['zone'];
 			$TableResult[$MyRow['loccode']][$MyRow['maintenancetype']] = $MyRow['total'];
 		}
 		$TableHeader = '<tr>
+						<th class="SortedColumn">' . __('Zone') . '</th>
 						<th class="SortedColumn">' . __('Location') . '</th>
 						<th class="SortedColumn">' . __('AC') . '</th>
 						<th class="SortedColumn">' . __('Bocor') . '</th>
@@ -4052,6 +4061,7 @@ function MaintenanceTasksDistribution($Status, $NumDays, $UserIsSystemAdmin){
 				$IssuesDLL = '';
 			}
 			echo '<tr class="striped_row">
+					<td>' . $Row['zone'] . '</td>
 					<td>' . $Row['locationname'] . '</td>
 					<td class="number">' . $IssuesAC . '</td>
 					<td class="number">' . $IssuesBOCOR . '</td>
@@ -4070,6 +4080,7 @@ function MaintenanceTasksDistribution($Status, $NumDays, $UserIsSystemAdmin){
 		}
 		echo '<tr class="striped_row">
 				<td>' . "TOTAL" . '</td>
+				<td>' . '' . '</td>
 				<td class="number">' . $TotalIssuesAC . '</td>
 				<td class="number">' . $TotalIssuesBOCOR . '</td>
 				<td class="number">' . $TotalIssuesFURNITURE . '</td>
