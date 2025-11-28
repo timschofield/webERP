@@ -257,19 +257,12 @@ while ($MyRow=DB_fetch_array($Result)){
 	}
 	$rowHtml = '<tr>';
 	for ($x = 0; $x < count($SectionColLabs); $x++) {
-		switch ($x) {
-			case 0:
-				$DispValue = htmlspecialchars($MyRow['name']);
-				break;
-			case 1:
-				$DispValue = htmlspecialchars($Value);
-				break;
-			case 2:
-				$DispValue = htmlspecialchars($MyRow['method']);
-				break;
-			default:
-				$DispValue = '';
-		}
+		$DispValue = match ($x) {
+			0       => htmlspecialchars($MyRow['name']),
+			1       => htmlspecialchars($Value),
+			2       => htmlspecialchars($MyRow['method']),
+			default => '',
+		};
 		$rowHtml .= '<td>'.$DispValue.'</td>';
 	}
 	$rowHtml .= '</tr>';

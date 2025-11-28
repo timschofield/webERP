@@ -36,7 +36,7 @@ function ConvertToSQLDate($DateEntry) {
 	}
 
 
-	if ($_SESSION['DefaultDateFormat']=='d/m/Y'){
+	/*if ($_SESSION['DefaultDateFormat']=='d/m/Y'){
 		return $Date_Array[2].'-0'.$Date_Array[1].'-'.$Date_Array[0];
 	} elseif ($_SESSION['DefaultDateFormat']=='m/d/Y'){
 		return $Date_Array[1].'/'.$Date_Array[2].'/'.$Date_Array[0];
@@ -44,7 +44,15 @@ function ConvertToSQLDate($DateEntry) {
 		return $Date_Array[0].'/'.$Date_Array[1].'/'.$Date_Array[2];
 	} elseif ($_SESSION['DefaultDateFormat']=='d.m.Y'){
 		return $Date_Array[2].'/'.$Date_Array[1].'/'.$Date_Array[0];
-	}
+	}*/
+
+	return match($_SESSION['DefaultDateFormat']){
+		'd/m/Y' => $Date_Array[2].'-0'.$Date_Array[1].'-'.$Date_Array[0],
+		'm/d/Y' => $Date_Array[1].'/'.$Date_Array[2].'/'.$Date_Array[0],
+		'd.m.Y' => $Date_Array[2].'/'.$Date_Array[1].'/'.$Date_Array[0],
+		'Y/m/d' => $Date_Array[0].'/'.$Date_Array[1].'/'.$Date_Array[2],
+		default => $Date_Array[0].'/'.$Date_Array[1].'/'.$Date_Array[2],
+	};
 
 } // end function ConvertSQLDate
 

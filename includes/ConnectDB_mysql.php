@@ -152,11 +152,7 @@ function DB_error_msg() {
 }
 
 function DB_Last_Insert_ID($Table, $FieldName) {
-	if (isset($_SESSION['LastInsertId'])) {
-		$Last_Insert_ID = $_SESSION['LastInsertId'];
-	} else {
-		$Last_Insert_ID = 0;
-	}
+	$Last_Insert_ID = $_SESSION['LastInsertId'] ?? 0;
 	return $Last_Insert_ID;
 }
 

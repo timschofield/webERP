@@ -170,16 +170,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	$j = 0; //row counter
 	while ($MyRow = DB_fetch_array($AccountListResult)) {
-		if (isset($ThisYearActuals[$MyRow['accountcode']])) {
-			$AccountBalance = $ThisYearActuals[$MyRow['accountcode']];
-		} else {
-			$AccountBalance = 0;
-		}
-		if (isset($LastYearActuals[$MyRow['accountcode']])) {
-			$LYAccountBalance = $LastYearActuals[$MyRow['accountcode']];
-		} else {
-			$LYAccountBalance = 0;
-		}
+		$AccountBalance = $ThisYearActuals[$MyRow['accountcode']] ?? 0;
+		$LYAccountBalance = $LastYearActuals[$MyRow['accountcode']] ?? 0;
 
 		if ($MyRow['accountcode'] == $RetainedEarningsAct) {
 			$AccountBalance = $ThisYearRetainedEarningsRow['retainedearnings'];

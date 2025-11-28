@@ -87,9 +87,9 @@ echo '<table class="selection">';
 echo $TableHeader;
 
 if ( isset($_GET['EditControlled']) ) {
-	$EditControlled = isset($_GET['EditControlled'])?$_GET['EditControlled']:false;
+	$EditControlled = isset($_GET['EditControlled']) && $_GET['EditControlled'];
 } elseif ( isset($_POST['EditControlled']) ){
-	$EditControlled = isset($_POST['EditControlled'])?$_POST['EditControlled']:false;
+	$EditControlled = isset($_POST['EditControlled']) && $_POST['EditControlled'];
 } else {
 	$EditControlled=false;
 }

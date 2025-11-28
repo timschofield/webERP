@@ -262,4 +262,4 @@ function GetUsers($GroupId, $GroupName) {
 		exit();
 	}
 }
-?>
+

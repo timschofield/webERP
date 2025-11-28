@@ -2,9 +2,6 @@
 function GetCommissionPeriods($SalesPerson, $Period, $Term) {
 	$ReturnPeriods = array();
 	switch ($Term) {
-		case 1:
-			$ReturnPeriods[] = $Period;
-		break;
 		case 2:
 			$From = FirstPeriodInFY($Period);
 			$EndPeriod = FirstPeriodInFY($Period);
@@ -26,6 +23,7 @@ function GetCommissionPeriods($SalesPerson, $Period, $Term) {
 				$From++;
 			}
 		break;
+		case 1:
 		default:
 			$ReturnPeriods[] = $Period;
 		break;
@@ -312,20 +310,11 @@ function CalculateCommission($SalesPerson, $Debtor, $Branch, $StockID, $Currency
 	$SalesCommissionType = $MyRow['commissiontypeid'];
 
 	/* Select the calculation function based on this method */
-	switch ($SalesCommissionType) {
-		case 1:
-			return StockCategoryCommission($SalesPerson, $Debtor, $Branch, $StockID, $Currency, $Value, $Period);
-		break;
-		case 2:
-			return SalesAreaCommission($SalesPerson, $Debtor, $Branch, $StockID, $Currency, $Value, $Period);
-		break;
-		case 3:
-			return TimeAsCommission($SalesPerson, $Debtor, $Branch, $StockID, $Currency, $Value, $Period);
-		break;
-		default:
-			/* if there is no commission calculation method then return zero */
-			return 0;
-		break;
-	}
+	return match ($SalesCommissionType) {
+		1       => StockCategoryCommission($SalesPerson, $Debtor, $Branch, $StockID, $Currency, $Value, $Period),
+		2       => SalesAreaCommission($SalesPerson, $Debtor, $Branch, $StockID, $Currency, $Value, $Period),
+		3       => TimeAsCommission($SalesPerson, $Debtor, $Branch, $StockID, $Currency, $Value, $Period),
+		default => 0,
+	};
 
 }

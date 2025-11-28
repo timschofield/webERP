@@ -668,11 +668,7 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
 }
 
 //if ($_POST['New'] == 1) {
-	if (isset($_POST['Description'])) {
-		$Description = $_POST['Description'];
-	} else {
-		$Description ='';
-	}
+$Description = $_POST['Description'] ?? '';
 	echo '<field>
 			<label for="Description">' . __('Part Description') . ' (' . __('short') . '):</label>
 			<input ' . (in_array('Description',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="Description" size="52" maxlength="50" value="' . $Description . '" />
@@ -974,21 +970,13 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
 			<input type="text" class="number" name="DecimalPlaces" size="1" maxlength="1" value="' . $_POST['DecimalPlaces'] . '" />
 		</field>';
 
-	if (isset($_POST['BarCode'])) {
-		$BarCode = $_POST['BarCode'];
-	} else {
-		$BarCode='';
-	}
+$BarCode = $_POST['BarCode'] ?? '';
 	echo '<field>
 			<label for="BarCode">' . __('Bar Code') . ':</label>
 			<input ' . (in_array('BarCode',$Errors) ?  'class="inputerror"' : '' ) .'  type="text" name="BarCode" size="22" maxlength="20" value="' . $BarCode . '" />
 		</field>';
 
-	if (isset($_POST['DiscountCategory'])) {
-		$DiscountCategory = $_POST['DiscountCategory'];
-	} else {
-		$DiscountCategory='';
-	}
+$DiscountCategory = $_POST['DiscountCategory'] ?? '';
 	echo '<field>
 			<label for="DiscountCategory">' . __('Discount Category') . ':</label>
 			<input type="text" name="DiscountCategory" size="2" maxlength="2" value="' . $DiscountCategory . '" />

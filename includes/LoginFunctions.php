@@ -114,19 +114,12 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 			$_SESSION['ShowFieldHelp'] = $MyRow['showfieldhelp'];
 			$_SESSION['ScreenFontSize'] = $MyRow['fontsize'];
 
-			switch ($_SESSION['ScreenFontSize']) {
-				case 0:
-					$_SESSION['FontSize'] = '0.667rem';
-				break;
-				case 1:
-					$_SESSION['FontSize'] = '0.833rem';
-				break;
-				case 2:
-					$_SESSION['FontSize'] = '1rem';
-				break;
-				default:
-					$_SESSION['FontSize'] = '0.833rem';
-			}
+			$_SESSION['FontSize'] = match ($_SESSION['ScreenFontSize']) {
+				0       => '0.667rem',
+				1       => '0.833rem',
+				2       => '1rem',
+				default => '0.833rem',
+			};
 
 			if (isset($MyRow['pdflanguage'])) {
 				$_SESSION['PDFLanguage'] = $MyRow['pdflanguage'];

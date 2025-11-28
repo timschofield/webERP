@@ -548,13 +548,7 @@ if (isset($_POST['submit'])) {
 		$MyRow = DB_fetch_array($Result);
 	}
 	if (DB_error_no() == 0) {
-
-		if (isset($MyRow['leeway'])) {
-			$Leeway = $MyRow['leeway'];
-		}
-		else {
-			$Leeway = 0;
-		}
+		$Leeway = $MyRow['leeway'] ?? 0;
 		$UseMRPDemands = __('No');
 		if (isset($MyRow['usemrpdemands']) and $MyRow['usemrpdemands'] == 'y') {
 			$UseMRPDemands = __('Yes');

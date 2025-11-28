@@ -319,11 +319,7 @@ echo '<field>
 		<input type="text" name="VoyageRef" maxlength="20" size="20" value="' . $_SESSION['Shipment']->VoyageRef . '" />
 	</field>';
 
-if (isset($_SESSION['Shipment']->ETA)){
-	$ETA = $_SESSION['Shipment']->ETA;
-} else {
-	$ETA ='';
-}
+$ETA = $_SESSION['Shipment']->ETA ?? '';
 
 echo '<field>
 		<label for="ETA">' .  __('Expected Arrival Date (ETA)'). ': </label>';

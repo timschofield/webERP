@@ -49,19 +49,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		exit();
 	}
 
-	switch ($_POST['TransType']) {
-		case 20:
-			$TransactionType = __('Invoices');
-			break;
-		case 21:
-			$TransactionType = __('Credits');
-			break;
-		case 22:
-			$TransactionType = __('Payments');
-			break;
-		default:
-			$TransactionType = __('None');
-	}
+	$TransactionType = match ($_POST['TransType']) {
+		20      => __('Invoices'),
+		21      => __('Credits'),
+		22      => __('Payments'),
+		default => __('None'),
+	};
 
 	$HTML = '';
 

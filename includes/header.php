@@ -90,7 +90,7 @@ if (isset($ExtraHeadContent)) {
 
 echo "\n</head>\n";
 
-echo '<body onload="initial();' . (isset($BodyOnLoad) ? $BodyOnLoad : '') . '">' . "\n";
+echo '<body onload="initial();' . ($BodyOnLoad ?? '') . '">' . "\n";
 
 echo '<div class="help-bubble" id="help-bubble">
 		<link rel="stylesheet" type="text/css" href="'. $RootPath . '/doc/Manual/css/manual.css" />
