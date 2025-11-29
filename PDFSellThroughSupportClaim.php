@@ -112,7 +112,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$CurrDecimalPlaces = $SellThroRow['currdecimalplaces'];
 		$Supplier = $SellThroRow['suppname'];
 		$CurrCode = $SellThroRow['currcode'];
-		if (isset($Supplier) and $SellThroRow['suppname']!=$Supplier){
+		# if (isset($Supplier) and $SellThroRow['suppname']!=$Supplier){
 			$pdf->addTextWrap($Left_Margin+2,$YPos,250,$FontSize,$SellThroRow['suppname']);
 			if ($SupplierClaimTotal > 0) {
 				$HTML .= '<tr>
@@ -121,7 +121,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 							<td class="number">' . locale_number_format($SupplierClaimTotal,$CurrDecimalPlaces) . '</td>
 						</tr>';
 			}
-		}
+		# }
 		$DisplaySellingPrice = locale_number_format($SellThroRow['sellingprice'],$_SESSION['CompanyRecord']['decimalplaces']);
 		$ClaimAmount = (($SellThroRow['fxcost']*$SellThroRow['rebatepercent']) + $SellThroRow['rebateamount']) * -$SellThroRow['qty'];
 		$SupplierClaimTotal += $ClaimAmount;

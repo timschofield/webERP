@@ -98,7 +98,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$SectionPrdBudget = 0;
 
 	$PeriodProfitLoss = 0;
-	$PeriodProfitLoss = 0;
 	$PeriodLYProfitLoss = 0;
 	$PeriodBudgetProfitLoss = 0;
 

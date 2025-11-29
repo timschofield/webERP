@@ -37,7 +37,7 @@ if (isset($_POST['Enter'])) { //user has input a new value
 
 //Add the new users to the mail group
 if (isset($_GET['Add']) and isset($_GET['UserId'])) {
-	if (isset($_GET['UserId']) and mb_strlen($_GET['UserId']) < 21 and !ContainsIllegalCharacters($_GET['UserId'])) {
+	if (mb_strlen($_GET['UserId']) < 21 and !ContainsIllegalCharacters($_GET['UserId'])) {
 		$UserId = $_GET['UserId'];
 	} else {
 		prnMsg(__('The User Id should be set and must be less than 21 and cannot contains illegal characters'), 'error');
