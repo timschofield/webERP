@@ -108,7 +108,7 @@ if (!isset($_POST['FromDate'])
 		$i++;
 	}
 
-	$GraphTitle = $InitialDate . ' ' . $KPIDescription . ' ' . 'From' . ' ' . ConvertSQLDate($InitialDate) . ' ' . 'to' . ' ' . ConvertSQLDate($FinalDate);
+	$GraphTitle = $KPIDescription . ' ' . 'From' . ' ' . ConvertSQLDate($InitialDate) . ' ' . 'to' . ' ' . ConvertSQLDate($FinalDate);
 
 	$Range = max(abs($MaxValue), abs($MinValue));
 	if ($Range < 5){
