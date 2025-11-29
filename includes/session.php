@@ -161,7 +161,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	if (!isset($_SESSION['DatabaseName'])) {
 		$_SESSION['DatabaseName'] = $DefaultDatabase;
 	}
-	include_once($PathPrefix . 'includes/ConnectDB_' . $DBType . '.php');
+	include_once('ConnectDB_' . $DBType . '.php');
 	include($PathPrefix . 'includes/GetConfig.php');
 
 } else {

@@ -208,6 +208,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	}
 
 	fclose($FileHandle);
+	# @bug : file not found
 	include('includes/GLPostings.php');
 
 } else { //show file upload form

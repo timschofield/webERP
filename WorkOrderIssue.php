@@ -103,7 +103,7 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 		if (!isset($_POST['LotCounter']) or !is_numeric($_POST['LotCounter'])) {
 			$InputError = true;
 			prnMsg(__('The line counter is not set up or not numeric, please ask administrator for help'), 'error');
-			include('include/footer.php');
+			include('includes/footer.php');
 			exit();
 		}
 		for ($i = 0;$i < $_POST['LotCounter'];$i++) {
