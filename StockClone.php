@@ -10,7 +10,7 @@ include('includes/header.php');
 include('includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['OldStockID']) || isset($_POST['OldStockID']) ){ //we are cloning
-	$_POST['OldStockID'] = isset($_GET['OldStockID']) && !empty($_GET['OldStockID']) ? $_GET['OldStockID']:$_POST['OldStockID'];
+	$_POST['OldStockID'] = !empty($_GET['OldStockID']) ? $_GET['OldStockID']:$_POST['OldStockID'];
 	$_POST['OldStockID'] =trim(mb_strtoupper($_POST['OldStockID']));
 	$_POST['New']= 1;
 	if (isset($_POST['StockID']) ) {
@@ -29,7 +29,7 @@ if (isset($_GET['OldStockID']) || isset($_POST['OldStockID']) ){ //we are clonin
 
 $ItemDescriptionLanguagesArray = explode(',',$_SESSION['ItemDescriptionLanguages']);
 
-if (isset($_POST['StockID']) && !empty($_POST['StockID']) && !isset($_POST['UpdateCategories'])) {
+if (!empty($_POST['StockID']) && !isset($_POST['UpdateCategories'])) {
 	$SQL = "SELECT COUNT(stockid)
 			FROM stockmaster
 			WHERE stockid='".$_POST['StockID']."'
@@ -1045,7 +1045,7 @@ $DiscountCategory = $_POST['DiscountCategory'] ?? '';
 
 		while ($PropertyRow=DB_fetch_array($PropertiesResult)){
 
-			if (isset($_POST['StockID']) && !empty($_POST['StockID'])) {
+			if (!empty($_POST['StockID'])) {
 				$PropValResult = DB_query("SELECT value FROM
 											stockitemproperties
 											WHERE stockid='" . $_POST['StockID'] . "'
