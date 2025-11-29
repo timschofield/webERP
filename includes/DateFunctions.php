@@ -213,7 +213,7 @@ function EndDateSQLFromPeriodNo($PeriodNo) {
 * Returns: String containing the month name
 **************************************************************************************************************/
 function GetMonthText($MonthNumber) {
-	$Month = match ($MonthNumber) {
+	$Month = match (strval($MonthNumber)) {
 		'1'       => __('January'),
 		'2'       => __('February'),
 		'3'       => __('March'),
