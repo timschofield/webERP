@@ -40,11 +40,7 @@ echo '<body>
 			<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />
 			<input type="hidden" name="NewLogin" value="Yes" />';
 
-if (isset($_COOKIE['Login'])) {
-	$DefaultCompany = $_COOKIE['Login'];
-} else {
-	$DefaultCompany = $DefaultDatabase;
-}
+$DefaultCompany = $_COOKIE['Login'] ?? $DefaultDatabase;
 
 // Read companies directory once and collect all company information
 $CompanyList = array();
@@ -122,7 +118,7 @@ if ($AllowCompanySelectionBox === 'Hide') {
 
 if ($AllowCompanySelectionBox != 'Hide') {
 	echo '<label for="CompanySelect">', __('Company'), ':</label>';
-	$DefaultCompanyName = isset($CompanyName[$DefaultCompany]) ? $CompanyName[$DefaultCompany] : $DefaultCompany;
+	$DefaultCompanyName = $CompanyName[$DefaultCompany] ?? $DefaultCompany;
 	echo '<input type="text" id="CompanySelect" readonly value="' . $DefaultCompanyName . '" />';
 	if (!isset($ShowLogoAtLogin) OR ($ShowLogoAtLogin == true)) {
 		echo '<ol id="dropdownlist" class="dropdownlist" style="padding-bottom:10px;">';

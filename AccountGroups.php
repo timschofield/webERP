@@ -274,13 +274,11 @@ if (!isset($_GET['SelectedAccountGroup']) AND !isset($_POST['SelectedAccountGrou
 	while($MyRow = DB_fetch_array($Result)) {
 
 		switch ($MyRow['pandl']) {
-		case -1:
+			case 1:
+			case -1:
 			$PandLText=__('Yes');
 			break;
-		case 1:
-			$PandLText=__('Yes');
-			break;
-		case 0:
+			case 0:
 			$PandLText=__('No');
 			break;
 		} //end of switch statement

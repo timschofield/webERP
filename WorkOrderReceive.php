@@ -494,11 +494,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 
 							$LastRef = trim($_POST['SerialNo' .$i]);
 							//already checked to ensure there are no duplicate serial numbers entered
-							if (isset($_POST['QualityText'.$i])){
-								$QualityText = $_POST['QualityText'.$i];
-							} else {
-								$QualityText ='';
-							}
+							$QualityText = $_POST['QualityText' . $i] ?? '';
 
 							if (empty($_POST['ExpiryDate'])){
 									$SQL = "INSERT INTO stockserialitems (stockid,
@@ -574,11 +570,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 						$ErrMsg =  __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('Could not check if a serial number for the stock item already exists because');
 						$Result = DB_query($SQL, $ErrMsg, '', true);
 						$AlreadyExistsRow = DB_fetch_row($Result);
-						if (isset($_POST['QualityText'.$i])){
-							$QualityText = $_POST['QualityText'.$i];
-						} else {
-							$QualityText ='';
-						}
+						$QualityText = $_POST['QualityText' . $i] ?? '';
 						if ($AlreadyExistsRow[0]>0){
 							$SQL = "UPDATE stockserialitems SET quantity = quantity + " . filter_number_format($_POST['Qty' . $i]) . ",
 																qualitytext = '" . $QualityText . "'
@@ -960,8 +952,8 @@ if ($WORow['controlled']==1){ //controlled
 						<td><input type="textbox" name="BatchRef' . $i .'" placeholder="'.__('Batch/Lot No').'" ';
 
 				if ($i==0){
-					$StringBitOfLotSNRef = isset($StringBitOfLotSNRef)?$StringBitOfLotSNRef:'';
-					$LotSNRefNumeric = isset($LotSNRefNumeric)?$LotSNRefNumeric:'';
+					$StringBitOfLotSNRef = $StringBitOfLotSNRef ?? '';
+					$LotSNRefNumeric = $LotSNRefNumeric ?? '';
 					echo 'value="' . $StringBitOfLotSNRef . ($LotSNRefNumeric + 1) . '"';
 				}
 				echo ' /></td>

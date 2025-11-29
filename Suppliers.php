@@ -311,7 +311,7 @@ function Is_ValidAccount($ActNo) {
 			return false;
 		}
 	}
-
+	return false;
 } //End Function
 
 
@@ -430,7 +430,7 @@ if (isset($_POST['submit'])) {
 			$SQL = "SELECT * FROM geocode_param";
 			$Resultgeo = DB_query($SQL);
 			$Row = DB_fetch_array($Resultgeo);
-			
+
 			// Build address string
 			$Address = urlencode($_POST['Address1'] . ', ' . $_POST['Address2'] . ', ' . $_POST['Address3'] . ', ' . $_POST['Address4'] . ', ' . $_POST['Address5'] . ', ' . $_POST['Address6']);
 			$BaseURL = "https://nominatim.openstreetmap.org/search?format=json&q=";
@@ -460,7 +460,7 @@ if (isset($_POST['submit'])) {
 				// Connection failed
 				echo '<p>' . __('Address') . ': ' . $Address . ' ' . __('failed to geocode') . ' - ' . __('Connection failed') . '</p>';
 			}
-			
+
 			// Respect Nominatim usage policy: 1 request per second
 			usleep(1000000);
 		}

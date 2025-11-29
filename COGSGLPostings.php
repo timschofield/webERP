@@ -14,7 +14,7 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	$Title, '" /> ', // Icon title.
 	$Title, '</p>';// Page title.
 
-
+$SelectedCOGSPostingID = 0;
 if (isset($_POST['SelectedCOGSPostingID'])){
 	$SelectedCOGSPostingID=$_POST['SelectedCOGSPostingID'];
 } elseif (isset($_GET['SelectedCOGSPostingID'])){
@@ -26,7 +26,7 @@ if (isset($_POST['submit'])) {
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
 
-	if (isset($SelectedCOGSPostingID)) {
+	if (isset($SelectedCOGSPostingID) && $SelectedCOGSPostingID > 0) {
 
 		/*SelectedCOGSPostingID could also exist if submit had not been clicked this 		code would not run in this case cos submit is false of course	see the delete code below*/
 

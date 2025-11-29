@@ -108,7 +108,7 @@ if (!isset($_POST['ProcessGoodsReceived'])) {
 			$_SESSION['PO' . $identifier]->SupplierReference = $_POST['SupplierReference'];
 		}
 	}
-	$SupplierReference = isset($_SESSION['PO' . $identifier]->SupplierReference)? $_SESSION['PO' . $identifier]->SupplierReference: $_POST['SupplierReference'];
+	$SupplierReference = $_SESSION['PO' . $identifier]->SupplierReference ?? $_POST['SupplierReference'];
 
 	echo '<fieldset>
 			<legend>', __('GRN Header'), '</legend>

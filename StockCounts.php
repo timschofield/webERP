@@ -67,7 +67,7 @@ if ($_GET['Action'] == 'Enter') {
 	if (isset($_POST['EnterCounts'])){
 
 		$Added=0;
-		$Counter = isset($_POST['RowCount'])?$_POST['RowCount'] : 10; // Arbitrary number of 10 hard coded as default as originally used - should there be a setting?
+		$Counter = $_POST['RowCount'] ?? 10; // Arbitrary number of 10 hard coded as default as originally used - should there be a setting?
 			for ($i=1;$i<=$Counter;$i++){
 			$InputError =false; //always assume the best to start with
 

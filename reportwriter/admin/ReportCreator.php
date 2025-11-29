@@ -595,8 +595,8 @@ switch ($_GET['action']) {
 				case RPT_BTN_FINISH: // update fields and return to report manager screen
 				default:	// bail to reports home
 					//fetch the entry type
-					if (isset($_POST['EntryType'])) $EntryType = $_POST['EntryType']; else $EntryType = '';
-					// build date string of choices from user
+					$EntryType = $_POST['EntryType'] ?? '';
+				// build date string of choices from user
 					$DateString = '';
 					for ($i=1; $i<=count($DateChoices); $i++) {
 						if (isset($_POST['DateRange'.$i])) $DateString .= $_POST['DateRange'.$i];
