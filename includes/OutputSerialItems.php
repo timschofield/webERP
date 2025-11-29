@@ -199,9 +199,9 @@ echo '</form>
 		</td><td valign="top">';
 $ShowExisting=true;
 $_POST['EntryType']='Sequential';
-if ($ShowExisting){
+# if ($ShowExisting){
 	include('includes/InputSerialItemsExisting.php');
-}
+# }
 echo '</td>
 	</tr>
 	</table>

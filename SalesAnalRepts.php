@@ -47,7 +47,7 @@ function GrpByDataOptions($GroupByDataX) {
  } else {
     echo '<option value="Sales Person">' . __('Sales Person') . '</option>';
  }
- if ($GroupByDataX=='Not Used' OR $GroupByDataX == '' OR ! isset($GroupByDataX) OR is_null($GroupByDataX)){
+ if ($GroupByDataX=='Not Used' OR empty($GroupByDataX)){ # == '' OR ! isset($GroupByDataX) OR is_null($GroupByDataX)){
      echo '<option selected="selected" value="Not Used">' . __('Not Used') . '</option>';
  } else {
     echo '<option value="Not Used">' . __('Not Used') . '</option>';

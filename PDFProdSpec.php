@@ -16,7 +16,8 @@ if (isset($_GET['KeyValue'])) {
 }
 
 //Get Out if we have no product specification
-if (isset($SelectedProdSpec) and $SelectedProdSpec != '') {
+# if (isset($SelectedProdSpec) and $SelectedProdSpec != '') {
+if ($SelectedProdSpec != '') {
 
 	/*retrieve the order details from the database to print */
 	$ErrMsg = __('There was a problem retrieving the Product Specification') . ' ' . $SelectedProdSpec . ' ' . __('from the database');

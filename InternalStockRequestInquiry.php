@@ -286,8 +286,7 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 
 if (isset($StockItemsResult)){
 
-	if (isset($StockItemsResult)
-	AND DB_num_rows($StockItemsResult)>1) {
+	if (DB_num_rows($StockItemsResult)>1) {
 	echo '<a href="' . $RootPath . '/InternalStockRequestInquiry.php">' . __('Return') . '</a>
 		<table cellpadding="2" class="selection">
 			<thead>
