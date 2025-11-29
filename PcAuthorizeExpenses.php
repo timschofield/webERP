@@ -148,6 +148,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			//get typeno
 			$TypeNo = GetNextTransNo($Type);
 
+			$Tags = array();
 			$TagsSQL = "SELECT tag FROM pctags WHERE pccashdetail='" . $MyRow['counterindex'] . "'";
 			$TagsResult = DB_query($TagsSQL);
 			while ($TagRow = DB_fetch_array($TagsResult)) {

@@ -214,18 +214,18 @@ function EndDateSQLFromPeriodNo($PeriodNo) {
 **************************************************************************************************************/
 function GetMonthText($MonthNumber) {
 	$Month = match ($MonthNumber) {
-		1       => __('January'),
-		2       => __('February'),
-		3       => __('March'),
-		4       => __('April'),
-		5       => __('May'),
-		6       => __('June'),
-		7       => __('July'),
-		8       => __('August'),
-		9       => __('September'),
-		10      => __('October'),
-		11      => __('November'),
-		12      => __('December'),
+		'1'       => __('January'),
+		'2'       => __('February'),
+		'3'       => __('March'),
+		'4'       => __('April'),
+		'5'       => __('May'),
+		'6'       => __('June'),
+		'7'       => __('July'),
+		'8'       => __('August'),
+		'9'       => __('September'),
+		'10'      => __('October'),
+		'11'      => __('November'),
+		'12'      => __('December'),
 		default => __('error'),
 	};
 	return $Month;
@@ -411,7 +411,7 @@ function ConvertSQLDate($DateEntry) {
 			return $DateArray[0] . '-' . $DateArray[1] . '-' . $DateArray[2];
 		}*/
 		return match($_SESSION['DefaultDateFormat']){
-			'd/m/Y' => $DateArray[2].'-0'.$DateArray[1].'-'.$DateArray[0],
+			'd/m/Y' => $DateArray[2].'-'.$DateArray[1].'-'.$DateArray[0],
 			'm/d/Y' => $DateArray[1].'/'.$DateArray[2].'/'.$DateArray[0],
 			'd.m.Y' => $DateArray[2].'/'.$DateArray[1].'/'.$DateArray[0],
 			'Y/m/d' => $DateArray[0].'/'.$DateArray[1].'/'.$DateArray[2],
@@ -471,7 +471,7 @@ function ConvertSQLDateTime($DateEntry) {
 		return $DateArray[0] . '/' . $DateArray[1] . '/' . $DateArray[2] . ' ' . $Time;
 	}*/
 	return match($_SESSION['DefaultDateFormat']){
-		'd/m/Y' => $DateArray[2].'-0'.$DateArray[1].'-'.$DateArray[0],
+		'd/m/Y' => $DateArray[2].'-'.$DateArray[1].'-'.$DateArray[0],
 		'm/d/Y' => $DateArray[1].'/'.$DateArray[2].'/'.$DateArray[0],
 		'd.m.Y' => $DateArray[2].'/'.$DateArray[1].'/'.$DateArray[0],
 		'Y/m/d' => $DateArray[0].'/'.$DateArray[1].'/'.$DateArray[2],
