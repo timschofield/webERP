@@ -88,32 +88,16 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$ReportTitle = __('Stock Transaction Listing');
 	$ReportSubTitle = __('Stock transaction listing from') . ' ' . $_POST['FromDate'] . ' ' . __('to') . ' ' . $_POST['ToDate'];
 
-	switch ($_POST['TransType']) {
-		case 10:
-			$TransType = __('Customer Invoices');
-		break;
-		case 11:
-			$TransType = __('Customer Credit Notes');
-		break;
-		case 16:
-			$TransType = __('Location Transfers');
-		break;
-		case 17:
-			$TransType = __('Stock Adjustments');
-		break;
-		case 25:
-			$TransType = __('Purchase Order Deliveries');
-		break;
-		case 26:
-			$TransType = __('Work Order Receipts');
-		break;
-		case 28:
-			$TransType = __('Work Order Issues');
-		break;
-		default:
-			$TransType = __('Other');
-		break;
-	}
+	$TransType = match ($_POST['TransType']) {
+		10      => __('Customer Invoices'),
+		11      => __('Customer Credit Notes'),
+		16      => __('Location Transfers'),
+		17      => __('Stock Adjustments'),
+		25      => __('Purchase Order Deliveries'),
+		26      => __('Work Order Receipts'),
+		28      => __('Work Order Issues'),
+		default => __('Other'),
+	};
 
 	$HTML = '';
 

@@ -5,7 +5,7 @@ if (!isset($PathPrefix)) {
 	$PathPrefix = __DIR__ . '/../../';
 }
 if (!isset($RootPath)) {
-	$RootPath = htmlspecialchars(dirname(dirname(dirname($_SERVER['PHP_SELF']))), ENT_QUOTES, 'UTF-8');
+	$RootPath = htmlspecialchars(dirname($_SERVER['PHP_SELF'], 3), ENT_QUOTES, 'UTF-8');
 }
 
 include($PathPrefix . 'api/includes/api_errorcodes.php');

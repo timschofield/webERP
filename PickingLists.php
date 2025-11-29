@@ -237,7 +237,8 @@ if (!isset($_GET['Prid']) and !isset($_SESSION['ProcessingPick'])) {
 				if (DB_num_rows($SerialItemsResult) > 0) {
 					$InOutModifier = 1;
 					while ($MySerial = DB_fetch_array($SerialItemsResult)) {
-						$_SESSION['Items' . $identifier]->LineItems[$MyRow['orderlineno']]->SerialItems[$MySerial['serialno']] = new SerialItem($MySerial['serialno'], ($InOutModifier > 0 ? 1 : 1) * filter_number_format($MySerial['moveqty']));
+						/*$_SESSION['Items' . $identifier]->LineItems[$MyRow['orderlineno']]->SerialItems[$MySerial['serialno']] = new SerialItem($MySerial['serialno'], ($InOutModifier > 0 ? 1 : 1) * filter_number_format($MySerial['moveqty']));*/
+						$_SESSION['Items' . $identifier]->LineItems[$MyRow['orderlineno']]->SerialItems[$MySerial['serialno']] = new SerialItem($MySerial['serialno'], filter_number_format($MySerial['moveqty']));
 					}
 				} else {
 					$_SESSION['Items' . $identifier]->LineItems[$MyRow['orderlineno']]->QtyDispatched = $MyRow['qtypicked'];

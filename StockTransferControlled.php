@@ -73,11 +73,7 @@ $ItemMustExist = true;
 $StockID = $LineItem->StockID;
 $InOutModifier=1;
 $ShowExisting = true;
-if (isset($TransferItem)){
-	$LineNo=$TransferItem;
-} else {
-	$LineNo=0;
-}
+$LineNo = $TransferItem ?? 0;
 
 include('includes/InputSerialItems.php');
 

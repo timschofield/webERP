@@ -31,40 +31,24 @@ if (isset($_POST['PartNumber'])) {
 }
 
 # Part Number operator - either LIKE or =
-if (isset($_POST['PartNumberOp'])) {
-	$PartNumberOp = $_POST['PartNumberOp'];
-} else {
-	$PartNumberOp = '=';
-}
+$PartNumberOp = $_POST['PartNumberOp'] ?? '=';
 
 if (isset($_POST['DebtorNo'])) {
 	$DebtorNo = trim(mb_strtoupper($_POST['DebtorNo']));
 } elseif (isset($_GET['DebtorNo'])) {
 	$DebtorNo = trim(mb_strtoupper($_GET['DebtorNo']));
 }
-if (isset($_POST['DebtorNoOp'])) {
-	$DebtorNoOp = $_POST['DebtorNoOp'];
-} else {
-	$DebtorNoOp = '=';
-}
+$DebtorNoOp = $_POST['DebtorNoOp'] ?? '=';
 if (isset($_POST['DebtorName'])) {
 	$DebtorName = trim(mb_strtoupper($_POST['DebtorName']));
 } elseif (isset($_GET['DebtorName'])) {
 	$DebtorName = trim(mb_strtoupper($_GET['DebtorName']));
 }
-if (isset($_POST['DebtorNameOp'])) {
-	$DebtorNameOp = $_POST['DebtorNameOp'];
-} else {
-	$DebtorNameOp = '=';
-}
+$DebtorNameOp = $_POST['DebtorNameOp'] ?? '=';
 
 // Save $_POST['SummaryType'] in $SaveSummaryType because change $_POST['SummaryType'] when
 // create $SQL
-if (isset($_POST['SummaryType'])) {
-	$SaveSummaryType = $_POST['SummaryType'];
-} else {
-	$SaveSummaryType = 'name';
-}
+$SaveSummaryType = $_POST['SummaryType'] ?? 'name';
 
 if (isset($_POST['submit'])) {
     submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$DebtorNameOp,$SaveSummaryType);

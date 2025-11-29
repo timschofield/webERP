@@ -186,7 +186,7 @@ if (isset($_POST['CancelContract'])) {
 		}
 	}
 
-	if ($OK_to_delete==true){
+	if ($OK_to_delete){
 		$SQL = "DELETE FROM contractbom WHERE contractref='" . $_SESSION['Contract'.$identifier]->ContractRef . "'";
 		$ErrMsg = __('The contract bill of materials could not be deleted because');
 		$DelResult = DB_query($SQL, $ErrMsg);

@@ -871,7 +871,7 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != '') {
 		$InputError = true;
 	}
 
-	if ($InputError == false) { //all good so let's get on with the processing
+	if (!$InputError) { //all good so let's get on with the processing
 
 	/* Now Get the area where the sale is to from the branches table */
 

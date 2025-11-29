@@ -116,12 +116,12 @@ $AllResultsArray=array();
 $TotResults=0;
 while ($MyTestRow=DB_fetch_array($TestResult)) {
 	$FormattedSampleID=str_pad($MyTestRow['sampleid'],10,'0',STR_PAD_LEFT);
-	$TestKey=array_search ($MyTestRow['name'] , $TestsArray);
+	$TestKey= in_array($MyTestRow['name'], $TestsArray);
 	if ($TestKey===false) {
 		$TestsArray[$MyTestRow['name']]=$MyTestRow['name'];
 	}
 
-	$TestKey=array_search ($MyTestRow['sampleid'] , $SamplesArray);
+	$TestKey= in_array($MyTestRow['sampleid'], $SamplesArray);
 	if ($TestKey===false) {
 		$SamplesArray[$FormattedSampleID]=$MyTestRow;
 		$TotResults++;

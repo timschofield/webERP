@@ -5,11 +5,7 @@ use Dompdf\Dompdf;
 
 include('includes/SetDomPDFOptions.php');
 
-if (isset($_GET['GRNNo'])) {
-	$GRNNo = $_GET['GRNNo'];
-} else {
-	$GRNNo = '';
-}
+$GRNNo = $_GET['GRNNo'] ?? '';
 
 $FormDesign = simplexml_load_file($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/QALabel.xml');
 

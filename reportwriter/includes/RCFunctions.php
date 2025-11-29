@@ -522,13 +522,13 @@ function ImportImage() {
 	}
 	$Rtn['result'] = 'error';
 	if ($_FILES['imagefile']['error']) { // php error uploading file
-		switch ($_FILES['imagefile']['error']) {
-			case '1': $Rtn['message'] = RPT_IMP_ERMSG1; break;
-			case '2': $Rtn['message'] = RPT_IMP_ERMSG2; break;
-			case '3': $Rtn['message'] = RPT_IMP_ERMSG3; break;
-			case '4': $Rtn['message'] = RPT_IMP_ERMSG4; break;
-			default:  $Rtn['message'] = RPT_IMP_ERMSG5.$_FILES['imagefile']['error'].'.';
-		}
+		$Rtn['message'] = match ($_FILES['imagefile']['error']) {
+			'1'     => RPT_IMP_ERMSG1,
+			'2'     => RPT_IMP_ERMSG2,
+			'3'     => RPT_IMP_ERMSG3,
+			'4'     => RPT_IMP_ERMSG4,
+			default => RPT_IMP_ERMSG5 . $_FILES['imagefile']['error'] . '.',
+		};
 	} elseif (!is_uploaded_file($_FILES['imagefile']['tmp_name'])) { // file uploaded
 		$Rtn['message'] = RPT_IMP_ERMSG10;
 	} elseif (mb_strpos($_FILES['imagefile']['type'],'image')===false) { // not an imsge file extension
@@ -615,13 +615,13 @@ function ImportReport($RptName) {
 	} else { // check for an uploaded file
 		$Rtn['result'] = 'error';
 		if ($_FILES['reportfile']['error']) { // php error uploading file
-			switch ($_FILES['reportfile']['error']) {
-				case '1': $Rtn['message'] = RPT_IMP_ERMSG1; break;
-				case '2': $Rtn['message'] = RPT_IMP_ERMSG2; break;
-				case '3': $Rtn['message'] = RPT_IMP_ERMSG3; break;
-				case '4': $Rtn['message'] = RPT_IMP_ERMSG4; break;
-				default:  $Rtn['message'] = RPT_IMP_ERMSG5.$_FILES['reportfile']['error'].'.';
-			}
+			$Rtn['message'] = match ($_FILES['reportfile']['error']) {
+				'1'     => RPT_IMP_ERMSG1,
+				'2'     => RPT_IMP_ERMSG2,
+				'3'     => RPT_IMP_ERMSG3,
+				'4'     => RPT_IMP_ERMSG4,
+				default => RPT_IMP_ERMSG5 . $_FILES['reportfile']['error'] . '.',
+			};
 		} elseif (!is_uploaded_file($_FILES['reportfile']['tmp_name'])) { // file uploaded
 			$Rtn['message'] = RPT_IMP_ERMSG10;
 		} elseif (mb_strpos($_FILES['reportfile']['type'],'text') === false)  { // not a text file, error

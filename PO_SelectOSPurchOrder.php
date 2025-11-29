@@ -752,11 +752,7 @@ else {
 //		$SQL = "SELECT realname FROM www_users WHERE userid='" . $MyRow['initiator'] . "'";
 //		$UserResult = DB_query($SQL);
 //		$MyUserRow = DB_fetch_array($UserResult);
-		if (isset($MyUserRow['realname'])) {
-			$InitiatorName = $MyUserRow['realname'];
-		} else {
-			$InitiatorName = '';
-		}
+		$InitiatorName = $MyUserRow['realname'] ?? '';
 
 		// KL RICARD show custom fields
 		echo '<tr class="striped_row">

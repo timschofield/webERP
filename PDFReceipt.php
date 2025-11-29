@@ -66,7 +66,7 @@ if (file_exists($LogoFile)) {
 
 // Get currency name
 include('includes/CurrenciesArray.php'); // $CurrencyName array
-$CurrencyLongName = isset($CurrencyName[$CurrencyCode]) ? $CurrencyName[$CurrencyCode] : $CurrencyCode;
+$CurrencyLongName = $CurrencyName[$CurrencyCode] ?? $CurrencyCode;
 
 // Format amount
 //require_once('includes/NumberFormat.php'); // ensure locale_number_format is available

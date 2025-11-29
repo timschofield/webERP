@@ -763,7 +763,16 @@ while (false !== ($OrderFile=readdir($DirHandle))) { /*there are files in the in
 					}
 					$EmailText .= "\n" . __('Additional product id') . ': ' . $PIA2[0] ;
 					break;
-
+			/*case 'PIA': // ADDITIONAL PRODUCT ID
+				// SA    Supplier's article number
+				$PIA = explode('+',mb_substr($LineText,4));
+				$PIA2 = explode(':',$PIA[1]);
+				switch ($PIA2[1]){
+					case 'SA': // Supplier's article number
+						break;
+				}
+				$EmailText .= "\n" . __('Additional product id') . ': ' . $PIA[3];
+				break;*/
 			case 'IMD':
 					$IMD = explode('+',mb_substr($LineText,4));
 					$IMD2 = explode(':',mb_substr($LineText,4));
@@ -816,16 +825,7 @@ while (false !== ($OrderFile=readdir($DirHandle))) { /*there are files in the in
 					$EmailText .= "\n" . __('Package') . ': ' . $PAC[1];
 					break;
 
-			case 'PIA': // ADDITIONAL PRODUCT ID
-					// SA    Supplier's article number
-					$PIA = explode('+',mb_substr($LineText,4));
-					$PIA2 = explode(':',$PIA[1]);
-					switch ($PIA2[1]){
-						case 'SA': // Supplier's article number
-							break;
-					}
-					$EmailText .= "\n" . __('Additional product id') . ': ' . $PIA[3];
-					break;
+
 
 			case 'PCI':
 					$EmailText .= "\n" . __('Package identification');

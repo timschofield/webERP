@@ -23,11 +23,7 @@ if (!isset($_SESSION['Trans'])){
 	 */
 }
 
-if (isset($_GET['TransID'])){
-	$TransID = $_GET['TransID'];
-} else {
-	$TransID = $_POST['TransID'];
-}
+$TransID = $_GET['TransID'] ?? $_POST['TransID'];
 if (!isset($TransID)){
 	prnMsg(__('This page can only be called from the importation of bank transactions page which sets up the data to receive the analysed general ledger entries'),'info');
 	echo '<br /><a href="' . $RootPath . '/ImportBankTrans.php">' . __('Import Bank Transactions') . '</a>';

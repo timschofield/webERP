@@ -222,12 +222,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		else {
 			$ShipQty = 0;
 			if ($AvailableShipQtyAtFrom > 0) {
-				if ($AvailableShipQtyAtFrom >= $NeededQtyAtTo) {
-					$ShipQty = $NeededQtyAtTo;
-				}
-				else {
-					$ShipQty = $AvailableShipQtyAtFrom;
-				}
+				$ShipQty = min($AvailableShipQtyAtFrom, $NeededQtyAtTo);
 			}
 		}
 
