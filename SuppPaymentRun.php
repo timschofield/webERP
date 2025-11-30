@@ -55,7 +55,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 
 	$SQL = "SELECT suppliers.supplierid,
 					currencies.decimalplaces AS currdecimalplaces,
-					SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) AS balance
+					SUM(supptrans.balance) AS balance
 			FROM suppliers INNER JOIN paymentterms
 			ON suppliers.paymentterms = paymentterms.termsindicator
 			INNER JOIN supptrans
@@ -64,7 +64,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 			ON systypes.typeid = supptrans.type
 			INNER JOIN currencies
 			ON suppliers.currcode=currencies.currabrev
-			WHERE supptrans.ovamount + supptrans.ovgst - supptrans.alloc !=0
+			WHERE supptrans.balance !=0
 			AND supptrans.duedate <='" . FormatDateForSQL($_POST['AmountsDueBy']) . "'
 			AND supptrans.hold=0
 			AND suppliers.currcode = '" . $_POST['Currency'] . "'
@@ -72,7 +72,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 			AND supptrans.supplierno <= '" . $_POST['ToCriteria'] . "'
 			GROUP BY suppliers.supplierid,
 					currencies.decimalplaces
-			HAVING SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) > 0
+			HAVING SUM(supptrans.balance) > 0
 			ORDER BY suppliers.supplierid";
 
 	$SuppliersResult = DB_query($SQL);
@@ -100,7 +100,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 						supptrans.rate,
 						supptrans.transno,
 						supptrans.type,
-						(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) AS balance,
+						(supptrans.balance) AS balance,
 						(supptrans.ovamount + supptrans.ovgst ) AS trantotal,
 						supptrans.diffonexch,
 						supptrans.id
@@ -111,7 +111,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 				INNER JOIN systypes
 				ON systypes.typeid = supptrans.type
 				WHERE supptrans.supplierno = '" . $SuppliersToPay['supplierid'] . "'
-				AND supptrans.ovamount + supptrans.ovgst - supptrans.alloc !=0
+				AND supptrans.balance !=0
 				AND supptrans.duedate <='" . FormatDateForSQL($_POST['AmountsDueBy']) . "'
 				AND supptrans.hold = 0
 				AND suppliers.currcode = '" . $_POST['Currency'] . "'

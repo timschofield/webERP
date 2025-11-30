@@ -42,27 +42,27 @@ $SQL = "SELECT suppliers.suppname,
 		currencies.currency,
 		currencies.decimalplaces AS currdecimalplaces,
 		paymentterms.terms,
-		SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) AS balance,
+		SUM(supptrans.balance) AS balance,
 		SUM(CASE WHEN paymentterms.daysbeforedue > 0 THEN
 			CASE WHEN (TO_DAYS(Now()) - TO_DAYS(supptrans.trandate)) >= paymentterms.daysbeforedue
-			THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
+			THEN supptrans.balance ELSE 0 END
 		ELSE
-			CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(supptrans.trandate),paymentterms.dayinfollowingmonth)) >= 0 THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
+			CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(supptrans.trandate),paymentterms.dayinfollowingmonth)) >= 0 THEN supptrans.balance ELSE 0 END
 		END) AS due,
 		SUM(CASE WHEN paymentterms.daysbeforedue > 0  THEN
 			CASE WHEN (TO_DAYS(Now()) - TO_DAYS(supptrans.trandate)) > paymentterms.daysbeforedue
 					AND (TO_DAYS(Now()) - TO_DAYS(supptrans.trandate)) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays1'] . ")
-			THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
+			THEN supptrans.balance ELSE 0 END
 		ELSE
 			CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(supptrans.trandate),paymentterms.dayinfollowingmonth)) >= '" . $_SESSION['PastDueDays1'] . "'
-			THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
+			THEN supptrans.balance ELSE 0 END
 		END) AS overdue1,
 		Sum(CASE WHEN paymentterms.daysbeforedue > 0 THEN
 			CASE WHEN TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays2'] . ")
-			THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
+			THEN supptrans.balance ELSE 0 END
 		ELSE
 			CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(supptrans.trandate),paymentterms.dayinfollowingmonth)) >= '" . $_SESSION['PastDueDays2'] . "'
-			THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
+			THEN supptrans.balance ELSE 0 END
 		END ) AS overdue2
 		FROM suppliers INNER JOIN paymentterms
 		ON suppliers.paymentterms = paymentterms.termsindicator
