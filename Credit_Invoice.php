@@ -554,7 +554,7 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 
 	/*Calculate the allocation and see if it is possible to allocate to the invoice being credited */
 
-	$SQL = "SELECT(ovamount+ovgst+ovfreight-ovdiscount-alloc) AS baltoallocate
+	$SQL = "SELECT(ovamount+ovgst+ovfreight+ovdiscount-alloc) AS baltoallocate
 			FROM debtortrans
 			WHERE transno=" . $_SESSION['ProcessingCredit'] . "
 			AND type=10";
