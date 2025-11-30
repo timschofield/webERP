@@ -88,11 +88,11 @@ if ($_POST['Customer']!= '') {
 	$WhereClause = "custbranch.salesman='" . $_POST['SalesPerson'] . "'";
 }
 
-$SQL = "SELECT SUM(ovamount+ovgst+ovdiscount+ovfreight-alloc) AS currencybalance,
+$SQL = "SELECT SUM(debtortrans.balance) AS currencybalance,
 				debtorsmaster.debtorno,
 				debtorsmaster.name,
 				decimalplaces AS currdecimalplaces,
-				SUM((ovamount+ovgst+ovdiscount+ovfreight-alloc)/debtortrans.rate) AS localbalance
+				SUM((debtortrans.balance)/debtortrans.rate) AS localbalance
 		FROM debtortrans INNER JOIN debtorsmaster
 			ON debtortrans.debtorno=debtorsmaster.debtorno
 		INNER JOIN currencies
