@@ -2749,7 +2749,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 			} else {
 				// the first time we find this supplier, let's get the balance
 				// This query leverages any existing indexes on supptrans.supplierno
-				$SupplierSQL = "SELECT COALESCE(SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc), 0) AS balance
+				$SupplierSQL = "SELECT COALESCE(SUM(supptrans.balance), 0) AS balance
 								FROM supptrans
 								WHERE supptrans.supplierno = '" . $MyRow['supplierno'] . "'";
 				$SupplierResult = DB_query($SupplierSQL, $ErrMsg);
