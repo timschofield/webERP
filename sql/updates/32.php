@@ -16,7 +16,7 @@ RemoveMenuItem('Utilities', 'Maintenance', 'Maintain Language Files', '/Z_poAdmi
 RemoveMenuItem('Utilities', 'Maintenance', 'Make New Company', '/Z_MakeNewCompany.php');
 RemoveMenuItem('Utilities', 'Maintenance', 'Data Export Options', '/Z_DataExport.php');
 RemoveMenuItem('Utilities', 'Maintenance', 'Import Customers from .csv file', '/Z_ImportDebtors.php');
-RemoveMenuItem('Utilities', 'Maintenance', 'Import Stock Items from .csv'. '/Z_ImportPartCodes.php');
+RemoveMenuItem('Utilities', 'Maintenance', 'Import Stock Items from .csv', '/Z_ImportPartCodes.php');
 RemoveMenuItem('Utilities', 'Maintenance', 'Import Price List from .csv file', '/Z_ImportPriceList.php');
 RemoveMenuItem('Utilities', 'Maintenance', 'Import Fixed Assets from .csv file', '/Z_ImportFixedAssets.php');
 RemoveMenuItem('Utilities', 'Maintenance', 'Import GL Payments Receipts Or Journals From .csv file', '/Z_ImportGLTransactions.php');
@@ -26,18 +26,18 @@ RemoveMenuItem('Utilities', 'Maintenance', 'Remove all purchase back orders', '/
 
 // create new maintenance entries
 // function NewMenuItem($Link, $Section, $Caption, $URL, $Sequence)
-RemoveMenuItem('Utilities', 'Maintenance', __('Maintain Language Files'), '/Z_poAdmin.php', 10);
-RemoveMenuItem('Utilities', 'Maintenance', __('Make New Company'), '/Z_MakeNewCompany.php', 20);
-RemoveMenuItem('Utilities', 'Maintenance', __('Data Export Options'), '/Z_DataExport.php', 30);
-RemoveMenuItem('Utilities', 'Maintenance', __('Import Customers from .csv file'), '/Z_ImportDebtors.php', 40);
-RemoveMenuItem('Utilities', 'Maintenance', __('Import Suppliers from .csv file'), '/Z_ImportSuppliers.php', 50);
-RemoveMenuItem('Utilities', 'Maintenance', __('Import Stock Items from .csv'), '/Z_ImportPartCodes.php', 60);
-RemoveMenuItem('Utilities', 'Maintenance', __('Import Price List from .csv file'), '/Z_ImportPriceList.php', 70);
-RemoveMenuItem('Utilities', 'Maintenance', __('Import Fixed Assets from .csv file'), '/Z_ImportFixedAssets.php', 80);
-RemoveMenuItem('Utilities', 'Maintenance', __('Import GL Payments Receipts Or Journals From .csv file'), '/Z_ImportGLTransactions.php', 90);
-RemoveMenuItem('Utilities', 'Maintenance', __('Create new company template SQL file and submit to webERP'), '/Z_CreateCompanyTemplateFile.php', 100);
-RemoveMenuItem('Utilities', 'Maintenance', __('Purge all old prices'), '/Z_DeleteOldPrices.php', 110);
-RemoveMenuItem('Utilities', 'Maintenance', __('Remove all purchase back orders'), '/Z_RemovePurchaseBackOrders.php', 120);
+NewMenuItem('Utilities', 'Maintenance', __('Maintain Language Files'), '/Z_poAdmin.php', 10);
+NewMenuItem('Utilities', 'Maintenance', __('Make New Company'), '/Z_MakeNewCompany.php', 20);
+NewMenuItem('Utilities', 'Maintenance', __('Data Export Options'), '/Z_DataExport.php', 30);
+NewMenuItem('Utilities', 'Maintenance', __('Import Customers from .csv file'), '/Z_ImportDebtors.php', 40);
+NewMenuItem('Utilities', 'Maintenance', __('Import Suppliers from .csv file'), '/Z_ImportSuppliers.php', 50);
+NewMenuItem('Utilities', 'Maintenance', __('Import Stock Items from .csv'), '/Z_ImportPartCodes.php', 60);
+NewMenuItem('Utilities', 'Maintenance', __('Import Price List from .csv file'), '/Z_ImportPriceList.php', 70);
+NewMenuItem('Utilities', 'Maintenance', __('Import Fixed Assets from .csv file'), '/Z_ImportFixedAssets.php', 80);
+NewMenuItem('Utilities', 'Maintenance', __('Import GL Payments Receipts Or Journals From .csv file'), '/Z_ImportGLTransactions.php', 90);
+NewMenuItem('Utilities', 'Maintenance', __('Create new company template SQL file and submit to webERP'), '/Z_CreateCompanyTemplateFile.php', 100);
+NewMenuItem('Utilities', 'Maintenance', __('Purge all old prices'), '/Z_DeleteOldPrices.php', 110);
+NewMenuItem('Utilities', 'Maintenance', __('Remove all purchase back orders'), '/Z_RemovePurchaseBackOrders.php', 120);
 
 // cleanup
 if ($_SESSION['Updates']['Errors'] == 0) {
