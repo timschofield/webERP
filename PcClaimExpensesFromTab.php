@@ -104,13 +104,19 @@ if (isset($_POST['submit'])) {
 		}
 		$SQL = "DELETE FROM pctags WHERE pccashdetail='" . $SelectedIndex . "'";
 		$Result = DB_query($SQL);
-		foreach ($_POST['tag'] as $Tag) {
-			$SQL = "INSERT INTO pctags (pccashdetail,
-										tag)
+		if (isset($_POST['tag']) && is_array($_POST['tag'])) {
+			foreach ($_POST['tag'] as $Tag) {
+				$SQL = "INSERT INTO pctags (pccashdetail,
+											tag)
 									VALUES (
-										'" . $SelectedIndex . "',
-										'" . $Tag . "'
-									)";
+											'" . $SelectedIndex . "',
+											'" . $Tag . "'
+										)";
+				$Result = DB_query($SQL);
+			}
+		} else {
+			// Insert default tag if none provided
+			$SQL = "INSERT INTO pctags (pccashdetail, tag) VALUES ('" . $SelectedIndex . "', '0')";
 			$Result = DB_query($SQL);
 		}
 		if (isset($_FILES['Receipt']) and $_FILES['Receipt']['name'] != '') {
@@ -247,17 +253,21 @@ if (isset($_POST['submit'])) {
 		$Result = DB_query($SQL);
 		$SelectedIndex = DB_Last_Insert_ID('pcashdetails', 'counterindex');
 
-		foreach ($_POST['tag'] as $Tag) {
-			$SQL = "INSERT INTO pctags (pccashdetail,
-										tag)
+		if (isset($_POST['tag']) && is_array($_POST['tag'])) {
+			foreach ($_POST['tag'] as $Tag) {
+				$SQL = "INSERT INTO pctags (pccashdetail,
+											tag)
 									VALUES (
-										'" . $SelectedIndex . "',
-										'" . $Tag . "'
-									)";
+											'" . $SelectedIndex . "',
+											'" . $Tag . "'
+										)";
+				$Result = DB_query($SQL);
+			}
+		} else {
+			// Insert default tag if none provided
+			$SQL = "INSERT INTO pctags (pccashdetail, tag) VALUES ('" . $SelectedIndex . "', '0')";
 			$Result = DB_query($SQL);
-		}
-
-		foreach ($_POST as $Index => $Value) {
+		}		foreach ($_POST as $Index => $Value) {
 			if (substr($Index, 0, 5) == 'index') {
 				$Index = $Value;
 				$SQL = "INSERT INTO pcashdetailtaxes (counterindex,
@@ -758,7 +768,7 @@ KL RICARD END Do not show taxes */
 KL RICARD END Do not show tag */
 		
 		if (!isset($_POST['Tag'])) {
-			$_POST['Tag'] = $DefaultTag;
+			$_POST['Tag'] = 0;
 		}
 		
 /*	KL RICARD END Do not show tag
