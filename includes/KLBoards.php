@@ -692,7 +692,7 @@ function ChangeItemStandardCost($StockID, $NewCost, $OldCost, $QOH){
 *   - $NumDays (int): The number of past days to consider when $Status is 'CLOSED'.
 * Returns: None
 **************************************************************************************************************/
-function MaintenanceTasksList($Status, $NumDays){
+function MaintenanceTasksList($Status, $NumDays, $UserIsShopRelated){
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 	if ($Status == "OPEN"){
 		$WhereStatus = "WHERE klmaintenancetasks.closed = 0";
@@ -701,6 +701,9 @@ function MaintenanceTasksList($Status, $NumDays){
 		$WhereStatus = "WHERE klmaintenancetasks.closed = 1
 							AND closedate >= '" . $FromDate . "'";
 		$TableTitleText = 'Closed Maintenance Tasks during the last ' . $NumDays . ' days';
+	}
+	if ($UserIsShopRelated){
+		$WhereStatus = $WhereStatus . " AND klmaintenancetasks.loccode NOT IN " .LIST_KANTOR . " ";
 	}
 	$SQL = "SELECT klmaintenancetasks.counterindex,
 				klmaintenancetasks.loccode,
@@ -3883,7 +3886,7 @@ function OnlineMarketPlacePaymentPending($Days, $RootPath){
 *   - $UserIsSystemAdmin (bool): If true, inserts KPIs for the task counts.
 * Returns: None
 **************************************************************************************************************/
-function MaintenanceTasksDistribution($Status, $NumDays, $UserIsSystemAdmin){
+function MaintenanceTasksDistribution($Status, $NumDays, $UserIsSystemAdmin, $UserIsShopRelated){
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 	if ($Status == "OPEN"){
 		$WhereStatus = "WHERE klmaintenancetasks.closed = 0";
@@ -3897,6 +3900,9 @@ function MaintenanceTasksDistribution($Status, $NumDays, $UserIsSystemAdmin){
 							OR (klmaintenancetasks.closed = 1
 								AND closedate >= '" . $FromDate . "')";
 		$Title = 'All Maintenance Tasks distribution during the last ' . $NumDays . ' days';
+	}
+	if ($UserIsShopRelated){
+		$WhereStatus = $WhereStatus . " AND klmaintenancetasks.loccode NOT IN " .LIST_KANTOR . " ";
 	}
 	$TableResult = array();
 	// now populate the array with info
