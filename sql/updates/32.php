@@ -41,7 +41,7 @@ NewScript('Z_ImportSuppliers.php', 15); // available to administrator only
 //NewMenuItem('Utilities', 'Maintenance', __('Remove all purchase back orders'), '/Z_RemovePurchaseBackOrders.php', 120);
 
 
-// set default security level for import scripts to "User Management and System Adminstration"
+// set default security level if necessary for other import scripts to "User Management and System Adminstration"
 // https://github.com/timschofield/webERP/discussions/789
 // TODO add code
 
