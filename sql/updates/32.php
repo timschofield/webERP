@@ -7,11 +7,8 @@ RemoveScript('Z_index.php');
 
 // add Import Suppliers to menu [Utilities > Maintenance > Import Suppliers from .csv]
 // https://github.com/timschofield/webERP/issues/754
-
-
-// register (existing) import suppliers script
-//NewScript('Z_ImportSuppliers.php', 15); // available to administrator only
-
+// 1. register (existing) import suppliers script
+NewScript('Z_ImportSuppliers.php', 15); // available to administrator only
 
 // adjust Maintenance menu items
 // remove existing maintenance entries
@@ -50,5 +47,5 @@ RemoveScript('Z_index.php');
 
 // cleanup - UpdateDbNo() MUST BE ONLY LINE BEFORE "}" in particular NO COMMENT LINES
 if ($_SESSION['Updates']['Errors'] == 0) {
-	UpdateDBNo(basename(__FILE__, '.php'), __('Un-register Z_index.php'));
+	UpdateDBNo(basename(__FILE__, '.php'), __('Un-register Z_index.php, add ImportSuppliers pt1'));
 }
