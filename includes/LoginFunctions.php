@@ -115,9 +115,9 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 			$_SESSION['ScreenFontSize'] = $MyRow['fontsize'];
 
 			$_SESSION['FontSize'] = match ($_SESSION['ScreenFontSize']) {
-				0       => '0.667rem',
-				1       => '0.833rem',
-				2       => '1rem',
+				'0'       => '0.667rem',
+				'1'       => '0.833rem',
+				'2'       => '1rem',
 				default => '0.833rem',
 			};
 
