@@ -135,25 +135,12 @@ if (isset($_POST['ShowSales'])){
 			$ToDate = date('Y-m-d');
 			break;
 		case 'ThisQuarter':
-			switch (date('m')) {
-				case 1:
-				case 2:
-				case 3:
-					$QuarterStartMonth=1;
-					break;
-				case 4:
-				case 5:
-				case 6:
-					$QuarterStartMonth=4;
-					break;
-				case 7:
-				case 8:
-				case 9:
-					$QuarterStartMonth=7;
-					break;
-				default:
-					$QuarterStartMonth=10;
-			}
+			$QuarterStartMonth = match (date('m')) {
+				1, 2, 3 => 1,
+				4, 5, 6 => 4,
+				7, 8, 9 => 7,
+				default => 10,
+			};
 			$FromDate = date('Y-m-d',mktime(0,0,0,$QuarterStartMonth,1,date('Y')));
 			$ToDate = date('Y-m-d');
 			break;

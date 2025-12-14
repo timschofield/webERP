@@ -55,35 +55,35 @@ if ($_POST['DoUpgrade'] == __('Perform Upgrade')){
 			if (mb_strpos($SQLScriptFile[$i],';')>0 AND ! $InAFunction){
 				$SQL = mb_substr($SQL,0,mb_strlen($SQL)-1);
 				$Result = DB_query($SQL, $ErrMsg, '', false, false);
-				switch (DB_error_no()) {
-					case 0:
-						echo '<tr><td>' . $comment . '</td><td style="background-color:green">' . __('Success') . '</td></tr>';
-						break;
-					case 1050:
-						echo '<tr><td>' . $comment . '</td><td style="background-color:yellow">' . __('Note').' - '.
-							__('Table has already been created') . '</td></tr>';
-						break;
-					case 1060:
-						echo '<tr><td>' . $comment . '</td><td style="background-color:yellow">' . __('Note').' - '.
-							__('Column has already been created') . '</td></tr>';
-						break;
-					case 1061:
-						echo '<tr><td>' . $comment . '</td><td style="background-color:yellow">' . __('Note').' - '.
-							__('Index already exists') . '</td></tr>';
-						break;
-					case 1062:
-						echo '<tr><td>' . $comment . '</td><td style="background-color:yellow">' . __('Note').' - '.
-							__('Entry has already been done') . '</td></tr>';
-						break;
-					case 1068:
-						echo '<tr><td>' . $comment . '</td><td style="background-color:yellow">' . __('Note').' - '.
-							__('Primary key already exists') . '</td></tr>';
-						break;
-					default:
-						echo '<tr><td>' . $comment . '</td><td style="background-color:red">' . __('Failure').' - '.
-							__('Error number').' - '.DB_error_no()  . '</td></tr>';
-						break;
-				}
+				echo match (DB_error_no()) {
+					0       => '<tr><td>' . $comment . '</td><td style="background-color:green">' . __(
+							'Success'
+						) . '</td></tr>',
+					1050    => '<tr><td>' . $comment . '</td><td style="background-color:yellow">' . __(
+							'Note'
+						) . ' - ' .
+							   __('Table has already been created') . '</td></tr>',
+					1060    => '<tr><td>' . $comment . '</td><td style="background-color:yellow">' . __(
+							'Note'
+						) . ' - ' .
+							   __('Column has already been created') . '</td></tr>',
+					1061    => '<tr><td>' . $comment . '</td><td style="background-color:yellow">' . __(
+							'Note'
+						) . ' - ' .
+							   __('Index already exists') . '</td></tr>',
+					1062    => '<tr><td>' . $comment . '</td><td style="background-color:yellow">' . __(
+							'Note'
+						) . ' - ' .
+							   __('Entry has already been done') . '</td></tr>',
+					1068    => '<tr><td>' . $comment . '</td><td style="background-color:yellow">' . __(
+							'Note'
+						) . ' - ' .
+							   __('Primary key already exists') . '</td></tr>',
+					default => '<tr><td>' . $comment . '</td><td style="background-color:red">' . __(
+							'Failure'
+						) . ' - ' .
+							   __('Error number') . ' - ' . DB_error_no() . '</td></tr>',
+				};
 				unset($SQL);
 			}
 

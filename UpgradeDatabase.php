@@ -251,41 +251,39 @@ if (isset($_POST['DoUpgrade'])) {
 					$SQL = mb_substr($SQL,0,mb_strlen($SQL)-1);
 					$Result = DB_query($SQL, '','', false, false);
 					echo '<tr><td>' . $SQL . '</td>';
-					switch (DB_error_no()) {
-						case 0:
-							echo '<td style="background-color:green">' . __('Success') . '</td></tr>';
-							break;
-						case 1025:
-							echo '<td style="background-color:yellow">' . __('Note').' - '. __('Foreign Key already removed') . '</td></tr>';
-							break;
-						case 1050:
-							echo '<td style="background-color:yellow">' . __('Note').' - '. __('Table has already been created') . '</td></tr>';
-							break;
-						case 1054:
-							echo '<td style="background-color:yellow">' . __('Note').' - '. __('Column has already been changed') . '</td></tr>';
-							break;
-						case 1060:
-							echo '<td style="background-color:yellow">' . __('Note').' - '. __('Column has already been created') . '</td></tr>';
-							break;
-						case 1061:
-							echo '<td style="background-color:yellow">' . __('Note').' - '. __('Index already exists') . '</td></tr>';
-							break;
-						case 1062:
-							echo '<td style="background-color:yellow">' . __('Note').' - '. __('Entry has already been done') . '</td></tr>';
-							break;
-						case 1064:
-							echo '<td style="background-color:red">' . __('Note').' - '.  __('SQL syntax error. The SQL error message is'). ' ' . DB_error_msg() . '</td></tr>';
-							break;
-						case 1068:
-							echo '<td style="background-color:yellow">' . __('Note').' - '. __('Primary key already exists') . '</td></tr>';
-							break;
-						case 1091:
-							echo '<td style="background-color:yellow">' . __('Note').' - '. __('Index already dropped previously') . '</td></tr>';
-							break;
-						default:
-							echo '<td style="background-color:red">' . __('Failure').' - '. 	__('Error number').' - '.DB_error_no() .' ' . DB_error_msg() . '</td></tr>';
-							break;
-					}
+					echo match (DB_error_no()) {
+						0       => '<td style="background-color:green">' . __('Success') . '</td></tr>',
+						1025    => '<td style="background-color:yellow">' . __('Note') . ' - ' . __(
+								'Foreign Key already removed'
+							) . '</td></tr>',
+						1050    => '<td style="background-color:yellow">' . __('Note') . ' - ' . __(
+								'Table has already been created'
+							) . '</td></tr>',
+						1054    => '<td style="background-color:yellow">' . __('Note') . ' - ' . __(
+								'Column has already been changed'
+							) . '</td></tr>',
+						1060    => '<td style="background-color:yellow">' . __('Note') . ' - ' . __(
+								'Column has already been created'
+							) . '</td></tr>',
+						1061    => '<td style="background-color:yellow">' . __('Note') . ' - ' . __(
+								'Index already exists'
+							) . '</td></tr>',
+						1062    => '<td style="background-color:yellow">' . __('Note') . ' - ' . __(
+								'Entry has already been done'
+							) . '</td></tr>',
+						1064    => '<td style="background-color:red">' . __('Note') . ' - ' . __(
+								'SQL syntax error. The SQL error message is'
+							) . ' ' . DB_error_msg() . '</td></tr>',
+						1068    => '<td style="background-color:yellow">' . __('Note') . ' - ' . __(
+								'Primary key already exists'
+							) . '</td></tr>',
+						1091    => '<td style="background-color:yellow">' . __('Note') . ' - ' . __(
+								'Index already dropped previously'
+							) . '</td></tr>',
+						default => '<td style="background-color:red">' . __('Failure') . ' - ' . __(
+								'Error number'
+							) . ' - ' . DB_error_no() . ' ' . DB_error_msg() . '</td></tr>',
+					};
 					$SQL='';
 				}
 			} //end if its a valid sql line not a comment

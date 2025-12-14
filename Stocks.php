@@ -1101,11 +1101,7 @@ if (!isset($StockID) or $StockID == '' or isset($_POST['UpdateCategories'])) {
 		</field>';
 }
 
-if (isset($_POST['Description'])) {
-	$Description = $_POST['Description'];
-} else {
-	$Description = '';
-}
+$Description = $_POST['Description'] ?? '';
 echo '<field>
 		<label for="Description">' . __('Part Description') . ' (' . __('short') . '):</label>
 		<input ' . (in_array('Description', $Errors) ? 'class="inputerror"' : '') . ' type="text" ' . ($New == 0 ? 'autofocus="autofocus"' : '') . ' name="Description" required="required" size="52" maxlength="50" value="' . stripslashes($Description) . '" />
@@ -1169,7 +1165,8 @@ if (sizeof(glob($_SESSION['part_pics_dir'] . '/' . $StockID . '.{' . implode(","
 KL RICARD END: For some reason, the image is not being displayed, return to old code as previous to commit 02/01/2025 */	
 
 // KL RICARD: create $ImageFile the old way
-$ImageFile = reset((glob($_SESSION['part_pics_dir'] . '/' . $StockID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+$GlobResult = glob($_SESSION['part_pics_dir'] . '/' . $StockID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE);
+$ImageFile = reset($GlobResult);
 
 $StockImgLink = GetImageLink($ImageFile, $StockID, 64, 64, "", "");
 
@@ -1539,21 +1536,13 @@ echo '<field>
 		<input type="text" class="number" name="DecimalPlaces" size="1" maxlength="1" value="' . $_POST['DecimalPlaces'] . '" /></td>
 	</field>';
 
-if (isset($_POST['BarCode'])) {
-	$BarCode = $_POST['BarCode'];
-} else {
-	$BarCode = '';
-}
+$BarCode = $_POST['BarCode'] ?? '';
 echo '<field>
 		<label for="BarCode">' . __('Bar Code') . ':</label>
 		<input ' . (in_array('BarCode', $Errors) ? 'class="inputerror"' : '') . '  type="text" name="BarCode" size="22" maxlength="20" value="' . $BarCode . '" />
 	</field>';
 
-if (isset($_POST['DiscountCategory'])) {
-	$DiscountCategory = $_POST['DiscountCategory'];
-} else {
-	$DiscountCategory = '';
-}
+$DiscountCategory = $_POST['DiscountCategory'] ?? '';
 echo '<field>
 		<label for="DiscountCategory">' . __('Discount Category') . ':</label>
 		<input type="text" name="DiscountCategory" size="2" maxlength="2" value="' . $DiscountCategory . '" />

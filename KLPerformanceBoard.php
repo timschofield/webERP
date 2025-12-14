@@ -381,15 +381,15 @@ if ($ProcessSection03){
 		OR $KL_OperationalLeader
 		OR $KL_ShopManager){
 		$StartTime = microtime(true);
-		MaintenanceTasksDistribution("OPEN", 0, $KL_SystemAdmin);
+		MaintenanceTasksDistribution("OPEN", 0, $KL_SystemAdmin, ($KL_SPGSeniorOrSupport OR $KL_SPGJunior OR $KL_ShopManager));
 		TimeNeededForExecution("MaintenanceTasksDistribution_OPEN", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		MaintenanceTasksDistribution("CLOSED", 30, $KL_SystemAdmin);
+		MaintenanceTasksDistribution("CLOSED", 30, $KL_SystemAdmin, ($KL_SPGSeniorOrSupport OR $KL_SPGJunior OR $KL_ShopManager));
 		TimeNeededForExecution("MaintenanceTasksDistribution_CLOSED", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		MaintenanceTasksDistribution("TOTAL", 30, $KL_SystemAdmin);
+		MaintenanceTasksDistribution("TOTAL", 30, $KL_SystemAdmin, ($KL_SPGSeniorOrSupport OR $KL_SPGJunior OR $KL_ShopManager));
 		TimeNeededForExecution("MaintenanceTasksDistribution_TOTAL", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
@@ -398,11 +398,11 @@ if ($ProcessSection03){
 		OR $KL_OperationalLeader
 		OR $KL_ShopManager){
 		$StartTime = microtime(true);
-		MaintenanceTasksList("OPEN", 0);
+		MaintenanceTasksList("OPEN", 0, ($KL_SPGSeniorOrSupport OR $KL_SPGJunior OR $KL_ShopManager));
 		TimeNeededForExecution("MaintenanceTasksList_OPEN", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		MaintenanceTasksList("CLOSED", 30);
+		MaintenanceTasksList("CLOSED", 30, ($KL_SPGSeniorOrSupport OR $KL_SPGJunior OR $KL_ShopManager));
 		TimeNeededForExecution("MaintenanceTasksList_CLOSED", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}

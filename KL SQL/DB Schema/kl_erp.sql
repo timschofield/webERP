@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 13, 2025 at 09:53 AM
+-- Generation Time: Dec 11, 2025 at 10:51 AM
 -- Server version: 11.4.9-MariaDB-log
 -- PHP Version: 8.4.12
 
@@ -372,7 +372,7 @@ CREATE TABLE `contracts` (
   `branchcode` varchar(10) NOT NULL DEFAULT '',
   `loccode` varchar(5) NOT NULL DEFAULT '',
   `status` tinyint(4) NOT NULL DEFAULT 0,
-  `categoryid` varchar(6) NOT NULL DEFAULT '',
+  `categoryid` varchar(6) NOT NULL,
   `orderno` int(11) NOT NULL DEFAULT 0,
   `customerref` varchar(20) NOT NULL DEFAULT '',
   `margin` double NOT NULL DEFAULT 1,
@@ -506,7 +506,7 @@ CREATE TABLE `custitem` (
 --
 
 CREATE TABLE `custnotes` (
-  `noteid` tinyint(4) NOT NULL,
+  `noteid` int(11) NOT NULL,
   `debtorno` varchar(10) NOT NULL DEFAULT '0',
   `href` varchar(100) NOT NULL DEFAULT '',
   `note` longtext NOT NULL DEFAULT '',
@@ -3307,7 +3307,7 @@ CREATE TABLE `stockadjustments` (
 --
 
 CREATE TABLE `stockcategory` (
-  `categoryid` char(6) NOT NULL DEFAULT '',
+  `categoryid` varchar(6) NOT NULL,
   `categorydescription` char(20) NOT NULL DEFAULT '',
   `stocktype` char(1) NOT NULL DEFAULT 'F',
   `stockact` varchar(20) NOT NULL DEFAULT '0',
@@ -3328,7 +3328,7 @@ CREATE TABLE `stockcategory` (
 
 CREATE TABLE `stockcatproperties` (
   `stkcatpropid` int(11) NOT NULL,
-  `categoryid` char(6) NOT NULL DEFAULT '',
+  `categoryid` varchar(6) NOT NULL,
   `label` mediumtext NOT NULL,
   `controltype` tinyint(4) NOT NULL DEFAULT 0,
   `defaultvalue` varchar(100) NOT NULL DEFAULT '''''',
@@ -3413,7 +3413,7 @@ CREATE TABLE `stockitemproperties` (
 
 CREATE TABLE `stockmaster` (
   `stockid` varchar(20) NOT NULL DEFAULT '',
-  `categoryid` varchar(6) NOT NULL DEFAULT '',
+  `categoryid` varchar(6) NOT NULL,
   `lastcategoryupdate` date NOT NULL DEFAULT '1000-01-01',
   `description` varchar(50) NOT NULL DEFAULT '',
   `longdescription` mediumtext NOT NULL,
@@ -4051,7 +4051,8 @@ ALTER TABLE `accountgroups`
   ADD PRIMARY KEY (`groupname`),
   ADD KEY `idx_accountgroups_sequenceintb` (`sequenceintb`),
   ADD KEY `idx_accountgroups_sectioninaccounts` (`sectioninaccounts`),
-  ADD KEY `idx_accountgroups_parentgroupname` (`parentgroupname`);
+  ADD KEY `idx_accountgroups_parentgroupname` (`parentgroupname`),
+  ADD KEY `idx_accountgroups_sort_covering` (`sequenceintb`,`groupname`);
 
 --
 -- Indexes for table `accountsection`
@@ -4093,7 +4094,8 @@ ALTER TABLE `bankaccounts`
   ADD PRIMARY KEY (`accountcode`),
   ADD KEY `idx_bankaccounts_currcode` (`currcode`),
   ADD KEY `idx_bankaccounts_bankaccountname` (`bankaccountname`),
-  ADD KEY `idx_bankaccounts_bankaccountnumber` (`bankaccountnumber`);
+  ADD KEY `idx_bankaccounts_bankaccountnumber` (`bankaccountnumber`),
+  ADD KEY `idx_bankaccounts_sort_covering` (`bankaccountname`,`accountcode`,`currcode`);
 
 --
 -- Indexes for table `banktrans`
@@ -4489,7 +4491,8 @@ ALTER TABLE `geocode_param`
 --
 ALTER TABLE `glaccountusers`
   ADD UNIQUE KEY `uk_glaccountusers_userid_accountcode` (`userid`,`accountcode`),
-  ADD UNIQUE KEY `uk_glaccountusers_accountcode_userid` (`accountcode`,`userid`);
+  ADD UNIQUE KEY `uk_glaccountusers_accountcode_userid` (`accountcode`,`userid`),
+  ADD KEY `idx_glaccountusers_lookup` (`userid`,`canview`,`accountcode`);
 
 --
 -- Indexes for table `glbudgetdetails`
@@ -4759,7 +4762,8 @@ ALTER TABLE `locations`
   ADD KEY `idx_locations_typeloc_smartdispatch` (`typeloc`,`smartdispatchfrom`),
   ADD KEY `idx_locations_typeloc_flags` (`typeloc`,`alltestitems`,`allstableitems`,`allnopoitems`,`alldisc20items`,`alldisc50items`,`alldisc80items`),
   ADD KEY `idx_locations_typeloc_priority_loccode` (`typeloc`,`priority`,`loccode`) USING BTREE,
-  ADD KEY `idx_locations_smartdispatch_typeloc_priority` (`smartdispatchfrom`,`typeloc`,`priority`,`loccode`,`zone`,`smartdispatchmaxmodels`,`smartdispatchminmodels`);
+  ADD KEY `idx_locations_smartdispatch_typeloc_priority` (`smartdispatchfrom`,`typeloc`,`priority`,`loccode`,`zone`,`smartdispatchmaxmodels`,`smartdispatchminmodels`),
+  ADD KEY `idx_locations_typeloc_locationname_klposcashaccount` (`typeloc`,`locationname`,`klposcashaccount`);
 
 --
 -- Indexes for table `locationtypes`
@@ -4819,7 +4823,9 @@ ALTER TABLE `loctransfers`
   ADD KEY `idx_loctransfers_recloc_stockid` (`recloc`,`stockid`),
   ADD KEY `idx_loctransfers_pending_stockid_shiploc` (`pendingqty`,`stockid`,`shiploc`),
   ADD KEY `idx_loctransfers_recdate_reference` (`recdate`,`reference`),
-  ADD KEY `idx_loctransfers_shipdate_reference` (`shipdate`,`reference`);
+  ADD KEY `idx_loctransfers_shipdate_reference` (`shipdate`,`reference`),
+  ADD KEY `idx_loct_shiploc_pending_ref_stock` (`shiploc`,`pendingqty`,`reference`,`stockid`),
+  ADD KEY `idx_loct_recloc_pending_ref_stock` (`recloc`,`pendingqty`,`reference`,`stockid`);
 
 --
 -- Indexes for table `mailgroupdetails`
@@ -4852,7 +4858,8 @@ ALTER TABLE `menuitems`
 -- Indexes for table `modules`
 --
 ALTER TABLE `modules`
-  ADD PRIMARY KEY (`modulelink`);
+  ADD PRIMARY KEY (`modulelink`),
+  ADD KEY `idx_modules_sequence_covering` (`sequence`,`modulelink`,`reportlink`,`modulename`);
 
 --
 -- Indexes for table `mrpcalendar`
@@ -4923,7 +4930,8 @@ ALTER TABLE `packagingused`
 -- Indexes for table `paymentmethods`
 --
 ALTER TABLE `paymentmethods`
-  ADD PRIMARY KEY (`paymentid`);
+  ADD PRIMARY KEY (`paymentid`),
+  ADD KEY `idx_paymentmethods_sort_covering` (`paymentname`,`paymentid`,`paymenttype`,`receipttype`,`percentdiscount`);
 
 --
 -- Indexes for table `paymentterms`
@@ -5578,6 +5586,7 @@ ALTER TABLE `stockrequestitems`
 --
 ALTER TABLE `stockserialitems`
   ADD PRIMARY KEY (`stockid`,`serialno`,`loccode`),
+  ADD UNIQUE KEY `stockid` (`stockid`,`loccode`,`serialno`),
   ADD KEY `idx_stockserialitems_stockid` (`stockid`),
   ADD KEY `idx_stockserialitems_loccode` (`loccode`),
   ADD KEY `idx_stockserialitems_serialno` (`serialno`),
@@ -5860,12 +5869,6 @@ ALTER TABLE `custallocns`
 --
 ALTER TABLE `custcontacts`
   MODIFY `contid` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `custnotes`
---
-ALTER TABLE `custnotes`
-  MODIFY `noteid` tinyint(4) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `dashboard_scripts`
@@ -6358,6 +6361,12 @@ ALTER TABLE `unitsofdimension`
 --
 
 --
+-- Constraints for table `contracts`
+--
+ALTER TABLE `contracts`
+  ADD CONSTRAINT `contracts_ibfk_2` FOREIGN KEY (`categoryid`) REFERENCES `stockcategory` (`categoryid`);
+
+--
 -- Constraints for table `employees`
 --
 ALTER TABLE `employees`
@@ -6369,6 +6378,13 @@ ALTER TABLE `employees`
 ALTER TABLE `gltags`
   ADD CONSTRAINT `gltags_ibfk_1` FOREIGN KEY (`counterindex`) REFERENCES `gltrans` (`counterindex`),
   ADD CONSTRAINT `gltags_ibfk_2` FOREIGN KEY (`tagref`) REFERENCES `tags` (`tagref`);
+
+--
+-- Constraints for table `internalstockcatrole`
+--
+ALTER TABLE `internalstockcatrole`
+  ADD CONSTRAINT `internalstockcatrole_ibfk_1` FOREIGN KEY (`categoryid`) REFERENCES `stockcategory` (`categoryid`),
+  ADD CONSTRAINT `internalstockcatrole_ibfk_3` FOREIGN KEY (`categoryid`) REFERENCES `stockcategory` (`categoryid`);
 
 --
 -- Constraints for table `pcreceipts`
@@ -6395,6 +6411,18 @@ ALTER TABLE `pickreqdetails`
 --
 ALTER TABLE `pickserialdetails`
   ADD CONSTRAINT `pickserialdetails_ibfk_1` FOREIGN KEY (`detailno`) REFERENCES `pickreqdetails` (`detailno`);
+
+--
+-- Constraints for table `stockcatproperties`
+--
+ALTER TABLE `stockcatproperties`
+  ADD CONSTRAINT `stockcatproperties_ibfk_1` FOREIGN KEY (`categoryid`) REFERENCES `stockcategory` (`categoryid`);
+
+--
+-- Constraints for table `stockmaster`
+--
+ALTER TABLE `stockmaster`
+  ADD CONSTRAINT `stockmaster_ibfk_1` FOREIGN KEY (`categoryid`) REFERENCES `stockcategory` (`categoryid`);
 
 --
 -- Constraints for table `timesheets`

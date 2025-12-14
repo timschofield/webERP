@@ -48,7 +48,7 @@ if (isset($_GET['Account'])) {
 
 if (isset($_POST['Update']) AND $_POST['RowCounter']>1) {
 	for ($Counter=1;$Counter <= $_POST['RowCounter']; $Counter++) {
-		if (isset($_POST['Clear_' . $Counter]) AND $_POST['Clear_' . $Counter]==true) {
+		if (isset($_POST['Clear_' . $Counter]) AND $_POST['Clear_' . $Counter]) {
 			/*Get amount to be cleared */
 			$SQL = "SELECT amount,
 							exrate
@@ -79,7 +79,7 @@ if (isset($_POST['Update']) AND $_POST['RowCounter']>1) {
 			$Result = DB_query($SQL, $ErrMsg);
 
 		} elseif (isset($_POST['Unclear_' . $Counter])
-					AND $_POST['Unclear_' . $Counter]==true) {
+				  AND $_POST['Unclear_' . $Counter]) {
 
 			$SQL = "UPDATE banktrans SET amountcleared = 0
 					 WHERE banktransid='" . $_POST['BankTrans_' . $Counter]."'";

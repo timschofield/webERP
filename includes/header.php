@@ -237,7 +237,7 @@ if (isset($ExtraHeadContent)) {
 */
 echo "\n</head>\n";
 
-echo '<body onload="initial();' . (isset($BodyOnLoad) ? $BodyOnLoad : '') . '">' . "\n";
+echo '<body onload="initial();' . ($BodyOnLoad ?? '') . '">' . "\n";
  
 /* KL RICARD Comment these lines as only show an X on the left top corner
 echo '<div class="help-bubble" id="help-bubble">

@@ -95,7 +95,7 @@ if (!UploadData($_SESSION['Installer']['Demo'],
 			$Database,
 			$DBType)) {
 	return;
-};
+}
 
 /// @todo wouldn't it make more sense to have this be run as part of CreateCompanyFolder, or just after it?
 if (!CreateCompaniesFile($Path_To_Root, $Database, $_SESSION['CompanyRecord']['coyname'])) {

@@ -10,9 +10,9 @@ include('includes/KLGeneralFunctions.php');
 include('includes/KLBoards.php');
 include('includes/KLUIGeneralFunctions.php');
 
-MaintenanceTasksDistribution("OPEN", 0, false);
-MaintenanceTasksDistribution("CLOSED", 30, false);
-MaintenanceTasksDistribution("TOTAL", 30, false);
-MaintenanceTasksList("CLOSED", 60);
+MaintenanceTasksDistribution("OPEN", 0, false, ($KL_SPGSeniorOrSupport OR $KL_SPGJunior OR $KL_ShopManager));
+MaintenanceTasksDistribution("CLOSED", 30, false, ($KL_SPGSeniorOrSupport OR $KL_SPGJunior OR $KL_ShopManager));
+MaintenanceTasksDistribution("TOTAL", 30, false, ($KL_SPGSeniorOrSupport OR $KL_SPGJunior OR $KL_ShopManager));
+MaintenanceTasksList("CLOSED", 60, ($KL_SPGSeniorOrSupport OR $KL_SPGJunior OR $KL_ShopManager));
 
 include('includes/footer.php');

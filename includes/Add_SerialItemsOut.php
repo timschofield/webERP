@@ -3,12 +3,7 @@
  in either the cartclass->LineItems->SerialItems or the POClass->LineItems->SerialItems */
 
 if (isset($_POST['AddBatches'])){
-
-	if (isset($_POST['TotalBundles'])){
-		$LoopMax = $_POST['TotalBundles'];
-	} else {
-		$LoopMax = 10;
-	}
+	$LoopMax = $_POST['TotalBundles'] ?? 10;
 	for ($i=0;$i < $LoopMax;$i++){
 	if (isset($_POST['SerialNo' . $i]) and mb_strlen($_POST['SerialNo' . $i])>0){
 			$ExistingBundleQty = ValidBundleRef($StockID, $LocationOut, $_POST['SerialNo' . $i]);
@@ -29,7 +24,7 @@ if (isset($_POST['AddBatches'])){
 						$AddThisBundle = true;
 					}
 				}
-				if ($AddThisBundle==true
+				if ($AddThisBundle
 					AND filter_number_format($_POST['Qty' . $i])>0){
 
 					$LineItem->SerialItems[$_POST['SerialNo' . $i]] = new SerialItem ($_POST['SerialNo' . $i],

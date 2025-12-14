@@ -281,7 +281,8 @@ if (!isset($_GET['delete'])) {
 
 	echo '<field>
 			<label for="GroupName">' . __('Group Name') . ':</label>
-			<input type="text" name="GroupName"' . (in_array('GroupName',$Errors) ? ' class="inputerror"' : '' ) .' ' . (!isset($SelectedGroup) ? 'autofocus="autofocus"' : 'autofocus="autofocus"') . ' required="required" value="' . $_POST['GroupName'] . '" size="35" maxlength="50" />
+			<!-- <input type="text" name="GroupName"' . (in_array('GroupName',$Errors) ? ' class="inputerror"' : '' ) .' ' . (!isset($SelectedGroup) ? 'autofocus="autofocus"' : 'autofocus="autofocus"') . ' required="required" value="' . $_POST['GroupName'] . '" size="35" maxlength="50" /> -->
+			<input type="text" name="GroupName"' . (in_array('GroupName',$Errors) ? ' class="inputerror"' : '' ) .' autofocus="autofocus" required="required" value="' . $_POST['GroupName'] . '" size="35" maxlength="50" />
 			<fieldhelp>' . __('A descriptive name to identify this product specification group') . '</fieldhelp>
 		</field>';
 

@@ -80,16 +80,8 @@ if ( isset($_GET['transcolor'])) {
 } else {
 	$doTrans = false;
 }
-if ( isset($_GET['bevel']) ) {
-	$bevel = $_GET['bevel'];
-} else {
-	$bevel = false;
-}
-if ( isset($_GET['fontsize']) ) {
-	$fontsize = $_GET['fontsize'];
-} else {
-	$fontsize = 3;
-}
+$bevel = $_GET['bevel'] ?? false;
+$fontsize = $_GET['fontsize'] ?? 3;
 if ( isset($_GET['notextbg']) ) {
 	$notextbg = true;
 } else {

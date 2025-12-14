@@ -202,16 +202,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	$j = 0; //row counter
 	while ($MyRow = DB_fetch_array($AccountListResult)) {
-		if (isset($ThisYearActuals[$MyRow['accountcode']])) {
-			$AccountBalance = $ThisYearActuals[$MyRow['accountcode']];
-		} else {
-			$AccountBalance = 0;
-		}
-		if (isset($LastYearActuals[$MyRow['accountcode']])) {
-			$LYAccountBalance = $LastYearActuals[$MyRow['accountcode']];
-		} else {
-			$LYAccountBalance = 0;
-		}
+		$AccountBalance = $ThisYearActuals[$MyRow['accountcode']] ?? 0;
+		$LYAccountBalance = $LastYearActuals[$MyRow['accountcode']] ?? 0;
 
 		// KL RICARD: adjustement for intercompany accounts
 		/* Commented out some lines to allow "automatic check total = 0", instead of manually checking it out and correcting.
@@ -227,8 +219,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				$AccountBalance = -$ThisYearAccumulatedAdjustment;
 				$LYAccountBalance = -$LastYearAccumulatedAdjustment;
 			} else {
-				$ThisYearAccumulatedAdjustment += $ThisYearActuals[$MyRow['accountcode']];
-				$LastYearAccumulatedAdjustment += $LastYearActuals[$MyRow['accountcode']];
+				$ThisYearAccumulatedAdjustment += isset($ThisYearActuals[$MyRow['accountcode']]) ? $ThisYearActuals[$MyRow['accountcode']] : 0;
+				$LastYearAccumulatedAdjustment += isset($LastYearActuals[$MyRow['accountcode']]) ? $LastYearActuals[$MyRow['accountcode']] : 0;
 			}
 //		}
 		// KL RICARD END: adjustement for intercompany accounts

@@ -6,7 +6,7 @@
 *
 *******************************************************************************/
 /* KL RICARD Configuration file for specific KL code */
-$KLCodeVersion = "055";
+$KLCodeVersion = "056";
 
 // let's setup all the variables depending on the environment
 if (URLWithoutScriptNameContains(".LOCAL")) {
@@ -119,10 +119,10 @@ if ($ErrorReportingType == 'PRODUCTION') {
 
 } elseif ($ErrorReportingType == 'DEVELOPMENT') {
 	// report some errors
-	// error_reporting (-1);
+	error_reporting (-1);
 	// error_reporting (E_ALL);
 	// error_reporting (E_ALL & ~E_NOTICE);
-	error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING);
+	// error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING);
 	// error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
 
 	// Enable debug (1 = simple, 2= more detailed)

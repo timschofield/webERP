@@ -411,16 +411,12 @@ if ($_SESSION['Items'.$identifier]->DefaultCurrency != $_SESSION['CompanyRecord'
 		if (isset($_POST[$QuickEntryQty])) {
 			$NewItemQty = filter_number_format($_POST[$QuickEntryQty]);
 		}
-		if (isset($_POST[$QuickEntryItemDue])) {
-			$NewItemDue = $_POST[$QuickEntryItemDue];
-		} else {
-			$NewItemDue = DateAdd (date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
-		}
-		if (isset($_POST[$QuickEntryPOLine])) {
-			$NewPOLine = $_POST[$QuickEntryPOLine];
-		} else {
-			$NewPOLine = 0;
-		}
+		$NewItemDue = $_POST[$QuickEntryItemDue] ?? DateAdd(
+			date($_SESSION['DefaultDateFormat']),
+			'd',
+			$_SESSION['Items' . $identifier]->DeliveryDays
+		);
+		$NewPOLine = $_POST[$QuickEntryPOLine] ?? 0;
 
 		if (!isset($NewItem)) {
 			unset($NewItem);

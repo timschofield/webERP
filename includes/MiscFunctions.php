@@ -142,6 +142,17 @@ class XmlElement {
 	var $children;
 }
 
+function GetDXRCurrencyRates() {
+	if (http_file_exists('https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/eur.json')) {
+		$Json = file_get_contents('https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/eur.json');
+		$Rates = json_decode($Json, true);
+		return array_change_key_case($Rates['eur'], CASE_UPPER);
+	} else {
+		$Json = '';
+		return array();
+	}
+}
+
 function GetECBCurrencyRates() {
 	/* See http://www.ecb.int/stats/exchange/eurofxref/html/index.en.html
 	for detail of the European Central Bank rates - published daily */
@@ -403,15 +414,13 @@ function LogBackTrace($dest = 0) {
 						$Msg.= '[ ';
 						foreach ($val as $v2) {
 							if (gettype($v2) == 'array') {
-								$Msg.= '[ ';
-								foreach ($v2 as $v3) $Msg.= $v3;
-								$Msg.= ' ]';
+								$Msg = '[ ' . implode('', $v2) . ' ]';
 							} else {
 								$Msg.= $v2 . ', ';
 							}
 							$Msg.= ' ]';
-							break;
 						}
+						break;
 					case 'string':
 						$Msg.= $val . ', ';
 						break;
@@ -638,10 +647,6 @@ function ReportPeriod($PeriodName, $FromOrTo) {
 			}
 			$DateEnd = date($_SESSION['DefaultDateFormat'], YearEndDate($_SESSION['YearEnd'], 0));
 		break;
-		case __('Last Month'):
-			$DateStart = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $LastMonth, 1, $ThisYear));
-			$DateEnd = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $LastMonth, $TotalDaysLast, $ThisYear));
-		break;
 		case __('Last Quarter'):
 			$QtrStrt = intval(($ThisMonth - 1) / 3) * 3 - 2;
 			$QtrEnd = intval(($ThisMonth - 1) / 3) * 3 + 0;
@@ -688,6 +693,7 @@ function ReportPeriod($PeriodName, $FromOrTo) {
 			}
 			$DateEnd = date($_SESSION['DefaultDateFormat'], YearEndDate($_SESSION['YearEnd'], 1));
 		break;
+		case __('Last Month'):
 		default:
 			$DateStart = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $LastMonth, 1, $ThisYear));
 			$DateEnd = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $LastMonth, $TotalDaysLast, $ThisYear));
@@ -954,10 +960,10 @@ function ShowDebugBackTrace($DebugMessage, $SQL){
 		}
 		echo '<tr class="striped_row">
 			<td>' . $Index . '</td>
-			<td>' . (isset($Frame['file']) ? $Frame['file'] : 'N/A') . '</td>
-			<td>' . (isset($Frame['line']) ? $Frame['line'] : 'N/A') . '</td>
-			<td>' . (isset($Frame['function']) ? $Frame['function'] : 'N/A') . '</td>
-			<td>' . (isset($Frame['class']) ? $Frame['class'] : 'N/A') . '</td>
+			<td>' . ($Frame['file'] ?? 'N/A') . '</td>
+			<td>' . ($Frame['line'] ?? 'N/A') . '</td>
+			<td>' . ($Frame['function'] ?? 'N/A') . '</td>
+			<td>' . ($Frame['class'] ?? 'N/A') . '</td>
 			<td>' . $Parameters . '</td>
 		</tr>';
 	}

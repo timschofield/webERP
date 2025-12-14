@@ -14,7 +14,7 @@ require($PathPrefix.'vendor/autoload.php');
 if (!file_exists($PathPrefix . 'config.php')) {
 	// gg: there is no need for htmlspecialchars here, as we never output $RootPath into html
 	// assumes the api entrypoint script is inside the /api folder is
-	$RootPath = dirname(dirname($_SERVER['PHP_SELF']));
+	$RootPath = dirname($_SERVER['PHP_SELF'], 2);
 	if ($RootPath == '/' or $RootPath == "\\") {
 		$RootPath = '';
 	}
