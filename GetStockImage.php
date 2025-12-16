@@ -204,6 +204,13 @@ if ( $automake AND !isset($FileName) ) {
 			$fyh = $fy + $fh - 1;
 			$Textwidth = $fw * mb_strlen($Text);
 			$px = (imagesx($im) - $Textwidth) / 2;
+			// Cast to int to avoid PHP 8.4 deprecation: float to int implicit conversion
+			$Textwidth = (int)$Textwidth;
+			$px = (int)$px;
+			$fy = (int)$fy;
+			$fh = (int)$fh;
+			$fw = (int)$fw;
+			$fyh = (int)$fyh;
 			if (!$notextbg)
 				imagefilledrectangle($im, $px, $fy, imagesx($im)-($px+1), $fyh, $ixbgcolor );
 			imagestring($im, $fontsize, $px, $fy, $Text, $ixtextcolor);
@@ -314,6 +321,13 @@ if ( $automake AND !isset($FileName) ) {
 			$fyh = imagesy($im) - 1;
 			$Textwidth = $fw * mb_strlen($Text);
 			$px = (imagesx($im) - $Textwidth) / 2;
+			// Cast to int to avoid PHP 8.4 deprecation: float to int implicit conversion
+			$Textwidth = (int)$Textwidth;
+			$px = (int)$px;
+			$fy = (int)$fy;
+			$fh = (int)$fh;
+			$fw = (int)$fw;
+			$fyh = (int)$fyh;
 			if (!$notextbg)
 				imagefilledrectangle($im, $px, $fy, imagesx($im)-($px+1), $fyh, $ixtextbgcolor );
 				imagestring($im, $fontsize, $px, $fy, $Text, $ixtextcolor);
