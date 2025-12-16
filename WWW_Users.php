@@ -597,7 +597,7 @@ echo '<field>
 		<label for="CanCreateTender">' . __('User Can Create Tenders') . ':</label>
 		<select name="CanCreateTender">';
 
-if ($_POST['CanCreateTender']==0) {
+if (isset($_POST['CanCreateTender']) and $_POST['CanCreateTender']==0) {
 	echo '<option selected="selected" value="0">' . __('No') . '</option>';
 	echo '<option value="1">' . __('Yes') . '</option>';
 } else {
@@ -876,7 +876,7 @@ echo '</select>
 echo '<field>
 		<label for="Blocked">' . __('Account Status') . ':</label>
 		<select required="required" name="Blocked">';
-if ($_POST['Blocked']==0) {
+if (isset($_POST['Blocked']) and $_POST['Blocked']==0) {
 	echo '<option selected="selected" value="0">' . __('Open') . '</option>';
 	echo '<option value="1">' . __('Blocked') . '</option>';
 } else {
