@@ -1,5 +1,5 @@
 <?php
-
+/*
 // Remove Z_index.php
 // https://github.com/timschofield/webERP/issues/755
 RemoveScript('Z_index.php');
@@ -52,7 +52,7 @@ NewScript('Z_ImportGLAccountSections.php', 15);
 
 RemoveScript('Z_ImportPartCodes.php');
 NewScript('Z_ImportPartCodes.php', 15);
-
+*/
 // cleanup - set DBUpdateNumber
 if ($_SESSION['Updates']['Errors'] == 0) {
 	UpdateDBNo(basename(__FILE__, '.php'), __('Un-register Z_index.php, add Import Suppliers to menu, set security token for import scripts to sysadmin'));
