@@ -7,7 +7,7 @@ RemoveScript('Z_index.php');
 // Add Import Suppliers to menu [Utilities > Maintenance > Import Suppliers from .csv]
 // https://github.com/timschofield/webERP/issues/754
 // 1. register (existing) import suppliers script
-NewScript('Z_ImportSuppliers.php', 15); // available to administrator only
+NewScript('Z_ImportSuppliers.php', 15); // Security Token: User Management and System Admistration
 
 // Insert menu item [Utilities > Maintenance > Import Supppliers from .csv file]
 // - remove all menu items from [Setup > Maintenance]
@@ -39,11 +39,21 @@ NewMenuItem('Utilities', 'Maintenance', __('Create new company template SQL file
 NewMenuItem('Utilities', 'Maintenance', __('Purge all old prices'), '/Z_DeleteOldPrices.php', 110);
 NewMenuItem('Utilities', 'Maintenance', __('Remove all purchase back orders'), '/Z_RemovePurchaseBackOrders.php', 120);
 
-// set (default) security token for Z_Import... scripts to "User Management and System Adminstration"
-// https://github.com/timschofield/webERP/discussions/789
-// TODO add code
+// set security token for Z_Import... scripts to "User Management and System Adminstration" (for any script not configured so)
+// per https://github.com/timschofield/webERP/discussions/789
+RemoveScript('Z_ImportChartOfAccounts.php');
+NewScript('Z_ImportChartOfAccounts.php', 15);
 
-// cleanup - UpdateDbNo() MUST BE ONLY LINE BEFORE "}" in particular NO COMMENT LINES
+RemoveScript('Z_ImportGLAccountGroups.php');
+NewScript('Z_ImportGLAccountGroups.php', 15);
+
+RemoveScript('Z_ImportGLAccountSections.php');
+NewScript('Z_ImportGLAccountSections.php', 15);
+
+RemoveScript('Z_ImportPartCodes.php');
+NewScript('Z_ImportPartCodes.php', 15);
+
+// cleanup - set DBUpdateNumber
 if ($_SESSION['Updates']['Errors'] == 0) {
-	UpdateDBNo(basename(__FILE__, '.php'), __('Un-register Z_index.php, add Import Suppliers menu item'));
+	UpdateDBNo(basename(__FILE__, '.php'), __('Un-register Z_index.php, add Import Suppliers to menu, set security token for import scripts to sysadmin'));
 }
