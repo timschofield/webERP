@@ -860,9 +860,9 @@ function SetRLForLowSalesHighRL($ShopType, $BottomPercentTopSales, $OldRL, $maxR
 	}
 
 	if ($ShopType == "SHOPKL") {
-		$WhereCat = " AND sm.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . " ";
+		$WhereCat = " AND sm.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_EXCLUDING_TEST . " ";
 	} elseif ($ShopType == "SHOPBL") {
-		$WhereCat = " AND sm.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . " ";
+		$WhereCat = " AND sm.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_EXCLUDING_TEST . " ";
 	} elseif ($ShopType == "SHOPOU") {
 		$WhereCat = " AND sm.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . " ";
 	} else {
