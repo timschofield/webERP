@@ -28,8 +28,8 @@ if (isset($_POST['PrintPDF'])
 					suppliers.suppname,
 					currencies.currency,
 					currencies.decimalplaces AS currdecimalplaces,
-					SUM((supptrans.ovamount + supptrans.ovgst - supptrans.alloc)/supptrans.rate) AS balance,
-					SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) AS fxbalance,
+					SUM((supptrans.balance)/supptrans.rate) AS balance,
+					SUM(supptrans.balance) AS fxbalance,
 					SUM(CASE WHEN supptrans.trandate > '" . $_POST['PeriodEnd'] . "' THEN
 						(supptrans.ovamount + supptrans.ovgst)/supptrans.rate ELSE 0 END) AS afterdatetrans,
 					SUM(CASE WHEN supptrans.trandate > '" . $_POST['PeriodEnd'] . "'

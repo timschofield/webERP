@@ -677,8 +677,11 @@ TRUNCATE test_erp.suppliertype;
 INSERT INTO test_erp.suppliertype SELECT * FROM kl_erp.suppliertype;
 
 TRUNCATE test_erp.supptrans;
-/* INSERT INTO test_erp.supptrans SELECT * FROM kl_erp.supptrans WHERE trandate >= '2025-01-01'; */
-INSERT INTO test_erp.supptrans SELECT * FROM kl_erp.supptrans; 
+/* Special insert to prevent error when copying calculated fields*/
+INSERT INTO test_erp.supptrans (transno , type , supplierno , suppreference , trandate , duedate , inputdate, settled , rate , ovamount , ovgst , diffonexch , alloc , transtext , hold  , chequeno , void, id)
+SELECT transno, type, supplierno, suppreference, trandate, duedate, inputdate, settled, rate, ovamount, ovgst, diffonexch, alloc, transtext, hold, chequeno, void, id
+FROM kl_erp.supptrans;
+
 
 TRUNCATE test_erp.supptranstaxes;
 /* INSERT INTO test_erp.supptranstaxes SELECT * FROM kl_erp.supptranstaxes WHERE supptransid >= 10000; */
