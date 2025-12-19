@@ -166,6 +166,7 @@ if (isset($_POST['SaveTemplate'])) {
 			}
 			$LineNumber = 0;
 			foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
+				$ItemTagForSave = property_exists($JournalItem, 'tag') ? $JournalItem->tag : 0;
 				$SQL = "INSERT INTO jnltmpldetails (linenumber,
 													templateid,
 													tags,
@@ -175,7 +176,7 @@ if (isset($_POST['SaveTemplate'])) {
 												) VALUES (
 													'" . $LineNumber . "',
 													'" . $TemplateNo . "',
-													'" . $JournalItem->tag . "',
+													'" . $ItemTagForSave . "',
 													'" . $JournalItem->GLCode . "',
 													'" . $JournalItem->Amount . "',
 													'" . $JournalItem->Narrative . "'
@@ -225,7 +226,7 @@ if (isset($_POST['ConfimSave'])) {
 	foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
 		echo '<tr class="striped_row">
 				<td>';
-		$Tag = $JournalItem->tag;
+		$Tag = property_exists($JournalItem, 'tag') ? $JournalItem->tag : 0;
 		$SQL = "SELECT tagdescription
 					FROM tags
 					WHERE tagref='" . $Tag . "'";
@@ -297,7 +298,8 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == __('Accept and Pro
 					)";
 		$ErrMsg = __('Cannot insert a GL entry for the journal line because');
 		$Result = DB_query($SQL, $ErrMsg, '', true);
-		InsertGLTags($JournalItem->tag);
+		$ItemTagForInsert = property_exists($JournalItem, 'tag') ? $JournalItem->tag : 0;
+		InsertGLTags($ItemTagForInsert);
 
 		if ($_POST['JournalType'] == 'Reversing') {
 			$SQL = "INSERT INTO gltrans (type,
@@ -318,7 +320,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == __('Accept and Pro
 
 			$ErrMsg = __('Cannot insert a GL entry for the reversing journal because');
 			$Result = DB_query($SQL, $ErrMsg, '', true);
-			InsertGLTags($JournalItem->tag);
+			InsertGLTags($ItemTagForInsert);
 		}
 	}
 
@@ -355,6 +357,12 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == __('Accept and Pro
 	elseif ($_POST['Credit'] > 0) {
 		$_POST['GLAmount'] = - filter_number_format($_POST['Credit']);
 	}
+	
+	// Set default tag value if not provided
+	if (!isset($_POST['tag'])) {
+		$_POST['tag'] = array(0);
+	}
+	
 	if ($_POST['GLManualCode'] !=  '') {
 		// If a manual code was entered need to check it exists and isnt a bank account
 		$AllowThisPosting = true; //by default
@@ -586,7 +594,8 @@ $CreditTotal = 0;
 foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
 	echo '<tr class="striped_row">
 		<td>';
-	echo GetDescriptionsFromTagArray($JournalItem->tag);
+	$ItemTag = property_exists($JournalItem, 'tag') ? $JournalItem->tag : array(0);
+	echo GetDescriptionsFromTagArray($ItemTag);
 	echo '</td>
 		<td>' . $JournalItem->GLCode . ' - ' . $JournalItem->GLActName . '</td>';
 	if ($JournalItem->Amount > 0) {
