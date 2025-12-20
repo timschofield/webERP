@@ -114,19 +114,12 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 			$_SESSION['ShowFieldHelp'] = $MyRow['showfieldhelp'];
 			$_SESSION['ScreenFontSize'] = $MyRow['fontsize'];
 
-			switch ($_SESSION['ScreenFontSize']) {
-				case 0:
-					$_SESSION['FontSize'] = '0.667rem';
-				break;
-				case 1:
-					$_SESSION['FontSize'] = '0.833rem';
-				break;
-				case 2:
-					$_SESSION['FontSize'] = '1rem';
-				break;
-				default:
-					$_SESSION['FontSize'] = '0.833rem';
-			}
+			$_SESSION['FontSize'] = match ($_SESSION['ScreenFontSize']) {
+				'0'       => '0.667rem',
+				'1'       => '0.833rem',
+				'2'       => '1rem',
+				default => '0.833rem',
+			};
 
 			if (isset($MyRow['pdflanguage'])) {
 				$_SESSION['PDFLanguage'] = $MyRow['pdflanguage'];
@@ -202,7 +195,6 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 								$CurrenciesResult = DB_query("SELECT currabrev FROM currencies");
 								while ($CurrencyRow = DB_fetch_row($CurrenciesResult)){
 									if ($CurrencyRow[0]!=$_SESSION['CompanyRecord']['currencydefault']){
-
 										$Rate = GetCurrencyRate($CurrencyRow[0],$CurrencyRates);
 										if ($Rate == '') {
 											$Rate = 1;
@@ -216,7 +208,14 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 							$CurrenciesResult = DB_query("SELECT currabrev FROM currencies");
 							while ($CurrencyRow = DB_fetch_row($CurrenciesResult)){
 								if ($CurrencyRow[0]!=$_SESSION['CompanyRecord']['currencydefault']){
-									$UpdateCurrRateResult = DB_query("UPDATE currencies SET rate='" . google_currency_rate($CurrencyRow[0]) . "'
+									if ($_SESSION['ExchangeRateFeed'] == 'ECB') {
+										$CurrencyRatesArray = GetECBCurrencyRates();
+									} elseif ($_SESSION['ExchangeRateFeed'] == 'DXR') {
+										$CurrencyRatesArray = GetDXRCurrencyRates();
+									} else {
+										$CurrencyRatesArray = array();
+									}
+									$UpdateCurrRateResult = DB_query("UPDATE currencies SET rate='" . GetCurrencyRate($CurrencyRow[0], $CurrencyRatesArray) . "'
 																		WHERE currabrev='" . $CurrencyRow[0] . "'");
 								}
 							}
