@@ -60,19 +60,19 @@ if (isset($_POST['Period']) and $_POST['Period'] != '') {
 }
 
 // Validates the data submitted in the form:
-if (isset($_POST['PeriodFrom']) and $_POST['PeriodFrom'] > $_POST['PeriodTo']) {
+if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo']) and $_POST['PeriodFrom'] > $_POST['PeriodTo']) {
 	// The beginning is after the end.
 	$_POST['NewReport'] = 'on';
 	prnMsg(__('The beginning of the period should be before or equal to the end of the period. Please reselect the reporting period.'), 'error');
 }
-if (isset($_POST['PeriodTo']) and $_POST['PeriodTo']-$_POST['PeriodFrom']+1 > 12) {
+if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo']) and $_POST['PeriodTo']-$_POST['PeriodFrom']+1 > 12) {
 	// The reporting period is greater than 12 months.
 	$_POST['NewReport'] = 'on';
 	prnMsg(__('The period should be 12 months or less in duration. Please select an alternative period range.'), 'error');
 }
 
 // Main code:
-if (isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewReport']) {
+if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo']) and !isset($_POST['NewReport'])) {
 	// If PeriodFrom and PeriodTo are set and it is not a NewReport, generates the report:
 
 	echo '<div class="sheet">';// Division to identify the report block.
@@ -105,7 +105,7 @@ if (isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRe
 				<td class="text" colspan="6">',// Prints an explanation of signs in actual and relative changes:
 					'<br /><b>', __('Notes'), ':</b><br />',
 					__('Cash flows signs: a negative number indicates a cash flow used in activities; a positive number indicates a cash flow provided by activities.'), '<br />';
-	if ($_POST['ShowCash']) {
+	if (isset($_POST['ShowCash']) and $_POST['ShowCash']) {
 		echo		__('Cash and cash equivalents signs: a negative number indicates a cash outflow; a positive number indicates a cash inflow.'), '<br />';
 	}
 	echo		'</td>
@@ -228,7 +228,7 @@ if (isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRe
 		    	</tr>';
 		}
 		if ($MyRow['ActualAmount']<>0
-			OR $MyRow['LastAmount']<>0 OR isset($_POST['ShowZeroBalance'])) {
+			OR $MyRow['LastAmount']<>0 OR (isset($_POST['ShowZeroBalance']) and $_POST['ShowZeroBalance'])) {
 
 			echo '<tr class="striped_row">
 					<td class="text"><a href="', $RootPath, '/GLAccountInquiry.php?PeriodFrom=', $_POST['PeriodFrom'], '&amp;PeriodTo=', $_POST['PeriodTo'], '&amp;Account=', $MyRow['account'], '">', $MyRow['account'], '</a></td>
@@ -256,7 +256,7 @@ if (isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRe
 			colDebitCredit($LastTotal),
 		'</tr>';
 	// Prints Cash and cash equivalents at beginning of period:
-	if ($_POST['ShowCash']) {
+	if (isset($_POST['ShowCash']) and $_POST['ShowCash']) {
 		// Prints a detail of Cash and cash equivalents at beginning of period (Parameters: PeriodFrom, PeriodTo, ShowZeroBalance=on/off, ShowCash=ON):
 		echo '<tr><td colspan="6">&nbsp;</td></tr>';
 		$ActualBeginning = 0;
@@ -276,7 +276,7 @@ if (isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRe
 		$Result = DB_query($Sql);
 		while($MyRow = DB_fetch_array($Result)) {
 			if ($MyRow['ActualAmount']<>0
-				OR $MyRow['LastAmount']<>0 OR isset($_POST['ShowZeroBalance'])) {
+				OR $MyRow['LastAmount']<>0 OR (isset($_POST['ShowZeroBalance']) and $_POST['ShowZeroBalance'])) {
 
 				echo '<tr class="striped_row">
 						<td class="text"><a href="', $RootPath, '/GLAccountInquiry.php?Period=', $_POST['PeriodFrom'], '&amp;Account=', $MyRow['account'], '">', $MyRow['account'], '</a></td>
@@ -309,7 +309,7 @@ if (isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRe
 			colDebitCredit($LastBeginning),
 		'</tr>';
 	// Prints Cash and cash equivalents at end of period:
-	if ($_POST['ShowCash']) {
+	if (isset($_POST['ShowCash']) and $_POST['ShowCash']) {
 		// Prints a detail of Cash and cash equivalents at end of period (Parameters: PeriodFrom, PeriodTo, ShowZeroBalance=on/off, ShowCash=ON):
 		echo '<tr><td colspan="6">&nbsp;</td></tr>';
 		// Calculate ending balance by summing all periods up to PeriodTo from gltotals
@@ -327,7 +327,7 @@ if (isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRe
 		$Result = DB_query($Sql);
 		while($MyRow = DB_fetch_array($Result)) {
 			if ($MyRow['ActualAmount']<>0
-				OR $MyRow['LastAmount']<>0 OR isset($_POST['ShowZeroBalance'])) {
+				OR $MyRow['LastAmount']<>0 OR (isset($_POST['ShowZeroBalance']) and $_POST['ShowZeroBalance'])) {
 
 				echo '<tr class="striped_row">
 						<td class="text"><a href="', $RootPath, '/GLAccountInquiry.php?Period=', $_POST['PeriodTo'], '&amp;Account=', $MyRow['account'], '">', $MyRow['account'], '</a></td>
@@ -345,7 +345,7 @@ if (isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRe
 			colDebitCredit($LastTotal+$LastBeginning),
 		'</tr>';
 	// Prints 'Cash or cash equivalent' section if selected (Parameters: PeriodFrom, PeriodTo, ShowZeroBalance=on/off, ShowCash=ON):
-	if ($_POST['ShowCash']) {
+	if (isset($_POST['ShowCash']) and $_POST['ShowCash']) {
 		// Prints 'Cash or cash equivalent' section title:
 		echo '<tr><td colspan="6">&nbsp</td><tr>
 			<tr>
@@ -369,7 +369,7 @@ if (isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRe
 		$Result = DB_query($Sql);
 		while($MyRow = DB_fetch_array($Result)) {
 			if ($MyRow['ActualAmount']<>0
-				OR $MyRow['LastAmount']<>0 OR isset($_POST['ShowZeroBalance'])) {
+				OR $MyRow['LastAmount']<>0 OR (isset($_POST['ShowZeroBalance']) and $_POST['ShowZeroBalance'])) {
 
 				echo '<tr class="striped_row">
 						<td class="text"><a href="', $RootPath, '/GLAccountInquiry.php?PeriodFrom=', $_POST['PeriodFrom'], '&amp;PeriodTo=', $_POST['PeriodTo'], '&amp;Account=', $MyRow['account'], '">', $MyRow['account'], '</a></td>
@@ -397,8 +397,8 @@ if (isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRe
 			// Resend report parameters:
 			'<input name="PeriodFrom" type="hidden" value="', $_POST['PeriodFrom'], '" />',
 			'<input name="PeriodTo" type="hidden" value="', $_POST['PeriodTo'], '" />',
-			'<input name="ShowZeroBalance" type="hidden" value="', $_POST['ShowZeroBalance'], '" />',
-			'<input name="ShowCash" type="hidden" value="', $_POST['ShowCash'], '" />',
+			'<input name="ShowZeroBalance" type="hidden" value="', (isset($_POST['ShowZeroBalance']) ? $_POST['ShowZeroBalance'] : ''), '" />',
+			'<input name="ShowCash" type="hidden" value="', (isset($_POST['ShowCash']) ? $_POST['ShowCash'] : ''), '" />',
 			'<div class="centre noPrint">'; // Form buttons:
 		if ($NeedSetup) {
 			echo '<button onclick="window.location=\'GLCashFlowsSetup.php\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/maintenance.png" /> ', __('Run Setup'), '</button>'; // "Run Setup" button.
@@ -504,13 +504,13 @@ if (isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRe
 	// Show accounts with zero balance:
 			'<field>
 			 	<label for="ShowZeroBalance">', __('Show accounts with zero balance'), '</label>
-			 	<input', ($_POST['ShowZeroBalance'] ? ' checked="checked"' : ''), ' id="ShowZeroBalance" name="ShowZeroBalance" type="checkbox">
+			 	<input', (isset($_POST['ShowZeroBalance']) and $_POST['ShowZeroBalance'] ? ' checked="checked"' : ''), ' id="ShowZeroBalance" name="ShowZeroBalance" type="checkbox">
 			 	<fieldhelp>', __('Check this box to show all accounts including those with zero balance'), '</fieldhelp>
 			</field>',
 	// Show cash and cash equivalents accounts:
 			'<field>
 				<label for="ShowCash">', __('Show cash and cash equivalents accounts'), '</label>
-			 	<input',($_POST['ShowCash'] ? ' checked="checked"' : ''), ' id="ShowCash" name="ShowCash" type="checkbox">
+			 	<input', (isset($_POST['ShowCash']) and $_POST['ShowCash'] ? ' checked="checked"' : ''), ' id="ShowCash" name="ShowCash" type="checkbox">
 			 	<fieldhelp>', __('Check this box to show cash and cash equivalents accounts'), '</fieldhelp>
 			</field>
 		</fieldset>';
@@ -521,7 +521,6 @@ if (isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRe
 		</div>',
 		'</form>';
 }
-echo	'</form>';
 
 if (!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
 	include('includes/footer.php');
