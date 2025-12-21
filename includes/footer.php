@@ -8,7 +8,13 @@ if (isset($Messages) and count($Messages) > 0) {
 	$LogFile = false;
 
 	if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity'] > 0) { // add these 3 lines
-		$LogFile = fopen($_SESSION['LogPath'] . '/weberp-' . $_SESSION['DatabaseName'] . '.log', 'a');
+		if ($_SESSION['LogPath'] == '') {
+			$_SESSION['LogPath'] = 'companies/' . $_SESSION['DatabaseName'] . '/logs';
+			if (!file_exists($_SESSION['LogPath'])) {
+				mkdir($_SESSION['LogPath']);
+			}
+		}
+		$LogFile = fopen($_SESSION['LogPath'] . '/weberp-' . $_SESSION['DatabaseName'] . '-' . date('Y-m-d') . '.log', 'a');
 	}
 
 	echo '<div id="MessageContainerFoot">';
