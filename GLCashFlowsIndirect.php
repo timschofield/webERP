@@ -17,19 +17,6 @@ Parameters:
 	IsIncluded: Parameter to indicate that a script is included within another.
 */
 
-function CashFlowsActivityName($Activity) {
-	// Converts the cash flow activity number to an activity text.
-	return match ($Activity) {
-		'-1'      => __('Not set up'),
-		'0'       => __('No effect on cash flow'),
-		'1'       => __('Operating activities'),
-		'2'       => __('Investing activities'),
-		'3'       => __('Financing activities'),
-		'4'       => __('Cash or cash equivalent'),
-		default => __('Unknown'),
-	};
-}
-
 function colDebitCredit($Amount) {
 	// Function to display in debit or Credit columns in a HTML table.
 	if ($Amount < 0) {
@@ -49,6 +36,8 @@ if (!isset($IsIncluded)) {// Runs normally if this script is NOT included in ano
 	$BookMark = 'GLCashFlowsIndirect';
 	include('includes/header.php');
 }
+
+include('includes/GLFunctions.php');
 
 // Merges gets into posts:
 if (isset($_GET['PeriodFrom']) AND is_numeric($_GET['PeriodFrom'])) {
