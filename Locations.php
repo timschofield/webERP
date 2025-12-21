@@ -553,35 +553,33 @@ or deletion of the records*/
 			ORDER BY locationname";
 	$Result = DB_query($SQL);
 
-	if (DB_num_rows($Result)==0) {
-		prnMsg(__('There are no locations that match up with a tax province record to display. Check that tax provinces are set up for all dispatch locations'),'error');
-	}
+	if (DB_num_rows($Result)!=0) {
 
-	// KL RICARD Show our needed fields, not standard webERP
-	echo '<table class="selection">
-		<thead>
-		<tr>
-			<th class="SortedColumn">', __('Code'), '</th>
-			<th class="SortedColumn">', __('Location Name'), '</th>
-			<th class="SortedColumn">', __('Zone'), '</th>
-			<th class="SortedColumn">', __('Type'), '</th>
-			<th class="SortedColumn">', __('Retail Partner'), '</th>
-			<th class="SortedColumn">', __('Online Partner'), '</th>
-			<th class="SortedColumn">', __('Stock Ready Sell'), '</th>
-			<th class="SortedColumn">', __('Stock for Online?'), '</th>
-			<th class="SortedColumn">', __('Priority'), '</th>
-			<th class="SortedColumn">', __('ST From'), '</th>
-			<th class="SortedColumn">', __('ST Max'), '</th>
-			<th class="SortedColumn">', __('ST Min'), '</th>
-			<th class="SortedColumn">', __('Pack From'), '</th>
-			<th class="SortedColumn">', __('Pack Factor'), '</th>
-			<th class="SortedColumn">', __('Pack Days'), '</th>
-			<th class="noPrint" colspan="2">&nbsp;</th>
-			</tr>
-		</thead>
-		<tbody>';
+		// KL RICARD Show our needed fields, not standard webERP
+		echo '<table class="selection">
+			<thead>
+				<tr>
+					<th class="SortedColumn">', __('Code'), '</th>
+					<th class="SortedColumn">', __('Location Name'), '</th>
+					<th class="SortedColumn">', __('Zone'), '</th>
+					<th class="SortedColumn">', __('Type'), '</th>
+					<th class="SortedColumn">', __('Retail Partner'), '</th>
+					<th class="SortedColumn">', __('Online Partner'), '</th>
+					<th class="SortedColumn">', __('Stock Ready Sell'), '</th>
+					<th class="SortedColumn">', __('Stock for Online?'), '</th>
+					<th class="SortedColumn">', __('Priority'), '</th>
+					<th class="SortedColumn">', __('ST From'), '</th>
+					<th class="SortedColumn">', __('ST Max'), '</th>
+					<th class="SortedColumn">', __('ST Min'), '</th>
+					<th class="SortedColumn">', __('Pack From'), '</th>
+					<th class="SortedColumn">', __('Pack Factor'), '</th>
+					<th class="SortedColumn">', __('Pack Days'), '</th>
+					<th class="noPrint" colspan="2">&nbsp;</th>
+				</tr>
+			</thead>
+			<tbody>';
 
-while ($MyRow = DB_fetch_array($Result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 /* warehouse management not implemented ... yet
 	if ($MyRow['managed'] == 1) {
 		$MyRow['managed'] = __('Yes');
@@ -647,9 +645,10 @@ while ($MyRow = DB_fetch_array($Result)) {
 			$MyRow['rldaysforpackaging'],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $MyRow['loccode'],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $MyRow['loccode']);
+		}
+		//END WHILE LIST LOOP
+		echo '</tbody></table>';
 	}
-	//END WHILE LIST LOOP
-	echo '</tbody></table>';
 }
 
 //end of ifs and buts!

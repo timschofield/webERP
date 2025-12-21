@@ -13,12 +13,12 @@
 function CashFlowsActivityName($Activity) {
 	// Converts the cash flow activity number to an activity text.
 	return match ($Activity) {
-		-1      => '<b>' . __('Not set up') . '</b>',
-		0       => __('No effect on cash flow'),
-		1       => __('Operating activity'),
-		2       => __('Investing activity'),
-		3       => __('Financing activity'),
-		4       => __('Cash or cash equivalent'),
+		'-1'      => '<b>' . __('Not set up') . '</b>',
+		'0'       => __('No effect on cash flow'),
+		'1'       => __('Operating activity'),
+		'2'       => __('Investing activity'),
+		'3'       => __('Financing activity'),
+		'4'       => __('Cash or cash equivalent'),
 		default => '<b>' . __('Unknown') . '</b>',
 	};
 }
@@ -76,24 +76,31 @@ if (isset($_POST['submit'])) {
 
 		/*SelectedAccount is null cos no item selected on first time round so must be adding a	record must be submitting new entries */
 
-		$SQL = "INSERT INTO chartmaster (
-					accountcode,
-					accountname,
-					group_,
-					controlled,
-					cashflowsactivity)
-				VALUES ('" .
-					$_POST['AccountCode'] . "', '" .
-					$_POST['AccountName'] . "', '" .
-					$_POST['Group'] . "', '" .
-					$_POST['Controlled'] . "', '" .
-					$_POST['CashFlowsActivity'] . "')";
-		$ErrMsg = __('Could not add the new account code');
-		$Result = DB_query($SQL, $ErrMsg);
+		// Does the account code already exist
+		$SQL = "SELECT accountcode FROM chartmaster WHERE accountcode='" . $_POST['AccountCode'] . "'";
+		$Result = DB_query($SQL);
 
-		prnMsg(__('The new general ledger account has been added'),'success');
-		// KL RICARD update GL accounts for PTADU, PTBB, POIK, POPI, etc...
-		UpdateMultiCompanyAccounts();
+		if (DB_num_rows($Result) == 0) {
+
+			$SQL = "INSERT INTO chartmaster (
+								accountcode,
+								accountname,
+								group_,
+								controlled,
+								cashflowsactivity)
+							VALUES ('" .
+								$_POST['AccountCode'] . "', '" .
+								$_POST['AccountName'] . "', '" .
+								$_POST['Group'] . "', '" .
+								$_POST['Controlled'] . "', '" .
+								$_POST['CashFlowsActivity'] . "')";
+			$ErrMsg = __('Could not add the new account code');
+			$Result = DB_query($SQL, $ErrMsg);
+
+			prnMsg(__('The new general ledger account has been added'),'success');
+			// KL RICARD update GL accounts for PTADU, PTBB, POIK, POPI, etc...
+			UpdateMultiCompanyAccounts();
+		}
 	}
 
 	unset($_POST['Group']);
@@ -118,7 +125,7 @@ if (isset($_POST['submit'])) {
 		echo '<br />' . __('There are') . ' ' . $MyRow[0] . ' ' . __('chart details that require this account code');
 
 	} else {
-// PREVENT DELETES IF DEPENDENT RECORDS IN 'GLTrans'
+		// PREVENT DELETES IF DEPENDENT RECORDS IN 'GLTrans'
 		$SQL = "SELECT COUNT(*)
 				FROM gltrans
 				WHERE gltrans.account ='" . $SelectedAccount . "'";
@@ -163,7 +170,7 @@ if (isset($_POST['submit'])) {
 					$CancelDelete = 1;
 					prnMsg(__('Cannot delete this account because it is used as one of the tax authority accounts'), 'warn');
 				} else {
-//PREVENT DELETES IF SALES POSTINGS USE THE GL ACCOUNT
+					//PREVENT DELETES IF SALES POSTINGS USE THE GL ACCOUNT
 					$SQL = "SELECT COUNT(*) FROM salesglpostings
 						WHERE salesglcode='" . $SelectedAccount . "'
 						OR discountglcode='" . $SelectedAccount . "'";
@@ -175,7 +182,7 @@ if (isset($_POST['submit'])) {
 						$CancelDelete = 1;
 						prnMsg(__('Cannot delete this account because it is used by one of the sales GL posting interface records'), 'warn');
 					} else {
-//PREVENT DELETES IF COGS POSTINGS USE THE GL ACCOUNT
+						//PREVENT DELETES IF COGS POSTINGS USE THE GL ACCOUNT
 						$SQL = "SELECT COUNT(*)
 								FROM cogsglpostings
 								WHERE glcode='" . $SelectedAccount . "'";
@@ -188,7 +195,7 @@ if (isset($_POST['submit'])) {
 							prnMsg(__('Cannot delete this account because it is used by one of the cost of sales GL posting interface records'), 'warn');
 
 						} else {
-//PREVENT DELETES IF STOCK POSTINGS USE THE GL ACCOUNT
+							//PREVENT DELETES IF STOCK POSTINGS USE THE GL ACCOUNT
 							$SQL = "SELECT COUNT(*) FROM stockcategory
 									WHERE stockact='" . $SelectedAccount . "'
 									OR adjglact='" . $SelectedAccount . "'
@@ -203,7 +210,7 @@ if (isset($_POST['submit'])) {
 								$CancelDelete = 1;
 								prnMsg(__('Cannot delete this account because it is used by one of the stock GL posting interface records'), 'warn');
 							} else {
-//PREVENT DELETES IF STOCK POSTINGS USE THE GL ACCOUNT
+								//PREVENT DELETES IF STOCK POSTINGS USE THE GL ACCOUNT
 								$SQL= "SELECT COUNT(*) FROM bankaccounts
 								WHERE accountcode='" . $SelectedAccount ."'";
 								$ErrMsg = __('Could not test for existing bank account GL codes because');
