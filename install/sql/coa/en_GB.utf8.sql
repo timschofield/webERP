@@ -1,10 +1,12 @@
-INSERT INTO `accountsection` VALUES (1,'EQUITY, PROVISIONS AND FINANCIAL LIABILITIES ACCOUNTS ');
-INSERT INTO `accountsection` VALUES (2,'FORMATION EXPENSES AND FIXED ASSETS ACCOUNTS ');
-INSERT INTO `accountsection` VALUES (5,'FINANCIAL ACCOUNTS ');
-INSERT INTO `accountsection` VALUES (10,'Capital or branches’ assigned capital and owner’s accounts');
-INSERT INTO `accountsection` VALUES (20,'Formation expenses and similar expenses ');
-INSERT INTO `accountsection` VALUES (30,'Raw materials and consumables ');
-INSERT INTO `accountsection` VALUES (50,'Transferable securities');
+INSERT INTO `accountsection` VALUES (1,'Income');
+INSERT INTO `accountsection` VALUES (2,'Cost Of Sales');
+INSERT INTO `accountsection` VALUES (5,'Overheads');
+INSERT INTO `accountsection` VALUES (10,'Fixed Assets');
+INSERT INTO `accountsection` VALUES (15,'Inventory');
+INSERT INTO `accountsection` VALUES (20,'Amounts Receivable');
+INSERT INTO `accountsection` VALUES (25,'Cash');
+INSERT INTO `accountsection` VALUES (30,'Amounts Payable');
+INSERT INTO `accountsection` VALUES (50,'Financed By');
 
 INSERT INTO `accountgroups` VALUES ('Cost of Goods Sold',2,1,5000,'');
 INSERT INTO `accountgroups` VALUES ('Promotions',5,1,6000,'');
@@ -60,7 +62,6 @@ INSERT INTO `chartmaster` VALUES ('1780','Other Depreciable Property','Fixed Ass
 INSERT INTO `chartmaster` VALUES ('1790','Accumulated Depreciation of Other Depreciable Prop','Fixed Assets',-1);
 INSERT INTO `chartmaster` VALUES ('1800','Patents','Fixed Assets',-1);
 INSERT INTO `chartmaster` VALUES ('1850','Goodwill','Fixed Assets',-1);
-INSERT INTO `chartmaster` VALUES ('2','test','Sales',-1);
 INSERT INTO `chartmaster` VALUES ('2010','Bank Indedebtedness (overdraft)','Liabilities',-1);
 INSERT INTO `chartmaster` VALUES ('2020','Retainers or Advances on Work','Liabilities',-1);
 INSERT INTO `chartmaster` VALUES ('2050','Interest Payable','Liabilities',-1);
