@@ -400,24 +400,22 @@ or deletion of the records*/
 			ON locations.taxprovinceid=taxprovinces.taxprovinceid";
 	$Result = DB_query($SQL);
 
-	if (DB_num_rows($Result)==0) {
-		prnMsg(__('There are no locations that match up with a tax province record to display. Check that tax provinces are set up for all dispatch locations'),'error');
-	}
+	if (DB_num_rows($Result)!=0) {
 
-	echo '<table class="selection">
-			<thead>
-				<tr>
-					<th class="SortedColumn">', __('Location Code'), '</th>
-					<th class="SortedColumn">', __('Location Name'), '</th>
-					<th class="SortedColumn">', __('Tax Province'), '</th>
-					<th class="SortedColumn">', __('GL Account Code'), '</th>
-					<th class="SortedColumn">', __('Allow Invoicing'), '</th>
-					<th class="noPrint" colspan="2">&nbsp;</th>
-				</tr>
-			</thead>
-			<tbody>';
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">', __('Location Code'), '</th>
+						<th class="SortedColumn">', __('Location Name'), '</th>
+						<th class="SortedColumn">', __('Tax Province'), '</th>
+						<th class="SortedColumn">', __('GL Account Code'), '</th>
+						<th class="SortedColumn">', __('Allow Invoicing'), '</th>
+						<th class="noPrint" colspan="2">&nbsp;</th>
+					</tr>
+				</thead>
+				<tbody>';
 
-while ($MyRow = DB_fetch_array($Result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 /* warehouse management not implemented ... yet
 	if ($MyRow['managed'] == 1) {
 		$MyRow['managed'] = __('Yes');
@@ -425,18 +423,19 @@ while ($MyRow = DB_fetch_array($Result)) {
 		$MyRow['managed'] = __('No');
 	}
 */
-	echo '<tr class="striped_row">
-			<td>', $MyRow['loccode'], '</td>
-			<td>', $MyRow['locationname'], '</td>
-			<td>', $MyRow['description'], '</td>
-			<td class="number">', ($MyRow['glaccountcode']!='' ? $MyRow['glaccountcode'] : '&nbsp;'), '</td>
-			<td class="centre">', ($MyRow['allowinvoicing']==1 ? __('Yes') : __('No')), '</td>
-			<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedLocation=', $MyRow['loccode'], '">' . __('Edit') . '</a></td>
-			<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedLocation=', $MyRow['loccode'], '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this inventory location?') . '\');">' . __('Delete') . '</a></td>
-		</tr>';
+			echo '<tr class="striped_row">
+					<td>', $MyRow['loccode'], '</td>
+					<td>', $MyRow['locationname'], '</td>
+					<td>', $MyRow['description'], '</td>
+					<td class="number">', ($MyRow['glaccountcode']!='' ? $MyRow['glaccountcode'] : '&nbsp;'), '</td>
+					<td class="centre">', ($MyRow['allowinvoicing']==1 ? __('Yes') : __('No')), '</td>
+					<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedLocation=', $MyRow['loccode'], '">' . __('Edit') . '</a></td>
+					<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedLocation=', $MyRow['loccode'], '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this inventory location?') . '\');">' . __('Delete') . '</a></td>
+				</tr>';
+		}
+		//END WHILE LIST LOOP
+		echo '</tbody></table>';
 	}
-	//END WHILE LIST LOOP
-	echo '</tbody></table>';
 }
 
 //end of ifs and buts!
