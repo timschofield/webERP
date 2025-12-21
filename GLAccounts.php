@@ -68,20 +68,29 @@ if (isset($_POST['submit'])) {
 
 		/*SelectedAccount is null cos no item selected on first time round so must be adding a	record must be submitting new entries */
 
-		$SQL = "INSERT INTO chartmaster (
-					accountcode,
-					accountname,
-					group_,
-					cashflowsactivity)
-				VALUES ('" .
-					$_POST['AccountCode'] . "', '" .
-					$_POST['AccountName'] . "', '" .
-					$_POST['Group'] . "', '" .
-					$_POST['CashFlowsActivity'] . "')";
-		$ErrMsg = __('Could not add the new account code');
-		$Result = DB_query($SQL, $ErrMsg);
+		// Does the account code already exist
+		$SQL = "SELECT accountcode FROM chartmaster WHERE accountcode='" . $_POST['AccountCode'] . "'";
+		$Result = DB_query($SQL);
 
-		prnMsg(__('The new general ledger account has been added'),'success');
+		if (DB_num_rows($Result) == 0) {
+
+			$SQL = "INSERT INTO chartmaster (
+								accountcode,
+								accountname,
+								group_,
+								cashflowsactivity)
+							VALUES ('" .
+								$_POST['AccountCode'] . "', '" .
+								$_POST['AccountName'] . "', '" .
+								$_POST['Group'] . "', '" .
+								$_POST['CashFlowsActivity'] . "')";
+			$ErrMsg = __('Could not add the new account code');
+			$Result = DB_query($SQL, $ErrMsg);
+
+			prnMsg(__('The new general ledger account has been added'),'success');
+		} else {
+			prnMsg(__('The account code already exists'),'error');
+		}
 	}
 
 	unset($_POST['Group']);
