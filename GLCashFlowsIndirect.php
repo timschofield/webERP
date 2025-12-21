@@ -19,15 +19,15 @@ Parameters:
 
 function CashFlowsActivityName($Activity) {
 	// Converts the cash flow activity number to an activity text.
-	switch($Activity) {
-		case -1: return __('Not set up');
-		case 0: return __('No effect on cash flow');
-		case 1: return __('Operating activities');
-		case 2: return __('Investing activities');
-		case 3: return __('Financing activities');
-		case 4: return __('Cash or cash equivalent');
-		default: return __('Unknown');
-	}
+	return match ($Activity) {
+		'-1'      => __('Not set up'),
+		'0'       => __('No effect on cash flow'),
+		'1'       => __('Operating activities'),
+		'2'       => __('Investing activities'),
+		'3'       => __('Financing activities'),
+		'4'       => __('Cash or cash equivalent'),
+		default => __('Unknown'),
+	};
 }
 
 function colDebitCredit($Amount) {
