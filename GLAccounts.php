@@ -1,27 +1,12 @@
 <?php
 
-/* Defines the general ledger accounts */
-/* To delete, insert, or update an account. */
-
-function CashFlowsActivityName($Activity) {
-	// Converts the cash flow activity number to an activity text.
-	return match ($Activity) {
-		'-1'      => '<b>' . __('Not set up') . '</b>',
-		'0'       => __('No effect on cash flow'),
-		'1'       => __('Operating activity'),
-		'2'       => __('Investing activity'),
-		'3'       => __('Financing activity'),
-		'4'       => __('Cash or cash equivalent'),
-		default => '<b>' . __('Unknown') . '</b>',
-	};
-}
-
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('General Ledger Accounts');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLAccounts';
 include('includes/header.php');
+include('includes/GLFunctions.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/transactions.png" title="', // Icon image.
 	$Title, '" /> ', // Icon title.
