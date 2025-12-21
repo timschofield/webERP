@@ -20,12 +20,12 @@ Parameters:
 function CashFlowsActivityName($Activity) {
 	// Converts the cash flow activity number to an activity text.
 	return match ($Activity) {
-		-1      => __('Not set up'),
-		0       => __('No effect on cash flow'),
-		1       => __('Operating activities'),
-		2       => __('Investing activities'),
-		3       => __('Financing activities'),
-		4       => __('Cash or cash equivalent'),
+		'-1'      => __('Not set up'),
+		'0'       => __('No effect on cash flow'),
+		'1'       => __('Operating activities'),
+		'2'       => __('Investing activities'),
+		'3'       => __('Financing activities'),
+		'4'       => __('Cash or cash equivalent'),
 		default => __('Unknown'),
 	};
 }
