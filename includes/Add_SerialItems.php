@@ -28,7 +28,7 @@ if ( (isset($_POST['AddBatches']) AND $_POST['AddBatches']!='')) {
 
 			if ($ItemMustExist){
 				$ExistingBundleQty = ValidBundleRef($StockID, $LocationOut, $_POST['SerialNo' . $i]);
-				if ($ExistingBundleQty >0 OR ($ExistingBundleQty==1 and $IsCredit=true)){
+				if ($ExistingBundleQty >0 OR ($ExistingBundleQty==1 and $IsCredit==true)){
 					if (!isset($AddThisBundle)){
 						$AddThisBundle = true;
 					}
