@@ -87,7 +87,7 @@ if (!CreateGLTriggers($Path_To_Root, $DBType)) {
 if (!UploadData($_SESSION['Installer']['Demo'],
 			$_SESSION['Installer']['AdminPassword'],
 			$_SESSION['Installer']['AdminUser'],
-			$_SESSION['Installer']['Email'],
+			$_SESSION['Installer']['AdminEmail'],
 			$_SESSION['Installer']['Language'],
 			$_SESSION['Installer']['CoA'],
 			$_SESSION['CompanyRecord']['coyname'],

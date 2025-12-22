@@ -1354,13 +1354,13 @@ if ($_SESSION['CompanyRecord']['gllink_creditors'] == 1 AND $_SESSION['PaymentDe
 				supptrans.transno,
 				supptrans.suppreference,
 				supptrans.trandate,
-				supptrans.ovamount+supptrans.ovgst+supptrans.diffonexch-supptrans.alloc AS amount
+				supptrans.balance + supptrans.diffonexch AS amount
 			FROM supptrans
 			INNER JOIN systypes
 				ON systypes.typeid=supptrans.type
-			WHERE settled=0 AND (systypes.typeid=20 OR systypes.typeid=21 OR (systypes.typeid=22 AND (supptrans.ovamount+supptrans.ovgst+supptrans.diffonexch-supptrans.alloc)>0))
+			WHERE settled=0 AND (systypes.typeid=20 OR systypes.typeid=21 OR (systypes.typeid=22 AND (supptrans.balance + supptrans.diffonexch)>0))
 				AND supplierno='" . $_SESSION['PaymentDetail' . $identifier]->SupplierID . "'
-				AND (supptrans.ovamount+supptrans.ovgst+supptrans.diffonexch-supptrans.alloc)<>0
+				AND (supptrans.balance + supptrans.diffonexch)<>0
 			ORDER BY supptrans.trandate,
 				supptrans.transno";
 	$Result = DB_query($SQL);

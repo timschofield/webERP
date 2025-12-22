@@ -411,11 +411,10 @@ function ConvertSQLDate($DateEntry) {
 			return $DateArray[0] . '-' . $DateArray[1] . '-' . $DateArray[2];
 		}*/
 		return match($_SESSION['DefaultDateFormat']){
-			'd/m/Y' => $DateArray[2].'/'.$DateArray[1].'/'.$DateArray[0],
+			'd/m/Y' => $DateArray[2].'-'.$DateArray[1].'-'.$DateArray[0],
 			'm/d/Y' => $DateArray[1].'/'.$DateArray[2].'/'.$DateArray[0],
 			'd.m.Y' => $DateArray[2].'/'.$DateArray[1].'/'.$DateArray[0],
 			'Y/m/d' => $DateArray[0].'/'.$DateArray[1].'/'.$DateArray[2],
-			'Y-m-d' => $DateArray[0].'-'.$DateArray[1].'-'.$DateArray[2],
 			default => $DateArray[0].'/'.$DateArray[1].'/'.$DateArray[2],
 		};
 	}
@@ -472,11 +471,11 @@ function ConvertSQLDateTime($DateEntry) {
 		return $DateArray[0] . '/' . $DateArray[1] . '/' . $DateArray[2] . ' ' . $Time;
 	}*/
 	return match($_SESSION['DefaultDateFormat']){
-		'd/m/Y' => $DateArray[2].'/'.$DateArray[1].'/'.$DateArray[0] . ' ' . $Time,
-		'm/d/Y' => $DateArray[1].'/'.$DateArray[2].'/'.$DateArray[0] . ' ' . $Time,
-		'd.m.Y' => $DateArray[2].'/'.$DateArray[1].'/'.$DateArray[0] . ' ' . $Time,
-		'Y/m/d' => $DateArray[0].'/'.$DateArray[1].'/'.$DateArray[2] . ' ' . $Time,
-		default => $DateArray[0].'/'.$DateArray[1].'/'.$DateArray[2] . ' ' . $Time,
+		'd/m/Y' => $DateArray[2].'-'.$DateArray[1].'-'.$DateArray[0],
+		'm/d/Y' => $DateArray[1].'/'.$DateArray[2].'/'.$DateArray[0],
+		'd.m.Y' => $DateArray[2].'/'.$DateArray[1].'/'.$DateArray[0],
+		'Y/m/d' => $DateArray[0].'/'.$DateArray[1].'/'.$DateArray[2],
+		default => $DateArray[0].'/'.$DateArray[1].'/'.$DateArray[2],
 	};
 
 } // end function ConvertSQLDate
