@@ -23,6 +23,9 @@ if (isset($_GET['StockID'])) {
 	$StockID = '';
 }
 
+if (empty($_SESSION['ItemDescriptionLanguages']) or $_SESSION['ItemDescriptionLanguages'] == '') {
+	$_SESSION['ItemDescriptionLanguages'] = ',';
+}
 $ItemDescriptionLanguagesArray = explode(',', $_SESSION['ItemDescriptionLanguages']); //WARNING: if the last character is a ",", there are n+1 languages.
 $HasNext = true;
 $HasPrev = true;
