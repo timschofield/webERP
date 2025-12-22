@@ -350,8 +350,9 @@ function EnsureGLEntriesBalance($TransType, $TransTypeNo) {
 							AND typeno = '" . $TransTypeNo . "'");
 	$MyRow = DB_fetch_row($Result);
 	$Difference = $MyRow[0];
+	$Tolerance = pow(10, -$_SESSION['CompanyRecord']['decimalplaces']); // tolerance based on functional currency precision
 	if (abs($Difference) != 0) {
-		if (abs($Difference) > 0.1) {
+		if (abs($Difference) > $Tolerance) {
 			prnMsg(__('The general ledger entries created do not balance. See your system administrator'), 'error');
 			DB_Txn_Rollback();
 		} else {
