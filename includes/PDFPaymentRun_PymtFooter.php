@@ -174,6 +174,5 @@ $YPos -= $LineHeight;
 
 if ($YPos < $Bottom_Margin + $LineHeight){
 	$PageNumber++;
-	# @bug - file not found?
 	include('PDFPaymentRunPageHeader.php');
 }
