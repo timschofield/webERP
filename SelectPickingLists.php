@@ -49,7 +49,7 @@ if (isset($_POST['ResetPart'])) {
 	unset($SelectedStockItem);
 }
 
-if (isset($OrderNumber) and $OrderNumber != '') {
+if ($OrderNumber != '') {
 	if (!is_numeric($OrderNumber)) {
 		prnMsg(__('The Order Number entered') . ' <u>' . __('MUST') . '</u> ' . __('be numeric'), 'error');
 		unset($OrderNumber);

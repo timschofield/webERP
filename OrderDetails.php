@@ -4,15 +4,15 @@ require(__DIR__ . '/includes/session.php');
 
 $_GET['OrderNumber'] = (int)$_GET['OrderNumber'];
 
-if (isset($_GET['OrderNumber'])) {
+/*if (isset($_GET['OrderNumber'])) {*/
 	$Title = __('Reviewing Sales Order Number') . ' ' . $_GET['OrderNumber'];
-} else {
+/*} else {
 	include('includes/header.php');
 	echo '<br /><br /><br />';
 	prnMsg(__('This page must be called with a sales order number to review') . '.<br />' . __('i.e.') . ' http://????/OrderDetails.php?OrderNumber=<i>xyz</i><br />' . __('Click on back') . '.','error');
 	include('includes/footer.php');
 	exit();
-}
+}*/
 
 $ViewTopic = 'SalesOrders';
 $BookMark = '';
