@@ -23,6 +23,9 @@ if (isset($_GET['StockID'])) {
 	$StockID = '';
 }
 
+if (empty($_SESSION['ItemDescriptionLanguages']) or $_SESSION['ItemDescriptionLanguages'] == '') {
+	$_SESSION['ItemDescriptionLanguages'] = ',';
+}
 $ItemDescriptionLanguagesArray = explode(',', $_SESSION['ItemDescriptionLanguages']); //WARNING: if the last character is a ",", there are n+1 languages.
 $HasNext = true;
 $HasPrev = true;
@@ -988,11 +991,7 @@ if (!isset($StockID) or $StockID == '' or isset($_POST['UpdateCategories'])) {
 		</field>';
 }
 
-if (isset($_POST['Description'])) {
-	$Description = $_POST['Description'];
-} else {
-	$Description = '';
-}
+$Description = $_POST['Description'] ?? '';
 echo '<field>
 		<label for="Description">' . __('Part Description') . ' (' . __('short') . '):</label>
 		<input ' . (in_array('Description', $Errors) ? 'class="inputerror"' : '') . ' type="text" ' . ($New == 0 ? 'autofocus="autofocus"' : '') . ' name="Description" required="required" size="52" maxlength="50" value="' . stripslashes($Description) . '" />
@@ -1294,21 +1293,13 @@ echo '<field>
 		<input type="text" class="number" name="DecimalPlaces" size="1" maxlength="1" value="' . $_POST['DecimalPlaces'] . '" /></td>
 	</field>';
 
-if (isset($_POST['BarCode'])) {
-	$BarCode = $_POST['BarCode'];
-} else {
-	$BarCode = '';
-}
+$BarCode = $_POST['BarCode'] ?? '';
 echo '<field>
 		<label for="BarCode">' . __('Bar Code') . ':</label>
 		<input ' . (in_array('BarCode', $Errors) ? 'class="inputerror"' : '') . '  type="text" name="BarCode" size="22" maxlength="20" value="' . $BarCode . '" />
 	</field>';
 
-if (isset($_POST['DiscountCategory'])) {
-	$DiscountCategory = $_POST['DiscountCategory'];
-} else {
-	$DiscountCategory = '';
-}
+$DiscountCategory = $_POST['DiscountCategory'] ?? '';
 echo '<field>
 		<label for="DiscountCategory">' . __('Discount Category') . ':</label>
 		<input type="text" name="DiscountCategory" size="2" maxlength="2" value="' . $DiscountCategory . '" />
