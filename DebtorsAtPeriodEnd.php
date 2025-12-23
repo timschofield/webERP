@@ -5,6 +5,7 @@ require(__DIR__ . '/includes/session.php');
 use Dompdf\Dompdf;
 
 include('includes/SetDomPDFOptions.php');
+include('includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
@@ -85,7 +86,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$Balance = $DebtorBalances['balance'] - $DebtorBalances['afterdatetrans'] + $DebtorBalances['afterdatediffonexch'] ;
 		$FXBalance = $DebtorBalances['fxbalance'] - $DebtorBalances['fxafterdatetrans'];
 
-		if (abs($Balance)>0.009 OR ABS($FXBalance)>0.009) {
+		if (ABS($Balance) > CurrencyTolerance($_SESSION['CompanyRecord']['currencydefault'])
+			OR ABS($FXBalance) > CurrencyTolerance($DebtorBalances['currency'])) {
 
 			$DisplayBalance = locale_number_format($DebtorBalances['balance'] - $DebtorBalances['afterdatetrans'],$DebtorBalances['decimalplaces']);
 			$DisplayFXBalance = locale_number_format($DebtorBalances['fxbalance'] - $DebtorBalances['fxafterdatetrans'],$DebtorBalances['decimalplaces']);

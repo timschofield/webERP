@@ -483,7 +483,7 @@ if ((isset($_SESSION['Items' . $identifier])) OR isset($NewItem)) {
 				prnMsg(__('The item could not be updated because you are attempting to set the quantity returned to less than 0 or the price less than 0 or the discount more than 100% or less than 0%'),'warn');
 			} elseif ($ReturnItemLine->Quantity !=$Quantity
 						OR $ReturnItemLine->Price != $Price
-						OR abs($ReturnItemLine->DiscountPercent -$DiscountPercentage/100) >0.001
+						OR abs($ReturnItemLine->DiscountPercent -$DiscountPercentage/100) > CurrencyTolerance($_SESSION['Items' . $identifier]->DefaultCurrency)
 						OR $ReturnItemLine->Narrative != $Narrative
 						OR $ReturnItemLine->ItemDue != $_POST['ItemDue_' . $ReturnItemLine->LineNumber]
 						OR $ReturnItemLine->POLine != $_POST['POLine_' . $ReturnItemLine->LineNumber]) {

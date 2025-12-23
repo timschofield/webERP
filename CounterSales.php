@@ -520,7 +520,7 @@ if ((isset($_SESSION['Items'.$identifier])) OR isset($NewItem)) {
 				prnMsg(__('The item could not be updated because you are attempting to set the quantity ordered to less than 0 or the price less than 0 or the discount more than 100% or less than 0%'),'warn');
 			} elseif ($OrderLine->Quantity !=$Quantity
 						OR $OrderLine->Price != $Price
-						OR abs($OrderLine->DiscountPercent -$DiscountPercentage/100) >0.001
+						OR abs($OrderLine->DiscountPercent -$DiscountPercentage/100) > CurrencyTolerance($_SESSION['Items' . $identifier]->DefaultCurrency)
 						OR $OrderLine->Narrative != $Narrative
 						OR $OrderLine->ItemDue != $_POST['ItemDue_' . $OrderLine->LineNumber]
 						OR $OrderLine->POLine != $_POST['POLine_' . $OrderLine->LineNumber]) {

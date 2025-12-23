@@ -1,6 +1,9 @@
 <?php
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
+
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat\Wizard\Currency;
+
 include('includes/DefineJournalClass.php');
 
 require(__DIR__ . '/includes/session.php');
@@ -611,7 +614,8 @@ echo '</table>
 	</tr>
 	</table>';
 
-if (abs($_SESSION['JournalDetail']->JournalTotal) < 0.001 and $_SESSION['JournalDetail']->GLItemCounter > 0) {
+if (abs($_SESSION['JournalDetail']->JournalTotal) < CurrencyTolerance($_SESSION['CompanyRecord']['currencydefault']) 
+	and $_SESSION['JournalDetail']->GLItemCounter > 0) {
 	echo '<div class="centre">
 			<input type="submit" name="CommitBatch" value="', __('Accept and Process Journal') , '" /><br />
 			<input type="submit" name="ConfimSave" value="', __('Save as a template') , '" />

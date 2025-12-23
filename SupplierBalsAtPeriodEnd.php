@@ -87,7 +87,9 @@ if (isset($_POST['PrintPDF'])
 		$Balance = $SupplierBalances['balance'] - $SupplierBalances['afterdatetrans'] + $SupplierBalances['afterdatediffonexch'];
 		$FXBalance = $SupplierBalances['fxbalance'] - $SupplierBalances['fxafterdatetrans'];
 
-		if (ABS($Balance) > 0.009 || ABS($FXBalance) > 0.009) {
+		if (ABS($Balance) > CurrencyTolerance($_SESSION['CompanyRecord']['currencydefault'])
+			or ABS($FXBalance) > CurrencyTolerance($SupplierBalances['currency'])) {
+
 			$DisplayBalance = locale_number_format($Balance, $_SESSION['CompanyRecord']['decimalplaces']);
 			$DisplayFXBalance = locale_number_format($FXBalance, $SupplierBalances['currdecimalplaces']);
 

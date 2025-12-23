@@ -51,7 +51,10 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCust']) and $_POST['FromCust
 
 	// Settle old transactions
 	$ErrMsg = __('There was a problem settling the old transactions.');
-	$SQL = "UPDATE debtortrans SET settled=1 WHERE ABS(debtortrans.balance)<0.009";
+	$SQL = "UPDATE debtortrans 
+			SET settled=1 
+			WHERE ABS(debtortrans.balance) < " . CurrencyTolerance($_SESSION['CompanyRecord']['currencydefault']) . "
+			AND debtortrans.settled = 0";
 	$SettleAsNec = DB_query($SQL, $ErrMsg);
 
 	// Get customers in range
