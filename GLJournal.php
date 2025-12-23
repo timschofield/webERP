@@ -1,9 +1,6 @@
 <?php
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-
-use PhpOffice\PhpSpreadsheet\Style\NumberFormat\Wizard\Currency;
-
 include('includes/DefineJournalClass.php');
 
 require(__DIR__ . '/includes/session.php');
