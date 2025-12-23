@@ -82,7 +82,7 @@ if (isset($_POST['PeriodTo']) and $_POST['PeriodTo']-$_POST['PeriodFrom']+1 > 12
 	$_POST['NewReport'] = 'on';
 	prnMsg(__('The period should be 12 months or less in duration. Please select an alternative period range.'), 'error');
 }
-if (isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !($_POST['ShowFinancialPosition']) AND !($_POST['ShowComprehensiveIncome']) AND !($_POST['ShowChangesInEquity']) AND !($_POST['ShowCashFlows']) AND !($_POST['ShowNotes'])) {
+if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo']) and !isset($_POST['ShowFinancialPosition']) and !isset($_POST['ShowComprehensiveIncome']) and !isset($_POST['ShowChangesInEquity']) and !isset($_POST['ShowCashFlows']) and !isset($_POST['ShowNotes'])) {
 	// No financial statement was selected.
 	$_POST['NewReport'] = 'on';
 	prnMsg(__('You must select at least one financial statement. Please select financial statements.'), 'error');
@@ -127,8 +127,9 @@ if (isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRe
 	}
 	if ($_POST['ShowChangesInEquity']) {
 		echo $PageBreak;
-		/// @bug this file does not exist
-		include('GLChangesInEquity.php');
+		if (file_exists('GLChangesInEquity.php')) {// Provisional, to be replaced by a rights verification.
+			include('GLChangesInEquity.php');
+		}
 	}
 	if ($_POST['ShowCashFlows']) {
 		echo $PageBreak;
@@ -136,8 +137,9 @@ if (isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRe
 	}
 	if ($_POST['ShowNotes']) {
 		echo $PageBreak;
-		/// @bug this file does not exist
-		include('GLNotes.php');
+		if (file_exists('GLNotes.php')) {// Provisional, to be replaced by a rights verification.
+			include('GLNotes.php');
+		}
 	}
 
 	echo // Shows a form to select an action after the report was shown:
@@ -217,6 +219,21 @@ if (isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRe
 	if (!isset($_POST['Period'])) {
 		$_POST['Period'] = '';
 	}
+	if (!isset($_POST['ShowBudget'])) {
+		$_POST['ShowBudget'] = '';
+	}
+	if (!isset($_POST['ShowZeroBalance'])) {
+		$_POST['ShowZeroBalance'] = '';
+	}
+	if (!isset($_POST['ShowFinancialPosition'])) {
+		$_POST['ShowFinancialPosition'] = '';
+	}
+	if (!isset($_POST['ShowComprehensiveIncome'])) {
+		$_POST['ShowComprehensiveIncome'] = '';
+	}
+	if (!isset($_POST['ShowCashFlows'])) {
+		$_POST['ShowCashFlows'] = '';
+	}
 	echo '<field>
 				<label for="Period">', '<b>' . __('OR') . ' </b>' . __('Select Period'), '</label>
 				', ReportPeriodList($_POST['Period'], array('l', 't')),'
@@ -273,8 +290,8 @@ if (isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRe
 	echo
 		'</fieldset>
 			<div class="centre">
-				<button name="Submit" type="submit" value="', __('Submit'), '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', __('Submit'), '</button>
-				<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', __('Return'), '</button>
+				<input name="Submit" type="submit" value="', __('Submit'), '" />
+				<input onclick="window.location=\'index.php?Application=GL\'" type="reset" value="', __('Return'), '" />
 			</div>
 		</form>';
 }
