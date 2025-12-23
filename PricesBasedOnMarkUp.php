@@ -7,6 +7,8 @@ $ViewTopic = 'Sales';
 $BookMark = '';
 include('includes/header.php');
 
+include('includes/SQL_CommonFunctions.php');
+
 if (isset($_POST['PriceStartDate'])){$_POST['PriceStartDate'] = ConvertSQLDate($_POST['PriceStartDate']);}
 if (isset($_POST['PriceEndDate'])){$_POST['PriceEndDate'] = ConvertSQLDate($_POST['PriceEndDate']);}
 
@@ -147,7 +149,7 @@ echo '</select>
 	</field>';
 
 if (!isset($_POST['RoundingFactor'])){
-	$_POST['RoundingFactor']=0.01;
+	$_POST['RoundingFactor']=CurrencyTolerance($_POST['CurrCode']);
 }
 
 if (!isset($_POST['PriceStartDate'])) {
@@ -161,7 +163,7 @@ if (!isset($_POST['PriceEndDate'])) {
 echo '<field>
 		<label for="RoundingFactor">' . __('Rounding Factor') . ':</label>
 		<input type="text" class="number" name="RoundingFactor" size="6" title="" maxlength="6" value="' . $_POST['RoundingFactor'] . '" />
-		<fieldhelp>' . __('To round to the nearest cent enter 0.01. To round to the nearest whole dollar enter 1. To round to the nearest 5 dollars enter 5 etc') . '</fieldhelp>
+		<fieldhelp>' . __('To round to the smallest amount enter') . ' ' . CurrencyTolerance($_POST['CurrCode']) . '. ' . __('To round to the nearest whole dollar enter 1. To round to the nearest 5 dollars enter 5 etc') . '</fieldhelp>
 	</field>';
 
 echo '<field>

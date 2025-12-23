@@ -350,9 +350,8 @@ function EnsureGLEntriesBalance($TransType, $TransTypeNo) {
 							AND typeno = '" . $TransTypeNo . "'");
 	$MyRow = DB_fetch_row($Result);
 	$Difference = $MyRow[0];
-	$Tolerance = pow(10, -$_SESSION['CompanyRecord']['decimalplaces']); // tolerance based on functional currency precision
 	if (abs($Difference) != 0) {
-		if (abs($Difference) > $Tolerance) {
+		if (abs($Difference) > CurrencyTolerance($_SESSION['CompanyRecord']['currencydefault'])) {
 			prnMsg(__('The general ledger entries created do not balance. See your system administrator'), 'error');
 			DB_Txn_Rollback();
 		} else {
@@ -446,4 +445,17 @@ function PettyCashTabCurrentBalance($Tab) {
 		$Balance = $MyRow['balance'];
 	}
 	return $Balance;
+}
+
+function CurrencyTolerance($Currency = '') {
+	if (($Currency == $_SESSION['CompanyRecord']['currencydefault']) 
+		or ($Currency != '')) {
+		// it is the home currency
+		return pow(10, -$_SESSION['CompanyRecord']['decimalplaces']);
+	} else {
+		// it is a foreign currency so get its decimal places
+		$Result = DB_query("SELECT decimalplaces FROM currencies WHERE currency = '" . $Currency . "'");
+		$MyRow = DB_fetch_row($Result);
+		return pow(10, -$MyRow[0]);
+	}
 }

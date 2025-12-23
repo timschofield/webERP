@@ -490,13 +490,13 @@ if ((isset($_SESSION['Items'.$identifier])) OR isset($NewItem)) {
 
 			$Quantity = round(filter_number_format($_POST['Quantity_' . $OrderLine->LineNumber]),$OrderLine->DecimalPlaces);
 
-				if (ABS($OrderLine->Price - filter_number_format($_POST['Price_' . $OrderLine->LineNumber]))>0.01) {
+				if (ABS($OrderLine->Price - filter_number_format($_POST['Price_' . $OrderLine->LineNumber])) > CurrencyTolerance($_SESSION['Items' . $identifier]->DefaultCurrency)) {
 					/*There is a new price being input for the line item */
 
 					$Price = filter_number_format($_POST['Price_' . $OrderLine->LineNumber]);
 					$_POST['GPPercent_' . $OrderLine->LineNumber] = (($Price*(1-(filter_number_format($_POST['Discount_' . $OrderLine->LineNumber])/100))) - $OrderLine->StandardCost*$ExRate)/($Price *(1-filter_number_format($_POST['Discount_' . $OrderLine->LineNumber]))/100);
 
-				} elseif (ABS($OrderLine->GPPercent - filter_number_format($_POST['GPPercent_' . $OrderLine->LineNumber]))>=0.01) {
+				} elseif (ABS($OrderLine->GPPercent - filter_number_format($_POST['GPPercent_' . $OrderLine->LineNumber])) >= CurrencyTolerance($_SESSION['Items' . $identifier]->DefaultCurrency)) {
 					/* A GP % has been input so need to do a recalculation of the price at this new GP Percentage */
 
 					prnMsg(__('Recalculated the price from the GP % entered - the GP % was') . ' ' . $OrderLine->GPPercent . '  the new GP % is ' . filter_number_format($_POST['GPPercent_' . $OrderLine->LineNumber]),'info');
@@ -982,7 +982,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 		prnMsg(__('There are no lines on this sale. Please enter lines to invoice first'),'error');
 		$InputError = true;
 	}
-	if (abs(filter_number_format($_POST['AmountPaid']) -(round($_SESSION['Items'.$identifier]->total+filter_number_format($_POST['TaxTotal']),$_SESSION['Items'.$identifier]->CurrDecimalPlaces)))>=0.01) {
+	if (abs(filter_number_format($_POST['AmountPaid']) -(round($_SESSION['Items'.$identifier]->total+filter_number_format($_POST['TaxTotal']),$_SESSION['Items'.$identifier]->CurrDecimalPlaces))) >= CurrencyTolerance($_SESSION['Items' . $identifier]->DefaultCurrency)) {
 		prnMsg(__('The amount entered as payment does not equal the amount of the invoice. Please ensure the customer has paid the correct amount and re-enter'),'error');
 		$InputError = true;
 	}

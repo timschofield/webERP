@@ -451,13 +451,13 @@ if ((isset($_SESSION['Items' . $identifier])) OR isset($NewItem)) {
 
 			$Quantity = round(filter_number_format($_POST['Quantity_' . $ReturnItemLine->LineNumber]),$ReturnItemLine->DecimalPlaces);
 
-				if (ABS($ReturnItemLine->Price - filter_number_format($_POST['Price_' . $ReturnItemLine->LineNumber]))>0.01) {
+				if (ABS($ReturnItemLine->Price - filter_number_format($_POST['Price_' . $ReturnItemLine->LineNumber])) > CurrencyTolerance($_SESSION['Items' . $identifier]->DefaultCurrency)) {
 					/*There is a new price being input for the line item */
 
 					$Price = filter_number_format($_POST['Price_' . $ReturnItemLine->LineNumber]);
 					$_POST['GPPercent_' . $ReturnItemLine->LineNumber] = (($Price*(1-(filter_number_format($_POST['Discount_' . $ReturnItemLine->LineNumber])/100))) - $ReturnItemLine->StandardCost*$ExRate)/($Price *(1-filter_number_format($_POST['Discount_' . $ReturnItemLine->LineNumber]))/100);
 
-				} elseif (ABS($ReturnItemLine->GPPercent - filter_number_format($_POST['GPPercent_' . $ReturnItemLine->LineNumber]))>=0.01) {
+				} elseif (ABS($ReturnItemLine->GPPercent - filter_number_format($_POST['GPPercent_' . $ReturnItemLine->LineNumber])) >= CurrencyTolerance($_SESSION['Items' . $identifier]->DefaultCurrency)) {
 					/* A GP % has been input so need to do a recalculation of the price at this new GP Percentage */
 
 
@@ -866,7 +866,7 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != '') {
 		prnMsg(__('There are no lines on this return. Please enter lines to return first'),'error');
 		$InputError = true;
 	}
-	if (abs(filter_number_format($_POST['AmountPaid']) -round($_SESSION['Items' . $identifier]->total+filter_number_format($_POST['TaxTotal']),$_SESSION['Items' . $identifier]->CurrDecimalPlaces))>=0.01) {
+	if (abs(filter_number_format($_POST['AmountPaid']) -round($_SESSION['Items' . $identifier]->total+filter_number_format($_POST['TaxTotal']),$_SESSION['Items' . $identifier]->CurrDecimalPlaces)) >= CurrencyTolerance($_SESSION['Items' . $identifier]->DefaultCurrency)) {
 		prnMsg(__('The amount entered as payment to the customer does not equal the amount of the return. Please correct amount and re-enter'),'error');
 		$InputError = true;
 	}

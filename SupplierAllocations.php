@@ -16,12 +16,13 @@
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefineSuppAllocsClass.php');
-
 require(__DIR__ . '/includes/session.php');
 $Title = __('Supplier Payment') . '/' . __('Credit Note Allocations');
 $ViewTopic = 'ARTransactions';// Filename in ManualContents.php's TOC./* RChacon: To do ManualAPInquiries.html from ManualARInquiries.html */
 $BookMark = 'SupplierAllocations';
 include('includes/header.php');
+
+include('includes/SQL_CommonFunctions.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/transactions.png" title="', // Icon image.
@@ -88,7 +89,7 @@ if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 	} /*end of the loop to set the new allocation amounts,
 	recalc diff on exchange and add up total allocations */
 
-	if ($TotalAllocated + $_SESSION['Alloc']->TransAmt > 0.005){
+	if ($TotalAllocated + $_SESSION['Alloc']->TransAmt > CurrencyTolerance($_SESSION['Alloc']->Currency)){
 		echo '<br />';
 		prnMsg(__('These allocations cannot be processed because the amount allocated is more than the amount of the') . ' ' . $_SESSION['Alloc']->TransTypeName  . ' ' . __('being allocated') . '<br />' . __('Total allocated') . ' = ' . locale_number_format($TotalAllocated,$_SESSION['Alloc']->CurrDecimalPlaces) . ' ' . __('and the total amount of the Credit/payment was') . ' ' . locale_number_format(-$_SESSION['Alloc']->TransAmt,$_SESSION['Alloc']->CurrDecimalPlaces) ,'error');
 		echo '<br />';
@@ -142,7 +143,7 @@ if (isset($_POST['UpdateDatabase'])){
 				     }
 				     $NewAllocTotal = $AllocnItem->PrevAlloc + $AllocnItem->AllocAmt;
 
-				     if (abs($NewAllocTotal-$AllocnItem->TransAmount) < 0.01){
+				     if (abs($NewAllocTotal-$AllocnItem->TransAmount) < CurrencyTolerance($_SESSION['Alloc']->Currency)){
 					     $Settled = 1;
 				     } else {
 					     $Settled = 0;
@@ -164,7 +165,7 @@ if (isset($_POST['UpdateDatabase'])){
 		/*Now update the payment or credit note with the amount allocated
 		and the new diff on exchange */
 
-		if (abs($TotalAllocated + $_SESSION['Alloc']->TransAmt) < 0.01){
+		if (abs($TotalAllocated + $_SESSION['Alloc']->TransAmt) < CurrencyTolerance($_SESSION['Alloc']->Currency)){
 		   $Settled = 1;
 		} else {
 		   $Settled = 0;
@@ -297,7 +298,8 @@ if (isset($_GET['AllocTrans'])){
 				(supptrans.ovamount+supptrans.ovgst) AS total,
 				supptrans.diffonexch,
 				supptrans.alloc,
-				currencies.decimalplaces
+				currencies.decimalplaces,
+				currencies.currabrev
 		    FROM supptrans INNER JOIN systypes
 			ON supptrans.type = systypes.typeid
 			INNER JOIN suppliers
@@ -325,6 +327,7 @@ if (isset($_GET['AllocTrans'])){
 	$_SESSION['Alloc']->PrevDiffOnExch = $MyRow['diffonexch'];
 	$_SESSION['Alloc']->TransDate = ConvertSQLDate($MyRow['trandate']);
 	$_SESSION['Alloc']->CurrDecimalPlaces = $MyRow['decimalplaces'];
+	$_SESSION['Alloc']->Currency = $MyRow['currabrev'];
 
 	/* Now populate the array of possible (and previous actual) allocations for this supplier */
 	/*First get the transactions that have outstanding balances ie Total-Alloc >0 */
@@ -341,7 +344,7 @@ if (isset($_GET['AllocTrans'])){
 			FROM supptrans INNER JOIN systypes
 			ON supptrans.type = systypes.typeid
 			WHERE supptrans.settled=0
-			AND abs(ovamount+ovgst-alloc)>0.009
+			AND abs(ovamount+ovgst-alloc) > " . CurrencyTolerance($_SESSION['Alloc']->Currency) . "
 			AND supplierno='" . $_SESSION['Alloc']->SupplierID . "'";
 
 	$ErrMsg = __('There was a problem retrieving the transactions available to allocate to');
@@ -461,7 +464,7 @@ if (isset($_POST['AllocTrans'])){
 			<td>' . $AllocnItem->SuppRef . '</td>
 			<td class="number">' . locale_number_format($AllocnItem->TransAmount,$_SESSION['Alloc']->CurrDecimalPlaces) . '</td>
 			<td class="number">' . locale_number_format($YetToAlloc,$_SESSION['Alloc']->CurrDecimalPlaces) . '<input type="hidden" name="YetToAlloc' . $Counter . '" value="' . $YetToAlloc . '" /></td>';
-		 if (ABS($AllocnItem->AllocAmt-$YetToAlloc) < 0.01){
+		 if (ABS($AllocnItem->AllocAmt-$YetToAlloc) < CurrencyTolerance($_SESSION['Alloc']->Currency)){
 			echo '<td class="number"><input type="checkbox" name="All' .  $Counter . '" checked="checked" />';
 	    } else {
 	    	echo '<td class="number"><input type="checkbox" name="All' .  $Counter . '" />';

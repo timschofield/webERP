@@ -5,6 +5,7 @@ require(__DIR__ . '/includes/session.php');
 use Dompdf\Dompdf;
 
 include('includes/SetDomPDFOptions.php');
+include('includes/SQL_CommonFunctions.php');
 
 $ViewTopic = 'AccountsPayable';
 $BookMark = 'AgedCreditors';
@@ -54,7 +55,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])
 						paymentterms.terms,
 						paymentterms.daysbeforedue,
 						paymentterms.dayinfollowingmonth
-				HAVING ROUND(ABS(SUM(supptrans.balance)), currencies.decimalplaces) > 0";
+				HAVING ROUND(ABS(SUM(supptrans.balance)), currencies.decimalplaces) > " . CurrencyTolerance($_POST['Currency']) . "";
 
 	} else {
 
@@ -197,7 +198,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])
 							ON suppliers.supplierid = supptrans.supplierno
 						LEFT JOIN systypes
 							ON systypes.typeid = supptrans.type
-						WHERE ABS(supptrans.balance) >0.009
+						WHERE ABS(supptrans.balance) > " . CurrencyTolerance($_POST['Currency']) . "
 							AND supptrans.settled = 0
 							AND supptrans.supplierno = '" . $AgedAnalysis["supplierid"] . "'";
 

@@ -10,6 +10,7 @@ $BookMark = 'BankAccounts';
 include('includes/header.php');
 
 include('includes/GLFunctions.php');
+include('includes/SQL_CommonFunctions.php');
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -185,7 +186,8 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])) {
 				WHERE banktrans.type = systypes.typeid
 					AND banktrans.bankact = '" . $_POST['BankAccount'] . "'
 					AND amount < 0
-					AND ABS((amount / exrate) - amountcleared) > 0.009 ORDER BY transdate";
+					AND ABS((amount / exrate) - amountcleared) >  " . CurrencyTolerance($CurrencyRow['currcode']) . "
+					ORDER BY transdate";
 
 	$ErrMsg = __('The unpresented cheques could not be retrieved by the SQL because');
 	$UPChequesResult = DB_query($SQL, $ErrMsg);
@@ -235,7 +237,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])) {
 				ON banktrans.type = systypes.typeid
 			WHERE banktrans.bankact = '" . $_POST['BankAccount'] . "'
 				AND amount > 0
-				AND ABS((amount / exrate) - amountcleared) > 0.009
+				AND ABS((amount / exrate) - amountcleared) >  " . CurrencyTolerance($CurrencyRow['currcode']) . "
 			ORDER BY transdate";
 
 	$ErrMsg = __('The uncleared deposits could not be retrieved by the SQL because');

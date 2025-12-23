@@ -9,6 +9,8 @@ $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLAccountInquiry';
 include('includes/header.php');
 
+include('includes/SQL_CommonFunctions.php');
+
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/transactions.png" title="', // Icon image.
 __('General Ledger Account Inquiry') , '" /> ', // Icon title.
 __('General Ledger Account Inquiry') , '</p>'; // Page title.
@@ -281,7 +283,7 @@ if (isset($_POST['Show'])) {
 						</tr>';
 				$IntegrityReport .= '<br />' . __('Period') . ': ' . $PeriodNo . __('Account movement per transaction') . ': ' . locale_number_format($PeriodTotal, $_SESSION['CompanyRecord']['decimalplaces']) . ' ' . __('Movement per GL Totals record') . ': ' . locale_number_format($PeriodActual, $_SESSION['CompanyRecord']['decimalplaces']) . ' ' . __('Period difference') . ': ' . locale_number_format($PeriodTotal - $PeriodActual, 3);
 
-				if (ABS($PeriodTotal - $PeriodActual) > 0.01) {
+				if (ABS($PeriodTotal - $PeriodActual) > CurrencyTolerance($_SESSION['CompanyRecord']['currencydefault'])) {
 					$ShowIntegrityReport = true;
 				}
 			}
