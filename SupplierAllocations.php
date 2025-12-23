@@ -29,8 +29,6 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	__('Supplier Allocations'), '" /> ', // Icon title.
 	__('Supplier Allocations'), '</p>';// Page title.
 
-include('includes/SQL_CommonFunctions.php');
-
 if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 
 	if (!isset($_SESSION['Alloc'])){
