@@ -16,6 +16,7 @@ class Allocation {
 	var $TransAmt; /*Total amount of the transaction in FX */
 	var $PrevDiffOnExch; /*The difference on exchange before this allocation */
 	var $CurrDecimalPlaces; /*The number of decimal places to display for the currency being allocated */
+	var $Currency; /*The currency being allocated */
 
 	function __construct(){
 		$this->Allocs = array();

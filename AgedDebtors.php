@@ -7,6 +7,7 @@ require(__DIR__ . '/includes/session.php');
 use Dompdf\Dompdf;
 
 include('includes/SetDomPDFOptions.php');
+include('includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])
 	and isset($_POST['FromCriteria'])
@@ -90,10 +91,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])
 					holdreasons.dissallowinvoices,
 					holdreasons.reasondescription
 				HAVING
-					ROUND(ABS(SUM(debtortrans.balance)),currencies.decimalplaces) > 0";
+					ROUND(ABS(SUM(debtortrans.balance)),currencies.decimalplaces) > " . CurrencyTolerance($_SESSION['CompanyRecord']['currencydefault']) . "";
 
 	} elseif ($_POST['All_Or_Overdues']=='OverduesOnly') {
-
 		$SQL = "SELECT debtorsmaster.debtorno,
 				debtorsmaster.name,
 				currencies.currency,
@@ -171,7 +171,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])
 								THEN debtortrans.balance
 								ELSE 0 END
 					END
-				) > 0.01";
+				) > " . CurrencyTolerance($_SESSION['CompanyRecord']['currencydefault']) . "";
 
 	} elseif ($_POST['All_Or_Overdues']=='HeldOnly') {
 
@@ -244,7 +244,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])
 					debtorsmaster.creditlimit,
 					holdreasons.dissallowinvoices,
 					holdreasons.reasondescription
-				HAVING ABS(SUM(debtortrans.balance)) >0.005";
+				HAVING ABS(SUM(debtortrans.balance)) >" . CurrencyTolerance($_SESSION['CompanyRecord']['currencydefault']) . "";
 	}
 	$ErrMsg = __('The customer details could not be retrieved');
 	$CustomerResult = DB_query($SQL, $ErrMsg);
@@ -360,7 +360,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])
 						AND debtorsmaster.paymentterms = paymentterms.termsindicator
 						AND debtorsmaster.debtorno = debtortrans.debtorno
 						AND debtortrans.debtorno = '" . $AgedAnalysis['debtorno'] . "'
-						AND ABS(debtortrans.balance)>0.004";
+						AND ABS(debtortrans.balance)> " . CurrencyTolerance($_SESSION['CompanyRecord']['currencydefault']) . "";
 
 			if ($_SESSION['SalesmanLogin'] !=  '') {
 				$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";

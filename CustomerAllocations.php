@@ -72,7 +72,7 @@ if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 
 	}
 
-	if ($TotalAllocated + $_SESSION['Alloc']->TransAmt > 0.008) {
+	if ($TotalAllocated + $_SESSION['Alloc']->TransAmt > CurrencyTolerance($_SESSION['Alloc']->Currency)) {
 		prnMsg(__('Allocation could not be processed because the amount allocated is more than the').' ' . $_SESSION['Alloc']->TransTypeName  . ' '.__('being allocated') . '<br />' . __('Total allocated').' = ' . $TotalAllocated . ' '.__('and the total amount of the') .' ' . $_SESSION['Alloc']->TransTypeName  . ' ' . __('was').' ' . -$_SESSION['Alloc']->TransAmt,'error');
 		$InputError=1;
 	}
@@ -114,7 +114,7 @@ if (isset($_POST['UpdateDatabase'])) {
 			}
 			$NewAllocTotal = $AllocnItem->PrevAlloc + $AllocnItem->AllocAmt;
 			$AllAllocations = $AllAllocations + $AllocnItem->AllocAmt;
-			$Settled = (abs($NewAllocTotal-$AllocnItem->TransAmount) < 0.005) ? 1 : 0;
+			$Settled = (abs($NewAllocTotal-$AllocnItem->TransAmount) < CurrencyTolerance($_SESSION['Alloc']->Currency)) ? 1 : 0;
 
 			$SQL = "UPDATE debtortrans
 					SET diffonexch='" . $AllocnItem->DiffOnExch . "',
@@ -125,7 +125,7 @@ if (isset($_POST['UpdateDatabase'])) {
 				$Error = __('Could not update difference on exchange');
 			}
 		}
-		if (abs($TotalAllocated + $_SESSION['Alloc']->TransAmt) < 0.01) {
+		if (abs($TotalAllocated + $_SESSION['Alloc']->TransAmt) < CurrencyTolerance($_SESSION['Alloc']->Currency)) {
 			$Settled = 1;
 		} else {
 			$Settled = 0;
@@ -228,7 +228,8 @@ if (isset($_GET['AllocTrans'])) {
 				(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount) as total,
 				debtortrans.diffonexch,
 				debtortrans.alloc,
-				currencies.decimalplaces
+				currencies.decimalplaces,
+				currencies.currabrev
 			FROM debtortrans INNER JOIN systypes
 			ON debtortrans.type = systypes.typeid
 			INNER JOIN debtorsmaster
@@ -244,17 +245,18 @@ if (isset($_GET['AllocTrans'])) {
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
 
-	$_SESSION['Alloc']->AllocTrans	= $_POST['AllocTrans'];
+	$_SESSION['Alloc']->AllocTrans		= $_POST['AllocTrans'];
 	$_SESSION['Alloc']->DebtorNo		= $MyRow['debtorno'];
 	$_SESSION['Alloc']->CustomerName	= $MyRow['name'];
-	$_SESSION['Alloc']->TransType		= $MyRow['type'];
+	$_SESSION['Alloc']->TransType 		= $MyRow['type'];
 	$_SESSION['Alloc']->TransTypeName	= $MyRow['typename'];//= __($MyRow['typename']); **********
-	$_SESSION['Alloc']->TransNo		= $MyRow['transno'];
-	$_SESSION['Alloc']->TransExRate	= $MyRow['rate'];
+	$_SESSION['Alloc']->TransNo			= $MyRow['transno'];
+	$_SESSION['Alloc']->TransExRate		= $MyRow['rate'];
 	$_SESSION['Alloc']->TransAmt		= $MyRow['total'];
-	$_SESSION['Alloc']->PrevDiffOnExch = $MyRow['diffonexch'];
+	$_SESSION['Alloc']->PrevDiffOnExch	= $MyRow['diffonexch'];
 	$_SESSION['Alloc']->TransDate		= ConvertSQLDate($MyRow['trandate']);
 	$_SESSION['Alloc']->CurrDecimalPlaces = $MyRow['decimalplaces'];
+	$_SESSION['Alloc']->Currency 		= $MyRow['currabrev'];
 
 	// First get transactions that have outstanding balances
 	$SQL = "SELECT debtortrans.id,
@@ -414,7 +416,7 @@ if (isset($_POST['AllocTrans'])) {
 				echo '<td class="number"><input type="hidden" name="YetToAlloc' . $Counter . '" value="' . round($YetToAlloc,$_SESSION['Alloc']->CurrDecimalPlaces) . '" />';
 				echo '<input tabindex="' . $j .'" type="checkbox" title="' . __('Check this box to allocate the entire amount of this transaction. Just enter the amount without ticking this check box for a partial allocation') . '" name="All' .  $Counter . '"';// NewText: __('Check this box to allocate the entire amount of this transaction. Just enter the amount without ticking this check box for a partial allocation')
 
-				if (ABS($AllocnItem->AllocAmt-$YetToAlloc) < 0.01) {
+				if (ABS($AllocnItem->AllocAmt-$YetToAlloc) < CurrencyTolerance($_SESSION['Alloc']->Currency)) {
 						echo ' checked="checked" />';
 				} else {
 						echo ' />';
@@ -583,7 +585,7 @@ if (isset($_POST['AllocTrans'])) {
 		$CurrentTransaction++;
 		$CurrCode = $MyRow['currcode'];
 		$CurrDecimalPlaces = $MyRow['currdecimalplaces'];
-		if (isset($Balance) AND abs($Balance) < -0.01 ) {
+		if (isset($Balance) AND abs($Balance) < CurrencyTolerance($_SESSION['Alloc']->Currency)) {
 			$AllocateLink = '&nbsp;';
 		}
 

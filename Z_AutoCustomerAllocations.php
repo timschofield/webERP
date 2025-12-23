@@ -69,6 +69,7 @@ if (isset($_GET['DebtorNo'])) {
 		$_SESSION['Alloc']->PrevDiffOnExch = $MyRow['diffonexch'];
 		$_SESSION['Alloc']->TransDate		= ConvertSQLDate($MyRow['trandate']);
 		$_SESSION['Alloc']->CurrDecimalPlaces = $MyRow['decimalplaces'];
+		$_SESSION['Alloc']->Currency = $MyRow['currcode'];
 
 		// Now get invoices or neg receipts that have outstanding balances
 		$SQL = "SELECT debtortrans.id,
@@ -145,7 +146,7 @@ function ProcessAllocation() {
 			}
 			$NewAllocTotal = $AllocnItem->PrevAlloc + $AllocnItem->AllocAmt;
 			$AllAllocations = $AllAllocations + $AllocnItem->AllocAmt;
-			$Settled = (abs($NewAllocTotal-$AllocnItem->TransAmount) < 0.005) ? 1 : 0;
+			$Settled = (abs($NewAllocTotal-$AllocnItem->TransAmount) < CurrencyTolerance($_SESSION['Alloc']->Currency)) ? 1 : 0;
 			$TotalDiffOnExch += $AllocnItem->DiffOnExch;
 
 			$SQL = "UPDATE debtortrans
@@ -157,7 +158,7 @@ function ProcessAllocation() {
 				$Error = __('Could not update difference on exchange');
 			}
 		}
-		if (abs($TotalAllocated + $_SESSION['Alloc']->TransAmt) < 0.01) {
+		if (abs($TotalAllocated + $_SESSION['Alloc']->TransAmt) < CurrencyTolerance($_SESSION['Alloc']->Currency)) {
 			$Settled = 1;
 		} else {
 			$Settled = 0;

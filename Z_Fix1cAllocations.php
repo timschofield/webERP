@@ -7,6 +7,8 @@ $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
 
+include('includes/SQL_CommonFunctions.php');
+
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -15,9 +17,9 @@ echo '<br />
 		</div></form>';
 
 if (isset($_POST['FixAllocations'])){
-	DB_query('UPDATE debtortrans
+	DB_query("UPDATE debtortrans
 				SET alloc=ovamount+ovgst+ovfreight+ovdiscount, settled=1
-				WHERE ABS(alloc-ovamount-ovgst-ovfreight-ovdiscount) <0.01;');
+				WHERE ABS(alloc-ovamount-ovgst-ovfreight-ovdiscount) < " . CurrencyTolerance() . "");
 	prnMsg(__('Updated debtor transactions'),'success');
 }
 

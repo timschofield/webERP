@@ -353,7 +353,7 @@ function EnsureGLEntriesBalance($TransType, $TransTypeNo) {
 	if (abs($Difference) != 100) {
 		/* KL RICARD. Change the trigger below from 0.1 to 100 to make sense in IDR currency, as 0.1 IDR is tiny and even rounding a double can trigger the error
 		*/
-		if (abs($Difference) > 100) {
+		if (abs($Difference) > 100 * CurrencyTolerance($_SESSION['CompanyRecord']['currencydefault'])) {
 			prnMsg(__('The general ledger entries created do not balance. See your system administrator'), 'error');
 			DB_Txn_Rollback();
 		} else {
@@ -447,4 +447,17 @@ function PettyCashTabCurrentBalance($Tab) {
 		$Balance = $MyRow['balance'];
 	}
 	return $Balance;
+}
+
+function CurrencyTolerance($Currency = '') {
+	if (($Currency == $_SESSION['CompanyRecord']['currencydefault']) 
+		or ($Currency != '')) {
+		// it is the home currency
+		return pow(10, -$_SESSION['CompanyRecord']['decimalplaces']);
+	} else {
+		// it is a foreign currency so get its decimal places
+		$Result = DB_query("SELECT decimalplaces FROM currencies WHERE currency = '" . $Currency . "'");
+		$MyRow = DB_fetch_row($Result);
+		return pow(10, -$MyRow[0]);
+	}
 }

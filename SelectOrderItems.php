@@ -982,8 +982,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			} else {
 				$AssetStockID = 'ASSET-' . $_POST['AssetToDisposeOf'];
 			}
-			if ($AssetRow['nbv']==0){
-				$NBV = 0.001; /* stock must have a cost to be invoiced if the flag is set so set to 0.001 */
+			if ($AssetRow['nbv'] == 0){
+				/* stock must have a cost to be invoiced if the flag is set so set to the base currency tolerance */
+				$NBV = CurrencyTolerance($_SESSION['Items' . $identifier]->DefaultCurrency);
 			} else {
 				$NBV = $AssetRow['nbv'];
 			}
@@ -1047,14 +1048,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 				$Quantity = round(filter_number_format($_POST['Quantity_' . $OrderLine->LineNumber]),$OrderLine->DecimalPlaces);
 
-				if (ABS($OrderLine->Price - filter_number_format($_POST['Price_' . $OrderLine->LineNumber]))>0.01){
+				if (ABS($OrderLine->Price - filter_number_format($_POST['Price_' . $OrderLine->LineNumber])) > CurrencyTolerance($_SESSION['Items' . $identifier]->DefaultCurrency)){
 					/*There is a new modified price being input for the line item */
 					$Price = filter_number_format($_POST['Price_' . $OrderLine->LineNumber]);
 					/* KL RICARD allow Price = 0 items in Sales Orders */
 					if ($Price == 0){
 						$_POST['GPPercent_' . $OrderLine->LineNumber] = 0;
-					}
-					else {
+					} else {
 						if (isset($_POST['Discount_' . $OrderLine->LineNumber]) AND is_numeric(filter_number_format($_POST['Discount_' . $OrderLine->LineNumber]))) {
 							if ($_POST['Discount_' . $OrderLine->LineNumber] < 100) {//to avoid divided by zero error
 								$_POST['GPPercent_' . $OrderLine->LineNumber] = (($Price*(1-(filter_number_format($_POST['Discount_' . $OrderLine->LineNumber])/100))) - $OrderLine->StandardCost*$ExRate)/($Price *(1-filter_number_format($_POST['Discount_' . $OrderLine->LineNumber])/100)/100);
@@ -1067,12 +1067,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					}
 					/* KL RICARD END allow Price = 0 items in Sales Orders */
 
-				} elseif (isset($_POST['GPPercent_'.$OrderLine->LineNumber]) AND ABS($OrderLine->GPPercent - filter_number_format($_POST['GPPercent_' . $OrderLine->LineNumber]))>=0.01) {
+				} elseif (isset($_POST['GPPercent_'.$OrderLine->LineNumber]) AND ABS($OrderLine->GPPercent - filter_number_format($_POST['GPPercent_' . $OrderLine->LineNumber])) >= CurrencyTolerance($_SESSION['Items' . $identifier]->DefaultCurrency)) {
 					/* A GP % has been input so need to do a recalculation of the price at this new GP Percentage */
 
-
 					prnMsg(__('Recalculated the price from the GP % entered - the GP % was') . ' ' . $OrderLine->GPPercent . '  the new GP % is ' . filter_number_format($_POST['GPPercent_' . $OrderLine->LineNumber]),'info');
-
 
 					$Price = ($OrderLine->StandardCost*$ExRate)/(1 -((filter_number_format($_POST['GPPercent_' . $OrderLine->LineNumber]) + filter_number_format($_POST['Discount_' . $OrderLine->LineNumber]))/100));
 				} else {
@@ -1118,7 +1116,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					prnMsg( __('You are attempting to make the quantity ordered a quantity less than has already been invoiced') . '. ' . __('The quantity delivered and invoiced cannot be modified retrospectively'),'warn');
 				} elseif ($OrderLine->Quantity !=$Quantity
 							OR $OrderLine->Price != $Price
-							OR ABS($OrderLine->DiscountPercent - $DiscountPercentage/100) >0.001
+							OR ABS($OrderLine->DiscountPercent - $DiscountPercentage/100) > CurrencyTolerance($_SESSION['Items' . $identifier]->DefaultCurrency)
 							OR $OrderLine->Narrative != $Narrative
 							OR $OrderLine->ItemDue != $_POST['ItemDue_' . $OrderLine->LineNumber]
 							OR $OrderLine->POLine != $_POST['POLine_' . $OrderLine->LineNumber]) {
