@@ -51,7 +51,8 @@ if (!isset($_POST['ReportID'])) { // entered for the first time or created new r
 		$Type = $myrow[0];
 	}
 }
-switch ($_GET['action']) {
+$Action = $_GET['action'] ?? 'step2';
+switch ($Action) {
 	default:
 	case "step2": // entered from select an action (home) page
 		// first check to see if a report was selected (except new report and import)
@@ -595,8 +596,8 @@ switch ($_GET['action']) {
 				case RPT_BTN_FINISH: // update fields and return to report manager screen
 				default:	// bail to reports home
 					//fetch the entry type
-					if (isset($_POST['EntryType'])) $EntryType = $_POST['EntryType']; else $EntryType = '';
-					// build date string of choices from user
+					$EntryType = $_POST['EntryType'] ?? '';
+				// build date string of choices from user
 					$DateString = '';
 					for ($i=1; $i<=count($DateChoices); $i++) {
 						if (isset($_POST['DateRange'.$i])) $DateString .= $_POST['DateRange'.$i];
