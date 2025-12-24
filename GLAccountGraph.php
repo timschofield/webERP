@@ -280,7 +280,7 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 		$LegendText = __('Actual');
 	}
 
-	$Graph = new PHPlot(1200, 600);
+	$Graph = new Phplot\Phplot\phplot(1200,600);
 	$Graph->SetTitle($GraphTitle);
 	$Graph->SetTitleColor('blue');
 	$Graph->SetOutputFile('companies/' . $_SESSION['DatabaseName'] . '/reports/glaccountgraph.png');
