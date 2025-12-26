@@ -83,23 +83,24 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					' . $BankAccountName . ' ' . __('Payments Summary') . '<br />
 					' . __('From') . ' ' . $_POST['FromDate'] . ' ' . __('to') . ' ' .  $_POST['ToDate'] . '<br />
 					' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
-				</div>
-				<table>
-					<thead>
-						<tr>
-							<th>' . __('Amount') . '</th>
-							<th>' . __('Reference / General Ledger Posting Details') . '</th>
-						</tr>
-					</thead>
-					<tbody>';
+				</div>';
 
 	$TotalCheques = 0;
 
 	while ($MyRow=DB_fetch_array($Result)){
 
+		$HTML .= '<table style="width:50%">
+					<thead>
+						<tr>
+							<th>' . __('Cheque Amount') . '</th>
+							<th>' . __('Reference') . '</th>
+						</tr>
+					</thead>
+					<tbody>';
+
 		$HTML .= '<tr class="striped_row">
-					<td>' . locale_number_format(-$MyRow['amount'],$BankCurrDecimalPlaces) . '</td>
-					<td>' . $MyRow['ref'] . '</td>
+					<td class="number">' . locale_number_format(-$MyRow['amount'],$BankCurrDecimalPlaces) . '</td>
+					<td>' . htmlspecialchars($MyRow['ref'], ENT_QUOTES, 'UTF-8') . '</td>
 				</tr>';
 
 		$SQL = "SELECT accountname,
@@ -114,6 +115,13 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 		$ErrMsg = __('An error occurred getting the GL transactions');
 		$GLTransResult = DB_query($SQL, $ErrMsg);
+
+		$HTML .= '<tr>
+					<th>' . __('GL Account') . '</th>
+					<th>' . __('GL Amount') . '</th>
+					<th>' . __('Narrative') . '</th>
+				</tr>';
+
 
 		while ($GLRow=DB_fetch_array($GLTransResult)){
 			// if user is allowed to see the account we show it, other wise we show "OTHERS ACCOUNTS"
@@ -131,57 +139,60 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				$AccountName = __('Other GL Accounts');
 			}
 			$HTML .= '<tr class="striped_row">
-						<td>' . $AccountName . '</td>
-						<td>' . locale_number_format($GLRow['amount'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-						<td>' . $GLRow['narrative'] . '</td>
+						<td>' . $GLRow['accountcode'] . ' - ' . htmlspecialchars($AccountName, ENT_QUOTES, 'UTF-8') . '</td>
+						<td class="number">' . locale_number_format($GLRow['amount'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td>' . htmlspecialchars($GLRow['narrative'], ENT_QUOTES, 'UTF-8') . '</td>
 					</tr>';
 		}
 		DB_free_result($GLTransResult);
 
-		$YPos -= ($LineHeight);
 		$TotalCheques = $TotalCheques - $MyRow['amount'];
 
-
-		if (isset($_POST['PrintPDF'])) {
-			$HTML .= '</tbody>
-					<div class="footer fixed-section">
-						<div class="right">
-							<span class="page-number">Page </span>
-						</div>
-					</div>
+		$HTML .= '</tbody>
 				</table>';
-		} else {
-			$HTML .= '</tbody>
-					</table>
-					<div class="centre">
-						<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
-					</div>';
-		}
-		$HTML .= '</body>
-				</html>';
 
-		if (isset($_POST['PrintPDF'])) {
-			$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
-			$DomPDF->loadHtml($HTML);
-
-			// (Optional) Setup the paper size and orientation
-			$DomPDF->setPaper($_SESSION['PageSize'], 'portrait');
-
-			// Render the HTML as PDF
-			$DomPDF->render();
-
-			// Output the generated PDF to Browser
-			$DomPDF->stream($_SESSION['DatabaseName'] . '_BankingSummary_' . date('Y-m-d') . '.pdf', array(
-				"Attachment" => false
-			));
-		} else {
-			$Title = __('Create PDF Print Out For A Batch Of Receipts');
-			include('includes/header.php');
-			echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/bank.png" title="' . __('Receipts') . '" alt="" />' . ' ' . __('Create PDF Print Out For A Batch Of Receipts') . '</p>';
-			echo $HTML;
-			include('includes/footer.php');
-		}
 	}
+
+	if (isset($_POST['PrintPDF'])) {
+		$HTML .= '</tbody>
+				<div class="footer fixed-section">
+					<div class="right">
+						<span class="page-number">Page </span>
+					</div>
+				</div>
+			</table>';
+	} else {
+		$HTML .= '</tbody>
+				</table>
+				<div class="centre">
+					<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
+				</div>';
+	}
+	$HTML .= '</body>
+			</html>';
+
+	if (isset($_POST['PrintPDF'])) {
+		$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
+		$DomPDF->loadHtml($HTML);
+
+		// (Optional) Setup the paper size and orientation
+		$DomPDF->setPaper($_SESSION['PageSize'], 'landscape');
+
+		// Render the HTML as PDF
+		$DomPDF->render();
+
+		// Output the generated PDF to Browser
+		$DomPDF->stream($_SESSION['DatabaseName'] . '_BankingSummary_' . date('Y-m-d') . '.pdf', array(
+			"Attachment" => false
+		));
+	} else {
+		$Title = __('Create PDF Print Out For A Batch Of Receipts');
+		include('includes/header.php');
+		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/bank.png" title="' . __('Receipts') . '" alt="" />' . ' ' . __('Create PDF Print Out For A Batch Of Receipts') . '</p>';
+		echo $HTML;
+		include('includes/footer.php');
+	}
+
 } else {
 
 	$Title = __('Payment Listing');
