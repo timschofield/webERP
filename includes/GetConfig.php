@@ -149,3 +149,4 @@ $RadioBeaconFTP_server = 192.168.2.2
 $RadioBeaconFTP_user_name = RadioBeacon ftp server user name
 $RadionBeaconFTP_user_pass = Radio Beacon remote ftp server password
 */
+$_SESSION['VersionNumber'] = '5.0.1';
