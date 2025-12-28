@@ -78,28 +78,6 @@ if ($_SESSION['ShowFieldHelp'] == 0) {
 	echo '	<link href="', $RootPath, '/css/', $_SESSION['Theme'], '/field_help_on.css" rel="stylesheet" type="text/css" media="screen" />' , "\n";
 }
 
-echo '	<style>
-		body {
-			font-size: ', $_SESSION['FontSize'], ';
-		}
-	</style>';
-
-if (isset($ExtraHeadContent)) {
-	echo "\n" . $ExtraHeadContent;
-}
-
-echo "\n</head>\n";
-
-echo '<body onload="initial();' . ($BodyOnLoad ?? '') . '">' . "\n";
-
-echo '<div class="help-bubble" id="help-bubble">
-		<link rel="stylesheet" type="text/css" href="'. $RootPath . '/doc/Manual/css/manual.css" />
-		<div class="help-header" id="help-header">
-			<div id="help_exit" class="close_button" onclick="CloseHelp()" title="', __('Close this window'), '">X</div>
-		</div>
-		<div class="help-content" id="help-content"></div>
-	</div>';
-
 /// @todo should we move this to index.php?
 if (isset($_GET['FontSize'])) {
 	$SQL = "UPDATE www_users
@@ -124,6 +102,28 @@ if (isset($_GET['FontSize'])) {
 			$_SESSION['FontSize'] = '0.833rem';
 	}
 }
+
+echo '	<style>
+		body {
+			font-size: ', $_SESSION['FontSize'], ';
+		}
+	</style>';
+
+if (isset($ExtraHeadContent)) {
+	echo "\n" . $ExtraHeadContent;
+}
+
+echo "\n</head>\n";
+
+echo '<body onload="initial();' . ($BodyOnLoad ?? '') . '">' . "\n";
+
+echo '<div class="help-bubble" id="help-bubble">
+		<link rel="stylesheet" type="text/css" href="'. $RootPath . '/doc/Manual/css/manual.css" />
+		<div class="help-header" id="help-header">
+			<div id="help_exit" class="close_button" onclick="CloseHelp()" title="', __('Close this window'), '">X</div>
+		</div>
+		<div class="help-content" id="help-content"></div>
+	</div>';
 
 echo '<header class="noPrint">';
 
