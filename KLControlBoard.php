@@ -591,7 +591,7 @@ if ($ProcessSection01){
 		TimeNeededForExecution("BalanceAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		BalanceAccountControl("111900000AD",    500000 * $NumberOfOpenShopsTotal,   1200000 * $NumberOfOpenShopsTotal, $PeriodNow);
+		BalanceAccountControl("111900000AD",    300000 * $NumberOfOpenShopsTotal,   900000 * $NumberOfOpenShopsTotal, $PeriodNow);
 		TimeNeededForExecution("BalanceAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
