@@ -114,7 +114,7 @@ if (DB_num_rows($Result) > 0) {
 			<select name="DiscountCategory">';
 
 	while ($MyRow = DB_fetch_array($Result)){
-		if ($MyRow['discountcategory']==$_POST['DiscCat']){
+		if (isset($_POST['DiscCat']) and $MyRow['discountcategory']==$_POST['DiscCat']){
 			echo '<option selected="selected" value="' . $MyRow['discountcategory'] . '">' . $MyRow['discountcategory'] . '</option>';
 		} else {
 			echo '<option value="' . $MyRow['discountcategory'] . '">' . $MyRow['discountcategory'] . '</option>';

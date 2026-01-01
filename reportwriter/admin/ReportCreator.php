@@ -51,7 +51,8 @@ if (!isset($_POST['ReportID'])) { // entered for the first time or created new r
 		$Type = $myrow[0];
 	}
 }
-switch ($_GET['action']) {
+$Action = $_GET['action'] ?? 'step2';
+switch ($Action) {
 	default:
 	case "step2": // entered from select an action (home) page
 		// first check to see if a report was selected (except new report and import)

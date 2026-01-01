@@ -384,7 +384,15 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 		header('Content-Disposition: attachment;filename="' . $File . '"');
 		header('Cache-Control: max-age=0');
 		$reader = new \PhpOffice\PhpSpreadsheet\Reader\Html();
-		$spreadsheet = $reader->loadFromString($HTML);
+		$SpreadsheetHTML = '';
+		if (preg_match('/<table[\s\S]*?<\/table>/i', $HTML, $m)) {
+			$Table = $m[0];
+			$Table = preg_replace('/&(?![a-zA-Z#][a-zA-Z0-9]*;)/', '&amp;', $Table);
+			$SpreadsheetHTML = '<html><head><meta charset="UTF-8"></head><body>' . $Table . '</body></html>';
+		} else {
+			$SpreadsheetHTML = '<html><head><meta charset="UTF-8"></head><body><table><tbody></tbody></table></body></html>';
+		}
+		$spreadsheet = $reader->loadFromString($SpreadsheetHTML);
 
 		$writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Ods');
 		$writer->save('php://output');

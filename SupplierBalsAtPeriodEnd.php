@@ -28,8 +28,8 @@ if (isset($_POST['PrintPDF'])
 					suppliers.suppname,
 					currencies.currency,
 					currencies.decimalplaces AS currdecimalplaces,
-					SUM((supptrans.ovamount + supptrans.ovgst - supptrans.alloc)/supptrans.rate) AS balance,
-					SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) AS fxbalance,
+					SUM((supptrans.balance)/supptrans.rate) AS balance,
+					SUM(supptrans.balance) AS fxbalance,
 					SUM(CASE WHEN supptrans.trandate > '" . $_POST['PeriodEnd'] . "' THEN
 						(supptrans.ovamount + supptrans.ovgst)/supptrans.rate ELSE 0 END) AS afterdatetrans,
 					SUM(CASE WHEN supptrans.trandate > '" . $_POST['PeriodEnd'] . "'
@@ -87,7 +87,9 @@ if (isset($_POST['PrintPDF'])
 		$Balance = $SupplierBalances['balance'] - $SupplierBalances['afterdatetrans'] + $SupplierBalances['afterdatediffonexch'];
 		$FXBalance = $SupplierBalances['fxbalance'] - $SupplierBalances['fxafterdatetrans'];
 
-		if (ABS($Balance) > 0.009 || ABS($FXBalance) > 0.009) {
+		if (ABS($Balance) > CurrencyTolerance($_SESSION['CompanyRecord']['currencydefault'])
+			or ABS($FXBalance) > CurrencyTolerance($SupplierBalances['currency'])) {
+
 			$DisplayBalance = locale_number_format($Balance, $_SESSION['CompanyRecord']['decimalplaces']);
 			$DisplayFXBalance = locale_number_format($FXBalance, $SupplierBalances['currdecimalplaces']);
 

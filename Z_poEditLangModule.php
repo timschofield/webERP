@@ -26,8 +26,9 @@ $PathToNewLanguage	= $PathPrefix . 'locale/' . $_SESSION['Language'] . '/LC_MESS
 if (isset($_POST['ReMergePO'])){
 
 /*update the messages.po file with any new strings */
-	/// @bug we have to check that msgmerge is a cli command, not a php function!!!
-	if (!function_exists('msgmerge')) {
+	$status = 1;
+	@exec('command -v msgmerge >/dev/null 2>&1', $o, $status);
+	if ($status !== 0) {
 		prnMsg(__('The gettext utilities must be present on your server for these language utilities to work'),'error');
 		exit();
 	} else {

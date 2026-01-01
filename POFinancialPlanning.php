@@ -31,7 +31,7 @@ function submit($Country, $Currency, $RootPath, $Title) {
 				suppliers.currcode,
 				currencies.decimalplaces,
 				currencies.rate,
-				(SELECT SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc)
+				(SELECT SUM(supptrans.balance)
 					FROM supptrans
 					WHERE suppliers.supplierid = supptrans.supplierno) AS balance
 			FROM suppliers

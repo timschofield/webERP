@@ -4,7 +4,7 @@
 
 require(__DIR__ . '/includes/session.php');
 
-$Title = __('Import Items');
+$Title = __('Import Suppliers');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
 include('includes/header.php');

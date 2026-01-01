@@ -99,11 +99,33 @@ Returns:
 	string - The relative change formatted as a percentage, or 'N/A' if the previous period is zero
 */
 function RelativeChange($SelectedPeriod, $PreviousPeriod) {
+	include('includes/SQL_CommonFunctions.php');
 	// Calculates the relative change between selected and previous periods. Uses percent with locale number format.
-	if (ABS($PreviousPeriod) >= 0.01) {
+	if (ABS($PreviousPeriod) >= CurrencyTolerance($_SESSION['CompanyRecord']['currencydefault'])) {
 		return locale_number_format(($SelectedPeriod - $PreviousPeriod) * 100 / $PreviousPeriod,
 			$_SESSION['CompanyRecord']['decimalplaces']) . '%';
 	} else {
 		return __('N/A');
 	}
+}
+
+
+/**
+Returns the cash flow activity name for a given activity code.
+Parameters:
+	$Activity - The cash flow activity code
+Returns:
+	string - The corresponding activity name
+*/
+function CashFlowsActivityName($Activity) {
+	// Converts the cash flow activity number to an activity text.
+	return match ($Activity) {
+		'-1'      => '<b>' . __('Not set up') . '</b>',
+		'0'       => __('No effect on cash flow'),
+		'1'       => __('Operating activity'),
+		'2'       => __('Investing activity'),
+		'3'       => __('Financing activity'),
+		'4'       => __('Cash or cash equivalent'),
+		default => '<b>' . __('Unknown') . '</b>',
+	};
 }
