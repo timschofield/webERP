@@ -149,6 +149,7 @@ if (!isset($SelectedType)){
 					<th class="SortedColumn" >' . __('Type ID') . '</th>
 					<th class="SortedColumn" >' . __('Type Name') . '</th>
 					<th></th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>';
@@ -158,7 +159,7 @@ while ($MyRow = DB_fetch_row($Result)) {
 	echo '<tr class="striped_row">
 			<td>', $MyRow[0], '</td>
 			<td>', $MyRow[1], '</td>
-			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedType=', $MyRow[0], '>' . __('Edit') . '</a></td>
+			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedType=', $MyRow[0], '">' . __('Edit') . '</a></td>
 			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedType=', $MyRow[0], '&amp;delete=yes" onclick="return confirm(\'' .
 				__('Are you sure you wish to delete this Supplier Type?') . '\');">' . __('Delete') . '</a></td>
 		</tr>';
