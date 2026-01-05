@@ -95,6 +95,9 @@ if ($ProcessSection01){
 		PeriodDifferenceSales("YEAR", "Shop",  30);
 		TimeNeededForExecution("PeriodDifferenceSales_YEAR_30", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		PeriodDifferenceSales("YEAR", "Shop",  180);
+		TimeNeededForExecution("PeriodDifferenceSales_YEAR_180", $StartTime, $KL_SystemAdmin);
+		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
 		PeriodDifferenceSales($yesterday_year -1, "Shop",  "YTD"); // previous year
 		TimeNeededForExecution("PeriodDifferenceSales_YTD", $StartTime, $KL_SystemAdmin);
