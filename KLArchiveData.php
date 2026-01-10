@@ -56,8 +56,7 @@ if (!isset($_POST['ArchiveKlconsignmentPeriod'])) {
 }
 
 if (isset($_POST['submit'])) {
-	submit($Title, 
-		$_POST['ArchiveGltransPeriod'], 
+	submit($_POST['ArchiveGltransPeriod'], 
 		$_POST['ArchiveStockmovesPeriod'], 
 		$_POST['ArchiveLoctransfersObsoletes'],
 		$_POST['ArchiveDebtortransPeriod'],
@@ -82,8 +81,7 @@ if (isset($_POST['submit'])) {
  * @param int $ArchiveKlconsignmentPeriod The period to archive klconsignment records up to.
  * @return void
  **************************************************************************************************************/
-function submit($Title, 
-				$ArchiveGltransPeriod, 
+function submit($ArchiveGltransPeriod, 
 				$ArchiveStockmovesPeriod,
 				$ArchiveLoctransfers,
 				$ArchiveDebtortransPeriod,

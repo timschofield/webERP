@@ -6,6 +6,8 @@
 *
 ***********************************************************************************************/
 
+include('includes/KLRoles.php');
+
 // echo the html header and page title
 
 // Variables which should be defined in the page this file is included with, before the inclusion of this header.php:
@@ -19,6 +21,7 @@ global $Language;
 global $Title;
 global $LanguagesArray;
 global $RootPath;
+global $PathPrefix;
 
 //if (!isset($RootPath)) {
 //	$RootPath = dirname(htmlspecialchars(basename(__FILE__)));
