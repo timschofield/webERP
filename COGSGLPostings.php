@@ -218,7 +218,7 @@ if (isset($SelectedCOGSPostingID)) {
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-if (isset($SelectedCOGSPostingID)) {
+if (isset($SelectedCOGSPostingID) and $SelectedCOGSPostingID != 0) {
 	//editing an existing cost of sales posting record
 
 	$SQL = "SELECT stkcat,
