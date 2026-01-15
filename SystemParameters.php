@@ -24,7 +24,7 @@ if (isset($_POST['submit'])) {
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
 
-	//first off validate inputs sensible
+	// validate inputs are sensible
 	/*
 		Note: the X_ in the POST variables, the reason for this is to overcome globals=on replacing
 		the actual system/overridden variables.
@@ -160,7 +160,6 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['WorkingDaysWeek'] != $_POST['X_WorkingDaysWeek'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_WorkingDaysWeek']."' WHERE confname = 'WorkingDaysWeek'";
 		}
-
 		if ($_SESSION['DispatchCutOffTime'] != $_POST['X_DispatchCutOffTime'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_DispatchCutOffTime']."' WHERE confname = 'DispatchCutOffTime'";
 		}
@@ -233,7 +232,7 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['ShowStockidOnImages'] != $_POST['X_ShowStockidOnImages'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShowStockidOnImages']."' WHERE confname = 'ShowStockidOnImages'";
 		}
-//new number must be shown
+		//new number must be shown
 		if ($_SESSION['NumberOfMonthMustBeShown'] != $_POST['X_NumberOfMonthMustBeShown'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_NumberOfMonthMustBeShown']."' WHERE confname = 'NumberOfMonthMustBeShown'";
 		}
@@ -360,7 +359,6 @@ if (isset($_POST['submit'])) {
 			foreach ($_POST['X_ItemDescriptionLanguages'] as $ItemLanguage){
 				$ItemDescriptionLanguages .= $ItemLanguage .',';
 			}
-
 			if ($_SESSION['ItemDescriptionLanguages'] != $ItemDescriptionLanguages){
 				$SQL[] = "UPDATE config SET confvalue='" . $ItemDescriptionLanguages . "' WHERE confname='ItemDescriptionLanguages'";
 			}
@@ -377,7 +375,6 @@ if (isset($_POST['submit'])) {
 		}
 		if ($_SESSION['QualityCOAText'] != $_POST['X_QualityCOAText']){
 			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_QualityCOAText'] . "' WHERE confname='QualityCOAText'";
-
 		}
 		if ($_SESSION['ShortcutMenu'] != $_POST['X_ShortcutMenu']){
 			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShortcutMenu'] . "' WHERE confname='ShortcutMenu'";
@@ -411,89 +408,42 @@ if (isset($_POST['submit'])) {
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
+// ---------------------------------------------
+// ---------- USER EDIT FORM ------------------------
+// ---------------------------------------------
+
+// Create a "super-section", although technically redundant as there will be only one,
+// it will force the following "sub-sections" to left justify for visual clarity
 echo '<fieldset>
 		<legend>', __('Configuration Options'), '</legend>';
 
-// ---------- New section: Db Maintenance
+// -------------------------------------
+// ---------- ACCOUNTING ---------------
+// -------------------------------------
 echo '<fieldset>
-		<legend>', __('Db Maintenance'), '</legend>';
-/*Perform Database maintenance DB_Maintenance*/
+		<legend>' . __('Accounting') . '</legend>';
+
+// YearEnd
+$MonthNames = array( 1=>__('January'),
+			2=>__('February'),
+			3=>__('March'),
+			4=>__('April'),
+			5=>__('May'),
+			6=>__('June'),
+			7=>__('July'),
+			8=>__('August'),
+			9=>__('September'),
+			10=>__('October'),
+			11=>__('November'),
+			12=>__('December') );
 echo '<field>
-		<label for="X_DB_Maintenance">' . __('Perform Database Maintenance At Logon') . ':</label>
-		<select name="X_DB_Maintenance">';
-	if ($_SESSION['DB_Maintenance']=='1'){
-		echo '<option selected="selected" value="1">' . __('Daily') . '</option>';
-	} else {
-		echo '<option value="1">' . __('Daily') . '</option>';
-	}
-	if ($_SESSION['DB_Maintenance']=='7'){
-		echo '<option selected="selected" value="7">' . __('Weekly') . '</option>';
-	} else {
-		echo '<option value="7">' . __('Weekly') . '</option>';
-	}
-	if ($_SESSION['DB_Maintenance']=='30'){
-		echo '<option selected="selected" value="30">' . __('Monthly') . '</option>';
-	} else {
-		echo '<option value="30">' . __('Monthly') . '</option>';
-	}
-	if ($_SESSION['DB_Maintenance']=='0'){
-		echo '<option selected="selected" value="0">' . __('Never') . '</option>';
-	} else {
-		echo '<option value="0">' . __('Never') . '</option>';
-	}
-	if ($_SESSION['DB_Maintenance']=='-1'){
-		echo '<option selected="selected" value="-1">' . __('Allow SysAdmin Access Only') . '</option>';
-	} else {
-		echo '<option value="-1">' . __('Allow SysAdmin Access Only') . '</option>';
-	}
-
-	echo '</select>
-		<fieldhelp>' . __('Runs DB_Maintenance function in ConnectDB_XXXX.php at regular intervals (checked every user login). [Allow Sysadmin Access Only] allows only users with security role Administrator to login.') . '</fieldhelp>
-	</field>';
-echo '</fieldset><br />';
-
-// ---------- New section: General Settings
-echo '<fieldset>
-		<legend>', __('General Settings'), '</legend>';
-// DefaultDateFormat
-echo '<field>
-		<label for="X_DefaultDateFormat">' . __('Default Date Format') . ':</label>
-		<select name="X_DefaultDateFormat">
-			<option '.(($_SESSION['DefaultDateFormat']=='d/m/Y')?'selected="selected" ':'').'value="d/m/Y">' . __('d/m/Y') . '</option>
-			<option '.(($_SESSION['DefaultDateFormat']=='d.m.Y')?'selected="selected" ':'').'value="d.m.Y">' . __('d.m.Y') . '</option>
-			<option '.(($_SESSION['DefaultDateFormat']=='m/d/Y')?'selected="selected" ':'').'value="m/d/Y">' . __('m/d/Y') . '</option>
-			<option '.(($_SESSION['DefaultDateFormat']=='Y/m/d')?'selected="selected" ':'').'value="Y/m/d">' . __('Y/m/d') . '</option>
-			<option '.(($_SESSION['DefaultDateFormat']=='Y-m-d')?'selected="selected" ':'').'value="Y-m-d">' . __('Y-m-d') . '</option>
-		</select>
-		<fieldhelp>' . __('The default date format for entry of dates and display.') . '</fieldhelp>
-	</field>';
-
-// DefaultTheme:
-if (is_writable('config.php')) {
-	echo '<field>
-			<label for="X_DefaultTheme">' . __('Default Theme') . ':</label>
-			<select name="X_DefaultTheme">';
-	$ThemeDirectories = scandir($PathPrefix . 'css');// List directories inside ~/css. Each diretory is a theme.
-	foreach($ThemeDirectories as $ThemeName) {
-		if (is_dir('css/'.$ThemeName) AND $ThemeName!='.' AND $ThemeName!='..' AND $ThemeName!='.svn') {
-			echo '<option';
-			if ($DefaultTheme == $ThemeName) {
-				echo ' selected="selected"';
-			}
-			echo ' value="'. $ThemeName.'">' . $ThemeName . '</option>';
-		}
-	}
-	echo '</select>
-		<fieldhelp>' . __('The default theme to use for the login screen and the setup of new users. The users\' theme selection will override it.') . '</fieldhelp>
-	</field>';
-} else {
-	echo '<input type="hidden" name="X_DefaultTheme" value="' . $DefaultTheme . '" />';
-}
-echo '</fieldset><br />';
-
-// ---------- New section:
-echo '<fieldset>
-		<legend>' . __('Accounts Receivable/Payable Settings') . '</legend>';
+		<label for="X_YearEnd">' . __('Financial Year Ends On') . ':</label>
+		<select name="X_YearEnd">';
+for ($i=1; $i <= sizeof($MonthNames); $i++ )
+	echo '<option value="' . $i . '"' . ($_SESSION['YearEnd'] == $i ? ' selected="selected"' : '') . '>' . $MonthNames[$i] . '</option>';
+echo '</select>
+	<fieldhelp>' . __('Defining the month in which the financial year ends enables the system to provide useful defaults for general ledger reports')  . '</fieldhelp>
+</field>';
 
 // PastDueDays1
 echo '<field>
@@ -553,7 +503,7 @@ echo '<field>
 
 // MaxSerialItemsIssued
 echo '<field style="height:30px">
-		<label for="X_MaxSerialItemsIssued">' . __('Maximum number of serial numbered items that can be issued') . ':</label>
+		<label for="X_MaxSerialItemsIssued">' . __('Maximum serialized items that can be issued') . ':</label>
 		<input type="text" class="integer" name="X_MaxSerialItemsIssued" value="' . $_SESSION['MaxSerialItemsIssued'] . '" size="3" required="required" maxlength="10" />
 		<fieldhelp>' . __('This parameter defines the Maximum number of serial numbered items that can be issued. It should be an integer greater than zero.') . '</fieldhelp>
 	</field>';
@@ -582,79 +532,6 @@ echo '<field>
 			<option value="0"' . ($_SESSION['AllowOrderLineItemNarrative'] == '0' ? ' selected="selected"' : '') . '>' . __('No Narrative Line') . '</option>
 		</select>
 		<fieldhelp>' . __('Select whether or not to allow entry of narrative on order line items. This narrative will appear on invoices and packing slips. Useful mainly for service businesses.') . '</fieldhelp>
-	</field>';
-//ItemDescriptionLanguages
-if (!isset($_POST['X_ItemDescriptionLanguages'])){
-	$_POST['X_ItemDescriptionLanguages'] = explode(',',$_SESSION['ItemDescriptionLanguages']);
-}
-echo '<field>
-		<label for="X_ItemDescriptionLanguages">' . __('Languages to Maintain Translations for Item Descriptions') . ':</label>
-		<select name="X_ItemDescriptionLanguages[]" size="5" multiple="multiple" >';
-
-		echo '<option value=""' . (count($LanguagesArray)==0 ? '':'selected="selected"') . '>' . __('None')  . '</option>';
-foreach ($LanguagesArray as $LanguageEntry => $LanguageName){
-	if (isset($_POST['X_ItemDescriptionLanguages']) AND in_array($LanguageEntry,$_POST['X_ItemDescriptionLanguages'])){
-		echo '<option selected="selected" value="' . $LanguageEntry . '">' . $LanguageName['LanguageName']  . '</option>';
-	} elseif ($LanguageEntry != $DefaultLanguage) {
-		echo '<option value="' . $LanguageEntry . '">' . $LanguageName['LanguageName']  . '</option>';
-	}
-}
-echo '</select>
-	<fieldhelp>' . __('Select the languages in which translations of the item description will be maintained. The default language is excluded.') . '</fieldhelp>
-</field>';
-
-// Google Translator API Key
-echo '<field>
-		<label for="X_GoogleTranslatorAPIKey">' . __('Google Translator API Key') . ':</label>
-		<input type="text" name="X_GoogleTranslatorAPIKey" size="25" maxlength="50" value="' . $_SESSION['GoogleTranslatorAPIKey'] . '" />
-		<fieldhelp>' . __('Google Translator API Key to allow automatic translations. More info at https://cloud.google.com/translate/')  . '</fieldhelp>
-	</field>';
-
-//'RequirePickingNote'
-echo '<field style="height:30px">
-		<label for="X_RequirePickingNote">' . __('A picking note must be produced before an order can be delivered') . ':</label>
-		<select name="X_RequirePickingNote">
-			<option value="1"' . ($_SESSION['RequirePickingNote'] == '1' ? ' selected="selected"' : '') . '>' . __('Yes') . '</option>
-			<option value="0"' . ($_SESSION['RequirePickingNote'] == '0' ? ' selected="selected"' : '') . '>' . __('No') . '</option>
-		</select>
-		<fieldhelp>' . __('Select whether or not a picking note must be produced before an order can be delivered to a customer.') . '</fieldhelp>
-	</field>';
-
-//UpdateCurrencyRatesDaily
-echo '<field>
-		<label for="X_UpdateCurrencyRatesDaily">' . __('Auto Update Exchange Rates Daily') . ':</label>
-		<select name="X_UpdateCurrencyRatesDaily">
-			<option value="1"' . ($_SESSION['UpdateCurrencyRatesDaily'] != '1'? ' selected="selected" ':'').'>' . __('Automatic') . '</option>
-			<option value="0"' . ($_SESSION['UpdateCurrencyRatesDaily'] == '0'? ' selected="selected" ':'').'>' . __('Manually') . '</option>
-		</select>
-		<fieldhelp>' . __('Automatic updates to exchange rates will retrieve the latest daily rates from either the European Central Bank or Google once per day - when the first user logs in for the day. Manual will never update the rates automatically - exchange rates will need to be maintained manually') . '</fieldhelp>
-	</field>';
-
-echo '<field>
-		<label for="X_ExchangeRateFeed">' . __('Source Exchange Rates From') . ':</label>
-		<select name="X_ExchangeRateFeed">';
-		if ($_SESSION['ExchangeRateFeed'] == 'ECB') {
-			echo '<option value="ECB" selected="selected">' . __('European Central Bank') . '</option>';
-		} else {
-			echo '<option value="ECB">' . __('European Central Bank') . '</option>';
-		}
-		if ($_SESSION['ExchangeRateFeed'] == 'DXR') {
-			echo '<option value="DXR" selected="selected">' . __('Daily Exchange Rates') . '</option>';
-		} else {
-			echo '<option value="DXR">' . __('Daily Exchange Rates') . '</option>';
-		}
-		echo '</select>
-		<fieldhelp>' . __('Specify the source to use for exchange rates') . '</fieldhelp>
-	</field>';
-
-//Default Packing Note Format
-echo '<field>
-		<label for="X_PackNoteFormat">' . __('Format of Packing Slips') . ':</label>
-		<select name="X_PackNoteFormat">
-			<option value="1"' . ($_SESSION['PackNoteFormat'] == '1' ? ' selected="selected"' : '') . '>' . __('Laser Printed') . '</option>
-			<option value="2"' . ($_SESSION['PackNoteFormat'] == '2' ? ' selected="selected"' : '') . '>' . __('Special Stationery') . '</option>
-		</select>
-		<fieldhelp>' . __('Choose the format that packing notes should be printed by default') . '</fieldhelp>
 	</field>';
 
 //Default Invoice Format
@@ -686,27 +563,6 @@ echo '<field>
 		</select>
 		<fieldhelp>' . __('Customer branches can be set by default not to print packing slips with the company logo and address. This is useful for companies that ship to customers customers and to show the source of the shipment would be inappropriate. There is an option on the setup of customer branches to ship blind, this setting is the default applied to all new customer branches') . '</fieldhelp>
 	</field>';
-
-// Working days on a week
-echo '<field>
-		<label for="X_WorkingDaysWeek">' . __('Working Days on a Week') . ':</label>
-		<select name="X_WorkingDaysWeek">
-			<option '.($_SESSION['WorkingDaysWeek']=='7'?'selected="selected" ':'').'value="7">7 '.__('working days') . '</option>
-			<option '.($_SESSION['WorkingDaysWeek']=='6'?'selected="selected" ':'').'value="6">6 '.__('working days') . '</option>
-			<option '.($_SESSION['WorkingDaysWeek']=='5'?'selected="selected" ':'').'value="5">5 '.__('working days') . '</option>
-		</select>
-		<fieldhelp>' . __('Number of working days on a week') . '</fieldhelp>
-	</field>';
-
-// DispatchCutOffTime
-echo '<field>
-		<label for="X_DispatchCutOffTime">' . __('Dispatch Cut-Off Time') . ':</label>
-		<select name="X_DispatchCutOffTime">';
-for ($i=0; $i < 24; $i++ )
-	echo '<option value="' . $i . '"' . ($_SESSION['DispatchCutOffTime'] == $i ? ' selected="selected"' : '') . '>' . $i . '</option>';
-echo '</select>
-	<fieldhelp>' . __('Orders entered after this time will default to be dispatched the following day, this can be over-ridden at the time of sales order entry') . '</fieldhelp>
-</field>';
 
 // AllowSalesOfZeroCostItems
 echo '<field>
@@ -746,42 +602,6 @@ echo '</select>
 	<fieldhelp>' . __('This price list is used as a last resort where there is no price set up for an item in the price list that the customer is set up for') . '</fieldhelp>
 </field>';
 
-// Default_Shipper
-$SQL = "SELECT shipper_id, shippername FROM shippers ORDER BY shippername";
-$ErrMsg = __('Could not load shippers');
-$Result = DB_query($SQL, $ErrMsg);
-echo '<field>
-		<label for="X_Default_Shipper">' . __('Default Shipper') . ':</label>
-		<select name="X_Default_Shipper">';
-if ( DB_num_rows($Result) == 0 ) {
-	echo '<option selected="selected" value="">' . __('Unavailable') . '</option>';
-} else {
-	while( $Row = DB_fetch_array($Result) ) {
-		echo '<option '.($_SESSION['Default_Shipper'] == $Row['shipper_id']?'selected="selected" ':'').'value="'.$Row['shipper_id'].'">' . $Row['shippername'] . '</option>';
-	}
-}
-echo '</select>
-	<fieldhelp>' . __('This shipper is used where the best shipper for a customer branch has not been defined previously') . '</fieldhelp>
-</field>';
-
-// DoFreightCalc
-echo '<field>
-		<label for="X_DoFreightCalc">' . __('Do Freight Calculation') . ':</label>
-		<select name="X_DoFreightCalc">
-			<option value="1"' . ($_SESSION['DoFreightCalc'] ? ' selected="selected"' : '') . '>' . __('Yes') . '</option>
-			<option value="0"' . (!$_SESSION['DoFreightCalc'] ? ' selected="selected"' : '') . '>' . __('No') . '</option>
-		</select>
-		<fieldhelp>' . __('If this is set to Yes then the system will attempt to calculate the freight cost of a dispatch based on the weight and cubic and the data defined for each shipper and their rates for shipping to various locations. The results of this calculation will only be meaningful if the data is entered for the item weight and volume in the stock item setup for all items and the freight costs for each shipper properly maintained.') . '</fieldhelp>
-	</field>';
-
-//FreightChargeAppliesIfLessThan
-echo '<field>
-		<label for="X_FreightChargeAppliesIfLessThan">' . __('Apply freight charges if an order is less than') . ':</label>
-		<input type="text" class="number" required="required" title="'.__('The input must be numeric').'" name="X_FreightChargeAppliesIfLessThan" size="12" maxlength="12" value="' . $_SESSION['FreightChargeAppliesIfLessThan'] . '" />
-		<fieldhelp>' . __('This parameter is only effective if Do Freight Calculation is set to Yes. If it is set to 0 then freight is always charged. The total order value is compared to this value in deciding whether or not to charge freight')  . '</fieldhelp>
-	</field>';
-
-
 // AutoDebtorNo
 echo '<field>
 		<label for="X_AutoDebtorNo">' . __('Create Debtor Codes Automatically') . ':</label>
@@ -813,7 +633,7 @@ echo '</select>
 	<fieldhelp>' . __('Set to Automatic - Supplier codes are automatically created - as a sequential number')  . '</fieldhelp>
 </field>';
 
-//==HJ== drop down list for tax category
+//drop down list for tax category (==HJ==)
 $SQL = "SELECT taxcatid, taxcatname FROM taxcategories ORDER BY taxcatname";
 $ErrMsg = __('Could not load tax categories table');
 $Result = DB_query($SQL, $ErrMsg);
@@ -838,20 +658,6 @@ echo '<field>
 		<fieldhelp>' . __('This parameter is what is displayed on tax invoices and credits for the tax authority of the company eg. in Australian this would by A.B.N.: - in NZ it would be GST No: in the UK it would be VAT Regn. No')  . '</fieldhelp>
 	</field>';
 
-// CountryOfOperation
-
-echo '<field>
-		<label for="X_CountryOfOperation">' . __('Country Of Operation') . ':</label>
-		<select name="X_CountryOfOperation">';
-echo '<option selected="selected" value="">' . __('Unavailable') . '</option>';
-foreach ($CountriesArray as $CountryEntry => $CountryName){
-	echo '<option ' . ($_SESSION['CountryOfOperation'] == $CountryEntry?'selected="selected" ':'') . ' value="' . $CountryEntry . '">' . $CountryName  . '</option>';
-}
-
-echo '</select>
-	<fieldhelp>' . __('This parameter is only effective if Do Freight Calculation is set to Yes.')  . '</fieldhelp>
-</field>';
-
 // StandardCostDecimalPlaces
 echo '<field>
 		<label for="X_StandardCostDecimalPlaces">' . __('Standard Cost Decimal Places') . ':</label>
@@ -871,16 +677,6 @@ for ($i=1; $i <= 12; $i++ )
 echo '</select>
 	<fieldhelp>' . __('In stock usage inquiries this determines how many periods of stock usage to show. An average is calculated over this many periods')  . '</fieldhelp>
 </field>';
-
-// StockUsageShowZeroWithinPeriodRange
-echo '<field style="height:30px">
-		<label for="X_StockUsageShowZeroWithinPeriodRange">' . __('Show Zero Counts Within Stock Usage Graph Period Range') . ':</label>
-		<select name="X_StockUsageShowZeroWithinPeriodRange">
-			<option value="1"' . ($_SESSION['StockUsageShowZeroWithinPeriodRange'] ? ' selected="selected"' : '') . '>' . __('Yes') . '</option>
-			<option value="0"' . (!$_SESSION['StockUsageShowZeroWithinPeriodRange'] ? ' selected="selected"' : '') . '>' . __('No') . '</option>
-		</select>
-		<fieldhelp>' . __('Show periods having zero counts within Stock Usage Graph. Choosing yes may show a wider period range than expected.') . '</fieldhelp>
-	</field>';
 
 //Show values on GRN
 echo '<field>
@@ -938,205 +734,13 @@ echo '<field>
 
 // AutoAuthorisePO
 echo '<field>
-		<label for="X_AutoAuthorisePO">' . __('Automatically authorise purchase orders if user has authority') . ':</label>
+		<label for="X_AutoAuthorisePO">' . __('Auto authorise purchase order if user has authority') . ':</label>
 		<select name="X_AutoAuthorisePO">
 			<option value="1"' . ($_SESSION['AutoAuthorisePO'] ? ' selected="selected" ':'') . '>' . __('Yes') . '</option>
 			<option value="0"' . (!$_SESSION['AutoAuthorisePO'] ? ' selected="selected" ':'') . '>' . __('No') . '</option>
 		</select>
 		<fieldhelp>' . __('If the user changing an existing purchase order or adding a new puchase order is set up to authorise purchase orders and the order is within their limit, then the purchase order status is automatically set to authorised') . '</fieldhelp>
 	</field>';
-
-echo '</fieldset><br />';
-
-echo '<fieldset>
-		<legend>' . __('General Settings') . '</legend>';
-
-// YearEnd
-$MonthNames = array( 1=>__('January'),
-			2=>__('February'),
-			3=>__('March'),
-			4=>__('April'),
-			5=>__('May'),
-			6=>__('June'),
-			7=>__('July'),
-			8=>__('August'),
-			9=>__('September'),
-			10=>__('October'),
-			11=>__('November'),
-			12=>__('December') );
-echo '<field>
-		<label for="X_YearEnd">' . __('Financial Year Ends On') . ':</label>
-		<select name="X_YearEnd">';
-for ($i=1; $i <= sizeof($MonthNames); $i++ )
-	echo '<option value="' . $i . '"' . ($_SESSION['YearEnd'] == $i ? ' selected="selected"' : '') . '>' . $MonthNames[$i] . '</option>';
-echo '</select>
-	<fieldhelp>' . __('Defining the month in which the financial year ends enables the system to provide useful defaults for general ledger reports')  . '</fieldhelp>
-</field>';
-
-//PageLength
-echo '<field>
-		<label for="X_PageLength">' . __('Report Page Length') . ':</label>
-		<input type="text" class="integer" pattern="(?!^0\d*$)[\d]{1,3}" title="'.__('The input should be between 1 and 999').'" placeholder="'.__('1 to 999').'" name="X_PageLength" size="4" maxlength="6" value="' . $_SESSION['PageLength'] . '" /></td>
-	</field>';
-
-//DefaultDisplayRecordsMax
-echo '<field>
-		<label for="X_DefaultDisplayRecordsMax">' . __('Default Maximum Number of Records to Show') . ':</label>
-		<input type="text" class="integer" pattern="(?!^0\d*$)[\d]{1,3}" required="required" title="'.__('The records should be between 1 and 999').'" name="X_DefaultDisplayRecordsMax" size="4" maxlength="3" value="' . $_SESSION['DefaultDisplayRecordsMax'] . '" />
-		<fieldhelp>' . __('When pages have code to limit the number of returned records - such as select customer, select supplier and select item, then this will be the default number of records to show for a user who has not changed this for themselves in user settings.') . '</fieldhelp>
-	</field>';
-
-// ShowStockidOnImage
-echo '<field>
-		<label for="X_ShowStockidOnImages">' . __('Show Stockid on images') . ':</label>
-		<select name="X_ShowStockidOnImages">
-			<option value="1"' . ($_SESSION['ShowStockidOnImages'] ? ' selected="selected" ':'') . '>' . __('Yes') . '</option>
-			<option value="0"' . (!$_SESSION['ShowStockidOnImages'] ? ' selected="selected" ':'') . '>' . __('No') . '</option>
-		</select>
-		<fieldhelp>' . __('Show the code inside the thumbnail image of the items') . '</fieldhelp>
-	</field>';
-
-//MaxImageSize
-echo '<field>
-		<label for="X_MaxImageSize">' . __('Maximum Size in KB of uploaded images') . ':</label>
-		<input type="text" class="integer" pattern="(?!^0\d*$)[\d]{1,4}" required="required" title="'.__('The input should be between 1 and 2048').'" placeholder="'.__('1 to 2048').'" name="X_MaxImageSize" size="5" maxlength="4" value="' . $_SESSION['MaxImageSize'] . '" />
-		<fieldhelp>' . __('Picture files of items can be uploaded to the server. The system will check that files uploaded are less than this size (in KB) before they will be allowed to be uploaded. Large pictures will make the system slow and will be difficult to view in the stock maintenance screen.')  . '</fieldhelp>
-	</field>';
-
-//NumberOfMonthMustBeShown
-echo '<field>
-		<label for="X_NumberOfMonthMustBeShown">' . __('Number Of Month Must Be Shown') . ':</label>
-			<input type="text" class="integer" pattern="(?!^0\d*$)[\d]+" required="required" title="'.__('input must be positive integer').'" placeholder="'.__('positive integer').'" name="X_NumberOfMonthMustBeShown" size="4" maxlength="3" value="' . $_SESSION['NumberOfMonthMustBeShown'] . '" />
-			<fieldhelp>' . __('Number of month must be shown on report can be changed with this parameters ex: in CustomerInquiry.php ')  . '</fieldhelp>
-	</field>';
-
-//$Part_pics_dir
-echo '<field>
-		<label for="X_part_pics_dir">' . __('The directory where images are stored') . ':</label>
-		<select name="X_part_pics_dir">';
-$CompanyDirectory = 'companies/' . $_SESSION['DatabaseName'] . '/';
-$DirHandle = dir($CompanyDirectory);
-while ($DirEntry = $DirHandle->read() ){
-	if (is_dir($CompanyDirectory . $DirEntry)
-		AND $DirEntry != '..'
-		AND $DirEntry!='.'
-		AND $DirEntry!='.svn'
-		AND $DirEntry != 'CVS'
-		AND $DirEntry != 'reports'
-		AND $DirEntry != 'locale'
-		AND $DirEntry != 'fonts'   ){
-		if ($_SESSION['part_pics_dir'] == $CompanyDirectory . $DirEntry){
-			echo '<option selected="selected" value="' . $DirEntry . '">' . $DirEntry . '</option>';
-		} else {
-			echo '<option value="' . $DirEntry . '">' . $DirEntry  . '</option>';
-		}
-	}
-}
-echo '</select>
-	<fieldhelp>' . __('The directory under which all image files should be stored. Image files take the format of ItemCode.jpg - they must all be .jpg files and the part code will be the name of the image file. This is named automatically on upload. The system will check to ensure that the image is a .jpg file') . '</fieldhelp>
-</field>';
-
-//$reports_dir
-echo '<field>
-		<label for="X_reports_dir">' . __('The directory where reports are stored') . ':</label>
-		<select name="X_reports_dir">';
-$DirHandle = dir($CompanyDirectory);
-while (false != ($DirEntry = $DirHandle->read())){
-	if (is_dir($CompanyDirectory . $DirEntry)
-		AND $DirEntry != '..'
-		AND $DirEntry != 'includes'
-		AND $DirEntry!='.'
-		AND $DirEntry!='.svn'
-		AND $DirEntry != 'doc'
-		AND $DirEntry != 'css'
-		AND $DirEntry != 'CVS'
-		AND $DirEntry != 'sql'
-		AND $DirEntry != 'part_pics'
-		AND $DirEntry != 'locale'
-		AND $DirEntry != 'fonts'      ){
-		if ($_SESSION['reports_dir'] == $CompanyDirectory . $DirEntry){
-			echo '<option selected="selected" value="' . $DirEntry . '">' . $DirEntry . '</option>';
-		} else {
-			echo '<option value="' . $DirEntry . '">' . $DirEntry  . '</option>';
-		}
-	}
-}
-echo '</select>
-	<fieldhelp>' . __('The directory under which all report pdf files should be created in. A separate directory is recommended') . '</fieldhelp>
-</field>';
-
-// HTTPS_Only
-echo '<field>
-		<label for="X_HTTPS_Only">' . __('Only allow secure socket connections') . ':</label>
-		<select name="X_HTTPS_Only">
-			<option value="1"' . ($_SESSION['HTTPS_Only'] ? ' selected="selected" ':'') . '>' . __('Yes') . '</option>
-			<option value="0"' . (!$_SESSION['HTTPS_Only'] ? ' selected="selected" ':'') . '>' . __('No') . '</option>
-		</select>
-		<fieldhelp>' . __('Force connections to be only over secure sockets - ie encrypted data only') . '</fieldhelp>
-	</field>';
-
-$WikiApplications = array( __('Disabled'),
- 					__('WackoWiki'),
- 					__('MediaWiki'),
-					__('DokuWiki') );
-
-echo '<field>
-		<label for="X_WikiApp">' . __('Wiki application') . ':</label>
-		<select name="X_WikiApp">';
-for ($i=0; $i < sizeof($WikiApplications); $i++ ) {
-	echo '<option '.($_SESSION['WikiApp'] == $WikiApplications[$i] ? 'selected="selected" ' : '').'value="'.$WikiApplications[$i].'">' . $WikiApplications[$i]  . '</option>';
-}
-echo '</select>
-	<fieldhelp>' . __('This feature makes webERP show links to a free form company knowledge base using a wiki. This allows sharing of important company information - about customers, suppliers and products and the set up of work flow menus and/or company procedures documentation')  . '</fieldhelp>
-</field>';
-
-echo '<field>
-		<label for="X_WikiPath">' . __('Wiki Path') . ':</label>
-		<input type="text" name="X_WikiPath" size="40" maxlength="40" value="' . $_SESSION['WikiPath'] . '" />
-		<fieldhelp>' . __('The path to the wiki installation to form the basis of wiki URLs - or the full URL of the wiki.')  . '</fieldhelp>
-	</field>';
-
-echo '<field>
-		<label for="X_geocode_integration">' . __('Geocode Customers and Suppliers') . ':</label>
-		<select name="X_geocode_integration">';
-if ($_SESSION['geocode_integration']==1){
-		echo  '<option selected="selected" value="1">' . __('Geocode Integration Enabled') . '</option>';
-		echo  '<option value="0">' . __('Geocode Integration Disabled') . '</option>';
-} else {
-		echo  '<option selected="selected" value="0">' . __('Geocode Integration Disabled') . '</option>';
-		echo  '<option value="1">' . __('Geocode Integration Enabled') . '</option>';
-}
-echo '</select>
-	<fieldhelp>' . __('This feature will give Latitude and Longitude coordinates to customers and suppliers. Requires access to a mapping provider. You must setup this facility under Main Menu - Setup - Geocode Setup. This feature is experimental.')  . '
-</field>';
-
-echo '<field>
-		<label for="X_Extended_CustomerInfo">' . __('Extended Customer Information') . ':</label>
-		<select name="X_Extended_CustomerInfo">';
-if ($_SESSION['Extended_CustomerInfo']==1){
-		echo  '<option selected="selected" value="1">' . __('Extended Customer Info Enabled') . '</option>';
-		echo  '<option value="0">' . __('Extended Customer Info Disabled') . '</option>';
-} else {
-		echo  '<option selected="selected" value="0">' . __('Extended Customer Info Disabled') . '</option>';
-		echo  '<option value="1">' . __('Extended Customer Info Enabled') . '</option>';
-}
-echo '</select>
-	<fieldhelp>' . __('This feature will give extended information in the Select Customer screen.')  . '</fieldhelp>
-</field>';
-
-echo '<field>
-		<label for="X_Extended_SupplierInfo">' . __('Extended Supplier Information') . ':</label>
-		<select name="X_Extended_SupplierInfo">';
-if ($_SESSION['Extended_SupplierInfo']==1){
-		echo  '<option selected="selected" value="1">' . __('Extended Supplier Info Enabled') . '</option>';
-		echo  '<option value="0">' . __('Extended Supplier Info Disabled') . '</option>';
-} else {
-		echo  '<option selected="selected" value="0">' . __('Extended Supplier Info Disabled') . '</option>';
-		echo  '<option value="1">' . __('Extended Supplier Info Enabled') . '</option>';
-}
-echo '</select>
-	<fieldhelp>' . __('This feature will give extended information in the Select Supplier screen.')  . '</fieldhelp>
-</field>';
 
 echo '<field>
 		<label for="X_ProhibitJournalsToControlAccounts">' . __('Prohibit GL Journals to Control Accounts') . ':</label>
@@ -1214,6 +818,435 @@ echo '</select>
 	<fieldhelp>' . __('Setting this parameter to Yes prevents invoicing and the issue of stock if this would result in negative stock. The stock problem must be corrected before the invoice or issue is allowed to be processed.') . '</fieldhelp>
 </field>' ;
 
+echo '</fieldset><br />';
+
+// ---------------------------------------------
+// ---------- DATE AND TIME --------------------
+// ---------------------------------------------
+echo '<fieldset>
+		<legend>', __('Date and Time'), '</legend>';
+
+// DefaultDateFormat
+echo '<field>
+		<label for="X_DefaultDateFormat">' . __('Default Date Format') . ':</label>
+		<select name="X_DefaultDateFormat">
+			<option '.(($_SESSION['DefaultDateFormat']=='d/m/Y')?'selected="selected" ':'').'value="d/m/Y">' . __('d/m/Y') . '</option>
+			<option '.(($_SESSION['DefaultDateFormat']=='d.m.Y')?'selected="selected" ':'').'value="d.m.Y">' . __('d.m.Y') . '</option>
+			<option '.(($_SESSION['DefaultDateFormat']=='m/d/Y')?'selected="selected" ':'').'value="m/d/Y">' . __('m/d/Y') . '</option>
+			<option '.(($_SESSION['DefaultDateFormat']=='Y/m/d')?'selected="selected" ':'').'value="Y/m/d">' . __('Y/m/d') . '</option>
+			<option '.(($_SESSION['DefaultDateFormat']=='Y-m-d')?'selected="selected" ':'').'value="Y-m-d">' . __('Y-m-d') . '</option>
+		</select>
+		<fieldhelp>' . __('The default date format for entry of dates and display.') . '</fieldhelp>
+	</field>';
+
+// Working days on a week
+echo '<field>
+		<label for="X_WorkingDaysWeek">' . __('Working Days on a Week') . ':</label>
+		<select name="X_WorkingDaysWeek">
+			<option '.($_SESSION['WorkingDaysWeek']=='7'?'selected="selected" ':'').'value="7">7 '.__('working days') . '</option>
+			<option '.($_SESSION['WorkingDaysWeek']=='6'?'selected="selected" ':'').'value="6">6 '.__('working days') . '</option>
+			<option '.($_SESSION['WorkingDaysWeek']=='5'?'selected="selected" ':'').'value="5">5 '.__('working days') . '</option>
+		</select>
+		<fieldhelp>' . __('Number of working days on a week') . '</fieldhelp>
+	</field>';
+
+// Last working days on a week
+echo '<field>
+		<label for="X_LastDayOfWeek">' . __('Last day of the week'). '</label>
+		<select type="text" name="X_LastDayOfWeek" >
+			<option ' . ($_SESSION['LastDayOfWeek'] == 0 ?'selected="selected"':'') . ' value="0">' . __('Sunday') . '</option>
+			<option ' . ($_SESSION['LastDayOfWeek'] == 1 ?'selected="selected"':'') . ' value="1">' . __('Monday') . '</option>
+			<option ' . ($_SESSION['LastDayOfWeek'] == 2 ?'selected="selected"':'') . ' value="2">' . __('Tuesday') . '</option>
+			<option ' . ($_SESSION['LastDayOfWeek'] == 3 ?'selected="selected"':'') . ' value="3">' . __('Wednesday') . '</option>
+			<option ' . ($_SESSION['LastDayOfWeek'] == 4 ?'selected="selected"':'') . ' value="4">' . __('Thursday') . '</option>
+			<option ' . ($_SESSION['LastDayOfWeek'] == 5 ?'selected="selected"':'') . ' value="5">' . __('Friday') . '</option>
+			<option ' . ($_SESSION['LastDayOfWeek'] == 6 ?'selected="selected"':'') . ' value="6">' . __('Saturday') . '</option>
+		</select>
+		<fieldhelp>' .  __('Timesheet entry default to weeks ending on this day').'</fieldhelp>
+	</field>';
+
+echo '</fieldset><br />';
+
+// -------------------------------------
+// ---------- EMAIL --------------------
+// -------------------------------------
+
+echo '<fieldset>
+		<legend>', __('E-Mail'), '</legend>';
+
+//FactoryManagerEmail
+echo '<field>
+		<label for="X_FactoryManagerEmail">' . __('Factory Manager Email Address') . ':</label>
+		<input type="email" name="X_FactoryManagerEmail" size="50" maxlength="50" value="' . $_SESSION['FactoryManagerEmail'] . '" />
+		<fieldhelp>' . __('Work orders automatically created when sales orders are entered will be emailed to this address')  . '</fieldhelp>
+	</field>';
+
+//PurchasingManagerEmail
+echo '<field>
+		<label for="X_PurchasingManagerEmail">' . __('Purchasing Manager Email Address') . ':</label>
+		<input type="email" name="X_PurchasingManagerEmail" size="50" maxlength="50" value="' . $_SESSION['PurchasingManagerEmail'] . '" />
+		<fieldhelp>' . __('The email address for the purchasing manager, used to receive notifications by the tendering system')  . '</fieldhelp>
+	</field>';
+
+//InventoryManagerEmail
+echo '<field>
+		<label for="X_InventoryManagerEmail">' . __('Inventory Manager Email Address') . ':</label>
+		<input type="email" name="X_InventoryManagerEmail" size="50" maxlength="50" value="' . $_SESSION['InventoryManagerEmail'] . '" />
+		<fieldhelp>' . __('The email address for the inventory manager, where notifications of all manual stock adjustments created are sent by the system. Leave blank if no emails should be sent to the inventory manager for manual stock adjustments')  . '</fieldhelp>
+	</field>';
+
+//SMTP Mail
+echo '<field>
+		<label for="X_SmtpSetting">' . __('Using Smtp Mail'). '</label>
+		<select type="text" name="X_SmtpSetting" >';
+		if ($_SESSION['SmtpSetting'] == 0){
+			echo '<option selected="selected" value="0">' . __('No') . '</option>';
+			echo '<option value="1">' . __('Yes') . '</option>';
+		} elseif ($_SESSION['SmtpSetting'] == 1){
+			echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
+			echo '<option value="0">' . __('No') . '</option>';
+		}
+echo '</select>
+	 <fieldhelp>' .  __('The default setting is using mail in default php.ini, if you choose Yes for this selection, you can use the SMTP set in the setup section.').'</fieldhelp>
+</field>';
+
+echo '</fieldset><br />';
+
+// ---------------------------------------------
+// ---------- EXCHANGE RATES -------------------
+// ---------------------------------------------
+echo '<fieldset>
+		<legend>', __('Exchange Rates'), '</legend>';
+
+//UpdateCurrencyRatesDaily
+echo '<field>
+		<label for="X_UpdateCurrencyRatesDaily">' . __('Auto Update Exchange Rates Daily') . ':</label>
+		<select name="X_UpdateCurrencyRatesDaily">
+			<option value="1"' . ($_SESSION['UpdateCurrencyRatesDaily'] != '1'? ' selected="selected" ':'').'>' . __('Automatic') . '</option>
+			<option value="0"' . ($_SESSION['UpdateCurrencyRatesDaily'] == '0'? ' selected="selected" ':'').'>' . __('Manually') . '</option>
+		</select>
+		<fieldhelp>' . __('Automatic updates to exchange rates will retrieve the latest daily rates from either the European Central Bank or Google once per day - when the first user logs in for the day. Manual will never update the rates automatically - exchange rates will need to be maintained manually') . '</fieldhelp>
+	</field>';
+
+echo '<field>
+		<label for="X_ExchangeRateFeed">' . __('Source Exchange Rates From') . ':</label>
+		<select name="X_ExchangeRateFeed">';
+		if ($_SESSION['ExchangeRateFeed'] == 'ECB') {
+			echo '<option value="ECB" selected="selected">' . __('European Central Bank') . '</option>';
+		} else {
+			echo '<option value="ECB">' . __('European Central Bank') . '</option>';
+		}
+		if ($_SESSION['ExchangeRateFeed'] == 'DXR') {
+			echo '<option value="DXR" selected="selected">' . __('Daily Exchange Rates') . '</option>';
+		} else {
+			echo '<option value="DXR">' . __('Daily Exchange Rates') . '</option>';
+		}
+		echo '</select>
+		<fieldhelp>' . __('Specify the source to use for exchange rates') . '</fieldhelp>
+	</field>';
+
+echo '</fieldset><br />';
+
+// ---------------------------------------------
+// ---------- LISTINGS AND REPORTS -------------
+// ---------------------------------------------
+echo '<fieldset>
+		<legend>', __('Listings and Reports'), '</legend>';
+
+//NumberOfMonthMustBeShown
+echo '<field>
+		<label for="X_NumberOfMonthMustBeShown">' . __('Number Of Month Must Be Shown') . ':</label>
+			<input type="text" class="integer" pattern="(?!^0\d*$)[\d]+" required="required" title="'.__('input must be positive integer').'" placeholder="'.__('positive integer').'" name="X_NumberOfMonthMustBeShown" size="4" maxlength="3" value="' . $_SESSION['NumberOfMonthMustBeShown'] . '" />
+			<fieldhelp>' . __('Number of month must be shown on report can be changed with this parameters ex: in CustomerInquiry.php ')  . '</fieldhelp>
+	</field>';
+
+//PageLength
+echo '<field>
+		<label for="X_PageLength">' . __('Report Page Length') . ':</label>
+		<input type="text" class="integer" pattern="(?!^0\d*$)[\d]{1,3}" title="'.__('The input should be between 1 and 999').'" placeholder="'.__('1 to 999').'" name="X_PageLength" size="4" maxlength="6" value="' . $_SESSION['PageLength'] . '" /></td>
+	</field>';
+
+//DefaultDisplayRecordsMax
+echo '<field>
+		<label for="X_DefaultDisplayRecordsMax">' . __('Default Maximum Number of Records to Show') . ':</label>
+		<input type="text" class="integer" pattern="(?!^0\d*$)[\d]{1,3}" required="required" title="'.__('The records should be between 1 and 999').'" name="X_DefaultDisplayRecordsMax" size="4" maxlength="3" value="' . $_SESSION['DefaultDisplayRecordsMax'] . '" />
+		<fieldhelp>' . __('When pages have code to limit the number of returned records - such as select customer, select supplier and select item, then this will be the default number of records to show for a user who has not changed this for themselves in user settings.') . '</fieldhelp>
+	</field>';
+
+//$reports_dir
+echo '<field>
+		<label for="X_reports_dir">' . __('The directory where reports are stored') . ':</label>
+		<select name="X_reports_dir">';
+$CompanyDirectory = 'companies/' . $_SESSION['DatabaseName'] . '/';
+$DirHandle = dir($CompanyDirectory);
+while (false != ($DirEntry = $DirHandle->read())){
+	if (is_dir($CompanyDirectory . $DirEntry)
+		AND $DirEntry != '..'
+		AND $DirEntry != 'includes'
+		AND $DirEntry!='.'
+		AND $DirEntry!='.svn'
+		AND $DirEntry != 'doc'
+		AND $DirEntry != 'css'
+		AND $DirEntry != 'CVS'
+		AND $DirEntry != 'sql'
+		AND $DirEntry != 'part_pics'
+		AND $DirEntry != 'locale'
+		AND $DirEntry != 'fonts'      ){
+		if ($_SESSION['reports_dir'] == $CompanyDirectory . $DirEntry){
+			echo '<option selected="selected" value="' . $DirEntry . '">' . $DirEntry . '</option>';
+		} else {
+			echo '<option value="' . $DirEntry . '">' . $DirEntry  . '</option>';
+		}
+	}
+}
+echo '</select>
+	<fieldhelp>' . __('The directory under which all report pdf files should be created in. A separate directory is recommended') . '</fieldhelp>
+</field>';
+
+echo '</fieldset><br />';
+
+// ---------------------------------------------
+// ---------- PICKING, SHIPPING AND FREIGHT ----
+// ---------------------------------------------
+echo '<fieldset>
+		<legend>', __('Picking, Shipping and Freight'), '</legend>';
+
+//Default Packing Note Format
+echo '<field>
+		<label for="X_PackNoteFormat">' . __('Packing Slip Format') . ':</label>
+		<select name="X_PackNoteFormat">
+			<option value="1"' . ($_SESSION['PackNoteFormat'] == '1' ? ' selected="selected"' : '') . '>' . __('Laser Printed') . '</option>
+			<option value="2"' . ($_SESSION['PackNoteFormat'] == '2' ? ' selected="selected"' : '') . '>' . __('Special Stationery') . '</option>
+		</select>
+		<fieldhelp>' . __('Choose the format that packing notes should be printed by default') . '</fieldhelp>
+	</field>';
+
+//'RequirePickingNote'
+echo '<field style="height:30px">
+		<label for="X_RequirePickingNote">' . __('Picking note required before order can be delivered') . ':</label>
+		<select name="X_RequirePickingNote">
+			<option value="1"' . ($_SESSION['RequirePickingNote'] == '1' ? ' selected="selected"' : '') . '>' . __('Yes') . '</option>
+			<option value="0"' . ($_SESSION['RequirePickingNote'] == '0' ? ' selected="selected"' : '') . '>' . __('No') . '</option>
+		</select>
+		<fieldhelp>' . __('Select whether or not a picking note must be produced before an order can be delivered to a customer.') . '</fieldhelp>
+	</field>';
+
+// DispatchCutOffTime
+echo '<field>
+		<label for="X_DispatchCutOffTime">' . __('Dispatch Cut-Off Time') . ':</label>
+		<select name="X_DispatchCutOffTime">';
+for ($i=0; $i < 24; $i++ )
+	echo '<option value="' . $i . '"' . ($_SESSION['DispatchCutOffTime'] == $i ? ' selected="selected"' : '') . '>' . $i . '</option>';
+echo '</select>
+	<fieldhelp>' . __('Orders entered after this time will default to be dispatched the following day, this can be over-ridden at the time of sales order entry') . '</fieldhelp>
+</field>';
+
+// Default_Shipper
+$SQL = "SELECT shipper_id, shippername FROM shippers ORDER BY shippername";
+$ErrMsg = __('Could not load shippers');
+$Result = DB_query($SQL, $ErrMsg);
+echo '<field>
+		<label for="X_Default_Shipper">' . __('Default Shipper') . ':</label>
+		<select name="X_Default_Shipper">';
+if ( DB_num_rows($Result) == 0 ) {
+	echo '<option selected="selected" value="">' . __('Unavailable') . '</option>';
+} else {
+	while( $Row = DB_fetch_array($Result) ) {
+		echo '<option '.($_SESSION['Default_Shipper'] == $Row['shipper_id']?'selected="selected" ':'').'value="'.$Row['shipper_id'].'">' . $Row['shippername'] . '</option>';
+	}
+}
+echo '</select>
+	<fieldhelp>' . __('This shipper is used where the best shipper for a customer branch has not been defined previously') . '</fieldhelp>
+	</field>';
+
+// DoFreightCalc
+echo '<field>
+		<label for="X_DoFreightCalc">' . __('Do Freight Calculation') . ':</label>
+		<select name="X_DoFreightCalc">
+			<option value="1"' . ($_SESSION['DoFreightCalc'] ? ' selected="selected"' : '') . '>' . __('Yes') . '</option>
+			<option value="0"' . (!$_SESSION['DoFreightCalc'] ? ' selected="selected"' : '') . '>' . __('No') . '</option>
+		</select>
+		<fieldhelp>' . __('If this is set to Yes then the system will attempt to calculate the freight cost of a dispatch based on the weight and cubic and the data defined for each shipper and their rates for shipping to various locations. The results of this calculation will only be meaningful if the data is entered for the item weight and volume in the stock item setup for all items and the freight costs for each shipper properly maintained.') . '</fieldhelp>
+	</field>';
+
+//FreightChargeAppliesIfLessThan
+echo '<field>
+		<label for="X_FreightChargeAppliesIfLessThan">' . __('Apply freight charges if an order is less than') . ':</label>
+		<input type="text" class="number" required="required" title="'.__('The input must be numeric').'" name="X_FreightChargeAppliesIfLessThan" size="12" maxlength="12" value="' . $_SESSION['FreightChargeAppliesIfLessThan'] . '" />
+		<fieldhelp>' . __('This parameter is only effective if Do Freight Calculation is set to Yes. If it is set to 0 then freight is always charged. The total order value is compared to this value in deciding whether or not to charge freight')  . '</fieldhelp>
+	</field>';
+
+// CountryOfOperation
+echo '<field>
+		<label for="X_CountryOfOperation">' . __('Country Of Operation') . ':</label>
+		<select name="X_CountryOfOperation">';
+echo '<option selected="selected" value="">' . __('Unavailable') . '</option>';
+foreach ($CountriesArray as $CountryEntry => $CountryName){
+	echo '<option ' . ($_SESSION['CountryOfOperation'] == $CountryEntry?'selected="selected" ':'') . ' value="' . $CountryEntry . '">' . $CountryName  . '</option>';
+}
+echo '</select>
+	<fieldhelp>' . __('This parameter is only effective if Do Freight Calculation is set to Yes.')  . '</fieldhelp>
+</field>';
+
+echo '</fieldset><br />';
+
+// -------------------------------------
+// ---------- QUALITY MGT SYSTEM -------
+// -------------------------------------
+echo '<fieldset>
+		<legend>', __('Quality Management System (QMS)'), '</legend>';
+
+echo '<field>
+		<label for="X_QualityProdSpecText">' . __('Text for Quality Product Specification') . ':</label>
+		<textarea name="X_QualityProdSpecText" rows="3" cols="40">' . $_SESSION['QualityProdSpecText'] . '</textarea>
+		<fieldhelp>' . __('This text appears on product specifications') . '</fieldhelp>
+	</field>';
+
+echo '<field>
+		<label for="X_QualityCOAText">' . __('Text for Quality Product Certifications') . ':</label>
+		<textarea name="X_QualityCOAText" rows="3" cols="40">' . $_SESSION['QualityCOAText'] . '</textarea>
+		<fieldhelp>' . __('This text appears on product certifications') . '</fieldhelp>
+	</field>';
+
+echo '<field>
+		<label for="X_QualityLogSamples">' . __('Auto Log Quality Samples'). '</label>
+		<select type="text" name="X_QualityLogSamples" >';
+		if ($_SESSION['QualityLogSamples'] == 0){
+			echo '<option selected="selected" value="0">' . __('No') . '</option>';
+			echo '<option value="1">' . __('Yes') . '</option>';
+		} elseif ($_SESSION['QualityLogSamples'] == 1){
+			echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
+			echo '<option value="0">' . __('No') . '</option>';
+		}
+echo '</select>
+	<fieldhelp>' .  __('The flag determines if the system creates quality samples automatically for each lot during P/O Receipt and W/O Receipt transactions.').'</fieldhelp>
+</field>';
+
+echo '</fieldset><br />';
+
+// ---------------------------------------------
+// ---------- STOCK IMAGES ---------------------
+// ---------------------------------------------
+echo '<fieldset>
+		<legend>', __('Stock Images'), '</legend>';
+
+//ShowStockidOnImage
+echo '<field>
+		<label for="X_ShowStockidOnImages">' . __('Show Stockid on images') . ':</label>
+		<select name="X_ShowStockidOnImages">
+			<option value="1"' . ($_SESSION['ShowStockidOnImages'] ? ' selected="selected" ':'') . '>' . __('Yes') . '</option>
+			<option value="0"' . (!$_SESSION['ShowStockidOnImages'] ? ' selected="selected" ':'') . '>' . __('No') . '</option>
+		</select>
+		<fieldhelp>' . __('Show the code inside the thumbnail image of the items') . '</fieldhelp>
+	</field>';
+
+//$Part_pics_dir
+echo '<field>
+		<label for="X_part_pics_dir">' . __('The directory where images are stored') . ':</label>
+		<select name="X_part_pics_dir">';
+$CompanyDirectory = 'companies/' . $_SESSION['DatabaseName'] . '/';
+$DirHandle = dir($CompanyDirectory);
+while ($DirEntry = $DirHandle->read() ){
+	if (is_dir($CompanyDirectory . $DirEntry)
+		AND $DirEntry != '..'
+		AND $DirEntry!='.'
+		AND $DirEntry!='.svn'
+		AND $DirEntry != 'CVS'
+		AND $DirEntry != 'reports'
+		AND $DirEntry != 'locale'
+		AND $DirEntry != 'fonts'   ){
+		if ($_SESSION['part_pics_dir'] == $CompanyDirectory . $DirEntry){
+			echo '<option selected="selected" value="' . $DirEntry . '">' . $DirEntry . '</option>';
+		} else {
+			echo '<option value="' . $DirEntry . '">' . $DirEntry  . '</option>';
+		}
+	}
+}
+echo '</select>
+	<fieldhelp>' . __('The directory under which all image files should be stored. Image files take the format of ItemCode.jpg - they must all be .jpg files and the part code will be the name of the image file. This is named automatically on upload. The system will check to ensure that the image is a .jpg file') . '</fieldhelp>
+</field>';
+
+//MaxImageSize
+echo '<field>
+		<label for="X_MaxImageSize">' . __('Maximum Size in KB of uploaded images') . ':</label>
+		<input type="text" class="integer" pattern="(?!^0\d*$)[\d]{1,4}" required="required" title="'.__('The input should be between 1 and 2048').'" placeholder="'.__('1 to 2048').'" name="X_MaxImageSize" size="5" maxlength="4" value="' . $_SESSION['MaxImageSize'] . '" />
+		<fieldhelp>' . __('Picture files of items can be uploaded to the server. The system will check that files uploaded are less than this size (in KB) before they will be allowed to be uploaded. Large pictures will make the system slow and will be difficult to view in the stock maintenance screen.')  . '</fieldhelp>
+	</field>';
+
+echo '</fieldset><br />';
+
+// ---------------------------------------------
+// ---------- SYSTEM ---------------------------
+// ---------------------------------------------
+echo '<fieldset>
+		<legend>', __('System'), '</legend>';
+
+/*Perform Database maintenance DB_Maintenance*/
+echo '<field>
+		<label for="X_DB_Maintenance">' . __('Perform Database Maintenance At Logon') . ':</label>
+		<select name="X_DB_Maintenance">';
+	if ($_SESSION['DB_Maintenance']=='1'){
+		echo '<option selected="selected" value="1">' . __('Daily') . '</option>';
+	} else {
+		echo '<option value="1">' . __('Daily') . '</option>';
+	}
+	if ($_SESSION['DB_Maintenance']=='7'){
+		echo '<option selected="selected" value="7">' . __('Weekly') . '</option>';
+	} else {
+		echo '<option value="7">' . __('Weekly') . '</option>';
+	}
+	if ($_SESSION['DB_Maintenance']=='30'){
+		echo '<option selected="selected" value="30">' . __('Monthly') . '</option>';
+	} else {
+		echo '<option value="30">' . __('Monthly') . '</option>';
+	}
+	if ($_SESSION['DB_Maintenance']=='0'){
+		echo '<option selected="selected" value="0">' . __('Never') . '</option>';
+	} else {
+		echo '<option value="0">' . __('Never') . '</option>';
+	}
+	if ($_SESSION['DB_Maintenance']=='-1'){
+		echo '<option selected="selected" value="-1">' . __('Allow SysAdmin Access Only') . '</option>';
+	} else {
+		echo '<option value="-1">' . __('Allow SysAdmin Access Only') . '</option>';
+	}
+
+	echo '</select>
+		<fieldhelp>' . __('Runs DB_Maintenance function in ConnectDB_XXXX.php at regular intervals (checked every user login). [Allow Sysadmin Access Only] allows only users with security role Administrator to login.') . '</fieldhelp>
+	</field>';
+
+// HTTPS_Only
+echo '<field>
+		<label for="X_HTTPS_Only">' . __('Only allow secure socket connections') . ':</label>
+		<select name="X_HTTPS_Only">
+			<option value="1"' . ($_SESSION['HTTPS_Only'] ? ' selected="selected" ':'') . '>' . __('Yes') . '</option>
+			<option value="0"' . (!$_SESSION['HTTPS_Only'] ? ' selected="selected" ':'') . '>' . __('No') . '</option>
+		</select>
+		<fieldhelp>' . __('Force connections to be only over secure sockets - ie encrypted data only') . '</fieldhelp>
+	</field>';
+
+// DefaultTheme:
+if (is_writable('config.php')) {
+	echo '<field>
+			<label for="X_DefaultTheme">' . __('Default Theme') . ':</label>
+			<select name="X_DefaultTheme">';
+	$ThemeDirectories = scandir($PathPrefix . 'css');// List directories inside ~/css. Each diretory is a theme.
+	foreach($ThemeDirectories as $ThemeName) {
+		if (is_dir('css/'.$ThemeName) AND $ThemeName!='.' AND $ThemeName!='..' AND $ThemeName!='.svn') {
+			echo '<option';
+			if ($DefaultTheme == $ThemeName) {
+				echo ' selected="selected"';
+			}
+			echo ' value="'. $ThemeName.'">' . $ThemeName . '</option>';
+		}
+	}
+	echo '</select>
+		<fieldhelp>' . __('The default theme to use for the login screen and the setup of new users. The users\' theme selection will override it.') . '</fieldhelp>
+	</field>';
+} else {
+	echo '<input type="hidden" name="X_DefaultTheme" value="' . $DefaultTheme . '" />';
+}
+
 //Months of Audit Trail to Keep
 echo '<field>
 		<label for="X_MonthsAuditTrail">' . __('Months of Audit Trail to Retain') . ':</label>
@@ -1246,6 +1279,58 @@ echo '<field>
 		<fieldhelp>' . __('The path to the directory where the log files will be stored. Note the apache user must have write permissions on this directory.') . '</fieldhelp>
 </field>';
 
+// StockUsageShowZeroWithinPeriodRange
+echo '<field style="height:30px">
+		<label for="X_StockUsageShowZeroWithinPeriodRange">' . __('Show zero counts in stock usage graph period range') . ':</label>
+		<select name="X_StockUsageShowZeroWithinPeriodRange">
+			<option value="1"' . ($_SESSION['StockUsageShowZeroWithinPeriodRange'] ? ' selected="selected"' : '') . '>' . __('Yes') . '</option>
+			<option value="0"' . (!$_SESSION['StockUsageShowZeroWithinPeriodRange'] ? ' selected="selected"' : '') . '>' . __('No') . '</option>
+		</select>
+		<fieldhelp>' . __('Show periods having zero counts within Stock Usage Graph. Choosing yes may show a wider period range than expected.') . '</fieldhelp>
+	</field>';
+
+echo '<field>
+		<label for="X_geocode_integration">' . __('Geocode Customers and Suppliers') . ':</label>
+		<select name="X_geocode_integration">';
+if ($_SESSION['geocode_integration']==1){
+		echo  '<option selected="selected" value="1">' . __('Geocode Integration Enabled') . '</option>';
+		echo  '<option value="0">' . __('Geocode Integration Disabled') . '</option>';
+} else {
+		echo  '<option selected="selected" value="0">' . __('Geocode Integration Disabled') . '</option>';
+		echo  '<option value="1">' . __('Geocode Integration Enabled') . '</option>';
+}
+echo '</select>
+	<fieldhelp>' . __('This feature will give Latitude and Longitude coordinates to customers and suppliers. Requires access to a mapping provider. You must setup this facility under Main Menu - Setup - Geocode Setup. This feature is experimental.')  . '
+</field>';
+
+echo '<field>
+		<label for="X_Extended_CustomerInfo">' . __('Extended Customer Information') . ':</label>
+		<select name="X_Extended_CustomerInfo">';
+if ($_SESSION['Extended_CustomerInfo']==1){
+		echo  '<option selected="selected" value="1">' . __('Extended Customer Info Enabled') . '</option>';
+		echo  '<option value="0">' . __('Extended Customer Info Disabled') . '</option>';
+} else {
+		echo  '<option selected="selected" value="0">' . __('Extended Customer Info Disabled') . '</option>';
+		echo  '<option value="1">' . __('Extended Customer Info Enabled') . '</option>';
+}
+echo '</select>
+	<fieldhelp>' . __('This feature will give extended information in the Select Customer screen.')  . '</fieldhelp>
+</field>';
+
+echo '<field>
+		<label for="X_Extended_SupplierInfo">' . __('Extended Supplier Information') . ':</label>
+		<select name="X_Extended_SupplierInfo">';
+if ($_SESSION['Extended_SupplierInfo']==1){
+		echo  '<option selected="selected" value="1">' . __('Extended Supplier Info Enabled') . '</option>';
+		echo  '<option value="0">' . __('Extended Supplier Info Disabled') . '</option>';
+} else {
+		echo  '<option selected="selected" value="0">' . __('Extended Supplier Info Disabled') . '</option>';
+		echo  '<option value="1">' . __('Extended Supplier Info Enabled') . '</option>';
+}
+echo '</select>
+	<fieldhelp>' . __('This feature will give extended information in the Select Supplier screen.')  . '</fieldhelp>
+</field>';
+
 //DefineControlledOnWOEntry
 echo '<field>
 		<label for="X_DefineControlledOnWOEntry">' . __('Controlled Items Defined At Work Order Entry') . ':</label>
@@ -1256,21 +1341,93 @@ echo '<field>
 		<fieldhelp>' . __('When set to yes, controlled items are defined at the time of the work order creation. Otherwise controlled items (serial numbers and batch/roll/lot references) are entered at the time the finished items are received against the work order') . '</fieldhelp>
 	</field>';
 
-//AutoCreateWOs
 echo '<field>
-		<label for="X_AutoCreateWOs">' . __('Auto Create Work Orders') . ':</label>
-		<select name="X_AutoCreateWOs">';
-if ($_SESSION['AutoCreateWOs']==0) {
-	echo '<option selected="selected" value="0">' . __('No') . '</option>';
-	echo '<option value="1">' . __('Yes') . '</option>';
-} else {
-	echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
-	echo '<option value="0">' . __('No') . '</option>';
+		<label for="X_ShortcutMenu">' . __('Allow use of short-cut menus'). '</label>
+		<select type="text" name="X_ShortcutMenu" >';
+		if ($_SESSION['ShortcutMenu'] == 0){
+			echo '<option selected="selected" value="0">' . __('No') . '</option>';
+			echo '<option value="1">' . __('Yes') . '</option>';
+		} elseif ($_SESSION['ShortcutMenu'] == 1){
+			echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
+			echo '<option value="0">' . __('No') . '</option>';
+		}
+echo '</select>
+	<fieldhelp>' .  __('The flag determines if the system allows users to create the javascript short cut menu - this can cause confusion to some users with some themes.').'</fieldhelp>
+</field>';
+
+echo '</fieldset><br />';
+
+// ---------------------------------------------
+// ---------- TRANSLATIONS ---------------------
+// ---------------------------------------------
+echo '<fieldset>
+		<legend>', __('Translations'), '</legend>';
+
+// ItemDescriptionLanguages
+if (!isset($_POST['X_ItemDescriptionLanguages'])){
+	$_POST['X_ItemDescriptionLanguages'] = explode(',',$_SESSION['ItemDescriptionLanguages']);
+}
+echo '<field>
+		<label for="X_ItemDescriptionLanguages">' . __('Languages to Maintain Translations for Item Descriptions') . ':</label>
+		<select name="X_ItemDescriptionLanguages[]" size="5" multiple="multiple" >';
+
+		echo '<option value=""' . (count($LanguagesArray)==0 ? '':'selected="selected"') . '>' . __('None')  . '</option>';
+foreach ($LanguagesArray as $LanguageEntry => $LanguageName){
+	if (isset($_POST['X_ItemDescriptionLanguages']) AND in_array($LanguageEntry,$_POST['X_ItemDescriptionLanguages'])){
+		echo '<option selected="selected" value="' . $LanguageEntry . '">' . $LanguageName['LanguageName']  . '</option>';
+	} elseif ($LanguageEntry != $DefaultLanguage) {
+		echo '<option value="' . $LanguageEntry . '">' . $LanguageName['LanguageName']  . '</option>';
+	}
 }
 echo '</select>
-	<fieldhelp>' . __('Setting this parameter to Yes will ensure that when a sales order is placed if there is insufficient stock then a new work order is created at the default factory location') . '</fieldhelp>
-</field>' ;
+	<fieldhelp>' . __('Select the languages in which translations of the item description will be maintained. The default language is excluded.') . '</fieldhelp>
+</field>';
 
+// Google Translator API Key
+echo '<field>
+		<label for="X_GoogleTranslatorAPIKey">' . __('Google Translator API Key') . ':</label>
+		<input type="text" name="X_GoogleTranslatorAPIKey" size="25" maxlength="50" value="' . $_SESSION['GoogleTranslatorAPIKey'] . '" />
+		<fieldhelp>' . __('Google Translator API Key to allow automatic translations. More info at https://cloud.google.com/translate/')  . '</fieldhelp>
+	</field>';
+
+echo '</fieldset><br />';
+
+// ---------------------------------------------
+// ---------- WIKI (KNOWLEDGEBASE) INTEGRATION -
+// ---------------------------------------------
+echo '<fieldset>
+		<legend>', __('Wiki Integration (Knowledgebase)'), '</legend>';
+
+$WikiApplications = array( __('Disabled'),
+ 					__('WackoWiki'),
+ 					__('MediaWiki'),
+					__('DokuWiki') );
+
+echo '<field>
+		<label for="X_WikiApp">' . __('Wiki application') . ':</label>
+		<select name="X_WikiApp">';
+for ($i=0; $i < sizeof($WikiApplications); $i++ ) {
+	echo '<option '.($_SESSION['WikiApp'] == $WikiApplications[$i] ? 'selected="selected" ' : '').'value="'.$WikiApplications[$i].'">' . $WikiApplications[$i]  . '</option>';
+}
+echo '</select>
+	<fieldhelp>' . __('This feature makes webERP show links to a free form company knowledge base using a wiki. This allows sharing of important company information - about customers, suppliers and products and the set up of work flow menus and/or company procedures documentation')  . '</fieldhelp>
+</field>';
+
+echo '<field>
+		<label for="X_WikiPath">' . __('Wiki Path') . ':</label>
+		<input type="text" name="X_WikiPath" size="40" maxlength="40" value="' . $_SESSION['WikiPath'] . '" />
+		<fieldhelp>' . __('The path to the wiki installation to form the basis of wiki URLs - or the full URL of the wiki.')  . '</fieldhelp>
+	</field>';
+
+echo '</fieldset><br />';
+
+// -------------------------------------
+// ---------- WORK ORDERS --------------
+// -------------------------------------
+echo '<fieldset>
+		<legend>', __('Work Orders'), '</legend>';
+
+//DefaultFactoryLocation
 echo '<field>
 		<label for="X_DefaultFactoryLocation">' . __('Default Factory Location') . ':</label>
 		<select name="X_DefaultFactoryLocation">';
@@ -1289,98 +1446,34 @@ echo '</select>
 	<fieldhelp>' . __('This location is the location where work orders will be created from when the auto create work orders option is activated') . '</fieldhelp>
 </field>';
 
+//AutoCreateWOs
 echo '<field>
-		<label for="X_FactoryManagerEmail">' . __('Factory Manager Email Address') . ':</label>
-		<input type="email" name="X_FactoryManagerEmail" size="50" maxlength="50" value="' . $_SESSION['FactoryManagerEmail'] . '" />
-		<fieldhelp>' . __('Work orders automatically created when sales orders are entered will be emailed to this address')  . '</fieldhelp>
-	</field>';
-
-echo '<field>
-		<label for="X_PurchasingManagerEmail">' . __('Purchasing Manager Email Address') . ':</label>
-		<input type="email" name="X_PurchasingManagerEmail" size="50" maxlength="50" value="' . $_SESSION['PurchasingManagerEmail'] . '" />
-		<fieldhelp>' . __('The email address for the purchasing manager, used to receive notifications by the tendering system')  . '</fieldhelp>
-	</field>';
-
-echo '<field>
-		<label for="X_InventoryManagerEmail">' . __('Inventory Manager Email Address') . ':</label>
-		<input type="email" name="X_InventoryManagerEmail" size="50" maxlength="50" value="' . $_SESSION['InventoryManagerEmail'] . '" />
-		<fieldhelp>' . __('The email address for the inventory manager, where notifications of all manual stock adjustments created are sent by the system. Leave blank if no emails should be sent to the inventory manager for manual stock adjustments')  . '</fieldhelp>
-	</field>';
-
-echo '<field>
-		<label for="X_SmtpSetting">' . __('Using Smtp Mail'). '</label>
-		<select type="text" name="X_SmtpSetting" >';
-		if ($_SESSION['SmtpSetting'] == 0){
-			echo '<option selected="selected" value="0">' . __('No') . '</option>';
-			echo '<option value="1">' . __('Yes') . '</option>';
-		} elseif ($_SESSION['SmtpSetting'] == 1){
-			echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
-			echo '<option value="0">' . __('No') . '</option>';
-		}
+		<label for="X_AutoCreateWOs">' . __('Auto Create Work Orders') . ':</label>
+		<select name="X_AutoCreateWOs">';
+if ($_SESSION['AutoCreateWOs']==0) {
+	echo '<option selected="selected" value="0">' . __('No') . '</option>';
+	echo '<option value="1">' . __('Yes') . '</option>';
+} else {
+	echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
+	echo '<option value="0">' . __('No') . '</option>';
+}
 echo '</select>
-	 <fieldhelp>' .  __('The default setting is using mail in default php.ini, if you choose Yes for this selection, you can use the SMTP set in the setup section.').'</fieldhelp>
-</field>';
+	<fieldhelp>' . __('Setting this parameter to Yes will ensure that when a sales order is placed if there is insufficient stock then a new work order is created at the default factory location') . '</fieldhelp>
+</field>' ;
 
-echo '<field>
-		<label for="X_QualityProdSpecText">' . __('Text for Quality Product Specification') . ':</label>
-		<textarea name="X_QualityProdSpecText" rows="3" cols="40">' . $_SESSION['QualityProdSpecText'] . '</textarea>
-		<fieldhelp>' . __('This text appears on product specifications') . '</fieldhelp>
-	</field>';
+echo '</fieldset><br />';
 
-echo '<field>
-		<label for="X_QualityCOAText">' . __('Text for Quality Product Certifications') . ':</label>
-		<textarea name="X_QualityCOAText" rows="3" cols="40">' . $_SESSION['QualityCOAText'] . '</textarea>
-		<fieldhelp>' . __('This text appears on product certifications') . '</fieldhelp>
-	</field>';
+// -------------------------------------
+// ---------- END SUB-SECTIONS ---------
+// -------------------------------------
 
-echo '<field>
-		<label for="X_QualityLogSamples">' . __('Auto Log Quality Samples'). '</label>
-		<select type="text" name="X_QualityLogSamples" >';
-		if ($_SESSION['QualityLogSamples'] == 0){
-			echo '<option selected="selected" value="0">' . __('No') . '</option>';
-			echo '<option value="1">' . __('Yes') . '</option>';
-		} elseif ($_SESSION['QualityLogSamples'] == 1){
-			echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
-			echo '<option value="0">' . __('No') . '</option>';
-		}
-echo '</select>
-	<fieldhelp>' .  __('The flag determines if the system creates quality samples automatically for each lot during P/O Receipt and W/O Receipt transactions.').'</fieldhelp>
-</field>';
+// end "super-section"
+echo '</fieldset>
+</fieldset>';
 
-echo '<field>
-		<label for="X_ShortcutMenu">' . __('Allow use of short-cut menus'). '</label>
-		<select type="text" name="X_ShortcutMenu" >';
-		if ($_SESSION['ShortcutMenu'] == 0){
-			echo '<option selected="selected" value="0">' . __('No') . '</option>';
-			echo '<option value="1">' . __('Yes') . '</option>';
-		} elseif ($_SESSION['ShortcutMenu'] == 1){
-			echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
-			echo '<option value="0">' . __('No') . '</option>';
-		}
-echo '</select>
-	<fieldhelp>' .  __('The flag determines if the system allows users to create the javascript short cut menu - this can cause confusion to some users with some themes.').'</fieldhelp>
-</field>
-
-	<field>
-		<label for="X_LastDayOfWeek">' . __('Last day of the week'). '</label>
-		<select type="text" name="X_LastDayOfWeek" >
-			<option ' . ($_SESSION['LastDayOfWeek'] == 0 ?'selected="selected"':'') . ' value="0">' . __('Sunday') . '</option>
-			<option ' . ($_SESSION['LastDayOfWeek'] == 1 ?'selected="selected"':'') . ' value="1">' . __('Monday') . '</option>
-			<option ' . ($_SESSION['LastDayOfWeek'] == 2 ?'selected="selected"':'') . ' value="2">' . __('Tuesday') . '</option>
-			<option ' . ($_SESSION['LastDayOfWeek'] == 3 ?'selected="selected"':'') . ' value="3">' . __('Wednesday') . '</option>
-			<option ' . ($_SESSION['LastDayOfWeek'] == 4 ?'selected="selected"':'') . ' value="4">' . __('Thursday') . '</option>
-			<option ' . ($_SESSION['LastDayOfWeek'] == 5 ?'selected="selected"':'') . ' value="5">' . __('Friday') . '</option>
-			<option ' . ($_SESSION['LastDayOfWeek'] == 6 ?'selected="selected"':'') . ' value="6">' . __('Saturday') . '</option>
-		</select>
-		<fieldhelp>' .  __('Timesheet entry default to weeks ending on this day').'</fieldhelp>
-	</field>';
-
-	echo '</fieldset>
-	</fieldset>';
-
-	echo '<div class="centre">
-			<input type="submit" name="submit" value="' . __('Update') . '" />
-		</div>
-	</form>';
+echo '<div class="centre">
+		<input type="submit" name="submit" value="' . __('Update') . '" />
+	</div>
+</form>';
 
 include('includes/footer.php');
