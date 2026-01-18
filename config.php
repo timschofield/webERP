@@ -110,4 +110,4 @@ if ($RootPath == "/" OR $RootPath == "\\") {
 
 // The real path to the symlinked part_pics directory, to prevent DomPDF from being unable to access images
 // $SymlinkImageDir = ''; // if no symlink is used.
-$SymlinkImageDir = '/var/www/vhosts/kapal-laut.com/httpdocs/image/catalog/KL/part_pics'; // if symlink is used.
+// Moved to KLConfig.php
