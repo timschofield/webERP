@@ -386,7 +386,7 @@ function AssignLocationsToSPG($UserID, $LocationCode) {
 					WHERE userid = '" . $_POST['UserID'] . "'";
 
 	$ErrMsg = __('The default user locations could not be deleted because');
-	$Result = DB_query($LocationSql, $ErrMsg, '');
+	DB_query($LocationSql, $ErrMsg, '');
 
 	// Assign the default location to the user
 	$LocationSql = "INSERT INTO locationusers (loccode,
@@ -400,7 +400,7 @@ function AssignLocationsToSPG($UserID, $LocationCode) {
 		1
 	)";
 	$ErrMsg = __('The default user locations could not be processed because');
-	$Result = DB_query($LocationSql, $ErrMsg, '');
+	DB_query($LocationSql, $ErrMsg, '');
 
 	// Give SPG rights ALSO to KANTO location (needed for internal requests)
 	$LocationSql = "INSERT INTO locationusers (loccode,
@@ -413,6 +413,5 @@ function AssignLocationsToSPG($UserID, $LocationCode) {
 		1,
 		0
 	)";
-	$Result = DB_query($LocationSql, $ErrMsg);
-
+	DB_query($LocationSql, $ErrMsg);
 }
