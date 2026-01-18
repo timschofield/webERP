@@ -23,8 +23,8 @@ TRUNCATE test_erp_archive.`klconsignment`;
 INSERT INTO test_erp_archive.klconsignment SELECT * FROM kl_erp_archive.klconsignment;
 
 TRUNCATE test_erp_archive.`loctransfers`;
-INSERT INTO test_erp_archive.loctransfers (loctransferid, reference, stockid, shipqty, recqty, shipdate, recdate, shiploc, recloc)
-SELECT loctransferid, reference, stockid, shipqty, recqty, shipdate, recdate, shiploc, recloc
+INSERT INTO test_erp_archive.loctransfers (loctransferid, reference, stockid, shipqty, recqty, shipdate, recdate, shiploc, recloc, reason)
+SELECT loctransferid, reference, stockid, shipqty, recqty, shipdate, recdate, shiploc, recloc, reason
 FROM kl_erp_archive.loctransfers;
 
 TRUNCATE test_erp_archive.`pcashdetails`;

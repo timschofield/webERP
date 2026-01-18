@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 10, 2026 at 09:12 AM
+-- Generation Time: Jan 18, 2026 at 11:53 AM
 -- Server version: 11.4.9-MariaDB-log
 -- PHP Version: 8.4.14
 
@@ -174,7 +174,8 @@ CREATE TABLE `loctransfers` (
   `recdate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `shiploc` varchar(7) NOT NULL DEFAULT '',
   `recloc` varchar(7) NOT NULL DEFAULT '',
-  `pendingqty` double GENERATED ALWAYS AS (`shipqty` - `recqty`) STORED
+  `pendingqty` double GENERATED ALWAYS AS (`shipqty` - `recqty`) STORED,
+  `reason` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Stores Shipments To And From Locations';
 
 -- --------------------------------------------------------
