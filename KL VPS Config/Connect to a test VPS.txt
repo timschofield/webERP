@@ -1,6 +1,0 @@
-To connect to a TEST VPS we need to redirect some domains (ptadu-development.com, or ptadu.com) tempòrarily to the new VPS
-but without breaking the production traffic.
-
-This is done locally in the development PC
-Check https://support.exabytes.co.id/en/support/solutions/articles/14000089526-how-to-test-your-website-before-dns-change-
-

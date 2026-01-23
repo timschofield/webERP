@@ -1,2 +1,0 @@
-Optimize the SQL query defined in function XXXXXXXXX, maintaining the exact output.
-This tasks only focuses on getting a fast, efficient and readable SQL query.
