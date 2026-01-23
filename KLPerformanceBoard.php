@@ -224,7 +224,7 @@ if ($ProcessSection02){
 		TimeNeededForExecution("FinishedStockDistribution_FORSALE_STOCKCATEGORY", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		StockByBrand("SHOPKL", 75, 150, false);
+		StockByBrand("SHOPKL", 75, 135, false);
 		TimeNeededForExecution("StockByBrand_SHOPKL", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
