@@ -33,3 +33,16 @@ sudo chown -h kapal45:psacln symlinkfileorfolder changes the ownership to kapal4
 /var/www/vhosts/kapal-laut.com/ptadu-development.com/weberp/companies/kl_erp IS a SymLink to /var/www/vhosts/kapal-laut.com/ptadu.com/weberp/companies/kl_erp 
 /var/www/vhosts/kapal-laut.com/ptadu-development.com/TEST/weberp/companies/test_erp IS a SymLink to /var/www/vhosts/kapal-laut.com/ptadu.com/TEST/weberp/companies/test_erp 
 
+
+In current structure of subdomains
+for PRODUCTION webERP 
+Main companies folder must be in: /var/www/vhosts/kapal-laut.com/wberp.ptadu.com/companies/kl_erp
+Copy from subfolder production weberp: rsync -av /var/www/vhosts/kapal-laut.com/ptadu.com/weberp/companies/ /var/www/vhosts/kapal-laut.com/weberp.ptadu.com/companies/
+
+Set a symlink in ptadu.com/weberp/companies to use the data in weberp.ptadu.com/companies/kl_erp
+To use this folder as main company folder go to: cd /var/www/vhosts/kapal-laut.com/ptadu.com/weberp/companies 
+Setup the symlink: ln -s /var/www/vhosts/kapal-laut.com/weberp.ptadu.com/companies/kl_erp kl_erp
+
+Set a symlink in weberp.ptadu-development.com/companies to use the data in weberp.ptadu.com/companies/kl_erp
+cd /var/www/vhosts/kapal-laut.com/weberp.ptadu-development.com/companies 
+ln -s /var/www/vhosts/kapal-laut.com/weberp.ptadu.com/companies/kl_erp kl_erp

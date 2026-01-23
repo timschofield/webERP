@@ -12,6 +12,8 @@
 5) To connect to any other server change the IP: 
 ssh root@202.157.185.100 -p 8288
 
+/* Check what directory I am in */
+pwd
 
 /* View one file in powershell */
 cat /etc/my.cnf (or filename)
@@ -30,6 +32,9 @@ nano /etc/my.cnf
 
 /* Delete a file in the server */
 rm /etc/my.cnf.backup
+
+/* Delete a directory recursively no confirmation in the server */
+rm -rf directoryname
 
 /* after uploading the file to the main user folder */
 cd /var/www/vhosts/kapal-laut.com
