@@ -8,6 +8,6 @@ CREATE TABLE `custitem` (
   PRIMARY KEY (`debtorno`,`stockid`),
   KEY `StockID` (`stockid`),
   KEY `Debtorno` (`debtorno`),
-  CONSTRAINT ` custitem _ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
-  CONSTRAINT ` custitem _ibfk_2` FOREIGN KEY (`debtorno`) REFERENCES `debtorsmaster` (`debtorno`)
+  CONSTRAINT `custitem_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
+  CONSTRAINT `custitem_ibfk_2` FOREIGN KEY (`debtorno`) REFERENCES `debtorsmaster` (`debtorno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
