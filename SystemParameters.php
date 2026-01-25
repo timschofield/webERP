@@ -15,6 +15,9 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	$Title, '</p>';// Page title.
 
 include('includes/CountriesArray.php');
+if (empty($_SESSION['ItemDescriptionLanguages']) or $_SESSION['ItemDescriptionLanguages'] == '') {
+	$_SESSION['ItemDescriptionLanguages'] = ',';
+}
 
 if (isset($_POST['submit'])) {
 
