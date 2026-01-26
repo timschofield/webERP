@@ -1,6 +1,0 @@
-
-Go to the Python scripts folder
-cd C:\wamp64\www\PTADU-webERP\KLPython
-
-Absolute path of the PHP repository
-C:\wamp64\www\PTADU-webERP\

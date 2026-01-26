@@ -6,6 +6,8 @@
 *
 ***********************************************************************************************/
 
+include('includes/KLRoles.php');
+
 // echo the html header and page title
 
 // Variables which should be defined in the page this file is included with, before the inclusion of this header.php:
@@ -19,6 +21,7 @@ global $Language;
 global $Title;
 global $LanguagesArray;
 global $RootPath;
+global $PathPrefix;
 
 //if (!isset($RootPath)) {
 //	$RootPath = dirname(htmlspecialchars(basename(__FILE__)));
@@ -335,8 +338,8 @@ if (isset($_SESSION['AllowedPageSecurityTokens']) && is_array($_SESSION['Allowed
 		echo '<option value="', $RootPath, '/SelectSupplier.php">🏢 ', __('Suppliers'), '</option>';
 	}
 	
-	echo '<option value="https://ptadu.com/wiki/index.php">🌐 ', __('Intranet'), '</option>';
-//	echo '<option value="https://kapal-laut.com">🛒 ', __('Online Shop'), '</option>';
+	echo '<option value="https://wiki.ptadu.com/index.php">🌐 ', __('Intranet'), '</option>';
+	//	echo '<option value="https://kapal-laut.com">🛒 ', __('Online Shop'), '</option>';
 	echo '<option value="', $RootPath, '/Logout.php" onclick="return confirm(\'', __('Are you sure you wish to logout?'), '\');">🚪 ', __('Logout'), '</option>
 		</select>
 	</div>';
@@ -353,8 +356,7 @@ if (isset($_SESSION['AllowedPageSecurityTokens']) && is_array($_SESSION['Allowed
 	</div>';
 
 	// 2nd - Items (only for non-SPG users)
-	if (!$KL_SPGSeniorOrSupport 
-		AND !$KL_SPGJunior){
+	if (!$KL_SPGSeniorOrSupport AND !$KL_SPGJunior){
 		echo '<div id="ActionIcon">
 			<a class="FontSize" data-title="', __('Customers'), '" href="', $PathPrefix, $RootPath, '/SelectCustomer.php">
 				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/customer.png" alt="', __('Customers'), '" />', __('Customers'), '
@@ -377,7 +379,7 @@ if (isset($_SESSION['AllowedPageSecurityTokens']) && is_array($_SESSION['Allowed
 
 	// 3rd - Intranet
 	echo '<div id="ActionIcon">
-		<a class="FontSize" data-title="', __('Intranet'), '" href="https://ptadu.com/wiki/index.php">
+		<a class="FontSize" data-title="', __('Intranet'), '" href="https://wiki.ptadu.com/index.php">
 			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/plugin.png" alt="', __('Intranet'), '" />', __('Intranet'), '
 		</a>
 	</div>';

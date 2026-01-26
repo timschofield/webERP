@@ -1,3 +1,0 @@
-In this file, 
-substitute the usage of htmlMimeMail or mail function,
-and use the function SendEmailFromWebERP($From, $To, $Subject, $Body, $Attachments=array(), $Silent = false) defined in MiscFunctions.php

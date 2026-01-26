@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.2
+-- version 5.2.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 02, 2025 at 09:33 AM
--- Server version: 10.3.39-MariaDB-log
--- PHP Version: 8.4.11
+-- Generation Time: Jan 18, 2026 at 11:53 AM
+-- Server version: 11.4.9-MariaDB-log
+-- PHP Version: 8.4.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -31,7 +31,7 @@ CREATE TABLE `audittrail` (
   `transactiondate` datetime NOT NULL DEFAULT current_timestamp(),
   `userid` varchar(20) NOT NULL DEFAULT '',
   `querystring` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 -- --------------------------------------------------------
 
@@ -53,7 +53,7 @@ CREATE TABLE `banktrans` (
   `amount` double NOT NULL DEFAULT 0,
   `currcode` char(3) NOT NULL DEFAULT '',
   `chequeno` varchar(16) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -67,7 +67,7 @@ CREATE TABLE `custallocns` (
   `datealloc` date NOT NULL DEFAULT '1000-01-01',
   `transid_allocfrom` int(11) NOT NULL DEFAULT 0,
   `transid_allocto` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -95,14 +95,14 @@ CREATE TABLE `debtortrans` (
   `ovdiscount` double NOT NULL DEFAULT 0,
   `diffonexch` double NOT NULL DEFAULT 0,
   `alloc` double NOT NULL DEFAULT 0,
-  `invtext` text DEFAULT NULL,
+  `invtext` mediumtext DEFAULT NULL,
   `shipvia` int(11) NOT NULL DEFAULT 0,
   `edisent` tinyint(4) NOT NULL DEFAULT 0,
   `consignment` varchar(20) NOT NULL DEFAULT '',
   `packages` int(11) NOT NULL DEFAULT 1 COMMENT 'number of cartons',
   `salesperson` varchar(4) NOT NULL DEFAULT '',
   `balance` double GENERATED ALWAYS AS (`ovamount` + `ovgst` + `ovfreight` + `ovdiscount` - `alloc`) STORED
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -114,7 +114,7 @@ CREATE TABLE `debtortranstaxes` (
   `debtortransid` int(11) NOT NULL DEFAULT 0,
   `taxauthid` tinyint(4) NOT NULL DEFAULT 0,
   `taxamount` double NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -133,7 +133,7 @@ CREATE TABLE `gltrans` (
   `narrative` varchar(200) NOT NULL DEFAULT '',
   `amount` double NOT NULL DEFAULT 0,
   `jobref` varchar(20) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -156,7 +156,7 @@ CREATE TABLE `klconsignment` (
   `standardcost` double NOT NULL DEFAULT 0,
   `invoicedtopartner` date NOT NULL DEFAULT '1000-01-01',
   `fakturpajakdate` date NOT NULL DEFAULT '1000-01-01'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -174,8 +174,9 @@ CREATE TABLE `loctransfers` (
   `recdate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `shiploc` varchar(7) NOT NULL DEFAULT '',
   `recloc` varchar(7) NOT NULL DEFAULT '',
-  `pendingqty` double GENERATED ALWAYS AS (`shipqty` - `recqty`) STORED
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Stores Shipments To And From Locations';
+  `pendingqty` double GENERATED ALWAYS AS (`shipqty` - `recqty`) STORED,
+  `reason` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Stores Shipments To And From Locations';
 
 -- --------------------------------------------------------
 
@@ -192,10 +193,10 @@ CREATE TABLE `pcashdetails` (
   `amount` double NOT NULL,
   `authorized` date NOT NULL COMMENT 'date cash assigment was revised and authorized by authorizer from tabs table',
   `posted` tinyint(4) NOT NULL COMMENT 'has (or has not) been posted into gltrans',
-  `purpose` text DEFAULT NULL,
-  `notes` text NOT NULL,
-  `receipt` text DEFAULT NULL COMMENT 'Column redundant. Replaced by receipt file upload. Nov 2017.'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `purpose` mediumtext DEFAULT NULL,
+  `notes` mediumtext NOT NULL,
+  `receipt` mediumtext DEFAULT NULL COMMENT 'Column redundant. Replaced by receipt file upload. Nov 2017.'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -222,8 +223,8 @@ CREATE TABLE `stockmoves` (
   `show_on_inv_crds` tinyint(4) NOT NULL DEFAULT 1,
   `newqoh` double NOT NULL DEFAULT 0,
   `hidemovt` tinyint(4) NOT NULL DEFAULT 0,
-  `narrative` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `narrative` mediumtext DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -237,7 +238,7 @@ CREATE TABLE `stockmovestaxes` (
   `taxrate` double NOT NULL DEFAULT 0,
   `taxontax` tinyint(4) NOT NULL DEFAULT 0,
   `taxcalculationorder` tinyint(4) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Indexes for dumped tables

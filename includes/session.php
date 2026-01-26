@@ -32,10 +32,6 @@ require($PathPrefix.'vendor/autoload.php');
 include($PathPrefix . 'KLsession.php');
 // KL RICARD END: Include the specific KL session functions
 
-// KL RICARD Select the default database depending on the code version
-$DefaultDatabase = KLDatabaseSelection();
-// KL RICARD END Select the default database depending on the code version
-
 if (!file_exists($PathPrefix . 'config.php')) {
 	// gg: there is no need for htmlspecialchars here, as we never output $RootPath into html
 	/// @todo what if we are on a webpage in a subfolder?

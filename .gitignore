@@ -21,7 +21,8 @@ nbproject/
 Thumbs.db
 
 # Only config.distrib.php is to be distributed
-/config.php
+# In PTADU scenario, the credentials are stored in another file (KLConfig/KLCredentials.php) under repository PTADU-webERP-Secrets)
+# /config.php 
 
 # Ignore everything in the companies directory...
 /companies/*

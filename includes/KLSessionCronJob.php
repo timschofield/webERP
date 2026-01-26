@@ -22,11 +22,6 @@ require $PathPrefix.'vendor/autoload.php';
 include($PathPrefix . 'includes/KLsession.php');
 // KL RICARD END: Include the specific KL session functions
 
-// KL RICARD Select the database depending on the code version
-$DefaultDatabase = KLDatabaseSelection();
-
-// KL RICARD END Select the database depending on the code version
-
 if (!file_exists($PathPrefix . 'config.php')) {
 	// gg: there is no need for htmlspecialchars here, as we never output $RootPath into html
 	$RootPath = dirname($_SERVER['PHP_SELF']);

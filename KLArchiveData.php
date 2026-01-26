@@ -56,8 +56,7 @@ if (!isset($_POST['ArchiveKlconsignmentPeriod'])) {
 }
 
 if (isset($_POST['submit'])) {
-	submit($Title, 
-		$_POST['ArchiveGltransPeriod'], 
+	submit($_POST['ArchiveGltransPeriod'], 
 		$_POST['ArchiveStockmovesPeriod'], 
 		$_POST['ArchiveLoctransfersObsoletes'],
 		$_POST['ArchiveDebtortransPeriod'],
@@ -82,8 +81,7 @@ if (isset($_POST['submit'])) {
  * @param int $ArchiveKlconsignmentPeriod The period to archive klconsignment records up to.
  * @return void
  **************************************************************************************************************/
-function submit($Title, 
-				$ArchiveGltransPeriod, 
+function submit($ArchiveGltransPeriod, 
 				$ArchiveStockmovesPeriod,
 				$ArchiveLoctransfers,
 				$ArchiveDebtortransPeriod,
@@ -728,8 +726,7 @@ function ArchiveTableDebtortrans($ArchiveToPeriod) {
 					edisent,
 					consignment,
 					packages,
-					salesperson,
-					balance
+					salesperson
 				FROM debtortrans
 				WHERE prd > " . $PeriodAlreadyArchived . "
 					AND prd <= " . $ArchiveToPeriod . "
@@ -768,8 +765,7 @@ function ArchiveTableDebtortrans($ArchiveToPeriod) {
 								edisent,
 								consignment,
 								packages,
-								salesperson,
-								balance
+								salesperson
 							) VALUES (
 							'" . $MyRow['id'] . "',
 							'" . $MyRow['transno'] . "',
@@ -782,7 +778,7 @@ function ArchiveTableDebtortrans($ArchiveToPeriod) {
 							'" . $MyRow['settled'] . "',
 							'" . DB_escape_string($MyRow['reference'] ?? '') . "',
 							'" . $MyRow['tpe'] . "',
-							'" . $MyRow['order_'] . "',
+							'" . DB_escape_string($MyRow['order_'] ?? '0') . "',
 							'" . $MyRow['rate'] . "',
 							'" . $MyRow['ovamount'] . "',
 							'" . $MyRow['ovgst'] . "',
@@ -795,8 +791,7 @@ function ArchiveTableDebtortrans($ArchiveToPeriod) {
 							'" . $MyRow['edisent'] . "',
 							'" . $MyRow['consignment'] . "',
 							'" . $MyRow['packages'] . "',
-							'" . $MyRow['salesperson'] . "',
-							'" . $MyRow['balance'] . "')";
+							'" . $MyRow['salesperson'] . "')";
 				DB_query_archive($SQLInsert, $ErrMsg, '');
 				$RecordCounter++;
 			}
@@ -813,8 +808,7 @@ function ArchiveTableDebtortrans($ArchiveToPeriod) {
 						SUM(ovfreight) AS ovfreight_consolidated,
 						SUM(ovdiscount) AS ovdiscount_consolidated,
 						SUM(diffonexch) AS diffonexch_consolidated,
-						SUM(alloc) AS alloc_consolidated,
-						SUM(balance) AS balance_consolidated
+						SUM(alloc) AS alloc_consolidated
 				FROM debtortrans
 				WHERE prd > " . $PeriodAlreadyArchived . "
 					AND prd <= " . $ArchiveToPeriod . "
@@ -856,8 +850,7 @@ function ArchiveTableDebtortrans($ArchiveToPeriod) {
 								edisent,
 								consignment,
 								packages,
-								salesperson,
-								balance
+								salesperson
 							) VALUES (
 							'" . $Transno . "',
 							'" . '1001' . "',
@@ -869,7 +862,7 @@ function ArchiveTableDebtortrans($ArchiveToPeriod) {
 							'" . '0' . "',
 							'" . 'CONSOLIDATED ACCOUNTING' . "',
 							'" . '' . "',
-							'" . '' . "',
+							'" . '0' . "',
 							'" . $MyConsolidatedRow['rate_consolidated'] . "',
 							'" . $MyConsolidatedRow['ovamount_consolidated'] . "',
 							'" . $MyConsolidatedRow['ovgst_consolidated'] . "',
@@ -882,8 +875,7 @@ function ArchiveTableDebtortrans($ArchiveToPeriod) {
 							'" . '0' . "',
 							'" . '' . "',
 							'" . '1' . "',
-							'" . '999' . "',
-							'" . $MyConsolidatedRow['balance_consolidated'] . "')";
+							'" . '999' . "')";
 					DB_query($SQLInsert, $ErrMsg);
 				}
 				prnMsg("Inserted consolidated accounting records in production DB debtortrans table");

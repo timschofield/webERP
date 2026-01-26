@@ -5,24 +5,6 @@
  *
  ***************************************************************************************************/
 
-function KLDatabaseSelection(){
-	// KL RICARD Select the default database depending on the code version
-	if (URLWithoutScriptNameContains(".LOCAL")){
-		// the current script filename resides in the WAMPP localhost, we are on TEST code
-		$DefaultDatabase = 'test_erp';
-	} else {
-		// the current script filename resides in the production server
-		if (URLWithoutScriptNameContains("/TEST")){
-			// the current script filename contains TEST, we are on TEST code
-			$DefaultDatabase = 'test_erp';
-		} else {
-			// the current script filename does not contain TEST, we are on production code
-			$DefaultDatabase = 'kl_erp';
-		}
-	}
-	return $DefaultDatabase;	
-}
-
 function KLThemeSelection(){
 	if (URLWithoutScriptNameContains(".LOCAL")){
 		// the current script filename resides in the WAMPP localhost, we are on TEST code

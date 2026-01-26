@@ -18,9 +18,9 @@ define("STANDARD_COST_FACTOR_INDONESIA", 1.00);
 define("STANDARD_COST_FACTOR_FOREIGN"  , 1.00);
 
 /* Defines about Prices factors*/
-define("MINIMUM_PRICE_FACTOR_KL",                6.30);
-define("MINIMUM_PRICE_FACTOR_TOPSALES_KL",       6.50);
-define("MAXIMUM_PRICE_FACTOR_BOTTOMSALES_KL",    7.00);
+define("MINIMUM_PRICE_FACTOR_KL",                5.00);
+define("MINIMUM_PRICE_FACTOR_TOPSALES_KL",       5.00);
+define("MAXIMUM_PRICE_FACTOR_BOTTOMSALES_KL",    6.00);
 define("MINIMUM_PRICE_FACTOR_BLINK",             6.80);
 define("MINIMUM_PRICE_FACTOR_TOPSALES_BLINK",    7.15);
 define("MAXIMUM_PRICE_FACTOR_BOTTOMSALES_BLINK", 7.50);
@@ -380,8 +380,6 @@ define("WEBERP_ORDER_STATUS_ORDER", 0);
 
 /* HARD CODED PATHS */
 define("ABSOLUTE_PATH_OPENCART_IMAGES", '/var/www/vhosts/kapal-laut.com/httpdocs/image/catalog/KL/part_pics/');
-define("ABSOLUTE_PATH_WEBERP", '/var/www/vhosts/kapal-laut.com/ptadu.com/weberp/');
-define("ABSOLUTE_PATH_WEBERP_TEST", '/var/www/vhosts/kapal-laut.com/ptadu.com/TEST/weberp/');
 
 define("PATH_OPENCART_IMAGES", 'catalog/KL/part_pics/');
 define("PATH_OPENCART_BASE", 'https://www.kapal-laut.com');
