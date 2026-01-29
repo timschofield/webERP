@@ -153,6 +153,20 @@ if (isset($_POST['ProcessLocationChange'])) {
 		$Result = DB_query($SQL, $ErrMsg, '', true);
 		echo ' ... ' . __('completed');
 		
+		/* KL RICARD table locations custom fields */
+		echo '<br />' . __('Changing the packaging from field location table records');
+		$SQL = "UPDATE locations SET packagingfrom='" . $_POST['NewLocationID'] . "' WHERE packagingfrom='" . $_POST['OldLocationID'] . "'";
+		$ErrMsg = __('The SQL to update packaging from field location records failed');
+		$Result = DB_query($SQL, $ErrMsg, '', true);
+		echo ' ... ' . __('completed');
+
+		/* KL RICARD table locations custom fields */
+		echo '<br />' . __('Changing the smartdispatch from field location table records');
+		$SQL = "UPDATE locations SET smartdispatchfrom='" . $_POST['NewLocationID'] . "' WHERE smartdispatchfrom='" . $_POST['OldLocationID'] . "'";
+		$ErrMsg = __('The SQL to update smartdispatch from field location records failed');
+		$Result = DB_query($SQL, $ErrMsg, '', true);
+		echo ' ... ' . __('completed');
+
 		echo '<br />' . __('Changing the locationusers table records');
 		$SQL = "UPDATE locationusers SET loccode='" . $_POST['NewLocationID'] . "' WHERE loccode='" . $_POST['OldLocationID'] . "'";
 		$ErrMsg = __('The SQL to update locationusers records failed');
