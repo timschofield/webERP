@@ -1175,7 +1175,7 @@ echo '</select>
 echo '<field>
 		<label for="MBFlag">' . __('Assembly, Kit, Manufactured or Service/Labour') . ':</label>
 		<select name="MBFlag">';
-if ($_POST['MBFlag'] == 'A') {
+if (isset($_POST['MBFlag']) && $_POST['MBFlag'] == 'A') {
 	echo '<option selected="selected" value="A">' . __('Assembly') . '</option>';
 } else {
 	echo '<option value="A">' . __('Assembly') . '</option>';
