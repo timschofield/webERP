@@ -1,5 +1,5 @@
 UPDATE `chartmaster` SET `accountname` = 'Cash TKAR1-Toko KL Arjuna 1 (ex-AR)' WHERE `chartmaster`.`accountcode` = '111111118';
-UPDATE `chartmaster` SET `accountname` = 'Cash TKBB3-Toko KL Batubolong 3 (ex-B3)' WHERE `chartmaster`.`accountcode` = '111111139';
+UPDATE `chartmaster` SET `accountname` = 'Cash TKBB2-Toko KL Batubolong 2 (ex-B3)' WHERE `chartmaster`.`accountcode` = '111111139';
 UPDATE `chartmaster` SET `accountname` = 'Cash TBBB1-Toko Blink Batubolong (ex-BB)' WHERE `chartmaster`.`accountcode` = '111111126';
 UPDATE `chartmaster` SET `accountname` = 'Cash TBPK1-Toko Blink Pantai Kuta 1 (ex-BK)' WHERE `chartmaster`.`accountcode` = '111111128';
 UPDATE `chartmaster` SET `accountname` = 'Cash TBLE1-Toko Blink Legian 1 (ex-BL)' WHERE `chartmaster`.`accountcode` = '111111130';
@@ -21,7 +21,7 @@ UPDATE `chartmaster` SET `accountname` = 'Cash TBOB2-Toko Blink Oberoi 2 (ex-O2)
 UPDATE `chartmaster` SET `accountname` = 'Cash TKOB1-Toko KL Oberoi 1 (ex-OB)' WHERE `chartmaster`.`accountcode` = '111111112';
 UPDATE `chartmaster` SET `accountname` = 'Cash TKPA1-Toko KL Padma 1 (ex-PA)' WHERE `chartmaster`.`accountcode` = '111111114';
 UPDATE `chartmaster` SET `accountname` = 'Cash TBPA2-Toko Blink Padma 2 (ex-PB)' WHERE `chartmaster`.`accountcode` = '111111120';
-UPDATE `chartmaster` SET `accountname` = 'Cash TBSE2-Toko Blink Seminyak 2 (ex-PS)' WHERE `chartmaster`.`accountcode` = '111111117';
+UPDATE `chartmaster` SET `accountname` = 'Cash TBSE4-Toko Blink Seminyak 4 (ex-PS)' WHERE `chartmaster`.`accountcode` = '111111117';
 UPDATE `chartmaster` SET `accountname` = 'Cash TKRU1-Toko KL Raya Ubud 1 (ex-PU)' WHERE `chartmaster`.`accountcode` = '111111110';
 UPDATE `chartmaster` SET `accountname` = 'Cash TKSA1-Toko KL Sanur 1 (ex-SA)' WHERE `chartmaster`.`accountcode` = '111111102';
 UPDATE `chartmaster` SET `accountname` = 'Cash TBSA2-Toko Blink Sanur 2 (ex-SB)' WHERE `chartmaster`.`accountcode` = '111111119';
@@ -34,7 +34,7 @@ UPDATE `chartmaster` SET `accountname` = 'Cash TBRU5-Toko Blink Raya Ubud 5 (ex-
 
 
 UPDATE `departments` SET `description` = 'TKAR1-Toko KL Arjuna 1 (ex-AR)' WHERE `departments`.`departmentid` = 19;
-UPDATE `departments` SET `description` = 'TKBB3-Toko KL Batubolong 3 (ex-B3)' WHERE `departments`.`departmentid` = 5;
+UPDATE `departments` SET `description` = 'TKBB2-Toko KL Batubolong 2 (ex-B3)' WHERE `departments`.`departmentid` = 5;
 UPDATE `departments` SET `description` = 'TBBB1-Toko Blink Batubolong 1 (ex-BB)' WHERE `departments`.`departmentid` = 27;
 UPDATE `departments` SET `description` = 'TBPK1-Toko Blink Pantai Kuta (ex-BK)' WHERE `departments`.`departmentid` = 29;
 UPDATE `departments` SET `description` = 'TBLE1-Toko Blink Legian 1 (ex-BL)' WHERE `departments`.`departmentid` = 31;
@@ -57,7 +57,7 @@ UPDATE `departments` SET `description` = 'TBOB2-Toko Blink Oberoi 2 (ex-O2)' WHE
 UPDATE `departments` SET `description` = 'TKOB1-Toko KL Oberoi 1 (ex-OB)' WHERE `departments`.`departmentid` = 14;
 UPDATE `departments` SET `description` = 'TKPA1-Toko KL Padma 1 (ex-PA)' WHERE `departments`.`departmentid` = 11;
 UPDATE `departments` SET `description` = 'TBPA2-Toko Blink Padma 2 (ex-PB)' WHERE `departments`.`departmentid` = 2
-UPDATE `departments` SET `description` = 'TBSE2-Toko Blink Seminyak 2 (ex-PS)' WHERE `departments`.`departmentid` = 35;
+UPDATE `departments` SET `description` = 'TBSE4-Toko Blink Seminyak 4 (ex-PS)' WHERE `departments`.`departmentid` = 35;
 UPDATE `departments` SET `description` = 'TKRU1-Toko KL Raya Ubud 1 (ex-PU)' WHERE `departments`.`departmentid` = 12;
 UPDATE `departments` SET `description` = 'TKSA1-Toko KL Sanur 1 (ex-SA)' WHERE `departments`.`departmentid` = 3;
 UPDATE `departments` SET `description` = 'TBSA2-Toko Blink Sanur 2 (ex-SB)' WHERE `departments`.`departmentid` = 20;
@@ -72,7 +72,7 @@ UPDATE `departments` SET `description` = 'TBPE1-Toko Blink Petitenget 1' WHERE `
 UPDATE `departments` SET `description` = 'TBKJ1-Toko Blink Kajeng 1' WHERE `departments`.`departmentid` = 32;
 
 UPDATE debtorsmaster SET name = 'Toko KL Arjuna 1 (ex-AR)' WHERE debtorno ='RETAILAR';
-UPDATE debtorsmaster SET name = 'Toko KL Batubolong 3 (ex-B3)' WHERE debtorno ='RETAILB3';
+UPDATE debtorsmaster SET name = 'Toko KL Batubolong 2 (ex-B3)' WHERE debtorno ='RETAILB3';
 UPDATE debtorsmaster SET name = 'Toko Blink Batubolong 1 (ex-BB)' WHERE debtorno ='RETAILBB';
 UPDATE debtorsmaster SET name = 'Toko Blink Pantai Kuta 1 (ex-BK)' WHERE debtorno ='RETAILBK';
 UPDATE debtorsmaster SET name = 'Toko Blink Legian 1 (ex-BL)' WHERE debtorno ='RETAILBL';
@@ -94,7 +94,7 @@ UPDATE debtorsmaster SET name = 'Toko Blink Oberoi 2 (ex-O2)' WHERE debtorno ='R
 UPDATE debtorsmaster SET name = 'Toko KL Oberoi 1 (ex-OB)' WHERE debtorno ='RETAILOB';
 UPDATE debtorsmaster SET name = 'Toko KL Padma 1 (ex-PA)' WHERE debtorno ='RETAILPA';
 UPDATE debtorsmaster SET name = 'Toko Blink Padma 2 (ex-PB)' WHERE debtorno ='RETAILPB';
-UPDATE debtorsmaster SET name = 'Toko Blink Seminyak 2 (ex-PS)' WHERE debtorno ='RETAILPS';
+UPDATE debtorsmaster SET name = 'Toko Blink Seminyak 4 (ex-PS)' WHERE debtorno ='RETAILPS';
 UPDATE debtorsmaster SET name = 'Toko KL Raya Ubud 1 (ex-PU)' WHERE debtorno ='RETAILPU';
 UPDATE debtorsmaster SET name = 'Toko KL Sanur 1 (ex-SA)' WHERE debtorno ='RETAILSA';
 UPDATE debtorsmaster SET name = 'Toko Blink Sanur 2 (ex-SB)' WHERE debtorno ='RETAILSB';
@@ -105,7 +105,7 @@ UPDATE debtorsmaster SET name = 'Toko Blink Raya Ubud 3 (ex-U3)' WHERE debtorno 
 UPDATE debtorsmaster SET name = 'Toko KL Raya Ubud 4 (ex-U4)' WHERE debtorno ='RETAILU4';
 UPDATE debtorsmaster SET name = 'Toko Blink Raya Ubud 5 (ex-U5)' WHERE debtorno ='RETAILU5';
 
-UPDATE custbranch SET brname = 'Toko KL Batubolong 3 (ex-B3)' WHERE debtorno ='RETAILB3';
+UPDATE custbranch SET brname = 'Toko KL Batubolong 2 (ex-B3)' WHERE debtorno ='RETAILB3';
 UPDATE custbranch SET brname = 'Toko Blink Batubolong 1 (ex-BB)' WHERE debtorno ='RETAILBB';
 UPDATE custbranch SET brname = 'Toko Blink Pantai Kuta 1 (ex-BK)' WHERE debtorno ='RETAILBK';
 UPDATE custbranch SET brname = 'Toko Blink Legian 1 (ex-BL)' WHERE debtorno ='RETAILBL';
@@ -127,7 +127,7 @@ UPDATE custbranch SET brname = 'Toko Blink Oberoi 2 (ex-O2)' WHERE debtorno ='RE
 UPDATE custbranch SET brname = 'Toko KL Oberoi 1 (ex-OB)' WHERE debtorno ='RETAILOB';
 UPDATE custbranch SET brname = 'Toko KL Padma 1 (ex-PA)' WHERE debtorno ='RETAILPA';
 UPDATE custbranch SET brname = 'Toko Blink Padma 2 (ex-PB)' WHERE debtorno ='RETAILPB';
-UPDATE custbranch SET brname = 'Toko Blink Seminyak 2 (ex-PS)' WHERE debtorno ='RETAILPS';
+UPDATE custbranch SET brname = 'Toko Blink Seminyak 4 (ex-PS)' WHERE debtorno ='RETAILPS';
 UPDATE custbranch SET brname = 'Toko KL Raya Ubud 1 (ex-PU)' WHERE debtorno ='RETAILPU';
 UPDATE custbranch SET brname = 'Toko KL Sanur 1 (ex-SA)' WHERE debtorno ='RETAILSA';
 UPDATE custbranch SET brname = 'Toko Blink Sanur 2 (ex-SB)' WHERE debtorno ='RETAILSB';
