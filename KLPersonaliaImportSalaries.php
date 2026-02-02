@@ -35,7 +35,7 @@ if (!isset($_POST['SelectedFile'])) {
 }
 
 if (isset($_POST['submit'])) {
-    submit($_POST['PeriodSelectedByUser'], $_POST['SelectedFile'], $_POST['SalaryType'], $RootPath);
+    submit($_POST['PeriodSelectedByUser'], $_POST['SalaryType'], $RootPath);
 } else {
     display();
 }
@@ -43,14 +43,13 @@ if (isset($_POST['submit'])) {
 include('includes/footer.php');
 
 
-function submit($PeriodSelectedByUser, $SelectedFile, $SalaryType, $RootPath) {
+function submit($PeriodSelectedByUser, $SalaryType, $RootPath) {
 
 	// upload to server and load it...
 	// http://stackoverflow.com/questions/38581632/how-to-upload-excel-file-to-php-server-from-input-type-file
 
 	$Target_dir =  $_SESSION['reports_dir'] . '/';
 	$Target_file = $Target_dir . basename($_FILES["SelectedFile"]["name"]);
-	$ImageFileType = pathinfo($Target_file,PATHINFO_EXTENSION);
 	move_uploaded_file($_FILES["SelectedFile"]["tmp_name"], $Target_file);
 	$inputFileType = IOFactory::identify($Target_file);
 	$objReader = IOFactory::createReader($inputFileType);
@@ -67,8 +66,6 @@ function submit($PeriodSelectedByUser, $SelectedFile, $SalaryType, $RootPath) {
 
 	$ExcelPeriod = GetPeriod(ConvertSQLDate($ExcelLastDate));
 	$PeriodNow = GetPeriod(Date($_SESSION['DefaultDateFormat']));
-
-	$MonthOfSalary = $worksheet->getCell('E11')->getCalculatedValue();
 
 	if ($SalaryType == "MONTHLY"){
 		$PageTitle = __('Importing Excel with Monthly Salary Information for '). MonthAndYearFromPeriodNo($ExcelPeriod);
@@ -110,15 +107,13 @@ function submit($PeriodSelectedByUser, $SelectedFile, $SalaryType, $RootPath) {
 		$SQL = "DELETE FROM salariescalculated
 				WHERE periodno = '" . $PeriodSelectedByUser . "'
 					AND salarytype = '" . $SalaryType . "'";
-		$Result = DB_query($SQL);
+		DB_query($SQL);
 		
 		$ExcelSheetName = "SalaryToPrint";
 		$SpreadSheet->setActiveSheetIndexByName($ExcelSheetName);
 		$worksheet = $SpreadSheet->getActiveSheet();
 		
 		$highestRow         = $worksheet->getHighestRow(); // e.g. 10
-		$highestColumn      = $worksheet->getHighestColumn(); // e.g 'F'
-		$highestColumnIndex = Coordinate::columnIndexFromString($highestColumn);
 		$InsertErrMsg = __('The SQL to insert Imported Salary Info failed');
 		
 		echo '<div>';
@@ -137,7 +132,7 @@ function submit($PeriodSelectedByUser, $SelectedFile, $SalaryType, $RootPath) {
 
 		for ($Row = 2; $Row <= $highestRow; ++ $Row) {
 			// first check if the row belongs to an active employee or not (old one so don't need to process)
-			$Active = $worksheet->getCell('A'.$Row)->getCalculatedValue();
+			$Active = strtoupper($worksheet->getCell('A'.$Row)->getCalculatedValue());
 			if ($Active === 'YES'){
 				// dump the employee info into variables
 				$CodeName = $worksheet->getCell('B'.$Row)->getCalculatedValue();
@@ -161,7 +156,7 @@ function submit($PeriodSelectedByUser, $SelectedFile, $SalaryType, $RootPath) {
 				$SalaryTo = ConvertExcelDate($worksheet->getCell('O'.$Row)->getCalculatedValue());
 				$PaymentDate = $worksheet->getCell('BE'.$Row)->getCalculatedValue();
 
-				$EmployeeWithTHR = $worksheet->getCell('BG'.$Row)->getCalculatedValue();
+				$EmployeeWithTHR = strtoupper($worksheet->getCell('BG'.$Row)->getCalculatedValue());
 				$THR = $worksheet->getCell('AK'.$Row)->getCalculatedValue();
 				$Bulatan = $worksheet->getCell('AW'.$Row)->getCalculatedValue();
 
@@ -236,8 +231,25 @@ function submit($PeriodSelectedByUser, $SelectedFile, $SalaryType, $RootPath) {
 				
 				//Insert into the database if it's a Monthly salary or THR-Only is for employee
 				if ((($SalaryType == "MONTHLY") 
-					OR (($SalaryType == "THRONLY") AND ($EmployeeWithTHR == "YES")))
+					OR (($SalaryType == "THRONLY") AND ($EmployeeWithTHR === "YES")))
 					AND ($TotalBawaPulang > 0)){
+					
+					// Truncate strings to match table column lengths
+					$SalaryType = substr($SalaryType, 0, 20);
+					$CodeName = substr($CodeName, 0, 30);
+					$FullName = substr($FullName, 0, 80);
+					$Email = substr($Email, 0, 50);
+					$CompanyCode = substr($CompanyCode, 0, 10);
+					$Position = substr($Position, 0, 50);
+					$PaymentMethod = substr($PaymentMethod, 0, 10);
+					$BankCode = substr($BankCode, 0, 11);
+					$BankAccount = substr($BankAccount, 0, 30);
+					$BankAccountHolder = substr($BankAccountHolder, 0, 80);
+					$ZonePPH21 = substr($ZonePPH21, 0, 30);
+					$PaymentDate = substr($PaymentDate, 0, 30);
+					$PenerimaanLain2Notes = substr($PenerimaanLain2Notes, 0, 80);
+					$PotonganLain2Notes = substr($PotonganLain2Notes, 0, 80);
+					
 					$SQLInsert = "INSERT INTO salariescalculated
 									(periodno,
 									salarytype,
@@ -317,8 +329,8 @@ function submit($PeriodSelectedByUser, $SelectedFile, $SalaryType, $RootPath) {
 									'" . $PotonganLain2Notes . "',
 									'" . $Bulatan . "'
 									)";
-					$ResultInsert = DB_query($SQLInsert,$InsertErrMsg,'',true);
-					
+					DB_query($SQLInsert,$InsertErrMsg,'',true);
+
 					echo '<tr class="striped_row">
 							<td class="number">' . $i . '</td>
 							<td>' . $SalaryType . '</td>
@@ -336,11 +348,10 @@ function submit($PeriodSelectedByUser, $SelectedFile, $SalaryType, $RootPath) {
 			</form>';
 
 	}
-} // End of function submit()
+}
 
 
-function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
-{
+function display(){
 	global $RootPath;	
 	echo '<p class="page_title_text">
 			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . __('Import Excel with Monthly Salary Information') . '" alt="" />' . ' ' . __('Import Excel with Monthly Salary Information') . '
@@ -368,4 +379,4 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 	echo '</div>
 		</form>';
 
-} // End of function display()
+}
