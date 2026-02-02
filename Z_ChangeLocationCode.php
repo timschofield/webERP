@@ -77,10 +77,37 @@ if (isset($_POST['ProcessLocationChange'])) {
 										managed,
 										cashsalecustomer,
 										cashsalebranch,
+										smartdispatchfrom,
+										smartdispatchmaxmodels,
+										smartdispatchminmodels,
 										internalrequest,
 										usedforwo,
+										priority,
+										packagingfrom,
+										rlfactorforpackaging,
+										rldaysforpackaging,
+										minmonthlysalestarget,
+										klemaillastpackacgingtransfer,
+										kldisplaylenght,
+										kldisplaysurface,
+										klyearlyrent,
+										klposcashaccount,
+										klpostag,
 										glaccountcode,
-										allowinvoicing
+										allowinvoicing,
+										zone,
+										typeloc,
+										stockreadytosell,
+										stockavailableforonline,
+										partnercode,
+										onlinepartnercode,
+										alltestitems,
+										allstableitems,
+										allnopoitems,
+										alldisc20items,
+										alldisc50items,
+										alldisc80items,
+										departmentid
 										)
 				SELECT '" . $_POST['NewLocationID'] . "',
 					    '" . $_POST['NewLocationName'] . "',
@@ -98,10 +125,37 @@ if (isset($_POST['ProcessLocationChange'])) {
 						managed,
 						cashsalecustomer,
 						cashsalebranch,
+						smartdispatchfrom,
+						smartdispatchmaxmodels,
+						smartdispatchminmodels,
 						internalrequest,
 						usedforwo,
+						priority,
+						packagingfrom,
+						rlfactorforpackaging,
+						rldaysforpackaging,
+						minmonthlysalestarget,
+						klemaillastpackacgingtransfer,
+						kldisplaylenght,
+						kldisplaysurface,
+						klyearlyrent,
+						klposcashaccount,
+						klpostag,
 						glaccountcode,
-						allowinvoicing
+						allowinvoicing,
+						zone,
+						typeloc,
+						stockreadytosell,
+						stockavailableforonline,
+						partnercode,
+						onlinepartnercode,
+						alltestitems,
+						allstableitems,
+						allnopoitems,
+						alldisc20items,
+						alldisc50items,
+						alldisc80items,
+						departmentid
 				FROM locations
 				WHERE loccode='" . $_POST['OldLocationID'] . "'";
 
@@ -139,9 +193,37 @@ if (isset($_POST['ProcessLocationChange'])) {
 		$Result = DB_query($SQL, $ErrMsg, '', true);
 		echo ' ... ' . __('completed');
 
+		/* KL RICARD table kladjustrl */
+		echo '<br />' . __('Changing the kladjustrl table records');
+		$SQL = "UPDATE kladjustrl SET loccode='" . $_POST['NewLocationID'] . "' WHERE loccode='" . $_POST['OldLocationID'] . "'";
+		$ErrMsg = __('The SQL to update the kladjustrl records failed');
+		$Result = DB_query($SQL, $ErrMsg, '', true);
+		echo ' ... ' . __('completed');
+
+		/* KL RICARD table klmaintenancetasks */
+		echo '<br />' . __('Changing the klmaintenancetasks table records');
+		$SQL = "UPDATE klmaintenancetasks SET loccode='" . $_POST['NewLocationID'] . "' WHERE loccode='" . $_POST['OldLocationID'] . "'";
+		$ErrMsg = __('The SQL to update the klmaintenancetasks records failed');
+		$Result = DB_query($SQL, $ErrMsg, '', true);
+		echo ' ... ' . __('completed');
+		
+		/* KL RICARD table locations custom fields */
+		echo '<br />' . __('Changing the packaging from field location table records');
+		$SQL = "UPDATE locations SET packagingfrom='" . $_POST['NewLocationID'] . "' WHERE packagingfrom='" . $_POST['OldLocationID'] . "'";
+		$ErrMsg = __('The SQL to update packaging from field location records failed');
+		$Result = DB_query($SQL, $ErrMsg, '', true);
+		echo ' ... ' . __('completed');
+
+		/* KL RICARD table locations custom fields */
+		echo '<br />' . __('Changing the smartdispatch from field location table records');
+		$SQL = "UPDATE locations SET smartdispatchfrom='" . $_POST['NewLocationID'] . "' WHERE smartdispatchfrom='" . $_POST['OldLocationID'] . "'";
+		$ErrMsg = __('The SQL to update smartdispatch from field location records failed');
+		$Result = DB_query($SQL, $ErrMsg, '', true);
+		echo ' ... ' . __('completed');
+
 		echo '<br />' . __('Changing the locationusers table records');
 		$SQL = "UPDATE locationusers SET loccode='" . $_POST['NewLocationID'] . "' WHERE loccode='" . $_POST['OldLocationID'] . "'";
-		$ErrMsg = __('The SQL to update users records failed');
+		$ErrMsg = __('The SQL to update locationusers records failed');
 		$Result = DB_query($SQL, $ErrMsg, '', true);
 		echo ' ... ' . __('completed');
 
@@ -173,6 +255,13 @@ if (isset($_POST['ProcessLocationChange'])) {
 			$Result = DB_query($SQL, $ErrMsg, '', true);
 			echo ' ... ' . __('completed');
 		}
+
+		/* KL RICARD table packagingused */
+		echo '<br />' . __('Changing packagingused information');
+		$SQL = "UPDATE packagingused SET fromlocation='" . $_POST['NewLocationID'] . "' WHERE fromlocation='" . $_POST['OldLocationID'] . "'";
+		$ErrMsg = __('The SQL to update the packagingused records failed');
+		$Result = DB_query($SQL, $ErrMsg, '', true);
+		echo ' ... ' . __('completed');
 
 		echo '<br />' . __('Changing pickreq information');
 		$SQL = "UPDATE pickreq SET loccode='" . $_POST['NewLocationID'] . "' WHERE loccode='" . $_POST['OldLocationID'] . "'";
