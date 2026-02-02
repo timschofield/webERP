@@ -3,9 +3,7 @@
 require(__DIR__ . '/includes/session.php');
 $Title = __('Audit Scripts');
 include('includes/header.php');
-include('includes/KLGeneralFunctions.php');
 include('includes/UIGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' 
 	. __('Search') . '" alt="" />' . ' ' . $Title . '</p>';

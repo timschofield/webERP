@@ -18,7 +18,7 @@ $Result = DB_query($SQL);
 $SQL = "DELETE FROM sessions WHERE sessionid = '" . session_id() . "'";
 $Result = DB_query($SQL);
 
-// KL RICARD log the script running time
+// log the script running time
 include_once ('includes/AuditScriptsFunctions.php');
 RecordRunningTime('Logout', $_SESSION['UserID']);
 

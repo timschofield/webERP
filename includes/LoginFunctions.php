@@ -1,14 +1,7 @@
 <?php
 
-/***************************************************************************************
- * 
- * KL RICARD: Log the script we run so we can optimize CPU time and record login attempts
- * 
- * 
- ***************************************************************************************/
-
  include('AuditScriptsFunctions.php');
-
+ 
 /* Performs login checks and $_SESSION initialisation */
 
 define('UL_OK',  0);		/* User verified, session initialised */
@@ -29,9 +22,9 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 	if (!isset($_SESSION['AccessLevel']) OR $_SESSION['AccessLevel'] == '' OR
 		(isset($Name) AND $Name != '')) {
 
-		/* KL RICARD Log the script we run so we can optimize CPU time*/	
+		/* Log the script we run so we can optimize CPU time*/	
 		$_SESSION['ScriptStartTime'] = microtime();
-
+		
 		/* if not logged in */
 
 		$_SESSION['AccessLevel'] = '';
@@ -102,7 +95,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 				unset($_POST['Password']);
 				unset($_SESSION['DatabaseName']);
 
-				// KL RICARD: log the script running time
+				// log the script running time
 				RecordRunningTime('Login attempt on blocked account', $Name); 
 				return  UL_BLOCKED;
 			}
@@ -159,7 +152,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 			$Sec_Result = DB_query($SQL);
 			$_SESSION['AllowedPageSecurityTokens'] = array();
 			if (DB_num_rows($Sec_Result)==0) {
-				// KL RICARD: log the script running time
+				// log the script running time
 				RecordRunningTime('Login attempt with security tokens error', $_SESSION['UserID']); 
 				return  UL_CONFIGERR;
 			} else {
@@ -198,6 +191,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 									WHERE  executiondate <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'";
 							$ErrMsg = __('There was a problem deleting expired audit-script history');
 							$Result = DB_query($SQL);
+
 						}
 					}
 				}
@@ -264,14 +258,14 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 			}
 
 			if (!isset($_SESSION['DB_Maintenance'])) {
-				// KL RICARD: log the script running time
+				// log the script running time
 				RecordRunningTime('Login attempt with config error', $_SESSION['UserID']); 
 				return  UL_CONFIGERR;
 			} else {
 				if ($_SESSION['DB_Maintenance']==-1 AND !in_array(15, $_SESSION['AllowedPageSecurityTokens'])) {
 					// the configuration setting has been set to -1 ==> Allow SysAdmin Access Only
 					// the user is NOT a SysAdmin
-					// KL RICARD: log the script running time
+					// log the script running time
 					RecordRunningTime('Login attempt while on maintenance mode', $_SESSION['UserID']); 
 					return  UL_MAINTENANCE;
 				}
@@ -303,18 +297,19 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 				unset($_POST['Password']);
 				unset($_SESSION['DatabaseName']);
 
-				// KL RICARD: log the script running time
+				// log the script running time
 				RecordRunningTime('Login attempt with wrong password: Account Blocked', $Name); 
 				return  UL_BLOCKED;
 			}
-			// KL RICARD: log the script running time
+
+			// log the script running time
 			RecordRunningTime('Login attempt with wrong password', $Name); 
 			return  UL_NOTVALID;
 		} // End of incorrect password
 	} // End of userid/password check
 
 	// Run with debugging messages for the system administrator(s) but not anyone else
-	// KL RICARD: log the script running time
+	// log the script running time
 	RecordRunningTime('Login successful', $_SESSION['UserID']); 
 
 	return   UL_OK;		    /* All is well */

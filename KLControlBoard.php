@@ -462,6 +462,7 @@ if ($ProcessSection01){
 		$StartTime = microtime(true);
 		BalanceListAccountControl("('111121101AD',
 									'111121105AD',
+									'111121106AD',
 									'111121107AD',
 									'111121110AD',
 									'111121115AD',
@@ -499,6 +500,7 @@ if ($ProcessSection01){
 		$StartTime = microtime(true);
 		BalanceListAccountControl("('111121100SM',
 									'111121105SM',
+									'111121106SM',
 									'111121110SM',
 									'111121115SM',
 									'111121117SM')", "Total Banks PT SMH", 1500000000, 4000000000, $PeriodNow);
@@ -506,9 +508,10 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 
 		$StartTime = microtime(true);
-		BalanceListAccountControl("('111121100BB', 
-									'111121101BB', 
-									'111121105BB', 
+		BalanceListAccountControl("('111121100BB',
+									'111121101BB',
+									'111121105BB',
+									'111121106BB',
 									'111121110BB', 
 									'111121115BB', 
 									'111121111BB', 

@@ -1,7 +1,7 @@
 <?php
 /**********************************************************************
 *
-* KL RICARD Functions related to Audit Scripts
+* Functions related to Audit Scripts
 *
 ***********************************************************************/
 

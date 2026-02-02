@@ -159,9 +159,6 @@ define("MINIMUM_AVERAGE_SALES_TREND", 3);
 define("MINIMUM_AVERAGE_SALES_COMPARED_LAST_YEAR_TREND", 5);
 define("MINIMUM_BUSINESS_HISTORY_TREND", 3);
 
-/* Defines about Retail Sales at KL Shops*/
-define("LENGHT_OF_LIST_OF_CODES_RETAIL_SHOP_SALES", 5); 
-
 /* Defines about Stock Control*/
 define("MAX_ITEMS_CHANGING_PRICE_OR_MOVING_DISC", 999); 
 define("MAX_ITEMS_CHANGING_PRICE", 999); 

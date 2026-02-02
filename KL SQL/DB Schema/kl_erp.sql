@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.2
+-- version 5.2.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 11, 2025 at 10:51 AM
+-- Generation Time: Feb 02, 2026 at 03:24 PM
 -- Server version: 11.4.9-MariaDB-log
--- PHP Version: 8.4.12
+-- PHP Version: 8.4.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -2817,7 +2817,7 @@ CREATE TABLE `salariescalculated` (
   `email` varchar(50) NOT NULL DEFAULT '',
   `company` varchar(10) NOT NULL DEFAULT '',
   `joiningdate` date NOT NULL DEFAULT '1000-01-01',
-  `position` varchar(30) NOT NULL DEFAULT '',
+  `position` varchar(50) NOT NULL,
   `paymentmethod` varchar(10) NOT NULL DEFAULT '',
   `bankcode` varchar(11) DEFAULT NULL COMMENT 'bank code as Bank Danamon',
   `bankaccount` varchar(30) DEFAULT NULL COMMENT 'bank account code',
@@ -3721,7 +3721,8 @@ CREATE TABLE `supptrans` (
   `hold` tinyint(4) NOT NULL DEFAULT 0,
   `chequeno` varchar(16) NOT NULL DEFAULT '',
   `void` tinyint(1) NOT NULL DEFAULT 0,
-  `id` int(11) NOT NULL
+  `id` int(11) NOT NULL,
+  `balance` double GENERATED ALWAYS AS (`ovamount` + `ovgst` - `alloc`) STORED
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------

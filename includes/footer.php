@@ -14,6 +14,10 @@ Global $Messages;
 include_once ('AuditScriptsFunctions.php');
 RecordRunningTime($Title, $_SESSION['UserID']);
 
+// log the script running time
+include_once ('AuditScriptsFunctions.php');
+RecordRunningTime($Title, $_SESSION['UserID']);
+
 echo '<div id="mask">
 		<div id="dialog"></div>
 	</div>';
