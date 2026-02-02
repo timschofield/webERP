@@ -111,7 +111,7 @@ if (!isset($_SESSION['AttemptsCounter']) or $AllowDemoMode == true) {
 	$_SESSION['AttemptsCounter'] = 0;
 }
 
-/* KL RICARD Log the script we run so we can optimize CPU time*/	
+/* Log the script we run so we can optimize CPU time*/	
 $_SESSION['ScriptStartTime'] = microtime();
 
 if (isset($_SESSION['DatabaseName'])) {

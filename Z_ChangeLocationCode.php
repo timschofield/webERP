@@ -174,6 +174,12 @@ if (isset($_POST['ProcessLocationChange'])) {
 			echo ' ... ' . __('completed');
 		}
 
+		echo '<br />' . __('Changing pickreq information');
+		$SQL = "UPDATE pickreq SET loccode='" . $_POST['NewLocationID'] . "' WHERE loccode='" . $_POST['OldLocationID'] . "'";
+		$ErrMsg = __('The SQL to update the pickreq records failed');
+		$Result = DB_query($SQL, $ErrMsg, '', true);
+		echo ' ... ' . __('completed');
+
 		echo '<br />' . __('Changing purchase orders information');
 		$SQL = "UPDATE purchorders SET intostocklocation='" . $_POST['NewLocationID'] . "' WHERE intostocklocation='" . $_POST['OldLocationID'] . "'";
 		$ErrMsg = __('The SQL to update the purchase orders records failed');
@@ -186,9 +192,9 @@ if (isset($_POST['ProcessLocationChange'])) {
 		$Result = DB_query($SQL, $ErrMsg, '', true);
 		echo ' ... ' . __('completed');
 
-		echo '<br />' . __('Changing  sales orders information');
+		echo '<br />' . __('Changing sales orders information');
 		$SQL = "UPDATE salesorders SET fromstkloc='" . $_POST['NewLocationID'] . "' WHERE fromstkloc='" . $_POST['OldLocationID'] . "'";
-		$ErrMsg = __('The SQL to update the  sales orders records failed');
+		$ErrMsg = __('The SQL to update the sales orders records failed');
 		$Result = DB_query($SQL, $ErrMsg, '', true);
 		echo ' ... ' . __('completed');
 

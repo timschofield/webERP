@@ -2,7 +2,7 @@
 
 /***********************************************************************************************
 *
-* KL RICARD: do not show auditscripts table results
+* KL RICARD: default from date as today
 *
 ************************************************************************************************/
 require(__DIR__ . '/includes/session.php');
@@ -200,7 +200,7 @@ if (isset($_POST['View'])) {
 			$RowColour = '#fe90bf';
 		}
 
-		// KL RICARD: Do not show auditscripts table results
+		// Do not show auditscripts table results, as it bloats the report unnecessarily
 		if ((trim($_SESSION['SQLString']['table']) != 'auditscripts') AND 
 		   ((trim($_SESSION['SQLString']['table']) == $_POST['SelectedTable'])  OR
 			($_POST['SelectedTable'] == 'ALL'))) {
