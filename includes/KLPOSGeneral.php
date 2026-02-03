@@ -1324,7 +1324,7 @@ function KLPrintCustomerServiceReceiptHeader($StockID, $Description, $Fee, $Mess
 	$TextToPrint .= KLPrintReceiptTestWarning("SERVICE RECEIPT"). $NewLine . $CenteredJustified;
 	$TextToPrint .= DisplayDateTime() . $NewLine;
 	$TextToPrint .= 'SPG Code: ' . $_SESSION['SalesmanLogin'] . $NewLine;
-	$TextToPrint .= 'Shop Code: ' . substr($_SESSION['UserStockLocation'],1,4) . $NewLine . $NewLine;
+	$TextToPrint .= 'Shop Code: ' . $_SESSION['UserStockLocation'] . $NewLine . $NewLine;
 	$TextToPrint .= $LeftJustified;
 	$TextToPrint .= 'Item code: ' . $StockID . $NewLine;
 	$TextToPrint .= 'Item description: ' . $Description . $NewLine . $NewLine;

@@ -4,8 +4,8 @@
 
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
-- Use the fucntion ChangeGLAcoountCode
-- change the account code also in KL tables using this field
+- Use the function ChangeGLAccountCode
+- change the account code also in KL tables using this field (regular and archive DB)
 ***************************************************************************************/
 
 require(__DIR__ . '/includes/session.php');
@@ -22,19 +22,19 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 
 include('includes/SQL_CommonFunctions.php');
 
-// RICARD KL: Use the function ChangeGLAcoountCode
+// RICARD KL: Use the function ChangeGLAccountCode and connection to Archive DB
 include('includes/KLGeneralFunctions.php');
-// RICARD KL END: Use the function ChangeGLAcoountCode
+include('includes/ArchiveConnectDB.php');
+// RICARD KL END: Use the function ChangeGLAccountCode and connection to Archive DB
 
 if (isset($_POST['ProcessGLAccountCode'])) {
 
 	$InputError =0;
 
 	$_POST['NewAccountCode'] = mb_strtoupper($_POST['NewAccountCode']);
-		DB_Txn_Begin();
-	ChangeGLAcoountCode($_POST['NewAccountCode'], $_POST['OldAccountCode']);
-
-		DB_Txn_Commit();
+	DB_Txn_Begin();
+	ChangeGLAccountCode($_POST['NewAccountCode'], $_POST['OldAccountCode']);
+	DB_Txn_Commit();
 
 }
 

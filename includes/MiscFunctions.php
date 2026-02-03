@@ -554,7 +554,17 @@ function ChangeFieldInTable($TableName, $FieldName, $OldValue, $NewValue) {
 	echo '<br />' . __('Changing') . ' ' . $TableName . ' ' . __('records');
 	$SQL = "UPDATE " . $TableName . " SET " . $FieldName . " ='" . $NewValue . "' WHERE " . $FieldName . "='" . $OldValue . "'";
 	$ErrMsg = __('The SQL to update' . ' ' . $TableName . ' ' . __('records failed'));
-	$Result = DB_query($SQL, $ErrMsg, '', true);
+	DB_query($SQL, $ErrMsg, '', true);
+	echo ' ... ' . __('completed');
+}
+
+function ChangeFieldInTableArchive($TableName, $FieldName, $OldValue, $NewValue) {
+	/* Used in Z_ scripts to change one field across the table.
+	*/
+	echo '<br />' . __('Changing') . ' ' . $TableName . ' ' . __('records in archive DB');
+	$SQL = "UPDATE " . $TableName . " SET " . $FieldName . " ='" . $NewValue . "' WHERE " . $FieldName . "='" . $OldValue . "'";
+	$ErrMsg = __('The SQL to update' . ' ' . $TableName . ' ' . __('records failed in archive DB'));
+	DB_query_archive($SQL, $ErrMsg, '', true);
 	echo ' ... ' . __('completed');
 }
 

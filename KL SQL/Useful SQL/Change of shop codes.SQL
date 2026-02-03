@@ -32,7 +32,6 @@ UPDATE `chartmaster` SET `accountname` = 'Cash TBRU3-Toko Blink Raya Ubud 3 (ex-
 UPDATE `chartmaster` SET `accountname` = 'Cash TKRU4-Toko KL Raya Ubud 4 (ex-U4)' WHERE `chartmaster`.`accountcode` = '111111140';
 UPDATE `chartmaster` SET `accountname` = 'Cash TBRU5-Toko Blink Raya Ubud 5 (ex-U5)' WHERE `chartmaster`.`accountcode` = '111111141';
 
-
 UPDATE `departments` SET `description` = 'TKAR1-Toko KL Arjuna 1 (ex-AR)' WHERE `departments`.`departmentid` = 19;
 UPDATE `departments` SET `description` = 'TKBB2-Toko KL Batubolong 2 (ex-B3)' WHERE `departments`.`departmentid` = 5;
 UPDATE `departments` SET `description` = 'TBBB1-Toko Blink Batubolong 1 (ex-BB)' WHERE `departments`.`departmentid` = 27;
@@ -289,5 +288,39 @@ UPDATE `fixedassets`
 SET `description` = 'Sewa toko TKRU1 (PU) 01/02/2024 - 31/01/2029', 
 	`longdescription` = 'Sewa toko TKRU1 (PU) 01/02/2024 - 31/01/2029' 
 WHERE `fixedassets`.`assetid` = 2054;
+
+UPDATE bankaccounts SET bankaccountname = 'Cash TKAR1-Toko KL Arjuna 1 (ex-AR)' WHERE bankaccounts.accountcode = '111111118';
+UPDATE bankaccounts SET bankaccountname = 'Cash TKBB2-Toko KL Batubolong 2 (ex-B3)' WHERE bankaccounts.accountcode = '111111139';
+UPDATE bankaccounts SET bankaccountname = 'Cash TBBB1-Toko Blink Batubolong (ex-BB)' WHERE bankaccounts.accountcode = '111111126';
+UPDATE bankaccounts SET bankaccountname = 'Cash TBPK1-Toko Blink Pantai Kuta 1 (ex-BK)' WHERE bankaccounts.accountcode = '111111128';
+UPDATE bankaccounts SET bankaccountname = 'Cash TBLE1-Toko Blink Legian 1 (ex-BL)' WHERE bankaccounts.accountcode = '111111130';
+UPDATE bankaccounts SET bankaccountname = 'Cash TBRU6-Toko Blink Raya Ubud 6 (ex-BU)' WHERE bankaccounts.accountcode = '111111121';
+UPDATE bankaccounts SET bankaccountname = 'Cash TBPL2-Toko Blink Padang Linjong 2 (ex-CB)' WHERE bankaccounts.accountcode = '111111137';
+UPDATE bankaccounts SET bankaccountname = 'Cash TKPL1-Toko KL Padang Linjong 1 (ex-CK)' WHERE bankaccounts.accountcode = '111111136';
+UPDATE bankaccounts SET bankaccountname = 'Cash TBKA3-Toko Blink Kayu Aya 3 (ex-FB)' WHERE bankaccounts.accountcode = '111111143';
+UPDATE bankaccounts SET bankaccountname = 'Cash TBSE3-Toko Blink Seminyak 3 (ex-GB)' WHERE bankaccounts.accountcode = '111111135';
+UPDATE bankaccounts SET bankaccountname = 'Cash TKSE2-Toko KL Seminyak 2 (ex-GK)' WHERE bankaccounts.accountcode = '111111134';
+UPDATE bankaccounts SET bankaccountname = 'Cash TBSA3-Toko Blink Sanur 3 (ex-IB)' WHERE bankaccounts.accountcode = '111111142';
+UPDATE bankaccounts SET bankaccountname = 'Cash TBKA2-Toko Blink Kayu Aya 2 (ex-K2)' WHERE bankaccounts.accountcode = '111111129';
+UPDATE bankaccounts SET bankaccountname = 'Cash TKKA1-Toko KL Kayu Aya 1 (ex-KA)' WHERE bankaccounts.accountcode = '111111115';
+UPDATE bankaccounts SET bankaccountname = 'Cash TKMF2-Toko KL Monkey Forest 2 (ex-M2)' WHERE bankaccounts.accountcode = '111111122';
+UPDATE bankaccounts SET bankaccountname = 'Cash TBMF3-Toko Blink Monkey Forest 3 (ex-M3)' WHERE bankaccounts.accountcode = '111111138';
+UPDATE bankaccounts SET bankaccountname = 'Cash TKMF4-Toko KL Monkey Forest 4 (ex-MF)' WHERE bankaccounts.accountcode = '111111107';
+UPDATE bankaccounts SET bankaccountname = 'Cash TBMF1-Toko Blink Monkey Forest 1 (ex-MU)' WHERE bankaccounts.accountcode = '111111116';
+UPDATE bankaccounts SET bankaccountname = 'Cash TBKR1-Toko Blink Karna 1 (ex-NB)' WHERE bankaccounts.accountcode = '111111144';
+UPDATE bankaccounts SET bankaccountname = 'Cash TBOB2-Toko Blink Oberoi 2 (ex-O2)' WHERE bankaccounts.accountcode = '111111125';
+UPDATE bankaccounts SET bankaccountname = 'Cash TKOB1-Toko KL Oberoi 1 (ex-OB)' WHERE bankaccounts.accountcode = '111111112';
+UPDATE bankaccounts SET bankaccountname = 'Cash TKPA1-Toko KL Padma 1 (ex-PA)' WHERE bankaccounts.accountcode = '111111114';
+UPDATE bankaccounts SET bankaccountname = 'Cash TBPA2-Toko Blink Padma 2 (ex-PB)' WHERE bankaccounts.accountcode = '111111120';
+UPDATE bankaccounts SET bankaccountname = 'Cash TBSE4-Toko Blink Seminyak 4 (ex-PS)' WHERE bankaccounts.accountcode = '111111117';
+UPDATE bankaccounts SET bankaccountname = 'Cash TKRU1-Toko KL Raya Ubud 1 (ex-PU)' WHERE bankaccounts.accountcode = '111111110';
+UPDATE bankaccounts SET bankaccountname = 'Cash TKSA1-Toko KL Sanur 1 (ex-SA)' WHERE bankaccounts.accountcode = '111111102';
+UPDATE bankaccounts SET bankaccountname = 'Cash TBSA2-Toko Blink Sanur 2 (ex-SB)' WHERE bankaccounts.accountcode = '111111119';
+UPDATE bankaccounts SET bankaccountname = 'Cash TKSE1-Toko KL Seminyak 1 (ex-SE)' WHERE bankaccounts.accountcode = '111111109';
+UPDATE bankaccounts SET bankaccountname = 'Cash TBTL1-Toko Blink Tanah Lot (ex-TK)' WHERE bankaccounts.accountcode = '111111132';
+UPDATE bankaccounts SET bankaccountname = 'Cash TKRU2-Toko KL Raya Ubud 2 (ex-U2)' WHERE bankaccounts.accountcode = '111111123';
+UPDATE bankaccounts SET bankaccountname = 'Cash TBRU3-Toko Blink Raya Ubud 3 (ex-U3)' WHERE bankaccounts.accountcode = '111111124';
+UPDATE bankaccounts SET bankaccountname = 'Cash TKRU4-Toko KL Raya Ubud 4 (ex-U4)' WHERE bankaccounts.accountcode = '111111140';
+UPDATE bankaccounts SET bankaccountname = 'Cash TBRU5-Toko Blink Raya Ubud 5 (ex-U5)' WHERE bankaccounts.accountcode = '111111141';
 
 

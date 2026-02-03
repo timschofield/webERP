@@ -11,6 +11,11 @@ include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.php');
 
+// RICARD KL: Use the connection to Archive DB
+include('includes/ArchiveConnectDB.php');
+// RICARD KL END: Use the connection to Archive DB
+
+
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/maintenance.png" title="',// Icon image.
 	__('Change A Location Code'), '" /> ',// Icon title.
@@ -245,6 +250,19 @@ if (isset($_POST['ProcessLocationChange'])) {
 		$Result = DB_query($SQL, $ErrMsg, '', true);
 		echo ' ... ' . __('completed');
 
+		/* KL RICARD table loctransfers in Archive DB */
+		echo '<br />' . __('Changing location transfer information (Shipping location) in Archive DB');
+		$SQL = "UPDATE loctransfers SET shiploc='" . $_POST['NewLocationID'] . "' WHERE shiploc='" . $_POST['OldLocationID'] . "'";
+		$ErrMsg = __('The SQL to update the loctransfers records failed');
+		$Result = DB_query_archive($SQL, $ErrMsg, '', true);
+		echo ' ... ' . __('completed');
+
+		echo '<br />' . __('Changing location transfer information (Receiving location)  in Archive DB');
+		$SQL = "UPDATE loctransfers SET recloc='" . $_POST['NewLocationID'] . "' WHERE recloc='" . $_POST['OldLocationID'] . "'";
+		$ErrMsg = __('The SQL to update the loctransfers records failed');
+		$Result = DB_query_archive($SQL, $ErrMsg, '', true);
+		echo ' ... ' . __('completed');
+
 		//check if MRP tables exist before assuming
 
 		$Result = DB_query("SELECT COUNT(*) FROM mrpparameters",'','',false,false);
@@ -304,6 +322,14 @@ if (isset($_POST['ProcessLocationChange'])) {
 		$ErrMsg = __('The SQL to update stockmoves records failed');
 		$Result = DB_query($SQL, $ErrMsg, '', true);
 		echo ' ... ' . __('completed');
+
+		/* KL RICARD table stockmoves in Archive DB */
+		echo '<br />' . __('Changing stockmoves records');
+		$SQL = "UPDATE stockmoves SET loccode='" . $_POST['NewLocationID'] . "' WHERE loccode='" . $_POST['OldLocationID'] . "'";
+		$ErrMsg = __('The SQL to update stockmoves records failed');
+		$Result = DB_query_archive($SQL, $ErrMsg, '', true);
+		echo ' ... ' . __('completed');
+		/* KL RICARD table stockmoves in Archive DB */
 
 		echo '<br />' . __('Changing stockrequest records');
 		$SQL = "UPDATE stockrequest SET loccode='" . $_POST['NewLocationID'] . "' WHERE loccode='" . $_POST['OldLocationID'] . "'";
