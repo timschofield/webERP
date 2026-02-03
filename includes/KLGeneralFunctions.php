@@ -10,7 +10,7 @@ FUNCTIONS INCLUDED IN ALPHABETICAL ORDER:
 AdjustBulatan                     - Calculates the rounding adjustment amount
 BrandTextFromCode                 - Returns the text description of a brand code
 CapitalizeName                    - Properly capitalizes a name with exceptions for common prefixes
-ChangeGLAcoountCode               - Changes a GL account code throughout the system
+ChangeGLAccountCode               - Changes a GL account code throughout the system
 ClassicalSize                     - Determines the classical size (XS, S, M, L, XL) from an item code
 CleanStringForWebERP              - Removes single quotes from strings for safe database use
 CodeModel                         - Returns the model code (first 6 characters) of an item
@@ -1795,7 +1795,7 @@ function OptimumOrderQuantity($QtyNeeded, $Eoq, $PanSize){
 }
 
 
-function ChangeGLAcoountCode($NewGL, $OldGL) {
+function ChangeGLAccountCode($NewGL, $OldGL) {
 	/*First check the code exists */
 	$Result = DB_query("SELECT accountcode FROM chartmaster WHERE accountcode='" . $OldGL . "'");
 	if (DB_num_rows($Result) == 0) {
@@ -1874,7 +1874,7 @@ function ChangeGLAcoountCode($NewGL, $OldGL) {
 
 		ChangeFieldInTable("gltrans", "account", $OldGL, $NewGL);
 		
-		ChangeFieldInTable("gltotals", "account", $OldGL, $NewGL);
+//		ChangeFieldInTable("gltotals", "account", $OldGL, $NewGL);
 
 		ChangeFieldInTable("lastcostrollup", "stockact", $OldGL, $NewGL);
 		ChangeFieldInTable("lastcostrollup", "adjglact", $OldGL, $NewGL);
@@ -1957,6 +1957,10 @@ function ChangeGLAcoountCode($NewGL, $OldGL) {
 		ChangeFieldInTable("klonlinepartners", "accountshopeecomissionidr", $OldGL, $NewGL);
 		ChangeFieldInTable("klonlinepartners", "accountlazadaidr", $OldGL, $NewGL);
 		ChangeFieldInTable("klonlinepartners", "accountlazadacomissionidr", $OldGL, $NewGL);
+
+		/* Now change it in the archived tables*/
+		ChangeFieldInTableArchive("banktrans", "bankact", $OldGL, $NewGL);
+		ChangeFieldInTableArchive("gltrans", "account", $OldGL, $NewGL);
 
 		DB_ReinstateForeignKeys();
 

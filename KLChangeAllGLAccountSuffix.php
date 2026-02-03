@@ -30,7 +30,7 @@ if (isset($_POST['ProcessGLAccountCode'])) {
 			$OldGL = $MyRow['accountcode'];
 			$NewGL = substr($OldGL, 0, strlen($OldGL) - $LenghtOldSuffix) . $_POST['NewSuffix'];
 			prnMsg("Old GL: " . $OldGL . " New GL: " . $NewGL);
-			ChangeGLAcoountCode ($NewGL, $OldGL);
+			ChangeGLAccountCode ($NewGL, $OldGL);
 		}
 	}
 }
