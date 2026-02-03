@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 18, 2026 at 11:53 AM
+-- Generation Time: Feb 03, 2026 at 10:52 AM
 -- Server version: 11.4.9-MariaDB-log
--- PHP Version: 8.4.14
+-- PHP Version: 8.4.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -30,8 +30,8 @@ SET time_zone = "+00:00";
 CREATE TABLE `audittrail` (
   `transactiondate` datetime NOT NULL DEFAULT current_timestamp(),
   `userid` varchar(20) NOT NULL DEFAULT '',
-  `querystring` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+  `querystring` mediumtext DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
