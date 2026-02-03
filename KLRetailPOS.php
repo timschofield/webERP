@@ -634,15 +634,15 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 		// Get the Customer invoice number depending on Area
 		if ($Area == $_SESSION['AreaSalesCashOthers']) {
 			// Cash sales
-			$_SESSION['Items' . $identifier]->CustRef = substr($_SESSION['UserStockLocation'], 3, 2) . "-" .
+			$_SESSION['Items' . $identifier]->CustRef = $_SESSION['UserStockLocation'] . "-" .
 				zerofill(GetNextTransNo($_SESSION['CounterInvoiceC']), 7) . "-C";
 		} elseif ($Area == $_SESSION['AreaSalesCash']) {
 			// Cash sales PT
-			$_SESSION['Items' . $identifier]->CustRef = substr($_SESSION['UserStockLocation'], 3, 2) . "-" .
+			$_SESSION['Items' . $identifier]->CustRef = $_SESSION['UserStockLocation'] . "-" .
 				zerofill(GetNextTransNo($_SESSION['CounterInvoiceB']), 7) . "-B";
 		} elseif ($Area == $_SESSION['AreaSalesCreditCard']) {
 			// Credit Card Sales PT
-			$_SESSION['Items' . $identifier]->CustRef = substr($_SESSION['UserStockLocation'], 3, 2) . "-" .
+			$_SESSION['Items' . $identifier]->CustRef = $_SESSION['UserStockLocation'] . "-" .
 				zerofill(GetNextTransNo($_SESSION['CounterInvoiceA']), 7) . "-A";
 		} else {
 			/*The area is wrong for any reason */
