@@ -194,8 +194,10 @@ if (isset($_POST['View'])) {
 			$RowColour = '#fe90bf';
 		}
 
-		if ((trim($_SESSION['SQLString']['table']) == $_POST['SelectedTable'])  ||
-			($_POST['SelectedTable'] == 'ALL')) {
+		// Do not show auditscripts table results, as it bloats the report unnecessarily
+		if ((trim($_SESSION['SQLString']['table']) != 'auditscripts') AND 
+		   ((trim($_SESSION['SQLString']['table']) == $_POST['SelectedTable'])  OR
+			($_POST['SelectedTable'] == 'ALL'))) {
 			if (!isset($_SESSION['SQLString']['values'])) {
 				$_SESSION['SQLString']['values'][0]='';
 			}

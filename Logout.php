@@ -9,6 +9,10 @@ $Result = DB_query($SQL);
 $SQL = "DELETE FROM sessions WHERE sessionid = '" . session_id() . "'";
 $Result = DB_query($SQL);
 
+// log the script running time
+include_once ('includes/AuditScriptsFunctions.php');
+RecordRunningTime('Logout', $_SESSION['UserID']);
+
 // Cleanup
 session_unset();
 session_destroy();

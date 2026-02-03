@@ -95,6 +95,9 @@ if (!isset($_SESSION['AttemptsCounter']) or $AllowDemoMode == true) {
 	$_SESSION['AttemptsCounter'] = 0;
 }
 
+/* Log the script we run so we can optimize CPU time*/	
+$_SESSION['ScriptStartTime'] = microtime();
+
 if (isset($_SESSION['DatabaseName'])) {
 
 	/* iterate through all elements of the $_GET and $_POST arrays and DB_escape_string plus htmlspecialchars them
