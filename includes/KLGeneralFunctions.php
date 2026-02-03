@@ -1880,6 +1880,7 @@ function ChangeGLAccountCode($NewGL, $OldGL) {
 		ChangeFieldInTable("lastcostrollup", "adjglact", $OldGL, $NewGL);
 
 		ChangeFieldInTable("locations", "glaccountcode", $OldGL, $NewGL);// Location's ledger account.
+		ChangeFieldInTable("locations", "klposcashaccount", $OldGL, $NewGL);// KL POS cash account for that toko
 
 		ChangeFieldInTable("pcexpenses", "glaccount", $OldGL, $NewGL);
 
