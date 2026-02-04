@@ -209,7 +209,8 @@ function submit($PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName,
 							   FROM salesorderdetails
 						LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
 						LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
-						LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
+						LEFT JOIN custbranch ON (salesorders.branchcode = custbranch.branchcode
+												AND salesorders.debtorno = custbranch.debtorno)
 						LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
 						LEFT JOIN currencies ON currencies.currabrev = debtorsmaster.currcode
 						WHERE salesorders.orddate >='" . $FromDate . "'
@@ -252,7 +253,8 @@ function submit($PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName,
 						LEFT JOIN salesorderdetails ON tempstockmoves.reference=salesorderdetails.orderno
 						LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
 						LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
-						LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
+						LEFT JOIN custbranch ON (salesorders.branchcode = custbranch.branchcode
+												AND salesorders.debtorno = custbranch.debtorno)
 						LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
 						LEFT JOIN currencies ON currencies.currabrev = debtorsmaster.currcode
 						WHERE tempstockmoves.trandate >='" . $FromDate . "'
@@ -293,7 +295,8 @@ function submit($PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName,
 								   FROM salesorderdetails
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
 							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
-							LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
+							LEFT JOIN custbranch ON (salesorders.branchcode = custbranch.branchcode
+												AND salesorders.debtorno = custbranch.debtorno)
 							LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							LEFT JOIN salesman ON salesman.salesmancode = salesorders.salesperson
@@ -326,7 +329,8 @@ function submit($PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName,
 								   FROM salesorderdetails
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
 							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
-							LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
+							LEFT JOIN custbranch ON (salesorders.branchcode = custbranch.branchcode
+												AND salesorders.debtorno = custbranch.debtorno)
 							LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							LEFT JOIN salesman ON salesman.salesmancode = salesorders.salesperson
@@ -360,7 +364,8 @@ function submit($PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName,
 								   FROM salesorderdetails
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
 							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
-							LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
+							LEFT JOIN custbranch ON (salesorders.branchcode = custbranch.branchcode
+												AND salesorders.debtorno = custbranch.debtorno)
 							LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							LEFT JOIN salesman ON salesman.salesmancode = salesorders.salesperson
@@ -390,7 +395,8 @@ function submit($PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName,
 								   FROM salesorderdetails
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
 							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
-							LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
+							LEFT JOIN custbranch ON (salesorders.branchcode = custbranch.branchcode
+												AND salesorders.debtorno = custbranch.debtorno)
 							LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							LEFT JOIN salesman ON salesman.salesmancode = salesorders.salesperson
@@ -420,7 +426,8 @@ function submit($PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName,
 								   FROM salesorderdetails
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
 							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
-							LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
+		 					LEFT JOIN custbranch ON (salesorders.branchcode = custbranch.branchcode
+												AND salesorders.debtorno = custbranch.debtorno)
 							LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							LEFT JOIN salesman ON salesman.salesmancode = salesorders.salesperson
@@ -450,7 +457,8 @@ function submit($PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName,
 								   FROM salesorderdetails
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
 							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
-							LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
+							LEFT JOIN custbranch ON (salesorders.branchcode = custbranch.branchcode
+												AND salesorders.debtorno = custbranch.debtorno)
 							LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							LEFT JOIN salesman ON salesman.salesmancode = salesorders.salesperson
@@ -480,7 +488,8 @@ function submit($PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName,
 								   FROM salesorderdetails
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
 							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
-							LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
+							LEFT JOIN custbranch ON (salesorders.branchcode = custbranch.branchcode
+												AND salesorders.debtorno = custbranch.debtorno)
 							LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							LEFT JOIN salesman ON salesman.salesmancode = salesorders.salesperson
@@ -515,7 +524,8 @@ function submit($PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName,
 							LEFT JOIN salesorderdetails ON tempstockmoves.reference=salesorderdetails.orderno
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
 							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
-							LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
+							LEFT JOIN custbranch ON (salesorders.branchcode = custbranch.branchcode
+												AND salesorders.debtorno = custbranch.debtorno)
 						    LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							LEFT JOIN salesman ON salesman.salesmancode = salesorders.salesperson
@@ -551,7 +561,8 @@ function submit($PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName,
 							LEFT JOIN salesorderdetails ON tempstockmoves.reference=salesorderdetails.orderno
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
 							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
-							LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
+							LEFT JOIN custbranch ON (salesorders.branchcode = custbranch.branchcode
+												AND salesorders.debtorno = custbranch.debtorno)
 						    LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							LEFT JOIN salesman ON salesman.salesmancode = salesorders.salesperson
@@ -590,7 +601,8 @@ function submit($PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName,
 							LEFT JOIN salesorderdetails ON tempstockmoves.reference=salesorderdetails.orderno
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
 							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
-							LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
+							LEFT JOIN custbranch ON (salesorders.branchcode = custbranch.branchcode
+												AND salesorders.debtorno = custbranch.debtorno)
 						    LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							LEFT JOIN salesman ON salesman.salesmancode = salesorders.salesperson
@@ -625,7 +637,8 @@ function submit($PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName,
 							LEFT JOIN salesorderdetails ON tempstockmoves.reference=salesorderdetails.orderno
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
 							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
-							LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
+							LEFT JOIN custbranch ON (salesorders.branchcode = custbranch.branchcode
+												AND salesorders.debtorno = custbranch.debtorno)
 						    LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							LEFT JOIN salesman ON salesman.salesmancode = salesorders.salesperson
@@ -660,7 +673,8 @@ function submit($PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName,
 							LEFT JOIN salesorderdetails ON tempstockmoves.reference=salesorderdetails.orderno
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
 							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
-							LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
+							LEFT JOIN custbranch ON (salesorders.branchcode = custbranch.branchcode
+												AND salesorders.debtorno = custbranch.debtorno)
 						    LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							LEFT JOIN salesman ON salesman.salesmancode = salesorders.salesperson
@@ -695,7 +709,8 @@ function submit($PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName,
 							LEFT JOIN salesorderdetails ON tempstockmoves.reference=salesorderdetails.orderno
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
 							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
-							LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
+							LEFT JOIN custbranch ON (salesorders.branchcode = custbranch.branchcode
+												AND salesorders.debtorno = custbranch.debtorno)
 						    LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							LEFT JOIN salesman ON salesman.salesmancode = salesorders.salesperson
@@ -730,8 +745,9 @@ function submit($PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName,
 							LEFT JOIN salesorderdetails ON tempstockmoves.reference=salesorderdetails.orderno
 							LEFT JOIN salesorders ON salesorders.orderno=salesorderdetails.orderno
 							LEFT JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
-							LEFT JOIN custbranch ON salesorders.branchcode = custbranch.branchcode
-						    LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
+							LEFT JOIN custbranch ON (salesorders.branchcode = custbranch.branchcode
+												AND salesorders.debtorno = custbranch.debtorno)
+							LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
 							LEFT JOIN stockcategory ON stockcategory.categoryid = stockmaster.categoryid
 							LEFT JOIN salesman ON salesman.salesmancode = salesorders.salesperson
 							LEFT JOIN areas ON areas.areacode = custbranch.area
