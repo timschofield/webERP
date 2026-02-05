@@ -1678,8 +1678,6 @@ CREATE TABLE `locations` (
   `rldaysforpackaging` int(11) NOT NULL DEFAULT 10 COMMENT 'Number of days to keep minim stock as RL for packaging',
   `minmonthlysalestarget` decimal(20,0) NOT NULL DEFAULT 0,
   `klemaillastpackacgingtransfer` date NOT NULL DEFAULT '1000-01-01',
-  `kldisplaylenght` bigint(20) NOT NULL COMMENT 'in cm ',
-  `kldisplaysurface` bigint(20) NOT NULL COMMENT 'in cm2',
   `klyearlyrent` decimal(20,0) NOT NULL DEFAULT 0 COMMENT 'Yearly rent for POS',
   `klposcashaccount` varchar(20) DEFAULT NULL COMMENT 'GL account for cash payments for KL POS ',
   `klpostag` tinyint(4) DEFAULT NULL COMMENT 'GL tag for KL POS ',
