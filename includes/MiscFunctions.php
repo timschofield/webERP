@@ -968,6 +968,7 @@ function SQLToBeAudited($SQLArray){
 	// $SQLArray already comes exploded by spaces and uppercased
 	if (($SQLArray[0] == 'INSERT' or $SQLArray[0] == 'UPDATE' or $SQLArray[0] == 'DELETE')) {
 		if (TableToBeSkippedInAudit($SQLArray, 'AUDITTRAIL')
+			or TableToBeSkippedInAudit($SQLArray, 'AUDITSCRIPTS')
 			or TableToBeSkippedInAudit($SQLArray, 'SESSIONS')
 			or TableToBeSkippedInAudit($SQLArray, 'SESSION_DATA')) {
 			return false;
