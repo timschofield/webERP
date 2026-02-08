@@ -14,9 +14,10 @@ if (isset($_GET['BackupFile'])) {
 
 	$BackupFiles = scandir($PathPrefix . 'companies/' . $_SESSION['DatabaseName'], 0);
 	$DeletedFiles = false;
+        $BackupPreLen = mb_strlen(__('Backup'), 'UTF-8');
 	foreach ($BackupFiles as $BackupFile) {
 		/// @todo check as well for file extension, not only the file name prefix
-		if (mb_substr($BackupFile, 0, 6) == 'Backup') {
+		if (mb_substr($BackupFile, 0, $BackupPreLen) == __('Backup')) {
 
 			$DeleteResult = unlink($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/' . $BackupFile);
 
@@ -35,7 +36,7 @@ if (isset($_GET['BackupFile'])) {
 	}
 } else {
 
-	$BackupFile = $PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/' . __('Backup') . '_' . date('Y-m-d-H-i-s') . '.sql.gz';
+	$BackupFile = $RootPath . 'companies/' . $_SESSION['DatabaseName'] . '/' . __('Backup') . '_' . date('Y-m-d-H-i-s') . '.sql.gz';
 	/// @todo add as well $DBPort
 	/// @todo use the same mysqldump options as in the build/dump_database?
 	/// @todo test for presence of gzip using `which` / `where.exe`. If not present, do not try to compress the dump
