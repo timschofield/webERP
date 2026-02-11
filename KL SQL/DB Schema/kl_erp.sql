@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 02, 2026 at 03:24 PM
--- Server version: 11.4.9-MariaDB-log
+-- Generation Time: Feb 11, 2026 at 08:09 AM
+-- Server version: 11.4.10-MariaDB-log
 -- PHP Version: 8.4.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -2785,7 +2785,7 @@ CREATE TABLE `returneditems` (
   `orderno` int(11) DEFAULT NULL,
   `returndate` date NOT NULL DEFAULT '1000-01-01',
   `reasonid` tinyint(4) NOT NULL DEFAULT 0,
-  `itemcode` varchar(20) NOT NULL DEFAULT '',
+  `itemcode` varchar(40) NOT NULL,
   `oldinvoice` varchar(20) NOT NULL DEFAULT '',
   `oldinvoicedate` date NOT NULL DEFAULT '1000-01-01'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

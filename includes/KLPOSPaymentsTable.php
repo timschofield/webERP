@@ -152,7 +152,7 @@ echo '<tr>
 echo '<tr>
 		<td></td>
 		<td>' . __('Invoice number') . ':</td>
-		<td><input type="text" class="text" name="ReturnedGoodsOldInvoice" maxlength="12" size="12" value="' . $_POST['ReturnedGoodsOldInvoice'] . '" /></td>
+		<td><input type="text" class="text" name="ReturnedGoodsOldInvoice" maxlength="15" size="15" value="' . $_POST['ReturnedGoodsOldInvoice'] . '" /></td>
 	</tr>';
 
 echo '<tr>
@@ -164,7 +164,7 @@ echo '<tr>
 echo '<tr>
 		<td></td>
 		<td>' . __('Items returned') . ':</td>
-		<td><input type="text" class="text" name="ReturnedGoodsItems" maxlength="40" size="12" value="' . $_POST['ReturnedGoodsItems'] . '" /></td>
+		<td><input type="text" class="text" name="ReturnedGoodsItems" maxlength="40" size="20" value="' . $_POST['ReturnedGoodsItems'] . '" /></td>
 	</tr>';
 
 echo '<tr>
