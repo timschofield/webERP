@@ -553,6 +553,7 @@ if (isset($SalesOrdersResult)) {
 			$OrderNumber = $OrdRow['orderno'];
 		}
 		echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/OrderDetails.php?OrderNumber=' . $OrderNumber. '">';
+		include('includes/footer.php');
 		exit();
 	}
 

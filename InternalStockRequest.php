@@ -130,8 +130,8 @@ if (isset($_POST['Submit']) and (!empty($_SESSION['Request']->LineItems))) {
 	DB_Txn_Commit();
 	prnMsg(__('The internal stock request has been entered and now needs to be authorised'), 'success');
 	echo '<br /><div class="centre"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?New=Yes">', __('Create another request'), '</a></div>';
-	include('includes/footer.php');
 	unset($_SESSION['Request']);
+	include('includes/footer.php');
 	exit();
 } elseif (isset($_POST['Submit'])) {
 	prnMsg(__('There are no items added to this request'), 'error');
@@ -301,6 +301,7 @@ $Result1 = DB_query($SQL);
 if (DB_num_rows($Result1) == 0) {
 	echo '<p class="bad">', __('Problem Report'), ':<br />', __('There are no stock categories currently defined please use the link below to set them up'), '</p>
 		<a href="', $RootPath, '/StockCategories.php">', __('Define Stock Categories'), '</a>';
+	include('includes/footer.php');
 	exit();
 }
 

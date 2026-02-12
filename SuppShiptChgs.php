@@ -31,6 +31,7 @@ echo '<p class="page_title_text">
 if (!isset($_SESSION['SuppTrans'])){
 	prnMsg(__('Shipment charges or credits are entered against supplier invoices or credit notes respectively') . '. ' . __('To enter supplier transactions the supplier must first be selected from the supplier selection screen') . ', ' . __('then the link to enter a supplier invoice or credit note must be clicked on'),'info');
 	echo '<br /><a href="' . $RootPath . '/SelectSupplier.php">' . __('Select a supplier') . '</a>';
+	include('includes/footer.php');
 	exit();
 	/*It all stops here if there aint no supplier selected and invoice/credit initiated ie $_SESSION['SuppTrans'] started off*/
 }

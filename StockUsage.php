@@ -17,6 +17,7 @@ if (isset($_POST['ShowGraphUsage'])) {
 	prnMsg(__('You should automatically be forwarded to the usage graph') .
 			'. ' . __('If this does not happen') .' (' . __('if the browser does not support META Refresh') . ') ' .
 			'<a href="' . $RootPath . '/StockUsageGraph.php?StockLocation=' . $_POST['StockLocation'] .'&amp;StockID=' . $StockID . '">' . __('click here') . '</a> ' . __('to continue'),'info');
+	include('includes/footer.php');
 	exit();
 }
 

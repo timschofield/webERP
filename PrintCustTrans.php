@@ -240,10 +240,12 @@ if (isset($PrintPDF)
 			// Security checks as before (salesman/customer authorization)
 			if ($_SESSION['SalesmanLogin'] != '' AND $_SESSION['SalesmanLogin'] != $MyRow['salesman']){
 				echo '<p class="bad">' . __('Your account is set up to see only a specific salespersons orders. You are not authorised to view transaction for this order') . '</p>';
+				include('includes/footer.php');
 				exit();
 			}
 			if (isset($CustomerLogin) && $CustomerLogin == 1 AND $MyRow['debtorno'] != $_SESSION['CustomerID']){
 				echo '<p class="bad">' . __('This transaction is addressed to another customer and cannot be displayed for privacy reasons') . '</p>';
+				include('includes/footer.php');
 				exit();
 			}
 

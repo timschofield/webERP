@@ -395,6 +395,7 @@ if (isset($_POST['TenderType'])
 		echo '<p><font size="4" color="red">' . __('Problem Report') . ':</font><br />' .
 			__('There are no stock categories currently defined please use the link below to set them up');
 		echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . __('Define Stock Categories') . '</a></p>';
+		include('includes/footer.php');
 		exit();
 	}
 	echo '<fieldset>

@@ -253,6 +253,7 @@ while ($Cols = DB_fetch_array($ColsResult)){
 		$Length_ColDen = mb_strpos($SQLSelectCls, 'AS col' . (($Cols['coldenominator']) + 8), 7);
 		if ($Length_ColDen == 0){
 			prnMsg(__('Calculated fields must use columns defined in the report specification') . '. ' . __('The denominator column number entered for this calculation is not defined in the report'),'error',__('Calculation With Undefined Denominator'));
+			include('includes/footer.php');
 			exit();
 		}
 
@@ -302,6 +303,5 @@ if (DB_num_rows($Result)==0) {
 	echo '<br /><a href="' . $RootPath . '/SalesAnalRepts.php?SelectedReport=' . $_GET['ReportID'] . '">' . __('Look at the design of this report') . '</a>';
 	echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 	include('includes/footer.php');
-
 	exit();
 }

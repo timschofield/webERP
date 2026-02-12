@@ -377,10 +377,11 @@ class Cart {
 		$TaxCatQuery = DB_query($SQL);
 
 		if ($TaxCatRow = DB_fetch_array($TaxCatQuery)) {
-		  $TaxCatID = $TaxCatRow['taxcatid'];
+			$TaxCatID = $TaxCatRow['taxcatid'];
 		} else {
-  		  prnMsg( __('Cannot find tax category Freight which must always be defined'),'error');
-		  exit();
+  			prnMsg( __('Cannot find tax category Freight which must always be defined'),'error');
+			include('includes/footer.php');
+			exit();
 		}
 
 		$SQL = "SELECT taxgrouptaxes.calculationorder,

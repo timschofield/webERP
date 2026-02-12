@@ -344,8 +344,8 @@ if (isset($_POST['submit'])) {
 		$SQL="DELETE FROM debtorsmaster WHERE debtorno='" . $_POST['DebtorNo'] . "'";
 		$Result = DB_query($SQL);
 		prnMsg( __('Customer') . ' ' . $_POST['DebtorNo'] . ' ' . __('has been deleted - together with all the associated branches and contacts'),'success');
-		include('includes/footer.php');
 		unset($_SESSION['CustomerID']);
+		include('includes/footer.php');
 		exit();
 	} //end if Delete Customer
 }

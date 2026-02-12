@@ -345,6 +345,7 @@ if (DB_num_rows($Result)==0){
 }
 if ($MyRow[1]=='K'){
 	prnMsg(__('The part selected is a kit set item') .', ' . __('these items explode into their components when selected on an order') . ', ' . __('prices must be set up for the components and no price can be set for the whole kit'),'error');
+	include('includes/footer.php');
 	exit();
 }
 

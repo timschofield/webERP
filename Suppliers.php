@@ -31,7 +31,7 @@ function Is_ValidAccount($ActNo) {
 
 	if ($BankPrefix == '29') {
 		echo __('NZ Accounts codes with the United Bank are not verified') . ', ' . __('be careful to enter the correct account number');
-		exit();
+		return false;
 	}
 
 	//Verify correct branch details
@@ -47,14 +47,12 @@ function Is_ValidAccount($ActNo) {
 			if (!(($BranchNumber >= 1 and $BranchNumber <= 999) or ($BranchNumber >= 1200 and $BranchNumber <= 1299))) {
 				echo __('Bank Of New Zealand branches must be between 0001 and 0999 or between 1200 and 1299') . '. ' . __('The branch number used is invalid');
 				return false;
-				exit();
 			}
 		break;
 		case '03':
 			if (!(($BranchNumber >= 1 and $BranchNumber <= 999) or ($BranchNumber >= 1300 and $BranchNumber <= 1399))) {
 				echo __('Westpac Trust branches must be between 0001 and 0999 or between 1300 and 1399') . '. ' . __('The branch number used is invalid');
 				return false;
-				exit();
 			}
 		break;
 
@@ -62,7 +60,6 @@ function Is_ValidAccount($ActNo) {
 			if (!(($BranchNumber >= 1 and $BranchNumber <= 999) or ($BranchNumber >= 1400 and $BranchNumber <= 1499))) {
 				echo __('National Bank branches must be between 0001 and 0999 or between 1400 and 1499') . '. ' . __('The branch number used is invalid');
 				return false;
-				exit();
 			}
 		break;
 
@@ -70,14 +67,12 @@ function Is_ValidAccount($ActNo) {
 			if (!($BranchNumber >= 6500 and $BranchNumber <= 6599)) {
 				echo __('National Australia branches must be between 6500 and 6599') . '. ' . __('The branch number used is invalid');
 				return false;
-				exit();
 			}
 		break;
 		case '09':
 			if ($BranchNumber != 0) {
 				echo __('The Reserve Bank branch should be 0000') . '. ' . __('The branch number used is invalid');
 				return false;
-				exit();
 			}
 		break;
 		case '12':
@@ -86,7 +81,6 @@ function Is_ValidAccount($ActNo) {
 			if (!($BranchNumber >= 3000 and $BranchNumber <= 4999)) {
 				echo __('Trust Bank and Regional Bank branches must be between 3000 and 4999') . '. ' . __('The branch number used is invalid');
 				return false;
-				exit();
 			}
 		break;
 
@@ -94,7 +88,6 @@ function Is_ValidAccount($ActNo) {
 			if (!($BranchNumber >= 5000 and $BranchNumber <= 6499)) {
 				echo __('Post Office Bank branches must be between 5000 and 6499') . '. ' . __('The branch number used is invalid');
 				return false;
-				exit();
 			}
 		break;
 
@@ -102,14 +95,12 @@ function Is_ValidAccount($ActNo) {
 			if (!($BranchNumber >= 2500 and $BranchNumber <= 2599)) {
 				echo __('Countrywide Bank branches must be between 2500 and 2599') . '. ' . __('The branch number used is invalid');
 				return false;
-				exit();
 			}
 		break;
 		case '29':
 			if (!($BranchNumber >= 2150 and $BranchNumber <= 2299)) {
 				echo __('United Bank branches must be between 2150 and 2299') . '. ' . __('The branch number used is invalid');
 				return false;
-				exit();
 			}
 		break;
 
@@ -117,7 +108,6 @@ function Is_ValidAccount($ActNo) {
 			if (!($BranchNumber >= 2900 and $BranchNumber <= 2949)) {
 				echo __('Hong Kong and Shanghai branches must be between 2900 and 2949') . '. ' . __('The branch number used is invalid');
 				return false;
-				exit();
 			}
 		break;
 
@@ -125,7 +115,6 @@ function Is_ValidAccount($ActNo) {
 			if (!($BranchNumber >= 2800 and $BranchNumber <= 2849)) {
 				echo __('Citibank NA branches must be between 2800 and 2849') . '. ' . __('The branch number used is invalid');
 				return false;
-				exit();
 			}
 		break;
 
@@ -133,14 +122,12 @@ function Is_ValidAccount($ActNo) {
 			if (!($BranchNumber >= 6700 and $BranchNumber <= 6799)) {
 				echo __('Rural Bank branches must be between 6700 and 6799') . '. ' . __('The branch number used is invalid');
 				return false;
-				exit();
 			}
 		break;
 
 		default:
 			echo __('The prefix') . ' - ' . $BankPrefix . ' ' . __('is not a valid New Zealand Bank') . '.<br />' . __('If you are using webERP outside New Zealand error trapping relevant to your country should be used');
 			return false;
-			exit();
 
 	} // end of first Bank prefix switch
 	for ($i = 3;$i <= 14;$i++) {
@@ -708,6 +695,7 @@ if (!isset($SupplierID)) {
 	$Result = DB_query("SELECT typeid, typename FROM suppliertype");
 	if (DB_num_rows($Result) == 0) {
 		prnMsg(__('There are no supplier types setup. These must be created first'), 'error');
+		include('includes/footer.php');
 		exit();
 	}
 

@@ -22,8 +22,8 @@ if (isset($_POST['Enter'])) { //user has input a new value
 	} else {
 		$InputError = 1;
 		prnMsg(__('The Mail Group should be less than 100 characters and cannot contain illegal characters and cannot be null'), 'error');
-		exit();
 		include('includes/footer.php');
+		exit();
 	}
 	if ($InputError == 0) {
 		$SQL = "INSERT INTO mailgroups (groupname) VALUES ('" . $MailGroup . "')";

@@ -549,18 +549,21 @@ if (!isset($_POST['PostInvoice'])) {
 		echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/SuppInvGRNs.php">';
 		echo '<div class="centre">' . __('You should automatically be forwarded to the entry of invoices against goods received page') . '. ' . __('If this does not happen') . ' (' . __('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/SuppInvGRNs.php">' . __('click here') . '</a> ' . __('to continue') . '</div>
 			<br />';
+		include('includes/footer.php');
 		exit();
 	}
 	if (isset($_POST['Shipts']) AND $_POST['Shipts'] == __('Shipments')) {
 		/*This ensures that any changes in the page are stored in the session before calling the shipments page */
 		echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/SuppShiptChgs.php">';
 		echo '<div class="centre">' . __('You should automatically be forwarded to the entry of invoices against shipments page') . '. ' . __('If this does not happen') . ' (' . __('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/SuppShiptChgs.php">' . __('click here') . '</a> ' . __('to continue') . '.</div><br />';
+		include('includes/footer.php');
 		exit();
 	}
 	if (isset($_POST['GL']) AND $_POST['GL'] == __('General Ledger')) {
 		/*This ensures that any changes in the page are stored in the session before calling the shipments page */
 		echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/SuppTransGLAnalysis.php">';
 		echo '<div class="centre">' . __('You should automatically be forwarded to the entry of invoices against the general ledger page') . '. ' . __('If this does not happen') . ' (' . __('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/SuppTransGLAnalysis.php">' . __('click here') . '</a> ' . __('to continue') . '.</div><br />';
+		include('includes/footer.php');
 		exit();
 	}
 	if (isset($_POST['Contracts']) AND $_POST['Contracts'] == __('Contracts')) {
@@ -568,12 +571,14 @@ if (!isset($_POST['PostInvoice'])) {
 		echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/SuppContractChgs.php">';
 		echo '<div class="centre">' . __('You should automatically be forwarded to the entry of invoices against contracts page') . '. ' . __('If this does not happen') . ' (' . __('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/SuppContractChgs.php">' . __('click here') . '</a> ' . __('to continue') . '.</div>
 			<br />';
+		include('includes/footer.php');
 		exit();
 	}
 	if (isset($_POST['FixedAssets']) AND $_POST['FixedAssets'] == __('Fixed Assets')) {
 		/*This ensures that any changes in the page are stored in the session before calling the shipments page */
 		echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/SuppFixedAssetChgs.php">';
 		echo '<div class="centre">' . __('You should automatically be forwarded to the entry of invoice amounts against fixed assets page') . '. ' . __('If this does not happen') . ' (' . __('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/SuppFixedAssetChgs.php">' . __('click here') . '</a> ' . __('to continue') . '.</DIV><br />';
+		include('includes/footer.php');
 		exit();
 	}
 	/* everything below here only do if a Supplier is selected

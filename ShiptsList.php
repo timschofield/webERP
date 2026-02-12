@@ -30,9 +30,9 @@ $ErrMsg = __('No shipments were returned from the database because'). ' - '. DB_
 $ShiptsResult = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($ShiptsResult)==0){
-       prnMsg(__('There are no open shipments currently set up for').' ' . $_GET['SupplierName'],'warn');
+	prnMsg(__('There are no open shipments currently set up for').' ' . $_GET['SupplierName'],'warn');
 	include('includes/footer.php');
-       exit();
+	exit();
 }
 /*show a table of the shipments returned by the SQL */
 

@@ -278,6 +278,7 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 		echo '<p class="bad">' . __('Problem Report') . ':<br />' . __('There are no stock categories currently defined please use the link below to set them up') . '</p>';
 		echo '<br />
 			<a href="' . $RootPath . '/StockCategories.php">' . __('Define Stock Categories') . '</a>';
+		include('includes/footer.php');
 		exit();
 	}
 

@@ -33,6 +33,7 @@ if (isset($_POST['DoIt']) AND IsEmailAddress($_POST['EmailAddr'])){
 
 		prnMsg(__('The transaction should have been emailed off. If this does not happen (perhaps the browser does not support META Refresh)') . '<a href="' . $RootPath . '/PrintCustTrans.php?FromTransNo=' . $_POST['FromTransNo'] . '&orientation=portrait&PrintPDF=Yes&InvOrCredit=' . $_POST['InvOrCredit'] .'&Email=' . $_POST['EmailAddr'] . '">' . __('click here') . '</a> ' . __('to email the customer transaction'),'success');
 	}
+	include('includes/footer.php');
 	exit();
 } elseif (isset($_POST['DoIt'])) {
 	$_GET['InvOrCredit'] = $_POST['InvOrCredit'];

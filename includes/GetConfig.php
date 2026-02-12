@@ -83,6 +83,7 @@ if ((isset($ForceConfigReload) AND $ForceConfigReload==true) OR !isset($_SESSION
 	if (DB_num_rows($ReadCoyResult)==0) {
       		echo '<br /><b>';
 		prnMsg( __('The company record has not yet been set up') . '</b><br />' . __('From the system setup tab select company maintenance to enter the company information and system preferences'),'error',__('CRITICAL PROBLEM'));
+		include('includes/footer.php');
 		exit();
 	} else {
 		$_SESSION['CompanyRecord'] = DB_fetch_array($ReadCoyResult);

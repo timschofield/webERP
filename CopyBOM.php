@@ -157,6 +157,7 @@ if (isset($_POST['Submit'])) {
 
 		header('Location: ' . htmlspecialchars_decode($RootPath) . '/BOMs.php?Select='.urlencode(htmlspecialchars_decode($NewStockID)));
 		//ob_end_flush();
+		include('includes/footer.php');
 		exit();
 	} //end  if there is no input error
 

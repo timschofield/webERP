@@ -1181,7 +1181,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/DeliveryDetails.php?identifier='.$identifier . '">';
 		prnMsg(__('You should automatically be forwarded to the entry of the delivery details page') . '. ' . __('if this does not happen') . ' (' . __('if the browser does not support META Refresh') . ') ' .
 		   '<a href="' . $RootPath . '/DeliveryDetails.php?identifier='.$identifier . '">' . __('click here') . '</a> ' . __('to continue'), 'info');
-	   	exit();
+	   	include('includes/footer.php');
+		exit();
 	}
 
 
