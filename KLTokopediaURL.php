@@ -82,8 +82,8 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 			// get the data for a product
 			$Error = "";
 			$TokopediaProductId = $worksheet->getCell('A'.$Row)->getCalculatedValue();
-			$StockID = $worksheet->getCell('K'.$Row)->getCalculatedValue();
-			$URLTokopedia = $worksheet->getCell('AC'.$Row)->getCalculatedValue();
+			$StockID = $worksheet->getCell('J'.$Row)->getCalculatedValue();
+			$URLTokopedia = $worksheet->getCell('AB'.$Row)->getCalculatedValue();
 			$LinkTokopedia = '<li><a rel="external" href="' . $URLTokopedia . '">' . __('Tokopedia') . '</a></li>';
 				
 			// Check if we have enough QOH to set it as enabled in Tokopedia
