@@ -107,3 +107,24 @@ function RelativeChange($SelectedPeriod, $PreviousPeriod) {
 		return __('N/A');
 	}
 }
+
+
+/**
+Returns the cash flow activity name for a given activity code.
+Parameters:
+	$Activity - The cash flow activity code
+Returns:
+	string - The corresponding activity name
+*/
+function CashFlowsActivityName($Activity) {
+	// Converts the cash flow activity number to an activity text.
+	return match ($Activity) {
+		'-1'      => '<b>' . __('Not set up') . '</b>',
+		'0'       => __('No effect on cash flow'),
+		'1'       => __('Operating activity'),
+		'2'       => __('Investing activity'),
+		'3'       => __('Financing activity'),
+		'4'       => __('Cash or cash equivalent'),
+		default => '<b>' . __('Unknown') . '</b>',
+	};
+}
