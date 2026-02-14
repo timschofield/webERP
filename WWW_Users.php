@@ -379,7 +379,7 @@ if (!isset($SelectedUser)) {
 				<th class="SortedColumn">', __('Supplier Code'), '</th>
 				<th class="SortedColumn">', __('Salesperson'), '</th>
 				<th class="SortedColumn">', __('Last Visit'), '</th>
-				<th class="SortedColumn">', __('Security Role'), '</th>
+				<th class="SortedColumn">', __('User Role'), '</th>
 				<th class="SortedColumn">', __('Report Size'), '</th>
 				<th class="SortedColumn">', __('Theme'), '</th>
 				<th class="SortedColumn">', __('Language'), '</th>
@@ -579,7 +579,7 @@ echo '<field>
 		<fieldhelp>'.__('Log the user out after this interval of non-use').'</fieldhelp>
 	</field>';
 echo '<field>
-		<label for="Access">' . __('Security Role') . ':</label>
+		<label for="Access">' . __('User Role') . ':</label>
 		<select name="Access">';
 
 foreach($SecurityRoles as $SecKey => $SecVal) {

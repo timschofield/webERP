@@ -220,6 +220,17 @@ function RemoveMenuItem($Link, $Section, $Caption, $URL) {
 	}
 }
 
+function UpdateMenuCaption($OldCaption, $NewCaption) {
+	$SQL = "UPDATE menuitems SET caption = '" . $NewCaption . "' WHERE  caption = '" . $OldCaption . "'"; 
+	$Response = executeSQL($SQL, false);
+	if ($Response == 0) {
+		OutputResult(__('The menu caption') . ' ' . $OldCaption . ' ' . __('has been updated to') . ' ' . $NewCaption, 'success');
+	} else {
+		OutputResult(__('The menu caption') . ' ' . $OldCaption . ' ' . __('could not be updated') . '<br />' . $SQL, 'error');
+	}
+}
+
+
 function AddColumn($Column, $Table, $Type, $Null, $Default, $After) {
 	global $SQLFile;
 	if (DB_table_exists($Table)) {

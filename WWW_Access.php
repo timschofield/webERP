@@ -4,15 +4,15 @@
 
 require(__DIR__ . '/includes/session.php');
 
-$Title = __('Access Permissions Maintenance');
+$Title = __('User Roles Maintenance');
 $ViewTopic = 'SecuritySchema';
 $BookMark = 'WWW_Access';
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	'/images/group_add.png" title="' .
-	__('Access Permissions Maintenance') . '" /> ' .// Icon title.
-	__('Access Permissions Maintenance') . '</p>';// Page title.
+	__('User Roles Maintenance') . '" /> ' .// Icon title.
+	__('User Roles Maintenance') . '</p>';// Page title.
 
 if ($AllowDemoMode) {
 	prnMsg(__('The the system is in demo mode and the security model administration is disabled'), 'warn');
@@ -39,7 +39,7 @@ if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 	//first off validate inputs sensible
 	if (isset($_POST['SecRoleName']) AND mb_strlen($_POST['SecRoleName'])<4){
 		$InputError = 1;
-		prnMsg(__('The role description entered must be at least 4 characters long'),'error');
+		prnMsg(__('The user role description entered must be at least 4 characters long'),'error');
 	}
 
 	// if $_POST['SecRoleName'] then it is a modifications on a SecRole
@@ -49,12 +49,12 @@ if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 		if (isset($SelectedRole)) { // Update Security Heading
 			$SQL = "UPDATE securityroles SET secrolename = '" . $_POST['SecRoleName'] . "'
 					WHERE secroleid = '".$SelectedRole . "'";
-			$ErrMsg = __('The update of the security role description failed because');
-			$ResMsg = __('The Security role description was updated.');
+			$ErrMsg = __('The update of the user role description failed because');
+			$ResMsg = __('The user role description was updated.');
 		} else { // Add Security Heading
 			$SQL = "INSERT INTO securityroles (secrolename) VALUES ('" . $_POST['SecRoleName'] ."')";
-			$ErrMsg = __('The update of the security role failed because');
-			$ResMsg = __('The Security role was created.');
+			$ErrMsg = __('The update of the user role failed because');
+			$ResMsg = __('The user role was created.');
 		}
 		unset($_POST['SecRoleName']);
 		unset($SelectedRole);
@@ -65,14 +65,14 @@ if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 											tokenid)
 									VALUES ('".$SelectedRole."',
 											'".$PageTokenId."' )";
-			$ErrMsg = __('The addition of the page group access failed because');
-			$ResMsg = __('The page group access was added.');
+			$ErrMsg = __('The insertion of the user role failed because');
+			$ResMsg = __('The user role was added.');
 		} elseif ( isset($_GET['remove']) ) { // updating Security Groups remove a page token
 			$SQL = "DELETE FROM securitygroups
 					WHERE secroleid = '".$SelectedRole."'
 					AND tokenid = '".$PageTokenId . "'";
-			$ErrMsg = __('The removal of this page-group access failed because');
-			$ResMsg = __('This page-group access was removed.');
+			$ErrMsg = __('The deletion of this user role failed because');
+			$ResMsg = __('This user role was removed.');
 		}
 		unset($_GET['add']);
 		unset($_GET['remove']);
@@ -86,20 +86,20 @@ if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 		}
 	}
 } elseif (isset($_GET['delete'])) {
-	//the Security heading wants to be deleted but some checks need to be performed fist
+	//the user role wants to be deleted but some checks need to be performed first
 	// PREVENT DELETES IF DEPENDENT RECORDS IN 'www_users'
 	$SQL= "SELECT COUNT(*) FROM www_users WHERE fullaccess='" . $_GET['SelectedRole'] . "'";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_row($Result);
 	if ($MyRow[0]>0) {
-		prnMsg( __('Cannot delete this role because user accounts are setup using it'),'warn');
-		echo '<br />' . __('There are') . ' ' . $MyRow[0] . ' ' . __('user accounts that have this security role setting') . '</font>';
+		prnMsg( __('Cannot delete this user role because user accounts are setup using it'),'warn');
+		echo '<br />' . __('There are') . ' ' . $MyRow[0] . ' ' . __('user accounts that have this user role setting') . '</font>';
 	} else {
 		$SQL="DELETE FROM securitygroups WHERE secroleid='" . $_GET['SelectedRole'] . "'";
 		$Result = DB_query($SQL);
 		$SQL="DELETE FROM securityroles WHERE secroleid='" . $_GET['SelectedRole'] . "'";
 		$Result = DB_query($SQL);
-		prnMsg( $_GET['SecRoleName'] . ' ' . __('security role has been deleted') . '!','success');
+		prnMsg( $_GET['SecRoleName'] . ' ' . __('user role has been deleted') . '!','success');
 
 	} //end if account group used in GL accounts
 	unset($SelectedRole);
@@ -118,7 +118,7 @@ if (!isset($SelectedRole)) {
 
 	echo '<table class="selection">
 		<tr>
-			<th>' . __('Role') . '</th>
+			<th>' . __('User Role') . '</th>
 			<th>&nbsp;</th>
 			<th>&nbsp;</th>
 		</tr>';
@@ -139,7 +139,7 @@ if (!isset($SelectedRole)) {
 
 
 if (isset($SelectedRole)) {
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Review Existing Roles') . '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Review Existing User Roles') . '</a></div>';
 }
 
 if (isset($SelectedRole)) {
@@ -151,7 +151,7 @@ if (isset($SelectedRole)) {
 		WHERE secroleid='" . $SelectedRole . "'";
 	$Result = DB_query($SQL);
 	if ( DB_num_rows($Result) == 0 ) {
-		prnMsg( __('The selected role is no longer available.'),'warn');
+		prnMsg( __('The selected user role is not available.'),'warn');
 	} else {
 		$MyRow = DB_fetch_array($Result);
 		$_POST['SelectedRole'] = $MyRow['secroleid'];
@@ -166,18 +166,18 @@ if ( isset($_POST['SelectedRole'])) {
 echo '<fieldset>';
 if (!isset($_POST['SecRoleName'])) {
 	$_POST['SecRoleName']='';
-	echo '<legend>', __('Create Role'), '</legend>';
+	echo '<legend>', __('Create User Role'), '</legend>';
 } else {
-	echo '<legend>', __('Amend Role'), '</legend>';
+	echo '<legend>', __('Update User Role'), '</legend>';
 }
 echo '<field>
-		<label for="SecRoleName">' . __('Role') . ':</label>
+		<label for="SecRoleName">' . __('User Role') . ':</label>
 		<input type="text" name="SecRoleName" pattern=".{4,}" size="40" maxlength="40" value="' . $_POST['SecRoleName'] . '" required="true" title="" />
-		<fieldhelp>'.__('The role description entered must be at least 4 characters long').'</fieldhelp>
+		<fieldhelp>'.__('The user role description entered must be at least 4 characters long').'</fieldhelp>
 	</field>';
 echo '</fieldset>
 	<div class="centre">
-		<input type="submit" name="submit" value="' . __('Enter Role') . '" />
+		<input type="submit" name="submit" value="' . __('Enter User Role') . '" />
 	</div>
 	</form>';
 
