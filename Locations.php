@@ -248,7 +248,7 @@ if (isset($_POST['submit'])) {
 								'" . $_POST['CashSaleBranch'] . "',
 								'" . $_POST['Managed'] . "',
 								'" . $_POST['InternalRequest'] . "',
-								'" . $_POST['Prority'] . "',
+								'" . $_POST['Priority'] . "',
 								'" . $_POST['SmartDispatchFrom'] . "',
 								'" . $_POST['SmartDispatchMaxModels'] . "',
 								'" . $_POST['SmartDispatchMinModels'] . "',

@@ -57,6 +57,7 @@ if (isset($_GET['gettemplate'])) //download an import template
 	echo '"' . implode('","',$FieldHeadings) . '"';
 
 	// exit cleanly to prevent any unwanted outputs
+	include('includes/footer.php');
 	exit();
 } else {
 	ob_end_flush();

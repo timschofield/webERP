@@ -299,11 +299,11 @@ if ((isset($_SESSION['Items' . $identifier])) OR isset($NewItem)) {
 
 			$Quantity = $_POST['Quantity_' . $OrderLine->LineNumber];
 
-			if (abs($OrderLine->Price - $_POST['Price_' . $OrderLine->LineNumber]) > (0.1 * CurrencyTolerance())) {
+			if (abs($OrderLine->Price - $_POST['Price_' . $OrderLine->LineNumber]) > (0.1 * CurrencyTolerance(''))) {
 				$Price = $_POST['Price_' . $OrderLine->LineNumber];
 				// Calculate GP Percent based on new Price
 				$PriceAfterDiscount = $Price * (1 - ($_POST['Discount_' . $OrderLine->LineNumber] / 100));
-				if (abs($PriceAfterDiscount) >  (0.1 * CurrencyTolerance())) { // Avoid division by zero
+				if (abs($PriceAfterDiscount) >  (0.1 * CurrencyTolerance(''))) { // Avoid division by zero
 					$_POST['GPPercent_' . $OrderLine->LineNumber] = (($PriceAfterDiscount - $OrderLine->StandardCost * $ExRate) / $PriceAfterDiscount) * 100;
 				} else {
 					// Handle case where price after discount is zero or very close to it
@@ -311,10 +311,10 @@ if ((isset($_SESSION['Items' . $identifier])) OR isset($NewItem)) {
 					// $_POST['GPPercent_' . $OrderLine->LineNumber] = $OrderLine->GPPercent; // Keep old value
 					$_POST['GPPercent_' . $OrderLine->LineNumber] = 0; // Or set to 0
 				}
-			} elseif (abs($OrderLine->GPPercent - $_POST['GPPercent_' . $OrderLine->LineNumber]) >= (0.1 * CurrencyTolerance())) {
+			} elseif (abs($OrderLine->GPPercent - $_POST['GPPercent_' . $OrderLine->LineNumber]) >= (0.1 * CurrencyTolerance(''))) {
 				// Calculate Price based on new GP Percent
 				$Denominator = 1 - (($_POST['GPPercent_' . $OrderLine->LineNumber] + $_POST['Discount_' . $OrderLine->LineNumber]) / 100);
-				if (abs($Denominator) < (0.1 * CurrencyTolerance())) { // Avoid division by zero
+				if (abs($Denominator) < (0.1 * CurrencyTolerance(''))) { // Avoid division by zero
 					prnMsg(__('Cannot calculate price with GP Percent + Discount Percent equal to 100%'), 'error');
 					$Price = $OrderLine->Price; // Keep original price
 				} else {
@@ -335,7 +335,7 @@ if ((isset($_SESSION['Items' . $identifier])) OR isset($NewItem)) {
 				prnMsg(__('The item could not be updated because you are attempting to set the quantity ordered to less than 0 or the price less than 0 or the discount more than 100% or less than 0%'), 'warn');
 			} elseif ($OrderLine->Quantity != $Quantity
 						or $OrderLine->Price != $Price
-						or abs($OrderLine->DiscountPercent - $DiscountPercentage / 100) > (0.1 * CurrencyTolerance())
+						or abs($OrderLine->DiscountPercent - $DiscountPercentage / 100) > (0.1 * CurrencyTolerance(''))
 						or $OrderLine->Narrative != $Narrative
 						or $OrderLine->POLine != $_POST['POLine_' . $OrderLine->LineNumber]) {
 
@@ -542,7 +542,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 	/////////////////////////////////////////////////
 
 	// payment received must be equal to total invoice
-	if (abs($TotalFromCustomer - ($_SESSION['Items' . $identifier]->total + $_POST['TaxTotal'])) >= (0.1 * CurrencyTolerance())) {
+	if (abs($TotalFromCustomer - ($_SESSION['Items' . $identifier]->total + $_POST['TaxTotal'])) >= (0.1 * CurrencyTolerance(''))) {
 		prnMsg(__('The amount entered as payment does not equal the amount of the invoice. Please ensure the customer has paid the correct amount and re-enter'), 'error');
 		$InputError = true;
 	}

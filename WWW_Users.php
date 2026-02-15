@@ -376,7 +376,7 @@ if (!isset($SelectedUser)) {
 				<th class="SortedColumn">', __('Email'), '</th>
 				<th class="SortedColumn">', __('Timeout'), '</th>
 				<th class="SortedColumn">', __('Last Visit'), '</th>
-				<th class="SortedColumn">', __('Security Role'), '</th>
+				<th class="SortedColumn">', __('User Role'), '</th>
 				<th class="noPrint" colspan="2">&nbsp;</th>
 			</tr>
 		</thead>
@@ -570,7 +570,7 @@ echo '<field>
 		<fieldhelp>'.__('Log the user out after this interval of non-use').'</fieldhelp>
 	</field>';
 echo '<field>
-		<label for="Access">' . __('Security Role') . ':</label>
+		<label for="Access">' . __('User Role') . ':</label>
 		<select name="Access">';
 
 // KL RICARD if not system admin, can not access to system admin role. To prevent rogue employees assigning themselves as system admin ;-)

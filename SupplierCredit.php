@@ -242,6 +242,7 @@ if (isset($_POST['Contracts'])
 				' . __('You should automatically be forwarded to the entry of supplier credit notes against contracts page') . '. ' . __('If this does not happen') . ' (' . __('if the browser does not support META Refresh'). ') ' . '<a href="' . $RootPath . '/SuppContractChgs.php">' . __('click here') . '</a> ' . __('to continue') . '.
 			</div>
 			<br />';
+		include('includes/footer.php');
 		exit();
 }
 if (isset($_POST['FixedAssets'])
@@ -252,6 +253,7 @@ if (isset($_POST['FixedAssets'])
 				' . __('You should automatically be forwarded to the entry of invoices against fixed assets page') . '. ' . __('If this does not happen') . ' (' . __('if the browser does not support META Refresh'). ') ' . '<a href="' . $RootPath . '/SuppFixedAssetChgs.php">' . __('click here') . '</a> ' . __('to continue') . '.
 			</div>
 			<br />';
+		include('includes/footer.php');
 		exit();
 }
 /* everything below here only do if a Supplier is selected

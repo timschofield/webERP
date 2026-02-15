@@ -458,6 +458,11 @@ function CurrencyTolerance($Currency = '') {
 		// it is a foreign currency so get its decimal places
 		$Result = DB_query("SELECT decimalplaces FROM currencies WHERE currency = '" . $Currency . "'");
 		$MyRow = DB_fetch_row($Result);
-		return pow(10, -$MyRow[0]);
+		if ($MyRow !== null and isset($MyRow[0])) {
+			return pow(10, -$MyRow[0]);
+		} else {
+			// Currency not found, fallback to default company decimal places
+			return pow(10, -$_SESSION['CompanyRecord']['decimalplaces']);
+		}
 	}
 }

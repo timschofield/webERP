@@ -561,6 +561,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		DB_Txn_Commit();
 		unset($_SESSION['SPL'.$identifier]); /*Clear the PO data to allow a newy to be input*/
 		echo '<br /><br /><a href="' . $RootPath . '/SpecialOrder.php">' . __('Enter A New Special Order') . '</a>';
+		include('includes/footer.php');
 		exit();
 	} /*end if there were no input errors trapped */
 } /* end of the code to do transfer the SPL object to the database  - user hit the place Order*/

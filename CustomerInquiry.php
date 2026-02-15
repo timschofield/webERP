@@ -58,6 +58,7 @@ if (isset($_GET['Status'])) {
 		$Status = $_POST['Status'];
 	} else {
 		prnMsg(__('The balance status should be all or zero balance or not zero balance'), 'error');
+		include('includes/footer.php');
 		exit();
 	}
 } else {

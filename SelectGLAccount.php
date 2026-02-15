@@ -53,6 +53,7 @@ if (isset($_POST['Search'])){
 		} elseif (mb_strlen($_POST['GLCode'])>0){
 			if (!empty($_POST['GLCode'])) {
 				echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/GLAccountInquiry.php?Account=' . $_POST['GLCode'] . '&Show=Yes">';
+				include('includes/footer.php');
 				exit();
 			}
 

@@ -42,6 +42,7 @@ if (DB_num_rows($Result) == 0) {
 	echo '<p><font size="4" color="red">' . __('Problem Report') . ':</font><br />' .
 		__('There are no asset categories currently defined please use the link below to set them up');
 	echo '<br /><a href="' . $RootPath . '/FixedAssetCategories.php">' . __('Define Asset Categories') . '</a>';
+	include('includes/footer.php');
 	exit();
 }
 // end of showing search facilities

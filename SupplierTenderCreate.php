@@ -650,6 +650,7 @@ if (isset($_POST['Items'])) {
 	if (DB_num_rows($Result) == 0) {
 		echo '<br /><p class="bad">' . __('Problem Report') . ':</p><br />' . __('There are no stock categories currently defined please use the link below to set them up');
 		echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . __('Define Stock Categories') . '</a>';
+		include('includes/footer.php');
 		exit();
 	}
 	echo '<fieldset>

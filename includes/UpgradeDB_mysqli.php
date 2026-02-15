@@ -197,6 +197,16 @@ function NewMenuItem($Link, $Section, $Caption, $URL, $Sequence) {
 	}
 }
 
+function UpdateMenuCaption($OldCaption, $NewCaption) {
+	$SQL = "UPDATE menuitems SET caption = '" . $NewCaption . "' WHERE  caption = '" . $OldCaption . "'"; 
+	$Response = executeSQL($SQL, false);
+	if ($Response == 0) {
+		OutputResult(__('The menu caption') . ' ' . $OldCaption . ' ' . __('has been updated to') . ' ' . $NewCaption, 'success');
+	} else {
+		OutputResult(__('The menu caption') . ' ' . $OldCaption . ' ' . __('could not be updated') . '<br />' . $SQL, 'error');
+	}
+}
+
 function RemoveMenuItem($Link, $Section, $Caption, $URL) {
 	$SQL = "SELECT modulelink FROM menuitems WHERE modulelink='" . $Link . "' AND menusection='" . $Section . "' AND url='" . $URL . "'";
 	$Result = DB_query($SQL);

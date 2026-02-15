@@ -372,6 +372,7 @@ if (isset($_POST['PrintPDF']) && $_POST['Part'] != '') {
 	if (DB_num_rows($Result1) == 0) {
 		echo '<p class="bad">' . __('Problem Report') . ':<br />' . __('There are no stock categories currently defined please use the link below to set them up');
 		echo '<a href="' . $RootPath . '/StockCategories.php">' . __('Define Stock Categories') . '</a>';
+		include('includes/footer.php');
 		exit();
 	}
 

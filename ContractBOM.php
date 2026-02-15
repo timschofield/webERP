@@ -14,6 +14,7 @@ $identifier = $_GET['identifier'];
  */
 if (!isset($_SESSION['Contract'.$identifier])){
 	header('Location:' . htmlspecialchars_decode($RootPath) . '/Contracts.php');
+	include('includes/footer.php');
 	exit();
 }
 

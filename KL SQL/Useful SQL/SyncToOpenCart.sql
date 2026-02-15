@@ -1,2 +1,0 @@
-ALTER TABLE `stockmaster` ADD `klsynctoopencart` TINYINT NOT NULL DEFAULT '1' COMMENT 'Flag to enable/ disable sync to OpenCart' AFTER `klmovingdiscount80`, ADD INDEX `SyncToOpenCart` (`klsynctoopencart`);
-UPDATE stockmaster SET klsynctoopencart = 0 WHERE discontinued = 1;
