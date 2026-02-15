@@ -246,6 +246,7 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 			if ((!$conn_id) || (!$login_result)) {
 				echo '<br />' . __('Ftp connection has failed');
 				echo '<br />' . __('Attempted to connect to') . ' ' . $_SESSION['RadioBeaconFTP_server'] . ' ' . __('for user') . ' ' . $_SESSION['RadioBeaconFTP_user_name'];
+				include('includes/footer.php');
 				exit();
 			} else {
 				echo '<br />' . __('Connected to Radio Beacon FTP server at') . ' ' . $_SESSION['RadioBeaconFTP_server'] . ' ' . __('with user name') . ' ' . $_SESSION['RadioBeaconFTP_user_name'];
@@ -253,6 +254,7 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 			$upload = ftp_put($conn_id, $FilePrefix .  $FileNumber . '.txt', $FileName, FTP_ASCII); // check upload status
 			if (!$upload) {
 				prnMsg(__('FTP upload has failed'),'success');
+				include('includes/footer.php');
 				exit();
 			} else {
 				echo '<br />' . __('Uploaded') . ' ' . $FileName . ' ' . __('to') . ' ' . $_SESSION['RadioBeaconFTP_server'];

@@ -89,7 +89,7 @@ if (!isset($_POST['continue'])) {
 				echo '<tr>
 					<td><span class="expand_icon" id="expand_icon', $x, '"></span></td>
 					<td>', $UpdateNumber, '</td>
-					<td>', substr(substr(implode("\n", $Description), 44), 0, -4), '</td>
+					<td>', substr(substr(implode("\n", $Description), 43), 0, -4), '</td>
 				</tr>';
 			} else {
 				echo '<tr>

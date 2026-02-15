@@ -28,6 +28,7 @@ function display_children($Parent, $Level, &$BOMTree) {
 				$BOMTree[$i]['Level'] = $Level; 		// Level
 				if ($Level > 15) {
 					prnMsg(__('A maximum of 15 levels of bill of materials only can be displayed'),'error');
+					include('includes/footer.php');
 					exit();
 				}
 				$BOMTree[$i]['Parent'] = $Parent;		// Assemble
