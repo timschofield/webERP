@@ -8,7 +8,8 @@ class BBB_SinglePageTest extends LoggedInUserTestCase
 		'/ContractBOM.php',
 		'/ContractOtherReqts.php',
 		'/PO_Items.php',
-		'/reportwriter/admin/defaults.php'
+		'/reportwriter/admin/defaults.php',
+		'/GenerateManualPDF.php'
 	];
 
 	/**
