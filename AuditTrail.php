@@ -87,10 +87,23 @@ if (!isset($_POST['ContainingText'])){
 echo '<field>
 		<label for="ContainingText">' . __('Containing text') . ':</label>
 		<input type="text" name="ContainingText" size="20" maxlength="20" value="'. $_POST['ContainingText'] . '" />
-	</field>
-	</fieldset>
+	</field>';
+
+// **NEW: Add Chronological Sort selector**
+if (!isset($_POST['ChronologicalSort'])){
+	$_POST['ChronologicalSort']='DESC';
+}
+echo '<field>
+		<label for="ChronologicalSort">' . __('Chronological Sort') . '</label>
+		<select tabindex="5" name="ChronologicalSort">
+			<option value="ASC"' . ($_POST['ChronologicalSort'] == 'ASC' ? ' selected="selected"' : '') . '>' . __('Forward (Oldest First)') . '</option>
+			<option value="DESC"' . ($_POST['ChronologicalSort'] == 'DESC' ? ' selected="selected"' : '') . '>' . __('Reverse (Newest First)') . '</option>
+		</select>
+	</field>';
+
+echo '</fieldset>
 	<div class="centre">
-		<input tabindex="5" type="submit" name="View" value="' . __('View') . '" />
+		<input tabindex="6" type="submit" name="View" value="' . __('View') . '" />
 	</div>
 	</form>';
 
@@ -156,19 +169,28 @@ if (isset($_POST['View'])) {
 	    $ContainingText = "";
 	}
 
+	// **NEW: Determine sort order**
+	$SortOrder = 'ASC'; // Default
+	if (isset($_POST['ChronologicalSort'])) {
+		$SortOrder = ($_POST['ChronologicalSort'] == 'DESC') ? 'DESC' : 'ASC';
+	}
+
+	// **MODIFIED: Add ORDER BY clause to SQL queries**
 	if ($_POST['SelectedUser'] == 'ALL') {
 		$SQL="SELECT transactiondate,
 				userid,
 				querystring
 			FROM audittrail
-			WHERE transactiondate BETWEEN '". $FromDate."' AND '".$ToDate."'" . $ContainingText;
+			WHERE transactiondate BETWEEN '". $FromDate."' AND '".$ToDate."'" . $ContainingText . "
+			ORDER BY transactiondate " . $SortOrder;
 	} else {
 		$SQL="SELECT transactiondate,
 				userid,
 				querystring
 			FROM audittrail
 			WHERE userid='".$_POST['SelectedUser']."'
-			AND transactiondate BETWEEN '".$FromDate."' AND '".$ToDate."'" . $ContainingText;
+			AND transactiondate BETWEEN '".$FromDate."' AND '".$ToDate."'" . $ContainingText . "
+			ORDER BY transactiondate " . $SortOrder;
 	}
 	$Result = DB_query($SQL);
 
@@ -195,7 +217,7 @@ if (isset($_POST['View'])) {
 		}
 
 		// Do not show auditscripts table results, as it bloats the report unnecessarily
-		if ((trim($_SESSION['SQLString']['table']) != 'auditscripts') AND 
+		if ((trim($_SESSION['SQLString']['table']) != 'auditscripts') AND
 		   ((trim($_SESSION['SQLString']['table']) == $_POST['SelectedTable'])  OR
 			($_POST['SelectedTable'] == 'ALL'))) {
 			if (!isset($_SESSION['SQLString']['values'])) {
