@@ -140,7 +140,7 @@ if (isset($_POST['submit'])) {
 		$Msg = __('The currency definition record has been added');
 	}
 	//run the SQL from either of the above possibilites
-	$ExDiffTransNo = GetNextTransNo(36);
+
 	DB_Txn_Begin();
 
 	$Result = DB_query($SQL);
@@ -148,85 +148,10 @@ if (isset($_POST['submit'])) {
 		prnMsg( $Msg,'success');
 	}
 
-	/* Now we should update the functional currency value of the bank accounts of the $SelectedCurrency
-	Example: if functional currency = IDR and we have a bank account in USD.
-	Before rate was 1 USD = 9.000 IDR so OldRate = 1 /9.000 = 0.000111
-	if the new exchange rate is 1 USD = 10.000 IDR NewRate will be 0.0001.
-	If we had 5.000 USD on the bank account, we had 45.000.000 IDR on the balance sheet.
-	After we update to the new rate, we still have 5.000 USD on the bank account
-	but the balance value of the bank account is 50.000.000 IDR, so let's adjust the value */
-
 	if (isset($SelectedCurrency) AND $InputError != 1) {
-		/*Get the current period */
-		$PostingDate = date($_SESSION['DefaultDateFormat']);
-		$PeriodNo = GetPeriod($PostingDate);
-
-		/* get all the bank accounts denominated on the selected currency */
-		$SQLBankAccounts = "SELECT 	bankaccountname,
-									accountcode
-							FROM bankaccounts
-							WHERE currcode = '" . $SelectedCurrency . "'";
-		$ResultBankAccounts = DB_query($SQLBankAccounts);
-		while ($MyRowBankAccount=DB_fetch_array($ResultBankAccounts)) {
-
-			/*Get the balance of the bank account concerned */
-			$SQL = "SELECT SUM(amount) as balance
-					FROM gltotals
-					WHERE period<='" . $PeriodNo . "'
-					AND account='" . $MyRowBankAccount['accountcode'] . "'";
-
-			$ErrMsg = __('The bank account balance could not be returned by the SQL because');
-			$BalanceResult = DB_query($SQL, $ErrMsg);
-			$MyRow = DB_fetch_row($BalanceResult);
-			$OldBalanceInFunctionalCurrency = $MyRow[0];
-			$BalanceInAccountCurrency = $OldBalanceInFunctionalCurrency * $OldRate;
-
-			/* Now calculate the Balance in functional currency at the new rate */
-			$NewBalanceInFucntionalCurrency = $BalanceInAccountCurrency / $NewRate;
-
-			/* If some adjustment has to be done, do it! */
-			$DifferenceToAdjust = $NewBalanceInFucntionalCurrency - $OldBalanceInFunctionalCurrency;
-			if ($OldRate !=  $NewRate) {
-
-				$SQL = "INSERT INTO gltrans (
-								type,
-								typeno,
-								trandate,
-								periodno,
-								account,
-								narrative,
-								amount
-							) VALUES (
-								36, '" .
-								$ExDiffTransNo . "', '" .
-								FormatDateForSQL($PostingDate) . "', '" .
-								$PeriodNo . "', '" .
-								$_SESSION['CompanyRecord']['exchangediffact'] . "', '" .
-								mb_substr($MyRowBankAccount['bankaccountname'] . ' ' . __('currency rate adjustment to') . ' ' . locale_number_format($NewRate, 'Variable') . ' ' . $SelectedCurrency . '/' . $_SESSION['CompanyRecord']['currencydefault'], 0, 200) . "', '" .
-								(-$DifferenceToAdjust) . "')";
-				$ErrMsg = __('Cannot insert a GL entry for the exchange difference because');
-				$Result = DB_query($SQL, $ErrMsg, '', true);
-				$SQL = "INSERT INTO gltrans (
-								type,
-								typeno,
-								trandate,
-								periodno,
-								account,
-								narrative,
-								amount
-							) VALUES (36, '" .
-								$ExDiffTransNo . "', '" .
-								FormatDateForSQL($PostingDate) . "', '" .
-								$PeriodNo . "', '" .
-								$MyRowBankAccount['accountcode'] . "', '" .
-								mb_substr($MyRowBankAccount['bankaccountname'] . ' ' . __('currency rate adjustment to') . ' ' . locale_number_format($NewRate, 'Variable') . ' ' . $SelectedCurrency . '/' . $_SESSION['CompanyRecord']['currencydefault'], 0, 200) . "', '" .
-								($DifferenceToAdjust) . "')";
-
-				$Result = DB_query($SQL, $ErrMsg, '', true);
-				prnMsg(__('Bank Account') . ' ' . $MyRowBankAccount['bankaccountname'] . ' ' . __('Currency Rate difference of') . ' ' . locale_number_format($DifferenceToAdjust, $_SESSION['CompanyRecord']['decimalplaces']) . ' ' . __('has been posted'),'success');
-			}
-		}
+		AdjustBankAccountsDueToCurrencyExchangeRate($SelectedCurrency, $OldRate, $NewRate);
 	}
+	
 	DB_Txn_Commit();
 
 	unset($SelectedCurrency);
@@ -371,7 +296,7 @@ or deletion of the records*/
 					<td class="number">', locale_number_format($MyRow['decimalplaces'], 0), '</td>
 					<td class="centre">', $ShowInWebText, '</td>
 					<td class="number">', locale_number_format($MyRow['rate'], 'Variable'), '</td>
-					<td class="number">', locale_number_format(1/$MyRow['rate'], 2), '</td>
+					<td class="number">', locale_number_format(1/$MyRow['rate'], 8), '</td>
 					<td class="number">', locale_number_format($Rate, 8), '</td>
 					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedCurrency=', $MyRow['currabrev'], '">', __('Edit'), '</a></td>
 					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedCurrency=', $MyRow['currabrev'], '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this currency?') . '\');">', __('Delete'), '</a></td>
