@@ -8,8 +8,7 @@ class BBB_SinglePageTest extends LoggedInUserTestCase
 		'/ContractBOM.php',
 		'/ContractOtherReqts.php',
 		'/PO_Items.php',
-		'/reportwriter/admin/defaults.php',
-		'/GenerateManualPDF.php'
+		'/reportwriter/admin/defaults.php'
 	];
 
 	/**
@@ -47,7 +46,7 @@ class BBB_SinglePageTest extends LoggedInUserTestCase
 		$pages = [];
 		foreach(self::listWebPages() as $path) {
 			$fileName = basename($path);
-			if (in_array($fileName, ['Logout.php', 'config.distrib.php', 'geocode.php'])) {
+			if (in_array($fileName, ['Logout.php', 'config.distrib.php', 'geocode.php', '/GenerateManualPDF.php'])) {
 				continue;
 			}
 			$pages[] = [$path];
