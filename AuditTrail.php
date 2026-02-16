@@ -203,15 +203,15 @@ if (isset($_POST['View'])) {
 			<th>' . __('Field Name') . '</th>
 			<th>' . __('Value') . '</th></tr>';
 	while ($MyRow = DB_fetch_row($Result)) {
-		if (Query_Type($MyRow[2]) == "INSERT") {
+		if (trim(Query_Type($MyRow[2])) == 'INSERT') {
 			InsertQueryInfo(str_replace("INSERT INTO",'',$MyRow[2]));
 			$RowColour = '#a8ff90';
 		}
-		if (Query_Type($MyRow[2]) == "UPDATE") {
+		if (trim(Query_Type($MyRow[2])) == "UPDATE") {
 			UpdateQueryInfo(str_replace("UPDATE",'',$MyRow[2]));
 			$RowColour = '#feff90';
 		}
-		if (Query_Type($MyRow[2]) == "DELETE") {
+		if (trim(Query_Type($MyRow[2])) == "DELETE") {
 			DeleteQueryInfo(str_replace("DELETE FROM",'',$MyRow[2]));
 			$RowColour = '#fe90bf';
 		}
