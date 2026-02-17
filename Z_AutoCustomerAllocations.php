@@ -195,12 +195,12 @@ function ProcessAllocation() {
 								'" . $_SESSION['Alloc']->TransNo . "',
 								'" . $_SESSION['Alloc']->TransDate . "',
 								'" . $PeriodNo . "',
-								'" . $_SESSION['CompanyRecord']['exchangediffact'] . "',
+								'" . $_SESSION['CompanyRecord']['salesexchangediffact'] . "',
 								'',
 								'" . $MovtInDiffOnExch . "'
 							)";
 				if ( !$Result = DB_query($SQL) ) {
-					$Error = __('Could not update exchange difference in General Ledger');
+					$Error = __('Could not update sales exchange difference in General Ledger');
 				}
 
 		  		$SQL = "INSERT INTO gltrans (

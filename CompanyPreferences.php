@@ -8,6 +8,7 @@ $ViewTopic = 'CreatingNewSystem';
 $BookMark = 'CompanyParameters';
 $Title = __('Company Preferences');
 include('includes/header.php');
+include('includes/UIGeneralFunctions.php');
 
 // initialise no input errors assumed initially before we test
 $InputError = 0;
@@ -69,8 +70,9 @@ if (isset($_POST['submit'])) {
 									payrollact='" . $_POST['PayrollAct'] . "',
 									grnact='" . $_POST['GRNAct'] . "',
 									commissionsact='" . $_POST['CommAct'] . "',
-									exchangediffact='" . $_POST['ExchangeDiffAct'] . "',
+									salesexchangediffact='" . $_POST['SalesExchangeDiffAct'] . "',
 									purchasesexchangediffact='" . $_POST['PurchasesExchangeDiffAct'] . "',
+									currencyexchangediffact='" . $_POST['CurrencyExchangeDiffAct'] . "',
 									retainedearnings='" . $_POST['RetainedEarnings'] . "',
 									gllink_debtors='" . $_POST['GLLink_Debtors'] . "',
 									gllink_creditors='" . $_POST['GLLink_Creditors'] . "',
@@ -135,8 +137,9 @@ if ($InputError !=  1) {
 					payrollact,
 					grnact,
 					commissionsact,
-					exchangediffact,
+					salesexchangediffact,
 					purchasesexchangediffact,
+					currencyexchangediffact,
 					retainedearnings,
 					gllink_debtors,
 					gllink_creditors,
@@ -170,8 +173,9 @@ if ($InputError !=  1) {
 	$_POST['PayrollAct']  = $MyRow['payrollact'];
 	$_POST['GRNAct'] = $MyRow['grnact'];
 	$_POST['CommAct'] = $MyRow['commissionsact'];
-	$_POST['ExchangeDiffAct']  = $MyRow['exchangediffact'];
+	$_POST['SalesExchangeDiffAct']  = $MyRow['salesexchangediffact'];
 	$_POST['PurchasesExchangeDiffAct']  = $MyRow['purchasesexchangediffact'];
+	$_POST['CurrencyExchangeDiffAct']  = $MyRow['currencyexchangediffact'];
 	$_POST['RetainedEarnings'] = $MyRow['retainedearnings'];
 	$_POST['GLLink_Debtors'] = $MyRow['gllink_debtors'];
 	$_POST['GLLink_Creditors'] = $MyRow['gllink_creditors'];
@@ -179,335 +183,107 @@ if ($InputError !=  1) {
 	$_POST['FreightAct'] = $MyRow['freightact'];
 }
 
-echo '<field>
-		<label for="CoyName">' . __('Name') . ' (' . __('to appear on reports') . '):</label>
-		<input '.(in_array('CoyName',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="1" type="text" autofocus="autofocus" required="required" name="CoyName" value="' . stripslashes($_POST['CoyName']) . '" title="" size="52" maxlength="50" />
-		<fieldhelp>' . __('Enter the name of the business. This will appear on all reports and at the top of each screen. ') . '</fieldhelp>
-	</field>';
-
-echo '<field>
-		<label for="CoyNumber">' . __('Official Company Number') . ':</label>
-		<input '.(in_array('CoyNumber',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="2" type="text" name="CompanyNumber" value="' . $_POST['CompanyNumber'] . '" size="22" maxlength="20" />
-	</field>';
-
-echo '<field>
-		<label for="TaxRef">' . __('Tax Authority Reference') . ':</label>
-		<input '.(in_array('TaxRef',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="3" type="text" name="GSTNo" value="' . $_POST['GSTNo'] . '" size="22" maxlength="20" />
-	</field>';
-
-echo '<field>
-		<label for="RegOffice1">' . __('Address Line 1') . ':</label>
-		<input '.(in_array('RegOffice1',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="4" type="text" name="RegOffice1" title="" required="required" size="42" maxlength="40" value="' . stripslashes($_POST['RegOffice1']) . '" />
-		<fieldhelp>' . __('Enter the first line of the company registered office. This will appear on invoices and statements.') . '</fieldhelp>
-	</field>';
-
-echo '<field>
-		<label for="RegOffice2">' . __('Address Line 2') . ':</label>
-		<input '.(in_array('RegOffice2',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="5" type="text" name="RegOffice2" title="" size="42" maxlength="40" value="' . stripslashes($_POST['RegOffice2']) . '" />
-		<fieldhelp>' . __('Enter the second line of the company registered office. This will appear on invoices and statements.') . '</fieldhelp>
-	</field>';
-
-echo '<field>
-		<label for="RegOffice3">' . __('Address Line 3') . ':</label>
-		<input '.(in_array('RegOffice3',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="6" type="text" name="RegOffice3" title="" size="42" maxlength="40" value="' . stripslashes($_POST['RegOffice3']) . '" />
-		<fieldhelp>' . __('Enter the third line of the company registered office. This will appear on invoices and statements.') . '</fieldhelp>
-	</field>';
-
-echo '<field>
-		<label for="RegOffice4">' . __('Address Line 4') . ':</label>
-		<input '.(in_array('RegOffice4',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="7" type="text" name="RegOffice4" title="" size="42" maxlength="40" value="' . stripslashes($_POST['RegOffice4']) . '" />
-		<fieldhelp>' . __('Enter the fourth line of the company registered office. This will appear on invoices and statements.') . '</fieldhelp>
-</field>';
-
-echo '<field>
-		<label for="RegOffice5">' . __('Address Line 5') . ':</label>
-		<input '.(in_array('RegOffice5',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="8" type="text" name="RegOffice5" size="22" maxlength="20" value="' . stripslashes($_POST['RegOffice5']) . '" />
-	</field>';
-
-echo '<field>
-		<label for="RegOffice6">' . __('Address Line 6') . ':</label>
-		<input '.(in_array('RegOffice6',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="9" type="text" name="RegOffice6" size="17" maxlength="15" value="' . stripslashes($_POST['RegOffice6']) . '" />
-	</field>';
-
-echo '<field>
-		<label for="Telephone">' . __('Telephone Number') . ':</label>
-		<input ', (in_array('Telephone',$Errors) ?  'class="inputerror"' : '' ), ' maxlength="25" name="Telephone" required="required" size="26" tabindex="10" type="tel" title="" value="', $_POST['Telephone'], '" />
-		<fieldhelp>', __('Enter the main telephone number of the company registered office. This will appear on invoices and statements.'), '</fieldhelp>
-	</field>';
-
-echo '<field>
-		<label for="Fax">' . __('Facsimile Number') . ':</label>
-		<input ', (in_array('Fax',$Errors) ?  'class="inputerror"' : '' ), ' maxlength="25" name="Fax" size="26" tabindex="11" type="tel" value="', $_POST['Fax'], '" />
-	</field>';
-
-echo '<field>
-		<label for="Email">' . __('Email Address') . ':</label>
-		<input '.(in_array('Email',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="12" type="email" name="Email" title="" required="required" placeholder="accounts@example.com" size="50" maxlength="55" value="' . $_POST['Email'] . '" />
-		<fieldhelp>' . __('Enter the main company email address. This will appear on invoices and statements.') . '</fieldhelp>
-	</field>';
-
-
-$Result = DB_query("SELECT currabrev, currency FROM currencies");
-include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
-
-echo '<field>
-		<label for="CurrencyDefault">', __('Home Currency'), ':</label>
-		<select id="CurrencyDefault" name="CurrencyDefault" tabindex="13" >';
-
-while ($MyRow = DB_fetch_array($Result)) {
-	if ($_POST['CurrencyDefault']==$MyRow['currabrev']){
-		echo '<option selected="selected" value="'. $MyRow['currabrev'] . '">' . $CurrencyName[$MyRow['currabrev']] . '</option>';
-	} else {
-		echo '<option value="' . $MyRow['currabrev'] . '">' . $CurrencyName[$MyRow['currabrev']] . '</option>';
-	}
-} //end while loop
-
-DB_free_result($Result);
-
-echo '</select>
-	</field>';
-
-$Result = DB_query("SELECT accountcode,
-						accountname
-					FROM chartmaster INNER JOIN accountgroups
-					ON chartmaster.group_=accountgroups.groupname
-					WHERE accountgroups.pandl=0
-					ORDER BY chartmaster.accountcode");
-
-echo '<field>
-		<label>' . __('Debtors Control GL Account') . ':</label>
-		<select tabindex="14" title="" name="DebtorsAct">';
-
-while ($MyRow = DB_fetch_row($Result)) {
-	if ($_POST['DebtorsAct']==$MyRow[0]){
-		echo '<option selected="selected" value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
-	} else {
-		echo '<option value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
-	}
-} //end while loop
-
-DB_data_seek($Result,0);
-
-echo '</select>
-	<fieldhelp>' . __('Select the general ledger account to be used for posting the local currency value of all customer transactions to. This account will always represent the total amount owed by customers to the business. Only balance sheet accounts are available for this selection.') . '</fieldhelp>
-</field>';
-
-echo '<field>
-		<label>' . __('Creditors Control GL Account') . ':</label>
-		<select tabindex="15" title="" name="CreditorsAct">';
-
-while ($MyRow = DB_fetch_row($Result)) {
-	if ($_POST['CreditorsAct']==$MyRow[0]){
-		echo '<option selected="selected" value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
-	} else {
-		echo '<option value="' . $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
-	}
-} //end while loop
-
-DB_data_seek($Result,0);
-
-echo '</select>
-	<fieldhelp>' . __('Select the general ledger account to be used for posting the local currency value of all supplier transactions to. This account will always represent the total amount owed by the business to suppliers. Only balance sheet accounts are available for this selection.') . '</fieldhelp>
-</field>';
-
-echo '<field>
-		<label>' . __('Payroll Net Pay Clearing GL Account') . ':</label>
-		<select tabindex="16" name="PayrollAct">';
-
-while ($MyRow = DB_fetch_row($Result)) {
-	if ($_POST['PayrollAct']==$MyRow[0]){
-		echo '<option selected="selected" value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
-	} else {
-		echo '<option value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
-	}
-} //end while loop
-
-DB_data_seek($Result,0);
-
-echo '</select>
-	</field>';
-
-echo '<field>
-		<label>' . __('Goods Received Clearing GL Account') . ':</label>
-		<select title="" tabindex="17" name="GRNAct">';
-
-while ($MyRow = DB_fetch_row($Result)) {
-	if ($_POST['GRNAct']==$MyRow[0]){
-		echo '<option selected="selected" value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
-	} else {
-		echo '<option value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
-	}
-} //end while loop
-
-DB_data_seek($Result,0);
-echo '</select>
-	<fieldhelp>' . __('Select the general ledger account to be used for posting the cost of goods received pending the entry of supplier invoices for the goods. This account will represent the value of goods received yet to be invoiced by suppliers. Only balance sheet accounts are available for this selection.') . '</fieldhelp>
-	</field>';
-
-echo '<field>
-		<label>', __('Sales Commission Accruals Account'), ':</label>';
-echo '<label>
-		<select name="CommAct">';
-while ($MyRow = DB_fetch_row($Result)) {
-	if ($_POST['CommAct']==$MyRow[0]){
-		echo '<option selected="selected" value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
-	} else {
-		echo '<option value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
-	}
-} //end while loop
-DB_data_seek($Result,0);
-echo '</select>
-	</field>';
-
-echo '<field>
-		<label>' . __('Retained Earning Clearing GL Account') . ':</label>
-		<select title="" tabindex="18" name="RetainedEarnings">';
-
-while ($MyRow = DB_fetch_row($Result)) {
-	if ($_POST['RetainedEarnings']==$MyRow[0]){
-		echo '<option selected="selected" value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
-	} else {
-		echo '<option value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
-	}
-} //end while loop
-
-DB_free_result($Result);
-
-echo '</select>
-	<fieldhelp>' . __('Select the general ledger account to be used for clearing profit and loss accounts to that represents the accumulated retained profits of the business. Only balance sheet accounts are available for this selection.') . '</fieldhelp>
-</field>';
-
-echo '<field>
-		<label>' . __('Freight Re-charged GL Account') . ':</label>
-		<select tabindex="19" name="FreightAct">';
-
-$Result = DB_query("SELECT accountcode,
-						accountname
-					FROM chartmaster INNER JOIN accountgroups
-					ON chartmaster.group_=accountgroups.groupname
-					WHERE accountgroups.pandl=1
-					ORDER BY chartmaster.accountcode");
-
-while ($MyRow = DB_fetch_row($Result)) {
-	if ($_POST['FreightAct']==$MyRow[0]){
-		echo '<option selected="selected" value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
-	} else {
-		echo '<option value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
-	}
-} //end while loop
-
-DB_data_seek($Result,0);
-
-echo '</select>
-	</field>';
-
-echo '<field>
-		<label>' . __('Sales Exchange Variances GL Account') . ':</label>
-		<select title="" tabindex="20" name="ExchangeDiffAct">';
-
-while ($MyRow = DB_fetch_row($Result)) {
-	if ($_POST['ExchangeDiffAct']==$MyRow[0]){
-		echo '<option selected="selected" value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
-	} else {
-		echo '<option value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
-	}
-} //end while loop
-
-DB_data_seek($Result,0);
-
-echo '</select>
-	<fieldhelp>' . __('Select the general ledger account to be used for posting accounts receivable exchange rate differences to - where the exchange rate on sales invocies is different to the exchange rate of currency receipts from customers, the exchange rate is calculated automatically and posted to this general ledger account. Only profit and loss general ledger accounts are available for this selection.') . '</fieldhelp>
-</field>';
-
-echo '<field>
-		<label>' . __('Purchases Exchange Variances GL Account') . ':</label>
-		<select tabindex="21" title="" name="PurchasesExchangeDiffAct">';
-
-while ($MyRow = DB_fetch_row($Result)) {
-	if ($_POST['PurchasesExchangeDiffAct']==$MyRow[0]){
-		echo '<option selected="selected" value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
-	} else {
-		echo '<option  value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
-	}
-} //end while loop
-
-DB_data_seek($Result,0);
-
-echo '</select>
-	<fieldhelp>' . __('Select the general ledger account to be used for posting the exchange differences on the accounts payable transactions to. Supplier invoices entered at one currency and paid in the supplier currency at a different exchange rate have the differences calculated automatically and posted to this general ledger account. Only profit and loss general ledger accounts are available for this selection.') . '</fieldhelp>
-</field>';
-
-echo '<field>
-		<label>' . __('Payment Discount GL Account') . ':</label>
-		<select title="" tabindex="22" name="PytDiscountAct">';
-
-while ($MyRow = DB_fetch_row($Result)) {
-	if ($_POST['PytDiscountAct']==$MyRow[0]){
-		echo '<option selected="selected" value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
-	} else {
-		echo '<option value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
-	}
-} //end while loop
-
-DB_data_seek($Result,0);
-
-echo '</select>
-	<fieldhelp>' . __('Select the general ledger account to be used for posting the value of payment discounts given to customers at the time of entering a receipt. Only profit and loss general ledger accounts are available for this selection.') . '</fieldhelp>
-</field>';
-
-echo '<field>
-		<label>' . __('Create GL entries for AR transactions') . ':</label>
-		<select title="" tabindex="23" name="GLLink_Debtors">';
-
-if ($_POST['GLLink_Debtors']==0){
-	echo '<option selected="selected" value="0">' . __('No') . '</option>';
-	echo '<option value="1">' . __('Yes'). '</option>';
-} else {
-	echo '<option selected="selected" value="1">' . __('Yes'). '</option>';
-	echo '<option value="0">' . __('No'). '</option>';
-}
-
-echo '</select>
-	<fieldhelp>' . __('Select yes to ensure that webERP creates general ledger journals for all accounts receivable transactions. webERP will maintain the debtors control account (selected above) to ensure it should always balance to the list of customer balances in local currency.') . '</fieldhelp>
-</field>';
-
-echo '<field>
-		<label>' . __('Create GL entries for AP transactions') . ':</label>
-		<select title="" tabindex="24" name="GLLink_Creditors">';
-
-if ($_POST['GLLink_Creditors']==0){
-	echo '<option selected="selected" value="0">' . __('No') . '</option>';
-	echo '<option value="1">' . __('Yes') . '</option>';
-} else {
-	echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
-	echo '<option value="0">' . __('No') . '</option>';
-}
-
-echo '</select>
-	<fieldhelp>' . __('Select yes to ensure that webERP creates general ledger journals for all accounts payable transactions. webERP will maintain the creditors control account (selected above) to ensure it should always balance to the list of supplier balances in local currency.') . '</fieldhelp>
-</field>';
-
-echo '<field>
-		<label>' . __('Create GL entries for stock transactions')  . ':</label>
-		<select title="" tabindex="25" name="GLLink_Stock">';
-
-if ($_POST['GLLink_Stock']=='0'){
-	echo '<option selected="selected" value="0">' . __('No') . '</option>';
-	echo '<option value="1">' . __('Yes') . '</option>';
-} else {
-	echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
-	echo '<option value="0">' . __('No') . '</option>';
-}
-
-echo '</select>
-	<fieldhelp>' . __('Select yes to ensure that webERP creates general ledger journals for all inventory transactions. webERP will maintain the stock control accounts (selected under the inventory categories set up) to ensure they balance. Only balance sheet general ledger accounts can be selected.') . '</fieldhelp>
-</field>';
-
-
-echo '</fieldset>
-	<div class="centre">
-		<input tabindex="26" type="submit" name="submit" value="' . __('Update') . '" />
-	</div>';
+echo  FieldToSelectOneText('CoyName', $_POST['CoyName'], 52, 50, __('Name') . ' (' . __('to appear on reports') . ')',
+	__('Enter the name of the business. This will appear on all reports and at the top of each screen.'), '', 1, true, true);
+
+echo  FieldToSelectOneText('CompanyNumber', $_POST['CompanyNumber'], 22, 20, __('Official Company Number'),
+	__('Enter the official company number.'), '', 2);
+
+echo  FieldToSelectOneText('GSTNo', $_POST['GSTNo'], 22, 20, __('Tax Authority Reference'),
+	__('Enter the tax authority reference.'), '', 3);
+
+echo  FieldToSelectOneText('RegOffice1', stripslashes($_POST['RegOffice1']), 42, 40, __('Address Line 1'),
+	__('Enter the first line of the company registered office. This will appear on invoices and statements.'), '', 4);
+	
+echo  FieldToSelectOneText('RegOffice2', stripslashes($_POST['RegOffice2']), 42, 40, __('Address Line 2'),
+	__('Enter the second line of the company registered office. This will appear on invoices and statements.'), '', 5, false, false);
+
+echo  FieldToSelectOneText('RegOffice3', stripslashes($_POST['RegOffice3']), 42, 40, __('Address Line 3'),
+	__('Enter the third line of the company registered office. This will appear on invoices and statements.'), '', 6, false, false);
+
+echo  FieldToSelectOneText('RegOffice4', stripslashes($_POST['RegOffice4']), 42, 40, __('Address Line 4'),
+	__('Enter the fourth line of the company registered office. This will appear on invoices and statements.'), '', 7, false, false);
+
+echo  FieldToSelectOneText('RegOffice5', stripslashes($_POST['RegOffice5']), 22, 20, __('Address Line 5'),
+	__('Enter the fifth line of the company registered office. This will appear on invoices and statements.'), '', 8, false, false);
+
+echo  FieldToSelectOneText('RegOffice6', stripslashes($_POST['RegOffice6']), 17, 15, __('Address Line 6'),
+	__('Enter the sixth line of the company registered office. This will appear on invoices and statements.'), '', 9, false, false);
+
+echo FieldToSelectOneTelephoneNumber('Telephone', $_POST['Telephone'], 26, 25, __('Telephone Number'),
+	__('Enter the main telephone number of the company registered office. This will appear on invoices and statements.'), '', 10);
+
+echo FieldToSelectOneTelephoneNumber('Fax', $_POST['Fax'], 26, 25, __('Facsimile Number'),
+	__('Enter the main facsimile number of the company registered office. This will appear on invoices and statements.'), '', 11, false, false);
+
+echo FieldToSelectOneEmail('Email', $_POST['Email'], 50, 55, __('Email Address'),
+	__('Enter the main company email address. This will appear on invoices and statements.'), '', 12);
+
+echo FieldToSelectOneCurrency('CurrencyDefault', $_POST['CurrencyDefault'], __('Home Currency'), 
+	__('Select the home currency for the company. This will be used for all financial transactions and reporting.'),
+	'', 13);
+
+echo FieldToSelectOneGLAccount('DebtorsAct', $_POST['DebtorsAct'],  __('Debtors Control GL Account'), 
+	__('Select the general ledger account to be used for posting the local currency value of all customer transactions to. This account will always represent the total amount owed by customers to the business. Only balance sheet accounts are available for this selection.'),
+	'BS', 14);
+
+echo FieldToSelectOneGLAccount('CreditorsAct', $_POST['CreditorsAct'],  __('Creditors Control GL Account'), 
+	__('Select the general ledger account to be used for posting the local currency value of all supplier transactions to. This account will always represent the total amount owed by the business to suppliers. Only balance sheet accounts are available for this selection.'),
+	'BS', 15);
+
+echo FieldToSelectOneGLAccount('PayrollAct', $_POST['PayrollAct'],  __('Payroll Net Pay Clearing GL Account'), 
+	__('Select the general ledger account to be used for posting the payroll net pay clearing transactions to. Only balance sheet accounts are available for this selection.'),
+	'BS', 16);
+
+echo FieldToSelectOneGLAccount('GRNAct', $_POST['GRNAct'],  __('Goods Received Clearing GL Account'), 
+	__('Select the general ledger account to be used for posting the cost of goods received pending the entry of supplier invoices for the goods. This account will represent the value of goods received yet to be invoiced by suppliers. Only balance sheet accounts are available for this selection.'),
+	'BS', 17);
+
+echo FieldToSelectOneGLAccount('CommAct', $_POST['CommAct'],  __('Sales Commission Accruals Account'), 
+	__('Select the general ledger account to be used for posting the sales commission accruals. Only balance sheet accounts are available for this selection.'),
+	'BS', 18);
+
+echo FieldToSelectOneGLAccount('RetainedEarnings', $_POST['RetainedEarnings'],  __('Retained Earning Clearing GL Account'), 
+	__('Select the general ledger account to be used for clearing profit and loss accounts to that represents the accumulated retained profits of the business. Only balance sheet accounts are available for this selection.'),
+	'BS', 19);
+
+echo FieldToSelectOneGLAccount('FreightAct', $_POST['FreightAct'],  __('Freight Re-charged GL Account'), 
+	__('Select the general ledger account to be used for posting the freight re-charged transactions to. Only balance sheet accounts are available for this selection.'),
+	'BS', 20);
+
+echo FieldToSelectOneGLAccount('SalesExchangeDiffAct', $_POST['SalesExchangeDiffAct'],  __('Sales Exchange Variances GL Account'), 
+	__('Select the general ledger account to be used for posting accounts receivable exchange rate differences to - where the exchange rate on sales invocies is different to the exchange rate of currency receipts from customers, the exchange rate is calculated automatically and posted to this general ledger account. Only profit and loss general ledger accounts are available for this selection.'),
+	'P&L', 21);
+
+echo FieldToSelectOneGLAccount('PurchasesExchangeDiffAct', $_POST['PurchasesExchangeDiffAct'],  __('Purchases Exchange Variances GL Account'), 
+	__('Select the general ledger account to be used for posting the exchange differences on the accounts payable transactions to. Supplier invoices entered at one currency and paid in the supplier currency at a different exchange rate have the differences calculated automatically and posted to this general ledger account. Only profit and loss general ledger accounts are available for this selection.'),
+	'P&L', 22);
+
+echo FieldToSelectOneGLAccount('CurrencyExchangeDiffAct', $_POST['CurrencyExchangeDiffAct'],  __('Currency Exchange Variances GL Account'), 
+	__('Select the general ledger account to be used for posting the exchange differences on the currency transactions to. Currency transactions with an exchange rate different to the home currency exchange rate have the differences calculated automatically and posted to this general ledger account. Only profit and loss general ledger accounts are available for this selection.'),
+	'P&L', 23);
+
+echo FieldToSelectOneGLAccount('PytDiscountAct', $_POST['PytDiscountAct'],  __('Payment Discount GL Account'), 
+	__('Select the general ledger account to be used for posting the value of payment discounts given to customers at the time of entering a receipt. Only profit and loss general ledger accounts are available for this selection.'),
+	'P&L', 24);
+
+echo FieldToSelectFromTwoOptions('0', __('No'), '1', __('Yes'),
+	'GLLink_Debtors', $_POST['GLLink_Debtors'], __('Create GL entries for AR transactions'), 
+	__('Select yes to ensure that webERP creates general ledger journals for all accounts receivable transactions. webERP will maintain the debtors control account (selected above) to ensure it should always balance to the list of customer balances in local currency.'),
+	'', 25);
+
+echo FieldToSelectFromTwoOptions('0', __('No'), '1', __('Yes'),
+	'GLLink_Creditors', $_POST['GLLink_Creditors'], __('Create GL entries for AP transactions'), 
+	__('Select yes to ensure that webERP creates general ledger journals for all accounts payable transactions. webERP will maintain the creditors control account (selected above) to ensure it should always balance to the list of supplier balances in local currency.'),
+	'', 26);
+
+echo FieldToSelectFromTwoOptions('0', __('No'), '1', __('Yes'),
+	'GLLink_Stock', $_POST['GLLink_Stock'], __('Create GL entries for stock transactions'), 
+	__('Select yes to ensure that webERP creates general ledger journals for all inventory transactions. webERP will maintain the stock control accounts (selected under the inventory categories set up) to ensure they balance. Only balance sheet general ledger accounts can be selected.'),
+	'', 27);
+
+echo '</fieldset>';
+echo OneButtonCenteredForm('submit', __('Update'));
 echo '</form>';
 
 include('includes/footer.php');

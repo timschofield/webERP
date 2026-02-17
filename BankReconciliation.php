@@ -70,12 +70,12 @@ if (isset($_POST['PostExchangeDifference']) AND is_numeric(filter_number_format(
 									'" . $ExDiffTransNo . "',
 									'" . FormatDateForSQL($PostingDate) . "',
 									'" . $PeriodNo . "',
-									'" . $_SESSION['CompanyRecord']['exchangediffact'] . "',
+									'" . $_SESSION['CompanyRecord']['currencyexchangediffact'] . "',
 									'" . mb_substr($CurrencyRow['bankaccountname'] . ' ' . __('reconciliation on') . " " .
 										date($_SESSION['DefaultDateFormat']), 0, 200) . "',
 									'" . $ExchangeDifference . "')";
 
-		$ErrMsg = __('Cannot insert a GL entry for the exchange difference because');
+		$ErrMsg = __('Cannot insert a GL entry for the currency exchange difference because');
 		$Result = DB_query($SQL, $ErrMsg, '', true);
 		$SQL = "INSERT INTO gltrans (type,
 									typeno,
@@ -95,7 +95,7 @@ if (isset($_POST['PostExchangeDifference']) AND is_numeric(filter_number_format(
 		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		DB_Txn_Commit();
-		prnMsg(__('Exchange difference of') . ' ' . locale_number_format($ExchangeDifference, $_SESSION['CompanyRecord']['decimalplaces']) . ' ' . __('has been posted'), 'success');
+		prnMsg(__('Currency exchange difference of') . ' ' . locale_number_format($ExchangeDifference, $_SESSION['CompanyRecord']['decimalplaces']) . ' ' . __('has been posted'), 'success');
 	} //end if the bank statement balance was numeric
 }
 
