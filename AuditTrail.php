@@ -30,6 +30,14 @@ if (isset($_POST['ContainingText'])){
 	$ContainingText = trim(mb_strtoupper($_GET['ContainingText']));
 }
 
+if (isset($_POST['FromDate']) and isset($_POST['ToDate'])) {
+	if (Date1GreaterThanDate2($_POST['FromDate'], $_POST['ToDate'])) {
+		// The beginning is after the end.
+		unset($_POST['View']);
+		prnMsg(__('The from date should be before the to date.'), 'error');
+	}
+}
+
 // Get list of tables
 $TableResult = DB_show_tables();
 
