@@ -21,3 +21,4 @@ Thumbs.db
 
 # And the eventual .git dir from composer-installed projects which are downloaded as git clones instead of zipballs
 /vendor/phplot/phplot/.git/
+KLConfig/
