@@ -13,6 +13,7 @@
  * - FieldToSelectOneDate() - Creates a date input field
  * - FieldToSelectOneEntryFromArray() - Creates a dropdown from an array of values
  * - FieldToSelectOneFile() - Creates a file upload input field
+ * - FieldToSelectOneGLAccount() - Creates a dropdown for selecting one GL account
  * - FieldToSelectOneGLAccountGroup() - Creates a dropdown for selecting GL account groups
  * - FieldToSelectOneLocation() - Creates a dropdown for selecting a location
  * - FieldToSelectOnePassword() - Creates a password input field
@@ -129,6 +130,104 @@ function FieldToSelectOneFile($VariableName, $Label = '', $HelpText = '', $Filte
 				<input type="file"';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
 	$HTML .= ' id="' . $VariableName . '" name="' . $VariableName . '" />
+			</field>';
+	return $HTML;
+}
+
+function FieldToSelectOneGLAccount($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+	if ($Filter == 'PTADU_ALL') {
+		$SuffixPT = 'ADU';
+		$Where = '';
+	} elseif ($Filter == 'PTADU_VIEW') {
+		$SuffixPT = 'ADU';
+		$Where = 'WHERE glaccountusers.canview=1';
+	} elseif ($Filter == 'PTADU_UPDATE') {
+		$SuffixPT = 'ADU';
+		$Where = 'WHERE glaccountusers.canupd=1';
+	} elseif ($Filter == 'PTSMH_ALL') {
+		$SuffixPT = 'SMH';
+		$Where = '';
+	} elseif ($Filter == 'PTSMH_VIEW') {
+		$SuffixPT = 'SMH';
+		$Where = 'WHERE glaccountusers.canview=1';
+	} elseif ($Filter == 'PTSMH_UPDATE') {
+		$SuffixPT = 'SMH';
+		$Where = 'WHERE glaccountusers.canupd=1';
+	} elseif ($Filter == 'PTBB_ALL') {
+		$SuffixPT = 'BB';
+		$Where = '';
+	} elseif ($Filter == 'PTBB_VIEW') {
+		$SuffixPT = 'BB';
+		$Where = 'WHERE glaccountusers.canview=1';
+	} elseif ($Filter == 'PTBB_UPDATE') {
+		$SuffixPT = 'BB';
+		$Where = 'WHERE glaccountusers.canupd=1';
+	} elseif ($Filter == 'POIK_ALL') {
+		$SuffixPT = 'IK';
+		$Where = '';
+	} elseif ($Filter == 'POIK_VIEW') {
+		$SuffixPT = 'IK';
+		$Where = 'WHERE glaccountusers.canview=1';
+	} elseif ($Filter == 'POIK_UPDATE') {
+		$SuffixPT = 'IK';
+		$Where = 'WHERE glaccountusers.canupd=1';
+	} elseif ($Filter == 'POPI_ALL') {
+		$SuffixPT = 'PI';
+		$Where = '';
+	} elseif ($Filter == 'POPI_VIEW') {
+		$SuffixPT = 'PI';
+		$Where = 'WHERE glaccountusers.canview=1';
+	} elseif ($Filter == 'POPI_UPDATE') {
+		$SuffixPT = 'PI';
+		$Where = 'WHERE glaccountusers.canupd=1';
+	} elseif ($Filter == 'ALL') {
+		$SuffixPT = '';
+		$Where = '';
+	} elseif ($Filter == 'BS') {
+		$SuffixPT = '';
+		$Where = 'WHERE accountgroups.pandl=0';
+	} elseif ($Filter == 'P&L') {
+		$SuffixPT = '';
+		$Where = 'WHERE accountgroups.pandl=1';
+	} elseif ($Filter == 'VIEW') {
+		$SuffixPT = '';
+		$Where = 'WHERE glaccountusers.canview=1';
+	} elseif ($Filter == 'UPDATE') {
+		$SuffixPT = '';
+		$Where = 'WHERE glaccountusers.canupd=1';
+	} else {
+		$SuffixPT = '';
+		$Where = '';
+	}
+	
+	$SQL = "SELECT chartmaster" . $SuffixPT . ".accountcode,
+				chartmaster" . $SuffixPT . ".accountname
+			FROM chartmaster" . $SuffixPT . " 
+			INNER JOIN glaccountusers 
+				ON glaccountusers.accountcode=chartmaster" . $SuffixPT . ".accountcode 
+				AND glaccountusers.userid='" . $_SESSION['UserID'] . "' ". 
+			$Where . " 
+			ORDER BY chartmaster" . $SuffixPT . ".accountcode";
+
+	$Result = DB_query($SQL);
+
+	$HTML = '<field>
+				<label for="' . $VariableName . '">' . $Label . ':</label>
+				<select';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= 'name="' . $VariableName . '">
+				<fieldhelp>' . $HelpText . '</fieldhelp>';
+	
+	while ($MyRow = DB_fetch_array($Result)) {
+		$TextOption = $MyRow['accountcode'] . ' ' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false);
+		if ($MyRow['accountcode'] == $SelectedValue) {
+			$HTML .= '<option selected="selected" value="' . $MyRow['accountcode'] . '">' . $TextOption . '</option>';
+		} 
+		else {
+			$HTML .= '<option value="' . $MyRow['accountcode'] . '">' . $TextOption . '</option>';
+		}
+	}
+	$HTML .= '</select>
 			</field>';
 	return $HTML;
 }
