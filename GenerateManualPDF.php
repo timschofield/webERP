@@ -112,16 +112,22 @@ $HTML = '<!DOCTYPE html>
 			font-size: 9pt;
 		}
 
-		/* Page numbers in footer */
-		@page {
-			margin: 2cm;
-			@bottom-right {
-				content: "Page " counter(page) " of " counter(pages);
-			}
+		/* Page numbers footer */
+		@page { margin: 2cm; }
+		.footer {
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			text-align: right;
+			font-size: 9pt;
+			color: #666;
 		}
+		.footer .pagenum:before { content: counter(page); }
+		.footer .totalpages:before { content: counter(pages); }
 	</style>
 </head>
-<body>';
+<body><div class="footer">Page <span class="pagenum"></span></div>';
 
 // Add title page
 $HTML .= '
@@ -154,34 +160,34 @@ foreach ($TOC_Array['TableOfContents'] as $Name => $FullName) {
 $HTML .= '</div>';
 
 // Function to process manual files and convert relative paths for images
-function ProcessManualContent($filePath, $Language) {
-	if (!file_exists($filePath)) {
+function ProcessManualContent($FilePath, $Language) {
+	if (!file_exists($FilePath)) {
 		return '<p><em>Content not available for this section.</em></p>';
 	}
 
-	$content = file_get_contents($filePath);
+	$Content = file_get_contents($FilePath);
 
 	// Convert relative image paths to absolute paths
 	// Pattern: src="doc/Manual/images/...
-	$content = preg_replace(
+	$Content = preg_replace(
 		'/src="doc\/Manual\/images\//i',
 		'src="' . __DIR__ . '/doc/Manual/images/',
-		$content
+		$Content
 	);
 
 	// Pattern: src="images/...
-	$content = preg_replace(
+	$Content = preg_replace(
 		'/src="images\//i',
 		'src="' . __DIR__ . '/doc/Manual/images/',
-		$content
+		$Content
 	);
 
 	// Remove any navigation links that don't make sense in PDF
-	$content = preg_replace('/<a[^>]*href="#top"[^>]*>.*?<\/a>/i', '', $content);
-	$content = preg_replace('/<a[^>]*href="#bottom"[^>]*>.*?<\/a>/i', '', $content);
-	$content = preg_replace('/<a[^>]*href="ManualContents\.php[^"]*"[^>]*>.*?<\/a>/i', '', $content);
+	$Content = preg_replace('/<a[^>]*href="#top"[^>]*>.*?<\/a>/i', '', $Content);
+	$Content = preg_replace('/<a[^>]*href="#bottom"[^>]*>.*?<\/a>/i', '', $Content);
+	$Content = preg_replace('/<a[^>]*href="ManualContents\.php[^"]*"[^>]*>.*?<\/a>/i', '', $Content);
 
-	return $content;
+	return $Content;
 }
 
 // Process each manual section
@@ -205,9 +211,9 @@ foreach ($TOC_Array['TableOfContents'] as $Name => $FullName) {
 			$PathPrefix = __DIR__ . '/';
 			$RootPath = '/';
 			include($ManualPage);
-			$content = ob_get_clean();
+			$Content = ob_get_clean();
 			$HTML .= ProcessManualContent('php://memory', $Language);
-			$HTML .= $content;
+			$HTML .= $Content;
 		} else {
 			$HTML .= ProcessManualContent($ManualPage, $Language);
 		}
@@ -223,15 +229,6 @@ $HTML .= '
 </body>
 </html>';
 
-// Generate PDF
-if (!$IsCommandLine) {
-//	echo '<div style="text-align:center; margin:50px;">';
-//	echo '<p>Generating PDF manual, please wait...</p>';
-//	echo '<p><em>This may take a minute or two depending on server performance.</em></p>';
-//	echo '</div>';
-//	flush();
-}
-
 try {
 	$DomPDF = new Dompdf($DomPDFOptions);
 	$DomPDF->loadHtml($HTML);
@@ -243,7 +240,7 @@ try {
 	$DomPDF->render();
 
 	// Generate filename
-	$FileName = 'doc/webERP_Manual_' . str_replace('.', '_', $Language) . '_' . date('Y-m-d') . '.pdf';
+	$FileName = 'doc/webERP_Manual_' . str_replace('.', '_', $Language) . '.pdf';
 
 	if ($IsCommandLine) {
 		// Save to file in CLI mode
