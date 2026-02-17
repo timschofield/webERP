@@ -152,7 +152,7 @@ if (isset($_POST['UpdateDatabase'])){
 												settled = '" . $Settled . "'
 							WHERE id = '" . $AllocnItem->ID . "'";
 
-					 $ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The debtor transaction record could not be modified for the allocation against it because');
+					 $ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The supplier transaction record could not be modified for the allocation against it because');
 
 					 $Result = DB_query($SQL, $ErrMsg, '', true);
 
@@ -180,12 +180,12 @@ if (isset($_POST['UpdateDatabase'])){
 		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		/*Almost there ... if there is a change in the total diff on exchange
-		 and if the GLLink to debtors is active - need to post diff on exchange to GL */
+		 and if the GLLink to creditors is active - need to post diff on exchange to GL */
 
 		$MovtInDiffOnExch = $_SESSION['Alloc']->PrevDiffOnExch + $TotalDiffOnExch;
 		if ($MovtInDiffOnExch !=0 ){
 
-		   if ($_SESSION['CompanyRecord']['gllink_debtors'] == 1){
+		   if ($_SESSION['CompanyRecord']['gllink_creditors'] == 1){
 
 		      $PeriodNo = GetPeriod($_SESSION['Alloc']->TransDate);
 
