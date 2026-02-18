@@ -159,16 +159,16 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			$Narrative = __('PettyCash') . ' - ' . $MyRow['tabcode'] . ' - ' . $MyRow['codeexpense'] . ' - ' . DB_escape_string($MyRow['notes']);
 			//insert to gltrans
 			DB_Txn_Begin();
-			$SQLFrom = "INSERT INTO `gltrans` (`counterindex`,
-											`type`,
-											`typeno`,
-											`chequeno`,
-											`trandate`,
-											`periodno`,
-											`account`,
-											`narrative`,
-											`amount`,
-											`jobref`)
+			$SQLFrom = "INSERT INTO gltrans (counterindex,
+											type,
+											typeno,
+											chequeno,
+											trandate,
+											periodno,
+											account,
+											narrative,
+											amount,
+											jobref)
 									VALUES (NULL,
 											'" . $Type . "',
 											'" . $TypeNo . "',
@@ -181,16 +181,16 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 											'')";
 			$ResultFrom = DB_Query($SQLFrom, '', '', true);
 
-			$SQLTo = "INSERT INTO `gltrans` (`counterindex`,
-										`type`,
-										`typeno`,
-										`chequeno`,
-										`trandate`,
-										`periodno`,
-										`account`,
-										`narrative`,
-										`amount`,
-										`jobref`)
+			$SQLTo = "INSERT INTO gltrans (counterindex,
+										type,
+										typeno,
+										chequeno,
+										trandate,
+										periodno,
+										account,
+										narrative,
+										amount,
+										jobref)
 								VALUES (NULL,
 										'" . $Type . "',
 										'" . $TypeNo . "',
@@ -217,16 +217,16 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 							WHERE pccashdetail='" . $MyRow['counterindex'] . "'";
 			$TaxResult = DB_query($TaxSQL);
 			while ($MyTaxRow = DB_fetch_array($TaxResult)) {
-				$SQLTo = "INSERT INTO `gltrans` (`counterindex`,
-												`type`,
-												`typeno`,
-												`chequeno`,
-												`trandate`,
-												`periodno`,
-												`account`,
-												`narrative`,
-												`amount`,
-												`jobref`)
+				$SQLTo = "INSERT INTO gltrans (counterindex,
+												type,
+												typeno,
+												chequeno,
+												trandate,
+												periodno,
+												account,
+												narrative,
+												amount,
+												jobref)
 										VALUES (NULL,
 												'" . $Type . "',
 												'" . $TypeNo . "',

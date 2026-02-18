@@ -1490,7 +1490,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						stockmaster.decimalplaces,
 						salesorderdetails.stkcode,
 						SUM(qtyinvoiced) salesqty
-					FROM `salesorderdetails`INNER JOIN `stockmaster`
+					FROM salesorderdetailsINNER JOIN stockmaster
 					ON  salesorderdetails.stkcode = stockmaster.stockid
 					WHERE ActualDispatchDate >= '" . FormatDateForSQL($SixMonthsAgo) . "'
 					GROUP BY stkcode
