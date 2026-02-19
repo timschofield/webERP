@@ -208,13 +208,9 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 							$CurrenciesResult = DB_query("SELECT currabrev, rate FROM currencies");
 							while ($CurrencyRow = DB_fetch_row($CurrenciesResult)){
 								if ($CurrencyRow[0]!=$_SESSION['CompanyRecord']['currencydefault']){
-									$OldRate = $CurrencyRow[1];
 									$NewRate = GetCurrencyRate($CurrencyRow[0],$CurrencyRates);
 									if ($NewRate == '') {
 										$NewRate = 1;
-									}
-									if ($OldRate != $NewRate) {
-										AdjustBankAccountsDueToCurrencyExchangeRate($CurrencyRow[0], $OldRate, $NewRate);
 									}
 									DB_query("UPDATE currencies
 											SET rate='" . $NewRate . "'
@@ -231,11 +227,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 								} else {
 									$CurrencyRatesArray = array();
 								}
-								$OldRate = $CurrencyRow[1];
 								$NewRate = GetCurrencyRate($CurrencyRow[0], $CurrencyRatesArray);
-								if ($OldRate != $NewRate) {
-									AdjustBankAccountsDueToCurrencyExchangeRate($CurrencyRow[0], $OldRate, $NewRate);
-								}
 								DB_query("UPDATE currencies
 											SET rate='" . $NewRate . "'
 											WHERE currabrev='" . $CurrencyRow[0] . "'");
