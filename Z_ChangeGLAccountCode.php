@@ -82,7 +82,8 @@ if (isset($_POST['ProcessGLAccountCode'])) {
 		ChangeFieldInTable("companies", "creditorsact", $_POST['OldAccountCode'], $_POST['NewAccountCode']);
 		ChangeFieldInTable("companies", "payrollact", $_POST['OldAccountCode'], $_POST['NewAccountCode']);
 		ChangeFieldInTable("companies", "grnact", $_POST['OldAccountCode'], $_POST['NewAccountCode']);
-		ChangeFieldInTable("companies", "exchangediffact", $_POST['OldAccountCode'], $_POST['NewAccountCode']);
+		ChangeFieldInTable("companies", "currencyexchangediffact", $_POST['OldAccountCode'], $_POST['NewAccountCode']);
+		ChangeFieldInTable("companies", "salesexchangediffact", $_POST['OldAccountCode'], $_POST['NewAccountCode']);
 		ChangeFieldInTable("companies", "purchasesexchangediffact", $_POST['OldAccountCode'], $_POST['NewAccountCode']);
 		ChangeFieldInTable("companies", "retainedearnings", $_POST['OldAccountCode'], $_POST['NewAccountCode']);
 		ChangeFieldInTable("companies", "freightact", $_POST['OldAccountCode'], $_POST['NewAccountCode']);

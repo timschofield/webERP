@@ -48,34 +48,52 @@ if ((isset($ForceConfigReload) AND $ForceConfigReload==true) OR !isset($_SESSION
 
 	/* Also reads all the company data set up in the company record and returns an array */
 
-	$SQL=	"SELECT	coyname,
-					gstno,
-					regoffice1,
-					regoffice2,
-					regoffice3,
-					regoffice4,
-					regoffice5,
-					regoffice6,
-					telephone,
-					fax,
-					email,
-					currencydefault,
-					debtorsact,
-					pytdiscountact,
-					creditorsact,
-					payrollact,
-					grnact,
-					exchangediffact,
+	/* Build the SELECT clause based on available columns, as update 41:
+	a) renames column exchangediffact into salesexchangediffact and
+	b) adds a new column to the companies table
+	and we want to be able to run this code on both updated and non-updated databases without errors.
+	*/
+
+	$SQLColumns = "SHOW COLUMNS FROM companies LIKE 'salesexchangediffact'";
+	$ResultColumns = DB_query($SQLColumns, '', '', false, false);
+	$UseNewColumns = (DB_num_rows($ResultColumns) > 0);
+
+	$SQL = "SELECT coyname,
+				gstno,
+				regoffice1,
+				regoffice2,
+				regoffice3,
+				regoffice4,
+				regoffice5,
+				regoffice6,
+				telephone,
+				fax,
+				email,
+				currencydefault,
+				debtorsact,
+				pytdiscountact,
+				creditorsact,
+				payrollact,
+				grnact,";
+
+	if ($UseNewColumns) {
+		$SQL .= "	salesexchangediffact,
 					purchasesexchangediffact,
-					retainedearnings,
-					freightact,
-					gllink_debtors,
-					gllink_creditors,
-					gllink_stock,
-					decimalplaces
-				FROM companies
-				INNER JOIN currencies ON companies.currencydefault=currencies.currabrev
-				WHERE coycode=1";
+					currencyexchangediffact,";
+	} else {
+		$SQL .= "	exchangediffact,
+					purchasesexchangediffact,";
+	}
+
+	$SQL .= "	retainedearnings,
+				freightact,
+				gllink_debtors,
+				gllink_creditors,
+				gllink_stock,
+				decimalplaces
+			FROM companies
+			INNER JOIN currencies ON companies.currencydefault=currencies.currabrev
+			WHERE coycode=1";
 
 	$ErrMsg = __('An error occurred accessing the database to retrieve the company information');
 	$ReadCoyResult = DB_query($SQL, $ErrMsg);

@@ -120,7 +120,8 @@ if (isset($_POST['submit'])) {
 					OR creditorsact='" . $SelectedAccount . "'
 					OR payrollact='" . $SelectedAccount . "'
 					OR grnact='" . $SelectedAccount . "'
-					OR exchangediffact='" . $SelectedAccount . "'
+					OR currencyexchangediffact='" . $SelectedAccount . "'
+					OR salesexchangediffact='" . $SelectedAccount . "'
 					OR purchasesexchangediffact='" . $SelectedAccount . "'
 					OR retainedearnings='" . $SelectedAccount . "'";
 			$ErrMsg = __('Could not test for default company GL codes because');

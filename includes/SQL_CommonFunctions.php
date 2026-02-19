@@ -515,10 +515,10 @@ function AdjustBankAccountsDueToCurrencyExchangeRate($SelectedCurrency, $OldRate
 							$ExDiffTransNo . "', '" .
 							FormatDateForSQL($PostingDate) . "', '" .
 							$PeriodNo . "', '" .
-							$_SESSION['CompanyRecord']['exchangediffact'] . "', '" .
+							$_SESSION['CompanyRecord']['currencyexchangediffact'] . "', '" .
 							mb_substr($MyRowBankAccount['bankaccountname'] . ' ' . __('currency rate adjustment to') . ' ' . locale_number_format($NewRate, 'Variable') . ' ' . $SelectedCurrency . '/' . $_SESSION['CompanyRecord']['currencydefault'], 0, 200) . "', '" .
 							(-$DifferenceToAdjust) . "')";
-			$ErrMsg = __('Cannot insert a GL entry for the exchange difference because');
+			$ErrMsg = __('Cannot insert a GL entry for the currency exchange difference because');
 			DB_query($SQL, $ErrMsg, '', true);
 			
 			$SQL = "INSERT INTO gltrans (

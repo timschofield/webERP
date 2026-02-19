@@ -1,18 +1,20 @@
-<?php
+﻿<?php
 
 /**********************************************************************************************************
- * 
+ *
  * General UI functions
- * 
+ *
  * Functions included in this file:
  * - AddAttributesToField() - Adds HTML attributes to form fields
  * - FieldToSelectMultipleLocations() - Creates a multiple selection dropdown for locations
  * - FieldToSelectMultiplePeriods() - Creates a multiple selection dropdown for accounting periods
  * - FieldToSelectMultipleStockCategories() - Creates a multiple selection dropdown for stock categories
+ * - FieldToSelectOneCurrency() - Creates a dropdown for selecting a currency
  * - FieldToSelectOneCustomerType() - Creates a dropdown for selecting customer types
  * - FieldToSelectOneDate() - Creates a date input field
  * - FieldToSelectOneEntryFromArray() - Creates a dropdown from an array of values
  * - FieldToSelectOneFile() - Creates a file upload input field
+ * - FieldToSelectOneGLAccount() - Creates a dropdown for selecting one GL account
  * - FieldToSelectOneGLAccountGroup() - Creates a dropdown for selecting GL account groups
  * - FieldToSelectOneLocation() - Creates a dropdown for selecting a location
  * - FieldToSelectOnePassword() - Creates a password input field
@@ -21,6 +23,7 @@
  * - FieldToSelectOneSalesPerson() - Creates a dropdown for selecting a sales person
  * - FieldToSelectOneStockCategory() - Creates a dropdown for selecting a stock category
  * - FieldToSelectOneSysType() - Creates a dropdown for selecting a system type
+ * - FieldToSelectOneTelephoneNumber() - Creates a telephone number input field
  * - FieldToSelectOneText() - Creates a text input field
  * - FieldToSelectOneTextArea() - Creates a text area input field
  * - FieldToSelectOneEmail() - Creates an email input field
@@ -33,20 +36,20 @@
  * - FieldToSelectFromTwoOptions() - Creates a dropdown with two options
  * - FieldToSelectOneBrand() - Creates a dropdown for selecting a brand
  * - FieldToSelectSpreadSheetFormat() - Creates a dropdown for selecting spreadsheet formats
- * 
+ *
  *********************************************************************************************************/
 
 function AddAttributesToField($TabIndex, $Required, $AutoFocus) {
 	$Attributes = ' ';
-	if (isset($AutoFocus) and $AutoFocus) {
+	if (isset($AutoFocus) && $AutoFocus) {
 		$Attributes .= 'autofocus="autofocus" ';
 	}
 
-	if (isset($Required) and $Required) {
+	if (isset($Required) && $Required) {
 		$Attributes .= 'required="required" ';
 	}
 
-	if (isset($TabIndex) and $TabIndex != '') {
+	if (isset($TabIndex) && $TabIndex != '') {
 		$Attributes .= 'tabindex="' . $TabIndex . '" ';
 	}
 	return $Attributes;
@@ -57,18 +60,51 @@ function FieldToSelectOneEntryFromArray($Array, $VariableName, $SelectedValue, $
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
-	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
 	$HTML .= 'name="' . $VariableName . '">
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
 
-	foreach ($Array as $Entry => $Name){
-		if (isset($SelectedValue) AND (strtoupper($SelectedValue) == strtoupper($Entry))){
-			$HTML .=  '<option selected="selected" value="' . $Entry . '">' . $Name  . '</option>';
+	foreach ($Array as $Entry => $Name) {
+		if (isset($SelectedValue) && (strtoupper($SelectedValue) == strtoupper($Entry))) {
+			$HTML .= '<option selected="selected" value="' . $Entry . '">' . $Name . '</option>';
 		} else {
-			$HTML .=  '<option value="' . $Entry . '">' . $Name  . '</option>';
+			$HTML .= '<option value="' . $Entry . '">' . $Name . '</option>';
 		}
 	}
 
+	$HTML .= '</select>
+			</field>';
+	return $HTML;
+}
+
+function FieldToSelectOneCurrency($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+
+	$SQL = "SELECT currabrev,
+				currency
+			FROM currencies
+			ORDER BY currency";
+
+	$Result = DB_query($SQL);
+
+
+	$HTML = '<field>
+				<label for="' . $VariableName . '">' . $Label . ':</label>
+				<select';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
+	$HTML .= 'name="' . $VariableName . '">
+				<fieldhelp>' . $HelpText . '</fieldhelp>';
+
+	if (!isset($SelectedValue)) {
+		$HTML .= '<option selected="selected" value="">' . __('Not Yet Selected') . '</option>';
+	}
+
+	while ($MyRow = DB_fetch_array($Result)) {
+		if (isset($SelectedValue) && ($MyRow['currabrev'] == $SelectedValue)) {
+			$HTML .= '<option selected="selected" value="' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
+		} else {
+			$HTML .= '<option value="' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
+		}
+	}
 	$HTML .= '</select>
 			</field>';
 	return $HTML;
@@ -86,11 +122,11 @@ function FieldToSelectOneCustomerType($VariableName, $SelectedValue, $Label = ''
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
-	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
 	$HTML .= 'name="' . $VariableName . '">
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
 
-	if ($Required){
+	if ($Required) {
 		$HTML .= '<option value="All">' . __('All Customer Types') . '</option>';
 	} elseif (!isset($SelectedValue)) {
 		$HTML .= '<option selected="selected" value="All">' . __('All Customer Types') . '</option>';
@@ -99,7 +135,7 @@ function FieldToSelectOneCustomerType($VariableName, $SelectedValue, $Label = ''
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($SelectedValue) AND ($MyRow['typeid'] == $SelectedValue)) {
 			$HTML .= '<option selected="selected" value="' . $MyRow['typeid'] . '">' . $MyRow['typename'] . '</option>';
-		} 
+		}
 		else {
 			$HTML .= '<option value="' . $MyRow['typeid'] . '">' . $MyRow['typename'] . '</option>';
 		}
@@ -115,7 +151,7 @@ function FieldToSelectOneDate($VariableName, $SelectedValue, $Label = '', $HelpT
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<fieldhelp>' . $HelpText . '</fieldhelp>
 				<input type="date"';
-	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
 	$HTML .= ' name="' . $VariableName . '" size="11" maxlength="10" value="' .  FormatDateForSQL($SelectedValue) . '" />
 			</field>';
 	return $HTML;
@@ -127,11 +163,61 @@ function FieldToSelectOneFile($VariableName, $Label = '', $HelpText = '', $Filte
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<fieldhelp>' . $HelpText . '</fieldhelp>
 				<input type="file"';
-	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
 	$HTML .= ' id="' . $VariableName . '" name="' . $VariableName . '" />
 			</field>';
 	return $HTML;
 }
+
+function FieldToSelectOneGLAccount($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+	if ($Filter == 'ALL') {
+		$Where = '';
+	} elseif ($Filter == 'BS') {
+		$Where = 'WHERE accountgroups.pandl=0';
+	} elseif ($Filter == 'P&L') {
+		$Where = 'WHERE accountgroups.pandl=1';
+	} elseif ($Filter == 'VIEW') {
+		$Where = 'WHERE glaccountusers.canview=1';
+	} elseif ($Filter == 'UPDATE') {
+		$Where = 'WHERE glaccountusers.canupd=1';
+	} else {
+		$Where = '';
+	}
+
+	$SQL = "SELECT chartmaster.accountcode,
+				chartmaster.accountname
+			FROM chartmaster
+			INNER JOIN accountgroups
+				ON chartmaster.group_=accountgroups.groupname
+			INNER JOIN glaccountusers
+				ON glaccountusers.accountcode=chartmaster.accountcode
+				AND glaccountusers.userid='" . $_SESSION['UserID'] . "' ".
+			$Where . "
+			ORDER BY chartmaster.accountcode";
+
+	$Result = DB_query($SQL);
+
+	$HTML = '<field>
+				<label for="' . $VariableName . '">' . $Label . ':</label>
+				<select';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
+	$HTML .= 'name="' . $VariableName . '">
+				<fieldhelp>' . $HelpText . '</fieldhelp>';
+
+	while ($MyRow = DB_fetch_array($Result)) {
+		$TextOption = $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false);
+		if ($MyRow['accountcode'] == $SelectedValue) {
+			$HTML .= '<option selected="selected" value="' . $MyRow['accountcode'] . '">' . $TextOption . '</option>';
+		}
+		else {
+			$HTML .= '<option value="' . $MyRow['accountcode'] . '">' . $TextOption . '</option>';
+		}
+	}
+	$HTML .= '</select>
+			</field>';
+	return $HTML;
+}
+
 
 function FieldToSelectOneGLAccountGroup($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 	$SQL = "SELECT groupname
@@ -143,7 +229,7 @@ function FieldToSelectOneGLAccountGroup($VariableName, $SelectedValue, $Label = 
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
-	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
 	$HTML .= 'name="' . $VariableName . '">
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
 
@@ -156,7 +242,7 @@ function FieldToSelectOneGLAccountGroup($VariableName, $SelectedValue, $Label = 
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($SelectedValue) AND ($MyRow['groupname'] == $SelectedValue)) {
 			$HTML .= '<option selected="selected" value="' . $MyRow['groupname'] . '">' . $MyRow['groupname'] . '</option>';
-		} 
+		}
 		else {
 			$HTML .= '<option value="' . $MyRow['groupname'] . '">' . $MyRow['groupname'] . '</option>';
 		}
@@ -167,36 +253,26 @@ function FieldToSelectOneGLAccountGroup($VariableName, $SelectedValue, $Label = 
 }
 
 function FieldToSelectOneLocation($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
-	
-	if ($Filter == 'CANVIEW') {    
+
+	if ($Filter == 'CANVIEW') {
 		$SQL = "SELECT locations.loccode,
 					locations.locationname
 				FROM locations
-				INNER JOIN locationusers 
-					ON locationusers.loccode=locations.loccode 
-					AND locationusers.userid='" .  $_SESSION['UserID'] . "' 
+				INNER JOIN locationusers
+					ON locationusers.loccode=locations.loccode
+					AND locationusers.userid='" .  $_SESSION['UserID'] . "'
 					AND locationusers.canview=1
 				ORDER BY locations.locationname";
-	} 
-	elseif ($Filter == 'CANUPDATE') {    
+	} elseif ($Filter == 'CANUPDATE') {
 		$SQL = "SELECT locations.loccode,
 					locations.locationname
 				FROM locations
-				INNER JOIN locationusers 
-					ON locationusers.loccode=locations.loccode 
-					AND locationusers.userid='" .  $_SESSION['UserID'] . "' 
+				INNER JOIN locationusers
+					ON locationusers.loccode=locations.loccode
+					AND locationusers.userid='" .  $_SESSION['UserID'] . "'
 					AND locationusers.canupd=1
 				ORDER BY locations.locationname";
-	}
-	elseif ($Filter == 'BALISHOPS') {    
-		$SQL = "SELECT loccode,
-					locationname
-				FROM locations
-				WHERE typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
-				ORDER BY locationname";
-	}
-	else 
-	{
+	} else {
 		$SQL = "SELECT loccode,
 					locationname
 				FROM locations
@@ -208,7 +284,7 @@ function FieldToSelectOneLocation($VariableName, $SelectedValue, $Label = '', $H
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
-	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
 	$HTML .= 'name="' . $VariableName . '">
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
 
@@ -221,7 +297,7 @@ function FieldToSelectOneLocation($VariableName, $SelectedValue, $Label = '', $H
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($SelectedValue) AND ($MyRow['loccode'] == $SelectedValue)) {
 			$HTML .= '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
-		} 
+		}
 		else {
 			$HTML .= '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 		}
@@ -241,8 +317,8 @@ function FieldToSelectOnePeriod($VariableName, $SelectedValue, $Label = '', $Hel
 		$WhereSQL = " ";
 	}
 
-$SQL = "SELECT periodno, 
-				lastdate_in_period 
+$SQL = "SELECT periodno,
+				lastdate_in_period
 			FROM periods" .
 			$WhereSQL . "
 			ORDER BY periodno";
@@ -252,7 +328,7 @@ $SQL = "SELECT periodno,
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
-	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
 	$HTML .= 'name="' . $VariableName . '">
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
 
@@ -262,7 +338,7 @@ $SQL = "SELECT periodno,
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($SelectedValue) AND ($MyRow['periodno'] == $SelectedValue)) {
 			$HTML .= '<option selected="selected" value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
-		} 
+		}
 		else {
 			$HTML .= '<option value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 		}
@@ -285,7 +361,7 @@ function FieldToSelectOneSalesArea($VariableName, $SelectedValue, $Label = '', $
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
-	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
 	$HTML .= 'name="' . $VariableName . '">
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
 
@@ -296,7 +372,7 @@ function FieldToSelectOneSalesArea($VariableName, $SelectedValue, $Label = '', $
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($SelectedValue) AND ($MyRow['areacode'] == $SelectedValue)) {
 			$HTML .= '<option selected="selected" value="' . $MyRow['areacode'] . '">' . $MyRow['areadescription'] . '</option>';
-		} 
+		}
 		else {
 			$HTML .= '<option value="' . $MyRow['areacode'] . '">' . $MyRow['areadescription'] . '</option>';
 		}
@@ -312,7 +388,7 @@ function FieldToSelectOneSalesPerson($VariableName, $SelectedValue, $Label = '',
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
-	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
 	$HTML .= 'name="' . $VariableName . '">
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
 
@@ -323,37 +399,37 @@ function FieldToSelectOneSalesPerson($VariableName, $SelectedValue, $Label = '',
 	} else {
 
 		if ($Filter == 'CURRENT') {
-			$SQL = "SELECT salesmancode, 
-						salesmanname 
+			$SQL = "SELECT salesmancode,
+						salesmanname
 					FROM salesman
 					WHERE current = 1
 					ORDER BY salesmancode";
 		}
 		else {
-			$SQL = "SELECT salesmancode, 
-						salesmanname 
+			$SQL = "SELECT salesmancode,
+						salesmanname
 					FROM salesman
 					ORDER BY salesmancode";
 		}
-	
+
 		$Result = DB_query($SQL);
-	
+
 		if ($AllowAll) {
 			if (!isset($SelectedValue)) {
 				$HTML .= '<option selected="selected" value="All">' . __('All Sales Persons') . '</option>';
-			} 
+			}
 			else {
 				$HTML .= '<option value="All">' . __('All Sales Persons') . '</option>';
 			}
-		} 
+		}
 		else {
 			$HTML .= '<option value="">' . __('Not Yet Selected') . '</option>';
 		}
-	
+
 		while ($MyRow = DB_fetch_array($Result)) {
 			if (isset($SelectedValue) AND ($MyRow['salesmancode'] == $SelectedValue)) {
 				$HTML .= '<option selected="selected" value="' . $MyRow['salesmancode'] . '">' . $MyRow['salesmancode'] . '-' . $MyRow['salesmanname'] . '</option>';
-			} 
+			}
 			else {
 				$HTML .= '<option value="' . $MyRow['salesmancode'] . '">' . $MyRow['salesmancode'] . '-' . $MyRow['salesmanname'] . '</option>';
 			}
@@ -366,7 +442,7 @@ function FieldToSelectOneSalesPerson($VariableName, $SelectedValue, $Label = '',
 
 function FieldToSelectOneStockCategory($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $AllowAll = false, $TabIndex = '', $Required = true, $AutoFocus = false) {
 
-	$SQL = "SELECT categoryid, 
+	$SQL = "SELECT categoryid,
 				categorydescription
 			FROM stockcategory
 			ORDER BY categorydescription";
@@ -377,27 +453,26 @@ function FieldToSelectOneStockCategory($VariableName, $SelectedValue, $Label = '
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
-	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
 	$HTML .= 'name="' . $VariableName . '">
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
 
 	if ($AllowAll) {
 		if (!isset($SelectedValue)) {
 			$HTML .= '<option selected="selected" value="All">' . __('All Stock Categories') . '</option>';
-		} 
+		}
 		else {
 			$HTML .= '<option value="All">' . __('All Stock Categories') . '</option>';
 		}
-	} 
+	}
 	else {
 		$HTML .= '<option value="">' . __('Not Yet Selected') . '</option>';
 	}
-		
+
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($SelectedValue) AND ($MyRow['categoryid'] == $SelectedValue)) {
 			$HTML .= '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
-		} 
-		else {
+		} else {
 			$HTML .= '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
 		}
 	}
@@ -409,9 +484,9 @@ function FieldToSelectOneStockCategory($VariableName, $SelectedValue, $Label = '
 
 function FieldToSelectOneSysType($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 
-	$SQL = "SELECT typeid, 
-				typename 
-			FROM systypes 
+	$SQL = "SELECT typeid,
+				typename
+			FROM systypes
 			ORDER BY typename";
 
 	$Result = DB_query($SQL);
@@ -420,7 +495,7 @@ function FieldToSelectOneSysType($VariableName, $SelectedValue, $Label = '', $He
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
-	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
 	$HTML .= 'name="' . $VariableName . '">
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
 
@@ -431,8 +506,7 @@ function FieldToSelectOneSysType($VariableName, $SelectedValue, $Label = '', $He
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($SelectedValue) AND ($MyRow['typeid'] == $SelectedValue)) {
 			$HTML .= '<option selected="selected" value="' . $MyRow['typeid'] . '">' . $MyRow['typename'] . '</option>';
-		} 
-		else {
+		} else {
 			$HTML .= '<option value="' . $MyRow['typeid'] . '">' . $MyRow['typename'] . '</option>';
 		}
 	}
@@ -445,24 +519,41 @@ function FieldToSelectOnePassword($VariableName, $SelectedValue, $Size, $MaxLeng
 
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
-				<fieldhelp>' . $HelpText . '</fieldhelp>
 				<input type="password" pattern=".{5,}"';
-	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
-	$HTML .= '" name="' . $VariableName . '"  placeholder="'.__('At least 5 characters').'" size="' . $Size . '" maxlength="' . $MaxLength . '" value="' . $SelectedValue . '" />
-			</field>';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
+	$HTML .= '" name="' . $VariableName . '"  placeholder="'.__('At least 5 characters').'" size="' . $Size . '" maxlength="' . $MaxLength . '" value="' . $SelectedValue . '" />';
+	if ($HelpText != '') {
+	    $HTML .= '<fieldhelp>' . $HelpText . '</fieldhelp>';
+	}
+	$HTML .= '</field>';
 	return $HTML;
 }
 
+function FieldToSelectOneTelephoneNumber($VariableName, $SelectedValue, $Size, $MaxLength, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+
+	$HTML = '<field>
+				<label for="' . $VariableName . '">' . $Label . ':</label>
+				<input type="text" pattern="[0-9+\s]*"';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
+	$HTML .= '" name="' . $VariableName . '" size="' . $Size . '" maxlength="' . $MaxLength . '" value="' . $SelectedValue . '" />';
+	if ($HelpText != '') {
+	    $HTML .= '<fieldhelp>' . $HelpText . '</fieldhelp>';
+	}
+	$HTML .= '</field>';
+	return $HTML;
+}
 
 function FieldToSelectOneText($VariableName, $SelectedValue, $Size, $MaxLength, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
-				<fieldhelp>' . $HelpText . '</fieldhelp>
 				<input type="text"';
-	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
-	$HTML .= '" name="' . $VariableName . '" size="' . $Size . '" maxlength="' . $MaxLength . '" value="' . $SelectedValue . '" />
-			</field>';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
+	$HTML .= '" name="' . $VariableName . '" size="' . $Size . '" maxlength="' . $MaxLength . '" value="' . $SelectedValue . '" />';
+	if ($HelpText != '') {
+	    $HTML .= '<fieldhelp>' . $HelpText . '</fieldhelp>';
+	}
+	$HTML .= '</field>';
 	return $HTML;
 }
 
@@ -470,11 +561,13 @@ function FieldToSelectOneEmail($VariableName, $SelectedValue, $Size, $MaxLength,
 
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
-				<fieldhelp>' . $HelpText . '</fieldhelp>
 				<input type="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"';
-	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
-	$HTML .= ' name="' . $VariableName . '" size="' . $Size . '" maxlength="' . $MaxLength . '" value="' . $SelectedValue . '" />
-			</field>';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
+	$HTML .= ' name="' . $VariableName . '" size="' . $Size . '" maxlength="' . $MaxLength . '" value="' . $SelectedValue . '" placeholder="accounts@example.com" />';
+	if ($HelpText != '') {
+	    $HTML .= '<fieldhelp>' . $HelpText . '</fieldhelp>';
+	}
+	$HTML .= '</field>';
 	return $HTML;
 }
 
@@ -482,11 +575,13 @@ function FieldToSelectOneNumber($VariableName, $SelectedValue, $Size, $MaxLength
 
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
-				<fieldhelp>' . $HelpText . '</fieldhelp>
 				<input type="text" class="number" pattern="[0-9]*"';
-	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
-	$HTML .= '" name="' . $VariableName . '" size="' . $Size . '" maxlength="' . $MaxLength . '" value="' . $SelectedValue . '" />
-			</field>';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
+	$HTML .= '" name="' . $VariableName . '" size="' . $Size . '" maxlength="' . $MaxLength . '" value="' . $SelectedValue . '" />';
+	if ($HelpText != '') {
+	    $HTML .= '<fieldhelp>' . $HelpText . '</fieldhelp>';
+	}
+	$HTML .= '</field>';
 	return $HTML;
 }
 
@@ -495,21 +590,21 @@ function FieldToSelectOneNumber($VariableName, $SelectedValue, $Size, $MaxLength
 function FieldToSelectOneTextArea($VariableName, $SelectedValue, $Cols, $Rows, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 
 	$HTML = '<field>';
-    if ($HTML != '') {
-        $HTML .= '<label for="' . $VariableName . '">' . $Label . ':</label>';
-    }
-    $HTML .= '<textarea name="' . $VariableName . '" cols="' . $Cols . '" rows="' . $Rows . '">' . htmlspecialchars($SelectedValue) . '</textarea>';
-    if ($HelpText != '') {
-        $HTML .= '<fieldhelp>' . $HelpText . '</fieldhelp>';
-    }
-    $HTML .= '</field>';
+	if ($HTML != '') {
+	    $HTML .= '<label for="' . $VariableName . '">' . $Label . ':</label>';
+	}
+	$HTML .= '<textarea name="' . $VariableName . '" cols="' . $Cols . '" rows="' . $Rows . '">' . htmlspecialchars($SelectedValue) . '</textarea>';
+	if ($HelpText != '') {
+	    $HTML .= '<fieldhelp>' . $HelpText . '</fieldhelp>';
+	}
+	$HTML .= '</field>';
 	return $HTML;
 }
 
 function FieldToSelectOneUser($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $AllowAll = false, $TabIndex = '', $Required = true, $AutoFocus = false) {
 
-	$SQL = "SELECT userid, 
-				realname 
+	$SQL = "SELECT userid,
+				realname
 			FROM www_users";
 
 	$Result = DB_query($SQL);
@@ -518,27 +613,26 @@ function FieldToSelectOneUser($VariableName, $SelectedValue, $Label = '', $HelpT
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
-	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
 	$HTML .= 'name="' . $VariableName . '">
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
 
 	if ($AllowAll) {
 		if (!isset($SelectedValue)) {
 			$HTML .= '<option selected="selected" value="All">' . __('All Users') . '</option>';
-		} 
+		}
 		else {
 			$HTML .= '<option value="All">' . __('All Users') . '</option>';
 		}
-	} 
+	}
 	else {
 		$HTML .= '<option value="">' . __('Not Yet Selected') . '</option>';
 	}
-		
+
 	while ($MyRow = DB_fetch_array($Result)) {
-		if (isset($SelectedValue) AND ($MyRow['userid'] == $SelectedValue)) {
+		if (isset($SelectedValue) && ($MyRow['userid'] == $SelectedValue)) {
 			$HTML .= '<option selected="selected" value="' . $MyRow['userid'] . '">' . $MyRow['userid'] . '</option>';
-		} 
-		else {
+		} else {
 			$HTML .= '<option value="' . $MyRow['userid'] . '">' . $MyRow['userid'] . '</option>';
 		}
 	}
@@ -548,35 +642,25 @@ function FieldToSelectOneUser($VariableName, $SelectedValue, $Label = '', $HelpT
 }
 
 function FieldToSelectMultipleLocations($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
-	if ($Filter == 'CANVIEW') {    
+	if ($Filter == 'CANVIEW') {
 		$SQL = "SELECT locations.loccode,
 					locations.locationname
 				FROM locations
-				INNER JOIN locationusers 
-					ON locationusers.loccode=locations.loccode 
-					AND locationusers.userid='" .  $_SESSION['UserID'] . "' 
+				INNER JOIN locationusers
+					ON locationusers.loccode=locations.loccode
+					AND locationusers.userid='" . $_SESSION['UserID'] . "'
 					AND locationusers.canview=1
 				ORDER BY locations.locationname";
-	} 
-	elseif ($Filter == 'CANUPDATE') {    
+	} elseif ($Filter == 'CANUPDATE') {
 		$SQL = "SELECT locations.loccode,
 					locations.locationname
 				FROM locations
-				INNER JOIN locationusers 
-					ON locationusers.loccode=locations.loccode 
-					AND locationusers.userid='" .  $_SESSION['UserID'] . "' 
+				INNER JOIN locationusers
+					ON locationusers.loccode=locations.loccode
+					AND locationusers.userid='" . $_SESSION['UserID'] . "'
 					AND locationusers.canupd=1
 				ORDER BY locations.locationname";
-	}
-	elseif ($Filter == 'BALISHOPS') {    
-		$SQL = "SELECT loccode,
-					locationname
-				FROM locations
-				WHERE typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
-				ORDER BY locationname";
-	}
-	else 
-	{
+	} else {
 		$SQL = "SELECT loccode,
 					locationname
 				FROM locations
@@ -588,15 +672,14 @@ function FieldToSelectMultipleLocations($VariableName, $SelectedValue, $Label = 
 	$HTML = '<field>
 				<label for="' . $VariableName . '[]">' . $Label . ':</label>
 				<select';
-	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
 	$HTML .= 'minlength="1" size="12" name="' . $VariableName . '[]" multiple="multiple">
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
-	
+
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($SelectedValue) AND in_array($MyRow['loccode'], $SelectedValue)) {
 			$HTML .= '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
-		} 
-		else {
+		} else {
 			$HTML .= '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 		}
 	}
@@ -615,25 +698,24 @@ function FieldToSelectMultiplePeriods($VariableName, $FirstSelectedValue, $LastS
 		$OrderSQL = " ORDER BY periodno DESC";
 	}
 
-	$SQL = "SELECT periodno, 
-				lastdate_in_period 
+	$SQL = "SELECT periodno,
+				lastdate_in_period
 			FROM periods"
 			. $OrderSQL;
-	
+
 	$Result = DB_query($SQL);
 
 	$HTML = '<field>
 				<label for="' . $VariableName . '[]">' . $Label . ':</label>
 				<select';
-	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
 	$HTML .= 'minlength="1" size="12" name="' . $VariableName . '[]" multiple="multiple">
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($FirstSelectedValue) AND $MyRow['periodno'] >= $FirstSelectedValue AND $MyRow['periodno'] <= $LastSelectedValue) {
 			$HTML .= '<option selected="selected" value="' . $MyRow['periodno'] . '">' . __(MonthAndYearFromSQLDate($MyRow['lastdate_in_period'])) . '</option>';
-		}
-		else {
+		} else {
 			$HTML .= '<option value="' . $MyRow['periodno'] . '">' . __(MonthAndYearFromSQLDate($MyRow['lastdate_in_period'])) . '</option>';
 		}
 	}
@@ -644,8 +726,8 @@ function FieldToSelectMultiplePeriods($VariableName, $FirstSelectedValue, $LastS
 
 
 function FieldToSelectMultipleStockCategories($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
-	$SQL = "SELECT categoryid, 
-				categorydescription 
+	$SQL = "SELECT categoryid,
+				categorydescription
 			FROM stockcategory
 			ORDER BY categorydescription";
 	$Result = DB_query($SQL);
@@ -653,15 +735,14 @@ function FieldToSelectMultipleStockCategories($VariableName, $SelectedValue, $La
 	$HTML = '<field>
 				<label for="' . $VariableName . '[]">' . $Label . ':</label>
 				<select';
-	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
 	$HTML .= 'minlength="1" size="12" name="' . $VariableName . '[]" multiple="multiple">
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
-	
+
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($SelectedValue) AND in_array($MyRow['categoryid'], $SelectedValue)) {
 			$HTML .= '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
-		} 
-		else {
+		} else {
 			$HTML .= '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
 		}
 	}
@@ -685,7 +766,7 @@ function FixedField($VariableName, $SelectedValue, $Label = '', $HelpText = '') 
 function OneButtonCenteredForm($ButtonName, $ButtonValue, $TabIndex = '', $Required = true, $AutoFocus = false) {
 	$HTML = '<div class="centre">
 				<input type="submit" ';
-	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
 	$HTML .= 'name="' . $ButtonName . '" value="' . $ButtonValue . '" />
 			</div>';
 	return $HTML;
@@ -694,7 +775,7 @@ function OneButtonCenteredForm($ButtonName, $ButtonValue, $TabIndex = '', $Requi
 function TwoButtonsCenteredForm($ButtonName1, $ButtonValue1, $ButtonName2, $ButtonValue2, $TabIndex = '', $Required = true, $AutoFocus = false) {
 	$HTML = '<div class="centre">
 				<input type="submit" ';
-	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
 	$HTML .= 'name="' . $ButtonName1 . '" value="' . $ButtonValue1 . '" />
 				<input type="reset" ';
 	$HTML .= 'name="' . $ButtonName2 . '" value="' . $ButtonValue2 . '" />
@@ -702,14 +783,14 @@ function TwoButtonsCenteredForm($ButtonName1, $ButtonValue1, $ButtonName2, $Butt
 	return $HTML;
 }
 
-function FieldToSelectFromTwoOptions($ValueOption1, $LabelOption1, 
-									$ValueOption2, $LabelOption2, 
+function FieldToSelectFromTwoOptions($ValueOption1, $LabelOption1,
+									$ValueOption2, $LabelOption2,
 									$VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 
 	$HTML = '<field>
 		<label>' . $Label . ':</label>
 		<select';
-	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
 	$HTML .= 'name="' . $VariableName . '">';
 	if ($SelectedValue == $ValueOption1) {
 		$HTML .= '<option selected="selected" value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
@@ -724,15 +805,15 @@ function FieldToSelectFromTwoOptions($ValueOption1, $LabelOption1,
 	return $HTML;
 }
 
-function FieldToSelectFromThreeOptions($ValueOption1, $LabelOption1, 
-									$ValueOption2, $LabelOption2, 
+function FieldToSelectFromThreeOptions($ValueOption1, $LabelOption1,
+									$ValueOption2, $LabelOption2,
 									$ValueOption3, $LabelOption3,
 									$VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 
 	$HTML = '<field>
 		<label>' . $Label . ':</label>
 		<select';
-	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
 	$HTML .= 'name="' . $VariableName . '">';
 	if ($SelectedValue == $ValueOption1) {
 		$HTML .= '<option selected="selected" value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
@@ -754,8 +835,8 @@ function FieldToSelectFromThreeOptions($ValueOption1, $LabelOption1,
 	return $HTML;
 }
 
-function FieldToSelectFromFourOptions($ValueOption1, $LabelOption1, 
-									$ValueOption2, $LabelOption2, 
+function FieldToSelectFromFourOptions($ValueOption1, $LabelOption1,
+									$ValueOption2, $LabelOption2,
 									$ValueOption3, $LabelOption3,
 									$ValueOption4, $LabelOption4,
 									$VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
@@ -763,7 +844,7 @@ function FieldToSelectFromFourOptions($ValueOption1, $LabelOption1,
 	$HTML = '<field>
 		<label>' . $Label . ':</label>
 		<select';
-	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
 	$HTML .= 'name="' . $VariableName . '">';
 	if ($SelectedValue == $ValueOption1) {
 		$HTML .= '<option selected="selected" value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
@@ -794,8 +875,8 @@ function FieldToSelectFromFourOptions($ValueOption1, $LabelOption1,
 	return $HTML;
 }
 
-function FieldToSelectFromFiveOptions($ValueOption1, $LabelOption1, 
-									$ValueOption2, $LabelOption2, 
+function FieldToSelectFromFiveOptions($ValueOption1, $LabelOption1,
+									$ValueOption2, $LabelOption2,
 									$ValueOption3, $LabelOption3,
 									$ValueOption4, $LabelOption4,
 									$ValueOption5, $LabelOption5,
@@ -804,7 +885,7 @@ function FieldToSelectFromFiveOptions($ValueOption1, $LabelOption1,
 	$HTML = '<field>
 		<label>' . $Label . ':</label>
 		<select';
-	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
 	$HTML .= 'name="' . $VariableName . '">';
 	if ($SelectedValue == $ValueOption1) {
 		$HTML .= '<option selected="selected" value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
@@ -858,19 +939,19 @@ function FieldToSelectSpreadSheetFormat($VariableName, $SelectedValue, $Label = 
 
 function FieldToSelectOneBrand($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 
-	$SQL = "SELECT manufacturers.manufacturers_id, 
-					manufacturers_name 
-			FROM manufacturers 
+	$SQL = "SELECT manufacturers.manufacturers_id,
+					manufacturers_name
+			FROM manufacturers
 			ORDER BY manufacturers_name";
 	$Result = DB_query($SQL);
 
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
-	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
 	$HTML .= 'name="' . $VariableName . '">
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
-	
+
 	if ($Required){
 		$HTML .= '<option value="">' . __('Not Yet Selected') . '</option>';
 	} elseif (!isset($SelectedValue)) {
@@ -880,7 +961,7 @@ function FieldToSelectOneBrand($VariableName, $SelectedValue, $Label = '', $Help
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($MyRow['manufacturers_id'] == $SelectedValue) {
 			$HTML .= '<option selected="selected" value="' . $MyRow['manufacturers_id'] . '">' . $MyRow['manufacturers_name'] . '</option>';
-		} 
+		}
 		else {
 			$HTML .= '<option value="' . $MyRow['manufacturers_id'] . '">' . $MyRow['manufacturers_name'] . '</option>';
 		}
