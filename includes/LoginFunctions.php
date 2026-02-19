@@ -157,11 +157,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 				return  UL_CONFIGERR;
 			} else {
 				$i = 0;
-				$UserIsSysAdmin = false;
 				while ($MyRow = DB_fetch_row($Sec_Result)) {
-					if ($MyRow[0] == 15) {
-						$UserIsSysAdmin = true;
-					}
 					$_SESSION['AllowedPageSecurityTokens'][$i] = $MyRow[0];
 					$i++;
 				}
@@ -185,12 +181,12 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 							 $SQL = "DELETE FROM audittrail
 									WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'";
 							$ErrMsg = __('There was a problem deleting expired audit-trail history');
-							$Result = DB_query($SQL);
+							DB_query($SQL);
 
 							 $SQL = "DELETE FROM auditscripts
 									WHERE  executiondate <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'";
 							$ErrMsg = __('There was a problem deleting expired audit-script history');
-							$Result = DB_query($SQL);
+							DB_query($SQL);
 
 						}
 					}
@@ -198,47 +194,50 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 			}
 
 			/*Check to see if currency rates need to be updated */
-			if (isset($_SESSION['UpdateCurrencyRatesDaily'])) {
-				if ($_SESSION['UpdateCurrencyRatesDaily']!=0)  {
-					/* Only run the update to currency rates if today is after the last update i.e. only runs once a day */
-					if (DateDiff(Date($_SESSION['DefaultDateFormat']),
-						ConvertSQLDate($_SESSION['UpdateCurrencyRatesDaily']),'d')> 0) {
+			if (isset($_SESSION['UpdateCurrencyRatesDaily']) and $_SESSION['UpdateCurrencyRatesDaily']!=0)  {
+				/* Only run the update to currency rates if today is after the last update i.e. only runs once a day */
+				if (DateDiff(Date($_SESSION['DefaultDateFormat']),
+					ConvertSQLDate($_SESSION['UpdateCurrencyRatesDaily']),'d')> 0) {
 
-						if ($_SESSION['ExchangeRateFeed']=='ECB') {
-							$CurrencyRates = GetECBCurrencyRates(); // gets rates from ECB see includes/MiscFunctions.php
-							/*Loop around the defined currencies and get the rate from ECB */
-							if ($CurrencyRates!=false) {
-								$CurrenciesResult = DB_query("SELECT currabrev FROM currencies");
-								while ($CurrencyRow = DB_fetch_row($CurrenciesResult)){
-									if ($CurrencyRow[0]!=$_SESSION['CompanyRecord']['currencydefault']){
-										$Rate = GetCurrencyRate($CurrencyRow[0],$CurrencyRates);
-										if ($Rate == '') {
-											$Rate = 1;
-										}
-										$UpdateCurrRateResult = DB_query("UPDATE currencies SET rate='" . $Rate . "'
-																			WHERE currabrev='" . $CurrencyRow[0] . "'");
-									}
-								}
-							}
-						} else {
-							$CurrenciesResult = DB_query("SELECT currabrev FROM currencies");
+					include($PathPrefix . 'includes/SQL_CommonFunctions.php');
+
+					if ($_SESSION['ExchangeRateFeed']=='ECB') {
+						$CurrencyRates = GetECBCurrencyRates(); // gets rates from ECB see includes/MiscFunctions.php
+						/*Loop around the defined currencies and get the rate from ECB */
+						if ($CurrencyRates!=false) {
+							$CurrenciesResult = DB_query("SELECT currabrev, rate FROM currencies");
 							while ($CurrencyRow = DB_fetch_row($CurrenciesResult)){
 								if ($CurrencyRow[0]!=$_SESSION['CompanyRecord']['currencydefault']){
-									if ($_SESSION['ExchangeRateFeed'] == 'ECB') {
-										$CurrencyRatesArray = GetECBCurrencyRates();
-									} elseif ($_SESSION['ExchangeRateFeed'] == 'DXR') {
-										$CurrencyRatesArray = GetDXRCurrencyRates();
-									} else {
-										$CurrencyRatesArray = array();
+									$NewRate = GetCurrencyRate($CurrencyRow[0],$CurrencyRates);
+									if ($NewRate == '') {
+										$NewRate = 1;
 									}
-									$UpdateCurrRateResult = DB_query("UPDATE currencies SET rate='" . GetCurrencyRate($CurrencyRow[0], $CurrencyRatesArray) . "'
-																		WHERE currabrev='" . $CurrencyRow[0] . "'");
+									DB_query("UPDATE currencies
+											SET rate='" . $NewRate . "'
+											WHERE currabrev='" . $CurrencyRow[0] . "'");
 								}
 							}
 						}
-						$_SESSION['UpdateCurrencyRatesDaily'] = Date('Y-m-d');
-						$UpdateConfigResult = DB_query("UPDATE config SET confvalue = CURRENT_DATE WHERE confname='UpdateCurrencyRatesDaily'");
+					} else {
+						$CurrenciesResult = DB_query("SELECT currabrev, rate FROM currencies");
+						while ($CurrencyRow = DB_fetch_row($CurrenciesResult)){
+							if ($CurrencyRow[0]!=$_SESSION['CompanyRecord']['currencydefault']){
+								if ($_SESSION['ExchangeRateFeed'] == 'DXR') {
+									$CurrencyRatesArray = GetDXRCurrencyRates();
+								} else {
+									$CurrencyRatesArray = array();
+								}
+								$NewRate = GetCurrencyRate($CurrencyRow[0], $CurrencyRatesArray);
+								DB_query("UPDATE currencies
+											SET rate='" . $NewRate . "'
+											WHERE currabrev='" . $CurrencyRow[0] . "'");
+							}
+						}
 					}
+					$_SESSION['UpdateCurrencyRatesDaily'] = Date('Y-m-d');
+					DB_query("UPDATE config
+							SET confvalue = CURRENT_DATE
+							WHERE confname='UpdateCurrencyRatesDaily'");
 				}
 			}
 

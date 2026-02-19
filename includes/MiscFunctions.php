@@ -199,16 +199,19 @@ function GetECBCurrencyRates() {
 }
 
 function GetCurrencyRate($CurrCode, $CurrenciesArray) {
-	if ((!isset($CurrenciesArray[$CurrCode]) or !isset($CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']])) and $_SESSION['UpdateCurrencyRatesDaily'] != '0') {
+	if ((!isset($CurrenciesArray[$CurrCode]) or !isset($CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']]))
+		and $_SESSION['UpdateCurrencyRatesDaily'] != '0') {
 		return quote_oanda_currency($CurrCode);
 	} elseif ($CurrCode == 'EUR') {
-		if ($CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']] == 0) {
+		if (!isset($CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']])
+			or ($CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']] == 0)) {
 			return 0;
 		} else {
 			return 1 / $CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']];
 		}
 	} else {
-		if ($CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']] == 0) {
+		if (!isset($CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']])
+			or ($CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']] == 0)) {
 			return 0;
 		} else {
 			return $CurrenciesArray[$CurrCode] / $CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']];

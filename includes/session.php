@@ -304,7 +304,10 @@ if (isset($_POST['Theme']) and ($_SESSION['UsersRealName'] == $_POST['RealName']
 /// @todo move this block to just after session_start
 if ($_SESSION['HTTPS_Only'] == 1) {
 	if ($_SERVER['HTTPS'] != 'on') {
+		$Title = __('HTTPS Configuration Error Report');
+		include($PathPrefix . 'includes/header.php');
 		prnMsg(__('webERP is configured to allow only secure socket connections. Pages must be called with https://') . ' .....', 'error');
+		include($PathPrefix . 'includes/footer.php');
 		exit();
 	}
 }
