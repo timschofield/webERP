@@ -203,10 +203,10 @@ if (isset($_POST['UpdateDatabase'])){
 							'" . $_SESSION['Alloc']->TransDate . "',
 							'" . $PeriodNo . "',
 							'" . $_SESSION['CompanyRecord']['purchasesexchangediffact'] . "',
-							'". __('Exchange difference') . "',
+							'". __('Purchase Exchange difference') . "',
 							'" . $MovtInDiffOnExch . "')";
 
-		      $ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The GL entry for the difference on exchange arising out of this allocation could not be inserted because');
+		      $ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The GL entry for the difference on purchase exchange arising out of this allocation could not be inserted because');
 
 		      $Result = DB_query($SQL, $ErrMsg, '', true);
 
@@ -222,11 +222,11 @@ if (isset($_POST['UpdateDatabase'])){
 							'" . $_SESSION['Alloc']->TransDate . "',
 							'" . $PeriodNo . "',
 							'" . $_SESSION['CompanyRecord']['creditorsact'] . "',
-							'" . __('Exchange difference') . "',
+							'" . __('Purchase Exchange difference') . "',
 							'" . -$MovtInDiffOnExch . "')";
 
 		      $ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ' : ' .
-		      			 __('The GL entry for the difference on exchange arising out of this allocation could not be inserted because');
+		      			 __('The GL entry for the difference on purchase exchange arising out of this allocation could not be inserted because');
 
 		      $Result = DB_query($SQL, $ErrMsg, '', true);
 

@@ -199,7 +199,8 @@ function GetECBCurrencyRates() {
 }
 
 function GetCurrencyRate($CurrCode, $CurrenciesArray) {
-	if ((!isset($CurrenciesArray[$CurrCode]) or !isset($CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']])) and $_SESSION['UpdateCurrencyRatesDaily'] != '0') {
+	if ((!isset($CurrenciesArray[$CurrCode]) or !isset($CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']]))
+		and $_SESSION['UpdateCurrencyRatesDaily'] != '0') {
 		return quote_oanda_currency($CurrCode);
 	} elseif ($CurrCode == 'EUR') {
 		if (!isset($CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']])
