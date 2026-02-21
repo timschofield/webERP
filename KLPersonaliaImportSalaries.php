@@ -275,10 +275,21 @@ function submit($PeriodSelectedByUser, $SalaryType, $RootPath) {
 					if (empty($FullName)) {
 						throw new Exception("FullName is required (Row $Row)");
 					}
+					if (empty($Position)) {
+						throw new Exception("Position is required (Row $Row)");
+					}
 					if (empty($PaymentMethod) || !in_array($PaymentMethod, ['BANK', 'CASH', 'CHECK'])) {
 						throw new Exception("Invalid payment method '$PaymentMethod' (Row $Row)");
 					}
 					
+					// Validate company code
+					if (empty($CompanyCode)) {
+						throw new Exception("Company code is required (Row $Row)");
+					}
+					if (!in_array($CompanyCode, ['PTADU', 'PTSMH', 'PTBB'])) {
+						throw new Exception("Invalid company code '$CompanyCode'. Must be PTADU, PTSMH, or PTBB (Row $Row)");
+					}
+				
 					// Validate and convert dates
 					$JoiningDateValue = $worksheet->getCell('BF'.$Row)->getCalculatedValue();
 					if ($JoiningDateValue === null || $JoiningDateValue === '') {
@@ -312,6 +323,11 @@ function submit($PeriodSelectedByUser, $SalaryType, $RootPath) {
 					$ZonePPH21 = trim($worksheet->getCell('J'.$Row)->getCalculatedValue() ?? '');
 					$PaymentDate = trim($worksheet->getCell('BE'.$Row)->getCalculatedValue() ?? '');
 					$EmployeeWithTHR = strtoupper(trim($worksheet->getCell('BG'.$Row)->getCalculatedValue() ?? ''));
+
+					// Validate ZonePPH21
+					if (empty($ZonePPH21)) {
+						throw new Exception("ZonePPH21 is required (Row $Row)");
+					}
 					
 					// Validate and convert salary period dates
 					$SalaryFromValue = $worksheet->getCell('K'.$Row)->getCalculatedValue();
