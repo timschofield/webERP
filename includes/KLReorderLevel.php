@@ -246,7 +246,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $UpdateDB, $RootPath, 
 				needed_loc.loccode AS locationneeded
 			FROM stockmaster sm
 			INNER JOIN locstock kantor_stock ON sm.stockid = kantor_stock.stockid 
-				AND kantor_stock.loccode = " . CODE_KANTOR . "
+				AND kantor_stock.loccode = '" . CODE_KANTOR . "'
 				AND kantor_stock.quantity = 0
 			INNER JOIN (
 				SELECT ls1.stockid,
@@ -1017,7 +1017,7 @@ function SetReorderLevel($Reason, $StockID, $loccode, $OldRL, $NewRL, $UpdateDB)
 }
 
 /**************************************************************************************************************
-* Adjusts reorder levels for the online shop (TOKWS).
+* Adjusts reorder levels for the online shop.
 * First, it resets all reorder levels for the online shop to zero.
 * Then, it sets the reorder level for items based on the total quantity in uncompleted sales orders.
 *
@@ -1038,7 +1038,7 @@ function OnlineReorderLevelAdjustments($ShowMessages, $UpdateDB, $RootPath, $Ema
 	if ($UpdateDB){
 		$RLSQL = "UPDATE locstock
 					SET reorderlevel = 0 
-					WHERE reorderlevel > 0 AND loccode = ". CODE_ONLINE_SHOP ."";
+					WHERE reorderlevel > 0 AND loccode = '". CODE_ONLINE_SHOP ."'";
 		$ErrMsg =__('Error in function OnlineReorderLevelAdjustments');
 		$Result = DB_query($RLSQL,$ErrMsg,'',true);		
 		if ($ShowMessages){
@@ -1055,8 +1055,8 @@ function OnlineReorderLevelAdjustments($ShowMessages, $UpdateDB, $RootPath, $Ema
 			FROM salesorders so
 			INNER JOIN salesorderdetails sod ON so.orderno = sod.orderno
 			INNER JOIN locstock ls ON sod.stkcode = ls.stockid
-			WHERE ls.loccode = ". CODE_ONLINE_SHOP ."
-				AND so.fromstkloc = ". CODE_ONLINE_SHOP ."
+			WHERE ls.loccode = '". CODE_ONLINE_SHOP ."'
+				AND so.fromstkloc = '". CODE_ONLINE_SHOP ."'
 				AND so.quotation = 0
 				AND sod.completed = 0
 			GROUP BY sod.stkcode, ls.reorderlevel
@@ -1085,7 +1085,7 @@ function OnlineReorderLevelAdjustments($ShowMessages, $UpdateDB, $RootPath, $Ema
 		$i = 1;
 		while ($MyRow = DB_fetch_array($Result)) {
 			/* set the RL to the total of qty requested by customers */
-			SetReorderLevel("OnlineSales", $MyRow['stkcode'],'TOKWS', 0, $MyRow['totalqty'], $UpdateDB);
+			SetReorderLevel("OnlineSales", $MyRow['stkcode'],CODE_ONLINE_SHOP, 0, $MyRow['totalqty'], $UpdateDB);
 			if ($ShowMessages){
 				$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $MyRow['stkcode'] . '">' . $MyRow['stkcode'] . '</a>';
 				echo '<tr class="striped_row">

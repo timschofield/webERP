@@ -557,7 +557,7 @@ function ConsumablesGoodsNotEnoughStock($DaysUsage, $DaysMinStock, $DaysStockPur
 				(SELECT locstock.quantity
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
-						AND locstock.loccode =  " . CODE_KANTOR . ") AS qtyKANTOR,
+						AND locstock.loccode = '" . CODE_KANTOR . "') AS qtyKANTOR,
 				(SELECT SUM(stockrequestitems.qtydelivered)
 					FROM stockrequestitems, stockrequest
 					WHERE stockrequestitems.dispatchid = stockrequest.dispatchid
@@ -569,7 +569,7 @@ function ConsumablesGoodsNotEnoughStock($DaysUsage, $DaysMinStock, $DaysStockPur
 			AND ((SELECT locstock.quantity
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
-						AND locstock.loccode = " . CODE_KANTOR . ") < 
+						AND locstock.loccode ='" . CODE_KANTOR . "') < 
 				(SELECT SUM(stockrequestitems.qtydelivered)
 					FROM stockrequestitems, stockrequest
 					WHERE stockrequestitems.dispatchid = stockrequest.dispatchid
@@ -1564,7 +1564,7 @@ function ItemsNotNeededInOnlineOrderButRequested($RootPath){
 				locstock.quantity
 			FROM locstock, stockmaster
 			WHERE locstock.stockid = stockmaster.stockid
-				AND locstock.loccode = ". CODE_ONLINE_SHOP ."
+				AND locstock.loccode = '". CODE_ONLINE_SHOP ."'
 				AND locstock.quantity > 0
 				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_PACKAGING . "
 				AND NOT EXISTS (SELECT 	salesorderdetails.stkcode
@@ -1572,7 +1572,7 @@ function ItemsNotNeededInOnlineOrderButRequested($RootPath){
 								WHERE salesorderdetails.orderno = salesorders.orderno
 									AND salesorderdetails.stkcode = locstock.stockid
 									AND salesorders.quotation = 0
-									AND salesorders.fromstkloc = ". CODE_ONLINE_SHOP ."
+									AND salesorders.fromstkloc = '". CODE_ONLINE_SHOP ."'
 									AND salesorderdetails.completed= 0)";
 	$Result = DB_query($SQL);
 	
@@ -1625,7 +1625,7 @@ function ItemsInSetup($Check, $Category, $RootPath){
 				LEFT JOIN (
 					SELECT stockid, SUM(quantity) as QOH
 					FROM locstock
-					WHERE loccode = " . CODE_KANTOR . "
+					WHERE loccode ='" . CODE_KANTOR . "'
 					GROUP BY stockid
 				) loc ON sm.stockid = loc.stockid
 				WHERE sm.categoryid = '" . $Category . "'
@@ -2148,7 +2148,7 @@ function ItemsWithStockLocationButNoStockAvailable($Location, $NameLocation, $Mi
 					WHERE l2.loccode = locations.loccode
 						AND locstock.stockid = l2.stockid
 						AND (locations.typeloc IN " . LIST_ALL_SHOPS_BY_TYPE . "
-							OR l2.loccode = " . CODE_KANTOR . ")
+							OR l2.loccode ='" . CODE_KANTOR . "')
 				) AS available
 			FROM locstock, stockmaster
 			WHERE locstock.stockid = stockmaster.stockid
@@ -2162,7 +2162,7 @@ function ItemsWithStockLocationButNoStockAvailable($Location, $NameLocation, $Mi
 						WHERE l2.loccode = locations.loccode
 							AND locstock.stockid = l2.stockid
 							AND (locations.typeloc IN " . LIST_ALL_SHOPS_BY_TYPE . "
-								OR l2.loccode = " . CODE_KANTOR . ")
+								OR l2.loccode ='" . CODE_KANTOR . "')
 					) <= " . $MinAvailable;
 	$Result = DB_query($SQL);
 	$ShowHeader = true;
@@ -2494,7 +2494,7 @@ No pending transfer regarding this item
 			(SELECT SUM(locstock.quantity)
 				FROM locstock
 				WHERE locstock.stockid = stockmaster.stockid
-				AND (locstock.loccode = " . CODE_KANTOR . " ))AS QtyKantor
+				AND (locstock.loccode ='" . CODE_KANTOR . "'))AS QtyKantor
 			FROM stockmaster, 
 				stockcategory
 			WHERE stockmaster.categoryid = stockcategory.categoryid
@@ -2511,7 +2511,7 @@ No pending transfer regarding this item
 				AND (SELECT SUM(locstock.quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
-						AND locstock.loccode = " . CODE_KANTOR . ") > 0
+						AND locstock.loccode ='" . CODE_KANTOR . "') > 0
 				AND NOT EXISTS (SELECT *
 						FROM loctransfers 
 						WHERE  pendingqty > 0
@@ -2874,15 +2874,15 @@ function OnlineItemsOnProcess($RootPath){
 				(SELECT SUM(l2.quantity)
 					FROM locstock AS l2
 					WHERE l1.stockid = l2.stockid
-						AND l2.loccode = " . CODE_KANTOR . ") AS qohkantor
+						AND l2.loccode ='" . CODE_KANTOR . "') AS qohkantor
 			FROM salesorderdetails, salesorders, locstock AS l1, debtorsmaster, stockmaster	
 			WHERE salesorderdetails.orderno = salesorders.orderno
 				AND salesorderdetails.stkcode = l1.stockid
 				AND salesorders.debtorno = debtorsmaster.debtorno
 				AND salesorderdetails.stkcode = stockmaster.stockid
 				AND salesorders.quotation = 0
-				AND salesorders.fromstkloc = ". CODE_ONLINE_SHOP ."
-				AND l1.loccode = ". CODE_ONLINE_SHOP ."
+				AND salesorders.fromstkloc = '". CODE_ONLINE_SHOP ."'
+				AND l1.loccode = '". CODE_ONLINE_SHOP ."'
 				AND salesorderdetails.completed= 0
 			ORDER BY salesorders.orderno, salesorderdetails.stkcode";
 	$Result = DB_query($SQL);

@@ -323,6 +323,16 @@ function FieldToSelectOneLocation($VariableName, $SelectedValue, $Label = '', $H
 					AND locationusers.userid='" .  $_SESSION['UserID'] . "'
 					AND locationusers.canupd=1
 				ORDER BY locations.locationname";
+	} elseif ($Filter == 'BALISHOPS') {
+		$SQL = "SELECT locations.loccode,
+					locations.locationname
+				FROM locations
+				INNER JOIN locationusers
+					ON locationusers.loccode=locations.loccode
+					AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+					AND locationusers.canview=1
+				WHERE locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
+				ORDER BY locations.locationname";
 	} else {
 		$SQL = "SELECT loccode,
 					locationname

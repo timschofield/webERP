@@ -1,17 +1,17 @@
 <?php
 
-define("CURRENCY_CODE", 'IDR');
-define("CUSTOMER_TYPE_RETAIL", '2');
-define("CUSTOMER_TYPE_CONSIGNMENT", '6');
-define("CUSTOMER_TYPE_WHOLESALE", '3,4,5');
-define("CUSTOMER_TYPE_WEBSITE", '9');
-define("CUSTOMER_TYPE_MARKETPLACE", '10');
-define("RETAIL_PRICE_LIST", 'RT');
+define("CURRENCY_CODE", "IDR");
+define("CUSTOMER_TYPE_RETAIL", "2");
+define("CUSTOMER_TYPE_CONSIGNMENT", "6");
+define("CUSTOMER_TYPE_WHOLESALE", "3,4,5");
+define("CUSTOMER_TYPE_WEBSITE", "9");
+define("CUSTOMER_TYPE_MARKETPLACE", "10");
+define("RETAIL_PRICE_LIST", "RT");
 define("PPN_PERCENT", 11);
 
 /* Defines about Purchase Orders */
-define("COMPANY_NAME_FOR_PO", 'PT. ANGIN DINGIN UTARA');
-define("NPWP_FOR_PO", '81.304.529.1-906.000');
+define("COMPANY_NAME_FOR_PO", "PT. ANGIN DINGIN UTARA");
+define("NPWP_FOR_PO", "81.304.529.1-906.000");
 
 /* Defines about standard Cost*/
 define("STANDARD_COST_FACTOR_INDONESIA", 1.00);
@@ -127,8 +127,8 @@ define("LIST_STOCK_CATEGORIES_GENERAL_INCLUDING_ALL_DISCOUNT",			"('TESTGA','STA
 define("LIST_STOCK_CATEGORIES_GENERAL_INCLUDING_SETUP_ALL_DISCOUNT",	"('SETGEA','TESTGA','STABGA','NOPOGA','DISC2G','DISC5G','DISC8G')");
 
 /* Defines about LOCATIONS*/
-define("CODE_KANTOR",      "'KANTO'");
-define("CODE_ONLINE_SHOP", "'TOKWS'");
+define("CODE_KANTOR",      "KANTO");
+define("CODE_ONLINE_SHOP", "TOKWS");
 
 define("LIST_ZONES_OF_KANTOR",   "('OFFICE')"); 
 define("LIST_KANTOR",  "('KANTO')");
@@ -214,80 +214,80 @@ define("FACTOR_SC_SERVICE_BY_REPLACEMENT", 1.3);
 define("ONLINE_PRICE_LIST", 'RT');
 
 /* Defines about weight in KG*/
-define('STANDARD_TALI_WEIGHT',       0.050);
-define('STANDARD_BEAD_WEIGHT',       0.050);
-define('STANDARD_RING_WEIGHT',       0.050);
-define('STANDARD_PIERCING_WEIGHT',   0.050);
-define('STANDARD_EARRING_WEIGHT',    0.060);
-define('STANDARD_BRACELET_WEIGHT',   0.080);
-define('STANDARD_PENDANT_WEIGHT',    0.090);
-define('STANDARD_NECKLACE_WEIGHT',   0.190);
-define('STANDARD_BAG_WEIGHT',        0.450);
-define('STANDARD_FOULARD_WEIGHT',    0.250);
-define('STANDARD_BROOCHE_WEIGHT',    0.080);
-define('STANDARD_KEYHOLDER_WEIGHT',  0.080);
-define('STANDARD_FACEMASK_WEIGHT',   0.080); 
-define('STANDARD_JEWEL_ROLL_WEIGHT', 0.080); 
-define('STANDARD_JEWEL_BOX_WEIGHT',  0.150); 
+define("STANDARD_TALI_WEIGHT",       0.050);
+define("STANDARD_BEAD_WEIGHT",       0.050);
+define("STANDARD_RING_WEIGHT",       0.050);
+define("STANDARD_PIERCING_WEIGHT",   0.050);
+define("STANDARD_EARRING_WEIGHT",    0.060);
+define("STANDARD_BRACELET_WEIGHT",   0.080);
+define("STANDARD_PENDANT_WEIGHT",    0.090);
+define("STANDARD_NECKLACE_WEIGHT",   0.190);
+define("STANDARD_BAG_WEIGHT",        0.450);
+define("STANDARD_FOULARD_WEIGHT",    0.250);
+define("STANDARD_BROOCHE_WEIGHT",    0.080);
+define("STANDARD_KEYHOLDER_WEIGHT",  0.080);
+define("STANDARD_FACEMASK_WEIGHT",   0.080); 
+define("STANDARD_JEWEL_ROLL_WEIGHT", 0.080); 
+define("STANDARD_JEWEL_BOX_WEIGHT",  0.150); 
 
 /* shipping dimensions in mm (webERP set up in mm) */
 
-define('BOX_XS_LENGTH',       150); // approx for polishing cloth
-define('BOX_XS_WIDTH',         75); // approx for polishing cloth
-define('BOX_XS_HEIGHT',        10); // approx for polishing cloth
-define('BOX_S_LENGTH',         85);
-define('BOX_S_WIDTH',          85);
-define('BOX_S_HEIGHT',         50);
-define('BOX_M_LENGTH',        115);
-define('BOX_M_WIDTH',         115);
-define('BOX_M_HEIGHT',         50);
-define('BOX_L_LENGTH',        250);
-define('BOX_L_WIDTH',         180);
-define('BOX_L_HEIGHT',         50);
-define('BOX_XL_LENGTH',       300); // approx
-define('BOX_XL_WIDTH',        300); // approx
-define('BOX_XL_HEIGHT',       200); // approx
+define("BOX_XS_LENGTH",       150); // approx for polishing cloth
+define("BOX_XS_WIDTH",         75); // approx for polishing cloth
+define("BOX_XS_HEIGHT",        10); // approx for polishing cloth
+define("BOX_S_LENGTH",         85);
+define("BOX_S_WIDTH",          85);
+define("BOX_S_HEIGHT",         50);
+define("BOX_M_LENGTH",        115);
+define("BOX_M_WIDTH",         115);
+define("BOX_M_HEIGHT",         50);
+define("BOX_L_LENGTH",        250);
+define("BOX_L_WIDTH",         180);
+define("BOX_L_HEIGHT",         50);
+define("BOX_XL_LENGTH",       300); // approx
+define("BOX_XL_WIDTH",        300); // approx
+define("BOX_XL_HEIGHT",       200); // approx
 
 /* Defines about website sales categories */
 define("ONLINESHOP_AVAILABLE_STOCK_CATEGORIES", "('TESTKA','TESTBA','TESTGA','STABKA','STABBA','STABGA','NOPOKA','NOPOBA','NOPOGA','DISC2A','DISC2B','DISC2G','DISC5A','DISC5B','DISC5G')");
 define("ONLINESHOP_AVAILABLE_STOCK_KL_BLINK", "('TESTKA','TESTBA','TESTGA','STABKA','STABBA','STABGA','NOPOKA','NOPOBA','NOPOGA')");
-define('FEATURED_IN_WEBSITE_AS_TOP_SALES',20);
+define("FEATURED_IN_WEBSITE_AS_TOP_SALES",20);
 
-define('ITEM_EXCLUDED_FROM_WEBSITE',-9999);
+define("ITEM_EXCLUDED_FROM_WEBSITE",-9999);
 
 /* Sales Categories based on type of item*/
-define('KL_JEWELLERY',5);
-define('KL_RINGS',31);
-define('KL_BRACELETS',32);
-define('KL_EARRINGS',33);
-define('KL_PENDANTS',34);
-define('KL_NECKLACES',48);
-define('KL_ANKLETS',57);
-define('KL_TOERINGS',58);
-define('KL_SLIMRINGS',67);
-define('KL_EARCUFFS',71);
-define('KL_BROOCHES',82);
-define('KL_PIERCINGS',126);
-define('KL_JEWELLERY_BOXES',130);
+define("KL_JEWELLERY",5);
+define("KL_RINGS",31);
+define("KL_BRACELETS",32);
+define("KL_EARRINGS",33);
+define("KL_PENDANTS",34);
+define("KL_NECKLACES",48);
+define("KL_ANKLETS",57);
+define("KL_TOERINGS",58);
+define("KL_SLIMRINGS",67);
+define("KL_EARCUFFS",71);
+define("KL_BROOCHES",82);
+define("KL_PIERCINGS",126);
+define("KL_JEWELLERY_BOXES",130);
 
-define('BLINK_JEWELLERY',14);
-define('BLINK_RINGS',35);
-define('BLINK_BRACELETS',36);
-define('BLINK_EARRINGS',37);
-define('BLINK_PENDANTS',38);
-define('BLINK_NECKLACES',49);
-define('BLINK_EARCUFFS',72);
-define('BLINK_BROOCHES',77);
-define('BLINK_KEYHOLDERS',84);
-define('BLINK_PIERCINGS',125);
-define('BAGS',29);
+define("BLINK_JEWELLERY",14);
+define("BLINK_RINGS",35);
+define("BLINK_BRACELETS",36);
+define("BLINK_EARRINGS",37);
+define("BLINK_PENDANTS",38);
+define("BLINK_NECKLACES",49);
+define("BLINK_EARCUFFS",72);
+define("BLINK_BROOCHES",77);
+define("BLINK_KEYHOLDERS",84);
+define("BLINK_PIERCINGS",125);
+define("BAGS",29);
 
-define('GENERAL_ACCESSORIES',88);
-define('GE_JEWELLERY_ROLLS',89);
-define('GE_FACEMASKS',90);
+define("GENERAL_ACCESSORIES",88);
+define("GE_JEWELLERY_ROLLS",89);
+define("GE_FACEMASKS",90);
 
-define('BLINK_OUTLET',128);
-define('KL_OUTLET',129);
+define("BLINK_OUTLET",128);
+define("KL_OUTLET",129);
 
 
 //********************************************************************************
@@ -296,8 +296,8 @@ define('KL_OUTLET',129);
 //********************************************************************************
 //********************************************************************************
 
-define("WEBERP_ONLINE_RETAIL_CUSTOMER_CODE_PREFIX",    'WEB-KL-');
-define("WEBERP_ONLINE_WHOLESALE_CUSTOMER_CODE_PREFIX", 'WEB-WH-');
+define("WEBERP_ONLINE_RETAIL_CUSTOMER_CODE_PREFIX",    "WEB-KL-");
+define("WEBERP_ONLINE_WHOLESALE_CUSTOMER_CODE_PREFIX", "WEB-WH-");
 
 define("OPENCART_STORE_KAPAL_LAUT", 0);
 define("OPENCART_STORE_BLINK", 4);
@@ -310,60 +310,59 @@ define("OPENCART_CUSTOMER_GROUP_WHOLESALE_NO_MINIMUM", 4);
 define("OPENCART_CUSTOMER_GROUP_WHOLESALE", 6);
 define("OPENCART_CUSTOMER_GROUP_WHOLESALE_ONLY_DISCOUNTED", 7);
 
-define("WEBERP_DISCOUNTS_IN_OPENCART_TABLE", 'product_special');
+define("WEBERP_DISCOUNTS_IN_OPENCART_TABLE", "product_special");
 
-define("MARKETPLACE_KAPAL_LAUT_SALES_CATEGORIES", '94');
-define("MARKETPLACE_BLINK_SALES_CATEGORIES", '95');
+define("MARKETPLACE_KAPAL_LAUT_SALES_CATEGORIES", "94");
+define("MARKETPLACE_BLINK_SALES_CATEGORIES", "95");
 
-define("SALES_CATEGORIES_FOR_GOOGLE_PRODUCT_FEED", '31,32,33,34,36,37,50,38,35,43,44,45,46,47,48,49,51,52,53,54,55,56,40,41,49,42,39,67,71,72,73,74,76,80,89');
+define("SALES_CATEGORIES_FOR_GOOGLE_PRODUCT_FEED", "31,32,33,34,36,37,50,38,35,43,44,45,46,47,48,49,51,52,53,54,55,56,40,41,49,42,39,67,71,72,73,74,76,80,89");
 
-define("GOOGLE_BRAND_KL", 'Kapal-Laut. Your Essential Jewellery');
-define("GOOGLE_BRAND_BLINK", 'Blink Fashion Jewellery');
-define("GOOGLE_BRAND_OUTLET", 'Outlet by Kapal-Laut');
-define("GOOGLE_GENDER", 'Female');
-define("GOOGLE_AGEGROUP", 'Adult');
-define("GOOGLE_CONDITION", 'New');
-define("GOOGLE_OOS_STATUS", 'Available for Order');
-define("GOOGLE_IDENTIFIER", 'true');
+define("GOOGLE_BRAND_KL", "Kapal-Laut. Your Essential Jewellery");
+define("GOOGLE_BRAND_BLINK", "Blink Fashion Jewellery");
+define("GOOGLE_BRAND_OUTLET", "Outlet by Kapal-Laut");
+define("GOOGLE_GENDER", "Female");
+define("GOOGLE_AGEGROUP", "Adult");
+define("GOOGLE_CONDITION", "New");
+define("GOOGLE_OOS_STATUS", "Available for Order");
+define("GOOGLE_IDENTIFIER", "true");
 
 /*	From webERP to OpenCart */
 define("REDIRECT_RESPONSE_CODE", 301);
 
 /* From OpenCart to webERP CUSTOMERS */
 
-define("OPENCART_DEFAULT_CUSTOMER_HOLD_REASON", '1');
-define("OPENCART_DEFAULT_CUSTOMER_PAYMENT_TERMS", 'CW');
-define("OPENCART_DEFAULT_CUSTOMER_SALES_TYPE", 'RT');
-define("OPENCART_DEFAULT_CUSTOMER_TYPE", '9');
+define("OPENCART_DEFAULT_CUSTOMER_HOLD_REASON", "1");
+define("OPENCART_DEFAULT_CUSTOMER_PAYMENT_TERMS", "CW");
+define("OPENCART_DEFAULT_CUSTOMER_SALES_TYPE", "RT");
+define("OPENCART_DEFAULT_CUSTOMER_TYPE", "9");
 define("OPENCART_DEFAULT_CUSTOMER_CREDIT_LIMIT", 0);
-define("OPENCART_DEFAULT_CUSTOMER_LANGUAGE", 'en_GB.utf8');
-define("OPENCART_DEFAULT_CUSTOMER_TAXREF", '');
+define("OPENCART_DEFAULT_CUSTOMER_LANGUAGE", "en_GB.utf8");
+define("OPENCART_DEFAULT_CUSTOMER_TAXREF", "");
 define("OPENCART_DEFAULT_CUSTOMER_TAXGROUPID", 1);
 
-define("OPENCART_DEFAULT_SALESMAN", '999');
-define("OPENCART_DEFAULT_CURRENCY", 'IDR');
-define("OPENCART_DEFAULT_LOCATION", 'TOKWS');
+define("OPENCART_DEFAULT_SALESMAN", "999");
+define("OPENCART_DEFAULT_CURRENCY", "IDR");
+define("OPENCART_DEFAULT_LOCATION", "TOKWS");
 
 define("OPENCART_DEFAULT_SHIPVIA", 15); 
 
-define("OPENCART_ONLINE_ORDER_DISCOUNT10", 'DISCOUNT-10%');
-define("OPENCART_ONLINE_ORDER_DISCOUNT20", 'DISCOUNT-20%');
-define("OPENCART_ONLINE_ORDER_DISCOUNT30", 'DISCOUNT-30%');
-define("OPENCART_ONLINE_ORDER_DISCOUNT40", 'DISCOUNT-40%');
-define("OPENCART_ONLINE_ORDER_DISCOUNT50", 'DISCOUNT-50%');
-define("OPENCART_ONLINE_ORDER_DISCOUNT60", 'DISCOUNT-60%');
+define("OPENCART_ONLINE_ORDER_DISCOUNT10", "DISCOUNT-10%");
+define("OPENCART_ONLINE_ORDER_DISCOUNT20", "DISCOUNT-20%");
+define("OPENCART_ONLINE_ORDER_DISCOUNT30", "DISCOUNT-30%");
+define("OPENCART_ONLINE_ORDER_DISCOUNT40", "DISCOUNT-40%");
+define("OPENCART_ONLINE_ORDER_DISCOUNT50", "DISCOUNT-50%");
+define("OPENCART_ONLINE_ORDER_DISCOUNT60", "DISCOUNT-60%");
 
-define("OPENCART_PROMOTION_DISCOUNT_CODE", 'PROMOTION-DISCOUNT');
-define("OPENCART_VIP_ONLINE_CODE", 'VIP-ONLINE-10%');
-define("OPENCART_VIP_SILVER_CODE", 'VIP-SILVER-15%');
-define("OPENCART_VIP_GOLD_CODE", 'VIP-GOLD-30%');
-define("OPENCART_VIP_ELITE_CODE", 'VIP-ELITE-50%');
-define("OPENCART_VIP_PLATINUM_CODE", 'VIP-PLATINUM-100%');
-define("OPENCART_CUSTOMER_REFUND_CODE", 'CUSTOMER-REFUND');
-define("OPENCART_WHOLESALE_DISCOUNT", 'WHOLESALE-DISCOUNT');
+define("OPENCART_PROMOTION_DISCOUNT_CODE", "PROMOTION-DISCOUNT");
+define("OPENCART_VIP_ONLINE_CODE", "VIP-ONLINE-10%");
+define("OPENCART_VIP_SILVER_CODE", "VIP-SILVER-15%");
+define("OPENCART_VIP_GOLD_CODE", "VIP-GOLD-30%");
+define("OPENCART_VIP_ELITE_CODE", "VIP-ELITE-50%");
+define("OPENCART_VIP_PLATINUM_CODE", "VIP-PLATINUM-100%");
+define("OPENCART_CUSTOMER_REFUND_CODE", "CUSTOMER-REFUND");
+define("OPENCART_WHOLESALE_DISCOUNT", "WHOLESALE-DISCOUNT");
 
-define("OPENCART_DEFAULT_PAYMENT_SYSTEM", 'PayPal');
-define("OPENCART_DOKU_PAYMENT_SYSTEM", 'Doku');
+define("OPENCART_DEFAULT_PAYMENT_SYSTEM", "PayPal");
 
 define("OPENCART_ORDER_STATUS_PENDING", 1);
 define("OPENCART_ORDER_STATUS_PROCESSING", 2);
@@ -376,21 +375,20 @@ define("WEBERP_ORDER_STATUS_QUOTATION", 1);
 define("WEBERP_ORDER_STATUS_ORDER", 0);
 
 /* HARD CODED PATHS */
-define("ABSOLUTE_PATH_OPENCART_IMAGES", '/var/www/vhosts/kapal-laut.com/httpdocs/image/catalog/KL/part_pics/');
+define("ABSOLUTE_PATH_OPENCART_IMAGES", "/var/www/vhosts/kapal-laut.com/httpdocs/image/catalog/KL/part_pics/");
 
-define("PATH_OPENCART_IMAGES", 'catalog/KL/part_pics/');
-define("PATH_OPENCART_BASE", 'https://www.kapal-laut.com');
-define("ROUTE_TO_PRODUCT", 'index.php?route=product/product&');
-define("PATH_TO_CATALOG_IMAGES", 'https://kapal-laut.com/image/catalog/KL/part_pics/');
-define("PATH_TO_CATALOG_PACKAGING_IMAGES", 'https://kapal-laut.com/image/catalog/KL/packaging_sets/');
+define("PATH_OPENCART_IMAGES", "catalog/KL/part_pics/");
+define("PATH_OPENCART_BASE", "https://www.kapal-laut.com");
+define("ROUTE_TO_PRODUCT", "index.php?route=product/product&");
+define("PATH_TO_CATALOG_IMAGES", "https://kapal-laut.com/image/catalog/KL/part_pics/");
+define("PATH_TO_CATALOG_PACKAGING_IMAGES", "https://kapal-laut.com/image/catalog/KL/packaging_sets/");
 
 define("OPENCART_PACKAGING_SET_IMAGE_SORT_ORDER", 9999);
-define("OPENCART_PACKAGING_SET_IMAGE_PATH", 'catalog/KL/packaging_sets/');
+define("OPENCART_PACKAGING_SET_IMAGE_PATH", "catalog/KL/packaging_sets/");
 
 // META DATA
 define("META_STORE_NAME_KL", "Kapal-Laut Jewellery");
 define("META_STORE_NAME_BL", "Blink Fashion Jewellery");
-define("META_STORE_NAME_OU", "Outlet by Kapal-Laut");
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -416,25 +414,25 @@ define("TOKOPEDIA_STORENAME_KAPAL_LAUT", "TikTok KL");
 // SHOPEE
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-define("SHOPEE_CATEGORY_RING",           'Cincin Kasual');
-define("SHOPEE_CATEGORY_TOE_RING",       'Cincin Kasual');
-define("SHOPEE_CATEGORY_BROOCHE",        'Bros');
-define("SHOPEE_CATEGORY_PIERCING",       'Anting');
-define("SHOPEE_CATEGORY_EARRING",        'Anting Plug');
-define("SHOPEE_CATEGORY_EARRING_HOOK",   'Anting Hooks');
-define("SHOPEE_CATEGORY_EARRING_STUD",   'Anting Stud');
-define("SHOPEE_CATEGORY_EARRING_HOOP",   'Anting Hoops');
-define("SHOPEE_CATEGORY_BANGLE",         'Bangle');
-define("SHOPEE_CATEGORY_BRACELET_PEARL", 'Gelang Mutiara');
-define("SHOPEE_CATEGORY_BRACELET",       'Gelang Etnik & Bead');
-define("SHOPEE_CATEGORY_ANKLET",         'Gelang Kaki');
-define("SHOPEE_CATEGORY_PENDANT",        'Liontin');
-define("SHOPEE_CATEGORY_PENDANT_PEARL",  'Kalung Mutiara');
-define("SHOPEE_CATEGORY_CHOKER",         'Choker');
-define("SHOPEE_CATEGORY_NECKLACE_PEARL", 'Kalung Mutiara');
-define("SHOPEE_CATEGORY_NECKLACE",       'Kalung Etnik');
-define("SHOPEE_CATEGORY_BAG",            'Clutch');
-define("SHOPEE_CATEGORY_KEYHOLDER",      'Hiasan & Gantungan Kunci');
+define("SHOPEE_CATEGORY_RING",           "Cincin Kasual");
+define("SHOPEE_CATEGORY_TOE_RING",       "Cincin Kasual");
+define("SHOPEE_CATEGORY_BROOCHE",        "Bros");
+define("SHOPEE_CATEGORY_PIERCING",       "Anting");
+define("SHOPEE_CATEGORY_EARRING",        "Anting Plug");
+define("SHOPEE_CATEGORY_EARRING_HOOK",   "Anting Hooks");
+define("SHOPEE_CATEGORY_EARRING_STUD",   "Anting Stud");
+define("SHOPEE_CATEGORY_EARRING_HOOP",   "Anting Hoops");
+define("SHOPEE_CATEGORY_BANGLE",         "Bangle");
+define("SHOPEE_CATEGORY_BRACELET_PEARL", "Gelang Mutiara");
+define("SHOPEE_CATEGORY_BRACELET",       "Gelang Etnik & Bead");
+define("SHOPEE_CATEGORY_ANKLET",         "Gelang Kaki");
+define("SHOPEE_CATEGORY_PENDANT",        "Liontin");
+define("SHOPEE_CATEGORY_PENDANT_PEARL",  "Kalung Mutiara");
+define("SHOPEE_CATEGORY_CHOKER",         "Choker");
+define("SHOPEE_CATEGORY_NECKLACE_PEARL", "Kalung Mutiara");
+define("SHOPEE_CATEGORY_NECKLACE",       "Kalung Etnik");
+define("SHOPEE_CATEGORY_BAG",            "Clutch");
+define("SHOPEE_CATEGORY_KEYHOLDER",      "Hiasan & Gantungan Kunci");
 
 define("SHOPEE_PREFIX_URL", "https://www.shopee.co.id/produk-i.");
 define("SHOPEE_STOREID_BLINK", "303205858");
@@ -450,6 +448,6 @@ define("LAZADA_PREFIX_URL", "https://www.lazada.co.id/products/-i");
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // DANAMON
 ///////////////////////////////////////////////////////////////////////////////////////////////
-define("DANAMON_ACCOUNT_GAJI_PTADU", '3607556887');
-define("DANAMON_ACCOUNT_GAJI_PTSMH", '3670857030');
-define("DANAMON_ACCOUNT_GAJI_PTBB",  '3568005502');
+define("DANAMON_ACCOUNT_GAJI_PTADU", "3607556887");
+define("DANAMON_ACCOUNT_GAJI_PTSMH", "3670857030");
+define("DANAMON_ACCOUNT_GAJI_PTBB",  "3568005502");
