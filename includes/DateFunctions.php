@@ -411,9 +411,9 @@ function ConvertSQLDate($DateEntry) {
 			return $DateArray[0] . '-' . $DateArray[1] . '-' . $DateArray[2];
 		}*/
 		return match($_SESSION['DefaultDateFormat']){
-			'd/m/Y' => $DateArray[2].'-'.$DateArray[1].'-'.$DateArray[0],
+			'd/m/Y' => $DateArray[2].'/'.$DateArray[1].'/'.$DateArray[0],
 			'm/d/Y' => $DateArray[1].'/'.$DateArray[2].'/'.$DateArray[0],
-			'd.m.Y' => $DateArray[2].'/'.$DateArray[1].'/'.$DateArray[0],
+			'd.m.Y' => $DateArray[2].'.'.$DateArray[1].'.'.$DateArray[0],
 			'Y/m/d' => $DateArray[0].'/'.$DateArray[1].'/'.$DateArray[2],
 			default => $DateArray[0].'/'.$DateArray[1].'/'.$DateArray[2],
 		};
@@ -471,9 +471,9 @@ function ConvertSQLDateTime($DateEntry) {
 		return $DateArray[0] . '/' . $DateArray[1] . '/' . $DateArray[2] . ' ' . $Time;
 	}*/
 	return match($_SESSION['DefaultDateFormat']){
-		'd/m/Y' => $DateArray[2].'-'.$DateArray[1].'-'.$DateArray[0],
+		'd/m/Y' => $DateArray[2].'/'.$DateArray[1].'/'.$DateArray[0],
 		'm/d/Y' => $DateArray[1].'/'.$DateArray[2].'/'.$DateArray[0],
-		'd.m.Y' => $DateArray[2].'/'.$DateArray[1].'/'.$DateArray[0],
+		'd.m.Y' => $DateArray[2].'.'.$DateArray[1].'.'.$DateArray[0],
 		'Y/m/d' => $DateArray[0].'/'.$DateArray[1].'/'.$DateArray[2],
 		default => $DateArray[0].'/'.$DateArray[1].'/'.$DateArray[2],
 	};
@@ -558,9 +558,9 @@ and converts to a yyyymmdd - EANCOM format 102*/
 
 	}*/
 	return match($_SESSION['DefaultDateFormat']){
-		'd/m/Y' => $DateArray[2].'-0'.$DateArray[1].'-'.$DateArray[0],
+		'd/m/Y' => $DateArray[2].'/'.$DateArray[1].'/'.$DateArray[0],
 		'm/d/Y' => $DateArray[1].'/'.$DateArray[2].'/'.$DateArray[0],
-		'd.m.Y' => $DateArray[2].'/'.$DateArray[1].'/'.$DateArray[0],
+		'd.m.Y' => $DateArray[2].'.'.$DateArray[1].'.'.$DateArray[0],
 		'Y/m/d' => $DateArray[0].'/'.$DateArray[1].'/'.$DateArray[2],
 		default => $DateArray[0].'/'.$DateArray[1].'/'.$DateArray[2],
 	};
