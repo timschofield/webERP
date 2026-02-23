@@ -1160,13 +1160,13 @@ if (!isset($_GET['delete'])) {
 		</field>';
 
 	echo '<field>
-			<label for="RLFactorForPackaging">' . __('KL RL Factor for Packaging Transfers') . ':</label>
-			<input type="text" name="RLFactorForPackaging" class="number" title="' . __('Factor to Multiply Reorder Level for Packaging Transfers') . '" value="' . $_POST['RLFactorForPackaging'] . '" size="4" maxlength="4" />
+			<label for="RLDaysForPackaging">' . __('Days of usage to calculate RL for Packaging Items') . ':</label>
+			<input type="text" name="RLDaysForPackaging" class="number" title="' . __('Set Reorder Level as needs of packaging for a number of days') . '" value="' . $_POST['RLDaysForPackaging'] . '" size="2" maxlength="2" />
 		</field>';
 
-	echo '<field>
-			<label for="RLDaysForPackaging">' . __('KL RL Days for Packaging Transfers') . ':</label>
-			<input type="text" name="RLDaysForPackaging" class="number" title="' . __('Set Reorder Level as needs of pacjaking for a number of days') . '" value="' . $_POST['RLDaysForPackaging'] . '" size="2" maxlength="2" />
+		echo '<field>
+			<label for="RLFactorForPackaging">' . __('RL Factor for Packaging Transfers') . ':</label>
+			<input type="text" name="RLFactorForPackaging" class="number" title="' . __('Factor to Multiply Reorder Level for Packaging Transfers') . '" value="' . $_POST['RLFactorForPackaging'] . '" size="4" maxlength="4" />
 		</field>';
 
 	echo '</fieldset>';
@@ -1233,7 +1233,7 @@ function UpdateOnlinePartnerPaypalSettingsInOpenCart($NewLocationType, $NewOnlin
 					FROM klonlinepartners
 					WHERE klonlinepartners.onlinepartnercode='" . $NewOnlinePartnerCode . "'";
 			$Result = DB_query($SQL);
-			$MyRow = DB_fetch_array($Result);
+			DB_fetch_array($Result);
 
 			prnMsg('Remind to update PayPal setting for Online Partner ' . $NewOnlinePartnerCode . ' in OpenCart', 'warning');
 		} else {

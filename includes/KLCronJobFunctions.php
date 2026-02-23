@@ -92,7 +92,7 @@ function KLCronJobChecks($Group, $RootPath, $EmailText= ''){
 	} elseif ($Group == "0900-RLZeroNotAvailable"){
 		$EmailText = KL_DailyRLZeroNotAvailable(false, true, $RootPath, $EmailText); // Updates RL 
 	} elseif ($Group == "1000-RLAdjustPackaging"){
-		$EmailText = KL_DailyRLAdjustmentsForPackaging(false, true, $RootPath, $EmailText); // Updates RL 
+		$EmailText = KL_DailyRLAdjustmentsForPackaging(false, true, $EmailText); // Updates RL 
 	} elseif ($Group == "1050-SmartStockTransfersKL"){
 		$EmailText = KLPrepareGroupSmartStockTransfers($Group, $EmailText); // prepares the Smart Stock Transfers for KL
 	} elseif ($Group == "1060-SmartStockTransfersBL"){

@@ -208,11 +208,11 @@ function KL_DailyRLZeroNotAvailable($ShowMessages, $UpdateDB, $RootPath, $EmailT
 * 
 * @return string - Updated email text containing results of operations
 **************************************************************************************************************/
-function KL_DailyRLAdjustmentsForPackaging($ShowMessages, $UpdateDB, $RootPath, $EmailText){
+function KL_DailyRLAdjustmentsForPackaging($ShowMessages, $UpdateDB, $EmailText){
 
-	$EmailText = AdjustPackaging(60, 'SHOPKL', $ShowMessages, $UpdateDB, $RootPath, $EmailText);
-	$EmailText = AdjustPackaging(60, 'SHOPBL', $ShowMessages, $UpdateDB, $RootPath, $EmailText);
-	$EmailText = AdjustPackagingGudang('PACKU', FACTOR_GUDANG_PACKAGING, $ShowMessages, $UpdateDB, $RootPath, $EmailText);
+	$EmailText = AdjustPackaging(60, 'SHOPKL', $ShowMessages, $UpdateDB, $EmailText);
+	$EmailText = AdjustPackaging(60, 'SHOPBL', $ShowMessages, $UpdateDB, $EmailText);
+	$EmailText = AdjustPackagingGudang('PACKU', FACTOR_GUDANG_PACKAGING, $ShowMessages, $UpdateDB, $EmailText);
 	
 	return $EmailText;
 }
@@ -1128,7 +1128,7 @@ function OnlineReorderLevelAdjustments($ShowMessages, $UpdateDB, $RootPath, $Ema
 * 
 * @return string - Updated email text containing results of operations.
 **************************************************************************************************************/
-function AdjustPackagingGudang($GudangCode, $FactorGudangPackaging, $ShowMessages, $UpdateDB, $RootPath, $EmailText){
+function AdjustPackagingGudang($GudangCode, $FactorGudangPackaging, $ShowMessages, $UpdateDB, $EmailText){
 
 	$Message = "Adjusting RL for Packaging Gudang " . $GudangCode ;
 	if ($ShowMessages){
@@ -1215,7 +1215,7 @@ function AdjustPackagingGudang($GudangCode, $FactorGudangPackaging, $ShowMessage
 * 
 * @return string|void - Updated email text, or void if ShopType is invalid.
 **************************************************************************************************************/
-function AdjustPackaging($DaysSales, $ShopType, $ShowMessages, $UpdateDB, $RootPath, $EmailText){
+function AdjustPackaging($DaysSales, $ShopType, $ShowMessages, $UpdateDB, $EmailText){
 	
 	if ($ShopType == 'SHOPKL'){
 		$ListOfItems = LIST_ITEMS_KAPAL_LAUT_PACKAGING;
@@ -1243,7 +1243,7 @@ function AdjustPackaging($DaysSales, $ShopType, $ShowMessages, $UpdateDB, $RootP
 		while ($MyLoc = DB_fetch_array($Resultloc)) {
 			$iItem = 0;
 			while ($iItem < $CountItem){
-				$EmailText = AdjustPackagingItemByShop($Items[$iItem], $MyLoc['loccode'], $DaysSales, $ShowMessages, $UpdateDB, $RootPath, $EmailText);
+				$EmailText = AdjustPackagingItemByShop($Items[$iItem], $MyLoc['loccode'], $DaysSales, $ShowMessages, $UpdateDB, $EmailText);
 				$iItem++;
 			}
 		}
@@ -1266,7 +1266,7 @@ function AdjustPackaging($DaysSales, $ShopType, $ShowMessages, $UpdateDB, $RootP
 * 
 * @return string - Updated email text containing results of operations.
 **************************************************************************************************************/
-function AdjustPackagingItemByShop($Item, $Shop, $DaysSales, $ShowMessages, $UpdateDB, $RootPath, $EmailText) {
+function AdjustPackagingItemByShop($Item, $Shop, $DaysSales, $ShowMessages, $UpdateDB, $EmailText) {
 
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', -$DaysSales));
 	$SQL = "SELECT loc.locationname,

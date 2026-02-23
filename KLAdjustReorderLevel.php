@@ -27,7 +27,7 @@ KL_DailyRLAdjustmentsForBlink($ShowMessages, $UpdateDB, $RootPath, $EmailText);
 KL_DailyRLAdjustmentsForOutlet($ShowMessages, $UpdateDB, $RootPath, $EmailText);
 KL_DailyRLRebalancing($ShowMessages, $UpdateDB, $RootPath, $EmailText);
 KL_DailyRLZeroNotAvailable($ShowMessages, $UpdateDB, $RootPath, $EmailText);
-KL_DailyRLAdjustmentsForPackaging($ShowMessages, $UpdateDB, $RootPath, $EmailText);
+KL_DailyRLAdjustmentsForPackaging($ShowMessages, $UpdateDB, $EmailText);
 
 prnMsg("Performed ". NUMBER_OF_TESTS . " RL adjustement strategies",'success');
 time_finish($begintime);
