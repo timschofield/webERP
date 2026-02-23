@@ -399,22 +399,13 @@ function ConvertSQLDate($DateEntry) {
 		if (mb_strlen($DateArray[2]) > 4) {  /*chop off the time stuff */
 			$DateArray[2] = mb_substr($DateArray[2], 0, 2);
 		}
-		/*if ($_SESSION['DefaultDateFormat'] == 'd/m/Y'){
-			return $DateArray[2] . '/' . $DateArray[1] . '/' . $DateArray[0];
-		} elseif ($_SESSION['DefaultDateFormat'] == 'd.m.Y'){
-			return $DateArray[2] . '.' . $DateArray[1] . '.' . $DateArray[0];
-		} elseif ($_SESSION['DefaultDateFormat'] == 'm/d/Y'){
-			return $DateArray[1] . '/' . $DateArray[2] . '/' . $DateArray[0];
-		} elseif ($_SESSION['DefaultDateFormat'] == 'Y/m/d'){
-			return $DateArray[0] . '/' . $DateArray[1] . '/' . $DateArray[2];
-		} elseif ($_SESSION['DefaultDateFormat'] == 'Y-m-d'){
-			return $DateArray[0] . '-' . $DateArray[1] . '-' . $DateArray[2];
-		}*/
+
 		return match($_SESSION['DefaultDateFormat']){
 			'd/m/Y' => $DateArray[2].'/'.$DateArray[1].'/'.$DateArray[0],
 			'm/d/Y' => $DateArray[1].'/'.$DateArray[2].'/'.$DateArray[0],
 			'd.m.Y' => $DateArray[2].'.'.$DateArray[1].'.'.$DateArray[0],
 			'Y/m/d' => $DateArray[0].'/'.$DateArray[1].'/'.$DateArray[2],
+			'Y-m-d' => $DateArray[0].'-'.$DateArray[1].'-'.$DateArray[2],
 			default => $DateArray[0].'/'.$DateArray[1].'/'.$DateArray[2],
 		};
 	}
@@ -440,16 +431,19 @@ function ConvertSQLDateTime($DateEntry) {
 		prnMsg(__('The date does not appear to be in a valid format. The date being converted from SQL format was:') . ' ' . $DateEntry,'error');
 		switch ($_SESSION['DefaultDateFormat']) {
 			case 'd/m/Y':
-				return '01/01/1000';
+				return '01/01/1000 00:00:00';
 				break;
 			case 'd.m.Y':
-				return '01.01.1000';
+				return '01.01.1000 00:00:00';
 				break;
 			case 'm/d/Y':
-				return '01/01/1000';
+				return '01/01/1000 00:00:00';
 				break;
 			case 'Y/m/d':
-				return '1000/01/01';
+				return '1000/01/01 00:00:00';
+				break;
+			case 'Y-m-d':
+				return '1000-01-01 00:00:00';
 				break;
 		}
 	}
@@ -461,24 +455,16 @@ function ConvertSQLDateTime($DateEntry) {
 		$Time = '00:00:00';
 	}
 
-	/*if ($_SESSION['DefaultDateFormat'] == 'd/m/Y'){
-		return $DateArray[2] . '/' . $DateArray[1] . '/' . $DateArray[0] . ' ' . $Time;
-	} elseif ($_SESSION['DefaultDateFormat'] == 'd.m.Y'){
-		return $DateArray[2] . '.' . $DateArray[1] . '.' . $DateArray[0] . ' ' . $Time;
-	} elseif ($_SESSION['DefaultDateFormat'] == 'm/d/Y'){
-		return $DateArray[1] . '/' . $DateArray[2] . '/' . $DateArray[0] . ' ' . $Time;
-	} elseif ($_SESSION['DefaultDateFormat'] == 'Y/m/d'){
-		return $DateArray[0] . '/' . $DateArray[1] . '/' . $DateArray[2] . ' ' . $Time;
-	}*/
 	return match($_SESSION['DefaultDateFormat']){
-		'd/m/Y' => $DateArray[2].'/'.$DateArray[1].'/'.$DateArray[0],
-		'm/d/Y' => $DateArray[1].'/'.$DateArray[2].'/'.$DateArray[0],
-		'd.m.Y' => $DateArray[2].'.'.$DateArray[1].'.'.$DateArray[0],
-		'Y/m/d' => $DateArray[0].'/'.$DateArray[1].'/'.$DateArray[2],
-		default => $DateArray[0].'/'.$DateArray[1].'/'.$DateArray[2],
+		'd/m/Y' => $DateArray[2] . '/' . $DateArray[1] . '/' . $DateArray[0] . ' ' . $Time,
+		'm/d/Y' => $DateArray[1] . '/' . $DateArray[2] . '/' . $DateArray[0] . ' ' . $Time,
+		'd.m.Y' => $DateArray[2] . '.' . $DateArray[1] . '.' . $DateArray[0] . ' ' . $Time,
+		'Y/m/d' => $DateArray[0] . '/' . $DateArray[1] . '/' . $DateArray[2] . ' ' . $Time,
+		'Y-m-d' => $DateArray[0] . '-' . $DateArray[1] . '-' . $DateArray[2] . ' ' . $Time,
+		default => $DateArray[0] . '/' . $DateArray[1] . '/' . $DateArray[2] . ' ' . $Time,
 	};
 
-} // end function ConvertSQLDate
+} // end function ConvertSQLDateTime
 
 /**************************************************************************************************************
 * Function: SQLDateToEDI
