@@ -221,7 +221,7 @@ function RemoveMenuItem($Link, $Section, $Caption, $URL) {
 }
 
 function UpdateMenuCaption($OldCaption, $NewCaption) {
-	$SQL = "UPDATE menuitems SET caption = '" . $NewCaption . "' WHERE  caption = '" . $OldCaption . "'"; 
+	$SQL = "UPDATE menuitems SET caption = '" . $NewCaption . "' WHERE  caption = '" . $OldCaption . "'";
 	$Response = executeSQL($SQL, false);
 	if ($Response == 0) {
 		OutputResult(__('The menu caption') . ' ' . $OldCaption . ' ' . __('has been updated to') . ' ' . $NewCaption, 'success');
@@ -514,13 +514,13 @@ function DeleteConfigValue($ConfName) {
 	}
 }
 
-function CreateTable($Table, $SQL) {
+function CreateTable($Table, $SQL, $CharacterSet='utf8mb4') {
 	$ShowSQL = "SHOW TABLES WHERE Tables_in_" . $_SESSION['DatabaseName'] . "='" . $Table . "'";
 	$Result = DB_query($ShowSQL);
 
 	if (DB_num_rows($Result) == 0) {
 		DB_IgnoreForeignKeys();
-		$Response = executeSQL($SQL . ' ENGINE=InnoDB DEFAULT CHARSET=utf8', false);
+		$Response = executeSQL($SQL . ' ENGINE=InnoDB DEFAULT CHARSET=' . $CharacterSet, false);
 		DB_ReinstateForeignKeys();
 		if ($Response == 0) {
 			OutputResult(__('The table') . ' ' . $Table . ' ' . __('has been created'), 'success');
