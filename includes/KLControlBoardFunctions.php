@@ -303,7 +303,7 @@ function CashAtShops($MinCashPerShop, $MaxCashPerShop, $MinCashAllShops, $MaxCas
 	$ListAccounts = "('";
 	$SQL="SELECT klposcashaccount
 		FROM locations
-		WHERE  locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . " 
+		WHERE  locations.typeloc IN " . LIST_PHYSICAL_SHOPS_BY_TYPE . " 
 		ORDER BY locations.locationname"; 
 	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)){
@@ -1195,7 +1195,7 @@ function ItemsChangingPriceDelayed($NumDays, $RootPath){
 					FROM locstock,locations
 					WHERE locstock.stockid = stockmaster.stockid
 						AND locstock.loccode = locations.loccode
-						AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . ") AS qohpos,
+						AND locations.typeloc IN " . LIST_PHYSICAL_SHOPS_BY_TYPE . ") AS qohpos,
 				(SELECT SUM(locstock.quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
@@ -1209,13 +1209,13 @@ function ItemsChangingPriceDelayed($NumDays, $RootPath){
 					WHERE locstock.stockid = stockmaster.stockid
 						AND locstock.loccode = locations.loccode
 						AND locstock.loccode NOT IN " . LIST_KANTOR_LOCATIONS . "
-						AND locations.typeloc NOT IN " . LIST_BALI_SHOPS_BY_TYPE . "
+						AND locations.typeloc NOT IN " . LIST_PHYSICAL_SHOPS_BY_TYPE . "
 						AND locstock.loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohotherlocs,
 				(SELECT SUM(loctransfers.pendingqty) 
 					FROM loctransfers,locations
 					WHERE loctransfers.stockid = stockmaster.stockid
 						AND loctransfers.shiploc = locations.loccode
-						AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . ") AS intransitfromshops,
+						AND locations.typeloc IN " . LIST_PHYSICAL_SHOPS_BY_TYPE . ") AS intransitfromshops,
 				(SELECT SUM(loctransfers.pendingqty) 
 					FROM loctransfers
 					WHERE loctransfers.stockid = stockmaster.stockid
@@ -1903,7 +1903,7 @@ function ItemsMovingToDiscountDelayed($TypeDiscount, $NumDays, $RootPath){
 					FROM locstock,locations
 					WHERE locstock.stockid = stockmaster.stockid
 					AND locstock.loccode = locations.loccode
-					AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . ") AS qohpos,
+					AND locations.typeloc IN " . LIST_PHYSICAL_SHOPS_BY_TYPE . ") AS qohpos,
 				(SELECT SUM(locstock.quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
@@ -1917,13 +1917,13 @@ function ItemsMovingToDiscountDelayed($TypeDiscount, $NumDays, $RootPath){
 					WHERE locstock.stockid = stockmaster.stockid
 					AND locstock.loccode = locations.loccode
 					AND locstock.loccode NOT IN " . LIST_KANTOR_LOCATIONS . "
-					AND locations.typeloc NOT IN " . LIST_BALI_SHOPS_BY_TYPE . "
+					AND locations.typeloc NOT IN " . LIST_PHYSICAL_SHOPS_BY_TYPE . "
 					AND locstock.loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohotherlocs,
 				(SELECT SUM(loctransfers.pendingqty) 
 						FROM loctransfers,locations
 						WHERE loctransfers.stockid = stockmaster.stockid
 						AND loctransfers.shiploc = locations.loccode
-						AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . ") AS intransitfromshops,
+						AND locations.typeloc IN " . LIST_PHYSICAL_SHOPS_BY_TYPE . ") AS intransitfromshops,
 				(SELECT SUM(loctransfers.pendingqty) 
 						FROM loctransfers
 						WHERE loctransfers.stockid = stockmaster.stockid
@@ -3564,7 +3564,7 @@ id	select_type	table	type	possible_keys	key	key_len	ref	rows	Extra
 			WHERE stockmaster.stockid = locstock.stockid
 				AND locstock.loccode = locations.loccode
 				AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_PACKAGING . "
-				AND locations.typeloc NOT IN " . LIST_BALI_SHOPS_BY_TYPE . "
+				AND locations.typeloc NOT IN " . LIST_PHYSICAL_SHOPS_BY_TYPE . "
 				AND locstock.loccode NOT IN " . LIST_PACAKING_LOCATIONS . "
 				AND locstock.loccode NOT IN " . LIST_ONLINE_SHOPS . "
 				AND locstock.loccode != 'SAMPR'

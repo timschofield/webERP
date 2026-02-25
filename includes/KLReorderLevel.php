@@ -253,7 +253,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $UpdateDB, $RootPath, 
 					MAX(CASE WHEN ls1.quantity < ls1.reorderlevel THEN ls1.loccode END) AS loccode
 				FROM locstock ls1
 				INNER JOIN locations loc1 ON ls1.loccode = loc1.loccode
-				WHERE loc1.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
+				WHERE loc1.typeloc IN " . LIST_PHYSICAL_SHOPS_BY_TYPE . "
 				GROUP BY ls1.stockid
 				HAVING COUNT(CASE WHEN ls1.quantity < ls1.reorderlevel THEN 1 END) > 0
 					AND COUNT(CASE WHEN ls1.quantity > 0 THEN 1 END) > 0
@@ -347,7 +347,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $UpdateDB, $RootPath, 
 											GROUP BY so.fromstkloc
 										) sales_data ON ls.loccode = sales_data.fromstkloc
 										WHERE ls.stockid = '" . $MyRow['stockid'] . "'
-											AND loc.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
+											AND loc.typeloc IN " . LIST_PHYSICAL_SHOPS_BY_TYPE . "
 											AND ls.reorderlevel > 0
 										ORDER BY loc.priority ASC, ".
 												$OrderBy ."
@@ -475,7 +475,7 @@ function WorstLocationForItem($StockID, $Kind, $maxdays){
 			) sales_count ON ls.loccode = sales_count.fromstkloc
 			WHERE ls.stockid = '" . $StockID . "'"
 			. $QuantityCondition . "
-			  AND loc.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
+			  AND loc.typeloc IN " . LIST_PHYSICAL_SHOPS_BY_TYPE . "
 			ORDER BY loc.priority DESC, sales_count ASC
 			LIMIT 1";
 			
@@ -512,7 +512,7 @@ function QtyAvailable($StockID, $Location){
 				FROM locstock ls
 				INNER JOIN locations loc ON ls.loccode = loc.loccode
 				WHERE ls.stockid = '" . $StockID . "'
-					AND loc.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE;
+					AND loc.typeloc IN " . LIST_PHYSICAL_SHOPS_BY_TYPE;
 	} elseif ($Location == "ALLSHOPSANDONLINE") {
 		// Join with locations table only when needed for type filtering
 		$SQL = "SELECT SUM(ls.quantity) AS total
@@ -986,7 +986,7 @@ function SetReorderLevel($Reason, $StockID, $loccode, $OldRL, $NewRL, $UpdateDB)
 						WHERE stockid = '". $StockID ."'
 							AND loccode IN (SELECT locations.loccode
 											FROM locations
-											WHERE locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . ")";
+											WHERE locations.typeloc IN " . LIST_PHYSICAL_SHOPS_BY_TYPE . ")";
 			} else {
 				$SQL = "UPDATE locstock
 						SET reorderlevel = '" . $NewRL ."'

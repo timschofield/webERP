@@ -367,7 +367,7 @@ function ItemCodeQOH($StockID, $CodeDetail, $Where){
 	}
 
 	if ($Where == "ALL_SHOPS"){
-		$SQL .= " AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . " "; 
+		$SQL .= " AND locations.typeloc IN " . LIST_PHYSICAL_SHOPS_BY_TYPE . " "; 
 	} elseif ($Where == "ALL_SHOPS_AND_ONLINE"){
 		$SQL .= " AND locations.typeloc IN " . LIST_ALL_SHOPS_BY_TYPE . " "; 
 	} elseif ($Where == "ALL"){

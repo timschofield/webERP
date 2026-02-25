@@ -1376,7 +1376,7 @@ function FinishedStockDistributionByShopAndCategory(){
 						AND m2.categoryid = 'DISC8G'
 						AND l2.reorderlevel != 0) AS modelsDISC80GE
 			FROM locations
-			WHERE locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
+			WHERE locations.typeloc IN " . LIST_PHYSICAL_SHOPS_BY_TYPE . "
 			ORDER BY locations.locationname";
 
 	$Result = DB_query($SQL);

@@ -331,7 +331,7 @@ function FieldToSelectOneLocation($VariableName, $SelectedValue, $Label = '', $H
 					ON locationusers.loccode=locations.loccode
 					AND locationusers.userid='" .  $_SESSION['UserID'] . "'
 					AND locationusers.canview=1
-				WHERE locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
+				WHERE locations.typeloc IN " . LIST_PHYSICAL_SHOPS_BY_TYPE . "
 				ORDER BY locations.locationname";
 	} else {
 		$SQL = "SELECT loccode,
