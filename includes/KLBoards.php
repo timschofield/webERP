@@ -2041,7 +2041,7 @@ function ItemsWithoutRetailPrice($StockCat, $factorRetail, $RootPath){
 								FROM prices
 								WHERE stockmaster.stockid = prices.stockid
 									AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
-									AND prices.currabrev = '". CURRENCY_CODE ."'
+									AND prices.currabrev = '". $_SESSION['CompanyRecord']['currencydefault'] ."'
 									AND prices.startdate <= CURRENT_DATE
 									AND prices.enddate >= CURRENT_DATE)";
 

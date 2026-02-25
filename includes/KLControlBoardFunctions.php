@@ -2862,7 +2862,8 @@ function OldWOStillActive($maxdays, $RootPath){
 
 function OnlineItemsOnProcess($RootPath){
 	
-	$SQL = "SELECT salesorders.orderno,	
+	$SQL = "SELECT
+				salesorders.orderno,
 				debtorsmaster.debtorno,
 				salesorders.deliverto AS name,
 				stockmaster.categoryid,
@@ -2871,19 +2872,23 @@ function OnlineItemsOnProcess($RootPath){
 				salesorderdetails.quantity AS qtyorder,
 				l1.reorderlevel,
 				l1.quantity AS qtyready,
-				(SELECT SUM(l2.quantity)
-					FROM locstock AS l2
-					WHERE l1.stockid = l2.stockid
-						AND l2.loccode ='" . CODE_KANTOR . "') AS qohkantor
-			FROM salesorderdetails, salesorders, locstock AS l1, debtorsmaster, stockmaster	
-			WHERE salesorderdetails.orderno = salesorders.orderno
-				AND salesorderdetails.stkcode = l1.stockid
-				AND salesorders.debtorno = debtorsmaster.debtorno
-				AND salesorderdetails.stkcode = stockmaster.stockid
-				AND salesorders.quotation = 0
+				COALESCE(l2.quantity, 0) AS qohkantor
+			FROM salesorderdetails
+			INNER JOIN salesorders
+				ON salesorderdetails.orderno = salesorders.orderno
+			INNER JOIN locstock AS l1
+				ON salesorderdetails.stkcode = l1.stockid
+					AND l1.loccode = '". CODE_ONLINE_SHOP ."'
+			INNER JOIN debtorsmaster
+				ON salesorders.debtorno = debtorsmaster.debtorno
+			INNER JOIN stockmaster
+				ON salesorderdetails.stkcode = stockmaster.stockid
+			LEFT JOIN locstock AS l2
+				ON l1.stockid = l2.stockid
+					AND l2.loccode = '". CODE_KANTOR ."'
+			WHERE salesorders.quotation = 0
 				AND salesorders.fromstkloc = '". CODE_ONLINE_SHOP ."'
-				AND l1.loccode = '". CODE_ONLINE_SHOP ."'
-				AND salesorderdetails.completed= 0
+				AND salesorderdetails.completed = 0
 			ORDER BY salesorders.orderno, salesorderdetails.stkcode";
 	$Result = DB_query($SQL);
 	

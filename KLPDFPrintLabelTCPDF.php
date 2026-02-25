@@ -38,7 +38,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 		$MainWhere = " INNER JOIN prices 
 							ON stockmaster.stockid = prices.stockid
 						WHERE prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
-							AND prices.currabrev = '" . CURRENCY_CODE . "'
+							AND prices.currabrev = '" . $_SESSION['CompanyRecord']['currencydefault'] . "'
 							AND prices.startdate <= CURRENT_DATE
 							AND prices.enddate > CURRENT_DATE
 							AND prices.debtorno = ''";
@@ -365,17 +365,17 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 					// there's a discount!
 					$PercentageDiscount = $MyRow[0];
 					$DiscountedPrice = "NOW: " . locale_number_format($_POST['Price' . $i] * (1 - ($PercentageDiscount)), 0) . 
-						' ' . CURRENCY_CODE;
-					$Price = "WAS: " . locale_number_format($_POST['Price' . $i], 0) . ' ' . CURRENCY_CODE;
+						' ' . $_SESSION['CompanyRecord']['currencydefault'];
+					$Price = "WAS: " . locale_number_format($_POST['Price' . $i], 0) . ' ' . $_SESSION['CompanyRecord']['currencydefault'];
 				} else {
 					// no discount, price discounted by fixed price
 					$PercentageDiscount = 0;
-					$DiscountedPrice = "ONLY: " . locale_number_format($_POST['Price' . $i], 0) . ' ' . CURRENCY_CODE;
+					$DiscountedPrice = "ONLY: " . locale_number_format($_POST['Price' . $i], 0) . ' ' . $_SESSION['CompanyRecord']['currencydefault'];
 					$Price = "";
 				}
 			} else {
 				// define prices for not discounted items
-				$Price = locale_number_format($_POST['Price' . $i], 0) . ' ' . CURRENCY_CODE;
+				$Price = locale_number_format($_POST['Price' . $i], 0) . ' ' . $_SESSION['CompanyRecord']['currencydefault'];
 			}
 
 			for ($LabelNumber = 0; $LabelNumber < $_POST['LabelsToPrint' . $i]; $LabelNumber++){
