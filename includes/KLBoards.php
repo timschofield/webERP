@@ -3748,6 +3748,7 @@ function OnlineMarketPlacePaymentPending($Days, $RootPath){
 				INNER JOIN currencies
 					ON debtorsmaster.currcode = currencies.currabrev
 			WHERE salesorders.klpaidcash = 0
+				AND salesorderdetails.unitprice > 0
 				AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_MARKETPLACE . ") " .
 				$WhereStatement . "
 			GROUP BY salesorders.orderno,
