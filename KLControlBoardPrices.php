@@ -276,7 +276,7 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $D
 			FROM stockmaster, prices				
 			WHERE stockmaster.stockid = prices.stockid	
 				AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
-				AND prices.currabrev = '". CURRENCY_CODE ."'
+				AND prices.currabrev = '". $_SESSION['CompanyRecord']['currencydefault'] ."'
 				AND prices.startdate <= CURRENT_DATE 
 				AND prices.enddate >= CURRENT_DATE
 				AND stockmaster.categoryid = '". $Stockcat ."'					
@@ -384,7 +384,7 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 			FROM stockmaster, prices				
 			WHERE stockmaster.stockid = prices.stockid	
 				AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
-				AND prices.currabrev = '". CURRENCY_CODE ."'
+				AND prices.currabrev = '". $_SESSION['CompanyRecord']['currencydefault'] ."'
 				AND prices.startdate <= '". $StartDate. "' 
 				AND prices.startdate <= CURRENT_DATE 
 				AND prices.enddate >= CURRENT_DATE
@@ -489,7 +489,7 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath){
 			FROM stockmaster, prices				
 			WHERE stockmaster.stockid = prices.stockid	
 				AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
-				AND prices.currabrev = '". CURRENCY_CODE ."'
+				AND prices.currabrev = '". $_SESSION['CompanyRecord']['currencydefault'] ."'
 				AND prices.startdate <= CURRENT_DATE 
 				AND (prices.enddate >= CURRENT_DATE)
 				AND stockmaster.categoryid = '". $Stockcat ."'					
@@ -506,7 +506,7 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath){
 					FROM prices	
 					WHERE stockmaster.stockid = prices.stockid	
 						AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
-						AND prices.currabrev = '". CURRENCY_CODE ."'
+						AND prices.currabrev = '". $_SESSION['CompanyRecord']['currencydefault'] ."'
 						AND prices.startdate > CURRENT_DATE)
 			ORDER BY (prices.price / (stockmaster.actualcost))";
 
@@ -593,7 +593,7 @@ function PriceWrongRounding($RootPath){
 					FROM prices	
 					WHERE stockmaster.stockid = prices.stockid	
 						AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
-						AND prices.currabrev = '". CURRENCY_CODE ."'
+						AND prices.currabrev = '". $_SESSION['CompanyRecord']['currencydefault'] ."'
 						AND prices.startdate <= CURRENT_DATE 
 						AND prices.enddate >= CURRENT_DATE
 					LIMIT 1) AS retailprice,
@@ -685,7 +685,7 @@ function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath){
 			FROM stockmaster, prices				
 			WHERE stockmaster.stockid = prices.stockid
 				AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
-				AND prices.currabrev = '". CURRENCY_CODE ."'
+				AND prices.currabrev = '". $_SESSION['CompanyRecord']['currencydefault'] ."'
 				AND prices.startdate <= '" . $StartDate . "' 
 				AND prices.enddate >= CURRENT_DATE
 				AND stockmaster.discontinued = 0

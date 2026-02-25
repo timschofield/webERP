@@ -408,7 +408,7 @@ function AssignLocationsToSPG($UserID, $LocationCode) {
 		canview,
 		canupd
 	) VALUES (
-		" . CODE_KANTOR . ",
+		'" . CODE_KANTOR . "',
 		'" . $UserID . "',
 		1,
 		0

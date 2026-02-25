@@ -83,7 +83,7 @@ if (($StockID != '') AND ($ServiceCode != '')){
 			FROM stockmaster, prices, klservicetypes
 			WHERE stockmaster.stockid = prices.stockid	
 				AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
-				AND prices.currabrev = '". CURRENCY_CODE ."'
+				AND prices.currabrev = '". $_SESSION['CompanyRecord']['currencydefault'] ."'
 				AND prices.startdate <= CURRENT_DATE 
 				AND klservicetypes.servicecode='".$ServiceCode."'
 				AND stockmaster.stockid='".$StockID."'

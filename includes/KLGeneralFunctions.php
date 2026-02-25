@@ -367,7 +367,7 @@ function ItemCodeQOH($StockID, $CodeDetail, $Where){
 	}
 
 	if ($Where == "ALL_SHOPS"){
-		$SQL .= " AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . " "; 
+		$SQL .= " AND locations.typeloc IN " . LIST_PHYSICAL_SHOPS_BY_TYPE . " "; 
 	} elseif ($Where == "ALL_SHOPS_AND_ONLINE"){
 		$SQL .= " AND locations.typeloc IN " . LIST_ALL_SHOPS_BY_TYPE . " "; 
 	} elseif ($Where == "ALL"){
@@ -1857,8 +1857,9 @@ function ChangeGLAccountCode($NewGL, $OldGL) {
 		ChangeFieldInTable("companies", "creditorsact", $OldGL, $NewGL);
 		ChangeFieldInTable("companies", "payrollact", $OldGL, $NewGL);
 		ChangeFieldInTable("companies", "grnact", $OldGL, $NewGL);
-		ChangeFieldInTable("companies", "exchangediffact", $OldGL, $NewGL);
+		ChangeFieldInTable("companies", "salesexchangediffact", $OldGL, $NewGL);
 		ChangeFieldInTable("companies", "purchasesexchangediffact", $OldGL, $NewGL);
+		ChangeFieldInTable("companies", "currencyexchangediffact", $OldGL, $NewGL);
 		ChangeFieldInTable("companies", "retainedearnings", $OldGL, $NewGL);
 		ChangeFieldInTable("companies", "freightact", $OldGL, $NewGL);
 		ChangeFieldInTable("companies", "commissionsact", $OldGL, $NewGL);

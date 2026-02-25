@@ -183,7 +183,7 @@ function RetailTypePayments($TypeReport, $MaxDays) {
 function SPGPerformanceAllShops($NumDaysA, $NumDaysB, $NumDaysC) {
 	$SQL = "SELECT locations.cashsalecustomer
 			FROM locations
-			WHERE locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
+			WHERE locations.typeloc IN " . LIST_PHYSICAL_SHOPS_BY_TYPE . "
 			ORDER BY locations.zone,
 				locations.loccode";
 	$Result = DB_query($SQL);
@@ -413,7 +413,7 @@ function SPGPerformanceMonthy(){
 	WHERE 
 		so.orddate >= '". $Last60D ."'
 		AND so.orddate <= '". $YesterdayA ."'
-		AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
+		AND locations.typeloc IN " . LIST_PHYSICAL_SHOPS_BY_TYPE . "
 	GROUP BY 
 		locations.zone,
 		locations.loccode,
@@ -557,7 +557,7 @@ function SPGPerformanceWeekly(){
 		ON so.salesperson = salesman.salesmancode
 	WHERE so.orddate >= '". $Last30D ."'
 		AND so.orddate <= '". $YesterdayA ."'
-		AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
+		AND locations.typeloc IN " . LIST_PHYSICAL_SHOPS_BY_TYPE . "
 	GROUP BY 
 		locations.zone,
 		locations.loccode,

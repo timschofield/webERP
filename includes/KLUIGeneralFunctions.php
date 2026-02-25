@@ -6,7 +6,6 @@
  * 
  * Alphabetical list of functions:
  * - FieldToSelectOneDepartment() - Creates a dropdown for selecting a department
- * - FieldToSelectOneGLAccount() - Creates a dropdown for selecting GL accounts
  * - FieldToSelectOneKPIConcept() - Creates a dropdown for selecting KPI concepts
  * - FieldToSelectOneMaintenanceType() - Creates a dropdown for selecting maintenance types
  * - FieldToSelectOneRetailPartner() - Creates a dropdown for selecting retail partners
@@ -66,117 +65,6 @@ function FieldToSelectOneDepartment($VariableName, $SelectedValue, $Label = '', 
 	return $HTML;
 }
 
-
-
-function FieldToSelectOneGLAccount($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
-	if ($Filter == 'PTADU_ALL') {
-		$SuffixPT = 'ADU';
-		$WhereUser = '';
-	}
-	elseif ($Filter == 'PTADU_VIEW') {
-		$SuffixPT = 'ADU';
-		$WhereUser = 'AND glaccountusers.canview=1';
-	}
-	elseif ($Filter == 'PTADU_UPDATE') {
-		$SuffixPT = 'ADU';
-		$WhereUser = 'AND glaccountusers.canupd=1';
-	}
-	elseif ($Filter == 'PTSMH_ALL') {
-		$SuffixPT = 'SMH';
-		$WhereUser = '';
-	}
-	elseif ($Filter == 'PTSMH_VIEW') {
-		$SuffixPT = 'SMH';
-		$WhereUser = 'AND glaccountusers.canview=1';
-	}
-	elseif ($Filter == 'PTSMH_UPDATE') {
-		$SuffixPT = 'SMH';
-		$WhereUser = 'AND glaccountusers.canupd=1';
-	}
-	elseif ($Filter == 'PTBB_ALL') {
-		$SuffixPT = 'BB';
-		$WhereUser = '';
-	}
-	elseif ($Filter == 'PTBB_VIEW') {
-		$SuffixPT = 'BB';
-		$WhereUser = 'AND glaccountusers.canview=1';
-	}
-	elseif ($Filter == 'PTBB_UPDATE') {
-		$SuffixPT = 'BB';
-		$WhereUser = 'AND glaccountusers.canupd=1';
-	}
-	elseif ($Filter == 'POIK_ALL') {
-		$SuffixPT = 'IK';
-		$WhereUser = '';
-	}
-	elseif ($Filter == 'POIK_VIEW') {
-		$SuffixPT = 'IK';
-		$WhereUser = 'AND glaccountusers.canview=1';
-	}
-	elseif ($Filter == 'POIK_UPDATE') {
-		$SuffixPT = 'IK';
-		$WhereUser = 'AND glaccountusers.canupd=1';
-	}
-	elseif ($Filter == 'POPI_ALL') {
-		$SuffixPT = 'PI';
-		$WhereUser = '';
-	}
-	elseif ($Filter == 'POPI_VIEW') {
-		$SuffixPT = 'PI';
-		$WhereUser = 'AND glaccountusers.canview=1';
-	}
-	elseif ($Filter == 'POPI_UPDATE') {
-		$SuffixPT = 'PI';
-		$WhereUser = 'AND glaccountusers.canupd=1';
-	}
-	elseif ($Filter == 'ALL') {
-		$SuffixPT = '';
-		$WhereUser = '';
-	}
-	elseif ($Filter == 'VIEW') {
-		$SuffixPT = '';
-		$WhereUser = 'AND glaccountusers.canview=1';
-	}
-	elseif ($Filter == 'UPDATE') {
-		$SuffixPT = '';
-		$WhereUser = 'AND glaccountusers.canupd=1';
-	}
-	else {
-		$SuffixPT = '';
-		$WhereUser = '';
-	}
-	
-	$SQL = "SELECT chartmaster" . $SuffixPT . ".accountcode,
-				chartmaster" . $SuffixPT . ".accountname
-			FROM chartmaster" . $SuffixPT . " 
-			INNER JOIN glaccountusers 
-				ON glaccountusers.accountcode=chartmaster" . $SuffixPT . ".accountcode 
-				AND glaccountusers.userid='" . $_SESSION['UserID'] . "' ". 
-				$WhereUser . " 
-			ORDER BY chartmaster" . $SuffixPT . ".accountcode";
-
-	$Result = DB_query($SQL);
-
-	$HTML = '<field>
-				<label for="' . $VariableName . '">' . $Label . ':</label>
-				<select';
-	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
-	$HTML .= 'name="' . $VariableName . '">
-				<fieldhelp>' . $HelpText . '</fieldhelp>';
-	
-	while ($MyRow = DB_fetch_array($Result)) {
-		$TextOption = $MyRow['accountcode'] . ' ' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false);
-		if ($MyRow['accountcode'] == $SelectedValue) {
-			$HTML .= '<option selected="selected" value="' . $MyRow['accountcode'] . '">' . $TextOption . '</option>';
-		} 
-		else {
-			$HTML .= '<option value="' . $MyRow['accountcode'] . '">' . $TextOption . '</option>';
-		}
-	}
-	$HTML .= '</select>
-			</field>';
-	return $HTML;
-}
 
 function FieldToSelectOneKPI($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 

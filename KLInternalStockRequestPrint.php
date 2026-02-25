@@ -252,8 +252,6 @@ function DisplayOptions() {
 
 	echo '<fieldset>';
 	echo '<legend>' . __('Selection Criteria') . '</legend>';
-	// Assuming FieldToSelectOneLocation is a custom function defined elsewhere
-	// Make sure it's included or defined.
 	echo FieldToSelectOneLocation("LocationForm", $_POST['LocationForm'], __('Location from'), '', 'CANVIEW', 1, true, false);
 	echo '</fieldset>';
 

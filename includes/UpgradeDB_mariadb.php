@@ -126,24 +126,31 @@ function NewModule($Link, $Report, $Name, $Sequence) {
 	$SQL = "SELECT modulelink FROM modules WHERE modulelink='" . $Link . "'";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) == 0) {
-		$SQL = "UPDATE `modules` SET sequence=sequence+1
-						WHERE sequence>='" . $Sequence . "'";
+		$SQL = "SELECT secroleid FROM securityroles";
+		$Result = DB_query($SQL);
+		while ($MyRow = DB_fetch_array($Result)) {
+			$SQL = "UPDATE `modules` SET sequence=sequence+1
+							WHERE sequence>='" . $Sequence . "'
+								AND secroleid='" . $MyRow['secroleid'] . "'";
 			$Response = executeSQL($SQL, false);
-		$SQL = "INSERT INTO `modules` (`modulelink`,
-										`reportlink`,
-										`modulename`,
-										`sequence`
-									) VALUES (
-										'" . $Link . "',
-										'" . $Report . "',
-										'" . $Name . "',
-										'" . $Sequence . "'
-									)";
+			$SQL = "INSERT INTO `modules` ( `secroleid`,
+											`modulelink`,
+											`reportlink`,
+											`modulename`,
+											`sequence`
+										) VALUES (
+											'" . $MyRow['secroleid'] . "',
+											'" . $Link . "',
+											'" . $Report . "',
+											'" . $Name . "',
+											'" . $Sequence . "'
+										)";
 			$Response = executeSQL($SQL, false);
-		if ($Response == 0) {
-			OutputResult(__('The module') . ' ' . $Name . ' ' . __('has been inserted'), 'success');
-		} else {
-			OutputResult(__('The module') . ' ' . $Name . ' ' . __('could not be inserted') . '<br />' . $SQL, 'error');
+			if ($Response == 0) {
+				OutputResult(__('The module') . ' ' . $Name . ' ' . __('has been inserted'), 'success');
+			} else {
+				OutputResult(__('The module') . ' ' . $Name . ' ' . __('could not be inserted') . '<br />' . $SQL, 'error');
+			}
 		}
 	} else {
 		OutputResult(__('The module') . ' ' . $Name . ' ' . __('already exists'), 'info');
@@ -155,28 +162,35 @@ function NewMenuItem($Link, $Section, $Caption, $URL, $Sequence) {
 	$SQL = "SELECT modulelink FROM menuitems WHERE modulelink='" . $Link . "' AND menusection='" . $Section . "' AND url='" . $URL . "'";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) == 0) {
-		$SQL = "UPDATE `menuitems` SET sequence=sequence+1
-						WHERE sequence>='" . $Sequence . "'
-							AND modulelink='" . $Link . "'
-							AND menusection='" . $Section . "'";
+		$SQL = "SELECT secroleid FROM securityroles";
+		$Result = DB_query($SQL);
+		while ($MyRow = DB_fetch_array($Result)) {
+			$SQL = "UPDATE `menuitems` SET sequence=sequence+1
+							WHERE sequence>='" . $Sequence . "'
+								AND secroleid='" . $MyRow['secroleid'] . "'
+								AND modulelink='" . $Link . "'
+								AND menusection='" . $Section . "'";
 			$Response = executeSQL($SQL, false);
-		$SQL = "INSERT INTO `menuitems` (`modulelink`,
-											`menusection`,
-											`caption`,
-											`url`,
-											`sequence`
-										) VALUES (
-											'" . $Link . "',
-											'" . $Section . "',
-											'" . $Caption . "',
-											'" . $URL . "',
-											'" . $Sequence . "'
-										)";
+			$SQL = "INSERT INTO `menuitems` (`secroleid`,
+												`modulelink`,
+												`menusection`,
+												`caption`,
+												`url`,
+												`sequence`
+											) VALUES (
+												'" . $MyRow['secroleid'] . "',
+												'" . $Link . "',
+												'" . $Section . "',
+												'" . $Caption . "',
+												'" . $URL . "',
+												'" . $Sequence . "'
+											)";
 			$Response = executeSQL($SQL, false);
-		if ($Response == 0) {
-			OutputResult(__('The menu link') . ' ' . $Caption . ' ' . __('has been inserted'), 'success');
-		} else {
-			OutputResult(__('The menu link') . ' ' . $Caption . ' ' . __('could not be inserted') . '<br />' . $SQL, 'error');
+			if ($Response == 0) {
+				OutputResult(__('The menu link') . ' ' . $Caption . ' ' . __('has been inserted'), 'success');
+			} else {
+				OutputResult(__('The menu link') . ' ' . $Caption . ' ' . __('could not be inserted') . '<br />' . $SQL, 'error');
+			}
 		}
 	} else {
 		OutputResult(__('The menu link') . ' ' . $Caption . ' ' . __('already exists'), 'info');
@@ -207,7 +221,7 @@ function RemoveMenuItem($Link, $Section, $Caption, $URL) {
 }
 
 function UpdateMenuCaption($OldCaption, $NewCaption) {
-	$SQL = "UPDATE menuitems SET caption = '" . $NewCaption . "' WHERE  caption = '" . $OldCaption . "'"; 
+	$SQL = "UPDATE menuitems SET caption = '" . $NewCaption . "' WHERE  caption = '" . $OldCaption . "'";
 	$Response = executeSQL($SQL, false);
 	if ($Response == 0) {
 		OutputResult(__('The menu caption') . ' ' . $OldCaption . ' ' . __('has been updated to') . ' ' . $NewCaption, 'success');
@@ -500,13 +514,13 @@ function DeleteConfigValue($ConfName) {
 	}
 }
 
-function CreateTable($Table, $SQL) {
+function CreateTable($Table, $SQL, $CharacterSet='utf8mb4') {
 	$ShowSQL = "SHOW TABLES WHERE Tables_in_" . $_SESSION['DatabaseName'] . "='" . $Table . "'";
 	$Result = DB_query($ShowSQL);
 
 	if (DB_num_rows($Result) == 0) {
 		DB_IgnoreForeignKeys();
-		$Response = executeSQL($SQL . ' ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci', false);
+		$Response = executeSQL($SQL . ' ENGINE=InnoDB DEFAULT CHARSET=' . $CharacterSet, false);
 		DB_ReinstateForeignKeys();
 		if ($Response == 0) {
 			OutputResult(__('The table') . ' ' . $Table . ' ' . __('has been created'), 'success');

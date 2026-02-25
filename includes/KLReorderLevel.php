@@ -208,11 +208,11 @@ function KL_DailyRLZeroNotAvailable($ShowMessages, $UpdateDB, $RootPath, $EmailT
 * 
 * @return string - Updated email text containing results of operations
 **************************************************************************************************************/
-function KL_DailyRLAdjustmentsForPackaging($ShowMessages, $UpdateDB, $RootPath, $EmailText){
+function KL_DailyRLAdjustmentsForPackaging($ShowMessages, $UpdateDB, $EmailText){
 
-	$EmailText = AdjustPackaging(60, 'SHOPKL', $ShowMessages, $UpdateDB, $RootPath, $EmailText);
-	$EmailText = AdjustPackaging(60, 'SHOPBL', $ShowMessages, $UpdateDB, $RootPath, $EmailText);
-	$EmailText = AdjustPackagingGudang('PACKU', FACTOR_GUDANG_PACKAGING, $ShowMessages, $UpdateDB, $RootPath, $EmailText);
+	$EmailText = AdjustPackaging(60, 'SHOPKL', $ShowMessages, $UpdateDB, $EmailText);
+	$EmailText = AdjustPackaging(60, 'SHOPBL', $ShowMessages, $UpdateDB, $EmailText);
+	$EmailText = AdjustPackagingGudang('PACKU', FACTOR_GUDANG_PACKAGING, $ShowMessages, $UpdateDB, $EmailText);
 	
 	return $EmailText;
 }
@@ -246,14 +246,14 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $UpdateDB, $RootPath, 
 				needed_loc.loccode AS locationneeded
 			FROM stockmaster sm
 			INNER JOIN locstock kantor_stock ON sm.stockid = kantor_stock.stockid 
-				AND kantor_stock.loccode = " . CODE_KANTOR . "
+				AND kantor_stock.loccode = '" . CODE_KANTOR . "'
 				AND kantor_stock.quantity = 0
 			INNER JOIN (
 				SELECT ls1.stockid,
 					MAX(CASE WHEN ls1.quantity < ls1.reorderlevel THEN ls1.loccode END) AS loccode
 				FROM locstock ls1
 				INNER JOIN locations loc1 ON ls1.loccode = loc1.loccode
-				WHERE loc1.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
+				WHERE loc1.typeloc IN " . LIST_PHYSICAL_SHOPS_BY_TYPE . "
 				GROUP BY ls1.stockid
 				HAVING COUNT(CASE WHEN ls1.quantity < ls1.reorderlevel THEN 1 END) > 0
 					AND COUNT(CASE WHEN ls1.quantity > 0 THEN 1 END) > 0
@@ -347,7 +347,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $UpdateDB, $RootPath, 
 											GROUP BY so.fromstkloc
 										) sales_data ON ls.loccode = sales_data.fromstkloc
 										WHERE ls.stockid = '" . $MyRow['stockid'] . "'
-											AND loc.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
+											AND loc.typeloc IN " . LIST_PHYSICAL_SHOPS_BY_TYPE . "
 											AND ls.reorderlevel > 0
 										ORDER BY loc.priority ASC, ".
 												$OrderBy ."
@@ -475,7 +475,7 @@ function WorstLocationForItem($StockID, $Kind, $maxdays){
 			) sales_count ON ls.loccode = sales_count.fromstkloc
 			WHERE ls.stockid = '" . $StockID . "'"
 			. $QuantityCondition . "
-			  AND loc.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
+			  AND loc.typeloc IN " . LIST_PHYSICAL_SHOPS_BY_TYPE . "
 			ORDER BY loc.priority DESC, sales_count ASC
 			LIMIT 1";
 			
@@ -512,7 +512,7 @@ function QtyAvailable($StockID, $Location){
 				FROM locstock ls
 				INNER JOIN locations loc ON ls.loccode = loc.loccode
 				WHERE ls.stockid = '" . $StockID . "'
-					AND loc.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE;
+					AND loc.typeloc IN " . LIST_PHYSICAL_SHOPS_BY_TYPE;
 	} elseif ($Location == "ALLSHOPSANDONLINE") {
 		// Join with locations table only when needed for type filtering
 		$SQL = "SELECT SUM(ls.quantity) AS total
@@ -986,7 +986,7 @@ function SetReorderLevel($Reason, $StockID, $loccode, $OldRL, $NewRL, $UpdateDB)
 						WHERE stockid = '". $StockID ."'
 							AND loccode IN (SELECT locations.loccode
 											FROM locations
-											WHERE locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . ")";
+											WHERE locations.typeloc IN " . LIST_PHYSICAL_SHOPS_BY_TYPE . ")";
 			} else {
 				$SQL = "UPDATE locstock
 						SET reorderlevel = '" . $NewRL ."'
@@ -1017,7 +1017,7 @@ function SetReorderLevel($Reason, $StockID, $loccode, $OldRL, $NewRL, $UpdateDB)
 }
 
 /**************************************************************************************************************
-* Adjusts reorder levels for the online shop (TOKWS).
+* Adjusts reorder levels for the online shop.
 * First, it resets all reorder levels for the online shop to zero.
 * Then, it sets the reorder level for items based on the total quantity in uncompleted sales orders.
 *
@@ -1038,7 +1038,7 @@ function OnlineReorderLevelAdjustments($ShowMessages, $UpdateDB, $RootPath, $Ema
 	if ($UpdateDB){
 		$RLSQL = "UPDATE locstock
 					SET reorderlevel = 0 
-					WHERE reorderlevel > 0 AND loccode = ". CODE_ONLINE_SHOP ."";
+					WHERE reorderlevel > 0 AND loccode = '". CODE_ONLINE_SHOP ."'";
 		$ErrMsg =__('Error in function OnlineReorderLevelAdjustments');
 		$Result = DB_query($RLSQL,$ErrMsg,'',true);		
 		if ($ShowMessages){
@@ -1055,8 +1055,8 @@ function OnlineReorderLevelAdjustments($ShowMessages, $UpdateDB, $RootPath, $Ema
 			FROM salesorders so
 			INNER JOIN salesorderdetails sod ON so.orderno = sod.orderno
 			INNER JOIN locstock ls ON sod.stkcode = ls.stockid
-			WHERE ls.loccode = ". CODE_ONLINE_SHOP ."
-				AND so.fromstkloc = ". CODE_ONLINE_SHOP ."
+			WHERE ls.loccode = '". CODE_ONLINE_SHOP ."'
+				AND so.fromstkloc = '". CODE_ONLINE_SHOP ."'
 				AND so.quotation = 0
 				AND sod.completed = 0
 			GROUP BY sod.stkcode, ls.reorderlevel
@@ -1085,7 +1085,7 @@ function OnlineReorderLevelAdjustments($ShowMessages, $UpdateDB, $RootPath, $Ema
 		$i = 1;
 		while ($MyRow = DB_fetch_array($Result)) {
 			/* set the RL to the total of qty requested by customers */
-			SetReorderLevel("OnlineSales", $MyRow['stkcode'],'TOKWS', 0, $MyRow['totalqty'], $UpdateDB);
+			SetReorderLevel("OnlineSales", $MyRow['stkcode'],CODE_ONLINE_SHOP, 0, $MyRow['totalqty'], $UpdateDB);
 			if ($ShowMessages){
 				$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $MyRow['stkcode'] . '">' . $MyRow['stkcode'] . '</a>';
 				echo '<tr class="striped_row">
@@ -1128,7 +1128,7 @@ function OnlineReorderLevelAdjustments($ShowMessages, $UpdateDB, $RootPath, $Ema
 * 
 * @return string - Updated email text containing results of operations.
 **************************************************************************************************************/
-function AdjustPackagingGudang($GudangCode, $FactorGudangPackaging, $ShowMessages, $UpdateDB, $RootPath, $EmailText){
+function AdjustPackagingGudang($GudangCode, $FactorGudangPackaging, $ShowMessages, $UpdateDB, $EmailText){
 
 	$Message = "Adjusting RL for Packaging Gudang " . $GudangCode ;
 	if ($ShowMessages){
@@ -1215,7 +1215,7 @@ function AdjustPackagingGudang($GudangCode, $FactorGudangPackaging, $ShowMessage
 * 
 * @return string|void - Updated email text, or void if ShopType is invalid.
 **************************************************************************************************************/
-function AdjustPackaging($DaysSales, $ShopType, $ShowMessages, $UpdateDB, $RootPath, $EmailText){
+function AdjustPackaging($DaysSales, $ShopType, $ShowMessages, $UpdateDB, $EmailText){
 	
 	if ($ShopType == 'SHOPKL'){
 		$ListOfItems = LIST_ITEMS_KAPAL_LAUT_PACKAGING;
@@ -1243,7 +1243,7 @@ function AdjustPackaging($DaysSales, $ShopType, $ShowMessages, $UpdateDB, $RootP
 		while ($MyLoc = DB_fetch_array($Resultloc)) {
 			$iItem = 0;
 			while ($iItem < $CountItem){
-				$EmailText = AdjustPackagingItemByShop($Items[$iItem], $MyLoc['loccode'], $DaysSales, $ShowMessages, $UpdateDB, $RootPath, $EmailText);
+				$EmailText = AdjustPackagingItemByShop($Items[$iItem], $MyLoc['loccode'], $DaysSales, $ShowMessages, $UpdateDB, $EmailText);
 				$iItem++;
 			}
 		}
@@ -1266,7 +1266,7 @@ function AdjustPackaging($DaysSales, $ShopType, $ShowMessages, $UpdateDB, $RootP
 * 
 * @return string - Updated email text containing results of operations.
 **************************************************************************************************************/
-function AdjustPackagingItemByShop($Item, $Shop, $DaysSales, $ShowMessages, $UpdateDB, $RootPath, $EmailText) {
+function AdjustPackagingItemByShop($Item, $Shop, $DaysSales, $ShowMessages, $UpdateDB, $EmailText) {
 
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', -$DaysSales));
 	$SQL = "SELECT loc.locationname,

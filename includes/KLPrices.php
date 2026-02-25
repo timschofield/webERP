@@ -373,7 +373,7 @@ function SendEmailChangePriceReadyForStep02($EmailText){
 					WHERE locstock.stockid = stockmaster.stockid
 					AND locstock.loccode = locations.loccode
 					AND locstock.loccode NOT IN " . LIST_KANTOR_LOCATIONS . "
-					AND locations.typeloc NOT IN " . LIST_BALI_SHOPS_BY_TYPE . "
+					AND locations.typeloc NOT IN " . LIST_PHYSICAL_SHOPS_BY_TYPE . "
 					AND locstock.loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohotherlocs,
 				(SELECT sum(quantity)
 					FROM locstock
@@ -415,7 +415,7 @@ function SendEmailMoveToDiscountReadyForStep02($TypeDiscount, $EmailText){
 					WHERE locstock.stockid = stockmaster.stockid
 					AND locstock.loccode = locations.loccode
 					AND locstock.loccode NOT IN " . LIST_KANTOR_LOCATIONS . "
-					AND locations.typeloc NOT IN " . LIST_BALI_SHOPS_BY_TYPE . "
+					AND locations.typeloc NOT IN " . LIST_PHYSICAL_SHOPS_BY_TYPE . "
 					AND locstock.loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . ") AS qohotherlocs,
 				(SELECT sum(quantity)
 					FROM locstock

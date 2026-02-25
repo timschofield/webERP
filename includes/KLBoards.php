@@ -1376,7 +1376,7 @@ function FinishedStockDistributionByShopAndCategory(){
 						AND m2.categoryid = 'DISC8G'
 						AND l2.reorderlevel != 0) AS modelsDISC80GE
 			FROM locations
-			WHERE locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
+			WHERE locations.typeloc IN " . LIST_PHYSICAL_SHOPS_BY_TYPE . "
 			ORDER BY locations.locationname";
 
 	$Result = DB_query($SQL);
@@ -2041,7 +2041,7 @@ function ItemsWithoutRetailPrice($StockCat, $factorRetail, $RootPath){
 								FROM prices
 								WHERE stockmaster.stockid = prices.stockid
 									AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
-									AND prices.currabrev = '". CURRENCY_CODE ."'
+									AND prices.currabrev = '". $_SESSION['CompanyRecord']['currencydefault'] ."'
 									AND prices.startdate <= CURRENT_DATE
 									AND prices.enddate >= CURRENT_DATE)";
 
@@ -3748,6 +3748,7 @@ function OnlineMarketPlacePaymentPending($Days, $RootPath){
 				INNER JOIN currencies
 					ON debtorsmaster.currcode = currencies.currabrev
 			WHERE salesorders.klpaidcash = 0
+				AND salesorderdetails.unitprice > 0
 				AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_MARKETPLACE . ") " .
 				$WhereStatement . "
 			GROUP BY salesorders.orderno,
