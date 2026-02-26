@@ -41,15 +41,15 @@
 
 function AddAttributesToField($TabIndex, $Required, $AutoFocus) {
 	$Attributes = ' ';
-	if (isset($AutoFocus) && $AutoFocus) {
+	if (isset($AutoFocus) and $AutoFocus) {
 		$Attributes .= 'autofocus="autofocus" ';
 	}
 
-	if (isset($Required) && $Required) {
+	if (isset($Required) and $Required) {
 		$Attributes .= 'required="required" ';
 	}
 
-	if (isset($TabIndex) && $TabIndex != '') {
+	if (isset($TabIndex) and $TabIndex != '') {
 		$Attributes .= 'tabindex="' . $TabIndex . '" ';
 	}
 	return $Attributes;
@@ -65,7 +65,7 @@ function FieldToSelectOneEntryFromArray($Array, $VariableName, $SelectedValue, $
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
 
 	foreach ($Array as $Entry => $Name) {
-		if (isset($SelectedValue) && (strtoupper($SelectedValue) == strtoupper($Entry))) {
+		if (isset($SelectedValue) and (strtoupper($SelectedValue) == strtoupper($Entry))) {
 			$HTML .= '<option selected="selected" value="' . $Entry . '">' . $Name . '</option>';
 		} else {
 			$HTML .= '<option value="' . $Entry . '">' . $Name . '</option>';
@@ -99,7 +99,7 @@ function FieldToSelectOneCurrency($VariableName, $SelectedValue, $Label = '', $H
 	}
 
 	while ($MyRow = DB_fetch_array($Result)) {
-		if (isset($SelectedValue) && ($MyRow['currabrev'] == $SelectedValue)) {
+		if (isset($SelectedValue) and ($MyRow['currabrev'] == $SelectedValue)) {
 			$HTML .= '<option selected="selected" value="' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
 		} else {
 			$HTML .= '<option value="' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
@@ -630,7 +630,7 @@ function FieldToSelectOneUser($VariableName, $SelectedValue, $Label = '', $HelpT
 	}
 
 	while ($MyRow = DB_fetch_array($Result)) {
-		if (isset($SelectedValue) && ($MyRow['userid'] == $SelectedValue)) {
+		if (isset($SelectedValue) and ($MyRow['userid'] == $SelectedValue)) {
 			$HTML .= '<option selected="selected" value="' . $MyRow['userid'] . '">' . $MyRow['userid'] . '</option>';
 		} else {
 			$HTML .= '<option value="' . $MyRow['userid'] . '">' . $MyRow['userid'] . '</option>';
@@ -677,7 +677,7 @@ function FieldToSelectMultipleLocations($VariableName, $SelectedValue, $Label = 
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
-		if (isset($SelectedValue) AND in_array($MyRow['loccode'], $SelectedValue)) {
+		if (isset($SelectedValue) and in_array($MyRow['loccode'], $SelectedValue)) {
 			$HTML .= '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 		} else {
 			$HTML .= '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
@@ -713,7 +713,7 @@ function FieldToSelectMultiplePeriods($VariableName, $FirstSelectedValue, $LastS
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
-		if (isset($FirstSelectedValue) AND $MyRow['periodno'] >= $FirstSelectedValue AND $MyRow['periodno'] <= $LastSelectedValue) {
+		if (isset($FirstSelectedValue) and $MyRow['periodno'] >= $FirstSelectedValue and $MyRow['periodno'] <= $LastSelectedValue) {
 			$HTML .= '<option selected="selected" value="' . $MyRow['periodno'] . '">' . __(MonthAndYearFromSQLDate($MyRow['lastdate_in_period'])) . '</option>';
 		} else {
 			$HTML .= '<option value="' . $MyRow['periodno'] . '">' . __(MonthAndYearFromSQLDate($MyRow['lastdate_in_period'])) . '</option>';
@@ -740,7 +740,7 @@ function FieldToSelectMultipleStockCategories($VariableName, $SelectedValue, $La
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
-		if (isset($SelectedValue) AND in_array($MyRow['categoryid'], $SelectedValue)) {
+		if (isset($SelectedValue) and in_array($MyRow['categoryid'], $SelectedValue)) {
 			$HTML .= '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
 		} else {
 			$HTML .= '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
@@ -792,6 +792,9 @@ function FieldToSelectFromTwoOptions($ValueOption1, $LabelOption1,
 		<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
 	$HTML .= 'name="' . $VariableName . '">';
+	if ($HelpText != '') {
+	    $HTML .= '<fieldhelp>' . $HelpText . '</fieldhelp>';
+	}
 	if ($SelectedValue == $ValueOption1) {
 		$HTML .= '<option selected="selected" value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
 				<option value="' . $ValueOption2 . '">' . $LabelOption2 . '</option>';
@@ -815,6 +818,9 @@ function FieldToSelectFromThreeOptions($ValueOption1, $LabelOption1,
 		<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
 	$HTML .= 'name="' . $VariableName . '">';
+	if ($HelpText != '') {
+	    $HTML .= '<fieldhelp>' . $HelpText . '</fieldhelp>';
+	}
 	if ($SelectedValue == $ValueOption1) {
 		$HTML .= '<option selected="selected" value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
 				<option value="' . $ValueOption2 . '">' . $LabelOption2 . '</option>
@@ -846,6 +852,9 @@ function FieldToSelectFromFourOptions($ValueOption1, $LabelOption1,
 		<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
 	$HTML .= 'name="' . $VariableName . '">';
+	if ($HelpText != '') {
+	    $HTML .= '<fieldhelp>' . $HelpText . '</fieldhelp>';
+	}
 	if ($SelectedValue == $ValueOption1) {
 		$HTML .= '<option selected="selected" value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
 				<option value="' . $ValueOption2 . '">' . $LabelOption2 . '</option>
@@ -887,6 +896,9 @@ function FieldToSelectFromFiveOptions($ValueOption1, $LabelOption1,
 		<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
 	$HTML .= 'name="' . $VariableName . '">';
+	if ($HelpText != '') {
+	    $HTML .= '<fieldhelp>' . $HelpText . '</fieldhelp>';
+	}
 	if ($SelectedValue == $ValueOption1) {
 		$HTML .= '<option selected="selected" value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
 				<option value="' . $ValueOption2 . '">' . $LabelOption2 . '</option>
