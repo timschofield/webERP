@@ -86,6 +86,14 @@ if (!in_array('libxml', $Extensions)) {
 	echo '<div class="success">' . __('The libxml extension is correctly installed') . '</div>';
 }
 
+// Check the xml extension
+if (!in_array('xml', $Extensions)) {
+	$InputError = 1;
+	echo '<div class="error">' . __('The xml extension is not available in your PHP') . '</div>';
+} else {
+	echo '<div class="success">' . __('The xml extension is correctly installed') . '</div>';
+}
+
 // Check that the extension used for DBMS connections is installed
 if (!in_array('mysqli', $Extensions)) {
 	$InputError = 1;
