@@ -9,6 +9,7 @@
 /* This script is for maintenance of the system parameters. */
 
 require(__DIR__ . '/includes/session.php');
+include('includes/UIGeneralFunctions.php');
 
 $Title = __('System Parameters');
 $ViewTopic = 'CreatingNewSystem';
@@ -391,14 +392,18 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['LastDayOfWeek'] != $_POST['X_LastDayOfWeek']){
 			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_LastDayOfWeek'] . "' WHERE confname='LastDayOfWeek'";
 		}
-// KL RICARD
+// -------------------------------------
+// KL RICARD  Specific Settings for PTADU webERP
+// -------------------------------------
 		if ($_SESSION['ShopMode'] != $_POST['X_ShopMode'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopMode']."' WHERE confname = 'ShopMode'";
 		}
 		if ($_SESSION['ShopManagerEmail'] != $_POST['X_ShopManagerEmail'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '" . DB_escape_string($_POST['X_ShopManagerEmail']) ."' WHERE confname = 'ShopManagerEmail'";
 		}
-// KL RICARD END
+// -------------------------------------
+// KL RICARD  Specific Settings for PTADU webERP
+// -------------------------------------
 		$ErrMsg =  __('The system configuration could not be updated because');
 		if (sizeof($SQL) > 1 ) {
 			DB_Txn_Begin();
@@ -431,7 +436,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 // Create a "super-section", although technically redundant as there will be only one,
 // it will force the following "sub-sections" to left justify for visual clarity
 echo '<fieldset>
-		<legend>', __('Configuration Options'), '</legend>';
+		<legend>', __('Standard webERP Configuration Options'), '</legend>';
 
 // -------------------------------------
 // ---------- ACCOUNTING ---------------
@@ -1485,39 +1490,29 @@ echo '</fieldset><br />';
 
 echo '</fieldset><br />';
 
-// KL RICARD; Kl Specific Settings
+// -------------------------------------
+// KL RICARD  Specific Settings for PTADU webERP
+// -------------------------------------
 
 echo '<fieldset>
-		<legend>' . __('KL Specific Settings') . '</legend>';
+		<legend>' . __('ADU webERP Configuration Options') . '</legend>';
 
-// KL RICARD: Moved from ShopParameters.php It is the only setting we are using to check if the Opencart shop is in test or live mode
 echo '<fieldset>
-		<legend>' . __('KL Opencart Online Shop Settings') . '</legend>';
+		<legend>' . __('ADU Opencart Online Shop Settings') . '</legend>';
 
-echo '<field>
-		<label for="X_ShopMode">' . __('Test or Live Mode') . ':</label>
-		<select name="X_ShopMode">';
-		if ($_SESSION['ShopMode']== 'test' OR $AllowDemoMode){
-			echo '<option selected="selected" value="test">' . __('Test') . '</option>
-				<option value="live">' . __('Live') . '</option>';
-		} else {
-			echo '<option value="test">' . __('Test') . '</option>
-				<option selected="selected" value="live">' . __('Live') . '</option>';
-		}
-		echo '</select>
-		<fieldhelp>' . __('Must change this to live mode when the shop is active. No PayPal or credit card transactions will be processed in test mode') . '</fieldhelp>
-	</field>';
-
+// Moved from ShopParameters.php It is the only setting we are using to check if the Opencart shop is in test or live mode
+echo FieldToSelectFromTwoOptions('live', __('Live'), 
+                                'test', __('Test'), 
+                                'X_ShopMode', $_SESSION['ShopMode'], __('Test or Live Mode'),
+								__('Set to live mode when the shop is active. No PayPal or credit card transactions will be processed in test mode'), '', '100', true, false);	
 //Shop Manager Email
-echo '<field>
-		<label for="X_ShopManagerEmail">' . __('Online Shop Manager Email') . ':</label>
-		<input type="email" name="X_ShopManagerEmail" required="required" size="40" maxlength="50" value="' . $_SESSION['ShopManagerEmail'] . '" />
-		<fieldhelp>' . __('Enter the email address of the online shop manager.') . '</fieldhelp>
-	</field>';
+echo FieldToSelectOneEmail('X_ShopManagerEmail', $_SESSION['ShopManagerEmail'], 51, 50, __('Online Shop Manager Email'), __('Enter the email address of the online shop manager.'), 101);
 
 echo '</fieldset>';
-// KL RICARD END: Moved from ShopParameters.php It is the only setting we are using to check if the Opencart shop is in test or live mode
-echo '</fieldset>';
+// -------------------------------------
+// KL RICARD END Specific Settings for PTADU webERP
+// -------------------------------------
+
 
 echo '<div class="centre">
 		<input type="submit" name="submit" value="' . __('Update') . '" />
