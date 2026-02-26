@@ -52,7 +52,6 @@ if (isset($_POST['PostExchangeDifference']) AND is_numeric(filter_number_format(
 
 		$ExchangeDifference = ($CalculatedBalance - filter_number_format($_POST['BankStatementBalance'])) / $CurrencyRow['rate'];
 
-		include('includes/SQL_CommonFunctions.php');
 		$ExDiffTransNo = GetNextTransNo(36);
 		/*Post the exchange difference to the last day of the month prior to current date*/
 		$PostingDate = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, date('m'), 0, date('Y')));
