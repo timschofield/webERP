@@ -52,7 +52,7 @@ echo '<html lang="' , str_replace('_', '-', substr($Language, 0, 5)) , '">
 	<meta http-equiv="Content-Type" content="application/html; charset=utf-8; cache-control: no-cache, no-store, must-revalidate; Pragma: no-cache" />
 	<title>', __('webERP'), ' - ', $Title, '</title>
 	<link rel="icon" href="', $RootPath, '/favicon.ico" type="image/x-icon" />
-	<link href="', $RootPath, '/css/', $_SESSION['Theme'], '/styles.css?version=1.0" rel="stylesheet" type="text/css" media="screen" />
+	<link href="', $RootPath, '/css/', $_SESSION['Theme'], '/styles.css?version=1.1" rel="stylesheet" type="text/css" media="screen" />
 	<link href="', $RootPath, '/css/print.css" rel="stylesheet" type="text/css" media="print" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">';
 echo '	<script async src="', $RootPath, '/javascripts/MiscFunctions.js?version=1.0"></script>' , "\n";
@@ -151,10 +151,23 @@ echo '<div id="Info">
 	</div>';
 
 echo '<div id="ExitIcon">
-		<a data-title="', __('Logout'), '" href="', $RootPath, '/Logout.php" onclick="return confirm(\'', __('Are you sure you wish to logout?'), '\');">
+		<a data-title="', __('Logout'), '" href="#" id="logoutLink">
 			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/quit.png" alt="', __('Logout'), '" />
 		</a>
 	</div>';
+
+echo '<div id="mask"></div>
+	<dialog id="logoutDialog">
+		<div id="DialogContainer">
+			<h3 id="LogoutDialogHeader">', __('Confirm Logout'), '</h3>
+			<p id="LogoutDialogText">', __('Are you sure you wish to logout?'), '</p>
+			<div id="DialogButtonContainer">
+				<button id="cancelLogout">', __('Cancel'), '</button>
+				<button id="confirmLogout">', __('Logout'), '</button>
+			</div>
+		</div>
+	</dialog>';
+echo '<script async src="', $RootPath, '/javascripts/dialogs.js?version=1.0"></script>';
 
 // Fix: Ensure AllowedPageSecurityTokens is an array before counting
 if (isset($_SESSION['AllowedPageSecurityTokens']) && is_array($_SESSION['AllowedPageSecurityTokens']) && count($_SESSION['AllowedPageSecurityTokens']) > 1) {

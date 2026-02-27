@@ -73,3 +73,52 @@ box-shadow:0 0 0;
 #dialog .okButton:hover {
 background-color:#B0C4DE;
 }
+#logoutDialog {
+background:#2A2A2A;
+border-radius:17px;
+width:30%;
+border: 4px solid black;
+padding:0px;
+}
+#LogoutDialogHeader {
+font-size:16px;
+font-weight:bold;
+margin-top: 0;
+padding-left:32px;
+padding-right:4px;
+margin-left:4px;
+background-image:url(images/quit.png);
+background-repeat: no-repeat;
+background-size:24px 24px;
+background-position:5px center;
+background-color:#686868;
+width:93%;
+border-radius:12px;
+color:#E9E9ED;
+}
+#LogoutDialogText {
+color:white;
+font-size:14px;
+}
+#cancelLogout {
+margin-right: 10px;
+padding: 8px 16px;
+cursor: pointer;
+}
+#confirmLogout {
+padding: 8px 16px;
+cursor: pointer;
+background-color: #d9534f;
+color: white;
+border: none;
+border-radius: 3px;
+}
+#DialogButtonContainer {
+margin-top: 20px;
+text-align: right;
+}
+#DialogContainer {
+padding: 20px;
+padding-top:5px;
+padding-left:5px;
+}
