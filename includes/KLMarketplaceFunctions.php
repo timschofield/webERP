@@ -91,8 +91,8 @@ function CalculateCommissionTokopedia($CustomerCode,
 	
 	$Commission = $CommissionTPGlobal + $CommissionTPFreeShipping; // this commission still has PPN
 	// Fix potential divide by zero error by checking denominator is not zero
-	if (PPN_PERCENT != -100) {
-		$Commission = round($Commission / ((100 + PPN_PERCENT) / 100), 0); // this commision already net
+	if ($_SESSION['PPN_Percent'] != -100) {
+		$Commission = round($Commission / ((100 + $_SESSION['PPN_Percent']) / 100), 0); // this commision already net
 	} else {
 		$Commission = 0; // Avoid division by zero
 	}
@@ -157,8 +157,8 @@ function CalculateCommissionShopee($CustomerCode,
 	
 	$Commission = $CommissionTPGlobal + $CommissionTPFreeShipping; // this commission still has PPN
 	// Fix potential divide by zero error by checking denominator is not zero
-	if (PPN_PERCENT != -100) {
-		$Commission = round($Commission / ((100 + PPN_PERCENT) / 100), 0); // this commision already net
+	if ($_SESSION['PPN_Percent'] != -100) {
+		$Commission = round($Commission / ((100 + $_SESSION['PPN_Percent']) / 100), 0); // this commision already net
 	} else {
 		$Commission = 0; // Avoid division by zero
 	}
@@ -183,8 +183,8 @@ function CalculateCommissionLazada($CustomerCode, $OrderNo, $TotalAmount, $Commi
 	// 1,80 from all order for lazada
 	$Commission = round($TotalAmount * $CommissionLazadaPercent / 100, 0); // this commission still includes PPN
 	// Fix potential divide by zero error by checking denominator is not zero
-	if (PPN_PERCENT != -100) {
-		$Commission = round($Commission / ((100 + PPN_PERCENT) / 100), 0); // this commision already net
+	if ($_SESSION['PPN_Percent'] != -100) {
+		$Commission = round($Commission / ((100 + $_SESSION['PPN_Percent']) / 100), 0); // this commision already net
 	} else {
 		$Commission = 0; // Avoid division by zero
 	}

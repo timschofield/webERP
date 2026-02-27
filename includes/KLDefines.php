@@ -6,7 +6,6 @@ define("CUSTOMER_TYPE_WHOLESALE", "3,4,5");
 define("CUSTOMER_TYPE_WEBSITE", "9");
 define("CUSTOMER_TYPE_MARKETPLACE", "10");
 define("RETAIL_PRICE_LIST", "RT");
-define("PPN_PERCENT", 11);
 
 /* Defines about Purchase Orders */
 define("COMPANY_NAME_FOR_PO", "PT. ANGIN DINGIN UTARA");

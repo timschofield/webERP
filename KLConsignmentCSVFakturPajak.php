@@ -95,7 +95,7 @@ function submit($CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $NomorSeriF
 				$LineType = 'OF';
 				$KodeObjek = $MyRow['stockid'];
 				$Nama = $MyRow['description'];
-				$HargaSatuan = round(($MyRow['consignmentsale']/$MyRow['qty']) / ((100 + PPN_PERCENT) / 100),$DecimalDigits);
+				$HargaSatuan = round(($MyRow['consignmentsale']/$MyRow['qty']) / ((100 + $_SESSION['PPN_Percent']) / 100),$DecimalDigits);
 				$JumlahBarang = round($MyRow['qty'],0);
 				$HargaTotal = $HargaSatuan * $JumlahBarang;
 				$Diskon = 0;

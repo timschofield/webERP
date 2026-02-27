@@ -281,7 +281,7 @@ function submit($CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $DomPDFOpti
 				</tr>';
 			
 			if ($CompanyFrom == 'PTADU'){
-				$TotalGoods = round($TotalInvoice / ((100 + PPN_PERCENT) / 100));
+				$TotalGoods = round($TotalInvoice / ((100 + $_SESSION['PPN_Percent']) / 100));
 				$TotalPPN = round($TotalInvoice - $TotalGoods);
 				
 				$HTML .= '<tr>

@@ -84,7 +84,7 @@ function submit($Title, $CompanyFrom, $StartDate, $EndDate) {
 
 				$NumberConsignmentInvoices++;
 				$TotalInvoiceValue += $MyRow['valueinvoice'];
-				$GoodsInvoice = $MyRow['valueinvoice'] / ((100 + PPN_PERCENT) / 100);
+				$GoodsInvoice = $MyRow['valueinvoice'] / ((100 + $_SESSION['PPN_Percent']) / 100);
 				$PPNInvoice = $MyRow['valueinvoice'] - $GoodsInvoice;
 				$TotalGoodsValue += $GoodsInvoice;
 				$TotalPPNValue += $PPNInvoice;

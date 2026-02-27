@@ -1023,7 +1023,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 														$TotalAmount,
 														$CommissionLazadaPercent);
 			}
-			$CommissionPPN = round($Commission * PPN_PERCENT / 100, 0);
+			$CommissionPPN = round($Commission * $_SESSION['PPN_Percent'] / 100, 0);
 			$NetAmount = $TotalAmount - $Commission - $CommissionPPN;
 		}
 

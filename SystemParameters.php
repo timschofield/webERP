@@ -395,6 +395,10 @@ if (isset($_POST['submit'])) {
 // -------------------------------------
 // KL RICARD  Specific Settings for PTADU webERP
 // -------------------------------------
+		if ($_SESSION['PPN_Percent'] != $_POST['X_PPN_Percent'] ) {
+			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_PPN_Percent']."' WHERE confname = 'PPN_Percent'";
+		}
+
 		if ($_SESSION['ShopMode'] != $_POST['X_ShopMode'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopMode']."' WHERE confname = 'ShopMode'";
 		}
@@ -1498,6 +1502,11 @@ echo '<fieldset>
 		<legend>' . __('ADU webERP Configuration Options') . '</legend>';
 
 echo '<fieldset>
+		<legend>' . __('ADU Tax Settings') . '</legend>';
+echo FieldToSelectOneNumber('X_PPN_Percent',  $_SESSION['PPN_Percent'], 6, 5, $Label = 'PPN (in %)', '', '', '99');
+echo '</fieldset><br />';
+
+echo '<fieldset>
 		<legend>' . __('ADU Opencart Online Shop Settings') . '</legend>';
 
 // Moved from ShopParameters.php It is the only setting we are using to check if the Opencart shop is in test or live mode
@@ -1508,11 +1517,12 @@ echo FieldToSelectFromTwoOptions('live', __('Live'),
 //Shop Manager Email
 echo FieldToSelectOneEmail('X_ShopManagerEmail', $_SESSION['ShopManagerEmail'], 51, 50, __('Online Shop Manager Email'), __('Enter the email address of the online shop manager.'), 101);
 
-echo '</fieldset>';
+echo '</fieldset><br />';
+
+echo '</fieldset><br />';
 // -------------------------------------
 // KL RICARD END Specific Settings for PTADU webERP
 // -------------------------------------
-
 
 echo '<div class="centre">
 		<input type="submit" name="submit" value="' . __('Update') . '" />
