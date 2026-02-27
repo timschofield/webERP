@@ -449,6 +449,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	    echo '<a href="' . $RootPath . '/StockClone.php?OldStockID=' . urlencode($StockID) . '">' . __('Clone This Item') . '</a><br />';
 		echo '<a href="' . $RootPath . '/RelatedItemsUpdate.php?Item=' . urlencode($StockID) . '">' . __('Maintain Related Items') . '</a><br />';
 		echo '<a href="' . $RootPath . '/PriceMatrix.php?StockID=' . urlencode($StockID) . '">' . __('Maintain Price Matrix') . '</a><br />';
+		echo '<a href="' . $RootPath . '/AddStockItemNotes.php?StockID=' . urlencode($StockID) . '">' . __('Add Item Notes') . '</a><br />';
 	}
 	echo '</td></tr><tbody></table>';
 } else {
