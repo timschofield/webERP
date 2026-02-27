@@ -15,15 +15,6 @@ define("NPWP_FOR_PO", "81.304.529.1-906.000");
 define("STANDARD_COST_FACTOR_INDONESIA", 1.00);
 define("STANDARD_COST_FACTOR_FOREIGN"  , 1.00);
 
-/* Defines about Prices factors*/
-define("MINIMUM_PRICE_FACTOR_KL",                5.00);
-define("MINIMUM_PRICE_FACTOR_TOPSALES_KL",       5.00);
-define("MAXIMUM_PRICE_FACTOR_BOTTOMSALES_KL",    6.00);
-define("MINIMUM_PRICE_FACTOR_BLINK",             6.80);
-define("MINIMUM_PRICE_FACTOR_TOPSALES_BLINK",    7.15);
-define("MAXIMUM_PRICE_FACTOR_BOTTOMSALES_BLINK", 7.50);
-define("MINIMUM_PRICE_FACTOR_GENERAL",           6.80);
-
 /* Defines about prices IDR */
 define("PRICE_ROUNDING_STEP01",               5000);
 define("PRICE_ROUNDING_LIMIT01",            100000);

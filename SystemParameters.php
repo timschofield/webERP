@@ -399,6 +399,30 @@ if (isset($_POST['submit'])) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_PPN_Percent']."' WHERE confname = 'PPN_Percent'";
 		}
 
+		if ($_SESSION['Price_Factor_Minimum_KL'] != $_POST['X_Price_Factor_Minimum_KL'] ) {
+			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_Price_Factor_Minimum_KL']."' WHERE confname = 'Price_Factor_Minimum_KL'";
+		}
+		if ($_SESSION['Price_Factor_Minimum_TopSales_KL'] != $_POST['X_Price_Factor_Minimum_TopSales_KL'] ) {
+			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_Price_Factor_Minimum_TopSales_KL']."' WHERE confname = 'Price_Factor_Minimum_TopSales_KL'";
+		}
+		if ($_SESSION['Price_Factor_Maximum_BottomSales_KL'] != $_POST['X_Price_Factor_Maximum_BottomSales_KL'] ) {
+			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_Price_Factor_Maximum_BottomSales_KL']."' WHERE confname = 'Price_Factor_Maximum_BottomSales_KL'";
+		}
+
+		if ($_SESSION['Price_Factor_Minimum_Blink'] != $_POST['X_Price_Factor_Minimum_Blink'] ) {
+			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_Price_Factor_Minimum_Blink']."' WHERE confname = 'Price_Factor_Minimum_Blink'";
+		}
+		if ($_SESSION['Price_Factor_Minimum_TopSales_Blink'] != $_POST['X_Price_Factor_Minimum_TopSales_Blink'] ) {
+			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_Price_Factor_Minimum_TopSales_Blink']."' WHERE confname = 'Price_Factor_Minimum_TopSales_Blink'";
+		}
+		if ($_SESSION['Price_Factor_Maximum_BottomSales_Blink'] != $_POST['X_Price_Factor_Maximum_BottomSales_Blink'] ) {
+			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_Price_Factor_Maximum_BottomSales_Blink']."' WHERE confname = 'Price_Factor_Maximum_BottomSales_Blink'";
+		}
+
+		if ($_SESSION['Price_Factor_Minimum_General'] != $_POST['X_Price_Factor_Minimum_General'] ) {
+			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_Price_Factor_Minimum_General']."' WHERE confname = 'Price_Factor_Minimum_General'";
+		}
+
 		if ($_SESSION['ShopMode'] != $_POST['X_ShopMode'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopMode']."' WHERE confname = 'ShopMode'";
 		}
@@ -1502,20 +1526,39 @@ echo '<fieldset>
 		<legend>' . __('ADU webERP Configuration Options') . '</legend>';
 
 echo '<fieldset>
-		<legend>' . __('ADU Tax Settings') . '</legend>';
-echo FieldToSelectOneNumber('X_PPN_Percent',  $_SESSION['PPN_Percent'], 6, 5, $Label = 'PPN (in %)', '', '', '99');
+		<legend>' . __('Indonesia Tax Settings') . '</legend>';
+echo FieldToSelectOneNumber('X_PPN_Percent',  $_SESSION['PPN_Percent'], 6, 5, 'PPN (in %)', '', '', '100');
 echo '</fieldset><br />';
 
 echo '<fieldset>
-		<legend>' . __('ADU Opencart Online Shop Settings') . '</legend>';
+		<legend>' . __('Retail Price Settings for KL items') . '</legend>';
+echo FieldToSelectOneNumber('X_Price_Factor_Minimum_KL',  $_SESSION['Price_Factor_Minimum_KL'], 6, 5, 'Minimum Price Factor for KL items', 'Retail >= Factor x Standard Cost', '', '110');
+echo FieldToSelectOneNumber('X_Price_Factor_Minimum_TopSales_KL',  $_SESSION['Price_Factor_Minimum_TopSales_KL'], 6, 5, 'Minimum Price Factor for Top Sales KL items', 'Retail Top Sales >= Factor x Standard Cost', '', '111');
+echo FieldToSelectOneNumber('X_Price_Factor_Maximum_BottomSales_KL',  $_SESSION['Price_Factor_Maximum_BottomSales_KL'], 6, 5, 'Maximum Price Factor for Bottom Sales KL items', 'Retail Bottom Sales <= Factor x Standard Cost', '', '112');
+echo '</fieldset><br />';
+
+echo '<fieldset>
+		<legend>' . __('Retail Price Settings for Blink items') . '</legend>';
+echo FieldToSelectOneNumber('X_Price_Factor_Minimum_Blink',  $_SESSION['Price_Factor_Minimum_Blink'], 6, 5, 'Minimum Price Factor for Blink items', 'Retail >= Factor x Standard Cost', '', '113');
+echo FieldToSelectOneNumber('X_Price_Factor_Minimum_TopSales_Blink',  $_SESSION['Price_Factor_Minimum_TopSales_Blink'], 6, 5, 'Minimum Price Factor for Top Sales Blink items', 'Retail Top Sales >= Factor x Standard Cost', '', '114');
+echo FieldToSelectOneNumber('X_Price_Factor_Maximum_BottomSales_Blink',  $_SESSION['Price_Factor_Maximum_BottomSales_Blink'], 6, 5, 'Maximum Price Factor for Bottom Sales Blink items', 'Retail Bottom Sales <= Factor x Standard Cost', '', '115');
+echo '</fieldset><br />';
+
+echo '<fieldset>
+		<legend>' . __('Retail Price Settings for General items') . '</legend>';
+echo FieldToSelectOneNumber('X_Price_Factor_Minimum_General',  $_SESSION['Price_Factor_Minimum_General'], 6, 5, 'Minimum Price Factor for General items', 'Retail >= Factor x Standard Cost', '', '116');
+echo '</fieldset><br />';
+
+echo '<fieldset>
+		<legend>' . __('Opencart Online Shop Settings') . '</legend>';
 
 // Moved from ShopParameters.php It is the only setting we are using to check if the Opencart shop is in test or live mode
 echo FieldToSelectFromTwoOptions('live', __('Live'), 
                                 'test', __('Test'), 
                                 'X_ShopMode', $_SESSION['ShopMode'], __('Test or Live Mode'),
-								__('Set to live mode when the shop is active. No PayPal or credit card transactions will be processed in test mode'), '', '100', true, false);	
+								__('Set to live mode when the shop is active. No PayPal or credit card transactions will be processed in test mode'), '', '120', true, false);	
 //Shop Manager Email
-echo FieldToSelectOneEmail('X_ShopManagerEmail', $_SESSION['ShopManagerEmail'], 51, 50, __('Online Shop Manager Email'), __('Enter the email address of the online shop manager.'), 101);
+echo FieldToSelectOneEmail('X_ShopManagerEmail', $_SESSION['ShopManagerEmail'], 51, 50, __('Online Shop Manager Email'), __('Enter the email address of the online shop manager.'), '121');
 
 echo '</fieldset><br />';
 
