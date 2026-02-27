@@ -25,6 +25,7 @@
  * - FieldToSelectOneSysType() - Creates a dropdown for selecting a system type
  * - FieldToSelectOneTelephoneNumber() - Creates a telephone number input field
  * - FieldToSelectOneText() - Creates a text input field
+ * - FieldToSelectOneNumber() - Creates a number input field
  * - FieldToSelectOneTextArea() - Creates a text area input field
  * - FieldToSelectOneEmail() - Creates an email input field
  * - FixedField() - Creates a read-only field displaying a value
@@ -575,7 +576,7 @@ function FieldToSelectOneNumber($VariableName, $SelectedValue, $Size, $MaxLength
 
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
-				<input type="text" class="number" pattern="[0-9]*"';
+				<input type="text" class="number" pattern="[0-9]*\.?[0-9]*"';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
 	$HTML .= '" name="' . $VariableName . '" size="' . $Size . '" maxlength="' . $MaxLength . '" value="' . $SelectedValue . '" />';
 	if ($HelpText != '') {
