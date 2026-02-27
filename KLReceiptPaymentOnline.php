@@ -43,6 +43,7 @@ if (($_GET['CustomerCode'] != "WEB-KL-IDR")
 	exit();
 }
 
+$Currency = "IDR"; // Hardcoded for now, as this script is only for processing IDR online orders. If in the future we need to process online orders in other currencies, we can add a parameter to pass the currency and use it here.
 $Result = ProcessPaymentOnlineOrder($_GET['OrderNo'], $_GET['PaymentCode'], $_GET['CustomerCode'], $_GET['Amount']);
 						
 if ($_GET['PaymentCode'] != "MANUAL_MARKETPLACE") {

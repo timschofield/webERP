@@ -181,7 +181,7 @@ function submit($CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice) {
 				$Code = '000000';
 				$Name = $MyRow['description'];
 				$Unit = 'UM.0021';
-				$Price = round(($MyRow['consignmentsale'] / $MyRow['qty']) / ((100 + PPN_PERCENT) / 100), 0);
+				$Price = round(($MyRow['consignmentsale'] / $MyRow['qty']) / ((100 + $_SESSION['PPN_Percent']) / 100), 0);
 				$Qty = round($MyRow['qty'], 0);
 				$TotalDiscount = 0;
 				$TaxBase = $Price * $Qty;

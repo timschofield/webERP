@@ -12,7 +12,6 @@
  * - FieldToSelectOneReturnedItemReason() - Creates a dropdown for selecting returned item reasons
  * - FieldToSelectOneServiceFee() - Creates a dropdown for selecting service fees
  * - FieldToSelectOneTag() - Creates a dropdown for selecting tags
- * - FieldToSelectSpreadSheetFormat() - Creates a dropdown for selecting spreadsheet formats
  * - ShowTableSubTitle() - Displays a table subtitle
  * - ShowTableTitle() - Displays a table title
  * - ShowWarningTitle() - Displays a warning title

@@ -6,7 +6,7 @@
 *
 *******************************************************************************/
 /* KL RICARD Configuration file for specific KL code */
-$KLCodeVersion = "064";
+$KLCodeVersion = "065";
 
 // KL RICARD look for the secret values of sensitive variables and credentials $PTADU...
 include('KLConfig/KLCredentials.php');
