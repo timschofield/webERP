@@ -1,7 +1,7 @@
 <?php
 
  include('AuditScriptsFunctions.php');
- 
+
 /* Performs login checks and $_SESSION initialisation */
 
 define('UL_OK',  0);		/* User verified, session initialised */
@@ -22,9 +22,9 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 	if (!isset($_SESSION['AccessLevel']) OR $_SESSION['AccessLevel'] == '' OR
 		(isset($Name) AND $Name != '')) {
 
-		/* Log the script we run so we can optimize CPU time*/	
+		/* Log the script we run so we can optimize CPU time*/
 		$_SESSION['ScriptStartTime'] = microtime();
-		
+
 		/* if not logged in */
 
 		$_SESSION['AccessLevel'] = '';
@@ -34,7 +34,6 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 		$_SESSION['Module'] = '';
 		$_SESSION['PageSize'] = '';
 		$_SESSION['UserStockLocation'] = '';
-		$_SESSION['AttemptsCounter']++;
 
 		if (!isset($Name) or $Name == '') {
 			// Show login screen
@@ -96,7 +95,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 				unset($_SESSION['DatabaseName']);
 
 				// log the script running time
-				RecordRunningTime('Login attempt on blocked account', $Name); 
+				RecordRunningTime('Login attempt on blocked account', $Name);
 				return  UL_BLOCKED;
 			}
 
@@ -153,7 +152,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 			$_SESSION['AllowedPageSecurityTokens'] = array();
 			if (DB_num_rows($Sec_Result)==0) {
 				// log the script running time
-				RecordRunningTime('Login attempt with security tokens error', $_SESSION['UserID']); 
+				RecordRunningTime('Login attempt with security tokens error', $_SESSION['UserID']);
 				return  UL_CONFIGERR;
 			} else {
 				$i = 0;
@@ -260,19 +259,20 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 
 			if (!isset($_SESSION['DB_Maintenance'])) {
 				// log the script running time
-				RecordRunningTime('Login attempt with config error', $_SESSION['UserID']); 
+				RecordRunningTime('Login attempt with config error', $_SESSION['UserID']);
 				return  UL_CONFIGERR;
 			} else {
 				if ($_SESSION['DB_Maintenance']==-1 AND !in_array(15, $_SESSION['AllowedPageSecurityTokens'])) {
 					// the configuration setting has been set to -1 ==> Allow SysAdmin Access Only
 					// the user is NOT a SysAdmin
 					// log the script running time
-					RecordRunningTime('Login attempt while on maintenance mode', $_SESSION['UserID']); 
+					RecordRunningTime('Login attempt while on maintenance mode', $_SESSION['UserID']);
 					return  UL_MAINTENANCE;
 				}
 			}
 		} else {
 			// Incorrect password
+			$_SESSION['AttemptsCounter']++;
 
 			// after 5 login attempts, show failed login screen
 			if (!isset($_SESSION['AttemptsCounter'])) {
@@ -299,19 +299,19 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 				unset($_SESSION['DatabaseName']);
 
 				// log the script running time
-				RecordRunningTime('Login attempt with wrong password: Account Blocked', $Name); 
+				RecordRunningTime('Login attempt with wrong password: Account Blocked', $Name);
 				return  UL_BLOCKED;
 			}
 
 			// log the script running time
-			RecordRunningTime('Login attempt with wrong password', $Name); 
+			RecordRunningTime('Login attempt with wrong password', $Name);
 			return  UL_NOTVALID;
 		} // End of incorrect password
 	} // End of userid/password check
 
 	// Run with debugging messages for the system administrator(s) but not anyone else
 	// log the script running time
-	RecordRunningTime('Login successful', $_SESSION['UserID']); 
+	RecordRunningTime('Login successful', $_SESSION['UserID']);
 
 	return   UL_OK;		    /* All is well */
 }
