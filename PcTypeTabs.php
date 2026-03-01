@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Maintenance Of Petty Cash Type of Tabs');
 $ViewTopic = 'PettyCash';
 $BookMark = 'PCTabTypes';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text">
 		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', __('Payment Entry'), '" alt="" />', ' ', $Title, '
@@ -88,7 +88,7 @@ if (isset($_POST['submit'])) {
 		echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 		echo '<div class="centre"><input type="submit" name="Return" value="', __('Return to list of tab types'), '" /></div>';
 		echo '</form>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	} else {
 		$SQL = "DELETE FROM pctypetabs WHERE typetabcode='" . $SelectedTab . "'";
@@ -175,4 +175,4 @@ if (!isset($_GET['delete'])) {
 		</div>
 	</form>';
 } // end if user wish to delete
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

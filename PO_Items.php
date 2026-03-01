@@ -3,14 +3,14 @@
 // Entry of a purchase order items - allows entry of items with lookup of currency cost from Purchasing Data previously entered also allows entry of nominal items against a general ledger code if the AP is integrated to the GL.
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefinePOClass.php');
+include(__DIR__ . '/includes/DefinePOClass.php');
 
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Purchase Order Items');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/ImageFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/ImageFunctions.php');
 
 if (isset($_POST['ReqDelDate'])){$_POST['ReqDelDate'] = ConvertSQLDate($_POST['ReqDelDate']);}
 
@@ -25,7 +25,7 @@ if (!isset($_SESSION['PO'.$identifier])) {
 /* webERP manual links before header.php */
 $ViewTopic = 'PurchaseOrdering';
 $BookMark = 'PurchaseOrdering';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (!isset($_POST['Commit'])) {
 	echo '<a href="'.$RootPath.'/PO_Header.php?identifier=' . $identifier. '">' .__('Back To Purchase Order Header') . '</a><br />';
@@ -386,7 +386,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		}
 
 		unset($_SESSION['PO'.$identifier]); /*Clear the PO data to allow a newy to be input*/
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	} /*end if there were no input errors trapped */
 } /* end of the code to do transfer the PO object to the database  - user hit the place PO*/
@@ -397,7 +397,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 if (isset($_GET['Delete'])){
 	if ($_SESSION['PO'.$identifier]->Some_Already_Received($_GET['Delete'])==0){
 		$_SESSION['PO'.$identifier]->remove_from_order($_GET['Delete']);
-		include('includes/PO_UnsetFormVbls.php');
+		include(__DIR__ . '/includes/PO_UnsetFormVbls.php');
 	} else {
 		prnMsg( __('This item cannot be deleted because some of it has already been received'),'warn');
 	}
@@ -502,7 +502,7 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 												1,
 												'',
 												$_POST['AssetID']);
-		include('includes/PO_UnsetFormVbls.php');
+		include(__DIR__ . '/includes/PO_UnsetFormVbls.php');
 	}
 }
  /*end if Enter line button was hit - adding non stock items */
@@ -663,7 +663,7 @@ if (isset($_POST['NewItem'])
 															$SuppliersPartNo);
 				} else { //no rows returned by the SQL to get the item
 					prnMsg(__('The item code') . ' ' . $ItemCode . ' ' . __('does not exist in the database and therefore cannot be added to the order'),'error');
-					include('includes/footer.php');
+					include(__DIR__ . '/includes/footer.php');
 					exit();
 				}
 			} /* end of if not already on the order */
@@ -1409,4 +1409,4 @@ if (isset($SearchResult)) {
 
 echo '</div>
       </form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

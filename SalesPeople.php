@@ -11,7 +11,7 @@ if (isset($_GET['SelectedSalesPerson'])) {
 if (isset($_GET['delete'])) {
 	$BookMark = 'SalespeopleDelete';
 }// For Delete's ERROR Message Report.
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_GET['SelectedSalesPerson'])){
 	$SelectedSalesPerson =mb_strtoupper($_GET['SelectedSalesPerson']);
@@ -424,4 +424,4 @@ if (! isset($_GET['delete'])) {
 
 } //end if record deleted no point displaying form to add record
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Edit Module');
 $ViewTopic = "SpecialUtilities";
 $BookMark = "Z_poEditLangModule";
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title="' .
@@ -253,4 +253,4 @@ if (!is_writable('./locale/' . $_SESSION['Language'])) {
 }
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

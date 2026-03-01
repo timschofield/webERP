@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Customer How Paid Inquiry');
 $ViewTopic = 'ARInquiries';
 $BookMark = 'WhereAllocated';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_GET['TransNo']) AND isset($_GET['TransType'])) {
 	$_POST['TransNo'] = (int)$_GET['TransNo'];
@@ -229,4 +229,4 @@ if (isset($Printer)) {
 				'/images/printer.png" /> ', __('Print'), '</button>', // "Print" button.
 		'</div>';// "Print This" button.
 }
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

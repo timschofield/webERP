@@ -3,17 +3,17 @@
 /* Picking List Maintenance */
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefineCartClass.php');
-include('includes/DefineSerialItems.php');
+include(__DIR__ . '/includes/DefineCartClass.php');
+include(__DIR__ . '/includes/DefineSerialItems.php');
 
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Picking List Maintenance');
 $ViewTopic = '';
 $BookMark = 'PickingLists';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 $ARSecurity = 3;
 
@@ -32,7 +32,7 @@ if (!isset($_GET['Prid']) and !isset($_SESSION['ProcessingPick'])) {
 		<br />
 		<br />';
 	prnMsg(__('This page can only be opened if a pick list has been selected Please select a pick list first'), 'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 } elseif (isset($_GET['Prid']) and $_GET['Prid'] > 0) {
 
@@ -252,7 +252,7 @@ if (!isset($_GET['Prid']) and !isset($_SESSION['ProcessingPick'])) {
 					<a href="' . $RootPath . '/SelectPickingLists.php">' . __('Select a Pick List') . '</a>
 				</div>';
 			prnMsg(__('There are no ordered items with a quantity left to deliver. There is nothing left to invoice'));
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 
 		} //end of checks on returned data set
@@ -265,7 +265,7 @@ if (!isset($_GET['Prid']) and !isset($_SESSION['ProcessingPick'])) {
 				<a href="' . $RootPath . '/SelectPickingLists.php">' . __('Select a Pick List') . '</a>
 			</div>';
 		prnMsg(__('This pick list item could not be retrieved. Please select another pick list'), 'warn');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	} //valid order returned from the entered pick number
 } else {
@@ -460,7 +460,7 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] !=  '') {
 			echo '<div class="centre">
 					<input type="submit" name="Update" value="' . __('Update') . '" />
 				</div>';
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 	} //end of testing for negative stocks
@@ -485,7 +485,7 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] !=  '') {
 	if ($_SESSION['CompanyRecord'] == 0) {
 		/*The company data and preferences could not be retrieved for some reason */
 		prnMsg(__('The company information and preferences could not be retrieved') . ' - ' . __('see your system administrator'), 'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -515,7 +515,7 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] !=  '') {
 		unset($_SESSION['Items' . $identifier]->LineItems);
 		unset($_SESSION['Items' . $identifier]);
 		unset($_SESSION['ProcessingPick']);
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -532,7 +532,7 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] !=  '') {
 			unset($_SESSION['Items' . $identifier]->LineItems);
 			unset($_SESSION['Items' . $identifier]);
 			unset($_SESSION['ProcessingPick']);
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 	}
@@ -745,4 +745,4 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] !=  '') {
 }
 echo '</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

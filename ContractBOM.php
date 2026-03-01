@@ -1,11 +1,11 @@
 <?php
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefineContractClass.php');
+include(__DIR__ . '/includes/DefineContractClass.php');
 
 require(__DIR__ . '/includes/session.php');
 
-include('includes/ImageFunctions.php');
+include(__DIR__ . '/includes/ImageFunctions.php');
 
 $identifier = $_GET['identifier'];
 
@@ -14,14 +14,14 @@ $identifier = $_GET['identifier'];
  */
 if (!isset($_SESSION['Contract'.$identifier])){
 	header('Location:' . htmlspecialchars_decode($RootPath) . '/Contracts.php');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
 $Title = __('Contract Bill of Materials');
 $ViewTopic = 'Contracts';
 $BookMark = 'AddToContract';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['UpdateLines']) OR isset($_POST['BackToHeader'])) {
 	if ($_SESSION['Contract'.$identifier]->Status!= 2) { //dont do anything if the customer has committed to the contract
@@ -41,7 +41,7 @@ if (isset($_POST['BackToHeader'])){
 	echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/Contracts.php?identifier='.$identifier. '" />';
 	echo '<br />';
 	prnMsg(__('You should automatically be forwarded to the Contract page. If this does not happen perhaps the browser does not support META Refresh') . '<a href="' . $RootPath . '/Contracts.php?identifier='.$identifier . '">' . __('click here') . '</a> ' . __('to continue'),'info');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -204,7 +204,7 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 																			$MyRow['decimalplaces']);
 				} else {
 					prnMsg(__('The item code') . ' ' . trim($_POST['StockID'.$i]) . ' ' . __('does not exist in the database and therefore cannot be added to the contract BOM'),'error');
-					include('includes/footer.php');
+					include(__DIR__ . '/includes/footer.php');
 					exit();
 				}
 			} /* end of if not already on the contract BOM */
@@ -385,4 +385,4 @@ if (isset($SearchResult)) {
 echo '<hr />
     </div>
 	</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

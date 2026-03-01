@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Customer Inquiry');// Screen identification.
 $ViewTopic = 'ARInquiries';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'CustomerInquiry';// Anchor's id in the manual's html document.
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['TransAfterDate'])){$_POST['TransAfterDate'] = ConvertSQLDate($_POST['TransAfterDate']);}
 
@@ -16,7 +16,7 @@ if (isset($_POST['TransAfterDate'])){$_POST['TransAfterDate'] = ConvertSQLDate($
 if (!isset($_GET['CustomerID']) and !isset($_SESSION['CustomerID'])) {
 	prnMsg(__('To display the enquiry a customer must first be selected from the customer selection screen'), 'info');
 	echo '<br /><div class="centre"><a href="', $RootPath, '/SelectCustomer.php">', __('Select a Customer to Inquire On'), '</a></div>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 } else {
 	if (isset($_GET['CustomerID'])) {
@@ -38,12 +38,12 @@ if ($_SESSION['SalesmanLogin'] !=  '') {
 		}
 	} else {
 		prnMsg(__('There is no salesman data set for this debtor'),'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 	if (!$ViewAllowed){
 		prnMsg(__('You have no authority to review this data'),'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 }
@@ -58,7 +58,7 @@ if (isset($_GET['Status'])) {
 		$Status = $_POST['Status'];
 	} else {
 		prnMsg(__('The balance status should be all or zero balance or not zero balance'), 'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 } else {
@@ -243,7 +243,7 @@ $TransResult = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($TransResult) == 0) {
 	echo '<div class="centre">', __('There are no transactions to display since'), ' ', $_POST['TransAfterDate'], '</div>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -675,4 +675,4 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 //end of while loop
 
 echo '</tbody></table>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

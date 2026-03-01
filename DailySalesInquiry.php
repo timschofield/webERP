@@ -4,7 +4,7 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 $Title = __('Daily Sales Inquiry');
 $ViewTopic = 'ARInquiries';
@@ -193,7 +193,7 @@ $HTML .= '</table>';
 		// Output the generated PDF to Browser
 		$DomPDF->stream($_SESSION['DatabaseName'] . '_OrderStatus_' . date('Y-m-d') . '.pdf', array("Attachment" => false));
 	} else {
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 
 		echo '<p class="page_title_text">
 				<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . __('Daily Sales') . '" alt="" />' . ' ' . __('Daily Sales') . '
@@ -203,7 +203,7 @@ $HTML .= '</table>';
 	}
 
 } else { /*The option to print PDF was not hit so display form */
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	echo '<p class="page_title_text">
 			<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . __('Daily Sales') . '" alt="" />' . ' ' . __('Daily Sales') . '
@@ -269,4 +269,4 @@ $HTML .= '</table>';
 		</div>
 	</form>';
 }
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

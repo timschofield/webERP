@@ -9,7 +9,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Cash Flows Activities Maintenance');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLCashFlowsSetup';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 // Merges gets into posts:
 if (isset($_GET['Action'])) {
@@ -218,4 +218,4 @@ echo				'</select>
 		'</div>
 	</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

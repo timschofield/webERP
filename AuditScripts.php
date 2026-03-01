@@ -2,8 +2,8 @@
 
 require(__DIR__ . '/includes/session.php');
 $Title = __('Audit Scripts');
-include('includes/header.php');
-include('includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/header.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' 
 	. __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
@@ -213,5 +213,5 @@ if (isset($_POST['View'])) {
 		echo '</table></div>';
 	}
 }
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 

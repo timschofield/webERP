@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Periods Inquiry');
 $ViewTopic = 'GeneralLedger';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 $SQL = "SELECT periodno ,
 		lastdate_in_period
@@ -52,4 +52,4 @@ for ($i=0;$i<3;$i++) {
 echo '</tr></table>';
 //end of while loop
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

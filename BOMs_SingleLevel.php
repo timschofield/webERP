@@ -5,9 +5,9 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Bill Of Materials Maintenance');
 $ViewTopic = 'Manufacturing';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 function display_children($Parent, $Level, &$BOMTree) {
 
@@ -28,7 +28,7 @@ function display_children($Parent, $Level, &$BOMTree) {
 				$BOMTree[$i]['Level'] = $Level; 		// Level
 				if ($Level > 15) {
 					prnMsg(__('A maximum of 15 levels of bill of materials only can be displayed'),'error');
-					include('includes/footer.php');
+					include(__DIR__ . '/includes/footer.php');
 					exit();
 				}
 				$BOMTree[$i]['Parent'] = $Parent;		// Assemble
@@ -709,7 +709,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		if (DB_num_rows($Result)==0){
 			prnMsg( __('There are no work centres set up yet') . '. ' . __('Please use the link below to set up work centres') . '.','warn');
 			echo '<a href="' . $RootPath . '/WorkCentres.php">' . __('Work Centre Maintenance') . '</a></td></tr></table><br />';
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 
@@ -946,4 +946,4 @@ function arrayUnique($array, $preserveKeys = false)
 	return $arrayRewrite;
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

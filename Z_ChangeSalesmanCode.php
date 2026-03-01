@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('UTILITY PAGE To Change A Salesman Code In All Tables');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = 'Z_ChangeSalesmanCode';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text">
 		<img alt="" src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', __('Change A Sales Person Code'), '" /> ', __('Change A Sales Person Code'),
@@ -17,7 +17,7 @@ if (isset($_POST['ProcessSalesmanChange'])){
 
 	if ($_POST['OldSalesmanCode']==''){
 		prnMsg(__('An existing salesman code entry must be provided'), 'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -25,18 +25,18 @@ if (isset($_POST['ProcessSalesmanChange'])){
 	$Result = DB_query("SELECT salesmancode FROM salesman WHERE salesmancode='" . $_POST['OldSalesmanCode'] . "'");
 	if (DB_num_rows($Result) == 0){
 		prnMsg('<br /><br />' . __('The salesman code') . ': ' . $_POST['OldSalesmanCode'] . ' ' . __('does not currently exist as a sales person code in the system'), 'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
 	if ($_POST['NewSalesmanCode']==''){
 		prnMsg(__('A new salesman code entry must be provided'), 'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 	elseif (ContainsIllegalCharacters($_POST['NewSalesmanCode'])) {
 		prnMsg(__('The new salesman code to change the old code to contains illegal characters - no changes will be made'), 'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -46,7 +46,7 @@ if (isset($_POST['ProcessSalesmanChange'])){
 	$Result = DB_query("SELECT salesmancode FROM salesman WHERE salesmancode='" . $_POST['NewSalesmanCode'] . "'");
 	if (DB_num_rows($Result)!=0){
 		prnMsg(__('The replacement salesman code') .': ' . $_POST['NewSalesmanCode'] . ' ' . __('already exists as a salesman code in the system') . ' - ' . __('a unique salesman code must be entered for the new code'), 'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -135,4 +135,4 @@ echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8
 	</div>
 	</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

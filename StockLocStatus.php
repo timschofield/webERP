@@ -7,10 +7,10 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('All Stock Status By Location/Category');
 $ViewTopic = 'Inventory';
 $BookMark = 'StockLocStatus';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/StockFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/StockFunctions.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 '/images/magnifier.png" title="',// Icon image.
@@ -63,7 +63,7 @@ if (DB_num_rows($Result1)==0) {
 	echo '</table><p>';
 	prnMsg(__('There are no stock categories currently defined please use the link below to set them up'),'warn');
 	echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . __('Define Stock Categories') . '</a>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -249,4 +249,4 @@ if (isset($_POST['ShowStatus'])) {
 } /* Show status button hit */
 echo '</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

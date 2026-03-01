@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title=__('Remove Purchase Order Back Orders');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -22,4 +22,4 @@ if (isset($_POST['RemovePOBackOrders'])){
 	prnMsg(__('Updated all purchase orders to remove back orders'),'success');
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

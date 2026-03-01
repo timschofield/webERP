@@ -3,17 +3,17 @@
 /* Entry of point to point stock location transfers of a single part. */
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefineSerialItems.php');
-include('includes/DefineStockTransfers.php');
+include(__DIR__ . '/includes/DefineSerialItems.php');
+include(__DIR__ . '/includes/DefineStockTransfers.php');
 
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Stock Transfers');
 $ViewTopic = "Inventory";
 $BookMark = "LocationTransfers";
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['New'])) {
 	unset($_SESSION['Transfer']);
@@ -63,7 +63,7 @@ if (isset($_POST['CheckCode'])) {
 
 	}
 	echo '</tbody></table>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -169,7 +169,7 @@ if ($NewTransfer) {
 			echo '.<hr />';
 			echo '<a href="' . $RootPath . '/StockTransfers.php?NewTransfer=Yes">' . __('Enter another Transfer') . '</a>';
 			unset($_SESSION['Transfer']);
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 	}
@@ -272,7 +272,7 @@ if (isset($_POST['EnterTransfer']) ) {
 		if ($_SESSION['ProhibitNegativeStock']==1
 			AND $QtyOnHandPrior<$_SESSION['Transfer']->TransferItem[0]->Quantity) {
 			prnMsg( __('There is insufficient stock to make this transfer and webERP is setup to prevent negative stock'), 'warn');
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 		// Insert outgoing inventory GL transaction if any of the locations has a GL account code:
@@ -575,7 +575,7 @@ if (isset($_POST['EnterTransfer']) ) {
 		prnMsg(__('An inventory transfer of').' ' . $_SESSION['Transfer']->TransferItem[0]->StockID . ' - ' . $_SESSION['Transfer']->TransferItem[0]->ItemDescription . ' '. __('has been created from').' ' . $_SESSION['Transfer']->StockLocationFrom . ' '. __('to') . ' ' . $_SESSION['Transfer']->StockLocationTo . ' '.__('for a quantity of').' ' . $_SESSION['Transfer']->TransferItem[0]->Quantity,'success');
 		echo '<br /><a href="' . $RootPath . '/PDFStockTransfer.php?TransferNo='.$TransferNumber.'" target="_blank">' . __('Print Transfer Note') . '</a>';
 		unset($_SESSION['Transfer']);
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -720,4 +720,4 @@ if (isset($_SESSION['Transfer'])) {
 }
 echo '</div>
 	</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

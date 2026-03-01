@@ -18,7 +18,7 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 if (isset($_POST['EffectiveDate'])){$_POST['EffectiveDate'] = ConvertSQLDate($_POST['EffectiveDate']);}
 
@@ -101,21 +101,21 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			$Title = __('Special price List - No Customer Selected');
 			$ViewTopic = 'SalesTypes';// Filename in ManualContents.php's TOC.
 			$BookMark = 'PDFPriceList';// Anchor's id in the manual's html document.
-			include('includes/header.php');
+			include(__DIR__ . '/includes/header.php');
 			echo '<br />';
 			prnMsg( __('The customer must first be selected from the select customer link') . '. ' . __('Re-run the price list once the customer has been selected') );
 			echo '<br /><br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Back') . '</a>';
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 		if (!Is_Date($_POST['EffectiveDate'])) {
 			$Title = __('Special price List - No Customer Selected');
 			$ViewTopic = 'SalesTypes';// Filename in ManualContents.php's TOC.
 			$BookMark = 'PDFPriceList';// Anchor's id in the manual's html document.
-			include('includes/header.php');
+			include(__DIR__ . '/includes/header.php');
 			prnMsg(__('The effective date must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
 			echo '<br /><br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Back') . '</a>';
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 
@@ -202,10 +202,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	if (DB_num_rows($PricesResult)==0) {
 		$Title = __('Print Price List Error');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		prnMsg(__('There were no price details to print out for the customer or category specified'),'warn');
 		echo '<br /><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Back') . '</a>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -213,7 +213,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$Category = '';
 	$CatTot_Val=0;
 
-	require_once('includes/CurrenciesArray.php');// To get the currency name from the currency code.
+	require_once(__DIR__ . '/includes/CurrenciesArray.php');// To get the currency name from the currency code.
 
 	while ($PriceList = DB_fetch_array($PricesResult)) {
 
@@ -336,10 +336,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		));
 	} else {
 		$Title = __('Prices By Inventory Category');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Prices By Inventory Category') . '" alt="" />' . ' ' . __('Prices By Inventory Category') . '</p>';
 		echo $HTML;
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 
 
@@ -347,7 +347,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$Title = __('Price Listing');
 	$ViewTopic = 'SalesTypes';
 	$BookMark = 'PDFPriceList';
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/customer.png" title="', // Icon image.
@@ -454,5 +454,5 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			</div>
 	</form>';
 
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 } /*end of else not PrintPDF */

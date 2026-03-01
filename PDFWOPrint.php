@@ -6,10 +6,10 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 use BarcodePack\qrCode;
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['WO'])) {
 	$SelectedWO = $_GET['WO'];
@@ -114,7 +114,7 @@ if (isset($_GET['LabelLot'])) {
 
 if (!isset($_GET['WO']) and !isset($_POST['WO'])) {
 	$Title = __('Select a Work Order');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<div class="centre">';
 	prnMsg(__('Select a Work Order Number to Print before calling this page'), 'error');
 	echo '<table class="table_index">
@@ -125,7 +125,7 @@ if (!isset($_GET['WO']) and !isset($_POST['WO'])) {
 			</tr>
 		</table>
 	</div>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 if (isset($_GET['WO'])) {
@@ -136,9 +136,9 @@ if (isset($_GET['WO'])) {
 $Title = __('Print Work Order Number') . ' ' . $SelectedWO;
 if (isset($_POST['PrintOrEmail']) and isset($_POST['EmailTo'])) {
 	if ($_POST['PrintOrEmail'] == 'Email' and !IsEmailAddress($_POST['EmailTo'])) {
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		prnMsg(__('The email address entered does not appear to be valid. No emails have been sent.'), 'warn');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 }
@@ -192,7 +192,7 @@ if (isset($SelectedWO) and $SelectedWO != '' and $SelectedWO > 0) {
 	if (DB_num_rows($Result) == 0) {
 		/*There is no order header returned */
 		$Title = __('Print Work Order Error');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<div class="centre">';
 		prnMsg(__('Unable to Locate Work Order Number') . ' : ' . $SelectedWO . ' ', 'error');
 		echo '<table class="table_index">
@@ -203,7 +203,7 @@ if (isset($SelectedWO) and $SelectedWO != '' and $SelectedWO > 0) {
 				</tr>
 			</table>
 		</div>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	} elseif (DB_num_rows($Result) == 1) {
 		/*There is only one order header returned  (as it should be!)*/
@@ -445,13 +445,13 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 
 		/// @todo should we delete the generated report?
 
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		if ($Success == 1) {
 			prnMsg(__('Work Order') . ' ' . $SelectedWO . ' ' . __('has been emailed to') . ' ' . $_POST['EmailTo'] . ' ' . __('as directed'), 'success');
 		} else {
 			prnMsg(__('Emailing Work order') . ' ' . $SelectedWO . ' ' . __('to') . ' ' . $_POST['EmailTo'] . ' ' . __('failed'), 'error');
 		}
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 } //isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)
 
@@ -459,7 +459,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 else {
 	/**
 	/*the user has just gone into the page need to ask the question whether to print the order or email it */
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	if (!isset($LabelItem)) {
 		$SQL = "SELECT workorders.wo,
@@ -681,5 +681,5 @@ else {
 			</div>
 			</form>';
 	}
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 }

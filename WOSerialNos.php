@@ -33,7 +33,7 @@ if (isset($_GET['identifier'])) {
 }
 if (!isset($WO) OR $WO==''){
 	prnMsg(__('This page must to be called from the work order entry screen'),'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 if ($Serialised==1){
@@ -44,7 +44,7 @@ if ($Serialised==1){
 $ViewTopic = 'Manufacturing';
 $BookMark = '';
 
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="" alt="" />' . ' ' . __('For Work Order Number') . ' ' . $WO . ' ' . __('and output item') . ' ' . $StockID . ' - ' . $Description . '
@@ -357,4 +357,4 @@ echo '<br /><a href="' . $RootPath . '/WorkOrderEntry.php?identifier=' . urlenco
 echo '</div>
       </form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

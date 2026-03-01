@@ -87,14 +87,14 @@ while ($MyRow = DB_fetch_array($Result)) {
 }
 
 if (DB_num_rows($Result) > 0) {
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	if (IsEmailAddress($LastManagerEmail)) {
 		$SendResult = SendEmailFromWebERP($SysAdminEmail, $LastManagerEmail, 'Overdue Maintenance Tasks Reminder', $ManagerMailText);
 		prnMsg(__('Reminder sent to') . ' ' . $LastManagerEmail, 'success');
 	}
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 } else {
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	prnMsg(__('There are no reminders to be sent'), 'info');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 }

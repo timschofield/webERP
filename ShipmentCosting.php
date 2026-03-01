@@ -1,17 +1,17 @@
 <?php
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefineShiptClass.php');
+include(__DIR__ . '/includes/DefineShiptClass.php');
 
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Shipment Costing');
 $ViewTopic = 'Shipments';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/StockFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/StockFunctions.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Search') . '" alt="" />
      ' . ' ' . $Title . '</p>';
@@ -25,7 +25,7 @@ if (!isset($_GET['SelectedShipment'])){
 
 	echo '<br />';
 	prnMsg( __('This page is expected to be called with the shipment number to show the costing for'), 'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -45,7 +45,7 @@ $GetShiptHdrResult = DB_query($ShipmentHeaderSQL, $ErrMsg);
 if (DB_num_rows($GetShiptHdrResult)==0) {
 	echo '<br />';
 	prnMsg( __('Shipment') . ' ' . $_GET['SelectedShipment'] . ' ' . __('could not be located in the database') , 'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -84,7 +84,7 @@ $GetShiptCostsResult = DB_query($SQL, $ErrMsg);
 if (DB_num_rows($GetShiptCostsResult)==0) {
 	echo '<br />';
 	prnMsg(__('No General Cost Records exist for Shipment') . ' ' . $_GET['SelectedShipment'] . ' ' . __('in the database'), 'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -104,7 +104,7 @@ $GetShiptCostsResult = DB_query($SQL);
 if (DB_error_no() !=0 OR DB_num_rows($GetShiptCostsResult)==0) {
 	echo '<br />';
 	prnMsg( __('No Item Cost Records exist for Shipment') . ' ' . $_GET['SelectedShipment'] . ' ' . __('in the database'), 'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -677,4 +677,4 @@ if ( isset($_POST['Close']) ){ /* OK do the shipment close journals */
 	}
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Search All Sales Orders');
 $ViewTopic = 'SalesOrders';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['OrdersAfterDate'])){$_POST['OrdersAfterDate'] = ConvertSQLDate($_POST['OrdersAfterDate']);}
 
@@ -553,7 +553,7 @@ if (isset($SalesOrdersResult)) {
 			$OrderNumber = $OrdRow['orderno'];
 		}
 		echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/OrderDetails.php?OrderNumber=' . $OrderNumber. '">';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -597,4 +597,4 @@ if (isset($SalesOrdersResult)) {
 }
 
 echo '</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

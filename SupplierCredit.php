@@ -18,18 +18,18 @@ the SuppTrans class contains an array of GRNs objects - containing details of GR
 an array of GLCodes objects - only used if the AP - GL link is effective */
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefineSuppTransClass.php');
+include(__DIR__ . '/includes/DefineSuppTransClass.php');
 
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Supplier Credit Note');
 $ViewTopic = 'AccountsPayable';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/StockFunctions.php');
-include('includes/GLFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/StockFunctions.php');
+include(__DIR__ . '/includes/GLFunctions.php');
 
 if (isset($_POST['TranDate'])){$_POST['TranDate'] = ConvertSQLDate($_POST['TranDate']);}
 
@@ -116,7 +116,7 @@ if (isset($_GET['SupplierID']) and $_GET['SupplierID']!=''){
 
 	if (DB_num_rows($LocalTaxProvinceResult)==0){
 		prnMsg(__('The tax province associated with your user account has not been set up in this database. Tax calculations are based on the tax group of the supplier and the tax province of the user entering the invoice. The system administrator should redefine your account with a valid default stocking location and this location should refer to a valid tax province'),'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -136,7 +136,7 @@ if (isset($_GET['SupplierID']) and $_GET['SupplierID']!=''){
 
 	prnMsg(__('To enter a supplier credit note the supplier must first be selected from the supplier selection screen'),'warn');
 	echo '<br /><a href="' . $RootPath . '/SelectSupplier.php">' . __('Select A Supplier to Enter an Credit Note For') . '</a>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 	/*It all stops here if there aint no supplier selected */
 }
@@ -208,7 +208,7 @@ if (isset($_POST['GRNS'])
 	echo '<br />' .
 		__('You should automatically be forwarded to the entry of credit notes against goods received page') . '. ' . __('If this does not happen') . ' (' . __('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/SuppCreditGRNs.php">' . __('click here') . '</a> ' . __('to continue') . '.
 		<br />';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 if (isset($_POST['Shipts'])){
@@ -219,7 +219,7 @@ if (isset($_POST['Shipts'])){
 	echo '<br />
 		' . __('You should automatically be forwarded to the entry of credit notes against shipments page') . '. ' . __('If this does not happen') . ' (' . __('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/SuppShiptChgs.php">' . __('click here') . '</a> ' . __('to continue') . '.
 		<br />';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 if (isset($_POST['GL'])
@@ -231,7 +231,7 @@ if (isset($_POST['GL'])
 	echo '<br />
 		' . __('You should automatically be forwarded to the entry of credit notes against the general ledger page') . '. ' . __('If this does not happen') . ' (' . __('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/SuppTransGLAnalysis.php">' . __('click here') . '</a> ' . __('to continue') . '.
 		<br />';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 if (isset($_POST['Contracts'])
@@ -242,7 +242,7 @@ if (isset($_POST['Contracts'])
 				' . __('You should automatically be forwarded to the entry of supplier credit notes against contracts page') . '. ' . __('If this does not happen') . ' (' . __('if the browser does not support META Refresh'). ') ' . '<a href="' . $RootPath . '/SuppContractChgs.php">' . __('click here') . '</a> ' . __('to continue') . '.
 			</div>
 			<br />';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 }
 if (isset($_POST['FixedAssets'])
@@ -253,7 +253,7 @@ if (isset($_POST['FixedAssets'])
 				' . __('You should automatically be forwarded to the entry of invoices against fixed assets page') . '. ' . __('If this does not happen') . ' (' . __('if the browser does not support META Refresh'). ') ' . '<a href="' . $RootPath . '/SuppFixedAssetChgs.php">' . __('click here') . '</a> ' . __('to continue') . '.
 			</div>
 			<br />';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 }
 /* everything below here only do if a Supplier is selected
@@ -1298,4 +1298,4 @@ then do the updates and inserts to process the credit note entered */
 
 echo '</div>
 	  </form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

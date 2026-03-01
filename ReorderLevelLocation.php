@@ -5,9 +5,9 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Reorder Level Location Reporting');
 $ViewTopic = 'Inventory';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/StockFunctions.php');
+include(__DIR__ . '/includes/StockFunctions.php');
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .
 	__('Inventory') . '" alt="" />' . ' ' . __('Inventory Reorder Level Location Report') . '</p>';
@@ -194,4 +194,4 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 	echo '</form>';
 
 } /*end of else not submit */
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

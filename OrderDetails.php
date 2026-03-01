@@ -7,16 +7,16 @@ $_GET['OrderNumber'] = (int)$_GET['OrderNumber'];
 /*if (isset($_GET['OrderNumber'])) {*/
 	$Title = __('Reviewing Sales Order Number') . ' ' . $_GET['OrderNumber'];
 /*} else {
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<br /><br /><br />';
 	prnMsg(__('This page must be called with a sales order number to review') . '.<br />' . __('i.e.') . ' http://????/OrderDetails.php?OrderNumber=<i>xyz</i><br />' . __('Click on back') . '.','error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }*/
 
 $ViewTopic = 'SalesOrders';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 $OrderHeaderSQL = "SELECT salesorders.debtorno,
 							debtorsmaster.name,
@@ -63,7 +63,7 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 
 	if ($CustomerLogin ==1 AND $MyRow['debtorno']!= $_SESSION['CustomerID']) {
 		prnMsg(__('Your customer login will only allow you to view your own purchase orders'),'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 	//retrieve invoice number
@@ -242,4 +242,4 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 		</table>';
 	}
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

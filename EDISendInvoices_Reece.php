@@ -6,9 +6,9 @@ require(__DIR__ . '/includes/session.php');
 
 $ViewTopic = 'EDI';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php'); // need for EDITransNo
+include(__DIR__ . '/includes/SQL_CommonFunctions.php'); // need for EDITransNo
 
 // Important: Default value for EDIsent in debtortrans should probably be 1 for non EDI customers
 // updated to 0 only for EDI enabled customers. As it stands run some sql to update all existing
@@ -210,7 +210,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 
 				if ($LineDetails['section'] == 'Heading') {
 					$MsgLineText = $LineDetails['linetext'];
-					include('includes/EDIVariableSubstitution.php');
+					include(__DIR__ . '/includes/EDIVariableSubstitution.php');
 					$LastLine = 'Heading';
 				}
 
@@ -284,7 +284,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 						/*now work through the detail line segments */
 						foreach ($DetailLines as $DetailLineText) {
 							$MsgLineText = $DetailLineText;
-							include('includes/EDIVariableSubstitution.php');
+							include(__DIR__ . '/includes/EDIVariableSubstitution.php');
 						}
 					}
 
@@ -294,7 +294,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 
 				if ($LineDetails['section'] == 'Summary' AND $LastLine == 'Detail') {
 					$MsgLineText = $LineDetails['linetext'];
-					include('includes/EDIVariableSubstitution.php');
+					include(__DIR__ . '/includes/EDIVariableSubstitution.php');
 				}
 			} /*end while there are message lines to parse and substitute vbles for */
 			fclose($fp); /*close the file at the end of each transaction */
@@ -329,7 +329,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 				if ((!$conn_id) || (!$login_result)) {
 					prnMsg( __('Ftp connection has failed'). '<BR>' . __('Attempted to connect to') . ' ' .
 						$CustDetails['ediaddress'] . ' ' .__('for user') . ' ' . $CustDetails['ediserveruser'],'error');
-					include('includes/footer.php');
+					include(__DIR__ . '/includes/footer.php');
 					exit();
 				}
 				$MessageSent = ftp_put($conn_id, $_SESSION['EDI_MsgPending'] . '/EDI_INV_' . $EDITransNo,
@@ -363,4 +363,4 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 
 } /*loop around all the customers enabled for EDI Invoices */
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

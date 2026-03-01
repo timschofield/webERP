@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('UTILITY PAGE To Changes A Customer Branch Code In All Tables');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = 'Z_ChangeBranchCode';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	'/images/customer.png" title="' .
@@ -24,18 +24,18 @@ if (isset($_POST['ProcessCustomerChange'])){
 						AND branchcode='" . $_POST['OldBranchCode'] . "'");
 	if (DB_num_rows($Result)==0){
 		prnMsg(__('The customer branch code') . ': ' . $_POST['DebtorNo'] . ' - ' . $_POST['OldBranchCode'] . ' ' . __('does not currently exist as a customer branch code in the system'),'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
 	if ($_POST['NewBranchCode']==''){
 		prnMsg(__('The new customer branch code to change the old code to must be entered as well'),'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 	if (ContainsIllegalCharacters($_POST['NewBranchCode']) OR mb_strstr($_POST['NewBranchCode'],' ')){
 		prnMsg(__('The new customer branch code cannot contain') . ' - & . ' . __('or a space'),'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -44,7 +44,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 	$Result = DB_query("SELECT debtorno FROM custbranch WHERE debtorno='" . $_POST['DebtorNo'] . "' AND branchcode ='" . $_POST['NewBranchCode'] . "'");
 	if (DB_num_rows($Result)!=0){
 		prnMsg(__('The replacement customer branch code') . ': ' . $_POST['NewBranchCode'] . ' ' . __('already exists as a branch code for the same customer') . ' - ' . __('a unique branch code must be entered for the new code'),'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -243,4 +243,4 @@ echo '<div class="centre">
 
 echo '</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

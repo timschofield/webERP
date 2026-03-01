@@ -4,8 +4,8 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 $ViewTopic = 'AccountsPayable';
 $BookMark = 'AgedCreditors';
@@ -290,15 +290,15 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])
 		));
 	} else {
 		$Title = __('Aged Creditor Analysis');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . __('Aged Creditor Analysis') . '" alt="" />' . ' ' . __('Aged Creditor Analysis') . '</p>';
 		echo $HTML;
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 } else { /*The option to print PDF was not hit */
 
 	$Title = __('Aged Supplier Analysis');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
 
@@ -368,5 +368,5 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])
 			</div>
 		</form>';
 	}
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 } /*end of else not PrintPDF */

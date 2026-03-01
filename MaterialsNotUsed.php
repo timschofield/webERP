@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Raw Materials Not Used Anywhere');
 $ViewTopic = 'Manufacturing';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 $SQL = "SELECT stockmaster.stockid,
 				stockmaster.description,
@@ -67,4 +67,4 @@ if (DB_num_rows($Result) != 0){
 	echo '</table>';
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

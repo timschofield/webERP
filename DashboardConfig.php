@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Configure Dashboard Scripts');
 $ViewTopic = 'Dashboard';
 $BookMark = 'Configure';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text">
 		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', __('Page Security Levels'), '" alt="" />', ' ', $Title, '
@@ -207,4 +207,4 @@ if (isset($_GET['Edit'])) {
 
 echo '</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

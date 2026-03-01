@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Maintenance Of Petty Cash Tabs');
 $ViewTopic = 'PettyCash';
 $BookMark = 'PCTabSetup';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text">
 		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', __('Payment Entry'), '" alt="" />', ' ', $Title, '
@@ -431,4 +431,4 @@ if (!isset($_GET['delete'])) {
 		</div>';
 	echo '</form>';
 } // end if user wish to delete
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

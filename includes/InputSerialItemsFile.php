@@ -77,7 +77,7 @@ if ((isset($_FILES['ImportFile']) AND $_FILES['ImportFile']['name'] == '') AND $
 	prnMsg($Msg);
 	$LineItem->SerialItemsValid=false;
 	echo '</td></tr></table>';
-	include('includes/footer.php');
+	include(__DIR__ . '/footer.php');
 	exit();
 }
 if ((isset($_FILES['ImportFile']) AND $_FILES['ImportFile']['error'] != '') AND !isset($_SESSION['CurImportFile'])){
@@ -88,7 +88,7 @@ if ((isset($_FILES['ImportFile']) AND $_FILES['ImportFile']['error'] != '') AND 
 		echo '<br />' . __('Error was').' '.$_FILES['ImportFile']['error'] . '<br />';
 		$LineItem->SerialItemsValid=false;
 		echo '</td></tr></table><br />';
-		include('includes/footer.php');
+		include(__DIR__ . '/footer.php');
 		exit();
 } elseif ((isset($_FILES['ImportFile']) AND $_FILES['ImportFile']['name']!='')){
 	//User has uploaded importfile. reset items, then just 'get hold' of it for later.
@@ -102,7 +102,7 @@ if ((isset($_FILES['ImportFile']) AND $_FILES['ImportFile']['error'] != '') AND 
 		prnMsg(__('Error moving temporary file') . '. ' . __('Please check your configuration'),'error' );
 		$LineItem->SerialItemsValid=false;
 		echo '</td></tr></table>';
-		include('includes/footer.php');
+		include(__DIR__ . '/footer.php');
 		exit();
 	}
 	$_SESSION['CurImportFile']['Processed']=false;

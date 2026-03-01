@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Supplier Purchasing Data');
 $ViewTopic = 'PurchaseOrdering';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['EffectiveFrom'])){$_POST['EffectiveFrom'] = ConvertSQLDate($_POST['EffectiveFrom']);}
 
@@ -371,7 +371,7 @@ if (isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier']
 					<input type="submit" name="SearchSupplier" value="' . __('Find Suppliers Now') . '" />
 				</div>
 			</form>';
-        include('includes/footer.php');
+        include(__DIR__ . '/includes/footer.php');
         exit();
     }
 }
@@ -431,7 +431,7 @@ if (isset($SuppliersResult)) {
 		if (DB_num_rows($Result) == 1) {
 			if ($MyRow[2] == 'D' OR $MyRow[2] == 'A' OR $MyRow[2] == 'K') {
 				prnMsg($StockID . ' - ' . $MyRow[0] . '<p> ' . __('The item selected is a dummy part or an assembly or kit set part') . ' - ' . __('it is not purchased') . '. ' . __('Entry of purchasing information is therefore inappropriate'), 'warn');
-				include('includes/footer.php');
+				include(__DIR__ . '/includes/footer.php');
 				exit();
 			}
 		} else {
@@ -727,4 +727,4 @@ if (!isset($SuppliersResult)) {
 	echo '</form></div>';
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

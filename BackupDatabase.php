@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 $ViewTopic = 'Setup';
 $BookMark = '';
 $Title = __('Backup webERP Database');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 /// @todo this action is dangerous. Trigger it only on POST. Also, deleting one backup and all backups is not the same
 if (isset($_GET['BackupFile'])) {
@@ -68,4 +68,4 @@ prnMsg(__('A backup of the database has been taken and emailed to you'), 'info')
 unlink($BackupFile); // would be a security issue to leave it there for all to download/see
 */
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

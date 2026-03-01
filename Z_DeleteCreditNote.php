@@ -14,7 +14,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Delete Credit Note');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (!isset($_GET['CreditNoteNo'])){
         prnMsg(__('This page must be called with the credit note number') . ' - ' . __('it is not intended for use by non-system administrators'),'info');
@@ -153,4 +153,4 @@ prnMsg(__('Deleted the credit note general ledger transactions'), 'info');
 DB_Txn_Commit();
 prnMsg(__('Credit note number') . ' ' . $_GET['CreditNoteNo'] . ' ' . __('has been completely deleted') . '. ' . __('To ensure the integrity of the general ledger transactions must be reposted from the period the credit note was created'), 'info');
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

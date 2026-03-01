@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Import Stock Items');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 include('api/includes/api_php.php');
 
@@ -72,4 +72,4 @@ if (isset($_POST['update'])) {
 	}
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

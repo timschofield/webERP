@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Maintain Security Tokens');
 $ViewTopic = 'SecuritySchema';
 $BookMark = 'SecurityTokens';// Pending ?
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 /* FixedTokens contains a list of token IDs that are reserved and cannot be changed or deleted.
  * These security tokens ID are hardcoded in several webERP scripts.
@@ -29,7 +29,7 @@ $FixedTokens = array(0, 1, 2, 3, 5, 9, 11, 12, 15, 18, 19, 20);
 
 if ($AllowDemoMode) {
 	prnMsg(__('The the system is in demo mode and the security model administration is disabled'), 'warn');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -197,4 +197,4 @@ if (isset($_GET['Edit'])) {
 }
 echo '</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

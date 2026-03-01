@@ -4,8 +4,8 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
@@ -44,10 +44,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	if (DB_num_rows($CustomerResult) == 0) {
 		$Title = __('Customer Balances') . ' - ' . __('Problem Report');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		prnMsg(__('The customer details listing has no clients to report on'),'warn');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -144,10 +144,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		));
 	} else {
 		$Title = __('Debtor Balances');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
 		echo $HTML;
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 
 } else { /*The option to print PDF was not hit */
@@ -157,7 +157,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$ViewTopic = 'ARReports';
 	$BookMark = 'PriorMonthDebtors';
 
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . __('Search') .
 	 '" alt="" />' . ' ' . $Title . '</p>';
 
@@ -203,5 +203,5 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		</div>
 	</form>';
 
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 } /*end of else not PrintPDF */

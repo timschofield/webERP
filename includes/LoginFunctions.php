@@ -1,6 +1,6 @@
 <?php
 
- include('AuditScriptsFunctions.php');
+ include(__DIR__ . '/AuditScriptsFunctions.php');
 
 /* Performs login checks and $_SESSION initialisation */
 

@@ -7,7 +7,7 @@ ob_start();
 $Title = __('Stock Check Sheets Entry');
 $ViewTopic = 'Inventory';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<form name="EnterCountsForm" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" enctype="multipart/form-data">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -57,7 +57,7 @@ if (isset($_GET['gettemplate'])) //download an import template
 	echo '"' . implode('","',$FieldHeadings) . '"';
 
 	// exit cleanly to prevent any unwanted outputs
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 } else {
 	ob_end_flush();
@@ -140,7 +140,7 @@ if ($_GET['Action'] == 'Enter') {
 		if ( count($HeadRow) != count($FieldHeadings) ) {
 			prnMsg(__('File contains '. count($HeadRow). ' columns, expected '. count($FieldHeadings). '. Try downloading a new template.'),'error');
 			fclose($FileHandle);
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 
@@ -150,7 +150,7 @@ if ($_GET['Action'] == 'Enter') {
 			if ( mb_strtoupper($HeadField) != mb_strtoupper($FieldHeadings[$Head]) ) {
 				prnMsg(__('File contains incorrect headers '. mb_strtoupper($HeadField). ' != '. mb_strtoupper($FieldHeadings[$Head]). '. Try downloading a new template.'),'error');  //Fixed $FieldHeadings from $Headings
 				fclose($FileHandle);
-				include('includes/footer.php');
+				include(__DIR__ . '/includes/footer.php');
 				exit();
 			}
 			$Head++;
@@ -168,7 +168,7 @@ if ($_GET['Action'] == 'Enter') {
 			if ($FieldCount != $FieldTarget){
 				prnMsg(__($FieldTarget. ' fields required, '. $FieldCount. ' fields received'),'error');
 				fclose($FileHandle);
-				include('includes/footer.php');
+				include(__DIR__ . '/includes/footer.php');
 				exit();
 			}
 
@@ -398,4 +398,4 @@ if ($_GET['Action'] == 'Enter') {
 
 echo '</div>
       </form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -4,14 +4,14 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 //Get Out if we have no order number to work with
 if (!isset($_GET['TransNo']) || $_GET['TransNo'] == '') {
 	$Title = __('Select Order To Print');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<div class="centre">';
 	prnMsg(__('Select an Order Number to Print before calling this page'), 'error');
 	echo '<table class="table_index">
@@ -25,7 +25,7 @@ if (!isset($_GET['TransNo']) || $_GET['TransNo'] == '') {
 			</tr>
 			</table>
 			</div>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -78,7 +78,7 @@ $Result = DB_query($SQL, $ErrMsg);
 //If there are no rows, there's a problem.
 if (DB_num_rows($Result) == 0) {
 	$Title = __('Print Packing Slip Error');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<div class="centre"><br /><br /><br />';
 	prnMsg(__('Unable to Locate Order Number') . ' : ' . $_GET['TransNo'] . ' ', 'error');
 	echo '<table class="table_index">
@@ -90,7 +90,7 @@ if (DB_num_rows($Result) == 0) {
 			</tr>
 			</table>
 			</div>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 } elseif (DB_num_rows($Result) == 1) {
 	$MyRow = DB_fetch_array($Result);
@@ -98,7 +98,7 @@ if (DB_num_rows($Result) == 0) {
 	if ($MyRow['printedpackingslip'] == 1 && ($_GET['Reprint'] != 'OK' || !isset($_GET['Reprint']))) {
 		$Title = __('Print Packing Slip');
 		$DatePrinted = $MyRow['datepackingslipprinted'];
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p>';
 		prnMsg(__('The packing slip for order number') . ' ' . $_GET['TransNo'] . ' ' .
 			__('has previously been printed') . '. ' . __('It was printed on') . ' ' . ConvertSQLDate($DatePrinted) .
@@ -119,7 +119,7 @@ if (DB_num_rows($Result) == 0) {
 				</table>
 				</div>';
 
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 }
@@ -311,12 +311,12 @@ $HTML .= '</body></html>';
 
 if ($ListCount == 0) {
 	$Title = __('Print Packing Slip Error');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<p>' . __('There were no outstanding items on the order to deliver') . '. ' . __('A packing slip cannot be printed') .
 		'<br /><a href="' . $RootPath . '/SelectSalesOrder.php">' . __('Print Another Packing Slip/Order') .
 		'</a>
 		<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 } else {
 	// Generate PDF using dompdf

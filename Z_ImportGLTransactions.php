@@ -5,9 +5,9 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Import General Ledger Transactions');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title="' .
@@ -45,7 +45,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	if (count($HeadRow) != count($FieldHeadings)) {
 		prnMsg(__('File contains') . ' '. count($HeadRow) . ' ' . __('columns, expected') . ' ' . count($FieldHeadings) . '. ' . __('Try downloading a new template'),'error');
 		fclose($FileHandle);
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -55,7 +55,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		if ( trim(mb_strtoupper($HeadField)) != trim(mb_strtoupper($FieldHeadings[$i]))) {
 			prnMsg(__('File contains incorrect headers') . ' '. mb_strtoupper($HeadField). ' != '. mb_strtoupper($FieldHeadings[$i]). '. ' . __('Try downloading a new template'),'error');
 			fclose($FileHandle);
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 		$i++;
@@ -85,7 +85,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		if ($FieldCount != $FieldTarget){
 			prnMsg(__($FieldTarget. ' fields required, '. $FieldCount. ' fields received'),'error');
 			fclose($FileHandle);
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 
@@ -266,7 +266,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 
 function IsBankAccount($Account) {
 	$SQL ="SELECT accountcode FROM bankaccounts WHERE accountcode='" . $Account . "'";

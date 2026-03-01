@@ -5,9 +5,9 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Claim Petty Cash Expenses From Tab');
 $ViewTopic = 'PettyCash';
 $BookMark = 'ExpenseClaim';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);}
 
@@ -781,4 +781,4 @@ if (!isset($SelectedTabs)) {
 		echo '</form>';
 	} // end if user wish to delete
 }
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

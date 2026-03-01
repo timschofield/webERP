@@ -7,7 +7,7 @@ $BookMark = 'GLAccountReport';
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 if (isset($_POST['Period'])) {
 	$SelectedPeriod = $_POST['Period'];
@@ -19,12 +19,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	if (!isset($SelectedPeriod)) {
 		prnMsg(__('A period or range of periods must be selected from the list box'), 'info');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 	if (!isset($_POST['Account'])) {
 		prnMsg(__('An account or range of accounts must be selected from the list box'), 'info');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -206,7 +206,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	if (count($_POST['Account']) == 0) {
 		prnMsg(__('An account or range of accounts must be selected from the list box'), 'info');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -244,15 +244,15 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		));
 	} else {
 		$Title = __('Inventory Planning Report');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('General Ledger Account Report') . '" alt="" />' . ' ' . __('General Ledger Account Report') . '</p>';
 		echo $HTML;
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 
 } else {
 	$Title = __('General Ledger Account Report');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	echo '<p class="page_title_text"><img src="' . $RootPath, '/css/', $Theme, '/images/transactions.png" title="' . __('General Ledger Account Inquiry') . '" alt="" />' . ' ' . __('General Ledger Account Report') . '</p>';
 
@@ -337,6 +337,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		</div>
 		</form>';
 
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }

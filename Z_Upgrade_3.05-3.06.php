@@ -5,7 +5,7 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Upgrade webERP 3.06 - 3.07');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 prnMsg(__('This script will run perform any modifications to the database since v 3.06 required to allow the additional functionality in version 3.07 scripts'),'info');
 
@@ -57,4 +57,4 @@ if ($_POST['DoUpgrade'] == __('Perform Upgrade')){
 
 } /*Dont do upgrade */
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

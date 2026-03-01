@@ -4,7 +4,7 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 if (isset($_GET['WO'])) {
 	$SelectedWO = $_GET['WO'];
@@ -187,19 +187,19 @@ if ($NoOfLabels > 0) {
 		);
 
 		$Title = __('Email a Work Order');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<div class="centre"><br /><br /><br />';
 		if ($Success == 1) {
 			prnMsg(__('Work Order') . ' ' . $SelectedWO . ' ' . __('has been emailed to') . ' ' . $_POST['EmailTo'] . ' ' . __('as directed'), 'success');
 		} else {
 			prnMsg(__('Emailing Work order') . ' ' . $SelectedWO . ' ' . __('to') . ' ' . $_POST['EmailTo'] . ' ' . __('failed'), 'error');
 		}
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 } else {
 	$Title = __('Label Error');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	prnMsg(__('There were no labels to print'),'warn');
 	echo '<br /><a href="'.$RootPath.'/index.php">' .  __('Back to the menu') . '</a>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 }

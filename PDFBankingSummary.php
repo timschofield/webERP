@@ -4,9 +4,9 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['BatchNo'])){
 	$_POST['BatchNo'] = $_GET['BatchNo'];
@@ -35,9 +35,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	if (DB_num_rows($Result) == 0){
 		$Title = __('Create PDF Print-out For A Batch Of Receipts');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		prnMsg(__('The receipt batch number') . ' ' . $_POST['BatchNo'] . ' ' . __('was not found in the database') . '. ' . __('Please try again selecting a different batch number'), 'warn');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 	/* OK get the row of receipt batch header info from the BankTrans table */
@@ -182,10 +182,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		));
 	} else {
 		$Title = __('Create PDF Print Out For A Batch Of Receipts');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/bank.png" title="' . __('Receipts') . '" alt="" />' . ' ' . __('Create PDF Print Out For A Batch Of Receipts') . '</p>';
 		echo $HTML;
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 
 } else { /*The option to print PDF was not hit so display form */
@@ -194,7 +194,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$ViewTopic = 'ARReports';
 	$BookMark = 'BankingSummary';
 
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' .
 		 $Title . '" alt="" />' . ' ' . $Title . '</p>';
@@ -226,6 +226,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			</div>
 	</form>';
 
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }

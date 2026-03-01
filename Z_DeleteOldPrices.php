@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('UTILITY PAGE To Delete All Old Prices');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 $Result = DB_query("UPDATE prices SET enddate='9999-12-31' WHERE enddate='1000-01-01'"); //convert old data to use end date of 9999-12-31 rather than SQL mode specific end date
 
@@ -48,4 +48,4 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 	</div>
       </form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

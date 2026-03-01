@@ -27,10 +27,10 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Recurring Orders Process');
 $ViewTopic = "SalesOrders";
 $BookMark = "RecurringSalesOrders";
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/GetSalesTransGLCodes.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/GetSalesTransGLCodes.php');
 
 $SQL = "SELECT recurringsalesorders.recurrorderno,
 			recurringsalesorders.debtorno,
@@ -81,7 +81,7 @@ $RecurrOrdersDueResult = DB_query($SQL,__('There was a problem retrieving the re
 
 if (DB_num_rows($RecurrOrdersDueResult)==0){
 	prnMsg(__('There are no recurring order templates that are due to have another recurring order created'),'warn');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -709,4 +709,4 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 
 }/*end while there are recurring orders due to have a new order created */
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

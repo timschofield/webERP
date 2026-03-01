@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('General Ledger Journal Inquiry');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLJournalInquiry';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['FromTransDate'])){$_POST['FromTransDate'] = ConvertSQLDate($_POST['FromTransDate']);}
 if (isset($_POST['ToTransDate'])){$_POST['ToTransDate'] = ConvertSQLDate($_POST['ToTransDate']);}
@@ -182,4 +182,4 @@ if (!isset($_POST['Show'])) {
 	echo '<br /><div class="centre"><input type="submit" name="Return" value="' . __('Select Another Date') . '" /></div>';
 	echo '</form>';
 }
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

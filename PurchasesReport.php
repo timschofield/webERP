@@ -13,7 +13,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Purchases from Suppliers');
 $ViewTopic = 'PurchaseOrdering';
 $BookMark = 'PurchasesReport';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['PeriodFrom'])){$_POST['PeriodFrom'] = ConvertSQLDate($_POST['PeriodFrom']);}
 if (isset($_POST['PeriodTo'])){$_POST['PeriodTo'] = ConvertSQLDate($_POST['PeriodTo']);}
@@ -77,7 +77,7 @@ if (isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRe
 					'<th>', __('Reference'), '</th>',
 					$CommonHead;
 		// Includes $CurrencyName array with currency three-letter alphabetic code and name based on ISO 4217:
-		include('includes/CurrenciesArray.php');
+		include(__DIR__ . '/includes/CurrenciesArray.php');
 		$SupplierId = '';
 		$SupplierOvAmount = 0;
 		$SupplierOvTax = 0;
@@ -268,5 +268,5 @@ echo '<div class="centre">',
 	'</div>';
 
 echo	'</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 // END Procedure division ======================================================

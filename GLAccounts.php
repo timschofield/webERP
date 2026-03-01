@@ -5,8 +5,8 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('General Ledger Accounts');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLAccounts';
-include('includes/header.php');
-include('includes/GLFunctions.php');
+include(__DIR__ . '/includes/header.php');
+include(__DIR__ . '/includes/GLFunctions.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/transactions.png" title="', // Icon image.
 	$Title, '" /> ', // Icon title.
@@ -340,4 +340,4 @@ if (isset($SelectedAccount)) {
 	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Show All Accounts') . '</a></div>';
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

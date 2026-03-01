@@ -4,7 +4,7 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 if (isset($_POST['PrintPDF'])
 	or isset($_POST['View'])
@@ -53,10 +53,10 @@ if (isset($_POST['PrintPDF'])
 
 	if (DB_num_rows($SupplierResult) == 0) {
 		$Title = __('Supplier Balances - Problem Report');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		prnMsg(__('There are no supplier balances to list'), 'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -159,7 +159,7 @@ if (isset($_POST['PrintPDF'])
 	$Title = __('Supplier Balances At A Period End');
 	$ViewTopic = 'AccountsPayable';
 	$BookMark = '';
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' .
 		__('Supplier Allocations') . '" alt="" />' . ' ' . $Title . '</p>';
@@ -207,5 +207,5 @@ if (isset($_POST['PrintPDF'])
 			<input type="submit" name="View" title="View Report" value="' . __('View') . '" />
 			</div>';
 	echo '</form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 }

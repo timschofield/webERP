@@ -10,7 +10,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Create and send sales analysis files');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 /* Config */
 
@@ -48,7 +48,7 @@ $fp = fopen($ItemsFileName,'w');
 if ($fp==false){
 
 	prnMsg(__('Could not open or create the file under') . ' ' . $ItemsFileName,'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 // the BOM is not used much anymore in 2025...
@@ -78,7 +78,7 @@ $fp = fopen($CustomersFileName,'w');
 if ($fp==false){
 
 	prnMsg(__('Could not open or create the file under') . ' ' . $CustomersFileName,'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 // the BOM is not used much anymore in 2025...
@@ -123,7 +123,7 @@ $fp = fopen($SalesFileName,'w');
 if ($fp==false){
 
 	prnMsg(__('Could not open or create the file under') . ' ' . $SalesFileName,'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 // the BOM is not used much anymore in 2025...
@@ -168,4 +168,4 @@ if (!$upload) {
 // close the FTP stream
 ftp_close($conn_id);
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

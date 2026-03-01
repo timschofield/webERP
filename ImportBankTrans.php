@@ -3,22 +3,22 @@
 // Imports bank transactions.
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefineImportBankTransClass.php');
+include(__DIR__ . '/includes/DefineImportBankTransClass.php');
 
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Import Bank Transactions');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'ImportBankTrans';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/bank.png" title="', // Icon image.
 	$Title, '" /> ', // Icon title.
 	$Title, '</p>';// Page title.
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/CurrenciesArray.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/CurrenciesArray.php');
 
 /*
 Read in the flat file one line at a time
@@ -39,7 +39,7 @@ if (!isset($_FILES['ImportFile']) AND !isset($_SESSION['Statement'])) {
 	if (DB_num_rows($Result) ==0) {
 		prnMsg(__('There are no bank accounts defined that are set up to allow importation of bank statement transactions. First define the file format used by your bank for statement exports.'),'error');
 		echo '<br /><a href="' . $RootPath . '/BankAccounts.php>' . __('Setup Import Format for Bank Accounts') . '</a>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
     echo '<form name="ImportForm" enctype="multipart/form-data" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
@@ -75,7 +75,7 @@ if (!isset($_FILES['ImportFile']) AND !isset($_SESSION['Statement'])) {
     if ($_FILES['ImportFile']['size'] > (1024*1024)) { //File Size Check
 		prnMsg(__('The file size is over the maximum allowed. The maximum size allowed is 1 megabyte. This file size is (bytes)') . ' ' . $_FILES['ImportFile']['size'],'warn');
 		prnMsg(__('The MT940 bank statement file cannot be imported and processed'),'error');
-        include('includes/footer.php');
+        include(__DIR__ . '/includes/footer.php');
         exit();
 		$ReadTheFile ='No';
 	}
@@ -98,13 +98,13 @@ if (!isset($_FILES['ImportFile']) AND !isset($_SESSION['Statement'])) {
 
 		switch ($_POST['ImportFormat']) {
 			case 'MT940-SCB':
-				include('includes/ImportBankTrans_MT940_SCB.php'); //for Siam Commercial Bank Thailand
+				include(__DIR__ . '/includes/ImportBankTrans_MT940_SCB.php'); //for Siam Commercial Bank Thailand
 				break;
 			case 'MT940-ING': //for ING Bank Netherlands
-				include('includes/ImportBankTrans_MT940_ING.php');
+				include(__DIR__ . '/includes/ImportBankTrans_MT940_ING.php');
 				break;
 			case 'GIFTS': //GIFTS for Bank of New Zealand
-				include('includes/ImportBankTrans_GIFTS.php');
+				include(__DIR__ . '/includes/ImportBankTrans_GIFTS.php');
 				break;
 		}
 
@@ -562,4 +562,4 @@ if (isset($_SESSION['Statement'])) {
 		</table>';
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

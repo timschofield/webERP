@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Import Chart Of Accounts');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title="' .
@@ -40,7 +40,7 @@ if (isset($_FILES['ChartFile']) and $_FILES['ChartFile']['name']) { //start file
 	if ( count($HeadRow) != count($FieldHeadings) ) {
 		prnMsg(__('File contains') . ' '. count($HeadRow). ' ' . __('columns, expected') . ' '. count($FieldHeadings) . '<br/>' . __('There should be three column headings:') . ' Account Code, Description, Account Group','error');
 		fclose($FileHandle);
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -50,7 +50,7 @@ if (isset($_FILES['ChartFile']) and $_FILES['ChartFile']['name']) { //start file
 		if ( trim(mb_strtoupper($HeadField)) != trim(mb_strtoupper($FieldHeadings[$HeadingColumnNumber]))) {
 			prnMsg(__('The file to import the chart of accounts from contains incorrect column headings') . ' '. mb_strtoupper($HeadField). ' != '. mb_strtoupper($FieldHeadings[$HeadingColumnNumber]). '<br />' . __('There should be three column headings:') . ' Account Code, Description, Account Group','error');
 			fclose($FileHandle);
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 		$HeadingColumnNumber++;
@@ -68,7 +68,7 @@ if (isset($_FILES['ChartFile']) and $_FILES['ChartFile']['name']) { //start file
 		if ($FieldCount != count($FieldHeadings)){
 			prnMsg(count($FieldHeadings) . ' ' . __('fields required') . ', '. $FieldCount. ' ' . __('fields received'),'error');
 			fclose($FileHandle);
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 
@@ -120,7 +120,7 @@ if (isset($_FILES['ChartFile']) and $_FILES['ChartFile']['name']) { //start file
 	fclose($FileHandle);
 	//Now create the chartdetails records as necessary for the new chartsmaster records
 	# bug: file not found
-	include('includes/GLPostings.php');
+	include(__DIR__ . '/includes/GLPostings.php');
 
 } else { //show file upload form
 
@@ -141,4 +141,4 @@ if (isset($_FILES['ChartFile']) and $_FILES['ChartFile']['name']) { //start file
 
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

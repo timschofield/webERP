@@ -16,17 +16,17 @@ function standard_deviation($Data) {
 	return sqrt($TotalDifferenceSquared / $Counter);
 }
 
-include ('includes/session.php');
+include (__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 $ViewTopic = "Inventory";
 $BookMark = "PlanningReport";
 
-include ('includes/SQL_CommonFunctions.php');
-include ('includes/StockFunctions.php');
+include (__DIR__ . '/includes/SQL_CommonFunctions.php');
+include (__DIR__ . '/includes/StockFunctions.php');
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
@@ -214,10 +214,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 	else {
 		$Title = __('Inventory Planning Report');
-		include ('includes/header.php');
+		include (__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Inventory') . '" alt="" />' . ' ' . __('Inventory Planning Report') . '</p>';
 		echo $HTML;
-		include ('includes/footer.php');
+		include (__DIR__ . '/includes/footer.php');
 	}
 
 } else { /*The option to print PDF was not hit */
@@ -225,7 +225,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$Title = __('Preferred Supplier Inventory Planning');
 	$ViewTopic = 'Inventory';
 	$BookMark = 'PlanningReport';
-	include ('includes/header.php');
+	include (__DIR__ . '/includes/header.php');
 
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
@@ -285,5 +285,5 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			</div>';
 	echo '</form>';
 
-	include ('includes/footer.php');
+	include (__DIR__ . '/includes/footer.php');
 }

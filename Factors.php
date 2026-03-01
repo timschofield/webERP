@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Factor Company Maintenance');
 $ViewTopic = 'AccountsPayable';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_GET['FactorID'])){
 	$FactorID = mb_strtoupper($_GET['FactorID']);
@@ -43,7 +43,7 @@ if (isset($_POST['Submit']) OR isset($_POST['Update'])) {
 	// But if errors were found in the input
 	if ($InputError>0) {
 		prnMsg(__('Validation failed no insert or update took place'),'warn');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -341,4 +341,4 @@ if (empty($FactorID) AND !isset($_POST['Create']) AND !isset($_POST['Amend'])) {
 		</form>';
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -695,7 +695,7 @@ if (!isset($SupplierID)) {
 	$Result = DB_query("SELECT typeid, typename FROM suppliertype");
 	if (DB_num_rows($Result) == 0) {
 		prnMsg(__('There are no supplier types setup. These must be created first'), 'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 

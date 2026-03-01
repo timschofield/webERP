@@ -4,7 +4,7 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 if (isset($_POST['FromCriteria'])
 	AND mb_strlen($_POST['FromCriteria'])>=1
@@ -46,18 +46,18 @@ if (isset($_POST['FromCriteria'])
 
 	if (DB_error_no() !=0) {
 	  $Title = __('Outstanding GRN Valuation') . ' - ' . __('Problem Report');
-	  include('includes/header.php');
+	  include(__DIR__ . '/includes/header.php');
 	  prnMsg(__('The outstanding GRNs valuation details could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 	   echo '<br /><a href="' .$RootPath .'/index.php">' . __('Back to the menu') . '</a>';
-	   include('includes/footer.php');
+	   include(__DIR__ . '/includes/footer.php');
 	   exit();
 	}
 	if (DB_num_rows($GRNsResult) == 0) {
 		$Title = __('Outstanding GRN Valuation') . ' - ' . __('Problem Report');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		prnMsg(__('No outstanding GRNs valuation details retrieved'), 'warn');
 		echo '<br /><a href="' .$RootPath .'/index.php">' . __('Back to the menu') . '</a>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 }
@@ -160,7 +160,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	} else {
 
 		$Title=__('Outstanding GRNs Report');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 
 		echo '<p class="page_title_text">
 				<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' .__('Inventory') . '" alt="" />
@@ -169,7 +169,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 		echo '<div class="page_help_text">' . __('Shows the list of goods received not yet invoiced, both in supplier currency and home currency. When run for all suppliers, the total in home curency should match the GL Account for Goods received not invoiced.') . '</div>';
 		echo $HTML;
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 
 } else { /*Neither the print PDF nor show on scrren option was hit */
@@ -177,7 +177,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$Title=__('Outstanding GRNs Report');
 	$ViewTopic = 'Inventory';
 	$BookMark = '';
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 		echo '<p class="page_title_text">
 				<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' .__('Inventory') . '" alt="" />
@@ -207,6 +207,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		</div>
 		</form>';
 
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 
 } /*end of else not PrintPDF */

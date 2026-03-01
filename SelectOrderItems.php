@@ -1,7 +1,7 @@
 <?php
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefineCartClass.php');
+include(__DIR__ . '/includes/DefineCartClass.php');
 
 require(__DIR__ . '/includes/session.php');
 
@@ -12,11 +12,11 @@ if (isset($_GET['ModifyOrderNumber'])) {
 }
 $ViewTopic = 'SalesOrders';
 $BookMark = 'SalesOrderEntry';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/GetPrice.php');
-include('includes/SQL_CommonFunctions.php');
-include('includes/StockFunctions.php');
+include(__DIR__ . '/includes/GetPrice.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/StockFunctions.php');
 
 if (isset($_POST['QuickEntry'])){
 	unset($_POST['PartSearch']);
@@ -170,12 +170,12 @@ if (isset($_GET['ModifyOrderNumber'])
 		$MyRow = DB_fetch_array($GetOrdHdrResult);
 		if ($_SESSION['SalesmanLogin']!='' AND $_SESSION['SalesmanLogin']!=$MyRow['salesman']){
 			prnMsg(__('Your account is set up to see only a specific salespersons orders. You are not authorised to modify this order'),'error');
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 		if ($CustomerLogin == 1 AND $_SESSION['CustomerID'] != $MyRow['debtorno']) {
 			echo '<p class="bad">' . __('This transaction is addressed to another customer and cannot be displayed for privacy reasons') . '. ' . __('Please select only transactions relevant to your company').'</p>';
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 
 		}
@@ -460,7 +460,7 @@ if (isset($SelectedCustomer)) {
 
 			prnMsg(__('The branch details for branch code') . ': ' . $_SESSION['Items'.$identifier]->Branch . ' ' . __('against customer code') . ': ' . $_SESSION['Items'.$identifier]->DebtorNo . ' ' . __('could not be retrieved') . '. ' . __('Check the set up of the customer and branch'),'error');
 
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 		// add echo
@@ -468,7 +468,7 @@ if (isset($SelectedCustomer)) {
 		$MyRow = DB_fetch_array($Result);
 		if ($_SESSION['SalesmanLogin']!=NULL AND $_SESSION['SalesmanLogin']!=$MyRow['salesman']){
 			prnMsg(__('Your login is only set up for a particular salesperson. This customer has a different salesperson.'),'error');
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 		$_SESSION['Items'.$identifier]->DeliverTo = $MyRow['brname'];
@@ -501,7 +501,7 @@ if (isset($SelectedCustomer)) {
 				prnMsg(__('The') . ' ' . htmlspecialchars($MyRow[0], ENT_QUOTES, 'UTF-8', false) . ' ' . __('account is currently at or over their credit limit'),'warn');
 			} elseif ($_SESSION['CheckCreditLimits']==2 AND $_SESSION['Items'.$identifier]->CreditAvailable <=0){
 				prnMsg(__('No more orders can be placed by') . ' ' . htmlspecialchars($MyRow[0], ENT_QUOTES, 'UTF-8', false) . ' ' . __(' their account is currently at or over their credit limit'),'warn');
-				include('includes/footer.php');
+				include(__DIR__ . '/includes/footer.php');
 				exit();
 			}
 		}
@@ -574,7 +574,7 @@ if (isset($SelectedCustomer)) {
 			}
 		} else {
 			prnMsg(__('Sorry, your account has been put on hold for some reason, please contact the credit control personnel.'),'warn');
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 	}
@@ -701,7 +701,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			}
 			echo '<br /><br />';
 			prnMsg(__('This sales order has been cancelled as requested'),'success');
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 	} else { /*Not cancelling the order */
@@ -913,13 +913,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						$NewItem = $KitParts['component'];
 						$NewItemQty = $KitParts['quantity'] * $ParentQty;
 						$NewPOLine = 0;
-						include('includes/SelectOrderItems_IntoCart.php');
+						include(__DIR__ . '/includes/SelectOrderItems_IntoCart.php');
 					}
 
 				} elseif ($MyRow['mbflag']=='G'){
 					prnMsg(__('Phantom assemblies cannot be sold, these items exist only as bills of materials used in other manufactured items. The following item has not been added to the order:') . ' ' . $NewItem, 'warn');
 				} else { /*Its not a kit set item*/
-					include('includes/SelectOrderItems_IntoCart.php');
+					include(__DIR__ . '/includes/SelectOrderItems_IntoCart.php');
 				}
 			}
 		 }
@@ -1009,7 +1009,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			$NewItemDue = date($_SESSION['DefaultDateFormat']);
 			$NewPOLine = $_POST['POLine'] ?? 0;
 			$NewItem = $AssetStockID;
-			include('includes/SelectOrderItems_IntoCart.php');
+			include(__DIR__ . '/includes/SelectOrderItems_IntoCart.php');
 		} //end if adding a fixed asset to the order
 	} //end if the fixed asset selection box was set
 
@@ -1181,7 +1181,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/DeliveryDetails.php?identifier='.$identifier . '">';
 		prnMsg(__('You should automatically be forwarded to the entry of the delivery details page') . '. ' . __('if this does not happen') . ' (' . __('if the browser does not support META Refresh') . ') ' .
 		   '<a href="' . $RootPath . '/DeliveryDetails.php?identifier='.$identifier . '">' . __('click here') . '</a> ' . __('to continue'), 'info');
-	   	include('includes/footer.php');
+	   	include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -1218,14 +1218,14 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					$NewItemQty = $KitParts['quantity'] * $ParentQty;
 					$NewPOLine = 0;
 					$NewItemDue = date($_SESSION['DefaultDateFormat']);
-					include('includes/SelectOrderItems_IntoCart.php');
+					include(__DIR__ . '/includes/SelectOrderItems_IntoCart.php');
 				}
 
 			} else { /*Its not a kit set item*/
 				$NewItemDue = date($_SESSION['DefaultDateFormat']);
 				$NewPOLine = 0;
 
-				include('includes/SelectOrderItems_IntoCart.php');
+				include(__DIR__ . '/includes/SelectOrderItems_IntoCart.php');
 			}
 
 		} /* end of if its a new item */
@@ -1267,13 +1267,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 							$NewItemQty = $KitParts['quantity'] * $ParentQty;
 							$NewItemDue = date($_SESSION['DefaultDateFormat']);
 							$NewPOLine = 0;
-							include('includes/SelectOrderItems_IntoCart.php');
+							include(__DIR__ . '/includes/SelectOrderItems_IntoCart.php');
 						}
 
 					} else { /*Its not a kit set item*/
 						$NewItemDue = date($_SESSION['DefaultDateFormat']);
 						$NewPOLine = 0;
-						include('includes/SelectOrderItems_IntoCart.php');
+						include(__DIR__ . '/includes/SelectOrderItems_IntoCart.php');
 					}
 				} /* end of if its a new item */
 			} /*end of if its a new item */
@@ -1810,7 +1810,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		}
 }#end of else not selecting a customer
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 
 function GetCustBranchDetails($identifier) {
 		$SQL = "SELECT custbranch.brname,

@@ -260,13 +260,13 @@ try {
 		exit(1);
 	} else {
 		$Title = 'Error Generating Manual PDF';
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<div class="centre">';
 		echo '<h2>Error Generating PDF</h2>';
 		echo '<p>' . htmlspecialchars($e->getMessage()) . '</p>';
 		echo '<p><a href="ManualContents.php">Return to Manual</a></p>';
 		echo '</div>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 }
 ?>

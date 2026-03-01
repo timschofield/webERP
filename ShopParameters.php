@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Shop Configuration');
 $ViewTopic = 'Setup';
 $BookMark = 'ShopParameters';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Shop Configuration')
 	. '" alt="" />' . $Title. '</p>';
@@ -604,4 +604,4 @@ echo '<div class="centre">
 	</div>
 	</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

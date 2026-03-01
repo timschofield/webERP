@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Stock On Hand By Date');
 $ViewTopic = 'Inventory';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['OnHandDate'])){$_POST['OnHandDate'] = ConvertSQLDate($_POST['OnHandDate']);}
 
@@ -196,4 +196,4 @@ if (isset($_POST['ShowStatus']) and is_date($_POST['OnHandDate'])) {
 		</table>';
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

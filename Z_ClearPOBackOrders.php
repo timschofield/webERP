@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('UTILITY PAGE To Clear purchase orders with quantity on back order');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['ClearSupplierBackOrders'])) {
 	$SQL = "UPDATE purchorderdetails INNER JOIN purchorders ON purchorderdetails.orderno=purchorders.orderno SET purchorderdetails.quantityord=purchorderdetails.quantityrecd, purchorderdetails.completed=1 WHERE quantityrecd >0 AND supplierno>= '" . $_POST['FromSupplierNo'] . "' AND supplierno <= '" . $_POST['ToSupplierNo'] . "'";
@@ -31,4 +31,4 @@ echo '<table>
 	<div>
 	</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

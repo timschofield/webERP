@@ -5,10 +5,10 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Fixed Assets');
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetItems';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/ImageFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/ImageFunctions.php');
 
 echo '<a href="' . $RootPath . '/SelectAsset.php">' . __('Back to Select') . '</a><br />' . "\n";
 
@@ -663,4 +663,4 @@ if (isset($New)) {
 
 echo '</div>
 	</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

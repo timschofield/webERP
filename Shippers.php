@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Shipping Company Maintenance');
 $ViewTopic = 'Shipments';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_GET['SelectedShipper'])){
 	$SelectedShipper = $_GET['SelectedShipper'];
@@ -197,4 +197,4 @@ if (!isset($_GET['delete'])) {
 
 } //end if record deleted no point displaying form to add record
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

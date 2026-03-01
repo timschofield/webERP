@@ -26,14 +26,14 @@ $DatabaseName = $_SESSION['DatabaseName'];
 $Recipients = GetMailList('SalesAnalysisReportRecipients');
 if (sizeOf($Recipients) == 0) {
 	$Title = __('Inventory Valuation') . ' - ' . __('Problem Report');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	prnMsg(__('There are no members of the Sales Analysis Report Recipients email group'), 'warn');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
-include('includes/ConstructSQLForUserDefinedSalesReport.php');
-include('includes/PDFSalesAnalysis.php');
+include(__DIR__ . '/includes/ConstructSQLForUserDefinedSalesReport.php');
+include(__DIR__ . '/includes/PDFSalesAnalysis.php');
 
 $From = $_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>';
 $Subject = __('Sales Analysis Report');

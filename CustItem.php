@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $ViewTopic = 'AccountsReceivable';// Filename in ManualContents.php's TOC.
 $BookMark = '';// Anchor's id in the manual's html document.
 $Title = __('Customer Item Data');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_GET['DebtorNo'])) {
 	$DebtorNo = trim(mb_strtoupper($_GET['DebtorNo']));
@@ -221,7 +221,7 @@ if (isset($DebtorNo) and $DebtorNo !=  '' and !isset($_POST['Searchcustomer'])) 
 				<input type="submit" name="Searchcustomer" value="', __('Find Customers Now'), '" />
 			</div>
 		</form>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 }
@@ -464,4 +464,4 @@ if (!isset($DebtorsMasterResult)) {
 	echo '</form>';
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

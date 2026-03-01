@@ -5,10 +5,10 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Authorisation of Petty Cash Expenses');
 $ViewTopic = 'PettyCash';
 $BookMark = 'AuthorizeExpense';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/GLFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/GLFunctions.php');
 
 if (isset($_POST['SelectedTabs'])) {
 	$SelectedTabs = mb_strtoupper($_POST['SelectedTabs']);
@@ -371,4 +371,4 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	echo '</form>';
 }
 /*end of else not submit */
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

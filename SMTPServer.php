@@ -7,7 +7,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 $Title = __('SMTP Server details');
 $ViewTopic = 'CreatingNewSystem';
 $BookMark = 'SMTPServer';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	'/images/email.png" title="' .// Icon image.
@@ -149,4 +149,4 @@ echo '<field>
 	</div>
 	</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

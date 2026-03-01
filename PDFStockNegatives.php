@@ -4,7 +4,7 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 $Title = __('Inventory Negatives Listing');
 
@@ -31,9 +31,9 @@ $SQL = "SELECT stockmaster.stockid,
 $Result = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($Result) == 0) {
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	prnMsg(__('There are no negative stocks to list'), 'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 

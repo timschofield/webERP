@@ -2,7 +2,7 @@
 
 require(__DIR__ . '/includes/session.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 function parseToXML($htmlStr)
 {

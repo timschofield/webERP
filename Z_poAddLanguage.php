@@ -17,7 +17,7 @@ if (isset($_POST['cancel'])) {
 $Title = __('New Language');// __('Add a New Language to the System')
 $ViewTopic = "SpecialUtilities";
 $BookMark = "Z_poAddLanguage";// Anchor's id in the manual's html document.
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title="' .
@@ -62,7 +62,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewLanguage'])) {
 			prnMsg(__('This language cannot be added because it already exists!'),'error');
   			echo '</form>';
 	  		echo '</div>';
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 
@@ -73,7 +73,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewLanguage'])) {
 
 		echo '</form>';
 		echo '</div>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -96,4 +96,4 @@ echo '</td></tr></table>';
 echo '<br /><input type="submit" name="submit" value="' . __('Proceed') . '" />&nbsp;&nbsp;&nbsp;&nbsp;';
 echo '</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

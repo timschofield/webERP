@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Historical Test Results');
 $ViewTopic = 'QualityAssurance';
 $BookMark = 'QA_HistoricalResults';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
@@ -155,4 +155,4 @@ if ($TotResults>0) {
 	echo '</tr></table></div></div>';
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

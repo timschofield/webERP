@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title=__('Apply Current Cost to Sales Analysis');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 $Period = 42;
 
@@ -81,4 +81,4 @@ if (isset($_POST['UpdateSalesAnalysis']) AND $_POST['PeriodNo']!=0){
 
 	prnMsg(__('Updated the sales analysis cost data for period') . ' '. $_POST['PeriodNo'],'success');
 }
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

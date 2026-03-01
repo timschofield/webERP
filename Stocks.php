@@ -7,11 +7,11 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Item Maintenance');
 $ViewTopic = 'Inventory';
 $BookMark = 'InventoryAddingItems';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/StockFunctions.php');
-include('includes/ImageFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/StockFunctions.php');
+include(__DIR__ . '/includes/ImageFunctions.php');
 
 /* If this form is called with the StockID then it is assumed that the stock item is to be modified */
 
@@ -1439,4 +1439,4 @@ if ($New == 1) {
 
 echo '</div>
 	</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

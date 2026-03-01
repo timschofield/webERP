@@ -4,7 +4,7 @@ require (__DIR__ . '/includes/session.php');
 $Title = __('Geocode Generate');
 include ('includes/header.php');
 
-//include('includes/SQL_CommonFunctions.php');
+//include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 $SQL = "SELECT * FROM geocode_param";
 $ResultGeo = DB_query($SQL);
 $MyRow = DB_fetch_array($ResultGeo);

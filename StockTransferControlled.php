@@ -1,15 +1,15 @@
 <?php
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefineSerialItems.php');
-include('includes/DefineStockTransfers.php');
+include(__DIR__ . '/includes/DefineSerialItems.php');
+include(__DIR__ . '/includes/DefineStockTransfers.php');
 
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Transfer Controlled Items');
 $ViewTopic = 'Inventory';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Inventory') . '" alt="" /><b>' . $Title . '</b></p>';
 
@@ -18,7 +18,7 @@ if (!isset($_SESSION['Transfer'])) {
 	echo '<div class="centre"><a href="' . $RootPath . '/StockTransfers.php?NewTransfer=Yes">' . __('Enter A Stock Transfer') . '</a><br />';
 	prnMsg( __('This page can only be opened if a Stock Transfer for a Controlled Item has been initiated'),'error');
 	echo '</div>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -46,7 +46,7 @@ if ($LineItem->Controlled != 1 ){
 		echo '<div class="centre"><a href="' . $RootPath . '/StockTransfers.php?NewTransfer=Yes">' . __('Enter A Stock Transfer') . '</a></div>';
 	}
 	prnMsg(__('Notice') . ' - ' . __('The transferred item must be defined as controlled to require input of the batch numbers or serial numbers being transferred'),'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -75,7 +75,7 @@ $InOutModifier=1;
 $ShowExisting = true;
 $LineNo = $TransferItem ?? 0;
 
-include('includes/InputSerialItems.php');
+include(__DIR__ . '/includes/InputSerialItems.php');
 
 /*TotalQuantity set inside this include file from the sum of the bundles
 of the item selected for adjusting */
@@ -83,4 +83,4 @@ $LineItem->Quantity = $TotalQuantity;
 
 /*Also a multi select box for adding bundles to the Transfer without keying */
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

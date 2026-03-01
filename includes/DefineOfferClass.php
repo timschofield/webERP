@@ -99,7 +99,7 @@ class Offer {
 							number_format($LineItems->Price, 2) . "\n";
 					} else {
 						prnMsg(__('The offer for') . ' ' . $LineItems->StockID . ' ' . __('could not be inserted into the database'), 'error');
-						include('includes/footer.php');
+						include(__DIR__ . '/footer.php');
 						exit();
 					}
 				}
@@ -120,7 +120,7 @@ class Offer {
 							$LineItem->StockID . ' ' . __('at a price of') . ' ' . $this->CurrCode . $LineItem->Price . "\n";
 					} else {
 						prnMsg(__('The offer for') . ' ' . $LineItem->StockID . ' ' . __('could not be updated in the database'), 'error');
-						include('includes/footer.php');
+						include(__DIR__ . '/footer.php');
 						exit();
 					}
 				} else { // the LineItem is Deleted flag is true so delete it

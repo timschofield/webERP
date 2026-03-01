@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Price break matrix Maintenance');
 $ViewTopic = 'Sales';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);}
 if (isset($_POST['EndDate'])){$_POST['EndDate'] = ConvertSQLDate($_POST['EndDate']);}
@@ -161,7 +161,7 @@ if (isset($_GET['Edit'])){
 }
 $SQL = "SELECT currabrev FROM currencies";
 $Result = DB_query($SQL);
-require_once('includes/CurrenciesArray.php');
+require_once(__DIR__ . '/includes/CurrenciesArray.php');
 echo '<fieldset>
 		<legend>', __('Price Matrix For'), ' ', $_POST['StockID'], '</legend>';
 echo '<field>
@@ -203,7 +203,7 @@ if (isset($_GET['StockID'])){
 	$StockID = trim(strtoupper($_POST['StockID']));
 } elseif (!isset($StockID)){
 	prnMsg(__('You must select a stock item first before set a price maxtrix'),'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 echo '<input type="hidden" name="StockID" value="' . $StockID . '" />';
@@ -311,7 +311,7 @@ if (DB_num_rows($Result) > 0) {
 echo '</table>
 	  </form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 
 function GetMySQLMaxDate () {
 	switch ($_SESSION['DefaultDateFormat']){

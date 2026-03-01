@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Delete Sales Transactions');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['ProcessDeletions'])) {
 
@@ -186,4 +186,4 @@ echo '<input type="submit" name="ProcessDeletions" value="' . __('Process') . '"
 echo '</div>';
 echo '</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('WO items can be produced with available stock');
 $ViewTopic = 'Manufacturing';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '
@@ -207,4 +207,4 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 
 } // End of function display()
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

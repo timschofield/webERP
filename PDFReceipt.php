@@ -5,7 +5,7 @@ require_once('vendor/autoload.php'); // Ensure DomPDF is autoloaded
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 // Fetch values from session and GET
 $BatchNumber = $_GET['BatchNumber'];
@@ -65,11 +65,11 @@ if (file_exists($LogoFile)) {
 }
 
 // Get currency name
-include('includes/CurrenciesArray.php'); // $CurrencyName array
+include(__DIR__ . '/includes/CurrenciesArray.php'); // $CurrencyName array
 $CurrencyLongName = $CurrencyName[$CurrencyCode] ?? $CurrencyCode;
 
 // Format amount
-//require_once('includes/NumberFormat.php'); // ensure locale_number_format is available
+//require_once(__DIR__ . '/includes/NumberFormat.php'); // ensure locale_number_format is available
 $AmountFormatted = locale_number_format(-$Amount, $DecimalPlaces) . ' ' . $CurrencyCode . ' - ' . $CurrencyLongName;
 
 // Date

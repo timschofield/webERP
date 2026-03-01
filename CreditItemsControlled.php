@@ -1,15 +1,15 @@
 <?php
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefineCartClass.php');
-include('includes/DefineSerialItems.php');
+include(__DIR__ . '/includes/DefineCartClass.php');
+include(__DIR__ . '/includes/DefineSerialItems.php');
 
 require(__DIR__ . '/includes/session.php');
 
 $ViewTopic = 'ARTransactions';
 $BookMark = 'CreditNotes';
 $Title = __('Specify Credited Controlled Items');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if ($_GET['CreditInvoice']=='Yes' OR $_POST['CreditInvoice']=='Yes'){
 	$CreditLink = 'Credit_Invoice.php';
@@ -21,7 +21,7 @@ if (!isset($_GET['identifier'])){
 	echo '<div class="centre"><a href="' . $RootPath . '/' . $CreditLink . '">' .  __('Select Credit Items'). '</a><br /><br />';
 	prnMsg( __('This page must be called with the identifier to uniquely identify the credit note being entered. This is a programming error that should not occur.') , 'error');
 	echo '</div>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 } else {
 	$identifier=$_GET['identifier'];
@@ -36,7 +36,7 @@ if (isset($_GET['LineNo'])){
 	echo '<div class="centre"><a href="' . $RootPath . '/' . $CreditLink . '">' .  __('Select Credit Items'). '</a><br /><br />';
 	prnMsg( __('This page can only be opened if a Line Item on a credit note has been selected.') . ' ' . __('Please do that first'), 'error');
 	echo '</div>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -47,7 +47,7 @@ if (!isset($_SESSION['CreditItems' . $identifier])) {
 		<br />';
 	prnMsg( __('This page can only be opened if a controlled credit note line item has been selected.') . ' ' . __('Please do that first'),'error');
 	echo '</div>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -60,7 +60,7 @@ if ( $LineItem->Controlled !=  1 ){
 	echo '<div class="centre"><a href="' . $RootPath . '/' . $CreditLink . '">' .  __('Back to Credit Note Entry') . '</a></div>';
 	echo '<br />';
 	prnMsg( __('Notice') . ' - ' . __('The line item must be defined as controlled to require input of the batch numbers or serial numbers being credited'),'warn');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -85,7 +85,7 @@ $StockID = $LineItem->StockID;
 $InOutModifier=1;
 $ShowExisting = false;
 $IsCredit = true;
-include('includes/InputSerialItems.php');
+include(__DIR__ . '/includes/InputSerialItems.php');
 
 echo '</tr>
 	</table>';
@@ -98,4 +98,4 @@ if ($CreditLink == 'Credit_Invoice.php?identifier=' . $identifier){
 	$_SESSION['CreditItems' . $identifier]->LineItems[$LineNo]->Quantity = $TotalQuantity;
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

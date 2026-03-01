@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Tax Rates');
 $ViewTopic = 'Tax';
 $BookMark = 'TaxAuthorityRates';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title="' .
@@ -24,7 +24,7 @@ if (!isset($TaxAuthority)) {
 		__('Please select the Rates link from the tax authority page') . '<br /><a href="' .
 		$RootPath . '/TaxAuthorities.php">' . __('click here') . '</a> ' .
 		__('to go to the Tax Authority page'), 'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -112,4 +112,4 @@ echo '<div class="centre">
 		<a href="' . $RootPath . '/TaxCategories.php">' . __('Tax Category Maintenance') .  '</a>
 	</div>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

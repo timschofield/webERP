@@ -7,7 +7,7 @@ if (isset($_POST['NewLogin']) and !isset($_SESSION['FormID'])) {
 	$_SESSION['FormID'] = sha1(uniqid(mt_rand(), true));
 }
 /*The module link codes are hard coded in a switch statement below to determine the options to show for each tab */
-include('includes/MainMenuLinksArray.php');
+include(__DIR__ . '/includes/MainMenuLinksArray.php');
 
 /// @todo this is better left handled to be done in session.php, which can send an http redirect instead
 if (isset($_SESSION['FirstLogIn']) and $_SESSION['FirstLogIn'] == '1' and isset($_SESSION['DatabaseName'])) {
@@ -41,7 +41,7 @@ if (isset($_GET['Application']) and ($_GET['Application'] != '')) {
 	$_SESSION['Module'] = '';
 }
 
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($SupplierLogin) AND $SupplierLogin==1){
 	echo '<section class="MainBody clearfix">';
@@ -68,7 +68,7 @@ if (isset($SupplierLogin) AND $SupplierLogin==1){
 	echo '</fieldset>
 		</form>
 	</section>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit;
 } elseif (isset($CustomerLogin) AND $CustomerLogin==1){
 	echo '<section class="MainBody clearfix">';
@@ -95,7 +95,7 @@ if (isset($SupplierLogin) AND $SupplierLogin==1){
 	echo '</fieldset>
 		</form>
 	</section>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit;
 }
 
@@ -218,7 +218,7 @@ if (isset($MenuItems[$_SESSION['Module']]['Maintenance'])) {
 }
 echo '</ul>
 </fieldset>'; // MaintenanceDive ===HJ===
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 
 /**
 * This function retrieves the reports given a certain group id as defined in /reports/admin/defaults.php

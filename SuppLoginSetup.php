@@ -5,16 +5,16 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Supplier Login Configuration');
 $ViewTopic = 'Setup';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/LanguagesArray.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/LanguagesArray.php');
 
 if (!isset($_SESSION['SupplierID'])){
 	echo '<br />
 		<br />';
 	prnMsg(__('A supplier must first be selected before logins can be defined for it') . '<br /><br /><a href="' . $RootPath . '/SelectSupplier.php">' . __('Select a supplier') . '</a>','info');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -102,7 +102,7 @@ if (isset($_POST['submit'])) {
 		$ErrMsg = __('The user could not be added because');
 		$Result = DB_query($SQL, $ErrMsg);
 		prnMsg( __('A new supplier login has been created'), 'success' );
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 }
@@ -179,7 +179,7 @@ if (!$FoundTheSupplierRole){
 	echo '</fieldset>
 		  </form>';
 	prnMsg(__('The supplier login role is expected to contain just one token - number 9. There is no such role currently defined - so a supplier login cannot be set up until this role is defined'),'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -300,4 +300,4 @@ echo '</fieldset>
 
 echo '<script>defaultControl(document.forms[0].UserID);</script>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

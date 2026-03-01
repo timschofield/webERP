@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Search Pick Lists');
 $ViewTopic = 'Sales';
 $BookMark = 'SelectPickingLists';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/magnifier.png" title="', // Icon image.
@@ -509,4 +509,4 @@ if ($_POST['Status'] == 'New') {
 	echo '<meta http-equiv="refresh" content="300" url="', $RootPath, htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" />';
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('User Settings');
 $ViewTopic = 'GettingStarted';
 $BookMark = 'UserSettings';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/user.png" title="', // Icon image.
@@ -253,4 +253,4 @@ echo '<div class="centre">
 		<input name="Modify" type="submit" value="', __('Modify'), '" /></div>
 	</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

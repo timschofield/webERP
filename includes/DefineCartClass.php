@@ -380,7 +380,7 @@ class Cart {
 			$TaxCatID = $TaxCatRow['taxcatid'];
 		} else {
   			prnMsg( __('Cannot find tax category Freight which must always be defined'),'error');
-			include('includes/footer.php');
+			include(__DIR__ . '/footer.php');
 			exit();
 		}
 

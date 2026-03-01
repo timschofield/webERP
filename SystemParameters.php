@@ -7,14 +7,14 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('System Parameters');
 $ViewTopic = 'CreatingNewSystem';
 $BookMark = 'SystemParameters';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/maintenance.png" title="', // Icon image.
 	$Title, '" /> ', // Icon title.
 	$Title, '</p>';// Page title.
 
-include('includes/CountriesArray.php');
+include(__DIR__ . '/includes/CountriesArray.php');
 if (empty($_SESSION['ItemDescriptionLanguages']) or $_SESSION['ItemDescriptionLanguages'] == '') {
 	$_SESSION['ItemDescriptionLanguages'] = ',';
 }
@@ -400,7 +400,7 @@ if (isset($_POST['submit'])) {
 		prnMsg( __('System configuration updated'),'success');
 
 		$ForceConfigReload = true; // Required to force a load even if stored in the session vars
-		include('includes/GetConfig.php');
+		include(__DIR__ . '/includes/GetConfig.php');
 		$ForceConfigReload = false;
 	} else {
 		prnMsg( __('Validation failed') . ', ' . __('no updates or deletes took place'),'warn');
@@ -1479,4 +1479,4 @@ echo '<div class="centre">
 	</div>
 </form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

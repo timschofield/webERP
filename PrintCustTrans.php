@@ -5,7 +5,7 @@ require_once __DIR__ . '/vendor/autoload.php'; // DomPDF autoload
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 $ViewTopic = 'ARReports';
 $BookMark = 'PrintInvoicesCredits';
@@ -240,12 +240,12 @@ if (isset($PrintPDF)
 			// Security checks as before (salesman/customer authorization)
 			if ($_SESSION['SalesmanLogin'] != '' AND $_SESSION['SalesmanLogin'] != $MyRow['salesman']){
 				echo '<p class="bad">' . __('Your account is set up to see only a specific salespersons orders. You are not authorised to view transaction for this order') . '</p>';
-				include('includes/footer.php');
+				include(__DIR__ . '/includes/footer.php');
 				exit();
 			}
 			if (isset($CustomerLogin) && $CustomerLogin == 1 AND $MyRow['debtorno'] != $_SESSION['CustomerID']){
 				echo '<p class="bad">' . __('This transaction is addressed to another customer and cannot be displayed for privacy reasons') . '</p>';
-				include('includes/footer.php');
+				include(__DIR__ . '/includes/footer.php');
 				exit();
 			}
 
@@ -551,9 +551,9 @@ if (isset($PrintPDF)
 	}
 
 if (isset($_GET['View']) and $_GET['View'] == 'Yes') {
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo $HTML;
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 } elseif (isset($_GET['Email'])) {
 
 	$PdfFileName = $_SESSION['DatabaseName'] . '_' . $InvOrCredit . '_' . ($FromTransNo-1) .'_'. date('Y-m-d') . '.pdf';
@@ -581,12 +581,12 @@ if (isset($_GET['View']) and $_GET['View'] == 'Yes') {
 	unlink($PdfFileName);
 
 	$Title = __('Send Report By Email');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	/// @todo give different message based on $Success
 	echo '<div class="centre">
 			<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
 		</div>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 
 } else {
 
@@ -608,7 +608,7 @@ if (isset($_GET['View']) and $_GET['View'] == 'Yes') {
 } else {
 	// --- HTML output for preview form ---
 	$Title=__('Select Invoices/Credit Notes To Print');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	if (!isset($FromTransNo) OR $FromTransNo=='') {
 
@@ -695,5 +695,5 @@ if (isset($_GET['View']) and $_GET['View'] == 'Yes') {
 			$FromTransNo++;
 		}
 	}
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 }

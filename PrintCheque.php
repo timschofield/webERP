@@ -6,13 +6,13 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 if (isset($_GET['identifier'])){
 	$identifier = $_GET['identifier'];
 } else {
 	prnMsg(__('Something was wrong without an identifier, please ask administrator for help'),'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit;
 }
 

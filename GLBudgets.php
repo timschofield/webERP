@@ -2,12 +2,12 @@
 
 require(__DIR__ . '/includes/session.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 $Title = __('Enter GL Budget amounts');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLBudgets';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['SelectedBudget'])) {
 	$SelectedBudget = $_POST['SelectedBudget'];
@@ -236,4 +236,4 @@ echo '<script>
 	}
 	</script>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

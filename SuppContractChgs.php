@@ -6,7 +6,7 @@ Contract charges are posted to the debit of Work In Progress (based on the accou
 This is cleared against the cost of the contract as originally costed - when the contract is closed and any difference is taken to the price variance on the contract */
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefineSuppTransClass.php');
+include(__DIR__ . '/includes/DefineSuppTransClass.php');
 
 /* Session started here for password checking and authorisation level check */
 require(__DIR__ . '/includes/session.php');
@@ -16,13 +16,13 @@ $Title = __('Contract Charges or Credits');
 $ViewTopic = 'AccountsPayable';
 $BookMark = '';
 
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (!isset($_SESSION['SuppTrans'])){
 	prnMsg(__('Contract charges or credits are entered against supplier invoices or credit notes respectively. To enter supplier transactions the supplier must first be selected from the supplier selection screen, then the link to enter a supplier invoice or credit note must be clicked on'),'info');
 	echo '<br />
 		<a href="' . $RootPath . '/SelectSupplier.php">' . __('Select a supplier') . '</a>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 	/*It all stops here if there aint no supplier selected and invoice/credit initiated ie $_SESSION['SuppTrans'] started off*/
 }
@@ -193,4 +193,4 @@ echo '</field>
 echo '<div class="centre"><input type="submit" name="AddContractChgToInvoice" value="' . __('Enter Contract Charge') . '" /></div>';
 
 echo '</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

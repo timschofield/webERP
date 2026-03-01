@@ -7,14 +7,14 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('UTILITY PAGE Change A GL Account Code');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = 'Z_ChangeGLAccountCode';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/gl.png" title="',// Icon image.
 	__('Change A GL Account Code'), '" /> ',// Icon title.
 	__('Change A GL Account Code'), '</p>';// Page title.
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['ProcessGLAccountCode'])) {
 
@@ -160,4 +160,4 @@ echo '<fieldset>
 	</div>
 	</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

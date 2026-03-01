@@ -7,10 +7,10 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Bank Reconciliation');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'BankAccounts';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/GLFunctions.php');
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/GLFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -121,7 +121,7 @@ if (DB_num_rows($AccountsResults) == 0) {
 			</field>
 		</fieldset>';
 	prnMsg(__('Bank Accounts have not yet been defined. You must first') . ' <a href="' . $RootPath . '/BankAccounts.php">' . __('define the bank accounts') . '</a> ' . __('and general ledger accounts to be affected'), 'warn');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 } else {
 	while ($MyRow = DB_fetch_array($AccountsResults)) {
@@ -326,4 +326,4 @@ if (isset($_POST['BankAccount'])) {
 		</div>';
 }
 echo '</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

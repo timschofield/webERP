@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('UTILITY PAGE To Changes A Customer Code In All Tables');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = 'Z_ChangeCustomerCode';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	'/images/customer.png" title="' .
@@ -20,21 +20,21 @@ if (isset($_POST['ProcessCustomerChange'])){
 	$Result = DB_query("SELECT debtorno FROM debtorsmaster WHERE debtorno='" . $_POST['OldDebtorNo'] . "'");
 	if (DB_num_rows($Result)==0){
 		prnMsg('<br /><br />' . __('The customer code') . ': ' . $_POST['OldDebtorNo'] . ' ' . __('does not currently exist as a customer code in the system'),'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
 
 	if ($_POST['NewDebtorNo']==''){
 		prnMsg(__('The new customer code to change the old code to must be entered as well'),'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 /*Now check that the new code doesn't already exist */
 	$Result = DB_query("SELECT debtorno FROM debtorsmaster WHERE debtorno='" . $_POST['NewDebtorNo'] . "'");
 	if (DB_num_rows($Result)!=0){
 		prnMsg(__('The replacement customer code') .': ' . $_POST['NewDebtorNo'] . ' ' . __('already exists as a customer code in the system') . ' - ' . __('a unique customer code must be entered for the new code'),'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -290,4 +290,4 @@ echo '<fieldset>
 	</div>
 	</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

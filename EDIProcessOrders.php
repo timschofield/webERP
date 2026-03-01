@@ -1,17 +1,17 @@
 <?php
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefineCartClass.php');
+include(__DIR__ . '/includes/DefineCartClass.php');
 
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Process EDI Orders');
 $ViewTopic = 'EDI';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php'); // need for EDITransNo
-require_once('includes/MiscFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php'); // need for EDITransNo
+require_once(__DIR__ . '/includes/MiscFunctions.php');
 
 /*The logic outline is this ....
 
@@ -1067,7 +1067,7 @@ echo '</pre>';
 	}
 }/*end of the loop around all the incoming order files in the incoming orders directory */
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 
 function StripTrailingComma($StringToStrip) {
 	if (strrpos($StringToStrip, "'")) {

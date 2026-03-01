@@ -5,9 +5,9 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Setup regular payments');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'RegularPayments';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/GLFunctions.php');
+include(__DIR__ . '/includes/GLFunctions.php');
 
 if (isset($_POST['FirstPaymentDate'])){$_POST['FirstPaymentDate'] = ConvertSQLDate($_POST['FirstPaymentDate']);}
 if (isset($_POST['LastPaymentDate'])){$_POST['LastPaymentDate'] = ConvertSQLDate($_POST['LastPaymentDate']);}
@@ -244,7 +244,7 @@ if (DB_num_rows($AccountsResults) == 0) {
 		</field>
 	</fieldset>';
 	prnMsg(__('Bank Accounts have not yet been defined. You must first') . ' <a href="' . $RootPath . '/BankAccounts.php">' . __('define the bank accounts') . '</a> ' . __('and general ledger accounts to be affected'), 'warn');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 } else {
 	echo '<option value=""></option>';
@@ -427,4 +427,4 @@ if (DB_num_rows($Result) > 0 and !isset($_GET['Edit'])) {
 
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

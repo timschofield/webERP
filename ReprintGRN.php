@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title=__('Reprint a GRN');
 $ViewTopic = 'Inventory';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
 
@@ -31,7 +31,7 @@ if (isset($_POST['Show'])) {
 	if ($_POST['PONumber']=='') {
 		echo '<br />';
 		prnMsg( __('You must enter a purchase order number in the box above'), 'warn');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 	$SQL="SELECT count(orderno)
@@ -42,7 +42,7 @@ if (isset($_POST['Show'])) {
 	if ($MyRow[0]==0) {
 		echo '<br />';
 		prnMsg( __('This purchase order does not exist on the system. Please try again.'), 'warn');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 	$SQL="SELECT grnbatch,
@@ -69,7 +69,7 @@ if (isset($_POST['Show'])) {
 	if (DB_num_rows($Result)==0) {
 		echo '<br />';
 		prnMsg( __('There are no GRNs for this purchase order that can be reprinted.'), 'warn');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -107,4 +107,4 @@ if (isset($_POST['Show'])) {
 	echo '</table>';
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

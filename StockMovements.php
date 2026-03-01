@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Stock Movements');
 $ViewTopic = 'Inventory';
 $BookMark = 'InventoryMovement';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['BeforeDate'])){$_POST['BeforeDate'] = ConvertSQLDate($_POST['BeforeDate']);}
 if (isset($_POST['AfterDate'])){$_POST['AfterDate'] = ConvertSQLDate($_POST['AfterDate']);}
@@ -252,4 +252,4 @@ echo '</table>
 	</div>
 	</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -3,12 +3,12 @@
 /* Entry of items received against purchase orders */
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefinePOClass.php');
-include('includes/DefineSerialItems.php');
+include(__DIR__ . '/includes/DefinePOClass.php');
+include(__DIR__ . '/includes/DefineSerialItems.php');
 
 require(__DIR__ . '/includes/session.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['DefaultReceivedDate'])){$_POST['DefaultReceivedDate'] = ConvertSQLDate($_POST['DefaultReceivedDate']);}
 
@@ -26,7 +26,7 @@ if (empty($_GET['identifier'])) {
 $Title = __('Receive Purchase Orders');
 $ViewTopic = 'Inventory';
 $BookMark = 'GoodsReceived';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<a href="'. $RootPath . '/PO_SelectOSPurchOrder.php">' . __('Back to Purchase Orders'). '</a>
 	<br />';
@@ -38,14 +38,14 @@ if (isset($_GET['PONumber']) AND $_GET['PONumber']<=0 AND !isset($_SESSION['PO'.
 		</div>
 		<br />' .  __('This page can only be opened if a purchase order has been selected. Please select a purchase order first');
 
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 } elseif (isset($_GET['PONumber'])
 			AND !isset($_POST['Update'])) {
 /*Update only occurs if the user hits the button to refresh the data and recalc the value of goods recd*/
 
 	$_GET['ModifyOrderNumber'] = intval($_GET['PONumber']);
-	include('includes/PO_ReadInOrder.php');
+	include(__DIR__ . '/includes/PO_ReadInOrder.php');
 } elseif (isset($_POST['Update'])
 			OR isset($_POST['ProcessGoodsReceived'])) {
 
@@ -73,7 +73,7 @@ if (isset($_GET['PONumber']) AND $_GET['PONumber']<=0 AND !isset($_SESSION['PO'.
 if ($_SESSION['PO'.$identifier]->Status != 'Printed') {
 	prnMsg( __('Purchase orders must have a status of Printed before they can be received').'.<br />' .
 		__('Order number') . ' ' . $_GET['PONumber'] . ' ' . __('has a status of') . ' ' . __($_SESSION['PO'.$identifier]->Status), 'warn');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -325,7 +325,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
         echo '</div>';
         echo '</form>';
 		prnMsg(__('The company information and preferences could not be retrieved') . ' - ' . __('see your system administrator') , 'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -357,7 +357,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 		unset($_POST['ProcessGoodsReceived']);
 		echo '</div>';
 		echo '</form>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -381,7 +381,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 			unset($_POST['ProcessGoodsReceived']);
             echo '</div>';
             echo '</form>';
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 		$LineNo++;
@@ -756,7 +756,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 /*end of process goods received entry */
     echo '</div>';
     echo '</form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 
 } else { /*Process Goods received not set so show a link to allow mod of line items on order and allow input of date goods received*/
@@ -775,4 +775,4 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 }
 echo '</div>';
 echo '</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

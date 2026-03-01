@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Bank Account Users');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'UserBankAccounts';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/money_add.png" title="',// Icon image.
@@ -227,4 +227,4 @@ if (isset($_POST['process']) or isset($SelectedUser)) {
 	} // end if user wish to delete
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

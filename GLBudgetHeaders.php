@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Create GL Budgets');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLBudgets';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post" id="createbudget">';
 echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
@@ -259,4 +259,4 @@ if (DB_num_rows($Result) > 0) {
 		</table>';
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

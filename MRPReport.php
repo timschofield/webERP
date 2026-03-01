@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 // Use DomPDF for PDF generation
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 if (isset($_POST['Select'])) {
 	$_POST['Part']=$_POST['Select'];
@@ -33,9 +33,9 @@ if (isset($_POST['PrintPDF']) && $_POST['Part'] != '') {
 	if (DB_num_rows($Result) == 0) {
 		$Errors = 1;
 		$Title = __('Print MRP Report Warning');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -120,10 +120,10 @@ if (isset($_POST['PrintPDF']) && $_POST['Part'] != '') {
 
 	if (isset($Errors)) {
 		$Title = __('MRP Report') . ' - ' . __('Problem Report');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		prnMsg( __('The MRP Report could not be retrieved'), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' . __('Back to the menu') . '</a>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -358,7 +358,7 @@ if (isset($_POST['PrintPDF']) && $_POST['Part'] != '') {
 	$Title=__('MRP Report');
 	$ViewTopic = 'MRP';
 	$BookMark = '';
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	if (isset($_POST['PrintPDF'])) {
 		prnMsg(__('This report shows the MRP calculation for a specific item - a part code must be selected'),'warn');
@@ -372,7 +372,7 @@ if (isset($_POST['PrintPDF']) && $_POST['Part'] != '') {
 	if (DB_num_rows($Result1) == 0) {
 		echo '<p class="bad">' . __('Problem Report') . ':<br />' . __('There are no stock categories currently defined please use the link below to set them up');
 		echo '<a href="' . $RootPath . '/StockCategories.php">' . __('Define Stock Categories') . '</a>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -424,7 +424,7 @@ if (isset($_POST['PrintPDF']) && $_POST['Part'] != '') {
 		</div>
 		</form>';
 	if (!isset($_POST['Search'])) {
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 
 } /*end of else not PrintPDF */
@@ -645,7 +645,7 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 			</form>';
 	}
 
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 }
 /* end display list if there is more than one record */
 

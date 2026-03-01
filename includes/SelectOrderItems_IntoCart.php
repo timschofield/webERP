@@ -60,7 +60,7 @@ if ($AlreadyOnThisOrder!=1){
 
     	if ($MyItemRow['discontinued']==1){
 			prnMsg(__('The item') . ' ' . $NewItem . ' ' . __('could not be added to the order because it has been flagged as obsolete'),'error',__('Obsolete Item'));
-			include('includes/footer.php');
+			include(__DIR__ . '/footer.php');
 			exit();
 		} elseif (($_SESSION['AllowSalesOfZeroCostItems'] == false
 						AND $MyItemRow['standardcost']>0

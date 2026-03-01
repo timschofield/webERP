@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title=__('Apply Current Customer and Branch Data to Sales Analysis');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
 	<div>
@@ -47,4 +47,4 @@ if (isset($_POST['UpdateSalesAnalysis'])){
 
 	prnMsg(__('Updated the sales analysis with all the latest sales areas, salesman and sales types as set up now'),'success');
 }
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Discount Matrix Maintenance');
 $ViewTopic = 'SalesOrders';
 $BookMark = 'DiscountMatrix';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 $Errors = array();
 $i = 1;
@@ -178,4 +178,4 @@ while ($MyRow = DB_fetch_array($Result)) {
 echo '</table>
 	  </form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

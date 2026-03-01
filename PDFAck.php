@@ -2,18 +2,18 @@
 
 /* Prints an acknowledgement using DomPDF */
 
-require_once('includes/session.php');
+require_once(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
-require_once('includes/SQL_CommonFunctions.php');
+require_once(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 //Get Out if we have no order number to work with
 if (!isset($_GET['AcknowledgementNo']) || $_GET['AcknowledgementNo'] == "") {
 	$Title = __('Select Acknowledgement To Print');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	prnMsg(__('Select an Acknowledgement to Print before calling this page'), 'error');
 	echo '<table class="table_index">
 				<tr>
@@ -23,7 +23,7 @@ if (!isset($_GET['AcknowledgementNo']) || $_GET['AcknowledgementNo'] == "") {
 					</td>
 				</tr>
 				</table>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -71,7 +71,7 @@ $Result = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($Result) == 0) {
 	$Title = __('Print Acknowledgement Error');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	prnMsg(__('Unable to Locate Acknowledgement Number') . ' : ' . $_GET['AcknowledgementNo'] . ' ', 'error');
 	echo '<table class="table_index">
 			<tr>
@@ -80,7 +80,7 @@ if (DB_num_rows($Result) == 0) {
 				</td>
 			</tr>
 			</table>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 } elseif (DB_num_rows($Result) == 1) {
 	$MyRow = DB_fetch_array($Result);
@@ -191,9 +191,9 @@ while ($MyRow2 = DB_fetch_array($Result)) {
 
 if ($ListCount == 0) {
 	$Title = __('Print Acknowledgement Error');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<p>' . __('There were no items on the Acknowledgement') . '. ' . __('The Acknowledgement cannot be printed') . '<br /><a href="' . $RootPath . '/SelectSalesOrder.php?Acknowledgement=Quotes_only">Back</a></p>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 

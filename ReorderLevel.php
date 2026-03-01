@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])) {
 
@@ -172,18 +172,18 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 		unlink($PDFFileName);
 
 		$Title = __('Send Report By Email');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		/// @todo give different message based on $Success
 		echo '<div class="centre">
 				<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
 			</div>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	} else {
 		$Title = __('Reorder Level Reporting');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Inventory') . '" alt="" />' . ' ' . __('Inventory Reorder Level Report') . '</p>';
 		echo $HTML;
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 
 } else { /*The option to print PDF was not hit so display form */
@@ -191,7 +191,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 	$Title = __('Reorder Level Reporting');
 	$ViewTopic = 'Inventory';
 	$BookMark = '';
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Inventory') . '" alt="" />' . ' ' . __('Inventory Reorder Level Report') . '</p>';
 	echo '<div class="page_help_text">' . __('Use this report to display the reorder levels for Inventory items in different categories.') . '</div>';
 
@@ -231,7 +231,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 			</table>';
 		prnMsg(__('There are no stock categories currently defined please use the link below to set them up') , 'warn');
 		echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . __('Define Stock Categories') . '</a>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -262,6 +262,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 				<input type="submit" name="Email" title="Email Report" value="' . __('Email') . '" />
 			</div>';
 	echo '</form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 
 } /*end of else not PrintPDF */

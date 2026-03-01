@@ -21,16 +21,16 @@ if (!isset($IsIncluded)) {// Runs normally if this script is NOT included in ano
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 $Title = __('Profit and Loss');
 $Title2 = __('Statement of Comprehensive Income'); // Name as IAS.
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'ProfitAndLoss';
 
-include_once('includes/SQL_CommonFunctions.php');
-include_once('includes/AccountSectionsDef.php'); // This loads the $Sections variable
-include_once('includes/CurrenciesArray.php'); // Array to retrieve currency name.
+include_once(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include_once(__DIR__ . '/includes/AccountSectionsDef.php'); // This loads the $Sections variable
+include_once(__DIR__ . '/includes/CurrenciesArray.php'); // Array to retrieve currency name.
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	// Initialize SelectedBudget if not set
@@ -538,7 +538,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 	else {
 		$Title = __('General Ledger Profit and Loss');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $Theme . '/images/gl.png" title="' . __('Profit and Loss Report') . '" alt="" />
 				' . __('Profit and Loss Report') . '
@@ -555,7 +555,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 } else {
 
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" title="' . // Icon image.
 	$Title2 . '" /> ' . // Icon title.
@@ -681,5 +681,5 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			<input type="submit" name="View" title="View" value="' . __('Show P & L Account') . '" />
 		</div>', '</form>';
 
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 }

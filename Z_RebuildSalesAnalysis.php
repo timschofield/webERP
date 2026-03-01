@@ -9,7 +9,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Rebuild sales analysis Records');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<br /><br />' . __('This script rebuilds sales analysis records. NB: all sales budget figures will be lost!');
 
@@ -66,4 +66,4 @@ $Result = DB_query($SQL, $ErrMsg);
 echo '<p />';
 prnMsg(__('The sales analsysis data has been recreated based on current stock master and customer master information'),'info');
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

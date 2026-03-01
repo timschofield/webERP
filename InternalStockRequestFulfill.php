@@ -5,10 +5,10 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Fulfill Stock Requests');
 $ViewTopic = 'Inventory';
 $BookMark = 'FulfilRequest';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/GLFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/GLFunctions.php');
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Contract') . '" alt="" />' . __('Fulfill Stock Requests') . '</p>';
 
@@ -265,7 +265,7 @@ if (!isset($_POST['Location'])) {
 	echo '<div class="centre"><input type="submit" name="EnterAdjustment" value="' . __('Show Requests') . '" /></div>';
 	echo '</div>
 		  </form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -295,7 +295,7 @@ if (isset($_POST['Location'])) {
 		prnMsg(__('There are no outstanding authorised requests for this location') , 'info');
 		echo '<br />';
 		echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . __('Select another location') . '</a></div>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -396,4 +396,4 @@ if (isset($_POST['Location'])) {
 	</form>';
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

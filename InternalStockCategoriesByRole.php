@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Internal Stock Categories Requests By Security Role Maintenance ');
 $ViewTopic = 'Inventory';
 $BookMark = 'InventoryRequests';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . __('Payment Entry')
 	. '" alt="" />' . ' ' . $Title . '</p>';
@@ -225,4 +225,4 @@ while ($MyRow = DB_fetch_array($Result)) {
 
 	} // end if user wish to delete
 }
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

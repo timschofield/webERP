@@ -9,19 +9,19 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Payment Allocations');
 $ViewTopic = 'AccountsPayable';
 $BookMark = 'PaymentAllocations';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (!isset($_GET['SuppID'])){
 	prnMsg( __('Supplier ID Number is not Set, can not display result'),'warn');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
 if (!isset($_GET['InvID'])){
 	prnMsg( __('Invoice Number is not Set, can not display result'),'warn');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 $SuppID = $_GET['SuppID'];
@@ -54,7 +54,7 @@ $Result = DB_query($SQL);
 if (DB_num_rows($Result) == 0){
 	prnMsg(__('There may be a problem retrieving the information. No data is returned'),'warn');
 	echo '<br /><a href="javascript:history.back()">' . __('Go back') . '</a>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -87,4 +87,4 @@ $j=1;
 }
   echo '</table>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

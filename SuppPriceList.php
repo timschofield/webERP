@@ -4,7 +4,7 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 if (isset($_GET['SelectedSupplier'])) {
 	$_POST['supplierid']=$_GET['SelectedSupplier'];
@@ -131,9 +131,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 	if (DB_num_rows($PricesResult)==0) {
 
 		$Title = __('Supplier Price List') . '-' . __('Report');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		prnMsg(__('There are no result so the PDF is empty'));
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 	$HTML = '';
@@ -242,18 +242,18 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 		unlink($PDFFileName);
 
 		$Title = __('Send Report By Email');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<div class="centre">
 				<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
 			</div>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	} else {
 		$Title = __('View supplier price');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Purchase') . '" alt="" />
 		'. __('Supplier Price List').'</p>';
 		echo $HTML;
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 
 } else { /*The option to print PDF was not hit so display form */
@@ -261,7 +261,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 	$Title=__('Supplier Price List');
 	$ViewTopic = 'AccountsPayable';
 	$BookMark = '';
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<p class="page_title_text">
 			<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Purchase') . '" alt="" />' . ' ' . __('Supplier Price List') . '
 		</p>';
@@ -319,7 +319,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 		</div>';
 
 	echo '</form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 
 } /*end of else not PrintPDF */
 

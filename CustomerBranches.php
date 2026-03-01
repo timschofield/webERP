@@ -7,9 +7,9 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Customer Branches');// Screen identification.
 $ViewTopic = 'AccountsReceivable';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'NewCustomerBranch';// Anchor's id in the manual's html document.
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/CountriesArray.php');
+include(__DIR__ . '/includes/CountriesArray.php');
 
 if (isset($_GET['DebtorNo'])) {
 	$DebtorNo = mb_strtoupper($_GET['DebtorNo']);
@@ -21,7 +21,7 @@ if (!isset($DebtorNo)) {
 	prnMsg(__('This page must be called with the debtor code of the customer for whom you wish to edit the branches for').'.
 		<br />' . __('When the pages is called from within the system this will always be the case').' <br />' .
 			__('Select a customer first then select the link to add/edit/delete branches'),'warn');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -728,7 +728,7 @@ if (!isset($_GET['delete'])) {
 			echo '</fieldset>';
 			prnMsg(__('There are no sales people defined as yet') . ' - ' . __('customer branches must be allocated to a sales person') . '. ' . __('Please use the link below to define at least one sales person'),'error');
 			echo '<p align="center"><a href="' . $RootPath . '/SalesPeople.php">' . __('Define Sales People') . '</a>';
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 
@@ -755,7 +755,7 @@ if (!isset($_GET['delete'])) {
 		echo '</fieldset>';
 		prnMsg(__('There are no areas defined as yet') . ' - ' . __('customer branches must be allocated to an area') . '. ' . __('Please use the link below to define at least one sales area'),'error');
 		echo '<br /><a href="' . $RootPath. '/Areas.php">' . __('Define Sales Areas') . '</a>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -790,7 +790,7 @@ if (!isset($_GET['delete'])) {
 		echo '</table>';
 		prnMsg(__('There are no stock locations defined for which this user has access to as yet') . ' - ' . __('customer branches must refer to a default location where stock is normally drawn from') . '. ' . __('Please use the link below to define at least one stock location'),'error');
 		echo '<br /><a href="', $RootPath, '/Locations.php">', __('Define Stock Locations'), '</a>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -842,7 +842,7 @@ if (!isset($_GET['delete'])) {
 		echo '</fieldset>';
 		prnMsg(__('There are no tax groups defined - these must be set up first before any branches can be set up') . '
 				<br /><a href="' . $RootPath . '/TaxGroups.php">' . __('Define Tax Groups') . '</a>','error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 	echo '<field>
@@ -881,7 +881,7 @@ if (!isset($_GET['delete'])) {
 		echo '</fieldset>';
 		prnMsg(__('There are no shippers defined - these must be set up first before any branches can be set up') . '
 				<br /><a href="' . $RootPath . '/Shippers.php">' . __('Define Shippers') . '</a>','error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 	echo '<field>
@@ -970,4 +970,4 @@ if (!isset($_GET['delete'])) {
 
 }//end if record deleted no point displaying form to add record
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

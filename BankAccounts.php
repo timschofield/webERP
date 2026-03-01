@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Bank Accounts');// Screen identificator.
 $ViewTopic = 'GeneralLedger';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'BankAccounts';// Anchor's id in the manual's html document.
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	'/images/bank.png" title="' .
@@ -408,4 +408,4 @@ echo '</select>
 		</fieldset>
 		<div class="centre"><input tabindex="9" type="submit" name="submit" value="'. __('Enter Information') .'" /></div>
 		</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

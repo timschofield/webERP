@@ -1,10 +1,10 @@
 <?php
 require (__DIR__ . '/includes/session.php');
-include ('includes/SQL_CommonFunctions.php');
+include (__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 use Dompdf\Options;
 
 $ViewTopic = 'ARReports';
@@ -83,10 +83,10 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCust']) and $_POST['FromCust
 
 	if (DB_Num_Rows($StatementResults) == 0) {
 		$Title = __('Print Statements') . ' - ' . __('No Customers Found');
-		require ('includes/header.php');
+		require (__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" title="' . __('Print') . '" alt="" />' . ' ' . __('Print Customer Account Statements') . '</p>';
 		prnMsg(__('There were no Customers matching your selection of ') . $_POST['FromCust'] . ' - ' . $_POST['ToCust'] . '.', 'error');
-		include ('includes/footer.php');
+		include (__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -382,7 +382,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCust']) and $_POST['FromCust
 	$LastDebtor = end($DebtorsArray);
 
 	$Title = __('Select Statements to Print');
-	include ('includes/header.php');
+	include (__DIR__ . '/includes/header.php');
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" title="' . __('Print') . '" alt="" />' . ' ' . __('Print Customer Account Statements') . '</p>';
 	if (!isset($_POST['FromCust']) or $_POST['FromCust'] == '') {
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" target="_blank">';
@@ -410,5 +410,5 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCust']) and $_POST['FromCust
 			</div>';
 		echo '</form>';
 	}
-	include ('includes/footer.php');
+	include (__DIR__ . '/includes/footer.php');
 }

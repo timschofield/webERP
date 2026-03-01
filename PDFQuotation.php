@@ -1,16 +1,16 @@
 <?php
 
 require(__DIR__ . '/includes/session.php');
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 //Get Out if we have no order number to work with
 if (!isset($_GET['QuotationNo']) || $_GET['QuotationNo']==""){
 	$Title = __('Select Quotation To Print');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<div class="centre"><br /><br /><br />';
 	prnMsg( __('Select a Quotation to Print before calling this page') , 'error');
 	echo '<br /><br /><br />
@@ -21,7 +21,7 @@ if (!isset($_GET['QuotationNo']) || $_GET['QuotationNo']==""){
 				</tr>
 			</table>
 			</div><br /><br /><br />';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -84,7 +84,7 @@ $Result = DB_query($SQL, $ErrMsg);
 //If there are no rows, there's a problem.
 if (DB_num_rows($Result)==0){
 	$Title = __('Print Quotation Error');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<div class="centre"><br /><br /><br />';
 	prnMsg( __('Unable to Locate Quotation Number') . ' : ' . $_GET['QuotationNo'] . ' ', 'error');
 	echo '<br /><br /><br />
@@ -96,7 +96,7 @@ if (DB_num_rows($Result)==0){
 			</tr>
 			</table>
 			</div><br /><br /><br />';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 } elseif (DB_num_rows($Result)==1) {
 	$MyRow = DB_fetch_array($Result);
@@ -219,11 +219,11 @@ $HTML .= '</table>';
 
 if ($ListCount == 0){
 	$Title = __('Print Quotation Error');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	prnMsg(__('There were no items on the quotation') . '. ' . __('The quotation cannot be printed'),'info');
 	echo '<br /><a href="' . $RootPath . '/SelectSalesOrder.php?Quotation=Quotes_only">' .  __('Print Another Quotation'). '</a>
 			<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 

@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Change Asset Location');
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetTransfer';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Search') .
 		'" alt="" />' . ' ' . $Title . '</p>';
@@ -207,4 +207,4 @@ if (isset($_POST['Search'])) {
           </form>';
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

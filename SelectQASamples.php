@@ -5,9 +5,9 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Select QA Samples');
 $ViewTopic = 'QualityAssurance';// Filename in ManualContents.php's TOC.
 $BookMark = 'QA_Samples';// Anchor's id in the manual's html document.
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['SampleDate'])){$_POST['SampleDate'] = ConvertSQLDate($_POST['SampleDate']);}
 if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
@@ -585,4 +585,4 @@ if (isset($SelectedSampleID)) {
 
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

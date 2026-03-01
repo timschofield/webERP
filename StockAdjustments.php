@@ -1,18 +1,18 @@
 <?php
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefineStockAdjustment.php');
-include('includes/DefineSerialItems.php');
+include(__DIR__ . '/includes/DefineStockAdjustment.php');
+include(__DIR__ . '/includes/DefineSerialItems.php');
 
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Stock Adjustments');
 $ViewTopic = 'Inventory';
 $BookMark = 'InventoryAdjustments';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/GLFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/GLFunctions.php');
 
 if (empty($_GET['identifier'])) {
 	/*unique session identifier to ensure that there is no conflict with other adjustment sessions on the same machine  */
@@ -148,7 +148,7 @@ if (isset($_POST['CheckCode'])) {
 			</tr>';
 	}
 	echo '</table>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -520,4 +520,4 @@ echo '<br />
 
 echo '</div>
 	</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

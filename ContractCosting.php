@@ -1,14 +1,14 @@
 <?php
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefineContractClass.php');
+include(__DIR__ . '/includes/DefineContractClass.php');
 
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Contract Costing');
 $ViewTopic = 'Contracts';
 $BookMark = 'ContractCosting';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (empty($_GET['identifier'])) {
 	$identifier=date('U');
@@ -19,12 +19,12 @@ if (empty($_GET['identifier'])) {
 if (!isset($_GET['SelectedContract'])){
 	echo '<br />';
 	prnMsg( __('This page is expected to be called with the contract reference to show the costing for'), 'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 } else {
 	$ContractRef = $_GET['SelectedContract'];
 	$_SESSION['Contract'.$identifier] = new Contract;
-	include('includes/Contract_Readin.php');
+	include(__DIR__ . '/includes/Contract_Readin.php');
 }
 
 /*Now read in actual usage of stock */
@@ -231,7 +231,7 @@ echo '<tr>
 //Do the processing here after the variances are all calculated above
 if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status==2){
 
-	include('includes/SQL_CommonFunctions.php');
+	include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 	$GLCodes = GetStockGLCode($_SESSION['Contract'.$identifier]->ContractRef);
 //Compare actual costs to original budgeted contract costs - if actual > budgeted - CR WIP and DR usage variance
@@ -448,4 +448,4 @@ if ($_SESSION['Contract'.$identifier]->Status ==2){//the contract is an order be
 		</form>';
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

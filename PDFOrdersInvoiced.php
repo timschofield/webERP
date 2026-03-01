@@ -4,7 +4,7 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 $Title = __('Orders Invoiced Report');
 
@@ -354,18 +354,18 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$DomPDF->stream($_SESSION['DatabaseName'] . '_OrdersInvoiced_' . date('Y-m-d') . '.pdf', array("Attachment" => false));
 	} else {
 		$Title = __('Orders Invoiced Report');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
 			</p>';
 		echo $HTML;
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 
 } else { /*The option to print PDF was not hit so display form */
 	$ViewPage = 'Sales';
 	$BookMark = '';
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '
 		. __('Orders Invoiced Report') . '</p>';
@@ -415,5 +415,5 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			</div>';
 	echo '</form>';
 
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 }

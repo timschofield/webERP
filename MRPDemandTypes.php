@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('MRP Demand Types');
 $ViewTopic = 'MRP';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 //SelectedDT is the Selected MRPDemandType
 if (isset($_POST['SelectedDT'])){
@@ -187,4 +187,4 @@ echo '<field>
     </div>
 	</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

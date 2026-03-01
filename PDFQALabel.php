@@ -3,7 +3,7 @@ require (__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 $GRNNo = $_GET['GRNNo'] ?? '';
 

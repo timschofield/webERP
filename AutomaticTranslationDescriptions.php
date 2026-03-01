@@ -5,15 +5,15 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Translate Item Descriptions');
 $ViewTopic = 'SpecialUtilities'; // Filename in ManualContents.php's TOC.
 $BookMark = 'Z_TranslateItemDescriptions'; // Anchor's id in the manual's html document.
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (!function_exists("curl_init")) {
 	prnMsg("This script requires that the PHP curl module be available to use the Google API. Unfortunately this installation does not have the curl module available","error");
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
-include('includes/TranslationFunctions.php');
+include(__DIR__ . '/includes/TranslationFunctions.php');
 
 $SourceLanguage=mb_substr($_SESSION['Language'],0,2);
 
@@ -100,4 +100,4 @@ echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $The
 
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

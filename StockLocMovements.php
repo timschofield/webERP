@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('All Stock Movements By Location');
 $ViewTopic = 'Inventory';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['BeforeDate'])){$_POST['BeforeDate'] = ConvertSQLDate($_POST['BeforeDate']);}
 if (isset($_POST['AfterDate'])){$_POST['AfterDate'] = ConvertSQLDate($_POST['AfterDate']);}
@@ -164,4 +164,4 @@ if (DB_num_rows($MovtsResult) > 0) {
 }
 echo '</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

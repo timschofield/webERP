@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('List of bank account balances');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'BankAccountBalances';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/bank.png" title="', // Icon image.
@@ -65,4 +65,4 @@ if (DB_num_rows($Result) == 0) {
 
 	echo '</table>';
 }
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

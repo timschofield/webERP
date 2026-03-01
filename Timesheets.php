@@ -7,9 +7,9 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Timesheet Entry');// Screen identification.
 $ViewTopic = 'Labour';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'Timesheets';// Anchor's id in the manual's html document.
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 $MaxHours = 15; // perhaps this should be a configuration option??
 
@@ -795,4 +795,4 @@ echo '</div>
 	</div>
 	</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

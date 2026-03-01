@@ -2,11 +2,11 @@
 
 /// @deprecated this script seems unused. Also, it does not belong to the 'includes' folder...
 
-require('includes/session.php');
+require(__DIR__ . '/session.php');
 
-include('includes/header.php');
+include(__DIR__ . '/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/SQL_CommonFunctions.php');
 
 /* EDI configuration variables definition */
 
@@ -84,4 +84,4 @@ while ($LineDetails = DB_fetch_array($MessageLinesResult)){
 
 fclose($fp);
 
-include('includes/footer.php');
+include(__DIR__ . '/footer.php');

@@ -9,9 +9,9 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('UTILITY PAGE Change A Stock Code');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = 'Z_ChangeStockCode';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	'/images/inventory.png" title="' .
@@ -229,4 +229,4 @@ echo '<fieldset>
 	</div>
 	</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

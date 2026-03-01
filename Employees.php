@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Employee Maintenance');// Screen identification.
 $ViewTopic = 'Labour';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'Employees';// Anchor's id in the manual's html document.
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/user.png" title="',// Icon image.
@@ -345,4 +345,4 @@ if (!isset($_GET['delete'])) {
 
 }//end if record deleted no point displaying form to add record
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

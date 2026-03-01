@@ -13,7 +13,7 @@ require(__DIR__ . '/includes/session.php');
 $ViewTopic = "SpecialUtilities";
 $BookMark = "Z_poEditLangRemaining";
 $Title = __('Edit Remaining Strings For This Language');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/maintenance.png" title="', // Icon image.
@@ -151,4 +151,4 @@ if (!$LangFile) {
 	}
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

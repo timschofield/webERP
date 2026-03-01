@@ -1,7 +1,7 @@
 <?php
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefineContractClass.php');
+include(__DIR__ . '/includes/DefineContractClass.php');
 
 require(__DIR__ . '/includes/session.php');
 
@@ -27,9 +27,9 @@ foreach ($_POST as $FormVariableName=>$FormVariableValue) {
 
 $ViewTopic = 'Contracts';
 $BookMark = 'CreateContract';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 /*If the page is called is called without an identifier being set then
  * it must be either a new contract, or the start of a modification of an
@@ -97,7 +97,7 @@ if (isset($_SESSION['Contract'.$identifier]) AND
 		echo '<br />';
 		prnMsg(__('You should automatically be forwarded to the entry of the Contract line items page') . '. ' .
 		__('If this does not happen') . ' (' . __('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/ContractBOM.php?identifier='.$identifier . '">' . __('click here') . '</a> ' . __('to continue'),'info');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 	if (isset($_POST['EnterContractRequirements']) AND !$InputError){
@@ -106,7 +106,7 @@ if (isset($_SESSION['Contract'.$identifier]) AND
 		prnMsg(__('You should automatically be forwarded to the entry of the Contract requirements page') . '. ' .
 		__('If this does not happen') . ' (' . __('if the browser does not support META Refresh') . ') ' .
 		'<a href="' . $RootPath . '/ContractOtherReqts.php?identifier=' . $identifier . '">' . __('click here') . '</a> ' . __('to continue'),'info');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 } /* end of if going to contract BOM or contract requriements */
@@ -171,7 +171,7 @@ if (isset($_GET['ModifyContractRef'])){
 
 	/*read in all the guff from the selected contract into the contract Class variable  */
 	$ContractRef = $_GET['ModifyContractRef'];
-	include('includes/Contract_Readin.php');
+	include(__DIR__ . '/includes/Contract_Readin.php');
 
 }// its an existing contract to readin
 
@@ -736,7 +736,7 @@ if (isset($_POST['SelectedCustomer'])) {
 				prnMsg(__('The') . ' ' . $_SESSION['Contract'.$identifier]->CustomerName . ' ' . __('account is currently at or over their credit limit'),'warn');
 			} elseif ($_SESSION['CheckCreditLimits']==2 AND $CreditAvailable <=0){
 				prnMsg(__('No more orders can be placed by') . ' ' . $MyRow[0] . ' ' . __(' their account is currently at or over their credit limit'),'warn');
-				include('includes/footer.php');
+				include(__DIR__ . '/includes/footer.php');
 				exit();
 			}
 		}
@@ -834,7 +834,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 	if (DB_num_rows($WCResults)==0){
 		prnMsg( __('There are no work centres set up yet') . '. ' . __('Please use the link below to set up work centres'),'warn');
 		echo '<br /><a href="'.$RootPath.'/WorkCentres.php">' . __('Work Centre Maintenance') . '</a>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -901,7 +901,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 	if (DB_num_rows($WcResults) == 0) {
 		prnMsg(__('There are no work centres set up yet') . '. ' . __('Please use the link below to set up work centres'), 'warn');
 		echo '<br /><a href="', $RootPath, '/WorkCentres.php">', __('Work Centre Maintenance'), '</a>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 	echo '<field>
@@ -1100,4 +1100,4 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 	echo '</form>';
 } /*end of if customer selected  and entering contract header*/
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

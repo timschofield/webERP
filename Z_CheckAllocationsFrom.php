@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Identify Allocation Stuff Ups');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 $SQL = "SELECT debtortrans.type,
 		debtortrans.transno,
@@ -64,4 +64,4 @@ if (DB_num_rows($Result)>0){
 	prnMsg(__('There are no inconsistent allocations') . ' - ' . __('all is well'),'info');
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

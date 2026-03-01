@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title=__('Sales Report Graph');
 $ViewTopic = 'ARInquiries';
 $BookMark = 'SalesGraph';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 $SelectADifferentPeriod ='';
 
@@ -223,7 +223,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	echo '</fieldset>
 			<div class="centre"><input type="submit" name="ShowGraph" value="' . __('Show Sales Graph') .'" /></div>
 		</form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 } else {
 
 	$graph = new Phplot\Phplot\phplot(950,450);
@@ -335,12 +335,12 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	if (DB_error_no() !=0) {
 
 		prnMsg(__('The sales graph data for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg(),'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 	if (DB_num_rows($SalesResult)==0){
 		prnMsg(__('There is not sales data for the criteria entered to graph'),'info');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -366,5 +366,5 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 				<td><p><img class="graph" src="',$RootPath,'/', $_SESSION['reports_dir'], '/salesgraph.png" alt="Sales Report Graph"></img></p></td>
 			</tr>
 		  </table>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 }

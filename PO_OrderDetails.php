@@ -10,7 +10,7 @@ if (isset($_GET['OrderNo'])) {
 }
 $ViewTopic = 'PurchaseOrdering';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_GET['FromGRNNo'])){
 
@@ -36,7 +36,7 @@ if (!isset($_GET['OrderNo'])) {
 		<tr><td class="menu_group_item">
 				<li><a href="'. $RootPath . '/PO_SelectPurchOrder.php">' . __('Outstanding Purchase Orders') . '</a></li>
 		</td></tr></table>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -77,7 +77,7 @@ if (DB_num_rows($GetOrdHdrResult)!=1) {
 				</tr>
 				</table>';
 
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
  // the checks all good get the order now
@@ -246,4 +246,4 @@ echo '<tr class="total_row">
 	</tr>
 	</table>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

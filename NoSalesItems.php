@@ -4,7 +4,7 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 $Title = __('No Sales Items Searching');
 
@@ -203,18 +203,18 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		));
 	} else {
 		$Title = __('No Sales Items');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . __('No Sales Items List') . '" alt="" />' . ' ' . __('Top Sales Items List') . '
 			</p>';
 		echo $HTML;
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 
 } else {
 	$ViewTopic = 'Sales';
 	$BookMark = '';
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . __('No Sales Items') . '" alt="" />' . ' ' . __('No Sales Items') . '</p></div>';
 	echo '<div class="page_help_text">'
@@ -300,6 +300,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		<input type="submit" name="View" title="View" value="' . __('View') . '" />
 	</div>
 	</form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 
 }

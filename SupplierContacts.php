@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Supplier Contacts');
 $ViewTopic = 'AccountsPayable';
 $BookMark = 'SupplierContact';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_GET['SupplierID'])){
 	$SupplierID = $_GET['SupplierID'];
@@ -21,7 +21,7 @@ echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/t
 if (!isset($SupplierID)) {
 	prnMsg(__('This page must be called with the supplier code of the supplier for whom you wish to edit the contacts') . '<br />' . __('When the page is called from within the system this will always be the case') .
 	'<br />' . __('Select a supplier first, then select the link to add/edit/delete contacts'),'info');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -280,4 +280,4 @@ if (! isset($_GET['delete'])) {
 
 } //end if record deleted no point displaying form to add record
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

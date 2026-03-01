@@ -1,17 +1,17 @@
 <?php
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefineStockRequestClass.php');
+include(__DIR__ . '/includes/DefineStockRequestClass.php');
 
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Create an Internal Materials Request');
 $ViewTopic = 'Inventory';
 $BookMark = 'CreateRequest';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/StockFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/StockFunctions.php');
 
 if (isset($_POST['DispatchDate'])){$_POST['DispatchDate'] = ConvertSQLDate($_POST['DispatchDate']);}
 
@@ -131,7 +131,7 @@ if (isset($_POST['Submit']) and (!empty($_SESSION['Request']->LineItems))) {
 	prnMsg(__('The internal stock request has been entered and now needs to be authorised'), 'success');
 	echo '<br /><div class="centre"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?New=Yes">', __('Create another request'), '</a></div>';
 	unset($_SESSION['Request']);
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 } elseif (isset($_POST['Submit'])) {
 	prnMsg(__('There are no items added to this request'), 'error');
@@ -170,7 +170,7 @@ if (isset($_GET['Edit'])) {
 			<input type="submit" name="Edit" value="', __('Update Line'), '" />
 		</div>
 		</form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -242,7 +242,7 @@ echo '</select>
 	</form>';
 
 if (!isset($_SESSION['Request']->Location)) {
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -301,7 +301,7 @@ $Result1 = DB_query($SQL);
 if (DB_num_rows($Result1) == 0) {
 	echo '<p class="bad">', __('Problem Report'), ':<br />', __('There are no stock categories currently defined please use the link below to set them up'), '</p>
 		<a href="', $RootPath, '/StockCategories.php">', __('Define Stock Categories'), '</a>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -582,4 +582,4 @@ if (isset($SearchResult)) {
        </form>';
 } #end if SearchResults to show
 //*********************************************************************************************************
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

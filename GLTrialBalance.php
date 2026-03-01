@@ -10,12 +10,12 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 $Title = __('Trial Balance');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/AccountSectionsDef.php'); //this reads in the Accounts Sections array
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/AccountSectionsDef.php'); //this reads in the Accounts Sections array
 
 // Merges gets into posts:
 if (isset($_GET['PeriodFrom'])) {
@@ -398,20 +398,20 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 		$writer->save('php://output');
 	} else {
 		$Title = __('General Ledger Trial Balance');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $Theme . '/images/gl.png" title="' . __('Trial Balance Report') . '" alt="" />
 				' . __('Trial Balance Report') . '
 			</p>';
 		echo $HTML;
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 
 } else {
 
 	$ViewTopic = 'GeneralLedger';
 	$BookMark = 'TrialBalance';
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<p class="page_title_text">
 			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/gl.png" title="', __('Trial Balance'), '" alt="', __('Print'), '" />', ' ', __('Trial Balance Report'), '
 		</p>';
@@ -529,5 +529,5 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 		</div>';
 
 	echo '</form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 }

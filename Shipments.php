@@ -1,16 +1,16 @@
 <?php
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefineShiptClass.php');
+include(__DIR__ . '/includes/DefineShiptClass.php');
 
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Shipments');
 $ViewTopic = 'Shipments';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['ETA'])){$_POST['ETA'] = ConvertSQLDate($_POST['ETA']);}
 
@@ -28,7 +28,7 @@ if (!isset($_SESSION['SupplierID']) AND !isset($_SESSION['Shipment']) AND !isset
 			<tr><td class="menu_group_item">
 			<li><a href="'. $RootPath . '/SelectSupplier.php">' . __('Select the Supplier') . '</a></li>
 			</td></tr></table></div>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -59,7 +59,7 @@ if (isset($_GET['SelectedShipment'])){
 
 	if (DB_num_rows($GetShiptHdrResult)==0) {
 		prnMsg( __('Unable to locate Shipment') . ' '. $_GET['SelectedShipment'] . ' ' . __('in the database'), 'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -70,7 +70,7 @@ if (isset($_GET['SelectedShipment'])){
 		if ($MyRow['closed']==1){
 			prnMsg( __('Shipment No.') .' '. $_GET['SelectedShipment'] .': '.
 				__('The selected shipment is already closed and no further modifications to the shipment are possible'), 'error');
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 		$_SESSION['Shipment']->ShiptRef = $_GET['SelectedShipment'];
@@ -107,7 +107,7 @@ if (isset($_GET['SelectedShipment'])){
 
 		if (DB_num_rows($GetShiptHdrResult)==0) {
 			prnMsg( __('Unable to locate lines for Shipment') . ' '. $_GET['SelectedShipment'] . ' ' . __('in the database'), 'error');
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 
@@ -517,4 +517,4 @@ if (DB_num_rows($Result)>0){
 echo '</div>
 	  </form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

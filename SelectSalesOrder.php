@@ -7,9 +7,9 @@ $PricesSecurity = 12;
 $Title = __('Search Outstanding Sales Orders');
 $ViewTopic = 'SalesOrders';
 $BookMark = 'SelectSalesOrder';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['DueDateFrom'])){$_POST['DueDateFrom'] = ConvertSQLDate($_POST['DueDateFrom']);}
 if (isset($_POST['DueDateTo'])){$_POST['DueDateTo'] = ConvertSQLDate($_POST['DueDateTo']);}
@@ -451,7 +451,7 @@ if (isset($OrderNumber) AND $OrderNumber != '') {
 			<b>' . __('The Order Number entered MUST be numeric') . '</b>
 			<br />';
 		unset ($OrderNumber);
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	} else {
 		echo __('Order Number') . ' - ' . $OrderNumber;
@@ -1066,7 +1066,7 @@ echo '</div>
 
 } //end StockID already selected
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 
 function GetSearchItems ($SqlConstraint = '') {
 

@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Credit Status Code Maintenance');
 $ViewTopic = 'CreditStatus';
 $BookMark = 'CreditStatus';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_GET['SelectedReason'])){
 	$SelectedReason = $_GET['SelectedReason'];
@@ -246,4 +246,4 @@ if (!isset($_GET['delete'])) {
             </div>
 			</form>';
 } //end if record deleted no point displaying form to add record
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

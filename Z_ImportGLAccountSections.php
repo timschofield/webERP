@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Import Chart of Accounts');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 include('api/includes/api_php.php');
 
@@ -80,4 +80,4 @@ if (isset($_POST['update'])) {
 	echo '</div>
           </form>';
 }
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

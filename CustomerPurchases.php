@@ -8,7 +8,7 @@ $Title = __('Customer Purchases');// Screen identificator.
 $ViewTopic = 'ARInquiries';// Filename's id in ManualContents.php's TOC.
 /* This help needs to be written...
 $BookMark = 'CustomerPurchases';// Anchor's id in the manual's html document.*/
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_GET['DebtorNo'])) {
 	$DebtorNo = $_GET['DebtorNo'];// Set DebtorNo from $_GET['DebtorNo'].
@@ -16,7 +16,7 @@ if (isset($_GET['DebtorNo'])) {
 	$DebtorNo = $_POST['DebtorNo'];// Set DebtorNo from $_POST['DebtorNo'].
 } else {
 	prnMsg(__('This script must be called with a customer code.'), 'info');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -120,4 +120,4 @@ else {
 
 echo '<br /><div class="centre"><a href="' . $RootPath . '/SelectCustomer.php">' . __('Return to customer selection screen') . '</a></div><br />';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

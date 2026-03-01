@@ -9,7 +9,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Shipments Open Inquiry');
 $ViewTopic = 'Shipments';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' .
 				__('Supplier') . '" alt="" />' . ' ' . __('Open Shipments for').' ' . $_GET['SupplierName']. '.</p>';
@@ -17,7 +17,7 @@ echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/
 if (!isset($_GET['SupplierID']) or !isset($_GET['SupplierName'])){
 	echo '<br />';
 	prnMsg( __('This page must be given the supplier code to look for shipments for'), 'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -31,7 +31,7 @@ $ShiptsResult = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($ShiptsResult)==0){
 	prnMsg(__('There are no open shipments currently set up for').' ' . $_GET['SupplierName'],'warn');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 /*show a table of the shipments returned by the SQL */
@@ -57,4 +57,4 @@ while ($MyRow=DB_fetch_array($ShiptsResult)) {
 
 echo '</table>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Authorise Purchase Orders');
 $ViewTopic = 'PurchaseOrdering';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title .
 	 '" alt="" />' . ' ' . $Title . '</p>';
@@ -146,4 +146,4 @@ echo '</tbody>
 			<input type="submit" name="UpdateAll" value="' . __('Update'). '" />
 		</div>
 		</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

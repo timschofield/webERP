@@ -3,7 +3,7 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Database table details');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 $SQL='DESCRIBE '.$_GET['table'];
 $Result = DB_query($SQL);
@@ -20,4 +20,4 @@ while ($MyRow=DB_fetch_row($Result)) {
 	echo $MyRow[4]  . '</td></tr>';
 }
 echo '</table>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

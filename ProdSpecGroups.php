@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Product Spec Groups Maintenance');
 $ViewTopic = 'QualityAssurance';// Filename in ManualContents.php's TOC.
 $BookMark = 'QA_ProdSpecs';// Anchor's id in the manual's html document.
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Product Specification Groups') . '" alt="" />' . ' ' . $Title .
@@ -327,4 +327,4 @@ if (!isset($_GET['delete'])) {
 	echo '</form>';
 } //end if record deleted no point displaying form to add record
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

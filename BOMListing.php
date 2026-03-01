@@ -4,7 +4,7 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
@@ -33,9 +33,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	if (DB_num_rows($BOMResult)==0){
 	   $Title = __('Bill of Materials Listing') . ' - ' . __('Problem Report');
-	   include('includes/header.php');
+	   include(__DIR__ . '/includes/header.php');
 	   prnMsg( __('The Bill of Material listing has no bills to report on'),'warn');
-	   include('includes/footer.php');
+	   include(__DIR__ . '/includes/footer.php');
 	   exit();
 	}
 
@@ -132,10 +132,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		));
 	} else {
 		$Title = __('Bill Of Material Listing');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
 		echo $HTML;
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 
 } else { /*The option to print PDF was not hit */
@@ -145,7 +145,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$ViewTopic = 'Manufacturing';
 	$BookMark = '';
 
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/reports.png" title="' . __('Search') .
 		'" alt="" />' . ' ' . $Title . '</p>';
 	if (!isset($_POST['FromCriteria']) || !isset($_POST['ToCriteria'])) {
@@ -176,6 +176,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				</div>
 			</form>';
 	}
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 
 } /*end of else not PrintPDF */

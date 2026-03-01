@@ -7,7 +7,7 @@ require_once __DIR__ . '/vendor/autoload.php'; // Make sure DomPDF is installed 
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 use Dompdf\Options;
 
 if (isset($_GET['ORD'])) {
@@ -328,19 +328,19 @@ if (isset($NoOfLabels) && $NoOfLabels > 0) {
 		);
 
 		$Title = __('Email a Work Order');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		if ($Success == 1) {
 			prnMsg(__('Work Order') . ' ' . $SelectedORD . ' ' . __('has been emailed to') . ' ' . $_POST['EmailTo'] . ' ' . __('as directed'), 'success');
 		} else {
 			prnMsg(__('Emailing Work order') . ' ' . $SelectedORD . ' ' . __('to') . ' ' . $_POST['EmailTo'] . ' ' . __('failed'), 'error');
 		}
 		unlink($tmpFile);
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 } else {
 	$Title = __('Label Error');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	prnMsg(__('There were no labels to print'), 'warn');
 	echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 }

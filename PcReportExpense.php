@@ -4,14 +4,14 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 $Title = __('Petty Cash Expense Management Report');
 /* webERP manual links before header.php */
 $ViewTopic = 'PettyCash';
 $BookMark = 'PcReportExpense';
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
@@ -183,15 +183,15 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		));
 	} else {
 		$Title = __('Petty Cash Expense Management Report');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' . __('PC Expense Report'). '" alt="" />' . ' ' . $Title . '
 			</p>';
 		echo $HTML;
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 } else {
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	echo '<p class="page_title_text">
 			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' . __('PC Expense Report'). '" alt="" />' . ' ' . $Title . '
@@ -257,4 +257,4 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

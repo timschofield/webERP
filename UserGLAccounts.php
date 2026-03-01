@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('User Authorised GL Accounts');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'UserGLAccounts';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['SelectedUser']) and $_POST['SelectedUser']<>'') {//If POST not empty:
 	$SelectedUser = mb_strtoupper($_POST['SelectedUser']);
@@ -255,4 +255,4 @@ echo		'<button onclick="window.location=\'index.php?Application=GL\'" type="butt
 		'</div>
 	</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

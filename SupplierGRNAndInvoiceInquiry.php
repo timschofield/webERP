@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Supplier Invoice and GRN inquiry');
 $ViewTopic = 'AccountsPayable';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_GET['SelectedSupplier'])) {
 	$SupplierID= $_GET['SelectedSupplier'];
@@ -14,7 +14,7 @@ if (isset($_GET['SelectedSupplier'])) {
 } else {
 	prnMsg(__('The page must be called from suppliers selected interface, please click following link to select the supplier'),'error');
 	echo '<a href="' . $RootPath . '/SelectSupplier.php">'. __('Select Supplier') . '</a>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 if (isset($_GET['SupplierName'])) {
@@ -103,4 +103,4 @@ if (isset($_POST['Submit'])) {
 	}
 
 }
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

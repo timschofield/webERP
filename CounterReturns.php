@@ -3,19 +3,19 @@
 // This script allows credits and refunds from the default Counter Sale account for an inventory location.
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefineCartClass.php');
+include(__DIR__ . '/includes/DefineCartClass.php');
 
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Counter Returns');
 $ViewTopic = 'SalesOrders';
 $BookMark = 'CounterReturns';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/GetPrice.php');
-include('includes/SQL_CommonFunctions.php');
-include('includes/StockFunctions.php');
-include('includes/GetSalesTransGLCodes.php');
+include(__DIR__ . '/includes/GetPrice.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/StockFunctions.php');
+include(__DIR__ . '/includes/GetSalesTransGLCodes.php');
 
 if (empty($_GET['identifier'])) {
 	$identifier=date('U');
@@ -77,14 +77,14 @@ if (!isset($_SESSION['Items' . $identifier])) {
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result)==0) {
 		prnMsg(__('Your user account does not have a valid default inventory location set up. Please see the system administrator to modify your user account.'),'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	} else {
 		$MyRow = DB_fetch_array($Result); //get the only row returned
 
 		if ($MyRow['cashsalecustomer']=='' OR $MyRow['cashsalebranch']=='') {
 			prnMsg(__('To use this script it is first necessary to define a cash sales customer for the location that is your default location. The default cash sale customer is defined under set up ->Inventory Locations Maintenance. The customer should be entered using the customer code and a valid branch code of the customer entered.'),'error');
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 		if (isset($_GET['DebtorNo'])) {
@@ -152,7 +152,7 @@ if (!isset($_SESSION['Items' . $identifier])) {
 
 			prnMsg(__('The branch details for branch code') . ': ' . $_SESSION['Items' . $identifier]->Branch . ' ' . __('against customer code') . ': ' . $_SESSION['Items' . $identifier]->DebtorNo . ' ' . __('could not be retrieved') . '. ' . __('Check the set up of the customer and branch'),'error');
 
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 		// add echo
@@ -184,7 +184,7 @@ if (isset($_POST['CancelReturn'])) {
 	echo '<br /><br />';
 	prnMsg(__('This return has been cancelled as requested'),'success');
 	echo '<br /><br /><a href="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Start a new Counter Return') . '</a>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 
 } else { /*Not cancelling the return */
@@ -418,7 +418,7 @@ if ($_SESSION['Items' . $identifier]->DefaultCurrency != $_SESSION['CompanyRecor
 					$NewItem = $KitParts['component'];
 					$NewItemQty = $KitParts['quantity'] * $ParentQty;
 					$NewPOLine = 0;
-					include('includes/SelectOrderItems_IntoCart.php');
+					include(__DIR__ . '/includes/SelectOrderItems_IntoCart.php');
 					$_SESSION['Items' . $identifier]->GetTaxes(($_SESSION['Items' . $identifier]->LineCounter - 1));
 				}
 
@@ -429,7 +429,7 @@ if ($_SESSION['Items' . $identifier]->DefaultCurrency != $_SESSION['CompanyRecor
 			} elseif ($NewItemQty<=0) {
 				prnMsg(__('Only items entered with a positive quantity can be added to the return'),'warn');
 			} else { /*Its not a kit set item*/
-				include('includes/SelectOrderItems_IntoCart.php');
+				include(__DIR__ . '/includes/SelectOrderItems_IntoCart.php');
 				$_SESSION['Items' . $identifier]->GetTaxes(($_SESSION['Items' . $identifier]->LineCounter - 1));
 			}
 		}
@@ -580,7 +580,7 @@ Now figure out if the item is a kit set - the field MBFlag='K'
 				$NewItemQty = $KitParts['quantity'] * $ParentQty;
 				$NewPOLine = 0;
 				$NewItemDue = date($_SESSION['DefaultDateFormat']);
-				include('includes/SelectOrderItems_IntoCart.php');
+				include(__DIR__ . '/includes/SelectOrderItems_IntoCart.php');
 				$_SESSION['Items' . $identifier]->GetTaxes(($_SESSION['Items' . $identifier]->LineCounter - 1));
 			}
 
@@ -588,7 +588,7 @@ Now figure out if the item is a kit set - the field MBFlag='K'
 			$NewItemDue = date($_SESSION['DefaultDateFormat']);
 			$NewPOLine = 0;
 
-			include('includes/SelectOrderItems_IntoCart.php');
+			include(__DIR__ . '/includes/SelectOrderItems_IntoCart.php');
 			$_SESSION['Items' . $identifier]->GetTaxes(($_SESSION['Items' . $identifier]->LineCounter - 1));
 		}
 
@@ -631,14 +631,14 @@ if (isset($NewItemArray) AND isset($_POST['SelectingReturnItems'])) {
 						$NewItemQty = $KitParts['quantity'] * $ParentQty;
 						$NewItemDue = date($_SESSION['DefaultDateFormat']);
 						$NewPOLine = 0;
-						include('includes/SelectOrderItems_IntoCart.php');
+						include(__DIR__ . '/includes/SelectOrderItems_IntoCart.php');
 						$_SESSION['Items' . $identifier]->GetTaxes(($_SESSION['Items' . $identifier]->LineCounter - 1));
 					}
 
 				} else { /*Its not a kit set item*/
 					$NewItemDue = date($_SESSION['DefaultDateFormat']);
 					$NewPOLine = 0;
-					include('includes/SelectOrderItems_IntoCart.php');
+					include(__DIR__ . '/includes/SelectOrderItems_IntoCart.php');
 					$_SESSION['Items' . $identifier]->GetTaxes(($_SESSION['Items' . $identifier]->LineCounter - 1));
 				}
 			} /* end of if its a new item */
@@ -893,7 +893,7 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != '') {
 		if ($_SESSION['CompanyRecord']==0) {
 			/*The company data and preferences could not be retrieved for some reason */
 			prnMsg( __('The company information and preferences could not be retrieved. See your system administrator'), 'error');
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 
@@ -1769,4 +1769,4 @@ if (!isset($_POST['ProcessReturn'])) {
 	}
 }
 echo '</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

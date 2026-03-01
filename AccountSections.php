@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Account Sections');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'AccountSections';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 // SOME TEST TO ENSURE THAT AT LEAST INCOME AND COST OF SALES ARE THERE
 	$SQL = "SELECT sectionid FROM accountsection WHERE sectionid=1";
@@ -273,4 +273,4 @@ if (! isset($_GET['delete'])) {
 	</form>';
 } //end if record deleted no point displaying form to add record
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -5,9 +5,9 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Multi-Level Bill Of Materials Maintenance');
 $ViewTopic = 'Inventory';
 $BookMark = 'BOMMaintenance';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['EffectiveAfter'])) {
 	$_POST['EffectiveAfter'] = ConvertSQLDate($_POST['EffectiveAfter']);
@@ -46,7 +46,7 @@ function display_children($Parent, $Level, &$BOMTree) {
 			else {
 				prnMsg(__('The component and the parent is the same') , 'error');
 				echo $MyRow['component'], '<br/>';
-				include('includes/footer.php');
+				include(__DIR__ . '/includes/footer.php');
 				exit();
 			}
 		}
@@ -307,7 +307,7 @@ if (isset($_POST['ComponentSearch']) or isset($_POST['Next']) or isset($_POST['P
 	echo '<input type="hidden" name="Keywords" value="', $_POST['Keywords'], '" />';
 	echo '<input type="hidden" name="StockCat" value="', $_POST['StockCat'], '" />';
 	echo '</form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -550,7 +550,7 @@ if (isset($_GET['Add']) or isset($_GET['Edit'])) {
 		if (DB_num_rows($Result) == 0) {
 			prnMsg(__('There are no work centres set up yet') . '. ' . __('Please use the link below to set up work centres') . '.', 'warn');
 			echo '<a href="', $RootPath, '/WorkCentres.php">', __('Work Centre Maintenance') , '</a></field></fieldset>';
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 		echo '<field>
@@ -630,7 +630,7 @@ if (isset($_GET['Add']) or isset($_GET['Edit'])) {
 				<input type="reset" name="Cancel" value="', __('Cancel') , '" />
 			</div>
 		</form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -1232,4 +1232,4 @@ function arrayUnique($Array, $PreserveKeys = false) {
 	return $ArrayRewrite;
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

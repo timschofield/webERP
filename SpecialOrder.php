@@ -3,16 +3,16 @@
 // Allows for a sales order to be created and an indent order to be created on a supplier for a one off item that may never be purchased again. A dummy part is created based on the description and cost details given.
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefineSpecialOrderClass.php');
+include(__DIR__ . '/includes/DefineSpecialOrderClass.php');
 
 require(__DIR__ . '/includes/session.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 $ViewTopic = 'SalesOrders';/* ?????????? */
 $BookMark = 'SpecialOrder';
 $Title = __('Special Order Entry');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['ReqDelDate'])){$_POST['ReqDelDate'] = ConvertSQLDate($_POST['ReqDelDate']);}
 
@@ -37,7 +37,7 @@ if (!isset($_SESSION['SupplierID'])){
 	echo '<br /><br />';
 	prnMsg(__('To set up a special') . ', ' . __('the supplier must first be selected from the Select Supplier page'),'info');
 	echo '<br /><a href="' . $RootPath . '/SelectSupplier.php">' . __('Select the supplier now') . '</a>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -46,7 +46,7 @@ if (!isset($_SESSION['CustomerID']) or $_SESSION['CustomerID']==''){
 		<br />' . __('To set up a special') . ', ' . __('the customer must first be selected from the Select Customer page') . '
 		<br />
 		<a href="' . $RootPath . '/SelectCustomer.php">' . __('Select the customer now') . '</a>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -163,12 +163,12 @@ if (!isset($_SESSION['SPL'.$identifier]->BranchCode)){
 		echo '</table>';
 		echo '</div>
               </form>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 
 	} else {
 		prnMsg( __('There are no branches defined for the customer selected') . '. ' . __('Please select a customer that has branches defined'),'info');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 }
@@ -561,7 +561,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		DB_Txn_Commit();
 		unset($_SESSION['SPL'.$identifier]); /*Clear the PO data to allow a newy to be input*/
 		echo '<br /><br /><a href="' . $RootPath . '/SpecialOrder.php">' . __('Enter A New Special Order') . '</a>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	} /*end if there were no input errors trapped */
 } /* end of the code to do transfer the SPL object to the database  - user hit the place Order*/
@@ -747,4 +747,4 @@ echo '<div class="centre">
 	</div>
 	</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -7,7 +7,7 @@ include('api/includes/api_php.php');
 $Title = __('Import Chart of Accounts');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 //$weberpuser = $_SESSION['UserID'];
 //$SQL="SELECT password FROM www_users WHERE userid='" . $weberpuser . "'";
@@ -77,4 +77,4 @@ if (isset($_POST['update'])) {
           </form>';
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

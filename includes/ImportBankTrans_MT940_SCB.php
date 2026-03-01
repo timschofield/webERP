@@ -29,7 +29,7 @@ if (substr($LineText,0,4)==':20:') { //Timestamp of report MT940 generation
 		 if (!array_key_exists($_SESSION['Statement']->CurrCode,$CurrencyName)){
 			prnMsg(__('The bank statement currency is a currency not defined in the system. Please see you system administrator'),'warn');
 			prnMsg(__('The MT940 bank statement file cannot be imported and processed'),'error');
-	        include('includes/footer.php');
+	        include(__DIR__ . '/footer.php');
 	        exit();
 			$ReadTheFile ='No';
 		}

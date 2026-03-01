@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Bank Account Users');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'BankAccountUsers';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<a class="toplink" href="' . $RootPath . '/BankAccountUsers.php">', __('Select another bank account'), '</a>';
 
@@ -220,4 +220,4 @@ while ($MyRow = DB_fetch_array($Result)) {
 	} // end if user wish to delete
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

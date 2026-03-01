@@ -6,7 +6,7 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 $ViewTopic = 'ARReports';
 $BookMark = 'CustomerListing';
@@ -18,10 +18,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	if ($_POST['Activity']!='All') {
 		if (!is_numeric($_POST['ActivityAmount'])) {
 			$Title = __('Customer List') . ' - ' . __('Problem Report') . '....';
-			include('includes/header.php');
+			include(__DIR__ . '/includes/header.php');
 			echo '<p />';
 			prnMsg( __('The activity amount is not numeric and you elected to print customer relative to a certain amount of activity') . ' - ' . __('this level of activity must be specified in the local currency') .'.', 'error');
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 	}
@@ -230,10 +230,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	if (DB_num_rows($CustomersResult) == 0) {
 	  $Title = __('Customer List') . ' - ' . __('Problem Report') . '....';
-	  include('includes/header.php');
+	  include(__DIR__ . '/includes/header.php');
 	  prnMsg( __('This report has no output because there were no customers retrieved'), 'error' );
 	  echo '<br /><a href="' .$RootPath .'/index.php">' .  __('Back to the menu'). '</a>';
-	  include('includes/footer.php');
+	  include(__DIR__ . '/includes/footer.php');
 	  exit();
 	}
 
@@ -436,16 +436,16 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		));
 	} else {
 		$Title = __('Customer Details Listing');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/bank.png" title="' . __('Receipts') . '" alt="" />' . ' ' . __('Create PDF Customer Details Listing') . '</p>';
 		echo $HTML;
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 
 } else {
 
 	$Title = __('Customer Details Listing');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' .
 		 $Title . '" alt="" />' . ' ' . $Title . '</p>';
 
@@ -506,6 +506,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			</div>';
     echo '</form>';
 
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 
 } /*end of else not PrintPDF */

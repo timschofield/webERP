@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Maintain journal templates');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLJournals';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_GET['delete'])) {
 	// Delete the lines
@@ -56,8 +56,8 @@ if (DB_num_rows($Result) == 0) {
 	}
 
 	echo '</table>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

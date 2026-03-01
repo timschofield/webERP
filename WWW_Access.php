@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('User Roles Maintenance');
 $ViewTopic = 'SecuritySchema';
 $BookMark = 'WWW_Access';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	'/images/group_add.png" title="' .
@@ -16,7 +16,7 @@ echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 
 if ($AllowDemoMode) {
 	prnMsg(__('The the system is in demo mode and the security model administration is disabled'), 'warn');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -241,4 +241,4 @@ if (isset($SelectedRole)) {
 	echo '</table>';
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

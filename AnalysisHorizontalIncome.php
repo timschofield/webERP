@@ -23,9 +23,9 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Horizontal Analysis of Statement of Comprehensive Income');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'AnalysisHorizontalIncome';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/GLFunctions.php');
+include(__DIR__ . '/includes/GLFunctions.php');
 
 // Merges gets into posts:
 if (isset($_GET['PeriodFrom'])) {
@@ -47,8 +47,8 @@ if (isset($_GET['NewReport'])) {
 	$_POST['NewReport'] = $_GET['NewReport'];
 }
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/AccountSectionsDef.php');// This loads the $Sections variable.
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/AccountSectionsDef.php');// This loads the $Sections variable.
 
 if (isset($_POST['PeriodFrom']) and ($_POST['PeriodFrom'] > $_POST['PeriodTo'])) {
 	prnMsg(__('The selected period from is actually after the period to') . '! ' .
@@ -195,7 +195,7 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST
 			__('the system automatically shows a comparative for the same period from the previous year') . ' - ' .
 			__('it cannot do this if a period of more than 12 months is specified') . '. ' .
 			__('Please select an alternative period range'), 'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -203,7 +203,7 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST
 	$PeriodToDate = MonthAndYearFromSQLDate($EndDateSQL);
 
 	// Page title as IAS 1, numerals 10 and 51:
-	include_once('includes/CurrenciesArray.php');// Array to retrieve currency name.
+	include_once(__DIR__ . '/includes/CurrenciesArray.php');// Array to retrieve currency name.
 	echo '<div id="Report">', // Division to identify the report block.
 		'<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/gl.png" title="', // Icon image.
 		$Title, '" /> ', // Icon title.
@@ -583,4 +583,4 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST
 	// END ReportDocEndButtons.
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -4,20 +4,20 @@
 some of the variable names refer to order - please think credit when you read order */
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefineCartClass.php');
-include('includes/DefineSerialItems.php');
+include(__DIR__ . '/includes/DefineCartClass.php');
+include(__DIR__ . '/includes/DefineSerialItems.php');
 
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Create Credit Note');
 $ViewTopic = 'ARTransactions';
 $BookMark = 'CreateCreditNote';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/ImageFunctions.php');
-include('includes/GetSalesTransGLCodes.php');
-include('includes/GetPrice.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/ImageFunctions.php');
+include(__DIR__ . '/includes/GetSalesTransGLCodes.php');
+include(__DIR__ . '/includes/GetPrice.php');
 
 
 if (empty($_GET['identifier'])) {
@@ -30,7 +30,7 @@ if (empty($_GET['identifier'])) {
 if (isset($_POST['ProcessCredit']) AND !isset($_SESSION['CreditItems'.$identifier])){
 	prnMsg(__('This credit note has already been processed. Refreshing the page will not enter the credit note again') . '<br />' . __('Please use the navigation links provided rather than using the browser back button and then having to refresh'),'info');
 	echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
   exit();
 }
 
@@ -1079,7 +1079,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 		OR $_POST['WriteOffGLCode']=='')){
 
 		  prnMsg(__('For credit notes created to write off the stock a general ledger account is required to be selected. Please select an account to write the cost of the stock off to then click on Process again'),'error');
-		  include('includes/footer.php');
+		  include(__DIR__ . '/includes/footer.php');
 		  exit();
 	 }
 
@@ -1955,4 +1955,4 @@ then debit the expense account the stock is to written off to */
 
 } /*end of process credit note */
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

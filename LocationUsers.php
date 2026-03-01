@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Inventory Location Authorised Users Maintenance');
 $ViewTopic = 'Inventory';// Filename in ManualContents.php's TOC.
 $BookMark = 'LocationUsers';// Anchor's id in the manual's html document.
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['SelectedUser'])) {
 	$SelectedUser = mb_strtoupper($_POST['SelectedUser']);
@@ -264,4 +264,4 @@ if (isset($_POST['process']) or isset($SelectedLocation)) {
 	} // end if user wish to delete
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

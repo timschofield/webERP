@@ -1,15 +1,15 @@
 <?php
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefineCartClass.php');
-include('includes/DefineSerialItems.php');
+include(__DIR__ . '/includes/DefineCartClass.php');
+include(__DIR__ . '/includes/DefineSerialItems.php');
 
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Specify Dispatched Controlled Items');
 $ViewTopic = 'ARTransactions';
 $BookMark = 'ConfirmInvoice';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (empty($_GET['identifier'])) {
 	/*unique session identifier to ensure that there is no conflict with other order entry sessions on the same machine  */
@@ -29,7 +29,7 @@ if (isset($_GET['LineNo'])){
 			<br />';
 	prnMsg( __('This page can only be opened if a line item on a sales order to be invoiced has been selected') . '. ' . __('Please do that first'),'error');
 	echo '</div>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -40,7 +40,7 @@ if (!isset($_SESSION['Items'.$identifier]) OR !isset($_SESSION['ProcessingOrder'
 			<br />';
 	prnMsg( __('This page can only be opened if a sales order and line item has been selected Please do that first'),'error');
 	echo '</div>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -54,7 +54,7 @@ if ( $LineItem->Controlled !=  1 ){
 	echo '<div class="centre"><a href="' . $RootPath . '/ConfirmDispatch_Invoice.php">' .  __('Back to the Sales Order'). '</a></div>';
 	echo '<br />';
 	prnMsg( __('The line item must be defined as controlled to require input of the batch numbers or serial numbers being sold'),'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -82,10 +82,10 @@ if ($_SESSION['RequirePickingNote'] == 1) {
 $InOutModifier=1;
 $ShowExisting=true;
 
-include('includes/InputSerialItems.php');
+include(__DIR__ . '/includes/InputSerialItems.php');
 
 /*TotalQuantity set inside this include file from the sum of the bundles
 of the item selected for dispatch */
 $_SESSION['Items'.$identifier]->LineItems[$LineNo]->QtyDispatched = $TotalQuantity;
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

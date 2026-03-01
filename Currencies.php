@@ -10,11 +10,11 @@ require(__DIR__ . '/includes/session.php');
 $ViewTopic = 'Setup';
 $BookMark = 'Currencies';
 $Title = __('Currencies Maintenance');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include_once('includes/CountriesArray.php');// To get the country name from the country code.
-include_once('includes/CurrenciesArray.php');// To get the currency name from the currency code.
-include_once('includes/SQL_CommonFunctions.php');
+include_once(__DIR__ . '/includes/CountriesArray.php');// To get the country name from the country code.
+include_once(__DIR__ . '/includes/CurrenciesArray.php');// To get the currency name from the currency code.
+include_once(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['SelectedCurrency'])) {
 	$SelectedCurrency = $_GET['SelectedCurrency'];
@@ -23,7 +23,7 @@ if (isset($_GET['SelectedCurrency'])) {
 }
 
 $ForceConfigReload = true;
-include('includes/GetConfig.php');
+include(__DIR__ . '/includes/GetConfig.php');
 $ForceConfigReload = false;
 
 $FunctionalCurrency = $_SESSION['CompanyRecord']['currencydefault'];
@@ -451,4 +451,4 @@ if (!isset($_GET['delete'])) {
 
 } //end if record deleted no point displaying form to add record
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

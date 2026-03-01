@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Dashboard');
 $ViewTopic = 'Dashboard';
 $BookMark = 'MainScreen';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 $DashBoardURL = $_SERVER['REQUEST_URI'];
 
@@ -83,5 +83,5 @@ if ($i < 6) {
 	</form>';
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 echo '<script async src="', $RootPath, '/dashboard/javascript/dashboard.js"></script>';

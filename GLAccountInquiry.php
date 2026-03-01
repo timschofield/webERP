@@ -7,9 +7,9 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('General Ledger Account Inquiry');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLAccountInquiry';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/transactions.png" title="', // Icon image.
 __('General Ledger Account Inquiry') , '" /> ', // Icon title.
@@ -138,7 +138,7 @@ if (isset($_POST['Show'])) {
 
 	if (!isset($SelectedPeriod)) {
 		prnMsg(__('A period or range of periods must be selected from the list box') , 'info');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 	/*Is the account a balance sheet or a profit and loss account */
@@ -394,4 +394,4 @@ if (isset($ShowIntegrityReport) AND $ShowIntegrityReport == true AND $_POST['tag
 	prnMsg(__('There are differences between the sum of the transactions and the recorded movements in the GL Totals table') . '. ' . __('A log of the account differences for the periods report shows below') , 'warn');
 	echo '<p>' . $IntegrityReport;
 }
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

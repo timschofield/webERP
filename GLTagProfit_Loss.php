@@ -4,14 +4,14 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 $Title = __('Income and Expenditure by Tag');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'TagReports';
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/AccountSectionsDef.php'); // This loads the $Sections variable
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/AccountSectionsDef.php'); // This loads the $Sections variable
 
 if (isset($_POST['PeriodFrom']) AND ($_POST['PeriodFrom'] > $_POST['PeriodTo'])) {
 	prnMsg(__('The selected period from is actually after the period to') . '! ' . __('Please reselect the reporting period') , 'error');
@@ -30,7 +30,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	if ($NumberOfMonths > 12) {
 		echo '<br />';
 		prnMsg(__('A period up to 12 months in duration can be specified') . ' - ' . __('the system automatically shows a comparative for the same period from the previous year') . ' - ' . __('it cannot do this if a period of more than 12 months is specified') . '. ' . __('Please select an alternative period range') , 'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -501,16 +501,16 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		));
 	} else {
 		$Title = __('Income and Expenditure by Tag');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 
 		echo '<p class="page_title_text"><img src="' . $RootPath, '/css/', $Theme, '/images/printer.png" title="' . __('Print') . '" alt="" />' . ' ' . $Title . '</p>';
 		echo $HTML;
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 } else {
 
 	// If PeriodFrom or PeriodTo are NOT set or it is a NewReport, shows a parameters input form:
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" target="_blank">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text">
@@ -641,6 +641,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			</div>
 		</form>';
 
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 
 }
