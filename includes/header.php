@@ -248,7 +248,15 @@ if ($ScriptName != 'index.php') {
 
 }
 
-echo '<br /><div class="ScriptTitle">', $Title, '</div>';
+if ($ScriptName == 'index.php') {
+	echo '<br /><div class="ScriptTitle">', $Title, '</div>';
+} else {
+	$SQL = "SELECT modulename FROM modules WHERE modulelink='" . $_SESSION['Module'] . "'";
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	echo '<br /><div class="ScriptTitle"><a href="index.php?Application=' . $_SESSION['Module'] . '">', $MyRow['modulename'] . '</a> -> '. $Title, '</div>';
+}
+
 if ($ScriptName == 'index.php') {
 	echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 	if ($_SESSION['ScreenFontSize'] == 0) {

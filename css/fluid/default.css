@@ -33,9 +33,9 @@ width:90%;
 height:auto;
 }
 a {
-color:blue;
 text-decoration:none;
-display:inline;
+display:inline-block;
+color:inherit;
 }
 a:hover {
 color:blue;

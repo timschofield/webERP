@@ -36,9 +36,9 @@ width:90%;
 height:auto;
 }
 a {
-color:navy;
 text-decoration:none;
-display:inline;
+display:inline-block;
+color:inherit;
 }
 a:hover {
 text-decoration:underline;

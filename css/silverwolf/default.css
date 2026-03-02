@@ -41,8 +41,9 @@ width:90%;
 height:auto;
 }
 a {
-color:#5B5B68;
 text-decoration:none;
+display:inline-block;
+color:inherit;
 }
 a:hover {
 text-decoration:underline;
