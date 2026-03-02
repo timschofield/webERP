@@ -164,7 +164,7 @@ if (!isset($_POST['continue'])) {
 
 	echo '<div class="centre">
 		<a href="' . $RootPath . '/Logout.php" title="' . __('Log out of') . ' ' . 'webERP" alt="">
-			', __('You need to logout and log back in for these changes to take affect'), '
+			', __('Now click here to logout and then log back in for these changes to take affect'), '
 		</a>
 	</div>';
 }
