@@ -343,10 +343,6 @@ function FieldToSelectOneLocation($VariableName, $SelectedValue, $Label = '', $H
 		$SQL = "SELECT locations.loccode,
 					locations.locationname
 				FROM locations
-				INNER JOIN locationusers
-					ON locationusers.loccode=locations.loccode
-					AND locationusers.userid='" .  $_SESSION['UserID'] . "'
-					AND locationusers.canview=1
 				WHERE locations.typeloc IN " . LIST_PHYSICAL_SHOPS_BY_TYPE . "
 				ORDER BY locations.locationname";
 	} else {
