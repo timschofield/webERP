@@ -144,40 +144,40 @@ function round_up_multiple_of($n,$x=1) {
 
 function IsPriceRoundedOK($n, $up="UP"){
 	return (($n==round_price($n, $up))
-			OR ($n==SMALL_PRICE_CORRECTED_STEP01) 
-			OR ($n==SMALL_PRICE_CORRECTED_STEP02) 
-			OR ($n==SMALL_PRICE_CORRECTED_STEP03) 
-			OR ($n==SMALL_PRICE_CORRECTED_STEP04));	
+			OR ($n==$_SESSION['Small_Price_Corrected_Step_01']) 
+			OR ($n==$_SESSION['Small_Price_Corrected_Step_02']) 
+			OR ($n==$_SESSION['Small_Price_Corrected_Step_03']) 
+			OR ($n==$_SESSION['Small_Price_Corrected_Step_04']));	
 }
 
 function round_price($n, $up="UP"){
 
 	$price = $n;
-	if ($n <= PRICE_ROUNDING_LIMIT01){
-		if (!multiple_of($n, PRICE_ROUNDING_STEP01)){
+	if ($n <= $_SESSION['Price_Rounding_Limit_01']){
+		if (!multiple_of($n, $_SESSION['Price_Rounding_Step_01'])){
 			if ($up == "UP"){
-				$price = round_multiple_of($n + (PRICE_ROUNDING_STEP01/2),PRICE_ROUNDING_STEP01);
+				$price = round_multiple_of($n + ($_SESSION['Price_Rounding_Step_01']/2),$_SESSION['Price_Rounding_Step_01']);
 			} else {
-				$price = round_multiple_of($n - (PRICE_ROUNDING_STEP01/2), PRICE_ROUNDING_STEP01);
+				$price = round_multiple_of($n - ($_SESSION['Price_Rounding_Step_01']/2), $_SESSION['Price_Rounding_Step_01']);
 			}
 		}
-	} elseif ($n <= PRICE_ROUNDING_LIMIT02){
-		if (!multiple_of($n, PRICE_ROUNDING_STEP02)){
+	} elseif ($n <= $_SESSION['Price_Rounding_Limit_02']){
+		if (!multiple_of($n, $_SESSION['Price_Rounding_Step_02'])){
 			if ($up == "UP"){
-				$price = round_multiple_of($n + (PRICE_ROUNDING_STEP02/2),PRICE_ROUNDING_STEP02);
+				$price = round_multiple_of($n + ($_SESSION['Price_Rounding_Step_02']/2),$_SESSION['Price_Rounding_Step_02']);
 			} else {
-				$price = round_multiple_of($n - (PRICE_ROUNDING_STEP02/2), PRICE_ROUNDING_STEP02);
+				$price = round_multiple_of($n - ($_SESSION['Price_Rounding_Step_02']/2), $_SESSION['Price_Rounding_Step_02']);
 			}
 		}
-		if (($price % PRICE_ROUNDING_COMMERCIAL_MODULE02) == 0){
-			$price = $price - PRICE_ROUNDING_COMMERCIAL_STEP02;
+		if (($price % $_SESSION['Price_Rounding_Commercial_Module_02']) == 0){
+			$price = $price - $_SESSION['Price_Rounding_Commercial_Step_02'];
 		}
 	} else {
-		if (!multiple_of($n, PRICE_ROUNDING_STEP03)){
+		if (!multiple_of($n, $_SESSION['Price_Rounding_Step_03'])){
 			if ($up == "UP"){
-				$price = round_multiple_of($n + (PRICE_ROUNDING_STEP03/2),PRICE_ROUNDING_STEP03);
+				$price = round_multiple_of($n + ($_SESSION['Price_Rounding_Step_03']/2),$_SESSION['Price_Rounding_Step_03']);
 			} else {
-				$price = round_multiple_of($n  - (PRICE_ROUNDING_STEP03/2), PRICE_ROUNDING_STEP03);
+				$price = round_multiple_of($n  - ($_SESSION['Price_Rounding_Step_03']/2), $_SESSION['Price_Rounding_Step_03']);
 			}
 		}
 	}
@@ -190,14 +190,14 @@ function correction_for_low_end_prices($n){
 	// for "low prices" we jump to the minimum set by the company
 	// then do special steps until we reach the normal pricing system
 	
-	if ($n <= SMALL_PRICE_CALCULATED_STEP01){
-		$n = SMALL_PRICE_CORRECTED_STEP01;
-	} elseif ($n <= SMALL_PRICE_CALCULATED_STEP02){
-		$n = SMALL_PRICE_CORRECTED_STEP02;
-	} elseif ($n <= SMALL_PRICE_CALCULATED_STEP03){
-		$n = SMALL_PRICE_CORRECTED_STEP03;
-	} elseif ($n <= SMALL_PRICE_CALCULATED_STEP04){
-		$n = SMALL_PRICE_CORRECTED_STEP04;
+	if ($n <= $_SESSION['Small_Price_Calculated_Step_01']){
+		$n = $_SESSION['Small_Price_Corrected_Step_01'];
+	} elseif ($n <= $_SESSION['Small_Price_Calculated_Step_02']){
+		$n = $_SESSION['Small_Price_Corrected_Step_02'];
+	} elseif ($n <= $_SESSION['Small_Price_Calculated_Step_03']){
+		$n = $_SESSION['Small_Price_Corrected_Step_03'];
+	} elseif ($n <= $_SESSION['Small_Price_Calculated_Step_04']){
+		$n = $_SESSION['Small_Price_Corrected_Step_04'];
 	}
 	return $n;
 }

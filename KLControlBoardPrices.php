@@ -398,7 +398,7 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 				AND ((SELECT SUM(quantity)
 					FROM locstock
 					WHERE stockmaster.stockid = locstock.stockid) >= " . $MinQoh . ")
-				AND (prices.price > " . SMALL_PRICE_CALCULATED_STEP04 . ") 
+				AND (prices.price > " . $_SESSION['Small_Price_Calculated_Step_04'] . ") 
 				AND (prices.price > ((stockmaster.actualcost) * " . $FactorMax . "))";
 
 	$Result = DB_query($SQL);
