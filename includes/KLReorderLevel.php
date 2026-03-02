@@ -253,7 +253,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $UpdateDB, $RootPath, 
 					MAX(CASE WHEN ls1.quantity < ls1.reorderlevel THEN ls1.loccode END) AS loccode
 				FROM locstock ls1
 				INNER JOIN locations loc1 ON ls1.loccode = loc1.loccode
-				WHERE loc1.typeloc IN " . LIST_PHYSICAL_SHOPS_BY_TYPE . "
+				WHERE loc1.typeloc IN " . LIST_ALL_SHOPS_BY_TYPE . "
 				GROUP BY ls1.stockid
 				HAVING COUNT(CASE WHEN ls1.quantity < ls1.reorderlevel THEN 1 END) > 0
 					AND COUNT(CASE WHEN ls1.quantity > 0 THEN 1 END) > 0
@@ -347,7 +347,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $UpdateDB, $RootPath, 
 											GROUP BY so.fromstkloc
 										) sales_data ON ls.loccode = sales_data.fromstkloc
 										WHERE ls.stockid = '" . $MyRow['stockid'] . "'
-											AND loc.typeloc IN " . LIST_PHYSICAL_SHOPS_BY_TYPE . "
+											AND loc.typeloc IN " . LIST_ALL_SHOPS_BY_TYPE . "
 											AND ls.reorderlevel > 0
 										ORDER BY loc.priority ASC, ".
 												$OrderBy ."
@@ -641,8 +641,10 @@ function ActiveLocationsForItem($StockID){
 }
 
 /**************************************************************************************************************
-* Increases reorder levels for top-selling items within a specified sales rank range,
-* provided there is sufficient stock available globally and the item is not undergoing a price change.
+Sets Reorder Level to $NewRL 
+for the items in top sales items (from $StartTopItems to $EndTopItems during last $daystopitems) 
+with stock available higher than $MinStockAvailable, lower than $MaxStockAvailable
+to the shops with RL > 0.
 *
 * @param string $ShopType - The type of shop (e.g., "SHOPKL", "SHOPBL") to filter items and apply RL changes.
 * @param int $StartTopItems - The starting rank in top sales items.
@@ -656,14 +658,6 @@ function ActiveLocationsForItem($StockID){
 * @param string $EmailText - Current email text to be appended with operation results.
 * 
 * @return string - Updated email text containing results of operations.
-**************************************************************************************************************/
-function SetRLForTopSalesItems($ShopType, $StartTopItems, $EndTopItems, $MinStockAvailable, $MaxStockAvailable, $NewRL, $ShowMessages, $UpdateDB, $RootPath, $EmailText){
-
-/* function SetRLForTopSalesItems Increases RL for good selling items with enough stock.
-Sets Reorder Level to $NewRL 
-for the items in top sales items (from $StartTopItems to $EndTopItems during last $daystopitems) 
-with stock available higher than $MinStockAvailable, lower than $MaxStockAvailable
-to the shops with RL > 0.
 
 24/12/2012 modification: For Plastic bag products, there is a MAX qty for some shops. HARDCODED.
 28/12/2012 modification: Not include items with schedduled price change to avoid problems with price tag changes
@@ -678,9 +672,10 @@ to the shops with RL > 0.
 11/03/2017 modification: filter by ShopType (brand) and simplified code with stockreadytosell
 18/12/2019 modification: change the LIKE in typeloc as we always call only one kind of typeloc
 19/12/2019 modification: simplified the main query to use klsalesperformance table, to reduce CPU time.
-18/12/2024 modofication: discounted items now can be sold in regular shops
+18/12/2024 modification: discounted items now can be sold in regular shops
+**************************************************************************************************************/
+function SetRLForTopSalesItems($ShopType, $StartTopItems, $EndTopItems, $MinStockAvailable, $MaxStockAvailable, $NewRL, $ShowMessages, $UpdateDB, $RootPath, $EmailText){
 
-*/	
 	if ($EmailText != ''){
 		$EmailText = $EmailText . "\n" . "Set RL For " . $ShopType . " top sales items range " . $StartTopItems . " - " . $EndTopItems . " Top Sales with RL lower than " . $NewRL . " and minimum available stock " . $MinStockAvailable . "\n";
 	}
@@ -1010,8 +1005,8 @@ function SetReorderLevel($Reason, $StockID, $loccode, $OldRL, $NewRL, $UpdateDB)
 						'". $StockID ."',
 						'". $OldRL ."',
 						'". $NewRL ."')";		
-		$ErrMsg =__('Could not insert the KLAdjustRL Log');
-		DB_query($SQL, $ErrMsg, '', true);
+			$ErrMsg =__('Could not insert the KLAdjustRL Log');
+			DB_query($SQL, $ErrMsg, '', true);
 		}
 	}
 }
@@ -1048,7 +1043,7 @@ function OnlineReorderLevelAdjustments($ShowMessages, $UpdateDB, $RootPath, $Ema
 			$EmailText = $EmailText . "Reset all RL=0 for location Shop Online" . "\n";
 		}
 	}
-// adjust RL for toko online as needed
+	// adjust RL for toko online as needed
 	$SQL = "SELECT sod.stkcode,
 				SUM(sod.quantity) AS totalqty,
 				ls.reorderlevel
