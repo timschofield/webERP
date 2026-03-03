@@ -204,6 +204,7 @@ AddConstraint('worequirements', 'worequirements_ibfk_3', array('wo', 'parentstoc
 // 4.1.1 drop foreign key constraint on stockserialmoves.stockid
 // DropConstraint($Table, $Constraint)
 DropConstraint('stockserialmoves', 'stockserialmoves_ibfk_2');  // fwiw this key was also dropped in 1.1.1 (and re-added in 1.3.2)
+DropConstraint('employees', 'stk_ibfk_1');
 
 // 4.1.2 changes sizes of implicit child fk columns
 // ChangeColumnSize($Column, $Table, $Type, $Null, $Default, $Size)
@@ -227,6 +228,7 @@ ChangeColumnSize('stockid', 'woserialnos',  'VARCHAR(64)', ' NOT NULL ', '', '64
 // 4.1.3 add (re-add) foreign key constraint
 // AddConstraint($Table, $Constraint, $Field, $ReferenceTable, $ReferenceField)
 AddConstraint('stockserialmoves', 'stockserialmoves_ibfk_2', array('stockid', 'serialno'), 'stockserialitems', array('stockid', 'serialno'));
+AddConstraint('employees', 'stk_ibfk_1', 'stockid', 'stockmaster', 'stockid');
 
 
 // 4.2 search for related columns named stkcode and change size (because "stkcode" was used as an explit fk constraint name)
@@ -304,6 +306,49 @@ ChangeColumnSize('partnerstockid', 'ediitemmapping', 'VARCHAR(64)', ' NOT NULL '
 
 // ChangeColumnSize($Column, $Table, $Type, $Null, $Default, $Size)
 ChangeColumnSize('description', 'stockmaster', 'VARCHAR(255)', ' NOT NULL ', '', '255');
+
+// KL FIELDS
+
+ChangeColumnSize('stockid', 'kladjustrl',  'VARCHAR(64)', ' NOT NULL ', '', '64');
+AddConstraint('kladjustrl', 'kladjustrl_ibfk_1', 'stockid', 'stockmaster', 'stockid');
+
+ChangeColumnSize('stockid', 'klchangeprice',  'VARCHAR(64)', ' NOT NULL ', '', '64');
+AddConstraint('klchangeprice', 'klchangeprice_ibfk_1', 'stockid', 'stockmaster', 'stockid');
+
+ChangeColumnSize('stockid', 'klconsignment',  'VARCHAR(64)', ' NOT NULL ', '', '64');
+AddConstraint('klconsignment', 'klconsignment_ibfk_1', 'stockid', 'stockmaster', 'stockid');
+
+ChangeColumnSize('itemfrom', 'klfreeexchanges',  'VARCHAR(64)', ' NOT NULL ', '', '64');
+ChangeColumnSize('itemto', 'klfreeexchanges',  'VARCHAR(64)', ' NOT NULL ', '', '64');
+AddConstraint('klfreeexchanges', 'klfreeexchanges_ibfk_1', 'itemfrom', 'stockmaster', 'stockid');
+AddConstraint('klfreeexchanges', 'klfreeexchanges_ibfk_2', 'itemto', 'stockmaster', 'stockid');
+
+ChangeColumnSize('stockid', 'klmovetodiscount20',  'VARCHAR(64)', ' NOT NULL ', '', '64');
+AddConstraint('klmovetodiscount20', 'klmovetodiscount20_ibfk_1', 'stockid', 'stockmaster', 'stockid');
+
+ChangeColumnSize('stockid', 'klmovetodiscount50',  'VARCHAR(64)', ' NOT NULL ', '', '64');
+AddConstraint('klmovetodiscount50', 'klmovetodiscount50_ibfk_1', 'stockid', 'stockmaster', 'stockid');
+
+ChangeColumnSize('stockid', 'klmovetodiscount80',  'VARCHAR(64)', ' NOT NULL ', '', '64');
+AddConstraint('klmovetodiscount80', 'klmovetodiscount80_ibfk_1', 'stockid', 'stockmaster', 'stockid');
+
+ChangeColumnSize('stockid', 'klsalesperformance',  'VARCHAR(64)', ' NOT NULL ', '', '64');
+AddConstraint('klsalesperformance', 'klsalesperformance_ibfk_1', 'stockid', 'stockmaster', 'stockid');
+
+ChangeColumnSize('stockid', 'klstockmarketplaces',  'VARCHAR(64)', ' NOT NULL ', '', '64');
+AddConstraint('klstockmarketplaces', 'klstockmarketplaces_ibfk_1', 'stockid', 'stockmaster', 'stockid');
+
+ChangeColumnSize('stockid', 'packagingused',  'VARCHAR(64)', ' NOT NULL ', '', '64');
+AddConstraint('packagingused', 'packagingused_ibfk_1', 'stockid', 'stockmaster', 'stockid');
+
+
+
+
+
+
+
+
+
 
 
 if ($_SESSION['Updates']['Errors'] == 0) {
