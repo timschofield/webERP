@@ -36,13 +36,14 @@ $FieldHeadings = array(
 	'DiscountCategory',	// 14 'DISCOUNTCATEGORY',
 	'TaxCat',          	// 15 'TAXCAT',
 	'DecimalPlaces',   	// 16 'DECIMALPLACES',
-	'ItemPDF'          	// 17 'ITEMPDF'
+	'ItemPDF',         	// 17 'ITEMPDF'
+	'note'          	// 17 'NOTE'
 );
 
 if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file processing
 
 	//initialize
-	$FieldTarget = 18;
+	$FieldTarget = 19;
 	$InputError = 0;
 
 	//check file info
@@ -236,6 +237,23 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 			$ErrMsg =  __('The item could not be added because');
 			$Result = DB_query($SQL, $ErrMsg);
+
+			if ($MyRow[18] != '') {
+				$SQL = "INSERT INTO stockitemnotes (
+								noteid,
+								stockid,
+								note,
+								date
+							) VALUES (
+								NULL,
+								'" . $StockID . "',
+								'" . $MyRow[18] . "',
+								CURRENT_DATE
+						)";
+
+				$ErrMsg =  __('The item note could not be added because');
+				$Result = DB_query($SQL, $ErrMsg);
+			}
 
 			if (DB_error_no() ==0) { //the insert of the new code worked so bang in the stock location records too
 
