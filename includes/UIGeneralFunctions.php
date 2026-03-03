@@ -885,6 +885,9 @@ function FieldToSelectFromTwoOptions($ValueOption1, $LabelOption1,
 		<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
 	$HTML .= 'name="' . $VariableName . '">';
+	if ($HelpText != '') {
+	    $HTML .= '<fieldhelp>' . $HelpText . '</fieldhelp>';
+	}
 	if ($SelectedValue == $ValueOption1) {
 		$HTML .= '<option selected="selected" value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
 				<option value="' . $ValueOption2 . '">' . $LabelOption2 . '</option>';
@@ -911,6 +914,9 @@ function FieldToSelectFromThreeOptions($ValueOption1, $LabelOption1,
 		<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
 	$HTML .= 'name="' . $VariableName . '">';
+	if ($HelpText != '') {
+	    $HTML .= '<fieldhelp>' . $HelpText . '</fieldhelp>';
+	}
 	if ($SelectedValue == $ValueOption1) {
 		$HTML .= '<option selected="selected" value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
 				<option value="' . $ValueOption2 . '">' . $LabelOption2 . '</option>
@@ -945,6 +951,9 @@ function FieldToSelectFromFourOptions($ValueOption1, $LabelOption1,
 		<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
 	$HTML .= 'name="' . $VariableName . '">';
+	if ($HelpText != '') {
+	    $HTML .= '<fieldhelp>' . $HelpText . '</fieldhelp>';
+	}
 	if ($SelectedValue == $ValueOption1) {
 		$HTML .= '<option selected="selected" value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
 				<option value="' . $ValueOption2 . '">' . $LabelOption2 . '</option>
@@ -989,6 +998,9 @@ function FieldToSelectFromFiveOptions($ValueOption1, $LabelOption1,
 		<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
 	$HTML .= 'name="' . $VariableName . '">';
+	if ($HelpText != '') {
+	    $HTML .= '<fieldhelp>' . $HelpText . '</fieldhelp>';
+	}
 	if ($SelectedValue == $ValueOption1) {
 		$HTML .= '<option selected="selected" value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
 				<option value="' . $ValueOption2 . '">' . $LabelOption2 . '</option>
