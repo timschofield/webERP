@@ -318,6 +318,15 @@ echo '<div id="Info" style="display: flex; align-items: center;">
 		</a>
 	</div>';
 
+// KL RICARD Show the location name for SPG users on every page
+if ($KL_SPGSeniorOrSupport 
+	OR $KL_SPGJunior){
+	echo '<div class="ScriptTitle">', $_SESSION['locationname'], '</div>';
+} else {
+	echo '<div class="ScriptTitle">', $Title, '</div>';
+}
+// KL RICARD END Show the location name for SPG users on every page
+
 // Action icons and controls section - right side of header  
 echo '<div style="display: flex; align-items: center; gap: 10px;">';
 
@@ -457,14 +466,25 @@ if (isset($_SESSION['AllowedPageSecurityTokens']) && is_array($_SESSION['Allowed
 }
 
 // Logout button - always visible on the right
+
 echo '<div id="ExitIcon">
-		<a data-title="', __('Logout'), '" href="', $RootPath, '/Logout.php" onclick="return confirm(\'', __('Are you sure you wish to logout?'), '\');">
+		<a data-title="', __('Logout'), '" href="#" id="logoutLink">
 			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/quit.png" alt="', __('Logout'), '" />
 		</a>
 	</div>';
 
-echo '</div>'; // Close action icons and controls section
-echo '</div>'; // Close header-container
+echo '<div id="mask"></div>
+	<dialog id="logoutDialog">
+		<div id="DialogContainer">
+			<h3 id="LogoutDialogHeader">', __('Confirm Logout'), '</h3>
+			<p id="LogoutDialogText">', __('Are you sure you wish to logout?'), '</p>
+			<div id="DialogButtonContainer">
+				<button id="cancelLogout">', __('Cancel'), '</button>
+				<button id="confirmLogout">', __('Logout'), '</button>
+			</div>
+		</div>
+	</dialog>';
+echo '<script async src="', $RootPath, '/javascripts/dialogs.js?version=1.0"></script>';
 
 /* KL RICARD No show the Dashboard
 if ($ScriptName != 'Dashboard.php') {
@@ -476,15 +496,6 @@ if ($ScriptName != 'Dashboard.php') {
 
 }
 KL RICARD END No show the Dashboard */
-
-// KL RICARD Show the location name for SPG users on every page
-if ($KL_SPGSeniorOrSupport 
-	OR $KL_SPGJunior){
-	echo '<div class="ScriptTitle">', $_SESSION['locationname'], '</div>';
-} else {
-	echo '<div class="ScriptTitle">', $Title, '</div>';
-}
-// KL RICARD END Show the location name for SPG users on every page
 
 if ($ScriptName == 'index.php') {
 	echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
