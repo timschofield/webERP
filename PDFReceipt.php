@@ -1,7 +1,7 @@
 <?php
 
 require(__DIR__ . '/includes/session.php');
-require_once('vendor/autoload.php'); // Ensure DomPDF is autoloaded
+require_once(__DIR__ . '/vendor/autoload.php'); // Ensure DomPDF is autoloaded
 
 use Dompdf\Dompdf;
 
