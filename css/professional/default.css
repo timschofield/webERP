@@ -34,7 +34,7 @@ width:90%;
 height:auto;
 }
 a {
-color:blue;
+color:inherit;
 text-decoration:none;
 transition-duration:0.5s;
 }
