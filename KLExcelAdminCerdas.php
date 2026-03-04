@@ -14,15 +14,15 @@ use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/KLDefines.php');
-include('includes/UIGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
-include('includes/KLBoards.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/KLMarketplaceFunctions.php');
-include('includes/OCOpenCartGeneralFunctions.php');
-include('includes/GetPrice.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLBoards.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLMarketplaceFunctions.php');
+include(__DIR__ . '/includes/OCOpenCartGeneralFunctions.php');
+include(__DIR__ . '/includes/GetPrice.php');
 
 if (!isset($_POST['Format'])) {
 	$_POST['Format'] = 'xlsx';
@@ -271,9 +271,9 @@ function submit($TypeOfShop, $TypeOfFile) {
 		} else {
 			// Display message if no products are found
 			$Title = "Excel file for uploading products to Admin Cerdas";
-			include('includes/header.php');
+			include(__DIR__ . '/includes/header.php');
 			prnMsg('No products to upload');
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 		}
 	}
 } // End of function submit()
@@ -288,7 +288,7 @@ function submit($TypeOfShop, $TypeOfFile) {
 function display($RootPath, $Theme) {
 	$Title = __('Excel file for uploading products to Admin Cerdas');
 
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">
 		  <div>
@@ -320,6 +320,6 @@ function display($RootPath, $Theme) {
 
 	echo '</div>
 		 </form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 
 } // End of function display()

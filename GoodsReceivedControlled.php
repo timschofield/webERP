@@ -1,13 +1,13 @@
 <?php
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefinePOClass.php');
-include('includes/DefineSerialItems.php');
+include(__DIR__ . '/includes/DefinePOClass.php');
+include(__DIR__ . '/includes/DefineSerialItems.php');
 
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Receive Controlled Items');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (empty($_GET['identifier'])) {
 	if (empty($_POST['identifier'])){
@@ -26,7 +26,7 @@ if (!isset($_SESSION['PO'.$identifier])) {
 		</div>
 		<br />';
 	prnMsg( __('This page can only be opened if a purchase order and line item has been selected') . '. ' . __('Please do that first'),'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -52,7 +52,7 @@ if ($LineItem->Controlled !=1 ){ /*This page only relavent for controlled items 
 			<a href="' . $RootPath . '/GoodsReceived.php">' . __('Back to the Purchase Order'). '</a>
 		</div>';
 	prnMsg( __('The line being received must be controlled as defined in the item definition'), 'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -72,7 +72,7 @@ $ItemMustExist = false;
 $StockID = $LineItem->StockID;
 $InOutModifier=1;
 $ShowExisting = false;
-include('includes/InputSerialItems.php');
+include(__DIR__ . '/includes/InputSerialItems.php');
 
 //echo '<br /><input type="submit" name=\'AddBatches\' value=\'Enter\' /><br />';
 

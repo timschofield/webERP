@@ -3,20 +3,20 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Import Excel with Shopee URL information');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/KLDefines.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/UIGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
-include('includes/KLMarketplaceFunctions.php');
-include('includes/OCOpenCartGeneralFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLMarketplaceFunctions.php');
+include(__DIR__ . '/includes/OCOpenCartGeneralFunctions.php');
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" enctype="multipart/form-data">
 	  <div>
@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
     display($RootPath, $Theme, $Title);
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 
 
 

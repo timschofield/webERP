@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Tax Authorities');
 $ViewTopic = 'Tax';
 $BookMark = 'TaxAuthorities';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title="' .
@@ -314,4 +314,4 @@ echo '<div class="centre">
 		<a href="' . $RootPath . '/TaxCategories.php">' . __('Tax Category Maintenance') .  '</a>
 	</div>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

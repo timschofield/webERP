@@ -13,11 +13,11 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('KL Daily Sales Inquiry');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include_once('includes/DateFunctions.php');
-include('includes/UIGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
+include_once(__DIR__ . '/includes/DateFunctions.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/' . $Theme .'/images/transactions.png" title="' . __('Daily Sales') . '" alt="" />' . ' ' . __('Daily Sales') . '</p>';
 echo '<div class="page_help_text">' . __('Select the month to show daily sales for') . '</div>';
@@ -168,5 +168,5 @@ echo '<th colspan="7">' . __('Total Sales for month') . ': ' . locale_number_for
 
 echo '</table>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 

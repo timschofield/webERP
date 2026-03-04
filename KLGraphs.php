@@ -3,11 +3,11 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title=__('KPI Graph');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/UIGeneralFunctions.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
 $ErrorInDates =false;
 
@@ -57,7 +57,7 @@ if (!isset($_POST['FromDate'])
 	
 	echo '</div>
         </form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 
 } else {
 
@@ -74,13 +74,13 @@ if (!isset($_POST['FromDate'])
 
 		prnMsg(__('The KPI graph data for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg(),'error');
 		prnMsg($SQL);
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 	if (DB_num_rows($KPIResult)==0){
 		prnMsg(__('There is not KPI data for the criteria entered to graph'),'info');
 		prnMsg($SQL);
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -154,6 +154,6 @@ if (!isset($_POST['FromDate'])
 			</tr>
 		  </table>';
 	unset ($_POST['KPICode']);
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 }
 

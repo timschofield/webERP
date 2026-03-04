@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Import Sales Price List');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);}
 
@@ -43,7 +43,7 @@ if (isset($_FILES['PriceListFile']) and $_FILES['PriceListFile']['name']) { //st
 	if ( count($HeadRow) != count($FieldHeadings) ) {
 		prnMsg(__('File contains') . ' '. count($HeadRow). ' ' . __('columns, expected') . ' '. count($FieldHeadings). '. ' . __('Download the template to see the expected columns.'),'error');
 		fclose($FileHandle);
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -53,7 +53,7 @@ if (isset($_FILES['PriceListFile']) and $_FILES['PriceListFile']['name']) { //st
 		if ( trim(mb_strtoupper($HeadField)) != trim(mb_strtoupper($FieldHeadings[$HeadingColumnNumber]))) {
 			prnMsg(__('The file to import the price list from contains incorrect column headings') . ' '. mb_strtoupper($HeadField). ' != '. mb_strtoupper($FieldHeadings[$HeadingColumnNumber]). '<br />' . __('The column headings must be') . ' StockID, SalesType, CurrencyCode, Price','error');
 			fclose($FileHandle);
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 		$HeadingColumnNumber++;
@@ -71,7 +71,7 @@ if (isset($_FILES['PriceListFile']) and $_FILES['PriceListFile']['name']) { //st
 		if ($FieldCount != $FieldTarget){
 			prnMsg($FieldTarget . ' ' . __('fields required') . ', '. $FieldCount. ' ' . __('fields received'),'error');
 			fclose($FileHandle);
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 
@@ -182,4 +182,4 @@ if (isset($_FILES['PriceListFile']) and $_FILES['PriceListFile']['name']) { //st
 
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

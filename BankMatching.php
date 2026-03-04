@@ -7,9 +7,9 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Bank Matching');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'BankMatching';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['AfterDate'])){$_POST['AfterDate'] = ConvertSQLDate($_POST['AfterDate']);}
 if (isset($_POST['BeforeDate'])){$_POST['BeforeDate'] = ConvertSQLDate($_POST['BeforeDate']);}
@@ -37,7 +37,7 @@ if ((isset($_GET['Type']) AND $_GET['Type']=='Receipts')
 } else {
 
 	prnMsg(__('This page must be called with a bank transaction type') . '. ' . __('It should not be called directly'),'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -329,4 +329,4 @@ if ($InputError != 1
 			</div>';
 }
 echo '</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

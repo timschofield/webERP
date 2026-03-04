@@ -3,14 +3,14 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('List of packaging needed to fill up the shops');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/KLDefines.php');
-include('includes/KLBoards.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/KLEmails.php');
-include('includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLBoards.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLEmails.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
 CheckPackagingToBeRefilled(true, true, $RootPath);
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

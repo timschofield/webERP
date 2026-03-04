@@ -435,7 +435,7 @@ if ( isset($_POST['pricelist']) ) {
 	$Title = __('Data Exports');
 	$ViewTopic = 'SpecialUtilities';
 	$BookMark = basename(__FILE__, '.php');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	// SELECT EXPORT FOR PRICE LIST
 
@@ -561,5 +561,5 @@ if ( isset($_POST['pricelist']) ) {
           </form><br />';
 
 
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 }

@@ -4,9 +4,9 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
@@ -191,9 +191,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	if (DB_num_rows($Result)==0){
 		$Title=__('Order Status Report - No Data');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		prnMsg(__('There were no orders found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . __('to') . ' '. $_POST['ToDate'] . '. ' . __('Please try again selecting a different date range'),'info');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -313,17 +313,17 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$DomPDF->stream($_SESSION['DatabaseName'] . '_OrderStatus_' . date('Y-m-d') . '.pdf', array("Attachment" => false));
 	} else {
 		$Title = __('Order Status Report');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . __('Order Status Report') . '" alt="" />' . ' ' . $Title . '</p>';
 		echo $HTML;
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 } else { /*The option to print PDF was not hit so display form */
 
 	$Title = __('Order Status Report');
 	$ViewTopic = 'Sales';
 	$BookMark = '';
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . __('Order Status Report') . '</p>';
 
@@ -380,6 +380,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<input type="submit" name="View" title="View" value="' . __('View') . '" />
 			</div>';
 	echo '</form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 
 } /*end of else not PrintPDF */

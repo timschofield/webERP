@@ -13,11 +13,11 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Delete Invoice');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (!isset($_GET['InvoiceNo'])){
         prnMsg(__('This page must be called with the InvoiceNo to delete Z_DeleteInvoice.php?InvoiceNo=XX') . '. ' . __('This page should not be run by non-system administrators'),'info');
-        include('includes/footer.php');
+        include(__DIR__ . '/includes/footer.php');
         exit();
 }
 /*Get the order number that was invoiced */
@@ -174,4 +174,4 @@ DB_Txn_Commit();
 
 prnMsg(__('Invoice number') . ' ' . $_GET['InvoiceNo'] . ' ' . __('has been deleted'),'info');
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

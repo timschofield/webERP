@@ -3,10 +3,10 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Goods Received But Not Invoiced Yet');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/KLGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
 $SQL = "SELECT grns.supplierid,
 				grns.deliverydate,
@@ -112,4 +112,4 @@ if (DB_num_rows($Result) != 0) {
 			</div>';
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

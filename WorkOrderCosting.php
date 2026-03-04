@@ -5,10 +5,10 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Work Order Costing');
 $ViewTopic = 'Manufacturing';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/StockFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/StockFunctions.php');
 
 if (isset($_GET['WO'])) {
 	$SelectedWO = $_GET['WO'];
@@ -34,7 +34,7 @@ if (!isset($SelectedWO)) {
 	echo '<div class="centre><a href="' . $RootPath . '/SelectWorkOrder.php">' .
 		__('Select a work order') . '</a></div>';
 	prnMsg(__('This page can only be opened if a work order has been selected.'),'info');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 } else {
 	echo '<input type="hidden" name="WO" value="' .$SelectedWO . '" />';
@@ -57,7 +57,7 @@ $WOResult = DB_query("SELECT workorders.loccode,
 
 if (DB_num_rows($WOResult)==0){
 	prnMsg(__('The selected work order item cannot be retrieved from the database'),'info');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 $WorkOrderRow = DB_fetch_array($WOResult);
@@ -585,4 +585,4 @@ echo '</table>
 	</div>
 	</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

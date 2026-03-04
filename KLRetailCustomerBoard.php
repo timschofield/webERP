@@ -3,13 +3,13 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('KL Retail Customer Analysis');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/KLDefines.php');
-include('includes/KLCountriesForRetail.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/KLRetailCustomer.php');
-include('includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLCountriesForRetail.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLRetailCustomer.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
 $begintime = time_start();
 $NumberOfTestExecuted = 0;
@@ -105,4 +105,4 @@ if ($KL_SystemAdmin){
 	time_finish($begintime);
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

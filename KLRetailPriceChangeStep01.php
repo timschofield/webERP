@@ -3,14 +3,14 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('KL Change of Retail Price -> Step 01');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/KLDefines.php');
-include('includes/KLPrices.php');
-include('includes/KLEmails.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/UIGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLPrices.php');
+include(__DIR__ . '/includes/KLEmails.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
 if (isset($_GET['SelectedPriceChange'])){
 	$SelectedPriceChange =mb_strtoupper($_GET['SelectedPriceChange']);
@@ -271,4 +271,4 @@ if (! isset($_GET['delete'])) {
 
 } //end if record deleted no point displaying form to add record
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

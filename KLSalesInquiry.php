@@ -6,7 +6,7 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('KL Sales Inquiry');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
@@ -70,7 +70,7 @@ if (isset($_POST['submit'])) {
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
 function submit($PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName, $DebtorNameOp, $SaveSummaryType) {
-	include('includes/KLRoles.php');
+	include(__DIR__ . '/includes/KLRoles.php');
 
 	//initialise no input errors
 	$InputError = 0;
@@ -1301,5 +1301,5 @@ function TempStockmoves() {
 
 } // End of function TempStockmoves
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 

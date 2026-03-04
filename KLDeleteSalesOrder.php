@@ -2,18 +2,18 @@
 
 require(__DIR__ . '/includes/session.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 $Title = __('KL Delete Sales Order');
 
-include('includes/header.php');
-include('includes/KLDefines.php');
-include('includes/OCOpenCartGeneralFunctions.php');
-include('includes/OCOpenCartConnectDB.php');
+include(__DIR__ . '/includes/header.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/OCOpenCartGeneralFunctions.php');
+include(__DIR__ . '/includes/OCOpenCartConnectDB.php');
 
 //Get Out if we don't have the data needed to work with
 if (!isset($_GET['OrderNo']) OR $_GET['OrderNo']==''){
 	prnMsg( __('We need an order number to delete it') , 'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -37,5 +37,5 @@ prnMsg( __('Deleted Sales Order Header ').  $_GET['OrderNo']);
 
 $Result = DB_Txn_Commit();
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 

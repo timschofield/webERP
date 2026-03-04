@@ -3,15 +3,15 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Send email to team to prepare a Packaging Transfer');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/KLDefines.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/KLEmails.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLEmails.php');
 
 if (!isset($_GET['From'])){
 	prnMsg( __('This page must be given the gudang location code.'), 'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 } else {
 	$EmailText = "From: " . $_GET['From'] . " " . GetLocationNameFromCode($_GET['From']) . "\n";
@@ -19,7 +19,7 @@ if (!isset($_GET['From'])){
 
 if (!isset($_GET['To'])){
 	prnMsg( __('This page must be given the destination location code.'), 'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 } else {
 	$LocationNameTo = GetLocationNameFromCode($_GET['To']);
@@ -52,4 +52,4 @@ prnMsg("Updated date of email for packaging transfer to shop to today");
 
 DB_Txn_Commit();
  
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

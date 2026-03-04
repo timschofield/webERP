@@ -3,21 +3,21 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('KL General Control Board');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/GLFunctions.php');
+include(__DIR__ . '/includes/GLFunctions.php');
 
-include('includes/KLDefines.php');
-include('includes/KLBoards.php');
-include('includes/KLControlBoardFunctions.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/KLPrices.php');
-include('includes/KLEmails.php');
-include('includes/KLReorderLevel.php');
-include('includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLBoards.php');
+include(__DIR__ . '/includes/KLControlBoardFunctions.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLPrices.php');
+include(__DIR__ . '/includes/KLEmails.php');
+include(__DIR__ . '/includes/KLReorderLevel.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
-include('includes/OCOpenCartGeneralFunctions.php');
-include('includes/OCOpenCartConnectDB.php');
+include(__DIR__ . '/includes/OCOpenCartGeneralFunctions.php');
+include(__DIR__ . '/includes/OCOpenCartConnectDB.php');
 
 $begintime = time_start();
 $NumberOfTestExecuted = 0;
@@ -1500,4 +1500,4 @@ if ($KL_SystemAdmin){
 	time_finish($begintime);
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

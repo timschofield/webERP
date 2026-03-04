@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Sales GL Postings Set Up');
 $ViewTopic = 'CreatingNewSystem';
 $BookMark = 'SalesGLPostings';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_GET['SelectedSalesPostingID'])){
 	$SelectedSalesPostingID =$_GET['SelectedSalesPostingID'];
@@ -409,4 +409,4 @@ if (!isset($_GET['delete'])) {
 } //end if record deleted no point displaying form to add record
 
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -3,12 +3,12 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('KL Stock Adjustment and Customer Returns Board');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/KLDefines.php');
-include('includes/KLBoards.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLBoards.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
 $BeginTime = time_start();
 $NumberOfTestExecuted = 0;
@@ -43,7 +43,7 @@ if ($KL_SystemAdmin) {
 	time_finish($BeginTime);
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 
 function QualityIssuesByItem($TypeReport, $NumDays, $RootPath) {
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', -$NumDays + 1));

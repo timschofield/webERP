@@ -10,7 +10,7 @@ KL RICARD MODIFICATIONS:
 ***************************************************************************************/
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefineReceiptClass.php');
+include(__DIR__ . '/includes/DefineReceiptClass.php');
 
 require(__DIR__ . '/includes/session.php');
 
@@ -18,7 +18,7 @@ if (isset($_POST['DateBanked'])) {
 	$_POST['DateBanked'] = ConvertSQLDate($_POST['DateBanked']);
 }
 
-include('includes/GetPaymentMethods.php');
+include(__DIR__ . '/includes/GetPaymentMethods.php');
 
 $Title = __('Receipt Entry');
 
@@ -30,10 +30,10 @@ if ($_GET['Type']=='GL') {
 	$BookMark = 'CustomerReceipts';
 }
 
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/GLFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/GLFunctions.php');
 
 if (empty($_GET['identifier'])) {
 	$identifier = date('U');
@@ -98,7 +98,7 @@ if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch' . $identifier])){
 		unset($Result);
 	} elseif (DB_num_rows($Result)==0 AND !$BankAccountEmpty){
 		prnMsg( __('The bank account number') . ' ' . $_POST['BankAccount'] . ' ' . __('is not set up as a bank account'),'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -273,7 +273,7 @@ if (isset($_POST['CommitBatch'])){
 
 	if ($_SESSION['CompanyRecord']==0){
 		prnMsg(__('The company has not yet been set up properly') . ' - ' . __('this information is needed to process the batch') . '. ' . __('Processing has been cancelled'),'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -607,7 +607,7 @@ if (isset($_POST['CommitBatch'])){
 		'</div>';
 
 	unset($_SESSION['ReceiptBatch' . $identifier]);
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 
 } /* End of commit batch */
@@ -825,7 +825,7 @@ if (DB_num_rows($AccountsResults)==0){
 		</field>
 		</fieldset>';
 	prnMsg(__('Bank Accounts have not yet been defined') . '. ' . __('You must first') . ' ' . '<a href="' . $RootPath . '/BankAccounts.php">' . __('define the bank accounts') . '</a>' . __('and general ledger accounts to be affected'),'info');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 } else {
 	echo '<option value=""></option>';
@@ -863,7 +863,7 @@ if (DB_num_rows($Result)==0){
 	prnMsg(__('No currencies are defined yet') . '. ' . __('Receipts cannot be entered until a currency is defined'),'warn');
 
 } else {
-	include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
+	include(__DIR__ . '/includes/CurrenciesArray.php'); // To get the currency name from the currency code.
 	while ($MyRow=DB_fetch_array($Result)){
 		if ($_SESSION['ReceiptBatch' . $identifier]->Currency==$MyRow['currabrev']){
 			echo '<option selected="selected" value="' . $MyRow['currabrev'] . '">' . $CurrencyName[$MyRow['currabrev']] . '</option>';
@@ -1282,4 +1282,4 @@ if (isset($_SESSION['ReceiptBatch' . $identifier]->Items) AND count($_SESSION['R
 		</div>';
 }
 echo '</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

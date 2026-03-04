@@ -3,14 +3,14 @@
 /* This is where the details specific to the recurring order are entered and the template committed to the database once the Process button is hit */
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefineCartClass.php');
+include(__DIR__ . '/includes/DefineCartClass.php');
 
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Recurring Orders');
 $ViewTopic = 'SalesOrders';
 $BookMark = 'RecurringSalesOrders';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);}
 if (isset($_POST['StopDate'])){$_POST['StopDate'] = ConvertSQLDate($_POST['StopDate']);}
@@ -158,14 +158,14 @@ if (isset($_GET['NewRecurringOrder']) or isset($_POST['NewRecurringOrder'])) {
 		/// @todo should we use a different error message?
 		/// @todo why not use the same IF a few lines below, removing the $NewRecurringOrder == 'Yes' part?
 		prnMsg(__('A new recurring order can only be created if an order template has already been created from the normal order entry screen') . '. ' . __('To enter an order template select sales order entry from the orders tab of the main menu'),'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 }
 
 if ((!isset($_SESSION['Items'.$identifier]) OR $_SESSION['Items'.$identifier]->ItemsOrdered == 0) AND $NewRecurringOrder == 'Yes') {
 	prnMsg(__('A new recurring order can only be created if an order template has already been created from the normal order entry screen') . '. ' . __('To enter an order template select sales order entry from the orders tab of the main menu'),'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -184,7 +184,7 @@ if (isset($_POST['DeleteRecurringOrder'])) {
 
 	unset($_SESSION['Items'.$identifier]->LineItems);
 	unset($_SESSION['Items'.$identifier]);
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -309,7 +309,7 @@ if (isset($_POST['Process'])) {
 
 	unset($_SESSION['Items'.$identifier]->LineItems);
 	unset($_SESSION['Items'.$identifier]);
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 
 	}
@@ -524,4 +524,4 @@ if ($NewRecurringOrder=='Yes'){
 
 echo '</div>';
 echo '</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

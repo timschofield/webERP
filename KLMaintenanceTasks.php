@@ -3,9 +3,9 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Open Location Maintenance Tasks');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
 
 if (isset($_GET['SelectedIndex'])){
 	$SelectedIndex = $_GET['SelectedIndex'];
@@ -381,4 +381,4 @@ if (!isset($_GET['close'])) {
             </div>
 			</form>';
 } //end if record deleted no point displaying form to add record
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

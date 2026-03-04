@@ -7,11 +7,11 @@ if (!in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens'])){
 	exit();
 }
 
-include('includes/ConstructSQLForUserDefinedSalesReport.php');
+include(__DIR__ . '/includes/ConstructSQLForUserDefinedSalesReport.php');
 
 if (isset($_GET['ProducePDF'])) {
 
-	include('includes/PDFSalesAnalysis.php');
+	include(__DIR__ . '/includes/PDFSalesAnalysis.php');
 
 	if ($Counter >0) {
 		$pdf->OutputD('SalesAnalysis_' . date('Y-m-d') . '.pdf');
@@ -19,21 +19,21 @@ if (isset($_GET['ProducePDF'])) {
 	} else {
 		$pdf->__destruct();
 		$Title = __('User Defined Sales Analysis Problem');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p>' . __('The report did not have any none zero lines of information to show and so it has not been created');
 		echo '<br /><a href="' . $RootPath . '/SalesAnalRepts.php?SelectedReport=' . $_GET['ReportID'] . '">' . __('Look at the design of this report') . '</a>';
 		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 } /* end if we wanted a PDF file */
 
 if ($_GET['ProduceCVSFile']==true) {
 
-	include('includes/CSVSalesAnalysis.php');
+	include(__DIR__ . '/includes/CSVSalesAnalysis.php');
 
 	$Title = __('Sales Analysis Comma Separated File (CSV) Generation');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	// gg: what was this line supposed to do ?
 	//echo '//' . getenv('SERVER_NAME') . $RootPath . '/' . $_SESSION['reports_dir'] .  '/SalesAnalysis.csv';
@@ -41,5 +41,5 @@ if ($_GET['ProduceCVSFile']==true) {
 	echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/' . $_SESSION['reports_dir'] .  '/SalesAnalysis.csv">';
 
 	echo '<p>' . __('You should automatically be forwarded to the CSV Sales Analysis file when it is ready') . '. ' . __('If this does not happen') . ' <a href="' . $RootPath . '/' . $_SESSION['reports_dir'] . '/SalesAnalysis.csv">' . __('click here') . '</a> ' . __('to continue') . '<br />';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 }

@@ -3,13 +3,13 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Customer Info Card Maintenance');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/KLCountriesForRetail.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/UIGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
-include('includes/KLPOSGeneral.php');
+include(__DIR__ . '/includes/KLCountriesForRetail.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLPOSGeneral.php');
 
 if (isset($_GET['SelectedOrder'])){
 	$SelectedOrder =mb_strtoupper($_GET['SelectedOrder']);
@@ -221,4 +221,4 @@ if (! isset($_GET['delete'])) {
 	}
 } //end if record deleted no point displaying form to add record
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Inventory Categories Maintenance');
 $ViewTopic = 'Inventory';
 $BookMark = 'InventoryCategories';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 // BEGIN: Stock Type Name array.
 $StockTypeName = array();
@@ -654,4 +654,4 @@ echo '<br />
     </div>
 	</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -3,14 +3,14 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Inventory Distribution by Type');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/KLDefines.php');
-include('includes/KLBoards.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
-include('includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLBoards.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
 
 if (isset($_POST['submit'])) {
     submit($_POST['Categories'], $_POST['Locations']);
@@ -285,4 +285,4 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 
 } // End of function display()
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

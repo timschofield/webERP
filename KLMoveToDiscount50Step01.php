@@ -3,14 +3,14 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Move Item To 50% Discount -> Step 01');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/KLDefines.php');
-include('includes/UIGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/KLPrices.php');
-include('includes/KLEmails.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLPrices.php');
+include(__DIR__ . '/includes/KLEmails.php');
 
 if (isset($_GET['SelectedMovement'])){
 	$SelectedMovement =mb_strtoupper($_GET['SelectedMovement']);
@@ -258,4 +258,4 @@ echo '</fieldset>
 	</form>';
 
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

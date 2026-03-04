@@ -2,7 +2,7 @@
 
 require(__DIR__ . '/includes/session.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 $SQL="SELECT map_height, map_width FROM geocode_param";
 $ErrMsg = __('An error occurred in retrieving the geocode information');
@@ -18,7 +18,7 @@ $Title = __('Geocoded Supplier Report');
 $ExtraHeadContent = '<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>' . "\n";
 $ExtraHeadContent .= '<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>' . "\n";
 
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 // Get supplier data with geocodes
 $SQL = "SELECT suppliers.suppname,
@@ -78,4 +78,4 @@ echo '<div class="centre">
 		<a href="' . $RootPath . '/GeocodeSetup.php">' . __('Go to Geocode Setup') . '</a>
 	</div>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

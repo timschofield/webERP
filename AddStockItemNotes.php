@@ -5,9 +5,9 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Customer Notes');
 $ViewTopic = 'Inventory';
 $BookMark = 'ItemNotes';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['NoteDate'])) {
 	$_POST['NoteDate'] = ConvertSQLDate($_POST['NoteDate']);
@@ -196,4 +196,4 @@ if (!isset($_GET['delete'])) {
 
 } //end if record deleted no point displaying form to add record
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

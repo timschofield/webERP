@@ -2,7 +2,7 @@
 
 require(__DIR__ . '/includes/session.php');
 
-include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
+include(__DIR__ . '/includes/CurrenciesArray.php'); // To get the currency name from the currency code.
 if (isset($_POST['ClientSince'])){$_POST['ClientSince'] = ConvertSQLDate($_POST['ClientSince']);}
 
 if (isset($_POST['Edit']) or isset($_GET['Edit']) or isset($_GET['DebtorNo'])) {
@@ -17,10 +17,10 @@ $Title = __('Customer Maintenance');
 /* webERP manual links before header.php */
 $ViewTopic = 'AccountsReceivable';
 $BookMark = 'NewCustomer';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/CountriesArray.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/CountriesArray.php');
 
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . __('Customer') .
@@ -270,7 +270,7 @@ if (isset($_POST['submit'])) {
 			'. ' . __('If this does not happen') .' (' . __('if the browser does not support META Refresh') . ') ' .
 			'<a href="' . $RootPath . '/CustomerBranches.php?DebtorNo=' . $_POST['DebtorNo']  . '"></a></div>';
 
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 	} else {
@@ -345,7 +345,7 @@ if (isset($_POST['submit'])) {
 		$Result = DB_query($SQL);
 		prnMsg( __('Customer') . ' ' . $_POST['DebtorNo'] . ' ' . __('has been deleted - together with all the associated branches and contacts'),'success');
 		unset($_SESSION['CustomerID']);
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	} //end if Delete Customer
 }
@@ -435,7 +435,7 @@ if (!isset($DebtorNo)) {
 
 	if ($SetupErrors>0) {
 		echo '<br /><div class="centre"><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'" >' . __('Click here to continue') . '</a></div>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
@@ -1170,4 +1170,4 @@ if (!isset($DebtorNo)) {
 		  </form>';
 } // end of main ifs
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

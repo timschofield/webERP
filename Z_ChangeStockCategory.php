@@ -7,9 +7,9 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('UTILITY PAGE Change A Stock Category');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = 'Z_ChangeStockCategory';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	'/images/inventory.png" title="' .
@@ -24,19 +24,19 @@ if (isset($_POST['ProcessStockChange'])) {
 
 	if (DB_num_rows($Result) == 0) {
 		prnMsg(__('The stock Category') . ': ' . $_POST['OldStockCategory'] . ' ' . __('does not currently exist as a stock category in the system'), 'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
 	if (ContainsIllegalCharacters($_POST['NewStockCategory'])) {
 		prnMsg(__('The new stock category to change the old code to contains illegal characters - no changes will be made'), 'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
 	if ($_POST['NewStockCategory'] == '') {
 		prnMsg(__('The new stock category to change the old code to must be entered as well'), 'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -46,7 +46,7 @@ if (isset($_POST['ProcessStockChange'])) {
 	if (DB_num_rows($Result) != 0) {
 		echo '<br /><br />';
 		prnMsg(__('The replacement stock category') . ': ' . $_POST['NewStockCategory'] . ' ' . __('already exists as a stock category in the system') . ' - ' . __('a unique stock category must be entered for the new stock category'), 'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
     DB_Txn_Begin();
@@ -126,4 +126,4 @@ echo '<fieldset>
 		<input type="submit" name="ProcessStockChange" value="' . __('Process') . '" />
 	</div>
 	</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

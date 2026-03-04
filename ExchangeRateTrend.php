@@ -6,7 +6,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('View Currency Trend');
 $ViewTopic = 'Currencies';
 $BookMark = 'ExchangeRateTrend';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 $FunctionalCurrency = $_SESSION['CompanyRecord']['currencydefault'];
 
@@ -31,7 +31,7 @@ if ( isset($_GET['CurrencyToShow']) ){
 
 	$SQL = "SELECT currabrev FROM currencies";
 	$Result = DB_query($SQL);
-	include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
+	include(__DIR__ . '/includes/CurrenciesArray.php'); // To get the currency name from the currency code.
 
 	// CurrencyToShow Currency Picker
 	echo '<tr>
@@ -76,4 +76,4 @@ if ( isset($_GET['CurrencyToShow']) ){
 		</tr>
 		</table>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

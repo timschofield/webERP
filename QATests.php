@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('QA Tests Maintenance');
 $ViewTopic = 'QualityAssurance';
 $BookMark = 'QA_Tests';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_GET['SelectedQATest'])){
 	$SelectedQATest =mb_strtoupper($_GET['SelectedQATest']);
@@ -258,7 +258,7 @@ if (! isset($_GET['delete'])) {
 		$DataError = 1;
 		echo '<a href="ProdSpecGroups.php" target="_parent">' . _('Setup Product Spec Groups') . '</a>';
 		echo '<tr><td colspan="2">' . prnMsg(_('No Product Spec Groups defined') . '&nbsp;&nbsp;<a href="ProdSpecGroups.php" target="_parent">' . _('Setup Product Spec Groups') . '</a></td></tr>', 'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	} else {
 		// if OK show select box with available options to choose
@@ -519,4 +519,4 @@ or deletion of the records*/
 	} //END WHILE LIST LOOP
 	echo '</tbody></table>';
 } //end of ifs and buts!
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

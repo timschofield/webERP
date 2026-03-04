@@ -13,15 +13,15 @@ if (isset($_POST['EnterCompanyDetails'])) {
 $Title = __('Make New Company Database Utility');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 /* Your webserver user MUST have read/write access to here,
 	otherwise you'll be wasting your time */
 if (! is_writeable('./companies/')){
 		prnMsg(__('The web-server does not appear to be able to write to the companies directory to create the required directories for the new company and to upload the logo to. The system administrator will need to modify the permissions on your installation before a new company can be created'),'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 }
 
@@ -174,7 +174,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 
 			echo '</div>
 				</form>';
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 
@@ -218,7 +218,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 		$Result = DB_query($SQL);
 
 		$ForceConfigReload = true;
-		include('includes/GetConfig.php');
+		include(__DIR__ . '/includes/GetConfig.php');
 		$ForceConfigReload = false;
 
 		prnMsg(__('The new company database has been created for' . ' ' . htmlspecialchars($_POST['NewCompany'], ENT_QUOTES, 'UTF-8') . '. ' . __('The company details and parameters should now be set up for the new company. NB: Only a single user admin is defined with the password weberp in the new company database. A new system administrator user should be defined for the new company and this account deleted immediately.')), 'info');
@@ -228,7 +228,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 			<p><a href="', $RootPath, '/WWW_Users.php">', __('Set Up User Accounts'), '</a></p>
 			</div>
 		</form>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -265,4 +265,4 @@ echo '<br /><br />
 	</div>
 	</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

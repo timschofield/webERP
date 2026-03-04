@@ -34,10 +34,10 @@ $Title = __('Statement of Cash Flows, Indirect Method');
 if (!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
 	$ViewTopic = 'GeneralLedger';
 	$BookMark = 'GLCashFlowsIndirect';
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 }
 
-include('includes/GLFunctions.php');
+include(__DIR__ . '/includes/GLFunctions.php');
 
 // Merges gets into posts:
 if (isset($_GET['PeriodFrom']) AND is_numeric($_GET['PeriodFrom'])) {
@@ -83,13 +83,13 @@ if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo']) and !isset($_POST[
 		stripslashes($_SESSION['CompanyRecord']['coyname']), '<br />'; // Page title, reporting entity.
 	if (!is_numeric($_POST['PeriodFrom']) OR !is_numeric($_POST['PeriodTo'])) {
 		prnMsg(__('The period to and period from must both be entered as numbers'),'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 	$PeriodFromName = EndDateSQLFromPeriodNo($_POST['PeriodFrom']);
 	$PeriodToName = EndDateSQLFromPeriodNo($_POST['PeriodTo']);
 	echo __('From'), ' ', MonthAndYearFromSQLDate($PeriodFromName), ' ', __('to'), ' ', MonthAndYearFromSQLDate($PeriodToName), '<br />'; // Page title, reporting period.
-	include_once('includes/CurrenciesArray.php');// Array to retrieve currency name.
+	include_once(__DIR__ . '/includes/CurrenciesArray.php');// Array to retrieve currency name.
 	echo __('All amounts stated in'), ': ', __($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]), '</p>';// Page title, reporting presentation currency and level of rounding used.
 	echo '<table class="selection">',
 		// Content of the header and footer of the output table:
@@ -523,5 +523,5 @@ if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo']) and !isset($_POST[
 }
 
 if (!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 }

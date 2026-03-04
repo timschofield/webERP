@@ -8,14 +8,14 @@
 
 require(__DIR__ . '/includes/session.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 $Title = __('Copy a BOM to New Item Code');
 $ViewTopic = 'Manufacturing';
 $BookMark = '';
 
 ob_start();
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['Submit'])) {
 	$StockID = $_POST['StockID'];
@@ -157,7 +157,7 @@ if (isset($_POST['Submit'])) {
 
 		header('Location: ' . htmlspecialchars_decode($RootPath) . '/BOMs.php?Select='.urlencode(htmlspecialchars_decode($NewStockID)));
 		//ob_end_flush();
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	} //end  if there is no input error
 
@@ -221,5 +221,5 @@ if (isset($_POST['Submit'])) {
 		</div>
 	</form>';
 
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 }

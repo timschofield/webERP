@@ -5,13 +5,13 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Script Security Token Assignment');
 $ViewTopic = 'SecuritySchema';
 $BookMark = 'PageSecurity';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/security.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p><br />';
 
 if ($AllowDemoMode) {
 	prnMsg(__('The the system is in demo mode and the security model administration is disabled'), 'warn');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -70,4 +70,4 @@ echo '<div class="centre">
     </div>
 	</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

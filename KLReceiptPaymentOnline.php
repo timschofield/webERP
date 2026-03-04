@@ -3,34 +3,34 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('KL Receipt Payment Online');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/KLDefines.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/KLMarketplaceFunctions.php');
-include('includes/OCOpenCartGeneralFunctions.php');
-include('includes/OCOpenCartConnectDB.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLMarketplaceFunctions.php');
+include(__DIR__ . '/includes/OCOpenCartGeneralFunctions.php');
+include(__DIR__ . '/includes/OCOpenCartConnectDB.php');
 
 //Get Out if we don't have the data needed to work with
 if (!isset($_GET['OrderNo']) OR $_GET['OrderNo']==''){
 	prnMsg( __('We need an order number to process the payment of online order') , 'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 if (!isset($_GET['PaymentCode']) OR $_GET['PaymentCode']==''){
 	prnMsg( __('We need a payment code to process the payment of online order') , 'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 if (!isset($_GET['CustomerCode']) OR $_GET['CustomerCode']==''){
 	prnMsg( __('We need a customer code to process the payment of online order') , 'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 if (!isset($_GET['Amount']) OR $_GET['Amount']==''){
 	prnMsg( __('We need an amount to process the payment of online order') , 'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 if (($_GET['CustomerCode'] != "WEB-KL-IDR") 
@@ -39,7 +39,7 @@ if (($_GET['CustomerCode'] != "WEB-KL-IDR")
 	AND ($_GET['CustomerCode'] != "LAZADA") 
 	AND ($_GET['CustomerCode'] != "SHOPEE")){
 	prnMsg( __('Script ready to process IDR online orders only') , 'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -58,5 +58,5 @@ echo '<tr><td>' . __('Total Amount') . ':</td> <td>' . number_format($_GET['Amou
 echo '<tr><td>' . __('Payment Code') . ':</td> <td>' . $_GET['PaymentCode'] . '</td></tr>';
 echo '</table>';	//end of table of final show of order
 	
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 

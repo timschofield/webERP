@@ -5,9 +5,9 @@ require(__DIR__ . '/includes/session.php');
 $Title=__('Fully allocate Customer transactions where < 1 c unallocated');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -23,4 +23,4 @@ if (isset($_POST['FixAllocations'])){
 	prnMsg(__('Updated debtor transactions'),'success');
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

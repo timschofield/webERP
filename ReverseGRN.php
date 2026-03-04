@@ -2,13 +2,13 @@
 
 require(__DIR__ . '/includes/session.php');
 
-include('includes/DefineSerialItems.php');
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/DefineSerialItems.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 $Title = __('Reverse Goods Received');
 $ViewTopic = 'Inventory';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['RecdAfterDate'])){$_POST['RecdAfterDate'] = ConvertSQLDate($_POST['RecdAfterDate']);}
 
@@ -20,7 +20,7 @@ if ((isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') or (!isse
 if (!isset($_POST['SupplierID']) or $_POST['SupplierID'] == "") {
 	echo '<br />' . __('This page is expected to be called after a supplier has been selected');
 	echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/SelectSupplier.php">';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 } elseif (!isset($_POST['SuppName']) or $_POST['SuppName'] == "") {
 	$SQL = "SELECT suppname FROM suppliers WHERE supplierid='" . $_SESSION['SupplierID'] . "'";
@@ -65,7 +65,7 @@ if (isset($_GET['GRNNo']) and isset($_POST['SupplierID'])) {
 	if ($QtyToReverse == 0) {
 		echo '<br />
 				<br />' . __('The GRN') . ' ' . $_GET['GRNNo'] . ' ' . __('has already been reversed or fully invoiced by the supplier - it cannot be reversed - stock quantities must be corrected by stock adjustments - the stock is paid for');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -103,7 +103,7 @@ if (isset($_GET['GRNNo']) and isset($_POST['SupplierID'])) {
 				/*Then some of the original goods received must have been sold
 				 or transfered so cannot reverse the GRN */
 				prnMsg(__('Unfortunately, of the original number') . ' (' . $SerialStockMoves['moveqty'] . ') ' . __('that were received on serial number') . ' ' . $SerialStockMoves['serialno'] . ' ' . __('only') . ' ' . $GetQOH[0] . ' ' . __('remain') . '. ' . __('The GRN can only be reversed if all the original serial number items are still in stock in the location they were received into'), 'error');
-				include('includes/footer.php');
+				include(__DIR__ . '/includes/footer.php');
 				exit();
 			}
 		}
@@ -423,4 +423,4 @@ if (isset($_GET['GRNNo']) and isset($_POST['SupplierID'])) {
 		}
 	}
 }
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Fixed Asset Maintenance Tasks');
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetMaintenance';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
@@ -236,4 +236,4 @@ if (isset($_GET['Edit'])) {
 		</div>';
 }
 echo '</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

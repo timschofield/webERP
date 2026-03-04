@@ -12,7 +12,7 @@ $ViewTopic = 'PettyCash';
 $BookMark = 'PCExpenses';
 $Title = __('Maintenance Of Petty Cash Of Expenses');
 
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/money_add.png" title="', // Icon image.
@@ -308,4 +308,4 @@ if (!isset($_GET['delete'])) {
 		</div>';
 	echo '</form>';
 } // end if user wish to delete
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

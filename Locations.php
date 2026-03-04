@@ -13,19 +13,19 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Location Maintenance');// Screen identification.
 $ViewTopic = 'Inventory';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'Locations';// Anchor's id in the manual's html document.
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/UIGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/supplier.png" title="',// Icon image.
 	__('Inventory'), '" /> ',// Icon title.
 	__('Location Maintenance'), '</p>';// Page title.
 
-include('includes/CountriesArray.php');
+include(__DIR__ . '/includes/CountriesArray.php');
 // KL RICARD
-include('includes/OCOpenCartGeneralFunctions.php');
+include(__DIR__ . '/includes/OCOpenCartGeneralFunctions.php');
 // KL RICARD END
 
 if (isset($_GET['SelectedLocation'])) {
@@ -1217,7 +1217,7 @@ if (!isset($_GET['delete'])) {
 
 }//end if record deleted no point displaying form to add record
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 
 // KL RICARD
 function UpdateOnlinePartnerPaypalSettingsInOpenCart($NewLocationType, $NewOnlinePartnerCode){
@@ -1225,7 +1225,7 @@ function UpdateOnlinePartnerPaypalSettingsInOpenCart($NewLocationType, $NewOnlin
 		// we are modifying an ONLINE Location
 		if ($NewOnlinePartnerCode != 'NOONLINE'){
 			// In the online location, the online partner can not be NOONLINE
-			include('includes/OCOpenCartConnectDB.php');
+			include(__DIR__ . '/includes/OCOpenCartConnectDB.php');
 			$SQL = "SELECT klonlinepartners.paypalusername,
 						klonlinepartners.paypalpassword,
 						klonlinepartners.paypalsignature,

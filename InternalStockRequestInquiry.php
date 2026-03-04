@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Internal Stock Request Inquiry');
 $ViewTopic = 'Inventory';
 $BookMark = 'InventoryRequests';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
@@ -25,7 +25,7 @@ if (isset($_POST['RequestNo'])) {
 
 if (isset($_POST['Search']) and $RequestNo == '') {
 	prnMsg( __('An internal request number must be entered'), 'warn');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -110,7 +110,7 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 
 			} else {
 				prnMsg(__('You have no authority to do the internal request inquiry'),'error');
-				include('includes/footer.php');
+				include(__DIR__ . '/includes/footer.php');
 				exit();
 			}
 		}
@@ -169,7 +169,7 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 		echo '<input type="hidden" name="Departments" value="' . base64_encode(serialize($Departments)) . '" />';
 	} else {
 		prnMsg(__('There are no internal request result available for your or your department'),'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -278,7 +278,7 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 		echo '<p class="bad">' . __('Problem Report') . ':<br />' . __('There are no stock categories currently defined please use the link below to set them up') . '</p>';
 		echo '<br />
 			<a href="' . $RootPath . '/StockCategories.php">' . __('Define Stock Categories') . '</a>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -506,7 +506,7 @@ if (isset($StockItemsResult)){
 	}
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 exit();
 
 function GetSearchItems ($SQLConstraint='') {

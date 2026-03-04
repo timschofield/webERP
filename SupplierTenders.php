@@ -1,16 +1,16 @@
 <?php
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefineOfferClass.php');
+include(__DIR__ . '/includes/DefineOfferClass.php');
 
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Supplier Tendering');
 $ViewTopic = 'SupplierTenders';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/ImageFunctions.php');
+include(__DIR__ . '/includes/ImageFunctions.php');
 
 $Maximum_Number_Of_Parts_To_Show=50;
 
@@ -31,7 +31,7 @@ if (!isset($_POST['SupplierID'])) {
 	$MyRow=DB_fetch_array($Result);
 	if ($MyRow['supplierid']=='') {
 		prnMsg(__('This functionality can only be accessed via a supplier login.'), 'warning');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	} else {
 		$_POST['SupplierID']=$MyRow['supplierid'];
@@ -154,7 +154,7 @@ if (isset($_POST['Process'])) {
 			<input type="reset" name="Cancel" value="' . __('Cancel Offer') . '" />
 		</div>
 		</form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -255,7 +255,7 @@ if (isset($_POST['Update'])) {
 	$_SESSION['offer'.$identifier]->Save('Yes');
 	$_SESSION['offer'.$identifier]->EmailOffer();
 	unset($_SESSION['offer'.$identifier]);
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -283,7 +283,7 @@ if (isset($_POST['Save'])) {
 	$_SESSION['offer'.$identifier]->Save();
 	$_SESSION['offer'.$identifier]->EmailOffer();
 	unset($_SESSION['offer'.$identifier]);
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -395,7 +395,7 @@ if (isset($_POST['TenderType'])
 		echo '<p><font size="4" color="red">' . __('Problem Report') . ':</font><br />' .
 			__('There are no stock categories currently defined please use the link below to set them up');
 		echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . __('Define Stock Categories') . '</a></p>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 	echo '<fieldset>
@@ -756,4 +756,4 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 
 } //end of if search
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -4,13 +4,13 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 $ViewTopic = 'PettyCash';
 $BookMark = 'PcReportTab';
 $Title = __('Petty Cash Management Report');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
@@ -306,17 +306,17 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		));
 	} else {
 		$Title = __('Petty Cash Management Report');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' . __('Payment Entry'). '" alt="" />' . ' ' . $Title . '
 			</p>';
 		echo $HTML;
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 
     echo '</form>';
 } else {
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' . __('Payment Entry')
 	. '" alt="" />' . ' ' . $Title . '</p>';
@@ -374,6 +374,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			<input type="submit" name="View" title="View" value="' . __('Show HTML') . '" />
 		</div>
 	</form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 
 }

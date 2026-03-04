@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Search Shipments');
 $ViewTopic = 'Shipments';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Search') .
 	'" alt="" />' . ' ' . $Title . '</p>';
@@ -328,4 +328,4 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 
 echo '</div>
       </form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

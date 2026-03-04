@@ -1,6 +1,6 @@
 <?php
 
-include('includes/class.cpdf.php');
+include(__DIR__ . '/class.cpdf.php');
 
 /* A4_Landscape */
 $DocumentPaper = 'A4';
@@ -522,7 +522,7 @@ if (isset($_GET['ProduceCVSFile'])){
 	      }
 	 }
 	 $Title = __('Sales Analysis Comma Separated File (CSV) Generation');
-	include('includes/header.php');
+	include(__DIR__ . '/header.php');
 
 	// gg: what was this line supposed to do ?
 	//echo '//' . getenv('SERVER_NAME') . $RootPath . '/' . $_SESSION['reports_dir'] .  '/SalesAnalysis.csv';
@@ -530,5 +530,5 @@ if (isset($_GET['ProduceCVSFile'])){
 	echo "<meta http-equiv='Refresh' content='0; url=" . $RootPath . '/' . $_SESSION['reports_dir'] .  "/SalesAnalysis.csv'>";
 
 	 echo '<p>' . __('You should automatically be forwarded to the CSV Sales Analysis file when it is ready') . '. ' . __('If this does not happen') . ' <a href="' . $RootPath . '/' . $_SESSION['reports_dir'] . '/SalesAnalysis.csv">' . __('click here') . '</a> ' . __('to continue')  . '<br />';
-	 include('includes/footer.php');
+	 include(__DIR__ . '/footer.php');
 }

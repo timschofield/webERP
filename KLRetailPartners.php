@@ -5,11 +5,11 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('KL Retail Partners Maintenance');
 $ViewTopic = '';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/UIGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
-include('includes/CountriesArray.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/CountriesArray.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/supplier.png" title="', // Icon image.
@@ -1052,5 +1052,5 @@ if (!isset($_GET['delete'])) {
 
 } //end if record deleted no point displaying form to add record
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 

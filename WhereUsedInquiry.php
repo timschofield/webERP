@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Where Used Inquiry');
 $ViewTopic = 'Manufacturing';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_GET['StockID'])){
 	$StockID = trim(mb_strtoupper($_GET['StockID']));
@@ -26,7 +26,7 @@ if (isset($StockID)){
 	$MyRow = DB_fetch_row($Result);
 	if (DB_num_rows($Result)==0){
 		prnMsg(__('The item code entered') . ' - ' . $StockID . ' ' . __('is not set up as an item in the system') . '. ' . __('Re-enter a valid item code or select from the Select Item link above'),'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 	echo '<div class="centre"><h3>' . $StockID . ' - ' . $MyRow[0] . '  (' . __('in units of') . ' ' . $MyRow[1] . ')</h3></div>';
@@ -111,4 +111,4 @@ if (isset($StockID)) {
 	}
 } // StockID is set
 echo '</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -5,7 +5,7 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Upgrade webERP 3.04 - 3.05');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 prnMsg(__('This script will run perform any modifications to the database required to allow the additional functionality in version 3.05 scripts'),'info');
 
@@ -66,7 +66,7 @@ if ($_POST['DoUpgrade'] == __('Perform Upgrade')){
 	$TestAlreadyDoneResult = DB_query('SELECT * FROM grns WHERE stdcostunit<>0');
 	if (DB_num_rows($TestAlreadyDoneResult)>0){
 		prnMsg(__('The upgrade script appears to have been run already successfully - there is no need to re-run it'),'info');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -77,4 +77,4 @@ if ($_POST['DoUpgrade'] == __('Perform Upgrade')){
 	prnMsg(__('The GRN records have been updated with cost information from purchorderdetails successfully'),'success');
 } /*Dont do upgrade */
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -8,21 +8,21 @@
  *******************************************************************************************************/
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefineStockAdjustment.php');
-include('includes/DefineSerialItems.php');
+include(__DIR__ . '/includes/DefineStockAdjustment.php');
+include(__DIR__ . '/includes/DefineSerialItems.php');
 
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Stock Adjustments');
 $ViewTopic = 'Inventory';
 $BookMark = 'InventoryAdjustments';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/GLFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/GLFunctions.php');
 
-include('includes/UIGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
 
 if (empty($_GET['identifier'])) {
@@ -161,7 +161,7 @@ if (isset($_POST['CheckCode'])) {
 			</tr>';
 	}
 	echo '</table>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -562,4 +562,4 @@ echo '<br />
 
 echo '</div>
 	</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

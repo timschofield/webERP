@@ -4,13 +4,13 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 $ViewTopic = "Inventory";
 $BookMark = "PlanningReport";
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/StockFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/StockFunctions.php');
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 
@@ -244,10 +244,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 		));
 	} else {
 		$Title = __('Inventory Planning Report');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Inventory') . '" alt="" />' . ' ' . __('Inventory Planning Report') . '</p>';
 		echo $HTML;
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 
 } elseif  (isset($_POST['Spreadsheet'])) { //send the data to a CSV
@@ -374,7 +374,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 } else { /*The option to print PDF was not hit */
 
 	$Title=__('Inventory Planning Reporting');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	echo '<p class="page_title_text">
 			<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
@@ -440,6 +440,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 	</div>
 	</form>';
 
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 
 } /*end of else not PrintPDF */

@@ -153,7 +153,7 @@ echo '</table>
 		<td valign="top">';
 
 if ($ShowExisting){
-	include('includes/InputSerialItemsExisting.php');
+	include(__DIR__ . '/InputSerialItemsExisting.php');
 }
 echo '</td>
 	</tr>

@@ -5,18 +5,18 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Service Fee Calculator');
 $ViewTopic= "Inventory";
 $BookMark = "Service Fee";
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/UIGeneralFunctions.php'); 
+include(__DIR__ . '/includes/UIGeneralFunctions.php'); 
 
-include('includes/KLGeneralFunctions.php');
-include('includes/KLPrices.php');
-include('includes/KLDefines.php');
-include('includes/KLUIGeneralFunctions.php');
-include('includes/KLPOSGeneral.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLPrices.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLPOSGeneral.php');
 
-include('includes/WebClientPrint/WebClientPrint.php');
-include('includes/KLESCPOSCommands.php');
+include(__DIR__ . '/includes/WebClientPrint/WebClientPrint.php');
+include(__DIR__ . '/includes/KLESCPOSCommands.php');
 
 if (isset($_GET['Warranty'])){
 	$ServiceCode = trim(mb_strtoupper($_GET['Warranty']));
@@ -196,10 +196,10 @@ if (($StockID != '') AND ($ServiceCode != '')){
 	$FileName = GetFilenameFromPOSIdentifier($identifier);  
 	file_put_contents($FileName, $TextToPrint);
 	$TextActionToPrint = 'Print the Service Receipts';
-	include('includes/KLSilentPrinting.php');
+	include(__DIR__ . '/includes/KLSilentPrinting.php');
 	//################## PRINTING STUFF ##################### 
 
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 

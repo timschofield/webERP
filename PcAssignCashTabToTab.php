@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 $ViewTopic = 'PettyCash';
 $BookMark = 'CashAssignment';
 $Title = __('Assignment of Cash from Tab to Tab');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);}
 
@@ -454,4 +454,4 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

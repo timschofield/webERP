@@ -8,7 +8,7 @@ $Today =  time();
 $Title = __('Aged Controlled Inventory') . ' ' . __('as-of') . ' ' . date(($_SESSION['DefaultDateFormat']), $Today);
 $ViewTopic = 'Inventory';
 $BookMark = 'AgedControlled';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text">
 		<img src="', $RootPath, '/css/', $Theme, '/images/inventory.png" title="', __('Inventory'), '" alt="" /><b>', $Title, '</b>
@@ -94,4 +94,4 @@ echo '</tbody>
 		</tfoot>
 	</table>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

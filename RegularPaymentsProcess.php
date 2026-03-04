@@ -5,10 +5,10 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Process regular payments');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'RegularPayments';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/GLFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/GLFunctions.php');
 
 echo '<p class="page_title_text" >
 		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', $Title, '" alt="" />', ' ', $Title, '
@@ -247,4 +247,4 @@ if (DB_num_rows($Result) > 0 and !isset($_GET['Edit'])) {
 
 echo '</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

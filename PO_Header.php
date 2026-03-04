@@ -8,7 +8,7 @@
  *************************************************************************************************************/
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefinePOClass.php');
+include(__DIR__ . '/includes/DefinePOClass.php');
 
 require(__DIR__ . '/includes/session.php');
 
@@ -19,9 +19,9 @@ if (isset($_GET['ModifyOrderNumber'])) {
 }
 $ViewTopic = 'PurchaseOrdering';
 $BookMark = 'PurchaseOrdering';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['DeliveryDate'])){$_POST['DeliveryDate'] = ConvertSQLDate($_POST['DeliveryDate']);}
 
@@ -307,7 +307,7 @@ if (isset($_POST['EnterLines']) or isset($_POST['AllowRePrint'])) {
 		echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/PO_Items.php?identifier=' . $identifier . '">';
 		echo '<p>';
 		prnMsg(__('You should automatically be forwarded to the entry of the purchase order line items page') . '. ' . __('If this does not happen') . ' (' . __('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/PO_Items.php?identifier=' . $identifier . '">' . __('click here') . '</a> ' . __('to continue'), 'info');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	} // end if reprint not allowed
 
@@ -321,7 +321,7 @@ echo '<span style="float:left"><a href="' . $RootPath . '/PO_SelectOSPurchOrder.
  * these details to be modified */
 
 if (isset($_GET['ModifyOrderNumber'])) {
-	include('includes/PO_ReadInOrder.php');
+	include(__DIR__ . '/includes/PO_ReadInOrder.php');
 }
 
 if (!isset($_SESSION['PO' . $identifier])) {
@@ -544,7 +544,7 @@ if (isset($_POST['Select'])) {
 	} else {
 
 		prnMsg(__('You do not have the authority to raise Purchase Orders for') . ' ' . $MyRow['suppname'] . '. ' . __('Please Consult your system administrator for more information.') . '<br />' . __('You can setup authorisations') . ' ' . '<a href="' . $RootPath . '/PO_AuthorisationLevels.php">' . __('here') . '</a>', 'warn');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -1387,4 +1387,4 @@ KL RICARD COMMENTED OUT END */
 /*end of if supplier selected */
 
 echo '</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

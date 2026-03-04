@@ -13,8 +13,8 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('GL Account Authorised Users');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLAccountUsers';
-include('includes/header.php');
-include('includes/KLEmails.php');
+include(__DIR__ . '/includes/header.php');
+include(__DIR__ . '/includes/KLEmails.php');
 
 if (isset($_POST['SelectedGLAccount']) and $_POST['SelectedGLAccount']<>'') {//If POST not empty:
 	$SelectedGLAccount = mb_strtoupper($_POST['SelectedGLAccount']);
@@ -255,4 +255,4 @@ echo		'<button onclick="window.location=\'index.php?Application=GL\'" type="butt
 		'</div>
 	</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

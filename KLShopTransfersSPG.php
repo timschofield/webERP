@@ -3,13 +3,13 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('List of Transfers from/to shop');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/StockFunctions.php');
+include(__DIR__ . '/includes/StockFunctions.php');
 
-include('includes/KLGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
-include('includes/KLDefines.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
 
 $LocationName = GetLocationNameFromCode($_SESSION['UserStockLocation']);
 
@@ -168,4 +168,4 @@ while ($MyRow = DB_fetch_array($Result)) {
 echo '</tbody></table>';
 echo '<br />';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

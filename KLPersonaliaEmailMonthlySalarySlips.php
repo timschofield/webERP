@@ -4,10 +4,10 @@ require(__DIR__ . '/includes/session.php');
 
 $Title = __('Email Salary Slips To Employees');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/KLDefines.php');
-include('includes/UIGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
 use Dompdf\Dompdf;
 
@@ -38,7 +38,7 @@ function submit($Company, $PeriodOfFile, $SalaryType) {
 		$InputError = true;
 	}
 
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	// The month selected should be last month for Monthly salaries
 	if ($SalaryType == "MONTHLY"){
@@ -60,7 +60,7 @@ function submit($Company, $PeriodOfFile, $SalaryType) {
 		$TextAdmin = "";
 		
 		// populates $SQL and $Result with the data to extract the salary slips
-		include('includes/KLPersonaliaSQLSalarySlips.php');
+		include(__DIR__ . '/includes/KLPersonaliaSQLSalarySlips.php');
 		
 		if (DB_num_rows($Result) != 0){
 
@@ -76,11 +76,11 @@ function submit($Company, $PeriodOfFile, $SalaryType) {
 				$HTML = ''; // Initialize HTML with no whitespace
 				
 				ob_start(); // Start output buffering
-				include('includes/KLPersonaliaPDFNewSalarySlip.php');
+				include(__DIR__ . '/includes/KLPersonaliaPDFNewSalarySlip.php');
 				$HTML .= trim(ob_get_clean()); // Get and trim output buffer
 				
-				include('includes/KLPersonaliaPDFCalculatedFields.php');
-				include('includes/KLPersonaliaPDFOneSalarySlip.php');
+				include(__DIR__ . '/includes/KLPersonaliaPDFCalculatedFields.php');
+				include(__DIR__ . '/includes/KLPersonaliaPDFOneSalarySlip.php');
 				
 				$HTML .= '</body></html>';
 				
@@ -176,7 +176,7 @@ function submit($Company, $PeriodOfFile, $SalaryType) {
 			'</p>';
 		prnMsg($InputErrorMessage, "warn");
 	}
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 } // End of function submit()
 
 
@@ -184,7 +184,7 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 {
 // Display form fields. This function is called the first time
 // the page is called.
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
           <div>
@@ -198,7 +198,7 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 	echo '<fieldset>
 		<legend>' . __('Parameters Selection') . '</legend>';
 
-	include('includes/KLPersonaliaParameterSelection.php');
+	include(__DIR__ . '/includes/KLPersonaliaParameterSelection.php');
 
 	echo '</fieldset>';
 
@@ -206,7 +206,7 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 
 	echo '</div>
          </form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 
 } // End of function display()
 

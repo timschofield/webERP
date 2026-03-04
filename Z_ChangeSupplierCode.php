@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('UTILITY PAGE To Changes A Supplier Code In All Tables');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = 'Z_ChangeSupplierCode';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	'/images/supplier.png" title="' .
@@ -36,7 +36,7 @@ echo '<fieldset>
 	<div>
 	</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 exit();
 
 

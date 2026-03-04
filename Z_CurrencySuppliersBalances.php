@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Currency Supplier Balances');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = 'Z_CurrencySuppliersBalances';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	'/images/supplier.png" title="' .
@@ -48,4 +48,4 @@ echo '<tr>
 
 echo '</table>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

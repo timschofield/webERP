@@ -15,15 +15,15 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 include ('includes/SQL_CommonFunctions.php');
 include ('includes/GetPrice.php');
 include ('includes/ImageFunctions.php');
-include('includes/StockFunctions.php');
+include(__DIR__ . '/includes/StockFunctions.php');
 
-include('includes/KLEmails.php');
-include('includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLEmails.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 

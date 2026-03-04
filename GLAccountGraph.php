@@ -43,9 +43,9 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('GL Account Graph');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLAccountGraph';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/GLFunctions.php');
+include(__DIR__ . '/includes/GLFunctions.php');
 
 $NewReport = '';
 $SelectedAccount = '';
@@ -220,7 +220,7 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 				<input type="submit" name="ShowGraph" value="' . __('Show Account Graph') . '" />
 			</div>
 		</form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 } else {
 
 	$GraphTitle = '';
@@ -304,12 +304,12 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 	if (DB_error_no() != 0) {
 
 		prnMsg(__('The GL Account graph data for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg(), 'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 	if (DB_num_rows($SalesResult) == 0) {
 		prnMsg(__('There is not GL Account data for the criteria entered to graph'), 'info');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -340,5 +340,5 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 	echo '<div class="noPrint centre">
 			<a href="', basename(__FILE__), '">', __('Select Different Criteria'), '</a>
 		</div>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 }

@@ -5,21 +5,21 @@ the SuppTrans class contains an array of GRNs objects - containing details of GR
 an array of GLCodes objects - only used if the AP - GL link is effective */
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefineSuppTransClass.php');
+include(__DIR__ . '/includes/DefineSuppTransClass.php');
 
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Supplier Transaction General Ledger Analysis');
 $ViewTopic = 'AccountsPayable';
 $BookMark = 'SuppTransGLAnalysis';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/GLFunctions.php');
+include(__DIR__ . '/includes/GLFunctions.php');
 
 if (!isset($_SESSION['SuppTrans'])) {
 	prnMsg(__('To enter a supplier invoice or credit note the supplier must first be selected from the supplier selection screen') . ', ' . __('then the link to enter a supplier invoice or supplier credit note must be clicked on'), 'info');
 	echo '<br /><a href="' . $RootPath . '/SelectSupplier.php">' . __('Select a supplier') . '</a>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 	/*It all stops here if there aint no supplier selected and transaction initiated ie $_SESSION['SuppTrans'] started off*/
 }
@@ -235,4 +235,4 @@ echo '<div class="centre">
 	</div>';
 
 echo '</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

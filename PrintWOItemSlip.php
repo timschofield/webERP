@@ -4,7 +4,7 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 if (isset($_GET['WO'])) {
 	$WO = filter_number_format($_GET['WO']);
@@ -127,11 +127,11 @@ if (isset($WO) && isset($StockId) && $WO != '') {
 		exit();
 	} else {
 		$Title = __('WO Item production Slip');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		prnMsg(__('There were no items with ready to produce'), 'info');
 		prnMsg($SQL);
 		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 }

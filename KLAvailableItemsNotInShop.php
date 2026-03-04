@@ -3,11 +3,11 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Items with stock available not in shop');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/UIGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
-include('includes/KLDefines.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
 
 //check if input already
 if (!(isset($_POST['Search']))) {
@@ -93,4 +93,4 @@ if (!(isset($_POST['Search']))) {
 	</table>';
 
 }
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

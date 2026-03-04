@@ -9,17 +9,17 @@ KL RICARD MODIFICATIONS:
 /* Inventory Transfer - Receive */
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefineSerialItems.php');
-include('includes/DefineStockTransfers.php');
+include(__DIR__ . '/includes/DefineSerialItems.php');
+include(__DIR__ . '/includes/DefineStockTransfers.php');
 
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Inventory Transfer') . ' - ' . __('Receiving');// Screen identification.
 $ViewTopic = 'Inventory';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'LocationTransfers';// Anchor's id in the manual's html document.
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['NewTransfer'])) {
 	unset($_SESSION['Transfer']);
@@ -488,7 +488,7 @@ if (isset($_GET['Trf_ID'])) {
 
 	if (DB_num_rows($Result) == 0) {
 		echo '<h3>' . __('Transfer') . ' #' . $_GET['Trf_ID'] . ' ' . __('Does Not Exist') . '</h3><br />';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -697,7 +697,7 @@ if (isset($_SESSION['Transfer'])) {
 	echo '</div>
 		  </form>';
 }
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 
 function RecordItemCancelledInTransfer($TransferReference, $StockID, $CancelQty) {
 	$SQL = "INSERT INTO loctransfercancellations (

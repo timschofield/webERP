@@ -8,7 +8,7 @@
 	Javier de Lorenzo-Cáceres <info@civicom.eu>
 	------------------------------------------------------------------------------------- */
 
-require_once(dirname(__FILE__).'/class.cpdf.php');
+require_once(__DIR__ . '/class.cpdf.php');
 
 /*
 //	Changes to move from FPDF to TCPDF to support UTF-8 by Javier de Lorenzo-Cáceres <info@civicom.eu>

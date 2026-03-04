@@ -4,15 +4,15 @@ require(__DIR__ . '/includes/session.php');
 
 $Title = __('Print PTADU Consignment Invoices');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/UIGeneralFunctions.php');
-include('includes/KLDefines.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 // The default company to Invoice from (PTADU).
 if (!isset($_POST['CompanyFrom'])) {
@@ -407,23 +407,23 @@ function submit($CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $DomPDFOpti
 				exit(); // Important to prevent any further output after PDF is streamed
 			} catch (Exception $e) {
 				// In case of errors, show a user-friendly message
-				include('includes/header.php');
+				include(__DIR__ . '/includes/header.php');
 				prnMsg('An error occurred while generating the PDF: ' . $e->getMessage(), 'error');
-				include('includes/footer.php');
+				include(__DIR__ . '/includes/footer.php');
 				exit();
 			}
 		} else {
-			include('includes/header.php');
+			include(__DIR__ . '/includes/header.php');
 			prnMsg('No consignment sales to invoice');
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 		}
 	} else {
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 
 			'</p>';
 		prnMsg($InputErrorMessage, "warn");
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 } // End of function submit()
 
@@ -432,7 +432,7 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 {
 // Display form fields. This function is called the first time
 // the page is called.
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -456,6 +456,6 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 	
 	echo '</form>';
 	
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 
 } // End of function display()

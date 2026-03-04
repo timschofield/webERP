@@ -3,12 +3,12 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('KL SPG Control Board');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/KLDefines.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/KLRetailCustomer.php');
-include('includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLRetailCustomer.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
 $PeriodNow=GetPeriod(Date($_SESSION['DefaultDateFormat']));
 
@@ -23,7 +23,7 @@ RetailCustomerDataQualitySPG($_SESSION['SalesmanLogin'], 15);
 
 prnMsg("Performed 4 SPG control board tests",'success');
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 
 /******************************************************************************************************/
 /******************************************************************************************************/

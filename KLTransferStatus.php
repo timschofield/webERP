@@ -3,12 +3,12 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('KL General Transfer Status');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/KLBoards.php');
-include('includes/KLDefines.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLBoards.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
 TransfersDelayed(2, $RootPath);
 
@@ -21,4 +21,4 @@ FinishedStockDistribution("FORSALE", "LOCATION");
 
 prnMsg("Performed 5 transfer status checks",'success');
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

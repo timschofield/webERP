@@ -6,9 +6,9 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 /* $Title is set in several parts of this script. */
 $ViewTopic = 'Sales';
@@ -19,21 +19,21 @@ if (isset($_POST['TransDate'])){$_POST['TransDate'] = ConvertSQLDate($_POST['Tra
 /* Check that the config variable is set for picking notes and get out if not. */
 if ($_SESSION['RequirePickingNote'] == 0) {
 	$Title = __('Picking Lists Not Enabled');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/error.png" title="',
 		$Title, '" /> ',
 		$Title, '</p>';
 	echo '<br />';
 	prnMsg(__('The system is not configured for picking lists. A configuration parameter is required where picking slips are required. Please consult your system administrator.'), 'info');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
 /* Show selection screen if we have no orders to work with */
 if ((!isset($_GET['TransNo']) or $_GET['TransNo'] == '') and !isset($_POST['TransDate'])) {
 	$Title = __('Select Picking Lists');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/sales.png" title="',
 		__('Search'), '" /> ',
@@ -65,7 +65,7 @@ if ((!isset($_GET['TransNo']) or $_GET['TransNo'] == '') and !isset($_POST['Tran
 			<input type="submit" name="Process" value="' . __('Print Picking Lists') . '" />
 		</div>
 		</form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -159,7 +159,7 @@ if (isset($_POST['TransDate']) or (isset($_GET['TransNo']) and $_GET['TransNo'] 
 
 	if (DB_num_rows($Result) == 0) {
 		$Title = __('Print Picking List Error');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<br />';
 		prnMsg(__('Unable to Locate any orders for this criteria '), 'info');
 		echo '<br />
@@ -169,7 +169,7 @@ if (isset($_POST['TransDate']) or (isset($_GET['TransNo']) and $_GET['TransNo'] 
 			</tr>
 			</table>
 			<br />';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 

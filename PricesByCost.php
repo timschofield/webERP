@@ -10,7 +10,7 @@ if (isset($_POST['submit']) OR isset($_POST['update']) && (@$_POST['Margin'] == 
 $Title = __('Update of Prices By A Multiple Of Cost');
 $ViewTopic = 'Sales';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Inventory') . '" alt="" />' . ' ' . __('Update Price By Cost') . '</p>';
 
@@ -304,4 +304,4 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 		</div>
 	</form>';
 } /*end of else not submit */
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

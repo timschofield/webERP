@@ -3,11 +3,11 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Shop Inventory Control for SPG');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/KLGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
-include('includes/KLDefines.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
 
 $LocationName = GetLocationNameFromCode($_SESSION['UserStockLocation']);
 
@@ -49,4 +49,4 @@ while ($MyRow = DB_fetch_array($Result)) {
 echo '</tbody>
 	</table>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

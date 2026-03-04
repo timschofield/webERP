@@ -5,9 +5,9 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Stock Cost Update');
 $ViewTopic = 'Inventory';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['StockID'])){
 	$StockID = trim(mb_strtoupper($_GET['StockID']));
@@ -147,7 +147,7 @@ if (($MyRow['mbflag']=='D' AND $MyRow['stocktype'] != 'L')
 		echo '<br />' . $StockID . ' ' . __('is a kit set part');
    }
    prnMsg(__('Cost information cannot be modified for kits assemblies or service items') . '. ' . __('Please select a different part'),'warn');
-   include('includes/footer.php');
+   include(__DIR__ . '/includes/footer.php');
    exit();
 }
 
@@ -207,4 +207,4 @@ if ($MyRow['mbflag']!='D'){
 }
 echo '</div>
 	  </form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

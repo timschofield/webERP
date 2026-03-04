@@ -3,16 +3,16 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('KL General Performance Board');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/GLFunctions.php');
-include('includes/KLDefines.php');
-include('includes/KLBoards.php');
-include('includes/KLPerformanceBoardFunctions.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/KLPrices.php');
-include('includes/KLUIGeneralFunctions.php');
-include('includes/KLGLFunctions.php');
+include(__DIR__ . '/includes/GLFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLBoards.php');
+include(__DIR__ . '/includes/KLPerformanceBoardFunctions.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLPrices.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLGLFunctions.php');
 
 $begintime = time_start();
 $NumberOfTestExecuted = 0;
@@ -473,4 +473,4 @@ if ($KL_SystemAdmin){
 	time_finish($begintime);
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

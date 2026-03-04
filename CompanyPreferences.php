@@ -7,8 +7,8 @@ require(__DIR__ . '/includes/session.php');
 $ViewTopic = 'CreatingNewSystem';
 $BookMark = 'CompanyParameters';
 $Title = __('Company Preferences');
-include('includes/header.php');
-include('includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/header.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
 
 // initialise no input errors assumed initially before we test
 $InputError = 0;
@@ -100,7 +100,7 @@ if (isset($_POST['submit'])) {
 			/* End of update currencies */
 
 			$ForceConfigReload = true; // Required to force a load even if stored in the session vars
-			include('includes/GetConfig.php');
+			include(__DIR__ . '/includes/GetConfig.php');
 			$ForceConfigReload = false;
 
 	} else {
@@ -286,4 +286,4 @@ echo '</fieldset>';
 echo OneButtonCenteredForm('submit', __('Update'));
 echo '</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

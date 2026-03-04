@@ -10,9 +10,9 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Clone Item');
 $ViewTopic = 'Inventory';
 $BookMark = 'CloneItem';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['OldStockID']) || isset($_POST['OldStockID']) ){ //we are cloning
 	$_POST['OldStockID'] = !empty($_GET['OldStockID']) ? $_GET['OldStockID']:$_POST['OldStockID'];
@@ -1240,4 +1240,4 @@ $DiscountCategory = $_POST['DiscountCategory'] ?? '';
 //}
 echo '</div>
 	</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

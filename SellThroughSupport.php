@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Sell Through Support');
 $ViewTopic = 'Sales';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['EffectiveFrom'])){$_POST['EffectiveFrom'] = ConvertSQLDate($_POST['EffectiveFrom']);}
 if (isset($_POST['EffectiveTo'])){$_POST['EffectiveTo'] = ConvertSQLDate($_POST['EffectiveTo']);}
@@ -201,7 +201,7 @@ if (isset($_POST['SearchSupplier'])) {
 				<input type="submit" name="SearchSupplier" value="' . __('Find Suppliers Now') . '" />
 			</div>
 		</form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -464,4 +464,4 @@ if (isset($SupplierID)) { //not selecting a supplier
 		</form>';
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -3,19 +3,19 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('KL Follow Up Email System');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 //Get Out if we have no order number to work with
 If (!isset($_GET['TransNo']) OR $_GET['TransNo']==''){
 	prnMsg( __('We need an order number to send an email to online customer') , 'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 If (!isset($_GET['EmailType']) OR $_GET['EmailType']==''){
 	prnMsg( __('We need an email type to send an email to online customer') , 'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -227,7 +227,7 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 	//If there are no rows, there's a problem.
 	if (DB_num_rows($Result)==0){
 		prnMsg( __('Unable to Locate Order Number') . ' : ' . $_GET['TransNo'] . ' ', 'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	} elseif (DB_num_rows($Result)==1){ /*There is only one order header returned - thats good! */
 		$MyRow = DB_fetch_array($Result);
@@ -235,7 +235,7 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 		$DeliveryDate = $MyRow['salesorders.deliverydate'];
 	} else {
 		prnMsg( __('Found too many Orders with Number') . ' : ' . $_GET['TransNo'] . ' ', 'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 	
@@ -246,10 +246,10 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 		</head>
 		<body>';
 	$Language = "ENGLISH";
-	include('includes/KLFollowUpOnlineEmailMessageText.php');
+	include(__DIR__ . '/includes/KLFollowUpOnlineEmailMessageText.php');
 
 	$Language = "BAHASA";
-	include('includes/KLFollowUpOnlineEmailMessageText.php');
+	include(__DIR__ . '/includes/KLFollowUpOnlineEmailMessageText.php');
 
 	$MailMessage .= '</body>
 					</html>';
@@ -324,9 +324,9 @@ if ($_GET['EmailType']=='PaymentConfirmation'){
 }
 
 if ($_GET['EmailType']=='TrackingConfirmation'){
-	include('includes/KLDefines.php');
-	include('includes/OCOpenCartGeneralFunctions.php');
-	include('includes/OCOpenCartConnectDB.php');
+	include(__DIR__ . '/includes/KLDefines.php');
+	include(__DIR__ . '/includes/OCOpenCartGeneralFunctions.php');
+	include(__DIR__ . '/includes/OCOpenCartConnectDB.php');
 	// change status of the order in Opencart, as OPENCART_ORDER_STATUS_SHIPPED
 	$ReasonChangeStatusId = "webERP --> Order shipped via " . $MyRow['shippername'] . " AWB# = " . $MyRow['consignment'];  
 	UpdateOpenCartOrderStatus($_GET['CustomerOrder'], OPENCART_ORDER_STATUS_SHIPPED, 1, $MyRow['shipvia'], $MyRow['consignment'], $ReasonChangeStatusId);
@@ -355,4 +355,4 @@ if (($_GET['EmailType']=='ThankYouOrder') OR ($_GET['EmailType']=='NoSendThankYo
 	prnMsg("Updated date of sending thank you! to online customer to today");
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -3,11 +3,11 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Stock Status in Shops');
-include('includes/header.php');
-include('includes/StockFunctions.php');
+include(__DIR__ . '/includes/header.php');
+include(__DIR__ . '/includes/StockFunctions.php');
 
-include('includes/KLDefines.php');
-include('includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
 
 
 if (isset($_GET['StockID'])){
@@ -101,5 +101,5 @@ echo '</tfooter>
 	</table>
 	</div>
 	</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 

@@ -4,14 +4,14 @@ the SuppTrans class contains an array of GRNs objects - containing details of GR
 an array of GLCodes objects - only used if the AP - GL link is effective */
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefineSuppTransClass.php');
+include(__DIR__ . '/includes/DefineSuppTransClass.php');
 
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Enter Supplier Invoice Against Goods Received');
 $ViewTopic = 'AccountsPayable';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Dispatch') .
@@ -23,7 +23,7 @@ if (!isset($_SESSION['SuppTrans'])){
 	prnMsg(__('To enter a supplier transactions the supplier must first be selected from the supplier selection screen') . ', ' . __('then the link to enter a supplier invoice must be clicked on'),'info');
 	echo '<br />
 			<a href="' . $RootPath . '/SelectSupplier.php">' . __('Select A Supplier to Enter a Transaction For') . '</a>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 	/*It all stops here if there aint no supplier selected and invoice initiated ie $_SESSION['SuppTrans'] started off*/
 }
@@ -201,7 +201,7 @@ $GRNResults = DB_query($SQL);
 if (DB_num_rows($GRNResults)==0){
 	prnMsg(__('There are no outstanding goods received from') . ' ' . $_SESSION['SuppTrans']->SupplierName . ' ' . __('that have not been invoiced by them') . '<br />' . __('The goods must first be received using the link below to select purchase orders to receive'),'warn');
 	echo '<div class="centre"><p><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?SupplierID=' . $_SESSION['SuppTrans']->SupplierID .'">' . __('Select Purchase Orders to Receive')  . '</a></p></div>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -317,4 +317,4 @@ if (!isset($_GET['Modify'])){
 
 echo '</div>
 	</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

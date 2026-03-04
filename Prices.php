@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Item Prices');
 $ViewTopic = 'Prices';
 //$BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['StartDate'])) {
 	$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);
@@ -21,7 +21,7 @@ if (DB_num_rows($TypeResult) == 0) {
 	prnMsg(__('There are no sales types setup. Click') .
 		' <a href="' . $RootPath . '/SalesTypes.php" target="_blank">' .
 		' ' . __('here') . ' ' . '</a>' . __('to create them'), 'warn');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -32,7 +32,7 @@ echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $The
 
 echo '<a href="' . $RootPath . '/SelectProduct.php" class="toplink">' . __('Back to Items') . '</a><br />';
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 //initialise no input errors assumed initially before we test
 $InputError = 0;
@@ -68,7 +68,7 @@ if (!isset($Item)) {
 	echo '<p>';
 	prnMsg(__('An item must first be selected before this page is called') . '. ' .
 		__('The product selection page should call this page with a valid product code'), 'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -78,7 +78,7 @@ if ($MyRow[1] == 'K') {
 	prnMsg(__('The part selected is a kit set item') . ', ' .
 		__('these items explode into their components when selected on an order') . ', ' .
 		__('prices must be set up for the components and no price can be set for the whole kit'), 'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -235,7 +235,7 @@ $SQL = "SELECT
 		prices.startdate";
 
 $Result = DB_query($SQL);
-require_once('includes/CurrenciesArray.php');
+require_once(__DIR__ . '/includes/CurrenciesArray.php');
 if (DB_num_rows($Result) > 0) {
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
@@ -394,7 +394,7 @@ echo '" />
 
 echo '</div>
 	</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 
 
 function ReSequenceEffectiveDates($Item, $PriceList, $CurrAbbrev) {

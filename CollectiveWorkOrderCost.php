@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Search Work Orders');
 $ViewTopic = 'Manufacturing';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['DateFrom'])){$_POST['DateFrom'] = ConvertSQLDate($_POST['DateFrom']);}
 if (isset($_POST['DateTo'])){$_POST['DateTo'] = ConvertSQLDate($_POST['DateTo']);}
@@ -89,12 +89,12 @@ if (isset($_POST['Submit'])) {//users have selected the WO to calculate and subm
 				</table>';
 			} else {
 				prnMsg(__('There are no data available'),'error');
-				include('includes/footer.php');
+				include(__DIR__ . '/includes/footer.php');
 				exit();
 			}
 		}//end of the work orders are not empty
 		echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Select Other Work Orders') . '</a>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 
 }
@@ -126,7 +126,7 @@ if (isset($SelectedWO) AND $SelectedWO!= '') {
 	if (!is_numeric($SelectedWO)){
 		  prnMsg(__('The work order number entered MUST be numeric'),'warn');
 		  unset ($SelectedWO);
-		  include('includes/footer.php');
+		  include(__DIR__ . '/includes/footer.php');
 		  exit();
 	} else {
 		echo __('Work Order Number') . ' - ' . $SelectedWO;
@@ -529,4 +529,4 @@ if (!isset($StockID)) {
 	echo '</form>';
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

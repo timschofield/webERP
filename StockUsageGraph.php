@@ -100,9 +100,9 @@ $MovtsResult = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($MovtsResult) == 0) {
     $Title = __('Stock Usage Graph Problem');
-    include('includes/header.php');
+    include(__DIR__ . '/includes/header.php');
     prnMsg(__('There are no movements of this item from the selected location to graph'),'info');
-    include('includes/footer.php');
+    include(__DIR__ . '/includes/footer.php');
     exit();
 }
 

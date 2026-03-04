@@ -368,7 +368,7 @@ if (isset($_GET['REVALIDATE']) || isset($_POST['REVALIDATE'])) {
 	} else {
 		prnMsg( __('Finished Validating Items').' with NO errors', 'success' );
 	}
-	include('includes/footer.php');
+	include(__DIR__ . '/footer.php');
 	exit();
 
 }//ReValidate

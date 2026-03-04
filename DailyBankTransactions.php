@@ -6,7 +6,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Bank Transactions Inquiry');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'DailyBankTransactions';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['FromTransDate'])){$_POST['FromTransDate'] = ConvertSQLDate($_POST['FromTransDate']);}
 if (isset($_POST['ToTransDate'])){$_POST['ToTransDate'] = ConvertSQLDate($_POST['ToTransDate']);}
@@ -57,7 +57,7 @@ if (!isset($_POST['Show'])) {
 				</field>
 			</table>';
 		prnMsg(__('Bank Accounts have not yet been defined. You must first') . ' <a href="' . $RootPath . '/BankAccounts.php">' . __('define the bank accounts') . '</a> ' . __('and general ledger accounts to be affected'), 'warn');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	} else {
 		while ($MyRow = DB_fetch_array($AccountsResults)) {
@@ -241,4 +241,4 @@ if (!isset($_POST['Show'])) {
 	echo '<div class="centre"><input type="submit" name="Return" value="' . __('Select Another Date') . '" /></div>';
 	echo '</form>';
 }
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

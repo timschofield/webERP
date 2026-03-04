@@ -3,20 +3,20 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('KL Update Standard Cost for an item');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/KLBoards.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/KLBoards.php');
 
 //Get Out if we have no StockId or NewCost
 If (!isset($_GET['StockId']) OR $_GET['StockId']==''){
 	prnMsg( __('We need an item code to change the standrd cost') , 'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 If (!isset($_GET['NewCost']) OR $_GET['NewCost']==''){
 	prnMsg( __('We need anew standard cost to apply to the item ') . $_GET['StockId'] , 'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 $SQL = "SELECT materialcost,
@@ -52,4 +52,4 @@ if (DB_num_rows($Result)==0) {
 	prnMsg(__('Standard Cost of ') . $_GET['StockId'] . ' changed from ' . locale_number_format($OldCost,0) . ' to ' . locale_number_format($NewCost,0),'success');
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

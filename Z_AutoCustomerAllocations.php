@@ -6,16 +6,16 @@ Call this page with:
 */
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefineCustAllocsClass.php');
+include(__DIR__ . '/includes/DefineCustAllocsClass.php');
 
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Automatic Customer Receipt') . '/' . __('Credit Note Allocations');
 $ViewTopic = 'ARTransactions';
 $BookMark = 'CustomerAllocations';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['DebtorNo'])) {
 	// Page called with customer code
@@ -48,7 +48,7 @@ if (isset($_GET['DebtorNo'])) {
 
 	if (DB_num_rows($Result)==0) {
 		prnMsg(__('No outstanding receipts or credits to be allocated for this customer'),'info');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 	 echo '<table class="selection">';
@@ -114,7 +114,7 @@ if (isset($_GET['DebtorNo'])) {
 	echo '</table>';
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 
 function ProcessAllocation() {
 	if ($InputError==0) {

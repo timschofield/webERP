@@ -2,7 +2,7 @@
 
 require(__DIR__ . '/includes/session.php');
 $Title = __('Location Types Maintenance');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['SelectedCode'])){
 	$SelectedCode = mb_strtoupper($_POST['SelectedCode']);
@@ -244,4 +244,4 @@ if (! isset($_GET['delete'])) {
 
 } // end if user wish to delete
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -5,10 +5,10 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Issue Materials To Work Order');
 $ViewTopic = 'Manufacturing';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/ImageFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/ImageFunctions.php');
 
 if (isset($_POST['IssuedDate'])){$_POST['IssuedDate'] = ConvertSQLDate($_POST['IssuedDate']);}
 
@@ -33,7 +33,7 @@ if (!isset($_POST['WO']) or !isset($_POST['StockID'])) {
 	/* This page can only be called with a work order number for issuing stock to*/
 	echo '<div class="centre"><a href="' . $RootPath . '/SelectWorkOrder.php">' . __('Select a work order to issue materials to') . '</a></div>';
 	prnMsg(__('This page can only be opened if a work order has been selected. Please select a work order to issue materials to first'), 'info');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 } else {
 	echo '<input type="hidden" name="WO" value="' . $_POST['WO'] . '" />';
@@ -67,7 +67,7 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 
 	if (DB_num_rows($WOResult) == 0) {
 		prnMsg(__('The selected work order item cannot be retrieved from the database'), 'info');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 	$WORow = DB_fetch_array($WOResult);
@@ -103,7 +103,7 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 		if (!isset($_POST['LotCounter']) or !is_numeric($_POST['LotCounter'])) {
 			$InputError = true;
 			prnMsg(__('The line counter is not set up or not numeric, please ask administrator for help'), 'error');
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 		for ($i = 0;$i < $_POST['LotCounter'];$i++) {
@@ -401,7 +401,7 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 		}
 		unset($_POST['Qty']);
 		/*end of process work order issues entry */
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	} //end if there were not input errors reported - so the processing was allowed to continue
 
@@ -431,7 +431,7 @@ elseif (isset($_POST['ProcessMultiple'])) {
 
 			if (DB_num_rows($WOResult) == 0) {
 				prnMsg(__('The selected work order item cannot be retrieved from the database'), 'info');
-				include('includes/footer.php');
+				include(__DIR__ . '/includes/footer.php');
 				exit();
 			}
 			$WORow = DB_fetch_array($WOResult);
@@ -596,7 +596,7 @@ elseif (isset($_POST['ProcessMultiple'])) {
 		unset($_POST['Process']);
 		unset($_POST['SerialNos']);
 		/*end of process work order issues entry */
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	} //end if there were not input errors reported - so the processing was allowed to continue
 
@@ -733,7 +733,7 @@ $WOResult = DB_query("SELECT workorders.loccode,
 
 if (DB_num_rows($WOResult) == 0) {
 	prnMsg(__('The selected work order item cannot be retrieved from the database'), 'info');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -762,7 +762,7 @@ echo '<table class="selection">
 
 if ($WORow['closed'] == 1) {
 	prnMsg(__('The selected work order has been closed and variances calculated and posted. No more issues of materials and components can be made against this work order.'), 'info');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 DB_data_seek($WOResult, 0);
@@ -1144,4 +1144,4 @@ if (!isset($_POST['IssueItem'])) { //no item selected to issue yet
 echo '</div>
 	  </form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

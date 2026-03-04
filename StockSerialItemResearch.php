@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Serial Item Research');
 $ViewTopic = 'Inventory';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Inventory') . '" alt="" /><b>' . $Title. '</b>
@@ -109,4 +109,4 @@ if ($SerialNo!='') {
 }//END OF POST IS SET
 echo '</div>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

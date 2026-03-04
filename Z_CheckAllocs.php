@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Customer Allocations != DebtorTrans.Alloc');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 /* First off get the DebtorTransID of all invoices where allocations dont agree to the recorded allocation */
 $SQL = "SELECT debtortrans.id,
@@ -105,4 +105,4 @@ while ($MyRow = DB_fetch_array($Result)){
 		<br />';
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

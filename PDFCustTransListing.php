@@ -4,9 +4,9 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);}
 
@@ -39,10 +39,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	if (DB_num_rows($Result) == 0){
 		$Title = __('Payment Listing');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<br />';
 		prnMsg(__('There were no transactions found in the database for the date') . ' ' . $_POST['Date'] .'. '.__('Please try again selecting a different date'), 'info');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -152,10 +152,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		));
 	} else {
 		$Title = __('Customer Transactions Listing');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . __('Receipts') . '" alt="" />' . ' ' . $Title . '</p>';
 		echo $HTML;
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 } else {
 
@@ -164,7 +164,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$ViewTopic = 'ARReports';
 	$BookMark = 'DailyTransactions';
 
-	 include('includes/header.php');
+	 include(__DIR__ . '/includes/header.php');
 
 	echo '<p class="page_title_text">
 			<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . __('Customer Transaction Listing').
@@ -198,5 +198,5 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		</div>
 	</form>';
 
-	 include('includes/footer.php');
+	 include(__DIR__ . '/includes/footer.php');
 }

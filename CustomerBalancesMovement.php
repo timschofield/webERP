@@ -11,7 +11,7 @@ $ViewTopic = 'ARInquiries';
 $BookMark = '';
 
 if (!isset($_POST['CreateCSV'])) {
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . __('Customer Activity and Balances') . '" /> ' . __('Customer Activity and Balances') . '</p>';
 }
 
@@ -76,7 +76,7 @@ if (!isset($_POST['RunReport'])){
 			<input tabindex="4" type="submit" name="RunReport" value="' . __('Show Customer Balance Movements') . '" />
 		</div>
 	</form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -228,7 +228,7 @@ if (isset($_POST['CreateCSV'])){
 	exit();
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 
 function stripcomma($str) { //because we're using comma as a delimiter
 	return str_replace(',', '', $str);

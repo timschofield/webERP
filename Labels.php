@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Label Templates');
 $ViewTopic = 'Setup';
 $BookMark = 'Labels.php';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 //define PaperSize array sizes in mm
 $PaperSize = array();
@@ -610,4 +610,4 @@ echo '<br />
 		</div>
 	</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

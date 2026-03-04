@@ -13,11 +13,11 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('KL Statement of Cash Flows, Cash Accounts Difference Method');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLCashFlowsIndirect';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/KLDefines.php');
-include('includes/UIGeneralFunctions.php'); // Added include
-include('includes/KLUIGeneralFunctions.php'); // Added include
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php'); // Added include
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php'); // Added include
 
 // Merges gets into posts:
 if (isset($_GET['PeriodFrom'])) { // Select period from.
@@ -54,7 +54,7 @@ if (isset($_POST['PeriodFrom']) && isset($_POST['PeriodTo']) && $_POST['Action']
 	
 	echo __('From'), ' ', MonthAndYearFromSQLDate($PeriodFromDate),
 		' ', __('to'), ' ', MonthAndYearFromSQLDate($PeriodToDate), '<br />'; // Page title, reporting period.
-	include_once('includes/CurrenciesArray.php'); // Array to retrieve currency name.
+	include_once(__DIR__ . '/includes/CurrenciesArray.php'); // Array to retrieve currency name.
 	echo __('All amounts stated in'), ': ', __($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]), '</p>'; // Page title, reporting presentation currency and level of rounding used.
 	echo '<table class="selection">',
 		// Content of the header and footer of the output table:
@@ -372,7 +372,7 @@ if (isset($_POST['PeriodFrom']) && isset($_POST['PeriodTo']) && $_POST['Action']
 	echo TwoButtonsCenteredForm('Submit', __('Submit'), 'Cancel', __('Return'), 'index.php?Application=GL');
 }
 echo '</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 
 // BEGIN: Functions division ---------------------------------------------------
 function CashFlowsActivityName($Activity) {

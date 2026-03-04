@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Product Specifications Maintenance');
 $ViewTopic = 'QualityAssurance';// Filename in ManualContents.php's TOC.
 $BookMark = 'QA_ProdSpecs';// Anchor's id in the manual's html document.
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_GET['SelectedQATest'])){
 	$SelectedQATest =mb_strtoupper($_GET['SelectedQATest']);
@@ -45,7 +45,7 @@ if (isset($_GET['CopySpec']) OR isset($_POST['CopySpec'])) {
 				<input type="submit" name="CopySpec" value="' . __('Copy') . '" />
 			</div>
 			</form>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	} else {
 		$SQL = "INSERT IGNORE INTO prodspecs
@@ -221,7 +221,7 @@ if (isset($_GET['ListTests'])) {
 				<input type="submit" name="AddTests" value="' . __('Add') . '" />
 		</div>
 		</form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }  //ListTests
 if (isset($_POST['AddTests'])) {
@@ -628,4 +628,4 @@ if (! isset($_GET['delete'])) {
 	}
 } //end if record deleted no point displaying form to add record
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -3,16 +3,16 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Print Transfer from Shop to Kantor');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/StockFunctions.php');
+include(__DIR__ . '/includes/StockFunctions.php');
 
-include('includes/KLDefines.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/KLPOSGeneral.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLPOSGeneral.php');
 
-include('includes/WebClientPrint/WebClientPrint.php');
-include('includes/KLESCPOSCommands.php');
+include(__DIR__ . '/includes/WebClientPrint/WebClientPrint.php');
+include(__DIR__ . '/includes/KLESCPOSCommands.php');
 
 $InputError = false;
 $ErrorMessage = '';
@@ -51,10 +51,10 @@ if (!$InputError AND $TransferReference != ''){
 	$FileName = GetFilenameFromPOSIdentifier($identifier);  
 	file_put_contents($FileName, $TextToPrint);
 	$TextActionToPrint = 'Print Transfer number: ' . $TransferReference;
-	include('includes/KLSilentPrinting.php');
+	include(__DIR__ . '/includes/KLSilentPrinting.php');
 	//################## PRINTING STUFF ##################### 
 } else {
 	prnMsg($ErrorMessage,'error');
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

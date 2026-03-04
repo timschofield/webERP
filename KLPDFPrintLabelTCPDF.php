@@ -8,10 +8,10 @@
 
 require(__DIR__ . '/includes/session.php');
 
-include('includes/KLDefines.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/UIGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
 if (!isset($_POST['LabelID'])){
 	$_POST['LabelID'] = 'T570';
@@ -31,7 +31,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 	AND mb_strlen($_POST['StockCategory']) >= 1){
 
 	$Title = __('Print Labels');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	
 	if ($_POST['LabelID'] == 'T570'){
 		$SQLPrice = "prices.price, ";
@@ -117,14 +117,14 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 	if (DB_error_no() != 0) {
 		prnMsg(__('The Price Labels could not be retrieved by the SQL because') . ' - ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 	if (DB_num_rows($LabelsResult) == 0){
 		prnMsg(__('There were no price labels to print out for the category specified'), 'warn');
 		echo '<br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . 
 			__('Back') . '</a>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -197,7 +197,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 			<input type="submit" name="PrintLabels" value="' . __('Print Labels') . '" />
 		</div>
 		</form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -428,7 +428,7 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 } else { /*The option to print PDF was not hit */
 
 	$Title = __('KL Print Labels');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . 
 		__('Price Labels') . '" alt="" />
@@ -437,7 +437,7 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 	if (!function_exists('gd_info')) {
 		prnMsg(__('The GD module for PHP is required to print barcode labels. Your PHP installation is not capable currently. 
 			You will most likely experience problems with this script until the GD module is enabled.'), 'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -475,6 +475,6 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 
 		echo '</form>';
 	}
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 
 } /*end of else not PrintPDF */

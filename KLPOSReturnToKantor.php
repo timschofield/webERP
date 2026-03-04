@@ -9,17 +9,17 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Return Transfer from Shop to Kantor');
 $BookMark = "LocationTransfers";
 $ViewTopic = "Inventory";
-include('includes/header.php');
-include('includes/StockFunctions.php');
+include(__DIR__ . '/includes/header.php');
+include(__DIR__ . '/includes/StockFunctions.php');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/KLDefines.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/KLEmails.php');
-include('includes/KLPOSGeneral.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLEmails.php');
+include(__DIR__ . '/includes/KLPOSGeneral.php');
 
-include('includes/WebClientPrint/WebClientPrint.php');
-include('includes/KLESCPOSCommands.php');
+include(__DIR__ . '/includes/WebClientPrint/WebClientPrint.php');
+include(__DIR__ . '/includes/KLESCPOSCommands.php');
 
 if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 /*Trap any errors in input */
@@ -146,10 +146,10 @@ if (isset($_POST['Submit']) AND $InputError==False){
 	$FileName = GetFilenameFromPOSIdentifier($identifier);   
 	file_put_contents($FileName, $TextToPrint);
 	$TextActionToPrint = 'Print Return Transfer number: '. $_POST['Trf_ID'];
-	include('includes/KLSilentPrinting.php');
+	include(__DIR__ . '/includes/KLSilentPrinting.php');
 	//################## PRINTING STUFF ##################### 
 
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 
 } else {
 	//Get next Inventory Transfer Shipment Reference Number
@@ -286,6 +286,6 @@ if (isset($_POST['Submit']) AND $InputError==False){
 		</div>
 		</div>
 		</form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 }
 

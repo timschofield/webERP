@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Stock Of Controlled Items');
 $ViewTopic = 'Inventory';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Inventory') .
@@ -15,13 +15,13 @@ echo '<p class="page_title_text">
 if (isset($_GET['StockID'])){
 	if (ContainsIllegalCharacters ($_GET['StockID'])){
 		prnMsg(__('The stock code sent to this page appears to be invalid'),'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 	$StockID = trim(mb_strtoupper($_GET['StockID']));
 } else {
 	prnMsg( __('This page must be called with parameters specifying the item to show the serial references and quantities') . '. ' . __('It cannot be displayed without the proper parameters being passed'),'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -48,7 +48,7 @@ $Perishable = $MyRow['perishable'];
 if ($MyRow['mbflag']=='K' OR $MyRow['mbflag']=='A' OR $MyRow['mbflag']=='D'){
 
 	prnMsg(__('This item is either a kitset or assembly or a dummy part and cannot have a stock holding') . '. ' . __('This page cannot be displayed') . '. ' . __('Only serialised or controlled items can be displayed in this page'),'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -175,4 +175,4 @@ echo '</table><br />';
 echo '<div class="centre"><br /><b>' . __('Total quantity') . ': ' . locale_number_format($TotalQuantity, $DecimalPlaces) . '<br /></div>';
 
 echo '</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

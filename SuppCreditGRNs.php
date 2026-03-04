@@ -5,14 +5,14 @@ the SuppTrans class contains an array of GRNs objects - containing details of GR
 an array of GLCodes objects - only used if the AP - GL link is effective */
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefineSuppTransClass.php');
+include(__DIR__ . '/includes/DefineSuppTransClass.php');
 
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Enter Supplier Credit Note Against Goods Received');
 $ViewTopic = 'AccountsPayable';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['Show_since'])){$_POST['Show_since'] = ConvertSQLDate($_POST['Show_since']);}
 
@@ -24,7 +24,7 @@ if (!isset($_SESSION['SuppTrans'])){
 	prnMsg(__('To enter a supplier transactions the supplier must first be selected from the supplier selection screen') . ', ' . __('then the link to enter a supplier credit note must be clicked on'),'info');
 	echo '<br />
 		<a href="' . $RootPath . '/SelectSupplier.php">' . __('Select A Supplier to Enter a Transaction For') . '</a>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 	/*It all stops here if there aint no supplier selected and credit note initiated ie $_SESSION['SuppTrans'] started off*/
 }
@@ -346,4 +346,4 @@ if (DB_num_rows($GRNResults)>0){
 
 echo '</div>
       </form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -3,10 +3,10 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Automatic Setting of Stock Re-Order Level');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/KLDefines.php');
-include('includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
 
 if (isset($_GET['StockID'])) {
 	$StockID = trim(mb_strtoupper($_GET['StockID']));
@@ -167,5 +167,5 @@ while ($MyRow = DB_fetch_array($LocStockResult)) {
 //end of while loop
 
 echo '</tbody></table></div></form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 

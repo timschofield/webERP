@@ -4,10 +4,10 @@ require(__DIR__ . '/includes/session.php');
 
 $NumDays = 30;
 $Title = __('Items Returned by Customers for the last ') . $NumDays . ' days';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/UIGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
 if (isset($_POST['SelectedReturnedItemsId'])) {
 	$SelectedReturnedItemsId = mb_strtoupper($_POST['SelectedReturnedItemsId']);
@@ -259,4 +259,4 @@ if (!isset($_GET['delete'])) {
 
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -7,7 +7,7 @@ include ('includes/GetPaymentMethods.php');
 // Add DomPDF namespace and autoload
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 class Allocation {
 	var $TransID;

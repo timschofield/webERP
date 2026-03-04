@@ -5,7 +5,7 @@ require_once __DIR__ . '/vendor/autoload.php'; // DomPDF autoload
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 // Get GRNNo
 $GRNNo = $_GET['GRNNo'] ?? '';
@@ -206,8 +206,8 @@ if ($NoOfGRNs > 0) {
 	exit;
 } else {
 	$Title = __('GRN Error');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	prnMsg(__('There were no GRNs to print'),'warn');
 	echo '<br /><a href="'.$RootPath.'/index.php">' .  __('Back to the menu') . '</a>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 }

@@ -5,9 +5,9 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Receive Work Order');
 $ViewTopic = 'Manufacturing';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['WO'])) {
 	$SelectedWO = $_GET['WO'];
@@ -42,7 +42,7 @@ if (!isset($SelectedWO) OR !isset($StockID)) {
 			<a href="' . $RootPath . '/SelectWorkOrder.php">' .  __('Select a work order to receive') . '</a>
 		</div>';
 	prnMsg(__('This page can only be opened if a work order has been selected. Please select a work order to receive first'),'info');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 } else {
 	echo '<input type="hidden" name="WO" value="' .$SelectedWO . '" />';
@@ -88,7 +88,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 		prnMsg(__('The selected work order item cannot be retrieved from the database'),'info');
 		echo '</div>';
 		echo '</form>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 	$WORow = DB_fetch_array($WOResult);
@@ -608,7 +608,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 							}
 						} else {
 							prnMsg(__('The input quantity should not be negative since there are no this lot no existed'),'error');
-							include('includes/footer.php');
+							include(__DIR__ . '/includes/footer.php');
 							exit();
 						}
 						$ErrMsg =  __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The serial stock item record could not be inserted because');
@@ -737,7 +737,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 		echo '</div>';
 		echo '</form>';
 		/*end of process work order goods received entry */
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	} //end if there were not input errors reported - so the processing was allowed to continue
 } //end of if the user hit the process button
@@ -775,7 +775,7 @@ if (DB_num_rows($WOResult)==0){
 	prnMsg(__('The selected work order item cannot be retrieved from the database'),'info');
 	echo '</div>';
 	echo '</form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 $WORow = DB_fetch_array($WOResult);
@@ -784,7 +784,7 @@ if ($WORow['closed']==1){
 	prnMsg(__('The selected work order has been closed and variances calculated and posted. No more receipts of manufactured items can be received against this work order. You should make up a new work order to receive this item against.'),'info');
 	echo '</div>';
 	echo '</form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -983,4 +983,4 @@ if ($WORow['controlled']==1){ //controlled
 }
 echo '</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
