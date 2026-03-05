@@ -261,7 +261,7 @@ echo FieldToSelectOneGLAccount('PurchasesExchangeDiffAct', $_POST['PurchasesExch
 
 echo FieldToSelectOneGLAccount('CurrencyExchangeDiffAct', $_POST['CurrencyExchangeDiffAct'],  __('Currency Exchange Variances GL Account'), 
 	__('Select the general ledger account to be used for posting the exchange differences on the currency transactions to. Currency transactions with an exchange rate different to the home currency exchange rate have the differences calculated automatically and posted to this general ledger account. Only profit and loss general ledger accounts are available for this selection.'),
-	'P&L', 23);
+	'ALL', 23);
 
 echo FieldToSelectOneGLAccount('PytDiscountAct', $_POST['PytDiscountAct'],  __('Payment Discount GL Account'), 
 	__('Select the general ledger account to be used for posting the value of payment discounts given to customers at the time of entering a receipt. Only profit and loss general ledger accounts are available for this selection.'),
