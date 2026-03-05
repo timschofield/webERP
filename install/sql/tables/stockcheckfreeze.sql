@@ -1,5 +1,5 @@
 CREATE TABLE `stockcheckfreeze` (
-  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `stockid` varchar(64) NOT NULL DEFAULT '',
   `loccode` varchar(5) NOT NULL DEFAULT '',
   `qoh` double NOT NULL DEFAULT '0',
   `stockcheckdate` date NOT NULL DEFAULT '1000-01-01',

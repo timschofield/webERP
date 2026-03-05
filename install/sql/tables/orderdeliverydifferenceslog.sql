@@ -1,7 +1,7 @@
 CREATE TABLE `orderdeliverydifferenceslog` (
   `orderno` int NOT NULL DEFAULT '0',
   `invoiceno` int NOT NULL DEFAULT '0',
-  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `stockid` varchar(64) NOT NULL DEFAULT '',
   `quantitydiff` double NOT NULL DEFAULT '0',
   `debtorno` varchar(10) NOT NULL DEFAULT '',
   `branch` varchar(10) NOT NULL DEFAULT '',

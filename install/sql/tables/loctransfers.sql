@@ -1,6 +1,6 @@
 CREATE TABLE `loctransfers` (
   `reference` int NOT NULL DEFAULT '0',
-  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `stockid` varchar(64) NOT NULL DEFAULT '',
   `shipqty` double NOT NULL DEFAULT '0',
   `recqty` double NOT NULL DEFAULT '0',
   `shipdate` datetime NOT NULL DEFAULT '1000-01-01 00:00:00',

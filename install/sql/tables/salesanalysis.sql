@@ -7,7 +7,7 @@ CREATE TABLE `salesanalysis` (
   `custbranch` varchar(10) NOT NULL DEFAULT '',
   `qty` double NOT NULL DEFAULT '0',
   `disc` double NOT NULL DEFAULT '0',
-  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `stockid` varchar(64) NOT NULL DEFAULT '',
   `area` varchar(3) NOT NULL,
   `budgetoractual` tinyint(1) NOT NULL DEFAULT '0',
   `salesperson` varchar(4) NOT NULL DEFAULT '',

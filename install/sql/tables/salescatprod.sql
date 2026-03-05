@@ -1,6 +1,6 @@
 CREATE TABLE `salescatprod` (
   `salescatid` tinyint NOT NULL DEFAULT '0',
-  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `stockid` varchar(64) NOT NULL DEFAULT '',
   `manufacturers_id` int NOT NULL,
   `featured` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`salescatid`,`stockid`),

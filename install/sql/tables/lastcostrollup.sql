@@ -1,5 +1,5 @@
 CREATE TABLE `lastcostrollup` (
-  `stockid` char(20) NOT NULL DEFAULT '',
+  `stockid` varchar(64) NOT NULL DEFAULT '',
   `totalonhand` double NOT NULL DEFAULT '0',
   `matcost` decimal(20,4) NOT NULL DEFAULT '0.0000',
   `labcost` decimal(20,4) NOT NULL DEFAULT '0.0000',

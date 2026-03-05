@@ -1,5 +1,5 @@
 CREATE TABLE `stockitemproperties` (
-  `stockid` varchar(20) NOT NULL,
+  `stockid` varchar(64) NOT NULL,
   `stkcatpropid` int NOT NULL,
   `value` varchar(50) NOT NULL,
   PRIMARY KEY (`stockid`,`stkcatpropid`),

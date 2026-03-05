@@ -1,6 +1,6 @@
 CREATE TABLE `mrpdemands` (
   `demandid` int NOT NULL AUTO_INCREMENT,
-  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `stockid` varchar(64) NOT NULL DEFAULT '',
   `mrpdemandtype` varchar(6) NOT NULL DEFAULT '',
   `quantity` double NOT NULL DEFAULT '0',
   `duedate` date NOT NULL DEFAULT '1000-01-01',

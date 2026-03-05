@@ -1,7 +1,7 @@
 CREATE TABLE `supplierdiscounts` (
   `id` int NOT NULL AUTO_INCREMENT,
   `supplierno` varchar(10) NOT NULL,
-  `stockid` varchar(20) NOT NULL,
+  `stockid` varchar(64) NOT NULL,
   `discountnarrative` varchar(20) NOT NULL,
   `discountpercent` double NOT NULL,
   `discountamount` double NOT NULL,

@@ -1,5 +1,5 @@
 CREATE TABLE `prices` (
-  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `stockid` varchar(64) NOT NULL DEFAULT '',
   `typeabbrev` char(2) NOT NULL DEFAULT '',
   `currabrev` char(3) NOT NULL DEFAULT '',
   `debtorno` varchar(10) NOT NULL DEFAULT '',

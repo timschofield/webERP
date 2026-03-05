@@ -1,6 +1,6 @@
 CREATE TABLE `loctransfercancellations` (
   `reference` int NOT NULL,
-  `stockid` varchar(20) NOT NULL,
+  `stockid` varchar(64) NOT NULL,
   `cancelqty` double NOT NULL,
   `canceldate` datetime NOT NULL,
   `canceluserid` varchar(20) NOT NULL,

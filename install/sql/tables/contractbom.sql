@@ -1,6 +1,6 @@
 CREATE TABLE `contractbom` (
   `contractref` varchar(20) NOT NULL DEFAULT '0',
-  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `stockid` varchar(64) NOT NULL DEFAULT '',
   `workcentreadded` char(5) NOT NULL DEFAULT '',
   `quantity` double NOT NULL DEFAULT '1',
   PRIMARY KEY (`contractref`,`stockid`,`workcentreadded`),

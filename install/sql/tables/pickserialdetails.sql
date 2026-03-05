@@ -1,7 +1,7 @@
 CREATE TABLE `pickserialdetails` (
   `serialmoveid` int NOT NULL AUTO_INCREMENT,
   `detailno` int NOT NULL DEFAULT '1',
-  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `stockid` varchar(64) NOT NULL DEFAULT '',
   `serialno` varchar(30) NOT NULL DEFAULT '',
   `moveqty` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`serialmoveid`),

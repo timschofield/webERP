@@ -1,7 +1,7 @@
 CREATE TABLE `bom` (
-  `parent` char(20) NOT NULL DEFAULT '',
+  `parent` varchar(64) NOT NULL DEFAULT '',
   `sequence` int NOT NULL DEFAULT '0',
-  `component` char(20) NOT NULL DEFAULT '',
+  `component` varchar(64) NOT NULL DEFAULT '',
   `workcentreadded` char(5) NOT NULL DEFAULT '',
   `loccode` char(5) NOT NULL DEFAULT '',
   `effectiveafter` date NOT NULL DEFAULT '1000-01-01',

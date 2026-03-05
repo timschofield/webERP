@@ -1,7 +1,7 @@
 CREATE TABLE `worequirements` (
   `wo` int NOT NULL,
-  `parentstockid` varchar(20) NOT NULL,
-  `stockid` varchar(20) NOT NULL,
+  `parentstockid` varchar(64) NOT NULL,
+  `stockid` varchar(64) NOT NULL,
   `qtypu` double NOT NULL DEFAULT '1',
   `stdcost` double NOT NULL DEFAULT '0',
   `autoissue` tinyint NOT NULL DEFAULT '0',

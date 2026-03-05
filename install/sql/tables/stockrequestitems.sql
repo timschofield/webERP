@@ -1,7 +1,7 @@
 CREATE TABLE `stockrequestitems` (
   `dispatchitemsid` int NOT NULL DEFAULT '0',
   `dispatchid` int NOT NULL DEFAULT '0',
-  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `stockid` varchar(64) NOT NULL DEFAULT '',
   `quantity` double NOT NULL DEFAULT '0',
   `qtydelivered` double NOT NULL DEFAULT '0',
   `decimalplaces` int NOT NULL DEFAULT '0',
