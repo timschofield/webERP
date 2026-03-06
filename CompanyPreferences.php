@@ -73,6 +73,7 @@ if (isset($_POST['submit'])) {
 									salesexchangediffact='" . $_POST['SalesExchangeDiffAct'] . "',
 									purchasesexchangediffact='" . $_POST['PurchasesExchangeDiffAct'] . "',
 									currencyexchangediffact='" . $_POST['CurrencyExchangeDiffAct'] . "',
+									unrealizedcurrencydiffact='" . $_POST['UnrealizedCurrencyDiffAct'] . "',
 									retainedearnings='" . $_POST['RetainedEarnings'] . "',
 									gllink_debtors='" . $_POST['GLLink_Debtors'] . "',
 									gllink_creditors='" . $_POST['GLLink_Creditors'] . "',
@@ -140,6 +141,7 @@ if ($InputError !=  1) {
 					salesexchangediffact,
 					purchasesexchangediffact,
 					currencyexchangediffact,
+					unrealizedcurrencydiffact,
 					retainedearnings,
 					gllink_debtors,
 					gllink_creditors,
@@ -175,7 +177,7 @@ if ($InputError !=  1) {
 	$_POST['CommAct'] = $MyRow['commissionsact'];
 	$_POST['SalesExchangeDiffAct']  = $MyRow['salesexchangediffact'];
 	$_POST['PurchasesExchangeDiffAct']  = $MyRow['purchasesexchangediffact'];
-	$_POST['CurrencyExchangeDiffAct']  = $MyRow['currencyexchangediffact'];
+	$_POST['UnrealizedCurrencyDiffAct']  = $MyRow['unrealizedcurrencydiffact'];
 	$_POST['RetainedEarnings'] = $MyRow['retainedearnings'];
 	$_POST['GLLink_Debtors'] = $MyRow['gllink_debtors'];
 	$_POST['GLLink_Creditors'] = $MyRow['gllink_creditors'];
@@ -261,26 +263,30 @@ echo FieldToSelectOneGLAccount('PurchasesExchangeDiffAct', $_POST['PurchasesExch
 
 echo FieldToSelectOneGLAccount('CurrencyExchangeDiffAct', $_POST['CurrencyExchangeDiffAct'],  __('Currency Exchange Variances GL Account'), 
 	__('Select the general ledger account to be used for posting the exchange differences on the currency transactions to. Currency transactions with an exchange rate different to the home currency exchange rate have the differences calculated automatically and posted to this general ledger account. Only profit and loss general ledger accounts are available for this selection.'),
-	'ALL', 23);
+	'P&L', 23);
+
+echo FieldToSelectOneGLAccount('UnrealizedCurrencyDiffAct', $_POST['UnrealizedCurrencyDiffAct'],  __('Unrealized P&L Currency Exchange GL Account'), 
+	__('Select the general ledger account to be used for posting the unrealized currency exchange differences due to currency exchange variations. Only balance sheet general ledger accounts are available for this selection.'),
+	'BS', 24);
 
 echo FieldToSelectOneGLAccount('PytDiscountAct', $_POST['PytDiscountAct'],  __('Payment Discount GL Account'), 
 	__('Select the general ledger account to be used for posting the value of payment discounts given to customers at the time of entering a receipt. Only profit and loss general ledger accounts are available for this selection.'),
-	'P&L', 24);
+	'P&L', 25);
 
 echo FieldToSelectFromTwoOptions('0', __('No'), '1', __('Yes'),
 	'GLLink_Debtors', $_POST['GLLink_Debtors'], __('Create GL entries for AR transactions'), 
 	__('Select yes to ensure that webERP creates general ledger journals for all accounts receivable transactions. webERP will maintain the debtors control account (selected above) to ensure it should always balance to the list of customer balances in local currency.'),
-	'', 25);
+	'', 26);
 
 echo FieldToSelectFromTwoOptions('0', __('No'), '1', __('Yes'),
 	'GLLink_Creditors', $_POST['GLLink_Creditors'], __('Create GL entries for AP transactions'), 
 	__('Select yes to ensure that webERP creates general ledger journals for all accounts payable transactions. webERP will maintain the creditors control account (selected above) to ensure it should always balance to the list of supplier balances in local currency.'),
-	'', 26);
+	'', 27);
 
 echo FieldToSelectFromTwoOptions('0', __('No'), '1', __('Yes'),
 	'GLLink_Stock', $_POST['GLLink_Stock'], __('Create GL entries for stock transactions'), 
 	__('Select yes to ensure that webERP creates general ledger journals for all inventory transactions. webERP will maintain the stock control accounts (selected under the inventory categories set up) to ensure they balance. Only balance sheet general ledger accounts can be selected.'),
-	'', 27);
+	'', 28);
 
 echo '</fieldset>';
 echo OneButtonCenteredForm('submit', __('Update'));

@@ -25,6 +25,7 @@ if (isset($_POST['CreateTemplate'])){
 								  salesexchangediffact,
 								  purchasesexchangediffact,
 								  currencyexchangediffact,
+								  unrealizedcurrencydiffact,
 								  retainedearnings,
 								  freightact
 								FROM currencies INNER JOIN companies
@@ -46,6 +47,7 @@ if (isset($_POST['CreateTemplate'])){
                                               salesexchangediffact=" . $CurrRow['salesexchangediffact'] . ",
                                               purchasesexchangediffact=" . $CurrRow['purchasesexchangediffact'] . ",
                                               currencyexchangediffact=" . $CurrRow['currencyexchangediffact'] . ",
+                                              unrealizedcurrencydiffact=" . $CurrRow['unrealizedcurrencydiffact'] . ",
                                               retainedearnings=" . $CurrRow['retainedearnings'] . ",
                                               freightact=" . $CurrRow['freightact'] . "
                           WHERE coycode='1';\n";

@@ -121,6 +121,7 @@ if (isset($_POST['submit'])) {
 					OR payrollact='" . $SelectedAccount . "'
 					OR grnact='" . $SelectedAccount . "'
 					OR currencyexchangediffact='" . $SelectedAccount . "'
+					OR unrealizedcurrencydiffact='" . $SelectedAccount . "'
 					OR salesexchangediffact='" . $SelectedAccount . "'
 					OR purchasesexchangediffact='" . $SelectedAccount . "'
 					OR retainedearnings='" . $SelectedAccount . "'";

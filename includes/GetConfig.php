@@ -56,7 +56,12 @@ if ((isset($ForceConfigReload) AND $ForceConfigReload==true) OR !isset($_SESSION
 
 	$SQLColumns = "SHOW COLUMNS FROM companies LIKE 'salesexchangediffact'";
 	$ResultColumns = DB_query($SQLColumns, '', '', false, false);
-	$UseNewColumns = (DB_num_rows($ResultColumns) > 0);
+	$UseNewColumns41 = (DB_num_rows($ResultColumns) > 0);
+
+	/* similar for update 46.php, as it adds the unrealizedcurrencydiffact column */
+	$SQLColumns = "SHOW COLUMNS FROM companies LIKE 'unrealizedcurrencydiffact'";
+	$ResultColumns = DB_query($SQLColumns, '', '', false, false);
+	$UseNewColumns46 = (DB_num_rows($ResultColumns) > 0);
 
 	$SQL = "SELECT coyname,
 				gstno,
@@ -76,10 +81,13 @@ if ((isset($ForceConfigReload) AND $ForceConfigReload==true) OR !isset($_SESSION
 				payrollact,
 				grnact,";
 
-	if ($UseNewColumns) {
+	if ($UseNewColumns41) {
 		$SQL .= "	salesexchangediffact,
 					purchasesexchangediffact,
 					currencyexchangediffact,";
+		if ($UseNewColumns46) {
+			$SQL .= "	unrealizedcurrencydiffact,";
+		}
 	} else {
 		$SQL .= "	exchangediffact,
 					purchasesexchangediffact,";
