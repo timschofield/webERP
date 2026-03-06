@@ -1,7 +1,7 @@
 CREATE TABLE `stockmaster` (
-  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `stockid` varchar(64) NOT NULL DEFAULT '',
   `categoryid` varchar(6) NOT NULL DEFAULT '',
-  `description` varchar(50) NOT NULL DEFAULT '',
+  `description` varchar(255) NOT NULL DEFAULT '',
   `longdescription` text NOT NULL,
   `units` varchar(20) NOT NULL DEFAULT 'each',
   `mbflag` char(1) NOT NULL DEFAULT 'B',

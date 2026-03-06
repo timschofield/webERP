@@ -3,7 +3,7 @@ CREATE TABLE `shipmentcharges` (
   `shiptref` int NOT NULL DEFAULT '0',
   `transtype` smallint NOT NULL DEFAULT '0',
   `transno` int NOT NULL DEFAULT '0',
-  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `stockid` varchar(64) NOT NULL DEFAULT '',
   `value` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`shiptchgid`),
   KEY `TransType` (`transtype`,`transno`),

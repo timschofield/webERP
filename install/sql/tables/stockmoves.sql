@@ -1,6 +1,6 @@
 CREATE TABLE `stockmoves` (
   `stkmoveno` int NOT NULL AUTO_INCREMENT,
-  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `stockid` varchar(64) NOT NULL DEFAULT '',
   `type` smallint NOT NULL DEFAULT '0',
   `transno` int NOT NULL DEFAULT '0',
   `loccode` varchar(5) NOT NULL DEFAULT '',

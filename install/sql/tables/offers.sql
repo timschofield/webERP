@@ -2,7 +2,7 @@ CREATE TABLE `offers` (
   `offerid` int NOT NULL AUTO_INCREMENT,
   `tenderid` int NOT NULL DEFAULT '0',
   `supplierid` varchar(10) NOT NULL DEFAULT '',
-  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `stockid` varchar(64) NOT NULL DEFAULT '',
   `quantity` double NOT NULL DEFAULT '0',
   `uom` varchar(15) NOT NULL DEFAULT '',
   `price` double NOT NULL DEFAULT '0',

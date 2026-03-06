@@ -1,7 +1,7 @@
 CREATE TABLE `salesorderdetails` (
   `orderlineno` int NOT NULL DEFAULT '0',
   `orderno` int NOT NULL DEFAULT '0',
-  `stkcode` varchar(20) NOT NULL DEFAULT '',
+  `stkcode` varchar(64) NOT NULL DEFAULT '',
   `qtyinvoiced` double NOT NULL DEFAULT '0',
   `unitprice` double NOT NULL DEFAULT '0',
   `quantity` double NOT NULL DEFAULT '0',

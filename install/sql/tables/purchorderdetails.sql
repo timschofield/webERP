@@ -1,7 +1,7 @@
 CREATE TABLE `purchorderdetails` (
   `podetailitem` int NOT NULL AUTO_INCREMENT,
   `orderno` int NOT NULL DEFAULT '0',
-  `itemcode` varchar(20) NOT NULL DEFAULT '',
+  `itemcode` varchar(64) NOT NULL DEFAULT '',
   `deliverydate` date NOT NULL DEFAULT '1000-01-01',
   `itemdescription` varchar(100) NOT NULL,
   `glcode` varchar(20) NOT NULL DEFAULT '0',

@@ -1860,6 +1860,7 @@ function ChangeGLAccountCode($NewGL, $OldGL) {
 		ChangeFieldInTable("companies", "salesexchangediffact", $OldGL, $NewGL);
 		ChangeFieldInTable("companies", "purchasesexchangediffact", $OldGL, $NewGL);
 		ChangeFieldInTable("companies", "currencyexchangediffact", $OldGL, $NewGL);
+		ChangeFieldInTable("companies", "unrealizedcurrencydiffact", $OldGL, $NewGL);
 		ChangeFieldInTable("companies", "retainedearnings", $OldGL, $NewGL);
 		ChangeFieldInTable("companies", "freightact", $OldGL, $NewGL);
 		ChangeFieldInTable("companies", "commissionsact", $OldGL, $NewGL);

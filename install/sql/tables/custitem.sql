@@ -1,6 +1,6 @@
 CREATE TABLE `custitem` (
   `debtorno` char(10) NOT NULL DEFAULT '',
-  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `stockid` varchar(64) NOT NULL DEFAULT '',
   `cust_part` varchar(20) NOT NULL DEFAULT '',
   `cust_description` varchar(30) NOT NULL DEFAULT '',
   `customersuom` char(50) NOT NULL DEFAULT '',

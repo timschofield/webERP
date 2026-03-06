@@ -22,6 +22,7 @@ CREATE TABLE `companies` (
   `salesexchangediffact` varchar(20) NOT NULL DEFAULT '65000',
   `purchasesexchangediffact` varchar(20) NOT NULL DEFAULT '0',
   `currencyexchangediffact` varchar(20) NOT NULL DEFAULT '65000',
+  `unrealizedcurrencydiffact` varchar(20) NOT NULL DEFAULT '65000',
   `retainedearnings` varchar(20) NOT NULL DEFAULT '90000',
   `gllink_debtors` tinyint(1) DEFAULT '1',
   `gllink_creditors` tinyint(1) DEFAULT '1',

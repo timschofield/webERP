@@ -1,6 +1,6 @@
 CREATE TABLE `woitems` (
   `wo` int NOT NULL,
-  `stockid` char(20) NOT NULL DEFAULT '',
+  `stockid` varchar(64) NOT NULL DEFAULT '',
   `qtyreqd` double NOT NULL DEFAULT '1',
   `qtyrecd` double NOT NULL DEFAULT '0',
   `stdcost` double NOT NULL,
