@@ -177,6 +177,7 @@ if ($InputError !=  1) {
 	$_POST['CommAct'] = $MyRow['commissionsact'];
 	$_POST['SalesExchangeDiffAct']  = $MyRow['salesexchangediffact'];
 	$_POST['PurchasesExchangeDiffAct']  = $MyRow['purchasesexchangediffact'];
+	$_POST['CurrencyExchangeDiffAct']  = $MyRow['currencyexchangediffact'];
 	$_POST['UnrealizedCurrencyDiffAct']  = $MyRow['unrealizedcurrencydiffact'];
 	$_POST['RetainedEarnings'] = $MyRow['retainedearnings'];
 	$_POST['GLLink_Debtors'] = $MyRow['gllink_debtors'];
@@ -251,7 +252,7 @@ echo FieldToSelectOneGLAccount('RetainedEarnings', $_POST['RetainedEarnings'],  
 
 echo FieldToSelectOneGLAccount('FreightAct', $_POST['FreightAct'],  __('Freight Re-charged GL Account'), 
 	__('Select the general ledger account to be used for posting the freight re-charged transactions to. Only balance sheet accounts are available for this selection.'),
-	'BS', 20);
+	'P&L', 20);
 
 echo FieldToSelectOneGLAccount('SalesExchangeDiffAct', $_POST['SalesExchangeDiffAct'],  __('Sales Exchange Variances GL Account'), 
 	__('Select the general ledger account to be used for posting accounts receivable exchange rate differences to - where the exchange rate on sales invocies is different to the exchange rate of currency receipts from customers, the exchange rate is calculated automatically and posted to this general ledger account. Only profit and loss general ledger accounts are available for this selection.'),
