@@ -65,8 +65,7 @@ $SQL = "SELECT salesorders.customerref,
 				ON salesorders.fromstkloc=locations.loccode
 			INNER JOIN currencies
 				ON debtorsmaster.currcode=currencies.currabrev
-				AND salesorders.orderno='" . $_GET['AcknowledgementNo'] . "'";
-
+			WHERE salesorders.orderno='" . $_GET['AcknowledgementNo'] . "'";
 $Result = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($Result) == 0) {

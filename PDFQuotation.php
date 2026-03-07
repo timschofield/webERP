@@ -52,6 +52,7 @@ $SQL = "SELECT salesorders.customerref,
 				salesorders.deladd5,
 				salesorders.deladd6,
 				debtorsmaster.name,
+				debtorsmaster.debtorno,
 				debtorsmaster.currcode,
 				debtorsmaster.address1,
 				debtorsmaster.address2,
@@ -174,11 +175,13 @@ while ($MyRow2 = DB_fetch_array($Result)) {
 	$SubTot =  $MyRow2['unitprice']*$MyRow2['quantity']*(1-$MyRow2['discountpercent']);
 	$TaxProv = $MyRow['taxprovinceid'];
 	$TaxCat = $MyRow2['taxcatid'];
+	$DebtorNo = $MyRow['debtorno'];
 	$Branch = $MyRow['branchcode'];
 	$SQL3 = "SELECT taxgrouptaxes.taxauthid
 				FROM taxgrouptaxes INNER JOIN custbranch
 				ON taxgrouptaxes.taxgroupid=custbranch.taxgroupid
-				WHERE custbranch.branchcode='" .$Branch ."'";
+				WHERE custbranch.debtorno='" . $DebtorNo . "'
+				AND custbranch.branchcode='" . $Branch . "'";
 	$Result3=DB_query($SQL3, $ErrMsg);
 	$TaxAuth = 0;
 	while ($MyRow3=DB_fetch_array($Result3)){
