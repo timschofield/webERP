@@ -1694,7 +1694,7 @@ if (!isset($_POST['PostInvoice'])) {
 
 								$SQL = "UPDATE stockmaster
 										SET lastcost=materialcost+overheadcost+labourcost,
-										materialcost=materialcost+" . $CostIncrement . "
+										materialcost=materialcost+" . $CostIncrement . ",                                          lastcostupdate = CURRENT_DATE
 										WHERE stockid='" . $EnteredGRN->ItemCode . "'";
 								$Result = DB_query($SQL, $ErrMsg, '', true);
 							}
@@ -1702,7 +1702,8 @@ if (!isset($_POST['PostInvoice'])) {
 								/* if stock is negative then update the cost to this cost */
 								$SQL = "UPDATE stockmaster
 										SET lastcost=materialcost+overheadcost+labourcost,
-											materialcost='" . $ActualCost . "'
+											materialcost='" . $ActualCost . "',
+                                            lastcostupdate = CURRENT_DATE
 										WHERE stockid='" . $EnteredGRN->ItemCode . "'";
 								$Result = DB_query($SQL, $ErrMsg, '', true);
 							}
