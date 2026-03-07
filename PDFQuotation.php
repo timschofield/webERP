@@ -183,20 +183,19 @@ while ($MyRow2 = DB_fetch_array($Result)) {
 				WHERE custbranch.debtorno='" . $DebtorNo . "'
 				AND custbranch.branchcode='" . $Branch . "'";
 	$Result3=DB_query($SQL3, $ErrMsg);
-	$TaxAuth = 0;
+	$TaxClass = 0;
 	while ($MyRow3=DB_fetch_array($Result3)){
 		$TaxAuth = $MyRow3['taxauthid'];
+		$SQL4 = "SELECT taxrate FROM taxauthrates
+					WHERE dispatchtaxprovince='" .$TaxProv ."'
+					AND taxcatid='" .$TaxCat ."'
+					AND taxauthority='" .$TaxAuth ."'";
+		$Result4=DB_query($SQL4, $ErrMsg);
+		if ($MyRow4=DB_fetch_array($Result4)){
+			$TaxClass += 100 * $MyRow4['taxrate'];
+		}
 	}
-	$SQL4 = "SELECT * FROM taxauthrates
-				WHERE dispatchtaxprovince='" .$TaxProv ."'
-				AND taxcatid='" .$TaxCat ."'
-				AND taxauthority='" .$TaxAuth ."'";
-	$Result4=DB_query($SQL4, $ErrMsg);
-	$TaxClass = 0;
-	while ($MyRow4=DB_fetch_array($Result4)){
-		$TaxClass = 100 * $MyRow4['taxrate'];
-	}
-	$DisplayTaxClass = $TaxClass . '%';
+	$DisplayTaxClass = number_format($TaxClass, 2) . '%';
 	$TaxAmount =  (($SubTot/100)*(100+$TaxClass))-$SubTot;
 	$DisplayTaxAmount = locale_number_format($TaxAmount,$MyRow['currdecimalplaces']);
 	$LineTotal = $SubTot + $TaxAmount;
