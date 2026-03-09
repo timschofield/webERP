@@ -2,7 +2,7 @@ CREATE TABLE `grns` (
   `grnbatch` smallint NOT NULL DEFAULT '0',
   `grnno` int NOT NULL AUTO_INCREMENT,
   `podetailitem` int NOT NULL DEFAULT '0',
-  `itemcode` varchar(20) NOT NULL DEFAULT '',
+  `itemcode` varchar(64) NOT NULL DEFAULT '',
   `deliverydate` date NOT NULL DEFAULT '1000-01-01',
   `itemdescription` varchar(100) NOT NULL DEFAULT '',
   `qtyrecd` double NOT NULL DEFAULT '0',

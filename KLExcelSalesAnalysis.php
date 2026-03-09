@@ -6,12 +6,12 @@ use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/KLDefines.php');
-include('includes/KLBoards.php');
-include('includes/UIGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php'); 
-include('includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLBoards.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php'); 
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
 
 if (!isset($_POST['FromDate'])){
 	$_POST['FromDate'] = date($_SESSION['DefaultDateFormat']);
@@ -322,9 +322,9 @@ function submit($ListCategories, $FromDate, $ToDate, $CodeDetail) {
 
 		} else {
 			$Title = __('Excel file for Sales Analysis');
-			include('includes/header.php');
+			include(__DIR__ . '/includes/header.php');
 			prnMsg('No items selected to analyse');
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 		}
 	}
 } // End of function submit()
@@ -336,7 +336,7 @@ function display($RootPath, $Theme){
 // the page is called.
 	$Title = __('Excel file for Sales Analysis');
 
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
           <div>
@@ -366,6 +366,6 @@ function display($RootPath, $Theme){
 
 	echo '</div>
          </form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 
 } // End of function display()

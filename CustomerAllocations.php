@@ -7,16 +7,16 @@
 */
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefineCustAllocsClass.php');
+include(__DIR__ . '/includes/DefineCustAllocsClass.php');
 
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Customer Receipt') . '/' . __('Credit Note Allocations');
 $ViewTopic = 'ARTransactions';
 $BookMark = 'CustomerAllocations';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if ( isset($_POST['Cancel']) ) {
 	unset($_POST['AllocTrans']);
@@ -31,7 +31,7 @@ if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 				__('try to use the navigation links provided rather than the back button') . ', ' .
 				__('to avoid this message in future'),
 			'info');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -491,7 +491,7 @@ if (isset($_POST['AllocTrans'])) {
 
 	if (DB_num_rows($Result)==0) {
 		prnMsg(__('No outstanding receipts or credits to be allocated for this customer'),'info');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 	 echo '<table class="selection">';
@@ -618,4 +618,4 @@ if (isset($_POST['AllocTrans'])) {
 	echo '<br />';
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -14,7 +14,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Rebuild the System Default Language File');
 $ViewTopic = 'SpecialUtilities';// Filename in ManualContents.php's TOC.
 $BookMark = 'Z_poRebuildDefault';// Anchor's id in the manual's html document.
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title="' .
@@ -61,4 +61,4 @@ if (isset($_POST['submit'])) {
 	echo '</div>';
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

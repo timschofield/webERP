@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $ViewTopic = 'EDI';// Filename in ManualContents.php's TOC.
 $BookMark = '';// Anchor's id in the manual's html document.
 $Title = __('Customer EDI Set Up');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<a href="' . $RootPath . '/SelectCustomer.php">' . __('Back to Customers') . '</a><br />';
 
@@ -161,4 +161,4 @@ echo '</fieldset>
 		</div>
 	</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

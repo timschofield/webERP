@@ -1,6 +1,6 @@
 CREATE TABLE `locstock` (
   `loccode` varchar(5) NOT NULL DEFAULT '',
-  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `stockid` varchar(64) NOT NULL DEFAULT '',
   `quantity` double NOT NULL DEFAULT '0',
   `reorderlevel` bigint NOT NULL DEFAULT '0',
   `bin` varchar(10) NOT NULL DEFAULT '',

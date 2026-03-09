@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Import Items');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/inventory.png" title="' .
@@ -36,13 +36,14 @@ $FieldHeadings = array(
 	'DiscountCategory',	// 14 'DISCOUNTCATEGORY',
 	'TaxCat',          	// 15 'TAXCAT',
 	'DecimalPlaces',   	// 16 'DECIMALPLACES',
-	'ItemPDF'          	// 17 'ITEMPDF'
+	'ItemPDF',         	// 17 'ITEMPDF'
+	'note'          	// 17 'NOTE'
 );
 
 if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file processing
 
 	//initialize
-	$FieldTarget = 18;
+	$FieldTarget = 19;
 	$InputError = 0;
 
 	//check file info
@@ -64,7 +65,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	if ( count($HeadRow) != count($FieldHeadings) ) {
 		prnMsg(__('File contains '. count($HeadRow). ' columns, expected '. count($FieldHeadings). '. Try downloading a new template.'),'error');
 		fclose($FileHandle);
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -74,7 +75,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		if ( mb_strtoupper($HeadField) != mb_strtoupper($FieldHeadings[$Head]) ) {
 			prnMsg(__('File contains incorrect headers '. mb_strtoupper($HeadField). ' != '. mb_strtoupper($FieldHeadings[$Head]). '. Try downloading a new template.'),'error');  //Fixed $FieldHeadings from $Headings
 			fclose($FileHandle);
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 		$Head++;
@@ -92,7 +93,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		if ($FieldCount != $FieldTarget){
 			prnMsg(__($FieldTarget. ' fields required, '. $FieldCount. ' fields received'),'error');
 			fclose($FileHandle);
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 
@@ -237,6 +238,23 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 			$ErrMsg =  __('The item could not be added because');
 			$Result = DB_query($SQL, $ErrMsg);
 
+			if ($MyRow[18] != '') {
+				$SQL = "INSERT INTO stockitemnotes (
+								noteid,
+								stockid,
+								note,
+								date
+							) VALUES (
+								NULL,
+								'" . $StockID . "',
+								'" . $MyRow[18] . "',
+								CURRENT_DATE
+						)";
+
+				$ErrMsg =  __('The item note could not be added because');
+				$Result = DB_query($SQL, $ErrMsg);
+			}
+
 			if (DB_error_no() ==0) { //the insert of the new code worked so bang in the stock location records too
 
 				$SQL = "INSERT INTO locstock (loccode,
@@ -304,4 +322,4 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 }
 
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -11,10 +11,10 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('User Authorised Inventory Locations Maintenance');
 $ViewTopic = 'Inventory';
 $BookMark = 'LocationUsers';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 // KL RICARD
-include('includes/KLEmails.php');
+include(__DIR__ . '/includes/KLEmails.php');
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/money_add.png" title="' . __('User Authorised Locations') . '" alt="" />' . ' ' . $Title . '</p>';
 
@@ -261,4 +261,4 @@ if (isset($_POST['process']) or isset($SelectedUser)) {
 	} // end if user wish to delete
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

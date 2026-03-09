@@ -31,7 +31,7 @@ $CompanyName = isset($_SESSION['CompanyRecord']['coyname']) ? stripslashes($_SES
 echo '<div class="title_bar" id="title_bar">', $Title, ' - ', $CompanyName, '
 	<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/user.png" class="TitleIcon" id="TitleIcon" title="" alt="" /></div>';
 
-//include('includes/header.php');
+//include(__DIR__ . '/includes/header.php');
 
 function executeSQL($SQL, $TrapErrors = false) {
 	global $SQLFile;
@@ -56,7 +56,7 @@ function updateDBNo($NewNumber, $Description = '') {
 	}
 }
 
-include('includes/UpgradeDB_' . $DBType . '.php');
+include(__DIR__ . '/includes/UpgradeDB_' . $DBType . '.php');
 
 echo '<div class="page_title_text">
 	<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title, '
@@ -159,14 +159,14 @@ if (!isset($_POST['continue'])) {
 	echo '</table><br />';
 
 	$ForceConfigReload = true;
-	include('includes/GetConfig.php');
+	include(__DIR__ . '/includes/GetConfig.php');
 	$ForceConfigReload = false;
 
 	echo '<div class="centre">
 		<a href="' . $RootPath . '/Logout.php" title="' . __('Log out of') . ' ' . 'webERP" alt="">
-			', __('You need to logout and log back in for these changes to take affect'), '
+			', __('Now click here to logout and then log back in for these changes to take affect'), '
 		</a>
 	</div>';
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

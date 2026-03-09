@@ -3,11 +3,11 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('SPG Last 10 Shop Tali Exchanges');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/KLDefines.php');
-include('includes/KLEmails.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLEmails.php');
 
 if (isset($_GET['SelectedExchange'])){
 	$SelectedExchange =mb_strtoupper($_GET['SelectedExchange']);
@@ -310,4 +310,4 @@ if (! isset($_GET['delete'])) {
 
 } //end if record deleted no point displaying form to add record
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

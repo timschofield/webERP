@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('GL Codes Inquiry');
 $ViewTopic = 'GeneralLedger';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . __('Print') . '" alt="" />' . ' ' . __('Print Invoices or Credit Notes (Portrait Mode)') . '
@@ -55,4 +55,4 @@ while ($MyRow=DB_fetch_array($AccountsResult)) {
 //end of while loop
 
 echo '</table>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

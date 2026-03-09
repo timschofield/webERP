@@ -1,12 +1,12 @@
 <?php
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefineTenderClass.php');
+include(__DIR__ . '/includes/DefineTenderClass.php');
 
 require(__DIR__ . '/includes/session.php');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/ImageFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/ImageFunctions.php');
 
 if (isset($_POST['RequiredByDate'])){$_POST['RequiredByDate'] = ConvertSQLDate($_POST['RequiredByDate']);}
 
@@ -23,19 +23,19 @@ if (isset($_GET['New']) and isset($_SESSION['tender' . $identifier])) {
 
 if (isset($_GET['New']) and $_SESSION['CanCreateTender'] == 0) {
 	$Title = __('Authorisation Problem');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . $Title . '" alt="" />  ' . $Title . '</p>';
 	prnMsg(__('You do not have authority to create supplier tenders for this company.') . '<br />' . __('Please see your system administrator'), 'warn');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
 if (isset($_GET['Edit']) and $_SESSION['CanCreateTender'] == 0) {
 	$Title = __('Authorisation Problem');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . $Title . '" alt="" />  ' . $Title . '</p>';
 	prnMsg(__('You do not have authority to amend supplier tenders for this company.') . '<br />' . __('Please see your system administrator'), 'warn');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -112,7 +112,7 @@ if (isset($_GET['Edit'])) {
 	$Title = __('Edit an Existing Supplier Tender Request');
 	$ViewTopic = 'SupplierTenders';
 	$BookMark = 'EditTender';
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . __('Purchase Order Tendering') . '" alt="" />  ' . $Title . '</p>';
 	$SQL = "SELECT tenderid,
 					location,
@@ -154,19 +154,19 @@ if (isset($_GET['Edit'])) {
 			</tr>';
 	}
 	echo '</table>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 } elseif (isset($_GET['ID']) or (isset($_SESSION['tender' . $identifier]->TenderId))) {
 	$Title = __('Edit an Existing Supplier Tender Request');
 	$ViewTopic = 'SupplierTenders';
 	$BookMark = 'EditTender';
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . __('Purchase Order Tendering') . '" alt="" />' . $Title . '</p>';
 } else {
 	$Title = __('Create a New Supplier Tender Request');
 	$ViewTopic = 'SupplierTenders';
 	$BookMark = 'CreateTender';
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . __('Purchase Order Tendering') . '" alt="" />' . $Title . '</p>';
 }
 
@@ -175,7 +175,7 @@ if (isset($_POST['Save'])) {
 	$_SESSION['tender' . $identifier]->save();
 	$_SESSION['tender' . $identifier]->EmailSuppliers();
 	prnMsg(__('The tender has been successfully saved'), 'success');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -464,7 +464,7 @@ if (!isset($_SESSION['tender' . $identifier]) or isset($_POST['LookupDeliveryAdd
 	}
 	echo '</div>
 		</form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -650,7 +650,7 @@ if (isset($_POST['Items'])) {
 	if (DB_num_rows($Result) == 0) {
 		echo '<br /><p class="bad">' . __('Problem Report') . ':</p><br />' . __('There are no stock categories currently defined please use the link below to set them up');
 		echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . __('Define Stock Categories') . '</a>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 	echo '<fieldset>
@@ -868,4 +868,4 @@ if (isset($_POST['Search'])) { /*ie seach for stock items */
 		</form>';
 
 } //end of if search
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -3,12 +3,12 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Copy all reorder levels from one location to another');// Screen identificator.
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/UIGeneralFunctions.php'); // Add this line to include UI functions
-include('includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php'); // Add this line to include UI functions
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/maintenance.png" title="',// Icon image.
@@ -94,4 +94,4 @@ echo OneButtonCenteredForm("ProcessCopyAuthority", $Title, 3, false, false);
 echo '</div>
 	</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

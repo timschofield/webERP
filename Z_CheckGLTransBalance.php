@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title=__('Check Period Sales Ledger Control Account');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<table>';
 
@@ -60,4 +60,4 @@ while ($OutOfWackRow = DB_fetch_array($OutOfWackResult)){
 }
 echo '</table>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

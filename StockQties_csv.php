@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Produce Stock Quantities CSV');
 $ViewTopic = 'Inventory';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 function stripcomma($str) { //because we're using comma as a delimiter
 	return str_replace(',', '', $str);
@@ -33,7 +33,7 @@ $fp = fopen($FileName,'w');
 if ($fp==false){
 
 	prnMsg(__('Could not open or create the file under') . ' ' . $_SESSION['reports_dir'] . '/StockQties.csv','error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -48,4 +48,4 @@ fclose($fp);
 
 echo '<br /><div class="centre"><a href="' . $RootPath . '/' . $_SESSION['reports_dir'] . '/StockQties.csv ">' . __('click here') . '</a> ' . __('to view the file') . '</div>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

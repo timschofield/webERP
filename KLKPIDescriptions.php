@@ -7,12 +7,12 @@
  * Based on PaymentTerms.php
  */
 
-include('includes/session.php');
+include(__DIR__ . '/includes/session.php');
 
 $Title = _('KL KPI Descriptions Maintenance');
 $ViewTopic = 'Setup';
 $BookMark = 'KLKPIDescriptions';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text">
 		<img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . $Title . '" alt="" />' . ' ' . $Title .
@@ -215,4 +215,4 @@ if (!isset($_GET['delete'])) {
 	echo '</form>';
 } //end if record deleted no point displaying form to add record
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -62,7 +62,12 @@ if ((isset($ForceConfigReload) AND $ForceConfigReload==true) OR !isset($_SESSION
 
 	$SQLColumns = "SHOW COLUMNS FROM companies LIKE 'salesexchangediffact'";
 	$ResultColumns = DB_query($SQLColumns, '', '', false, false);
-	$UseNewColumns = (DB_num_rows($ResultColumns) > 0);
+	$UseNewColumns41 = (DB_num_rows($ResultColumns) > 0);
+
+	/* similar for update 46.php, as it adds the unrealizedcurrencydiffact column */
+	$SQLColumns = "SHOW COLUMNS FROM companies LIKE 'unrealizedcurrencydiffact'";
+	$ResultColumns = DB_query($SQLColumns, '', '', false, false);
+	$UseNewColumns46 = (DB_num_rows($ResultColumns) > 0);
 
 	$SQL = "SELECT coyname,
 				gstno,
@@ -82,10 +87,13 @@ if ((isset($ForceConfigReload) AND $ForceConfigReload==true) OR !isset($_SESSION
 				payrollact,
 				grnact,";
 
-	if ($UseNewColumns) {
+	if ($UseNewColumns41) {
 		$SQL .= "	salesexchangediffact,
 					purchasesexchangediffact,
 					currencyexchangediffact,";
+		if ($UseNewColumns46) {
+			$SQL .= "	unrealizedcurrencydiffact,";
+		}
 	} else {
 		$SQL .= "	exchangediffact,
 					purchasesexchangediffact,";
@@ -107,7 +115,7 @@ if ((isset($ForceConfigReload) AND $ForceConfigReload==true) OR !isset($_SESSION
 	if (DB_num_rows($ReadCoyResult)==0) {
       		echo '<br /><b>';
 		prnMsg( __('The company record has not yet been set up') . '</b><br />' . __('From the system setup tab select company maintenance to enter the company information and system preferences'),'error',__('CRITICAL PROBLEM'));
-		include('includes/footer.php');
+		include(__DIR__ . '/footer.php');
 		exit();
 	} else {
 		$_SESSION['CompanyRecord'] = DB_fetch_array($ReadCoyResult);

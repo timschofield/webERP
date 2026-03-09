@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Work Centres');
 $ViewTopic = 'Manufacturing';
 $BookMark = 'WorkCentres';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['SelectedWC'])){
 	$SelectedWC =$_POST['SelectedWC'];
@@ -290,4 +290,4 @@ echo '<div class="centre">
 		<input type="submit" name="submit" value="' . __('Enter Information') . '" />
 	</div>
 	</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

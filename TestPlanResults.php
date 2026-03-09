@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 $ViewTopic = 'QualityAssurance'; /* ?????????? */
 $BookMark = 'TestPlanResults';
 $Title = __('Test Plan Results');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
@@ -309,7 +309,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 		echo '</div>' . __('Override existing Test values?') .
 			 '<input type="checkbox" name="OverRide"><input type="submit" name="Copy" value="' . __('Copy') . '" />
 			  </form>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	} else {
 		$SQL = "SELECT sampleresults.testid,
@@ -548,7 +548,7 @@ if (isset($_GET['ListTests'])) {
 			</div>
 		</div>
 		</form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }  //ListTests
 if (isset($_POST['AddTests'])) {
@@ -681,7 +681,7 @@ if (!isset($SelectedSampleID)) {
 			<a href="' . $RootPath . '/SelectQASamples.php">' .  __('Select a sample to enter results against') . '</a>
 		</div>';
 	prnMsg(__('This page can only be opened if a QA Sample has been selected. Please select a sample first'),'info');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -938,4 +938,4 @@ if ($CanCert==1){
 	echo '<div class="centre"><a target="_blank" href="'. $RootPath . '/PDFCOA.php?LotKey=' .$LotKey .'&ProdSpec=' . $ProdSpec. '">' . __('Print COA') . '</a></div>';
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

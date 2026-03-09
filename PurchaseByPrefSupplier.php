@@ -5,10 +5,10 @@ require(__DIR__ . '/includes/session.php');
 $Title=__('Preferred Supplier Purchasing');
 $ViewTopic = 'PurchaseOrdering';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
-	include('includes/SQL_CommonFunctions.php');
+	include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 	$InputError =0; //Always hope for the best
 
 	//Make an array of the Items to purchase
@@ -291,7 +291,7 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 		prnMsg(__('Purchase Order') . ' ' . $OrderNo . ' ' .  __('has been created.') . ' ' . __('Total order value of') . ': ' . locale_number_format($OrderValue,$SupplierRow['decimalplaces']) . ' ' . $SupplierRow['currcode']  ,'success');
 		echo '<br /><a href="' . $RootPath . '/PO_PDFPurchOrder.php?OrderNo=' . $OrderNo . '">' . __('Print Order') . '</a>
 				<br /><a href="' . $RootPath . '/PO_Header.php?ModifyOrderNumber=' . $OrderNo . '">' . __('Edit Order') . '</a>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	} else {
 		prnMsg(__('Unable to create the order'),'error');
@@ -473,4 +473,4 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 echo '</div>
 	  </form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

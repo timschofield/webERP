@@ -4,16 +4,16 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 if (isset($_POST['PrintPDF']) or isset($_POST['Spreadsheet']) or isset($_POST['View'])){
 
 	if (!isset($_POST['Tokens'])){
 		$Title = __('User Roles by Security Token Report Error');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		prnMsg(__('No security tokens were selected. Please select at least one token to report on.'),'error');
 		echo '<br /><a href="' . $RootPath . '/UserRolesBySecurityToken.php">' . __('Back to the menu') . '</a>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -36,10 +36,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['Spreadsheet']) or isset($_POST['V
 
 	if (DB_num_rows($Result)==0){
 		$Title = __('Print User Roles by Security Token Error');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		prnMsg(__('There were no roles found for the selected security tokens'),'info');
 		echo '<br /><a href="' . $RootPath . '/UserRolesBySecurityToken.php">' . __('Back to the menu') . '</a>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -142,10 +142,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['Spreadsheet']) or isset($_POST['V
 		exit();
 	} else {
 		$Title = __('User Roles by Security Token Report');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/security.png" title="' . __('Security') . '" alt="" />' . ' ' . $Title . '</p>';
 		echo $HTML;
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 
 } else { /*The option to print PDF nor to create the CSV was not hit */
@@ -153,7 +153,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['Spreadsheet']) or isset($_POST['V
 	$Title = __('User Roles by Security Token Reporting');
 	$ViewTopic = 'Security';
 	$BookMark = 'UserRolesByToken';
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	echo '<p class="page_title_text">
 			<img src="'.$RootPath.'/css/'.$Theme.'/images/security.png" title="' . __('Security') . '" alt="" />' . ' ' . $Title . '
@@ -189,6 +189,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['Spreadsheet']) or isset($_POST['V
 		</div>';
 	echo '</form>';
 
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 
 } /*end of else not PrintPDF */

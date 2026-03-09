@@ -5,9 +5,9 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Supplier Offers');
 $ViewTopic = 'SupplierTenders';
 $BookMark = 'SupplierOffers';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['supplierid'])) {
 	$SQL = "SELECT suppname,
@@ -232,7 +232,7 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 		$Recipients = GetMailList('OffersReceivedResultRecipients');
 		if (sizeOf($Recipients) == 0) {
 			prnMsg(__('There are no members of the Offers Received Result Recipients email group'), 'warn');
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 		array_push($Recipients, $Email);
@@ -272,7 +272,7 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 		$Recipients = GetMailList('OffersReceivedResultRecipients');
 		if (sizeOf($Recipients) == 0) {
 			prnMsg(__('There are no members of the Offers Received Result Recipients email group'), 'warn');
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 		array_push($Recipients, $Email);
@@ -292,4 +292,4 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 	}
 	prnMsg(__('All offers have been processed, and emails sent where appropriate'), 'success');
 }
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Stock Movements');
 $ViewTopic = 'Inventory';
 $BookMark = 'InventoryMovement';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['BeforeDate'])){$_POST['BeforeDate'] = ConvertSQLDate($_POST['BeforeDate']);}
 if (isset($_POST['AfterDate'])){$_POST['AfterDate'] = ConvertSQLDate($_POST['AfterDate']);}
@@ -177,7 +177,7 @@ if (DB_num_rows($MovtsResult) > 0) {
 			/*its a sales invoice allow link to show invoice it was sold on*/
 
 			echo '<tr class="striped_row">
-					<td><a target="_blank" href="', $RootPath, '/PrintCustTrans.php?FromTransNo=', urlencode($MyRow['transno']), '&amp;InvOrCredit=Invoice">', $MyRow['typename'], '</a></td>
+					<td><a target="_blank" href="', $RootPath, '/PrintCustTrans.php?FromTransNo=', urlencode($MyRow['transno']), '&amp;InvOrCredit=Invoice&View=Yes">', $MyRow['typename'], '</a></td>
 					<td>', $MyRow['transno'], '</td>
 					<td>', $DisplayTranDate, '</td>
 					<td>', $MyRow['userid'], '</td>
@@ -252,4 +252,4 @@ echo '</table>
 	</div>
 	</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -2,7 +2,7 @@ CREATE TABLE `pickreqdetails` (
   `detailno` int NOT NULL AUTO_INCREMENT,
   `prid` int NOT NULL DEFAULT '1',
   `orderlineno` int NOT NULL DEFAULT '0',
-  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `stockid` varchar(64) NOT NULL DEFAULT '',
   `qtyexpected` double NOT NULL DEFAULT '0',
   `qtypicked` double NOT NULL DEFAULT '0',
   `invoicedqty` double NOT NULL DEFAULT '0',

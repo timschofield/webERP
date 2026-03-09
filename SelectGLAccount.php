@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Search GL Accounts');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLAccountInquiry';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 $Msg='';
 unset($Result);
@@ -53,7 +53,7 @@ if (isset($_POST['Search'])){
 		} elseif (mb_strlen($_POST['GLCode'])>0){
 			if (!empty($_POST['GLCode'])) {
 				echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/GLAccountInquiry.php?Account=' . $_POST['GLCode'] . '&Show=Yes">';
-				include('includes/footer.php');
+				include(__DIR__ . '/includes/footer.php');
 				exit();
 			}
 
@@ -177,4 +177,4 @@ if (!isset($AccountID)) {
 
 } //end AccountID already selected
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

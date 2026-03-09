@@ -4,9 +4,9 @@ require(__DIR__ . '/includes/session.php');
 
 $ViewTopic = 'Sales';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['DoIt'])) {
 	$_GET['InvOrCredit'] = $_POST['InvOrCredit'];
@@ -33,7 +33,7 @@ if (isset($_POST['DoIt']) AND IsEmailAddress($_POST['EmailAddr'])){
 
 		prnMsg(__('The transaction should have been emailed off. If this does not happen (perhaps the browser does not support META Refresh)') . '<a href="' . $RootPath . '/PrintCustTrans.php?FromTransNo=' . $_POST['FromTransNo'] . '&orientation=portrait&PrintPDF=Yes&InvOrCredit=' . $_POST['InvOrCredit'] .'&Email=' . $_POST['EmailAddr'] . '">' . __('click here') . '</a> ' . __('to email the customer transaction'),'success');
 	}
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 } elseif (isset($_POST['DoIt'])) {
 	$_GET['InvOrCredit'] = $_POST['InvOrCredit'];
@@ -76,4 +76,4 @@ echo '<br /><div class="centre"><input type="submit" name="DoIt" value="' . __('
 echo '</div>
       </div>
       </form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

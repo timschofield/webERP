@@ -7,7 +7,7 @@ require_once(__DIR__ . '/vendor/autoload.php'); // Make sure DomPDF is installed
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 use BarcodePack\code128;
 
 if (isset($_POST['EffectiveDate'])) {
@@ -21,7 +21,7 @@ if ((isset($_POST['ShowLabels']) or isset($_POST['SelectAll']))
 	and mb_strlen($_POST['StockCategory']) >= 1) {
 
 	$Title = __('Print Labels');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	$SQL = "SELECT prices.stockid,
 					stockmaster.description,
@@ -51,7 +51,7 @@ if ((isset($_POST['ShowLabels']) or isset($_POST['SelectAll']))
 	if (DB_num_rows($LabelsResult) == 0) {
 		prnMsg(__('There were no price labels to print out for the category specified'), 'warn');
 		echo '<br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' .  __('Back') . '</a>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -108,7 +108,7 @@ if ((isset($_POST['ShowLabels']) or isset($_POST['SelectAll']))
 			<a href="' . $RootPath . '/Labels.php">' . __('Label Template Maintenance') . '</a>
 		</div>
 		</form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -268,7 +268,7 @@ if (isset($_POST['PrintLabels']) && $NoOfLabels > 0) {
 	$Title = __('Price Labels');
 	$ViewTopic = 'Inventory';
 	$BookMark = '';
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . __('Price Labels') . '" alt="" />
          ' . ' ' . __('Print Price Labels') . '</p>';
@@ -358,6 +358,6 @@ if (isset($_POST['PrintLabels']) && $NoOfLabels > 0) {
 				</form>';
 
 	}
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 
 } /*end of else not PrintPDF */

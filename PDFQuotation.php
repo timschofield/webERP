@@ -1,16 +1,16 @@
 <?php
 
 require(__DIR__ . '/includes/session.php');
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 //Get Out if we have no order number to work with
 if (!isset($_GET['QuotationNo']) || $_GET['QuotationNo']==""){
 	$Title = __('Select Quotation To Print');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<div class="centre"><br /><br /><br />';
 	prnMsg( __('Select a Quotation to Print before calling this page') , 'error');
 	echo '<br /><br /><br />
@@ -21,7 +21,7 @@ if (!isset($_GET['QuotationNo']) || $_GET['QuotationNo']==""){
 				</tr>
 			</table>
 			</div><br /><br /><br />';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -52,6 +52,7 @@ $SQL = "SELECT salesorders.customerref,
 				salesorders.deladd5,
 				salesorders.deladd6,
 				debtorsmaster.name,
+				debtorsmaster.debtorno,
 				debtorsmaster.currcode,
 				debtorsmaster.address1,
 				debtorsmaster.address2,
@@ -84,7 +85,7 @@ $Result = DB_query($SQL, $ErrMsg);
 //If there are no rows, there's a problem.
 if (DB_num_rows($Result)==0){
 	$Title = __('Print Quotation Error');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<div class="centre"><br /><br /><br />';
 	prnMsg( __('Unable to Locate Quotation Number') . ' : ' . $_GET['QuotationNo'] . ' ', 'error');
 	echo '<br /><br /><br />
@@ -96,7 +97,7 @@ if (DB_num_rows($Result)==0){
 			</tr>
 			</table>
 			</div><br /><br /><br />';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 } elseif (DB_num_rows($Result)==1) {
 	$MyRow = DB_fetch_array($Result);
@@ -174,26 +175,27 @@ while ($MyRow2 = DB_fetch_array($Result)) {
 	$SubTot =  $MyRow2['unitprice']*$MyRow2['quantity']*(1-$MyRow2['discountpercent']);
 	$TaxProv = $MyRow['taxprovinceid'];
 	$TaxCat = $MyRow2['taxcatid'];
+	$DebtorNo = $MyRow['debtorno'];
 	$Branch = $MyRow['branchcode'];
 	$SQL3 = "SELECT taxgrouptaxes.taxauthid
 				FROM taxgrouptaxes INNER JOIN custbranch
 				ON taxgrouptaxes.taxgroupid=custbranch.taxgroupid
-				WHERE custbranch.branchcode='" .$Branch ."'";
+				WHERE custbranch.debtorno='" . $DebtorNo . "'
+				AND custbranch.branchcode='" . $Branch . "'";
 	$Result3=DB_query($SQL3, $ErrMsg);
-	$TaxAuth = 0;
+	$TaxClass = 0;
 	while ($MyRow3=DB_fetch_array($Result3)){
 		$TaxAuth = $MyRow3['taxauthid'];
+		$SQL4 = "SELECT taxrate FROM taxauthrates
+					WHERE dispatchtaxprovince='" .$TaxProv ."'
+					AND taxcatid='" .$TaxCat ."'
+					AND taxauthority='" .$TaxAuth ."'";
+		$Result4=DB_query($SQL4, $ErrMsg);
+		if ($MyRow4=DB_fetch_array($Result4)){
+			$TaxClass += 100 * $MyRow4['taxrate'];
+		}
 	}
-	$SQL4 = "SELECT * FROM taxauthrates
-				WHERE dispatchtaxprovince='" .$TaxProv ."'
-				AND taxcatid='" .$TaxCat ."'
-				AND taxauthority='" .$TaxAuth ."'";
-	$Result4=DB_query($SQL4, $ErrMsg);
-	$TaxClass = 0;
-	while ($MyRow4=DB_fetch_array($Result4)){
-		$TaxClass = 100 * $MyRow4['taxrate'];
-	}
-	$DisplayTaxClass = $TaxClass . '%';
+	$DisplayTaxClass = number_format($TaxClass, 2) . '%';
 	$TaxAmount =  (($SubTot/100)*(100+$TaxClass))-$SubTot;
 	$DisplayTaxAmount = locale_number_format($TaxAmount,$MyRow['currdecimalplaces']);
 	$LineTotal = $SubTot + $TaxAmount;
@@ -219,11 +221,11 @@ $HTML .= '</table>';
 
 if ($ListCount == 0){
 	$Title = __('Print Quotation Error');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	prnMsg(__('There were no items on the quotation') . '. ' . __('The quotation cannot be printed'),'info');
 	echo '<br /><a href="' . $RootPath . '/SelectSalesOrder.php?Quotation=Quotes_only">' .  __('Print Another Quotation'). '</a>
 			<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 

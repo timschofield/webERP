@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Supplier Purchasing Data');
 $ViewTopic = 'PurchaseOrdering';
 $BookMark = 'SupplierPriceList';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['StockSearch'])) {
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
@@ -67,7 +67,7 @@ if (isset($_POST['StockSearch'])) {
 			<input type="submit" name="Search" value="' . __('Search Now') . '" />
 		</div>
 	</form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -298,7 +298,7 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
               <br />
               </div>
               </form>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 }
@@ -417,7 +417,7 @@ if (isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier']
 				<input name="SearchSupplier" type="submit" value="' . __('Find Suppliers Now') . '" />
 			</div>';
         echo '</form>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 }
@@ -483,7 +483,7 @@ if (isset($SuppliersResult)) {
 	echo '</table>
           </form>
           <br />';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }// END if (isset($SuppliersResult)).
 
@@ -608,6 +608,6 @@ if (isset($_POST['SupplierID'])) {
 	}
 	echo '</table>';
 	echo '</form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }

@@ -8,17 +8,17 @@
 ********************************************************************************************************/
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefineJournalClass.php');
+include(__DIR__ . '/includes/DefineJournalClass.php');
 
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Journal Entry');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLJournals';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/GLFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/GLFunctions.php');
 
 if (isset($_POST['JournalProcessDate'])){$_POST['JournalProcessDate'] = ConvertSQLDate($_POST['JournalProcessDate']);}
 
@@ -127,7 +127,7 @@ if (isset($_POST['LoadTemplate'])) {
 		}
 
 		echo '</table>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 }
@@ -161,7 +161,7 @@ if (isset($_POST['SaveTemplate'])) {
 			$Result = DB_query($SQL);
 			if (DB_error_no() !=  0) {
 				prnMsg(__('The journal template header info could not be saved') , 'error');
-				include('includes/footer.php');
+				include(__DIR__ . '/includes/footer.php');
 				exit();
 			}
 			$LineNumber = 0;
@@ -185,7 +185,7 @@ if (isset($_POST['SaveTemplate'])) {
 				++$LineNumber;
 				if (DB_error_no() !=  0) {
 					prnMsg(__('The journal template line info could not be saved') , 'error');
-					include('includes/footer.php');
+					include(__DIR__ . '/includes/footer.php');
 					exit();
 				}
 			}
@@ -262,7 +262,7 @@ if (isset($_POST['ConfimSave'])) {
 		</div>';
 	echo '</form>';
 
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -338,7 +338,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == __('Accept and Pro
 	echo '<br />
 			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?NewJournal=Yes">' . __('Enter Another General Ledger Journal') . '</a>';
 
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 
 } elseif (isset($_GET['Delete'])) {
@@ -657,4 +657,4 @@ if (abs($_SESSION['JournalDetail']->JournalTotal) < CurrencyTolerance($_SESSION[
 
 echo '</div>
 	</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

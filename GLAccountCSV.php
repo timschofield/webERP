@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('General Ledger Account Report');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLAccountCSV';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['Period'])) {
 	$SelectedPeriod = $_POST['Period'];
@@ -108,12 +108,12 @@ if (isset($_POST['MakeCSV'])) {
 
 	if (!isset($SelectedPeriod)) {
 		prnMsg(__('A period or range of periods must be selected from the list box') , 'info');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 	if (!isset($_POST['Account'])) {
 		prnMsg(__('An account or range of accounts must be selected from the list box') , 'info');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -127,7 +127,7 @@ if (isset($_POST['MakeCSV'])) {
 
 	if ($fp == false) {
 		prnMsg(__('Could not open or create the file under') . ' ' . $FileName, 'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -270,4 +270,4 @@ if (isset($_POST['MakeCSV'])) {
 	echo '<p><a href="' . $FileName . '">' . __('click here') . '</a> ' . __('to view the file') . '<br />';
 } /* end of if CreateCSV button hit */
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

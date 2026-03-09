@@ -5,9 +5,9 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Sales Category Maintenance');
 $ViewTopic = 'Setup';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/ImageFunctions.php');
+include(__DIR__ . '/includes/ImageFunctions.php');
 
 if (isset($_GET['SelectedCategory'])) {
 	$SelectedCategory = mb_strtoupper($_GET['SelectedCategory']);
@@ -207,7 +207,7 @@ if (isset($SearchResult)) {
 			<input type="submit" name="AddItems", value="', __('Add items to category'), '" />
 		</div>';
 
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 } //end if SearchResults to show
 if (isset($_POST['SubmitCategory'])) {
@@ -528,4 +528,4 @@ if (!isset($_GET['Select'])) {
 	</form>';
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

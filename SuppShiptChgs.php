@@ -7,7 +7,7 @@ This is cleared against credits to the GRN suspense when the products are receiv
 purchase price variance calculated when the shipment is closed */
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefineSuppTransClass.php');
+include(__DIR__ . '/includes/DefineSuppTransClass.php');
 
 /* Session started here for password checking and authorisation level check */
 require(__DIR__ . '/includes/session.php');
@@ -16,7 +16,7 @@ $Title = __('Shipment Charges or Credits');
 $ViewTopic = 'AccountsPayable';
 $BookMark = '';
 
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
 	echo '<a href="' . $RootPath . '/SupplierInvoice.php" class="toplink">' . __('Back to Invoice Entry') . '</a>';
@@ -31,7 +31,7 @@ echo '<p class="page_title_text">
 if (!isset($_SESSION['SuppTrans'])){
 	prnMsg(__('Shipment charges or credits are entered against supplier invoices or credit notes respectively') . '. ' . __('To enter supplier transactions the supplier must first be selected from the supplier selection screen') . ', ' . __('then the link to enter a supplier invoice or credit note must be clicked on'),'info');
 	echo '<br /><a href="' . $RootPath . '/SelectSupplier.php">' . __('Select a supplier') . '</a>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 	/*It all stops here if there aint no supplier selected and invoice/credit initiated ie $_SESSION['SuppTrans'] started off*/
 }
@@ -161,4 +161,4 @@ echo '<div class="centre">
 	</div>
 	</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

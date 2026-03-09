@@ -8,7 +8,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('UTILITY PAGE That sets up a new blank company record if not already existing');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 $SQL = "SELECT COUNT(coycode) FROM companies";
 $Result = DB_query($SQL);
@@ -19,7 +19,7 @@ if ($MyRow[0]==0){
 	$Result = DB_query($SQL);
 } else {
 	prnMsg(__('An existing company record is set up already. No alterations have been made'),'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -97,4 +97,4 @@ if ($MyRow[0]==0){
 
 prnMsg(__('Company record is now available for modification by clicking') . '<br /><br /><a href="' . $RootPath . '/CompanyPreferences.php">' . __('this link') . '</a>','success');
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

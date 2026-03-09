@@ -8,7 +8,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Sales Inquiry');
 $ViewTopic = 'Sales';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
@@ -1283,4 +1283,4 @@ function TempStockmoves() {
 
 } // End of function TempStockmoves
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

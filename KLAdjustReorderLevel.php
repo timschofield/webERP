@@ -5,13 +5,13 @@ define("NUMBER_OF_TESTS", 7);
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('KL Reorder Level Adjustments');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/KLDefines.php');
-include('includes/KLBoards.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
-include('includes/KLReorderLevel.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLBoards.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLReorderLevel.php');
 
 $begintime = time_start();
 
@@ -31,4 +31,4 @@ KL_DailyRLAdjustmentsForPackaging($ShowMessages, $UpdateDB, $EmailText);
 
 prnMsg("Performed ". NUMBER_OF_TESTS . " RL adjustement strategies",'success');
 time_finish($begintime);
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

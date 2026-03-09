@@ -3,13 +3,13 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('KL Set Online Shop Categories');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/KLDefines.php');
-include('includes/KLBoards.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
-include('includes/OCOpenCartGeneralFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLBoards.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/OCOpenCartGeneralFunctions.php');
 
 $UpdateDB = true;
 
@@ -134,7 +134,7 @@ if (DB_num_rows($Result) != 0){
 	prnMsg("Number of items associated to website catalog: " . locale_number_format($ItemsAdded));
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 
 /********************************************************************************************************
 				Associated functions 

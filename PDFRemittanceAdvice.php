@@ -4,7 +4,7 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 if (isset($_POST['PaymentDate'])) {
 	$_POST['PaymentDate'] = ConvertSQLDate($_POST['PaymentDate']);
@@ -39,10 +39,10 @@ if (
 	$SuppliersResult = DB_query($SQL);
 	if (DB_num_rows($SuppliersResult) == 0) {
 		$Title = __('Print Remittance Advices Error');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		prnMsg(__('There were no remittance advices to print out for the supplier range and payment date specified'), 'warn');
 		echo '<br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . __('Back') . '</a>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -161,7 +161,7 @@ if (
 	$Title = __('Remittance Advices');
 	$ViewTopic = 'AccountsPayable';
 	$BookMark = '';
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" target="_blank">';
@@ -206,5 +206,5 @@ if (
 
 	echo '</form>';
 
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 }

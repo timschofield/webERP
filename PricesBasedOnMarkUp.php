@@ -5,9 +5,9 @@ require(__DIR__ . '/includes/session.php');
 $Title=__('Update Pricing');
 $ViewTopic = 'Sales';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['PriceStartDate'])){$_POST['PriceStartDate'] = ConvertSQLDate($_POST['PriceStartDate']);}
 if (isset($_POST['PriceEndDate'])){$_POST['PriceEndDate'] = ConvertSQLDate($_POST['PriceEndDate']);}
@@ -251,12 +251,12 @@ if (isset($_POST['UpdatePrices'])){
 
 		if ($_POST['PriceList']=='0'){
 			echo '<br />' . __('The price list/sales type to be updated must be selected first');
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 		if ($_POST['CurrCode']=='0'){
 			echo '<br />' . __('The currency of prices to be updated must be selected first');
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 		if (Is_Date($_POST['PriceEndDate'])){
@@ -382,4 +382,4 @@ if (isset($_POST['UpdatePrices'])){
 		}//end while loop around items in the category
 	}
 }
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

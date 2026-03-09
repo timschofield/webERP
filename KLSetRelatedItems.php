@@ -3,13 +3,13 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('KL Set Related Items');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/KLDefines.php');
-include('includes/KLBoards.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/UIGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLBoards.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
 $UpdateDB = true;
 
@@ -119,4 +119,4 @@ if (DB_num_rows($Result) != 0){
 			</div>';
 	prnMsg("Number of related items pairs in website catalog: " . locale_number_format($i));
 }
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

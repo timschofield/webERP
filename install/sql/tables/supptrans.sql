@@ -17,6 +17,7 @@ CREATE TABLE `supptrans` (
   `chequeno` varchar(16) NOT NULL DEFAULT '',
   `void` tinyint(1) NOT NULL DEFAULT '0',
   `id` int NOT NULL AUTO_INCREMENT,
+  `balance` double GENERATED ALWAYS AS (((`ovamount` + `ovgst`) - `alloc`)) STORED,
   PRIMARY KEY (`id`),
   KEY `DueDate` (`duedate`),
   KEY `Hold` (`hold`),

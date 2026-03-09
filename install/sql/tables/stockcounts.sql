@@ -1,6 +1,6 @@
 CREATE TABLE `stockcounts` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `stockid` varchar(64) NOT NULL DEFAULT '',
   `loccode` varchar(5) NOT NULL DEFAULT '',
   `qtycounted` double NOT NULL DEFAULT '0',
   `reference` varchar(20) NOT NULL DEFAULT '',

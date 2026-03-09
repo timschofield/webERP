@@ -5,10 +5,10 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Chart of Accounts Maintenance for POIK');
 $ViewTopic= 'GeneralLedger';
 $BookMark = 'GLAccounts';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/UIGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
 if (isset($_POST['SelectedAccount'])){
 	$SelectedAccount = $_POST['SelectedAccount'];
@@ -166,4 +166,4 @@ if (isset($SelectedAccount)) {
 
 echo '<p />';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

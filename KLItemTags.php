@@ -3,10 +3,10 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Item Tags') . ' / ' . __('Maintenance');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/UIGeneralFunctions.php');
-include('includes/KUIGeneralFunctions.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/KUIGeneralFunctions.php');
 
 if (isset($_POST['SelectedTag'])){
 	$SelectedTag = mb_strtoupper($_POST['SelectedTag']);
@@ -232,5 +232,5 @@ if (! isset($_GET['delete'])) {
 
 } // end if user wish to delete
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 

@@ -5,9 +5,9 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Depreciation Journal Entry');
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetDepreciation';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 // Check if ProcessDate is set before converting it
 if (isset($_POST['ProcessDate'])){
@@ -285,4 +285,4 @@ if (isset($_POST['CommitDepreciation']) AND $InputError == false){
 		</div>
 	</form>';
 }
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

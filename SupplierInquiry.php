@@ -7,9 +7,9 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Supplier Inquiry');
 $ViewTopic = 'AccountsPayable';// RChacon: Is there any content for Supplier Inquiry?
 $BookMark = 'AccountsPayable';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['TransAfterDate'])){$_POST['TransAfterDate'] = ConvertSQLDate($_POST['TransAfterDate']);}
 
@@ -21,7 +21,7 @@ if (!isset($_GET['SupplierID']) AND !isset($_SESSION['SupplierID'])) {
 			<div class="centre">
 				<a href="' . $RootPath . '/SelectSupplier.php">' . __('Select a Supplier to Inquire On') . '</a>
 			</div>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 } else {
 	if (isset($_GET['SupplierID'])) {
@@ -113,7 +113,7 @@ if ($NIL_BALANCE == true) {
 	$SupplierRecord['overdue1'] = 0;
 	$SupplierRecord['overdue2'] = 0;
 }
-include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
+include(__DIR__ . '/includes/CurrenciesArray.php'); // To get the currency name from the currency code.
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/supplier.png" title="', // Icon image.
@@ -192,7 +192,7 @@ $TransResult = DB_query($SQL, $ErrMsg);
 if (DB_num_rows($TransResult) == 0) {
 	echo '<br /><div class="centre">' . __('There are no transactions to display since') . ' ' . $_POST['TransAfterDate'];
 	echo '</div>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -298,4 +298,4 @@ while($MyRow = DB_fetch_array($TransResult)) {
 }// End of while loop
 
 echo '</tbody></table>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

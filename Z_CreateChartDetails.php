@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Create Chart Details Records');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 /* Script to insert ChartDetails records where one should already exist
 only necessary where manual entry of chartdetails has stuffed the system */
@@ -94,4 +94,4 @@ if (DB_num_rows($ChartDetailsNotSetUpResult)>0){
 	prnMsg(__('No additional chart details were required to be added'),'success');
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

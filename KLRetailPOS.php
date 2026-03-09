@@ -38,31 +38,31 @@ v 1.00 2011-08-10: Shops start using it.
 v 1.00 2011-07-25: Kantor starts using it.
 *********************************************************************/
 
-include('includes/DefineCartClass.php');
+include(__DIR__ . '/includes/DefineCartClass.php');
 
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('POS ' . $_SESSION['locationname']);
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/GetPrice.php');
-include('includes/SQL_CommonFunctions.php');
-include('includes/StockFunctions.php');
-include('includes/GetSalesTransGLCodes.php');
+include(__DIR__ . '/includes/GetPrice.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/StockFunctions.php');
+include(__DIR__ . '/includes/GetSalesTransGLCodes.php');
 
-include('includes/KLDefines.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/KLPOSGeneral.php');
-include('includes/KLEmails.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLPOSGeneral.php');
+include(__DIR__ . '/includes/KLEmails.php');
 
-include('includes/WebClientPrint/WebClientPrint.php');
-include('includes/KLESCPOSCommands.php');
+include(__DIR__ . '/includes/WebClientPrint/WebClientPrint.php');
+include(__DIR__ . '/includes/KLESCPOSCommands.php');
 
-include('includes/KLPOSInit.php');
+include(__DIR__ . '/includes/KLPOSInit.php');
 
 if (!isset($_SESSION['SalesmanLogin']) or $_SESSION['SalesmanLogin'] == '') {
 	prnMsg(__('You are not properly logged in. Please logout and login before processing any sale.'), 'error);');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -152,7 +152,7 @@ if (isset($_POST['CancelOrder'])) {
 	prnMsg(__('This sale has been cancelled as requested'), 'success');
 	echo '<br /><br /><a href="' . $_SERVER['PHP_SELF'] . '">' .
 		__('Start a new Retail Sale in ') . $_SESSION['Items' . $identifier]->LocationName . '</a>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 
 } else { /*Not cancelling the order */
@@ -275,7 +275,7 @@ if (isset($_POST['OrderItems'])
 					}
 				} else {
 					// it's not packaging, so a sold item
-					include('includes/SelectOrderItems_IntoCart.php');
+					include(__DIR__ . '/includes/SelectOrderItems_IntoCart.php');
 					$_SESSION['Items' . $identifier]->GetTaxes(($_SESSION['Items' . $identifier]->LineCounter - 1));
 				}
 			}
@@ -374,7 +374,7 @@ if (isset($NewItem)) {
 	$Discount = 0; /*By default - can change later or discount category override */
 	$NewItemDue = date($_SESSION['DefaultDateFormat']);
 	$NewPOLine = 0;
-	include('includes/SelectOrderItems_IntoCart.php');
+	include(__DIR__ . '/includes/SelectOrderItems_IntoCart.php');
 	$_SESSION['Items' . $identifier]->GetTaxes(($_SESSION['Items' . $identifier]->LineCounter - 1));
 } /*end of if its a new item */
 
@@ -387,7 +387,7 @@ if (isset($NewItemArray) and isset($_POST['OrderItems'])) {
 			$Discount = 0; /*By default - can change later or discount category override */
 			$NewItemDue = date($_SESSION['DefaultDateFormat']);
 			$NewPOLine = 0;
-			include('includes/SelectOrderItems_IntoCart.php');
+			include(__DIR__ . '/includes/SelectOrderItems_IntoCart.php');
 			$_SESSION['Items' . $identifier]->GetTaxes(($_SESSION['Items' . $identifier]->LineCounter - 1));
 		} /*end of if its a new item */
 	}
@@ -431,9 +431,9 @@ if (count($_SESSION['Items' . $identifier]->LineItems) > 0 and !isset($_POST['Pr
 //   T H I S   W H E R E   T H E   S A L E  I S   D I S P L A Y E D
 // *************************************************************************
 */
-	include('includes/KLPOSItemsTable.php');
-	include('includes/KLPOSPackagingTable.php');
-	include('includes/KLPOSPaymentsTable.php');
+	include(__DIR__ . '/includes/KLPOSItemsTable.php');
+	include(__DIR__ . '/includes/KLPOSPackagingTable.php');
+	include(__DIR__ . '/includes/KLPOSPaymentsTable.php');
 
 	/////////////////////////////////////////////////
 	// Buttons confirm / recalculate the sale
@@ -617,7 +617,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 		if ($_SESSION['CompanyRecord'] == 0) {
 			/*The company data and preferences could not be retrieved for some reason */
 			prnMsg(__('The company information and preferences could not be retrieved. Please call the office inmediately'), 'error');
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 
@@ -648,7 +648,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 			/*The area is wrong for any reason */
 			prnMsg('ERROR POS0050: The area ' . $Area . ' is not defined. Please call the office inmediately', 'error');
 			$Result = DB_Txn_Rollback();
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 
@@ -807,7 +807,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 		}
 		// Check if an error occurred during tax insertion before proceeding
 		if ($InputError) {
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 
@@ -1092,7 +1092,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 		} /*end of OrderLine loop */
 		// Check if an error occurred during order line processing
 		if ($InputError) {
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 
@@ -1116,7 +1116,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 				prnMsg(__('Exchange rate is zero, cannot post debtor GL transaction.'), 'error');
 				$InputError = true;
 				DB_Txn_Rollback();
-				include('includes/footer.php');
+				include(__DIR__ . '/includes/footer.php');
 				exit();
 			}
 		}
@@ -1247,7 +1247,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 		}
 		// Check if an error occurred during tax GL posting
 		if ($InputError) {
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 
@@ -1934,7 +1934,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 		$FileName = GetFilenameFromPOSIdentifier($identifier);
 		file_put_contents($FileName, $Receipt);
 		$TextActionToPrint = 'Print the customer receipt';
-		include('includes/KLSilentPrinting.php');
+		include(__DIR__ . '/includes/KLSilentPrinting.php');
 	   //################## PRINTING STUFF #####################
 
 		unset($_SESSION['Items' . $identifier]->LineItems);
@@ -1989,4 +1989,4 @@ if (!isset($_POST['ProcessSale'])) {
 	}
 }
 echo '</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

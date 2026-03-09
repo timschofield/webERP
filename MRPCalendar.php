@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('MRP Calendar');
 $ViewTopic = 'MRP';
 $BookMark = 'MRP_Calendar';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
@@ -317,4 +317,4 @@ function ShowInputForm(&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DIS
 
 } // End of function ShowInputForm()
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

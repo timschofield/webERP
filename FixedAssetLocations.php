@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Fixed Asset Locations');
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetLocations';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title.'
@@ -179,4 +179,4 @@ if (isset($_GET['SelectedLocation'])) {
 echo '</div>
 	</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

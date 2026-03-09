@@ -35,8 +35,9 @@ width:90%;
 height:auto;
 }
 a {
-color:#4D4D4D;
+color:inherit;
 text-decoration:none;
+display:inline;
 }
 a:hover {
 color:#0088CD;

@@ -5,7 +5,7 @@ $PageSecurity = 15; // hard coded in case database is old and PageSecurity stuff
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Upgrade webERP Database');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (!isset($_POST['DoUpgrade'])) {
 
@@ -161,7 +161,7 @@ if (isset($_POST['DoUpgrade'])) {
 				case '4.10.0':
 					if (!is_writable('config.php')) {
 						prnMsg( __('To perform this upgrade the web server must have write access to the config.php file. Currently the web-server is reporting that it does not have appropriate permission. Please ensure config.php is writable and run the upgrade again'), 'warning');
-						include('includes/footer.php');
+						include(__DIR__ . '/includes/footer.php');
 						exit();
 					} else {
 						$ConfigFileContents = file_get_contents('config.php');
@@ -293,8 +293,8 @@ if (isset($_POST['DoUpgrade'])) {
 	DB_ReinstateForeignKeys();
 	/*Now get the modified VersionNumber and script pagesecurities */
 	$ForceConfigReload = true;
-	include('includes/GetConfig.php');
+	include(__DIR__ . '/includes/GetConfig.php');
 	$ForceConfigReload = false;
 } /*Dont do upgrade */
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

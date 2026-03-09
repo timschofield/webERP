@@ -277,7 +277,8 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $UpdateDB, $RootPath, 
 								<th>' . __('Category') . '</th>
 								<th>' . __('Description') . '</th>
 								<th>' . __('Toko From') . '</th>
-								<th>' . __('RL From') . '</th>
+								<th>' . __('Old RL @From') . '</th>
+								<th>' . __('New RL @From') . '</th>
 								<th>' . __('Needed At') . '</th>
 								<th>' . __('Strategy') . '</th>
 							</tr>';
@@ -358,10 +359,18 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $UpdateDB, $RootPath, 
 					if ($LocationsToDistribute != 0){
 						// We have some locations to distribute the stock
 						while ($MyDistribution = DB_fetch_array($DistributionResult)) {
-							// distribute the stock between the locations with RL>0, updating the RL
-							$NewRL = ceil($QtyToDistribute / ($LocationsToDistribute - $LocationsDistributed));
-							// Fix corrections to some models, due to space restrictions, or other exceptions
-							$NewRL = MaxRLCorrectionSomeModels($MyRow['stockid'], $MyDistribution['loccode'], $NewRL);
+							// if we are processing the Online shop, we do not need to recalculated $NewRL
+							// as it is items already sold and we just need to update the RL of the other locations to be able to transfer 
+							// the stock back to kantor to be processed
+							// This assumes CODE_ONLINE_SHOP is the shop with highest priority in the distribution list, so the first one to be processed
+							if ($MyDistribution['loccode'] == CODE_ONLINE_SHOP){
+								$NewRL = $MyDistribution['oldrl'];
+							} else {
+								// distribute the stock between the locations with RL>0, updating the RL
+								$NewRL = ceil($QtyToDistribute / ($LocationsToDistribute - $LocationsDistributed));
+								// Fix corrections to some models, due to space restrictions, or other exceptions
+								$NewRL = MaxRLCorrectionSomeModels($MyRow['stockid'], $MyDistribution['loccode'], $NewRL);
+							}
 							SetReorderLevel("Rebalancing", $MyRow['stockid'], $MyDistribution['loccode'], $MyDistribution['oldrl'], $NewRL, $UpdateDB);
 							$Strategy = "Distribute available stock between shops with RL > 0";
 							$QtyToDistribute = $QtyToDistribute - $NewRL;
@@ -374,6 +383,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $UpdateDB, $RootPath, 
 										<td>'.$MyRow['description'].'</td>
 										<td>'.$MyDistribution['loccode'].'</td>
 										<td class="number">'.locale_number_format($MyDistribution['oldrl'],0).'</td>
+										<td class="number">'.locale_number_format($NewRL,0).'</td>
 										<td>'.$MyRow['locationneeded'].'</td>
 										<td>'.$Strategy.'</td>
 									</tr>';
@@ -1066,7 +1076,7 @@ function OnlineReorderLevelAdjustments($ShowMessages, $UpdateDB, $RootPath, $Ema
 			$TableHeader = '<tr>
 								<th>' . __('#') . '</th>
 								<th>' . __('Code') . '</th>
-								<th>' . __('QOH = New RL') . '</th>
+								<th>' . __('New RL') . '</th>
 								<th>' . __('Old RL') . '</th>
 							</tr>';
 			echo '<div>

@@ -36,6 +36,8 @@ height:auto;
 }
 a {
 text-decoration:none;
+display:inline-block;
+color:inherit;
 }
 a:hover {
 text-decoration:underline;

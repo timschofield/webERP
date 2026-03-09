@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Costed Bill Of Material');
 $ViewTopic = 'Manufacturing';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_GET['StockID'])){
 	$StockID =trim(mb_strtoupper($_GET['StockID']));
@@ -228,4 +228,4 @@ if (isset($StockID) and $StockID!= ""){
 	prnMsg(__('Enter a stock item code below') . ', ' . __('to view the costed bill of material for'),'info');
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

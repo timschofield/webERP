@@ -12,7 +12,7 @@ $ViewTopic = 'SpecialUtilities';
 $BookMark = 'Z_poAdmin';
 $Title = __('Maintain Language Files');
 
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/maintenance.png" title="', // Icon image.
@@ -37,4 +37,4 @@ if (!is_writable('./locale/' . $_SESSION['Language'])) {
 	echo '<p><a href="' . $RootPath . '/locale/'.$_SESSION['Language'].'/LC_MESSAGES/messages.mo">' .  __('Download messages.mo file') . '</a>';
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

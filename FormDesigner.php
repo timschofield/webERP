@@ -22,7 +22,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Form Designer');
 $ViewTopic = 'Setup';
 $BookMark = 'FormDesigner';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/reports.png" title="', // Icon image.
 __('Form Designer'), '" /> ', // Icon title.
@@ -205,7 +205,7 @@ if (empty($_POST['FormName'])) {
 			</tr>
 		</table>
 		</form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 } // End of if (empty($_POST['FormName']))
 /* If we are not previewing the form then load up the simplexml object from the main xml file */
@@ -352,4 +352,4 @@ echo '</div>
 
 echo '</div>', '</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

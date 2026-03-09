@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Payment Methods');
 $ViewTopic = 'ARTransactions';
 $BookMark = 'PaymentMethods';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . __('Payments') .
 	'" alt="" />' . ' ' . $Title . '</p>';
@@ -322,4 +322,4 @@ if (! isset($_GET['delete'])) {
 
 } //end if record deleted no point displaying form to add record
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -4,11 +4,11 @@ require(__DIR__ . '/includes/session.php');
 
 $Title = __('Print PTADU Consignment Invoices');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/UIGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
-include('includes/KLDefines.php');
-include('includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
 
 // The default company to Invoice from (PTADU).
 if (!isset($_POST['CompanyFrom'])) {
@@ -31,11 +31,11 @@ if (isset($_POST['submit'])) {
 	display($Title);
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 
 
 function submit($Title, $CompanyFrom, $StartDate, $EndDate) {
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	$StartDate = FormatDateForSQL($StartDate);
 	$EndDate = FormatDateForSQL($EndDate);
@@ -118,7 +118,7 @@ function submit($Title, $CompanyFrom, $StartDate, $EndDate) {
 function display($Title) {
 // Display form fields. This function is called the first time
 // the page is called.
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';

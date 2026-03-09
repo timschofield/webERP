@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Users currently logged in');
 $ViewTopic = 'Setup';// Filename in ManualContents.php's TOC.
 $BookMark = '';// Anchor's id in the manual's html document.
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/user.png" title="' . __('Logged In Users') . '" alt="" />' . ' ' . $Title .
@@ -54,4 +54,4 @@ while ($MyRow = DB_fetch_array($Result)) {
 echo '</tbody>
 	</table>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

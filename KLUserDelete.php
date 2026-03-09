@@ -3,10 +3,10 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Delete webERP User');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/KLGeneralFunctions.php');
-include('includes/KLEmails.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLEmails.php');
 
 if (!isset($_GET['UserID']) OR $_GET['UserID']==''){
 	prnMsg( __('Script needs an User ID to delete it') , 'error');
@@ -14,4 +14,4 @@ if (!isset($_GET['UserID']) OR $_GET['UserID']==''){
 	DeleteWeberpUser($_GET['UserID'], $KL_SystemAdmin);
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

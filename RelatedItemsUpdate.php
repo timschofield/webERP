@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Update Related Items');
 $ViewTopic = 'QualityAssurance';
 $BookMark = 'QA_Tests';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<a href="' . $RootPath . '/SelectProduct.php" class="toplink">' . __('Back to Items') . '</a>';
 
@@ -16,7 +16,7 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	$Title, '" /> ', // Icon title.
 	$Title, '</p>';// Page title.
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 //initialise no input errors assumed initially before we test
 $InputError = 0;
@@ -46,7 +46,7 @@ if (DB_num_rows($Result)==0){
 if (!isset($Item)){
 	echo '<p>';
 	prnMsg(__('An item must first be selected before this page is called') . '. ' . __('The product selection page should call this page with a valid product code'),'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -205,4 +205,4 @@ echo '<field>
 	</div>';
 
 echo '</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Search Work Orders');
 $ViewTopic = 'Manufacturing';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
@@ -38,7 +38,7 @@ if (isset($SelectedWO) AND $SelectedWO!='') {
 	if (!is_numeric($SelectedWO)){
 		  prnMsg(__('The work order number entered MUST be numeric'),'warn');
 		  unset ($SelectedWO);
-		  include('includes/footer.php');
+		  include(__DIR__ . '/includes/footer.php');
 		  exit();
 	} else {
 		echo __('Work Order Number') . ' - ' . $SelectedWO;
@@ -394,4 +394,4 @@ if (!isset($StockID)) {
 	echo '</form>';
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

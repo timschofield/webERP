@@ -4,10 +4,10 @@ require(__DIR__ . '/includes/session.php');
 
 $Title = __('Export XML File for Faktur Pajak');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/UIGeneralFunctions.php');
-include('includes/KLDefines.php');
-include('includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
 // The default company to Invoice from (PTADU).
 if (!isset($_POST['CompanyFrom'])) {
@@ -244,26 +244,26 @@ function submit($CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice) {
 
 		// Output the formatted XML
 		echo $xmlOutput;
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 			
 		} else {
-			include('includes/header.php');
+			include(__DIR__ . '/includes/header.php');
 			prnMsg('No data to create a Faktur Pajak','warn');
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 		}
 	} else {
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 
 			'</p>';
 		prnMsg($InputErrorMessage, "warn");
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 } // End of function submit()
 
 
 function display($Title) {
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
           <div>
@@ -287,6 +287,6 @@ function display($Title) {
 
 	echo '</form>';
 	
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 
 } // End of function display()

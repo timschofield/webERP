@@ -10,7 +10,7 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 $FromCriteria = '1'; /*Category From */
 $ToCriteria = 'zzzzzzzz'; /*Category To */
@@ -26,9 +26,9 @@ $Recipients = GetMailList('InventoryValuationRecipients');
 
 if (sizeOf($Recipients) == 0) {
 	$Title = __('Inventory Valuation') . ' - ' . __('Problem Report');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	prnMsg(__('There are no members of the "InventoryValuationRecipients" email group'), 'warn');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -149,10 +149,10 @@ $HTML .= '</tbody>
 
 if ($ListCount == 0) {
 	$Title = __('Print Inventory Valuation Error');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<p>' . __('There were no items with any value to print out for the location specified');
 	echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit(); // Javier: needs check
 
 } else {
@@ -181,7 +181,7 @@ if ($ListCount == 0) {
 	unlink($PDFFileName);
 
 	$Title = __('Send Report By Email');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	if ($Result) {
 		$Title = __('Print Inventory Valuation');
@@ -193,5 +193,5 @@ if ($ListCount == 0) {
 		echo '<div class="centre"><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a></div>';
 	}
 
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 }

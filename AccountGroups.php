@@ -7,9 +7,9 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Account Groups');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'AccountGroups';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 function CheckForRecursiveGroup($ParentGroupName, $GroupName) {
 
@@ -322,7 +322,7 @@ if (!isset($_GET['delete'])) {
 		$Result = DB_query($SQL, $ErrMsg);
 		if (DB_num_rows($Result) == 0) {
 			prnMsg( __('The account group name does not exist in the database'),'error');
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 		$MyRow = DB_fetch_array($Result);
@@ -441,4 +441,4 @@ if (!isset($_GET['delete'])) {
 
 } //end if record deleted no point displaying form to add record
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -3,7 +3,7 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Financial planning for active (Authorised, Printed, Pending) Purchase Orders by Supplier');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['submit'])) {
     submit($_POST['Country'], $_POST['Currency'], $RootPath, $Title);
@@ -232,4 +232,4 @@ function display($Title)
 
 } // End of function display()
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

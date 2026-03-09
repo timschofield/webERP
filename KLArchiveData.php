@@ -23,12 +23,12 @@ require(__DIR__ . '/includes/session.php');
 
 $Title = __('KL Archive Data from Production DB into Archive DB');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/KLDefines.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/UIGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
-include('includes/ArchiveConnectDB.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/ArchiveConnectDB.php');
 
 
 if (!isset($_POST['ArchiveGltransPeriod'])) {
@@ -88,7 +88,7 @@ function submit($ArchiveGltransPeriod,
 				$ArchiveBanktransPeriod,
 				$ArchiveKlconsignmentPeriod) {
 
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	ArchiveTableGltrans($ArchiveGltransPeriod);
 
 	ArchiveTableStockmoves($ArchiveStockmovesPeriod);
@@ -103,7 +103,7 @@ function submit($ArchiveGltransPeriod,
 	ArchiveTableBanktrans($ArchiveBanktransPeriod);
 	ArchiveTableKlconsignment($ArchiveKlconsignmentPeriod);
 
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 
 } // End of function submit()
 
@@ -116,7 +116,7 @@ function submit($ArchiveGltransPeriod,
  * @return void
  **************************************************************************************************************/
 function display($Title) {
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">
 		<div>
@@ -171,7 +171,7 @@ function display($Title) {
 	echo '</div>
 		</form>';
 
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 
 } // End of function display()
 

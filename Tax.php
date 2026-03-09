@@ -4,7 +4,7 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 	// Get period end date
@@ -341,10 +341,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 
 	if ($SalesCount + $PurchasesCount + $PettyCashCount == 0) {
 		$Title = __('Taxation Reporting Error');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		prnMsg(__('There are no tax entries to list'), 'info');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	} else {
 		if (isset($_POST['PrintPDF'])) {
@@ -363,10 +363,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 			));
 		} else {
 			$Title = __('Tax Report');
-			include('includes/header.php');
+			include(__DIR__ . '/includes/header.php');
 			echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/gl.png" title="' . __('Tax Report') . '" alt="" />' . ' ' . __('Tax Report') . '</p>';
 			echo $HTML;
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 		}
 	}
 } else {
@@ -374,7 +374,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 	$Title = __('Tax Reporting');
 	$ViewTopic = 'Tax';
 	$BookMark = 'Tax';
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_delete.png" title="' . __('Tax Report') . '" />' . ' ' . __('Tax Reporting') . '</p>';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" target="_blank">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -432,5 +432,5 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 			<input type="submit" name="View" title="View Report" value="' . __('View') . '" />
 		</div>
 		</form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 }

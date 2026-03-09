@@ -7,9 +7,9 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Customer Contacts');
 $ViewTopic = 'AccountsReceivable';
 $BookMark = 'AddCustomerContacts';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['Id'])) {
 	$Id = (int)$_GET['Id'];
@@ -278,4 +278,4 @@ if (!isset($_GET['delete'])) {
 
 } //end if record deleted no point displaying form to add record
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -3,15 +3,15 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('KL Update stock category');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/KLBoards.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/KLBoards.php');
 
 //Get Out if we have no StockId or OldCat or NewCat
 If (!isset($_GET['StockId']) OR $_GET['OldCat']=='' OR $_GET['NewCat']==''){
 	prnMsg( __('We need an item code and Old Category and New Category codes') , 'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -24,7 +24,7 @@ if (DB_num_rows($Result)==0) {
 	prnMsg('Stock Category of ' . $_GET['StockId'] . ' changed from ' . $_GET['OldCat'] . ' to ' . $_GET['NewCat'] ,'success');
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 
 function ChangeItemStockCategory($StockID, $OldCat, $NewCat){
 	$Result = DB_Txn_Begin();

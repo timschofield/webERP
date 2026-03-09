@@ -11,7 +11,7 @@ for controlled items - used in:
 
 // we start with a batch or serial no header and need to display something for verification...
 
-include('includes/Add_SerialItemsOut.php');
+include(__DIR__ . '/Add_SerialItemsOut.php');
 
 global $Tableheader;
 
@@ -200,7 +200,7 @@ echo '</form>
 $ShowExisting=true;
 $_POST['EntryType']='Sequential';
 # if ($ShowExisting){
-	include('includes/InputSerialItemsExisting.php');
+	include(__DIR__ . '/InputSerialItemsExisting.php');
 # }
 echo '</td>
 	</tr>

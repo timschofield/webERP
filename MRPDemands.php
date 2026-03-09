@@ -9,7 +9,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('MRP Demands');
 $ViewTopic = 'MRP';
 $BookMark = 'MRP_MasterSchedule';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['Duedate'])){$_POST['Duedate'] = ConvertSQLDate($_POST['Duedate']);}
 
@@ -441,4 +441,4 @@ function display(&$StockID,&$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_D
 
 } // End of function display()
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

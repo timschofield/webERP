@@ -10,7 +10,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Audit Trail');
 $ViewTopic = 'Setup';
 $BookMark = 'AuditTrail';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
@@ -264,4 +264,4 @@ if (isset($_POST['View'])) {
 	}
 	echo '</table>';
 }
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

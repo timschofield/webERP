@@ -4,7 +4,7 @@
 
 require(__DIR__ . '/includes/session.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['SupplierID'])) {
 	$_SESSION['SupplierID']=$_GET['SupplierID'];
@@ -53,7 +53,7 @@ if ($_SESSION['geocode_integration'] == 1 AND isset($_SESSION['SupplierID'])) {
 $Title = __('Search Suppliers');
 $ViewTopic = 'AccountsPayable';
 $BookMark = 'SelectSupplier';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (!isset($_POST['PageOffset'])) {
 	$_POST['PageOffset'] = 1;
@@ -425,4 +425,4 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 	}
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

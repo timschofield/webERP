@@ -3,10 +3,10 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title=__('Update of PPH21 Deduction');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/UIGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
@@ -103,7 +103,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 	echo '<fieldset>
 		<legend>' . __('Selection Parameters') . '</legend>';
 
-	include('includes/KLPersonaliaParameterSelection.php');
+	include(__DIR__ . '/includes/KLPersonaliaParameterSelection.php');
 
 	echo '</fieldset>';
 	
@@ -113,4 +113,4 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
           </form>';
 
 } /*end of else not submit */
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

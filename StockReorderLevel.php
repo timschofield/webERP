@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Stock Re-Order Level Maintenance');
 $ViewTopic = 'Inventory';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_GET['StockID'])){
 	$StockID = trim(mb_strtoupper($_GET['StockID']));
@@ -104,4 +104,4 @@ echo '<br /><a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockIte
 
 echo '</div>
 	</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

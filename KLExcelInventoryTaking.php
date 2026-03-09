@@ -6,12 +6,12 @@ use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/KLDefines.php');
-include('includes/KLBoards.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/UIGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLBoards.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
 if (!isset($_POST['Categories'])) {
 	$_POST['Categories'] = [];
@@ -196,9 +196,9 @@ function submit($ListCategories, $Location) {
 
 		} else {
 			$Title = __('Excel file for Inventory Taking');
-			include('includes/header.php');
+			include(__DIR__ . '/includes/header.php');
 			prnMsg('Inventory Taking: No items to count');
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 		}
 	}
 } // End of function submit()
@@ -210,7 +210,7 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 // the page is called.
 	$Title = __('Export file for Inventory Taking at a location');
 
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -230,6 +230,6 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 	echo OneButtonCenteredForm('submit', __('Export Inventory Taking File'));
 
 	echo '</form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 
 } // End of function display()

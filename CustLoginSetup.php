@@ -5,16 +5,16 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Customer Login Configuration');
 $ViewTopic = 'Setup';// Filename in ManualContents.php's TOC.
 $BookMark = '';// Anchor's id in the manual's html document.
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
-//include('includes/LanguagesArray.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+//include(__DIR__ . '/includes/LanguagesArray.php');
 
 if (!isset($_SESSION['CustomerID'])){
 	echo '<br />
 		<br />';
 	prnMsg(__('A customer must first be selected before logins can be defined for it') . '<br /><br /><a href="' . $RootPath . '/SelectCustomer.php">' . __('Select A Customer') . '</a>','info');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -117,7 +117,7 @@ if (isset($_POST['submit'])) {
 			$ErrMsg = __('The user could not be added because');
 			$Result = DB_query($SQL, $ErrMsg);
 			prnMsg( __('A new customer login has been created'), 'success' );
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 	}
@@ -285,4 +285,4 @@ echo '<div class="centre">
     </div>
 	</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

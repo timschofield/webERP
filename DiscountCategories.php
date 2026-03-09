@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Discount Categories Maintenance');
 $ViewTopic = "SalesOrders";
 $BookMark = "DiscountMatrix";
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
 
@@ -68,7 +68,7 @@ if (isset($_POST['submit']) and !isset($_POST['SubmitCategory'])) {
 		$Result = DB_query($SQL);
 	} else {
 		prnMsg(__('There are no stock defined for this stock category, you must define stock for it first'),'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 }
@@ -268,4 +268,4 @@ if (!isset($_POST['SelectChoice'])) {
 	echo '</form>';
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

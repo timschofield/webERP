@@ -8,7 +8,7 @@
  *********************************************************************************************/
 
 include($PathPrefix . 'includes/LanguageSetup.php');
-include('LanguagesArray.php');
+include(__DIR__ . '/LanguagesArray.php');
 
 // KL RICARD Select the default text and css depending on the code version
 if (KLwebERPScriptCalledFromTEST()) {

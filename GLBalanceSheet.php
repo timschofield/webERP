@@ -27,20 +27,20 @@ if (!isset($IsIncluded)) {// Runs normally if this script is NOT included in ano
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 $GeneralTitle = __('Balance Sheet');
 $Title2 = __('Statement of Financial Position'); // Name as IAS.
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'BalanceSheet';
 
-include_once('includes/SQL_CommonFunctions.php');
-include_once('includes/AccountSectionsDef.php'); // This loads the $Sections variable
-include_once('includes/CurrenciesArray.php');// Array to retrieve currency name.
+include_once(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include_once(__DIR__ . '/includes/AccountSectionsDef.php'); // This loads the $Sections variable
+include_once(__DIR__ . '/includes/CurrenciesArray.php');// Array to retrieve currency name.
 
 // KL RICARD: prepare the data for each company
-include('includes/UIGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
 if (!isset($_POST['Company']) OR $_POST['Company'] == 'ALL') {
 	$_POST['Company'] = 'ALL';
@@ -480,7 +480,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			"Attachment" => false
 		));
 	} else {
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 
 		echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/gl.png" title="', // Icon image.
 		$Title, '" /> ', // Icon title.
@@ -499,13 +499,13 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			<input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" />
 		</div>' .
 		'</form>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 
 } else {
 	// Show a form to allow input of criteria for TB to show
 	if (!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 	}
 	if (!isset($_POST['ShowZeroBalance'])) {
 		$_POST['ShowZeroBalance'] = '';
@@ -587,5 +587,5 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		</div>',
 		'</form>';
 
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 }

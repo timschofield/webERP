@@ -7,9 +7,9 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('GLAccount - Users Authority Copy Authority');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = 'Z_GLAccountUsersCopyAuthority';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/maintenance.png" title="',// Icon image.
 	__('Copy Authority of GL Accounts from one user to another'), '" /> ',// Icon title.
@@ -91,4 +91,4 @@ echo '</fieldset>
 		'</div>
 	</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

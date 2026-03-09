@@ -15,14 +15,14 @@
 */
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefineSuppAllocsClass.php');
+include(__DIR__ . '/includes/DefineSuppAllocsClass.php');
 require(__DIR__ . '/includes/session.php');
 $Title = __('Supplier Payment') . '/' . __('Credit Note Allocations');
 $ViewTopic = 'ARTransactions';// Filename in ManualContents.php's TOC./* RChacon: To do ManualAPInquiries.html from ManualARInquiries.html */
 $BookMark = 'SupplierAllocations';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/transactions.png" title="', // Icon image.
@@ -37,7 +37,7 @@ if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 				__('If you hit refresh on this page after having just processed an allocation') . ', ' .
 				__('try to use the navigation links provided rather than the back button, to avoid this message in future'),
 			'warn');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -531,7 +531,7 @@ if (isset($_POST['AllocTrans'])){
   $Result = DB_query($SQL);
   if (DB_num_rows($Result) == 0){
 	prnMsg(__('There are no outstanding payments or credits yet to be allocated for this supplier'),'info');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
   }
   echo '<table class="selection">';
@@ -639,4 +639,4 @@ if (isset($_POST['AllocTrans'])){
 
 echo '</div>
       </form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -62,7 +62,7 @@ color:#4D4D4D;
 header .ScriptTitle {
 font-weight:bold;
 font-size:130%;
-display:inline;
+display:inline-block;
 padding:10px;
 margin-left:0px;
 }

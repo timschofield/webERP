@@ -4,12 +4,12 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 $Title = __('Top Items Searching');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/StockFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/StockFunctions.php');
 
 //check if input already
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
@@ -171,18 +171,18 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		));
 	} else {
 		$Title = __('Top Sales Items List');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . __('Top Sales Items List') . '" alt="" />' . ' ' . __('Top Sales Items List') . '
 			</p>';
 		echo $HTML;
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 
 } else {
 	$ViewTopic = 'Sales';
 	$BookMark = '';
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	echo '<p class="page_title_text">
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . __('Top Sales Order Search') . '" alt="" />' . ' ' . __('Top Sales Order Search') . '
@@ -286,5 +286,5 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			<input type="submit" name="View" title="View" value="' . __('View') . '" />
 		</div>
 	</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 }

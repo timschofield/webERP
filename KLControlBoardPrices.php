@@ -3,16 +3,16 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('KL Pricing Control Board');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/KLDefines.php');
-include('includes/KLBoards.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/KLPrices.php');
-include('includes/KLEmails.php');
-include('includes/SQL_CommonFunctions.php');
-include('includes/StockFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLBoards.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLPrices.php');
+include(__DIR__ . '/includes/KLEmails.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/StockFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
 $begintime = time_start();
 $NumberOfTestExecuted = 0;
@@ -254,7 +254,7 @@ if ($KL_SystemAdmin){
 	time_finish($begintime);
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 
 /********************************************************************************************
 FUNCTIONS ONLY USED IN PRICING CONTROL BOARD

@@ -4,10 +4,10 @@ require(__DIR__ . '/includes/session.php');
 
 $Title = __('Export PDF Salary Slips');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/KLDefines.php');
-include('includes/UIGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
 use Dompdf\Dompdf;
 
@@ -56,7 +56,7 @@ function submit($Company, $PeriodOfFile, $SalaryType) {
 
 	if (!$InputError){
 		// populates $SQL and $Result with the data to extract the salary slips
-		include('includes/KLPersonaliaSQLSalarySlips.php');
+		include(__DIR__ . '/includes/KLPersonaliaSQLSalarySlips.php');
 
 		if (DB_num_rows($Result) != 0){
 			// Let's start the real PDF creation 
@@ -73,7 +73,7 @@ function submit($Company, $PeriodOfFile, $SalaryType) {
 			// Make sure the included file doesn't start with whitespace or newlines
 			ob_start(); // Start output buffering
 			
-			include('includes/KLPersonaliaPDFNewSalarySlip.php');
+			include(__DIR__ . '/includes/KLPersonaliaPDFNewSalarySlip.php');
 			$HTML .= trim(ob_get_clean()); // Trim to remove any leading/trailing whitespace
 			
 			$EmployeesByBankTransferLLG = 0;
@@ -90,7 +90,7 @@ function submit($Company, $PeriodOfFile, $SalaryType) {
 			$firstSalarySlip = true; // Flag to track first salary slip
 
 			while ($MyRow = DB_fetch_array($Result)) {
-				include('includes/KLPersonaliaPDFCalculatedFields.php');
+				include(__DIR__ . '/includes/KLPersonaliaPDFCalculatedFields.php');
 				
 				// set information depending on payment method
 				if (strtoupper($MyRow['paymentmethod']) == 'BANK'){
@@ -116,7 +116,7 @@ function submit($Company, $PeriodOfFile, $SalaryType) {
 				// add one salary slip HTML
 				// Pass the firstSalarySlip flag to the included file
 				$isFirstSlip = $firstSalarySlip;
-				include('includes/KLPersonaliaPDFOneSalarySlip.php');
+				include(__DIR__ . '/includes/KLPersonaliaPDFOneSalarySlip.php');
 				$firstSalarySlip = false; // After first slip, set flag to false
 			}
 			
@@ -124,7 +124,7 @@ function submit($Company, $PeriodOfFile, $SalaryType) {
 			$HTML .= '<div class="page-break"></div>';
 
 			// Company header
-			include('includes/KLPersonaliaPDFCompanyHeader.php');
+			include(__DIR__ . '/includes/KLPersonaliaPDFCompanyHeader.php');
 
 			$HTML .= '<div class="font-large bold margin-top-5">';
 			$HTML .= 'Salary totals for ' . $PeriodMonth;
@@ -184,17 +184,17 @@ function submit($Company, $PeriodOfFile, $SalaryType) {
 			$DomPDF->stream($FileName, array('Attachment' => true));
 		
 		} else {
-			include('includes/header.php');
+			include(__DIR__ . '/includes/header.php');
 			prnMsg('No data to export PDF Monthly Salary Slips', 'info');
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 		}
 	} else {
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 
 			'</p>';
 		prnMsg($InputErrorMessage, "warn");
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 } // End of function submit()
 
@@ -203,7 +203,7 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 {
 // Display form fields. This function is called the first time
 // the page is called.
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
           <div>
@@ -217,7 +217,7 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 	echo '<fieldset>
 		<legend>' . __('Parameters Selection') . '</legend>';
 
-	include('includes/KLPersonaliaParameterSelection.php');
+	include(__DIR__ . '/includes/KLPersonaliaParameterSelection.php');
 
 	echo '</fieldset>';
 
@@ -225,6 +225,6 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 
 	echo '</div>
          </form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 
 } // End of function display()

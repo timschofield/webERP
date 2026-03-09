@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Reverse and Delete Supplier Payments');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 /* Only do deletions if user hits the button */
 if (isset($_POST['RevPayts']) AND Is_Date($_POST['PaytDate'])==1){
@@ -88,4 +88,4 @@ echo '<input type="submit" name="RevPayts" value="' . __('Reverse Supplier Payme
 echo '</div>
       </form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

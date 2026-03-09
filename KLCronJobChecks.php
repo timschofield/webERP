@@ -2,9 +2,9 @@
 
 $ForceConfigReload = true;
 
-include('includes/KLSessionCronJob.php');
+include(__DIR__ . '/includes/KLSessionCronJob.php');
 
-include('includes/KLCronJobFunctions.php');
+include(__DIR__ . '/includes/KLCronJobFunctions.php');
 
 /* Getting time now to calculate starting time */
 $time = microtime();

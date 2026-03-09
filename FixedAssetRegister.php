@@ -11,7 +11,7 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 if (isset($_POST['FromDate'])) {
 	$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);
@@ -247,10 +247,10 @@ if (isset($_POST['submit']) or isset($_POST['PrintPDF']) or isset($_POST['Spread
 	}
 	else {
 		$Title = __('Fixed Asset Register');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 		echo $HTML;
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 } else {
 	$Title = __('Fixed Asset Register');
@@ -258,7 +258,7 @@ if (isset($_POST['submit']) or isset($_POST['PrintPDF']) or isset($_POST['Spread
 	$ViewTopic = 'FixedAssets';
 	$BookMark = 'AssetRegister';
 
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	$Result = DB_query('SELECT categoryid,categorydescription FROM fixedassetcategories');
@@ -366,5 +366,5 @@ if (isset($_POST['submit']) or isset($_POST['PrintPDF']) or isset($_POST['Spread
 	</div>
 	</form>';
 
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 }

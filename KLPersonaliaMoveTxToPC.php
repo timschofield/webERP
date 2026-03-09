@@ -3,13 +3,13 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Move Monthly Salaries Data to Petty Cash');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/KLDefines.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/UIGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
 
 echo '<p class="page_title_text">
@@ -22,7 +22,7 @@ if (isset($_POST['submit'])) {
 	display($Title);
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 
 
 function submit($Company, $PeriodOfFile, $PaymentDate, $SalaryType) {
@@ -257,7 +257,7 @@ function display($Title)
 
 	echo '<fieldset><legend>' . __('Parameters Selection') . '</legend>';
 	
-	include('includes/KLPersonaliaParameterSelection.php');
+	include(__DIR__ . '/includes/KLPersonaliaParameterSelection.php');
 
  	echo FieldToSelectOneDate('PaymentDate', ConvertSQLDate(EndDateSQLFromPeriodNo($PeriodNow - 1)), __('Payment date'), '', '', '', true, false);
 	echo '</fieldset>';

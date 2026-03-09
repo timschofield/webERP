@@ -5,19 +5,19 @@ An array of class BankTrans objects - containing details of the bank transaction
 GLEntries objects to hold the GL analysis for each transaction */
 
 // NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
-include('includes/DefineImportBankTransClass.php');
+include(__DIR__ . '/includes/DefineImportBankTransClass.php');
 
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Imported Bank Transaction General Ledger Analysis');
 $ViewTopic = 'GeneralLedger';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (!isset($_SESSION['Trans'])){
 	prnMsg(__('This page can only be called from the importation of bank transactions page which sets up the data to receive the analysed general ledger entries'),'info');
 	echo '<br /><a href="' . $RootPath . '/ImportBankTrans.php">' . __('Import Bank Transactions') . '</a>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 	/*It all stops here if there ain't no bank transactions being imported i.e. $_SESSION['Trans'] has not been initiated
 	 */
@@ -27,7 +27,7 @@ $TransID = $_GET['TransID'] ?? $_POST['TransID'];
 if (!isset($TransID)){
 	prnMsg(__('This page can only be called from the importation of bank transactions page which sets up the data to receive the analysed general ledger entries'),'info');
 	echo '<br /><a href="' . $RootPath . '/ImportBankTrans.php">' . __('Import Bank Transactions') . '</a>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -315,4 +315,4 @@ if ($AllowGLAnalysis==false){
 	echo '<div class="centre"><input type="submit" name="AddGLCodeToTrans" value="' . __('Enter GL Line') . '"></div>';
 }
 echo '</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

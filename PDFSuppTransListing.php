@@ -1,12 +1,12 @@
 <?php
 
-include ('includes/session.php');
+include (__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
-include ('includes/SQL_CommonFunctions.php');
+include (__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['Date'])) {
 	$_POST['Date'] = ConvertSQLDate($_POST['Date']);
@@ -42,10 +42,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	if (DB_num_rows($Result) == 0) {
 		$Title = __('Payment Listing');
-		include ('includes/header.php');
+		include (__DIR__ . '/includes/header.php');
 		echo '<br />';
 		prnMsg(__('There were no transactions found in the database for the date') . ' ' . $_POST['Date'] . '. ' . __('Please try again selecting a different date'), 'info');
-		include ('includes/footer.php');
+		include (__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -154,17 +154,17 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 	else {
 		$Title = __('Inventory Planning Report');
-		include ('includes/header.php');
+		include (__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Supplier Transaction Listing') . '" alt="" />' . ' ' . __('Supplier Transaction Listing') . '</p>';
 		echo $HTML;
-		include ('includes/footer.php');
+		include (__DIR__ . '/includes/footer.php');
 	}
 
 } else { /*The option to print PDF was not hit */
 	$Title = __('Supplier Transaction Listing');
 	$ViewTopic = 'AccountsPayable';
 	$BookMark = '';
-	include ('includes/header.php');
+	include (__DIR__ . '/includes/header.php');
 
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . __('Supplier Transaction Listing') . '</p>';
 
@@ -199,6 +199,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	echo '</form>';
 
-	include ('includes/footer.php');
+	include (__DIR__ . '/includes/footer.php');
 
 }

@@ -496,12 +496,21 @@ function DeleteConfigValue($ConfName) {
 }
 
 function CreateTable($Table, $SQL, $CharacterSet='utf8mb4') {
+
+	$CollationSQL = "SHOW VARIABLES LIKE 'collation_connection'";
+	$Result = DB_query($CollationSQL);
+	if (DB_num_rows($Result) == 0) {
+		$Collation='utf8mb4_general_ci';
+	} else {
+		$MyRow = DB_fetch_row($Result);
+		$Collation = $MyRow[1];
+	}
 	$ShowSQL = "SHOW TABLES WHERE Tables_in_" . $_SESSION['DatabaseName'] . "='" . $Table . "'";
 	$Result = DB_query($ShowSQL);
 
 	if (DB_num_rows($Result) == 0) {
 		DB_IgnoreForeignKeys();
-		$Response = executeSQL($SQL . ' ENGINE=InnoDB DEFAULT CHARSET=' . $CharacterSet, false);
+		$Response = executeSQL($SQL . ' ENGINE=InnoDB DEFAULT CHARSET=' . $CharacterSet . ' COLLATE=' . $Collation, false);
 		DB_ReinstateForeignKeys();
 		if ($Response == 0) {
 			OutputResult(__('The table') . ' ' . $Table . ' ' . __('has been created'), 'success');
@@ -512,6 +521,7 @@ function CreateTable($Table, $SQL, $CharacterSet='utf8mb4') {
 		OutputResult(__('The table') . ' ' . $Table . ' ' . __('already exists'), 'info');
 	}
 }
+
 
 function ConstraintExists($Table, $Constraint) {
 	$SQL = "SELECT CONSTRAINT_NAME

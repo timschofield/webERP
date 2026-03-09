@@ -1,11 +1,11 @@
 <?php
-include ('includes/session.php');
+include (__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
-include ('includes/SQL_CommonFunctions.php');
+include (__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['FromDate'])) {
 	$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);
@@ -70,17 +70,17 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	if (DB_error_no() != 0) {
 		$Title = __('Transaction Listing');
-		include ('includes/header.php');
+		include (__DIR__ . '/includes/header.php');
 		prnMsg(__('An error occurred getting the transactions'), 'error');
-		include ('includes/footer.php');
+		include (__DIR__ . '/includes/footer.php');
 		exit();
 	}
 	elseif (DB_num_rows($Result) == 0) {
 		$Title = __('Transaction Listing');
-		include ('includes/header.php');
+		include (__DIR__ . '/includes/header.php');
 		echo '<br />';
 		prnMsg(__('There were no transactions found in the database between the dates') . ' ' . $_POST['FromDate'] . ' ' . __('and') . ' ' . $_POST['ToDate'] . '<br />' . __('Please try again selecting a different date range'), 'info');
-		include ('includes/footer.php');
+		include (__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -170,16 +170,16 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 	else {
 		$Title = __('Inventory Planning Report');
-		include ('includes/header.php');
+		include (__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Inventory') . '" alt="" />' . ' ' . __('Inventory Planning Report') . '</p>';
 		echo $HTML;
-		include ('includes/footer.php');
+		include (__DIR__ . '/includes/footer.php');
 	}
 } else {
 	$Title = __('Stock Transaction Listing');
 	$ViewTopic = 'Inventory';
 	$BookMark = '';
-	include ('includes/header.php');
+	include (__DIR__ . '/includes/header.php');
 
 	echo '<div class="centre">
 			<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . __('Stock Transaction Listing') . '</p>
@@ -249,6 +249,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			</div>';
 	echo '</form>';
 
-	include ('includes/footer.php');
+	include (__DIR__ . '/includes/footer.php');
 }
 

@@ -3,13 +3,13 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('KL Start Process Change Retail Price');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/KLDefines.php');
-include('includes/KLBoards.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/KLPrices.php');
-include('includes/KLEmails.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLBoards.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLPrices.php');
+include(__DIR__ . '/includes/KLEmails.php');
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .
 				__('Retail Price') . '" alt="" />' . ' ' . __('KL Start the Process of Change Retail Prices for').' ' . $_GET['Item']. '.</p>';
@@ -17,12 +17,12 @@ echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/
 if (!isset($_GET['Item']) or !isset($_GET['NewPrice'])){
 	echo '<br />';
 	prnMsg( __('This page must be given the item code and its new Retail price.'), 'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 } elseif ((ItemCodeQOH($_GET['Item'],'CODE_FULL', "ALL") != 0) AND (GetTotalItemsChangingPrice() >= MAX_ITEMS_CHANGING_PRICE) AND (!$KL_SystemAdmin)) {
 	echo '<br />';
 	prnMsg(__('Too many items changing price at the same time. Maximum = '). MAX_ITEMS_CHANGING_PRICE,'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -48,4 +48,4 @@ KLSendEmail("ChangePriceStarted", "Silent", $_GET['Item']);
 
 DB_Txn_Commit();
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

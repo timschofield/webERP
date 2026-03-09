@@ -3,15 +3,15 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('SPG End Of Shift Report');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/KLDefines.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/KLPOSGeneral.php');
-include('includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLPOSGeneral.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
-include('includes/WebClientPrint/WebClientPrint.php');
-include('includes/KLESCPOSCommands.php');
+include(__DIR__ . '/includes/WebClientPrint/WebClientPrint.php');
+include(__DIR__ . '/includes/KLESCPOSCommands.php');
 
 $Today = date('Y-m-d');
 
@@ -158,7 +158,7 @@ $identifier=GetPOSIdentifier();
 $FileName = GetFilenameFromPOSIdentifier($identifier);   
 file_put_contents($FileName, $TextToPrint);
 $TextActionToPrint = 'Print the Daily SPG End Of Shift';
-include('includes/KLSilentPrinting.php');
+include(__DIR__ . '/includes/KLSilentPrinting.php');
 //################## PRINTING STUFF ##################### 
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

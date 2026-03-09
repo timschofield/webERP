@@ -7,9 +7,9 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Import Fixed Assets');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/descending.png" title="' .
@@ -42,7 +42,7 @@ if (isset($_FILES['SelectedAssetFile']['name'])) { //start file processing
 /*
 	if ($_FILES['SelectedAssetFile']['type'] != 'text/csv') {
 		prnMsg(__('File has type') . ' ' . $_FILES['SelectedAssetFile']['type'] . ', ' . __('but only "text/csv" is allowed.'),'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 */
@@ -60,7 +60,7 @@ if (isset($_FILES['SelectedAssetFile']['name'])) { //start file processing
 	if ( count($HeaderRow) != count($FieldNames) ) {
 		prnMsg(__('File contains') . ' '. count($HeaderRow). ' ' . __('columns, expected') . ' '. count($FieldNames). '. ' . __('Study a downloaded template to see the format for the file'),'error');
 		fclose($FileHandle);
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -70,7 +70,7 @@ if (isset($_FILES['SelectedAssetFile']['name'])) { //start file processing
 		if ( mb_strtoupper($FieldName) != mb_strtoupper($FieldNames[$i]) ) {
 			prnMsg(__('The selected file contains fields in the incorrect order ('. mb_strtoupper($FieldName). ' != '. mb_strtoupper($FieldNames[$i]). '. ' .__('Download a template and ensure that fields are in the same sequence as the template.')),'error');
 			fclose($FileHandle);
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 		$i++;
@@ -88,7 +88,7 @@ if (isset($_FILES['SelectedAssetFile']['name'])) { //start file processing
 		if ($FieldCount != count($FieldNames)){
 			prnMsg(count($FieldNames) . ' ' . __('fields are required, but') . ' '. $FieldCount . ' ' . __('fields were received'),'error');
 			fclose($FileHandle);
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 
@@ -320,4 +320,4 @@ if (isset($_FILES['SelectedAssetFile']['name'])) { //start file processing
 
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

@@ -2,16 +2,16 @@
 
 require(__DIR__ . '/includes/session.php');
 $Title = __('webERP to OpenCart Hourly Synchronizer');
-include('includes/header.php');
-include('includes/GetPrice.php');
+include(__DIR__ . '/includes/header.php');
+include(__DIR__ . '/includes/GetPrice.php');
 
-include('includes/KLGeneralFunctions.php');
-include('includes/KLDefines.php');
-include('includes/OCOpenCartGeneralFunctions.php');
-include('includes/KLMarketplaceFunctions.php');
-include('includes/OCWeberpToOpenCartSync.php');
-include('includes/OCOpenCartConnectDB.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/OCOpenCartGeneralFunctions.php');
+include(__DIR__ . '/includes/KLMarketplaceFunctions.php');
+include(__DIR__ . '/includes/OCWeberpToOpenCartSync.php');
+include(__DIR__ . '/includes/OCOpenCartConnectDB.php');
 
 WeberpToOpenCartHourlySync(true , true, '');
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

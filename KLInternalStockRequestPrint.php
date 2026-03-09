@@ -2,11 +2,11 @@
 
 require(__DIR__ . '/includes/session.php');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/UIGeneralFunctions.php');
-include('includes/KLDefines.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
 // Use necessary classes for PDF and Spreadsheet generation
 use Dompdf\Dompdf;
@@ -58,9 +58,9 @@ function GenerateReport($LocationForm) {
 
 		if (DB_num_rows($Result) == 0) {
 			$Title = __('Print Authorized Internal Stock Request still not fulfilled');
-			include('includes/header.php');
+			include(__DIR__ . '/includes/header.php');
 			prnMsg(__('No Pending Authorized Internal Stock Requests found for the selected location.'), 'info');
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit(); // Stop script execution
 		}
 
@@ -215,25 +215,25 @@ function GenerateReport($LocationForm) {
 
 		} else { // Default to 'View' which corresponds to the 'submit' button
 			$Title = __('View Authorized Internal Stock Request still not fulfilled');
-			include('includes/header.php');
+			include(__DIR__ . '/includes/header.php');
 			// Removed the specific image/title echo here, as the $HTML includes a title.
 			// You can add it back if needed:
 			// echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
 			echo $HTML; // Display the generated HTML
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 		}
 
 	} else {
 		// Handle Input Errors if validation was added
 		$Title = __('Input Error');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $Theme . '/images/warning.png" title="' . $Title . '" alt="" />' . ' ' . $Title .
 			'</p>';
 		// Display specific error messages here using prnMsg()
 		// prnMsg($InputErrorMessage, "warn");
 		echo '<br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . __('Back') . '</a>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 } // End of function GenerateReport()
 
@@ -241,7 +241,7 @@ function GenerateReport($LocationForm) {
 function DisplayOptions() {
     global $RootPath, $_SESSION; // Make global variables available
 	$Title = __('Print Authorized Internal Stock Request still not fulfilled');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -266,6 +266,6 @@ function DisplayOptions() {
 
 	echo '</form>';
 
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 
 } // End of function DisplayOptions()

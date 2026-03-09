@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('List of Items without picture');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 $SQL = "SELECT stockmaster.stockid,
 			stockmaster.description,
@@ -54,4 +54,4 @@ if (DB_num_rows($Result) != 0){
 			</form>';
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

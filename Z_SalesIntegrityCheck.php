@@ -8,7 +8,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Sales Integrity');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<div class="centre"><h3>' . __('Sales Integrity Check') . '</h3></div>';
 
@@ -209,4 +209,4 @@ echo '<br /><br />' . __('Sales Integrity Check completed.') . '<br /><br />';
 
 prnMsg(__('Sales Integrity Check completed.'),'info');
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

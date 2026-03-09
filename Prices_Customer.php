@@ -18,7 +18,7 @@ $Name = $MyRow['name'];
 $Title = __('Special Prices for') . ' '. htmlspecialchars($MyRow['name'], ENT_QUOTES, 'UTF-8');
 $ViewTopic = 'Sales';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);}
 if (isset($_POST['EndDate'])){$_POST['EndDate'] = ConvertSQLDate($_POST['EndDate']);}
@@ -35,7 +35,7 @@ if (!isset($Item) OR !isset($_SESSION['CustomerID']) OR $_SESSION['CustomerID']=
 		. __('then an item must be selected before this page is called') . '. '
 			. __('The product selection page should call this page with a valid product code'),'info');
 	echo '<br />';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -345,7 +345,7 @@ if (DB_num_rows($Result)==0){
 }
 if ($MyRow[1]=='K'){
 	prnMsg(__('The part selected is a kit set item') .', ' . __('these items explode into their components when selected on an order') . ', ' . __('prices must be set up for the components and no price can be set for the whole kit'),'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -391,7 +391,7 @@ echo '<div class="centre">
 	</div>
 </form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 exit();
 
 function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $CustomerID) {

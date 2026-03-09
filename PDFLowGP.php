@@ -4,7 +4,7 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 if (isset($_POST['FromDate'])) {$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
 if (isset($_POST['ToDate'])) {$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
@@ -37,9 +37,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$Title = __('Low GP sales') . ' - ' . __('Problem Report');
 
 	if (! Is_Date($_POST['FromDate']) OR ! Is_Date($_POST['ToDate'])){
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		prnMsg(__('The dates entered must be in the format') . ' '  . $_SESSION['DefaultDateFormat'],'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -71,10 +71,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$LowGPSalesResult = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($LowGPSalesResult) == 0) {
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		prnMsg(__('No low GP items retrieved'), 'warn');
 		echo '<br /><a href="'  . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -142,12 +142,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		));
 	} else {
 		$Title = __('Sales With Low GP');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . __('Sales With Low G') . '" alt="" />' . ' ' . __('Sales With Low G') . '
 			</p>';
 		echo $HTML;
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 
 } else {
@@ -155,7 +155,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$ViewTopic = 'Sales';
 	$BookMark = '';
 
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '
 		. __('Low Gross Profit Report') . '</p>';
@@ -189,6 +189,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			</div>
 		</form>';
 	}
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 
 } /*end of else not PrintPDF */

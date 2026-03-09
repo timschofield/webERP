@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('General Ledger Transaction Inquiry');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLTransInquiry';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 $MenuURL = '<div><a href="' . $RootPath . '/index.php?&amp;Application=GL">' . __('General Ledger Menu') . '</a></div>';
 
@@ -202,4 +202,4 @@ if (!isset($_GET['TypeID']) or !isset($_GET['TransNo'])) {
 
 }
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

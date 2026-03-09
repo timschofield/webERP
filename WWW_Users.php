@@ -17,8 +17,8 @@ $ViewTopic = 'GettingStarted';
 $BookMark = 'UserMaintenance';
 
 // KL RICARD : Include KL scripts needed 
-include('includes/KLGeneralFunctions.php');
-include('includes/KLEmails.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLEmails.php');
 // KL RICARD END
 
 if (isset($_POST['UserID']) AND isset($_POST['ID'])) {
@@ -31,7 +31,7 @@ if (isset($_POST['UserID']) AND isset($_POST['ID'])) {
 	}
 }
 
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/group_add.png" title="', // Icon image.
@@ -40,7 +40,7 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 
 if ($AllowDemoMode) {
 	prnMsg(__('Demo mode is currently active, which disables the security model administration'), 'warn');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 $ModuleList = array(
@@ -76,7 +76,7 @@ $PDFLanguages = array(
 	__('Latin Western Languages - Times')
 );
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 // Make an array of the security roles
 // KL RICARD: Exclude SPG, as they are maintained in KLUsersSPG.php
@@ -911,4 +911,4 @@ echo '</fieldset>
 	</div>
 	</form>';
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

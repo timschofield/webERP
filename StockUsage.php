@@ -17,13 +17,13 @@ if (isset($_POST['ShowGraphUsage'])) {
 	prnMsg(__('You should automatically be forwarded to the usage graph') .
 			'. ' . __('If this does not happen') .' (' . __('if the browser does not support META Refresh') . ') ' .
 			'<a href="' . $RootPath . '/StockUsageGraph.php?StockLocation=' . $_POST['StockLocation'] .'&amp;StockID=' . $StockID . '">' . __('click here') . '</a> ' . __('to continue'),'info');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
 $ViewTopic = 'Inventory';
 $BookMark = '';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Dispatch') .
@@ -194,4 +194,4 @@ echo '<br />
 
 echo '</div>
 	</form>';
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

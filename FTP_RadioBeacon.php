@@ -5,9 +5,9 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title=__('FTP order to Radio Beacon');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . __('Freight Costs') . '" alt="" />' . ' ' . $Title . '
@@ -118,7 +118,7 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 	if ($_SESSION['CompanyRecord']==0){
 		/*CompanyRecord will be 0 if the company information could not be retrieved */
 		prnMsg(__('There was a problem retrieving the company information ensure that the company record is correctly set up'),'error');
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -164,7 +164,7 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 			prnMsg(__('Order Number') . ' ' . $_GET['OrderNo'] . ' ' . __('has previously been sent to Radio Beacon') . '. ' . __('It was sent on') . ' ' . ConvertSQLDate($MyRow['datepackingslipprinted']) . '<br />' . __('To re-send the order with the balance not previously dispatched and invoiced the order must be modified to allow a reprint (or re-send)') . '.<br />' . __('This check is there to ensure that duplication of dispatches to the customer are avoided'),'warn');
 			echo '<p><a href="' . $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $_GET['OrderNo'] . '">' . __('Modify the order to allow a re-send or reprint') . ' (' . __('Select Delivery Details') . ')' . '</a>';
 			echo '<p><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		 }
 
@@ -246,7 +246,7 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 			if ((!$conn_id) || (!$login_result)) {
 				echo '<br />' . __('Ftp connection has failed');
 				echo '<br />' . __('Attempted to connect to') . ' ' . $_SESSION['RadioBeaconFTP_server'] . ' ' . __('for user') . ' ' . $_SESSION['RadioBeaconFTP_user_name'];
-				include('includes/footer.php');
+				include(__DIR__ . '/includes/footer.php');
 				exit();
 			} else {
 				echo '<br />' . __('Connected to Radio Beacon FTP server at') . ' ' . $_SESSION['RadioBeaconFTP_server'] . ' ' . __('with user name') . ' ' . $_SESSION['RadioBeaconFTP_user_name'];
@@ -254,7 +254,7 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 			$upload = ftp_put($conn_id, $FilePrefix .  $FileNumber . '.txt', $FileName, FTP_ASCII); // check upload status
 			if (!$upload) {
 				prnMsg(__('FTP upload has failed'),'success');
-				include('includes/footer.php');
+				include(__DIR__ . '/includes/footer.php');
 				exit();
 			} else {
 				echo '<br />' . __('Uploaded') . ' ' . $FileName . ' ' . __('to') . ' ' . $_SESSION['RadioBeaconFTP_server'];
@@ -279,4 +279,4 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 
 } /*end of if page called with a OrderNo - OrderNo*/
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

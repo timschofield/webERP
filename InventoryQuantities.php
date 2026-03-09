@@ -7,7 +7,7 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
@@ -107,10 +107,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	if (DB_num_rows($Result)==0){
 			$Title = __('Print Inventory Quantities Report');
-			include('includes/header.php');
+			include(__DIR__ . '/includes/header.php');
 			prnMsg(__('There were no items with inventory quantities'),'error');
 			echo '<br /><a href="'.$RootPath.'/index.php">' . __('Back to the menu') . '</a>';
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 	}
 
@@ -169,10 +169,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		));
 	} else {
 		$Title = __('Inventory Quantities');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
 		echo $HTML;
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 
 } else { /*The option to print PDF was not hit so display form */
@@ -180,7 +180,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$Title=__('Inventory Quantities Reporting');
 	$ViewTopic = 'Inventory';
 	$BookMark = '';
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Inventory') . '" alt="" />' . ' ' . __('Inventory Quantities Report') . '</p>';
 	echo '<div class="page_help_text">' . __('Use this report to display the quantity of Inventory items in different categories.') . '</div>';
 
@@ -207,7 +207,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			<p />';
 		prnMsg(__('There are no stock categories currently defined please use the link below to set them up'),'warn');
 		echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . __('Define Stock Categories') . '</a>';
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -238,6 +238,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		</div>';
 
 	echo '</form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 
 } /*end of else not PrintPDF */

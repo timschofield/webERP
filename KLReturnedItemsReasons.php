@@ -3,9 +3,9 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Reasons for Item Return Maintenance');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
 
 if (isset($_POST['SelectedType'])){
 	$SelectedType = mb_strtoupper($_POST['SelectedType']);
@@ -193,5 +193,5 @@ if (! isset($_GET['delete'])) {
 
 } // end if user wish to delete
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 

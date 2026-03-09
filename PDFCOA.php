@@ -5,9 +5,9 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['LotKey']))  {
 	$SelectedCOA=$_GET['LotKey'];
@@ -31,7 +31,7 @@ if ((!isset($SelectedCOA) || $SelectedCOA=='') && (!isset($QASampleID) || $QASam
 	$ViewTopic = 'QualityAssurance';
 	$BookMark = '';
 	$Title = __('Select Certificate of Analysis To Print');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . __('Print')  . '" alt="" />' . ' ' . $Title . '</p>';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
@@ -77,7 +77,7 @@ if ((!isset($SelectedCOA) || $SelectedCOA=='') && (!isset($QASampleID) || $QASam
 		<input type="submit" name="PickSpec" value="' . __('Submit') . '" />
 		</div>
 		</form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -129,7 +129,7 @@ $Result = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($Result)==0){
 	$Title = __('Print Certificate of Analysis Error');
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<div class="centre">
 			<br />
 			<br />
@@ -149,7 +149,7 @@ if (DB_num_rows($Result)==0){
 			<br />
 			<br />
 			<br />';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 

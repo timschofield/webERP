@@ -1,5 +1,5 @@
 CREATE TABLE `stockserialitems` (
-  `stockid` varchar(20) NOT NULL DEFAULT '',
+  `stockid` varchar(64) NOT NULL DEFAULT '',
   `loccode` varchar(5) NOT NULL DEFAULT '',
   `serialno` varchar(30) NOT NULL DEFAULT '',
   `expirationdate` datetime NOT NULL DEFAULT '1000-01-01 00:00:00',

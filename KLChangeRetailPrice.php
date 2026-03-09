@@ -3,18 +3,18 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Set Retail Price');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/KLDefines.php');
-include('includes/KLBoards.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/KLPrices.php');
-include('includes/KLEmails.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLBoards.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLPrices.php');
+include(__DIR__ . '/includes/KLEmails.php');
  
 if (!isset($_GET['Item']) or !isset($_GET['NewPrice']) or !isset($_GET['Action'])){
 	echo '<br />';
 	prnMsg( __('This page must be given the item code, Retail price and action due.'), 'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -30,7 +30,7 @@ if ($_GET['Action'] == "New"){
 } else {
 	echo '<br />';
 	prnMsg( __('Action unknown'), 'error');
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -49,4 +49,4 @@ if ($_GET['Action'] == "Finish"){
 
 DB_Txn_Commit();
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

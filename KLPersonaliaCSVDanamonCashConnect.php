@@ -2,10 +2,10 @@
 
 require(__DIR__ . '/includes/session.php');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/KLDefines.php');
-include('includes/UIGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
 $Title = __('Export CSV File for Transfer Danamon Cash Connect');
 
@@ -237,17 +237,17 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 			}
 			fclose($output);
 		} else {
-			include('includes/header.php');
+			include(__DIR__ . '/includes/header.php');
 			prnMsg('No data to export CSV File for Transfer Cash Connect ');
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 		}
 	} else {
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 
 			'</p>';
 		prnMsg($InputErrorMessage, "warn");
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 } // End of function submit()
 
@@ -256,7 +256,7 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 {
 // Display form fields. This function is called the first time
 // the page is called.
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
           <div>
@@ -270,7 +270,7 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 	echo '<fieldset>
 		<legend>' . __('Parameters') . '</legend>';
 	
-	include('includes/KLPersonaliaParameterSelection.php');
+	include(__DIR__ . '/includes/KLPersonaliaParameterSelection.php');
 
 	echo '</fieldset>';
 	
@@ -278,7 +278,7 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 
 	echo '</div>
          </form>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 
 } // End of function display()
 

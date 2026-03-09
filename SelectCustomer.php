@@ -7,9 +7,9 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Search Customers');
 $ViewTopic = 'AccountsReceivable';
 $BookMark = 'SelectCustomer';
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 echo '<p class="page_title_text">
 		<img alt="" src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/customer.png" title="', __('Customer'), '" /> ', __('Customers'), '
@@ -484,7 +484,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 		$Result = DB_query($SQL);
 		if (DB_num_rows($Result) == 0) {
 			prnMsg(__('You must first setup the geocode parameters') . ' ' . '<a href="' . $RootPath . '/GeocodeSetup.php">' . __('here') . '</a>', 'error');
-			include('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 		$MyRow = DB_fetch_array($Result);
@@ -863,4 +863,4 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 	} // $_SESSION['Extended_CustomerInfo'] == 1
 
 } // isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != ''
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

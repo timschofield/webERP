@@ -1,6 +1,6 @@
 CREATE TABLE `purchdata` (
   `supplierno` char(10) NOT NULL DEFAULT '',
-  `stockid` char(20) NOT NULL DEFAULT '',
+  `stockid` varchar(64) NOT NULL DEFAULT '',
   `price` decimal(20,4) NOT NULL DEFAULT '0.0000',
   `suppliersuom` char(50) NOT NULL DEFAULT '',
   `conversionfactor` double NOT NULL DEFAULT '1',

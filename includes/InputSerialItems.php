@@ -18,7 +18,7 @@ $Result = DB_query($SQL);
 $MyRow = DB_fetch_array($Result);
 $Perishable = $MyRow['perishable'];
 $DecimalPlaces = $MyRow['decimalplaces'];
-include('includes/Add_SerialItems.php');
+include(__DIR__ . '/Add_SerialItems.php');
 
 /* Setup the Data Entry Types */
 if (isset($_GET['LineNo'])){
@@ -141,9 +141,9 @@ if ($LineItem->Serialised==1){
 
 echo $EditLink . $RemoveLink;
 if ($_POST['EntryType'] == 'FILE'){
-	include('includes/InputSerialItemsFile.php');
+	include(__DIR__ . '/InputSerialItemsFile.php');
 } elseif ($_POST['EntryType'] == 'SEQUENCE'){
-	include('includes/InputSerialItemsSequential.php');
+	include(__DIR__ . '/InputSerialItemsSequential.php');
 } else { /*KEYED or BARCODE */
-	include('includes/InputSerialItemsKeyed.php');
+	include(__DIR__ . '/InputSerialItemsKeyed.php');
 }

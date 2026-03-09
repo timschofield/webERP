@@ -3,13 +3,13 @@
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Move To 20% Discount -> Step 02');
-include('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
-include('includes/KLBoards.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/KLDefines.php');
-include('includes/KLPrices.php');
-include('includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLBoards.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
+include(__DIR__ . '/includes/KLPrices.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
@@ -121,4 +121,4 @@ include('includes/KLUIGeneralFunctions.php');
 		prnMsg("No items to be moved to 20% discount at the moment", "success");
 	}
 
-include('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');

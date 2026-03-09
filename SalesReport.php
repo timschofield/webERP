@@ -12,7 +12,7 @@ require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 $Title = __('Sales to Customers');
 $ViewTopic = 'Sales';
@@ -84,7 +84,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<th>' . __('Reference') . '</th>' .
 					$CommonHead;
 		// Includes $CurrencyName array with currency three-letter alphabetic code and name based on ISO 4217:
-		include('includes/CurrenciesArray.php');
+		include(__DIR__ . '/includes/CurrenciesArray.php');
 		$CustomerId = '';
 		$CustomerOvAmount = 0;
 		$CustomerOvTax = 0;
@@ -244,15 +244,15 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		));
 	} else {
 		$Title = __('Sales Report');
-		include('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . __('Sales Report') . '" alt="" />' . ' ' . __('Sales Report') . '
 			</p>';
 		echo $HTML;
-		include('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 } else {
-	include('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	// If PeriodFrom or PeriodTo are NOT set or it is a NewReport, shows a parameters input form:
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/gl.png" title="', // Icon image.
 		$Title, '" /> ', // Icon title.
@@ -294,7 +294,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<input type="submit" name="PrintPDF" title="PDF" value="' . __('Print PDF') . '" />
 				<input type="submit" name="View" title="View" value="' . __('View') . '" />
 			</div>';
-	include('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 }
 echo '</form>';
 // END Procedure division ======================================================
