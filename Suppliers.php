@@ -313,7 +313,7 @@ if (isset($_GET['SupplierID'])) {
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . __('Search') . '" alt="" />' . ' ' . __('Suppliers') . '</p>';
 if (isset($SupplierID)) {
 	echo '<p>
-			<a href="' . $RootPath . '/SupplierContacts.php?SupplierID=' . $SupplierID . '">' . __('Review Supplier Contact Details') . '</a>
+			<a class="toplink" href="' . $RootPath . '/SupplierContacts.php?SupplierID=' . $SupplierID . '">' . __('Review Supplier Contact Details') . '</a>
 		</p>';
 }
 $InputError = 0;
@@ -441,11 +441,11 @@ if (isset($_POST['submit'])) {
 					$longitude = $json[0]['lon'];
 				} else {
 					// No results found
-					echo '<p>' . __('Address') . ': ' . $Address . ' ' . __('failed to geocode') . ' - ' . __('No results found') . '</p>';
+					echo '<h3>' . __('Address') . ': ' . $Address . ' ' . __('failed to geocode') . ' - ' . __('No results found') . '</h3>';
 				}
 			} else {
 				// Connection failed
-				echo '<p>' . __('Address') . ': ' . $Address . ' ' . __('failed to geocode') . ' - ' . __('Connection failed') . '</p>';
+				echo '<h3>' . __('Address') . ': ' . $Address . ' ' . __('failed to geocode') . ' - ' . __('Connection failed') . '</h3>';
 			}
 
 			// Respect Nominatim usage policy: 1 request per second
@@ -604,7 +604,7 @@ if (isset($_POST['submit'])) {
 			prnMsg(__('A new supplier for') . ' ' . $_POST['SuppName'] . ' ' . __('has been added to the database'), 'success');
 
 			echo '<p>
-				<a href="' . $RootPath . '/SupplierContacts.php?SupplierID=' . $SupplierID . '">' . __('Review Supplier Contact Details') . '</a>
+				<a class="toplink"  href="' . $RootPath . '/SupplierContacts.php?SupplierID=' . $SupplierID . '">' . __('Review Supplier Contact Details') . '</a>
 				</p>';
 
 			unset($SupplierID);
@@ -1296,7 +1296,7 @@ if (!isset($SupplierID)) {
 					<input type="submit" name="submit" value="' . __('Update Supplier') . '" />
 				</div>';
 		//		echo '<p><font color=red><b>' . __('WARNING') . ': ' . __('There is no second warning if you hit the delete button below') . '. ' . __('However checks will be made to ensure there are no outstanding purchase orders or existing accounts payable transactions before the deletion is processed') . '<br /></font></b>';
-		prnMsg(__('WARNING') . ': ' . __('There is no second warning if you hit the delete button below') . '. ' . __('However checks will be made to ensure there are no outstanding purchase orders or existing accounts payable transactions before the deletion is processed'), 'Warn');
+		prnMsg(__('WARNING') . ': ' . __('There is no second warning if you hit the delete button below') . '. ' . __('However checks will be made to ensure there are no outstanding purchase orders or existing accounts payable transactions before the deletion is processed'), 'info');
 		echo '<div class="centre">
 				<input type="reset" name="delete" value="' . __('Delete Supplier') . '" onclick="return confirm(\'' . __('Are you sure you wish to delete this supplier?') . '\');" />
 			</div>';
