@@ -65,8 +65,7 @@ $SQL = "SELECT salesorders.customerref,
 				ON salesorders.fromstkloc=locations.loccode
 			INNER JOIN currencies
 				ON debtorsmaster.currcode=currencies.currabrev
-				AND salesorders.orderno='" . $_GET['AcknowledgementNo'] . "'";
-
+			WHERE salesorders.orderno='" . $_GET['AcknowledgementNo'] . "'";
 $Result = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($Result) == 0) {
@@ -137,21 +136,18 @@ while ($MyRow2 = DB_fetch_array($Result)) {
 					ON taxgrouptaxes.taxgroupid=custbranch.taxgroupid
 				WHERE custbranch.branchcode='" . $Branch . "'";
 	$Result3 = DB_query($SQL3, $ErrMsg);
-	$TaxAuth = '';
+	$TaxClass = 0;
 	while ($MyRow3 = DB_fetch_array($Result3)) {
 		$TaxAuth = $MyRow3['taxauthid'];
-	}
-
-	// Get Tax Rate
-	$SQL4 = "SELECT taxrate
-				FROM taxauthrates
-				WHERE dispatchtaxprovince='" . $TaxProv . "'
+		$SQL4 = "SELECT taxrate
+					FROM taxauthrates
+					WHERE dispatchtaxprovince='" . $TaxProv . "'
 					AND taxcatid='" . $TaxCat . "'
 					AND taxauthority='" . $TaxAuth . "'";
-	$Result4 = DB_query($SQL4, $ErrMsg);
-	$TaxClass = 0;
-	while ($MyRow4 = DB_fetch_array($Result4)) {
-		$TaxClass = 100 * $MyRow4['taxrate'];
+		$Result4 = DB_query($SQL4, $ErrMsg);
+		if ($MyRow4 = DB_fetch_array($Result4)) {
+			$TaxClass += 100 * $MyRow4['taxrate'];
+		}
 	}
 
 	$TaxAmount = (($SubTot / 100) * (100 + $TaxClass)) - $SubTot;

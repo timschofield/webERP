@@ -939,13 +939,16 @@ then do the updates and inserts to process the credit note entered */
 									$CostIncrement = ($PurchPriceVar - $WriteOffToVariances) / $TotalQuantityOnHand;
 
 									$SQL = "UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost,
-																	materialcost=materialcost-" . $CostIncrement . "
+																	materialcost=materialcost-" . $CostIncrement . ",
+                                                                    lastcostupdate=CURRENT_DATE
 											WHERE stockid='" . $EnteredGRN->ItemCode . "'";
 
 									$Result = DB_query($SQL, $ErrMsg, '', true);
 								} else {
 									$SQL = "UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost,
-																	materialcost=" . ($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) . " WHERE stockid='" . $EnteredGRN->ItemCode . "'";
+																	materialcost=" . ($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) . ",
+                                                                    lastcostupdate=CURRENT_DATE
+                                                                 WHERE stockid='" . $EnteredGRN->ItemCode . "'";
 									$Result = DB_query($SQL, $ErrMsg, '', true);
 								}
 								/* End of Weighted Average Costing Code */
