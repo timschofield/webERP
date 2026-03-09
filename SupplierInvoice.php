@@ -34,13 +34,15 @@ if (!isset($_SESSION['SuppTrans']->SupplierName)) {
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_row($Result);
 	$SupplierName = $MyRow[0];
+    $SupplierID = $_GET['SupplierID'];
 } else {
+    $SupplierID = $_SESSION['SuppTrans']->SupplierID;
 	$SupplierName = $_SESSION['SuppTrans']->SupplierName;
 }
 
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . __('Supplier Invoice') . '" />' . ' ' .
 
-__('Enter Supplier Invoice') . ': ' . $SupplierName . ' ' . $_SESSION['SuppTrans']->SupplierID . '</p>';
+__('Enter Supplier Invoice') . ': ' . $SupplierName . ' ' . $SupplierID . '</p>';
 if (isset($_GET['SupplierID']) AND $_GET['SupplierID'] != '') {
 
 	/*It must be a new invoice entry - clear any existing invoice details from the SuppTrans object and initiate a newy*/
