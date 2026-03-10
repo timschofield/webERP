@@ -16,6 +16,7 @@ $BookMark = 'Locations';// Anchor's id in the manual's html document.
 include(__DIR__ . '/includes/header.php');
 
 include(__DIR__ . '/includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLDefines.php');
 include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
@@ -73,6 +74,12 @@ if (isset($_POST['submit'])) {
 		} else {
 			$_POST['Managed'] = 0;
 		}
+
+		/* Set default values for fields that might not be set */
+		if (!isset($_POST['GLAccountCode'])) {
+			$_POST['GLAccountCode'] = '';
+		}
+
 		// KL RICARD Added custom fields to sql
 		$SQL = "UPDATE locations SET loccode='" . $_POST['LocCode'] . "',
 									locationname='" . $_POST['LocationName'] . "',
@@ -183,6 +190,11 @@ if (isset($_POST['submit'])) {
 			$_POST['Managed'] = 1;
 		} else {
 			$_POST['Managed'] = 0;
+		}
+
+		/* Set default values for fields that might not be set */
+		if (!isset($_POST['GLAccountCode'])) {
+			$_POST['GLAccountCode'] = '';
 		}
 
 		/*SelectedLocation is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new Location form */
@@ -831,7 +843,7 @@ if (!isset($_GET['delete'])) {
 		$_POST['Priority'] = 5;
 	}
 	if (!isset($_POST['SmartDispatchFrom'])) {
-		$_POST['SmartDispatchFrom'] = 'KANTO';
+		$_POST['SmartDispatchFrom'] = '';
 	}
 	if (!isset($_POST['SmartDispatchMaxModels'])) {
 		$_POST['SmartDispatchMaxModels'] = 999;
@@ -1136,10 +1148,7 @@ if (!isset($_GET['delete'])) {
 			<input type="text" name="Priority" class="number" title="' . __('Priority for KL Shops Smart Transfers 1-Max Priority 9-Min Priority') . '" value="' . $_POST['Priority'] . '" size="1" maxlength="1" />
 		</field>';
 
-	echo '<field>
-			<label for="SmartDispatchFrom">' . __('KL Smart Transfers from') . ':</label>
-			<input type="text" name="SmartDispatchFrom" title="' . __('Enter the location code where KL Smart Transfers must pull stock to this location (usually KANTO)') . '" data-type="no-illegal-chars" name="LocCode" value="' . $_POST['SmartDispatchFrom'] . '" size="5" maxlength="5" />
-		</field>';
+	echo FieldToSelectOneLocation("SmartDispatchFrom", $_POST['SmartDispatchFrom'],  __('KL Smart Transfers from'), __('Enter the location code where KL Smart Transfers must pull stock to this location (usually KANTO)'), '', '', false, false);
 
 	echo '<field>
 			<label for="SmartDispatchMaxModels">' . __('KL Smart Transfers # max models') . ':</label>
@@ -1154,10 +1163,8 @@ if (!isset($_GET['delete'])) {
 
 	echo '<fieldset>
 			<legend>' . __('Retail Shop Packaging Transfer Settings') . '</legend>';
-	echo '<field>
-			<label for="PackagingFrom">' . __('Receives Packaging from') . ':</label>
-			<input type="text" name="PackagingFrom" title="' . __('Enter the location code where Packaging should be sent from (PACKA, PACKU, etc)') . '" data-type="no-illegal-chars" name="LocCode" value="' . $_POST['PackagingFrom'] . '" size="5" maxlength="5" />
-		</field>';
+
+	echo FieldToSelectOneLocation("PackagingFrom", $_POST['PackagingFrom'],  __('Receives Packaging from'), __('Enter the location code where Packaging should be sent from (PACKA, PACKU, etc)'), 'GUDANGPACKAGING', '', false, false);
 
 	echo '<field>
 			<label for="RLDaysForPackaging">' . __('Days of usage to calculate RL for Packaging Items') . ':</label>

@@ -3565,7 +3565,7 @@ id	select_type	table	type	possible_keys	key	key_len	ref	rows	Extra
 				AND locstock.loccode = locations.loccode
 				AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_PACKAGING . "
 				AND locations.typeloc NOT IN " . LIST_PHYSICAL_SHOPS_BY_TYPE . "
-				AND locstock.loccode NOT IN " . LIST_PACAKING_LOCATIONS . "
+				AND locations.typeloc NOT IN " . LIST_GUDANG_PACKAGING_BY_TYPE . "
 				AND locstock.loccode NOT IN " . LIST_ONLINE_SHOPS . "
 				AND locstock.loccode != 'SAMPR'
 				AND ( locstock.quantity > 0 OR locstock.reorderlevel > 0 )
