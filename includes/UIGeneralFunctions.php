@@ -212,11 +212,17 @@ function FieldToSelectOneGLAccount($VariableName, $SelectedValue, $Label = '', $
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
-	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
 	$HTML .= 'name="' . $VariableName . '">';
+	
+	if ($Required){
+		$HTML .= '<option value="">' . __('Not Yet Selected') . '</option>';
+	} elseif (!isset($SelectedValue) OR ($SelectedValue == '')) {
+		$HTML .= '<option selected="selected" value="">' . __('Not Yet Selected') . '</option>';
+	}
 
 	while ($MyRow = DB_fetch_array($Result)) {
-		$TextOption = $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false);
+		$TextOption = str_pad($MyRow['accountcode'], 20, ' ', STR_PAD_RIGHT) . '- ' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false);
 		if ($MyRow['accountcode'] == $SelectedValue) {
 			$HTML .= '<option selected="selected" value="' . $MyRow['accountcode'] . '">' . $TextOption . '</option>';
 		}
@@ -349,9 +355,12 @@ $SQL = "SELECT periodno,
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
 	$HTML .= 'name="' . $VariableName . '">';
 
-	if (!isset($SelectedValue)) {
+	if ($Required){
+		$HTML .= '<option value="">' . __('Not Yet Selected') . '</option>';
+	} elseif (!isset($SelectedValue) OR ($SelectedValue == '')) {
 		$HTML .= '<option selected="selected" value="">' . __('Not Yet Selected') . '</option>';
 	}
+
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($SelectedValue) AND ($MyRow['periodno'] == $SelectedValue)) {
 			$HTML .= '<option selected="selected" value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
@@ -384,7 +393,9 @@ function FieldToSelectOneSalesArea($VariableName, $SelectedValue, $Label = '', $
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
 	$HTML .= 'name="' . $VariableName . '">';
 
-	if (!isset($SelectedValue)) {
+	if ($Required){
+		$HTML .= '<option value="">' . __('Not Yet Selected') . '</option>';
+	} elseif (!isset($SelectedValue) OR ($SelectedValue == '')) {
 		$HTML .= '<option selected="selected" value="">' . __('Not Yet Selected') . '</option>';
 	}
 
@@ -524,7 +535,9 @@ function FieldToSelectOneSysType($VariableName, $SelectedValue, $Label = '', $He
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
 	$HTML .= 'name="' . $VariableName . '">';
 
-	if (!isset($SelectedValue)) {
+	if ($Required){
+		$HTML .= '<option value="">' . __('Not Yet Selected') . '</option>';
+	} elseif (!isset($SelectedValue) OR ($SelectedValue == '')) {
 		$HTML .= '<option selected="selected" value="">' . __('Not Yet Selected') . '</option>';
 	}
 
@@ -612,8 +625,6 @@ function FieldToSelectOneNumber($VariableName, $SelectedValue, $Size, $MaxLength
 	$HTML .= '</field>';
 	return $HTML;
 }
-
-
 
 function FieldToSelectOneTextArea($VariableName, $SelectedValue, $Cols, $Rows, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 
