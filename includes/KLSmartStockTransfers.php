@@ -28,7 +28,10 @@ Returns:
 
 function KLPrepareGroupSmartStockTransfers($Group, $EmailText){
 
-	if ($Group == "1050-SmartStockTransfersKL"){
+	if ($Group == "1040-SmartStockTransfersOnline"){
+		$ShopType = "ONLINE";
+		$EmailText .= 'Smart Stock Transfers for Online Shops' . "\n";
+	} elseif ($Group == "1050-SmartStockTransfersKL"){
 		$ShopType = "SHOPKL";
 		$EmailText .= 'Smart Stock Transfers for Kapal-Laut Shops' . "\n";
 	} elseif ($Group == "1060-SmartStockTransfersBL"){
@@ -134,7 +137,7 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 		$ToDecimalPlaces = 0;
 
 	} else {
-		// if the trasnfer is going somewhere not being KANTO, we need to get the parameters
+		// if the transfer is going somewhere not being KANTO, we need to get the parameters
 		$SQLto = "SELECT locationname,
 					cashsalecustomer,
 					cashsalebranch

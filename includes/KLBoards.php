@@ -1701,7 +1701,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					(SELECT SUM(quantity)
 						FROM locstock
 						WHERE locstock.stockid = stockmaster.stockid
-							AND locstock.loccode IN " . LIST_PACAKING_LOCATIONS . ") AS qohgudang,
+							AND locstock.loccode IN " . LIST_PACKAGING_LOCATIONS . ") AS qohgudang,
 					(SELECT SUM(GREATEST(reorderlevel," . TRANSFER_ROUNDING_STEP01 . "))
 						FROM locstock
 						WHERE locstock.stockid = stockmaster.stockid
@@ -2301,11 +2301,11 @@ function PackagingToBeRefilledFromGudang($LocCode, $ShowAll, $ShowLinkEmail, $Ro
 			$TableResult[$NumItems]['optimum'] = round(($MyRow['rl'] * $RLFactor),0);
 			$TableResult[$NumItems]['needed']= max(0,$TableResult[$NumItems]['optimum'] - $MyRow['qoh']);
 			$QtyToShip = min(max(0,$TableResult[$NumItems]['needed'] - $MyRow['intransit']),($MyRow['qohparent'] - $MyRow['intransit']));
-			if (ItemInList($LocCode, LIST_PACAKING_LOCATIONS)){
+			if (ItemInList($LocCode, LIST_PACKAGING_LOCATIONS)){
 				// if it is a transfer from a gudang packaging to another and we don't have much stock,
 				// we divide the available gudang QOH between all the packaging gudang
 				$QOHAllGudang = $MyRow['qohparent'] + $MyRow['qoh'];
-				$FairQOHGudang = $QOHAllGudang / NumberOfItemsInList(LIST_PACAKING_LOCATIONS);
+				$FairQOHGudang = $QOHAllGudang / NumberOfItemsInList(LIST_PACKAGING_LOCATIONS);
 				if ($QtyToShip > $FairQOHGudang){
 					// if we should ship more than the "fair share", we cap it so all gudang end up with a QOH close to the fair share
 					$QtyToShip = $FairQOHGudang - $MyRow['qoh'];

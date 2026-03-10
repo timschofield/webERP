@@ -345,6 +345,12 @@ function FieldToSelectOneLocation($VariableName, $SelectedValue, $Label = '', $H
 				FROM locations
 				WHERE locations.typeloc IN " . LIST_PHYSICAL_SHOPS_BY_TYPE . "
 				ORDER BY locations.locationname";
+	} elseif ($Filter == 'GUDANGPACKAGING') {
+		$SQL = "SELECT locations.loccode,
+					locations.locationname
+				FROM locations
+				WHERE locations.typeloc IN " . LIST_GUDANG_PACKAGING_BY_TYPE . "
+				ORDER BY locations.locationname";
 	} else {
 		$SQL = "SELECT loccode,
 					locationname
