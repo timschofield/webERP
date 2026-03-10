@@ -281,7 +281,7 @@ function GetWeberpGLAccountPayPalFromCustomer($CustomerCode){
 	} else {
 		$GLAccount = '';
 	}
-	// in Paypal there is no IDR yet, so we pay by bank trasnfer and record payment manually in webERP
+	// in Paypal there is no IDR yet, so we pay by bank transfer and record payment manually in webERP
 	return $GLAccount;
 }
 
@@ -312,7 +312,7 @@ function GetWeberpGLCommissionAccountPayPalFromCustomer($CustomerCode){
 	} else {
 		$GLAccount = '';
 	}
-	// in Paypal there is no IDR yet, so we pay by bank trasnfer and record payment manually in webERP
+	// in Paypal there is no IDR yet, so we pay by bank transfer and record payment manually in webERP
 	return $GLAccount;
 }
 
