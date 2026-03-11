@@ -162,11 +162,13 @@ if (!isset($_POST['continue'])) {
 	include(__DIR__ . '/includes/GetConfig.php');
 	$ForceConfigReload = false;
 
+	// use a button here for consistency with the "Continue" button (used to initiate updates)
 	echo '<div class="centre">
 		<a href="' . $RootPath . '/Logout.php" title="' . __('Log out of') . ' ' . 'webERP" alt="">
-			', __('Now click here to logout and then log back in for these changes to take affect'), '
+			<button>', __('Login again for changes to take affect'), '</button>
 		</a>
 	</div>';
+
 }
 
 include(__DIR__ . '/includes/footer.php');
