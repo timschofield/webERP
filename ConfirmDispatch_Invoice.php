@@ -25,7 +25,9 @@ if (empty($_GET['identifier'])) {
 } else {
 	$identifier = $_GET['identifier'];
 }
-
+if (isset($_POST['DispatchDate'])) {
+    $_POST['DispatchDate'] = ConvertSQLDate($_POST['DispatchDate']);
+}
 if (!isset($_GET['OrderNumber']) and !isset($_SESSION['ProcessingOrder'])) {
 	/* This page can only be called with an order number for invoicing*/
 	echo '<div class="centre">
