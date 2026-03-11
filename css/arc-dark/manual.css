@@ -12,7 +12,7 @@ font-weight:400;
 }
 
 article.h1 {
-color:#0D1F54;
+color:#000000;
 background:#BED4EB;
 text-shadow:1px 1px #293EF5;
 padding:10px;
@@ -21,7 +21,7 @@ border-radius: 5px;
 }
 
 article.h2 {
-color:#0D1F54;
+color:#000000;
 background:#C8D5E3;
 padding:8px 8px 8px 20px;
 margin-left:1%;
@@ -43,7 +43,7 @@ text-decoration:none;
 }
 
 article.a:hover {
-color:#03c;
+color:#000000;
 }
 articele.code{
 background:#C7E4ED;
@@ -152,7 +152,7 @@ width:97%;
 .help-content {
 position:absolute;
 overflow:auto;
-background:#F9F9F9;
+background:#404552;
 top:10%;
 height:87%;
 }
@@ -160,4 +160,3 @@ height:87%;
 float:right;
 padding-right:10px;
 cursor:pointer;
-}
