@@ -494,6 +494,15 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 					$TrfToBankRow = DB_fetch_array($TrfToAccountResult);
 					$TrfToBankCurrCode = $TrfToBankRow['currcode'];
 					$TrfToBankExRate = $TrfToBankRow['rate'];
+                    
+                    $SQL = "SELECT currcode, rate
+                            FROM bankaccounts INNER JOIN currencies
+                            ON bankaccounts.currcode = currencies.currabrev
+                            WHERE accountcode='" . $_SESSION['PaymentDetail' . $identifier]->Account . "'";
+                    $TrfFromAccountResult = DB_query($SQL);
+                    $TrfFromBankRow = DB_fetch_array($TrfFromAccountResult);
+                    $TrfFromBankCurrCode = $TrfFromBankRow['currcode'];
+                    $TrfFromBankExRate = $TrfFromBankRow['rate'];
 
 					if ($_SESSION['PaymentDetail' . $identifier]->AccountCurrency == $TrfToBankCurrCode) {
 						/*Make sure to use the same rate if the transfer is between two bank accounts in the same currency */
