@@ -10,6 +10,10 @@ include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 include(__DIR__ . '/includes/KLDefines.php');
 include(__DIR__ . '/includes/KLGeneralFunctions.php');
 
+// as the script uses _SESSION variables, reload just in case another user has been changing values in the meantime 
+// because the script needs the latest values for the calculations
+ReloadSessionVariablesFromConfig();
+
 // The default company to Invoice from (PTADU).
 if (!isset($_POST['CompanyFrom'])) {
 	$_POST['CompanyFrom']='PTADU';

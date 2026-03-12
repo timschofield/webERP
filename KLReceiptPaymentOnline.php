@@ -11,6 +11,11 @@ include(__DIR__ . '/includes/KLGeneralFunctions.php');
 include(__DIR__ . '/includes/KLMarketplaceFunctions.php');
 include(__DIR__ . '/includes/OCOpenCartGeneralFunctions.php');
 include(__DIR__ . '/includes/OCOpenCartConnectDB.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+
+// as the script uses _SESSION variables, reload just in case another user has been changing values in the meantime 
+// because the script needs the latest values for the calculations
+ReloadSessionVariablesFromConfig();
 
 //Get Out if we don't have the data needed to work with
 if (!isset($_GET['OrderNo']) OR $_GET['OrderNo']==''){

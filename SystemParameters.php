@@ -10,6 +10,11 @@
 
 require(__DIR__ . '/includes/session.php');
 include(__DIR__ . '/includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+
+// as the script uses _SESSION variables, reload just in case another user has been changing values in the meantime 
+// because the script needs the latest values for the calculations
+ReloadSessionVariablesFromConfig();
 
 $Title = __('System Parameters');
 $ViewTopic = 'CreatingNewSystem';
@@ -1618,7 +1623,7 @@ echo '</fieldset><br />';
 echo '<fieldset>
 		<legend>' . __('Small Retail Price Corrections') . '</legend>';
 echo FieldToSelectOneNumber('X_Small_Price_Calculated_Step_01',  $_SESSION['Small_Price_Calculated_Step_01'], 12, 11, 'For Calculated Retail Prices Smaller than 01', '', '', '140');
-echo FieldToSelectOneNumber('X_X_Small_Price_Corrected_Step_01',  $_SESSION['X_Small_Price_Corrected_Step_01'], 12, 11, 'Set Corrected Retail Price 01', '', '', '141');
+echo FieldToSelectOneNumber('X_Small_Price_Corrected_Step_01',  $_SESSION['Small_Price_Corrected_Step_01'], 12, 11, 'Set Corrected Retail Price 01', '', '', '141');
 echo FieldToSelectOneNumber('X_Small_Price_Calculated_Step_02',  $_SESSION['Small_Price_Calculated_Step_02'], 12, 11, 'For Calculated Retail Prices Smaller than 02', '', '', '142');
 echo FieldToSelectOneNumber('X_Small_Price_Corrected_Step_02',  $_SESSION['Small_Price_Corrected_Step_02'], 12, 11, 'Set Corrected Retail Price 02', '', '', '143');
 echo FieldToSelectOneNumber('X_Small_Price_Calculated_Step_03',  $_SESSION['Small_Price_Calculated_Step_03'], 12, 11, 'For Calculated Retail Prices Smaller than 03', '', '', '144');
