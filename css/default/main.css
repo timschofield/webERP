@@ -38,6 +38,7 @@ margin-bottom:5px;
 padding:3px;
 border:1px solid #083309;
 padding-left:5px;
+padding-right:13px;
 color:#B1CBE1;
 font-weight:bold;
 transition-duration:0.5s;
@@ -46,6 +47,7 @@ transition-duration:0.5s;
 border:1px solid #083309;
 background:#A62121;
 padding-left:5px;
+padding-right:13px;
 color:#B1CBE1;
 font-weight:bold;
 }
@@ -54,6 +56,7 @@ border:1px solid #083309;
 background:#AF6060;
 color:#FFFFFF;
 padding-left:5px;
+padding-right:13px;
 }
 .ModuleList ul,.MenuList ul {
 margin:0;

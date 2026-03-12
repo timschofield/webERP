@@ -28,6 +28,7 @@ margin-bottom:5px;
 padding:3px;
 border:1px solid #404552;
 padding-right:5px;
+padding-left:13px;
 color:white;
 transition-duration:0.5s;
 }
@@ -36,12 +37,14 @@ border:1px solid #1A1A1A;
 background:url(images/desk.jpg) #631;
 color:white;
 padding-right:5px;
+padding-left:13px;
 }
 .ModuleList .ModuleUnSelected a {
 border:1px solid #1A1A1A;
 background:transparent;
 color:#4D4D4D;
 padding-right:5px;
+padding-left:13px;
 }
 .ModuleList ul,.MenuList ul {
 margin:0;

@@ -30,6 +30,7 @@ margin-bottom:5px;
 padding:3px;
 border:1px solid #404552;
 padding-left:5px;
+padding-right:13px;
 color:white;
 }
 .ModuleList .ModuleSelected a {
@@ -37,12 +38,14 @@ border:1px solid #1A1A1A;
 background:#5A5F00;
 color:white;
 padding-left:5px;
+padding-right:13px;
 }
 .ModuleList .ModuleUnSelected a {
 border:1px solid #1A1A1A;
 background:#617C4F;
 color:white;
 padding-left:5px;
+padding-right:13px;
 }
 .ModuleList ul,.MenuList ul {
 margin:0;
