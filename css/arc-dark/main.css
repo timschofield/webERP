@@ -29,18 +29,21 @@ margin-bottom:5px;
 padding:3px;
 border:1px solid #404552;
 padding-left:5px;
+padding-right:13px;
 }
 .ModuleList .ModuleSelected a {
 border:1px solid #1A1A1A;
 background:#A3D2FF;
 color:#494C56;
 padding-left:5px;
+padding-right:13px;
 }
 .ModuleList .ModuleUnSelected a{
 border:1px solid #0E1826;
 background:transparent;
 color:#A3D2FF;
 padding-left:5px;
+padding-right:13px;
 }
 .ModuleList ul,.MenuList ul {
 margin:0;

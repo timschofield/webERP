@@ -27,6 +27,7 @@ margin-bottom:1px;
 padding:7px;
 border:0px solid #404552;
 padding-right:5px;
+padding-left:13px;
 font-weight:normal;
 transition-duration:0.5s;
 }
@@ -37,6 +38,7 @@ color:white;
 margin-bottom:1px;
 padding:7px;
 padding-right:5px;
+padding-left:13px;
 font-weight:normal;
 }
 .ModuleList .ModuleUnSelected a {
@@ -46,6 +48,7 @@ color:white;
 margin-bottom:1px;
 padding:7px;
 padding-right:5px;
+padding-left:13px;
 font-weight:normal;
 }
 .ModuleList ul,.MenuList ul {

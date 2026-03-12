@@ -30,18 +30,21 @@ text-decoration:none;
 margin-bottom:5px;
 padding:3px;
 border:1px solid #404552;
-padding-right:5px;
+padding-left:5px;
+padding-right:13px;
 }
 .ModuleList .ModuleSelected a {
 border:1px solid #1A1A1A;
 color:#FFFFFF;
 padding-left:5px;
+padding-right:13px;
 }
 .ModuleList .ModuleUnSelected a {
 border:1px solid #1A1A1A;
 background:transparent;
 color:#1A1A1A;
 padding-left:5px;
+padding-right:13px;
 }
 .ModuleList ul,.MenuList ul {
 margin:0;
