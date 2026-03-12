@@ -203,7 +203,7 @@ function submit($PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName,
 							   debtorsmaster.name,
 							   custbranch.brname,
 							   custbranch.area,
-							   salesorders.salesperson,
+							   salesorders.salesperson AS salesman,
 							   stockmaster.decimalplaces,
 							   stockmaster.description
 							   FROM salesorderdetails
@@ -212,6 +212,7 @@ function submit($PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName,
 						LEFT JOIN custbranch ON (salesorders.branchcode = custbranch.branchcode
 												AND salesorders.debtorno = custbranch.debtorno)
 						LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
+						LEFT JOIN salesman ON salesman.salesmancode = salesorders.salesperson
 						LEFT JOIN currencies ON currencies.currabrev = debtorsmaster.currcode
 						WHERE salesorders.orddate >='" . $FromDate . "'
 						 AND salesorders.orddate <='" . $ToDate . "'
@@ -242,7 +243,7 @@ function submit($PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName,
 							   debtorsmaster.name,
 							   custbranch.brname,
 							   custbranch.area,
-							   salesorders.salesperson,
+							   salesorders.salesperson AS salesman,
 							   stockmaster.decimalplaces,
 							   stockmaster.description,
 							   (tempstockmoves.qty * -1) as qty,
@@ -256,6 +257,7 @@ function submit($PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName,
 						LEFT JOIN custbranch ON (salesorders.branchcode = custbranch.branchcode
 												AND salesorders.debtorno = custbranch.debtorno)
 						LEFT JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid
+						LEFT JOIN salesman ON salesman.salesmancode = salesorders.salesperson
 						LEFT JOIN currencies ON currencies.currabrev = debtorsmaster.currcode
 						WHERE tempstockmoves.trandate >='" . $FromDate . "'
 						 AND tempstockmoves.trandate <='" . $ToDate . "'
