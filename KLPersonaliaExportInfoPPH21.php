@@ -75,7 +75,9 @@ function submit($Company, $PeriodOfFile, $SalaryType, $Format, $Title) {
 						penerimaanlainnotes,
 						potonganjht,
 						potonganaskes,
-						potonganabsen
+						potonganabsen,
+						potonganlain2,
+						potonganlain2notes
 				FROM salariescalculated
 				WHERE company = '" . $Company . "'
 					AND periodno = '" . $PeriodOfFile . "'
@@ -124,8 +126,10 @@ function submit($Company, $PeriodOfFile, $SalaryType, $Format, $Title) {
 			$SpreadSheet->getActiveSheet()->setCellValue('Q1', 'Potongan JHT');
 			$SpreadSheet->getActiveSheet()->setCellValue('R1', 'Potongan ASKES');
 			$SpreadSheet->getActiveSheet()->setCellValue('S1', 'Potongan Absen');
+			$SpreadSheet->getActiveSheet()->setCellValue('T1', 'Potongan Lain-lain');
+			$SpreadSheet->getActiveSheet()->setCellValue('U1', 'Potongan Lain-lain Notes');
 
-			$SpreadSheet->getActiveSheet()->getStyle('C:S')->getNumberFormat()->setFormatCode('#,##0');
+			$SpreadSheet->getActiveSheet()->getStyle('C:U')->getNumberFormat()->setFormatCode('#,##0');
 
 			// Add data
 			$StartingRow = 2;
@@ -150,10 +154,12 @@ function submit($Company, $PeriodOfFile, $SalaryType, $Format, $Title) {
 				$ActiveSheet->setCellValue('M'.$i, round($MyRow['lembur'],0));
 				$ActiveSheet->setCellValue('N'.$i, round($MyRow['thr'],0));
 				$ActiveSheet->setCellValue('O'.$i, round($MyRow['penerimaanlain'],0));
-				$ActiveSheet->setCellValue('P'.$i, $MyRow['penerimaanlainnotes']);
+				$ActiveSheet->setCellValue('P'.$i, empty($MyRow['penerimaanlainnotes']) ? '' : $MyRow['penerimaanlainnotes']);
 				$ActiveSheet->setCellValue('Q'.$i, round($MyRow['potonganjht'],0));
 				$ActiveSheet->setCellValue('R'.$i, round($MyRow['potonganaskes'],0));
 				$ActiveSheet->setCellValue('S'.$i, round($MyRow['potonganabsen'],0));
+				$ActiveSheet->setCellValue('T'.$i, round($MyRow['potonganlain2'],0));
+				$ActiveSheet->setCellValue('U'.$i, empty($MyRow['potonganlain2notes']) ? '' : $MyRow['potonganlain2notes']);
 
 				$i++;
 			}
