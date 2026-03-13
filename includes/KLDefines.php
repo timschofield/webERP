@@ -11,10 +11,6 @@ define("RETAIL_PRICE_LIST", "RT");
 define("COMPANY_NAME_FOR_PO", "PT. ANGIN DINGIN UTARA");
 define("NPWP_FOR_PO", "81.304.529.1-906.000");
 
-/* Defines about standard Cost*/
-define("STANDARD_COST_FACTOR_INDONESIA", 1.00);
-define("STANDARD_COST_FACTOR_FOREIGN"  , 1.00);
-
 /* Defines about packaging transfers */
 define("TRANSFER_ROUNDING_STEP01",               5);
 define("TRANSFER_ROUNDING_LIMIT01",             10);

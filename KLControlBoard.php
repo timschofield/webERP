@@ -22,6 +22,10 @@ include(__DIR__ . '/includes/OCOpenCartConnectDB.php');
 $begintime = time_start();
 $NumberOfTestExecuted = 0;
 
+// as the script uses _SESSION variables, reload just in case another user has been changing values in the meantime 
+// because the script needs the latest values for the calculations
+ReloadSessionVariablesFromConfig();
+
 /* Assign the sections to be executed, to avoid error 504*/
 $ShowSectionInfo = false;
 $ProcessSection01 = false;
@@ -120,38 +124,38 @@ if ($ProcessSection01){
 
 	if ($KL_SystemAdmin){
 		$StartTime = microtime(true);
-		WrongStandardCost("Indonesia"  , "", STANDARD_COST_FACTOR_INDONESIA, 0.04, "SHOWLINK", $RootPath);
+		WrongStandardCost("Indonesia"  , "", $_SESSION['Standard_Cost_Factor_Indonesia'], 0.04, "SHOWLINK", $RootPath);
 		TimeNeededForExecution("WrongStandardCost_Indonesia", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		WrongStandardCost("Thailand"   , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath);
+		WrongStandardCost("Thailand"   , "", $_SESSION['Standard_Cost_Factor_Foreign'], 0.04, "SHOWLINK", $RootPath);
 		TimeNeededForExecution("WrongStandardCost_Thailand", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		WrongStandardCost("China"      , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath);
+		WrongStandardCost("China"      , "", $_SESSION['Standard_Cost_Factor_Foreign'], 0.04, "SHOWLINK", $RootPath);
 		TimeNeededForExecution("WrongStandardCost_China", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		WrongStandardCost("Hong Kong"  , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath);
+		WrongStandardCost("Hong Kong"  , "", $_SESSION['Standard_Cost_Factor_Foreign'], 0.04, "SHOWLINK", $RootPath);
 		TimeNeededForExecution("WrongStandardCost_HongKong", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_PurchasingTeam) {
 		$StartTime = microtime(true);
-		WrongStandardCost("Indonesia"  , "", STANDARD_COST_FACTOR_INDONESIA, 0.04, "SHOWONLY", $RootPath);
+		WrongStandardCost("Indonesia"  , "", $_SESSION['Standard_Cost_Factor_Indonesia'], 0.04, "SHOWONLY", $RootPath);
 		TimeNeededForExecution("WrongStandardCost_Indonesia_SHOWONLY", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		WrongStandardCost("Thailand"   , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWONLY", $RootPath);
+		WrongStandardCost("Thailand"   , "", $_SESSION['Standard_Cost_Factor_Foreign'], 0.04, "SHOWONLY", $RootPath);
 		TimeNeededForExecution("WrongStandardCost_Thailand_SHOWONLY", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		WrongStandardCost("China"      , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWONLY", $RootPath);
+		WrongStandardCost("China"      , "", $_SESSION['Standard_Cost_Factor_Foreign'], 0.04, "SHOWONLY", $RootPath);
 		TimeNeededForExecution("WrongStandardCost_China_SHOWONLY", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		WrongStandardCost("Hong Kong"  , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWONLY", $RootPath);
+		WrongStandardCost("Hong Kong"  , "", $_SESSION['Standard_Cost_Factor_Foreign'], 0.04, "SHOWONLY", $RootPath);
 		TimeNeededForExecution("WrongStandardCost_HongKong_SHOWONLY", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}

@@ -2794,7 +2794,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 				$TotalValueOrderUSD += $ValueOrderUSD;
 				// Enhanced division by zero protection and currency conversion
 				if ($exchangeRate > 0) {
-					$TotalValueAllOrders += ($ValueOrderUSD / $exchangeRate * STANDARD_COST_FACTOR_FOREIGN);
+					$TotalValueAllOrders += ($ValueOrderUSD / $exchangeRate * $_SESSION['Standard_Cost_Factor_Foreign']);
 				}
 				$SupplierBalanceIDR = 0;
 				$SupplierBalanceUSD = $Payments[$MyRow['supplierno']]['balance'];
@@ -2815,7 +2815,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 				$TotalValueOrderTHB += $ValueOrderTHB;
 				// Enhanced division by zero protection and currency conversion
 				if ($exchangeRate > 0) {
-					$TotalValueAllOrders += ($ValueOrderTHB / $exchangeRate * STANDARD_COST_FACTOR_FOREIGN);
+					$TotalValueAllOrders += ($ValueOrderTHB / $exchangeRate * $_SESSION['Standard_Cost_Factor_Foreign']);
 				}
 				$SupplierBalanceIDR = 0;
 				$SupplierBalanceUSD = 0;

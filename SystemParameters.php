@@ -404,6 +404,14 @@ if (isset($_POST['submit'])) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_PPN_Percent']."' WHERE confname = 'PPN_Percent'";
 		}
 
+
+		if ($_SESSION['Standard_Cost_Factor_Indonesia'] != $_POST['X_Standard_Cost_Factor_Indonesia'] ) {
+			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_Standard_Cost_Factor_Indonesia']."' WHERE confname = 'Standard_Cost_Factor_Indonesia'";
+		}
+		if ($_SESSION['Standard_Cost_Factor_Foreign'] != $_POST['X_Standard_Cost_Factor_Foreign'] ) {
+			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_Standard_Cost_Factor_Foreign']."' WHERE confname = 'Standard_Cost_Factor_Foreign'";
+		}
+
 		if ($_SESSION['Price_Factor_Minimum_KL'] != $_POST['X_Price_Factor_Minimum_KL'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_Price_Factor_Minimum_KL']."' WHERE confname = 'Price_Factor_Minimum_KL'";
 		}
@@ -1581,6 +1589,12 @@ echo '<fieldset>
 echo '<fieldset>
 		<legend>' . __('Indonesia Tax Settings') . '</legend>';
 echo FieldToSelectOneNumber('X_PPN_Percent',  $_SESSION['PPN_Percent'], 6, 5, 'PPN (in %)', '', '', '100');
+echo '</fieldset><br />';
+
+echo '<fieldset>
+		<legend>' . __('Standard Cost Settings') . '</legend>';
+echo FieldToSelectOneNumber('X_Standard_Cost_Factor_Indonesia',  $_SESSION['Standard_Cost_Factor_Indonesia'], 6, 5, 'Factor to multiply the purchasing price for items purchased in Indonesia', '', '', '101');
+echo FieldToSelectOneNumber('X_Standard_Cost_Factor_Foreign',  $_SESSION['Standard_Cost_Factor_Foreign'], 6, 5, 'Factor to multiply the purchasing price for items purchased outside Indonesia', '', '', '102');
 echo '</fieldset><br />';
 
 echo '<fieldset>
