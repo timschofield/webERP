@@ -2065,8 +2065,8 @@ function GetItemTransferReason($Reason){
 
 
 function ReloadSessionVariablesFromConfig(){
-	$SQL = "SELECT confname, confvalue FROM config";
-	$ErrMsg = __('Could not get the configuration parameters from the database because');
+	$SQL = "SELECT confname, confvalue FROM klconfig";
+	$ErrMsg = __('Could not get the KL configuration parameters from the database because');
 	$ConfigResult = DB_query($SQL, $ErrMsg);
 	while( $MyRow = DB_fetch_array($ConfigResult) ) {
 		if (is_numeric($MyRow['confvalue']) AND $MyRow['confname']!='DefaultPriceList' AND $MyRow['confname']!='VersionNumber'){

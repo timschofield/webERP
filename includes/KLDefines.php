@@ -111,9 +111,6 @@ define("LIST_SAMPLE_LOCATIONS",      "('SAMPR')");
 define("LIST_UNIFORM_LOCATIONS",     "('SASPG')");
 define("LIST_CONSIGNMENT_LOCATIONS", "('CSLAZ','CSZAL')");
 define("LIST_PACKAGING_LOCATIONS",    "('PACKA','PACKU')");
-define("FORECAST_DAYS_FOR_PACKAGING_STOCK", 90);
-define("FACTOR_GUDANG_PACKAGING", 1.65);
-define("FACTOR_GUDANG_PACKAGING_PAPER_INSIDE_BOX", 1.10);
 
 define("LIST_LOCATIONS_WITH_RL_ALWAYS_ZERO", "('KANTO','PACKA','SUPBA','SERVI','SERSU','SERSV','SERSW','SERDE','SAMPR','SASPG')");
 
@@ -358,8 +355,6 @@ define("META_STORE_NAME_BL", "Blink Fashion Jewellery");
 // MARKETPLACES
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
-define("MAXIMUM_QOH_TO_SHOW_IN_MARKETPLACES",     10); // if we have more than X then, we will show QOH=X in marketplaces to avoid unneeded updates
-define("MINIMUM_QOH_TO_SHOW_ITEM_IN_MARKETPLACES", 3); // if we have less than X then we consider QOH = 0 for the marketplaces to avoid cancelled orders and bad reviews 
 
 define("MARKETPLACES_BRAND_BLINK", "Blink Fashion Jewellery");
 define("MARKETPLACES_BRAND_KAPAL_LAUT", "Kapal-Laut Jewellery");

@@ -67,6 +67,10 @@ function KLCronJobChecks($Group, $RootPath, $EmailText= ''){
 	include('includes/OCOpenCartConnectDB.php');
 
 	include('includes/ArchiveConnectDB.php');
+
+	// as the script uses _SESSION variables, reload just in case another user has been changing values in the meantime 
+	// because the script needs the latest values for the calculations
+	ReloadSessionVariablesFromConfig();
 	
 	if ($Group == "0010-HourlySyncOpenCart"){
 		$EmailText = WeberpToOpenCartHourlySync(false , true, $EmailText);

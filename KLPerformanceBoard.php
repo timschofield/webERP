@@ -17,6 +17,10 @@ include(__DIR__ . '/includes/KLGLFunctions.php');
 $begintime = time_start();
 $NumberOfTestExecuted = 0;
 
+// as the script uses _SESSION variables, reload just in case another user has been changing values in the meantime 
+// because the script needs the latest values for the calculations
+ReloadSessionVariablesFromConfig();
+
 /* Assign the sections to be executed, to avoid error 504*/
 $ShowSectionInfo = false;
 $ProcessSection01 = false;
@@ -358,7 +362,7 @@ if ($ProcessSection03){
 
 	if ($KL_SystemAdmin ){
 		$StartTime = microtime(true);
-		InsuficientStockForShopPackaging('SHPACK', 30, FORECAST_DAYS_FOR_PACKAGING_STOCK, true, false, $RootPath);
+		InsuficientStockForShopPackaging('SHPACK', $_SESSION['Usage_Days_For_Packaging_Stock'], $_SESSION['Forecast_Days_For_Packaging_Stock'], true, false, $RootPath);
 		TimeNeededForExecution("InsuficientStockForShopPackaging", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}

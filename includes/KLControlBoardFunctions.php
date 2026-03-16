@@ -25,7 +25,6 @@
 * GoodsReceivedNotInvoicedControl - Controls goods received not invoiced
 * GoodsToBeProduced - Lists goods that need to be produced
 * ImagesWithoutProduct - Lists images without corresponding products
-* InsuficientStockForShopPackaging - Lists shop packaging with insufficient stock
 * InternalBankTransfers - Manages internal bank transfers between accounts
 * ItemsCancelledInTransfers - Lists items cancelled in transfers
 * ItemsChangingPriceDelayed - Lists items with delayed price changes

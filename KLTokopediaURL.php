@@ -17,6 +17,9 @@ include(__DIR__ . '/includes/OCOpenCartGeneralFunctions.php');
 include(__DIR__ . '/includes/UIGeneralFunctions.php');
 include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
+// as the script uses _SESSION variables, reload just in case another user has been changing values in the meantime 
+// because the script needs the latest values for the calculations
+ReloadSessionVariablesFromConfig();
 
 include(__DIR__ . '/includes/header.php');
 

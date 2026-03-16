@@ -270,14 +270,14 @@ function ItemMarketplaceName($MarketPlace, $StockID, $Description, $Translation)
 * @return int Adjusted quantity on hand for marketplace display
 **************************************************************************************************************/
 function ItemMarketplaceQOH($StockID) {
-	// if we have more than MAXIMUM_QOH_TO_SHOW_IN_MARKETPLACES we "cap" it, 
+	// if we have more than $_SESSION['Maximum_QOH_To_Show_In_Marketplaces'] we "cap" it, 
 	// so we don't spend update credits updating QOH when it is not important for us
-	$QOH = min(ItemOnlineQOH($StockID), MAXIMUM_QOH_TO_SHOW_IN_MARKETPLACES);
+	$QOH = min(ItemOnlineQOH($StockID), $_SESSION['Maximum_QOH_To_Show_In_Marketplaces']);
 	
-	//if less than MINIMUM_QOH_TO_SHOW_ITEM_IN_MARKETPLACES then consider we do not have available for marketplaces
+	//if less than  $_SESSION['Minimum_QOH_To_Show_Item_In_Marketplaces'] then consider we do not have available for marketplaces
 	// to avoid problems of orders not fulfilled and low rankings, better show QOH = 0 than cancel the order.
 	// Anyway, this can be revised, depending on internal marketplace order management 
-	if ($QOH < MINIMUM_QOH_TO_SHOW_ITEM_IN_MARKETPLACES) {
+	if ($QOH < $_SESSION['Minimum_QOH_To_Show_Item_In_Marketplaces']) {
 		$QOH = 0;
 	}
 	return $QOH;
