@@ -1776,14 +1776,14 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			// we need to keep a minimum stock always in gudang
 			if (isPackagingPaperInsideBox($MyRow['stockid'])){
 				if (ItemInList($MyRow['stockid'], LIST_ITEMS_KAPAL_LAUT_PACKAGING)){
-					$MinQOHGudang = $NumberOfOpenShopsKL * $MyRow['eoq'] * FACTOR_GUDANG_PACKAGING_PAPER_INSIDE_BOX;
+					$MinQOHGudang = $NumberOfOpenShopsKL * $MyRow['eoq'] * $_SESSION['Factor_Gudang_Packaging_Paper_Inside_Box'];
 				} elseif (ItemInList($MyRow['stockid'], LIST_ITEMS_BLINK_PACKAGING)){
-					$MinQOHGudang = $NumberOfOpenShopsBL * $MyRow['eoq'] * FACTOR_GUDANG_PACKAGING_PAPER_INSIDE_BOX;
+					$MinQOHGudang = $NumberOfOpenShopsBL * $MyRow['eoq'] * $_SESSION['Factor_Gudang_Packaging_Paper_Inside_Box'];
 				} else {
-					$MinQOHGudang = $NumberOfOpenShopsOU * $MyRow['eoq'] * FACTOR_GUDANG_PACKAGING_PAPER_INSIDE_BOX;
+					$MinQOHGudang = $NumberOfOpenShopsOU * $MyRow['eoq'] * $_SESSION['Factor_Gudang_Packaging_Paper_Inside_Box'];
 				}
 			} else {
-				$MinQOHGudang = $MyRow['sumrl'] * FACTOR_GUDANG_PACKAGING;
+				$MinQOHGudang = $MyRow['sumrl'] * $_SESSION['Factor_Gudang_Packaging'];
 			}
 
 			$OptimumQOH = max($ForecastUsageNextDays, $MinQOHGudang);
@@ -2794,7 +2794,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 				$TotalValueOrderUSD += $ValueOrderUSD;
 				// Enhanced division by zero protection and currency conversion
 				if ($exchangeRate > 0) {
-					$TotalValueAllOrders += ($ValueOrderUSD / $exchangeRate * STANDARD_COST_FACTOR_FOREIGN);
+					$TotalValueAllOrders += ($ValueOrderUSD / $exchangeRate * $_SESSION['Standard_Cost_Factor_Foreign']);
 				}
 				$SupplierBalanceIDR = 0;
 				$SupplierBalanceUSD = $Payments[$MyRow['supplierno']]['balance'];
@@ -2815,7 +2815,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 				$TotalValueOrderTHB += $ValueOrderTHB;
 				// Enhanced division by zero protection and currency conversion
 				if ($exchangeRate > 0) {
-					$TotalValueAllOrders += ($ValueOrderTHB / $exchangeRate * STANDARD_COST_FACTOR_FOREIGN);
+					$TotalValueAllOrders += ($ValueOrderTHB / $exchangeRate * $_SESSION['Standard_Cost_Factor_Foreign']);
 				}
 				$SupplierBalanceIDR = 0;
 				$SupplierBalanceUSD = 0;

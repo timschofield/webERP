@@ -756,12 +756,24 @@ function SetAutoIncStart($Table, $Field, $StartNumber) {
 }
 
 function OutputResult($Msg, $Status) {
+    global $LogFileName;
+    global $UpdateNumber;
+    global $LineCounter;
+    if (!isset($LineCounter) or !isset($_SESSION['FunctionCalls'][$UpdateNumber][$LineCounter])) {
+        $LineCounter = 0;
+    }
+    $Line = $_SESSION['FunctionCalls'][$UpdateNumber][$LineCounter];
+    file_put_contents($LogFileName, $Line . "\n", FILE_APPEND);
+    $LineCounter++;
 	if ($Status == 'error') {
 		$_SESSION['Updates']['Errors']++;
 		$_SESSION['Updates']['Messages'][] = $Msg;
+        file_put_contents($LogFileName, '***ERROR*** ' . $Msg . "\n\n", FILE_APPEND);
 	} elseif ($Status == 'success') {
 		$_SESSION['Updates']['Successes']++;
+        file_put_contents($LogFileName, '***SUCCESS*** ' . $Msg . "\n\n", FILE_APPEND);
 	} else {
 		$_SESSION['Updates']['Warnings']++;
+        file_put_contents($LogFileName, '***INFO***' . $Msg . "\n\n", FILE_APPEND);
 	}
 }

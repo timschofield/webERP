@@ -2062,3 +2062,18 @@ function GetItemTransferReason($Reason){
 		return '';
 	}
 }
+
+
+function ReloadSessionVariablesFromConfig(){
+	$SQL = "SELECT confname, confvalue FROM klconfig";
+	$ErrMsg = __('Could not get the KL configuration parameters from the database because');
+	$ConfigResult = DB_query($SQL, $ErrMsg);
+	while( $MyRow = DB_fetch_array($ConfigResult) ) {
+		if (is_numeric($MyRow['confvalue']) AND $MyRow['confname']!='DefaultPriceList' AND $MyRow['confname']!='VersionNumber'){
+			//the variable name is given by $MyRow[0]
+			$_SESSION[$MyRow['confname']] = (float) $MyRow['confvalue'];
+		} else {
+			$_SESSION[$MyRow['confname']] =  $MyRow['confvalue'];
+		}
+	} //end loop through all config variables
+}

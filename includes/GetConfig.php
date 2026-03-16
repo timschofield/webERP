@@ -24,6 +24,20 @@ if ((isset($ForceConfigReload) AND $ForceConfigReload==true) OR !isset($_SESSION
 		}
 	} //end loop through all config variables
 
+	/* KL RICARD load the variables from klconfig table */
+	$SQL = "SELECT confname, confvalue FROM klconfig";
+	$ErrMsg = __('Could not get the configuration parameters from the database because');
+	$ConfigResult = DB_query($SQL, $ErrMsg);
+	while( $MyRow = DB_fetch_array($ConfigResult) ) {
+		if (is_numeric($MyRow['confvalue'])){
+			//the variable name is given by $MyRow[0]
+			$_SESSION[$MyRow['confname']] = (float) $MyRow['confvalue'];
+		} else {
+			$_SESSION[$MyRow['confname']] =  $MyRow['confvalue'];
+		}
+	} //end loop through all config variables
+	/* END KL RICARD load the variables from klconfig table */
+
 	if (!isset($_SESSION['DBUpdateNumber'])) {
 		$_SESSION['DBUpdateNumber'] = -1;
 	}

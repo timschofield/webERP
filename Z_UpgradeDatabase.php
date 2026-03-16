@@ -65,7 +65,7 @@ echo '<div class="page_title_text">
 if (!isset($_POST['continue'])) {
 	echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-
+    
 	echo '<div class="page_help_text">' . __('You have the following database updates which are required.') . '<br />' . __('Please ensure that you have taken a backup of your current database before continuing.') . '</div><br />';
 	echo '<table>
 		<tr>
@@ -103,6 +103,9 @@ if (!isset($_POST['continue'])) {
 			foreach ($Lines as $Line) {
 				if ($Line != '?>' and substr($Line, 0, 8) != 'UpdateDB' and $Line != '<?php') {
 					echo $Line, '<br />';
+                    if (substr($Line, 0, 2) != '//') {
+                        $_SESSION['FunctionCalls'][$UpdateNumber][] = $Line;
+                    }
 				}
 			}
 			echo '</td>
@@ -125,8 +128,12 @@ if (!isset($_POST['continue'])) {
 		'Successes' => 0,
 		'Warnings' => 0,
 	);
+
+    $LogFileName = $_SESSION['LogPath'] . '/DBUpdateLog-' . date('Y-m-d') . '.log';
+
 	for ($UpdateNumber = $StartingUpdate; $UpdateNumber <= $EndingUpdate; $UpdateNumber++) {
 		if (file_exists('sql/updates/' . $UpdateNumber . '.php')) {
+            LogEntryHeader($LogFileName, $UpdateNumber);
 			$SQL = "SET FOREIGN_KEY_CHECKS=0";
 			$Result = DB_query($SQL);
 			include('sql/updates/' . $UpdateNumber . '.php');
@@ -162,11 +169,24 @@ if (!isset($_POST['continue'])) {
 	include(__DIR__ . '/includes/GetConfig.php');
 	$ForceConfigReload = false;
 
+	// use a button here for consistency with the "Continue" button (used to initiate updates)
 	echo '<div class="centre">
 		<a href="' . $RootPath . '/Logout.php" title="' . __('Log out of') . ' ' . 'webERP" alt="">
-			', __('Now click here to logout and then log back in for these changes to take affect'), '
+			<button>', __('Login again for changes to take affect'), '</button>
 		</a>
 	</div>';
+
+
+}
+
+function LogEntryHeader($LogFileName, $DBUpdateNumber) {
+    $Header = str_repeat('+', 60) . "\n";
+    $Header .= str_repeat(' ', 10);
+    $Header .= 'Update File Number' . ' - ' . $DBUpdateNumber . "\n";
+    $Header .= str_repeat(' ', 10);
+    $Header .= 'Updated on' . ' - ' . date($_SESSION['DefaultDateFormat']) . "\n";
+    $Header .= str_repeat('+', 60) . "\n\n";
+    file_put_contents($LogFileName, $Header, FILE_APPEND);
 }
 
 include(__DIR__ . '/includes/footer.php');

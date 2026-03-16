@@ -711,7 +711,7 @@ if ($_POST['DepnType']==0){ //straight line
 echo '</select></field>
 	<field>
 		<label>' . __('Depreciation Rate') . ':</label>
-		<input ' . (in_array('DepnRate',$Errors) ?  'class="inputerror number"' : 'class="number"' ) .'  type="text" name="DepnRate" size="4" maxlength="4" value="' . $_POST['DepnRate'] . '" />%
+		<input ' . (in_array('DepnRate',$Errors) ?  'class="inputerror number"' : 'class="number"' ) .'  type="text" name="DepnRate" size="5" maxlength="5" value="' . $_POST['DepnRate'] . '" />%
 	</field>
 	</fieldset>';
 

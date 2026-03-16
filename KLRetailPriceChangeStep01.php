@@ -32,7 +32,6 @@ if (isset($_POST['submit'])) {
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
 	$i=1;
-	//first off validate inputs sensible round_price($MyRow['retailprice'], "UP")
 	
 	$Result = DB_query("SELECT klchangingprice, 
 								klmovingdiscount20,

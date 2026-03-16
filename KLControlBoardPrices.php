@@ -18,6 +18,10 @@ $begintime = time_start();
 $NumberOfTestExecuted = 0;
 $IssuesFound = 0;
 
+// as the script uses _SESSION variables, reload just in case another user has been changing values in the meantime 
+// because the script needs the latest values for the calculations
+ReloadSessionVariablesFromConfig();
+
 $PeriodNow=GetPeriod(Date($_SESSION['DefaultDateFormat']));
 
 /* Assign the sections to be executed, to avoid error 504*/

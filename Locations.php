@@ -1128,11 +1128,11 @@ if (!isset($_GET['delete'])) {
 			<label for="KLyearlyRent">' . __('KL Yearly Rent IDR (Shops Only)') . ':</label>
 			<input type="text" name="KLyearlyRent" class="number" title="' . __('Enter the yearly rent in IDR') . '" name="KLyearlyRent" value="' . $_POST['KLyearlyRent'] . '" size="12" maxlength="12" />
 		</field>';
-	echo '<field>
-			<label for="KLPOSCashAccount">' . __('KL POS Cash GL Account') . ':</label>
-			<input data-type="no-illegal-chars" id="KLPOSCashAccount" maxlength="20" name="KLPOSCashAccount" size="20" type="text" value="' . $_POST['KLPOSCashAccount'] . '" />
-			<fieldhelp>' . __('Enter the KL POS Cash GL account for this location, or leave it in blank if not needed') . '</fieldhelp>
-		</field>';
+
+	echo FieldToSelectOneGLAccount('KLPOSCashAccount', $_POST['KLPOSCashAccount'],  __('KL POS Cash GL Account'), 
+	__('Enter the KL POS Cash GL account for this location, or leave it in blank if not needed'),
+	'BS', '', false, false);
+
 	echo '<field>
 			<label for="KLPOSTag">' . __('KL POS Tag') . ':</label>
 			<input data-type="no-illegal-chars" id="KLPOSTag" maxlength="20" name="KLPOSTag" size="4" type="text" value="' . $_POST['KLPOSTag'] . '" />

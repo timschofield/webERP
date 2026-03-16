@@ -25,7 +25,6 @@
 * GoodsReceivedNotInvoicedControl - Controls goods received not invoiced
 * GoodsToBeProduced - Lists goods that need to be produced
 * ImagesWithoutProduct - Lists images without corresponding products
-* InsuficientStockForShopPackaging - Lists shop packaging with insufficient stock
 * InternalBankTransfers - Manages internal bank transfers between accounts
 * ItemsCancelledInTransfers - Lists items cancelled in transfers
 * ItemsChangingPriceDelayed - Lists items with delayed price changes
@@ -2905,8 +2904,9 @@ function OnlineItemsOnProcess($RootPath){
 						<th>' . __('Name') . '</th>
 						<th>' . __('Order Date') . '</th>
 						<th>' . __('Item Code') . '</th>
-						<th>' . __('Quantity') . '</th>
-						<th>' . __('QOH Toko Online') . '</th>
+						<th>' . __('QOO') . '</th>
+						<th>' . __('RL Online') . '</th>
+						<th>' . __('QOH Online') . '</th>
 						<th>' . __('QOH Kantor') . '</th>
 						<th>' . __('Status') . '</th>
 					</tr>
@@ -2930,6 +2930,7 @@ function OnlineItemsOnProcess($RootPath){
 						<td></td>
 						<td></td>
 						<td></td>
+						<td class="number"></td>
 						<td class="number"></td>
 						<td class="number"></td>
 						<td class="number"></td>
@@ -2961,6 +2962,7 @@ function OnlineItemsOnProcess($RootPath){
 					<td>' . ConvertSQLDate($MyRow['orddate']) . '</td>
 					<td>' . $ItemLink . '</td>
 					<td class="number">' . locale_number_format($MyRow['qtyorder'],0) . '</td>
+					<td class="number">' . locale_number_format($MyRow['reorderlevel'],0) . '</td>
 					<td class="number">' . locale_number_format($MyRow['qtyready'],0) . '</td>
 					<td class="number">' . locale_number_format($MyRow['qohkantor'],0) . '</td>
 					<td>' . $Status . '</td>
@@ -2981,6 +2983,7 @@ function OnlineItemsOnProcess($RootPath){
 				<td></td>
 				<td></td>
 				<td></td>
+				<td class="number"></td>
 				<td class="number"></td>
 				<td class="number"></td>
 				<td class="number"></td>

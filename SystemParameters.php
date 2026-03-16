@@ -10,6 +10,7 @@
 
 require(__DIR__ . '/includes/session.php');
 include(__DIR__ . '/includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
 
 $Title = __('System Parameters');
 $ViewTopic = 'CreatingNewSystem';
@@ -392,103 +393,14 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['LastDayOfWeek'] != $_POST['X_LastDayOfWeek']){
 			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_LastDayOfWeek'] . "' WHERE confname='LastDayOfWeek'";
 		}
-// -------------------------------------
-// KL RICARD  Specific Settings for PTADU webERP
-// -------------------------------------
-		if ($_SESSION['PPN_Percent'] != $_POST['X_PPN_Percent'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_PPN_Percent']."' WHERE confname = 'PPN_Percent'";
-		}
 
-		if ($_SESSION['Price_Factor_Minimum_KL'] != $_POST['X_Price_Factor_Minimum_KL'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_Price_Factor_Minimum_KL']."' WHERE confname = 'Price_Factor_Minimum_KL'";
-		}
-		if ($_SESSION['Price_Factor_Minimum_TopSales_KL'] != $_POST['X_Price_Factor_Minimum_TopSales_KL'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_Price_Factor_Minimum_TopSales_KL']."' WHERE confname = 'Price_Factor_Minimum_TopSales_KL'";
-		}
-		if ($_SESSION['Price_Factor_Maximum_BottomSales_KL'] != $_POST['X_Price_Factor_Maximum_BottomSales_KL'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_Price_Factor_Maximum_BottomSales_KL']."' WHERE confname = 'Price_Factor_Maximum_BottomSales_KL'";
-		}
-
-		if ($_SESSION['Price_Factor_Minimum_Blink'] != $_POST['X_Price_Factor_Minimum_Blink'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_Price_Factor_Minimum_Blink']."' WHERE confname = 'Price_Factor_Minimum_Blink'";
-		}
-		if ($_SESSION['Price_Factor_Minimum_TopSales_Blink'] != $_POST['X_Price_Factor_Minimum_TopSales_Blink'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_Price_Factor_Minimum_TopSales_Blink']."' WHERE confname = 'Price_Factor_Minimum_TopSales_Blink'";
-		}
-		if ($_SESSION['Price_Factor_Maximum_BottomSales_Blink'] != $_POST['X_Price_Factor_Maximum_BottomSales_Blink'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_Price_Factor_Maximum_BottomSales_Blink']."' WHERE confname = 'Price_Factor_Maximum_BottomSales_Blink'";
-		}
-
-		if ($_SESSION['Price_Factor_Minimum_General'] != $_POST['X_Price_Factor_Minimum_General'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_Price_Factor_Minimum_General']."' WHERE confname = 'Price_Factor_Minimum_General'";
-		}
-
-		if ($_SESSION['Price_Rounding_Step_01'] != $_POST['X_Price_Rounding_Step_01'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_Price_Rounding_Step_01']."' WHERE confname = 'Price_Rounding_Step_01'";
-		}
-		if ($_SESSION['Price_Rounding_Limit_01'] != $_POST['X_Price_Rounding_Limit_01'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_Price_Rounding_Limit_01']."' WHERE confname = 'Price_Rounding_Limit_01'";
-		}
-		if ($_SESSION['Price_Rounding_Step_02'] != $_POST['X_Price_Rounding_Step_02'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_Price_Rounding_Step_02']."' WHERE confname = 'Price_Rounding_Step_02'";
-		}
-		if ($_SESSION['Price_Rounding_Limit_02'] != $_POST['X_Price_Rounding_Limit_02'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_Price_Rounding_Limit_02']."' WHERE confname = 'Price_Rounding_Limit_02'";
-		}
-		if ($_SESSION['Price_Rounding_Step_03'] != $_POST['X_Price_Rounding_Step_03'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_Price_Rounding_Step_03']."' WHERE confname = 'Price_Rounding_Step_03'";
-		}
-
-		if ($_SESSION['Price_Rounding_Commercial_Module_02'] != $_POST['X_Price_Rounding_Commercial_Module_02'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_Price_Rounding_Commercial_Module_02']."' WHERE confname = 'Price_Rounding_Commercial_Module_02'";
-		}
-		if ($_SESSION['Price_Rounding_Commercial_Step_02'] != $_POST['X_Price_Rounding_Commercial_Step_02'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_Price_Rounding_Commercial_Step_02']."' WHERE confname = 'Price_Rounding_Commercial_Step_02'";
-		}
-
-		if ($_SESSION['Small_Price_Calculated_Step_01'] != $_POST['X_Small_Price_Calculated_Step_01'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_Small_Price_Calculated_Step_01']."' WHERE confname = 'Small_Price_Calculated_Step_01'";
-		}
-		if ($_SESSION['Small_Price_Corrected_Step_01'] != $_POST['X_Small_Price_Corrected_Step_01'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_Small_Price_Corrected_Step_01']."' WHERE confname = 'Small_Price_Corrected_Step_01'";
-		}
-		if ($_SESSION['Small_Price_Calculated_Step_02'] != $_POST['X_Small_Price_Calculated_Step_02'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_Small_Price_Calculated_Step_02']."' WHERE confname = 'Small_Price_Calculated_Step_02'";
-		}
-		if ($_SESSION['Small_Price_Corrected_Step_02'] != $_POST['X_Small_Price_Corrected_Step_02'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_Small_Price_Corrected_Step_02']."' WHERE confname = 'Small_Price_Corrected_Step_02'";
-		}
-		if ($_SESSION['Small_Price_Calculated_Step_03'] != $_POST['X_Small_Price_Calculated_Step_03'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_Small_Price_Calculated_Step_03']."' WHERE confname = 'Small_Price_Calculated_Step_03'";
-		}
-		if ($_SESSION['Small_Price_Corrected_Step_03'] != $_POST['X_Small_Price_Corrected_Step_03'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_Small_Price_Corrected_Step_03']."' WHERE confname = 'Small_Price_Corrected_Step_03'";
-		}
-		if ($_SESSION['Small_Price_Calculated_Step_04'] != $_POST['X_Small_Price_Calculated_Step_04'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_Small_Price_Calculated_Step_04']."' WHERE confname = 'Small_Price_Calculated_Step_04'";
-		}
-		if ($_SESSION['Small_Price_Corrected_Step_04'] != $_POST['X_Small_Price_Corrected_Step_04'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_Small_Price_Corrected_Step_04']."' WHERE confname = 'Small_Price_Corrected_Step_04'";
-		}
-
-		if ($_SESSION['ShopMode'] != $_POST['X_ShopMode'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_ShopMode']."' WHERE confname = 'ShopMode'";
-		}
-		if ($_SESSION['ShopManagerEmail'] != $_POST['X_ShopManagerEmail'] ) {
-			$SQL[] = "UPDATE config SET confvalue = '" . DB_escape_string($_POST['X_ShopManagerEmail']) ."' WHERE confname = 'ShopManagerEmail'";
-		}
-// -------------------------------------
-// KL RICARD  Specific Settings for PTADU webERP
-// -------------------------------------
 		$ErrMsg =  __('The system configuration could not be updated because');
-		if (sizeof($SQL) > 1 ) {
+		if (sizeof($SQL) >= 1 ) {
 			DB_Txn_Begin();
 			foreach ($SQL as $Line) {
 				$Result = DB_query($Line, $ErrMsg);
 			}
 			DB_Txn_Commit();
-		} elseif (sizeof($SQL)==1) {
-			$Result = DB_query($SQL, $ErrMsg);
 		}
 
 		prnMsg( __('System configuration updated'),'success');
@@ -1565,87 +1477,6 @@ echo '</fieldset><br />';
 // -------------------------------------
 
 echo '</fieldset><br />';
-
-// -------------------------------------
-// KL RICARD  Specific Settings for PTADU webERP
-// -------------------------------------
-
-echo '<fieldset>
-		<legend>' . __('ADU webERP Configuration Options') . '</legend>';
-
-echo '<fieldset>
-		<legend>' . __('Indonesia Tax Settings') . '</legend>';
-echo FieldToSelectOneNumber('X_PPN_Percent',  $_SESSION['PPN_Percent'], 6, 5, 'PPN (in %)', '', '', '100');
-echo '</fieldset><br />';
-
-echo '<fieldset>
-		<legend>' . __('Retail Price Settings for KL items') . '</legend>';
-echo FieldToSelectOneNumber('X_Price_Factor_Minimum_KL',  $_SESSION['Price_Factor_Minimum_KL'], 6, 5, 'Minimum Standard Cost to Price Factor for KL items', 'Retail >= Factor x Standard Cost', '', '110');
-echo FieldToSelectOneNumber('X_Price_Factor_Minimum_TopSales_KL',  $_SESSION['Price_Factor_Minimum_TopSales_KL'], 6, 5, 'Minimum Standard Cost to Price Factor for Top Sales KL items', 'Retail Top Sales >= Factor x Standard Cost', '', '111');
-echo FieldToSelectOneNumber('X_Price_Factor_Maximum_BottomSales_KL',  $_SESSION['Price_Factor_Maximum_BottomSales_KL'], 6, 5, 'Maximum Standard Cost to Price Factor for Bottom Sales KL items', 'Retail Bottom Sales <= Factor x Standard Cost', '', '112');
-echo '</fieldset><br />';
-
-echo '<fieldset>
-		<legend>' . __('Retail Price Settings for Blink items') . '</legend>';
-echo FieldToSelectOneNumber('X_Price_Factor_Minimum_Blink',  $_SESSION['Price_Factor_Minimum_Blink'], 6, 5, 'Minimum Standard Cost to Price Factor for Blink items', 'Retail >= Factor x Standard Cost', '', '113');
-echo FieldToSelectOneNumber('X_Price_Factor_Minimum_TopSales_Blink',  $_SESSION['Price_Factor_Minimum_TopSales_Blink'], 6, 5, 'Minimum Standard Cost to Price Factor for Top Sales Blink items', 'Retail Top Sales >= Factor x Standard Cost', '', '114');
-echo FieldToSelectOneNumber('X_Price_Factor_Maximum_BottomSales_Blink',  $_SESSION['Price_Factor_Maximum_BottomSales_Blink'], 6, 5, 'Maximum Standard Cost to Price Factor for Bottom Sales Blink items', 'Retail Bottom Sales <= Factor x Standard Cost', '', '115');
-echo '</fieldset><br />';
-
-echo '<fieldset>
-		<legend>' . __('Retail Price Settings for General items') . '</legend>';
-echo FieldToSelectOneNumber('X_Price_Factor_Minimum_General',  $_SESSION['Price_Factor_Minimum_General'], 6, 5, 'Minimum Standard Cost to Price Factor for General items', 'Retail >= Factor x Standard Cost', '', '116');
-echo '</fieldset><br />';
-
-echo '<fieldset>
-		<legend>' . __('Retail Price Rounding') . '</legend>';
-
-echo '<fieldset>
-		<legend>' . __('Retail Price Rounding Steps') . '</legend>';
-echo FieldToSelectOneNumber('X_Price_Rounding_Step_01',  $_SESSION['Price_Rounding_Step_01'], 12, 11, 'Rounding Step for retail prices below limit 01', '', '', '120');
-echo FieldToSelectOneNumber('X_Price_Rounding_Limit_01',  $_SESSION['Price_Rounding_Limit_01'], 12, 11, 'Retail Price Limit 01', '', '', '121');
-echo FieldToSelectOneNumber('X_Price_Rounding_Step_02',  $_SESSION['Price_Rounding_Step_02'], 12, 11, 'Rounding Step for retail prices below limit 02', '', '', '122');
-echo FieldToSelectOneNumber('X_Price_Rounding_Limit_02',  $_SESSION['Price_Rounding_Limit_02'], 12, 11, 'Retail Price Limit 02', '', '', '123');
-echo FieldToSelectOneNumber('X_Price_Rounding_Step_03',  $_SESSION['Price_Rounding_Step_03'], 12, 11, 'Rounding Step for retail prices over limit 02', '', '', '123');
-echo '</fieldset><br />';
-
-echo '<fieldset>
-		<legend>' . __('Retail Price Commercial Rounding Down') . '</legend>';
-echo FieldToSelectOneNumber('X_Price_Rounding_Commercial_Module_02',  $_SESSION['Price_Rounding_Commercial_Module_02'], 12, 11, 'Retail Price Commercial Module 02', '', '', '130');
-echo FieldToSelectOneNumber('X_Price_Rounding_Commercial_Step_02',  $_SESSION['Price_Rounding_Commercial_Step_02'], 12, 11, 'Retail Price Commercial Step 02', '', '', '131');
-echo '</fieldset><br />';
-
-echo '<fieldset>
-		<legend>' . __('Small Retail Price Corrections') . '</legend>';
-echo FieldToSelectOneNumber('X_Small_Price_Calculated_Step_01',  $_SESSION['Small_Price_Calculated_Step_01'], 12, 11, 'For Calculated Retail Prices Smaller than 01', '', '', '140');
-echo FieldToSelectOneNumber('X_X_Small_Price_Corrected_Step_01',  $_SESSION['X_Small_Price_Corrected_Step_01'], 12, 11, 'Set Corrected Retail Price 01', '', '', '141');
-echo FieldToSelectOneNumber('X_Small_Price_Calculated_Step_02',  $_SESSION['Small_Price_Calculated_Step_02'], 12, 11, 'For Calculated Retail Prices Smaller than 02', '', '', '142');
-echo FieldToSelectOneNumber('X_Small_Price_Corrected_Step_02',  $_SESSION['Small_Price_Corrected_Step_02'], 12, 11, 'Set Corrected Retail Price 02', '', '', '143');
-echo FieldToSelectOneNumber('X_Small_Price_Calculated_Step_03',  $_SESSION['Small_Price_Calculated_Step_03'], 12, 11, 'For Calculated Retail Prices Smaller than 03', '', '', '144');
-echo FieldToSelectOneNumber('X_Small_Price_Corrected_Step_03',  $_SESSION['Small_Price_Corrected_Step_03'], 12, 11, 'Set Corrected Retail Price 03', '', '', '145');
-echo FieldToSelectOneNumber('X_Small_Price_Calculated_Step_04',  $_SESSION['Small_Price_Calculated_Step_04'], 12, 11, 'For Calculated Retail Prices Smaller than 04', '', '', '146');
-echo FieldToSelectOneNumber('X_Small_Price_Corrected_Step_04',  $_SESSION['Small_Price_Corrected_Step_04'], 12, 11, 'Set Corrected Retail Price 04', '', '', '147');
-echo '</fieldset><br />';
-
-echo '</fieldset><br />';
-
-echo '<fieldset>
-		<legend>' . __('Opencart Online Shop Settings') . '</legend>';
-
-// Moved from ShopParameters.php It is the only setting we are using to check if the Opencart shop is in test or live mode
-echo FieldToSelectFromTwoOptions('live', __('Live'), 
-                                'test', __('Test'), 
-                                'X_ShopMode', $_SESSION['ShopMode'], __('Test or Live Mode'),
-								__('Set to live mode when the shop is active. No PayPal or credit card transactions will be processed in test mode'), '', '120', true, false);	
-//Shop Manager Email
-echo FieldToSelectOneEmail('X_ShopManagerEmail', $_SESSION['ShopManagerEmail'], 51, 50, __('Online Shop Manager Email'), __('Enter the email address of the online shop manager.'), '121');
-
-echo '</fieldset><br />';
-
-echo '</fieldset><br />';
-// -------------------------------------
-// KL RICARD END Specific Settings for PTADU webERP
-// -------------------------------------
 
 echo '<div class="centre">
 		<input type="submit" name="submit" value="' . __('Update') . '" />
