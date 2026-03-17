@@ -228,11 +228,11 @@ if ($ProcessSection02){
 		TimeNeededForExecution("FinishedStockDistribution_FORSALE_STOCKCATEGORY", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		StockByBrand("SHOPKL", 75, 135, false);
+		StockByBrand("SHOPKL", 75, $_SESSION['OptimumDaysStockPOWOForKL'], false);
 		TimeNeededForExecution("StockByBrand_SHOPKL", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		StockByBrand("SHOPBL", 75, 150, false);
+		StockByBrand("SHOPBL", 75, $_SESSION['OptimumDaysStockPOWOForBlink'], false);
 		TimeNeededForExecution("StockByBrand_SHOPBL", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);

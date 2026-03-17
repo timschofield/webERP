@@ -131,6 +131,27 @@ if (isset($_POST['submit'])) {
 			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_Small_Price_Corrected_Step_04']."' WHERE confname = 'Small_Price_Corrected_Step_04'";
 		}
 
+		if ($_SESSION['ShopMode'] != $_POST['X_ShopMode'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_ShopMode']."' WHERE confname = 'ShopMode'";
+		}
+		if ($_SESSION['ShopManagerEmail'] != $_POST['X_ShopManagerEmail'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '" . DB_escape_string($_POST['X_ShopManagerEmail']) ."' WHERE confname = 'ShopManagerEmail'";
+		}
+
+		if ($_SESSION['Maximum_QOH_To_Show_In_Marketplaces'] != $_POST['X_Maximum_QOH_To_Show_In_Marketplaces'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_Maximum_QOH_To_Show_In_Marketplaces']."' WHERE confname = 'Maximum_QOH_To_Show_In_Marketplaces'";
+		}
+		if ($_SESSION['Minimum_QOH_To_Show_Item_In_Marketplaces'] != $_POST['X_Minimum_QOH_To_Show_Item_In_Marketplaces'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_Minimum_QOH_To_Show_Item_In_Marketplaces']."' WHERE confname = 'Minimum_QOH_To_Show_Item_In_Marketplaces'";
+		}
+
+		if ($_SESSION['OptimumDaysStockPOWOForKL'] != $_POST['X_OptimumDaysStockPOWOForKL'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_OptimumDaysStockPOWOForKL']."' WHERE confname = 'OptimumDaysStockPOWOForKL'";
+		}
+		if ($_SESSION['OptimumDaysStockPOWOForBlink'] != $_POST['X_OptimumDaysStockPOWOForBlink'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_OptimumDaysStockPOWOForBlink']."' WHERE confname = 'OptimumDaysStockPOWOForBlink'";
+		}
+
 		if ($_SESSION['Usage_Days_For_Packaging_Stock'] != $_POST['X_Usage_Days_For_Packaging_Stock'] ) {
 			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_Usage_Days_For_Packaging_Stock']."' WHERE confname = 'Usage_Days_For_Packaging_Stock'";
 		}
@@ -143,21 +164,6 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['Factor_Gudang_Packaging_Paper_Inside_Box'] != $_POST['X_Factor_Gudang_Packaging_Paper_Inside_Box'] ) {
 			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_Factor_Gudang_Packaging_Paper_Inside_Box']."' WHERE confname = 'Factor_Gudang_Packaging_Paper_Inside_Box'";
 		}
-
-		if ($_SESSION['ShopMode'] != $_POST['X_ShopMode'] ) {
-			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_ShopMode']."' WHERE confname = 'ShopMode'";
-		}
-		if ($_SESSION['ShopManagerEmail'] != $_POST['X_ShopManagerEmail'] ) {
-			$SQL[] = "UPDATE klconfig SET confvalue = '" . DB_escape_string($_POST['X_ShopManagerEmail']) ."' WHERE confname = 'ShopManagerEmail'";
-		}
-
-		if ($_SESSION['X_Maximum_QOH_To_Show_In_Marketplaces'] != $_POST['X_Maximum_QOH_To_Show_In_Marketplaces'] ) {
-			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_Maximum_QOH_To_Show_In_Marketplaces']."' WHERE confname = 'Maximum_QOH_To_Show_In_Marketplaces'";
-		}
-		if ($_SESSION['X_Minimum_QOH_To_Show_Item_In_Marketplaces'] != $_POST['X_Minimum_QOH_To_Show_Item_In_Marketplaces'] ) {
-			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_Minimum_QOH_To_Show_Item_In_Marketplaces']."' WHERE confname = 'Minimum_QOH_To_Show_Item_In_Marketplaces'";
-		}
-
 
 // -------------------------------------
 // KL RICARD  Specific Settings for PTADU webERP
@@ -192,98 +198,118 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 echo '<fieldset>
 		<legend>' . __('ADU webERP Configuration Options') . '</legend>';
 
-echo '<fieldset>
-		<legend>' . __('Indonesia Tax Settings') . '</legend>';
-echo FieldToSelectOneNumber('X_PPN_Percent',  $_SESSION['PPN_Percent'], 6, 5, 'PPN (in %)', '', '', '100');
+	echo '<fieldset>
+			<legend>' . __('Indonesia Tax Settings') . '</legend>';
+		echo FieldToSelectOneNumber('X_PPN_Percent',  $_SESSION['PPN_Percent'], 6, 5, 'PPN (in %)', '', '', '100');
+	echo '</fieldset><br />';
+
+	echo '<fieldset>
+			<legend>' . __('Standard Cost Settings') . '</legend>';
+		echo FieldToSelectOneNumber('X_Standard_Cost_Factor_Indonesia',  $_SESSION['Standard_Cost_Factor_Indonesia'], 6, 5, 'Factor to multiply the purchasing price for items purchased in Indonesia', '', '', '101');
+		echo FieldToSelectOneNumber('X_Standard_Cost_Factor_Foreign',  $_SESSION['Standard_Cost_Factor_Foreign'], 6, 5, 'Factor to multiply the purchasing price for items purchased outside Indonesia', '', '', '102');
+	echo '</fieldset><br />';
+
+	echo '<fieldset>
+			<legend>' . __('Retail Price Settings') . '</legend>';
+		echo '<fieldset>
+				<legend>' . __('Retail Price Settings for KL items') . '</legend>';
+			echo FieldToSelectOneNumber('X_Price_Factor_Minimum_KL',  $_SESSION['Price_Factor_Minimum_KL'], 6, 5, 'Minimum Standard Cost to Price Factor for KL items', 'Retail >= Factor x Standard Cost', '', '110');
+			echo FieldToSelectOneNumber('X_Price_Factor_Minimum_TopSales_KL',  $_SESSION['Price_Factor_Minimum_TopSales_KL'], 6, 5, 'Minimum Standard Cost to Price Factor for Top Sales KL items', 'Retail Top Sales >= Factor x Standard Cost', '', '111');
+			echo FieldToSelectOneNumber('X_Price_Factor_Maximum_BottomSales_KL',  $_SESSION['Price_Factor_Maximum_BottomSales_KL'], 6, 5, 'Maximum Standard Cost to Price Factor for Bottom Sales KL items', 'Retail Bottom Sales <= Factor x Standard Cost', '', '112');
+		echo '</fieldset><br />';
+
+		echo '<fieldset>
+				<legend>' . __('Retail Price Settings for Blink items') . '</legend>';
+			echo FieldToSelectOneNumber('X_Price_Factor_Minimum_Blink',  $_SESSION['Price_Factor_Minimum_Blink'], 6, 5, 'Minimum Standard Cost to Price Factor for Blink items', 'Retail >= Factor x Standard Cost', '', '113');
+			echo FieldToSelectOneNumber('X_Price_Factor_Minimum_TopSales_Blink',  $_SESSION['Price_Factor_Minimum_TopSales_Blink'], 6, 5, 'Minimum Standard Cost to Price Factor for Top Sales Blink items', 'Retail Top Sales >= Factor x Standard Cost', '', '114');
+			echo FieldToSelectOneNumber('X_Price_Factor_Maximum_BottomSales_Blink',  $_SESSION['Price_Factor_Maximum_BottomSales_Blink'], 6, 5, 'Maximum Standard Cost to Price Factor for Bottom Sales Blink items', 'Retail Bottom Sales <= Factor x Standard Cost', '', '115');
+		echo '</fieldset><br />';
+
+		echo '<fieldset>
+				<legend>' . __('Retail Price Settings for General items') . '</legend>';
+			echo FieldToSelectOneNumber('X_Price_Factor_Minimum_General',  $_SESSION['Price_Factor_Minimum_General'], 6, 5, 'Minimum Standard Cost to Price Factor for General items', 'Retail >= Factor x Standard Cost', '', '116');
+		echo '</fieldset><br />';
+	echo '</fieldset><br />';
+
+	echo '<fieldset>
+			<legend>' . __('Retail Price Rounding') . '</legend>';
+
+		echo '<fieldset>
+				<legend>' . __('Retail Price Rounding Steps') . '</legend>';
+			echo FieldToSelectOneNumber('X_Price_Rounding_Step_01',  $_SESSION['Price_Rounding_Step_01'], 12, 11, 'Rounding Step for retail prices below limit 01', '', '', '120');
+			echo FieldToSelectOneNumber('X_Price_Rounding_Limit_01',  $_SESSION['Price_Rounding_Limit_01'], 12, 11, 'Retail Price Limit 01', '', '', '121');
+			echo FieldToSelectOneNumber('X_Price_Rounding_Step_02',  $_SESSION['Price_Rounding_Step_02'], 12, 11, 'Rounding Step for retail prices below limit 02', '', '', '122');
+			echo FieldToSelectOneNumber('X_Price_Rounding_Limit_02',  $_SESSION['Price_Rounding_Limit_02'], 12, 11, 'Retail Price Limit 02', '', '', '123');
+			echo FieldToSelectOneNumber('X_Price_Rounding_Step_03',  $_SESSION['Price_Rounding_Step_03'], 12, 11, 'Rounding Step for retail prices over limit 02', '', '', '123');
+		echo '</fieldset><br />';
+
+		echo '<fieldset>
+				<legend>' . __('Retail Price Commercial Rounding Down') . '</legend>';
+			echo FieldToSelectOneNumber('X_Price_Rounding_Commercial_Module_02',  $_SESSION['Price_Rounding_Commercial_Module_02'], 12, 11, 'Retail Price Commercial Module 02', '', '', '130');
+			echo FieldToSelectOneNumber('X_Price_Rounding_Commercial_Step_02',  $_SESSION['Price_Rounding_Commercial_Step_02'], 12, 11, 'Retail Price Commercial Step 02', '', '', '131');
+		echo '</fieldset><br />';
+
+		echo '<fieldset>
+				<legend>' . __('Small Retail Price Corrections') . '</legend>';
+			echo FieldToSelectOneNumber('X_Small_Price_Calculated_Step_01',  $_SESSION['Small_Price_Calculated_Step_01'], 12, 11, 'For Calculated Retail Prices Smaller than 01', '', '', '140');
+			echo FieldToSelectOneNumber('X_Small_Price_Corrected_Step_01',  $_SESSION['Small_Price_Corrected_Step_01'], 12, 11, 'Set Corrected Retail Price 01', '', '', '141');
+			echo FieldToSelectOneNumber('X_Small_Price_Calculated_Step_02',  $_SESSION['Small_Price_Calculated_Step_02'], 12, 11, 'For Calculated Retail Prices Smaller than 02', '', '', '142');
+			echo FieldToSelectOneNumber('X_Small_Price_Corrected_Step_02',  $_SESSION['Small_Price_Corrected_Step_02'], 12, 11, 'Set Corrected Retail Price 02', '', '', '143');
+			echo FieldToSelectOneNumber('X_Small_Price_Calculated_Step_03',  $_SESSION['Small_Price_Calculated_Step_03'], 12, 11, 'For Calculated Retail Prices Smaller than 03', '', '', '144');
+			echo FieldToSelectOneNumber('X_Small_Price_Corrected_Step_03',  $_SESSION['Small_Price_Corrected_Step_03'], 12, 11, 'Set Corrected Retail Price 03', '', '', '145');
+			echo FieldToSelectOneNumber('X_Small_Price_Calculated_Step_04',  $_SESSION['Small_Price_Calculated_Step_04'], 12, 11, 'For Calculated Retail Prices Smaller than 04', '', '', '146');
+			echo FieldToSelectOneNumber('X_Small_Price_Corrected_Step_04',  $_SESSION['Small_Price_Corrected_Step_04'], 12, 11, 'Set Corrected Retail Price 04', '', '', '147');
+		echo '</fieldset><br />';
+	echo '</fieldset><br />';
+
+	echo '<fieldset>
+			<legend>' . __('Opencart Online Shop Settings') . '</legend>';
+		// Moved from ShopParameters.php It is the only setting we are using to check if the Opencart shop is in test or live mode
+		echo FieldToSelectFromTwoOptions('live', __('Live'), 
+										'test', __('Test'), 
+										'X_ShopMode', $_SESSION['ShopMode'], __('Test or Live Mode'),
+										__('Set to live mode when the shop is active. No PayPal or credit card transactions will be processed in test mode'), '', '200', true, false);	
+		echo FieldToSelectOneEmail('X_ShopManagerEmail', $_SESSION['ShopManagerEmail'], 51, 50, __('Online Shop Manager Email'), __('Enter the email address of the online shop manager.'), '201');
+	echo '</fieldset><br />';
+
+	echo '<fieldset>
+			<legend>' . __('Marketplaces Shop Settings') . '</legend>';
+
+		echo '<fieldset>
+				<legend>' . __('Marketplace QOH Settings') . '</legend>';
+			echo FieldToSelectOneNumber('X_Maximum_QOH_To_Show_In_Marketplaces',  $_SESSION['Maximum_QOH_To_Show_In_Marketplaces'], 6, 5, 'QOH Max to show on Marketplaces', 'if we have more than X then, we will show QOH=X in marketplaces to avoid unneeded updates and to create scarcity', '', '300');
+			echo FieldToSelectOneNumber('X_Minimum_QOH_To_Show_Item_In_Marketplaces',  $_SESSION['Minimum_QOH_To_Show_Item_In_Marketplaces'], 6, 5, 'Hide item in marketplaces if QOH below', 'if we have less than X then we consider QOH = 0 for the marketplaces to avoid cancelled orders and bad reviews', '', '301');
+		echo '</fieldset><br />';
+	echo '</fieldset><br />';
 echo '</fieldset><br />';
 
 echo '<fieldset>
-		<legend>' . __('Standard Cost Settings') . '</legend>';
-echo FieldToSelectOneNumber('X_Standard_Cost_Factor_Indonesia',  $_SESSION['Standard_Cost_Factor_Indonesia'], 6, 5, 'Factor to multiply the purchasing price for items purchased in Indonesia', '', '', '101');
-echo FieldToSelectOneNumber('X_Standard_Cost_Factor_Foreign',  $_SESSION['Standard_Cost_Factor_Foreign'], 6, 5, 'Factor to multiply the purchasing price for items purchased outside Indonesia', '', '', '102');
+		<legend>' . __('Performance Board Section 1 Settings') . '</legend>';
+
 echo '</fieldset><br />';
 
 echo '<fieldset>
-		<legend>' . __('Retail Price Settings') . '</legend>';
-echo '<fieldset>
-		<legend>' . __('Retail Price Settings for KL items') . '</legend>';
-echo FieldToSelectOneNumber('X_Price_Factor_Minimum_KL',  $_SESSION['Price_Factor_Minimum_KL'], 6, 5, 'Minimum Standard Cost to Price Factor for KL items', 'Retail >= Factor x Standard Cost', '', '110');
-echo FieldToSelectOneNumber('X_Price_Factor_Minimum_TopSales_KL',  $_SESSION['Price_Factor_Minimum_TopSales_KL'], 6, 5, 'Minimum Standard Cost to Price Factor for Top Sales KL items', 'Retail Top Sales >= Factor x Standard Cost', '', '111');
-echo FieldToSelectOneNumber('X_Price_Factor_Maximum_BottomSales_KL',  $_SESSION['Price_Factor_Maximum_BottomSales_KL'], 6, 5, 'Maximum Standard Cost to Price Factor for Bottom Sales KL items', 'Retail Bottom Sales <= Factor x Standard Cost', '', '112');
+		<legend>' . __('Performance Board Section 2 Settings') . '</legend>';
+
+	echo '<fieldset>
+			<legend>' . __('Stock for Brand Settings') . '</legend>';
+		echo FieldToSelectOneNumber('X_OptimumDaysStockPOWOForKL',  $_SESSION['OptimumDaysStockPOWOForKL'], 6, 5, '# Days of Optimum Current Stock+PO+WO for KL', 'Number of days of optimum current stock plus purchase orders and work orders for KL', '', '150');
+		echo FieldToSelectOneNumber('X_OptimumDaysStockPOWOForBlink',  $_SESSION['OptimumDaysStockPOWOForBlink'], 6, 5, '# Days of Optimum Current Stock+PO+WO for Blink', 'Number of days of optimum current stock plus purchase orders and work orders for Blink', '', '151');
+	echo '</fieldset><br />';
+
 echo '</fieldset><br />';
 
 echo '<fieldset>
-		<legend>' . __('Retail Price Settings for Blink items') . '</legend>';
-echo FieldToSelectOneNumber('X_Price_Factor_Minimum_Blink',  $_SESSION['Price_Factor_Minimum_Blink'], 6, 5, 'Minimum Standard Cost to Price Factor for Blink items', 'Retail >= Factor x Standard Cost', '', '113');
-echo FieldToSelectOneNumber('X_Price_Factor_Minimum_TopSales_Blink',  $_SESSION['Price_Factor_Minimum_TopSales_Blink'], 6, 5, 'Minimum Standard Cost to Price Factor for Top Sales Blink items', 'Retail Top Sales >= Factor x Standard Cost', '', '114');
-echo FieldToSelectOneNumber('X_Price_Factor_Maximum_BottomSales_Blink',  $_SESSION['Price_Factor_Maximum_BottomSales_Blink'], 6, 5, 'Maximum Standard Cost to Price Factor for Bottom Sales Blink items', 'Retail Bottom Sales <= Factor x Standard Cost', '', '115');
-echo '</fieldset><br />';
+		<legend>' . __('Performance Board Section 3 Settings') . '</legend>';
 
-echo '<fieldset>
-		<legend>' . __('Retail Price Settings for General items') . '</legend>';
-echo FieldToSelectOneNumber('X_Price_Factor_Minimum_General',  $_SESSION['Price_Factor_Minimum_General'], 6, 5, 'Minimum Standard Cost to Price Factor for General items', 'Retail >= Factor x Standard Cost', '', '116');
-echo '</fieldset><br />';
-echo '</fieldset><br />';
+	echo '<fieldset>
+			<legend>' . __('Packaging Forecast Settings') . '</legend>';
+		echo FieldToSelectOneNumber('X_Usage_Days_For_Packaging_Stock',  $_SESSION['Usage_Days_For_Packaging_Stock'], 6, 5, '# Days of Packaging Usage for Forecast', 'Number of days  of Packaging Usage for Forecast', '', '150');
+		echo FieldToSelectOneNumber('X_Forecast_Days_For_Packaging_Stock',  $_SESSION['Forecast_Days_For_Packaging_Stock'], 6, 5, 'Optimum # Days of Packaging Stock Forecast', 'Number of days to forecast packaging stock', '', '151');
+		echo FieldToSelectOneNumber('X_Factor_Gudang_Packaging',  $_SESSION['Factor_Gudang_Packaging'], 6, 5, 'Factor Gudang Packaging (except paper inside box)', 'Factor for packaging stock in gudang', '', '152');
+		echo FieldToSelectOneNumber('X_Factor_Gudang_Packaging_Paper_Inside_Box',  $_SESSION['Factor_Gudang_Packaging_Paper_Inside_Box'], 6, 5, 'Factor Gudang Packaging Paper Inside Box', 'Factor for packaging stock in gudang for paper inside box', '', '153');
+	echo '</fieldset><br />';
 
-echo '<fieldset>
-		<legend>' . __('Retail Price Rounding') . '</legend>';
-
-echo '<fieldset>
-		<legend>' . __('Retail Price Rounding Steps') . '</legend>';
-echo FieldToSelectOneNumber('X_Price_Rounding_Step_01',  $_SESSION['Price_Rounding_Step_01'], 12, 11, 'Rounding Step for retail prices below limit 01', '', '', '120');
-echo FieldToSelectOneNumber('X_Price_Rounding_Limit_01',  $_SESSION['Price_Rounding_Limit_01'], 12, 11, 'Retail Price Limit 01', '', '', '121');
-echo FieldToSelectOneNumber('X_Price_Rounding_Step_02',  $_SESSION['Price_Rounding_Step_02'], 12, 11, 'Rounding Step for retail prices below limit 02', '', '', '122');
-echo FieldToSelectOneNumber('X_Price_Rounding_Limit_02',  $_SESSION['Price_Rounding_Limit_02'], 12, 11, 'Retail Price Limit 02', '', '', '123');
-echo FieldToSelectOneNumber('X_Price_Rounding_Step_03',  $_SESSION['Price_Rounding_Step_03'], 12, 11, 'Rounding Step for retail prices over limit 02', '', '', '123');
-echo '</fieldset><br />';
-
-echo '<fieldset>
-		<legend>' . __('Retail Price Commercial Rounding Down') . '</legend>';
-echo FieldToSelectOneNumber('X_Price_Rounding_Commercial_Module_02',  $_SESSION['Price_Rounding_Commercial_Module_02'], 12, 11, 'Retail Price Commercial Module 02', '', '', '130');
-echo FieldToSelectOneNumber('X_Price_Rounding_Commercial_Step_02',  $_SESSION['Price_Rounding_Commercial_Step_02'], 12, 11, 'Retail Price Commercial Step 02', '', '', '131');
-echo '</fieldset><br />';
-
-echo '<fieldset>
-		<legend>' . __('Small Retail Price Corrections') . '</legend>';
-echo FieldToSelectOneNumber('X_Small_Price_Calculated_Step_01',  $_SESSION['Small_Price_Calculated_Step_01'], 12, 11, 'For Calculated Retail Prices Smaller than 01', '', '', '140');
-echo FieldToSelectOneNumber('X_Small_Price_Corrected_Step_01',  $_SESSION['Small_Price_Corrected_Step_01'], 12, 11, 'Set Corrected Retail Price 01', '', '', '141');
-echo FieldToSelectOneNumber('X_Small_Price_Calculated_Step_02',  $_SESSION['Small_Price_Calculated_Step_02'], 12, 11, 'For Calculated Retail Prices Smaller than 02', '', '', '142');
-echo FieldToSelectOneNumber('X_Small_Price_Corrected_Step_02',  $_SESSION['Small_Price_Corrected_Step_02'], 12, 11, 'Set Corrected Retail Price 02', '', '', '143');
-echo FieldToSelectOneNumber('X_Small_Price_Calculated_Step_03',  $_SESSION['Small_Price_Calculated_Step_03'], 12, 11, 'For Calculated Retail Prices Smaller than 03', '', '', '144');
-echo FieldToSelectOneNumber('X_Small_Price_Corrected_Step_03',  $_SESSION['Small_Price_Corrected_Step_03'], 12, 11, 'Set Corrected Retail Price 03', '', '', '145');
-echo FieldToSelectOneNumber('X_Small_Price_Calculated_Step_04',  $_SESSION['Small_Price_Calculated_Step_04'], 12, 11, 'For Calculated Retail Prices Smaller than 04', '', '', '146');
-echo FieldToSelectOneNumber('X_Small_Price_Corrected_Step_04',  $_SESSION['Small_Price_Corrected_Step_04'], 12, 11, 'Set Corrected Retail Price 04', '', '', '147');
-echo '</fieldset><br />';
-echo '</fieldset><br />';
-
-echo '<fieldset>
-		<legend>' . __('Packaging Forecast Settings') . '</legend>';
-echo FieldToSelectOneNumber('X_Usage_Days_For_Packaging_Stock',  $_SESSION['Usage_Days_For_Packaging_Stock'], 6, 5, '# Days of Packaging Usage for Forecast', 'Number of days  of Packaging Usage for Forecast', '', '150');
-echo FieldToSelectOneNumber('X_Forecast_Days_For_Packaging_Stock',  $_SESSION['Forecast_Days_For_Packaging_Stock'], 6, 5, 'Optimum # Days of Packaging Stock Forecast', 'Number of days to forecast packaging stock', '', '151');
-echo FieldToSelectOneNumber('X_Factor_Gudang_Packaging',  $_SESSION['Factor_Gudang_Packaging'], 6, 5, 'Factor Gudang Packaging (except paper inside box)', 'Factor for packaging stock in gudang', '', '152');
-echo FieldToSelectOneNumber('X_Factor_Gudang_Packaging_Paper_Inside_Box',  $_SESSION['Factor_Gudang_Packaging_Paper_Inside_Box'], 6, 5, 'Factor Gudang Packaging Paper Inside Box', 'Factor for packaging stock in gudang for paper inside box', '', '153');
-echo '</fieldset><br />';
-
-echo '<fieldset>
-		<legend>' . __('Opencart Online Shop Settings') . '</legend>';
-// Moved from ShopParameters.php It is the only setting we are using to check if the Opencart shop is in test or live mode
-echo FieldToSelectFromTwoOptions('live', __('Live'), 
-                                'test', __('Test'), 
-                                'X_ShopMode', $_SESSION['ShopMode'], __('Test or Live Mode'),
-								__('Set to live mode when the shop is active. No PayPal or credit card transactions will be processed in test mode'), '', '200', true, false);	
-echo FieldToSelectOneEmail('X_ShopManagerEmail', $_SESSION['ShopManagerEmail'], 51, 50, __('Online Shop Manager Email'), __('Enter the email address of the online shop manager.'), '201');
-echo '</fieldset><br />';
-
-echo '<fieldset>
-		<legend>' . __('Marketplaces Shop Settings') . '</legend>';
-
-echo '<fieldset>
-		<legend>' . __('Marketplace QOH Settings') . '</legend>';
-echo FieldToSelectOneNumber('X_Maximum_QOH_To_Show_In_Marketplaces',  $_SESSION['Maximum_QOH_To_Show_In_Marketplaces'], 6, 5, 'QOH Max to show on Marketplaces', 'if we have more than X then, we will show QOH=X in marketplaces to avoid unneeded updates and to create scarcity', '', '300');
-echo FieldToSelectOneNumber('X_Minimum_QOH_To_Show_Item_In_Marketplaces',  $_SESSION['Minimum_QOH_To_Show_Item_In_Marketplaces'], 6, 5, 'Hide item in marketplaces if QOH below', 'if we have less than X then we consider QOH = 0 for the marketplaces to avoid cancelled orders and bad reviews', '', '301');
-echo '</fieldset><br />';
-
-echo '</fieldset><br />';
 echo '</fieldset><br />';
 // -------------------------------------
 // KL RICARD END Specific Settings for PTADU webERP
