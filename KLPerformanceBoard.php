@@ -441,9 +441,9 @@ if ($ProcessSection03){
 		OR $KL_AdministrationLeader){
 		$StartTime = microtime(true);
 		CashStatus($yesterday_year, 
-					239394769, 200000000, 100000000, 
-					270102062, 200000000, 100000000, 
-					172254183, 200000000, 100000000, 
+					$_SESSION['CashKantorEndLastYearPTADU'], 200000000, 100000000, 
+					$_SESSION['CashKantorEndLastYearPTSMH'], 200000000, 100000000, 
+					$_SESSION['CashKantorEndLastYearPTBB'], 200000000, 100000000, 
 					100000000, 
 					75, 1.05,
 					  5000, 
