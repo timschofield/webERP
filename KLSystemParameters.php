@@ -145,6 +145,9 @@ if (isset($_POST['submit'])) {
 			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_Minimum_QOH_To_Show_Item_In_Marketplaces']."' WHERE confname = 'Minimum_QOH_To_Show_Item_In_Marketplaces'";
 		}
 
+		if ($_SESSION['DaysToPredictFutureSalesPerBrand'] != $_POST['X_DaysToPredictFutureSalesPerBrand'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_DaysToPredictFutureSalesPerBrand']."' WHERE confname = 'DaysToPredictFutureSalesPerBrand'";
+		}
 		if ($_SESSION['OptimumDaysStockPOWOForKL'] != $_POST['X_OptimumDaysStockPOWOForKL'] ) {
 			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_OptimumDaysStockPOWOForKL']."' WHERE confname = 'OptimumDaysStockPOWOForKL'";
 		}
@@ -293,6 +296,7 @@ echo '<fieldset>
 
 	echo '<fieldset>
 			<legend>' . __('Stock for Brand Settings') . '</legend>';
+		echo FieldToSelectOneNumber('X_DaysToPredictFutureSalesPerBrand',  $_SESSION['DaysToPredictFutureSalesPerBrand'], 6, 5, '# Days to Predict Future Sales Per Brand', 'Number of days to predict future sales per brand', '', '150');
 		echo FieldToSelectOneNumber('X_OptimumDaysStockPOWOForKL',  $_SESSION['OptimumDaysStockPOWOForKL'], 6, 5, '# Days of Optimum Current Stock+PO+WO for KL', 'Number of days of optimum current stock plus purchase orders and work orders for KL', '', '150');
 		echo FieldToSelectOneNumber('X_OptimumDaysStockPOWOForBlink',  $_SESSION['OptimumDaysStockPOWOForBlink'], 6, 5, '# Days of Optimum Current Stock+PO+WO for Blink', 'Number of days of optimum current stock plus purchase orders and work orders for Blink', '', '151');
 	echo '</fieldset><br />';
