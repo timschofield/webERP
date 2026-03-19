@@ -228,27 +228,27 @@ if ($ProcessSection02){
 		TimeNeededForExecution("FinishedStockDistribution_FORSALE_STOCKCATEGORY", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		StockByBrand("SHOPKL", 75, 135, false);
+		StockByBrand("SHOPKL", $_SESSION['DaysToPredictFutureSalesPerBrand'], $_SESSION['OptimumDaysStockPOWOForKL'], false);
 		TimeNeededForExecution("StockByBrand_SHOPKL", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		StockByBrand("SHOPBL", 75, 150, false);
+		StockByBrand("SHOPBL", $_SESSION['DaysToPredictFutureSalesPerBrand'], $_SESSION['OptimumDaysStockPOWOForBlink'], false);
 		TimeNeededForExecution("StockByBrand_SHOPBL", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		StockByBrand("SHOPOU", 75, 150, false);
+		StockByBrand("SHOPOU", $_SESSION['DaysToPredictFutureSalesPerBrand'], 0, false);
 		TimeNeededForExecution("StockByBrand_SHOPOU", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		StockByBrand("SHOPOK", 75, 150, false);
+		StockByBrand("SHOPOK", $_SESSION['DaysToPredictFutureSalesPerBrand'], 0, false);
 		TimeNeededForExecution("StockByBrand_SHOPOK", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		StockByBrand("SHOPOB", 75, 150, false);
+		StockByBrand("SHOPOB", $_SESSION['DaysToPredictFutureSalesPerBrand'], 0, false);
 		TimeNeededForExecution("StockByBrand_SHOPOB", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		StockByBrand("SHOPOG", 75, 150, false);
+		StockByBrand("SHOPOG", $_SESSION['DaysToPredictFutureSalesPerBrand'], 0, false);
 		TimeNeededForExecution("StockByBrand_SHOPOG", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
@@ -441,9 +441,9 @@ if ($ProcessSection03){
 		OR $KL_AdministrationLeader){
 		$StartTime = microtime(true);
 		CashStatus($yesterday_year, 
-					239394769, 200000000, 100000000, 
-					270102062, 200000000, 100000000, 
-					172254183, 200000000, 100000000, 
+					$_SESSION['CashKantorEndLastYearPTADU'], 200000000, 100000000, 
+					$_SESSION['CashKantorEndLastYearPTSMH'], 200000000, 100000000, 
+					$_SESSION['CashKantorEndLastYearPTBB'], 200000000, 100000000, 
 					100000000, 
 					75, 1.05,
 					  5000, 

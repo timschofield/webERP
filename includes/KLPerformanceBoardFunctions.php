@@ -1802,36 +1802,40 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock, $ShowFullDetails){
 	$BrandCode = substr($Brand, -2); // Get the 2 rightmost characters of $Brand
 
 	$Shops = NumberOfShops($Brand);
-	$NumDaysLastYear = $OptimalDaysStock - $NumDays;
+	$NextDaysLastYear = $OptimalDaysStock - $NumDays;
 	
-	/* Past NumDays This Year*/
+	$TotalModels  = TotalModels($Brand);
+	$TotalItems   = TotalItems($Brand);
+
+	/* Past $NumDays This Year*/
 	$ToLastDaysThisYear = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 	$FromLastDaysThisYear = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays-1));
-
-	/* Next $NumDays future days since yesterday one year ago */
-	$ToNextDaysLastYear = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-365+$NumDays));
-	$FromNextDaysLastYear = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-365));
+	$DailySoldItemsThisYearNumDays = NumItemsSoldPerBrand($Brand, $FromLastDaysThisYear, $ToLastDaysThisYear) / $NumDays;
 
 	/* Past $NumDays days since yesterday one year ago */
 	$ToLastDaysLastYear = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-366));
 	$FromLastDaysLastYear = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays-366));
+	$DailySoldItemsLastYearNumDays = NumItemsSoldPerBrand($Brand, $FromLastDaysLastYear, $ToLastDaysLastYear) / $NumDays;
+	
+	/* Trend during the past $NumDays compared to same period last year */
+	$TrendThisYear = ($DailySoldItemsThisYearNumDays - $DailySoldItemsLastYearNumDays) / $DailySoldItemsLastYearNumDays;
 
-	$TotalModels  = TotalModels($Brand);
-	$TotalItems   = TotalItems($Brand);
-	$DailySoldItemsThisYearPastDays = NumItemsSoldPerBrand($Brand, $FromLastDaysThisYear, $ToLastDaysThisYear) / $NumDays;
-	$DailySoldItemsLastYearPastDays = NumItemsSoldPerBrand($Brand, $FromLastDaysLastYear, $ToLastDaysLastYear) / $NumDays;
-	$TrendThisYear = ($DailySoldItemsThisYearPastDays - $DailySoldItemsLastYearPastDays) / $DailySoldItemsLastYearPastDays;
+	/* Next $NumDays future days since today one year ago */
+	$ToNextDaysLastYear = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-365+$NumDays));
+	$FromNextDaysLastYear = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-365));
+
 	if ($Brand == "SHOPKL" OR $Brand == "SHOPBL") {
 		$DisplayItems = TotalDisplayItems($Brand);
 		$AvailableForSaleItems = $TotalItems - $DisplayItems;
-		$DailySoldItemsLastYearNextDays = NumItemsSoldPerBrand($Brand, $FromNextDaysLastYear, $ToNextDaysLastYear) / $NumDaysLastYear;
+		$DailySoldItemsLastYearNextDays = NumItemsSoldPerBrand($Brand, $FromNextDaysLastYear, $ToNextDaysLastYear) / $NumDays;
 		$ItemsToBeSoldNextDaysBasedOnTrendLastYear = $DailySoldItemsLastYearNextDays * ($TrendThisYear+1);
-		$EstimationDailyItemsToBeSoldNextDays = max($DailySoldItemsThisYearPastDays, $ItemsToBeSoldNextDaysBasedOnTrendLastYear);
+		$EstimationDailyItemsToBeSoldNextDays = max($DailySoldItemsThisYearNumDays, $ItemsToBeSoldNextDaysBasedOnTrendLastYear);
 	} else {
 		$DisplayItems = 0; // for discounted items we don't want to keep enough for display, we want to get rid of them
 		$AvailableForSaleItems = $TotalItems ;
-		$EstimationDailyItemsToBeSoldNextDays = $DailySoldItemsThisYearPastDays;
+		$EstimationDailyItemsToBeSoldNextDays = $DailySoldItemsThisYearNumDays;
 	}
+	$OptimalStock = $EstimationDailyItemsToBeSoldNextDays * $OptimalDaysStock;
 	$DaysStockForSale = $AvailableForSaleItems / $EstimationDailyItemsToBeSoldNextDays;
 	$ItemsPO = TotalItemsToBeReceivedByPO($Brand);
 	$ItemsWO = TotalItemsToBeReceivedByWO($Brand);
@@ -1868,23 +1872,20 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock, $ShowFullDetails){
 			<td>Total Stock (PCS)</td>
 			<td class="number">' . locale_number_format($TotalItems,0) . '</td>
 			</tr>';
-	if ($Brand != "SHOPOU"){
+
+	if ($Brand == "SHOPKL" OR $Brand == "SHOPBL"){
 		echo '<tr>
 			<td>Stock needed for display (PCS)</td>
 			<td class="number">' . locale_number_format($DisplayItems,0) . '</td>
 			</tr>';
 	}
-	echo '<tr>
-			<td>Stock available for sale (PCS)</td>
-			<td class="number">' . locale_number_format($AvailableForSaleItems,0) . '</td>
-			</tr>';
 
 	if ($ShowFullDetails){
 		echo '<tr>
 				<td>Daily Stock sold last ' . $NumDays . ' days ' . 
 				ConvertSQLDate($FromLastDaysThisYear) . '-' .
 				ConvertSQLDate($ToLastDaysThisYear). ' (PCS)</td>
-				<td class="number">' . locale_number_format($DailySoldItemsThisYearPastDays,0) . '</td>
+				<td class="number">' . locale_number_format($DailySoldItemsThisYearNumDays,0) . '</td>
 				</tr>';
 	}
 
@@ -1893,7 +1894,7 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock, $ShowFullDetails){
 				<td>Daily Stock sold same last ' . $NumDays . ' days last year ' . 
 				ConvertSQLDate($FromLastDaysLastYear) . '-' .
 				ConvertSQLDate($ToLastDaysLastYear). ' (PCS)</td>
-				<td class="number">' . locale_number_format($DailySoldItemsLastYearPastDays,0) . '</td>
+				<td class="number">' . locale_number_format($DailySoldItemsLastYearNumDays,0) . '</td>
 				</tr>';
 	}
 	
@@ -1906,27 +1907,43 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock, $ShowFullDetails){
 	
 	if ($ShowFullDetails AND ($Brand == "SHOPKL" OR $Brand == "SHOPBL")){
 		echo '<tr>
-				<td>Daily Stock sold next ' . $NumDaysLastYear . ' days last year ' . 
+				<td>Daily Stock sold next ' . $NumDays . ' days last year ' . 
 				ConvertSQLDate($FromNextDaysLastYear) . '-' .
 				ConvertSQLDate($ToNextDaysLastYear). ' (PCS)</td>
 				<td class="number">' . locale_number_format($DailySoldItemsLastYearNextDays,0) . '</td>
 				</tr>';
 		echo '<tr>
-				<td>Items to be sold next ' . $NumDaysLastYear . ' days based on trend (PCS)</td>
+				<td>Estimated Daily Items to be sold next ' . $NumDays . ' days based on trend (PCS)</td>
 				<td class="number">' . locale_number_format($ItemsToBeSoldNextDaysBasedOnTrendLastYear,0) . '</td>
 				</tr>';
 	}
 
 	echo '<tr>
-			<td>Estimation daily Stock to be sold next ' . $NumDays . ' days  (PCS)</td>
+			<td>Estimated Daily Items to be sold next ' . $NumDays . ' days  (PCS)</td>
 			<td class="number">' . locale_number_format($EstimationDailyItemsToBeSoldNextDays,0) . '</td>
 			</tr>';
+
+	if ($Brand == "SHOPKL" OR $Brand == "SHOPBL"){
+		echo '<tr>
+				<td>Optimal Stock available for sale for next ' . $OptimalDaysStock . ' days (PCS)</td>
+				<td class="number">' . locale_number_format($OptimalStock,0) . '</td>
+				</tr>';
+		echo '<tr>
+				<td>Current Stock available for sale (PCS)</td>
+				<td class="number">' . locale_number_format($AvailableForSaleItems,0) . '</td>
+				</tr>';
+	}
+
 	echo '<tr>
-			<td>Days left of stock (DAYS)</td>
+			<td>Days left with current stock (DAYS)</td>
 			<td class="number">' . locale_number_format($DaysStockForSale,0) . '</td>
 			</tr>';
 
 	if ($Brand == "SHOPKL" OR $Brand == "SHOPBL"){
+		echo '<tr>
+				<td>Pending Stock to achieve Optimal Stock for next ' . $OptimalDaysStock . ' days (PCS)</td>
+				<td class="number">' . locale_number_format($OptimalStock - $AvailableForSaleItems,0) . '</td>
+				</tr>';
 		echo '<tr>
 				<td>Stock to be received by PO (PCS)</td>
 				<td class="number">' . locale_number_format($ItemsPO,0) . '</td>
@@ -1955,7 +1972,7 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock, $ShowFullDetails){
 		InsertKPI("STOCK-DISPLAY-PCS-" . $BrandCode, $DisplayItems);
 		InsertKPI("STOCK-FORSALE-PCS-" . $BrandCode, $AvailableForSaleItems);
 		InsertKPI("STOCK-AV-PCS-MODEL-" . $BrandCode, round($AvailableForSaleItems/$TotalModels,2));
-		InsertKPI("STOCK-AV-SOLD-" . $NumDays . "D-PCS-" . $BrandCode, $DailySoldItemsThisYearPastDays);
+		InsertKPI("STOCK-AV-SOLD-" . $NumDays . "D-PCS-" . $BrandCode, $DailySoldItemsThisYearNumDays);
 		InsertKPI("STOCK-FORECAST-" . $NumDays . "D-PCS-" . $BrandCode, $EstimationDailyItemsToBeSoldNextDays);
 		InsertKPI("STOCK-QOH-DAYS-" .$BrandCode, $DaysStockForSale);
 		InsertKPI("STOCK-PENDING-PO-PCS-" . $BrandCode, $ItemsPO);
