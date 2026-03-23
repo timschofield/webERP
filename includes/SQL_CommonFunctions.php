@@ -507,7 +507,7 @@ function AdjustBankAccountsDueToCurrencyExchangeRate($SelectedCurrency, $OldRate
 
 		/* If some adjustment has to be done, do it! */
 		$DifferenceToAdjust = $NewBalanceInFunctionalCurrency - $OldBalanceInFunctionalCurrency;
-		if ($OldRate !=  $NewRate) {
+		if ($DifferenceToAdjust >= CurrencyTolerance($_SESSION['CompanyRecord']['currencydefault'])) {
 
 			$SQL = "INSERT INTO gltrans (
 							type,
