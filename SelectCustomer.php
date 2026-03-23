@@ -190,9 +190,6 @@ if ($_SESSION['CustomerID'] != '' and !isset($_POST['Search']) and !isset($_POST
 					<a data-title="', __('This allows the deposits received from the customer to be matched against invoices'), '" href="', $RootPath, '/CustomerAllocations.php?DebtorNo=', urlencode($_SESSION['CustomerID']), '">', __('Allocate Receipts OR Credit Notes'), '</a>
 				</li>
 				<li class="MenuItem">
-					<a href="', $RootPath, '/JobCards.php?DebtorNo=', urlencode($_SESSION['CustomerID']), '&amp;BranchNo=', $_SESSION['BranchCode'], '">', __('Job Cards'), '</a>
-				</li>
-				<li class="MenuItem">
 					<a href="', $RootPath, '/CustomerReceipt.php?CustomerID=', urlencode($_SESSION['CustomerID']), '&NewReceipt=Yes&Type=Customer">', __('Enter a Receipt From This Customer'), '</a>
 				</li>';
 	if (isset($_SESSION['CustomerID']) and isset($_SESSION['BranchCode'])) {

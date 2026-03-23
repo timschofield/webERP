@@ -63,9 +63,9 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg(__('Freight Charge Applies If Less Than must be a number'),'error');
 	} elseif ( !is_numeric($_POST['X_StandardCostDecimalPlaces']) OR
-		$_POST['X_StandardCostDecimalPlaces'] < 0 OR $_POST['X_StandardCostDecimalPlaces'] > 4 ) {
+		$_POST['X_StandardCostDecimalPlaces'] < 0 OR $_POST['X_StandardCostDecimalPlaces'] > 8 ) {
 		$InputError = 1;
-		prnMsg(__('Standard Cost Decimal Places must be a number between 0 and 4'),'error');
+		prnMsg(__('Standard Cost Decimal Places must be a number between 0 and 8'),'error');
 	} elseif (mb_strlen($_POST['X_NumberOfPeriodsOfStockUsage']) > 2 OR !is_numeric($_POST['X_NumberOfPeriodsOfStockUsage']) OR
 		$_POST['X_NumberOfPeriodsOfStockUsage'] < 1 OR $_POST['X_NumberOfPeriodsOfStockUsage'] > 12 ) {
 		$InputError = 1;
@@ -671,7 +671,7 @@ echo '<field>
 echo '<field>
 		<label for="X_StandardCostDecimalPlaces">' . __('Standard Cost Decimal Places') . ':</label>
 		<select name="X_StandardCostDecimalPlaces">';
-for ($i=0; $i <= 4; $i++ )
+for ($i=0; $i <= 8; $i++ )
 	echo '<option value="' . $i . '"' . ($_SESSION['StandardCostDecimalPlaces'] == $i ? ' selected="selected"' : '') . '>' . $i . '</option>';
 echo '</select>
 	<fieldhelp>' . __('Decimal Places to be used in Standard Cost')  . '</fieldhelp>

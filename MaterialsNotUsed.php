@@ -51,7 +51,7 @@ if (DB_num_rows($Result) != 0){
 				<td>', $CodeLink, '</td>
 				<td>', $MyRow['description'], '</td>
 				<td class="number">', locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']), '</td>
-				<td class="number">', locale_number_format($MyRow['stdcost'],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
+				<td class="number">', locale_number_format($MyRow['stdcost'],$_SESSION['StandardCostDecimalPlaces']), '</td>
 				<td class="number">', locale_number_format($LineValue,$_SESSION['CompanyRecord']['decimalplaces']), '</td>
 			</tr>';
 

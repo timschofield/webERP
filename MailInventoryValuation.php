@@ -113,7 +113,7 @@ while ($InventoryValn = DB_fetch_array($InventoryResult)) {
 		$CategoryName = $InventoryValn['categorydescription'];
 	}
 
-	$DisplayUnitCost = locale_number_format($InventoryValn['unitcost'], $_SESSION['CompanyRecord']['decimalplaces']);
+	$DisplayUnitCost = locale_number_format($InventoryValn['unitcost'], $_SESSION['StandardCostDecimalPlaces']);
 	$DisplayQtyOnHand = locale_number_format($InventoryValn['qtyonhand'], 0);
 	$DisplayItemTotal = locale_number_format($InventoryValn['itemtotal'], $_SESSION['CompanyRecord']['decimalplaces']);
 	$HTML .= '<tr>

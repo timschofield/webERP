@@ -65,7 +65,7 @@ echo '<div class="page_title_text">
 if (!isset($_POST['continue'])) {
 	echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-    
+
 	echo '<div class="page_help_text">' . __('You have the following database updates which are required.') . '<br />' . __('Please ensure that you have taken a backup of your current database before continuing.') . '</div><br />';
 	echo '<table>
 		<tr>
@@ -129,7 +129,7 @@ if (!isset($_POST['continue'])) {
 		'Warnings' => 0,
 	);
 
-    $LogFileName = $_SESSION['LogPath'] . '/DBUpdateLog-' . date('Y-m-d') . '.log';
+    $LogFileName = $_SESSION['LogPath'] . '/' . $_SESSION['DatabaseName'] . ' - DBUpdateLog-' . date('Y-m-d') . '.log';
 
 	for ($UpdateNumber = $StartingUpdate; $UpdateNumber <= $EndingUpdate; $UpdateNumber++) {
 		if (file_exists('sql/updates/' . $UpdateNumber . '.php')) {

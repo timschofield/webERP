@@ -161,7 +161,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '<td>' . ConvertSQLDate($MyRow['duedate']) . '</td>';
 		$HTML .= '<td>' . ConvertSQLDate($MyRow['mrpdate']) . '</td>';
 		$HTML .= '<td class="number">' . locale_number_format($MyRow['supplyquantity'], $MyRow['decimalplaces']) . '</td>';
-		$HTML .= '<td class="number">' . locale_number_format($MyRow['computedcost'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
+		$HTML .= '<td class="number">' . locale_number_format($MyRow['computedcost'], $_SESSION['StandardCostDecimalPlaces']) . '</td>';
 		$HTML .= '<td class="number">' . locale_number_format($ExtCost, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
 
 		if ($_POST['Consolidation'] == 'None') {
@@ -184,7 +184,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			<th colspan="4" style="text-align:right;">' . __('Totals') . ':</th>
 			<th class="number">' . locale_number_format($TotalPartQty, 2) . '</th>
 			<th></th>
-			<th class="number">' . locale_number_format($Total_ExtCost, 2) . '</th>';
+			<th class="number">' . locale_number_format($Total_ExtCost, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>';
 
 	if ($_POST['Consolidation'] == 'None') {
 		$HTML .= '<th colspan="2"></th>';

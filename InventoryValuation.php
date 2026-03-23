@@ -169,7 +169,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['Spreadsheet']) or isset($_POST['V
 
 		if ($_POST['DetailedReport']=='Yes'){
 
-			$DisplayUnitCost = locale_number_format($InventoryValn['unitcost'],$_SESSION['CompanyRecord']['decimalplaces']);
+			$DisplayUnitCost = locale_number_format($InventoryValn['unitcost'],($_SESSION['StandardCostDecimalPlaces']));
 			$DisplayQtyOnHand = locale_number_format($InventoryValn['qtyonhand'],$InventoryValn['decimalplaces']);
 			$DisplayItemTotal = locale_number_format($InventoryValn['itemtotal'],$_SESSION['CompanyRecord']['decimalplaces']);
 

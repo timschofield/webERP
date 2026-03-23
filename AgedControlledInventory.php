@@ -21,8 +21,8 @@ $SQL = "SELECT stockserialitems.stockid,
 				stockmoves.trandate,
 				stockmaster.units,
 				stockmaster.actualcost AS cost,
-				createdate,
-				decimalplaces
+				stockserialitems.createdate,
+				stockmaster.decimalplaces
 			FROM stockserialitems
 			LEFT JOIN stockserialmoves
 				ON stockserialitems.serialno=stockserialmoves.serialno
@@ -35,7 +35,7 @@ $SQL = "SELECT stockserialitems.stockid,
 				AND locationusers.userid='" .  $_SESSION['UserID'] . "'
 				AND locationusers.canview=1
 			WHERE quantity > 0
-			ORDER BY createdate, quantity";
+			ORDER BY stockserialitems.createdate, quantity";
 
 $ErrMsg =  __('The stock held could not be retrieved because');
 $LocStockResult = DB_query($SQL, $ErrMsg);
@@ -86,9 +86,9 @@ echo '</tbody>
 		<tfoot>
 			<tr class="total_row">
 				<td colspan="3"><b>', __('Total'), '</b></td>
-				<td class="number"><b>', locale_number_format($TotalQty,2), '</b></td>
+				<td class="number"><b>', locale_number_format($TotalQty,$LocQtyRow['decimalplaces']), '</b></td>
 				<td></td>
-				<td class="number"><b>', locale_number_format($TotalVal,2), '</b></td>
+				<td class="number"><b>', locale_number_format($TotalVal,($_SESSION['StandardCostDecimalPlaces'])), '</b></td>
 				<td colspan="3"></td>
 			</tr>
 		</tfoot>

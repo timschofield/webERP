@@ -514,16 +514,8 @@ function DeleteConfigValue($ConfName) {
 	}
 }
 
-function CreateTable($Table, $SQL, $CharacterSet='utf8mb4') {
+function CreateTable($Table, $SQL, $CharacterSet='utf8mb4', $Collation='utf8mb4_general_ci') {
 
-	$CollationSQL = "SHOW VARIABLES LIKE 'collation_connection'";
-	$Result = DB_query($CollationSQL);
-	if (DB_num_rows($Result) == 0) {
-		$Collation='utf8mb4_general_ci';
-	} else {
-		$MyRow = DB_fetch_row($Result);
-		$Collation = $MyRow[1];
-	}
 	$ShowSQL = "SHOW TABLES WHERE Tables_in_" . $_SESSION['DatabaseName'] . "='" . $Table . "'";
 	$Result = DB_query($ShowSQL);
 
