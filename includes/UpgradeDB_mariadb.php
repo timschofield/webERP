@@ -499,7 +499,7 @@ function DeleteConfigValue($ConfName) {
 	}
 }
 
-function CreateTable($Table, $SQL, $CharacterSet='utf8mb4', $Collation='utf8mb4_general_ci') {
+function CreateTable($Table, $SQL, $CharacterSet='utf8mb4', $Collation='utf8mb4_unicode_ci') {
 
 	$ShowSQL = "SHOW TABLES WHERE Tables_in_" . $_SESSION['DatabaseName'] . "='" . $Table . "'";
 	$Result = DB_query($ShowSQL);
