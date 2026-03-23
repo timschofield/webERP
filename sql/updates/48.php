@@ -221,7 +221,7 @@ CreateTable('forecastsaleshistory', "CREATE TABLE IF NOT EXISTS `forecastsaleshi
   KEY `composite` (`stockid`,`customertype`,`area`,`perioddate`)
 )");
 
-NewModule('for', 'Fcst', __('Forecasting'), 7);
+NewModule('for', 'Fcst', __('Forecasting'), 66);
 
 // Register new scripts
 NewScript('ForecastDashboard.php', 11, __('Forecast management dashboard'));
