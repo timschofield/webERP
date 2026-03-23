@@ -478,8 +478,23 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 			$SQLScriptFile = file_get_contents($FileName);
 			// we disable FKs for each script, in case the previous script re-enabled them
 			DB_IgnoreForeignKeys();
-			$Result = DB_query($SQLScriptFile, '', '', false, false);
-			$DBErrors += DB_error_no($Result);
+
+			// Use mysqli_multi_query to execute multiple statements
+			global $db;
+			if (mysqli_multi_query($db, $SQLScriptFile)) {
+				do {
+					// Store first result set
+					if ($Result = mysqli_store_result($db)) {
+						mysqli_free_result($Result);
+					}
+					// Check for errors
+					if (mysqli_errno($db)) {
+						$DBErrors++;
+					}
+				} while (mysqli_more_results($db) && mysqli_next_result($db));
+			} else {
+				$DBErrors++;
+			}
 		}
 		DB_ReinstateForeignKeys();
 		if ($DBErrors > 0) {
@@ -492,7 +507,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 
 		/// @todo there is no guarantee that all the db updates have been applied to the single SQL files making up
 		///       the installer - that is left to the person preparing the release to verify...
-		$SQL = "INSERT INTO config VALUES('DBUpdateNumber', " . HighestFileName($Path_To_Root) . ")";
+		$SQL = "INSERT INTO config (confname, confvalue) VALUES('DBUpdateNumber', " . HighestFileName($Path_To_Root) . ")";
 		$Result = DB_query($SQL, '', '', false, false);
 		if (DB_error_no() == 0) {
 			echo '<div class="success">' . __('The database update revision has been inserted') . '</div>';
@@ -525,6 +540,8 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 											'4200',
 											'5200',
 											'3500',
+											'3500',
+											'90000',
 											1,
 											1,
 											1,
@@ -535,7 +552,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 			echo '<div class="success">' . __('The company record has been inserted') . '</div>';
 		} else {
 			$Errors++;
-			echo '<div class="error">' . __('There was an error inserting the DB revision number') . ' - ' . DB_error_msg() . '</div>';
+			echo '<div class="error">' . __('There was an error inserting the company record') . ' - ' . DB_error_msg() . '</div>';
 		}
 		flush();
 
@@ -632,7 +649,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 
 		/// @todo there is no guarantee that all the db updates have been applied to the single SQL files making up
 		///       the installer - that is left to the person preparing the release to verify...
-		$SQL = "INSERT INTO config VALUES('DBUpdateNumber', " . HighestFileName($Path_To_Root) . ")";
+		$SQL = "INSERT INTO config (confname, confvalue) VALUES('DBUpdateNumber', " . HighestFileName($Path_To_Root) . ")";
 		$Result = DB_query($SQL, '', '', false, false);
 		if (DB_error_no() == 0) {
 			echo '<div class="success">' . __('The database update revision has been inserted') . '</div>';
@@ -1295,4 +1312,29 @@ function GetTimezones() {
 		'Pacific/Yap',
 		'Etc/UTC'
 	);
+}
+
+function DetectServerTimezone() {
+	 // Try php.ini setting first
+	 $tz = ini_get('date.timezone');
+	 if (!empty($tz) && $tz !== 'UTC') {
+		 return $tz;
+	 }
+
+	 // Try /etc/timezone (Debian/Ubuntu)
+	 if (file_exists('/etc/timezone')) {
+		 $tz = trim(file_get_contents('/etc/timezone'));
+		 if (!empty($tz)) return $tz;
+	 }
+
+	 // Try /etc/localtime symlink (RHEL/CentOS)
+	 if (is_link('/etc/localtime')) {
+		 $link = readlink('/etc/localtime');
+		 if (preg_match('#zoneinfo/(.+)$#', $link, $m)) {
+			 return $m[1];
+		 }
+	 }
+
+	 // Fallback
+	 return date_default_timezone_get();
 }

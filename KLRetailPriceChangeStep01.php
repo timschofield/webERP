@@ -48,13 +48,13 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'StockId';
 		$i++;
 	} elseif ((ItemCodeQOH($_POST['Stockid'],'CODE_FULL', "ALL") != 0) 
-			AND (GetTotalItemsChangingPrice() >= MAX_ITEMS_CHANGING_PRICE) 
+			AND (GetTotalItemsChangingPrice() >= $_SESSION['MaxItemsChangingPrice']) 
 			AND (!ItemInList($MyRow['categoryid'], LIST_STOCK_CATEGORIES_SETUP))
 			AND (!$KL_SystemAdmin)) {
 		$InputError = 1;
 		$Errors[$i] = 'MaxItemsChangingPrice';
 		$i++;
-		prnMsg(__('Too many items changing price at the same time. Maximum = '). MAX_ITEMS_CHANGING_PRICE,'error');
+		prnMsg(__('Too many items changing price at the same time. Maximum = '). $_SESSION['MaxItemsChangingPrice'],'error');
 	} elseif (!is_numeric(filter_number_format($_POST['NewRetailPrice']))) {
 		$InputError = 1;
 		$Errors[$i] = 'NewRetailPrice';

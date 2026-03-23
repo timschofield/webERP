@@ -121,15 +121,15 @@ if (($StockID != '') AND ($ServiceCode != '')){
 					$Message1 = "CAN'T be serviced.";
 					$Fee = -1;
 				} else {
-					if ($MyRow['price'] <= RETAIL_PRICE_FOR_SERVICE_TIER_01){
+					if ($MyRow['price'] <= $_SESSION['RetailPriceServiceTier01']){
 						$FeeService = $MyRow['pricetier01'];
-					} elseif ($MyRow['price'] <= RETAIL_PRICE_FOR_SERVICE_TIER_02){
+					} elseif ($MyRow['price'] <= $_SESSION['RetailPriceServiceTier02']){
 						$FeeService = $MyRow['pricetier02'];
 					} else {
 						$FeeService = $MyRow['pricetier03'];
 					}
 					if ($MyRow['klservicebyreplacement'] == 1){
-						$FeeReplacement = $MyRow['actualcost'] * FACTOR_SC_SERVICE_BY_REPLACEMENT;
+						$FeeReplacement = $MyRow['actualcost'] * $_SESSION['FactorStandardCostServiceReplacement'];
 					} else {
 						$FeeReplacement = 0;
 					}
@@ -152,15 +152,15 @@ if (($StockID != '') AND ($ServiceCode != '')){
 					$Message1 = "CAN'T be serviced.";
 					$Fee = -1;
 				} else {
-					if ($MyRow['price'] <= RETAIL_PRICE_FOR_SERVICE_TIER_01){
+					if ($MyRow['price'] <= $_SESSION['RetailPriceServiceTier01']){
 						$FeeService = $MyRow['pricetier01'];
-					} elseif ($MyRow['price'] <= RETAIL_PRICE_FOR_SERVICE_TIER_02){
+					} elseif ($MyRow['price'] <= $_SESSION['RetailPriceServiceTier02']){
 						$FeeService = $MyRow['pricetier02'];
 					} else {
 						$FeeService = $MyRow['pricetier03'];
 					}
 					if ($MyRow['klservicebyreplacement'] == 1){
-						$FeeReplacement = $MyRow['actualcost'] * FACTOR_SC_SERVICE_BY_REPLACEMENT;
+						$FeeReplacement = $MyRow['actualcost'] * $_SESSION['FactorStandardCostServiceReplacement'];
 					} else {
 						$FeeReplacement = 0;
 					}

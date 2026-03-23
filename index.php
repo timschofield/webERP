@@ -148,18 +148,20 @@ if ($_SESSION['Module'] == 'system') {
 echo '</legend><ul>'; // SubMenuHeader
 //=== SubMenu Items ===
 $i = 0;
-foreach ($MenuItems[$_SESSION['Module']]['Transactions']['Caption'] as $Caption) {
-	/* Transactions Menu Item */
-	$ScriptNameArray = explode('?', substr($MenuItems[$_SESSION['Module']]['Transactions']['URL'][$i], 1));
-	if (isset($_SESSION['PageSecurityArray'][$ScriptNameArray[0]])) {
-		$PageSecurity = $_SESSION['PageSecurityArray'][$ScriptNameArray[0]];
-	}
-	if ((in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) and $PageSecurity != '')) {
-		echo '<li class="MenuItem">
-				<a href="', $RootPath, $MenuItems[$_SESSION['Module']]['Transactions']['URL'][$i], '">&bull; ', __($Caption), '</a>
-			</li>';
-	}
-	++$i;
+if (isset($MenuItems[$_SESSION['Module']]['Transactions'])) {
+    foreach ($MenuItems[$_SESSION['Module']]['Transactions']['Caption'] as $Caption) {
+	    /* Transactions Menu Item */
+    	$ScriptNameArray = explode('?', substr($MenuItems[$_SESSION['Module']]['Transactions']['URL'][$i], 1));
+	    if (isset($_SESSION['PageSecurityArray'][$ScriptNameArray[0]])) {
+	    	$PageSecurity = $_SESSION['PageSecurityArray'][$ScriptNameArray[0]];
+    	}
+	    if ((in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) and $PageSecurity != '')) {
+	    	echo '<li class="MenuItem">
+	    			<a href="', $RootPath, $MenuItems[$_SESSION['Module']]['Transactions']['URL'][$i], '">&bull; ',     __($Caption), '</a>
+    			</li>';
+	    }
+    	++$i;
+    }
 }
 echo '</ul>
 	</fieldset>'; //=== TransactionsDiv ===

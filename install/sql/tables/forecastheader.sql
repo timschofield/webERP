@@ -1,0 +1,21 @@
+CREATE TABLE IF NOT EXISTS `forecastheader` (
+  `forecastid` int(11) NOT NULL AUTO_INCREMENT,
+  `stockid` varchar(20) NOT NULL,
+  `locationcode` varchar(5) NOT NULL DEFAULT '',
+  `forecasttype` varchar(2) NOT NULL DEFAULT 'DT',
+  `forecastmethod` tinyint(2) NOT NULL DEFAULT 1,
+  `description` varchar(100) NOT NULL DEFAULT '',
+  `startdate` date NOT NULL,
+  `enddate` date DEFAULT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT 1,
+  `lastgenerated` datetime DEFAULT NULL,
+  `createdby` varchar(20) NOT NULL,
+  `createdon` timestamp DEFAULT CURRENT_TIMESTAMP,
+  `modifiedby` varchar(20) DEFAULT NULL,
+  `modifiedon` datetime DEFAULT NULL,
+  PRIMARY KEY (`forecastid`),
+  KEY `stockid` (`stockid`),
+  KEY `locationcode` (`locationcode`),
+  KEY `forecasttype` (`forecasttype`),
+  KEY `active` (`active`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

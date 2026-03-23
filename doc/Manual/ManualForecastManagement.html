@@ -1,0 +1,1399 @@
+<a id="top"></a>
+<article>
+<h1><a id="ForecastManagement">Forecast Management System</a></h1>
+
+<h2><a id="Overview">Overview</a></h2>
+<p>The Forecast Management System provides comprehensive statistical demand forecasting capabilities for inventory planning, production scheduling, and materials requirements planning (MRP). This system implements 12 proven statistical forecasting methods to help predict future demand with accuracy.</p>
+
+<p>The system enables you to:</p>
+<ul>
+	<li>Generate item-level (detail) forecasts using 12 different statistical methods</li>
+	<li>Process entire stock categories with a single operation (category forecasting)</li>
+	<li>Create aggregated summary forecasts by category, customer type, area, or sales person</li>
+	<li>Automatically determine the best forecasting method for each item or category</li>
+	<li>Track forecast accuracy with multiple metrics (MAD, POA, RMSE, MSE)</li>
+	<li>Make manual revisions to override calculated forecasts</li>
+	<li>Process forecasts in batch for entire categories</li>
+	<li>Integrate forecasts with MRP and purchasing systems</li>
+</ul>
+
+<h2>Quick Start Guide</a></h2>
+
+<h3><a id="ExtractSalesActuals">Step 1: Extract Sales History</a></h3>
+<p>Before generating forecasts, you must extract historical sales data into the forecast system's cache:</p>
+<ol>
+	<li>Navigate to <strong>Forecasting → Extract Sales Actuals</strong></li>
+	<li>Set the <strong>From Date</strong> to 24 months ago (recommended minimum)</li>
+	<li>Set the <strong>To Date</strong> to today</li>
+	<li>Click <strong>"Extract Sales Actuals"</strong></li>
+	<li>Wait for the extraction to complete</li>
+</ol>
+<p>This creates an optimized cache of sales history aggregated by month, which enables fast forecast calculations.</p>
+
+<h3>Step 2: Generate Your First Forecast</h3>
+
+<p><strong>Option A: Single Item Forecast</strong></p>
+<ol>
+	<li>Navigate to <strong>Forecasting → Generate Forecast</strong></li>
+	<li>Select <strong>"Single Item"</strong> radio button (default)</li>
+	<li>Enter a <strong>Stock Item Code</strong> (or use the Select button)</li>
+	<li>Select a <strong>Location</strong> (optional)</li>
+	<li>Click <strong>"Find Best Fit Method"</strong> to automatically select the optimal forecasting method</li>
+	<li>Review the recommended method and parameters</li>
+	<li>Click <strong>"Generate Forecast"</strong></li>
+	<li>View the generated forecast data with period-by-period quantities</li>
+</ol>
+
+<p><strong>Option B: Category Forecast (Recommended for Multiple Items)</strong></p>
+<ol>
+	<li>Navigate to <strong>Forecasting → Generate Forecast</strong></li>
+	<li>Select <strong>"Entire Category"</strong> radio button</li>
+	<li>Choose a <strong>Stock Category</strong> from the dropdown</li>
+	<li>Click <strong>"Find Best Fit Method"</strong> to analyze all items and get a recommendation</li>
+	<li>Review the method recommendation and results</li>
+	<li>Select the recommended method and click <strong>"Generate Forecast"</strong></li>
+	<li>View the summary (e.g., "47 successful, 3 failed")</li>
+</ol>
+
+<p><strong>Time Savings:</strong> Forecasting a category of 50 items takes 2-3 minutes vs 30-60 minutes for individual items (95% time reduction).</p>
+
+<h3>Step 3: Review the Forecast</h3>
+<ol>
+	<li>Navigate to <strong>Forecasting → Forecast Review</strong></li>
+	<li>Search for the item(s) you just forecasted</li>
+	<li>Review the forecast quantities</li>
+	<li>Make manual revisions if needed</li>
+	<li>Save changes</li>
+</ol>
+
+<p><strong>Congratulations!</strong> You've created your first forecast. For ongoing use, consider processing entire categories at once using the category forecasting feature - it's much faster than processing items individually.</p>
+
+<h2><a id="ForecastMethods">The 12 Forecasting Methods</a></h2>
+
+<p>The system provides 12 statistical forecasting methods, each suited for different demand patterns:</p>
+
+<h3>Method 1: Percent Over Last Year</h3>
+<p><strong>Formula:</strong> Forecast = Last Year × (1 + Percentage/100)</p>
+<p><strong>Use When:</strong> You expect steady, predictable growth or decline</p>
+<p><strong>Parameters:</strong> Percentage increase (e.g., 5% = 5.0)</p>
+<p><strong>Example:</strong> If last year's sales were 1,000 units and you expect 10% growth, the forecast will be 1,100 units.</p>
+<p><strong>Minimum History:</strong> 12 months</p>
+
+<h3>Method 2: Calculated Percent Over Last Year</h3>
+<p><strong>Formula:</strong> System automatically calculates the growth percentage from historical trends</p>
+<p><strong>Use When:</strong> You want the system to determine the growth rate based on past performance</p>
+<p><strong>Parameters:</strong> None (automatically calculated)</p>
+<p><strong>Example:</strong> If sales grew from 900 to 1,000 units last year (11.1%), the system will apply 11.1% growth to this year.</p>
+<p><strong>Minimum History:</strong> 24 months</p>
+
+<h3>Method 3: Last Year to This Year</h3>
+<p><strong>Formula:</strong> This Year Forecast = Last Year Actual</p>
+<p><strong>Use When:</strong> Demand is stable with no growth or seasonal patterns</p>
+<p><strong>Parameters:</strong> None</p>
+<p><strong>Example:</strong> If January last year had 100 units, January this year is forecasted at 100 units.</p>
+<p><strong>Minimum History:</strong> 12 months</p>
+
+<h3>Method 4: Moving Average</h3>
+<p><strong>Formula:</strong> Average of the last N periods</p>
+<p><strong>Use When:</strong> Recent demand is the best predictor of future demand</p>
+<p><strong>Parameters:</strong> Number of periods to average (typically 3-6)</p>
+<p><strong>Example:</strong> With 4-period average and recent months of 90, 100, 110, 120, forecast = (90+100+110+120)/4 = 105 units.</p>
+<p><strong>Minimum History:</strong> 4 months</p>
+
+<h3>Method 5: Linear Approximation</h3>
+<p><strong>Formula:</strong> y = mx + b using two historical points</p>
+<p><strong>Use When:</strong> Clear linear trend exists in demand</p>
+<p><strong>Parameters:</strong> Uses first and last periods of history</p>
+<p><strong>Example:</strong> If sales are consistently increasing by 10 units per month, the forecast extends this trend forward.</p>
+<p><strong>Minimum History:</strong> 6 months</p>
+
+<h3>Method 6: Least Squares Regression</h3>
+<p><strong>Formula:</strong> Statistical linear regression (y = mx + b) using all historical data</p>
+<p><strong>Use When:</strong> You want the most statistically accurate linear trend</p>
+<p><strong>Parameters:</strong> None (calculated from all history)</p>
+<p><strong>Example:</strong> Finds the best-fit line through all historical points to project future demand.</p>
+<p><strong>Minimum History:</strong> 12 months</p>
+
+<h3>Method 7: Second Degree Approximation</h3>
+<p><strong>Formula:</strong> Polynomial regression y = a + bx + cx²</p>
+<p><strong>Use When:</strong> Demand has a curved (accelerating or decelerating) trend</p>
+<p><strong>Parameters:</strong> None (calculated from history)</p>
+<p><strong>Example:</strong> Product in rapid growth phase that's starting to level off (S-curve pattern).</p>
+<p><strong>Minimum History:</strong> 12 months</p>
+
+<h3>Method 8: Flexible Method</h3>
+<p><strong>Formula:</strong> Custom weighted formula combining different periods</p>
+<p><strong>Use When:</strong> You want to apply custom business logic or weighting</p>
+<p><strong>Parameters:</strong> Custom weights per period</p>
+<p><strong>Example:</strong> Weight most recent month at 50%, prior month at 30%, and earlier months at 20%.</p>
+<p><strong>Minimum History:</strong> 12 months</p>
+
+<h3>Method 9: Weighted Moving Average</h3>
+<p><strong>Formula:</strong> Moving average with higher weight on recent periods</p>
+<p><strong>Use When:</strong> Recent demand is more important than older data</p>
+<p><strong>Parameters:</strong> Number of periods and weighting scheme</p>
+<p><strong>Example:</strong> 4-period average weighted 40%, 30%, 20%, 10% (most recent to oldest).</p>
+<p><strong>Minimum History:</strong> 4 months</p>
+
+<h3>Method 10: Linear Smoothing (Simple Exponential Smoothing)</h3>
+<p><strong>Formula:</strong> F<sub>t+1</sub> = α × A<sub>t</sub> + (1-α) × F<sub>t</sub></p>
+<p><strong>Use When:</strong> Demand is relatively stable without strong trends</p>
+<p><strong>Parameters:</strong> Alpha (α) smoothing constant (0.1 to 0.9)</p>
+<p><strong>Example:</strong> With α=0.3, the forecast is 30% of last period's actual plus 70% of last period's forecast.</p>
+<p><strong>Minimum History:</strong> 12 months</p>
+<p><strong>Recommended α values:</strong></p>
+<ul>
+	<li>0.1-0.3: Stable, smooth demand</li>
+	<li>0.4-0.6: Moderate variability</li>
+	<li>0.7-0.9: High variability, react quickly to changes</li>
+</ul>
+
+<h3>Method 11: Exponential Smoothing (Holt's Method)</h3>
+<p><strong>Formula:</strong> Double exponential smoothing with level and trend components</p>
+<p><strong>Use When:</strong> Demand has a clear upward or downward trend</p>
+<p><strong>Parameters:</strong> Alpha (α) for level, Beta (β) for trend</p>
+<p><strong>Example:</strong> Sales are growing by 50 units per month. This method captures both the current level and the growth rate.</p>
+<p><strong>Minimum History:</strong> 12 months</p>
+
+<h3>Method 12: Exponential Smoothing with Trend and Seasonality (Holt-Winters)</h3>
+<p><strong>Formula:</strong> Triple exponential smoothing with level, trend, and seasonal components</p>
+<p><strong>Use When:</strong> Demand has both trend and seasonal patterns (e.g., higher sales in summer)</p>
+<p><strong>Parameters:</strong> Alpha (α), Beta (β), Gamma (γ), Season Length (e.g., 12 for monthly data)</p>
+<p><strong>Example:</strong> A product that sells more in December every year, with overall growth trend.</p>
+<p><strong>Minimum History:</strong> 24 months (2 full seasonal cycles recommended)</p>
+
+<h2><a id="Dashboard">Forecast Management Dashboard</a></h2>
+<p><img class="ManualImage" src="doc/Manual/images/forecast_dashboard.png" alt="Forecast Dashboard"></p>
+<p>The Forecast Management Dashboard is the central hub for all forecasting functions. Access it via <strong>Forecasting → Dashboard</strong> (ForecastDashboard.php).</p>
+
+<p>The dashboard displays:</p>
+<ul>
+	<li><strong>System Statistics:</strong> Number of active forecasts, summary forecasts, and sales history range</li>
+	<li><strong>Setup & Configuration:</strong> Links to install, extract actuals, and configure parameters</li>
+	<li><strong>Forecast Generation:</strong> Links to generate single or batch forecasts</li>
+	<li><strong>Review & Analysis:</strong> Links to review, query, and analyze forecast accuracy</li>
+</ul>
+
+<h2><a id="ForecastGeneration">Generating Forecasts</a></h2>
+
+<p>The Forecast Generation screen provides three ways to generate forecasts: single-item, entire category, or batch processing. The single-item and category modes are accessible from a unified interface.</p>
+
+<h3>Forecast Generation Screen</h3>
+<p>Navigate to <strong>Forecasting → Generate Forecast</strong> (ForecastGeneration.php).</p>
+
+<p><img class="ManualImage" src="doc/Manual/images/forecast_generation.png" alt="Forecast Generation"></p>
+
+<h4>Choosing Forecast Scope</h4>
+<p>At the top of the screen, select your forecast scope:</p>
+<ul>
+	<li><strong>Single Item:</strong> Generate a forecast for one specific stock item</li>
+	<li><strong>Entire Category:</strong> Generate forecasts for all active items in a stock category</li>
+</ul>
+<p>The form fields change automatically based on your selection.</p>
+
+<h3>Single Item Forecast Generation</h3>
+
+<p><strong>When to use:</strong> For detailed analysis of individual items, testing new methods, or items requiring special attention.</p>
+
+<ol>
+	<li>Select <strong>"Single Item"</strong> radio button (default)</li>
+	<li><strong>Stock Item:</strong> Enter the stock code or click "Select" to choose from a list</li>
+	<li><strong>Location:</strong> Select a specific location or leave blank for all locations</li>
+	<li><strong>Forecast Method:</strong> Choose from the dropdown (1-12) or click "Find Best Fit Method"</li>
+	<li><strong>Number of Periods:</strong> How many future periods to forecast (typically 6-12)</li>
+	<li><strong>Method Parameters:</strong> These fields change based on the selected method:
+		<ul>
+			<li>Methods 1-2: Percentage increase</li>
+			<li>Methods 4, 9: Number of periods to average</li>
+			<li>Methods 10-12: Smoothing constants (α, β, γ)</li>
+		</ul>
+	</li>
+	<li><strong>Periods of History:</strong> How many past periods to analyze (12-24 recommended)</li>
+	<li>Click <strong>"Generate Forecast"</strong></li>
+</ol>
+
+<p><strong>Result:</strong> A detailed table showing forecast quantities period-by-period with calculated metrics.</p>
+
+<h4>Using "Find Best Fit Method" for Single Items</h4>
+<p>The Best Fit Analysis feature tests all 12 methods against your historical data and recommends the method with the highest accuracy (POA). This is the recommended approach for new items where you're unsure which method to use.</p>
+
+<ol>
+	<li>Enter the stock item and location</li>
+	<li>Click <strong>"Find Best Fit Method"</strong></li>
+	<li>The system will:
+		<ul>
+			<li>Test all 12 methods against historical actuals</li>
+			<li>Calculate MAD and POA for each method</li>
+			<li>Automatically select the method with highest POA</li>
+			<li>Pre-fill the optimal parameters</li>
+		</ul>
+	</li>
+	<li>Review the recommendation and click "Generate Forecast"</li>
+</ol>
+
+<h3>Category Forecast Generation (New!)</h3>
+
+<p><strong>When to use:</strong> For processing multiple related items at once, monthly forecast updates, initial system setup, or ensuring consistency across a product line.</p>
+
+<p><strong>Benefits:</strong></p>
+<ul>
+	<li><strong>Time Savings:</strong> Process 50 items in 2-3 minutes vs 30-60 minutes individually (95%+ time reduction)</li>
+	<li><strong>Consistency:</strong> Apply the same method and parameters to all items in a category</li>
+	<li><strong>Scalability:</strong> Ideal for initial setup or monthly regeneration</li>
+	<li><strong>Simplicity:</strong> Single operation instead of multiple individual forecasts</li>
+</ul>
+
+<h4>Generating Category Forecasts</h4>
+
+<ol>
+	<li>Select <strong>"Entire Category"</strong> radio button</li>
+	<li><strong>Stock Category:</strong> Choose a category from the dropdown (e.g., "Electronics")</li>
+	<li><strong>Location:</strong> Select a specific location or leave blank for all locations</li>
+	<li><strong>Forecast Method:</strong> Choose from the dropdown (1-12) or use Best Fit</li>
+	<li><strong>Number of Periods:</strong> How many future periods to forecast (typically 6-12)</li>
+	<li><strong>Method Parameters:</strong> Set parameters appropriate for the method</li>
+	<li><strong>Periods of History:</strong> How far back to look (12-24 recommended)</li>
+	<li>Click <strong>"Generate Forecast"</strong></li>
+</ol>
+
+<p><strong>Processing:</strong> The system will:</p>
+<ul>
+	<li>Query all active items in the selected category</li>
+	<li>Filter for bought/manufactured items only (mbflag = 'B' or 'M')</li>
+	<li>Exclude discontinued items</li>
+	<li>Generate forecasts for each item sequentially</li>
+	<li>Track success and failure counts</li>
+</ul>
+
+<p><strong>Result:</strong> A summary message showing how many items were successfully forecasted and how many failed (e.g., "Category forecast complete: 47 successful, 3 failed"). Navigate to <strong>Forecast Inquiry</strong> to view detailed results for all items.</p>
+
+<h4>Using "Find Best Fit Method" for Categories</h4>
+
+<p>This powerful feature analyzes the best forecasting method for each item in the category and recommends the most commonly optimal method.</p>
+
+<ol>
+	<li>Select <strong>"Entire Category"</strong> radio button</li>
+	<li>Choose a <strong>Stock Category</strong> from the dropdown</li>
+	<li>Click <strong>"Find Best Fit Method"</strong></li>
+	<li>The system will:
+		<ul>
+			<li>Test all 12 methods for each item in the category</li>
+			<li>Calculate POA (accuracy) for each method per item</li>
+			<li>Identify the best method for each individual item</li>
+			<li>Count method frequency across the category</li>
+			<li>Recommend the most common best-fit method</li>
+		</ul>
+	</li>
+	<li>Review the detailed results table showing:
+		<ul>
+			<li>Stock ID and description</li>
+			<li>Best method for each item</li>
+			<li>POA accuracy percentage</li>
+			<li>Most common recommended method for the category</li>
+		</ul>
+	</li>
+	<li>Use the recommended method to generate forecasts for the entire category</li>
+</ol>
+
+<p><strong>Performance Note:</strong> Category best-fit analysis is limited to 50 items for web performance. For larger categories, use <strong>Batch Generation</strong> (see below).</p>
+
+<h4>Category Forecasting Examples</h4>
+
+<p><strong>Example 1: Monthly Update</strong></p>
+<p>Update all forecasts for "Electronics" category (75 items):</p>
+<ul>
+	<li>Traditional approach: 75 operations, 30-60 minutes</li>
+	<li>Category approach: 1 operation, 2-3 minutes</li>
+	<li><strong>Time savings: 95%</strong></li>
+</ul>
+
+<p><strong>Example 2: Initial System Setup</strong></p>
+<p>Company has 500 items across 10 categories:</p>
+<ul>
+	<li>Traditional approach: 500 operations, 4-8 hours</li>
+	<li>Category approach: 10 operations, 15-30 minutes</li>
+	<li><strong>Time savings: 98%</strong></li>
+</ul>
+
+<p><strong>Example 3: Method Selection</strong></p>
+<p>New "Office Supplies" category (40 items), unsure which method to use:</p>
+<ol>
+	<li>Run category best-fit analysis</li>
+	<li>Review results: "Method 6 is best for 28 items, Method 4 for 8 items, Method 10 for 4 items"</li>
+	<li>Most common recommendation: Method 6</li>
+	<li>Generate category forecast using Method 6</li>
+	<li>Result: Data-driven decision with 70% of items using their optimal method</li>
+</ol>
+
+<h3><a id="BatchForecast">Batch Forecast Generation (Alternative for Large Categories)</a></h3>
+<p>Navigate to <strong>Forecasting → Batch Generation</strong> (ForecastBatchGeneration.php).</p>
+
+<p>For very large categories (100+ items) or command-line processing, use the dedicated batch generation screen:</p>
+<ol>
+	<li>Select a <strong>Stock Category</strong></li>
+	<li>Select a <strong>Location</strong> (or all locations)</li>
+	<li>Choose a <strong>Forecast Method</strong></li>
+	<li>Set <strong>Number of Periods</strong> to forecast</li>
+	<li>Click <strong>"Generate Batch Forecasts"</strong></li>
+	<li>The system processes all items in the category and displays progress</li>
+</ol>
+
+<p><strong>Note:</strong> If forecast constants are configured for specific items, the system will use those item-specific parameters instead of the default method settings.</p>
+
+<h3>Which Generation Method to Use?</h3>
+
+<table class="selection">
+	<tr>
+		<th>Situation</th>
+		<th>Recommended Method</th>
+		<th>Reason</th>
+	</tr>
+	<tr>
+		<td>Single item analysis</td>
+		<td>Single Item mode</td>
+		<td>Detailed results and full control</td>
+	</tr>
+	<tr>
+		<td>Testing new methods</td>
+		<td>Single Item mode</td>
+		<td>See period-by-period details</td>
+	</tr>
+	<tr>
+		<td>Small category (1-50 items)</td>
+		<td>Category mode</td>
+		<td>Fast, convenient, single screen</td>
+	</tr>
+	<tr>
+		<td>Medium category (50-100 items)</td>
+		<td>Category mode or Batch</td>
+		<td>Either works well</td>
+	</tr>
+	<tr>
+		<td>Large category (100+ items)</td>
+		<td>Batch Generation</td>
+		<td>Better performance, progress tracking</td>
+	</tr>
+	<tr>
+		<td>Unknown best method</td>
+		<td>Category Best Fit</td>
+		<td>Data-driven recommendation</td>
+	</tr>
+	<tr>
+		<td>Initial system setup</td>
+		<td>Category mode (per category)</td>
+		<td>Process categories one at a time</td>
+	</tr>
+	<tr>
+		<td>Monthly regeneration</td>
+		<td>Category mode</td>
+		<td>Quick updates per category</td>
+	</tr>
+	<tr>
+		<td>Automated scheduling</td>
+		<td>Batch Generation (cron)</td>
+		<td>Command-line compatible</td>
+	</tr>
+</table>
+
+<h2><a id="ReviewingForecasts">Reviewing and Revising Forecasts</a></h2>
+
+<h3>Forecast Review Screen</h3>
+<p>Navigate to <strong>Forecasting → Forecast Review</strong> (ForecastReview.php).</p>
+
+<p><img class="ManualImage" src="doc/Manual/images/forecast_review.png" alt="Forecast Review"></p>
+
+<p>This screen allows you to:</p>
+<ul>
+	<li>Search for forecasts by stock item, location, or date range</li>
+	<li>View forecast quantities period-by-period</li>
+	<li>Compare forecasts against actual sales (when available)</li>
+	<li>Make manual revisions to override calculated forecasts</li>
+	<li>View variance percentages</li>
+	<li>Activate or deactivate forecasts</li>
+</ul>
+
+<h4>Making Manual Revisions</h4>
+<ol>
+	<li>Search for and select a forecast</li>
+	<li>In the detail grid, enter revised quantities in the <strong>"Revised Qty"</strong> column</li>
+	<li>Click <strong>"Save Revisions"</strong></li>
+	<li>The system will use revised quantities instead of calculated forecasts in all reports and integrations</li>
+</ol>
+
+<h4>Understanding Variance Colors</h4>
+<p>The variance column is color-coded to help identify forecast accuracy:</p>
+<ul>
+	<li><strong class="success">Green:</strong> Variance within ±10% (excellent)</li>
+	<li><strong class="warn">Yellow:</strong> Variance between ±10% and ±25% (acceptable)</li>
+	<li><strong class="error">Red:</strong> Variance greater than ±25% (needs attention)</li>
+</ul>
+
+<h2><a id="SummaryForecasts">Summary Forecasts</a></h2>
+
+<p>Summary forecasts aggregate individual item forecasts into higher-level groupings for executive reporting and planning.</p>
+
+<h3>Creating a Summary Forecast</h3>
+<p>Navigate to <strong>Forecasting → Summary Forecasts</strong> (ForecastSummary.php).</p>
+
+<ol>
+	<li>Click <strong>"Add New Summary"</strong></li>
+	<li>Enter a <strong>Summary Code</strong> (e.g., "ELEC-Q1")</li>
+	<li>Enter a <strong>Description</strong> (e.g., "Electronics Q1 Forecast")</li>
+	<li>Select aggregation criteria:
+		<ul>
+			<li><strong>Category:</strong> Aggregate all items in a category</li>
+			<li><strong>Customer Type:</strong> Aggregate by customer segment</li>
+			<li><strong>Area:</strong> Aggregate by geographical area</li>
+			<li><strong>Sales Person:</strong> Aggregate by salesperson</li>
+		</ul>
+	</li>
+	<li>Set the <strong>Start Date</strong> and <strong>Number of Periods</strong></li>
+	<li>Click <strong>"Generate Summary"</strong></li>
+</ol>
+
+<p>The system will automatically sum all detail forecasts matching your criteria into period-by-period summary totals.</p>
+
+<h3>Reviewing Summary Forecasts</h3>
+<p>Click the <strong>"Review"</strong> link next to any summary forecast to view and edit the period details (ForecastSummaryReview.php).</p>
+
+<p>The summary review screen shows:</p>
+<ul>
+	<li>Summary header information (code, description, criteria)</li>
+	<li>Period-by-period forecast quantities and values</li>
+	<li>Actual quantities and values (when available)</li>
+	<li>Ability to make manual revisions to summary forecasts</li>
+	<li>Variance analysis</li>
+	<li>Total and average calculations</li>
+</ul>
+
+<h2><a id="AccuracyTracking">Forecast Accuracy Tracking</a></h2>
+
+<h3>Accuracy Report</h3>
+<p>Navigate to <strong>Forecasting → Accuracy Report</strong> (ForecastAccuracy.php).</p>
+
+<p>This report helps you monitor how well your forecasts are performing by comparing them against actual sales.</p>
+
+<h4>Understanding Accuracy Metrics</h4>
+
+<p><strong>MAD (Mean Absolute Deviation)</strong></p>
+<ul>
+	<li>Formula: Average of |Actual - Forecast|</li>
+	<li>Measures the average size of forecast errors</li>
+	<li>Lower is better</li>
+	<li>Same units as your product (e.g., if forecasting units, MAD is in units)</li>
+</ul>
+
+<p><strong>POA (Percent of Accuracy)</strong></p>
+<ul>
+	<li>Formula: (1 - MAD / Average Actual) × 100%</li>
+	<li>Percentage accuracy from 0-100%</li>
+	<li>Higher is better</li>
+	<li>Industry guidelines:
+		<ul>
+			<li>80-100%: Excellent forecast</li>
+			<li>60-80%: Good forecast</li>
+			<li>40-60%: Fair forecast (consider adjusting method)</li>
+			<li>Below 40%: Poor forecast (needs review)</li>
+		</ul>
+	</li>
+</ul>
+
+<p><strong>RMSE (Root Mean Squared Error)</strong></p>
+<ul>
+	<li>Similar to MAD but penalizes large errors more heavily</li>
+	<li>Lower is better</li>
+	<li>Useful for identifying forecasts with occasional large misses</li>
+</ul>
+
+<h3>What to Do When Accuracy is Low</h3>
+<ol>
+	<li>Try a different forecasting method (use Method Comparison tool)</li>
+	<li>Adjust smoothing constants in Forecast Constants</li>
+	<li>Check for outliers in historical sales data</li>
+	<li>Consider if demand pattern has changed (seasonal, promotional events)</li>
+	<li>Make manual revisions for critical periods</li>
+	<li>Ensure sufficient historical data exists (minimum 12-24 months)</li>
+</ol>
+
+<h2><a id="MethodComparison">Method Comparison Tool</a></h2>
+
+<p>Navigate to <strong>Forecasting → Method Comparison</strong> (ForecastComparison.php).</p>
+
+<p>This unique tool allows you to visually compare multiple forecasting methods side-by-side for the same item:</p>
+
+<ol>
+	<li>Enter a stock item code</li>
+	<li>Select multiple methods to compare (use checkboxes)</li>
+	<li>Click <strong>"Compare Methods"</strong></li>
+	<li>View the results in a comparative table showing:
+		<ul>
+			<li>Each period's forecast by each method</li>
+			<li>Highest and lowest forecasts highlighted</li>
+			<li>Total forecast per method</li>
+			<li>Average per period</li>
+			<li>Standard deviation across methods</li>
+		</ul>
+	</li>
+</ol>
+
+<p>Use this tool to understand the range of possible outcomes and select the most appropriate method for your business needs.</p>
+
+<h2><a id="ForecastConstants">Configuring Forecast Constants</a></h2>
+
+<p>Navigate to <strong>Forecasting → Forecast Constants</strong> (ForecastConstants.php).</p>
+
+<p>Forecast constants allow you to configure item-specific parameters that override default settings:</p>
+
+<h3>Smoothing Constants</h3>
+<ul>
+	<li><strong>Alpha (α):</strong> Controls responsiveness to recent changes (0.1-0.9)
+		<ul>
+			<li>Low (0.1-0.3): Smooth, stable forecast - use for stable demand</li>
+			<li>High (0.7-0.9): Responsive forecast - use for volatile demand</li>
+		</ul>
+	</li>
+	<li><strong>Beta (β):</strong> Controls responsiveness to trend changes (Methods 11-12)</li>
+	<li><strong>Gamma (γ):</strong> Controls responsiveness to seasonal changes (Method 12 only)</li>
+</ul>
+
+<h3>Other Parameters</h3>
+<ul>
+	<li><strong>Periods for Average:</strong> Number of periods to use in moving average calculations (Methods 4, 9)</li>
+	<li><strong>Periods of History:</strong> How far back to look when calculating forecasts</li>
+	<li><strong>Safety Stock:</strong> Fixed safety stock quantity to add to forecast</li>
+	<li><strong>Safety Stock %:</strong> Additional safety stock as percentage of forecast</li>
+	<li><strong>Outlier Filter:</strong> Enable/disable automatic outlier detection</li>
+	<li><strong>Outlier Deviation:</strong> Number of standard deviations to consider as outlier (typically 2-3)</li>
+</ul>
+
+<h2><a id="ForecastInquiry">Querying Forecasts</a></h2>
+
+<p>Navigate to <strong>Forecasting → Forecast Inquiry</strong> (ForecastInquiry.php).</p>
+
+<p>Use this screen to query and view forecasts across multiple items and time periods:</p>
+
+<ul>
+	<li>Filter by stock item, category, or location</li>
+	<li>Specify date range for forecast periods</li>
+	<li>View multiple items in a single report</li>
+	<li>See forecast quantities, actual quantities, and variances</li>
+	<li>Export data for further analysis (if export feature added)</li>
+</ul>
+
+<h2><a id="SalesHistory">Extracting Sales History</a></h2>
+
+<p>Navigate to <strong>Forecasting → Extract Sales Actuals</strong> (ForecastExtractActuals.php).</p>
+
+<h3>Why Extract Sales History?</h3>
+<p>The forecast system uses a cached, aggregated view of sales history for optimal performance. The extraction process:</p>
+<ul>
+	<li>Reads data from the salesanalysis table (actual sales transactions)</li>
+	<li>Aggregates by month and stores in forecastsaleshistory table</li>
+	<li>Enables fast forecast calculations without complex joins</li>
+	<li>Groups data by item, location, customer type, area, and salesperson for summary forecasts</li>
+</ul>
+
+<h3>How Often to Extract</h3>
+<ul>
+	<li><strong>Initial setup:</strong> Extract 24-36 months of history</li>
+	<li><strong>Ongoing:</strong> Extract monthly (first week of each month)</li>
+	<li><strong>Major events:</strong> After large sales or data corrections</li>
+</ul>
+
+<h3>Extraction Process</h3>
+<ol>
+	<li>Select <strong>From Date</strong> (e.g., 24 months ago)</li>
+	<li>Select <strong>To Date</strong> (e.g., today)</li>
+	<li>Click <strong>"Extract Sales Actuals"</strong></li>
+	<li>Wait for completion</li>
+	<li>Review statistics displayed (records processed, date range)</li>
+</ol>
+
+<p><strong>Performance Tip:</strong> Schedule extraction during off-hours using a cron job for automated processing.</p>
+
+<h2><a id="Integration">Integration with Other Systems</a></h2>
+
+<h3>MRP Integration</h3>
+<p>Forecasts can be used as independent demand in the Material Requirements Planning (MRP) system:</p>
+
+<div class="code">
+<pre>
+// Example: Create MRP demands from active forecasts
+$sql = "SELECT fh.stockid, fd.perioddate,
+               COALESCE(fd.revisedqty, fd.forecastqty) as quantity
+        FROM forecastheader fh
+        INNER JOIN forecastdetails fd ON fh.forecastid = fd.forecastid
+        WHERE fh.active = 1
+          AND fd.perioddate >= CURDATE()
+          AND fd.perioddate <= DATE_ADD(CURDATE(), INTERVAL 6 MONTH)";
+
+$result = DB_query($sql);
+
+while ($row = DB_fetch_array($result)) {
+    // Create MRP demand
+    $insertSQL = "INSERT INTO mrpdemands
+                  (stockid, mrpdemandtype, quantity, duedate)
+                  VALUES (
+                  '" . $row['stockid'] . "',
+                  'FCT',
+                  " . $row['quantity'] . ",
+                  '" . $row['perioddate'] . "'
+                  )";
+    DB_query($insertSQL);
+}
+</pre>
+</div>
+
+<h3>Reorder Level Calculation</h3>
+<p>Use forecasts to automatically calculate reorder points:</p>
+
+<div class="code">
+<pre>
+// Reorder Level = Forecast + Safety Stock
+$forecast = getNextPeriodForecast($stockid, $location);
+$safetyStock = getSafetyStockFromConstants($stockid, $location);
+$reorderLevel = $forecast + $safetyStock;
+</pre>
+</div>
+
+<h3>Purchase Planning</h3>
+<p>Calculate net requirements for purchasing:</p>
+
+<div class="code">
+<pre>
+// Net Requirement = Forecast - On Hand - On Order
+$forecast = getForecastTotal($stockid, $startdate, $enddate);
+$onHand = getCurrentStock($stockid, $location);
+$onOrder = getPurchaseOrderQty($stockid);
+$netRequirement = max(0, $forecast - $onHand - $onOrder);
+</pre>
+</div>
+
+<h2><a id="BestPractices">Best Practices</a></h2>
+
+<h3>Getting Started</h3>
+<ol>
+	<li><strong>Start with a pilot:</strong> Choose one product category to test the system</li>
+	<li><strong>Extract sufficient history:</strong> Minimum 12 months, 24-36 months recommended</li>
+	<li><strong>Use category forecasting:</strong> Process entire categories instead of individual items (saves 95%+ time)</li>
+	<li><strong>Use Best Fit:</strong> Let the system recommend methods initially (works for both items and categories)</li>
+	<li><strong>Review regularly:</strong> Check accuracy monthly and adjust as needed</li>
+</ol>
+
+<h3>Ongoing Operations</h3>
+<ul>
+	<li><strong>Monthly:</strong> Extract new sales actuals</li>
+	<li><strong>Weekly/Monthly:</strong> Regenerate forecasts using category mode for efficiency</li>
+	<li><strong>Monthly:</strong> Review accuracy reports</li>
+	<li><strong>Quarterly:</strong> Adjust methods and parameters based on accuracy trends</li>
+	<li><strong>As needed:</strong> Make manual revisions for promotional periods or known events</li>
+</ul>
+
+<h3>Category vs. Single Item Forecasting</h3>
+<ul>
+	<li><strong>Use Category Mode:</strong> For initial setup, monthly updates, or when processing 5+ items from same category</li>
+	<li><strong>Use Single Item Mode:</strong> For detailed analysis, testing new methods, or critical items requiring special attention</li>
+	<li><strong>Category Best Fit:</strong> Run once per category to find the most common optimal method, then use for all items</li>
+	<li><strong>Time Savings:</strong> Category mode reduces forecast generation time by 90-98% compared to individual processing</li>
+</ul>
+
+<h3>Method Selection Guidelines</h3>
+<table class="selection">
+	<tr>
+		<th>Demand Pattern</th>
+		<th>Recommended Method</th>
+		<th>Alternative Method</th>
+	</tr>
+	<tr>
+		<td>Stable, no trend</td>
+		<td>Method 3 (Last Year to This Year)</td>
+		<td>Method 10 (Linear Smoothing)</td>
+	</tr>
+	<tr>
+		<td>Growing steadily</td>
+		<td>Method 6 (Least Squares Regression)</td>
+		<td>Method 11 (Exponential Smoothing)</td>
+	</tr>
+	<tr>
+		<td>Declining</td>
+		<td>Method 6 (Least Squares Regression)</td>
+		<td>Method 11 (Exponential Smoothing)</td>
+	</tr>
+	<tr>
+		<td>Seasonal pattern</td>
+		<td>Method 12 (Holt-Winters)</td>
+		<td>Method 1 with seasonal %</td>
+	</tr>
+	<tr>
+		<td>Erratic/volatile</td>
+		<td>Method 9 (Weighted Moving Average)</td>
+		<td>Method 4 (Moving Average)</td>
+	</tr>
+	<tr>
+		<td>New product</td>
+		<td>Method 1 (Percent Over LY)</td>
+		<td>Similar item + adjustment</td>
+	</tr>
+	<tr>
+		<td>Unknown pattern</td>
+		<td>Use "Find Best Fit"</td>
+		<td>Method 4 (safe default)</td>
+	</tr>
+</table>
+
+<h3>Critical Items</h3>
+<p>For high-value or strategic items:</p>
+<ul>
+	<li>Configure specific forecast constants</li>
+	<li>Use multiple methods and compare results</li>
+	<li>Apply manual review and adjustments</li>
+	<li>Monitor accuracy closely</li>
+	<li>Document revision rationale in notes field</li>
+</ul>
+
+<h2><a id="Troubleshooting">Troubleshooting</a></h2>
+
+<h3>Problem: No forecast generated</h3>
+<p><strong>Solutions:</strong></p>
+<ul>
+	<li>Ensure sales history has been extracted (run ForecastExtractActuals.php)</li>
+	<li>Verify the stock item has sales data in the selected date range</li>
+	<li>Check that the item exists in stockmaster table</li>
+	<li>Ensure sufficient historical periods exist for the selected method</li>
+</ul>
+
+<h3>Problem: Forecast accuracy is low (POA < 60%)</h3>
+<p><strong>Solutions:</strong></p>
+<ul>
+	<li>Try different forecasting methods using the Comparison tool</li>
+	<li>Adjust smoothing constants (increase α for volatile, decrease for stable)</li>
+	<li>Check for data quality issues (outliers, missing data)</li>
+	<li>Review for external factors (promotions, market changes)</li>
+	<li>Consider increasing periods of history used</li>
+	<li>Apply manual revisions for known upcoming events</li>
+</ul>
+
+<h3>Problem: Batch generation is slow</h3>
+<p><strong>Solutions:</strong></p>
+<ul>
+	<li>Extract sales history during off-hours</li>
+	<li>Process smaller categories at a time</li>
+	<li>Ensure database indexes are created (check installation)</li>
+	<li>Consider running batch jobs via command line during low-usage periods</li>
+</ul>
+
+<h3>Problem: Forecast is all zeros</h3>
+<p><strong>Solutions:</strong></p>
+<ul>
+	<li>Check that the item has sales history in forecastsaleshistory table</li>
+	<li>Verify the location filter isn't excluding all data</li>
+	<li>Ensure the date range overlaps with available history</li>
+	<li>Check that the stock item is not discontinued</li>
+</ul>
+
+<h2><a id="AdvancedTopics">Advanced Topics</a></h2>
+
+<h3>Seasonal Forecasting (Method 12)</h3>
+<p>For products with seasonal patterns:</p>
+<ul>
+	<li>Requires at least 24 months of history (2 full seasonal cycles)</li>
+	<li>Set Season Length parameter (12 for monthly data with annual seasonality)</li>
+	<li>Start with α=0.3, β=0.3, γ=0.3 and adjust based on results</li>
+	<li>Review seasonal indices to ensure they make sense</li>
+</ul>
+
+<h3>Promotional Events</h3>
+<p>For forecasting during promotional periods:</p>
+<ul>
+	<li>Use historical promotion data if available</li>
+	<li>Generate baseline forecast first</li>
+	<li>Apply manual revision with promotional uplift percentage</li>
+	<li>Document the promotion in the notes field</li>
+	<li>Track actual vs forecast to improve future promotional forecasts</li>
+</ul>
+
+<h3>New Product Introduction</h3>
+<p>For items without sales history:</p>
+<ul>
+	<li>Find similar products and copy their forecast patterns</li>
+	<li>Use Method 1 with estimated percentage based on similar items</li>
+	<li>Apply conservative estimates initially</li>
+	<li>Review and adjust weekly as actual sales data becomes available</li>
+	<li>Switch to statistical methods once 6+ months of history exists</li>
+</ul>
+
+<h3>Automating Forecast Generation</h3>
+<p>Set up automated forecast generation using cron jobs:</p>
+
+<div class="code">
+<pre>
+# Extract sales history monthly (1st of month at 2 AM)
+0 2 1 * * php /path/to/webERP/ForecastExtractActuals.php extract
+
+# Generate forecasts weekly (Sunday at 3 AM)
+0 3 * * 0 php /path/to/webERP/batch_forecast.php
+
+# Email accuracy report monthly (5th of month at 8 AM)
+0 8 5 * * php /path/to/webERP/email_forecast_accuracy.php
+</pre>
+</div>
+
+<h2><a id="DatabaseTables">Database Table Reference</a></h2>
+
+<h3>forecastheader</h3>
+<p>Master table containing one record per forecast. Links to stockmaster and locations.</p>
+
+<h3>forecastdetails</h3>
+<p>Period-by-period forecast data. Multiple records per forecast (one per period). Stores forecast quantity, actual quantity, revised quantity, and metrics.</p>
+
+<h3>forecastsummary</h3>
+<p>Summary forecast definitions. Specifies aggregation criteria (category, customer type, area, salesperson).</p>
+
+<h3>forecastsummarydetails</h3>
+<p>Period-by-period summary data. Stores both quantity and value forecasts.</p>
+
+<h3>forecastconstants</h3>
+<p>Item-specific parameters. One record per stock item/location combination. Stores smoothing constants and safety stock settings.</p>
+
+<h3>forecastsaleshistory</h3>
+<p>Cached sales history for fast calculations. Pre-aggregated by month with dimensions for summary forecasting.</p>
+
+<h3>forecastmethods</h3>
+<p>Lookup table of the 12 forecasting methods with descriptions and requirements.</p>
+
+<h3>forecastmetrics</h3>
+<p>Calculated accuracy metrics (MAD, POA, RMSE, MSE) stored per forecast and period.</p>
+
+<h3>forecastprices</h3>
+<p>Historical and projected pricing for value-based forecasting.</p>
+
+<h3>forecastinclusionrules</h3>
+<p>Rules defining which transaction types to include in forecasts.</p>
+
+<h3>forecastsimulation</h3>
+<p>What-if scenarios for testing forecast adjustments before committing.</p>
+
+<h2><a id="FAQ">Frequently Asked Questions</a></h2>
+
+<h3>Q: How much historical data do I need?</h3>
+<p>A: Minimum 6 months for basic methods (4, 9), 12 months recommended for most methods, and 24 months for seasonal methods (12). More history generally produces better forecasts.</p>
+
+<h3>Q: Can I forecast new products with no sales history?</h3>
+<p>A: Yes, use Method 1 (Percent Over Last Year) with estimates based on similar products, or manually enter forecast quantities.</p>
+
+<h3>Q: What's the difference between detail and summary forecasts?</h3>
+<p>A: Detail forecasts are item-specific. Summary forecasts aggregate multiple items for higher-level planning (e.g., total sales for electronics category).</p>
+
+<h3>Q: Should I forecast by location or for all locations combined?</h3>
+<p>A: If demand patterns differ by location, forecast separately. If locations have similar patterns, combined forecasting may be simpler.</p>
+
+<h3>Q: When should I use manual revisions?</h3>
+<p>A: Use manual revisions when you have knowledge of future events that aren't reflected in historical data (promotions, market changes, new customers, etc.).</p>
+
+<h3>Q: Can I use multiple methods for the same item?</h3>
+<p>A: Yes, you can generate forecasts with different methods and compare them. However, only one forecast per item/location can be marked as "active" for MRP integration.</p>
+
+<h3>Q: How do I know which method to use?</h3>
+<p>A: Use the "Find Best Fit Method" feature in Forecast Generation, or use the Method Comparison tool to compare multiple methods visually.</p>
+
+<h3>Q: What if my forecast accuracy is low?</h3>
+<p>A: Try different methods, adjust smoothing constants, check for data quality issues, ensure sufficient historical data, and consider manual adjustments for known future events.</p>
+
+<h2><a id="Glossary">Glossary of Terms</a></h2>
+
+<dl>
+	<dt><strong>Detail Forecast</strong></dt>
+	<dd>Item-level forecast for a specific product and location</dd>
+
+	<dt><strong>Summary Forecast</strong></dt>
+	<dd>Aggregated forecast combining multiple items by category, customer type, area, or salesperson</dd>
+
+	<dt><strong>MAD (Mean Absolute Deviation)</strong></dt>
+	<dd>Average magnitude of forecast errors, regardless of direction</dd>
+
+	<dt><strong>POA (Percent of Accuracy)</strong></dt>
+	<dd>Percentage accuracy measure (0-100%), with higher being better</dd>
+
+	<dt><strong>Alpha (α)</strong></dt>
+	<dd>Smoothing constant controlling responsiveness to recent changes (0.1-0.9)</dd>
+
+	<dt><strong>Beta (β)</strong></dt>
+	<dd>Smoothing constant for trend component in exponential smoothing</dd>
+
+	<dt><strong>Gamma (γ)</strong></dt>
+	<dd>Smoothing constant for seasonal component in Holt-Winters method</dd>
+
+	<dt><strong>Seasonality</strong></dt>
+	<dd>Repeating patterns in demand over time (e.g., higher sales in December)</dd>
+
+	<dt><strong>Outlier</strong></dt>
+	<dd>Data point significantly different from other observations, potentially skewing forecasts</dd>
+
+	<dt><strong>Best Fit</strong></dt>
+	<dd>Automated analysis to determine which forecasting method performs most accurately for an item</dd>
+</dl>
+
+<h2><a id="ScreenReference">Screen Reference</a></h2>
+
+<table class="selection">
+	<tr>
+		<th>Screen</th>
+		<th>File</th>
+		<th>Purpose</th>
+	</tr>
+	<tr>
+		<td>Forecast Dashboard</td>
+		<td>ForecastDashboard.php</td>
+		<td>Central hub with navigation and statistics</td>
+	</tr>
+	<tr>
+		<td>Generate Forecast</td>
+		<td>ForecastGeneration.php</td>
+		<td>Create forecasts for individual items or entire categories</td>
+	</tr>
+	<tr>
+		<td>Forecast Review</td>
+		<td>ForecastReview.php</td>
+		<td>Review and revise detail forecasts</td>
+	</tr>
+	<tr>
+		<td>Method Comparison</td>
+		<td>ForecastComparison.php</td>
+		<td>Compare multiple methods side-by-side</td>
+	</tr>
+	<tr>
+		<td>Summary Forecasts</td>
+		<td>ForecastSummary.php</td>
+		<td>Create and manage summary forecasts</td>
+	</tr>
+	<tr>
+		<td>Summary Review</td>
+		<td>ForecastSummaryReview.php</td>
+		<td>Review and edit summary details</td>
+	</tr>
+	<tr>
+		<td>Extract Actuals</td>
+		<td>ForecastExtractActuals.php</td>
+		<td>Import sales history into cache</td>
+	</tr>
+	<tr>
+		<td>Accuracy Report</td>
+		<td>ForecastAccuracy.php</td>
+		<td>Monitor forecast accuracy metrics</td>
+	</tr>
+	<tr>
+		<td>Forecast Inquiry</td>
+		<td>ForecastInquiry.php</td>
+		<td>Query and view forecasts</td>
+	</tr>
+	<tr>
+		<td>Forecast Constants</td>
+		<td>ForecastConstants.php</td>
+		<td>Configure item-specific parameters</td>
+	</tr>
+	<tr>
+		<td>Batch Generation</td>
+		<td>ForecastBatchGeneration.php</td>
+		<td>Generate forecasts for categories</td>
+	</tr>
+</table>
+
+<h2><a id="MRPIntegration">Integrating Forecasts with MRP</a></h2>
+
+<p>The Forecast Management System directly integrates with webERP's Material Requirements Planning (MRP) system, allowing forecasted demand to drive production planning and purchasing decisions. This creates a complete demand-driven planning cycle from historical sales through statistical forecasting to materials requirements.</p>
+
+<h3><a id="MRPWorkflow">Complete Workflow: Forecast to MRP</a></h3>
+
+<p>The integration follows a five-step workflow:</p>
+
+<div style="background-color: #f0f8ff; border-left: 4px solid #1e90ff; padding: 15px; margin: 20px 0;">
+<h4>Step 1: Extract Sales History → Forecast Sales History Table</h4>
+<p><strong>File:</strong> ForecastExtractActuals.php</p>
+<p><strong>Purpose:</strong> Pull historical sales data from sales orders into the forecast system's optimized cache.</p>
+<p><strong>Process:</strong></p>
+<ul>
+	<li>Extracts from <code>salesorders</code> and <code>salesorderdetails</code> tables</li>
+	<li>Aggregates by stock item, location, customer type, area, salesperson, and period</li>
+	<li>Creates records in <code>forecastsaleshistory</code> table</li>
+	<li>No dependency on salesanalysis or stockmoves tables</li>
+</ul>
+<p><strong>How to Use:</strong></p>
+<ol>
+	<li>Navigate to <strong>Forecasting → Extract Sales Actuals</strong></li>
+	<li>Select date range (e.g., last 12-24 months)</li>
+	<li>Click <strong>"Extract"</strong></li>
+	<li>Wait for completion</li>
+</ol>
+</div>
+
+<div style="background-color: #f0f8ff; border-left: 4px solid #1e90ff; padding: 15px; margin: 20px 0;">
+<h4>Step 2: Generate Forecasts → Forecast Header and Details Tables</h4>
+<p><strong>File:</strong> ForecastGeneration.php</p>
+<p><strong>Purpose:</strong> Create statistical forecasts based on historical sales patterns.</p>
+<p><strong>Process:</strong></p>
+<ul>
+	<li>Analyzes historical sales patterns from <code>forecastsaleshistory</code></li>
+	<li>Applies selected statistical algorithm (12 methods available)</li>
+	<li>Creates forecast header in <code>forecastheader</code> table</li>
+	<li>Creates period-by-period forecasts in <code>forecastdetails</code> table</li>
+</ul>
+<p><strong>How to Use:</strong></p>
+<ol>
+	<li>Navigate to <strong>Forecasting → Generate Forecast</strong></li>
+	<li>Select stock item or entire category</li>
+	<li>Choose location (optional)</li>
+	<li>Select forecast method or use "Find Best Fit"</li>
+	<li>Set number of periods to forecast (e.g., 3 months)</li>
+	<li>Click <strong>"Generate Forecast"</strong></li>
+</ol>
+</div>
+
+<div style="background-color: #f0f8ff; border-left: 4px solid #1e90ff; padding: 15px; margin: 20px 0;">
+<h4><a id="ForecastSummaryReview">Step 3: Review and Adjust Forecasts → Update Revised Quantities</a></h4>
+<p><strong>File:</strong> ForecastReview.php</p>
+<p><strong>Purpose:</strong> Review generated forecasts and make manual adjustments based on business knowledge.</p>
+<p><strong>Process:</strong></p>
+<ul>
+	<li>Reviews <code>forecastdetails</code> records</li>
+	<li>Allows updating <code>revisedqty</code> field</li>
+	<li>Revised quantities override calculated forecasts</li>
+	<li>Original forecasts are preserved for comparison</li>
+</ul>
+<p><strong>How to Use:</strong></p>
+<ol>
+	<li>Navigate to <strong>Forecasting → Forecast Review</strong></li>
+	<li>Search for forecasts to review</li>
+	<li>View period-by-period forecast quantities</li>
+	<li>Enter adjusted quantities in "Revised Qty" column (e.g., for known promotions)</li>
+	<li>Add notes to document adjustments</li>
+	<li>Click <strong>"Save Changes"</strong></li>
+</ol>
+</div>
+
+<div style="background-color: #ffe4b5; border-left: 4px solid #ff8c00; padding: 15px; margin: 20px 0;">
+<h4><a id="ForecastToMRP">Step 4: Convert Forecasts to MRP Demands → MRP Demands Table (NEW)</a></h4>
+<p><strong>File:</strong> ForecastToMRP.php</p>
+<p><strong>Purpose:</strong> Convert active forecasts into MRP demand records that drive material requirements planning.</p>
+<p><strong>Process:</strong></p>
+<ul>
+	<li>Reads from <code>forecastdetails</code> for active forecasts</li>
+	<li>Uses <code>revisedqty</code> if available, otherwise <code>forecastqty</code></li>
+	<li>Creates records in <code>mrpdemands</code> table</li>
+	<li>Links to specified MRP demand type (e.g., "FORECAST")</li>
+</ul>
+<p><strong>How to Use:</strong></p>
+<ol>
+	<li>Navigate to <strong>MRP → Forecast to MRP Demands</strong></li>
+	<li>Set <strong>From Date</strong> and <strong>To Date</strong> (e.g., next 3 months)</li>
+	<li>Select <strong>MRP Demand Type</strong> (create "FORECAST" type if needed)</li>
+	<li>Select <strong>Location</strong> (or "All Locations")</li>
+	<li>Select <strong>Stock Categories</strong> to include</li>
+	<li>Check <strong>"Replace Existing"</strong> to clear old forecast demands first</li>
+	<li>Click <strong>"Generate MRP Demands"</strong></li>
+	<li>Review confirmation: "X MRP Demands created"</li>
+</ol>
+<p><strong>Example:</strong> If you have a forecast showing 45 units in April, 48 in May, and 75 in June (revised), the system creates three MRP demand records with these quantities and dates.</p>
+</div>
+
+<div style="background-color: #f0f8ff; border-left: 4px solid #1e90ff; padding: 15px; margin: 20px 0;">
+<h4>Step 5: Run MRP → Planned Purchase and Work Orders</h4>
+<p><strong>File:</strong> MRP.php</p>
+<p><strong>Purpose:</strong> Calculate material requirements based on all demands including forecasts.</p>
+<p><strong>Process:</strong></p>
+<ul>
+	<li>Reads from <code>mrpdemands</code> table (includes forecast demands)</li>
+	<li>Analyzes current inventory levels</li>
+	<li>Checks Bills of Materials (BOMs)</li>
+	<li>Considers lead times and safety stock</li>
+	<li>Generates planned purchase orders</li>
+	<li>Generates planned work orders</li>
+	<li>Identifies shortages and reschedule recommendations</li>
+</ul>
+<p><strong>How to Use:</strong></p>
+<ol>
+	<li>Navigate to <strong>MRP → Run MRP</strong></li>
+	<li>Select location</li>
+	<li>Select manufacturing calendar</li>
+	<li>Set planning horizon</li>
+	<li>Click <strong>"Run MRP"</strong></li>
+	<li>MRP calculates requirements based on all demands (sales orders + forecasts)</li>
+	<li>Review planned orders under <strong>MRP → Planned Purchase Orders</strong></li>
+	<li>Review planned work orders under <strong>MRP → Planned Work Orders</strong></li>
+</ol>
+</div>
+
+<h3><a id="MRPExample">Complete Example Scenario</a></h3>
+
+<p><strong>Scenario:</strong> Forecast and plan for electronic components for the next 3 months</p>
+
+<table class="table_index">
+	<tr>
+		<th style="width:15%">Step</th>
+		<th style="width:25%">Action</th>
+		<th style="width:60%">Result</th>
+	</tr>
+	<tr>
+		<td>1. Extract History</td>
+		<td>ForecastExtractActuals.php<br/>From: 2025-03-01<br/>To: 2026-03-01</td>
+		<td>5,974 historical sales records loaded into forecastsaleshistory</td>
+	</tr>
+	<tr>
+		<td>2. Generate Forecast</td>
+		<td>ForecastGeneration.php<br/>Item: ELEC-0001<br/>Location: MAIN<br/>Method: Exponential Smoothing<br/>Periods: 3</td>
+		<td>Forecast created:<br/>• April 2026: 45 units<br/>• May 2026: 48 units<br/>• June 2026: 50 units</td>
+	</tr>
+	<tr>
+		<td>3. Review & Adjust</td>
+		<td>ForecastReview.php<br/>June revised to 75 units<br/>(Known promotion)</td>
+		<td>Revised forecast:<br/>• April: 45 units<br/>• May: 48 units<br/>• June: 75 units (revised)</td>
+	</tr>
+	<tr>
+		<td>4. Convert to MRP</td>
+		<td>ForecastToMRP.php<br/>From: 2026-04-01<br/>To: 2026-06-30<br/>Type: FORECAST</td>
+		<td>3 MRP demand records created:<br/>• 2026-04-30: 45 units<br/>• 2026-05-31: 48 units<br/>• 2026-06-30: 75 units</td>
+	</tr>
+	<tr>
+		<td>5. Run MRP</td>
+		<td>MRP.php<br/>Planning horizon: 3 months</td>
+		<td>MRP calculates requirements:<br/>• Total demand: 168 units<br/>• Current stock: 20 units<br/>• Net requirement: 148 units<br/>• Planned purchase orders generated</td>
+	</tr>
+</table>
+
+<h3><a id="MRPKeyFeatures">Key Integration Features</a></h3>
+
+<h4>Priority System: Revised Over Calculated</h4>
+<p>The system uses a priority hierarchy for forecast quantities:</p>
+<pre style="background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+COALESCE(forecastdetails.revisedqty, forecastdetails.forecastqty)
+</pre>
+<p>This means:</p>
+<ul>
+	<li>If you've made manual adjustments, the <code>revisedqty</code> is used</li>
+	<li>If no revision exists, the statistical <code>forecastqty</code> is used</li>
+	<li>Both values are preserved for audit and comparison</li>
+</ul>
+
+<h4>Multiple Demand Sources</h4>
+<p>The MRP system combines demands from multiple sources:</p>
+<table class="table_index">
+	<tr>
+		<th>Demand Source</th>
+		<th>MRP Demand Type</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td>Sales Orders</td>
+		<td>SO</td>
+		<td>Actual customer orders (firm demands)</td>
+	</tr>
+	<tr>
+		<td>Forecasts</td>
+		<td>FC</td>
+		<td>Statistical predictions (planned demands)</td>
+	</tr>
+	<tr>
+		<td>Work Orders</td>
+		<td>WO</td>
+		<td>Production requirements for assemblies</td>
+	</tr>
+	<tr>
+		<td>Manual</td>
+		<td>MAN</td>
+		<td>Manually entered demands</td>
+	</tr>
+</table>
+
+<h4>Incremental vs. Replace Modes</h4>
+<p><strong>Replace Mode</strong> (Recommended for weekly/monthly updates):</p>
+<ul>
+	<li>Deletes existing forecast demands in the date range</li>
+	<li>Creates new demands from current forecasts</li>
+	<li>Ensures MRP always uses latest forecast data</li>
+</ul>
+
+<p><strong>Incremental Mode</strong> (For adding new forecasts):</p>
+<ul>
+	<li>Only adds demands that don't already exist</li>
+	<li>Preserves existing demands</li>
+	<li>Use when adding forecasts for new items or periods</li>
+</ul>
+
+<h3><a id="MRPBestPractices">Best Practices for Forecast-to-MRP Integration</a></h3>
+
+<h4>1. Regular Update Schedule</h4>
+<table class="table_index">
+	<tr>
+		<th>Activity</th>
+		<th>Recommended Frequency</th>
+		<th>Timing</th>
+	</tr>
+	<tr>
+		<td>Extract Actuals</td>
+		<td>Monthly</td>
+		<td>After closing each period</td>
+	</tr>
+	<tr>
+		<td>Regenerate Forecasts</td>
+		<td>Monthly</td>
+		<td>Same day as actuals extraction</td>
+	</tr>
+	<tr>
+		<td>Review & Adjust</td>
+		<td>Weekly</td>
+		<td>Before converting to MRP</td>
+	</tr>
+	<tr>
+		<td>Convert to MRP</td>
+		<td>Weekly</td>
+		<td>Before running MRP</td>
+	</tr>
+	<tr>
+		<td>Run MRP</td>
+		<td>Weekly or Daily</td>
+		<td>After converting forecasts</td>
+	</tr>
+</table>
+
+<h4>2. Review Process</h4>
+<p>Always review forecasts before converting to MRP demands:</p>
+<ul>
+	<li><strong>Check for anomalies:</strong> Look for unusually high or low forecasts</li>
+	<li><strong>Adjust for known events:</strong> Promotions, product launches, seasonality</li>
+	<li><strong>Document changes:</strong> Use the notes field to explain adjustments</li>
+	<li><strong>Compare with actuals:</strong> Review accuracy of previous forecasts</li>
+</ul>
+
+<h4>3. Accuracy Monitoring</h4>
+<p>Track forecast performance over time:</p>
+<ul>
+	<li><strong>MAD (Mean Absolute Deviation):</strong> Average forecast error</li>
+	<li><strong>POA (Percent of Accuracy):</strong> Percentage accuracy metric</li>
+	<li><strong>Bias detection:</strong> Identify consistent over/under forecasting</li>
+	<li><strong>Method comparison:</strong> Test different algorithms for each item</li>
+</ul>
+
+<h4>4. Planning Horizon</h4>
+<p>Set appropriate forecast and MRP horizons:</p>
+<ul>
+	<li><strong>Forecast horizon:</strong> 3-6 months typical (longer for seasonal items)</li>
+	<li><strong>MRP planning horizon:</strong> Forecast horizon + longest lead time</li>
+	<li><strong>Example:</strong> 3-month forecast + 2-month lead time = 5-month MRP horizon</li>
+</ul>
+
+<h3><a id="MRPConfiguration">Configuration and Setup</a></h3>
+
+<h4>Create MRP Demand Type for Forecasts</h4>
+<p>Before first use, create a demand type for forecasts:</p>
+<ol>
+	<li>Navigate to <strong>MRP → MRP Demand Types</strong></li>
+	<li>Click <strong>"Add New"</strong></li>
+	<li>Enter code: <code>FC</code></li>
+	<li>Enter description: <code>Forecast Demand</code></li>
+	<li>Click <strong>"Save"</strong></li>
+</ol>
+
+<p>Or using SQL:</p>
+<pre style="background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+INSERT INTO mrpdemandtypes (mrpdemandtype, description)
+VALUES ('FC', 'Forecast Demand');
+</pre>
+
+<h4>Recommended Demand Type Setup</h4>
+<table class="table_index">
+	<tr>
+		<th>Code</th>
+		<th>Description</th>
+		<th>Priority</th>
+	</tr>
+	<tr>
+		<td>SO</td>
+		<td>Sales Order</td>
+		<td>1 (Highest - firm demand)</td>
+	</tr>
+	<tr>
+		<td>FC</td>
+		<td>Forecast</td>
+		<td>2 (Planned demand)</td>
+	</tr>
+	<tr>
+		<td>WO</td>
+		<td>Work Order</td>
+		<td>3 (Production requirement)</td>
+	</tr>
+	<tr>
+		<td>MAN</td>
+		<td>Manual</td>
+		<td>4 (As needed)</td>
+	</tr>
+</table>
+
+<h3><a id="MRPTroubleshooting">Troubleshooting</a></h3>
+
+<h4>No MRP Demands Created</h4>
+<p><strong>Possible causes and solutions:</strong></p>
+<ul>
+	<li><strong>Forecasts not marked active:</strong> Check <code>forecastheader.active = 1</code></li>
+	<li><strong>Zero quantities:</strong> Ensure forecast quantities are greater than 0</li>
+	<li><strong>Date range mismatch:</strong> Verify forecast periods fall within selected date range</li>
+	<li><strong>MRP demand type missing:</strong> Create the FORECAST demand type first</li>
+</ul>
+
+<h4>Duplicate Demands</h4>
+<p><strong>Solution:</strong></p>
+<ul>
+	<li>Use <strong>"Replace Existing"</strong> checkbox when converting to MRP</li>
+	<li>Or manually delete old demands: <code>DELETE FROM mrpdemands WHERE mrpdemandtype = 'FC' AND duedate &lt; '2026-04-01'</code></li>
+</ul>
+
+<h4>Forecasts Don't Update in MRP</h4>
+<p><strong>Solution:</strong></p>
+<ul>
+	<li>Remember to convert forecasts to MRP demands after making changes</li>
+	<li>The MRP system reads from <code>mrpdemands</code>, not directly from <code>forecastdetails</code></li>
+	<li>Use "Replace Existing" mode to ensure latest forecasts are used</li>
+</ul>
+
+<h3><a id="MRPDatabaseFlow">Database Table Flow</a></h3>
+
+<pre style="background-color: #f4f4f4; padding: 15px; border-radius: 5px; font-family: monospace;">
+salesorders + salesorderdetails
+           ↓
+    forecastsaleshistory (via ForecastExtractActuals.php)
+           ↓
+forecastheader + forecastdetails (via ForecastGeneration.php)
+           ↓
+      mrpdemands (via ForecastToMRP.php) ← NEW
+           ↓
+   MRP planned orders (via MRP.php)
+</pre>
+
+<h3><a id="MRPSummary">Integration Summary</a></h3>
+
+<p>The Forecast-to-MRP integration provides:</p>
+<ul>
+	<li>✓ <strong>Direct integration:</strong> Forecast → MRP with one click</li>
+	<li>✓ <strong>Manual overrides:</strong> Use revisedqty to adjust statistical forecasts</li>
+	<li>✓ <strong>No intermediate tables:</strong> Direct from sales orders to forecasts</li>
+	<li>✓ <strong>Multiple sources:</strong> Combine actual sales + forecasts in MRP</li>
+	<li>✓ <strong>Flexible filtering:</strong> By location, category, dates</li>
+	<li>✓ <strong>Audit trail:</strong> Keeps both original and revised forecasts</li>
+	<li>✓ <strong>Automated workflow:</strong> Minimal manual intervention required</li>
+</ul>
+
+<p>This creates a complete closed-loop system from historical sales analysis through statistical forecasting to production planning and material requirements.</p>
+
+<h2><a id="Support">Getting Help</a></h2>
+
+<p>For additional support and resources:</p>
+<ul>
+	<li><strong>Quick Start Guide:</strong> FORECAST_QUICKSTART.md in the webERP root directory</li>
+	<li><strong>MRP Integration Guide:</strong> FORECAST_TO_MRP_GUIDE.md - Complete workflow from forecasts to production planning</li>
+	<li><strong>Technical Documentation:</strong> doc/ForecastManagement.md</li>
+	<li><strong>API Reference:</strong> FORECAST_API_REFERENCE.md for developers</li>
+	<li><strong>webERP Forum:</strong> <a href="https://github.com/timschofield/webERP/discussions" target="_blank">https://github.com/timschofield/webERP/discussions</a></li>
+	<li><strong>webERP Website:</strong> <a href="https://www.weberp.org/" target="_blank">https://www.weberp.org/</a></li>
+</ul>
+
+<p><a href="#top">Back to top</a></p>
+
+</article>

@@ -126,20 +126,15 @@ function NewModule($Link, $Report, $Name, $Sequence) {
 	$SQL = "SELECT modulelink FROM modules WHERE modulelink='" . $Link . "'";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) == 0) {
-		$SQL = "SELECT secroleid FROM securityroles";
-		$Result = DB_query($SQL);
-		while ($MyRow = DB_fetch_array($Result)) {
+			// KL RICARD: PTADU webERP does not have modules by role, so we need to update the sequence just once.
 			$SQL = "UPDATE `modules` SET sequence=sequence+1
-							WHERE sequence>='" . $Sequence . "'
-								AND secroleid='" . $MyRow['secroleid'] . "'";
+							WHERE sequence>='" . $Sequence . "'";
 			$Response = executeSQL($SQL, false);
-			$SQL = "INSERT INTO `modules` ( `secroleid`,
-											`modulelink`,
+			$SQL = "INSERT INTO `modules` (`modulelink`,
 											`reportlink`,
 											`modulename`,
 											`sequence`
 										) VALUES (
-											'" . $MyRow['secroleid'] . "',
 											'" . $Link . "',
 											'" . $Report . "',
 											'" . $Name . "',
@@ -151,7 +146,6 @@ function NewModule($Link, $Report, $Name, $Sequence) {
 			} else {
 				OutputResult(__('The module') . ' ' . $Name . ' ' . __('could not be inserted') . '<br />' . $SQL, 'error');
 			}
-		}
 	} else {
 		OutputResult(__('The module') . ' ' . $Name . ' ' . __('already exists'), 'info');
 	}
@@ -162,23 +156,18 @@ function NewMenuItem($Link, $Section, $Caption, $URL, $Sequence) {
 	$SQL = "SELECT modulelink FROM menuitems WHERE modulelink='" . $Link . "' AND menusection='" . $Section . "' AND url='" . $URL . "'";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) == 0) {
-		$SQL = "SELECT secroleid FROM securityroles";
-		$Result = DB_query($SQL);
-		while ($MyRow = DB_fetch_array($Result)) {
+			// KL RICARD: PTADU webERP does not have menus by role, so we need to update the sequence just once.
 			$SQL = "UPDATE `menuitems` SET sequence=sequence+1
 							WHERE sequence>='" . $Sequence . "'
-								AND secroleid='" . $MyRow['secroleid'] . "'
 								AND modulelink='" . $Link . "'
 								AND menusection='" . $Section . "'";
 			$Response = executeSQL($SQL, false);
-			$SQL = "INSERT INTO `menuitems` (`secroleid`,
-												`modulelink`,
+			$SQL = "INSERT INTO `menuitems` (	`modulelink`,
 												`menusection`,
 												`caption`,
 												`url`,
 												`sequence`
 											) VALUES (
-												'" . $MyRow['secroleid'] . "',
 												'" . $Link . "',
 												'" . $Section . "',
 												'" . $Caption . "',
@@ -191,7 +180,6 @@ function NewMenuItem($Link, $Section, $Caption, $URL, $Sequence) {
 			} else {
 				OutputResult(__('The menu link') . ' ' . $Caption . ' ' . __('could not be inserted') . '<br />' . $SQL, 'error');
 			}
-		}
 	} else {
 		OutputResult(__('The menu link') . ' ' . $Caption . ' ' . __('already exists'), 'info');
 	}
@@ -201,9 +189,7 @@ function RemoveMenuItem($Link, $Section, $Caption, $URL) {
 	$SQL = "SELECT modulelink FROM menuitems WHERE modulelink='" . $Link . "' AND menusection='" . $Section . "' AND url='" . $URL . "'";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0) {
-		$SQL = "SELECT secroleid FROM securityroles";
-		$Result = DB_query($SQL);
-		while ($MyRow = DB_fetch_array($Result)) {
+			// KL RICARD: PTADU webERP does not have menus by role, so we need to delete the menu item just once.
 			$SQL = "DELETE FROM menuitems WHERE modulelink='" . $Link . "'
 											AND menusection='" . $Section . "'
 											AND caption='" . $Caption . "'
@@ -214,7 +200,6 @@ function RemoveMenuItem($Link, $Section, $Caption, $URL) {
 			} else {
 				OutputResult(__('The menu link') . ' ' . $Caption . ' ' . __('could not be deleted') . '<br />' . $SQL, 'error');
 			}
-		}
 	} else {
 		OutputResult(__('The menu link') . ' ' . $Caption . ' ' . __('does not exist'), 'info');
 	}
@@ -514,16 +499,8 @@ function DeleteConfigValue($ConfName) {
 	}
 }
 
-function CreateTable($Table, $SQL, $CharacterSet='utf8mb4') {
+function CreateTable($Table, $SQL, $CharacterSet='utf8mb4', $Collation='utf8mb4_unicode_ci') {
 
-	$CollationSQL = "SHOW VARIABLES LIKE 'collation_connection'";
-	$Result = DB_query($CollationSQL);
-	if (DB_num_rows($Result) == 0) {
-		$Collation='utf8mb4_general_ci';
-	} else {
-		$MyRow = DB_fetch_row($Result);
-		$Collation = $MyRow[1];
-	}
 	$ShowSQL = "SHOW TABLES WHERE Tables_in_" . $_SESSION['DatabaseName'] . "='" . $Table . "'";
 	$Result = DB_query($ShowSQL);
 

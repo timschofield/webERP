@@ -162,7 +162,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<td class="right">' . $FormatedSupDueDate . '</td>
 				<td class="right">' . $FormatedSupMRPDate . '</td>
 				<td class="right">' . locale_number_format($MyRow['supplyquantity'], $MyRow['decimalplaces']) . '</td>
-				<td class="right">' . locale_number_format($ExtCost, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
+				<td class="right">' . locale_number_format($ExtCost, $_SESSION['StandardCostDecimalPlaces']) . '</td>';
 
 		if ($_POST['Consolidation'] == 'None') {
 			$HTML .= '<td class="center">' . htmlspecialchars($MyRow['ordertype']) . '</td>
@@ -187,15 +187,15 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	// Print summary information for last part
 	$HTML .= '<tr><td colspan="2"><b>' . $HoldDescription . '</b></td>
-			<td class="center">' . __('Unit Cost:') . ' ' . locale_number_format($HoldCost, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td class="center">' . __('Unit Cost:') . ' ' . locale_number_format($HoldCost, $_SESSION['StandardCostDecimalPlaces']) . '</td>
 			<td class="right">' . locale_number_format($TotalPartQty, $HoldDecimalPlaces) . '</td>
-			<td class="right">' . locale_number_format($TotalPartCost, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td class="right">' . locale_number_format($TotalPartCost, $_SESSION['StandardCostDecimalPlaces']) . '</td>
 			<td class="right">' . __('M/B:') . ' ' . $HoldMBFlag . '</td>
 			<td></td></tr>';
 
 	// Grand totals
 	$HTML .= '<tr><td colspan="3" class="right"><b>' . __('Number of Work Orders:') . ' ' . $Partctr . '</b></td>
-			<td colspan="4" class="right"><b>' . __('Total Extended Cost:') . ' ' . locale_number_format($Total_ExtCost, $_SESSION['CompanyRecord']['decimalplaces']) . '</b></td></tr>';
+			<td colspan="4" class="right"><b>' . __('Total Extended Cost:') . ' ' . locale_number_format($Total_ExtCost, $_SESSION['StandardCostDecimalPlaces']) . '</b></td></tr>';
 
 	if (isset($_POST['PrintPDF']) or isset($_POST['Email'])) {
 		$HTML .= '</tbody>

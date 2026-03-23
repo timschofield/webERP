@@ -198,8 +198,8 @@ if (isset($StockID) and $StockID!= ""){
 					<td>', $ComponentLink, '</td>
 					<td>', $MyRow['description'], '</td>
 					<td class="number">', locale_number_format($MyRow['quantity'],$MyRow['decimalplaces']), '</td>
-					<td class="number">', locale_number_format($MyRow['standardcost'],$_SESSION['CompanyRecord']['decimalplaces'] + 2), '</td>
-					<td class="number">', locale_number_format($MyRow['componentcost'],$_SESSION['CompanyRecord']['decimalplaces'] + 2), '</td>
+					<td class="number">', locale_number_format($MyRow['standardcost'],$_SESSION['StandardCostDecimalPlaces']), '</td>
+					<td class="number">', locale_number_format($MyRow['componentcost'],$_SESSION['StandardCostDecimalPlaces']), '</td>
 				</tr>';
 
 			$TotalCost += $MyRow['componentcost'];
@@ -209,17 +209,17 @@ if (isset($StockID) and $StockID!= ""){
 		$TotalCost += $ParentLabourCost;
 		echo '<tr class="total_row">
 				<td colspan="4" class="number"><b>' . __('Labour Cost') . '</b></td>
-				<td class="number"><b>' . locale_number_format($ParentLabourCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
+				<td class="number"><b>' . locale_number_format($ParentLabourCost, $_SESSION['StandardCostDecimalPlaces']) . '</b></td>
 			</tr>';
 		$TotalCost += $ParentOverheadCost;
 		echo '<tr class="total_row">
 				<td colspan="4" class="number"><b>' . __('Overhead Cost') . '</b></td>
-				<td class="number"><b>' . locale_number_format($ParentOverheadCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
+				<td class="number"><b>' . locale_number_format($ParentOverheadCost, $_SESSION['StandardCostDecimalPlaces']) . '</b></td>
 			</tr>';
 
 		echo '<tr class="total_row">
 				<td colspan="4" class="number"><b>' . __('Total Cost') . '</b></td>
-				<td class="number"><b>' . locale_number_format($TotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
+				<td class="number"><b>' . locale_number_format($TotalCost, $_SESSION['StandardCostDecimalPlaces']) . '</b></td>
 			</tr>';
 
 		echo '</table>';

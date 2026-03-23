@@ -152,13 +152,13 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			$Shortage = ($MyRow['demand'] - $MyRow['supply']) * -1;
 			$Extcost = $Shortage * $MyRow['computedcost'];
 			$shortageVal = locale_number_format($Shortage, $MyRow['decimalplaces']);
-			$extcostVal = locale_number_format($MyRow['extcost'], 2);
+			$extcostVal = locale_number_format($MyRow['extcost'], $_SESSION['StandardCostDecimalPlaces']);
 		} else {
 			$LineToPrint = ($MyRow['demand'] <= $MyRow['supply']);
 			$Shortage = ($MyRow['supply'] - $MyRow['demand']);
 			$Extcost = $Shortage * $MyRow['computedcost'];
 			$shortageVal = locale_number_format($Shortage, $MyRow['decimalplaces']);
-			$extcostVal = locale_number_format($MyRow['extcost'], 2);
+			$extcostVal = locale_number_format($MyRow['extcost'], $_SESSION['StandardCostDecimalPlaces']);
 		}
 
 		if ($LineToPrint) {
@@ -167,7 +167,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			$HTML .= '<td>' . htmlspecialchars($MyRow['stockid']) . '</td>';
 			$HTML .= '<td>' . htmlspecialchars($MyRow['description']) . '</td>';
 			$HTML .= '<td class="centre">' . htmlspecialchars($MyRow['mbflag']) . '</td>';
-			$HTML .= '<td class="right">' . locale_number_format($MyRow['computedcost'], 2) . '</td>';
+			$HTML .= '<td class="right">' . locale_number_format($MyRow['computedcost'], $_SESSION['StandardCostDecimalPlaces']) . '</td>';
 			$HTML .= '<td class="right">' . locale_number_format($MyRow['supply'], $MyRow['decimalplaces']) . '</td>';
 			$HTML .= '<td class="right">' . locale_number_format($MyRow['demand'], $MyRow['decimalplaces']) . '</td>';
 			$HTML .= '<td class="right">' . $shortageVal . '</td>';

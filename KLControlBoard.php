@@ -176,23 +176,23 @@ if ($ProcessSection01){
 		OR $KL_ShopSupportTeam){
 		
 		$StartTime = microtime(true);
-		over_or_below_limit("Items changing price or moving category", "OVER", MAX_ITEMS_CHANGING_PRICE_OR_MOVING_DISC, $RootPath);
+		over_or_below_limit("Items changing price or moving category", "OVER", $_SESSION['MaxItemsChangingPriceOrMovingDisc'], $RootPath);
 		TimeNeededForExecution("over_or_below_limit", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		over_or_below_limit("Items changing price", "OVER", MAX_ITEMS_CHANGING_PRICE, $RootPath);
+		over_or_below_limit("Items changing price", "OVER", $_SESSION['MaxItemsChangingPrice'], $RootPath);
 		TimeNeededForExecution("over_or_below_limit", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		over_or_below_limit("Items moving to 20% discount", "OVER", MAX_ITEMS_MOVING_DISC20, $RootPath);
+		over_or_below_limit("Items moving to 20% discount", "OVER", $_SESSION['MaxItemsChangingDisc20'], $RootPath);
 		TimeNeededForExecution("over_or_below_limit", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		over_or_below_limit("Items moving to 50% discount", "OVER", MAX_ITEMS_MOVING_DISC50, $RootPath);
+		over_or_below_limit("Items moving to 50% discount", "OVER", $_SESSION['MaxItemsChangingDisc50'], $RootPath);
 		TimeNeededForExecution("over_or_below_limit", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		over_or_below_limit("Items moving to 80% discount", "OVER", MAX_ITEMS_MOVING_DISC80, $RootPath);
+		over_or_below_limit("Items moving to 80% discount", "OVER", $_SESSION['MaxItemsChangingDisc80'], $RootPath);
 		TimeNeededForExecution("over_or_below_limit", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}

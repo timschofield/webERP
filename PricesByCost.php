@@ -212,7 +212,7 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 					<td>' . $MyRow['branch'] . '</td>
 					<td class="date">' . ConvertSQLDate($MyRow['startdate']) . '</td>
 					<td class="date">' . $EndDateDisplay . '</td>
-					<td class="number">' . locale_number_format($Cost, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($Cost, $_SESSION['StandardCostDecimalPlaces']) . '</td>
 					<td class="number">' . locale_number_format($CurrentGP, 1) . '%</td>
 					<td class="number">' . locale_number_format($ProposedPrice, $MyRow['decimalplaces']) . '</td>
 					<td><input type="text" class="number" name="Price_' . $PriceCounter . '" maxlength="14" size="10" value="' . locale_number_format($MyRow['price'],$MyRow['decimalplaces']) . '" /></td>

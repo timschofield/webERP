@@ -134,7 +134,7 @@ if (isset($_POST['PrintPDF']) && $_POST['Part'] != '') {
 	// Get and display part information
 	$SQL = "SELECT levels.*,
 				   stockmaster.description,
-				   stockmaster.lastcost,
+				   stockmaster.actualcost,
 				   stockmaster.decimalplaces,
 				   stockmaster.mbflag
 				   FROM levels
@@ -201,7 +201,7 @@ if (isset($_POST['PrintPDF']) && $_POST['Part'] != '') {
 				<td><b>Lead Time:</b></td>
 				<td>'.htmlspecialchars($MyRow['leadtime']).'</td>
 				<td><b>Last Cost:</b></td>
-				<td class="number">'.locale_number_format($MyRow['lastcost'],2).'</td>
+				<td class="number">'.locale_number_format($MyRow['actualcost'],$_SESSION['StandardCostDecimalPlaces']).'</td>
 				<td></td>
 				<td></td>
 			</tr>

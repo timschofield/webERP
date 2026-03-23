@@ -131,6 +131,16 @@ if (isset($_POST['submit'])) {
 			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_Small_Price_Corrected_Step_04']."' WHERE confname = 'Small_Price_Corrected_Step_04'";
 		}
 
+		if ($_SESSION['RetailPriceServiceTier01'] != $_POST['X_RetailPriceServiceTier01'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_RetailPriceServiceTier01']."' WHERE confname = 'RetailPriceServiceTier01'";
+		}
+		if ($_SESSION['RetailPriceServiceTier02'] != $_POST['X_RetailPriceServiceTier02'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_RetailPriceServiceTier02']."' WHERE confname = 'RetailPriceServiceTier02'";
+		}
+		if ($_SESSION['FactorStandardCostServiceReplacement'] != $_POST['X_FactorStandardCostServiceReplacement'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_FactorStandardCostServiceReplacement']."' WHERE confname = 'FactorStandardCostServiceReplacement'";
+		}
+
 		if ($_SESSION['ShopMode'] != $_POST['X_ShopMode'] ) {
 			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_ShopMode']."' WHERE confname = 'ShopMode'";
 		}
@@ -143,6 +153,22 @@ if (isset($_POST['submit'])) {
 		}
 		if ($_SESSION['Minimum_QOH_To_Show_Item_In_Marketplaces'] != $_POST['X_Minimum_QOH_To_Show_Item_In_Marketplaces'] ) {
 			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_Minimum_QOH_To_Show_Item_In_Marketplaces']."' WHERE confname = 'Minimum_QOH_To_Show_Item_In_Marketplaces'";
+		}
+
+		if ($_SESSION['MaxItemsChangingPrice'] != $_POST['X_MaxItemsChangingPrice'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_MaxItemsChangingPrice']."' WHERE confname = 'MaxItemsChangingPrice'";
+		}
+		if ($_SESSION['MaxItemsChangingDisc20'] != $_POST['X_MaxItemsChangingDisc20'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_MaxItemsChangingDisc20']."' WHERE confname = 'MaxItemsChangingDisc20'";
+		}
+		if ($_SESSION['MaxItemsChangingDisc50'] != $_POST['X_MaxItemsChangingDisc50'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_MaxItemsChangingDisc50']."' WHERE confname = 'MaxItemsChangingDisc50'";
+		}
+		if ($_SESSION['MaxItemsChangingDisc80'] != $_POST['X_MaxItemsChangingDisc80'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_MaxItemsChangingDisc80']."' WHERE confname = 'MaxItemsChangingDisc80'";
+		}
+		if ($_SESSION['MaxItemsChangingPriceOrMovingDisc'] != $_POST['X_MaxItemsChangingPriceOrMovingDisc'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_MaxItemsChangingPriceOrMovingDisc']."' WHERE confname = 'MaxItemsChangingPriceOrMovingDisc'";
 		}
 
 		if ($_SESSION['DaysToPredictFutureSalesPerBrand'] != $_POST['X_DaysToPredictFutureSalesPerBrand'] ) {
@@ -276,6 +302,13 @@ echo '<fieldset>
 	echo '</fieldset><br />';
 
 	echo '<fieldset>
+		<legend>' . __('Repair Fee Calculator') . '</legend>';
+		echo FieldToSelectOneNumber('X_RetailPriceServiceTier01',  $_SESSION['RetailPriceServiceTier01'], 12, 11, 'Retail Price Tier 01 for repair fees', '', '', '130');
+		echo FieldToSelectOneNumber('X_RetailPriceServiceTier02',  $_SESSION['RetailPriceServiceTier02'], 12, 11, 'Retail Price Tier 02 for repair fees', '', '', '131');
+		echo FieldToSelectOneNumber('X_FactorStandardCostServiceReplacement',  $_SESSION['FactorStandardCostServiceReplacement'], 6, 5, 'Standard Cost Factor in case of Item Replacement', '', '', '132');
+	echo '</fieldset><br />';
+
+	echo '<fieldset>
 		<legend>' . __('Opencart Online Shop Settings') . '</legend>';
 		// Moved from ShopParameters.php It is the only setting we are using to check if the Opencart shop is in test or live mode
 		echo FieldToSelectFromTwoOptions('live', __('Live'), 
@@ -293,6 +326,19 @@ echo '<fieldset>
 			echo FieldToSelectOneNumber('X_Maximum_QOH_To_Show_In_Marketplaces',  $_SESSION['Maximum_QOH_To_Show_In_Marketplaces'], 6, 5, 'QOH Max to show on Marketplaces', 'if we have more than X then, we will show QOH=X in marketplaces to avoid unneeded updates and to create scarcity', '', '300');
 			echo FieldToSelectOneNumber('X_Minimum_QOH_To_Show_Item_In_Marketplaces',  $_SESSION['Minimum_QOH_To_Show_Item_In_Marketplaces'], 6, 5, 'Hide item in marketplaces if QOH below', 'if we have less than X then we consider QOH = 0 for the marketplaces to avoid cancelled orders and bad reviews', '', '301');
 		echo '</fieldset><br />';
+	echo '</fieldset><br />';
+echo '</fieldset><br />';
+
+echo '<fieldset>
+	<legend>' . __('Control Board Settings') . '</legend>';
+
+	echo '<fieldset>
+		<legend>' . __('Changing Items Settings') . '</legend>';
+		echo FieldToSelectOneNumber('X_MaxItemsChangingPrice',  $_SESSION['MaxItemsChangingPrice'], 6, 5, 'Maximum # items changing price at the same time', 'Maximum # items changing price at the same time', '', '150');
+		echo FieldToSelectOneNumber('X_MaxItemsChangingDisc20',  $_SESSION['MaxItemsChangingDisc20'], 6, 5, 'Maximum # items changing to discount 20% at the same time', 'Maximum # items changing to discount 20% at the same time', '', '150');
+		echo FieldToSelectOneNumber('X_MaxItemsChangingDisc50',  $_SESSION['MaxItemsChangingDisc50'], 6, 5, 'Maximum # items changing to discount 50% at the same time', 'Maximum # items changing to discount 50% at the same time', '', '150');
+		echo FieldToSelectOneNumber('X_MaxItemsChangingDisc80',  $_SESSION['MaxItemsChangingDisc80'], 6, 5, 'Maximum # items changing to discount 80% at the same time', 'Maximum # items changing to discount 80% at the same time', '', '150');
+		echo FieldToSelectOneNumber('X_MaxItemsChangingPriceOrMovingDisc',  $_SESSION['MaxItemsChangingPriceOrMovingDisc'], 6, 5, 'Maximum # items changing price or moving to discount category at the same time', 'Maximum # items changing price or moving to discount category at the same time', '', '150');
 	echo '</fieldset><br />';
 echo '</fieldset><br />';
 

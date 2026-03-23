@@ -1,0 +1,12 @@
+INSERT INTO forecastmethods (methodid, methodname, methoddesc, requireshistory, active) VALUES (1, 'Percent Over Last Year', 'Increases last year forecast by a percentage', 12, 1);
+INSERT INTO forecastmethods (methodid, methodname, methoddesc, requireshistory, active) VALUES (2, 'Calculated Percent Over LY', 'Calculates percentage increase from historical data', 24, 1);
+INSERT INTO forecastmethods (methodid, methodname, methoddesc, requireshistory, active) VALUES (3, 'Last Year to This Year', 'Uses last year actual as this year forecast', 12, 1);
+INSERT INTO forecastmethods (methodid, methodname, methoddesc, requireshistory, active) VALUES (4, 'Moving Average', 'Simple moving average of recent periods', 4, 1);
+INSERT INTO forecastmethods (methodid, methodname, methoddesc, requireshistory, active) VALUES (5, 'Linear Approximation', 'Linear trend projection', 6, 1);
+INSERT INTO forecastmethods (methodid, methodname, methoddesc, requireshistory, active) VALUES (6, 'Least Squares Regression', 'Statistical linear regression', 12, 1);
+INSERT INTO forecastmethods (methodid, methodname, methoddesc, requireshistory, active) VALUES (7, 'Second Degree Approximation', 'Polynomial regression (quadratic)', 12, 1);
+INSERT INTO forecastmethods (methodid, methodname, methoddesc, requireshistory, active) VALUES (8, 'Flexible Method', 'Custom formula-based forecasting', 12, 1);
+INSERT INTO forecastmethods (methodid, methodname, methoddesc, requireshistory, active) VALUES (9, 'Weighted Moving Average', 'Moving average with weights', 4, 1);
+INSERT INTO forecastmethods (methodid, methodname, methoddesc, requireshistory, active) VALUES (10, 'Linear Smoothing', 'Simple exponential smoothing', 12, 1);
+INSERT INTO forecastmethods (methodid, methodname, methoddesc, requireshistory, active) VALUES (11, 'Exponential Smoothing', 'Exponential smoothing with trend', 12, 1);
+INSERT INTO forecastmethods (methodid, methodname, methoddesc, requireshistory, active) VALUES (12, 'Exp Smooth Trend/Season', 'Triple exponential smoothing (Holt-Winters)', 24, 1);

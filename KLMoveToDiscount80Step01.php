@@ -61,11 +61,11 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'DiscountCategory';
 		$i++;
 		prnMsg(__('The Discount Type must be 80 (so far, only 80% discount available for Discount Category)'),'error');
-	} elseif (GetTotalItemsMovingToDiscount('80') >= MAX_ITEMS_MOVING_DISC80) {
+	} elseif (GetTotalItemsMovingToDiscount('80') >= $_SESSION['MaxItemsChangingDisc80']) {
 		$InputError = 1;
 		$Errors[$i] = 'MaxItemsMovingToDiscount';
 		$i++;
-		prnMsg('Too many items moving to Discount 80% at the same time. Maximum = '. MAX_ITEMS_MOVING_DISC80,'error');
+		prnMsg('Too many items moving to Discount 80% at the same time. Maximum = '. $_SESSION['MaxItemsChangingDisc80'],'error');
 	} elseif (ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_DISCOUNT_80)) {
 		$InputError = 1;
 		$Errors[$i] = 'AlreadyDiscount80';

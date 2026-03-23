@@ -95,7 +95,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$CatTot_Val=0;
 	while ($LowGPItems = DB_fetch_array($LowGPSalesResult)){
 
-		$DisplayUnitCost = locale_number_format($LowGPItems['unitcost'],$_SESSION['CompanyRecord']['decimalplaces']);
+		$DisplayUnitCost = locale_number_format($LowGPItems['unitcost'],$_SESSION['StandardCostDecimalPlaces']);
 		$DisplaySellingPrice = locale_number_format($LowGPItems['sellingprice'],$_SESSION['CompanyRecord']['decimalplaces']);
 		$DisplayGP = locale_number_format($LowGPItems['gp'],$_SESSION['CompanyRecord']['decimalplaces']);
 		$DisplayGPPercent = locale_number_format(($LowGPItems['gp']*100)/$LowGPItems['sellingprice'],1);

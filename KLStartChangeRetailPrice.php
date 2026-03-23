@@ -19,9 +19,9 @@ if (!isset($_GET['Item']) or !isset($_GET['NewPrice'])){
 	prnMsg( __('This page must be given the item code and its new Retail price.'), 'error');
 	include(__DIR__ . '/includes/footer.php');
 	exit();
-} elseif ((ItemCodeQOH($_GET['Item'],'CODE_FULL', "ALL") != 0) AND (GetTotalItemsChangingPrice() >= MAX_ITEMS_CHANGING_PRICE) AND (!$KL_SystemAdmin)) {
+} elseif ((ItemCodeQOH($_GET['Item'],'CODE_FULL', "ALL") != 0) AND (GetTotalItemsChangingPrice() >= $_SESSION['MaxItemsChangingPrice']) AND (!$KL_SystemAdmin)) {
 	echo '<br />';
-	prnMsg(__('Too many items changing price at the same time. Maximum = '). MAX_ITEMS_CHANGING_PRICE,'error');
+	prnMsg(__('Too many items changing price at the same time. Maximum = '). $_SESSION['MaxItemsChangingPrice'],'error');
 	include(__DIR__ . '/includes/footer.php');
 	exit();
 }

@@ -216,7 +216,7 @@ while ($RequirementsRow = DB_fetch_array($RequirementsResult)){
 				<td colspan="4"></td>
 				<td>' . ConvertSQLDate($IssuesRow['trandate']) . '</td>
 				<td class="number">' . locale_number_format(-$IssuesRow['qty'],$RequirementsRow['decimalplaces']) . '</td>
-				<td class="number">' . locale_number_format(-($IssuesRow['qty']*$IssuesRow['standardcost']),$IssuesRow['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format(-($IssuesRow['qty']*$IssuesRow['standardcost']),$_SESSION['StandardCostDecimalPlaces']) . '</td>
 			</tr>';
 			$IssueQty -= $IssuesRow['qty'];// because qty for the stock movement will be negative
 			$IssueCost -= ($IssuesRow['qty']*$IssuesRow['standardcost']);
@@ -257,9 +257,9 @@ while ($RequirementsRow = DB_fetch_array($RequirementsResult)){
 			<td class="number">' . locale_number_format($RequirementsRow['expectedcost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			<td></td>
 			<td class="number">' . locale_number_format($IssueQty,$RequirementsRow['decimalplaces']) . '</td>
-			<td class="number">' . locale_number_format($IssueCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($IssueCost,$_SESSION['StandardCostDecimalPlaces']) . '</td>
 			<td class="number">' . locale_number_format($UsageVar,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-			<td class="number">' . locale_number_format($CostVar,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($CostVar,$_SESSION['StandardCostDecimalPlaces']) . '</td>
 		</tr>';
 	$TotalReqdCost += $RequirementsRow['expectedcost'];
 	$TotalIssuedCost += $IssueCost;
@@ -301,8 +301,8 @@ if (DB_num_rows($WOIssuesResult)>0){
 				<td class="number">0</td>
 				<td>' . ConvertSQLDate($WOIssuesRow['trandate']) . '</td>
 				<td class="number">' . locale_number_format(-$WOIssuesRow['qty'],$WOIssuesRow['decimalplaces'])   . '</td>
-				<td class="number">' . locale_number_format(-$WOIssuesRow['qty']*$WOIssuesRow['standardcost'],$_SESSION['CompanyRecord']['decimalplaces'])   . '</td>
-				<td class="number">' . locale_number_format($WOIssuesRow['qty']*$WOIssuesRow['standardcost'],$_SESSION['CompanyRecord']['decimalplaces'])   . '</td>
+				<td class="number">' . locale_number_format(-$WOIssuesRow['qty']*$WOIssuesRow['standardcost'],$_SESSION['StandardCostDecimalPlaces'])   . '</td>
+				<td class="number">' . locale_number_format($WOIssuesRow['qty']*$WOIssuesRow['standardcost'],$_SESSION['StandardCostDecimalPlaces'])   . '</td>
 				<td class="number">0</td>
 			</tr>';
 
@@ -319,11 +319,11 @@ echo '<tr>
 echo '<tr>
 		<td colspan="2" class="number">' . __('Totals') . '</td>
 		<td></td>
-		<td class="number">' . locale_number_format($TotalReqdCost,$_SESSION['CompanyRecord']['decimalplaces'])  . '</td>
+		<td class="number">' . locale_number_format($TotalReqdCost,$_SESSION['StandardCostDecimalPlaces'])  . '</td>
 		<td></td><td></td>
-		<td class="number">' . locale_number_format($TotalIssuedCost,$_SESSION['CompanyRecord']['decimalplaces'])  . '</td>
+		<td class="number">' . locale_number_format($TotalIssuedCost,$_SESSION['StandardCostDecimalPlaces'])  . '</td>
 		<td class="number">' . locale_number_format($TotalUsageVar,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-		<td class="number">' . locale_number_format($TotalCostVar,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		<td class="number">' . locale_number_format($TotalCostVar,$_SESSION['StandardCostDecimalPlaces']) . '</td>
 	</tr>';
 
 echo '<tr>
