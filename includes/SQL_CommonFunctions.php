@@ -507,7 +507,7 @@ function AdjustBankAccountsDueToCurrencyExchangeRate($SelectedCurrency, $OldRate
 
 		/* If some adjustment has to be done, do it! */
 		$DifferenceToAdjust = $NewBalanceInFunctionalCurrency - $OldBalanceInFunctionalCurrency;
-		if ($DifferenceToAdjust >= CurrencyTolerance($_SESSION['CompanyRecord']['currencydefault'])) {
+		if (abs($DifferenceToAdjust) >= CurrencyTolerance($_SESSION['CompanyRecord']['currencydefault'])) {
 
 			$SQL = "INSERT INTO gltrans (
 							type,
@@ -547,5 +547,63 @@ function AdjustBankAccountsDueToCurrencyExchangeRate($SelectedCurrency, $OldRate
 			DB_query($SQL, $ErrMsg, '', true);
 			prnMsg(__('Bank Account') . ' ' . $MyRowBankAccount['bankaccountname'] . ' ' . __('Currency Rate difference of') . ' ' . locale_number_format($DifferenceToAdjust, $_SESSION['CompanyRecord']['decimalplaces']) . ' ' . __('has been posted'),'success');
 		}
+	}
+}
+
+function AdjustGoodsReceivedNotInvoicedDueToCurrencyExchangeRate(){
+
+	/*Get the current period */
+	$PostingDate = date($_SESSION['DefaultDateFormat']);
+	$PeriodNo = GetPeriod($PostingDate);
+
+	$ExDiffTransNo = GetNextTransNo(36);
+
+	$ValueAtBalance = -GetGLAccountBalance('211021400AD', $PeriodNo);
+	$GoodsValue = RealGoodsReceivedNotYetInvoicedValueAtStdCost();
+
+	$DifferenceToAdjust = $ValueAtBalance - $GoodsValue;
+prnMsg($ValueAtBalance);
+prnMsg($GoodsValue);
+prnMsg($DifferenceToAdjust);
+
+	if (abs($DifferenceToAdjust) >= CurrencyTolerance($_SESSION['CompanyRecord']['currencydefault'])) {
+
+		$SQL = "INSERT INTO gltrans (
+						type,
+						typeno,
+						trandate,
+						periodno,
+						account,
+						narrative,
+						amount
+					) VALUES (
+						36, '" .
+						$ExDiffTransNo . "', '" .
+						FormatDateForSQL($PostingDate) . "', '" .
+						$PeriodNo . "', '" .
+						$_SESSION['CompanyRecord']['unrealizedcurrencydiffact'] . "', '" .
+						mb_substr('Goods Received Not Invoiced currency rate adjustment', 0, 200) . "', '" .
+						(-$DifferenceToAdjust) . "')";
+		$ErrMsg = __('Cannot insert a GL entry for the currency exchange difference because');
+		DB_query($SQL, $ErrMsg, '', true);
+		
+		$SQL = "INSERT INTO gltrans (
+						type,
+						typeno,
+						trandate,
+						periodno,
+						account,
+						narrative,
+						amount
+					) VALUES (36, '" .
+						$ExDiffTransNo . "', '" .
+						FormatDateForSQL($PostingDate) . "', '" .
+						$PeriodNo . "', '" .
+						$_SESSION['CompanyRecord']['grnact'] . "', '" .
+						mb_substr('Goods Received Not Invoiced currency rate adjustment', 0, 200) . "', '" .
+						($DifferenceToAdjust) . "')";
+
+		DB_query($SQL, $ErrMsg, '', true);
+		prnMsg(__('Goods Received Not Invoiced') . ' ' . __('Currency Rate difference of') . ' ' . locale_number_format($DifferenceToAdjust, $_SESSION['CompanyRecord']['decimalplaces']) . ' ' . __('has been posted'),'success');
 	}
 }

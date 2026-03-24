@@ -16,6 +16,9 @@ include_once(__DIR__ . '/includes/CountriesArray.php');// To get the country nam
 include_once(__DIR__ . '/includes/CurrenciesArray.php');// To get the currency name from the currency code.
 include_once(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
+include(__DIR__ . '/includes/KLGLFunctions.php');
+include(__DIR__ . '/includes/GLFunctions.php');
+
 if (isset($_GET['SelectedCurrency'])) {
 	$SelectedCurrency = $_GET['SelectedCurrency'];
 } elseif (isset($_POST['SelectedCurrency'])) {
@@ -150,6 +153,7 @@ if (isset($_POST['submit'])) {
 
 	if (isset($SelectedCurrency) AND $InputError != 1) {
 		AdjustBankAccountsDueToCurrencyExchangeRate($SelectedCurrency, $OldRate, $NewRate);
+		AdjustGoodsReceivedNotInvoicedDueToCurrencyExchangeRate();
 	}
 	
 	DB_Txn_Commit();

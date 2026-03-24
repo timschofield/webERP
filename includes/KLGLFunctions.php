@@ -63,3 +63,14 @@ function GetCashSalesValueStillFloating($Company, $DateFrom, $DateTo){
 	$MyRow = DB_fetch_array($Result);
 	return ($MyRow['total'] ?? 0);
 }
+
+function RealGoodsReceivedNotYetInvoicedValueAtStdCost(){
+
+	$SQL = "SELECT SUM((grns.qtyrecd - grns.quantityinv) * (stockmaster.actualcost))
+			FROM grns, stockmaster
+			WHERE stockmaster.stockid = grns.itemcode
+				AND (grns.qtyrecd - grns.quantityinv) > 0";
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	return $MyRow[0];
+}
