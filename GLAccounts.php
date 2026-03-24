@@ -57,6 +57,8 @@ if (isset($_POST['submit'])) {
 		$Result = DB_query($SQL, $ErrMsg);
 
 		prnMsg(__('The general ledger account has been updated'),'success');
+		// KL RICARD update GL accounts for PTADU, PTBB, POIK, POPI, etc...
+		UpdateMultiCompanyAccounts();
 	} elseif ($InputError != 1) {
 
 		/*SelectedAccount is null cos no item selected on first time round so must be adding a	record must be submitting new entries */
@@ -406,38 +408,38 @@ function UpdateMultiCompanyAccounts(){
 		  KEY `AccountName` (`accountname`),
 		  KEY `Group_` (`group_`)
 		) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
-	$Result = DB_query($SQL);
+	DB_query($SQL);
 	prnMsg('      Recreated chartmasterADU table', 'info');
 
 	$SQL="TRUNCATE `chartmasterADU`";
-	$Result = DB_query($SQL);
+	DB_query($SQL);
 	prnMsg('      Truncated chartmasterADU table', 'info');
 
 	$SQL="INSERT INTO `chartmasterADU` (`accountcode`, `accountname`, `group_`) 
 			SELECT `accountcode`, `accountname`, `group_`
 			FROM chartmaster
-			WHERE (accountcode LIKE '%AD' OR accountcode = '350510100')";
-	$Result = DB_query($SQL);
+			WHERE (accountcode LIKE '%AD' OR accountcode = '999999999')";
+	DB_query($SQL);
 	prnMsg('      Inserted accounts into chartmasterADU table', 'info');
 
 	$SQL="UPDATE chartmasterADU SET `group_` =  'Penjualan' WHERE `accountcode` = '410010000AD'";
-	$Result = DB_query($SQL);
+	DB_query($SQL);
 	prnMsg('      Adjusting groups into chartmasterADU table', 'info');
 
 	$SQL="UPDATE chartmasterADU SET `group_` =  'Biaya Karyawan' WHERE `accountcode` = '612011210AD'";
-	$Result = DB_query($SQL);
+	DB_query($SQL);
 	prnMsg('      Adjusting groups into chartmasterADU table', 'info');
 
 	$SQL="UPDATE chartmasterADU SET `group_` =  'Biaya Karyawan' WHERE `accountcode` = '612011220AD'";
-	$Result = DB_query($SQL);
+	DB_query($SQL);
 	prnMsg('      Adjusting groups into chartmasterADU table', 'info');
 
 //	$SQL="UPDATE chartmasterADU SET `group_` =  'Biaya General' WHERE `accountcode` = '510010070AD'";
-//	$Result = DB_query($SQL);
+//	DB_query($SQL);
 //	prnMsg('      Adjusting groups into chartmasterADU table', 'info');
 
 	$SQL="UPDATE chartmasterADU SET `group_` =  'Pajak Penghasilan' WHERE `accountcode` = '611012025AD'";
-	$Result = DB_query($SQL);
+	DB_query($SQL);
 	prnMsg('      Adjusting groups into chartmasterADU table', 'info');
 
 	prnMsg('Updating PT. SMH ChartmasterSM table', 'info');
@@ -450,38 +452,38 @@ function UpdateMultiCompanyAccounts(){
 			KEY `AccountName` (`accountname`),
 			KEY `Group_` (`group_`)
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
-	$Result = DB_query($SQL);
+	DB_query($SQL);
 	prnMsg('      Recreated ChartmasterSM table', 'info');
 
 	$SQL="TRUNCATE `chartmasterSMH`";
-	$Result = DB_query($SQL);
+	DB_query($SQL);
 	prnMsg('      Truncated ChartmasterSM table', 'info');
 
 	$SQL="INSERT INTO `chartmasterSMH` (`accountcode`, `accountname`, `group_`) 
 			SELECT `accountcode`, `accountname`, `group_`
 			FROM chartmaster
-			WHERE (accountcode LIKE '%SM' OR accountcode = '350510100')";
-	$Result = DB_query($SQL);
+			WHERE (accountcode LIKE '%SM' OR accountcode = '999999999')";
+	DB_query($SQL);
 	prnMsg('      Inserted accounts into ChartmasterSM table', 'info');
 
 	$SQL="UPDATE chartmasterSMH SET `group_` =  'HPP (COGS)' WHERE `accountcode` = '510010005SM'";
-	$Result = DB_query($SQL);
+	DB_query($SQL);
 	prnMsg('      Adjusting groups into ChartmasterSM table', 'info');
 
 //	$SQL="UPDATE chartmasterSMH SET `group_` =  'Biaya General' WHERE `accountcode` = '510010070SM'";
-//	$Result = DB_query($SQL);
+//	DB_query($SQL);
 //	prnMsg('      Adjusting groups into ChartmasterSM table', 'info');
 
 	$SQL="UPDATE chartmasterSMH SET `group_` =  'Pajak Penghasilan' WHERE `accountcode` = '611012025SM'";
-	$Result = DB_query($SQL);
+	DB_query($SQL);
 	prnMsg('      Adjusting groups into ChartmasterSM table', 'info');
 
 	$SQL="UPDATE chartmasterSMH SET `group_` =  'Biaya Karyawan' WHERE `accountcode` = '612011210SM'";
-	$Result = DB_query($SQL);
+	DB_query($SQL);
 	prnMsg('      Adjusting groups into ChartmasterSM table', 'info');
 
 	$SQL="UPDATE chartmasterSMH SET `group_` =  'Biaya Karyawan' WHERE `accountcode` = '612011220SM'";
-	$Result = DB_query($SQL);
+	DB_query($SQL);
 	prnMsg('      Adjusting groups into ChartmasterSM table', 'info');
 
 
@@ -495,34 +497,34 @@ function UpdateMultiCompanyAccounts(){
 			KEY `AccountName` (`accountname`),
 			KEY `Group_` (`group_`)
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
-	$Result = DB_query($SQL);
+	DB_query($SQL);
 	prnMsg('      Recreated ChartmasterBB table', 'info');
 
 	$SQL="TRUNCATE `chartmasterBB`";
-	$Result = DB_query($SQL);
+	DB_query($SQL);
 	prnMsg('      Truncated ChartmasterBB table', 'info');
 
 	$SQL="INSERT INTO `chartmasterBB` (`accountcode`, `accountname`, `group_`) 
 			SELECT `accountcode`, `accountname`, `group_`
 			FROM chartmaster
-			WHERE (accountcode LIKE '%BB' OR accountcode = '350510100')";
-	$Result = DB_query($SQL);
+			WHERE (accountcode LIKE '%BB' OR accountcode = '999999999')";
+	DB_query($SQL);
 	prnMsg('      Inserted accounts into ChartmasterBB table', 'info');
 
 	$SQL="UPDATE chartmasterBB SET `group_` =  'HPP (COGS)' WHERE `accountcode` = '510010005BB'";
-	$Result = DB_query($SQL);
+	DB_query($SQL);
 	prnMsg('      Adjusting groups into ChartmasterBB table', 'info');
 
 	$SQL="UPDATE chartmasterBB SET `group_` =  'Penjualan' WHERE `accountcode` = '410010010BB'";
-	$Result = DB_query($SQL);
+	DB_query($SQL);
 	prnMsg('      Adjusting groups into ChartmasterBB table', 'info');
 
 //	$SQL="UPDATE chartmasterBB SET `group_` =  'Biaya General' WHERE `accountcode` = '510010070BB'";
-//	$Result = DB_query($SQL);
+//	DB_query($SQL);
 //	prnMsg('      Adjusting groups into ChartmasterBB table', 'info');
 
 	$SQL="UPDATE chartmasterBB SET `group_` =  'Pajak Penghasilan' WHERE `accountcode` = '611012025BB'";
-	$Result = DB_query($SQL);
+	DB_query($SQL);
 	prnMsg('      Adjusting groups into ChartmasterBB table', 'info');
 
 	prnMsg('Updating PO IK chartmasterIK table', 'info');
@@ -535,22 +537,22 @@ function UpdateMultiCompanyAccounts(){
 			KEY `AccountName` (`accountname`),
 			KEY `Group_` (`group_`)
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
-	$Result = DB_query($SQL);
+	DB_query($SQL);
 	prnMsg('      Recreated ChartmasterIK table', 'info');
 
 	$SQL="TRUNCATE `chartmasterIK`";
-	$Result = DB_query($SQL);
+	DB_query($SQL);
 	prnMsg('      Truncated ChartmasterIK table', 'info');
 
 	$SQL="INSERT INTO `chartmasterIK` (`accountcode`, `accountname`, `group_`) 
 			SELECT `accountcode`, `accountname`, `group_`
 			FROM chartmaster
-			WHERE (accountcode LIKE '%IK' OR accountcode = '350510100')";
-	$Result = DB_query($SQL);
+			WHERE (accountcode LIKE '%IK' OR accountcode = '999999999')";
+	DB_query($SQL);
 	prnMsg('      Inserted accounts into ChartmasterIK table', 'info');
 
 	$SQL="UPDATE chartmasterIK SET `group_` =  'HPP (COGS)' WHERE `accountcode` = '510010005IK'";
-	$Result = DB_query($SQL);
+	DB_query($SQL);
 	prnMsg('      Adjusting groups into ChartmasterIK table', 'info');
 
 	prnMsg('Updating PO PI chartmasterPI table', 'info');
@@ -563,22 +565,22 @@ function UpdateMultiCompanyAccounts(){
 			KEY `AccountName` (`accountname`),
 			KEY `Group_` (`group_`)
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
-	$Result = DB_query($SQL);
+	DB_query($SQL);
 	prnMsg('      Recreated ChartmasterPI table', 'info');
 
 	$SQL="TRUNCATE `chartmasterPI`";
-	$Result = DB_query($SQL);
+	DB_query($SQL);
 	prnMsg('      Truncated ChartmasterPI table', 'info');
 
 	$SQL="INSERT INTO `chartmasterPI` (`accountcode`, `accountname`, `group_`) 
 			SELECT `accountcode`, `accountname`, `group_`
 			FROM chartmaster
-			WHERE (accountcode LIKE '%PI' OR accountcode = '350510100')";
-	$Result = DB_query($SQL);
+			WHERE (accountcode LIKE '%PI' OR accountcode = '999999999')";
+	DB_query($SQL);
 	prnMsg('      Inserted accounts into ChartmasterPI table', 'info');
 
 	$SQL="UPDATE chartmasterPI SET `group_` =  'HPP (COGS)' WHERE `accountcode` = '510010005PI'";
-	$Result = DB_query($SQL);
+	DB_query($SQL);
 	prnMsg('      Adjusting groups into ChartmasterPI table', 'info');
 }
 

@@ -1798,6 +1798,7 @@ function OptimumOrderQuantity($QtyNeeded, $Eoq, $PanSize){
 function ChangeGLAccountCode($NewGL, $OldGL) {
 	/*First check the code exists */
 	$Result = DB_query("SELECT accountcode FROM chartmaster WHERE accountcode='" . $OldGL . "'");
+	$InputError = 0;
 	if (DB_num_rows($Result) == 0) {
 		prnMsg(__('The GL account code') . ': ' . $OldGL . ' ' . __('does not currently exist as a GL account code in the system'), 'error');
 		$InputError = 1;
@@ -1877,9 +1878,6 @@ function ChangeGLAccountCode($NewGL, $OldGL) {
 		ChangeFieldInTable("gltrans", "account", $OldGL, $NewGL);
 		
 //		ChangeFieldInTable("gltotals", "account", $OldGL, $NewGL);
-
-		ChangeFieldInTable("lastcostrollup", "stockact", $OldGL, $NewGL);
-		ChangeFieldInTable("lastcostrollup", "adjglact", $OldGL, $NewGL);
 
 		ChangeFieldInTable("locations", "glaccountcode", $OldGL, $NewGL);// Location's ledger account.
 		ChangeFieldInTable("locations", "klposcashaccount", $OldGL, $NewGL);// KL POS cash account for that toko

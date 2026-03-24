@@ -1006,22 +1006,11 @@ function GoodsJustTransferred($Locationfrom, $Locationto, $numdays, $QOHmax, $Ro
 function GoodsReceivedNotInvoicedControl($AcceptedDifference, $Period){
 
 	$ValueAtBalance = -GetGLAccountBalance('211021400AD', $Period);
-
-	$SQL = "SELECT SUM((grns.qtyrecd - grns.quantityinv) * (stockmaster.actualcost))
-			FROM grns, stockmaster
-			WHERE stockmaster.stockid = grns.itemcode
-				AND (grns.qtyrecd - grns.quantityinv) > 0";
-// EXPLAIN SQL 2014-05-31
-// NOT OK. All 10.000 rows each time
-// prnMsg($SQL);	
-	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-
-	$GoodsValue = $MyRow[0];
+	$GoodsValue = RealGoodsReceivedNotYetInvoicedValueAtStdCost();	
 
 	if (abs($ValueAtBalance - $GoodsValue) > $AcceptedDifference){
-		$WarningTitleText = "Goods Received Balance value = " . locale_number_format($ValueAtBalance,0) . 
-				" <-> Real Goods Received Value at Std Cost = " . locale_number_format($GoodsValue,0) .
+		$WarningTitleText = "Goods Received Not Yet Invoiced Balance value = " . locale_number_format($ValueAtBalance,0) . 
+				" <-> Real Goods Received Not Yet Invoiced Value at Std Cost = " . locale_number_format($GoodsValue,0) .
 				" Difference = ". locale_number_format($ValueAtBalance - $GoodsValue,0);;
         ShowWarningTitle($WarningTitleText);
 	}

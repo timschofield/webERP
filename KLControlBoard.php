@@ -15,6 +15,7 @@ include(__DIR__ . '/includes/KLPrices.php');
 include(__DIR__ . '/includes/KLEmails.php');
 include(__DIR__ . '/includes/KLReorderLevel.php');
 include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLGLFunctions.php');
 
 include(__DIR__ . '/includes/OCOpenCartGeneralFunctions.php');
 include(__DIR__ . '/includes/OCOpenCartConnectDB.php');
