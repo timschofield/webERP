@@ -450,16 +450,16 @@ function PettyCashTabCurrentBalance($Tab) {
 }
 
 function CurrencyTolerance($Currency = '') {
-	if (($Currency == $_SESSION['CompanyRecord']['currencydefault']) 
-		or ($Currency != '')) {
+	if (($Currency == $_SESSION['CompanyRecord']['currencydefault'])
+		or ($Currency == '')) {
 		// it is the home currency
 		return pow(10, -$_SESSION['CompanyRecord']['decimalplaces']);
 	} else {
 		// it is a foreign currency so get its decimal places
-		$Result = DB_query("SELECT decimalplaces FROM currencies WHERE currency = '" . $Currency . "'");
-		$MyRow = DB_fetch_row($Result);
-		if ($MyRow !== null and isset($MyRow[0])) {
-			return pow(10, -$MyRow[0]);
+		$Result = DB_query("SELECT decimalplaces FROM currencies WHERE currabrev = '" . $Currency . "'");
+		$MyRow = DB_fetch_array($Result);
+		if (isset($MyRow['decimalplaces'])) {
+			return pow(10, -$MyRow['decimalplaces']);
 		} else {
 			// Currency not found, fallback to default company decimal places
 			return pow(10, -$_SESSION['CompanyRecord']['decimalplaces']);
@@ -562,9 +562,6 @@ function AdjustGoodsReceivedNotInvoicedDueToCurrencyExchangeRate(){
 	$GoodsValue = RealGoodsReceivedNotYetInvoicedValueAtStdCost();
 
 	$DifferenceToAdjust = $ValueAtBalance - $GoodsValue;
-prnMsg($ValueAtBalance);
-prnMsg($GoodsValue);
-prnMsg($DifferenceToAdjust);
 
 	if (abs($DifferenceToAdjust) >= CurrencyTolerance($_SESSION['CompanyRecord']['currencydefault'])) {
 
@@ -605,5 +602,101 @@ prnMsg($DifferenceToAdjust);
 
 		DB_query($SQL, $ErrMsg, '', true);
 		prnMsg(__('Goods Received Not Invoiced') . ' ' . __('Currency Rate difference of') . ' ' . locale_number_format($DifferenceToAdjust, $_SESSION['CompanyRecord']['decimalplaces']) . ' ' . __('has been posted'),'success');
+	}
+}
+
+function AdjustCustomersDebtDueToCurrencyExchangeRate(){
+
+	/*Get the current period */
+	$PostingDate = date($_SESSION['DefaultDateFormat']);
+	$PeriodNo = GetPeriod($PostingDate);
+
+	$ExDiffTransNo = GetNextTransNo(36);
+
+	$ValueAtBalance = GetGLAccountBalance('111311100AD', $PeriodNo);
+
+	/* Now get the Customer debt by currency, converted to functional currency IDR */
+    $SQL = "SELECT
+				SUM(CASE WHEN debtorsmaster.currcode = 'USD' THEN debtortrans.balance / currencies.rate ELSE 0 END) AS DebtValueUSDinIDR,
+				SUM(CASE WHEN debtorsmaster.currcode = 'AUD' THEN debtortrans.balance / currencies.rate ELSE 0 END) AS DebtValueAUDinIDR,
+				SUM(CASE WHEN debtorsmaster.currcode = 'EUR' THEN debtortrans.balance / currencies.rate ELSE 0 END) AS DebtValueEURinIDR,
+				SUM(CASE WHEN debtorsmaster.currcode = 'IDR' THEN debtortrans.balance ELSE 0 END) AS DebtValueIDR,
+				SUM(CASE WHEN debtorsmaster.currcode = 'USD' THEN debtortrans.balance ELSE 0 END) AS DebtValueUSD,
+				SUM(CASE WHEN debtorsmaster.currcode = 'AUD' THEN debtortrans.balance ELSE 0 END) AS DebtValueAUD,
+				SUM(CASE WHEN debtorsmaster.currcode = 'EUR' THEN debtortrans.balance ELSE 0 END) AS DebtValueEUR
+            FROM debtorsmaster
+            INNER JOIN debtortrans ON debtorsmaster.debtorno = debtortrans.debtorno
+            INNER JOIN currencies ON debtorsmaster.currcode = currencies.currabrev
+            WHERE debtorsmaster.currcode IN ('IDR', 'USD', 'AUD', 'EUR')";
+
+    $Result = DB_query($SQL);
+    $MyRow = DB_fetch_array($Result);
+
+	if (abs($MyRow['DebtValueIDR']) >= CurrencyTolerance('IDR')){
+		$DebtIDR = $MyRow['DebtValueIDR'];
+	}else{
+		$DebtIDR = 0;
+	}
+
+	if (abs($MyRow['DebtValueUSD']) >= CurrencyTolerance('USD')){
+		$DebtUSD = $MyRow['DebtValueUSDinIDR'];
+	}else{
+		$DebtUSD = 0;
+	}
+
+	if (abs($MyRow['DebtValueAUD']) >= CurrencyTolerance('AUD')){
+		$DebtAUD = $MyRow['DebtValueAUDinIDR'];
+	}else{
+		$DebtAUD = 0;
+	}
+
+	if (abs($MyRow['DebtValueEUR']) >= CurrencyTolerance('EUR')){
+		$DebtEUR = $MyRow['DebtValueEURinIDR'];
+	}else{
+		$DebtEUR = 0;
+	}
+
+	$DebtValue = $DebtIDR + $DebtUSD + $DebtAUD + $DebtEUR;
+	$DifferenceToAdjust = $ValueAtBalance - $DebtValue;
+
+	if (abs($DifferenceToAdjust) >= CurrencyTolerance($_SESSION['CompanyRecord']['currencydefault'])) {
+
+		$SQL = "INSERT INTO gltrans (
+						type,
+						typeno,
+						trandate,
+						periodno,
+						account,
+						narrative,
+						amount
+					) VALUES (
+						36, '" .
+						$ExDiffTransNo . "', '" .
+						FormatDateForSQL($PostingDate) . "', '" .
+						$PeriodNo . "', '" .
+						$_SESSION['CompanyRecord']['unrealizedcurrencydiffact'] . "', '" .
+						mb_substr('Customer Debt currency rate adjustment', 0, 200) . "', '" .
+						($DifferenceToAdjust) . "')";
+		$ErrMsg = __('Cannot insert a GL entry for the currency exchange difference because');
+		DB_query($SQL, $ErrMsg, '', true);
+		
+		$SQL = "INSERT INTO gltrans (
+						type,
+						typeno,
+						trandate,
+						periodno,
+						account,
+						narrative,
+						amount
+					) VALUES (36, '" .
+						$ExDiffTransNo . "', '" .
+						FormatDateForSQL($PostingDate) . "', '" .
+						$PeriodNo . "', '" .
+						$_SESSION['CompanyRecord']['debtorsact'] . "', '" .
+						mb_substr('Customer Debt currency rate adjustment', 0, 200) . "', '" .
+						(-$DifferenceToAdjust) . "')";
+
+		DB_query($SQL, $ErrMsg, '', true);
+		prnMsg(__('Customer Debt') . ' ' . __('Currency Rate difference of') . ' ' . locale_number_format($DifferenceToAdjust, $_SESSION['CompanyRecord']['decimalplaces']) . ' ' . __('has been posted'),'success');
 	}
 }
