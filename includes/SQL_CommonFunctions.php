@@ -177,13 +177,13 @@ function ItemCostUpdateGL($StockID, $NewCost, $OldCost, $QOH) {
 						CURRENT_DATE,
 						'" . $PeriodNo . "',
 						'" . $StockGLCode['adjglact'] . "',
-						'" . mb_substr($StockID . ' ' . __('cost was') . ' ' . $OldCost . ' ' . __('changed to') . ' '
-							. $NewCost . ' x ' . __('Quantity on hand of') . ' ' . $QOH, 0, 200) . "',
+						'" . mb_substr($StockID . ' ' . __('cost was') . ' ' . locale_number_format($OldCost, $_SESSION['StandardCostDecimalPlaces']) . ' ' . __('changed to') . ' '
+							. locale_number_format($NewCost, $_SESSION['StandardCostDecimalPlaces']) . ' x ' . __('QOH of') . ' ' . $QOH, 0, 200) . "',
 						'" . -$ValueOfChange . "')";
 
 		$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': '
 			. __('The GL credit for the stock cost adjustment posting could not be inserted because');
-		$Result = DB_query($SQL, $ErrMsg, '', true);
+		DB_query($SQL, $ErrMsg, '', true);
 
 		$SQL = "INSERT INTO gltrans (type,
 						typeno,
@@ -197,13 +197,13 @@ function ItemCostUpdateGL($StockID, $NewCost, $OldCost, $QOH) {
 						CURRENT_DATE,
 						'" . $PeriodNo . "',
 						'" . $StockGLCode['stockact'] . "',
-						'" . mb_substr($StockID . ' ' . __('cost was') . ' ' . $OldCost . ' ' . __('changed to') . ' '
-							. $NewCost . ' x ' . __('Quantity on hand of') . ' ' . $QOH, 0, 200) . "',
+						'" . mb_substr($StockID . ' ' . __('cost was') . ' ' . locale_number_format($OldCost, $_SESSION['StandardCostDecimalPlaces']) . ' ' . __('changed to') . ' '
+							. locale_number_format($NewCost, $_SESSION['StandardCostDecimalPlaces']) . ' x ' . __('QOH of') . ' ' . $QOH, 0, 200) . "',
 						'" . $ValueOfChange . "')";
 
 		$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': '
 			. __('The GL debit for stock cost adjustment posting could not be inserted because');
-		$Result = DB_query($SQL, $ErrMsg, '', true);
+		DB_query($SQL, $ErrMsg, '', true);
 	}
 }
 
