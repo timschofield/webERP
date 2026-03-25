@@ -96,7 +96,7 @@ function submit($PartnerCode, $FromDate, $ToDate) {
 		$i = 2;
 		$ErrMsg = __('The SQL to find the GL Transactions for '. $PartnerCode);
 
-		$WhereGroupedAccounts = " ( accountgroups.groupname IN ('Penjualan', 'HPP (COGS)') 
+		$WhereGroupedPandLAccounts = " ( accountgroups.groupname IN ('Penjualan', 'HPP (COGS)') 
 									OR gltrans.account = '" . $MyRowSettings['accountcomissioncreditcard'] . "'
 									OR gltrans.account = '" . $MyRowSettings['accountcomissionwechat'] . "'
 									OR gltrans.account = '" . $MyRowSettings['accountcomissionqris'] . "'
@@ -107,7 +107,7 @@ function submit($PartnerCode, $FromDate, $ToDate) {
 									OR gltrans.account IN " . GL_COMMISSION_PAYPAL . " " .
 									") ";
 		
-		// Regular GL accounts (NOT HPP (COGS) OR PENJUALAN))
+		// Part 1: Pand L regular GL accounts (NOT HPP (COGS) OR PENJUALAN))
 		$SQL = "SELECT accountgroups.groupname AS 'Group',
 					gltrans.account AS 'AccountCode', 
 					chartmaster" . $ShortPartnerCode . ".accountname AS 'AccountName', 
@@ -120,7 +120,7 @@ function submit($PartnerCode, $FromDate, $ToDate) {
 				WHERE gltrans.account = chartmaster" . $ShortPartnerCode . ".accountcode
 					AND chartmaster" . $ShortPartnerCode . ".group_ = accountgroups.groupname
 					AND (accountgroups.pandl = 1)
-					AND NOT " . $WhereGroupedAccounts . " " .
+					AND NOT " . $WhereGroupedPandLAccounts . " " .
 					$WhereFrom .
 					$WhereTo . " 
 				ORDER BY accountgroups.groupname ASC, 
@@ -142,7 +142,7 @@ function submit($PartnerCode, $FromDate, $ToDate) {
 			}
 		}
 
-		// Exception GL accounts grouped (HPP (COGS) OR PENJUALAN))
+		// Part 2: Add the GL accounts grouped (HPP (COGS) OR PENJUALAN))
 		$SQL = "SELECT accountgroups.groupname AS 'Group',
 					gltrans.account AS 'AccountCode', 
 					chartmaster" . $ShortPartnerCode . ".accountname AS 'AccountName', 
@@ -155,7 +155,7 @@ function submit($PartnerCode, $FromDate, $ToDate) {
 				WHERE gltrans.account = chartmaster" . $ShortPartnerCode . ".accountcode
 					AND chartmaster" . $ShortPartnerCode . ".group_ = accountgroups.groupname
 					AND (accountgroups.pandl = 1)
-					AND " . $WhereGroupedAccounts . " " .
+					AND " . $WhereGroupedPandLAccounts . " " .
 					$WhereFrom .
 					$WhereTo . " 
 				GROUP BY accountgroups.groupname,
@@ -176,6 +176,44 @@ function submit($PartnerCode, $FromDate, $ToDate) {
 				$SpreadSheet->getActiveSheet()->setCellValue('D'.$i, ConvertSQLDate($MyRow['Date']));
 				$SpreadSheet->getActiveSheet()->setCellValue('E'.$i, round($MyRow['Amount'],0));
 				$SpreadSheet->getActiveSheet()->setCellValue('F'.$i, 'Total harian ' . $MyRow['AccountName']);
+				$i++;
+			}
+		}
+
+		// Part 3: Some Balance Sheet accounts that need to be included in the report
+		$WhereBalanceSheetAccounts = " ( accountgroups.groupname IN ('Aset Tetap', 'Kontrak Lokasi', 'Hutang Kontrak Lokasi', 'Modal') 
+									) ";
+
+		$SQL = "SELECT accountgroups.groupname AS 'Group',
+					gltrans.account AS 'AccountCode', 
+					chartmaster" . $ShortPartnerCode . ".accountname AS 'AccountName', 
+					gltrans.trandate AS 'Date', 
+					ROUND(gltrans.amount,0) AS 'Amount', 
+					gltrans.narrative AS 'Description'
+				FROM gltrans, 
+					chartmaster" . $ShortPartnerCode . ", 
+					accountgroups
+				WHERE gltrans.account = chartmaster" . $ShortPartnerCode . ".accountcode
+					AND chartmaster" . $ShortPartnerCode . ".group_ = accountgroups.groupname
+					AND (accountgroups.pandl = 0)
+					AND " . $WhereBalanceSheetAccounts . " " .
+					$WhereFrom .
+					$WhereTo . " 
+				ORDER BY accountgroups.groupname ASC, 
+					gltrans.account ASC, 
+					gltrans.trandate ASC ";
+					
+		$Result = DB_query($SQL,$ErrMsg);
+		if (DB_num_rows($Result) != 0){
+			// Add data
+			while ($MyRow = DB_fetch_array($Result)) {
+				$SpreadSheet->setActiveSheetIndex(0);
+				$SpreadSheet->getActiveSheet()->setCellValue('A'.$i, $MyRow['Group']);
+				$SpreadSheet->getActiveSheet()->setCellValue('B'.$i, $MyRow['AccountCode']);
+				$SpreadSheet->getActiveSheet()->setCellValue('C'.$i, $MyRow['AccountName']);
+				$SpreadSheet->getActiveSheet()->setCellValue('D'.$i, ConvertSQLDate($MyRow['Date']));
+				$SpreadSheet->getActiveSheet()->setCellValue('E'.$i, round($MyRow['Amount'],0));
+				$SpreadSheet->getActiveSheet()->setCellValue('F'.$i, $MyRow['Description']);
 				$i++;
 			}
 		}
