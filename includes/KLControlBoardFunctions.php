@@ -622,7 +622,7 @@ function ConsumablesGoodsNotEnoughStock($DaysUsage, $DaysMinStock, $DaysStockPur
 
 function CustomersDebtControl($AcceptedDifference, $Period){
 
-	$ValueAtBalance = GetGLAccountBalance('111311100AD', $Period);
+	$ValueAtBalance = GetGLAccountBalance($_SESSION['CompanyRecord']['debtorsact'], $Period);
 
 	/* Now get the Customer debt by currency, converted to functional currency IDR */
 	/* 2025-08-25 SQL optimized by Gemini */
@@ -648,6 +648,35 @@ function CustomersDebtControl($AcceptedDifference, $Period){
         ShowWarningTitle($WarningTitleText);
 	}
 }
+
+function SuppliersDebtControl($AcceptedDifference, $Period){
+
+	$ValueAtBalance = -GetGLAccountBalance($_SESSION['CompanyRecord']['creditorsact'], $Period);
+
+	/* Now get the Supplier debt by currency, converted to functional currency IDR */
+   $SQL = "SELECT
+                SUM(CASE WHEN suppliers.currcode = 'IDR' THEN supptrans.balance / currencies.rate ELSE 0 END) AS DebtValueIDR,
+                SUM(CASE WHEN suppliers.currcode = 'USD' THEN supptrans.balance / currencies.rate ELSE 0 END) AS DebtValueUSD,
+                SUM(CASE WHEN suppliers.currcode = 'THB' THEN supptrans.balance / currencies.rate ELSE 0 END) AS DebtValueTHB
+            FROM suppliers
+            INNER JOIN supptrans ON suppliers.supplierid = supptrans.supplierno
+            INNER JOIN currencies ON suppliers.currcode = currencies.currabrev
+            WHERE suppliers.currcode IN ('IDR', 'USD', 'THB')";
+
+    $Result = DB_query($SQL);
+    $MyRow = DB_fetch_array($Result);
+
+    $DebtValue = $MyRow['DebtValueIDR'] + $MyRow['DebtValueUSD'] + $MyRow['DebtValueTHB'];
+	
+	if (abs($ValueAtBalance - $DebtValue) > $AcceptedDifference){
+		$WarningTitleText = "Supplier's Debt Balance value = " . locale_number_format($ValueAtBalance,0) . 
+				" <-> Supplier's Debt = " . locale_number_format($DebtValue,0) . 
+				" Difference = ". locale_number_format($ValueAtBalance - $DebtValue,0);
+        ShowWarningTitle($WarningTitleText);
+	}
+}
+
+
 
 function DiscountedItemsWithWrongDiscount($Category, $DiscountCode, $RootPath){
 	$SQL = "SELECT * 

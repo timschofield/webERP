@@ -155,6 +155,7 @@ if (isset($_POST['submit'])) {
 		AdjustBankAccountsDueToCurrencyExchangeRate($SelectedCurrency, $OldRate, $NewRate);
 		AdjustGoodsReceivedNotInvoicedDueToCurrencyExchangeRate();
 		AdjustCustomersDebtDueToCurrencyExchangeRate();
+		AdjustSuppliersDebtDueToCurrencyExchangeRate();
 	}
 	
 	DB_Txn_Commit();
