@@ -357,12 +357,16 @@ if ($ProcessSection01){
 		TimeNeededForExecution("GLTransDateControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		GoodsReceivedNotInvoicedControl(1000000, $PeriodNow);
+		GoodsReceivedNotInvoicedControl(10000, $PeriodNow);
 		TimeNeededForExecution("GoodsReceivedNotInvoicedControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
 		CustomersDebtControl(10000, $PeriodNow);
 		TimeNeededForExecution("CustomersDebtControl", $StartTime, $KL_SystemAdmin);
+		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
+		SuppliersDebtControl(10000, $PeriodNow);
+		TimeNeededForExecution("SuppliersDebtControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
 		PettyCashBalanceControl("IDR", "('111111209',
