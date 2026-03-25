@@ -195,8 +195,9 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 			/*Check to see if currency rates need to be updated */
 			if (isset($_SESSION['UpdateCurrencyRatesDaily']) and $_SESSION['UpdateCurrencyRatesDaily']!=0)  {
 				/* Only run the update to currency rates if today is after the last update i.e. only runs once a day */
+				// KL RICARD: We do the update every $_SESSION['UpdateCurrencyRatesFrequency'] days instead of every day
 				if (DateDiff(Date($_SESSION['DefaultDateFormat']),
-					ConvertSQLDate($_SESSION['UpdateCurrencyRatesDaily']),'d')> 0) {
+					ConvertSQLDate($_SESSION['UpdateCurrencyRatesDaily']),'d') >= $_SESSION['UpdateCurrencyRatesFrequency']) {
 
 					include($PathPrefix . 'includes/SQL_CommonFunctions.php');
 
@@ -214,6 +215,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 									DB_query("UPDATE currencies
 											SET rate='" . $NewRate . "'
 											WHERE currabrev='" . $CurrencyRow[0] . "'");
+									AdjustmentsDueToCurrencyRateUpdate($CurrencyRow[0], $CurrencyRow[1], $NewRate, false);
 								}
 							}
 						}
@@ -230,6 +232,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 								DB_query("UPDATE currencies
 											SET rate='" . $NewRate . "'
 											WHERE currabrev='" . $CurrencyRow[0] . "'");
+								AdjustmentsDueToCurrencyRateUpdate($CurrencyRow[0], $CurrencyRow[1], $NewRate, false);
 							}
 						}
 					}

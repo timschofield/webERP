@@ -51,6 +51,9 @@ if (isset($_POST['submit'])) {
 			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_PPN_Percent']."' WHERE confname = 'PPN_Percent'";
 		}
 
+		if ($_SESSION['UpdateCurrencyRatesFrequency'] != $_POST['X_UpdateCurrencyRatesFrequency'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_UpdateCurrencyRatesFrequency']."' WHERE confname = 'UpdateCurrencyRatesFrequency'";
+		}
 
 		if ($_SESSION['Standard_Cost_Factor_Indonesia'] != $_POST['X_Standard_Cost_Factor_Indonesia'] ) {
 			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_Standard_Cost_Factor_Indonesia']."' WHERE confname = 'Standard_Cost_Factor_Indonesia'";
@@ -240,6 +243,11 @@ echo '<fieldset>
 	echo '<fieldset>
 		<legend>' . __('Indonesia Tax Settings') . '</legend>';
 		echo FieldToSelectOneNumber('X_PPN_Percent',  $_SESSION['PPN_Percent'], 6, 5, 'PPN (in %)', '', '', '100');
+	echo '</fieldset><br />';
+
+	echo '<fieldset>
+		<legend>' . __('Currency Settings') . '</legend>';
+		echo FieldToSelectOneNumber('X_UpdateCurrencyRatesFrequency',  $_SESSION['UpdateCurrencyRatesFrequency'], 6, 5, 'Frequency of updating currency rates (in days)', '', '', '100');
 	echo '</fieldset><br />';
 
 	echo '<fieldset>

@@ -152,10 +152,7 @@ if (isset($_POST['submit'])) {
 	}
 
 	if (isset($SelectedCurrency) AND $InputError != 1) {
-		AdjustBankAccountsDueToCurrencyExchangeRate($SelectedCurrency, $OldRate, $NewRate);
-		AdjustGoodsReceivedNotInvoicedDueToCurrencyExchangeRate();
-		AdjustCustomersDebtDueToCurrencyExchangeRate();
-		AdjustSuppliersDebtDueToCurrencyExchangeRate();
+		AdjustmentsDueToCurrencyRateUpdate($SelectedCurrency, $OldRate, $NewRate, true);
 	}
 	
 	DB_Txn_Commit();
@@ -305,9 +302,9 @@ or deletion of the records*/
 					<td>', $MyRow['hundredsname'], '</td>
 					<td class="number">', locale_number_format($MyRow['decimalplaces'], 0), '</td>
 					<td class="centre">', $ShowInWebText, '</td>
-					<td class="number">', locale_number_format($MyRow['rate'], 'Variable'), '</td>
-					<td class="number">', locale_number_format(1/$MyRow['rate'], 8), '</td>
-					<td class="number">', locale_number_format($Rate, 8), '</td>
+					<td class="number">', locale_number_format($MyRow['rate'], 10), '</td>
+					<td class="number">', locale_number_format(1/$MyRow['rate'], 2), '</td>
+					<td class="number">', locale_number_format($Rate, 10), '</td>
 					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedCurrency=', $MyRow['currabrev'], '">', __('Edit'), '</a></td>
 					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedCurrency=', $MyRow['currabrev'], '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this currency?') . '\');">', __('Delete'), '</a></td>
 					<td><a href="', $RootPath, '/ExchangeRateTrend.php?&amp;CurrencyToShow=' . $MyRow['currabrev'], '">' . __('Graph') . '</a></td>
@@ -320,9 +317,9 @@ or deletion of the records*/
 					<td>', $MyRow['hundredsname'], '</td>
 					<td class="number">', locale_number_format($MyRow['decimalplaces'], 0), '</td>
 					<td class="centre">', $ShowInWebText, '</td>
-					<td class="number">', locale_number_format(1, 8), '</td>
-					<td class="number">', locale_number_format(1, 2), '</td>
-					<td class="number">', locale_number_format(1, 8), '</td>
+					<td class="number">', '', '</td>
+					<td class="number">', '', '</td>
+					<td class="number">', '', '</td>
 					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?&amp;SelectedCurrency=' . urlencode($MyRow['currabrev']) . '">' . __('Edit') . '</a></td>
 					<td colspan="2"><a href="' . $RootPath . '/CompanyPreferences.php#CurrencyDefault">' . __('Functional Currency') . '</a></td>
 				</tr>';
