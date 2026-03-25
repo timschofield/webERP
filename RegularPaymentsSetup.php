@@ -7,7 +7,7 @@ $ViewTopic = 'GeneralLedger';
 $BookMark = 'RegularPayments';
 include(__DIR__ . '/includes/header.php');
 
-include(__DIR__ . '/includes/GLFunctions.php');
+include_once(__DIR__ . '/includes/GLFunctions.php');
 
 if (isset($_POST['FirstPaymentDate'])){$_POST['FirstPaymentDate'] = ConvertSQLDate($_POST['FirstPaymentDate']);}
 if (isset($_POST['LastPaymentDate'])){$_POST['LastPaymentDate'] = ConvertSQLDate($_POST['LastPaymentDate']);}

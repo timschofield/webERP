@@ -33,7 +33,7 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 $PageTitleText, '" /> ', // Icon title.
 $PageTitleText, '</p>'; // Page title.
 include(__DIR__ . '/includes/SQL_CommonFunctions.php');
-include(__DIR__ . '/includes/GLFunctions.php');
+include_once(__DIR__ . '/includes/GLFunctions.php');
 
 if (isset($_POST['PaymentCancelled'])) {
 	prnMsg(__('Payment Cancelled since cheque was not printed') , 'warning');

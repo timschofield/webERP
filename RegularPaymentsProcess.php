@@ -8,7 +8,7 @@ $BookMark = 'RegularPayments';
 include(__DIR__ . '/includes/header.php');
 
 include(__DIR__ . '/includes/SQL_CommonFunctions.php');
-include(__DIR__ . '/includes/GLFunctions.php');
+include_once(__DIR__ . '/includes/GLFunctions.php');
 
 echo '<p class="page_title_text" >
 		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', $Title, '" alt="" />', ' ', $Title, '

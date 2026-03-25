@@ -9,7 +9,7 @@ $ViewTopic = 'GeneralLedger';
 $BookMark = 'BankAccounts';
 include(__DIR__ . '/includes/header.php');
 
-include(__DIR__ . '/includes/GLFunctions.php');
+include_once(__DIR__ . '/includes/GLFunctions.php');
 include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
