@@ -37,7 +37,7 @@ if (!isset($IsIncluded)) {// Runs normally if this script is NOT included in ano
 	include(__DIR__ . '/includes/header.php');
 }
 
-include(__DIR__ . '/includes/GLFunctions.php');
+include_once(__DIR__ . '/includes/GLFunctions.php');
 
 // Merges gets into posts:
 if (isset($_GET['PeriodFrom']) AND is_numeric($_GET['PeriodFrom'])) {

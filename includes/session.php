@@ -185,6 +185,8 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 
 } else {
 	include($PathPrefix . 'includes/LoginFunctions.php'); /* Login checking and setup. Includes GetConfig.php on successful logins */
+	include($PathPrefix . 'includes/GLFunctions.php'); /* KL RICARD: Needed for auto update currencies and associated functions  */
+	include($PathPrefix . 'includes/KLGLFunctions.php'); /* KL RICARD: Needed for auto update currencies and associated functions  */
 
 	/// @todo what if the current user is already logged in? We should at least log him/her out before re-logging in...
 	///       (or maybe swallow that event, and log it as suspected hack attempt?)

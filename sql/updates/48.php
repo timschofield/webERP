@@ -267,9 +267,10 @@ NewMenuItem('for', 'Reports', __('MRP Suggested Purchase Orders'), '/MRPPlannedP
 RemoveMenuItem('manuf', 'Reports', 'MRP Suggested Work Orders', '/MRPPlannedWorkOrders.php');
 NewMenuItem('for', 'Reports', __('MRP Suggested Work Orders'), '/MRPPlannedWorkOrders.php', 11);
 
-UpdateDBNo(basename(__FILE__, '.php'), __('Forecast Management System - Statistical forecasting for inventory planning'));
-
 AddColumn('loccode', 'salesanalysis', 'varchar(5)', ' NOT NULL ', "''", 'area');
 AddColumn('custtype', 'salesanalysis', 'char(2)', ' NOT NULL ', "''", 'custbranch');
+
+// UpdateDBNo() should be come absolutely last in an update file
+UpdateDBNo(basename(__FILE__, '.php'), __('Forecast Management System - Statistical forecasting for inventory planning'));
 
 ?>

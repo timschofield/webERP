@@ -120,7 +120,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	$Head = 0;
 	foreach ($HeadRow as $HeadField) {
 		if (mb_strtoupper($HeadField) != mb_strtoupper($FieldHeadings[$Head])) {
-			prnMsg(__('File contains incorrect headers (' . mb_strtoupper($HeadField) . ' != ' . mb_strtoupper($Header[$Head]) . '. Try downloading a new template.'), 'error');
+			prnMsg(__('File contains incorrect headers (' . mb_strtoupper($HeadField) . ' != ' . mb_strtoupper($FieldHeadings[$Head]) . '. Try downloading a new template.'), 'error');
 			fclose($FileHandle);
 			include(__DIR__ . '/includes/footer.php');
 			exit();
@@ -218,8 +218,9 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		$_POST['BrPostAddr3'] = $Filerow[48];
 		$_POST['BrPostAddr4'] = $Filerow[49];
 		$_POST['BrPostAddr5'] = $Filerow[50];
-		$_POST['CustBranchCode'] = $Filerow[51];
+		$_POST['BrPostAddr6'] = $Filerow[51];
 		$_POST['SpecialInstructions'] = $Filerow[52];
+		$_POST['CustBranchCode'] = $Filerow[53];
 
 		$i = 0;
 		if ($_POST['AutoDebtorNo'] == 0 and mb_strlen($_POST['DebtorNo']) == 0) {

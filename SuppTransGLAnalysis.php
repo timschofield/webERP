@@ -14,7 +14,7 @@ $ViewTopic = 'AccountsPayable';
 $BookMark = 'SuppTransGLAnalysis';
 include(__DIR__ . '/includes/header.php');
 
-include(__DIR__ . '/includes/GLFunctions.php');
+include_once(__DIR__ . '/includes/GLFunctions.php');
 
 if (!isset($_SESSION['SuppTrans'])) {
 	prnMsg(__('To enter a supplier invoice or credit note the supplier must first be selected from the supplier selection screen') . ', ' . __('then the link to enter a supplier invoice or supplier credit note must be clicked on'), 'info');

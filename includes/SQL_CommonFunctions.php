@@ -177,13 +177,13 @@ function ItemCostUpdateGL($StockID, $NewCost, $OldCost, $QOH) {
 						CURRENT_DATE,
 						'" . $PeriodNo . "',
 						'" . $StockGLCode['adjglact'] . "',
-						'" . mb_substr($StockID . ' ' . __('cost was') . ' ' . $OldCost . ' ' . __('changed to') . ' '
-							. $NewCost . ' x ' . __('Quantity on hand of') . ' ' . $QOH, 0, 200) . "',
+						'" . mb_substr($StockID . ' ' . __('cost was') . ' ' . locale_number_format($OldCost, $_SESSION['StandardCostDecimalPlaces']) . ' ' . __('changed to') . ' '
+							. locale_number_format($NewCost, $_SESSION['StandardCostDecimalPlaces']) . ' x ' . __('QOH of') . ' ' . $QOH, 0, 200) . "',
 						'" . -$ValueOfChange . "')";
 
 		$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': '
 			. __('The GL credit for the stock cost adjustment posting could not be inserted because');
-		$Result = DB_query($SQL, $ErrMsg, '', true);
+		DB_query($SQL, $ErrMsg, '', true);
 
 		$SQL = "INSERT INTO gltrans (type,
 						typeno,
@@ -197,13 +197,13 @@ function ItemCostUpdateGL($StockID, $NewCost, $OldCost, $QOH) {
 						CURRENT_DATE,
 						'" . $PeriodNo . "',
 						'" . $StockGLCode['stockact'] . "',
-						'" . mb_substr($StockID . ' ' . __('cost was') . ' ' . $OldCost . ' ' . __('changed to') . ' '
-							. $NewCost . ' x ' . __('Quantity on hand of') . ' ' . $QOH, 0, 200) . "',
+						'" . mb_substr($StockID . ' ' . __('cost was') . ' ' . locale_number_format($OldCost, $_SESSION['StandardCostDecimalPlaces']) . ' ' . __('changed to') . ' '
+							. locale_number_format($NewCost, $_SESSION['StandardCostDecimalPlaces']) . ' x ' . __('QOH of') . ' ' . $QOH, 0, 200) . "',
 						'" . $ValueOfChange . "')";
 
 		$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': '
 			. __('The GL debit for stock cost adjustment posting could not be inserted because');
-		$Result = DB_query($SQL, $ErrMsg, '', true);
+		DB_query($SQL, $ErrMsg, '', true);
 	}
 }
 
@@ -467,7 +467,14 @@ function CurrencyTolerance($Currency = '') {
 	}
 }
 
-function AdjustBankAccountsDueToCurrencyExchangeRate($SelectedCurrency, $OldRate, $NewRate){
+function AdjustmentsDueToCurrencyRateUpdate($SelectedCurrency, $OldRate, $NewRate, $ShowMessages = false) {
+	AdjustBankAccountsDueToCurrencyExchangeRate($SelectedCurrency, $OldRate, $NewRate, $ShowMessages);
+	AdjustGoodsReceivedNotInvoicedDueToCurrencyExchangeRate($ShowMessages);
+	AdjustCustomersDebtDueToCurrencyExchangeRate($ShowMessages);
+	AdjustSuppliersDebtDueToCurrencyExchangeRate($ShowMessages);
+}
+
+function AdjustBankAccountsDueToCurrencyExchangeRate($SelectedCurrency, $OldRate, $NewRate, $ShowMessages){
 	/* We should update the functional currency value of the bank accounts of the $SelectedCurrency
 	Example: if functional currency = IDR and we have a bank account in USD.
 	Before rate was 1 USD = 9.000 IDR so OldRate = 1 /9.000 = 0.000111
@@ -508,7 +515,7 @@ function AdjustBankAccountsDueToCurrencyExchangeRate($SelectedCurrency, $OldRate
 		/* If some adjustment has to be done, do it! */
 		$DifferenceToAdjust = $NewBalanceInFunctionalCurrency - $OldBalanceInFunctionalCurrency;
 		if (abs($DifferenceToAdjust) >= CurrencyTolerance($_SESSION['CompanyRecord']['currencydefault'])) {
-
+			$ErrMsg = __('Cannot insert a GL entry for the currency exchange difference because');
 			$SQL = "INSERT INTO gltrans (
 							type,
 							typeno,
@@ -525,7 +532,6 @@ function AdjustBankAccountsDueToCurrencyExchangeRate($SelectedCurrency, $OldRate
 							$_SESSION['CompanyRecord']['unrealizedcurrencydiffact'] . "', '" .
 							mb_substr($MyRowBankAccount['bankaccountname'] . ' ' . __('currency rate adjustment to') . ' ' . locale_number_format($NewRate, 'Variable') . ' ' . $SelectedCurrency . '/' . $_SESSION['CompanyRecord']['currencydefault'], 0, 200) . "', '" .
 							(-$DifferenceToAdjust) . "')";
-			$ErrMsg = __('Cannot insert a GL entry for the currency exchange difference because');
 			DB_query($SQL, $ErrMsg, '', true);
 			
 			$SQL = "INSERT INTO gltrans (
@@ -543,14 +549,16 @@ function AdjustBankAccountsDueToCurrencyExchangeRate($SelectedCurrency, $OldRate
 							$MyRowBankAccount['accountcode'] . "', '" .
 							mb_substr($MyRowBankAccount['bankaccountname'] . ' ' . __('currency rate adjustment to') . ' ' . locale_number_format($NewRate, 'Variable') . ' ' . $SelectedCurrency . '/' . $_SESSION['CompanyRecord']['currencydefault'], 0, 200) . "', '" .
 							($DifferenceToAdjust) . "')";
-
 			DB_query($SQL, $ErrMsg, '', true);
-			prnMsg(__('Bank Account') . ' ' . $MyRowBankAccount['bankaccountname'] . ' ' . __('Currency Rate difference of') . ' ' . locale_number_format($DifferenceToAdjust, $_SESSION['CompanyRecord']['decimalplaces']) . ' ' . __('has been posted'),'success');
+
+			if ($ShowMessages) {
+				prnMsg(__('Bank Account') . ' ' . $MyRowBankAccount['bankaccountname'] . ' ' . __('Currency Rate difference of') . ' ' . locale_number_format($DifferenceToAdjust, $_SESSION['CompanyRecord']['decimalplaces']) . ' ' . __('has been posted'),'success');
+			}
 		}
 	}
 }
 
-function AdjustGoodsReceivedNotInvoicedDueToCurrencyExchangeRate(){
+function AdjustGoodsReceivedNotInvoicedDueToCurrencyExchangeRate($ShowMessages){
 
 	/*Get the current period */
 	$PostingDate = date($_SESSION['DefaultDateFormat']);
@@ -564,7 +572,7 @@ function AdjustGoodsReceivedNotInvoicedDueToCurrencyExchangeRate(){
 	$DifferenceToAdjust = $ValueAtBalance - $GoodsValue;
 
 	if (abs($DifferenceToAdjust) >= CurrencyTolerance($_SESSION['CompanyRecord']['currencydefault'])) {
-
+		$ErrMsg = __('Cannot insert a GL entry for the currency exchange difference because');
 		$SQL = "INSERT INTO gltrans (
 						type,
 						typeno,
@@ -581,7 +589,6 @@ function AdjustGoodsReceivedNotInvoicedDueToCurrencyExchangeRate(){
 						$_SESSION['CompanyRecord']['unrealizedcurrencydiffact'] . "', '" .
 						mb_substr('Goods Received Not Invoiced currency rate adjustment', 0, 200) . "', '" .
 						(-$DifferenceToAdjust) . "')";
-		$ErrMsg = __('Cannot insert a GL entry for the currency exchange difference because');
 		DB_query($SQL, $ErrMsg, '', true);
 		
 		$SQL = "INSERT INTO gltrans (
@@ -599,13 +606,15 @@ function AdjustGoodsReceivedNotInvoicedDueToCurrencyExchangeRate(){
 						$_SESSION['CompanyRecord']['grnact'] . "', '" .
 						mb_substr('Goods Received Not Invoiced currency rate adjustment', 0, 200) . "', '" .
 						($DifferenceToAdjust) . "')";
-
 		DB_query($SQL, $ErrMsg, '', true);
-		prnMsg(__('Goods Received Not Invoiced') . ' ' . __('Currency Rate difference of') . ' ' . locale_number_format($DifferenceToAdjust, $_SESSION['CompanyRecord']['decimalplaces']) . ' ' . __('has been posted'),'success');
+
+		if ($ShowMessages) {
+			prnMsg(__('Goods Received Not Invoiced') . ' ' . __('Currency Rate difference of') . ' ' . locale_number_format($DifferenceToAdjust, $_SESSION['CompanyRecord']['decimalplaces']) . ' ' . __('has been posted'),'success');
+		}
 	}
 }
 
-function AdjustCustomersDebtDueToCurrencyExchangeRate(){
+function AdjustCustomersDebtDueToCurrencyExchangeRate($ShowMessages){
 
 	/*Get the current period */
 	$PostingDate = date($_SESSION['DefaultDateFormat']);
@@ -660,7 +669,7 @@ function AdjustCustomersDebtDueToCurrencyExchangeRate(){
 	$DifferenceToAdjust = $ValueAtBalance - $DebtValue;
 
 	if (abs($DifferenceToAdjust) >= CurrencyTolerance($_SESSION['CompanyRecord']['currencydefault'])) {
-
+		$ErrMsg = __('Cannot insert a GL entry for the currency exchange difference because');
 		$SQL = "INSERT INTO gltrans (
 						type,
 						typeno,
@@ -677,7 +686,6 @@ function AdjustCustomersDebtDueToCurrencyExchangeRate(){
 						$_SESSION['CompanyRecord']['unrealizedcurrencydiffact'] . "', '" .
 						mb_substr('Customer Debt currency rate adjustment', 0, 200) . "', '" .
 						($DifferenceToAdjust) . "')";
-		$ErrMsg = __('Cannot insert a GL entry for the currency exchange difference because');
 		DB_query($SQL, $ErrMsg, '', true);
 		
 		$SQL = "INSERT INTO gltrans (
@@ -695,9 +703,98 @@ function AdjustCustomersDebtDueToCurrencyExchangeRate(){
 						$_SESSION['CompanyRecord']['debtorsact'] . "', '" .
 						mb_substr('Customer Debt currency rate adjustment', 0, 200) . "', '" .
 						(-$DifferenceToAdjust) . "')";
-
 		DB_query($SQL, $ErrMsg, '', true);
-		prnMsg(__('Customer Debt') . ' ' . __('Currency Rate difference of') . ' ' . locale_number_format($DifferenceToAdjust, $_SESSION['CompanyRecord']['decimalplaces']) . ' ' . __('has been posted'),'success');
+
+		if ($ShowMessages) {
+			prnMsg(__('Customer Debt') . ' ' . __('Currency Rate difference of') . ' ' . locale_number_format($DifferenceToAdjust, $_SESSION['CompanyRecord']['decimalplaces']) . ' ' . __('has been posted'),'success');
+		}
+	}
+}
+
+function AdjustSuppliersDebtDueToCurrencyExchangeRate($ShowMessages){
+
+	/*Get the current period */
+	$PostingDate = date($_SESSION['DefaultDateFormat']);
+	$PeriodNo = GetPeriod($PostingDate);
+
+	$ExDiffTransNo = GetNextTransNo(36);
+
+	$ValueAtBalance = -GetGLAccountBalance($_SESSION['CompanyRecord']['creditorsact'], $PeriodNo);
+
+	/* Now get the Customer debt by currency, converted to functional currency IDR */
+	$SQL = "SELECT
+                SUM(CASE WHEN suppliers.currcode = 'IDR' THEN supptrans.balance / currencies.rate ELSE 0 END) AS DebtValueIDR,
+                SUM(CASE WHEN suppliers.currcode = 'USD' THEN supptrans.balance / currencies.rate ELSE 0 END) AS DebtValueUSD,
+                SUM(CASE WHEN suppliers.currcode = 'THB' THEN supptrans.balance / currencies.rate ELSE 0 END) AS DebtValueTHB
+            FROM suppliers
+            INNER JOIN supptrans ON suppliers.supplierid = supptrans.supplierno
+            INNER JOIN currencies ON suppliers.currcode = currencies.currabrev
+            WHERE suppliers.currcode IN ('IDR', 'USD', 'THB')";
+
+    $Result = DB_query($SQL);
+    $MyRow = DB_fetch_array($Result);
+
+	if (abs($MyRow['DebtValueIDR']) >= CurrencyTolerance('IDR')){
+		$DebtIDR = $MyRow['DebtValueIDR'];
+	}else{
+		$DebtIDR = 0;
+	}
+
+	if (abs($MyRow['DebtValueUSD']) >= CurrencyTolerance('USD')){
+		$DebtUSD = $MyRow['DebtValueUSD'];
+	}else{
+		$DebtUSD = 0;
+	}
+
+	if (abs($MyRow['DebtValueTHB']) >= CurrencyTolerance('THB')){
+		$DebtTHB = $MyRow['DebtValueTHB'];
+	}else{
+		$DebtTHB = 0;
+	}
+
+	$DebtValue = $DebtIDR + $DebtUSD + $DebtTHB;
+	$DifferenceToAdjust = $ValueAtBalance - $DebtValue;
+
+	if (abs($DifferenceToAdjust) >= CurrencyTolerance($_SESSION['CompanyRecord']['currencydefault'])) {
+		$ErrMsg = __('Cannot insert a GL entry for the currency exchange difference because');
+		$SQL = "INSERT INTO gltrans (
+						type,
+						typeno,
+						trandate,
+						periodno,
+						account,
+						narrative,
+						amount
+					) VALUES (
+						36, '" .
+						$ExDiffTransNo . "', '" .
+						FormatDateForSQL($PostingDate) . "', '" .
+						$PeriodNo . "', '" .
+						$_SESSION['CompanyRecord']['unrealizedcurrencydiffact'] . "', '" .
+						mb_substr('Supplier Debt currency rate adjustment', 0, 200) . "', '" .
+						(-$DifferenceToAdjust) . "')";
+		DB_query($SQL, $ErrMsg, '', true);
+		
+		$SQL = "INSERT INTO gltrans (
+						type,
+						typeno,
+						trandate,
+						periodno,
+						account,
+						narrative,
+						amount
+					) VALUES (36, '" .
+						$ExDiffTransNo . "', '" .
+						FormatDateForSQL($PostingDate) . "', '" .
+						$PeriodNo . "', '" .
+						$_SESSION['CompanyRecord']['creditorsact'] . "', '" .
+						mb_substr('Supplier Debt currency rate adjustment', 0, 200) . "', '" .
+						($DifferenceToAdjust) . "')";
+		DB_query($SQL, $ErrMsg, '', true);
+
+		if ($ShowMessages) {
+			prnMsg(__('Supplier Debt') . ' ' . __('Currency Rate difference of') . ' ' . locale_number_format($DifferenceToAdjust, $_SESSION['CompanyRecord']['decimalplaces']) . ' ' . __('has been posted'),'success');
+		}
 	}
 }
 

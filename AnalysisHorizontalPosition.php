@@ -32,7 +32,7 @@ $ViewTopic = 'GeneralLedger';
 $BookMark = 'AnalysisHorizontalPosition';
 include(__DIR__ . '/includes/header.php');
 
-include(__DIR__ . '/includes/GLFunctions.php');
+include_once(__DIR__ . '/includes/GLFunctions.php');
 
 // KL RICARD: prepare the data for each company
 include(__DIR__ . '/includes/UIGeneralFunctions.php');

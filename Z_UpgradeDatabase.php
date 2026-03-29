@@ -80,22 +80,24 @@ if (!isset($_POST['continue'])) {
 		$File = 'sql/updates/' . $UpdateNumber . '.php';
 		if (file_exists($File)) {
 			$Lines = file($File, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-			$Contents = file_get_contents($File);
-			$pattern = 'UpdateDBNo';
-			$pattern = "/^.*$pattern.*\$/m";
-			if (preg_match_all($pattern, $Contents, $Matches) and (implode("\n", $Matches[0]) != "UpdateDBNo(basename(__FILE__, '.php'));")) {
-				/// @todo use more regexps to extract the upgrade description rather than using substrings
-				$Description = str_replace("\r", '', $Matches[0]);
+			foreach ($Lines as $Line) {
+				if (substr(ltrim($Line), 0 , 10) == 'UpdateDBNo') {
+					$Description =  str_replace("\r", '', str_replace("UpdateDBNo(basename(__FILE__, '.php'), __('", '', $Line));
+					$EndOfString = mb_strpos($Description, "')");
+					$Description =  mb_substr($Description, 0, $EndOfString)."\n";
+				}
+			}
+			if (mb_strlen($Description) > 0) {
 				echo '<tr>
 					<td><span class="expand_icon" id="expand_icon', $x, '"></span></td>
 					<td>', $UpdateNumber, '</td>
-					<td>', substr(substr(implode("\n", $Description), 43), 0, -4), '</td>
+					<td>', $Description, '</td>
 				</tr>';
 			} else {
 				echo '<tr>
 					<td><div class="expand_icon" id="expand_icon', $x, '"></div></td>
 					<td>', $UpdateNumber, '</td>
-					<td>', __('No descriptrion can be found for this update'), '</td>
+					<td>', __('Description not found'), '</td>
 				</tr>';
 			}
 			echo '<tr>
@@ -103,14 +105,13 @@ if (!isset($_POST['continue'])) {
 			foreach ($Lines as $Line) {
 				if ($Line != '?>' and substr($Line, 0, 8) != 'UpdateDB' and $Line != '<?php') {
 					echo $Line, '<br />';
-                    if (substr($Line, 0, 2) != '//') {
-                        $_SESSION['FunctionCalls'][$UpdateNumber][] = $Line;
-                    }
+					if (substr($Line, 0, 2) != '//') {
+						$_SESSION['FunctionCalls'][$UpdateNumber][] = $Line;
+					}
 				}
 			}
 			echo '</td>
-			</tr>';
-			$x++;
+				</tr>';
 		}
 	}
 
@@ -129,11 +130,11 @@ if (!isset($_POST['continue'])) {
 		'Warnings' => 0,
 	);
 
-    $LogFileName = $_SESSION['LogPath'] . '/' . $_SESSION['DatabaseName'] . ' - DBUpdateLog-' . date('Y-m-d') . '.log';
+	$LogFileName = $_SESSION['LogPath'] . '/' . $_SESSION['DatabaseName'] . ' - DBUpdateLog-' . date('Y-m-d') . '.log';
 
 	for ($UpdateNumber = $StartingUpdate; $UpdateNumber <= $EndingUpdate; $UpdateNumber++) {
 		if (file_exists('sql/updates/' . $UpdateNumber . '.php')) {
-            LogEntryHeader($LogFileName, $UpdateNumber);
+			LogEntryHeader($LogFileName, $UpdateNumber);
 			$SQL = "SET FOREIGN_KEY_CHECKS=0";
 			$Result = DB_query($SQL);
 			include('sql/updates/' . $UpdateNumber . '.php');
@@ -180,13 +181,13 @@ if (!isset($_POST['continue'])) {
 }
 
 function LogEntryHeader($LogFileName, $DBUpdateNumber) {
-    $Header = str_repeat('+', 60) . "\n";
-    $Header .= str_repeat(' ', 10);
-    $Header .= 'Update File Number' . ' - ' . $DBUpdateNumber . "\n";
-    $Header .= str_repeat(' ', 10);
-    $Header .= 'Updated on' . ' - ' . date($_SESSION['DefaultDateFormat']) . "\n";
-    $Header .= str_repeat('+', 60) . "\n\n";
-    file_put_contents($LogFileName, $Header, FILE_APPEND);
+	$Header = str_repeat('+', 60) . "\n";
+	$Header .= str_repeat(' ', 10);
+	$Header .= 'Update File Number' . ' - ' . $DBUpdateNumber . "\n";
+	$Header .= str_repeat(' ', 10);
+	$Header .= 'Updated on' . ' - ' . date($_SESSION['DefaultDateFormat']) . "\n";
+	$Header .= str_repeat('+', 60) . "\n\n";
+	file_put_contents($LogFileName, $Header, FILE_APPEND);
 }
 
 include(__DIR__ . '/includes/footer.php');

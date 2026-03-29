@@ -45,7 +45,7 @@ $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLAccountGraph';
 include(__DIR__ . '/includes/header.php');
 
-include(__DIR__ . '/includes/GLFunctions.php');
+include_once(__DIR__ . '/includes/GLFunctions.php');
 
 $NewReport = '';
 $SelectedAccount = '';

@@ -262,7 +262,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 								CURRENT_DATE,
 								'" . $PeriodNo . "',
 								'" . $StockGLCode['adjglact'] . "',
-								'" . mb_substr(__('Cost roll on release of WO') . ': ' . $_POST['WO'] . ' - ' . $_POST['StockID'] . ' ' . __('cost was') . ' ' . $ItemCostRow['cost'] . ' ' . __('changed to') . ' ' . $Cost . ' x ' . __('Quantity on hand of') . ' ' . $ItemCostRow['totalqoh'], 0, 200) . "',
+								'" . mb_substr(__('Cost roll on release of WO') . ': ' . $_POST['WO'] . ' - ' . $_POST['StockID'] . ' ' . __('cost was') . ' ' . locale_number_format($ItemCostRow['cost'], $_SESSION['StandardCostDecimalPlaces']) . ' ' . __('changed to') . ' ' . locale_number_format($Cost, $_SESSION['StandardCostDecimalPlaces']) . ' x ' . __('QOH of') . ' ' . $ItemCostRow['totalqoh'], 0, 200) . "',
 								'" . (-$ValueOfChange) . "')";
 
 					$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The GL credit for the stock cost adjustment posting could not be inserted because');
@@ -280,7 +280,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 								CURRENT_DATE,
 								'" . $PeriodNo . "',
 								'" . $StockGLCode['stockact'] . "',
-								'" . mb_substr(__('Cost roll on release of WO') . ': ' . $_POST['WO'] . ' - ' . $_POST['StockID'] . ' ' . __('cost was') . ' ' . $ItemCostRow['cost'] . ' ' . __('changed to') . ' ' . $Cost . ' x ' . __('Quantity on hand of') . ' ' . $ItemCostRow['totalqoh'], 0, 200) . "',
+								'" . mb_substr(__('Cost roll on release of WO') . ': ' . $_POST['WO'] . ' - ' . $_POST['StockID'] . ' ' . __('cost was') . ' ' . locale_number_format($ItemCostRow['cost'], $_SESSION['StandardCostDecimalPlaces']) . ' ' . __('changed to') . ' ' . locale_number_format($Cost, $_SESSION['StandardCostDecimalPlaces']) . ' x ' . __('QOH of') . ' ' . $ItemCostRow['totalqoh'], 0, 200) . "',
 								'" . $ValueOfChange . "')";
 
 					$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The GL debit for stock cost adjustment posting could not be inserted because');

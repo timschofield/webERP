@@ -383,7 +383,7 @@ if (isset($_POST['Close'])) {
 										'" . $PeriodNo . "',
 										'" . $WORow['materialuseagevarac'] . "',
 										'" . mb_substr($_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . __('share of variance'), 0, 200) . "',
-										'" .round((-$TotalCostVar*$ShareProportion*(1-$ProportionOnHand)),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
+										'" .round((-$TotalVariance*$ShareProportion*(1-$ProportionOnHand)),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
 					$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The GL posting for the work order variance could not be inserted because');
 					$Result = DB_query($SQL, $ErrMsg, '', true);
@@ -402,7 +402,7 @@ if (isset($_POST['Close'])) {
 							'" . $PeriodNo . "',
 							'" . $WORow['stockact'] . "',
 							'" . mb_substr($_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . __('share of variance'), 0, 200) . "',
-							'" . round((-$TotalCostVar*$ShareProportion*$ProportionOnHand),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
+							'" . round((-$TotalVariance*$ShareProportion*$ProportionOnHand),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
 				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The GL posting for the work order variance could not be inserted because');
 				$Result = DB_query($SQL, $ErrMsg, '', true);
@@ -420,14 +420,14 @@ if (isset($_POST['Close'])) {
 							'" . $PeriodNo . "',
 							'" . $WORow['wipact'] . "',
 							'" . mb_substr($_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . __('share of variance'), 0, 200) . "',
-							'" . round(($TotalCostVar*$ShareProportion),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
+							'" . round(($TotalVariance*$ShareProportion),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
 				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The GL posting for the WIP side of the work order variance posting could not be inserted because');
 				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 			}
 			if ($TotalOnHand>0) {//to avoid negative quantity make cost data abnormal
-				$NewCost = $WORow['currcost'] +(-$TotalCostVar* $ShareProportion *$ProportionOnHand)/$TotalOnHand;
+				$NewCost = $WORow['currcost'] +(-$TotalVariance* $ShareProportion *$ProportionOnHand)/$TotalOnHand;
 			} else {
 				$NewCost = $WORow['currcost'];
 			}
