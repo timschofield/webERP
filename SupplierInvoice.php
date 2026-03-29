@@ -19,7 +19,7 @@ include(__DIR__ . '/includes/header.php');
 
 include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 include(__DIR__ . '/includes/StockFunctions.php');
-include(__DIR__ . '/includes/GLFunctions.php');
+include_once(__DIR__ . '/includes/GLFunctions.php');
 
 if (isset($_POST['TranDate'])){$_POST['TranDate'] = ConvertSQLDate($_POST['TranDate']);}
 

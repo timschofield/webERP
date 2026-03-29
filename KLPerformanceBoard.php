@@ -5,14 +5,14 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('KL General Performance Board');
 include(__DIR__ . '/includes/header.php');
 
-include(__DIR__ . '/includes/GLFunctions.php');
+include_once(__DIR__ . '/includes/GLFunctions.php');
 include(__DIR__ . '/includes/KLDefines.php');
 include(__DIR__ . '/includes/KLBoards.php');
 include(__DIR__ . '/includes/KLPerformanceBoardFunctions.php');
 include(__DIR__ . '/includes/KLGeneralFunctions.php');
 include(__DIR__ . '/includes/KLPrices.php');
 include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
-include(__DIR__ . '/includes/KLGLFunctions.php');
+include_once(__DIR__ . '/includes/KLGLFunctions.php');
 
 $begintime = time_start();
 $NumberOfTestExecuted = 0;

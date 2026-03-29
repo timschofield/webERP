@@ -13,7 +13,7 @@ $Title = __('General Ledger Accounts');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLAccounts';
 include(__DIR__ . '/includes/header.php');
-include(__DIR__ . '/includes/GLFunctions.php');
+include_once(__DIR__ . '/includes/GLFunctions.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/transactions.png" title="', // Icon image.
 	$Title, '" /> ', // Icon title.

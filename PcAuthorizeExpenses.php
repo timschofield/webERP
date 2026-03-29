@@ -17,7 +17,7 @@ $BookMark = 'AuthorizeExpense';
 include(__DIR__ . '/includes/header.php');
 
 include(__DIR__ . '/includes/SQL_CommonFunctions.php');
-include(__DIR__ . '/includes/GLFunctions.php');
+include_once(__DIR__ . '/includes/GLFunctions.php');
 
 // KL RICARD
 include(__DIR__ . '/includes/KLDefines.php');
