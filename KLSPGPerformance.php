@@ -17,7 +17,8 @@ if ($KL_SystemAdmin) {
 
 }
 
-if ($KL_GeneralAffairsManager 
+if ($KL_SystemAdmin 
+	OR $KL_GeneralAffairsManager 
 	OR $KL_SalesTeamManager
 	OR $KL_ShopManager) {
 
@@ -25,7 +26,8 @@ if ($KL_GeneralAffairsManager
 	$NumberOfTestExecuted++;
 }
 
-if ($KL_SalesTeamManager
+if ($KL_SystemAdmin 
+	OR $KL_SalesTeamManager
 	OR $KL_ShopManager) {
 
 	SPGPerformanceWeekly();
@@ -41,7 +43,8 @@ if ($KL_SystemAdmin
 	$NumberOfTestExecuted++;
 }
 	
-if ($KL_GeneralAffairsManager 
+if ($KL_SystemAdmin 
+	OR $KL_GeneralAffairsManager 
 	OR $KL_ShopManager) {
 
 	SPGPerformanceAllShops(15, 30, 45);
