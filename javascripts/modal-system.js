@@ -6,6 +6,143 @@ function toggleModuleMenu() {
 	}
 }
 
+// Close module options modal
+function closeModuleModal() {
+	var modal = document.getElementById("module-options-modal");
+	var overlay = document.getElementById("module-modal-overlay");
+	if (modal) modal.classList.remove("active");
+	if (overlay) overlay.classList.remove("active");
+}
+
+// Show module options modal with menu items
+function showModuleModal(moduleLink) {
+	var menu = document.getElementById("module-menu");
+	if (menu) menu.classList.remove("active");
+	
+	var modal = document.getElementById("module-options-modal");
+	var overlay = document.getElementById("module-modal-overlay");
+	var modalTitle = document.getElementById("modal-module-title");
+	var tabsContainer = document.getElementById("modal-tabs-container");
+	
+	if (!modal || !overlay || !tabsContainer) return;
+	
+	// Set title
+	if (modalTitle && moduleNames[moduleLink]) {
+		modalTitle.textContent = moduleNames[moduleLink];
+	}
+	
+	// Get menu data for this module
+	var menuData = moduleMenuData[moduleLink] || {};
+	
+	// Clear tabs container
+	tabsContainer.innerHTML = '';
+	
+	// If no data, show message
+	if (!menuData || Object.keys(menuData).length === 0) {
+		tabsContainer.innerHTML = '<div class="no-items">No menu items available</div>';
+		modal.style.display = "block";
+		overlay.style.display = "block";
+		setTimeout(function() {
+			modal.classList.add("active");
+			overlay.classList.add("active");
+		}, 10);
+		return;
+	}
+	
+	// Create tabs with proper ordering
+	var tabButtons = document.createElement("div");
+	tabButtons.className = "tab-buttons";
+	
+	var tabContents = document.createElement("div");
+	tabContents.className = "tab-contents";
+	
+	// Collect sections in order
+	var sections = [];
+	for (var section in menuData) {
+		if (menuData.hasOwnProperty(section)) {
+			sections.push(section);
+		}
+	}
+	// Sort sections in a standard order
+	sections.sort(function(a, b) {
+		var order = {'Transactions': 0, 'Reports': 1, 'Maintenance': 2};
+		var aOrder = order[a] !== undefined ? order[a] : 999;
+		var bOrder = order[b] !== undefined ? order[b] : 999;
+		if (aOrder === bOrder) return a.localeCompare(b);
+		return aOrder - bOrder;
+	});
+	
+	var firstTab = true;
+	for (var s = 0; s < sections.length; s++) {
+		var section = sections[s];
+		var sectionData = menuData[section];
+		
+		// Create tab button
+		var button = document.createElement("button");
+		button.className = "tab-btn" + (firstTab ? " active" : "");
+		button.textContent = section;
+		var tabId = section.toLowerCase().replace(/ /g, "-") + "-tab";
+		button.onclick = (function(id) {
+			return function() {
+				switchTab(this, id);
+			};
+		})(tabId);
+		tabButtons.appendChild(button);
+		
+		// Create tab content
+		var tabContent = document.createElement("div");
+		tabContent.id = tabId;
+		tabContent.className = "tab-content" + (firstTab ? " active" : "");
+		
+		// Populate with menu items
+		if (sectionData.Caption && sectionData.URL) {
+			var html = "<ul class=\"module-menu-items\">";
+			for (var i = 0; i < sectionData.Caption.length; i++) {
+				html += "<li><a href=\"" + sectionData.URL[i] + "\">" + sectionData.Caption[i] + "</a></li>";
+			}
+			html += "</ul>";
+			tabContent.innerHTML = html;
+		}
+		
+		tabContents.appendChild(tabContent);
+		firstTab = false;
+	}
+	
+	tabsContainer.appendChild(tabButtons);
+	tabsContainer.appendChild(tabContents);
+	
+	// Re-attach listeners to new links
+	attachLinkListeners();
+	
+	// Show modal
+	modal.style.display = "block";
+	overlay.style.display = "block";
+	setTimeout(function() {
+		modal.classList.add("active");
+		overlay.classList.add("active");
+	}, 10);
+}
+
+function switchTab(button, tabId) {
+	// Remove active from all buttons and tabs
+	var tabsContainer = document.getElementById("modal-tabs-container");
+	if (tabsContainer) {
+		var buttons = tabsContainer.querySelectorAll(".tab-btn");
+		buttons.forEach(function(btn) {
+			btn.classList.remove("active");
+		});
+		var tabs = tabsContainer.querySelectorAll(".tab-content");
+		tabs.forEach(function(tab) {
+			tab.classList.remove("active");
+		});
+	}
+	
+	// Add active to clicked button and corresponding tab
+	button.classList.add("active");
+	var tab = document.getElementById(tabId);
+	if (tab) tab.classList.add("active");
+}
+
 // Open content modal with AJAX
 var openModals = {};
 var minimizedModals = {};

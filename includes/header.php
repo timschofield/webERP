@@ -312,7 +312,7 @@ $i = 0;
 if (isset($ModuleLink) && is_array($ModuleLink)) {
 	while ($i < count($ModuleLink)) {
 		if (isset($_SESSION['ModulesEnabled'][$i]) && $_SESSION['ModulesEnabled'][$i] == 1) {
-			echo '<li class="module-menu-item"><a href="', $ModuleLink[$i], '">', $ModuleList[$i], '</a></li>';
+			echo '<li class="module-menu-item"><a href="#" onclick="showModuleModal(\'', $ModuleLink[$i], '\'); return false;">', $ModuleList[$i], '</a></li>';
 		}
 		++$i;
 	}
@@ -320,6 +320,36 @@ if (isset($ModuleLink) && is_array($ModuleLink)) {
 
 echo '</ul></nav></div>';
 echo '<div id="module-menu-overlay" class="module-menu-overlay" onclick="toggleModuleMenu()"></div>';
+
+// Module options modal with menu items
+echo '<div id="module-options-modal" class="module-modal">';
+echo '<div class="module-modal-content">';
+echo '<div class="modal-header"><h2 id="modal-module-title">Module</h2><span class="modal-close" onclick="closeModuleModal()">&times;</span></div>';
+echo '<div class="modal-tabs" id="modal-tabs-container"></div>';
+echo '</div></div>';
+echo '<div id="module-modal-overlay" class="module-modal-overlay" onclick="closeModuleModal()"></div>';
+
+// Populate module menu data in JavaScript
+if (!isset($MenuItems)) {
+	$MenuItems = array();
+}
+
+echo '<script>
+var moduleMenuData = ' . json_encode($MenuItems) . ';
+var moduleNames = {};
+';
+
+$i = 0;
+if (isset($ModuleLink) && is_array($ModuleLink)) {
+	while ($i < count($ModuleLink)) {
+		if (isset($_SESSION['ModulesEnabled'][$i]) && $_SESSION['ModulesEnabled'][$i] == 1) {
+			echo "moduleNames['" . addslashes($ModuleLink[$i]) . "'] = '" . addslashes($ModuleList[$i]) . "';";
+		}
+		++$i;
+	}
+}
+
+echo '</script>';
 
 if ($ScriptName != 'index.php') {
 	echo '<section class="MainBody">';

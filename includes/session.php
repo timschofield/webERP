@@ -367,7 +367,7 @@ if (in_array(1, $_SESSION['AllowedPageSecurityTokens']) and count($_SESSION['All
 	$CustomerLogin = 0;
 }
 
-if ($FirstLogin and !$SupplierLogin and !$CustomerLogin and $_SESSION['ShowDashboard'] == 1) {
+if ($FirstLogin and !$SupplierLogin and !$CustomerLogin) {
 	header('Location: ' . htmlspecialchars_decode($RootPath) . '/Dashboard.php');
 }
 
