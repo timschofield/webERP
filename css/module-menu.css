@@ -397,6 +397,15 @@
 	overflow-x: hidden;
 	padding: 20px;
 	background-color: #f9f9f9;
+	pointer-events: auto;
+}
+
+.content-modal-body input,
+.content-modal-body select,
+.content-modal-body textarea,
+.content-modal-body button,
+.content-modal-body a {
+	pointer-events: auto;
 }
 
 .content-modal-overlay {

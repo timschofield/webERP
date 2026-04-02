@@ -44,7 +44,12 @@ if (!headers_sent()) {
 	trigger_error('Page output started before header file was included, this should not happen');
 }
 
-echo "<!DOCTYPE html>\n";
+// Check if this is an AJAX request for modal content
+$IsAjaxRequest = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+
+// Skip full HTML structure for AJAX requests
+if (!$IsAjaxRequest) {
+	echo "<!DOCTYPE html>\n";
 
 /// @todo handle better the case where $Language is not in xx-YY format (full spec is at https://www.rfc-editor.org/rfc/rfc5646.html)
 echo '<html lang="' , str_replace('_', '-', substr($Language, 0, 5)) , '">
@@ -62,6 +67,7 @@ echo '	<script async src="', $RootPath, '/javascripts/modal-system.js?version=1.
 echo '	<script>
 		localStorage.setItem("DateFormat", "', $_SESSION['DefaultDateFormat'], '");
 		localStorage.setItem("Theme", "', $_SESSION['Theme'], '");
+		window.RootPath = "', $RootPath, '";
 	</script>' , "\n";
 
 if (isset($_SESSION['Timeout'])) {
@@ -119,6 +125,8 @@ echo "\n</head>\n";
 
 echo '<body onload="initial();' . ($BodyOnLoad ?? '') . '">' . "\n";
 
+} // End of if (!$IsAjaxRequest)
+
 echo '<div class="help-bubble" id="help-bubble">
 		<link rel="stylesheet" type="text/css" href="'. $RootPath . '/doc/Manual/css/manual.css" />
 		<div class="help-header" id="help-header">
@@ -126,6 +134,8 @@ echo '<div class="help-bubble" id="help-bubble">
 		</div>
 		<div class="help-content" id="help-content"></div>
 	</div>';
+
+if (!$IsAjaxRequest) {
 
 echo '<header class="noPrint">';
 
@@ -162,7 +172,8 @@ echo '<div id="ExitIcon">
 		</a>
 	</div>';
 
-echo '<div id="mask"></div>
+if (!$IsAjaxRequest) {
+	echo '<div id="mask"></div>
 	<dialog id="logoutDialog">
 		<div id="DialogContainer">
 			<h3 id="LogoutDialogHeader">', __('Confirm Logout'), '</h3>
@@ -173,7 +184,8 @@ echo '<div id="mask"></div>
 			</div>
 		</div>
 	</dialog>';
-echo '<script async src="', $RootPath, '/javascripts/dialogs.js?version=1.0"></script>';
+	echo '<script async src="', $RootPath, '/javascripts/dialogs.js?version=1.0"></script>';
+} // End of if (!$IsAjaxRequest)
 
 // Fix: Ensure AllowedPageSecurityTokens is an array before counting
 if (isset($_SESSION['AllowedPageSecurityTokens']) && is_array($_SESSION['AllowedPageSecurityTokens']) && count($_SESSION['AllowedPageSecurityTokens']) > 1) {
@@ -300,6 +312,8 @@ if ($ScriptName == 'index.php') {
 }
 
 echo '</header>';
+
+} // End of if (!$IsAjaxRequest)
 
 // Add module menu HTML
 include_once($PathPrefix . 'includes/MainMenuLinksArray.php');

@@ -98,7 +98,12 @@ function showModuleModal(moduleLink) {
 		if (sectionData.Caption && sectionData.URL) {
 			var html = "<ul class=\"module-menu-items\">";
 			for (var i = 0; i < sectionData.Caption.length; i++) {
-				html += "<li><a href=\"" + sectionData.URL[i] + "\">" + sectionData.Caption[i] + "</a></li>";
+				var url = sectionData.URL[i];
+				// Ensure URL has the /webERP/ base path
+				if (!url.includes('/webERP/')) {
+					url = '/webERP/' + url;
+				}
+				html += "<li><a href=\"" + url + "\">" + sectionData.Caption[i] + "</a></li>";
 			}
 			html += "</ul>";
 			tabContent.innerHTML = html;
@@ -159,6 +164,18 @@ function openContentModal(url, title) {
 		document.body.appendChild(container);
 	}
 	
+	// Close the module menu modal when opening content modal
+	var moduleModal = document.getElementById("module-options-modal");
+	var moduleOverlay = document.getElementById("module-modal-overlay");
+	if (moduleModal) {
+		moduleModal.classList.remove("active");
+		if (moduleOverlay) moduleOverlay.classList.remove("active");
+		setTimeout(function() {
+			moduleModal.style.display = "none";
+			if (moduleOverlay) moduleOverlay.style.display = "none";
+		}, 300);
+	}
+	
 	var modal = document.createElement("div");
 	modal.id = modalId;
 	modal.className = "content-modal active";
@@ -167,30 +184,105 @@ function openContentModal(url, title) {
 		'<div class="content-modal-header">' +
 		'<h2 class="modal-title">' + title + '</h2>' +
 		'<div class="content-modal-controls">' +
-		'<button class="modal-btn" onclick="minimizeContentModal(\'' + modalId + '\')" title="Minimize">_</button>' +
-		'<button class="modal-btn" onclick="maximizeContentModal(\'' + modalId + '\')" title="Maximize">□</button>' +
-		'<span class="modal-close" onclick="closeContentModal(\'' + modalId + '\')">&times;</span>' +
+		'<button class="content-modal-minimize" title="Minimize">_</button>' +
+		'<button class="content-modal-maximize" title="Maximize">□</button>' +
+		'<span class="content-modal-close">&times;</span>' +
 		'</div></div>' +
 		'<div class="content-modal-body"><div class="loading-spinner">Loading...</div></div>' +
 		'</div>';
 	
 	container.appendChild(modal);
 	openModals[modalId] = {url: url, title: title, maximized: false};
+	
+	// Attach button event listeners IMMEDIATELY after DOM insertion
+	var minimizeBtn = modal.querySelector(".content-modal-minimize");
+	var maximizeBtn = modal.querySelector(".content-modal-maximize");
+	var closeBtn = modal.querySelector(".content-modal-close");
+	
+	if (minimizeBtn) {
+		minimizeBtn.onclick = function(e) {
+			e.stopPropagation();
+			minimizeContentModal(modalId);
+		};
+	}
+	if (maximizeBtn) {
+		maximizeBtn.onclick = function(e) {
+			e.stopPropagation();
+			maximizeContentModal(modalId);
+		};
+	}
+	if (closeBtn) {
+		closeBtn.onclick = function(e) {
+			e.stopPropagation();
+			closeContentModal(modalId);
+		};
+	}
+	
 	bringModalToFront(modalId);
 	
+	// Resolve relative URLs and ensure proper path construction
+	if (url) {
+		// If it's a full URL, extract just the pathname
+		if (url.startsWith('http')) {
+			try {
+				const urlObj = new URL(url);
+				url = urlObj.pathname + urlObj.search + urlObj.hash;
+			} catch (e) {
+				// If URL parsing fails, use as-is
+			}
+		}
+		
+		// Now url should be either:
+		// - /webERP/AccountSections.php (absolute path)
+		// - AccountSections.php (relative path from menu)
+		if (!url.startsWith('/')) {
+			// Relative URL - prepend RootPath
+			if (window.RootPath) {
+				url = window.RootPath + '/' + url;
+			} else {
+				url = '/' + url;
+			}
+		}
+		// If it starts with /, use as-is (already has full path)
+	}
+	
 	// Load content
+	console.log("Fetching URL:", url, "RootPath:", window.RootPath);
 	fetch(url, {
 		method: "GET",
 		headers: {"X-Requested-With": "XMLHttpRequest"},
 		credentials: "same-origin"
 	})
 	.then(response => {
-		if (!response.ok) throw new Error("Network response was not ok");
+		if (!response.ok) throw new Error("HTTP " + response.status + ": " + response.statusText);
 		return response.text();
 	})
 	.then(html => {
 		var modalBody = document.querySelector("#" + modalId + " .content-modal-body");
 		if (modalBody) {
+			// Strip the minimal HTML wrapper if present
+			var contentStart = html.indexOf('<body');
+			if (contentStart > -1) {
+				html = html.substring(contentStart);
+				var bodyEnd = html.indexOf('>');
+				if (bodyEnd > -1) {
+					html = html.substring(bodyEnd + 1);
+				}
+				var contentEnd = html.lastIndexOf('</body>');
+				if (contentEnd > -1) {
+					html = html.substring(0, contentEnd);
+				}
+			}
+			// Clear old event listeners by removing processed markers
+			var oldLinks = modalBody.querySelectorAll("a[data-ajax-processed]");
+			oldLinks.forEach(function(link) {
+				link.removeAttribute("data-ajax-processed");
+			});
+			var oldForms = modalBody.querySelectorAll("form[data-ajax-processed]");
+			oldForms.forEach(function(form) {
+				form.removeAttribute("data-ajax-processed");
+			});
+			
 			modalBody.innerHTML = html;
 			attachLinkListeners();
 			attachFormListeners();
@@ -201,8 +293,51 @@ function openContentModal(url, title) {
 		console.error("Error loading page:", error);
 		var modalBody = document.querySelector("#" + modalId + " .content-modal-body");
 		if (modalBody) {
-			modalBody.innerHTML = "<div class=\"error-message\">Error loading page.</div>";
+			modalBody.innerHTML = "<div class=\"error-message\">Error loading page: " + error.message + "</div>";
 		}
+	});
+}
+
+// Load content into an existing modal
+function loadContentIntoModal(url, modalId) {
+	var modal = document.getElementById(modalId);
+	if (!modal) return;
+	
+	var modalBody = modal.querySelector(".content-modal-body");
+	if (!modalBody) return;
+	
+	modalBody.innerHTML = "<div class=\"loading-message\">Loading...</div>";
+	
+	fetch(url + (url.indexOf("?") > -1 ? "&" : "?") + "ajax=1", {
+		headers: {"X-Requested-With": "XMLHttpRequest"}
+	})
+	.then(response => {
+		if (!response.ok) {
+			throw new Error("HTTP " + response.status);
+		}
+		return response.text();
+	})
+	.then(html => {
+		// Strip the HTML wrapper if present
+		var contentStart = html.indexOf('<body');
+		if (contentStart > -1) {
+			html = html.substring(contentStart);
+			var bodyEnd = html.indexOf('>');
+			if (bodyEnd > -1) {
+				html = html.substring(bodyEnd + 1);
+			}
+			var contentEnd = html.lastIndexOf('</body>');
+			if (contentEnd > -1) {
+				html = html.substring(0, contentEnd);
+			}
+		}
+		modalBody.innerHTML = html;
+		attachLinkListeners();
+		attachFormListeners();
+	})
+	.catch(error => {
+		console.error("Error loading page:", error);
+		modalBody.innerHTML = "<div class=\"error-message\">Error loading page: " + error.message + "</div>";
 	});
 }
 
@@ -352,8 +487,20 @@ function attachLinkListeners() {
 			}
 			
 			e.preventDefault();
-			var linkText = this.textContent || "Page";
-			openContentModal(href, linkText);
+			
+			// Check if we're inside a content modal
+			var currentModal = this.closest(".content-modal");
+			if (currentModal) {
+				// Reload content in the current modal
+				var modalId = currentModal.id;
+				console.log("Loading into existing modal:", modalId, "URL:", href);
+				loadContentIntoModal(href, modalId);
+			} else {
+				// Open new modal if not inside one
+				var linkText = this.textContent || "Page";
+				console.log("Opening new modal with URL:", href);
+				openContentModal(href, linkText);
+			}
 		});
 	});
 }
