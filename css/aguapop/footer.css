@@ -36,3 +36,29 @@ margin-right:15px;
 font-weight:bold;
 color:white;
 }
+/* Sticky footer styles */
+html {
+height: 100%;
+}
+
+body {
+display: flex;
+flex-direction: column;
+min-height: 100vh;
+margin: 0;
+}
+
+header {
+flex-shrink: 0;
+}
+
+.MainBody, section {
+flex: 1 0 auto;
+}
+
+footer {
+position: sticky;
+bottom: 0;
+margin-top: auto;
+flex-shrink: 0;
+}

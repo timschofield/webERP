@@ -89,3 +89,7 @@ background:url(images/descending.png) no-repeat right #4D4D4D;
 background-size:contain;
 transition-duration:0.5s;
 }
+/* Header layout adjustments for hamburger menu */
+header #Info:first-of-type {
+margin-left: 100px;
+}

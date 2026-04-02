@@ -72,3 +72,7 @@ margin-top:4px;
 -webkit-appearance: none;
 cursor:pointer;
 }
+/* Header layout adjustments for hamburger menu */
+header #Info:first-of-type {
+margin-left: 100px;
+}

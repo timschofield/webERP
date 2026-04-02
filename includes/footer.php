@@ -4,6 +4,9 @@
 include_once (__DIR__ . '/AuditScriptsFunctions.php');
 RecordRunningTime($Title, $_SESSION['UserID']);
 
+// Check if this is an AJAX request for modal content
+$IsAjaxRequest = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+
 echo '<div id="mask">
 		<div id="dialog"></div>
 	</div>';
@@ -71,6 +74,11 @@ if (isset($Messages) and count($Messages) > 0) {
 	echo '</div>';
 }
 
+// Messages are displayed above, now close the content container
+echo '</div>'; // Close ajax-content-container
+
+// Only output footer HTML if not an AJAX request
+if (!$IsAjaxRequest) {
 echo '</section>'; // BodyDiv
 echo '<footer class="noPrint">
 		<a class="FooterLogo" href="https://www.weberp.org" target="_blank">
@@ -79,5 +87,7 @@ echo '<footer class="noPrint">
 		<div class="FooterVersion">webERP ', __('version'), ' ', $_SESSION['VersionNumber'], '+', $_SESSION['DBVersion'], '</div>
 		<div class="FooterTime">', DisplayDateTime(), '</div>
 	  </footer>'; // FooterDiv
+echo '<div id="minimized-modals-bar" class="minimized-modals-bar" style="display:none;"></div>';
 echo '</body>';
 echo '</html>';
+} // End of if (!$IsAjaxRequest)

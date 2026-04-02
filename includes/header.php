@@ -57,6 +57,8 @@ echo '<html lang="' , str_replace('_', '-', substr($Language, 0, 5)) , '">
 	<meta name="viewport" content="width=device-width, initial-scale=1">';
 echo '	<script async src="', $RootPath, '/javascripts/MiscFunctions.js?version=1.0"></script>' , "\n";
 echo '	<script async src="', $RootPath, '/javascripts/manual.js"></script>' , "\n";
+echo '	<link href="', $RootPath, '/css/module-menu.css?version=1.0" rel="stylesheet" type="text/css" media="screen" />' , "\n";
+echo '	<script async src="', $RootPath, '/javascripts/modal-system.js?version=1.0"></script>' , "\n";
 echo '	<script>
 		localStorage.setItem("DateFormat", "', $_SESSION['DefaultDateFormat'], '");
 		localStorage.setItem("Theme", "', $_SESSION['Theme'], '");
@@ -126,6 +128,10 @@ echo '<div class="help-bubble" id="help-bubble">
 	</div>';
 
 echo '<header class="noPrint">';
+
+echo '<div id="hamburger-menu" class="hamburger-icon" onclick="toggleModuleMenu()">';
+echo '<div class="hamburger-line"></div><div class="hamburger-line"></div><div class="hamburger-line"></div>';
+echo '</div>';
 
 $CompanyLogo = '';
 /// @todo move the scanning for a logo file to a dedicated function
@@ -294,6 +300,26 @@ if ($ScriptName == 'index.php') {
 }
 
 echo '</header>';
+
+// Add module menu HTML
+include_once($PathPrefix . 'includes/MainMenuLinksArray.php');
+
+echo '<div id="module-menu" class="module-slide-menu">';
+echo '<div class="module-menu-header"><h3>', __('Modules'), '</h3><div class="close-menu" onclick="toggleModuleMenu()">×</div></div>';
+echo '<nav class="module-menu-content"><ul>';
+
+$i = 0;
+if (isset($ModuleLink) && is_array($ModuleLink)) {
+	while ($i < count($ModuleLink)) {
+		if (isset($_SESSION['ModulesEnabled'][$i]) && $_SESSION['ModulesEnabled'][$i] == 1) {
+			echo '<li class="module-menu-item"><a href="', $ModuleLink[$i], '">', $ModuleList[$i], '</a></li>';
+		}
+		++$i;
+	}
+}
+
+echo '</ul></nav></div>';
+echo '<div id="module-menu-overlay" class="module-menu-overlay" onclick="toggleModuleMenu()"></div>';
 
 if ($ScriptName != 'index.php') {
 	echo '<section class="MainBody">';

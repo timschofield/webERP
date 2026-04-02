@@ -65,3 +65,7 @@ header #favourites:hover {
 box-shadow:2px 2px 3px #86C3D7, -2px -2px 3px #383878;
 cursor:pointer;
 }
+/* Header layout adjustments for hamburger menu */
+header #Info:first-of-type {
+margin-left: 100px;
+}
