@@ -157,7 +157,7 @@ if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/logo.png')) {
 
 echo '<div id="Info" data-title="', stripslashes($_SESSION['CompanyRecord']['coyname']), '">';
 if ($CompanyLogo != '')
-	echo '	<img src="', $CompanyLogo, '" alt="', stripslashes($_SESSION['CompanyRecord']['coyname']), '"/>';
+	echo '	<img id="CompanyLogo" src="', $CompanyLogo, '" alt="', stripslashes($_SESSION['CompanyRecord']['coyname']), '"/>';
 echo '</div>';
 
 echo '<div id="Info">
