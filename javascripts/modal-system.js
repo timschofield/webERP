@@ -1,8 +1,19 @@
 // Hamburger menu toggle
 function toggleModuleMenu() {
 	var menu = document.getElementById("module-menu");
+	var hamburger = document.querySelector(".hamburger-icon");
+	
 	if (menu) {
-		menu.classList.toggle("active");
+		var isActive = menu.classList.toggle("active");
+		
+		// Hide hamburger when menu is open, show when closed
+		if (hamburger) {
+			if (isActive) {
+				hamburger.style.display = "none";
+			} else {
+				hamburger.style.display = "flex";
+			}
+		}
 	}
 }
 
@@ -12,12 +23,26 @@ function closeModuleModal() {
 	var overlay = document.getElementById("module-modal-overlay");
 	if (modal) modal.classList.remove("active");
 	if (overlay) overlay.classList.remove("active");
+	
+	// Hide the elements after animation completes
+	setTimeout(function() {
+		if (modal) modal.style.display = "none";
+		if (overlay) overlay.style.display = "none";
+	}, 300);
 }
 
 // Show module options modal with menu items
 function showModuleModal(moduleLink) {
 	var menu = document.getElementById("module-menu");
-	if (menu) menu.classList.remove("active");
+	var hamburger = document.querySelector(".hamburger-icon");
+	
+	if (menu) {
+		menu.classList.remove("active");
+		// Show hamburger when menu closes
+		if (hamburger) {
+			hamburger.style.display = "flex";
+		}
+	}
 	
 	var modal = document.getElementById("module-options-modal");
 	var overlay = document.getElementById("module-modal-overlay");

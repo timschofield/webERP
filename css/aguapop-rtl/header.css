@@ -22,6 +22,9 @@ vertical-align:middle;
 header #Info a {
 color:white;
 }
+header #CompanyLogo {
+margin-left:35px;
+}
 header #ActionIcon {
 display:inline;
 float:left;
