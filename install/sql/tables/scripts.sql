@@ -3,4 +3,4 @@ CREATE TABLE `scripts` (
   `pagesecurity` int NOT NULL DEFAULT '1',
   `description` text NOT NULL,
   PRIMARY KEY (`script`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  COLLATE=utf8mb4_general_ci;

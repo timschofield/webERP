@@ -15,4 +15,4 @@ CREATE TABLE `reportcolumns` (
   `constant` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`reportid`,`colno`),
   CONSTRAINT `reportcolumns_ibfk_1` FOREIGN KEY (`reportid`) REFERENCES `reportheaders` (`reportid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  COLLATE=utf8mb4_general_ci;

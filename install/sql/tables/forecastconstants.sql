@@ -14,4 +14,4 @@ CREATE TABLE IF NOT EXISTS `forecastconstants` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `stock_location` (`stockid`,`locationcode`),
   KEY `stockid` (`stockid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  COLLATE=utf8mb4_general_ci;

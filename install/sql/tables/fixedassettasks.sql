@@ -9,4 +9,4 @@ CREATE TABLE `fixedassettasks` (
   PRIMARY KEY (`taskid`),
   KEY `assetid` (`assetid`),
   KEY `userresponsible` (`userresponsible`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  COLLATE=utf8mb4_general_ci;

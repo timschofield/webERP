@@ -8,4 +8,4 @@ CREATE TABLE `discountmatrix` (
   KEY `DiscountCategory` (`discountcategory`),
   KEY `SalesType` (`salestype`),
   CONSTRAINT `discountmatrix_ibfk_1` FOREIGN KEY (`salestype`) REFERENCES `salestypes` (`typeabbrev`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  COLLATE=utf8mb4_general_ci;

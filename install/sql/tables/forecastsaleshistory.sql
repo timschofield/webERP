@@ -14,4 +14,4 @@ CREATE TABLE IF NOT EXISTS `forecastsaleshistory` (
   KEY `stockid` (`stockid`,`locationcode`,`perioddate`),
   KEY `perioddate` (`perioddate`),
   KEY `composite` (`stockid`,`customertype`,`area`,`perioddate`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  COLLATE=utf8mb4_general_ci;

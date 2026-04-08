@@ -5,4 +5,4 @@ CREATE TABLE `woserialnos` (
   `quantity` double NOT NULL DEFAULT '1',
   `qualitytext` text NOT NULL,
   PRIMARY KEY (`wo`,`stockid`,`serialno`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  COLLATE=utf8mb4_general_ci;

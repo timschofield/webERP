@@ -11,4 +11,4 @@ CREATE TABLE `stockcatproperties` (
   PRIMARY KEY (`stkcatpropid`),
   KEY `categoryid` (`categoryid`),
   CONSTRAINT `stockcatproperties_ibfk_1` FOREIGN KEY (`categoryid`) REFERENCES `stockcategory` (`categoryid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  COLLATE=utf8mb4_general_ci;

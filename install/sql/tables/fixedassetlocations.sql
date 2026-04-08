@@ -3,4 +3,4 @@ CREATE TABLE `fixedassetlocations` (
   `locationdescription` char(20) NOT NULL DEFAULT '',
   `parentlocationid` char(6) DEFAULT '',
   PRIMARY KEY (`locationid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  COLLATE=utf8mb4_general_ci;

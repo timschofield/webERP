@@ -4,4 +4,4 @@ CREATE TABLE `systypes` (
   `typeno` int NOT NULL DEFAULT '1',
   PRIMARY KEY (`typeid`),
   KEY `TypeNo` (`typeno`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  COLLATE=utf8mb4_general_ci;

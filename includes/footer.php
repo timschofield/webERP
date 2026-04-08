@@ -12,6 +12,10 @@ Global $Messages;
 
 // log the script running time
 include_once (__DIR__ . '/AuditScriptsFunctions.php');
+
+if (!isset($Title)) {
+    $Title = "Undefined Title";
+}
 RecordRunningTime($Title, $_SESSION['UserID']);
 
 echo '<div id="mask">
