@@ -71,7 +71,7 @@ echo '	<script>
 		localStorage.setItem("Theme", "', $_SESSION['Theme'], '");
 	</script>' , "\n";
 
-if (isset($_SESSION['Timeout'])) {
+if (isset($_SESSION['Timeout']) and $_SESSION['Timeout'] > 0) {
 	echo '	<meta http-equiv="refresh" content="' . (60 * $_SESSION['Timeout']) . ';url=' . $RootPath . '/Logout.php" />', "\n";
 }
 

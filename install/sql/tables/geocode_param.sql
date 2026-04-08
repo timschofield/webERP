@@ -7,4 +7,4 @@ CREATE TABLE `geocode_param` (
   `map_width` varchar(10) NOT NULL DEFAULT '',
   `map_host` varchar(50) NOT NULL DEFAULT '',
   PRIMARY KEY (`geocodeid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  COLLATE=utf8mb4_general_ci;

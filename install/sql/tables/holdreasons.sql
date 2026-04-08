@@ -4,4 +4,4 @@ CREATE TABLE `holdreasons` (
   `dissallowinvoices` tinyint NOT NULL DEFAULT '-1',
   PRIMARY KEY (`reasoncode`),
   KEY `ReasonDescription` (`reasondescription`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  COLLATE=utf8mb4_general_ci;

@@ -3,4 +3,4 @@ CREATE TABLE `relateditems` (
   `related` varchar(64) NOT NULL,
   PRIMARY KEY (`stockid`,`related`),
   UNIQUE KEY `Related` (`related`,`stockid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  COLLATE=utf8mb4_general_ci;

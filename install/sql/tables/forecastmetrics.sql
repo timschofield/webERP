@@ -13,4 +13,4 @@ CREATE TABLE IF NOT EXISTS `forecastmetrics` (
   UNIQUE KEY `forecast_period` (`forecastid`,`perioddate`),
   KEY `forecastid` (`forecastid`),
   CONSTRAINT `forecastmetrics_ibfk_1` FOREIGN KEY (`forecastid`) REFERENCES `forecastheader` (`forecastid`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  COLLATE=utf8mb4_general_ci;

@@ -5,4 +5,4 @@ CREATE TABLE `modules` (
   `modulename` varchar(25) NOT NULL DEFAULT '',
   `sequence` int NOT NULL DEFAULT '1',
   PRIMARY KEY (`secroleid`,`modulelink`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  COLLATE=utf8mb4_general_ci;

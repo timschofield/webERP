@@ -18,4 +18,4 @@ CREATE TABLE `sampleresults` (
   KEY `sampleid` (`sampleid`),
   KEY `testid` (`testid`),
   CONSTRAINT `sampleresults_ibfk_1` FOREIGN KEY (`testid`) REFERENCES `qatests` (`testid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  COLLATE=utf8mb4_general_ci;

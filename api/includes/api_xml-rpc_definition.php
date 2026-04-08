@@ -78,9 +78,9 @@ function xmlrpc_Login($request)
 	$encoder = new Encoder();
 	$rtn = new Response($encoder->encode(
 		LoginAPI(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval()
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval())
 		)));
 
 	ob_end_flush();
@@ -139,12 +139,12 @@ function xmlrpc_InsertCustomer($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(InsertCustomer(
-			$encoder->decode($request->getParam(0)),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval()
+			SanitizeInput($encoder->decode($request->getParam(0))),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval())
 		)));
 	} else {
-		$rtn = new Response($encoder->encode(InsertCustomer($encoder->decode($request->getParam(0)), '', '')));
+		$rtn = new Response($encoder->encode(InsertCustomer(SanitizeInput($encoder->decode($request->getParam(0))), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -179,11 +179,11 @@ function xmlrpc_InsertBranch($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(InsertBranch(
-			$encoder->decode($request->getParam(0)),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($encoder->decode($request->getParam(0))),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(InsertBranch($encoder->decode($request->getParam(0)), '', '')));
+		$rtn = new Response($encoder->encode(InsertBranch(SanitizeInput($encoder->decode($request->getParam(0))), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -219,11 +219,11 @@ function xmlrpc_ModifyCustomer($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(ModifyCustomer(
-			$encoder->decode($request->getParam(0)),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($encoder->decode($request->getParam(0))),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(ModifyCustomer($encoder->decode($request->getParam(0)), '', '')));
+		$rtn = new Response($encoder->encode(ModifyCustomer(SanitizeInput($encoder->decode($request->getParam(0))), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -259,11 +259,11 @@ function xmlrpc_ModifyBranch($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(ModifyBranch(
-			$encoder->decode($request->getParam(0)),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($encoder->decode($request->getParam(0))),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(ModifyBranch($encoder->decode($request->getParam(0)), '', '')));
+		$rtn = new Response($encoder->encode(ModifyBranch(SanitizeInput($encoder->decode($request->getParam(0))), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -295,11 +295,11 @@ function xmlrpc_GetCustomerBranchCodes($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(GetCustomerBranchCodes(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(GetCustomerBranchCodes($request->getParam(0)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(GetCustomerBranchCodes(SanitizeInput($request->getParam(0)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -335,13 +335,13 @@ function xmlrpc_GetCustomerBranch($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 4) {
 		$rtn = new Response($encoder->encode(GetCustomerBranch(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval(),
-			$request->getParam(3)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()),
+			SanitizeInput($request->getParam(3)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(GetCustomerBranch($request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(GetCustomerBranch(SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -373,11 +373,11 @@ function xmlrpc_GetCustomer($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(GetCustomer(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(GetCustomer($request->getParam(0)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(GetCustomer(SanitizeInput($request->getParam(0)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -413,13 +413,13 @@ function xmlrpc_SearchCustomers($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 4) {
 		$rtn = new Response($encoder->encode(SearchCustomers(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval(),
-			$request->getParam(3)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()),
+			SanitizeInput($request->getParam(3)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(SearchCustomers($request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(SearchCustomers(SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -449,7 +449,7 @@ function xmlrpc_GetCurrencyList($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 2) {
 		$rtn = new Response($encoder->encode(GetCurrencyList(
-			$request->getParam(0)->scalarval(), $request->getParam(1)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()), SanitizeInput($request->getParam(1)->scalarval()))));
 	} else {
 		$rtn = new Response($encoder->encode(GetCurrencyList('', '')));
 	}
@@ -481,11 +481,11 @@ function xmlrpc_GetCurrencyDetails($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(GetCurrencyDetails(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(GetCurrencyDetails($request->getParam(0)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(GetCurrencyDetails(SanitizeInput($request->getParam(0)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -515,8 +515,8 @@ function xmlrpc_GetSalesTypeList($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 2) {
 		$rtn = new Response($encoder->encode(GetSalesTypeList(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()))));
 	} else {
 		$rtn = new Response($encoder->encode(GetSalesTypeList('', '')));
 	}
@@ -548,11 +548,11 @@ function xmlrpc_GetSalesTypeDetails($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(GetSalesTypeDetails(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(GetSalesTypeDetails($request->getParam(0)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(GetSalesTypeDetails(SanitizeInput($request->getParam(0)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -587,11 +587,11 @@ function xmlrpc_InsertSalesType($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(InsertSalesType(
-			$encoder->decode($request->getParam(0)),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($encoder->decode($request->getParam(0))),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(InsertSalesType($encoder->decode($request->getParam(0)), '', '')));
+		$rtn = new Response($encoder->encode(InsertSalesType(SanitizeInput($encoder->decode($request->getParam(0))), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -619,7 +619,7 @@ function xmlrpc_GetHoldReasonList($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 2) {
 		$rtn = new Response($encoder->encode(GetHoldReasonList(
-			$request->getParam(0)->scalarval(), $request->getParam(1)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()), SanitizeInput($request->getParam(1)->scalarval()))));
 	} else {
 		$rtn = new Response($encoder->encode(GetHoldReasonList('', '')));
 	}
@@ -651,9 +651,9 @@ function xmlrpc_GetHoldReasonDetails($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(GetHoldReasonDetails(
-			$request->getParam(0)->scalarval(), $request->getParam(1)->scalarval(), $request->getParam(2)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()), SanitizeInput($request->getParam(1)->scalarval()), SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(GetHoldReasonDetails($request->getParam(0)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(GetHoldReasonDetails(SanitizeInput($request->getParam(0)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -681,8 +681,8 @@ function xmlrpc_GetPaymentTermsList($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 2) {
 		$rtn = new Response($encoder->encode(GetPaymentTermsList(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()))));
 	} else {
 		$rtn = new Response($encoder->encode(GetPaymentTermsList('', '')));
 	}
@@ -714,11 +714,11 @@ function xmlrpc_GetPaymentTermsDetails($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(GetPaymentTermsDetails(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(GetPaymentTermsDetails($request->getParam(0)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(GetPaymentTermsDetails(SanitizeInput($request->getParam(0)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -746,7 +746,7 @@ function xmlrpc_GetPaymentMethodsList($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 2) {
 		$rtn = new Response($encoder->encode(GetPaymentMethodsList(
-			$request->getParam(0)->scalarval(), $request->getParam(1)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()), SanitizeInput($request->getParam(1)->scalarval()))));
 	} else {
 		$rtn = new Response($encoder->encode(GetPaymentMethodsList('', '')));
 	}
@@ -778,11 +778,11 @@ function xmlrpc_GetPaymentMethodDetails($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(GetPaymentMethodDetails(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(GetPaymentMethodDetails($request->getParam(0)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(GetPaymentMethodDetails(SanitizeInput($request->getParam(0)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -814,11 +814,11 @@ function xmlrpc_InsertStockItem($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(InsertStockItem(
-			$encoder->decode($request->getParam(0)),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($encoder->decode($request->getParam(0))),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(InsertStockItem($encoder->decode($request->getParam(0)), '', '')));
+		$rtn = new Response($encoder->encode(InsertStockItem(SanitizeInput($encoder->decode($request->getParam(0))), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -850,11 +850,11 @@ function xmlrpc_ModifyStockItem($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(ModifyStockItem(
-			$encoder->decode($request->getParam(0)),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($encoder->decode($request->getParam(0))),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(ModifyStockItem($encoder->decode($request->getParam(0)), '', '')));
+		$rtn = new Response($encoder->encode(ModifyStockItem(SanitizeInput($encoder->decode($request->getParam(0))), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -887,11 +887,11 @@ function xmlrpc_GetStockItem($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(GetStockItem(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(GetStockItem($request->getParam(0)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(GetStockItem(SanitizeInput($request->getParam(0)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -923,13 +923,13 @@ function xmlrpc_SearchStockItems($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 4) {
 		$rtn = new Response($encoder->encode(SearchStockItems(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval(),
-			$request->getParam(3)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()),
+			SanitizeInput($request->getParam(3)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(SearchStockItems($request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(SearchStockItems(SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()), '', '')));
 	}
 	//ob_end_flush();
 	return $rtn;
@@ -959,11 +959,11 @@ function xmlrpc_GetStockBalance($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(GetStockBalance(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(GetStockBalance($request->getParam(0)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(GetStockBalance(SanitizeInput($request->getParam(0)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -993,11 +993,11 @@ function xmlrpc_GetStockReorderLevel($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(GetStockReorderLevel(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(GetStockReorderLevel($request->getParam(0)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(GetStockReorderLevel(SanitizeInput($request->getParam(0)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -1031,15 +1031,15 @@ function xmlrpc_SetStockReorderLevel($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 5) {
 		$rtn = new Response($encoder->encode(SetStockReorderLevel(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval(),
-			$request->getParam(3)->scalarval(),
-			$request->getParam(4)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()),
+			SanitizeInput($request->getParam(3)->scalarval()),
+			SanitizeInput($request->getParam(4)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(SetStockReorderLevel($request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(SetStockReorderLevel(SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -1069,11 +1069,11 @@ function xmlrpc_GetAllocatedStock($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(GetAllocatedStock(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(GetAllocatedStock($request->getParam(0)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(GetAllocatedStock(SanitizeInput($request->getParam(0)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -1103,11 +1103,11 @@ function xmlrpc_GetOrderedStock($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(GetOrderedStock(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(GetOrderedStock($request->getParam(0)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(GetOrderedStock(SanitizeInput($request->getParam(0)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -1143,18 +1143,18 @@ function xmlrpc_SetStockPrice($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 6) {
 		$rtn = new Response($encoder->encode(SetStockPrice(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval(),
-			$request->getParam(3)->scalarval(),
-			$request->getParam(4)->scalarval(),
-			$request->getParam(5)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()),
+			SanitizeInput($request->getParam(3)->scalarval()),
+			SanitizeInput($request->getParam(4)->scalarval()),
+			SanitizeInput($request->getParam(5)->scalarval()))));
 	} else {
 		$rtn = new Response($encoder->encode(SetStockPrice(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval(),
-			$request->getParam(3)->scalarval(), '', '')));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()),
+			SanitizeInput($request->getParam(3)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -1188,15 +1188,15 @@ function xmlrpc_GetStockPrice($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 5) {
 		$rtn = new Response($encoder->encode(GetStockPrice(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval(),
-			$request->getParam(3)->scalarval(),
-			$request->getParam(4)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()),
+			SanitizeInput($request->getParam(3)->scalarval()),
+			SanitizeInput($request->getParam(4)->scalarval()))));
 	} else { //only 3 parameters if login already in session
-		$rtn = new Response($encoder->encode(GetStockPrice($request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(GetStockPrice(SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -1228,11 +1228,11 @@ function xmlrpc_InsertDebtorReceipt($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(InsertDebtorReceipt(
-			$encoder->decode($request->getParam(0)),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($encoder->decode($request->getParam(0))),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(InsertDebtorReceipt($encoder->decode($request->getParam(0)), '', '')));
+		$rtn = new Response($encoder->encode(InsertDebtorReceipt(SanitizeInput($encoder->decode($request->getParam(0))), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -1264,11 +1264,11 @@ function xmlrpc_AllocateTrans($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(AllocateTrans(
-			$encoder->decode($request->getParam(0)),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($encoder->decode($request->getParam(0))),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(AllocateTrans($encoder->decode($request->getParam(0)), '', '')));
+		$rtn = new Response($encoder->encode(AllocateTrans(SanitizeInput($encoder->decode($request->getParam(0))), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -1302,13 +1302,13 @@ function xmlrpc_CreateCreditNote($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 4) {
 		$rtn = new Response($encoder->encode(CreateCreditNote(
-			$encoder->decode($request->getParam(0)),
-			$encoder->decode($request->getParam(1)),
-			$request->getParam(2)->scalarval(),
-			$request->getParam(3)->scalarval())));
+			SanitizeInput($encoder->decode($request->getParam(0))),
+			SanitizeInput($encoder->decode($request->getParam(1))),
+			SanitizeInput($request->getParam(2)->scalarval()),
+			SanitizeInput($request->getParam(3)->scalarval()))));
 	} else {
 		$rtn = new Response($encoder->encode(CreateCreditNote(
-			$encoder->decode($request->getParam(0)), $encoder->decode($request->getParam(1)), '', '')));
+			SanitizeInput($encoder->decode($request->getParam(0))), SanitizeInput($encoder->decode($request->getParam(1))), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -1346,11 +1346,11 @@ function xmlrpc_InsertSalesInvoice($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(InsertSalesInvoice(
-			$encoder->decode($request->getParam(0)),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($encoder->decode($request->getParam(0))),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(InsertSalesInvoice($encoder->decode($request->getParam(0)), '', '')));
+		$rtn = new Response($encoder->encode(InsertSalesInvoice(SanitizeInput($encoder->decode($request->getParam(0))), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -1379,11 +1379,11 @@ function xmlrpc_InsertSalesCredit($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(InsertSalesCredit(
-			$encoder->decode($request->getParam(0)),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($encoder->decode($request->getParam(0))),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(InsertSalesCredit($encoder->decode($request->getParam(0)), '', '')));
+		$rtn = new Response($encoder->encode(InsertSalesCredit(SanitizeInput($encoder->decode($request->getParam(0))), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -1417,11 +1417,11 @@ function xmlrpc_InsertSalesOrderHeader($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(InsertSalesOrderHeader(
-			$encoder->decode($request->getParam(0)),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($encoder->decode($request->getParam(0))),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(InsertSalesOrderHeader($encoder->decode($request->getParam(0)), '', '')));
+		$rtn = new Response($encoder->encode(InsertSalesOrderHeader(SanitizeInput($encoder->decode($request->getParam(0))), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -1451,11 +1451,11 @@ function xmlrpc_InvoiceSalesOrder($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(InvoiceSalesOrder(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else { //do it with the current login
-		$rtn = new Response($encoder->encode(InvoiceSalesOrder($request->getParam(0)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(InvoiceSalesOrder(SanitizeInput($request->getParam(0)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -1488,11 +1488,11 @@ function xmlrpc_ModifySalesOrderHeader($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(ModifySalesOrderHeader(
-			$encoder->decode($request->getParam(0)),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($encoder->decode($request->getParam(0))),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(ModifySalesOrderHeader($encoder->decode($request->getParam(0)), '', '')));
+		$rtn = new Response($encoder->encode(ModifySalesOrderHeader(SanitizeInput($encoder->decode($request->getParam(0))), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -1526,11 +1526,11 @@ function xmlrpc_InsertSalesOrderLine($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(InsertSalesOrderLine(
-			$encoder->decode($request->getParam(0)),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($encoder->decode($request->getParam(0))),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(InsertSalesOrderLine($encoder->decode($request->getParam(0)), '', '')));
+		$rtn = new Response($encoder->encode(InsertSalesOrderLine(SanitizeInput($encoder->decode($request->getParam(0))), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -1564,11 +1564,11 @@ function xmlrpc_ModifySalesOrderLine($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(ModifySalesOrderLine(
-			$encoder->decode($request->getParam(0)),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($encoder->decode($request->getParam(0))),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(ModifySalesOrderLine($encoder->decode($request->getParam(0)), '', '')));
+		$rtn = new Response($encoder->encode(ModifySalesOrderLine(SanitizeInput($encoder->decode($request->getParam(0))), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -1597,11 +1597,11 @@ function xmlrpc_InsertGLAccount($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(InsertGLAccount(
-			$encoder->decode($request->getParam(0)),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($encoder->decode($request->getParam(0))),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(InsertGLAccount($encoder->decode($request->getParam(0)), '', '')));
+		$rtn = new Response($encoder->encode(InsertGLAccount(SanitizeInput($encoder->decode($request->getParam(0))), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -1632,11 +1632,11 @@ function xmlrpc_InsertGLAccountSection($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(InsertGLAccountSection(
-			$encoder->decode($request->getParam(0)),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($encoder->decode($request->getParam(0))),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(InsertGLAccountSection($encoder->decode($request->getParam(0)), '', '')));
+		$rtn = new Response($encoder->encode(InsertGLAccountSection(SanitizeInput($encoder->decode($request->getParam(0))), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -1667,11 +1667,11 @@ function xmlrpc_InsertGLAccountGroup($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(InsertGLAccountGroup(
-			$encoder->decode($request->getParam(0)),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($encoder->decode($request->getParam(0))),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(InsertGLAccountGroup($encoder->decode($request->getParam(0)), '', '')));
+		$rtn = new Response($encoder->encode(InsertGLAccountGroup(SanitizeInput($encoder->decode($request->getParam(0))), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -1699,8 +1699,8 @@ function xmlrpc_GetLocationList($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 2) {
 		$rtn = new Response($encoder->encode(GetLocationList(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()))));
 	} else {
 		$rtn = new Response($encoder->encode(GetLocationList('', '')));
 	}
@@ -1732,11 +1732,11 @@ function xmlrpc_GetLocationDetails($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(GetLocationDetails(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(GetLocationDetails($request->getParam(0)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(GetLocationDetails(SanitizeInput($request->getParam(0)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -1764,8 +1764,8 @@ function xmlrpc_GetShipperList($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 2) {
 		$rtn = new Response($encoder->encode(GetShipperList(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()))));
 	} else {
 		$rtn = new Response($encoder->encode(GetShipperList('', '')));
 	}
@@ -1797,11 +1797,11 @@ function xmlrpc_GetShipperDetails($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(GetShipperDetails(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(GetShipperDetails($request->getParam(0)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(GetShipperDetails(SanitizeInput($request->getParam(0)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -1829,8 +1829,8 @@ function xmlrpc_GetSalesAreasList($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 2) {
 		$rtn = new Response($encoder->encode(GetSalesAreasList(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()))));
 	} else {
 		$rtn = new Response($encoder->encode(GetSalesAreasList('', '')));
 	}
@@ -1862,11 +1862,11 @@ function xmlrpc_GetSalesAreaDetails($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(GetSalesAreaDetails(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(GetSalesAreaDetails($request->getParam(0)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(GetSalesAreaDetails(SanitizeInput($request->getParam(0)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -1896,11 +1896,11 @@ function xmlrpc_GetSalesAreaDetailsFromName($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(GetSalesAreaDetailsFromName(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(GetSalesAreaDetailsFromName($request->getParam(0)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(GetSalesAreaDetailsFromName(SanitizeInput($request->getParam(0)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -1931,11 +1931,11 @@ function xmlrpc_InsertSalesArea($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(InsertSalesArea(
-			$encoder->decode($request->getParam(0)),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($encoder->decode($request->getParam(0))),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(InsertSalesArea($encoder->decode($request->getParam(0)), '', '')));
+		$rtn = new Response($encoder->encode(InsertSalesArea(SanitizeInput($encoder->decode($request->getParam(0))), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -1963,8 +1963,8 @@ function xmlrpc_GetSalesmanList($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 2) {
 		$rtn = new Response($encoder->encode(GetSalesmanList(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()))));
 	} else {
 		$rtn = new Response($encoder->encode(GetSalesmanList('', '')));
 	}
@@ -1996,11 +1996,11 @@ function xmlrpc_GetSalesmanDetails($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(GetSalesmanDetails(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(GetSalesmanDetails($request->getParam(0)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(GetSalesmanDetails(SanitizeInput($request->getParam(0)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -2030,11 +2030,11 @@ function xmlrpc_GetSalesmanDetailsFromName($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(GetSalesmanDetailsFromName(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(GetSalesmanDetailsFromName($request->getParam(0)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(GetSalesmanDetailsFromName(SanitizeInput($request->getParam(0)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -2065,11 +2065,11 @@ function xmlrpc_InsertSalesman($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(InsertSalesman(
-			$encoder->decode($request->getParam(0)),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($encoder->decode($request->getParam(0))),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(InsertSalesman($encoder->decode($request->getParam(0)), '', '')));
+		$rtn = new Response($encoder->encode(InsertSalesman(SanitizeInput($encoder->decode($request->getParam(0))), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -2097,8 +2097,8 @@ function xmlrpc_GetTaxGroupList($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 2) {
 		$rtn = new Response($encoder->encode(GetTaxGroupList(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()))));
 	} else {
 		$rtn = new Response($encoder->encode(GetTaxGroupList('', '')));
 	}
@@ -2130,11 +2130,11 @@ function xmlrpc_GetTaxGroupDetails($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(GetTaxGroupDetails
-		($request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+		(SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(GetTaxGroupDetails($request->getParam(0)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(GetTaxGroupDetails(SanitizeInput($request->getParam(0)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -2158,8 +2158,8 @@ function xmlrpc_GetTaxAuthorityList($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 2) {
 		$rtn = new Response($encoder->encode(GetTaxAuthorityList(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()))));
 	} else {
 		$rtn = new Response($encoder->encode(GetTaxAuthorityList('', '')));
 	}
@@ -2191,11 +2191,11 @@ function xmlrpc_GetTaxAuthorityDetails($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(GetTaxAuthorityDetails(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(GetTaxAuthorityDetails($request->getParam(0)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(GetTaxAuthorityDetails(SanitizeInput($request->getParam(0)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -2225,11 +2225,11 @@ function xmlrpc_GetTaxAuthorityRates($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(GetTaxAuthorityRates(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(GetTaxAuthorityRates($request->getParam(0)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(GetTaxAuthorityRates(SanitizeInput($request->getParam(0)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -2259,11 +2259,11 @@ function xmlrpc_GetTaxGroupTaxes($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(GetTaxGroupTaxes(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(GetTaxGroupTaxes($request->getParam(0)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(GetTaxGroupTaxes(SanitizeInput($request->getParam(0)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -2291,8 +2291,8 @@ function xmlrpc_GetCustomerTypeList($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 2) {
 		$rtn = new Response($encoder->encode(GetCustomerTypeList(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()))));
 	} else {
 		$rtn = new Response($encoder->encode(GetCustomerTypeList('', '')));
 	}
@@ -2324,11 +2324,11 @@ function xmlrpc_GetCustomerTypeDetails($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(GetCustomerTypeDetails(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(GetCustomerTypeDetails($request->getParam(0)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(GetCustomerTypeDetails(SanitizeInput($request->getParam(0)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -2359,11 +2359,11 @@ function xmlrpc_InsertStockCategory($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(InsertStockCategory(
-			$encoder->decode($request->getParam(0)),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($encoder->decode($request->getParam(0))),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(InsertStockCategory($encoder->decode($request->getParam(0)), '', '')));
+		$rtn = new Response($encoder->encode(InsertStockCategory(SanitizeInput($encoder->decode($request->getParam(0))), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -2394,11 +2394,11 @@ function xmlrpc_ModifyStockCategory($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(ModifyStockCategory(
-			$encoder->decode($request->getParam(0)),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($encoder->decode($request->getParam(0))),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(ModifyStockCategory($encoder->decode($request->getParam(0)), '', '')));
+		$rtn = new Response($encoder->encode(ModifyStockCategory(SanitizeInput($encoder->decode($request->getParam(0))), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -2427,8 +2427,8 @@ function xmlrpc_GetStockCategoryList($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 2) {
 		$rtn = new Response($encoder->encode(GetStockCategoryList(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()))));
 	} else {
 		$rtn = new Response($encoder->encode(GetStockCategoryList('', '')));
 	}
@@ -2460,11 +2460,11 @@ function xmlrpc_GetStockCategory($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(GetStockCategory(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(GetStockCategory($request->getParam(0)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(GetStockCategory(SanitizeInput($request->getParam(0)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -2497,13 +2497,13 @@ function xmlrpc_SearchStockCategories($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 4) {
 		$rtn = new Response($encoder->encode(SearchStockCategories(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval(),
-			$request->getParam(3)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()),
+			SanitizeInput($request->getParam(3)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(SearchStockCategories($request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(SearchStockCategories(SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -2536,13 +2536,13 @@ function xmlrpc_StockCatPropertyList($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 4) {
 		$rtn = new Response($encoder->encode(StockCatPropertyList(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval(),
-			$request->getParam(3)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()),
+			SanitizeInput($request->getParam(3)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(StockCatPropertyList($request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(StockCatPropertyList(SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -2570,8 +2570,8 @@ function xmlrpc_GetGLAccountList($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 2) {
 		$rtn = new Response($encoder->encode(GetGLAccountList(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()))));
 	} else {
 		$rtn = new Response($encoder->encode(GetGLAccountList('', '')));
 	}
@@ -2603,11 +2603,11 @@ function xmlrpc_GetGLAccountDetails($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(GetGLAccountDetails(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(GetGLAccountDetails($request->getParam(0)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(GetGLAccountDetails(SanitizeInput($request->getParam(0)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -2639,14 +2639,14 @@ function xmlrpc_GetStockTaxRate($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 4) {
 		$rtn = new Response($encoder->encode(GetStockTaxRate(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval(),
-			$request->getParam(3)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()),
+			SanitizeInput($request->getParam(3)->scalarval()))));
 	} else {
 		$rtn = new Response($encoder->encode(GetStockTaxRate(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(), '', '')));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -2681,11 +2681,11 @@ function xmlrpc_InsertSupplier($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(InsertSupplier(
-			$encoder->decode($request->getParam(0)),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($encoder->decode($request->getParam(0))),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(InsertSupplier($encoder->decode($request->getParam(0)), '', '')));
+		$rtn = new Response($encoder->encode(InsertSupplier(SanitizeInput($encoder->decode($request->getParam(0))), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -2721,11 +2721,11 @@ function xmlrpc_ModifySupplier($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(ModifySupplier(
-			$encoder->decode($request->getParam(0)),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($encoder->decode($request->getParam(0))),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(ModifySupplier($encoder->decode($request->getParam(0)), '', '')));
+		$rtn = new Response($encoder->encode(ModifySupplier(SanitizeInput($encoder->decode($request->getParam(0))), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -2757,11 +2757,11 @@ function xmlrpc_GetSupplier($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(GetSupplier(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(GetSupplier($request->getParam(0)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(GetSupplier(SanitizeInput($request->getParam(0)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -2794,14 +2794,14 @@ function xmlrpc_SearchSuppliers($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 4) {
 		$rtn = new Response($encoder->encode(SearchSuppliers(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval(),
-			$request->getParam(3)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()),
+			SanitizeInput($request->getParam(3)->scalarval()))));
 	} else {
 		$rtn = new Response($encoder->encode(SearchSuppliers(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(), '', '')));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -2834,14 +2834,14 @@ function xmlrpc_GetBatches($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 4) {
 		$rtn = new Response($encoder->encode(GetBatches(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval(),
-			$request->getParam(3)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()),
+			SanitizeInput($request->getParam(3)->scalarval()))));
 	} else {
 		$rtn = new Response($encoder->encode(GetBatches(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(), '', '')));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -2878,18 +2878,18 @@ function xmlrpc_StockAdjustment($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 6) {
 		$rtn = new Response($encoder->encode(StockAdjustment(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval(),
-			$request->getParam(3)->scalarval(),
-			$request->getParam(4)->scalarval(),
-			$request->getParam(5)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()),
+			SanitizeInput($request->getParam(3)->scalarval()),
+			SanitizeInput($request->getParam(4)->scalarval()),
+			SanitizeInput($request->getParam(5)->scalarval()))));
 	} else {
 		$rtn = new Response($encoder->encode(StockAdjustment(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval(),
-			$request->getParam(3)->scalarval(), '', '')));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()),
+			SanitizeInput($request->getParam(3)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -2930,22 +2930,22 @@ function xmlrpc_WorkOrderIssue($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 8) {
 		$rtn = new Response($encoder->encode(WorkOrderIssue(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval(),
-			$request->getParam(3)->scalarval(),
-			$request->getParam(4)->scalarval(),
-			$request->getParam(5)->scalarval(),
-			$request->getParam(6)->scalarval(),
-			$request->getParam(7)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()),
+			SanitizeInput($request->getParam(3)->scalarval()),
+			SanitizeInput($request->getParam(4)->scalarval()),
+			SanitizeInput($request->getParam(5)->scalarval()),
+			SanitizeInput($request->getParam(6)->scalarval()),
+			SanitizeInput($request->getParam(7)->scalarval()))));
 	} else {
 		$rtn = new Response($encoder->encode(WorkOrderIssue(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval(),
-			$request->getParam(3)->scalarval(),
-			$request->getParam(4)->scalarval(),
-			$request->getParam(5)->scalarval(), '', '')));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()),
+			SanitizeInput($request->getParam(3)->scalarval()),
+			SanitizeInput($request->getParam(4)->scalarval()),
+			SanitizeInput($request->getParam(5)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -2978,14 +2978,14 @@ function xmlrpc_SearchWorkOrders($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 4) {
 		$rtn = new Response($encoder->encode(SearchWorkOrders(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval(),
-			$request->getParam(3)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()),
+			SanitizeInput($request->getParam(3)->scalarval()))));
 	} else {
 		$rtn = new Response($encoder->encode(SearchWorkOrders(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(), '', '')));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -3020,11 +3020,11 @@ function xmlrpc_InsertPurchData($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(InsertPurchData(
-			$encoder->decode($request->getParam(0)),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($encoder->decode($request->getParam(0))),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(InsertPurchData($encoder->decode($request->getParam(0)), '', '')));
+		$rtn = new Response($encoder->encode(InsertPurchData(SanitizeInput($encoder->decode($request->getParam(0))), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -3059,11 +3059,11 @@ function xmlrpc_ModifyPurchData($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(ModifyPurchData(
-			$encoder->decode($request->getParam(0)),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($encoder->decode($request->getParam(0))),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(ModifyPurchData($encoder->decode($request->getParam(0)), '', '')));
+		$rtn = new Response($encoder->encode(ModifyPurchData(SanitizeInput($encoder->decode($request->getParam(0))), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -3098,11 +3098,11 @@ function xmlrpc_InsertWorkOrder($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(InsertWorkOrder(
-			$encoder->decode($request->getParam(0)),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($encoder->decode($request->getParam(0))),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(InsertWorkOrder($encoder->decode($request->getParam(0)), '', '')));
+		$rtn = new Response($encoder->encode(InsertWorkOrder(SanitizeInput($encoder->decode($request->getParam(0))), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -3141,19 +3141,19 @@ function xmlrpc_WorkOrderReceive($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 7) {
 		$rtn = new Response($encoder->encode(WorkOrderReceive(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval(),
-			$request->getParam(3)->scalarval(),
-			$request->getParam(4)->scalarval(),
-			$request->getParam(5)->scalarval(),
-			$request->getParam(6)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()),
+			SanitizeInput($request->getParam(3)->scalarval()),
+			SanitizeInput($request->getParam(4)->scalarval()),
+			SanitizeInput($request->getParam(5)->scalarval()),
+			SanitizeInput($request->getParam(6)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(WorkOrderReceive($request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval(),
-			$request->getParam(3)->scalarval(),
-			$request->getParam(4)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(WorkOrderReceive(SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()),
+			SanitizeInput($request->getParam(3)->scalarval()),
+			SanitizeInput($request->getParam(4)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -3182,8 +3182,8 @@ function xmlrpc_GetDefaultDateFormat($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 2) {
 		$rtn = new Response($encoder->encode(GetDefaultDateFormat(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()))));
 	} else {
 		$rtn = new Response($encoder->encode(GetDefaultDateFormat('', '')));
 	}
@@ -3214,8 +3214,8 @@ function xmlrpc_GetDefaultShipper($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 2) {
 		$rtn = new Response($encoder->encode(GetDefaultShipper(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()))));
 	} else {
 		$rtn = new Response($encoder->encode(GetDefaultShipper('', '')));
 	}
@@ -3246,8 +3246,8 @@ function xmlrpc_GetDefaultCurrency($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 2) {
 		$rtn = new Response($encoder->encode(GetDefaultCurrency(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()))));
 	} else {
 		$rtn = new Response($encoder->encode(GetDefaultCurrency('', '')));
 	}
@@ -3278,8 +3278,8 @@ function xmlrpc_GetDefaultPriceList($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 2) {
 		$rtn = new Response($encoder->encode(GetDefaultPriceList(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()))));
 	} else {
 		$rtn = new Response($encoder->encode(GetDefaultPriceList('', '')));
 	}
@@ -3310,8 +3310,8 @@ function xmlrpc_GetDefaultLocation($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 2) {
 		$rtn = new Response($encoder->encode(GetDefaultLocation(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()))));
 	} else {
 		$rtn = new Response($encoder->encode(GetDefaultLocation('', '')));
 	}
@@ -3337,8 +3337,8 @@ function xmlrpc_GetReportsDirectory($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 2) {
 		$rtn = new Response($encoder->encode(GetReportsDirectory(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()))));
 	} else {
 		$rtn = new Response($encoder->encode(GetReportsDirectory('', '')));
 	}
@@ -3369,14 +3369,14 @@ function xmlrpc_CreatePOSDataFull($request)
 	ob_start('ob_file_callback');
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 4) {
-		$rtn = new Response($encoder->encode(CreatePOSDataFull($request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval(),
-			$request->getParam(3)->scalarval())));
+		$rtn = new Response($encoder->encode(CreatePOSDataFull(SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()),
+			SanitizeInput($request->getParam(3)->scalarval()))));
 	} else {
 		$rtn = new Response($encoder->encode(CreatePOSDataFull(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
 			'',
 			'')));
 	}
@@ -3404,8 +3404,8 @@ function xmlrpc_DeletePOSData($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 2) {
 		$rtn = new Response($encoder->encode(DeletePOSData(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()))));
 	} else {
 		$rtn = new Response($encoder->encode(DeletePOSData('', '')));
 	}
@@ -3440,14 +3440,14 @@ function xmlrpc_GetStockCatProperty($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 4) {
 		$rtn = new Response($encoder->encode(GetStockCatProperty(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval(),
-			$request->getParam(3)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()),
+			SanitizeInput($request->getParam(3)->scalarval()))));
 	} else {
 		$rtn = new Response($encoder->encode(GetStockCatProperty(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(), '', '')));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -3478,8 +3478,8 @@ function xmlrpc_GetSalesOrderList($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 2) {
 		$rtn = new Response($encoder->encode(GetSalesOrderList(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()))));
 	} else {
 		$rtn = new Response($encoder->encode(GetSalesOrderList('', '')));
 	}
@@ -3514,8 +3514,8 @@ function xmlrpc_GetSalesOrderLineDetails($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 2) {
 		$rtn = new Response($encoder->encode(GetSalesOrderLineDetails(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()))));
 	} else {
 		$rtn = new Response($encoder->encode(GetSalesOrderLineDetails('', '')));
 	}
@@ -3548,11 +3548,11 @@ unset($ReturnValue);
 		$encoder = new Encoder();
 		if ($request->getNumParams() == 3) {
 			$rtn = new Response($encoder->encode(GetSalesOrderHeader(
-				$request->getParam(0)->scalarval(),
-				$request->getParam(1)->scalarval(),
-				$request->getParam(2)->scalarval())));
+				SanitizeInput($request->getParam(0)->scalarval()),
+				SanitizeInput($request->getParam(1)->scalarval()),
+				SanitizeInput($request->getParam(2)->scalarval()))));
 		} else {
-			$rtn = new Response($encoder->encode(GetSalesOrderHeader($request->getParam(0)->scalarval(),'', '')));
+			$rtn = new Response($encoder->encode(GetSalesOrderHeader(SanitizeInput($request->getParam(0)->scalarval()),'', '')));
 		}
 		ob_end_flush();
 		return $rtn;
@@ -3589,13 +3589,13 @@ function xmlrpc_SearchOrders($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 4) {
 		$rtn = new Response($encoder->encode(SearchOrders(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval(),
-			$request->getParam(3)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()),
+			SanitizeInput($request->getParam(3)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(SearchOrders($request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(SearchOrders(SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -3628,11 +3628,11 @@ function xmlrpc_GetSalesOrderValue($request)
 	$encoder = new Encoder();
 	if ($request->getNumParams() == 3) {
 		$rtn = new Response($encoder->encode(GetSalesOrderValue(
-			$request->getParam(0)->scalarval(),
-			$request->getParam(1)->scalarval(),
-			$request->getParam(2)->scalarval())));
+			SanitizeInput($request->getParam(0)->scalarval()),
+			SanitizeInput($request->getParam(1)->scalarval()),
+			SanitizeInput($request->getParam(2)->scalarval()))));
 	} else {
-		$rtn = new Response($encoder->encode(GetSalesOrderValue($request->getParam(0)->scalarval(), '', '')));
+		$rtn = new Response($encoder->encode(GetSalesOrderValue(SanitizeInput($request->getParam(0)->scalarval()), '', '')));
 	}
 	ob_end_flush();
 	return $rtn;
@@ -3653,7 +3653,7 @@ function xmlrpc_GetErrorMessages($request)
 {
 	ob_start('ob_file_callback');
 	$encoder = new Encoder();
-	$rtn = new Response($encoder->encode(GetAPIErrorMessages($encoder->decode($request->getParam(0)))));
+	$rtn = new Response($encoder->encode(GetAPIErrorMessages(SanitizeInput($encoder->decode($request->getParam(0))))));
 	ob_end_flush();
 	return $rtn;
 }

@@ -2511,7 +2511,11 @@ No pending transfer regarding this item
 			(SELECT SUM(locstock.quantity)
 				FROM locstock
 				WHERE locstock.stockid = stockmaster.stockid
-				AND (locstock.loccode ='" . CODE_KANTOR . "'))AS QtyKantor
+				AND (locstock.loccode ='" . CODE_KANTOR . "'))AS QtyKantor,
+			(SELECT SUM(locstock.reorderlevel - locstock.quantity)
+				FROM locstock
+				WHERE locstock.stockid = stockmaster.stockid
+				AND (locstock.loccode ='" . CODE_ONLINE_SHOP . "'))AS PendingOnline
 			FROM stockmaster, 
 				stockcategory
 			WHERE stockmaster.categoryid = stockcategory.categoryid
@@ -2592,47 +2596,50 @@ No pending transfer regarding this item
 			$LinkRL4Some = '';
 			$LinkRL5All = '';
 			$LinkRL5Some = '';
-			if ($ShopsToSetRL != 0){
-				if ($MyRow['QtyKantor'] >= 0){
-					$LinkRL1All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $MyRow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=1' . '">' . '1' . '</a>';
-					$LinkRL1Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $MyRow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=1' . '">' . '1' . '</a>';
+			$AvailableAtKantor = $MyRow['QtyKantor'] - $MyRow['PendingOnline'];
+			if ($AvailableAtKantor > 0){
+				if ($ShopsToSetRL != 0){
+					if ($AvailableAtKantor >= 0){
+						$LinkRL1All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $MyRow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=1' . '">' . '1' . '</a>';
+						$LinkRL1Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $MyRow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=1' . '">' . '1' . '</a>';
+					}
+					if ($AvailableAtKantor >= $ShopsToSetRL * 2){
+						$LinkRL2All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $MyRow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=2' . '">' . '2' . '</a>';
+						$LinkRL2Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $MyRow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=2' . '">' . '2' . '</a>';
+					}
+					if ($AvailableAtKantor >= $ShopsToSetRL * 3){
+						$LinkRL3All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $MyRow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=3' . '">' . '3' . '</a>';
+						$LinkRL3Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $MyRow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=3' . '">' . '3' . '</a>';
+					}
+					if ($AvailableAtKantor >= $ShopsToSetRL * 4){
+						$LinkRL4All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $MyRow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=4' . '">' . '4' . '</a>';
+						$LinkRL4Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $MyRow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=4' . '">' . '4' . '</a>';
+					}
+					if ($AvailableAtKantor >= $ShopsToSetRL * 5){
+						$LinkRL5All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $MyRow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=5' . '">' . '5' . '</a>';
+						$LinkRL5Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $MyRow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=5' . '">' . '5' . '</a>';
+					}
 				}
-				if ($MyRow['QtyKantor'] >= $ShopsToSetRL * 2){
-					$LinkRL2All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $MyRow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=2' . '">' . '2' . '</a>';
-					$LinkRL2Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $MyRow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=2' . '">' . '2' . '</a>';
-				}
-				if ($MyRow['QtyKantor'] >= $ShopsToSetRL * 3){
-					$LinkRL3All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $MyRow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=3' . '">' . '3' . '</a>';
-					$LinkRL3Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $MyRow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=3' . '">' . '3' . '</a>';
-				}
-				if ($MyRow['QtyKantor'] >= $ShopsToSetRL * 4){
-					$LinkRL4All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $MyRow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=4' . '">' . '4' . '</a>';
-					$LinkRL4Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $MyRow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=4' . '">' . '4' . '</a>';
-				}
-				if ($MyRow['QtyKantor'] >= $ShopsToSetRL * 5){
-					$LinkRL5All  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $MyRow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=Y' . '&RL=5' . '">' . '5' . '</a>';
-					$LinkRL5Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $MyRow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=5' . '">' . '5' . '</a>';
-				}
+				echo '<tr class="striped_row">
+						<td class="number">' . $i . '</td>
+						<td>' . $CodeLink . '</td>
+						<td>' . $MyRow['categoryid'] . '</td>
+						<td>' . $MyRow['description'] . '</td>
+						<td class="number">' . locale_number_format($AvailableAtKantor,0) . '</td>
+						<td>' . $ManualLink . '</td>
+						<td>' . $LinkRL1All . '</td>
+						<td>' . $LinkRL1Some . '</td>
+						<td>' . $LinkRL2All . '</td>
+						<td>' . $LinkRL2Some . '</td>
+						<td>' . $LinkRL3All . '</td>
+						<td>' . $LinkRL3Some . '</td>
+						<td>' . $LinkRL4All . '</td>
+						<td>' . $LinkRL4Some . '</td>
+						<td>' . $LinkRL5All . '</td>
+						<td>' . $LinkRL5Some . '</td>
+						</tr>';
+				$i++;
 			}
-			echo '<tr class="striped_row">
-					<td class="number">' . $i . '</td>
-					<td>' . $CodeLink . '</td>
-					<td>' . $MyRow['categoryid'] . '</td>
-					<td>' . $MyRow['description'] . '</td>
-					<td class="number">' . locale_number_format($MyRow['QtyKantor'],0) . '</td>
-					<td>' . $ManualLink . '</td>
-					<td>' . $LinkRL1All . '</td>
-					<td>' . $LinkRL1Some . '</td>
-					<td>' . $LinkRL2All . '</td>
-					<td>' . $LinkRL2Some . '</td>
-					<td>' . $LinkRL3All . '</td>
-					<td>' . $LinkRL3Some . '</td>
-					<td>' . $LinkRL4All . '</td>
-					<td>' . $LinkRL4Some . '</td>
-					<td>' . $LinkRL5All . '</td>
-					<td>' . $LinkRL5Some . '</td>
-					</tr>';
-			$i++;
 		}
 		echo '</tbody>
 			</table>

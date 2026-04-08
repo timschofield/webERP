@@ -14,4 +14,4 @@ CREATE TABLE IF NOT EXISTS `forecastsummarydetails` (
   KEY `summaryid` (`summaryid`),
   KEY `perioddate` (`perioddate`),
   CONSTRAINT `forecastsummarydetails_ibfk_1` FOREIGN KEY (`summaryid`) REFERENCES `forecastsummary` (`summaryid`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  COLLATE=utf8mb4_general_ci;

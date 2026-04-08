@@ -8,4 +8,4 @@ CREATE TABLE `salesman` (
   `commissiontypeid` tinyint NOT NULL DEFAULT '0',
   `glaccount` varchar(20) NOT NULL DEFAULT '1',
   PRIMARY KEY (`salesmancode`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  COLLATE=utf8mb4_general_ci;

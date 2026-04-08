@@ -12,4 +12,4 @@ CREATE TABLE `fixedassettrans` (
   KEY `assetid` (`assetid`,`transtype`,`transno`),
   KEY `inputdate` (`inputdate`),
   KEY `transdate` (`transdate`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  COLLATE=utf8mb4_general_ci;

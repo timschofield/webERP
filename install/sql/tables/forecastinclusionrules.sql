@@ -10,4 +10,4 @@ CREATE TABLE IF NOT EXISTS `forecastinclusionrules` (
   `active` tinyint(1) NOT NULL DEFAULT 1,
   PRIMARY KEY (`ruleid`),
   UNIQUE KEY `rulename` (`rulename`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  COLLATE=utf8mb4_general_ci;

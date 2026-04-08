@@ -109,3 +109,27 @@ if (! function_exists('VerifyPass')) {
 		return password_verify($Password, $Hash);
 	}
 }
+
+/**
+ * Sanitize input value to prevent SQL injection and XSS attacks
+ * This mirrors the sanitization done in includes/session.php for POST/GET inputs
+ * 
+ * @param mixed $value The value to sanitize (can be string or array)
+ * @return mixed The sanitized value
+ */
+function SanitizeInput($value) {
+	if (gettype($value) != 'array') {
+		$sanitized = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+		// Only apply DB_escape_string if function exists (requires DB connection)
+		if (function_exists('DB_escape_string')) {
+			$sanitized = DB_escape_string($sanitized);
+		}
+		return $sanitized;
+	} else {
+		$sanitized = array();
+		foreach ($value as $key => $val) {
+			$sanitized[$key] = SanitizeInput($val);
+		}
+		return $sanitized;
+	}
+}

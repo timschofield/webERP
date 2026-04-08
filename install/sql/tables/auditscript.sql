@@ -6,4 +6,4 @@ CREATE TABLE `auditscripts` (
   KEY `idx_auditscripts_userid` (`userid`),
   KEY `idx_auditscripts_executiondate` (`executiondate`),
   KEY `idx_auditscripts_scripttitle` (`scripttitle`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  COLLATE=utf8mb4_general_ci;

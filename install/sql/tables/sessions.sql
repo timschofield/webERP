@@ -5,4 +5,4 @@ CREATE TABLE `sessions` (
   `script` varchar(100) NOT NULL DEFAULT '',
   `scripttime` TIMESTAMP NULL,
   PRIMARY KEY (`sessionid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  COLLATE=utf8mb4_general_ci;

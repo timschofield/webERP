@@ -224,9 +224,7 @@ function CashStatus($Year,
 					$USDSafetyFactor,
 					$USDMinPurchase,
 					$USDMaxEasyPurchasePerMonth,
-					$SaldoADUGlobalUSDMax,
 					$SaldoADUDanamonUSDMin,
-					$SaldoADUDanamonUSDMax,
 					$SaldoADUPayoneerUSDMin,
 					$SaldoADUPayoneerUSDMax,
 					$Period, 
@@ -444,36 +442,26 @@ function CashStatus($Year,
 	$USDAlreadyExhangedThisMonth = round(($MyRow['saldo'] ?? 0), 0);
 
 	$PORunningTotalUSD = round(GetLastKPIValue("PO-ITEMS-NEXT-%-IDR")*$CurrentUSDRate,0);
-	$POPaymentsPendingUSD = round(GetLastKPIValue("PO-PAY-PEND-%")*$CurrentUSDRate,0);
 	$POPaymentsPendingUSDuntilEndOfMonth = $PORunningTotalUSD / $USDPODaysSchedule * $DaysUntilEndOfMonth * $USDSafetyFactor;
 	$SaldoUSD = $SaldoADUDanamonUSD + $SaldoADUPayoneerUSD + $SaldoAyeCargoUSD;
+	$ShortageUSD = max(0, $PORunningTotalUSD - $SaldoUSD);
 	$ShortageUSDuntilEndOfMonth = $POPaymentsPendingUSDuntilEndOfMonth - $SaldoUSD;
+	$USDEasyAvailableThisMonth = max(0, $USDMaxEasyPurchasePerMonth - $USDAlreadyExhangedThisMonth);
 
-	if ($SaldoUSD >= $PORunningTotalUSD){
+	if ($ShortageUSD == 0){ // No USD shortage, no need to exchange
 		$ToBeExchanged = 0;
-	} 
-	elseif ($SaldoUSD <= $USDMaxEasyPurchasePerMonth){
-		if (($USDAlreadyExhangedThisMonth < $USDMaxEasyPurchasePerMonth) 
-			AND ($SaldoADUDanamonUSD < $SaldoADUDanamonUSDMax)){
-			$ToBeExchanged = round_multiple_of(min($USDMaxEasyPurchasePerMonth - $USDAlreadyExhangedThisMonth,
-													$SaldoADUGlobalUSDMax - $SaldoUSD), $USDMinPurchase);	
-		}
-		elseif ($ShortageUSDuntilEndOfMonth > $SaldoADUDanamonUSD){
-			$ToBeExchanged = round_multiple_of($ShortageUSDuntilEndOfMonth, $USDMinPurchase);	
-		}
-		else {
-			$ToBeExchanged = 0;	
-		}
-	}
-	else {
-		$ToBeExchanged = 0;	
+	} elseif ($ShortageUSD <= $USDEasyAvailableThisMonth){ // Shortage can be fulfilled with easy purchase available
+		$ToBeExchanged = round_multiple_of($ShortageUSD, $USDMinPurchase);			
+	} elseif ($ShortageUSDuntilEndOfMonth <= $USDEasyAvailableThisMonth){ // Shortage until end of month can be fulfilled with easy purchase available
+		$ToBeExchanged = round_multiple_of($USDEasyAvailableThisMonth, $USDMinPurchase);			
+	} else { // Shortage until end of month cannot be fulfilled with easy purchase available, need to exchange at least the shortage until end of month
+		$ToBeExchanged = round_multiple_of($ShortageUSDuntilEndOfMonth, $USDMinPurchase);			
 	}
 	
 	if ($SaldoADUPayoneerUSD < $SaldoADUPayoneerUSDMin){
 		$ToBeTransferredToPayoneer = round_multiple_of(min($SaldoADUPayoneerUSDMax - $SaldoADUPayoneerUSD, 
 															$SaldoADUDanamonUSD - $SaldoADUDanamonUSDMin), $USDMinPurchase);	
-	}
-	else {
+	} else {
 		$ToBeTransferredToPayoneer = 0;
 	}
 
