@@ -447,10 +447,10 @@ if ($ProcessSection03){
 					100000000, 
 					75, 1.05,
 					  5000, 
-					 50000,
-					 10000,
-					 10000,
-					 40000,
+					 $_SESSION['USDMaxEasyPurchasePerMonth'],
+					 $_SESSION['SaldoADUDanamonUSDMin'],
+					 $_SESSION['SaldoADUPayoneerUSDMin'],
+					 $_SESSION['SaldoADUPayoneerUSDMax'],
 					$PeriodNow, $KL_SystemAdmin);
 		TimeNeededForExecution("CashStatus", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;

@@ -206,6 +206,18 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['CashKantorEndLastYearPTBB'] != $_POST['X_CashKantorEndLastYearPTBB'] ) {
 			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_CashKantorEndLastYearPTBB']."' WHERE confname = 'CashKantorEndLastYearPTBB'";
 		}
+		if ($_SESSION['USDMaxEasyPurchasePerMonth'] != $_POST['X_USDMaxEasyPurchasePerMonth'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_USDMaxEasyPurchasePerMonth']."' WHERE confname = 'USDMaxEasyPurchasePerMonth'";
+		}
+		if ($_SESSION['SaldoADUDanamonUSDMin'] != $_POST['X_SaldoADUDanamonUSDMin'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_SaldoADUDanamonUSDMin']."' WHERE confname = 'SaldoADUDanamonUSDMin'";
+		}
+		if ($_SESSION['SaldoADUPayoneerUSDMin'] != $_POST['X_SaldoADUPayoneerUSDMin'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_SaldoADUPayoneerUSDMin']."' WHERE confname = 'SaldoADUPayoneerUSDMin'";
+		}
+		if ($_SESSION['SaldoADUPayoneerUSDMax'] != $_POST['X_SaldoADUPayoneerUSDMax'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_SaldoADUPayoneerUSDMax']."' WHERE confname = 'SaldoADUPayoneerUSDMax'";
+		}
 
 // -------------------------------------
 // KL RICARD  Specific Settings for PTADU webERP
@@ -386,6 +398,10 @@ echo '<fieldset>
 			echo FieldToSelectOneNumber('X_CashKantorEndLastYearPTADU',  $_SESSION['CashKantorEndLastYearPTADU'], 15, 14, 'Cash Kantor End Last Year PTADU (IDR)', 'Cash Kantor End Last Year PTADU (IDR)', '', '150');
 			echo FieldToSelectOneNumber('X_CashKantorEndLastYearPTSMH',  $_SESSION['CashKantorEndLastYearPTSMH'], 15, 14, 'Cash Kantor End Last Year PTSMH (IDR)', 'Cash Kantor End Last Year PTSMH (IDR)', '', '150');
 			echo FieldToSelectOneNumber('X_CashKantorEndLastYearPTBB',  $_SESSION['CashKantorEndLastYearPTBB'], 15, 14, 'Cash Kantor End Last Year PTBB (IDR)', 'Cash Kantor End Last Year PTBB (IDR)', '', '150');
+			echo FieldToSelectOneNumber('X_USDMaxEasyPurchasePerMonth',  $_SESSION['USDMaxEasyPurchasePerMonth'], 15, 14, 'USD Maximum Easy Purchase from IDR Monthly (USD)', 'USD Max Easy Purchase Per Month', '', '150');
+			echo FieldToSelectOneNumber('X_SaldoADUDanamonUSDMin',  $_SESSION['SaldoADUDanamonUSDMin'], 15, 14, 'Minimum Saldo Danamon USD PTADU (USD)', 'Minimum Saldo Danamon USD ADU (USD)', '', '150');
+			echo FieldToSelectOneNumber('X_SaldoADUPayoneerUSDMin',  $_SESSION['SaldoADUPayoneerUSDMin'], 15, 14, 'Minimum Saldo Payoneer USD PTADU (USD)', 'Minimum Saldo Payoneer USD ADU (USD)', '', '150');
+			echo FieldToSelectOneNumber('X_SaldoADUPayoneerUSDMax',  $_SESSION['SaldoADUPayoneerUSDMax'], 15, 14, 'Maximum Saldo Payoneer USD PTADU (USD)', 'Maximum Saldo Payoneer USD ADU (USD)', '', '150');
 		echo '</fieldset><br />';
 
 	echo '</fieldset><br />';
