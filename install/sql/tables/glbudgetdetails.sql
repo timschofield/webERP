@@ -7,4 +7,4 @@ CREATE TABLE `glbudgetdetails` (
   PRIMARY KEY (`id`),
   KEY `account` (`account`),
   KEY `headerid` (`headerid`,`account`,`period`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  COLLATE=utf8mb4_general_ci;

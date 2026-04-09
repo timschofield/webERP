@@ -84,7 +84,7 @@ if (isset($_POST['submit'])) {
 				if (file_exists ($File) ) {
 					@unlink($File);
 					$_POST['BrandsImage'] = '';
-					if (is_file($ImageFile)) {
+					if (is_file($File)) {
 						prnMsg(__('You do not have access to delete this item image file.'),'error');
 					}
 				}

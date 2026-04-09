@@ -9,4 +9,4 @@ CREATE TABLE `qasamples` (
   `cert` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`sampleid`),
   KEY `prodspeckey` (`prodspeckey`,`lotkey`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  COLLATE=utf8mb4_general_ci;

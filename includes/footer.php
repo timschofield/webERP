@@ -2,6 +2,10 @@
 
 // log the script running time
 include_once (__DIR__ . '/AuditScriptsFunctions.php');
+
+if (!isset($Title)) {
+    $Title = "Undefined Title";
+}
 RecordRunningTime($Title, $_SESSION['UserID']);
 
 // Check if this is an AJAX request for modal content

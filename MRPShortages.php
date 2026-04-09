@@ -30,6 +30,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			   SELECT part,
 					  SUM(quantity) as demand
 				FROM mrprequirements
+				WHERE directdemand = 1
 				GROUP BY part";
 	$Result = DB_query($SQL);
 

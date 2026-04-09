@@ -13,4 +13,4 @@ CREATE TABLE IF NOT EXISTS `forecastsummary` (
   UNIQUE KEY `summarycode` (`summarycode`),
   KEY `categorycode` (`categorycode`),
   KEY `active` (`active`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  COLLATE=utf8mb4_general_ci;

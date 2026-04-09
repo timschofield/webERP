@@ -8,4 +8,4 @@ CREATE TABLE `salescommissionrates` (
   `currency` char(3) NOT NULL DEFAULT '',
   PRIMARY KEY (`salespersoncode`,`categoryid`,`startfrom`),
   KEY `salespersoncode` (`salespersoncode`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  COLLATE=utf8mb4_general_ci;
