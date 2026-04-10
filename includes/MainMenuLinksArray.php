@@ -2,7 +2,7 @@
 
 /***************************************************************************************************************
  * 
- * KL RICARD: Divide certain menu entries into different sections depesning on the user's role
+ * KL RICARD: Divide certain menu entries into different sections depending on the user's role
  * 			- KL Performance Board
  * 			- KL Control Board
  *			- KL Shop Transfer - Receive Transfer FROM kantor (show different caption)
@@ -48,8 +48,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 			$MenuItems[$MyRow['modulelink']][$MyRow['menusection']]['URL'][] = '/KLPerformanceBoard.php?Section=02';
 			$MenuItems[$MyRow['modulelink']][$MyRow['menusection']]['Caption'][] = 	__('KL Performance Board Section 03');
 			$MenuItems[$MyRow['modulelink']][$MyRow['menusection']]['URL'][] = '/KLPerformanceBoard.php?Section=03';
-	}
-	elseif (($KL_PurchasingManager
+	} elseif (($KL_PurchasingManager
 			OR $KL_SalesTeamManager)
 			// divide the KL control board into 2 sections
 		AND ($MyRow['url'] == '/KLControlBoard.php')) {
@@ -57,8 +56,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 			$MenuItems[$MyRow['modulelink']][$MyRow['menusection']]['URL'][] = '/KLControlBoard.php?Section=01';
 			$MenuItems[$MyRow['modulelink']][$MyRow['menusection']]['Caption'][] = 	__('KL Control Board Section 02');
 			$MenuItems[$MyRow['modulelink']][$MyRow['menusection']]['URL'][] = '/KLControlBoard.php?Section=02';
-	}
-	elseif ($MyRow['url'] == '/StockLocTransferReceive.php') {
+	} elseif ($MyRow['url'] == '/StockLocTransferReceive.php') {
 		// show different menu caption for KL_SPGSeniorOrSupport and KL_SPGJunior
 		if ($KL_SPGSeniorOrSupport 
 			OR $KL_SPGJunior){
@@ -68,8 +66,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 			$MenuItems[$MyRow['modulelink']][$MyRow['menusection']]['Caption'][] = __($MyRow['caption']);
 			$MenuItems[$MyRow['modulelink']][$MyRow['menusection']]['URL'][] = $MyRow['url'];
 		}
-	}
-	else {
+	} else {
 		// Normal menu entries
 		$MenuItems[$MyRow['modulelink']][$MyRow['menusection']]['Caption'][] = __($MyRow['caption']);
 		$MenuItems[$MyRow['modulelink']][$MyRow['menusection']]['URL'][] = $MyRow['url'];
