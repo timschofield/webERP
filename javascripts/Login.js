@@ -13,7 +13,6 @@ function ShowCompanies() {
 		rect=document.getElementById("CompanySelect").getBoundingClientRect();
 		var ViewPortHeight = window.innerHeight;
 		var DropDownTop=rect.bottom;
-		document.getElementById("dropdownlist").style.left=rect.left+"px";
 		document.getElementById("dropdownlist").style.maxHeight=ViewPortHeight-DropDownTop-10+"px";
 		document.getElementById("CompanySelect").style.background = "url(\'css/ascending.png\') no-repeat right transparent";
 		document.getElementById("CompanySelect").style.backgroundSize = "contain";

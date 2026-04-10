@@ -117,14 +117,12 @@ if ($AllowCompanySelectionBox === 'Hide') {
 }
 
 if ($AllowCompanySelectionBox != 'Hide') {
-	echo '<label for="CompanySelect">', __('Company'), ':</label>';
+	echo '<div class="form-group" style="position: relative;">';
+	echo '<label for="CompanySelect">', __('Company'), '</label>';
 	$DefaultCompanyName = $CompanyName[$DefaultCompany] ?? $DefaultCompany;
 	echo '<input type="text" id="CompanySelect" readonly value="' . $DefaultCompanyName . '" />';
-	if (!isset($ShowLogoAtLogin) OR ($ShowLogoAtLogin == true)) {
-		echo '<ol id="dropdownlist" class="dropdownlist" style="padding-bottom:10px;">';
-	} else {
-		echo '<ol id="dropdownlist" class="dropdownlist" style="padding-bottom:15px;">';
-	}
+	
+	echo '<ol id="dropdownlist" class="dropdownlist">';
 
 	// Generate company list with logos
 	foreach ($CompanyList as $CompanyEntry => $CompanyInfo) {
@@ -140,14 +138,23 @@ if ($AllowCompanySelectionBox != 'Hide') {
 	}
 
 	echo '</ol>';
+	echo '</div>';
 }
 
-echo '<label for="username">', __('User name'), ':</label>
-	<input type="text" id="username" autocomplete="username" autofocus="autofocus" required="required" name="UserNameEntryField" placeholder="', __('User name'), '" maxlength="20" /><br />
-	<label for="password">', __('Password'), ':</label>
-	<input type="password" autocomplete="current-password" id="password" required="required" name="Password" placeholder="', __('Password'), '" />
-	<input type="text" id="eye" readonly title="', __('Show Password'), '" />
-	<div id="demo_text">';
+echo '<div class="form-group">';
+echo '<label for="username">', __('User name'), '</label>';
+echo '<input type="text" id="username" autocomplete="username" autofocus="autofocus" required="required" name="UserNameEntryField" placeholder="', __('User name'), '" maxlength="20" />';
+echo '</div>';
+
+echo '<div class="form-group">';
+echo '<label for="password">', __('Password'), '</label>';
+echo '<div style="position: relative;">';
+echo '<input type="password" autocomplete="current-password" id="password" required="required" name="Password" placeholder="', __('Password'), '" />';
+echo '<input type="text" id="eye" readonly title="', __('Show Password'), '" />';
+echo '</div>';
+echo '</div>';
+
+echo '<div id="demo_text">';
 
 if (isset($DemoText)) {
 	echo $DemoText;
@@ -155,11 +162,9 @@ if (isset($DemoText)) {
 
 echo '</div>';
 
-echo '<div style="text-align: left;">
-        <button class="button" type="submit" value="', __('Login'), '" name="SubmitUser" onclick="ShowSpinner()">
-            <img id="waiting_show" class="waiting_show" src="css/waiting.gif" />', __('Login'), ' ', '<img src="css/tick.png" title="', __('Login'), '" alt="" class="ButtonIcon" />
-        </button>
-      </div>';
+echo '<button class="button" type="submit" value="', __('Login'), '" name="SubmitUser" onclick="ShowSpinner()">
+	<img id="waiting_show" class="waiting_show" src="css/waiting.gif" />', __('Login'), '
+</button>';
 
 echo '</form>
 	</div>
