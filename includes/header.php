@@ -37,6 +37,10 @@ if ($LanguagesArray[$_SESSION['Language']]['Direction'] == 'rtl' and mb_substr($
 	$_SESSION['Theme'] = $_SESSION['Theme'] . '-rtl';
 }
 
+if ($LanguagesArray[$_SESSION['Language']]['Direction'] == 'rtl' and mb_substr($_SESSION['Theme'], -4) != '-rtl') {
+	$_SESSION['Theme'] = $_SESSION['Theme'] . '-rtl';
+}
+
 if (!headers_sent()) {
 	header('cache-control: no-cache, no-store, must-revalidate');
 	header('Pragma: no-cache');
@@ -62,8 +66,7 @@ echo '<html lang="' , str_replace('_', '-', substr($Language, 0, 5)) , '">
 	<meta name="viewport" content="width=device-width, initial-scale=1">';
 echo '	<script async src="', $RootPath, '/javascripts/MiscFunctions.js?version=1.0"></script>' , "\n";
 echo '	<script async src="', $RootPath, '/javascripts/manual.js"></script>' , "\n";
-echo '	<link href="', $RootPath, '/css/module-menu.css?version=1.0" rel="stylesheet" type="text/css" media="screen" />' , "\n";
-echo '	<script async src="', $RootPath, '/javascripts/modal-system.js?version=1.0"></script>' , "\n";
+echo '	<script async src="', $RootPath, '/javascripts/modal-system.js?version=1.3"></script>' , "\n";
 echo '	<script>
 		localStorage.setItem("DateFormat", "', $_SESSION['DefaultDateFormat'], '");
 		localStorage.setItem("Theme", "', $_SESSION['Theme'], '");
@@ -166,6 +169,23 @@ echo '<div id="Info">
 		</a>
 	</div>';
 
+	echo '<div class="ScriptTitle">', __('Theme'), ':</div>';
+
+	echo '<select name="Theme" id="favourites" onchange="window.open (\'Dashboard.php?Theme=\' + this.value,\'_self\',false)">';
+
+	$Themes = glob('css/*', GLOB_ONLYDIR);
+	foreach ($Themes as $ThemeName) {
+		$ThemeName = basename($ThemeName);
+		if ($ThemeName != 'mobile' and mb_substr($ThemeName, -4) != '-rtl') {
+			if ($_SESSION['Theme'] == $ThemeName) {
+				echo '<option selected="selected" value="', $ThemeName, '">', ucfirst($ThemeName), '</option>';
+			} else {
+				echo '<option value="', $ThemeName, '">', ucfirst($ThemeName), '</option>';
+			}
+		}
+	}
+	echo '</select>';
+
 echo '<div id="ExitIcon">
 		<a data-title="', __('Logout'), '" href="#" id="logoutLink">
 			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/quit.png" alt="', __('Logout'), '" />
@@ -213,39 +233,6 @@ if (isset($_SESSION['AllowedPageSecurityTokens']) && is_array($_SESSION['Allowed
 				</a>
 			</div>';
 	}
-
-	$SQL = "SELECT caption, href FROM favourites WHERE userid='" . $_SESSION['UserID'] . "'";
-	$Result = DB_query($SQL);
-	while ($MyRow = DB_fetch_array($Result)) {
-		$_SESSION['Favourites'][$MyRow['href']] = $MyRow['caption'];
-	}
-	if (DB_num_rows($Result) == 0) {
-		$_SESSION['Favourites'] = Array();
-	}
-
-	echo '<div id="ActionIcon">
-			<select name="Favourites" id="favourites" onchange="window.open (this.value,\'_self\',false)">';
-	echo '<option value=""><i>', __('Commonly used scripts'), '</i></option>';
-	foreach ($_SESSION['Favourites'] as $Url => $Caption) {
-		echo '<option value="', $Url, '">', __($Caption), '</option>';
-	}
-	echo '</select>
-		</div>';
-	if ($ScriptName != 'index.php') {
-		if (!isset($_SESSION['Favourites'][$ScriptName]) or $_SESSION['Favourites'][$ScriptName] == '') {
-			echo '<div id="ActionIcon">
-					<a data-title="', __('Add this script to your list of commonly used'), '">
-						<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/add.png" id="PlusMinus" onclick="AddScript(\'', $ScriptName, '\',\'', $Title, '\')"', ' alt="', __('Add to commonly used'), '" />
-					</a>
-				</div>';
-		} else {
-			echo '<div id="ActionIcon">
-					<a data-title="', __('Remove this script from your list of commonly used'), '">
-						<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/subtract.png" id="PlusMinus" onclick="RemoveScript(\'', $ScriptName, '\')"', ' alt="', __('Remove from commonly used'), '" />
-					</a>
-				</div>';
-		}
-	}
 }
 
 if ($ScriptName != 'Dashboard.php') {
@@ -255,24 +242,6 @@ if ($ScriptName != 'Dashboard.php') {
 			</a>
 		</div>'; //take off inline formatting, use CSS instead ===HJ===
 
-}
-
-if ($ScriptName != 'index.php') {
-	echo '<div id="ActionIcon">
-			<a data-title="', __('Return to the main menu'), '" href="', $RootPath, '/index.php">
-				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/home.png" alt="', __('Main Menu'), '" />
-			</a>
-		</div>'; //take off inline formatting, use CSS instead ===HJ===
-
-}
-
-if ($ScriptName == 'index.php') {
-	echo '<br /><div class="ScriptTitle">', $Title, '</div>';
-} else {
-	$SQL = "SELECT modulename FROM modules WHERE modulelink='" . $_SESSION['Module'] . "'";
-	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-	echo '<br /><div class="ScriptTitle"><a href="index.php?Application=' . $_SESSION['Module'] . '">', $MyRow['modulename'] . '</a> -> '. $Title, '</div>';
 }
 
 if ($ScriptName == 'index.php') {
