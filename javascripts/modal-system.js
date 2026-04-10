@@ -1,10 +1,22 @@
 // Hamburger menu toggle
 function toggleModuleMenu() {
-	var menu = document.getElementById("module-menu");
+	var menus = document.querySelectorAll(".module-slide-menu");
 	var hamburger = document.querySelector(".hamburger-icon");
 	
-	if (menu) {
-		var isActive = menu.classList.toggle("active");
+	if (menus.length > 0) {
+		var firstMenu = menus[0];
+		var isActive = firstMenu.classList.toggle("active");
+		
+		// Sync state across all menu instances
+		menus.forEach(function(menu) {
+			if (isActive) {
+				menu.classList.add("active");
+			} else {
+				menu.classList.remove("active");
+			}
+			// Remove hidden class to ensure menu can be displayed
+			menu.classList.remove("hidden");
+		});
 		
 		// Hide hamburger when menu is open, show when closed
 		if (hamburger) {
@@ -21,8 +33,15 @@ function toggleModuleMenu() {
 function closeModuleModal() {
 	var modal = document.getElementById("module-options-modal");
 	var overlay = document.getElementById("module-modal-overlay");
+	var menus = document.querySelectorAll(".module-slide-menu");
+	
 	if (modal) modal.classList.remove("active");
 	if (overlay) overlay.classList.remove("active");
+	
+	// Remove hidden class from ALL menu elements
+	menus.forEach(function(menu) {
+		menu.classList.remove("hidden");
+	});
 	
 	// Hide the elements after animation completes
 	setTimeout(function() {
@@ -33,15 +52,25 @@ function closeModuleModal() {
 
 // Show module options modal with menu items
 function showModuleModal(moduleLink) {
-	var menu = document.getElementById("module-menu");
+	// Hide ALL menu elements (in case there are duplicates)
+	var menus = document.querySelectorAll(".module-slide-menu");
+	var menuOverlay = document.querySelector(".module-menu-overlay");
 	var hamburger = document.querySelector(".hamburger-icon");
 	
-	if (menu) {
+	menus.forEach(function(menu) {
 		menu.classList.remove("active");
-		// Show hamburger when menu closes
-		if (hamburger) {
-			hamburger.style.display = "flex";
-		}
+		// Add hidden class to force display:none with !important
+		menu.classList.add("hidden");
+	});
+	
+	// Show hamburger when menu closes
+	if (hamburger) {
+		hamburger.style.display = "flex";
+	}
+	
+	// Also hide the menu overlay
+	if (menuOverlay) {
+		menuOverlay.classList.remove("active");
 	}
 	
 	var modal = document.getElementById("module-options-modal");
@@ -309,6 +338,25 @@ function openContentModal(url, title) {
 			});
 			
 			modalBody.innerHTML = html;
+			
+			// Remove any menus that were loaded inside the modal content
+			var menusInModal = modalBody.querySelectorAll(".module-slide-menu");
+			menusInModal.forEach(function(menu) {
+				menu.remove();
+			});
+			
+			// Remove any menu overlays inside modal
+			var overlaysInModal = modalBody.querySelectorAll(".module-menu-overlay");
+			overlaysInModal.forEach(function(overlay) {
+				overlay.remove();
+			});
+			
+			// Remove hamburger icons inside modal
+			var hamburgersInModal = modalBody.querySelectorAll(".hamburger-icon");
+			hamburgersInModal.forEach(function(hamburger) {
+				hamburger.remove();
+			});
+			
 			attachLinkListeners();
 			attachFormListeners();
 			if (typeof initial === "function") initial();
@@ -357,6 +405,25 @@ function loadContentIntoModal(url, modalId) {
 			}
 		}
 		modalBody.innerHTML = html;
+		
+		// Remove any menus that were loaded inside the modal content
+		var menusInModal = modalBody.querySelectorAll(".module-slide-menu");
+		menusInModal.forEach(function(menu) {
+			menu.remove();
+		});
+		
+		// Remove any menu overlays inside modal
+		var overlaysInModal = modalBody.querySelectorAll(".module-menu-overlay");
+		overlaysInModal.forEach(function(overlay) {
+			overlay.remove();
+		});
+		
+		// Remove hamburger icons inside modal
+		var hamburgersInModal = modalBody.querySelectorAll(".hamburger-icon");
+		hamburgersInModal.forEach(function(hamburger) {
+			hamburger.remove();
+		});
+		
 		attachLinkListeners();
 		attachFormListeners();
 	})
@@ -369,6 +436,7 @@ function loadContentIntoModal(url, modalId) {
 function closeContentModal(modalId) {
 	var modal = document.getElementById(modalId);
 	if (modal) {
+		modal.style.display = "block";
 		modal.classList.remove("active");
 		setTimeout(function() {
 			modal.remove();
@@ -607,4 +675,22 @@ function attachFormListeners() {
 document.addEventListener("DOMContentLoaded", function() {
 	attachLinkListeners();
 	attachFormListeners();
+	
+	// Watch for dynamically added menus and hide them if modal is open
+	var observer = new MutationObserver(function(mutations) {
+		mutations.forEach(function(mutation) {
+			mutation.addedNodes.forEach(function(node) {
+				if (node.nodeType === 1 && node.classList && node.classList.contains('module-slide-menu')) {
+					// Check if modal is open
+					var modal = document.getElementById("module-options-modal");
+					if (modal && modal.classList.contains("active")) {
+						console.log("New menu detected while modal is open - hiding it");
+						node.classList.add("hidden");
+					}
+				}
+			});
+		});
+	});
+	
+	observer.observe(document.body, { childList: true, subtree: true });
 });
