@@ -586,85 +586,85 @@ NewModule('hr', 'HR', __('Human Resources'), 8);
 ChangeColumnSize('modulesallowed', 'www_users', 'varchar(100)', ' NOT NULL ', '', 100);
 
 // Register HR scripts
-NewScript('HRDashboard.php', 15, __('HR management dashboard'));
+NewScript('HRDashboard.php', 35020, __('HR management dashboard'));
 NewMenuItem('hr', 'Maintenance', __('HR Dashboard'), '/HRDashboard.php', 1);
 
-NewScript('HREmployeeEntry.php', 15, __('Employee entry and maintenance'));
+NewScript('HREmployeeEntry.php', 35020, __('Employee entry and maintenance'));
 NewMenuItem('hr', 'Transactions', __('Employee Entry'), '/HREmployeeEntry.php', 1);
 
-NewScript('HREmployees.php', 15, __('Employee list and search'));
+NewScript('HREmployees.php', 35020, __('Employee list and search'));
 NewMenuItem('hr', 'Reports', __('Employee List'), '/HREmployees.php', 1);
 
-NewScript('HRDepartments.php', 15, __('Department management'));
+NewScript('HRDepartments.php', 35020, __('Department management'));
 NewMenuItem('hr', 'Maintenance', __('Departments'), '/HRDepartments.php', 2);
 
-NewScript('HRPositions.php', 15, __('Position management'));
+NewScript('HRPositions.php', 35020, __('Position management'));
 NewMenuItem('hr', 'Maintenance', __('Positions'), '/HRPositions.php', 3);
 
-NewScript('HRPayGrades.php', 15, __('Pay grade management'));
+NewScript('HRPayGrades.php', 35020, __('Pay grade management'));
 NewMenuItem('hr', 'Maintenance', __('Pay Grades'), '/HRPayGrades.php', 4);
 
-NewScript('HREmployeeCompensation.php', 15, __('Employee compensation management'));
+NewScript('HREmployeeCompensation.php', 35020, __('Employee compensation management'));
 NewMenuItem('hr', 'Transactions', __('Employee Compensation'), '/HREmployeeCompensation.php', 2);
 
-NewScript('HRSalaryIncrease.php', 15, __('Salary increase processing'));
+NewScript('HRSalaryIncrease.php', 35020, __('Salary increase processing'));
 NewMenuItem('hr', 'Transactions', __('Salary Increase'), '/HRSalaryIncrease.php', 3);
 
-NewScript('HRCompReviewCycles.php', 15, __('Compensation review cycles'));
+NewScript('HRCompReviewCycles.php', 35020, __('Compensation review cycles'));
 NewMenuItem('hr', 'Maintenance', __('Comp Review Cycles'), '/HRCompReviewCycles.php', 5);
 
-NewScript('HRIncreaseGuidelines.php', 15, __('Increase guidelines'));
+NewScript('HRIncreaseGuidelines.php', 35020, __('Increase guidelines'));
 NewMenuItem('hr', 'Maintenance', __('Increase Guidelines'), '/HRIncreaseGuidelines.php', 6);
 
-NewScript('HRPerformanceAppraisals.php', 15, __('Performance appraisals'));
+NewScript('HRPerformanceAppraisals.php', 35020, __('Performance appraisals'));
 NewMenuItem('hr', 'Transactions', __('Performance Appraisals'), '/HRPerformanceAppraisals.php', 4);
 
-NewScript('HRAppraisalEntry.php', 15, __('Appraisal entry form'));
-NewScript('HRAppraisalsDue.php', 15, __('Appraisal entry form'));
+NewScript('HRAppraisalEntry.php', 35020, __('Appraisal entry form'));
+NewScript('HRAppraisalsDue.php', 35020, __('Appraisal entry form'));
 
-NewScript('HRMyAppraisals.php', 15, __('My appraisals'));
+NewScript('HRMyAppraisals.php', 35020, __('My appraisals'));
 NewMenuItem('hr', 'Reports', __('My Appraisals'), '/HRMyAppraisals.php', 2);
 
-NewScript('HRPerformanceRatings.php', 15, __('Performance rating scales'));
+NewScript('HRPerformanceRatings.php', 35020, __('Performance rating scales'));
 NewMenuItem('hr', 'Maintenance', __('Performance Ratings'), '/HRPerformanceRatings.php', 7);
 
-NewScript('HRPerformanceGoals.php', 15, __('Performance goals'));
+NewScript('HRPerformanceGoals.php', 35020, __('Performance goals'));
 NewMenuItem('hr', 'Maintenance', __('Performance Goals'), '/HRPerformanceGoals.php', 8);
 
-NewScript('HRSkills.php', 15, __('Competency management'));
+NewScript('HRSkills.php', 35020, __('Competency management'));
 NewMenuItem('hr', 'Maintenance', __('Skills'), '/HRSkills.php', 9);
 
-NewScript('HREmployeeSkills.php', 15, __('Employee skills'));
+NewScript('HREmployeeSkills.php', 35020, __('Employee skills'));
 NewMenuItem('hr', 'Transactions', __('Employee Skills'), '/HREmployeeSkills.php', 5);
 
-NewScript('HRJobSkills.php', 15, __('Job skills'));
+NewScript('HRJobSkills.php', 35020, __('Job skills'));
 NewMenuItem('hr', 'Maintenance', __('Job Skills'), '/HRJobSkills.php', 10);
 
-NewScript('HRSkillGapAnalysis.php', 15, __('Competency gap analysis'));
+NewScript('HRSkillGapAnalysis.php', 35020, __('Competency gap analysis'));
 NewMenuItem('hr', 'Reports', __('Competency Gap Analysis'), '/HRSkillGapAnalysis.php', 3);
 
-NewScript('HRRequisitions.php', 15, __('Position requisitions'));
+NewScript('HRRequisitions.php', 35020, __('Position requisitions'));
 NewMenuItem('hr', 'Transactions', __('Requisitions'), '/HRRequisitions.php', 6);
 
-NewScript('HRApplicants.php', 15, __('Applicant management'));
+NewScript('HRApplicants.php', 35020, __('Applicant management'));
 NewMenuItem('hr', 'Transactions', __('Applicants'), '/HRApplicants.php', 7);
 
-NewScript('HRApplicantTracking.php', 15, __('Applicant tracking'));
+NewScript('HRApplicantTracking.php', 35020, __('Applicant tracking'));
 NewMenuItem('hr', 'Reports', __('Applicant Tracking'), '/HRApplicantTracking.php', 4);
 
-NewScript('HRPositionBudgets.php', 15, __('Position budgets'));
+NewScript('HRPositionBudgets.php', 35020, __('Position budgets'));
 NewMenuItem('hr', 'Maintenance', __('Position Budgets'), '/HRPositionBudgets.php', 11);
 
-NewScript('HRSafetyIncidents.php', 15, __('Safety incident tracking'));
+NewScript('HRSafetyIncidents.php', 35020, __('Safety incident tracking'));
 NewMenuItem('hr', 'Transactions', __('Safety Incidents'), '/HRSafetyIncidents.php', 8);
 
-NewScript('HRSystemOptions.php', 15, __('HR system options'));
+NewScript('HRSystemOptions.php', 35020, __('HR system options'));
 NewMenuItem('hr', 'Maintenance', __('System Options'), '/HRSystemOptions.php', 12);
 
-NewScript('HRAuditTrail.php', 15, __('HR audit trail'));
+NewScript('HRAuditTrail.php', 35020, __('HR audit trail'));
 NewMenuItem('hr', 'Reports', __('Audit Trail'), '/HRAuditTrail.php', 5);
 
-NewScript('HRPerformanceReviews.php', 15, __('Performance review reports'));
+NewScript('HRPerformanceReviews.php', 35020, __('Performance review reports'));
 NewMenuItem('hr', 'Reports', __('Performance Reviews'), '/HRPerformanceReviews.php', 6);
 
 CreateTable('hrperformancecriteria', "CREATE TABLE `hrperformancecriteria` (
@@ -682,7 +682,7 @@ CreateTable('hrperformancecriteria', "CREATE TABLE `hrperformancecriteria` (
 	PRIMARY KEY (`criteriaid`)
 ) ");
 
-NewScript('HRPerformanceCriteria.php', 15, __('Performance criteria'));
+NewScript('HRPerformanceCriteria.php', 35020, __('Performance criteria'));
 NewMenuItem('hr', 'Maintenance', __('Performance Criteria'), '/HRPerformanceCriteria.php', 13);
 
 CreateTable('hrratingscales', "CREATE TABLE `hrratingscales` (
@@ -697,7 +697,7 @@ CreateTable('hrratingscales', "CREATE TABLE `hrratingscales` (
 	UNIQUE KEY `scalename` (`scalename`)
 ) ");
 
-NewScript('HRRatingScales.php', 15, __('Rating scales'));
+NewScript('HRRatingScales.php', 35020, __('Rating scales'));
 NewMenuItem('hr', 'Maintenance', __('Rating Scales'), '/HRRatingScales.php', 14);
 
 // Migrate data from employees table to hremployees table
