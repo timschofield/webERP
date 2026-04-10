@@ -1,0 +1,23 @@
+CREATE TABLE `hrrequisitions` (
+	`requisitionid` INT(11) NOT NULL AUTO_INCREMENT,
+	`requisitionnumber` VARCHAR(20) NOT NULL,
+	`positionid` INT(11) NOT NULL,
+	`departmentid` INT(11) NOT NULL,
+	`numberofpositions` INT(11) DEFAULT 1,
+	`requisitiontype` ENUM('New','Replacement','Temporary') NOT NULL,
+	`priority` ENUM('Low','Medium','High','Urgent') DEFAULT 'Medium',
+	`requestedby` INT(11) DEFAULT NULL,
+	`requestdate` DATE NOT NULL,
+	`targetstartdate` DATE DEFAULT NULL,
+	`status` ENUM('Draft','Pending Approval','Approved','In Progress','Filled','Cancelled') DEFAULT 'Draft',
+	`approvedby` INT(11) DEFAULT NULL,
+	`approvaldate` DATE DEFAULT NULL,
+	`filleddate` DATE DEFAULT NULL,
+	`justification` TEXT,
+	`createdby` VARCHAR(20) DEFAULT NULL,
+	`createddate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (`requisitionid`),
+	UNIQUE KEY `requisitionnumber` (`requisitionnumber`),
+	KEY `idx_status` (`status`),
+	KEY `idx_position` (`positionid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

@@ -14,7 +14,7 @@ CREATE TABLE `www_users` (
   `branchcode` varchar(10) NOT NULL DEFAULT '',
   `pagesize` varchar(20) NOT NULL DEFAULT 'A4',
   `timeout` tinyint NOT NULL DEFAULT '5',
-  `modulesallowed` varchar(25) NOT NULL,
+  `modulesallowed` varchar(100) NOT NULL,
   `showdashboard` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Display dashboard after login',
   `showpagehelp` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'Turn off/on page help',
   `showfieldhelp` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'Turn off/on field help',

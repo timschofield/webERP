@@ -1,0 +1,2792 @@
+<h1><a id="HumanResources">Human Resources</a></h1>
+
+<div id="manualpage">
+    <h2><a id="HROverview">Overview</a></h2>
+
+    <p>The Human Resources module in webERP provides comprehensive functionality for managing all aspects of human capital management. The module is designed to handle employee information, organizational structure, compensation, performance management, recruitment, training, and compliance tracking.</p>
+
+    <p>The HR module integrates with the general ledger for payroll and compensation postings, and provides comprehensive reporting and analytics capabilities. All employee data is maintained securely with role-based access controls to protect sensitive information.</p>
+
+    <p>The module supports the complete employee lifecycle from recruitment through separation, including:</p>
+
+    <ul>
+        <li>Employee master data management</li>
+        <li>Organizational hierarchy and reporting structures</li>
+        <li>Compensation and benefits administration</li>
+        <li>Performance management and appraisals</li>
+        <li>Recruitment and applicant tracking</li>
+        <li>Training and development</li>
+        <li>Time and attendance</li>
+        <li>Safety and compliance</li>
+    </ul>
+
+    <h2>HR System Features</h2>
+
+    <p>The HR module provides the following capabilities:</p>
+
+    <ul>
+        <li><strong>Employee Master Data:</strong> Maintain complete employee records including personal information, contact details, emergency contacts, employment history, and documents</li>
+        <li><strong>Organizational Structure:</strong> Define departments, positions, and reporting hierarchies to model your organization</li>
+        <li><strong>Employment Types:</strong> Support for full-time, part-time, contract, and temporary employment arrangements</li>
+        <li><strong>Compensation Management:</strong> Track salary history, manage pay grades, process salary increases, and maintain compensation guidelines</li>
+        <li><strong>Performance Management:</strong> Configure review cycles, define skills, use rating scales, and conduct structured performance appraisals</li>
+        <li><strong>Recruitment:</strong> Post requisitions, track applicants through the hiring pipeline, and convert applicants to employees</li>
+        <li><strong>Training & Development:</strong> Track employee skills, identify skill gaps, and manage training programs</li>
+        <li><strong>Safety Management:</strong> Record and track workplace safety incidents and maintain compliance records</li>
+        <li><strong>Employee Self-Service:</strong> Allow employees to view their information and submit appraisal inputs</li>
+        <li><strong>Reporting & Analytics:</strong> Generate comprehensive reports on all aspects of HR operations</li>
+        <li><strong>Audit Trail:</strong> Complete history of all changes to HR data</li>
+    </ul>
+
+    <div class="floatright">
+        <a class="minitext" href="#top">⬆ Top</a>
+    </div>
+
+    <h2><a id="GettingStarted">Getting Started with the HR Module</a></h2>
+
+    <p>This section provides a step-by-step guide for implementing the HR module in your organization. Follow these steps in order for the smoothest implementation.</p>
+
+    <h3><a id="InitialSetup">Step 1: Initial System Configuration</a></h3>
+
+    <p>Before entering employee data, configure the foundational settings:</p>
+
+    <ol>
+        <li><strong>Configure HR System Options</strong> (HR → Maintenance → System Options)
+            <ul>
+                <li><strong>Appraisal Frequency:</strong> Set how often performance appraisals should occur in days (default: 365 days for annual reviews). The system uses this to identify employees due for appraisal.</li>
+                <li><strong>Maximum Sick Days:</strong> Set the maximum sick days allowed per year for compliance tracking (default: 10 days).</li>
+                <li><strong>Maximum Vacation Days:</strong> Set the maximum vacation days allowed per year (default: 20 days).</li>
+                <li><strong>Minimum Salary Increase Percentage:</strong> Set the minimum allowed salary increase percentage (default: 0%). The system will warn if increases are below this threshold.</li>
+                <li><strong>Maximum Salary Increase Percentage:</strong> Set the maximum allowed salary increase percentage (default: 15%). The system will warn if increases exceed this threshold.</li>
+            </ul>
+        </li>
+        <li><strong>Set Up Security Permissions</strong> (Setup → Security)
+            <ul>
+                <li>Assign HR security tokens to appropriate user roles</li>
+                <li>Determine who can view vs. edit employee data</li>
+                <li>Restrict compensation data access to authorized personnel</li>
+                <li>Set up employee self-service access if desired</li>
+            </ul>
+        </li>
+    </ol>
+
+    <h3><a id="OrganizationalSetup">Step 2: Build Organizational Structure</a></h3>
+
+    <ol>
+        <li><strong>Create Departments</strong> (Setup → HR → HR Departments)
+            <ul>
+                <li>Start with top-level departments (Sales, Operations, Finance, etc.)</li>
+                <li>Add sub-departments if needed</li>
+                <li>Link each department to a cost center for GL integration</li>
+                <li>Don't assign managers yet - you'll do this after entering employees</li>
+            </ul>
+        </li>
+        <li><strong>Define Pay Grades</strong> (Setup → HR → Pay Grades)
+            <ul>
+                <li>Create grades that align with your compensation philosophy</li>
+                <li>Set minimum, midpoint, and maximum for each grade</li>
+                <li>Document grade criteria for consistency</li>
+            </ul>
+        </li>
+        <li><strong>Create Positions</strong> (Setup → HR → HR Positions)
+            <ul>
+                <li>Define all job positions in your organization</li>
+                <li>Assign each to a department and pay grade</li>
+                <li>Write clear job descriptions</li>
+                <li>Set up reporting relationships (you can refine these later)</li>
+            </ul>
+        </li>
+    </ol>
+
+    <h3><a id="EmployeeDataEntry">Step 3: Enter Employee Data</a></h3>
+
+    <ol>
+        <li><strong>Start with Leadership</strong>
+            <ul>
+                <li>Enter executives and senior managers first</li>
+                <li>This establishes the top of your reporting hierarchy</li>
+            </ul>
+        </li>
+        <li><strong>Add Remaining Employees</strong> (HR → Employees → Employee Entry)
+            <ul>
+                <li>Work down the organizational hierarchy</li>
+                <li>Enter complete information for each employee</li>
+                <li>Include emergency contacts</li>
+                <li>Upload employee photo if available</li>
+            </ul>
+        </li>
+        <li><strong>Update Department Managers</strong>
+            <ul>
+                <li>Now that employees are in the system, go back to departments</li>
+                <li>Assign the appropriate manager to each department</li>
+            </ul>
+        </li>
+    </ol>
+
+    <h3><a id="PerformanceSetup">Step 4: Configure Performance Management (Optional but Recommended)</a></h3>
+
+    <ol>
+        <li><strong>Define Rating Scales</strong> (Setup → HR → Rating Scales)
+            <ul>
+                <li>Create the scale you'll use for evaluations (e.g., 1-5 or Exceeds/Meets/Below)</li>
+            </ul>
+        </li>
+        <li><strong>Set Up Performance Criteria</strong> (Setup → HR → Performance Criteria)
+            <ul>
+                <li>Define what you'll evaluate (quality, productivity, communication, etc.)</li>
+                <li>These can be customized by position later</li>
+            </ul>
+        </li>
+        <li><strong>Create Skills</strong> (Setup → HR → Skills)
+            <ul>
+                <li>Define key skills for your organization</li>
+                <li>Group by category (technical, behavioral, leadership)</li>
+            </ul>
+        </li>
+        <li><strong>Link Skills to Positions</strong> (Setup → HR → Job Skills)
+            <ul>
+                <li>For each position, define which skills are required</li>
+                <li>Set required proficiency levels</li>
+            </ul>
+        </li>
+    </ol>
+
+    <h3><a id="DailyOperations">Step 5: Begin Daily Operations</a></h3>
+
+    <p>Once setup is complete, you can start using the system for day-to-day HR activities:</p>
+
+    <ul>
+        <li><strong>Maintain Employee Records</strong> - Keep information current as changes occur</li>
+        <li><strong>Process Compensation Changes</strong> - Use the salary increase function for raises and promotions</li>
+        <li><strong>Conduct Performance Reviews</strong> - Follow your review schedule</li>
+        <li><strong>Manage Recruitment</strong> - Create requisitions and track applicants</li>
+        <li><strong>Track Safety Incidents</strong> - Report and investigate incidents promptly</li>
+        <li><strong>Generate Reports</strong> - Use reports for decision-making and compliance</li>
+    </ul>
+
+    <h3><a id="QuickStartChecklist">Quick Start Checklist</a></h3>
+
+    <p>Use this checklist to track your implementation progress:</p>
+
+    <table class="table">
+        <tr>
+            <th>Step</th>
+            <th>Task</th>
+            <th>Complete</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Configure HR System Options</td>
+            <td>☐</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Set up security permissions</td>
+            <td>☐</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Create departments</td>
+            <td>☐</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>Define pay grades</td>
+            <td>☐</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>Create positions</td>
+            <td>☐</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>Enter employee data</td>
+            <td>☐</td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td>Assign department managers</td>
+            <td>☐</td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td>Configure performance management (optional)</td>
+            <td>☐</td>
+        </tr>
+        <tr>
+            <td>9</td>
+            <td>Train users on the system</td>
+            <td>☐</td>
+        </tr>
+        <tr>
+            <td>10</td>
+            <td>Begin daily operations</td>
+            <td>☐</td>
+        </tr>
+    </table>
+
+    <div class="floatright">
+        <a class="minitext" href="#top">⬆ Top</a>
+    </div>
+
+    <h2><a id="HRDashboard">HR Dashboard</a></h2>
+
+    <p>The HR Dashboard provides an at-a-glance view of key human resources metrics and quick access to common HR functions. Access the dashboard from:</p>
+
+    <p>Main Menu → Human Resources → HR Dashboard</p>
+
+    <p>The dashboard displays:</p>
+
+    <ul>
+        <li><strong>Active Employees:</strong> Total count of employees with active status</li>
+        <li><strong>Open Positions:</strong> Number of positions currently open for recruitment</li>
+        <li><strong>Pending Appraisals:</strong> Performance appraisals that are in progress or due within the next 30 days</li>
+        <li><strong>Due for Appraisal:</strong> Employees who need an appraisal based on the system's appraisal frequency setting (click to see detailed list)</li>
+        <li><strong>Active Requisitions:</strong> Job requisitions currently in pending, approved, or in-progress status</li>
+        <li>Quick links to frequently used HR functions organized by category</li>
+    </ul>
+
+    <h4>Using the "Due for Appraisal" Feature:</h4>
+    <p>The dashboard automatically tracks which employees are due for performance appraisals based on your configured appraisal frequency:</p>
+    <ol>
+        <li>The system calculates time since each employee's last completed appraisal</li>
+        <li>For employees who have never been appraised, it calculates from their hire date</li>
+        <li>Click on the "Due for Appraisal" number to see a detailed list of employees requiring appraisal</li>
+        <li>From that list, you can directly create new appraisals for each employee</li>
+        <li>This ensures timely performance reviews according to your organization's schedule</li>
+    </ol>
+
+    <div class="floatright">
+        <a class="minitext" href="#top">⬆ Top</a>
+    </div>
+
+    <h2><a id="OrganizationalStructure">Organizational Structure</a></h2>
+
+    <h3><a id="HRDepartments">Departments</a></h3>
+
+    <p>Departments represent the organizational units within your company. Departments are defined from:</p>
+
+    <p><strong>Setup → Human Resources → HR Departments</strong></p>
+
+    <h4>To Create a New Department:</h4>
+    <ol>
+        <li>Navigate to Setup → Human Resources → HR Departments</li>
+        <li>Click the "New Department" button</li>
+        <li>Enter the required information:
+            <ul>
+                <li><strong>Department Code</strong> - unique identifier (up to 10 characters, e.g., "SALES", "IT", "HR")</li>
+                <li><strong>Department Name</strong> - descriptive name (up to 50 characters, e.g., "Sales Department")</li>
+                <li><strong>Manager</strong> - select the employee who manages this department from the dropdown</li>
+                <li><strong>Parent Department</strong> - select the parent department if creating a sub-department (optional)</li>
+                <li><strong>Cost Center</strong> - enter the GL cost center code for expense tracking and reporting</li>
+                <li><strong>Description</strong> - enter a detailed description of the department's function and responsibilities</li>
+            </ul>
+        </li>
+        <li>Click "Save" to create the department</li>
+    </ol>
+
+    <h4>To Edit an Existing Department:</h4>
+    <ol>
+        <li>Navigate to Setup → Human Resources → HR Departments</li>
+        <li>Click on the department code or name in the list</li>
+        <li>Modify the desired fields</li>
+        <li>Click "Update" to save changes</li>
+    </ol>
+
+    <h4>Building a Department Hierarchy:</h4>
+    <p>Departments can be organized hierarchically to reflect your organization's structure:</p>
+    <ol>
+        <li>First create the top-level departments (leave Parent Department blank)</li>
+        <li>Then create sub-departments and select the appropriate Parent Department</li>
+        <li>Example hierarchy:
+            <ul>
+                <li>Sales (top level) → Regional Sales → District Sales</li>
+                <li>Operations (top level) → Manufacturing → Quality Control</li>
+            </ul>
+        </li>
+    </ol>
+
+    <p><strong>Note:</strong> The department hierarchy is used for reporting chains, approval workflows, and organizational charts. Changes to the structure affect reporting relationships.</p>
+
+    <h3><a id="HRPositions">Positions</a></h3>
+
+    <p>Positions define the jobs within your organization. Positions are created and maintained from:</p>
+
+    <p><strong>Setup → Human Resources → HR Positions</strong></p>
+
+    <h4>To Create a New Position:</h4>
+    <ol>
+        <li>Navigate to Setup → Human Resources → HR Positions</li>
+        <li>Click "New Position"</li>
+        <li>Enter the position details:
+            <ul>
+                <li><strong>Position Code</strong> - unique identifier (e.g., "MGR-001", "SALES-REP")</li>
+                <li><strong>Position Title</strong> - the job title (e.g., "Sales Manager", "Software Engineer")</li>
+                <li><strong>Department</strong> - select the department from the dropdown</li>
+                <li><strong>Reports To Position</strong> - select the supervisory position (establishes reporting hierarchy)</li>
+                <li><strong>Pay Grade</strong> - assign the appropriate pay grade for compensation planning</li>
+                <li><strong>Job Description</strong> - enter detailed responsibilities, duties, and requirements</li>
+                <li><strong>Status</strong> - set to Active or Inactive</li>
+            </ul>
+        </li>
+        <li>Click "Save Position"</li>
+    </ol>
+
+    <h4>To Assign Required Skills to a Position:</h4>
+    <ol>
+        <li>After creating the position, go to Setup → Human Resources → Job Skills</li>
+        <li>Select the position from the dropdown</li>
+        <li>Click "Add Skill"</li>
+        <li>Select the skill from the list</li>
+        <li>Enter the required proficiency level (1-5 or as defined in your system)</li>
+        <li>Mark as mandatory or preferred</li>
+        <li>Save the skills assignment</li>
+    </ol>
+
+    <h4>Managing Position Budgets:</h4>
+    <p>Track authorized headcount versus actual staffing:</p>
+    <ol>
+        <li>Navigate to Setup → Human Resources → Position Budgets</li>
+        <li>Select a budget year</li>
+        <li>For each position, enter:
+            <ul>
+                <li>Budgeted positions (authorized headcount)</li>
+                <li>Planned hires by quarter</li>
+                <li>Estimated salary budget</li>
+            </ul>
+        </li>
+        <li>The system automatically shows current filled positions</li>
+        <li>View variance reports to compare budget vs. actual</li>
+    </ol>
+
+    <div class="floatright">
+        <a class="minitext" href="#top">⬆ Top</a>
+    </div>
+
+    <h2><a id="EmployeeManagement">Employee Management</a></h2>
+
+    <h3><a id="EmployeeEntry">Employee Entry and Maintenance</a></h3>
+
+    <p>Employee records are created and maintained from:</p>
+
+    <p><strong>Human Resources → Employees → Employee Entry</strong></p>
+
+    <h4>To Create a New Employee Record:</h4>
+    <ol>
+        <li>Navigate to Human Resources → Employees → Employee Entry</li>
+        <li>Click "New Employee"</li>
+        <li>Complete the Personal Information section:
+            <ul>
+                <li><strong>Employee Number</strong> - enter a unique ID or leave blank to auto-generate</li>
+                <li><strong>First Name, Middle Name, Last Name</strong> - enter full legal name</li>
+                <li><strong>Preferred Name</strong> - name used for day-to-day interactions (optional)</li>
+                <li><strong>Gender</strong> - select from dropdown</li>
+                <li><strong>Date of Birth</strong> - use date picker or format YYYY-MM-DD</li>
+                <li><strong>Social Security Number / National ID</strong> - entered in encrypted format for security</li>
+                <li><strong>Marital Status</strong> - select Single, Married, Divorced, Widowed, etc.</li>
+            </ul>
+        </li>
+        <li>Enter Contact Information:
+            <ul>
+                <li><strong>Email Address</strong> - work email (used for system login if self-service is enabled)</li>
+                <li><strong>Phone Number</strong> - primary work phone</li>
+                <li><strong>Mobile Phone</strong> - optional</li>
+                <li><strong>Address</strong> - street, city, state/province, postal code, country</li>
+            </ul>
+        </li>
+        <li>Complete Employment Information:
+            <ul>
+                <li><strong>Hire Date</strong> - first day of employment</li>
+                <li><strong>Original Hire Date</strong> - only different if this is a rehire</li>
+                <li><strong>Employment Status</strong> - Active, On Leave, or Terminated</li>
+                <li><strong>Employment Type</strong> - Full-Time, Part-Time, Contract, or Temporary</li>
+                <li><strong>Department</strong> - select from previously defined departments</li>
+                <li><strong>Position</strong> - select the employee's job position</li>
+                <li><strong>Supervisor</strong> - select the immediate supervisor/manager</li>
+                <li><strong>Work Location</strong> - select primary work location</li>
+                <li><strong>Employment Terms</strong> - any special terms or conditions (optional)</li>
+            </ul>
+        </li>
+        <li>Enter Compensation Details:
+            <ul>
+                <li><strong>Current Salary/Wage</strong> - annual salary or hourly wage</li>
+                <li><strong>Pay Frequency</strong> - Hourly, Weekly, Bi-Weekly, Semi-Monthly, Monthly, or Annual</li>
+                <li><strong>Pay Grade</strong> - select appropriate grade (validates against pay grade ranges)</li>
+            </ul>
+        </li>
+        <li>Add at least one Emergency Contact:
+            <ul>
+                <li>Click "Add Emergency Contact"</li>
+                <li><strong>Contact Name</strong> - full name</li>
+                <li><strong>Relationship</strong> - Spouse, Parent, Sibling, Friend, etc.</li>
+                <li><strong>Primary Phone</strong> - main contact number</li>
+                <li><strong>Alternate Phone</strong> - optional secondary number</li>
+                <li><strong>Address</strong> - complete address (optional)</li>
+            </ul>
+        </li>
+        <li>Click "Save Employee" to create the record</li>
+    </ol>
+
+    <h4>To Update an Existing Employee:</h4>
+    <ol>
+        <li>Navigate to Human Resources → Employees → Employee Entry</li>
+        <li>Search for the employee by name or employee number</li>
+        <li>Click on the employee name to open their record</li>
+        <li>Make necessary changes to any section</li>
+        <li>Click "Update Employee" to save</li>
+    </ol>
+
+    <p><strong>Important Notes:</strong></p>
+    <ul>
+        <li>Salary history is automatically maintained when you change compensation - you don't need to manually track it</li>
+        <li>Changes to department or position are logged in the employee's history</li>
+        <li>Sensitive fields like SSN/National ID are encrypted in the database</li>
+        <li>Required fields are marked with an asterisk (*)</li>
+    </ul>
+
+    <h3><a id="EmployeeList">Employee List and Search</a></h3>
+
+    <p>View and search employees from:</p>
+
+    <p>Human Resources → Employees → Employee List</p>
+
+    <p>The employee list provides filtering and search capabilities including:</p>
+    <ul>
+        <li>Search by name, employee number, or department</li>
+        <li>Filter by status (active, terminated, on leave)</li>
+        <li>Filter by department or position</li>
+        <li>Sort by various fields</li>
+        <li>Export to CSV</li>
+    </ul>
+
+    <div class="floatright">
+        <a class="minitext" href="#top">⬆ Top</a>
+    </div>
+
+    <h2><a id="CompensationManagement">Compensation Management</a></h2>
+
+    <h3><a id="PayGrades">Pay Grades</a></h3>
+
+    <p>Pay grades define salary ranges for positions. Configure pay grades from:</p>
+
+    <p>Setup → Human Resources → Pay Grades</p>
+
+    <p>Each pay grade includes:</p>
+    <ul>
+        <li>Grade Code - unique identifier</li>
+        <li>Grade Name - descriptive name</li>
+        <li>Minimum Salary - lower bound of the range</li>
+        <li>Midpoint Salary - target salary for the grade</li>
+        <li>Maximum Salary - upper bound of the range</li>
+        <li>Currency</li>
+        <li>Effective Date - when this grade structure became effective</li>
+    </ul>
+
+    <h3><a id="EmployeeCompensation">Employee Compensation</a></h3>
+
+    <p>Manage individual employee compensation from:</p>
+
+    <p>Human Resources → Compensation → Employee Compensation</p>
+
+    <p>This screen allows you to:</p>
+    <ul>
+        <li>View current compensation details</li>
+        <li>View complete salary history</li>
+        <li>Process salary increases</li>
+        <li>View position in pay grade range</li>
+        <li>Add compensation notes and justifications</li>
+    </ul>
+
+    <h3><a id="CompReviewCycles">Compensation Review Cycles</a></h3>
+
+    <p>Compensation review cycles help manage annual or periodic salary reviews. Set up review cycles from:</p>
+
+    <p>Setup → Human Resources → Compensation Review Cycles</p>
+
+    <p>Review cycle features include:</p>
+    <ul>
+        <li>Define review period and effective dates</li>
+        <li>Set overall budget increase percentage</li>
+        <li>Define increase guidelines by performance rating</li>
+        <li>Track approval status</li>
+        <li>Generate review worksheets</li>
+        <li>Batch process approved increases</li>
+    </ul>
+
+    <h3><a id="IncreaseGuidelines">Increase Guidelines</a></h3>
+
+    <p>Increase guidelines provide recommended salary increase ranges based on performance ratings and position in pay grade. Configure from:</p>
+
+    <p>Setup → Human Resources → Increase Guidelines</p>
+
+    <h3><a id="SalaryIncrease">Salary Increase Processing</a></h3>
+
+    <p>Process individual or batch salary increases from:</p>
+
+    <p><strong>Human Resources → Compensation → Salary Increase</strong></p>
+
+    <h4>To Process an Individual Salary Increase:</h4>
+    <ol>
+        <li>Navigate to Human Resources → Compensation → Salary Increase</li>
+        <li>Select the employee using the search/dropdown</li>
+        <li>The system displays:
+            <ul>
+                <li>Current salary</li>
+                <li>Pay grade range</li>
+                <li>Position in range (compa-ratio)</li>
+                <li>Last increase date and amount</li>
+                <li>Performance rating (if available)</li>
+            </ul>
+        </li>
+        <li>Enter increase details:
+            <ul>
+                <li><strong>Increase Type</strong> - select Merit, Promotion, Market Adjustment, Cost of Living, etc.</li>
+                <li><strong>Increase Amount</strong> - enter dollar amount OR</li>
+                <li><strong>Increase Percentage</strong> - enter percentage (system calculates the dollar amount)</li>
+                <li><strong>Effective Date</strong> - when the increase takes effect</li>
+                <li><strong>Reason/Justification</strong> - explain the basis for the increase</li>
+            </ul>
+        </li>
+        <li>Review the preview showing:
+            <ul>
+                <li>New salary amount</li>
+                <li>New position in pay grade range</li>
+                <li>Warnings if salary goes outside grade range</li>
+            </ul>
+        </li>
+        <li>Click "Submit for Approval" or "Process Increase" (depending on workflow settings)</li>
+    </ol>
+
+    <h4>To Process a Compensation Review Cycle (Batch Increases):</h4>
+    <ol>
+        <li>First, set up the review cycle in Setup → HR → Compensation Review Cycles</li>
+        <li>Define:
+            <ul>
+                <li>Review period (e.g., "2024 Annual Review")</li>
+                <li>Budget percentage (overall increase pool)</li>
+                <li>Effective date for increases</li>
+                <li>Increase guidelines by performance rating</li>
+            </ul>
+        </li>
+        <li>Navigate to Human Resources → Compensation → Salary Increase</li>
+        <li>Enter the effective date and change reason for the batch</li>
+        <li>Optionally filter by department to process increases department by department</li>
+        <li>For each employee:
+            <ul>
+                <li>The system displays current salary and last increase information</li>
+                <li>Enter the new salary or increase percentage</li>
+                <li>The system calculates the increase amount and percentage automatically</li>
+                <li>The system validates against configured min/max increase percentages and displays warnings if limits are exceeded</li>
+                <li>Select employees to include in the batch processing</li>
+            </ul>
+        </li>
+        <li>Click "Process Increases" to apply all selected salary changes in a single transaction</li>
+    </ol>
+
+    <p><strong>System Validation:</strong></p>
+    <ul>
+        <li>The system displays the configured minimum and maximum salary increase percentages at the top of the form</li>
+        <li>Warning messages appear for any increases below the minimum threshold</li>
+        <li>Warning messages appear for any increases above the maximum threshold</li>
+        <li>These warnings are informational - increases can still be processed but may require additional approval</li>
+        <li>The limits are configured in Setup → HR → HR System Options</li>
+    </ul>
+
+    <p><strong>Approval Workflow:</strong></p>
+    <ul>
+        <li>Increases may require approval based on amount or percentage thresholds</li>
+        <li>Approvers receive notifications to review pending increases</li>
+        <li>Increases show as "Pending" until approved</li>
+        <li>Once approved, salary history is automatically updated</li>
+        <li>Employee's compensation record reflects the new amount on the effective date</li>
+    </ul>
+
+    <p><strong>Important Considerations:</strong></p>
+    <ul>
+        <li>System warns if new salary falls outside the pay grade min/max</li>
+        <li>All increases are logged in salary history with reason codes</li>
+        <li>If GL integration is enabled, compensation entries can be posted automatically</li>
+        <li>Reports are available to analyze increase distribution by department, performance rating, etc.</li>
+    </ul>
+
+    <div class="floatright">
+        <a class="minitext" href="#top">⬆ Top</a>
+    </div>
+
+    <h2><a id="PerformanceManagement">Performance Management</a></h2>
+
+    <h3><a id="PerformanceOverview">Performance Management Overview</a></h3>
+
+    <p>The performance management system provides a structured approach to evaluating and developing employee performance. The system supports:</p>
+    <ul>
+        <li>Multiple review types (annual, probationary, project-based)</li>
+        <li>Configurable rating scales</li>
+        <li>Goal setting and tracking</li>
+        <li>Skill assessment</li>
+        <li>Multi-rater feedback (360-degree reviews)</li>
+        <li>Performance improvement plans</li>
+    </ul>
+
+    <h3><a id="RatingScales">Rating Scales</a></h3>
+
+    <p>Rating scales define the levels used to evaluate performance. Configure from:</p>
+
+    <p>Setup → Human Resources → Rating Scales</p>
+
+    <p>Rating scales can be customized for your organization. Common examples include:</p>
+    <ul>
+        <li>1-5 numeric scale</li>
+        <li>Exceeds/Meets/Below Expectations</li>
+        <li>Outstanding/Excellent/Good/Fair/Poor</li>
+    </ul>
+
+    <h3><a id="PerformanceCriteria">Performance Criteria</a></h3>
+
+    <p>Performance criteria define what aspects of performance will be evaluated. Set up from:</p>
+
+    <p>Setup → Human Resources → Performance Criteria</p>
+
+    <p>Criteria can include:</p>
+    <ul>
+        <li>Job knowledge</li>
+        <li>Quality of work</li>
+        <li>Productivity</li>
+        <li>Communication skills</li>
+        <li>Teamwork</li>
+        <li>Leadership</li>
+        <li>Initiative</li>
+    </ul>
+
+    <h3><a id="Skills">Skills</a></h3>
+
+    <p>Skills are the knowledge, abilities, and competencies required for positions. Define skills from:</p>
+
+    <p>Setup → Human Resources → Skills</p>
+
+    <p>Each skill includes:</p>
+    <ul>
+        <li>Skill Code</li>
+        <li>Skill Name</li>
+        <li>Description</li>
+        <li>Category (technical, behavioral, leadership)</li>
+        <li>Proficiency levels (beginner, intermediate, advanced, expert)</li>
+    </ul>
+
+    <h3><a id="JobSkills">Job Skills</a></h3>
+
+    <p>Link required skills to positions from:</p>
+
+    <p>Setup → Human Resources → Job Skills</p>
+
+    <p>Define:</p>
+    <ul>
+        <li>Which skills are required for each position</li>
+        <li>Required proficiency level for each skill</li>
+        <li>Whether the skill is mandatory or preferred</li>
+    </ul>
+
+    <h3><a id="EmployeeSkills">Employee Skills</a></h3>
+
+    <p>Track employee skill levels from:</p>
+
+    <p>Human Resources → Performance → Employee Skills</p>
+
+    <p>Record:</p>
+    <ul>
+        <li>Current proficiency level for each skill</li>
+        <li>Date assessed</li>
+        <li>Assessor</li>
+        <li>Training history related to the skill</li>
+    </ul>
+
+    <h3><a id="SkillGapAnalysis">Skill Gap Analysis</a></h3>
+
+    <p>Identify development needs by comparing required vs. actual skills:</p>
+
+    <p>Human Resources → Performance → Skill Gap Analysis</p>
+
+    <p>The gap analysis shows:</p>
+    <ul>
+        <li>Skills where employee is below required level</li>
+        <li>Recommended training to close gaps</li>
+        <li>Priority of development needs</li>
+        <li>Departmental skill profiles</li>
+    </ul>
+
+    <h3><a id="PerformanceGoals">Performance Goals</a></h3>
+
+    <p>Set and track performance goals from:</p>
+
+    <p>Human Resources → Performance → Performance Goals</p>
+
+    <p>Goal information includes:</p>
+    <ul>
+        <li>Goal description and success criteria</li>
+        <li>Start and target completion dates</li>
+        <li>Goal category (individual, departmental, organizational)</li>
+        <li>Weight/importance</li>
+        <li>Progress tracking</li>
+        <li>Completion status and comments</li>
+    </ul>
+
+    <h3><a id="PerformanceReviews">Performance Reviews</a></h3>
+
+    <p>Conduct performance reviews from:</p>
+
+    <p><strong>Human Resources → Performance → Performance Reviews</strong></p>
+
+    <h4>To Initiate a Performance Review:</h4>
+    <ol>
+        <li>Navigate to Human Resources → Performance → Performance Reviews</li>
+        <li>Click "New Review"</li>
+        <li>Select the employee from the dropdown</li>
+        <li>Choose the review type:
+            <ul>
+                <li><strong>Annual Review</strong> - standard yearly performance evaluation</li>
+                <li><strong>Probationary Review</strong> - for new employees at end of probation period</li>
+                <li><strong>Project Review</strong> - evaluation after completing a specific project</li>
+                <li><strong>Interim Review</strong> - mid-year check-in</li>
+            </ul>
+        </li>
+        <li>Set the review period (start and end dates)</li>
+        <li>Click "Create Review" - this creates a draft review</li>
+    </ol>
+
+    <h4>To Complete a Performance Review:</h4>
+    <ol>
+        <li>Open the draft review</li>
+        <li>Rate each Performance Criteria:
+            <ul>
+                <li>Each criterion appears with its description</li>
+                <li>Select a rating from your configured rating scale (e.g., 1-5)</li>
+                <li>Add comments explaining the rating</li>
+                <li>Provide specific examples of performance</li>
+            </ul>
+        </li>
+        <li>Assess Skills:
+            <ul>
+                <li>Rate the employee's proficiency level for each relevant skill</li>
+                <li>Compare against required levels for their position</li>
+                <li>Identify development needs</li>
+            </ul>
+        </li>
+        <li>Review Goal Achievement:
+            <ul>
+                <li>The system displays goals set during the review period</li>
+                <li>Mark each goal as Achieved, Partially Achieved, or Not Achieved</li>
+                <li>Add comments on progress and results</li>
+            </ul>
+        </li>
+        <li>Enter Overall Assessment:
+            <ul>
+                <li>Select overall rating (system may calculate from individual ratings)</li>
+                <li>Enter strengths summary</li>
+                <li>Enter areas for improvement</li>
+                <li>Add supervisor's overall comments</li>
+            </ul>
+        </li>
+        <li>Create Development Plan:
+            <ul>
+                <li>List specific development objectives</li>
+                <li>Identify training needs</li>
+                <li>Set timeline for development activities</li>
+            </ul>
+        </li>
+        <li>Set Goals for Next Period (optional at this stage)</li>
+        <li>Save the review (stays in draft until submitted)</li>
+    </ol>
+
+    <h4>Review Discussion and Finalization:</h4>
+    <ol>
+        <li>Schedule a meeting with the employee to discuss the review</li>
+        <li>During/after the meeting:
+            <ul>
+                <li>Share the review with the employee (if not already visible)</li>
+                <li>Employee adds their comments and self-assessment</li>
+                <li>Discuss ratings, achievements, and development needs</li>
+                <li>Finalize goals for the upcoming period</li>
+            </ul>
+        </li>
+        <li>Both supervisor and employee electronically sign the review</li>
+        <li>Submit for final approval (if required by your workflow)</li>
+        <li>Once approved, the review is locked and becomes part of the permanent record</li>
+    </ol>
+
+    <p><strong>Tips for Effective Reviews:</strong></p>
+    <ul>
+        <li>Provide specific examples and data to support ratings</li>
+        <li>Focus on observable behaviors and measurable results</li>
+        <li>Balance positive feedback with constructive criticism</li>
+        <li>Make development plans actionable with clear timelines</li>
+        <li>Set SMART goals (Specific, Measurable, Achievable, Relevant, Time-bound) for next period</li>
+        <li>Use the system's audit trail to reference performance throughout the year</li>
+    </ul>
+
+    <h3><a id="AppraisalEntry">Appraisal Entry</a></h3>
+
+    <p>A simplified appraisal entry form is available from:</p>
+
+    <p>Human Resources → Performance → Appraisal Entry</p>
+
+    <h3><a id="MyAppraisals">My Appraisals (Employee Self-Service)</a></h3>
+
+    <p>Employees can view their performance history from:</p>
+
+    <p>Human Resources → Performance → My Appraisals</p>
+
+    <p>Employees can:</p>
+    <ul>
+        <li>View completed reviews</li>
+        <li>Add self-assessment comments</li>
+        <li>View current goals</li>
+        <li>Update goal progress</li>
+        <li>View development plans</li>
+    </ul>
+
+    <div class="floatright">
+        <a class="minitext" href="#top">⬆ Top</a>
+    </div>
+
+    <h2><a id="RecruitmentManagement">Recruitment Management</a></h2>
+
+    <h3><a id="Requisitions">Position Requisitions</a></h3>
+
+    <p>Create requisitions to request new or replacement positions from:</p>
+
+    <p><strong>Human Resources → Recruitment → Requisitions</strong></p>
+
+    <h4>To Create a Position Requisition:</h4>
+    <ol>
+        <li>Navigate to Human Resources → Recruitment → Requisitions</li>
+        <li>Click "New Requisition"</li>
+        <li>Enter requisition details:
+            <ul>
+                <li><strong>Position</strong> - select the position from the dropdown (must be predefined)</li>
+                <li><strong>Department</strong> - select department (may auto-fill based on position)</li>
+                <li><strong>Number of Openings</strong> - how many positions to fill (usually 1)</li>
+                <li><strong>Requisition Type</strong>:
+                    <ul>
+                        <li>New Position - adding headcount</li>
+                        <li>Replacement - filling a vacancy</li>
+                        <li>Temporary - short-term need</li>
+                    </ul>
+                </li>
+                <li><strong>Reason</strong> - explain why this position is needed</li>
+                <li><strong>Requested Start Date</strong> - when you need the person to begin</li>
+                <li><strong>Justification</strong> - detailed business case for the hire</li>
+                <li><strong>Salary Range</strong> - proposed compensation (may default from pay grade)</li>
+            </ul>
+        </li>
+        <li>Specify posting preferences:
+            <ul>
+                <li><strong>Post Internally</strong> - make visible to current employees first</li>
+                <li><strong>Post Externally</strong> - advertise publicly</li>
+                <li><strong>Posting Duration</strong> - how long to keep position open</li>
+            </ul>
+        </li>
+        <li>Click "Submit Requisition"</li>
+    </ol>
+
+    <h4>Requisition Approval Workflow:</h4>
+    <ol>
+        <li>Submitted requisitions go to the department manager (if not the submitter)</li>
+        <li>Manager reviews and approves or rejects with comments</li>
+        <li>Approved requisitions go to HR for review</li>
+        <li>HR may send to senior management or finance for budget approval</li>
+        <li>Once fully approved, the status changes to "Open" and recruiting can begin</li>
+        <li>View approval status and history in the requisition details</li>
+    </ol>
+
+    <h4>Managing Open Requisitions:</h4>
+    <ul>
+        <li>View all requisitions and filter by status (pending, approved, open, filled, cancelled)</li>
+        <li>Edit requisition details if changes are needed (may require re-approval)</li>
+        <li>Cancel a requisition if the need is eliminated</li>
+        <li>Mark as "Filled" when hire is completed</li>
+        <li>Link to applicants who applied for this requisition</li>
+    </ul>
+
+    <h3><a id="Applicants">Applicant Tracking</a></h3>
+
+    <p>Manage job applicants from:</p>
+
+    <p>Human Resources → Recruitment → Applicants</p>
+
+    <p>Applicant information includes:</p>
+    <ul>
+        <li>Personal information</li>
+        <li>Contact details</li>
+        <li>Positions applied for</li>
+        <li>Resume/CV (file attachment)</li>
+        <li>Cover letter</li>
+        <li>Source (how they heard about the position)</li>
+        <li>Application date</li>
+        <li>Current status</li>
+    </ul>
+
+    <h3><a id="ApplicantTracking">Applicant Tracking System</a></h3>
+
+    <p>Track applicants through the hiring process from:</p>
+
+    <p><strong>Human Resources → Recruitment → Applicant Tracking</strong></p>
+
+    <h4>To Add a New Applicant:</h4>
+    <ol>
+        <li>Navigate to Human Resources → Recruitment → Applicants</li>
+        <li>Click "New Applicant"</li>
+        <li>Enter applicant information:
+            <ul>
+                <li><strong>Personal Information</strong>:
+                    <ul>
+                        <li>First Name, Last Name</li>
+                        <li>Email (required for communication)</li>
+                        <li>Phone number</li>
+                        <li>Address</li>
+                    </ul>
+                </li>
+                <li><strong>Application Details</strong>:
+                    <ul>
+                        <li>Position Applied For - link to a requisition</li>
+                        <li>Application Date - defaults to today</li>
+                        <li>Source - how they heard about the job (job board, referral, website, etc.)</li>
+                        <li>Referral Source - if referred, who referred them</li>
+                    </ul>
+                </li>
+                <li><strong>Documents</strong>:
+                    <ul>
+                        <li>Upload Resume/CV</li>
+                        <li>Upload Cover Letter</li>
+                        <li>Additional documents (portfolio, certifications, etc.)</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>Click "Save Applicant"</li>
+    </ol>
+
+    <h4>Managing the Applicant Pipeline:</h4>
+    <ol>
+        <li>Go to Human Resources → Recruitment → Applicant Tracking</li>
+        <li>View applicants in a kanban-style board or list view</li>
+        <li>Standard workflow stages:
+            <ul>
+                <li><strong>Applied</strong> - initial application received</li>
+                <li><strong>Screening</strong> - HR reviewing qualifications</li>
+                <li><strong>Phone Screen</strong> - initial phone conversation scheduled/completed</li>
+                <li><strong>Interview</strong> - in-person or video interview scheduled</li>
+                <li><strong>Second Interview</strong> - additional rounds if needed</li>
+                <li><strong>Reference Check</strong> - checking references</li>
+                <li><strong>Offer</strong> - offer extended</li>
+                <li><strong>Hired</strong> - offer accepted, start date set</li>
+                <li><strong>Rejected</strong> - not moving forward</li>
+            </ul>
+        </li>
+        <li>Move applicants between stages by:
+            <ul>
+                <li>Dragging cards (if using kanban view)</li>
+                <li>Selecting new status from dropdown and clicking "Update Status"</li>
+            </ul>
+        </li>
+    </ol>
+
+    <h4>Conducting Interviews:</h4>
+    <ol>
+        <li>Open the applicant record</li>
+        <li>Click "Schedule Interview"</li>
+        <li>Enter:
+            <ul>
+                <li>Interview date and time</li>
+                <li>Interview type (phone, video, in-person)</li>
+                <li>Interviewer(s) - select from employee list</li>
+                <li>Location or meeting link</li>
+            </ul>
+        </li>
+        <li>System sends notification to interviewer(s)</li>
+        <li>After the interview, interviewer(s) submit feedback:
+            <ul>
+                <li>Rating on various criteria</li>
+                <li>Strengths observed</li>
+                <li>Concerns or weaknesses</li>
+                <li>Overall recommendation (strongly recommend, recommend, neutral, not recommended)</li>
+            </ul>
+        </li>
+        <li>All interview feedback is compiled in the applicant record</li>
+    </ol>
+
+    <h4>Making an Offer:</h4>
+    <ol>
+        <li>Once decision is made, update status to "Offer"</li>
+        <li>Generate offer letter from template</li>
+        <li>Fill in offer details:
+            <ul>
+                <li>Position title</li>
+                <li>Start date</li>
+                <li>Salary/compensation</li>
+                <li>Benefits summary</li>
+                <li>Any special terms</li>
+            </ul>
+        </li>
+        <li>Send offer to applicant via email</li>
+        <li>Track offer status (pending, accepted, rejected, negotiating)</li>
+    </ol>
+
+    <h4>Converting Applicant to Employee:</h4>
+    <ol>
+        <li>Once offer is accepted, update status to "Hired"</li>
+        <li>Click "Convert to Employee"</li>
+        <li>System pre-populates employee entry form with applicant data</li>
+        <li>Complete remaining employee information fields</li>
+        <li>Save to create the employee record</li>
+        <li>Applicant record is linked to employee record for reference</li>
+        <li>Requisition is automatically marked as filled</li>
+    </ol>
+
+    <p><strong>Communication Features:</strong></p>
+    <ul>
+        <li>Send email directly from applicant record</li>
+        <li>Use email templates for common communications (rejection, interview invitation, etc.)</li>
+        <li>All communications are logged in the applicant's history</li>
+        <li>Set reminders for follow-ups</li>
+    </ul>
+
+    <div class="floatright">
+        <a class="minitext" href="#top">⬆ Top</a>
+    </div>
+
+    <h2><a id="SafetyManagement">Safety Management</a></h2>
+
+    <h3><a id="SafetyIncidents">Safety Incidents</a></h3>
+
+    <p>Record and track workplace safety incidents from:</p>
+
+    <p><strong>Human Resources → Safety → Safety Incidents</strong></p>
+
+    <h4>To Report a Safety Incident:</h4>
+    <ol>
+        <li>Navigate to Human Resources → Safety → Safety Incidents</li>
+        <li>Click "New Incident"</li>
+        <li>Enter incident details:
+            <ul>
+                <li><strong>Incident Date and Time</strong> - when the incident occurred</li>
+                <li><strong>Reported Date</strong> - when it was reported (auto-fills to today)</li>
+                <li><strong>Location</strong> - specific location where incident occurred</li>
+                <li><strong>Department</strong> - department where incident occurred</li>
+                <li><strong>Incident Type</strong>:
+                    <ul>
+                        <li>Injury - employee was hurt</li>
+                        <li>Near Miss - potential for injury but none occurred</li>
+                        <li>Property Damage - equipment or facility damage</li>
+                        <li>Environmental - spill or environmental concern</li>
+                        <li>Security - security breach or threat</li>
+                    </ul>
+                </li>
+                <li><strong>Severity</strong>:
+                    <ul>
+                        <li>Minor - first aid only</li>
+                        <li>Moderate - medical treatment required</li>
+                        <li>Serious - hospitalization or lost time</li>
+                        <li>Critical - life-threatening or fatality</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>Identify people involved:
+            <ul>
+                <li><strong>Employee(s) Involved</strong> - select from employee list</li>
+                <li><strong>Injury Details</strong> - if injury occurred, describe nature and body part affected</li>
+                <li><strong>Witnesses</strong> - list anyone who witnessed the incident</li>
+            </ul>
+        </li>
+        <li>Describe the incident:
+            <ul>
+                <li><strong>What Happened</strong> - detailed description of the incident</li>
+                <li><strong>What Was Being Done</strong> - task/activity at time of incident</li>
+                <li><strong>Equipment Involved</strong> - any machinery or equipment involved</li>
+                <li><strong>Contributing Factors</strong> - environmental conditions, PPE usage, etc.</li>
+            </ul>
+        </li>
+        <li>Immediate actions taken:
+            <ul>
+                <li><strong>First Aid Provided</strong> - describe any immediate medical response</li>
+                <li><strong>Medical Treatment</strong> - hospital visit, doctor visit, etc.</li>
+                <li><strong>Work Status</strong> - returned to work, restricted duty, lost time</li>
+            </ul>
+        </li>
+        <li>Click "Save Incident" to create the initial report</li>
+    </ol>
+
+    <h4>To Complete an Incident Investigation:</h4>
+    <ol>
+        <li>Open the incident record</li>
+        <li>Click "Add Investigation"</li>
+        <li>Conduct root cause analysis:
+            <ul>
+                <li><strong>Investigation Date</strong> - when investigation was performed</li>
+                <li><strong>Investigator(s)</strong> - who conducted the investigation</li>
+                <li><strong>Root Cause</strong> - underlying cause(s) identified using 5 Whys or other method</li>
+                <li><strong>Contributing Factors</strong> - additional factors that contributed</li>
+            </ul>
+        </li>
+        <li>Document corrective actions:
+            <ul>
+                <li><strong>Immediate Corrective Actions</strong> - what was done right away</li>
+                <li><strong>Planned Corrective Actions</strong> - longer-term fixes needed</li>
+                <li><strong>Responsible Person</strong> - who will implement each action</li>
+                <li><strong>Target Completion Date</strong> - when action should be completed</li>
+            </ul>
+        </li>
+        <li>Identify preventive measures:
+            <ul>
+                <li><strong>Policy Changes</strong> - any procedures that need updating</li>
+                <li><strong>Training Needs</strong> - additional training required</li>
+                <li><strong>Engineering Controls</strong> - physical changes to prevent recurrence</li>
+            </ul>
+        </li>
+        <li>Determine regulatory requirements:
+            <ul>
+                <li><strong>OSHA Recordable</strong> - Yes/No (based on OSHA criteria)</li>
+                <li><strong>OSHA Form</strong> - which form applies (300, 300A, 301)</li>
+                <li><strong>Workers Compensation</strong> - claim filed (Y/N) and claim number</li>
+                <li><strong>Other Reporting</strong> - state or local requirements</li>
+            </ul>
+        </li>
+        <li>Save the investigation</li>
+        <li>Set follow-up reminders to verify corrective actions are completed</li>
+    </ol>
+
+    <h4>Tracking and Analysis:</h4>
+    <ul>
+        <li><strong>View All Incidents</strong> - list view with filtering by date, type, severity, department</li>
+        <li><strong>Incident Dashboard</strong> - graphical view of trends and metrics:
+            <ul>
+                <li>Incidents by month</li>
+                <li>Incidents by type and severity</li>
+                <li>Lost time incident rate</li>
+                <li>Days away, restricted, or transfer (DART) rate</li>
+                <li>Near miss to injury ratio</li>
+            </ul>
+        </li>
+        <li><strong>Reports</strong>:
+            <ul>
+                <li>OSHA 300 Log - annual summary of recordable incidents</li>
+                <li>Incident Investigation Reports</li>
+                <li>Department Safety Performance</li>
+                <li>Corrective Action Status</li>
+            </ul>
+        </li>
+    </ul>
+
+    <p><strong>Best Practices:</strong></p>
+    <ul>
+        <li>Report all incidents, including near misses - they provide learning opportunities</li>
+        <li>Complete initial report within 24 hours of incident</li>
+        <li>Conduct investigation within 48-72 hours while details are fresh</li>
+        <li>Focus on systemic causes, not individual blame</li>
+        <li>Ensure corrective actions address root causes, not just symptoms</li>
+        <li>Follow up to verify corrective actions were effective</li>
+        <li>Use incident data to identify trends and prioritize safety initiatives</li>
+    </ul>
+
+    <div class="floatright">
+        <a class="minitext" href="#top">⬆ Top</a>
+    </div>
+
+    <h2><a id="HRReports">HR Reports and Analytics</a></h2>
+
+    <p>The HR module provides comprehensive reporting capabilities:</p>
+
+    <h3>Employee Reports</h3>
+    <ul>
+        <li>Employee Roster - comprehensive list of all employees with filtering</li>
+        <li>Employee Demographics - age, gender, diversity statistics</li>
+        <li>Employee Directory - contact information</li>
+        <li>Organization Chart - visual hierarchy</li>
+        <li>Headcount by Department/Position</li>
+        <li>Employee Turnover Analysis</li>
+        <li>Length of Service Report</li>
+        <li>Anniversary Report</li>
+        <li>Birthday Report</li>
+    </ul>
+
+    <h3>Compensation Reports</h3>
+    <ul>
+        <li>Salary by Department/Position</li>
+        <li>Salary Distribution Analysis</li>
+        <li>Compensation Ratio (actual vs. midpoint)</li>
+        <li>Salary Increase History</li>
+        <li>Compensation Budget vs. Actual</li>
+        <li>Pay Equity Analysis</li>
+    </ul>
+
+    <h3>Performance Reports</h3>
+    <ul>
+        <li>Performance Review Status</li>
+        <li>Performance Rating Distribution</li>
+        <li>Goal Achievement Summary</li>
+        <li>Skills Assessment Summary</li>
+        <li>Performance Trends</li>
+    </ul>
+
+    <h3>Recruitment Reports</h3>
+    <ul>
+        <li>Open Requisitions</li>
+        <li>Applicant Pipeline by Position</li>
+        <li>Time to Fill Analysis</li>
+        <li>Recruitment Source Effectiveness</li>
+        <li>Offer Acceptance Rate</li>
+    </ul>
+
+    <h3>Safety Reports</h3>
+    <ul>
+        <li>Incident Log</li>
+        <li>Incident Rate Analysis</li>
+        <li>OSHA Recordable Incidents</li>
+        <li>Lost Time Incidents</li>
+        <li>Safety Metrics Dashboard</li>
+    </ul>
+
+    <div class="floatright">
+        <a class="minitext" href="#top">⬆ Top</a>
+    </div>
+
+    <h2><a id="HRSystemOptions">HR System Options</a></h2>
+
+    <p>Configure HR system preferences from:</p>
+
+    <p>Setup → Human Resources → HR System Options</p>
+
+    <p>System options include:</p>
+    <ul>
+        <li>Employee number format and auto-generation</li>
+        <li>Required fields for employee entry</li>
+        <li>Default employment type and status</li>
+        <li>Performance review frequency</li>
+        <li>Probationary period length</li>
+        <li>Notice period requirements</li>
+        <li>File attachment settings</li>
+        <li>Email notification settings</li>
+        <li>Approval workflow configuration</li>
+        <li>Data retention policies</li>
+        <li>Privacy and security settings</li>
+    </ul>
+
+    <div class="floatright">
+        <a class="minitext" href="#top">⬆ Top</a>
+    </div>
+
+    <h2><a id="HRAuditTrail">HR Audit Trail</a></h2>
+
+    <p>The HR Audit Trail provides a complete history of all HR transactions. Access from:</p>
+
+    <p>Human Resources → Reports → HR Audit Trail</p>
+
+    <p>The audit trail records:</p>
+    <ul>
+        <li>User who made the change</li>
+        <li>Date and time of change</li>
+        <li>Type of transaction</li>
+        <li>Employee affected</li>
+        <li>Fields changed</li>
+        <li>Before and after values</li>
+        <li>Transaction ID for reference</li>
+    </ul>
+
+    <p>The audit trail is essential for compliance, security, and troubleshooting. It can be filtered by date range, employee, transaction type, or user.</p>
+
+    <div class="floatright">
+        <a class="minitext" href="#top">⬆ Top</a>
+    </div>
+
+    <h2><a id="HRSecurityPermissions">HR Security and Permissions</a></h2>
+
+    <p>The HR module uses webERP's security framework to control access to sensitive information. Security is managed through security tokens assigned to user roles.</p>
+
+    <h3>HR Security Tokens</h3>
+    <ul>
+        <li>HR Dashboard Access</li>
+        <li>Employee View (read-only access to employee information)</li>
+        <li>Employee Edit (ability to create and modify employee records)</li>
+        <li>Compensation View (read-only access to compensation data)</li>
+        <li>Compensation Edit (ability to modify compensation)</li>
+        <li>Performance Review View</li>
+        <li>Performance Review Edit</li>
+        <li>Recruitment Access</li>
+        <li>Safety Incident Access</li>
+        <li>HR Reports Access</li>
+        <li>HR Setup and Configuration</li>
+        <li>HR Audit Trail Access</li>
+    </ul>
+
+    <h3>Self-Service Access</h3>
+    <p>Employees can be granted limited access to view and update their own information through the employee self-service portal. This includes:</p>
+    <ul>
+        <li>View personal information</li>
+        <li>Update contact information</li>
+        <li>View pay stubs and tax forms</li>
+        <li>View and update emergency contacts</li>
+        <li>View performance reviews</li>
+        <li>Update goals and development plans</li>
+        <li>Request time off</li>
+    </ul>
+
+    <div class="floatright">
+        <a class="minitext" href="#top">⬆ Top</a>
+    </div>
+
+    <h2><a id="HRBestPractices">Best Practices</a></h2>
+
+    <h3>Data Entry and Maintenance</h3>
+    <ul>
+        <li>Establish consistent naming conventions for departments and positions</li>
+        <li>Keep employee information current and accurate</li>
+        <li>Document all compensation changes with clear justifications</li>
+        <li>Maintain proper employment documentation (offer letters, contracts, etc.)</li>
+        <li>Regularly update organizational structure to reflect current reality</li>
+    </ul>
+
+    <h3>Performance Management</h3>
+    <ul>
+        <li>Conduct reviews on schedule - don't let them lapse</li>
+        <li>Set SMART goals (Specific, Measurable, Achievable, Relevant, Time-bound)</li>
+        <li>Document performance issues and improvement plans</li>
+        <li>Provide regular feedback, not just during annual reviews</li>
+        <li>Train managers on proper use of performance management tools</li>
+    </ul>
+
+    <h3>Recruitment</h3>
+    <ul>
+        <li>Keep job descriptions current and accurate</li>
+        <li>Follow consistent interview and evaluation processes</li>
+        <li>Document hiring decisions and rationale</li>
+        <li>Communicate promptly with applicants</li>
+        <li>Maintain applicant data for compliance requirements</li>
+    </ul>
+
+    <h3>Compliance and Security</h3>
+    <ul>
+        <li>Restrict access to sensitive information based on job requirements</li>
+        <li>Review audit trail regularly for unusual activity</li>
+        <li>Maintain employee files in accordance with legal requirements</li>
+        <li>Document terminations and exits properly</li>
+        <li>Keep safety records accurate and up-to-date</li>
+        <li>Regular backup of HR data</li>
+    </ul>
+
+    <div class="floatright">
+        <a class="minitext" href="#top">⬆ Top</a>
+    </div>
+
+    <h2><a id="HRIntegration">Integration with Other Modules</a></h2>
+
+    <p>The HR module integrates with other webERP modules:</p>
+
+    <h3>General Ledger</h3>
+    <ul>
+        <li>Payroll journal entries</li>
+        <li>Compensation expense by department</li>
+        <li>Benefits costs</li>
+        <li>Workers compensation costs</li>
+    </ul>
+
+    <h3>Manufacturing</h3>
+    <ul>
+        <li>Labor time tracking</li>
+        <li>Crew assignment to work orders</li>
+        <li>Labor costing</li>
+        <li>Efficiency analysis</li>
+    </ul>
+
+    <h3>Maintenance</h3>
+    <ul>
+        <li>Technician assignment</li>
+        <li>Skill-based scheduling</li>
+        <li>Training requirements</li>
+    </ul>
+
+    <h3>Petty Cash</h3>
+    <ul>
+        <li>Employee expense reimbursements</li>
+        <li>Travel advances</li>
+    </ul>
+
+    <div class="floatright">
+        <a class="minitext" href="#top">⬆ Top</a>
+    </div>
+
+<!-- Insert this after the existing content to expand with detailed form help -->
+
+    <h2><a id="DetailedFormHelp">Detailed Form Entry Guide</a></h2>
+
+    <p>This section provides step-by-step instructions for completing each form in the HR module. Follow these guides when entering data to ensure consistency and accuracy.</p>
+
+    <div class="floatright">
+        <a class="minitext" href="#top">⬆ Top</a>
+    </div>
+
+    <h3><a id="FormHelpDepartments">Department Entry Form</a></h3>
+
+    <p><strong>Access:</strong> Setup → HR → HR Departments</p>
+
+    <h4>Form Fields:</h4>
+
+    <table class="selection">
+        <tr>
+            <th>Field Name</th>
+            <th>Required</th>
+            <th>Description</th>
+            <th>Entry Guidelines</th>
+        </tr>
+        <tr>
+            <td><strong>Department Code</strong></td>
+            <td>Yes</td>
+            <td>Unique identifier for the department</td>
+            <td>
+                <ul>
+                    <li>Use a short, meaningful code (3-10 characters)</li>
+                    <li>Examples: SALES, IT, HR, FIN, OPS</li>
+                    <li>Use uppercase for consistency</li>
+                    <li>Cannot be changed after creation</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Department Name</strong></td>
+            <td>Yes</td>
+            <td>Full name of the department</td>
+            <td>
+                <ul>
+                    <li>Use proper capitalization</li>
+                    <li>Be descriptive but concise</li>
+                    <li>Examples: "Sales and Marketing", "Information Technology", "Human Resources"</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Manager</strong></td>
+            <td>No</td>
+            <td>Department manager/head</td>
+            <td>
+                <ul>
+                    <li>Select from dropdown of existing employees</li>
+                    <li>Leave blank initially if manager not yet entered</li>
+                    <li>Can update later after adding employees</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Authorization Required</strong></td>
+            <td>No</td>
+            <td>Internal Stock Request authorization</td>
+            <td>
+                <ul>
+                    <li>Check if department requires authorization for internal stock requests</li>
+                    <li>Unchecked = requests are auto-approved</li>
+                    <li>Checked = requests require manager approval</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+
+    <h4>Step-by-Step Entry Process:</h4>
+
+    <ol>
+        <li>Enter a unique <strong>Department Code</strong> (e.g., "SALES")</li>
+        <li>Enter the <strong>Department Name</strong> (e.g., "Sales and Marketing")</li>
+        <li>If the manager has already been entered as an employee, select them from the <strong>Manager</strong> dropdown. Otherwise, leave blank and update later.</li>
+        <li>Check <strong>Authorization Required</strong> if this department needs approval for internal stock requests</li>
+        <li>Click <strong>Add Department</strong> button</li>
+        <li>Verify the department appears in the list below</li>
+    </ol>
+
+    <h4>Common Errors and Solutions:</h4>
+
+    <ul>
+        <li><strong>Error: "Duplicate department code"</strong> - Choose a different code that hasn't been used</li>
+        <li><strong>Error: "Department code is required"</strong> - You must enter a department code</li>
+        <li><strong>Problem: Manager not in dropdown</strong> - Enter that employee first, then return to update the department</li>
+    </ul>
+
+    <div class="floatright">
+        <a class="minitext" href="#top">⬆ Top</a>
+    </div>
+
+    <h3><a id="FormHelpPositions">Position Entry Form</a></h3>
+
+    <p><strong>Access:</strong> Setup → HR → HR Positions</p>
+
+    <h4>Form Fields:</h4>
+
+    <table class="selection">
+        <tr>
+            <th>Field Name</th>
+            <th>Required</th>
+            <th>Description</th>
+            <th>Entry Guidelines</th>
+        </tr>
+        <tr>
+            <td><strong>Position Code</strong></td>
+            <td>Yes</td>
+            <td>Unique identifier for the position</td>
+            <td>
+                <ul>
+                    <li>Use descriptive abbreviations (5-15 characters)</li>
+                    <li>Examples: ACCT-MGR, SR-DEV, SALES-REP</li>
+                    <li>Include seniority if applicable (JR-, SR-)</li>
+                    <li>Cannot be changed after creation</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Position Title</strong></td>
+            <td>Yes</td>
+            <td>Official job title</td>
+            <td>
+                <ul>
+                    <li>Use formal, professional titles</li>
+                    <li>Be consistent across similar roles</li>
+                    <li>Examples: "Senior Software Developer", "Sales Representative", "Accounting Manager"</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Department</strong></td>
+            <td>Yes</td>
+            <td>Department this position belongs to</td>
+            <td>
+                <ul>
+                    <li>Select from dropdown of departments</li>
+                    <li>Ensure department is created first</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Pay Grade</strong></td>
+            <td>No</td>
+            <td>Compensation grade for this position</td>
+            <td>
+                <ul>
+                    <li>Select from dropdown of pay grades</li>
+                    <li>Create pay grades first if needed</li>
+                    <li>Can leave blank and assign later</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Reports To</strong></td>
+            <td>No</td>
+            <td>Position this role reports to</td>
+            <td>
+                <ul>
+                    <li>Select from dropdown of positions</li>
+                    <li>Leave blank for top-level positions</li>
+                    <li>Creates organizational hierarchy</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Description</strong></td>
+            <td>No</td>
+            <td>Job description and responsibilities</td>
+            <td>
+                <ul>
+                    <li>Enter complete job description</li>
+                    <li>Include key responsibilities</li>
+                    <li>List required qualifications</li>
+                    <li>Used for recruitment and performance management</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+
+    <h4>Step-by-Step Entry Process:</h4>
+
+    <ol>
+        <li>Enter <strong>Position Code</strong> (e.g., "SR-DEV")</li>
+        <li>Enter <strong>Position Title</strong> (e.g., "Senior Software Developer")</li>
+        <li>Select <strong>Department</strong> from dropdown</li>
+        <li>Select <strong>Pay Grade</strong> if available</li>
+        <li>Select <strong>Reports To</strong> position if applicable</li>
+        <li>Enter detailed <strong>Description</strong> of the job</li>
+        <li>Click <strong>Add Position</strong></li>
+        <li>Verify position appears in the list</li>
+    </ol>
+
+    <div class="floatright">
+        <a class="minitext" href="#top">⬆ Top</a>
+    </div>
+
+    <h3><a id="FormHelpEmployees">Employee Entry Form</a></h3>
+
+    <p><strong>Access:</strong> Employees → HR → HR Employees</p>
+
+    <p>This is the most comprehensive form in the HR module. Take care to enter all information accurately as it forms the foundation for all other HR functions.</p>
+
+    <h4>Personal Information Section:</h4>
+
+    <table class="selection">
+        <tr>
+            <th>Field Name</th>
+            <th>Required</th>
+            <th>Description</th>
+            <th>Entry Guidelines</th>
+        </tr>
+        <tr>
+            <td><strong>Employee ID</strong></td>
+            <td>Yes</td>
+            <td>Unique employee identifier</td>
+            <td>
+                <ul>
+                    <li>Use consistent format (e.g., EMP00001, 2024-001)</li>
+                    <li>Consider including hire year for tracking</li>
+                    <li>Cannot be changed after creation</li>
+                    <li>Must be unique across all employees</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>First Name</strong></td>
+            <td>Yes</td>
+            <td>Employee's legal first name</td>
+            <td>
+                <ul>
+                    <li>Enter legal name as it appears on documents</li>
+                    <li>Use proper capitalization</li>
+                    <li>No nicknames in this field</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Last Name</strong></td>
+            <td>Yes</td>
+            <td>Employee's legal last name</td>
+            <td>
+                <ul>
+                    <li>Enter legal surname</li>
+                    <li>Use proper capitalization</li>
+                    <li>Include suffixes if applicable (Jr., III, etc.)</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Email</strong></td>
+            <td>Yes</td>
+            <td>Work email address</td>
+            <td>
+                <ul>
+                    <li>Enter company email address</li>
+                    <li>Format: username@domain.com</li>
+                    <li>Used for system notifications</li>
+                    <li>Must be unique</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Phone</strong></td>
+            <td>No</td>
+            <td>Work phone number</td>
+            <td>
+                <ul>
+                    <li>Include area code</li>
+                    <li>Format consistently (e.g., (555) 123-4567)</li>
+                    <li>Can be desk or mobile</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Date of Birth</strong></td>
+            <td>No</td>
+            <td>Employee's birth date</td>
+            <td>
+                <ul>
+                    <li>Use date picker or enter in YYYY-MM-DD format</li>
+                    <li>Required for age-related compliance</li>
+                    <li>Used for birthday reminders</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Gender</strong></td>
+            <td>No</td>
+            <td>Employee's gender</td>
+            <td>
+                <ul>
+                    <li>Select from dropdown: Male, Female, Other, Prefer not to say</li>
+                    <li>For reporting and compliance only</li>
+                    <li>Optional based on local regulations</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+
+    <h4>Employment Details Section:</h4>
+
+    <table class="selection">
+        <tr>
+            <th>Field Name</th>
+            <th>Required</th>
+            <th>Description</th>
+            <th>Entry Guidelines</th>
+        </tr>
+        <tr>
+            <td><strong>Department</strong></td>
+            <td>Yes</td>
+            <td>Employee's department</td>
+            <td>
+                <ul>
+                    <li>Select from dropdown</li>
+                    <li>Must be created in Departments first</li>
+                    <li>Determines reporting structure</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Position</strong></td>
+            <td>Yes</td>
+            <td>Employee's job position</td>
+            <td>
+                <ul>
+                    <li>Select from dropdown</li>
+                    <li>Must be created in Positions first</li>
+                    <li>Should match department selected</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Hire Date</strong></td>
+            <td>Yes</td>
+            <td>First day of employment</td>
+            <td>
+                <ul>
+                    <li>Use date picker or YYYY-MM-DD format</li>
+                    <li>Used to calculate tenure</li>
+                    <li>Important for benefits eligibility</li>
+                    <li>Probation end date calculated from this</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Employment Type</strong></td>
+            <td>Yes</td>
+            <td>Type of employment</td>
+            <td>
+                <ul>
+                    <li>Select: Full-time, Part-time, Contract, Temporary, Intern</li>
+                    <li>Affects benefits eligibility</li>
+                    <li>Used in reporting</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Status</strong></td>
+            <td>Yes</td>
+            <td>Current employment status</td>
+            <td>
+                <ul>
+                    <li>New hire: Active</li>
+                    <li>Options: Active, On Leave, Terminated, Retired</li>
+                    <li>Only Active employees appear in most reports</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Manager</strong></td>
+            <td>No</td>
+            <td>Direct supervisor</td>
+            <td>
+                <ul>
+                    <li>Select from dropdown of employees</li>
+                    <li>Used for approval workflows</li>
+                    <li>Used in performance appraisals</li>
+                    <li>Can be updated as org changes</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Location</strong></td>
+            <td>No</td>
+            <td>Work location</td>
+            <td>
+                <ul>
+                    <li>Select from dropdown of inventory locations</li>
+                    <li>Physical work site</li>
+                    <li>For multi-site organizations</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Current Salary</strong></td>
+            <td>No</td>
+            <td>Current annual salary</td>
+            <td>
+                <ul>
+                    <li>Enter annual salary amount</li>
+                    <li>Numeric only (no currency symbols)</li>
+                    <li>Example: 50000.00</li>
+                    <li>Restricted access - only visible to authorized users</li>
+                    <li>Full history maintained in Compensation module</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>User ID</strong></td>
+            <td>No</td>
+            <td>System login username</td>
+            <td>
+                <ul>
+                    <li>Select from dropdown of system users</li>
+                    <li>Links employee to their login account</li>
+                    <li>Required for employee self-service features</li>
+                    <li>Must match username in WWW_Users table</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+
+    <h4>Step-by-Step Employee Entry:</h4>
+
+    <ol>
+        <li><strong>Gather Required Information</strong>
+            <ul>
+                <li>Ensure you have employee's legal documents</li>
+                <li>Verify email address is set up</li>
+                <li>Confirm department and position exist in system</li>
+                <li>Have salary information ready</li>
+            </ul>
+        </li>
+        <li><strong>Enter Personal Information</strong>
+            <ul>
+                <li>Enter unique <strong>Employee ID</strong> following your numbering scheme</li>
+                <li>Enter <strong>First Name</strong> and <strong>Last Name</strong> exactly as on legal documents</li>
+                <li>Enter <strong>Email</strong> address (company email)</li>
+                <li>Enter <strong>Phone</strong> number with area code</li>
+                <li>Use date picker for <strong>Date of Birth</strong></li>
+                <li>Select <strong>Gender</strong> if required by your policies</li>
+            </ul>
+        </li>
+        <li><strong>Enter Employment Details</strong>
+            <ul>
+                <li>Select <strong>Department</strong> from dropdown</li>
+                <li>Select <strong>Position</strong> (filtered by department)</li>
+                <li>Use date picker for <strong>Hire Date</strong></li>
+                <li>Select <strong>Employment Type</strong></li>
+                <li>Set <strong>Status</strong> to "Active" for new hires</li>
+                <li>Select <strong>Manager</strong> if already in system</li>
+                <li>Select <strong>Location</strong> if applicable</li>
+                <li>Enter <strong>Current Salary</strong> (annual amount)</li>
+                <li>Select <strong>User ID</strong> to link to login (if applicable)</li>
+            </ul>
+        </li>
+        <li><strong>Review and Submit</strong>
+            <ul>
+                <li>Double-check all entries for accuracy</li>
+                <li>Verify email address is correct</li>
+                <li>Ensure hire date is accurate</li>
+                <li>Click <strong>Add Employee</strong></li>
+            </ul>
+        </li>
+        <li><strong>Verify Entry</strong>
+            <ul>
+                <li>Check that employee appears in list below</li>
+                <li>Note the probation end date displayed</li>
+                <li>Verify all details are correct</li>
+            </ul>
+        </li>
+        <li><strong>Next Steps</strong>
+            <ul>
+                <li>Add compensation history if needed (Compensation module)</li>
+                <li>Set up performance goals (Performance module)</li>
+                <li>Assign skills if using that feature</li>
+                <li>Update department manager if this employee is a manager</li>
+            </ul>
+        </li>
+    </ol>
+
+    <h4>Common Mistakes and How to Avoid Them:</h4>
+
+    <ul>
+        <li><strong>Duplicate Employee ID:</strong> Check existing employees first; use consistent numbering scheme</li>
+        <li><strong>Wrong hire date:</strong> Verify from HR documents; this affects probation period and tenure calculations</li>
+        <li><strong>Missing email:</strong> Email is required for most notifications and self-service features</li>
+        <li><strong>Salary in wrong format:</strong> Enter annual amount only, no commas or currency symbols</li>
+        <li><strong>Wrong department/position:</strong> Ensure department and position match; create position first if needed</li>
+    </ul>
+
+    <div class="floatright">
+        <a class="minitext" href="#top">⬆ Top</a>
+    </div>
+
+    <h3><a id="FormHelpPayGrades">Pay Grade Entry Form</a></h3>
+
+    <p><strong>Access:</strong> Setup → HR → Pay Grades</p>
+
+    <h4>Form Fields:</h4>
+
+    <table class="selection">
+        <tr>
+            <th>Field Name</th>
+            <th>Required</th>
+            <th>Description</th>
+            <th>Entry Guidelines</th>
+        </tr>
+        <tr>
+            <td><strong>Grade ID</strong></td>
+            <td>Yes</td>
+            <td>Unique grade identifier</td>
+            <td>
+                <ul>
+                    <li>Use sequential numbering (GRADE-1, GRADE-2) or lettering (A, B, C)</li>
+                    <li>Consider using system that indicates level</li>
+                    <li>Examples: E1-E5 (entry), M1-M3 (manager), S1-S2 (senior)</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Grade Name</strong></td>
+            <td>Yes</td>
+            <td>Descriptive name</td>
+            <td>
+                <ul>
+                    <li>Use clear, meaningful names</li>
+                    <li>Examples: "Entry Level", "Mid-Level Professional", "Senior Management"</li>
+                    <li>Should indicate career progression</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Minimum Salary</strong></td>
+            <td>Yes</td>
+            <td>Lowest salary for this grade</td>
+            <td>
+                <ul>
+                    <li>Enter annual amount</li>
+                    <li>Based on market research and budget</li>
+                    <li>Should be lower than midpoint</li>
+                    <li>Example: 40000</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Midpoint Salary</strong></td>
+            <td>Yes</td>
+            <td>Target salary for experienced performer</td>
+            <td>
+                <ul>
+                    <li>Market competitive rate for fully competent employee</li>
+                    <li>Typically 20-30% above minimum</li>
+                    <li>Example: 52000</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Maximum Salary</strong></td>
+            <td>Yes</td>
+            <td>Highest salary for this grade</td>
+            <td>
+                <ul>
+                    <li>Upper limit for grade</li>
+                    <li>Typically 20-30% above midpoint</li>
+                    <li>Employees above max should be promoted</li>
+                    <li>Example: 65000</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Description</strong></td>
+            <td>No</td>
+            <td>Grade criteria and expectations</td>
+            <td>
+                <ul>
+                    <li>Document what qualifies for this grade</li>
+                    <li>Include experience requirements</li>
+                    <li>Note typical positions at this level</li>
+                    <li>Helps ensure consistent job leveling</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+
+    <h4>Salary Grade Design Best Practices:</h4>
+
+    <ol>
+        <li><strong>Research Market Rates:</strong> Use salary surveys for your industry and region</li>
+        <li><strong>Define Clear Progression:</strong> Each grade should represent meaningful career advancement</li>
+        <li><strong>Set Appropriate Spread:</strong> Range from min to max typically 40-60%</li>
+        <li><strong>Allow Overlap:</strong> Grades can overlap by 10-20% to accommodate experience differences</li>
+        <li><strong>Regular Review:</strong> Update grades annually based on market changes</li>
+    </ol>
+
+    <h4>Pay Grade Steps:</h4>
+
+    <p>After creating a pay grade, you can optionally define <strong>Steps</strong> within the grade for automatic progression:</p>
+
+    <ol>
+        <li>After adding the pay grade, click <strong>Steps</strong> next to the grade</li>
+        <li>For each step, enter:
+            <ul>
+                <li><strong>Step Number:</strong> Sequential number (1, 2, 3, etc.)</li>
+                <li><strong>Amount:</strong> Salary amount for this step</li>
+                <li><strong>Years Required:</strong> Years at previous step before eligible for this step</li>
+            </ul>
+        </li>
+        <li>Steps allow automatic progression based on tenure</li>
+        <li>Common in union or government environments</li>
+        <li>Example: Step 1: $40K (0 years), Step 2: $42K (1 year), Step 3: $45K (2 years)</li>
+    </ol>
+
+    <div class="floatright">
+        <a class="minitext" href="#top">⬆ Top</a>
+    </div>
+
+    <h3><a id="FormHelpCompensation">Employee Compensation Entry</a></h3>
+
+    <p><strong>Access:</strong> Employees → HR → Employee Compensation</p>
+
+    <p>Use this form to record salary changes, bonuses, and maintain complete compensation history for each employee.</p>
+
+    <h4>Form Fields:</h4>
+
+    <table class="selection">
+        <tr>
+            <th>Field Name</th>
+            <th>Required</th>
+            <th>Description</th>
+            <th>Entry Guidelines</th>
+        </tr>
+        <tr>
+            <td><strong>Employee</strong></td>
+            <td>Yes</td>
+            <td>Select employee</td>
+            <td>
+                <ul>
+                    <li>Start typing name to filter dropdown</li>
+                    <li>Shows: ID - First Last</li>
+                    <li>Only active employees shown</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Effective Date</strong></td>
+            <td>Yes</td>
+            <td>When compensation change takes effect</td>
+            <td>
+                <ul>
+                    <li>Use date picker or YYYY-MM-DD format</li>
+                    <li>For new hires: use hire date</li>
+                    <li>For increases: typically first of pay period</li>
+                    <li>For bonuses: payment date</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Change Type</strong></td>
+            <td>Yes</td>
+            <td>Type of compensation change</td>
+            <td>
+                <ul>
+                    <li><strong>New Hire:</strong> Initial salary for new employee</li>
+                    <li><strong>Merit Increase:</strong> Performance-based raise</li>
+                    <li><strong>Promotion:</strong> Salary increase due to promotion</li>
+                    <li><strong>Market Adjustment:</strong> Market-based increase</li>
+                    <li><strong>Bonus:</strong> One-time payment</li>
+                    <li><strong>Other:</strong> Any other type</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Amount</strong></td>
+            <td>Yes</td>
+            <td>New salary or bonus amount</td>
+            <td>
+                <ul>
+                    <li>For salary changes: enter new annual salary</li>
+                    <li>For bonuses: enter bonus amount</li>
+                    <li>Numeric only, no commas or symbols</li>
+                    <li>System will calculate increase percentage</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Reason</strong></td>
+            <td>No</td>
+            <td>Explanation for change</td>
+            <td>
+                <ul>
+                    <li>Document justification</li>
+                    <li>Examples: "Annual merit increase - exceeds expectations", "Promoted to Senior Developer"</li>
+                    <li>Helpful for audit trail</li>
+                    <li>May be required by policy</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Approved By</strong></td>
+            <td>No</td>
+            <td>Who authorized the change</td>
+            <td>
+                <ul>
+                    <li>Select from employee dropdown</li>
+                    <li>Typically department manager or HR</li>
+                    <li>Important for compliance</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+
+    <h4>Step-by-Step Compensation Entry:</h4>
+
+    <ol>
+        <li><strong>Select Employee:</strong> Choose from dropdown or start typing name</li>
+        <li><strong>View Current Compensation:</strong> System shows current salary and grade for reference</li>
+        <li><strong>Set Effective Date:</strong> Enter date change takes effect</li>
+        <li><strong>Select Change Type:</strong> Choose appropriate type from dropdown</li>
+        <li><strong>Enter Amount:</strong> Input new salary or bonus amount</li>
+        <li><strong>Review Calculation:</strong> System shows:
+            <ul>
+                <li>Previous salary</li>
+                <li>New salary</li>
+                <li>Increase amount</li>
+                <li>Increase percentage</li>
+                <li>Position in grade range (if grade assigned)</li>
+            </ul>
+        </li>
+        <li><strong>Enter Reason:</strong> Document why change is being made</li>
+        <li><strong>Select Approver:</strong> Choose who authorized the change</li>
+        <li><strong>Validate:</strong> System checks against increase guidelines and warns if:
+            <ul>
+                <li>Increase exceeds maximum percentage</li>
+                <li>New salary exceeds grade maximum</li>
+                <li>New salary below grade minimum</li>
+            </ul>
+        </li>
+        <li><strong>Submit:</strong> Click Add Compensation</li>
+        <li><strong>Verify:</strong> Check compensation history table shows new entry</li>
+    </ol>
+
+    <div class="floatright">
+        <a class="minitext" href="#top">⬆ Top</a>
+    </div>
+
+    <h3><a id="FormHelpPerformanceAppraisal">Performance Appraisal Entry</a></h3>
+
+    <p><strong>Access:</strong> Employees → HR → Appraisal Entry</p>
+
+    <p>This form is used by managers to conduct performance appraisals. The system guides you through rating the employee on each performance criterion and skill.</p>
+
+    <h4>Pre-Appraisal Preparation:</h4>
+
+    <ol>
+        <li><strong>Review employee's goals</strong> for the period</li>
+        <li><strong>Gather performance data:</strong> metrics, achievements, incidents</li>
+        <li><strong>Review previous appraisal</strong> and development plan</li>
+        <li><strong>Ask employee to complete self-appraisal</strong> (via My Appraisals)</li>
+        <li><strong>Schedule appraisal meeting</strong> with employee</li>
+    </ol>
+
+    <h4>Appraisal Form Sections:</h4>
+
+    <table class="selection">
+        <tr>
+            <th>Section</th>
+            <th>Description</th>
+            <th>Entry Guidelines</th>
+        </tr>
+        <tr>
+            <td><strong>Header Information</strong></td>
+            <td>Employee and period details</td>
+            <td>
+                <ul>
+                    <li><strong>Employee:</strong> Select from dropdown</li>
+                    <li><strong>Review Period:</strong> From/To dates for period being reviewed</li>
+                    <li><strong>Review Date:</strong> Date appraisal is being conducted</li>
+                    <li><strong>Reviewer:</strong> Auto-filled with your name</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Performance Criteria Ratings</strong></td>
+            <td>Rate on each criterion</td>
+            <td>
+                <ul>
+                    <li>Each criterion from Performance Criteria setup appears</li>
+                    <li>Select rating from configured scale (e.g., 1-5)</li>
+                    <li>Scale definitions shown for reference</li>
+                    <li>All criteria must be rated</li>
+                    <li><strong>Tip:</strong> Be specific and fair; avoid recency bias</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Skill Assessments</strong></td>
+            <td>Rate on required skills</td>
+            <td>
+                <ul>
+                    <li>Shows skills required for employee's position</li>
+                    <li>Rate current proficiency level</li>
+                    <li>Use same scale as performance criteria</li>
+                    <li>Identifies development needs</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Goal Achievement</strong></td>
+            <td>Review goals from period</td>
+            <td>
+                <ul>
+                    <li>Lists goals set for employee</li>
+                    <li>Mark each as: Met, Exceeded, Partially Met, Not Met</li>
+                    <li>Add comments on achievement</li>
+                    <li>Discuss what helped or hindered success</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Strengths</strong></td>
+            <td>What employee does well</td>
+            <td>
+                <ul>
+                    <li>List 3-5 key strengths</li>
+                    <li>Be specific with examples</li>
+                    <li>Connect to business impact</li>
+                    <li>Acknowledge growth and improvement</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Development Areas</strong></td>
+            <td>Areas for improvement</td>
+            <td>
+                <ul>
+                    <li>List 2-3 priority development areas</li>
+                    <li>Frame constructively</li>
+                    <li>Focus on behaviors, not personality</li>
+                    <li>Include specific examples</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Development Plan</strong></td>
+            <td>Actions for growth</td>
+            <td>
+                <ul>
+                    <li>Create specific, actionable plans</li>
+                    <li>Include training, coaching, stretch assignments</li>
+                    <li>Set timelines and success measures</li>
+                    <li>Assign responsibilities</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Overall Rating</strong></td>
+            <td>Summary rating</td>
+            <td>
+                <ul>
+                    <li>Select overall performance rating</li>
+                    <li>Should reflect average of criteria ratings</li>
+                    <li>Can weight certain criteria more heavily</li>
+                    <li>Be consistent across similar performers</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Comments</strong></td>
+            <td>Overall summary</td>
+            <td>
+                <ul>
+                    <li>Summarize performance for the period</li>
+                    <li>Highlight major achievements</li>
+                    <li>Discuss overall contribution</li>
+                    <li>Note any exceptional circumstances</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Employee Comments</strong></td>
+            <td>Employee's response</td>
+            <td>
+                <ul>
+                    <li>Completed during appraisal meeting</li>
+                    <li>Employee can agree, disagree, or add perspective</li>
+                    <li>Leave blank until meeting</li>
+                    <li>Employee signature/acknowledgment</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+
+    <h4>Conducting the Appraisal Meeting:</h4>
+
+    <ol>
+        <li><strong>Set the Tone:</strong> Create comfortable environment; explain process</li>
+        <li><strong>Employee Self-Review:</strong> Ask employee to share their self-assessment</li>
+        <li><strong>Present Your Assessment:</strong> Go through each section:
+            <ul>
+                <li>Start with strengths and achievements</li>
+                <li>Discuss each rating with specific examples</li>
+                <li>Allow time for discussion and questions</li>
+                <li>Address development areas constructively</li>
+            </ul>
+        </li>
+        <li><strong>Develop Plan Together:</strong> Collaborate on development plan</li>
+        <li><strong>Set Goals:</strong> Establish goals for next period (may be separate process)</li>
+        <li><strong>Employee Input:</strong> Complete employee comments section together</li>
+        <li><strong>Finalize:</strong> Save appraisal and provide copy to employee</li>
+        <li><strong>Follow-up:</strong> Schedule progress check-ins for development plan</li>
+    </ol>
+
+    <h4>Rating Guidelines and Calibration:</h4>
+
+    <p><strong>Understanding the Rating Scale (example 1-5 scale):</strong></p>
+
+    <ul>
+        <li><strong>5 - Exceptional:</strong> Consistently exceeds expectations; role model performance (5-10% of employees)</li>
+        <li><strong>4 - Exceeds Expectations:</strong> Regularly exceeds expectations (20-30% of employees)</li>
+        <li><strong>3 - Meets Expectations:</strong> Fully competent; delivers what is expected (50-60% of employees)</li>
+        <li><strong>2 - Below Expectations:</strong> Performance concerns; improvement needed (5-10% of employees)</li>
+        <li><strong>1 - Unsatisfactory:</strong> Significant performance issues (0-5% of employees)</li>
+    </ul>
+
+    <p><strong>Calibration Best Practices:</strong></p>
+
+    <ul>
+        <li>Managers should calibrate ratings together to ensure consistency</li>
+        <li>Avoid "central tendency" - not everyone is average</li>
+        <li>Avoid "halo/horn effect" - rate each criterion independently</li>
+        <li>Avoid recency bias - consider entire review period</li>
+        <li>Use data and examples to support ratings</li>
+        <li>Be honest but constructive</li>
+    </ul>
+
+    <div class="floatright">
+        <a class="minitext" href="#top">⬆ Top</a>
+    </div>
+
+    <h3><a id="FormHelpRequisition">Position Requisition Entry</a></h3>
+
+    <p><strong>Access:</strong> Employees → HR → Requisitions</p>
+
+    <p>Use this form to create hiring requests. This starts the recruitment process for a position.</p>
+
+    <h4>Form Fields:</h4>
+
+    <table class="selection">
+        <tr>
+            <th>Field Name</th>
+            <th>Required</th>
+            <th>Description</th>
+            <th>Entry Guidelines</th>
+        </tr>
+        <tr>
+            <td><strong>Position</strong></td>
+            <td>Yes</td>
+            <td>Position to hire for</td>
+            <td>
+                <ul>
+                    <li>Select from dropdown of positions</li>
+                    <li>Position must exist in system</li>
+                    <li>Job description auto-populated from position</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Number of Openings</strong></td>
+            <td>Yes</td>
+            <td>How many people to hire</td>
+            <td>
+                <ul>
+                    <li>Enter number (typically 1)</li>
+                    <li>Can hire multiple people for same position</li>
+                    <li>Each gets separate requisition number</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Request Date</strong></td>
+            <td>Yes</td>
+            <td>Date requisition created</td>
+            <td>
+                <ul>
+                    <li>Defaults to today</li>
+                    <li>Can backdate if needed</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Target Start Date</strong></td>
+            <td>Yes</td>
+            <td>Desired start date for new hire</td>
+            <td>
+                <ul>
+                    <li>When you need person to start</li>
+                    <li>Allows time for recruitment process</li>
+                    <li>Typically 30-90 days out</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Hiring Manager</strong></td>
+            <td>Yes</td>
+            <td>Manager for this position</td>
+            <td>
+                <ul>
+                    <li>Select from employee dropdown</li>
+                    <li>Person who will supervise new hire</li>
+                    <li>Involved in interview process</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Requisition Type</strong></td>
+            <td>Yes</td>
+            <td>Reason for hiring</td>
+            <td>
+                <ul>
+                    <li><strong>Replacement:</strong> Filling vacated position</li>
+                    <li><strong>New Position:</strong> Newly created role</li>
+                    <li><strong>Expansion:</strong> Growth-driven hire</li>
+                    <li><strong>Temporary:</strong> Fixed-term need</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Status</strong></td>
+            <td>Yes</td>
+            <td>Current status</td>
+            <td>
+                <ul>
+                    <li>New requisitions: "Draft" or "Pending Approval"</li>
+                    <li>After approval: "Open"</li>
+                    <li>System updates as candidates move through</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Justification</strong></td>
+            <td>No</td>
+            <td>Business case for hire</td>
+            <td>
+                <ul>
+                    <li>Explain why position is needed</li>
+                    <li>Include workload, growth, or replacement details</li>
+                    <li>May be required for approval</li>
+                    <li>Example: "Sales volume increased 40%; need additional support"</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Special Requirements</strong></td>
+            <td>No</td>
+            <td>Additional qualifications needed</td>
+            <td>
+                <ul>
+                    <li>Certifications, licenses, clearances</li>
+                    <li>Specific skills or experience</li>
+                    <li>Used in job postings</li>
+                    <li>Example: "CPA required; 5+ years public accounting"</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+
+    <h4>Requisition Workflow:</h4>
+
+    <ol>
+        <li><strong>Manager Creates Requisition:</strong> Enters details and justification</li>
+        <li><strong>Approval Process:</strong> Routed to appropriate approvers based on company policy</li>
+        <li><strong>HR Review:</strong> HR validates budget, pay grade, and requirements</li>
+        <li><strong>Approved and Posted:</strong> Requisition opens; can accept applications</li>
+        <li><strong>Recruitment:</strong> Applicants tracked against requisition</li>
+        <li><strong>Offer Made:</strong> When offer accepted, requisition closed</li>
+        <li><strong>New Hire:</strong> Applicant converted to employee</li>
+    </ol>
+
+    <div class="floatright">
+        <a class="minitext" href="#top">⬆ Top</a>
+    </div>
+
+    <h3><a id="FormHelpApplicants">Applicant Entry and Tracking</a></h3>
+
+    <p><strong>Access:</strong> Employees → HR → Applicants</p>
+
+    <h4>Adding a New Applicant:</h4>
+
+    <table class="selection">
+        <tr>
+            <th>Field Name</th>
+            <th>Required</th>
+            <th>Description</th>
+            <th>Entry Guidelines</th>
+        </tr>
+        <tr>
+            <td><strong>Requisition</strong></td>
+            <td>Yes</td>
+            <td>Position applying for</td>
+            <td>
+                <ul>
+                    <li>Select from open requisitions</li>
+                    <li>Links applicant to specific job opening</li>
+                    <li>Can change if applying for different role</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>First Name</strong></td>
+            <td>Yes</td>
+            <td>Applicant's first name</td>
+            <td>
+                <ul>
+                    <li>As it appears on resume</li>
+                    <li>Proper capitalization</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Last Name</strong></td>
+            <td>Yes</td>
+            <td>Applicant's last name</td>
+            <td>
+                <ul>
+                    <li>As it appears on resume</li>
+                    <li>Proper capitalization</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Email</strong></td>
+            <td>Yes</td>
+            <td>Contact email</td>
+            <td>
+                <ul>
+                    <li>Primary contact method</li>
+                    <li>Used for interview scheduling</li>
+                    <li>Must be unique</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Phone</strong></td>
+            <td>Yes</td>
+            <td>Contact phone</td>
+            <td>
+                <ul>
+                    <li>Include area code</li>
+                    <li>Format consistently</li>
+                    <li>Mobile preferred</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Application Date</strong></td>
+            <td>Yes</td>
+            <td>When they applied</td>
+            <td>
+                <ul>
+                    <li>Date resume received</li>
+                    <li>Defaults to today</li>
+                    <li>Used in reporting and metrics</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Source</strong></td>
+            <td>No</td>
+            <td>How you found candidate</td>
+            <td>
+                <ul>
+                    <li>Examples: LinkedIn, Referral, Job Board, Career Site</li>
+                    <li>Helps evaluate recruiting channels</li>
+                    <li>Track which sources yield best candidates</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Resume</strong></td>
+            <td>No</td>
+            <td>Link to resume/CV</td>
+            <td>
+                <ul>
+                    <li>Upload to server or enter URL</li>
+                    <li>Keep in consistent location</li>
+                    <li>Consider naming convention: LastName_FirstName_Resume.pdf</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+
+    <h4>Tracking Applicant Progress:</h4>
+
+    <p>After adding applicant, use <strong>Applicant Tracking</strong> to manage their progress through hiring stages:</p>
+
+    <ol>
+        <li><strong>Select Applicant:</strong> Choose from list</li>
+        <li><strong>Update Status:</strong> Move through stages:
+            <ul>
+                <li><strong>Applied:</strong> Initial application received</li>
+                <li><strong>Screening:</strong> Resume review in progress</li>
+                <li><strong>Phone Screen:</strong> Scheduled or completed phone interview</li>
+                <li><strong>Interview:</strong> In-person/video interview stage</li>
+                <li><strong>Assessment:</strong> Skills testing or assignments</li>
+                <li><strong>Reference Check:</strong> Checking references</li>
+                <li><strong>Offer:</strong> Offer made</li>
+                <li><strong>Hired:</strong> Offer accepted; ready to onboard</li>
+                <li><strong>Declined:</strong> Applicant withdrew</li>
+                <li><strong>Rejected:</strong> Did not advance</li>
+            </ul>
+        </li>
+        <li><strong>Add Activity Notes:</strong> Document each interaction:
+            <ul>
+                <li>Date and type of activity</li>
+                <li>Who was involved</li>
+                <li>Summary of discussion</li>
+                <li>Next steps</li>
+                <li>Interview feedback and ratings</li>
+            </ul>
+        </li>
+        <li><strong>Schedule Interviews:</strong> Record interview details</li>
+        <li><strong>Rate Candidate:</strong> Score on key criteria</li>
+        <li><strong>Make Decision:</strong> Advance or reject with reason</li>
+    </ol>
+
+    <h4>Converting Applicant to Employee:</h4>
+
+    <p>When offer is accepted:</p>
+
+    <ol>
+        <li>Go to <strong>Applicants</strong> screen</li>
+        <li>Find the applicant being hired</li>
+        <li>Click <strong>Convert to Employee</strong></li>
+        <li>System pre-populates employee form with applicant data</li>
+        <li>Complete additional employee information</li>
+        <li>Set hire date, salary, benefits, etc.</li>
+        <li>Submit to create employee record</li>
+        <li>Applicant automatically marked as "Hired"</li>
+        <li>Requisition filled and closed</li>
+    </ol>
+
+    <div class="floatright">
+        <a class="minitext" href="#top">⬆ Top</a>
+    </div>
+
+    <h2><a id="BestPractices">Best Practices and Tips</a></h2>
+
+    <h3>Data Entry Best Practices</h3>
+
+    <ul>
+        <li><strong>Consistency:</strong> Use standard formats for dates, names, codes, and descriptions</li>
+        <li><strong>Completeness:</strong> Fill in all available fields; incomplete data limits reporting</li>
+        <li><strong>Accuracy:</strong> Double-check entries; incorrect hire dates or salaries cause problems</li>
+        <li><strong>Timeliness:</strong> Enter changes promptly; delays affect reporting accuracy</li>
+        <li><strong>Documentation:</strong> Use comments fields to explain non-standard situations</li>
+        <li><strong>Security:</strong> Protect sensitive data; log out when finished; only access what you need</li>
+    </ul>
+
+    <h3>Common Workflows</h3>
+
+    <h4>New Employee Onboarding:</h4>
+
+    <ol>
+        <li>Create requisition for position</li>
+        <li>Track applicants through hiring process</li>
+        <li>Convert successful applicant to employee</li>
+        <li>Enter complete employee data</li>
+        <li>Set up compensation record</li>
+        <li>Link to system user account (if applicable)</li>
+        <li>Assign initial skills for position</li>
+        <li>Set performance goals</li>
+        <li>Schedule probation review</li>
+    </ol>
+
+    <h4>Annual Performance Review Cycle:</h4>
+
+    <ol>
+        <li>Set up review cycle in Compensation Review Cycles</li>
+        <li>Configure or update performance criteria and rating scales</li>
+        <li>Notify employees to complete self-appraisals</li>
+        <li>Managers complete appraisals in Appraisal Entry</li>
+        <li>Conduct appraisal meetings with employees</li>
+        <li>Set goals for next period</li>
+        <li>Identify development needs and training</li>
+        <li>Use appraisal results for compensation decisions</li>
+        <li>Run reports to analyze performance distribution</li>
+    </ol>
+
+    <h4>Annual Compensation Review:</h4>
+
+    <ol>
+        <li>Update pay grades based on market research</li>
+        <li>Set increase guidelines for the year</li>
+        <li>Review performance appraisal results</li>
+        <li>Calculate recommended increases per guidelines</li>
+        <li>Get budget approval</li>
+        <li>Process increases in Employee Compensation</li>
+        <li>Generate increase letters for employees</li>
+        <li>Update payroll system</li>
+    </ol>
+
+    <h3>Reporting Tips</h3>
+
+    <ul>
+        <li><strong>Regular Reports:</strong> Run standard reports monthly for trends</li>
+        <li><strong>Headcount:</strong> Track active employees by department</li>
+        <li><strong>Turnover:</strong> Monitor terminations and calculate turnover rate</li>
+        <li><strong>Open Positions:</strong> Track time to fill and recruitment effectiveness</li>
+        <li><strong>Compensation Analysis:</strong> Review pay equity and position in grade ranges</li>
+        <li><strong>Performance Distribution:</strong> Ensure ratings are properly calibrated</li>
+        <li><strong>Audit Trail:</strong> Review for suspicious or unusual changes</li>
+    </ul>
+
+    <h3>Troubleshooting Common Issues</h3>
+
+    <table class="selection">
+        <tr>
+            <th>Issue</th>
+            <th>Cause</th>
+            <th>Solution</th>
+        </tr>
+        <tr>
+            <td>Employee not appearing in dropdown</td>
+            <td>Status is not "Active"</td>
+            <td>Check employee status; change to Active if appropriate</td>
+        </tr>
+        <tr>
+            <td>Cannot link employee to user</td>
+            <td>User ID doesn't exist in system</td>
+            <td>Create user account first in WWW_Users, then link in HR Employees</td>
+        </tr>
+        <tr>
+            <td>Salary increase exceeds maximum</td>
+            <td>Amount over guidelines</td>
+            <td>Verify amount is correct; if yes, document exception reason; may need additional approval</td>
+        </tr>
+        <tr>
+            <td>Cannot create department</td>
+            <td>Duplicate department code</td>
+            <td>Use different code; check for existing department that could be reused</td>
+        </tr>
+        <tr>
+            <td>Performance ratings don't show</td>
+            <td>Rating scale not defined</td>
+            <td>Create rating scale in Rating Scales before conducting appraisals</td>
+        </tr>
+        <tr>
+            <td>Applicant tracking not working</td>
+            <td>No open requisitions</td>
+            <td>Create and approve requisition before adding applicants</td>
+        </tr>
+        <tr>
+            <td>Probation end date wrong</td>
+            <td>Incorrect hire date or probation setting</td>
+            <td>Verify hire date is correct; check probation period in HR System Options</td>
+        </tr>
+        <tr>
+            <td>Reports are empty</td>
+            <td>Missing required data or filters too restrictive</td>
+            <td>Check that data exists; review report filter settings</td>
+        </tr>
+    </table>
+
+    <div class="floatright">
+        <a class="minitext" href="#top">⬆ Top</a>
+    </div>
+
+</div>

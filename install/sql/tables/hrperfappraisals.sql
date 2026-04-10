@@ -1,0 +1,20 @@
+CREATE TABLE `hrperfappraisals` (
+	`appraisalid` INT(11) NOT NULL AUTO_INCREMENT,
+	`employeeid` INT(11) NOT NULL,
+	`reviewperiodstart` DATE NOT NULL,
+	`reviewperiodend` DATE NOT NULL,
+	`appraisaltype` ENUM('Annual','Mid-Year','Probation','90-Day','Project') NOT NULL,
+	`reviewerid` INT(11) DEFAULT NULL,
+	`overallrating` INT(11) DEFAULT NULL,
+	`status` ENUM('Not Started','In Progress','Employee Review','Manager Review','Completed','Cancelled') DEFAULT 'Not Started',
+	`duedate` DATE DEFAULT NULL,
+	`completiondate` DATE DEFAULT NULL,
+	`comments` TEXT,
+	`goalsnextperiod` TEXT,
+	`createddate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`modifieddate` DATETIME DEFAULT NULL,
+	PRIMARY KEY (`appraisalid`),
+	KEY `idx_employee` (`employeeid`),
+	KEY `idx_reviewer` (`reviewerid`),
+	KEY `idx_status` (`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

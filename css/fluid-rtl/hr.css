@@ -1,0 +1,66 @@
+	.hr-stats-grid {
+		display: grid;
+		grid-template-columns: repeat(5, 1fr);
+		gap: 20px;
+		margin: 20px auto;
+		width: 90%;
+		max-width: 1200px;
+	}
+	.hr-stat-card {
+		text-align: center;
+		padding: 20px;
+		border-radius: 8px;
+		border: 1px solid #ddd;
+	}
+	.hr-stat-card h3 {
+		margin: 0 0 10px 0;
+		font-size: 16px;
+	}
+	.hr-stat-value {
+		font-size: 32px;
+		font-weight: bold;
+	}
+	.hr-modules-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 20px;
+		margin: 20px auto;
+		width: 90%;
+		max-width: 1200px;
+	}
+	.hr-module-card {
+		padding: 20px;
+		border: 1px solid #ddd;
+		border-radius: 8px;
+		background-color: #f9f9f9;
+	}
+	.hr-module-card h3 {
+		margin: 0 0 15px 0;
+		display: flex;
+		align-items: center;
+		gap: 10px;
+	}
+	.hr-module-card ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+	.hr-module-card li {
+		margin-bottom: 8px;
+	}
+	@media (max-width: 1024px) {
+		.hr-stats-grid {
+			grid-template-columns: repeat(3, 1fr);
+		}
+		.hr-modules-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+	@media (max-width: 768px) {
+		.hr-stats-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+		.hr-modules-grid {
+			grid-template-columns: 1fr;
+		}
+	}
