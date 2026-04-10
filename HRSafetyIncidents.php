@@ -1,10 +1,10 @@
 <?php
 
-/* Safety Incidents Management */
+/* Incidents Management */
 
 require(__DIR__ . '/includes/session.php');
 
-$Title = __('Safety Incidents');
+$Title = __('Incidents');
 $ViewTopic = 'HumanResources';
 $BookMark = 'HRSafetyIncidents';
 
@@ -20,7 +20,7 @@ echo '<a class="toplink" href="' . $RootPath . '/HRDashboard.php">' . __('Return
 
 echo '<p class="page_title_text">
 		<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/warning.png" title="' . __('Safety') . '" /> ' .
-		__('Safety Incidents Management') . '
+		__('Incidents Management') . '
 	</p>';
 
 // Handle form submission
@@ -67,7 +67,7 @@ if (isset($_POST['Submit'])) {
 				WHERE incidentid = " . $IncidentID;
 
 			$Result = DB_query($SQL);
-			prnMsg(__('Safety incident has been updated'), 'success');
+			prnMsg(__('Incident has been updated'), 'success');
 
 		} else {
 			// Insert - get next incident number
@@ -117,7 +117,7 @@ if (isset($_POST['Submit'])) {
 					" . $DaysLost . "
 				)";
 			$Result = DB_query($SQL);
-			prnMsg(__('Safety incident has been recorded'), 'success');
+			prnMsg(__('Incident has been recorded'), 'success');
 		}
 		unset($_POST['EmployeeID']);
 		unset($_POST['IncidentNumber']);
@@ -143,7 +143,7 @@ if (isset($_GET['Delete']) && isset($_GET['IncidentID'])) {
 	$SQL = "DELETE FROM hrsafetyincidents WHERE incidentid = " . $IncidentID;
 	$Result = DB_query($SQL);
 
-	prnMsg(__('Safety incident has been deleted'), 'success');
+	prnMsg(__('Incident has been deleted'), 'success');
 	unset($_GET['IncidentID']);
 }
 
@@ -211,7 +211,7 @@ if (isset($IncidentID)) {
 }
 
 echo '<fieldset>
-		<legend>' . (isset($IncidentID) ? __('Edit Safety Incident') : __('Report Safety Incident')) . '</legend>';
+		<legend>' . (isset($IncidentID) ? __('Edit Incident') : __('Report Incident')) . '</legend>';
 
 echo '<field>
 		<label for="IncidentNumber">' . __('Incident Number') . ':</label>
@@ -386,7 +386,7 @@ if (DB_num_rows($Result) > 0) {
 		</table>';
 
 } else {
-	echo '<div class="centre">' . __('No safety incidents recorded') . '</div>';
+	echo '<div class="centre">' . __('No Incidents recorded') . '</div>';
 }
 
 include(__DIR__ . '/includes/footer.php');

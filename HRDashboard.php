@@ -183,11 +183,11 @@ echo '<div class="hr-module-card">
 echo '<div class="hr-module-card">
 		<h3 style="color: #795548;">
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/currency.png" alt="" />
-			' . __('Budget & Safety') . '
+			' . __('Budget & Incidents') . '
 		</h3>
 		<ul>
 			<li><a href="' . $RootPath . '/HRPositionBudgets.php">' . __('Position Budgets') . '</a></li>
-			<li><a href="' . $RootPath . '/HRSafetyIncidents.php">' . __('Safety Incidents') . '</a></li>
+			<li><a href="' . $RootPath . '/HRSafetyIncidents.php">' . __('Incidents') . '</a></li>
 			<li><a href="' . $RootPath . '/HRSystemOptions.php">' . __('System Options') . '</a></li>
 			<li><a href="' . $RootPath . '/HRAuditTrail.php">' . __('Audit Trail') . '</a></li>
 		</ul>
