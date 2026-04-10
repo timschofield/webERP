@@ -582,7 +582,7 @@ InsertRecord('hrsystemoptions', array('optioncategory', 'optionname'), array('Re
 InsertRecord('hrsystemoptions', array('optioncategory', 'optionname'), array('General', 'fiscal_year_start_month'), array('optioncategory', 'optionname', 'optionvalue', 'optiondescription'), array('General', 'fiscal_year_start_month', '1', 'Fiscal year start month (1-12)'));
 
 // Register HR Module
-NewModule('hr', 'HR', __('Human Resources'), 8);
+NewModule('hr', 'HR', __('Human Resources'), 76);
 ChangeColumnSize('modulesallowed', 'www_users', 'varchar(100)', ' NOT NULL ', '', 100);
 
 // Register HR scripts
