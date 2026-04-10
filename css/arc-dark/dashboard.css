@@ -1,16 +1,18 @@
 .container{
 display:grid;
-grid-template-columns:repeat(var(--cols), 1fr);
-grid-template-rows:repeat(var(--rows), 0.6fr);
+grid-template-columns: repeat(3, 1fr);
+grid-template-rows: repeat(2, 1fr);
 column-gap: 10px;
 row-gap: 10px;
 margin-bottom:2%;
 margin-right:1%;
+flex: 1;
+min-height: 0;
 }
 .dashboard_cell {
 overflow:auto;
 scrollbar-color: #00644B #82B7CC;
-background:#404552;
+background:var(--background-colour);
 border: 1px solid #8BAA92;
 margin-top:4px;
 padding:3px;

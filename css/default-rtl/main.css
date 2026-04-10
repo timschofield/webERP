@@ -5,6 +5,8 @@ padding:1px;
 padding-bottom:4px;
 border: 1px solid #82BCF4;
 border-radius: 7px;
+display: flex;
+flex-direction: column;
 }
 .MainBody li a {
 color:#090939;

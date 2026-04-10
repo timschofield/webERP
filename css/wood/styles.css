@@ -11,8 +11,11 @@
 @import "logo.css";
 @import "manual.css";
 @import "dashboard.css";
-
 @import "module-menu.css";
-
 @import "hr.css";
 
+:root {
+--background-colour:#404552;
+--foreground-colour:#9FC5FD;
+--icon-background:#00644B;
+}

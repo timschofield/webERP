@@ -4,6 +4,8 @@ margin:3px;
 padding:1px;
 border: 1px solid #008000;
 border-radius: 7px;
+display: flex;
+flex-direction: column;
 }
 .ModuleList {
 float:right;

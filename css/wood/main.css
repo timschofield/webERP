@@ -5,6 +5,8 @@ margin-top:0px;
 margin-bottom:0px;
 padding:10px;
 border: 0px solid #82BCF4;
+display: flex;
+flex-direction: column;
 }
 .ModuleList {
 float:left;

@@ -38,6 +38,10 @@
 	left: 0;
 }
 
+.module-slide-menu.hidden {
+	display: none !important;
+}
+
 .module-menu-header {
 	padding: 20px;
 	background-color: #588BB6;
@@ -125,14 +129,14 @@
 .module-modal {
 	display: none;
 	position: fixed;
-	z-index: 2000;
+	z-index: 2100;
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%) scale(0);
 	width: 80%;
 	max-width: 800px;
 	max-height: 80vh;
-	background-color: white;
+	background-color: var(--background-colour);
 	border-radius: 8px;
 	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 	transition: transform 0.3s ease-out, opacity 0.3s ease-out;
@@ -263,11 +267,12 @@
 	width: 100%;
 	height: 100%;
 	background-color: rgba(0, 0, 0, 0);
-	z-index: 1999;
+	z-index: 2050;
 	transition: background-color 0.3s ease-out;
 }
 
 .module-modal-overlay.active {
+	display: block;
 	background-color: rgba(0, 0, 0, 0.6);
 }
 
@@ -303,7 +308,7 @@
 	width: 90%;
 	max-width: 1200px;
 	height: 85vh;
-	background-color: white;
+	background-color: var(--background-colour);
 	border-radius: 8px;
 	box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
 	transition: transform 0.3s ease-out, opacity 0.3s ease-out;
@@ -339,9 +344,14 @@
 	overflow: hidden;
 }
 
+.modal-title {
+	background-color: var(--foreground-colour);
+	color: white;
+}
+
 .content-modal-header {
 	padding: 15px 20px;
-	background-color: #588BB6;
+	background-color: var(--foreground-colour);
 	color: white;
 	display: flex;
 	justify-content: space-between;
@@ -396,7 +406,7 @@
 	overflow-y: auto;
 	overflow-x: hidden;
 	padding: 20px;
-	background-color: #f9f9f9;
+	background-color: var(--background-colour);
 	pointer-events: auto;
 }
 
@@ -573,59 +583,6 @@
 .error-message a {
 	color: #c9302c;
 	text-decoration: underline;
-}
-
-/* Module Options Modal */
-.module-modal {
-position: fixed;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%) scale(0.5);
-width: 70%;
-max-width: 800px;
-height: 70%;
-max-height: 600px;
-background-color: white;
-border: 2px solid #588BB6;
-border-radius: 8px;
-box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-z-index: 2100;
-display: none;
-opacity: 0;
-transition: all 0.3s ease;
-}
-
-.module-modal.active {
-display: block;
-opacity: 1;
-transform: translate(-50%, -50%) scale(1);
-}
-
-.module-modal-overlay {
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background-color: rgba(0, 0, 0, 0.5);
-z-index: 2050;
-display: none;
-opacity: 0;
-transition: opacity 0.3s ease;
-}
-
-.module-modal-overlay.active {
-display: block;
-opacity: 1;
-}
-
-.module-modal-content {
-width: 100%;
-height: 100%;
-display: flex;
-flex-direction: column;
-border-radius: 8px;
-overflow: hidden;
 }
 
 .modal-header {
