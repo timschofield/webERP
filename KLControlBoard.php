@@ -472,18 +472,31 @@ if ($ProcessSection01){
 		BalanceListAccountControl("('111121101AD',
 									'111121105AD',
 									'111121106AD',
-									'111121107AD',
+									'111121110AD',
+									'111121115AD',
+									'111121117AD',
+									'111121121AD',
+									'111121122AD',
+									'111121125AD')", "Total Banks PT ADU (IDR Only)", 2000000000, 4000000000, $PeriodNow);
+		TimeNeededForExecution("BalanceListAccountControl", $StartTime, $KL_SystemAdmin);
+		$NumberOfTestExecuted++;
+
+		$StartTime = microtime(true);
+		BalanceListAccountControl("('111121101AD',
+									'111121105AD',
+									'111121106AD',
 									'111121110AD',
 									'111121115AD',
 									'111121117AD',
 									'111121121AD',
 									'111121122AD',
 									'111121125AD',
+									'111121130AD',
 									'111203010AD',
 									'111203020AD',
 									'111259010AD', 
 									'111259020AD', 
-									'111259050AD')", "Total Banks PT ADU", 2000000000, 5000000000, $PeriodNow);
+									'111259050AD')", "Total Banks PT ADU", 3000000000, 6000000000, $PeriodNow);
 		TimeNeededForExecution("BalanceListAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
