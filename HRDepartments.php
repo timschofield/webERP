@@ -39,10 +39,10 @@ if (isset($_POST['Submit'])) {
 
 	if (isset($SelectedDepartment) AND $InputError != 1) {
 		// Update existing department
-		$SQL = "SELECT description FROM departments WHERE departmentid = '" . $SelectedDepartment . "'";
+		$SQL = "SELECT departmentid FROM departments WHERE departmentcode = '" . $_POST['DepartmentCode'] . "' and departmentid<>'" . $SelectedDepartment . "'";
 		$Result = DB_query($SQL);
 
-		if (DB_num_rows($Result) != 0) {
+		if (DB_num_rows($Result) == 0) {
 			$SQL = "UPDATE departments SET
 						departmentcode = '" . $_POST['DepartmentCode'] . "',
 						description = '" . $_POST['DepartmentName'] . "',
@@ -59,7 +59,7 @@ if (isset($_POST['Submit'])) {
 			prnMsg(__('Department') . ' ' . $_POST['DepartmentName'] . ' ' . __('has been updated'), 'success');
 		} else {
 			$InputError = 1;
-			prnMsg(__('The department no longer exists'), 'error');
+			prnMsg(__('A department with that code already exists'), 'error');
 		}
 	} elseif ($InputError != 1) {
 		// Insert new department
@@ -158,7 +158,6 @@ if (!isset($SelectedDepartment)) {
 	echo '<table class="selection">';
 	echo '<thead>
 			<tr>
-				<th class="SortedColumn">' . __('ID') . '</th>
 				<th class="SortedColumn">' . __('Code') . '</th>
 				<th class="SortedColumn">' . __('Department Name') . '</th>
 				<th class="SortedColumn">' . __('Parent Department') . '</th>
@@ -187,7 +186,6 @@ if (!isset($SelectedDepartment)) {
 			$AuthoriserRow['locationname'] = '';
 		}
 		echo '<tr class="striped_row">
-				<td>' . $MyRow['departmentid'] . '</td>
 				<td>' . $MyRow['departmentcode'] . '</td>
 				<td>' . $MyRow['description'] . '</td>
 				<td>' . $MyRow['parentname'] . '</td>
@@ -217,7 +215,8 @@ if (isset($SelectedDepartment)) {
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
 
-	$_POST['DepartmentCode'] = $MyRow['departmentid'];
+	$_POST['DepartmentID'] = $MyRow['departmentid'];
+	$_POST['DepartmentCode'] = $MyRow['departmentcode'];
 	$_POST['DepartmentName'] = $MyRow['description'];
 	$_POST['ParentDepartmentID'] = $MyRow['parentdepartmentid'];
 	$_POST['ManagerID'] = $MyRow['managerid'];
@@ -226,12 +225,13 @@ if (isset($SelectedDepartment)) {
 	$_POST['Active'] = $MyRow['active'];
 
 	echo '<input type="hidden" name="SelectedDepartment" value="' . $SelectedDepartment . '" />';
+	echo '<input type="hidden" name="DepartmentID" value="' . $_POST['DepartmentID'] . '" />';
 	echo '<input type="hidden" name="DepartmentCode" value="' . $_POST['DepartmentCode'] . '" />';
 	echo '<fieldset>
 			<legend>' . __('Edit Department') . '</legend>';
 	echo '<field>
 			<label>' . __('Department Code') . ':</label>
-			<fieldtext>' . $_POST['DepartmentCode'] . '</fieldtext>
+			<input type="text" name="DepartmentCode" required="required" size="15" maxlength="20" value="' . (isset($_POST['DepartmentCode']) ? $_POST['DepartmentCode'] : '') . '" />
 		</field>';
 } else {
 	echo '<fieldset>';

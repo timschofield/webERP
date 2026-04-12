@@ -14,7 +14,7 @@ Global $Messages;
 include_once (__DIR__ . '/AuditScriptsFunctions.php');
 
 if (!isset($Title)) {
-    $Title = "Undefined Title";
+    $Title = "Undefined title";
 }
 RecordRunningTime($Title, $_SESSION['UserID']);
 
