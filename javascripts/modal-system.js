@@ -153,9 +153,9 @@ function showModuleModal(moduleLink) {
 			var html = "<ul class=\"module-menu-items\">";
 			for (var i = 0; i < sectionData.Caption.length; i++) {
 				var url = sectionData.URL[i];
-				// Ensure URL has the /webERP/ base path
-				if (!url.includes('/webERP/')) {
-					url = '/webERP/' + url;
+				/* Prepend RootPath for relative URLs so installations in any subdirectory work */
+				if (!url.startsWith('/') && !url.startsWith('http')) {
+					url = (window.RootPath || '') + '/' + url;
 				}
 				html += "<li><a href=\"" + url + "\">" + sectionData.Caption[i] + "</a></li>";
 			}
