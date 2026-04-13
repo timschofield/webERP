@@ -76,12 +76,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 		$NumberMonthsHolding=$_POST['NumberMonthsHolding'];
 	}
 
-	$Period_0_Name = GetMonthText(date('m', mktime(0,0,0,date('m'),date('d'),date('Y'))));
-	$Period_1_Name = GetMonthText(date('m', mktime(0,0,0,date('m')-1,date('d'),date('Y'))));
-	$Period_2_Name = GetMonthText(date('m', mktime(0,0,0,date('m')-2,date('d'),date('Y'))));
-	$Period_3_Name = GetMonthText(date('m', mktime(0,0,0,date('m')-3,date('d'),date('Y'))));
-	$Period_4_Name = GetMonthText(date('m', mktime(0,0,0,date('m')-4,date('d'),date('Y'))));
-	$Period_5_Name = GetMonthText(date('m', mktime(0,0,0,date('m')-5,date('d'),date('Y'))));
+	$Period_0_Name = GetMonthText(date('n', mktime(0,0,0,date('m'),date('d'),date('Y'))));
+	$Period_1_Name = GetMonthText(date('n', mktime(0,0,0,date('m')-1,date('d'),date('Y'))));
+	$Period_2_Name = GetMonthText(date('n', mktime(0,0,0,date('m')-2,date('d'),date('Y'))));
+	$Period_3_Name = GetMonthText(date('n', mktime(0,0,0,date('m')-3,date('d'),date('Y'))));
+	$Period_4_Name = GetMonthText(date('n', mktime(0,0,0,date('m')-4,date('d'),date('Y'))));
+	$Period_5_Name = GetMonthText(date('n', mktime(0,0,0,date('m')-5,date('d'),date('Y'))));
 
 	$HTML .= '<meta name="author" content="WebERP " . $Version">
 					<meta name="Creator" content="webERP https://www.weberp.org">
