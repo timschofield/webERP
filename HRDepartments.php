@@ -303,10 +303,10 @@ echo '</select>
 
 // Authoriser dropdown
 echo '<field>
-		<label for="Authoriser">' . __('Authoriser') . ':</label>
+		<label for="Authoriser">' . __('Internal Requests Authoriser') . ':</label>
 		<select name="Authoriser">';
 echo '<option value="">' . __('None') . '</option>';
-$SQL = "SELECT userid, realname FROM www_users ORDER BY userid";
+$SQL = "SELECT userid, realname FROM www_users ORDER BY realname";
 $Result = DB_query($SQL);
 while ($MyRow = DB_fetch_array($Result)) {
 	if (isset($_POST['Authoriser']) AND $_POST['Authoriser'] == $MyRow['userid']) {
