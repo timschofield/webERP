@@ -324,7 +324,7 @@ or deletion of the records*/
 				<td>' . $MyRow['onlinepartnercode'] . '</td>
 				<td>' . $MyRow['onlinepartnername'] . '</td>
 				<td>' . $MyRow['paypalaccount'] . '</td>
-				<td>' . $PayPalTest . '</td>
+				<td>' . $MyRow['paypaltest'] . '</td>
 				<td class="number">' . locale_number_format($MyRow['foreigncurrencysurchargefactor'],2) . '</td>
 				<td class="noprint"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedPartner=' . $MyRow['onlinepartnercode'] . '">' . __('Edit') . '</a></td>
 				<td class="noprint"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedPartner=' . $MyRow['onlinepartnercode'] . '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this online partner?') . '\');">' . __('Delete') . '</a></td>
@@ -823,7 +823,7 @@ if (!isset($_GET['delete'])) {
 		</tr>';
 
 	echo '<tr>
-			<td>' . __('% Fee Comission Tokopedia When Free Shipping Maximum') . ':</td>
+			<td>' . __('Flat Order Processing Fee') . ':</td>
 			<td><input type="text" name="ComissionTokopediaFreeShippingMaximum" class="number"  value="' . $_POST['ComissionTokopediaFreeShippingMaximum'] . '" size="10" maxlength="10" /></td>
 		</tr>';
 
@@ -867,12 +867,12 @@ if (!isset($_GET['delete'])) {
 		</tr>';
 
 	echo '<tr>
-			<td>' . __('% Fee Comission Shopee When Free Shipping Maximum') . ':</td>
+			<td>' . __('Flat Order Processing Fee') . ':</td>
 			<td><input type="text" name="ComissionShopeeFreeShippingMaximum" class="number"  value="' . $_POST['ComissionShopeeFreeShippingMaximum'] . '" size="10" maxlength="10" /></td>
 		</tr>';
 
 	echo '<tr>
-			<th colspan="2">' . 'LAZADA Details' . '</th>
+			<th colspan="2">' . 'LAZADA Details (NOT USED YET)' . '</th>
 		</tr>';
 
 	echo '<tr>
@@ -906,7 +906,7 @@ if (!isset($_GET['delete'])) {
 		</tr>';
 
 	echo '<tr>
-			<th colspan="2">' . 'DOKU Details' . '</th>
+			<th colspan="2">' . 'DOKU Details (NOT USED YET)' . '</th>
 		</tr>';
 
 	echo '<tr>
@@ -945,7 +945,7 @@ if (!isset($_GET['delete'])) {
 		</tr>';
 
 	echo '<tr>
-			<th colspan="2">' . 'XENDIT Details' . '</th>
+			<th colspan="2">' . 'XENDIT Details (NOT USED YET)' . '</th>
 		</tr>';
 
 	echo '<tr>
@@ -985,7 +985,7 @@ if (!isset($_GET['delete'])) {
 		</tr>';
 
 	echo '<tr>
-			<td>' . __('% Fee Commission Xendit for CC only (%))') . ':</td>
+			<td>' . __('% Fee Commission Xendit for CC only (%)') . ':</td>
 			<td><input type="text" name="ComissionXenditPercentCC" class="number"  value="' . $_POST['ComissionXenditPercentCC'] . '" size="5" maxlength="5" /></td>
 		</tr>';
 
