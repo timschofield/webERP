@@ -936,11 +936,9 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 					accountlazadacomissionidr,
 					accountcomissionppn,
 					comissiontokopediapercent,
-					comissiontokopediafreeshippingperitempercent,
-					comissiontokopediafreeshippingperitemmaximum,
+					comissiontokopediaflatfee,
 					comissionshopeepercent,
-					comissionshopeefreeshippingperitempercent,
-					comissionshopeefreeshippingperitemmaximum,
+					comissionshopeeflatfee,
 					comissionlazadapercent
 				FROM klonlinepartners
 				WHERE klonlinepartners.onlinepartnercode = '" . $OnlinePartner . "'";
@@ -990,28 +988,22 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 				$GLAccountCommission = $MyRowAccounts['accounttokopediacomissionidr'];
 				$GLAccountCommissionPPN = $MyRowAccounts['accountcomissionppn'];
 				$CommissionTokopediaPercent = $MyRowAccounts['comissiontokopediapercent'];
-				$CommissionTokopediaFreeShippingPerItem = $MyRowAccounts['comissiontokopediafreeshippingperitempercent'];
-				$CommissionTokopediaFreeShippingMaximum = $MyRowAccounts['comissiontokopediafreeshippingperitemmaximum'];
-				$Commission = CalculateCommissionTokopedia($CustomerCode, 
-															$OrderNo, 
+				$ComissionTokopediaFlatFee = $MyRowAccounts['comissiontokopediaflatfee'];
+				$Commission = CalculateCommissionTokopedia($CustomerCode,
 															$TotalAmount,
 															$CommissionTokopediaPercent,
-															$CommissionTokopediaFreeShippingPerItem,
-															$CommissionTokopediaFreeShippingMaximum);
+															$ComissionTokopediaFlatFee);
 			} elseif  ($PaymentCode == "shopee"){
 				// Shopee payments  has commissions
 				$GLAccountTransfer = $MyRowAccounts['accountshopeeidr'];
 				$GLAccountCommission = $MyRowAccounts['accountshopeecomissionidr'];
 				$GLAccountCommissionPPN = $MyRowAccounts['accountcomissionppn'];
 				$CommissionShopeePercent = $MyRowAccounts['comissionshopeepercent'];
-				$CommissionShopeeFreeShippingPerItem = $MyRowAccounts['comissionshopeefreeshippingperitempercent'];
-				$CommissionShopeeFreeShippingMaximum = $MyRowAccounts['comissionshopeefreeshippingperitemmaximum'];
-				$Commission = CalculateCommissionShopee($CustomerCode, 
-														$OrderNo, 
+				$ComissionShopeeFlatFee = $MyRowAccounts['comissionshopeeflatfee'];
+				$Commission = CalculateCommissionShopee($CustomerCode,
 														$TotalAmount,
 														$CommissionShopeePercent,
-														$CommissionShopeeFreeShippingPerItem,
-														$CommissionShopeeFreeShippingMaximum);
+														$ComissionShopeeFlatFee);
 			} elseif  ($PaymentCode == "lazada"){
 				// Lazada payments  has commissions
 				$GLAccountTransfer = $MyRowAccounts['accountlazadaidr'];
