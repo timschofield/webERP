@@ -7,11 +7,12 @@
 
 function RecordRunningTime($Title, $UserName) {
 
-	if (isset($Title)) {
+	if (isset($Title) and ($Title != "Undefined title")) {
 		$TitleScriptRunning = $Title;
 	} else {
-		$TitleScriptRunning = "Undefined title";
+		$TitleScriptRunning = "Undefined title" . ' - ' . basename($_SERVER['PHP_SELF']);
 	}
+
 
 	$Time = explode(' ', $_SESSION['ScriptStartTime']);
 	$BeginTime = $Time[1] + $Time[0];
