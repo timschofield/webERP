@@ -1,0 +1,20 @@
+CREATE TABLE `hrapplicantreqs` (
+	`applicationid` INT(11) NOT NULL AUTO_INCREMENT,
+	`applicantid` INT(11) NOT NULL,
+	`requisitionid` INT(11) NOT NULL,
+	`applicationstatus` ENUM('New','Screening','Interview','Offer Extended','Offer Accepted','Offer Rejected','Hired','Rejected','Withdrawn') DEFAULT 'New',
+	`screeningscore` DECIMAL(5,2) DEFAULT NULL,
+	`interviewdate` DATE DEFAULT NULL,
+	`interviwerid` INT(11) DEFAULT NULL,
+	`interviewrating` INT(11) DEFAULT NULL,
+	`interviewnotes` TEXT,
+	`offeramount` DECIMAL(15,2) DEFAULT NULL,
+	`offerdate` DATE DEFAULT NULL,
+	`startdate` DATE DEFAULT NULL,
+	`rejectionreason` VARCHAR(200) DEFAULT NULL,
+	`notes` TEXT,
+	`createddate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (`applicationid`),
+	KEY `idx_applicant` (`applicantid`),
+	KEY `idx_requisition` (`requisitionid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

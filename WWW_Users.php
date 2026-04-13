@@ -4,7 +4,7 @@
 
 /**************************************************************************************
 *
-* KL RICARD: Send emails to admin, allow usage of group os scripts Personalia
+* KL RICARD: Send emails to admin, allow usage of group of scripts Human Resources/ Personalia
 * 			Simplify table display, add some fields to the user table
 *			Exclude SPG users, as they are maintained in KLUsersSPG.php
 *
@@ -52,9 +52,9 @@ $ModuleList = array(
 	__('Manufacturing'),
     __('Forecasting'),
 	__('General Ledger'),
+	__('Human Resources'),
 	__('Asset Manager'),
 	__('Petty Cash'),
-	__('Personalia'),
 	__('Setup'),
 	__('Utilities')
 );
@@ -68,9 +68,9 @@ $ModuleListLabel = array(
 	__('Display Manufacturing module'),
     __('Display Forecasting module'),
 	__('Display General Ledger module'),
+	__('Display Human Resources module'),
 	__('Display Asset Manager module'),
 	__('Display Petty Cash module'),
-	__('Display Personalia module'),
 	__('Display Setup module'),
 	__('Display Utilities module')
 );
