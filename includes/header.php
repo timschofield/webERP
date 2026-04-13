@@ -288,7 +288,8 @@ echo '</header>';
 include_once($PathPrefix . 'includes/MainMenuLinksArray.php');
 
 echo '<div id="module-menu" class="module-slide-menu">';
-echo '<div class="module-menu-header"><h3>', __('Modules'), '</h3><div class="close-menu" onclick="toggleModuleMenu()">×</div></div>';
+echo '<div class="module-menu-header"><h3>', __('Modules'), '</h3><div class="close-menu" onclick="toggleModuleMenu()">
+		<img style="width:32px" src="css/' . $_SESSION['Theme'] . '/images/previous.png" title="' . __('Close Module List') . '" /></div></div>';
 echo '<nav class="module-menu-content"><ul>';
 
 $i = 0;

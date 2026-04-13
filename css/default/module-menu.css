@@ -55,6 +55,7 @@
 .module-menu-header h3 {
 	margin: 0;
 	font-size: 1.5rem;
+	padding:6px;
 }
 
 .close-menu {
@@ -84,7 +85,7 @@
 
 .module-menu-item a {
 	display: block;
-	padding: 15px 20px;
+	padding: 10px 20px;
 	color: #333;
 	text-decoration: none;
 	transition: background-color 0.2s ease;

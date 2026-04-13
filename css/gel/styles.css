@@ -15,7 +15,7 @@
 @import "hr.css";
 
 :root {
---background-colour:#404552;
---foreground-colour:#9FC5FD;
---icon-background:#00644B;
+--background-colour:linear-gradient(#9B9BCE, #0202EE);
+--foreground-colour:#FEFEFE;
+--icon-background:#007F17;
 }

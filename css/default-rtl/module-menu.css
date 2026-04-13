@@ -55,6 +55,7 @@
 .module-menu-header h3 {
 	margin: 0;
 	font-size: 1.5rem;
+	padding:6px;
 }
 
 .close-menu {
@@ -84,7 +85,7 @@
 
 .module-menu-item a {
 	display: block;
-	padding: 15px 20px;
+	padding: 10px 20px;
 	color: #333;
 	text-decoration: none;
 	transition: background-color 0.2s ease;
@@ -282,15 +283,15 @@
 		width: 95%;
 		max-height: 90vh;
 	}
-	
+
 	.module-modal-header {
 		padding: 15px 20px;
 	}
-	
+
 	.module-modal-body {
 		padding: 15px 20px;
 	}
-	
+
 	.module-tab-button {
 		padding: 12px 10px;
 		font-size: 0.9rem;
@@ -435,7 +436,7 @@
 		width: 95%;
 		height: 90vh;
 	}
-	
+
 	.content-modal-body {
 		padding: 15px;
 	}

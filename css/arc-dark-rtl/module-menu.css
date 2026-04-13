@@ -27,7 +27,7 @@
 	left: -300px;
 	width: 300px;
 	height: 100%;
-	background-color: #fff;
+	background-color: var(--background-colour);
 	box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
 	z-index: 1000;
 	transition: left 0.3s ease;
@@ -55,6 +55,7 @@
 .module-menu-header h3 {
 	margin: 0;
 	font-size: 1.5rem;
+	padding:6px;
 }
 
 .close-menu {
@@ -84,14 +85,15 @@
 
 .module-menu-item a {
 	display: block;
-	padding: 15px 20px;
-	color: #333;
+	padding: 10px 10px;
+	color: var(--foreground-colour);
 	text-decoration: none;
 	transition: background-color 0.2s ease;
 }
 
 .module-menu-item a:hover {
 	background-color: #f0f0f0;
+	color: var(--background-colour);
 }
 
 .module-menu-item.selected a {
@@ -342,6 +344,7 @@
 	height: 100%;
 	border-radius: 8px;
 	overflow: hidden;
+	border: solid 2px var(--foreground-colour);
 }
 
 .modal-title {
