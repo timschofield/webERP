@@ -49,7 +49,7 @@ AddColumn('active', 'departments', 'TINYINT(1)', 'NOT NULL', '1', 'locationid');
 AddColumn('createddate', 'departments', 'TIMESTAMP', 'NOT NULL', 'CURRENT_TIMESTAMP', 'active');
 
 // Populate departmentcode with departmentid for existing records
-$SQL = "UPDATE departments SET departmentcode = departmentid";
+$SQL = "UPDATE departments SET departmentcode = CONCAT('DEPT', LPAD(departmentid, 4, '0')) WHERE departmentcode IS NULL OR departmentcode = ''";
 $Result = DB_query($SQL, '', '', false, false);
 
 // Add indexes for performance
