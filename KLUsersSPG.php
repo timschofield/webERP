@@ -21,7 +21,7 @@ echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/g
 	<br />';
 	
 // HARDCODED FOR KL SPG
-$ModulesAllowed = "1,0,0,0,1,0,0,1,0,0,0,0,";
+$ModulesAllowed = "1,0,0,0,1,0,0,0,1,0,0,0,";
 $PDFLanguage = 0;
 $Language = "en_GB.utf8";
 $ThemeSPG = "aguapop";

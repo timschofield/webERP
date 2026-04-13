@@ -30,10 +30,10 @@ if (isset($_GET['SelectedEmployee'])) {
 } elseif (isset($_POST['SelectedEmployee'])) {
 	$SelectedEmployee = $_POST['SelectedEmployee'];
 } else {
-	$CheckUserResult = DB_query("SELECT id FROM employees WHERE userid='" . $_SESSION['UserID'] . "'");
+	$CheckUserResult = DB_query("SELECT employeeid FROM hremployees WHERE userid='" . $_SESSION['UserID'] . "'");
 	if (DB_num_rows($CheckUserResult)>0) { // then there is an employee match with the logged in user - in which case assume we are inputting their timesheet
 		$LoggedInEmployeeRow = DB_fetch_array($CheckUserResult);
-		$SelectedEmployee = $LoggedInEmployeeRow['id'];
+		$SelectedEmployee = $LoggedInEmployeeRow['employeeid'];
 	}
 }
 
@@ -44,19 +44,19 @@ if (isset($_GET['WeekEnding'])) {
 }
 
 if (isset($SelectedEmployee)) { //Get the employee's details
-	$SQL = "SELECT id,
-					surname,
+	$SQL = "SELECT employeeid,
+					lastname as surname,
 					firstname,
-					employees.stockid,
-					manager,
+					hremployees.stockid,
+					supervisorid as manager,
 					normalhours,
 					userid,
 					email,
 					decimalplaces
-			FROM employees
+			FROM hremployees
 			INNER JOIN stockmaster
-			ON employees.stockid=stockmaster.stockid
-			WHERE employees.id='" . $SelectedEmployee . "'";
+			ON hremployees.stockid=stockmaster.stockid
+			WHERE hremployees.employeeid='" . $SelectedEmployee . "'";
 
 	$EmployeeResult = DB_query($SQL);
 	$EmployeeRow = DB_fetch_array($EmployeeResult);
@@ -304,8 +304,8 @@ if (isset($_POST['SubmitForApproval'])) {
 											AND weekending='" . FormatDateForSQL($_POST['WeekEnding']) . "'");
 
 		$ManagerResult = DB_query("SELECT email
-									FROM employees
-									WHERE employees.id='" . $EmployeeRow['manager'] . "'");
+									FROM hremployees
+									WHERE hremployees.employeeid='" . $EmployeeRow['manager'] . "'");
 		$ManagerRow = DB_fetch_array($ManagerResult);
 		$Recipients = array($ManagerRow['email']);
 		// Prepare email content
@@ -332,17 +332,17 @@ if (isset($_POST['SubmitForApproval'])) {
 if (isset($_POST['ApproveTimesheet'])) {
 	//need to check again we have the full week!
 	$WeekTimeTotalResult = DB_query("SELECT employeeid,
-											employees.stockid,
+											hremployees.stockid,
 											actualcost AS labourcost,
 											SUM(day1+day2+day3+day4+day5+day6+day7) as totalweekhours
-									FROM timesheets INNER JOIN employees
-									ON timesheets.employeeid=employees.id
+									FROM timesheets INNER JOIN hremployees
+									ON timesheets.employeeid=hremployees.employeeid
 									INNER JOIN stockmaster ON
-									employees.stockid=stockmaster.stockid
+									hremployees.stockid=stockmaster.stockid
 									WHERE employeeid ='" . $SelectedEmployee . "'
 									AND weekending ='" . FormatDateForSQL($_POST['WeekEnding']) ."'
 									GROUP BY employeeid,
-											employees.stockid,
+											hremployees.stockid,
 											 labourcost");
 
 	$WeekTimeTotalRow = DB_fetch_array($WeekTimeTotalResult);
@@ -356,16 +356,16 @@ if (isset($_POST['ApproveTimesheet'])) {
 		/* Now we are into posting the time to the work orders NB: only open work orders!! and only time that has not already been posted */
 		$WeekTimeResult = DB_query("SELECT timesheets.wo,
 											timesheets.workcentre,
-											employees.stockid as issueitem,
-											employees.surname,
-											employees.firstname,
+											hremployees.stockid as issueitem,
+											hremployees.lastname as surname,
+											hremployees.firstname,
 											actualcost AS labourcost,
 											workorders.loccode,
 											SUM(day1+day2+day3+day4+day5+day6+day7) as totalweekhours
-									FROM timesheets INNER JOIN employees
-									ON timesheets.employeeid=employees.id
+									FROM timesheets INNER JOIN hremployees
+									ON timesheets.employeeid=hremployees.employeeid
 									INNER JOIN stockmaster
-									ON employees.stockid=stockmaster.stockid
+									ON hremployees.stockid=stockmaster.stockid
 									INNER JOIN workorders
 									ON timesheets.wo=workorders.wo
 									WHERE employeeid ='" . $SelectedEmployee . "'
@@ -508,18 +508,18 @@ if (!isset($SelectedEmployee) AND in_array(20, $_SESSION['AllowedPageSecurityTok
 /* It could still be the second time the page has been run and a record has been selected for modification - SelectedEmployee will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters then none of the above are true and the list of employees will be displayed with links to select one. These will call the same page again and allow input of the timesheet or deletion of the records*/
 
 
-	$SQL = "SELECT employees.id,
-					employees.surname,
-					employees.firstname,
-					employees.stockid,
-					employees.manager,
-					employees2.firstname as managerfirstname,
-					employees2.surname as managersurname,
-					employees.normalhours,
-					employees.email,
-					employees.userid
-			FROM employees LEFT JOIN employees AS employees2
-			ON employees.manager=employees2.id";
+	$SQL = "SELECT hremployees.employeeid,
+					hremployees.lastname as surname,
+					hremployees.firstname,
+					hremployees.stockid,
+					hremployees.supervisorid as manager,
+					hremployees2.firstname as managerfirstname,
+					hremployees2.lastname as managersurname,
+					hremployees.normalhours,
+					hremployees.email,
+					hremployees.userid
+			FROM hremployees LEFT JOIN hremployees AS hremployees2
+			ON hremployees.supervisorid=hremployees2.employeeid";
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) > 0) {
@@ -540,14 +540,14 @@ if (!isset($SelectedEmployee) AND in_array(20, $_SESSION['AllowedPageSecurityTok
 	while ($MyRow = DB_fetch_array($Result)) {
 
 		echo '<tr class="striped_row">
-				<td>', $MyRow['id'], '</td>
+				<td>', $MyRow['employeeid'], '</td>
 				<td>', $MyRow['firstname'], '</td>
 				<td>', $MyRow['surname'], '</td>
 				<td>', $MyRow['stockid'], '</td>
 				<td>', $MyRow['managerfirstname'] . ' ' . $MyRow['managersurname'], '</td>
 				<td><a href="mailto:', $MyRow['email'], '">', $MyRow['email'], '</a></td>
-				<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedEmployee=', $MyRow['id'], '">' . __('Select') . '</a></td>
-				<td class="noPrint"><a href="' . $RootPath . '/Employees.php?SelectedEmployee=', $MyRow['id'], '">' . __('Edit') . '</a></td>
+				<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedEmployee=', $MyRow['employeeid'], '">' . __('Select') . '</a></td>
+				<td class="noPrint"><a href="' . $RootPath . '/HREmployeeEntry.php?EmployeeID=', $MyRow['employeeid'], '">' . __('Edit') . '</a></td>
 			</tr>';
 		}
 		//END WHILE LIST LOOP

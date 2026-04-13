@@ -1,0 +1,22 @@
+CREATE TABLE `hremployeecompensation` (
+	`compensationid` INT(11) NOT NULL AUTO_INCREMENT,
+	`employeeid` INT(11) NOT NULL,
+	`effectivedate` DATE NOT NULL,
+	`paygradeid` INT(11) DEFAULT NULL,
+	`paystepid` INT(11) DEFAULT NULL,
+	`basesalary` DECIMAL(15,2) NOT NULL,
+	`currencycode` VARCHAR(3) DEFAULT 'USD',
+	`payfrequency` ENUM('Hourly','Weekly','Bi-Weekly','Semi-Monthly','Monthly','Annual') DEFAULT NULL,
+	`increasetype` VARCHAR(20) DEFAULT NULL,
+	`increaseamount` DECIMAL(15,2) DEFAULT NULL,
+	`increasepercentage` DECIMAL(5,2) DEFAULT NULL,
+	`reasoncode` VARCHAR(20) DEFAULT NULL,
+	`notes` TEXT,
+	`approvedby` INT(11) DEFAULT NULL,
+	`approvaldate` DATE DEFAULT NULL,
+	`createddate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`createdby` VARCHAR(50) DEFAULT NULL,
+	PRIMARY KEY (`compensationid`),
+	KEY `idx_employee` (`employeeid`),
+	KEY `idx_effectivedate` (`effectivedate`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
