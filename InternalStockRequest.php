@@ -244,7 +244,7 @@ echo '<field>
 /* KL RICARD for SPG, we request only to KANTOR */
 if ($KL_SPGSeniorOrSupport 
 	OR $KL_SPGJunior){
-		echo '<fieldtext>' . "Kantor KL". '</fieldtext>';
+		echo '<fieldtext>' . "Kantor Kesambi". '</fieldtext>';
 } else {
 	/* KL RICARD for our use, we prefer AND locationusers.canview=1 */
 	$SQL = "SELECT locations.loccode,
