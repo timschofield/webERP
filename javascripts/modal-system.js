@@ -153,9 +153,16 @@ function showModuleModal(moduleLink) {
 			var html = "<ul class=\"module-menu-items\">";
 			for (var i = 0; i < sectionData.Caption.length; i++) {
 				var url = sectionData.URL[i];
-				/* Prepend RootPath for relative URLs so installations in any subdirectory work */
-				if (!url.startsWith('/') && !url.startsWith('http')) {
-					url = (window.RootPath || '') + '/' + url;
+				/*
+				 * Normalise the URL against RootPath so menu links work regardless of
+				 * install location.  Database entries may be bare filenames or absolute
+				 * paths left over from a different installation, so we strip any leading
+				 * path segments and keep only the filename (+ query string), then
+				 * prepend the correct RootPath.  External http URLs are left as-is.
+				 */
+				if (!url.startsWith('http')) {
+					var filename = url.substring(url.lastIndexOf('/') + 1);
+					url = (window.RootPath || '') + '/' + filename;
 				}
 				html += "<li><a href=\"" + url + "\">" + sectionData.Caption[i] + "</a></li>";
 			}
