@@ -31,7 +31,7 @@ echo '</head>';
 $_SESSION['FormID'] = sha1(uniqid(mt_rand(), true));
 
 echo '<body>
-	<div id="container">
+	<dialog id="login-dialog">
 		<div id="login_logo">
 			<div class="logo logo-left">web</div><div class="logo logo-right">ERP</div>
 		</div>
@@ -121,7 +121,7 @@ if ($AllowCompanySelectionBox != 'Hide') {
 	echo '<label for="CompanySelect">', __('Company'), '</label>';
 	$DefaultCompanyName = $CompanyName[$DefaultCompany] ?? $DefaultCompany;
 	echo '<input type="text" id="CompanySelect" readonly value="' . $DefaultCompanyName . '" />';
-	
+
 	echo '<ol id="dropdownlist" class="dropdownlist">';
 
 	// Generate company list with logos
@@ -154,10 +154,10 @@ echo '<input type="text" id="eye" readonly title="', __('Show Password'), '" />'
 echo '</div>';
 echo '</div>';
 
-echo '<div id="demo_text">';
+//echo '<div id="demo_text">';
 
 if (isset($DemoText)) {
-	echo $DemoText;
+//	echo $DemoText;
 }
 
 echo '</div>';
@@ -168,7 +168,8 @@ echo '<button class="button" type="submit" value="', __('Login'), '" name="Submi
 
 echo '</form>
 	</div>
-	</div>';
+	</dialog>
+	<script>document.getElementById("login-dialog").showModal();</script>';
 
 echo '</body>
 	</html>';

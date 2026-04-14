@@ -1,431 +1,343 @@
 :root {
---primary-color: #588BB6;
---primary-dark: #456D91;
---primary-light: #7BA5CB;
---accent-color: #4A90E2;
---bg-gradient-start: #0F2027;
---bg-gradient-mid: #203A43;
---bg-gradient-end: #2C5364;
---text-color: #FFFFFF;
---text-muted: #B8C5D6;
---input-bg: rgba(255, 255, 255, 0.08);
---input-border: rgba(255, 255, 255, 0.2);
---input-focus: rgba(255, 255, 255, 0.35);
---card-bg: rgba(255, 255, 255, 0.05);
---card-border: rgba(255, 255, 255, 0.1);
---shadow-color: rgba(0, 0, 0, 0.3);
+	--primary-color: #315913;
+	--primary-dark: #253521;
+	--primary-light: #697369;
+	--accent-color: #4A90E2;
+	--text-color: #FFFFFF;
+	--text-muted: #B8C5D6;
+	--input-bg: rgba(255, 255, 255, 0.08);
+	--input-border: rgba(255, 255, 255, 0.18);
+	--input-focus: rgba(255, 255, 255, 0.35);
+	--dialog-bg: rgba(8, 18, 32, 0.78);
+	--dialog-border: rgba(88, 139, 182, 0.28);
+	--shadow-color: rgba(0, 0, 0, 0.55);
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
 }
 
 body {
-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-mid) 50%, var(--bg-gradient-end) 100%);
-background-attachment: fixed;
-color: var(--text-color);
-font-size: 14px;
-margin: 0;
-padding: 0;
-text-align: center;
-min-height: 100vh;
-display: flex;
-align-items: center;
-justify-content: center;
-}
-@media only screen and (min-width: 401px) {
-#container {
-background: var(--card-bg);
-backdrop-filter: blur(10px);
--webkit-backdrop-filter: blur(10px);
-border: 1px solid var(--card-border);
-border-radius: 24px;
-box-shadow: 0 8px 32px var(--shadow-color);
-margin: 0;
-padding: 0;
-text-align: center;
-width: 100%;
-max-width: 440px;
-animation: fadeIn 0.5s ease-out;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+	background-color: #0c1520;
+	background-image: url('background.png');
+	background-size: cover;
+	background-position: center center;
+	background-attachment: fixed;
+	color: var(--text-color);
+	font-size: 14px;
+	margin: 0;
+	padding: 0;
+	min-height: 100vh;
 }
 
-@keyframes fadeIn {
-from {
-opacity: 0;
-transform: translateY(-20px);
+/* === DIALOG - the semi-transparent login box === */
+
+dialog {
+	background: rgba(0, 5, 22, 0.5);
+	backdrop-filter: blur(20px) saturate(1.3);
+	-webkit-backdrop-filter: blur(20px) saturate(1.3);
+	border: 1px solid var(--dialog-border);
+	border-radius: 24px;
+	box-shadow:
+		0 12px 60px rgba(0, 0, 0, 0.7),
+		inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+	color: var(--text-color);
+	padding: 0;
+	width: min(440px, 94vw);
+	margin: auto;
+	animation: dialogFadeIn 0.4s ease-out;
+	height:fit-content;
 }
-to {
-opacity: 1;
-transform: translateY(0);
+
+@keyframes dialogFadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(-16px) scale(0.98);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
 }
+
+/* Let the industrial background show through */
+dialog::backdrop {
+	background: transparent;
 }
 
 #login_box {
-background: transparent;
-border: none;
-border-radius: 0;
-margin: 0;
-padding: 40px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left: 40px;
+	padding-right: 40px;
 }
 
 form {
-margin: 0;
-width: 100%;
+	margin: 0;
+	width: 100%;
 }
 
-.form-group {
-margin-bottom: 24px;
-text-align: left;
-}
+/* === LOGO === */
 
-input {
-background-color: var(--input-bg);
-border: 1px solid var(--input-border);
-border-radius: 12px;
-color: var(--text-color);
-font-size: 15px;
-padding: 14px 18px;
-width: 100%;
-box-sizing: border-box;
-transition: all 0.3s ease;
-}
-
-input::placeholder {
-color: var(--text-muted);
-opacity: 0.7;
-}
-
-input:hover {
-background-color: rgba(255, 255, 255, 0.1);
-border-color: var(--input-focus);
-}
-
-input:focus {
-background-color: rgba(255, 255, 255, 0.12);
-border-color: var(--primary-light);
-outline: none;
-box-shadow: 0 0 0 3px rgba(88, 139, 182, 0.1);
-}
-
-span {
-margin: 0;
-}
-
-label {
-display: block;
-float: none;
-font-weight: 600;
-font-size: 13px;
-line-height: normal;
-margin: 0 0 8px 0;
-color: var(--text-muted);
-text-transform: uppercase;
-letter-spacing: 0.5px;
-}
-
-#demo_text {
-margin: 20px 0;
-padding: 16px;
-background: rgba(74, 144, 226, 0.15);
-border-radius: 12px;
-border-left: 3px solid var(--accent-color);
-font-size: 13px;
-color: var(--text-color);
-text-align: left;
-}
-
-#eye {
-background: url(eye.png) no-repeat center;
-background-size: 18px;
-display: inline-block;
-width: 40px;
-height: 40px;
-margin-left: -46px;
-cursor: pointer;
-opacity: 0.6;
-transition: opacity 0.2s;
-border: none;
-vertical-align: middle;
-}
-
-#eye:hover {
-opacity: 1;
-}
-
-#eye:focus {
-box-shadow: none;
-outline: none;
-}
-
-#CompanySelect {
-background-color: var(--input-bg);
-background-image: url(descending.png);
-background-repeat: no-repeat;
-background-position: right 18px center;
-background-size: 12px !important;
-cursor: pointer;
-padding-right: 42px;
-}
-
-.dropdownlist {
-background: rgba(30, 30, 30, 0.95) !important;
-backdrop-filter: blur(10px);
-position: fixed !important;
-max-height: 0px;
-list-style: none;
-display: none;
-margin-top: 0;
-border-radius: 12px;
-box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-overflow: hidden;
-scrollbar-color: var(--primary-color) rgba(255, 255, 255, 0.1);
-z-index: 10000;
-}
-
-.option {
-position: relative;
-left: -37px;
-background: transparent;
-padding: 12px 16px;
-cursor: pointer;
-border: none;
-margin-bottom: 0;
-width: 100%;
-box-sizing: border-box;
-transition: background 0.2s ease;
-text-align: left;
-}
-
-.option:hover {
-background: rgba(88, 139, 182, 0.3);
-}
-
-#optionlogo {
-position: relative;
-height: 24px;
-width: 96px;
-left: 0;
-margin-right: 12px;
-vertical-align: middle;
-display: inline-block;
-}
-
-#optionlabel {
-position: relative;
-left: 0;
-top: 0;
-color: var(--text-color);
-vertical-align: middle;
-display: inline-block;
-}
-}
-@media only screen and (max-width: 400px) {
-#container {
-max-width: 90%;
-margin: 20px auto;
-}
-
-#login_box {
-padding: 30px 24px;
-}
-
-.dropdownlist {
-background: rgba(30, 30, 30, 0.95) !important;
-backdrop-filter: blur(10px);
-position: absolute !important;
-top: 100%;
-left: 0;
-right: 0;
-max-height: 0px;
-list-style: none;
-display: none;
-margin: 0;
-padding: 0;
-border-radius: 12px;
-box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-overflow: hidden;
-scrollbar-color: var(--primary-color) rgba(255, 255, 255, 0.1);
-z-index: 10000;
-}
-
-#optionlogo {
-display: inline-block;
-height: 24px;
-width: 96px;
-margin-right: 12px;
-vertical-align: middle;
-}
-
-.option {
-position: relative;
-left: 0;
-background: transparent;
-padding: 12px 16px;
-cursor: pointer;
-border: none;
-margin-bottom: 0;
-width: 100%;
-box-sizing: border-box;
-transition: background 0.2s ease;
-text-align: left;
-}
-
-.option:hover {
-background: rgba(88, 139, 182, 0.3);
-}
-
-label {
-display: block;
-font-weight: 600;
-font-size: 13px;
-margin: 0 0 8px 0;
-text-align: left;
-width: 100%;
-color: var(--text-muted);
-text-transform: uppercase;
-letter-spacing: 0.5px;
-}
-
-#CompanySelect {
-background-color: var(--input-bg);
-background-image: url(descending.png);
-background-repeat: no-repeat;
-background-position: right 18px center;
-background-size: 12px !important;
-cursor: pointer;
-padding-right: 42px;
-width: 100%;
-box-sizing: border-box;
-}
-
-#eye {
-background: url(eye.png) no-repeat center;
-background-size: 18px;
-display: inline-block;
-width: 40px;
-height: 40px;
-margin-left: -46px;
-cursor: pointer;
-opacity: 0.6;
-transition: opacity 0.2s;
-border: none;
-vertical-align: middle;
-}
-
-#eye:hover {
-opacity: 1;
-}
-
-#eye:focus {
-box-shadow: none;
-outline: none;
-}
-
-input {
-display: block;
-background-color: var(--input-bg);
-border: 1px solid var(--input-border);
-border-radius: 12px;
-color: var(--text-color);
-font-size: 15px;
-padding: 14px 18px;
-width: 100%;
-box-sizing: border-box;
-transition: all 0.3s ease;
-}
-
-input[type="password"] {
-display: inline;
-width: calc(100% - 46px);
-margin: 0;
-}
-}
 #login_logo {
-height: 80px;
-margin: 10px auto 40px;
-width: 100%;
-display: flex;
-align-items: center;
-justify-content: center;
-}
-
-#CompanyNameField {
-display: none;
-}
-
-button {
-background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-border: none;
-border-radius: 12px;
-color: var(--text-color);
-font-size: 16px;
-font-weight: 600;
-margin: 28px 0 0 0;
-padding: 14px 24px;
-width: 100%;
-cursor: pointer;
-transition: all 0.3s ease;
-box-shadow: 0 4px 12px rgba(88, 139, 182, 0.3);
-position: relative;
-overflow: hidden;
-}
-
-button::before {
-content: '';
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
-opacity: 0;
-transition: opacity 0.3s ease;
-}
-
-button:hover {
-background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-color) 100%);
-box-shadow: 0 6px 20px rgba(88, 139, 182, 0.4);
-transform: translateY(-2px);
-}
-
-button:hover::before {
-opacity: 1;
-}
-
-button:active {
-transform: translateY(0);
-box-shadow: 0 2px 8px rgba(88, 139, 182, 0.3);
-}
-
-.waiting_show {
-position: absolute;
-left: 24px;
-width: 20px;
-height: 20px;
-display: none;
+	height: 50px;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 0px;
 }
 
 .logo {
-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-display: inline-block;
-font-size: 48px;
-font-weight: 700;
-cursor: default;
-letter-spacing: -2px;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	display: inline-block;
+	font-size: 32px;
+	font-weight: 700;
+	cursor: default;
+	letter-spacing: -2px;
+	margin-top:16px;
 }
 
 .logo-left {
-background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-color) 100%);
-color: white;
-padding: 8px 2px 8px 20px;
-border-top-left-radius: 16px;
-border-bottom-left-radius: 16px;
-box-shadow: 0 4px 12px rgba(88, 139, 182, 0.3);
+	background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-color) 100%);
+	color: white;
+	padding: 8px 2px 8px 20px;
+	border-top-left-radius: 16px;
+	border-bottom-left-radius: 16px;
+	box-shadow: 0 4px 12px rgba(88, 139, 182, 0.3);
 }
 
 .logo-right {
-background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-color: white;
-padding: 8px 20px 8px 2px;
-font-style: italic;
-border-top-right-radius: 16px;
-border-bottom-right-radius: 16px;
-box-shadow: 0 4px 12px rgba(88, 139, 182, 0.3);
+	background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+	color: white;
+	padding: 8px 20px 8px 2px;
+	font-style: italic;
+	border-top-right-radius: 16px;
+	border-bottom-right-radius: 16px;
+	box-shadow: 0 4px 12px rgba(88, 139, 182, 0.3);
+}
+
+/* === FORM FIELDS === */
+
+.form-group {
+	margin-bottom: 24px;
+	text-align: left;
+}
+
+label {
+	display: block;
+	float: none;
+	font-weight: 600;
+	font-size: 13px;
+	line-height: normal;
+	margin: 0 0 8px 0;
+	color: var(--text-muted);
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+input {
+	background-color: var(--input-bg);
+	border: 1px solid var(--input-border);
+	border-radius: 12px;
+	color: var(--text-color);
+	font-size: 15px;
+	padding: 14px 18px;
+	width: 100%;
+	transition: all 0.3s ease;
+}
+
+input::placeholder {
+	color: var(--text-muted);
+	opacity: 0.7;
+}
+
+input:hover {
+	background-color: rgba(255, 255, 255, 0.1);
+	border-color: var(--input-focus);
+}
+
+input:focus {
+	background-color: rgba(255, 255, 255, 0.12);
+	border-color: var(--primary-light);
+	outline: none;
+	box-shadow: 0 0 0 3px rgba(88, 139, 182, 0.15);
+}
+
+span {
+	margin: 0;
+}
+
+/* Hidden select backing the custom company dropdown */
+#CompanyNameField {
+	display: none;
+}
+
+/* Custom company selector */
+#CompanySelect {
+	background-color: var(--input-bg);
+	background-image: url(descending.png);
+	background-repeat: no-repeat;
+	background-position: right 18px center;
+	background-size: 12px !important;
+	cursor: pointer;
+	padding-right: 42px;
+}
+
+.dropdownlist {
+	background: rgba(12, 22, 38, 0.97);
+	backdrop-filter: blur(10px);
+	position: fixed !important;
+	max-height: 0;
+	list-style: none;
+	display: none;
+	margin: 0;
+	padding: 0;
+	border-radius: 12px;
+	border: 1px solid var(--dialog-border);
+	box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+	overflow: hidden;
+	z-index: 10000;
+}
+
+.option {
+	position: relative;
+	left: -37px;
+	background: transparent;
+	padding: 12px 16px;
+	cursor: pointer;
+	border: none;
+	margin-bottom: 0;
+	width: 100%;
+	transition: background 0.2s ease;
+	text-align: left;
+}
+
+.option:hover {
+	background: rgba(88, 139, 182, 0.25);
+}
+
+#optionlogo {
+	height: 24px;
+	width: 96px;
+	margin-right: 12px;
+	vertical-align: middle;
+	display: inline-block;
+}
+
+#optionlabel {
+	color: var(--text-color);
+	vertical-align: middle;
+	display: inline-block;
+}
+
+/* Password eye toggle */
+#eye {
+	background: url(eye.png) no-repeat center;
+	background-size: 18px;
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+	margin-left: -46px;
+	cursor: pointer;
+	opacity: 0.55;
+	transition: opacity 0.2s;
+	border: none;
+	vertical-align: middle;
+}
+
+#eye:hover {
+	opacity: 1;
+}
+
+#eye:focus {
+	box-shadow: none;
+	outline: none;
+}
+
+/* === DEMO TEXT === */
+
+#demo_text {
+	margin: 20px 0;
+	padding: 14px 16px;
+	background: rgba(74, 144, 226, 0.12);
+	border-radius: 10px;
+	border-left: 3px solid var(--accent-color);
+	font-size: 13px;
+	color: var(--text-color);
+	text-align: left;
+}
+
+/* === LOGIN BUTTON === */
+
+button {
+	background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+	border: none;
+	border-radius: 12px;
+	color: var(--text-color);
+	font-size: 16px;
+	font-weight: 600;
+	margin: 28px 0 0 0;
+	padding: 14px 24px;
+	width: 100%;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	box-shadow: 0 4px 16px rgba(88, 139, 182, 0.35);
+	position: relative;
+	overflow: hidden;
+}
+
+button:hover {
+	background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-color) 100%);
+	box-shadow: 0 6px 24px rgba(88, 139, 182, 0.45);
+	transform: translateY(-2px);
+}
+
+button:active {
+	transform: translateY(0);
+	box-shadow: 0 2px 8px rgba(88, 139, 182, 0.3);
+}
+
+.waiting_show {
+	position: absolute;
+	left: 24px;
+	width: 20px;
+	height: 20px;
+	display: none;
+}
+
+/* === RESPONSIVE - narrow screens === */
+
+@media only screen and (max-width: 480px) {
+	dialog {
+		width: 100%;
+		max-width: 100%;
+		min-height: 100svh;
+		border-left: none;
+		border-right: none;
+		border-radius: 0;
+	}
+
+	#login_box {
+		padding: 28px 20px;
+	}
+
+	.dropdownlist {
+		position: absolute !important;
+		top: 100%;
+		left: 0;
+		right: 0;
+	}
+
+	.option {
+		left: 0;
+	}
+
+	input[type="password"] {
+		display: inline;
+		width: calc(100% - 46px);
+	}
 }
