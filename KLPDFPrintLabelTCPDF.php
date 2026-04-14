@@ -459,7 +459,7 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 		$LabelLocationField = '<b>' . __('OR') . ' </b> ' . 'QOH at Location';
 		echo FieldToSelectFromTwoOptions
 							('', ' ',
-							'KANTO', '000-Kantor',
+							'KANTO', '000-Kantor Kesambi',
 							'Location', $_POST['Location'], $LabelLocationField, '', '',  4, false, false);
 		$LabelItemsThatField = '<b>' . __('OR') . ' </b> ' . ' items that';
 		echo FieldToSelectFromFiveOptions('Nothing', ' ',
