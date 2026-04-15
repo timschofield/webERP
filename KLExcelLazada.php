@@ -95,7 +95,7 @@ function submit($TypeOfShop) {
 					AND stockmaster.stockid = salescatprod.stockid
 					AND stockdescriptiontranslations.language_id = 'id_ID.utf8'
 					AND stockmaster.discontinued = 0 
-					AND salescatprod.manufacturers_id = '" . $TypeOfShop . "' 
+					AND salescatprod.brands_id = '" . $TypeOfShop . "' 
 					AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
 					AND prices.currabrev = '". $_SESSION['CompanyRecord']['currencydefault'] ."'
 					AND prices.startdate <= CURRENT_DATE 

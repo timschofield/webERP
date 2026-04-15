@@ -1255,7 +1255,7 @@ function MaintainPackagingImage($ProductId, $KLPackaging){
 	}
 }
 
-function InsertWebsiteSalesCategory($StockID, $WebsiteCategory, $Manufacturers_id, $MultipleCategories, $Featured, $UpdateDB){
+function InsertWebsiteSalesCategory($StockID, $WebsiteCategory, $Brands_id, $MultipleCategories, $Featured, $UpdateDB){
 	if ($UpdateDB){
 		
 		if (!$MultipleCategories){
@@ -1277,14 +1277,14 @@ function InsertWebsiteSalesCategory($StockID, $WebsiteCategory, $Manufacturers_i
 			$SQL = "INSERT INTO salescatprod (
 						salescatid ,
 						stockid,
-						manufacturers_id,
+						brands_id,
 						featured,
 						date_created,
 						date_updated)
 					VALUES (
 						'" . $WebsiteCategory . "',
 						'" . $StockID . "',
-						'" . $Manufacturers_id . "',
+						'" . $Brands_id . "',
 						'" . $Featured . "',
 						NOW(),
 						NOW())";

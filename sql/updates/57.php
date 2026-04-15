@@ -43,7 +43,7 @@ AddIndex(array('brands_id'), 'salescatprod', 'idx_brands_id');
 // RemoveScript($ScriptName)
 RemoveScript('Manufacturers.php');
 // NewScript($ScriptName, $PageSecurity)
-NewScript('Brands.php', 15);  // Security Token: User Management and System Admistration - TODO reasign as appropriate
+NewScript('Brands.php', 15000);  // Security Token: User Management and System Admistration - TODO reasign as appropriate
 
 // 3. Update menu
 // Update Inventory module Brands Management menu item [Inventory > Maintenance > Brands Management]

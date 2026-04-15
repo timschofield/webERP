@@ -95,7 +95,7 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 			$ShopeeProductName = $worksheet->getCell('C'.$Row)->getCalculatedValue();
 			
 			$SQL = "SELECT stockmaster.stockid,
-						salescatprod.manufacturers_id
+						salescatprod.brands_id
 					FROM stockmaster, salescatprod
 					WHERE stockmaster.stockid = salescatprod.stockid
 						AND stockmaster.stockid = '" . $StockID . "'";
@@ -103,9 +103,9 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 			if (DB_num_rows($Result) != 0){
 				$MyRow = DB_fetch_array($Result);
 				
-				if ($MyRow['manufacturers_id'] == "1"){
+				if ($MyRow['brands_id'] == "1"){
 					$ShopeeStoreId = SHOPEE_STOREID_KAPAL_LAUT;
-				} elseif ($MyRow['manufacturers_id'] == "2"){
+				} elseif ($MyRow['brands_id'] == "2"){
 					$ShopeeStoreId = SHOPEE_STOREID_BLINK;
 				} else {
 					$Error = "STORE";
