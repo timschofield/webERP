@@ -1061,10 +1061,10 @@ function FieldToSelectSpreadSheetFormat($VariableName, $SelectedValue, $Label = 
 
 function FieldToSelectOneBrand($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 
-	$SQL = "SELECT manufacturers.manufacturers_id,
-					manufacturers_name
-			FROM manufacturers
-			ORDER BY manufacturers_name";
+	$SQL = "SELECT brands.brands_id,
+					brands_name
+			FROM brands
+			ORDER BY brands_name";
 	$Result = DB_query($SQL);
 
 	$HTML = '<field>
@@ -1080,11 +1080,11 @@ function FieldToSelectOneBrand($VariableName, $SelectedValue, $Label = '', $Help
 	}
 
 	while ($MyRow = DB_fetch_array($Result)) {
-		if ($MyRow['manufacturers_id'] == $SelectedValue) {
-			$HTML .= '<option selected="selected" value="' . $MyRow['manufacturers_id'] . '">' . $MyRow['manufacturers_name'] . '</option>';
+		if ($MyRow['brands_id'] == $SelectedValue) {
+			$HTML .= '<option selected="selected" value="' . $MyRow['brands_id'] . '">' . $MyRow['brands_name'] . '</option>';
 		}
 		else {
-			$HTML .= '<option value="' . $MyRow['manufacturers_id'] . '">' . $MyRow['manufacturers_name'] . '</option>';
+			$HTML .= '<option value="' . $MyRow['brands_id'] . '">' . $MyRow['brands_name'] . '</option>';
 		}
 	}
 	$HTML .= '</select>';

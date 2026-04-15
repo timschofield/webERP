@@ -91,12 +91,12 @@ if (isset($_POST['submit'])) {
 			}
 		}
 
-		$SQL = "UPDATE manufacturers SET manufacturers_name='" . $_POST['BrandsName'] . "',
-									manufacturers_url='" . $_POST['BrandsURL'] . "'";
+		$SQL = "UPDATE brands SET brands_name='" . $_POST['BrandsName'] . "',
+									brands_url='" . $_POST['BrandsURL'] . "'";
 		if (isset($_POST['BrandsImage'])){
-			$SQL .= ", manufacturers_image='" . $_POST['BrandsImage'] . "'";
+			$SQL .= ", brands_image='" . $_POST['BrandsImage'] . "'";
 		}
-		$SQL .= " WHERE manufacturers_id = '" . $SelectedBrand . "'";
+		$SQL .= " WHERE brands_id = '" . $SelectedBrand . "'";
 
 		$ErrMsg = __('An error occurred updating the') . ' ' . $SelectedBrand . ' ' . __('brand record because');
 
@@ -112,14 +112,14 @@ if (isset($_POST['submit'])) {
 
 		/*SelectedBrand is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new Location form */
 
-		$SQL = "INSERT INTO manufacturers (manufacturers_name,
-										manufacturers_url)
+		$SQL = "INSERT INTO brands (brands_name,
+										brands_url)
 						VALUES ('" . $_POST['BrandsName'] . "',
 								'" . $_POST['BrandsURL'] . "')";
 
 		$ErrMsg =  __('An error occurred inserting the new brand record because');
 		$Result = DB_query($SQL, $ErrMsg);
-		$LastInsertId = DB_Last_Insert_ID('manufacturers', 'manufacturers_id');
+		$LastInsertId = DB_Last_Insert_ID('brands', 'brands_id');
 
 		if (isset($_FILES['BrandPicture']) AND $_FILES['BrandPicture']['name'] !='') {
 
@@ -154,9 +154,9 @@ if (isset($_POST['submit'])) {
 			if ($UploadTheFile=='Yes'){
 				$Result  =  move_uploaded_file($_FILES['BrandPicture']['tmp_name'], $FileName);
 				$Message = ($Result)?__('File url')  . '<a href="' . $FileName .'">' .  $FileName . '</a>' : __('Something is wrong with uploading a file');
-				DB_query("UPDATE manufacturers
-					SET  manufacturers_image='" . 'BRAND-' . $LastInsertId . "'
-					WHERE manufacturers_id = '" . $LastInsertId . "'
+				DB_query("UPDATE brands
+					SET  brands_image='" . 'BRAND-' . $LastInsertId . "'
+					WHERE brands_id = '" . $LastInsertId . "'
 					");
 			}
 		}
@@ -175,7 +175,7 @@ if (isset($_POST['submit'])) {
 	$CancelDelete = false;
 
 // PREVENT DELETES IF DEPENDENT RECORDS
-	$SQL= "SELECT COUNT(*) FROM salescatprod WHERE manufacturers_id='". $SelectedBrand . "'";
+	$SQL= "SELECT COUNT(*) FROM salescatprod WHERE brands_id='". $SelectedBrand . "'";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_row($Result);
 	if ($MyRow[0]>0) {
@@ -186,7 +186,7 @@ if (isset($_POST['submit'])) {
 
 	if (!$CancelDelete) {
 
-		$Result = DB_query("DELETE FROM manufacturers WHERE manufacturers_id='" . $SelectedBrand . "'");
+		$Result = DB_query("DELETE FROM brands WHERE brands_id='" . $SelectedBrand . "'");
 		foreach ($SupportedImgExt as $Ext) {
 			$File = $_SESSION['part_pics_dir'] . '/BRAND-' . $SelectedBrand . '.' . $Ext;
 			if (file_exists ($File) ) {
@@ -207,11 +207,11 @@ then none of the above are true and the list of Brands will be displayed with
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$SQL = "SELECT manufacturers_id,
-				manufacturers_name,
-				manufacturers_url,
-				manufacturers_image
-			FROM manufacturers";
+	$SQL = "SELECT brands_id,
+				brands_name,
+				brands_url,
+				brands_image
+			FROM brands";
 	$Result = DB_query($SQL);
 
 	if (DB_num_rows($Result)==0){
@@ -230,17 +230,17 @@ or deletion of the records*/
 		</tr>';
 
 while ($MyRow = DB_fetch_array($Result)) {
-    $Glob = (glob($_SESSION['part_pics_dir'] . '/BRAND-' . $MyRow['manufacturers_id'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
+    $Glob = (glob($_SESSION['part_pics_dir'] . '/BRAND-' . $MyRow['brands_id'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
 	$ImageFile = reset($Glob);
-	$BrandImgLink = GetImageLink($ImageFile, '/BRAND-' . $MyRow['manufacturers_id'], 120, 120, "", "");
+	$BrandImgLink = GetImageLink($ImageFile, '/BRAND-' . $MyRow['brands_id'], 120, 120, "", "");
 
 	echo '<tr class="striped_row">
-			<td>', $MyRow['manufacturers_id'], '</td>
-			<td>', $MyRow['manufacturers_name'], '</td>
-			<td><a target="_blank" href="', $MyRow['manufacturers_url'], '">', $MyRow['manufacturers_url'], '</a></td>
+			<td>', $MyRow['brands_id'], '</td>
+			<td>', $MyRow['brands_name'], '</td>
+			<td><a target="_blank" href="', $MyRow['brands_url'], '">', $MyRow['brands_url'], '</a></td>
 			<td>', $BrandImgLink, '</td>
-			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedBrand=', $MyRow['manufacturers_id'], '&amp;edit=1">' . __('Edit') . '</a></td>
-			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedBrand=', $MyRow['manufacturers_id'], '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this brand?') . '\');">' . __('Delete') . '</a></td>
+			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedBrand=', $MyRow['brands_id'], '&amp;edit=1">' . __('Edit') . '</a></td>
+			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedBrand=', $MyRow['brands_id'], '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this brand?') . '\');">' . __('Delete') . '</a></td>
 		</tr>';
 
 	}
@@ -264,19 +264,19 @@ if (!isset($_GET['delete'])) {
 		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" Title="' .
 			__('Brand') . '" alt="" />' . ' ' . $Title . '</p>';
 
-		$SQL = "SELECT manufacturers_id,
-					manufacturers_name,
-					manufacturers_url,
-					manufacturers_image
-				FROM manufacturers
-				WHERE manufacturers_id='" . $SelectedBrand . "'";
+		$SQL = "SELECT brands_id,
+					brands_name,
+					brands_url,
+					brands_image
+				FROM brands
+				WHERE brands_id='" . $SelectedBrand . "'";
 
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_array($Result);
 
-		$_POST['BrandsName']  = $MyRow['manufacturers_name'];
-		$_POST['BrandsURL'] = $MyRow['manufacturers_url'];
-		$_POST['BrandsImage'] = $MyRow['manufacturers_image'];
+		$_POST['BrandsName'] = $MyRow['brands_name'];
+		$_POST['BrandsURL'] = $MyRow['brands_url'];
+		$_POST['BrandsImage'] = $MyRow['brands_image'];
 
 
 		echo '<input type="hidden" name="SelectedBrand" value="' . $SelectedBrand . '" />';
