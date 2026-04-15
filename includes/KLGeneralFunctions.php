@@ -875,14 +875,14 @@ function FindWebsiteBrand($StockID, $Category, $Description){
 		$Brand = 1;	
 	} else {
 		//should be a discounted item, we keep the previous brand if still available, otherwise we continue messing around
-		$SQL = "SELECT manufacturers_id
+		$SQL = "SELECT brands_id
 				FROM salescatprod 
 				WHERE stockid = '" . $StockID . "'";
 		$Result = DB_query($SQL);
 		if (DB_num_rows($Result) != 0){
 			// assign the current brand
 			$MyRow = DB_fetch_array($Result);
-			$Brand = $MyRow['manufacturers_id'];	
+			$Brand = $MyRow['brands_id'];	
 		} else {
 			// we check the description, if we get any info
 				if (mb_stristr($Description, "silver") != false){

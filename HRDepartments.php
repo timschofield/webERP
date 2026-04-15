@@ -183,14 +183,14 @@ if (!isset($SelectedDepartment)) {
 			$AuthoriserResult = DB_query($AuthoriserSQL);
 			$AuthoriserRow = DB_fetch_array($AuthoriserResult);
 		} else {
-			$AuthoriserRow['locationname'] = '';
+			$AuthoriserRow['realname'] = '';
 		}
 		echo '<tr class="striped_row">
 				<td>' . $MyRow['departmentcode'] . '</td>
 				<td>' . $MyRow['description'] . '</td>
 				<td>' . $MyRow['parentname'] . '</td>
 				<td>' . $MyRow['managername'] . '</td>
-				<td>' . $AuthoriserRow['realname'] . ' - ' . $MyRow['authoriser'] . '</td>
+				<td>' . $AuthoriserRow['realname'] . '</td>
 				<td>' . $LocationRow['locationname'] . '</td>
 				<td>' . ($MyRow['active'] ? __('Yes') : __('No')) . '</td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedDepartment=' . $MyRow['departmentid'] . '">' . __('Edit') . '</a></td>

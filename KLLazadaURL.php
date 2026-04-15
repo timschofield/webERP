@@ -100,7 +100,7 @@ function submit($SelectedFile) {
 			$LazadaProductName = $worksheet->getCell('C'.$Row)->getCalculatedValue();
 			
 			$SQL = "SELECT stockmaster.stockid,
-						salescatprod.manufacturers_id
+						salescatprod.brands_id
 					FROM stockmaster, salescatprod
 					WHERE stockmaster.stockid = salescatprod.stockid
 						AND stockmaster.stockid = '" . $StockID . "'";

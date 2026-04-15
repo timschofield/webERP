@@ -66,7 +66,7 @@ if (isset($_POST['AddItems'])) {
 	foreach ($Items as $StockID => $Brand) {
 		$SQL = "INSERT INTO salescatprod (stockid,
 										salescatid,
-										manufacturers_id)
+										brands_id)
 									VALUES ('" . $StockID . "',
 										'" . $SelectedCategory . "',
 										'" . $Brand . "')";
@@ -187,9 +187,9 @@ if (isset($SearchResult)) {
 						<td><input type="checkbox" value="0" name="StockID_', $MyRow['stockid'], '" /></td>
 						<td><select name="Brand_', $MyRow['stockid'], '">
 							<option value="">', __('Select Brand'), '</option>';
-				$BrandResult = DB_query("SELECT manufacturers_id, manufacturers_name FROM manufacturers");
+				$BrandResult = DB_query("SELECT brands_id, brands_name FROM brands");
 				while ($MyRow = DB_fetch_array($BrandResult)) {
-					echo '<option value="', $MyRow['manufacturers_id'], '">', $MyRow['manufacturers_name'], '</option>';
+					echo '<option value="', $MyRow['brands_id'], '">', $MyRow['brands_name'], '</option>';
 				}
 
 				echo '</select>
@@ -413,12 +413,12 @@ if (!isset($_GET['Select'])) {
 	$SQL = "SELECT salescatprod.stockid,
 					salescatprod.featured,
 					stockmaster.description,
-					manufacturers_name
+					brands_name
 				FROM salescatprod
 				INNER JOIN stockmaster
 					ON salescatprod.stockid=stockmaster.stockid
-				INNER JOIN manufacturers
-					ON salescatprod.manufacturers_id=manufacturers.manufacturers_id
+				INNER JOIN brands
+					ON salescatprod.brands_id=brands.brands_id
 				WHERE salescatprod.salescatid=" . $SelectedCategory . "
 				ORDER BY salescatprod.stockid";
 
@@ -446,7 +446,7 @@ if (!isset($_GET['Select'])) {
 				echo '<tr class="striped_row">
 						<td>', $MyRow['stockid'], '</td>
 						<td>', $MyRow['description'], '</td>
-						<td>', $MyRow['manufacturers_name'], '</td>
+						<td>', $MyRow['brands_name'], '</td>
 						<td>';
 				if ($MyRow['featured'] == 1) {
 					echo __('Yes'), '</td>

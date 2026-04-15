@@ -74,7 +74,7 @@ function submit($TypeOfShop, $TypeOfFile) {
 
 		// SQL query to retrieve product data
 		// Joins stockmaster with translations, sales category products, and prices (LEFT JOIN for optional prices).
-		// Filters by language, discontinued status (including recently discontinued), and manufacturer ID (TypeOfShop).
+		// Filters by language, discontinued status (including recently discontinued), and type of shop (TypeOfShop).
 		$SQL = "SELECT stockmaster.stockid,
 						stockmaster.categoryid,
 						stockmaster.description,

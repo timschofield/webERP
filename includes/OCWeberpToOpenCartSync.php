@@ -135,7 +135,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 				stockmaster.discountcategory,
 				salescatprod.salescatid,
 				salescat.salescatname,
-				salescatprod.manufacturers_id
+				salescatprod.brands_id
 			FROM stockmaster, salescatprod, salescat
 			WHERE stockmaster.stockid = salescatprod.stockid
 				AND stockmaster.klsynctoopencart = '1'
@@ -182,7 +182,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 			$StockStatusId = 5; // Out of stock by default
 
 			$Image = PATH_OPENCART_IMAGES . $MyRow['stockid'].'.jpg';
-			$ManufacturerId = $MyRow['manufacturers_id'];
+			$ManufacturerId = $MyRow['brands_id'];
 			$Shipping = 1; // will need function depending if it's a shippable or not item
 			$CustomerCode = WEBERP_ONLINE_RETAIL_CUSTOMER_CODE_PREFIX . OPENCART_DEFAULT_CURRENCY;
 			$Price = GetPrice($MyRow['stockid'], $CustomerCode, $CustomerCode); // Get the price without any discount from webERP
@@ -546,7 +546,7 @@ function SyncProductSalesCategories($ShowMessages, $LastTimeRun , $EmailText= ''
 	/* Look for the late modifications of salescatprod table in webERP */
 	$SQL = "SELECT salescatprod.salescatid,
 				salescatprod.stockid,
-				salescatprod.manufacturers_id,
+				salescatprod.brands_id,
 				salescatprod.featured
 			FROM salescatprod
 			WHERE (salescatprod.date_created >= '" . $LastTimeRun . "'
@@ -575,7 +575,7 @@ function SyncProductSalesCategories($ShowMessages, $LastTimeRun , $EmailText= ''
 			/* Field Matching */
 			$Model = $MyRow['stockid'];
 			$SalesCatId = $MyRow['salescatid'];
-			$ManufacturerId = $MyRow['manufacturers_id'];
+			$ManufacturerId = $MyRow['brands_id'];
 			$Featured = $MyRow['featured'];
 			if ($Featured == 1){
 				$PrintFeatured = "Yes";
@@ -1084,7 +1084,7 @@ function SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun , $Email
 
 	/* Look for the late modifications of description translations table in webERP */
 	$SQL = "SELECT stockmaster.categoryid,
-				salescatprod.manufacturers_id,
+				salescatprod.brands_id,
 					stockdescriptiontranslations.stockid,
 					stockdescriptiontranslations.language_id,
 					stockdescriptiontranslations.descriptiontranslation,
@@ -1125,7 +1125,7 @@ function SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun , $Email
 			/* Field Matching */
 			$Model = $MyRow['stockid'];
 			$webERPCategoryId = $MyRow['categoryid'];
-			$ManufacturerId = $MyRow['manufacturers_id'];
+			$ManufacturerId = $MyRow['brands_id'];
 
 			$ItemBrand = GetWeberpItemBrand($webERPCategoryId, $ManufacturerId);
 
