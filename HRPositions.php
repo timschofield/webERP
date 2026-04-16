@@ -256,11 +256,13 @@ if (!isset($SelectedPosition)) {
 				d.description,
 				pg.paygradename,
 				p.positionstatus,
+				rpt.positiontitle AS reportstopositiontitle,
 				p.fte,
 				p.active
 			FROM hrpositions p
 			LEFT JOIN departments d ON p.departmentid = d.departmentid
 			LEFT JOIN hrpaygrades pg ON p.paygradeid = pg.paygradeid
+			LEFT JOIN hrpositions rpt ON p.reportstopositionid = rpt.positionid
 			ORDER BY p.positioncode";
 
 	$Result = DB_query($SQL);
@@ -270,6 +272,7 @@ if (!isset($SelectedPosition)) {
 				<th>' . __('Code') . '</th>
 				<th>' . __('Position Title') . '</th>
 				<th>' . __('Department') . '</th>
+				<th>' . __('Reports To') . '</th>
 				<th>' . __('Pay Grade') . '</th>
 				<th>' . __('Status') . '</th>
 				<th>' . __('FTE') . '</th>
@@ -282,6 +285,7 @@ if (!isset($SelectedPosition)) {
 					<td>' . $Row['positioncode'] . '</td>
 					<td>' . $Row['positiontitle'] . '</td>
 					<td>' . $Row['description'] . '</td>
+					<td>' . $Row['reportstopositiontitle'] . '</td>
 					<td>' . $Row['paygradename'] . '</td>
 					<td>' . $Row['positionstatus'] . '</td>
 					<td>' . $Row['fte'] . '</td>
