@@ -1,6 +1,7 @@
 <?php
 
 UpdateField('hrsystemoptions', 'optionname', 'AppraisalFrequency', 'optionname="appraisal_frequency"');
+UpdateField('hrsystemoptions', 'optionvalue', '365', 'optionname="AppraisalFrequency"');
 UpdateField('hrsystemoptions', 'optionname', 'ProbationPeriod', 'optionname="probation_period_days"');
 
 InsertRecord('hrsystemoptions', array('optioncategory', 'optionname'), array('Compensation', 'MinSalaryIncreasePercent'), array('optioncategory', 'optionname', 'optionvalue', 'optiondescription'), array('Compensation', 'MinSalaryIncreasePercent', '0', 'Minimum Salary increase in percentage'));
