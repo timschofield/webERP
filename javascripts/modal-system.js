@@ -280,6 +280,7 @@ function openContentModal(url, title) {
 	}
 	
 	bringModalToFront(modalId);
+	updateModalBlurState();
 	
 	// Resolve relative URLs and ensure proper path construction
 	if (url) {
@@ -449,6 +450,7 @@ function closeContentModal(modalId) {
 			modal.remove();
 			delete openModals[modalId];
 			removeMinimizedIcon(modalId);
+			updateModalBlurState();
 		}, 300);
 	}
 }
@@ -463,6 +465,7 @@ function minimizeContentModal(modalId) {
 			modal.style.display = "none";
 		}, 300);
 		addMinimizedIcon(modalId, url, title);
+		updateModalBlurState();
 	}
 }
 
@@ -490,6 +493,23 @@ function restoreContentModal(modalId) {
 		}, 10);
 		removeMinimizedIcon(modalId);
 		bringModalToFront(modalId);
+		updateModalBlurState();
+	}
+}
+
+function updateModalBlurState() {
+	var hasVisibleModal = false;
+	for (var id in openModals) {
+		var el = document.getElementById(id);
+		if (el && !el.classList.contains('minimized')) {
+			hasVisibleModal = true;
+			break;
+		}
+	}
+	if (hasVisibleModal) {
+		document.body.classList.add('modal-active');
+	} else {
+		document.body.classList.remove('modal-active');
 	}
 }
 

@@ -704,3 +704,11 @@ padding: 40px 20px;
 color: #999;
 font-size: 1rem;
 }
+
+/* Blur background content and disable interactions when a content modal is visible */
+body.modal-active > *:not(#modals-container):not(#minimized-modals-bar) {
+	filter: blur(4px);
+	pointer-events: none;
+	user-select: none;
+	transition: filter 0.3s ease;
+}
