@@ -162,8 +162,8 @@ if (isset($DemoText)) {
 
 echo '</div>';
 
-echo '<button class="button" type="submit" value="', __('Login'), '" name="SubmitUser" onclick="ShowSpinner()">
-	<img id="waiting_show" class="waiting_show" src="css/waiting.gif" />', __('Login'), '
+echo '<button class="button" type="submit" value="', __('Please login here'), '" name="SubmitUser" onclick="ShowSpinner()">
+	<img id="waiting_show" class="waiting_show" src="css/waiting.gif" />', __('Please login here'), '
 </button>';
 
 echo '</form>
