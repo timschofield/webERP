@@ -108,6 +108,8 @@ height:48px;
 vertical-align:middle;
 }
 .toplink {
+	align-self: flex-start;
+	width: fit-content;
 float:right;
 position:relative;
 background-image:url(images/next.png);

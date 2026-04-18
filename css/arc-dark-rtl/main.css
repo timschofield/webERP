@@ -105,6 +105,8 @@ vertical-align:middle;
 box-shadow:0 0 0 0;
 }
 .toplink {
+	align-self: flex-start;
+	width: fit-content;
 float:right;
 position:relative;
 background-image:url(images/next.png);
