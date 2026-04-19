@@ -146,6 +146,8 @@ $MultiModalScript = <<<'SCRIPT'
 		
 		function addMinimizedIcon(modalId, url, title) {
 			var bar = document.getElementById("minimized-modals-bar");
+			var track = document.getElementById("minimized-modals-track");
+			if (!track) track = bar;
 			var container = document.createElement("div");
 			container.className = "minimized-modal-container";
 			container.setAttribute("data-modal-id", modalId);
@@ -190,9 +192,10 @@ $MultiModalScript = <<<'SCRIPT'
 			button.appendChild(label);
 			
 			container.appendChild(button);
-			bar.appendChild(container);
+			track.appendChild(container);
 			bar.style.display = "flex";
 			minimizedModals[modalId] = container;
+			if (typeof updateCarouselArrows === "function") updateCarouselArrows();
 		}
 		
 		function removeMinimizedIcon(modalId) {
@@ -202,6 +205,7 @@ $MultiModalScript = <<<'SCRIPT'
 				if (Object.keys(minimizedModals).length === 0) {
 					document.getElementById("minimized-modals-bar").style.display = "none";
 				}
+				if (typeof updateCarouselArrows === "function") updateCarouselArrows();
 			}
 		}
 SCRIPT;

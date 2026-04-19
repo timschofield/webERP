@@ -523,14 +523,45 @@ function bringModalToFront(modalId) {
 	}
 }
 
-function addMinimizedIcon(modalId, url, title) {
+function getMinimizedTrack() {
 	var bar = document.getElementById("minimized-modals-bar");
 	if (!bar) {
 		bar = document.createElement("div");
 		bar.id = "minimized-modals-bar";
 		bar.className = "minimized-modals-bar";
+		bar.innerHTML = '<button class="carousel-arrow carousel-arrow-left" id="carousel-arrow-left" onclick="scrollMinimizedBar(-1)" style="display:none;">&#8249;</button>'
+			+ '<div class="carousel-track" id="minimized-modals-track"></div>'
+			+ '<button class="carousel-arrow carousel-arrow-right" id="carousel-arrow-right" onclick="scrollMinimizedBar(1)" style="display:none;">&#8250;</button>';
 		document.body.appendChild(bar);
 	}
+	var track = document.getElementById("minimized-modals-track");
+	if (!track) {
+		track = bar;
+	}
+	return track;
+}
+
+function updateCarouselArrows() {
+	var track = document.getElementById("minimized-modals-track");
+	var leftArrow = document.getElementById("carousel-arrow-left");
+	var rightArrow = document.getElementById("carousel-arrow-right");
+	if (!track || !leftArrow || !rightArrow) return;
+
+	leftArrow.style.display = track.scrollLeft > 0 ? "flex" : "none";
+	rightArrow.style.display = (track.scrollLeft + track.clientWidth) < (track.scrollWidth - 1) ? "flex" : "none";
+}
+
+function scrollMinimizedBar(direction) {
+	var track = document.getElementById("minimized-modals-track");
+	if (!track) return;
+	var scrollAmount = 160;
+	track.scrollBy({ left: direction * scrollAmount, behavior: "smooth" });
+	setTimeout(updateCarouselArrows, 350);
+}
+
+function addMinimizedIcon(modalId, url, title) {
+	var track = getMinimizedTrack();
+	var bar = document.getElementById("minimized-modals-bar");
 	
 	var container = document.createElement("div");
 	container.className = "minimized-modal-container";
@@ -576,9 +607,10 @@ function addMinimizedIcon(modalId, url, title) {
 	button.appendChild(label);
 	
 	container.appendChild(button);
-	bar.appendChild(container);
+	track.appendChild(container);
 	bar.style.display = "flex";
 	minimizedModals[modalId] = container;
+	updateCarouselArrows();
 }
 
 function removeMinimizedIcon(modalId) {
@@ -589,6 +621,7 @@ function removeMinimizedIcon(modalId) {
 			var bar = document.getElementById("minimized-modals-bar");
 			if (bar) bar.style.display = "none";
 		}
+		updateCarouselArrows();
 	}
 }
 
@@ -702,6 +735,12 @@ function attachFormListeners() {
 document.addEventListener("DOMContentLoaded", function() {
 	attachLinkListeners();
 	attachFormListeners();
+	
+	/* Update carousel arrows when the track is scrolled by the user */
+	var track = document.getElementById("minimized-modals-track");
+	if (track) {
+		track.addEventListener("scroll", updateCarouselArrows);
+	}
 	
 	// Watch for dynamically added menus and hide them if modal is open
 	var observer = new MutationObserver(function(mutations) {

@@ -91,7 +91,11 @@ echo '<footer class="noPrint">
 		<div class="FooterVersion">webERP ', __('version'), ' ', $_SESSION['VersionNumber'], '+', $_SESSION['DBVersion'], '</div>
 		<div class="FooterTime">', DisplayDateTime(), '</div>
 	  </footer>'; // FooterDiv
-echo '<div id="minimized-modals-bar" class="minimized-modals-bar" style="display:none;"></div>';
+echo '<div id="minimized-modals-bar" class="minimized-modals-bar" style="display:none;">
+	<button class="carousel-arrow carousel-arrow-left" id="carousel-arrow-left" onclick="scrollMinimizedBar(-1)" style="display:none;">&#8249;</button>
+	<div class="carousel-track" id="minimized-modals-track"></div>
+	<button class="carousel-arrow carousel-arrow-right" id="carousel-arrow-right" onclick="scrollMinimizedBar(1)" style="display:none;">&#8250;</button>
+</div>';
 echo '</body>';
 echo '</html>';
 } // End of if (!$IsAjaxRequest)
