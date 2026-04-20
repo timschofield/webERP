@@ -1,5 +1,23 @@
 <?php
 
+/**************************************************************************************
+ * 
+ * KL RICARD: Added custom fields:
+ * Company PT
+ * Nationality
+ * Payment method
+ * Bank name
+ * Bank account
+ * Account holder
+ * Religion
+ * BPJS Tenaga Kerja
+ * BPJS Kesehatan
+ * PPH21 Zone
+ * UMK Zone
+ * 
+ **************************************************************************************/
+
+
 /* HR Employees Directory and Maintenance */
 
 require(__DIR__ . '/includes/session.php');
@@ -10,6 +28,7 @@ $BookMark = 'HREmployees';
 
 include(__DIR__ . '/includes/header.php');
 include(__DIR__ . '/includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
 echo '<p class="page_title_text">
 		<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/user.png" title="' . __('Employees') . '" /> ' .
@@ -66,6 +85,17 @@ if (isset($_POST['Submit'])) {
 					stockid = " . ($_POST['StockID'] != '' ? "'" . $_POST['StockID'] . "'" : "NULL") . ",
 					normalhours = " . (float)$_POST['NormalHours'] . ",
 					currency = " . ($_POST['Currency'] != '' ? "'" . $_POST['Currency'] . "'" : "'" . $_SESSION['CompanyRecord']['currencydefault'] . "'") . ",
+					company = '" . $_POST['Company'] . "',
+					nationality = '" . $_POST['Nationality'] . "',
+					religion = '" . $_POST['Religion'] . "',
+					paymentmethod = '" . $_POST['PaymentMethod'] . "',
+					bankcode = '" . $_POST['BankCode'] . "',
+					bankaccount = '" . $_POST['BankAccount'] . "',
+					bankaccountholder = '" . $_POST['BankAccountHolder'] . "',
+					bpjstenagakerja = '" . $_POST['BPJSTenagaKerja'] . "',
+					bpjskesehatan = '" . $_POST['BPJSKesehatan'] . "',
+					pph21zone = '" . $_POST['PPH21Zone'] . "',
+					umkzone = '" . $_POST['UMKZone'] . "',
 					userid = '" . $_POST['UserID'] . "',
 					modifiedby = '" . $_SESSION['UserID'] . "',
 					modifieddate = NOW()
@@ -105,6 +135,17 @@ if (isset($_POST['Submit'])) {
 						stockid,
 						normalhours,
 						currency,
+						company,
+						nationality,
+						religion,
+						paymentmethod,
+						bankcode,
+						bankaccount,
+						bankaccountholder,
+						bpjstenagakerja,
+						bpjskesehatan,
+						pph21zone,
+						umkzone,
 						userid,
 						createdby
 					) VALUES (
@@ -126,6 +167,17 @@ if (isset($_POST['Submit'])) {
 						" . ($_POST['StockID'] != '' ? "'" . $_POST['StockID'] . "'" : "NULL") . ",
 						" . (float)$_POST['NormalHours'] . ",
 						" . ($_POST['Currency'] != '' ? "'" . $_POST['Currency'] . "'" : "'" . $_SESSION['CompanyRecord']['currencydefault'] . "'") . ",
+						'" . $_POST['Company'] . "',
+						'" . $_POST['Nationality'] . "',
+						'" . $_POST['Religion'] . "',
+						'" . $_POST['PaymentMethod'] . "',
+						'" . $_POST['BankCode'] . "',
+						'" . $_POST['BankAccount'] . "',
+						'" . $_POST['BankAccountHolder'] . "',
+						'" . (int)$_POST['BPJSTenagaKerja'] . "',
+						'" . (int)$_POST['BPJSKesehatan'] . "',
+						'" . $_POST['PPH21Zone'] . "',
+						'" . $_POST['UMKZone'] . "',
 						'" . $_POST['UserID'] . "',
 						'" . $_SESSION['UserID'] . "'
 					)";
@@ -206,7 +258,18 @@ if (isset($SelectedEmployee)) {
 				stockid,
 				normalhours,
 				currentsalary,
-				currency
+				currency,
+				company,
+				nationality,
+				religion,
+				paymentmethod,
+				bankcode,
+				bankaccount,
+				bankaccountholder,
+				bpjstenagakerja,
+				bpjskesehatan,
+				pph21zone,
+				umkzone
 		FROM hremployees
 		WHERE employeeid = '" . $SelectedEmployee . "'";
 	$Result = DB_query($SQL);
@@ -234,6 +297,17 @@ if (isset($SelectedEmployee)) {
 	$_POST['NormalHours'] = $MyRow['normalhours'];
 	$_POST['CurrentSalary'] = $MyRow['currentsalary'];
 	$_POST['Currency'] = $MyRow['currency'];
+	$_POST['Company'] = $MyRow['company'];
+	$_POST['Nationality'] = $MyRow['nationality'];
+	$_POST['Religion'] = $MyRow['religion'];
+	$_POST['PaymentMethod'] = $MyRow['paymentmethod'];
+	$_POST['BankCode'] = $MyRow['bankcode'];
+	$_POST['BankAccount'] = $MyRow['bankaccount'];
+	$_POST['BankAccountHolder'] = $MyRow['bankaccountholder'];
+	$_POST['BPJSTenagaKerja'] = $MyRow['bpjstenagakerja'];
+	$_POST['BPJSKesehatan'] = $MyRow['bpjskesehatan'];
+	$_POST['PPH21Zone'] = $MyRow['pph21zone'];
+	$_POST['UMKZone'] = $MyRow['umkzone'];
 
 	echo '<input type="hidden" name="SelectedEmployee" value="' . $SelectedEmployee . '" />';
 	echo '<fieldset>';
@@ -259,6 +333,40 @@ if (!isset($_POST['TerminationDate'])
 	or $_POST['TerminationDate'] == '1000-01-01'
 	or $_POST['TerminationDate'] == NULL) {
 	$_POST['TerminationDate'] = '1000-01-01';
+}
+
+if (!isset($_POST['Company'])) {
+	$_POST['Company'] = 'PTADU';
+}
+if (!isset($_POST['Nationality'])) {
+	$_POST['Nationality'] = 'WNI';
+}
+if (!isset($_POST['Religion'])) {
+	$_POST['Religion'] = 'HINDU';
+}
+if (!isset($_POST['PaymentMethod'])) {
+	$_POST['PaymentMethod'] = 'BANK';
+}
+if (!isset($_POST['BankCode'])) {
+	$_POST['BankCode'] = '';
+}
+if (!isset($_POST['BankAccount'])) {
+	$_POST['BankAccount'] = '';
+}
+if (!isset($_POST['BankAccountHolder'])) {
+	$_POST['BankAccountHolder'] = '';
+}
+if (!isset($_POST['BPJSTenagaKerja'])) {
+	$_POST['BPJSTenagaKerja'] = '1';
+}
+if (!isset($_POST['BPJSKesehatan'])) {
+	$_POST['BPJSKesehatan'] = '1';
+}
+if (!isset($_POST['PPH21Zone'])) {
+	$_POST['PPH21Zone'] = '';
+}
+if (!isset($_POST['UMKZone'])) {
+	$_POST['UMKZone'] = '';
 }
 
 echo '<field>
@@ -455,6 +563,51 @@ while ($MyRow = DB_fetch_array($Result)) {
 }
 echo '</select>
 	</field>';
+
+echo '<fieldset>
+	<legend>' . __('KL Custom Employee Details') . '</legend>';
+	echo FieldToSelectFromThreeOptions('PTADU', 'PT Angin Dingin Utara', 
+									'PTSMH', 'PT Sungai Mutiara Hitam',
+									'PTBB', 'PT Bumi Biru',
+									'Company', $_POST['Company'], 'PT Company', '', '', '', true, false);
+
+	echo FieldToSelectFromTwoOptions('WNI', 'Warga Negara Indonesia', 
+									'WNA', 'Warga Negara Asing',
+									'Nationality', $_POST['Nationality'], 'Nationality', '', '', '', true, false);
+
+	echo FieldToSelectFromFiveOptions('HINDU', 'Hindu', 
+									'ISLAM', 'Islam',
+									'KRISTEN', 'Katolik / Kristen',
+									'BUDDHA', 'Buddha',
+									'OTHER', 'Other',
+									'Religion', $_POST['Religion'], 'Religion', '', '', '', true, false);
+
+	echo FieldToSelectFromThreeOptions('BANK', 'Bank Transfer', 
+									'CASH', 'Cash',
+									'CHECK', 'Check',
+									'PaymentMethod', $_POST['PaymentMethod'], 'Payment Method', '', '', '', true, false);
+
+	echo FieldToSelectOneBank('BankCode', $_POST['BankCode'], 'Bank Name', '', '', '', true, false);
+
+	echo FieldToSelectOneText('BankAccount', $_POST['BankAccount'], 20, 20, 'Bank Account Number', '', '', '', false, false);
+
+	echo FieldToSelectOneText('BankAccountHolder', $_POST['BankAccountHolder'], 50, 50, 'Bank Account Holder', '', '', '', false, false);
+
+	echo FieldToSelectFromTwoOptions('1', 'Yes', 
+									'0', 'No',
+									'BPJSTenagaKerja', $_POST['BPJSTenagaKerja'], 'BPJS Tenaga Kerja', '', '', '', true, false);
+
+	echo FieldToSelectFromTwoOptions('1', 'Yes', 
+									'0', 'No',
+									'BPJSKesehatan', $_POST['BPJSKesehatan'], 'BPJS Kesehatan', '', '', '', true, false);
+
+	echo FieldToSelectOnePPH21Zone('PPH21Zone', $_POST['PPH21Zone'], 'PPh 21 Zone', '', '', '', true, false);
+
+	echo FieldToSelectOneUMKZone('UMKZone', $_POST['UMKZone'], 'UMK Zone', '', '', '', true, false);
+
+
+
+echo '</fieldset>';
 
 echo '</fieldset>';
 
