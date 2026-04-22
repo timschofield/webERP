@@ -96,7 +96,7 @@ if (true) {
 			$Category = $Row['category'];
 			$Weight = $Row['weight'];
 			$DisplayOrder = $Row['displayorder'];
-			$Active = $Row['active'];
+			$Active = $Row['isactive'];
 		}
 	}
 
@@ -181,12 +181,12 @@ if (DB_num_rows($Result) == 0) {
 					</tr>';
 		}
 
-		echo '<tr' . (!$Row['active'] ? ' style="background-color: #f0f0f0; opacity: 0.7;"' : '') . '>
+		echo '<tr' . (!$Row['isactive'] ? ' style="background-color: #f0f0f0; opacity: 0.7;"' : '') . '>
 				<td>' . $Row['displayorder'] . '</td>
 				<td><strong>' . $Row['criterianame'] . '</strong></td>
 				<td>' . $Row['description'] . '</td>
 				<td class="number">' . number_format($Row['weight'], 1) . '%</td>
-				<td>' . ($Row['active'] ? __('Yes') : __('No')) . '</td>
+				<td>' . ($Row['isactive'] ? __('Yes') : __('No')) . '</td>
 				<td>
 					<a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?edit=' . $Row['criteriaid'] . '">' . __('Edit') . '</a> |
 					<a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?delete=1&CriteriaID=' . $Row['criteriaid'] . '" onclick="return confirm(\'' . __('Are you sure you want to delete this criteria?') . '\');">' . __('Delete') . '</a>
