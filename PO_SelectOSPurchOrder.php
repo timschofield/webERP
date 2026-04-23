@@ -417,20 +417,21 @@ else {
 						group_concat(CASE WHEN quantityord>quantityrecd THEN CONCAT(itemcode,'--',round(quantityord-quantityrecd)) ELSE '' END) as bal,
 						SUM(purchorderdetails.quantityord) AS orderitems,
 						SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
-				FROM purchorders INNER JOIN purchorderdetails
-				ON purchorders.orderno=purchorderdetails.orderno
+				FROM purchorders
+				INNER JOIN purchorderdetails
+					ON purchorders.orderno=purchorderdetails.orderno
 				INNER JOIN locationusers 
-				ON purchorders.intostocklocation=locationusers.loccode
-				AND userid='" . $_SESSION['UserID'] . "' AND canview = 1
+					ON purchorders.intostocklocation=locationusers.loccode
+					AND userid='" . $_SESSION['UserID'] . "' AND canview = 1
 				INNER JOIN suppliers
-				ON purchorders.supplierno = suppliers.supplierid
+					ON purchorders.supplierno = suppliers.supplierid
 				INNER JOIN klpostatus
-				ON klpostatus.code=purchorders.klstatus
+					ON klpostatus.code = purchorders.klstatus
 				INNER JOIN currencies
-				ON suppliers.currcode=currencies.currabrev
+					ON suppliers.currcode=currencies.currabrev
 				WHERE purchorderdetails.completed=0
-				AND suppliers.paymentterms = klpostatus.paymentterm
-				AND purchorders.orderno='" . $OrderNumber . "'
+					AND suppliers.paymentterms = klpostatus.paymentterm
+					AND purchorders.orderno='" . $OrderNumber . "'
 				GROUP BY purchorders.orderno,
 					suppliers.suppname,
 					purchorders.orddate,

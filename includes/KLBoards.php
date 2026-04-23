@@ -3192,45 +3192,31 @@ function PurchaseOrdersWrongPlannedDates($RootPath){
 				AND klpostatus.code = purchorders.klstatus
 				AND purchorderdetails.completed = 0
 				AND purchorders.status IN ('Authorised', 'Printed', 'Pending')
-				AND ( (purchorders.klstatus > '1000' AND purchorders.klstatus <= '2000'
-						AND (purchorders.deliverydate < CURRENT_DATE))
-					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '4000' AND suppliers.paymentterms = 'B1'
-						AND (purchorders.paymentdate < CURRENT_DATE))
-					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '7000' AND suppliers.paymentterms = 'B2'
-						AND (purchorders.paymentdate < CURRENT_DATE))
-					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '4000' AND suppliers.paymentterms = 'O1'
-						AND (purchorders.paymentdate < CURRENT_DATE))
-					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '4000' AND suppliers.paymentterms = 'O2'
-						AND (purchorders.paymentdate < CURRENT_DATE))
-					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '4000' AND suppliers.paymentterms = 'O3'
-						AND (purchorders.paymentdate < CURRENT_DATE))
-					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '4000' AND suppliers.paymentterms = 'O4'
-						AND (purchorders.paymentdate < CURRENT_DATE))
-					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '4000' AND suppliers.paymentterms = 'O5'
-						AND (purchorders.arrivaldate < CURRENT_DATE))
-					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5000' AND suppliers.paymentterms = 'O1'
-						AND (purchorders.shipmentdate < CURRENT_DATE))
-					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5000' AND suppliers.paymentterms = 'O2'
-						AND (purchorders.shipmentdate < CURRENT_DATE))
-					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5000' AND suppliers.paymentterms = 'O3'
-						AND (purchorders.shipmentdate < CURRENT_DATE))
-					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5000' AND suppliers.paymentterms = 'O4'
-						AND (purchorders.shipmentdate < CURRENT_DATE))
-					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5000' AND suppliers.paymentterms = 'O5'
-						AND (purchorders.shipmentdate < CURRENT_DATE))
-					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5500' AND suppliers.paymentterms = 'O1'
-						AND (purchorders.customsdate < CURRENT_DATE))
-					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5500' AND suppliers.paymentterms = 'O2'
-						AND (purchorders.customsdate < CURRENT_DATE))
-					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5500' AND suppliers.paymentterms = 'O3'
-						AND (purchorders.customsdate < CURRENT_DATE))
-					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5500' AND suppliers.paymentterms = 'O4'
-						AND (purchorders.customsdate < CURRENT_DATE))
-					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5500' AND suppliers.paymentterms = 'O5'
-						AND (purchorders.customsdate < CURRENT_DATE))
-					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '6000'
-						AND (purchorders.arrivaldate < CURRENT_DATE))
-					)
+				AND ( (purchorders.klstatus > '1000'
+						AND purchorders.klstatus <= '2000'
+						AND purchorders.deliverydate < CURRENT_DATE)
+					OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '4000' AND suppliers.paymentterms = 'B1' AND purchorders.paymentdate < CURRENT_DATE)
+					OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '7000' AND suppliers.paymentterms = 'B2' AND purchorders.paymentdate < CURRENT_DATE)
+					OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '4000' AND suppliers.paymentterms = 'O1' AND purchorders.paymentdate < CURRENT_DATE)
+					OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '4000' AND suppliers.paymentterms = 'O2' AND purchorders.paymentdate < CURRENT_DATE)
+					OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '4000' AND suppliers.paymentterms = 'O3' AND purchorders.paymentdate < CURRENT_DATE)
+					OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '4000' AND suppliers.paymentterms = 'O4' AND purchorders.paymentdate < CURRENT_DATE)
+					OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '4000' AND suppliers.paymentterms = 'O5' AND purchorders.arrivaldate < CURRENT_DATE)
+					OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '4000' AND suppliers.paymentterms = 'O6' AND purchorders.paymentdate < CURRENT_DATE)
+					OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5000' AND suppliers.paymentterms = 'O1' AND purchorders.shipmentdate < CURRENT_DATE)
+					OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5000' AND suppliers.paymentterms = 'O2' AND purchorders.shipmentdate < CURRENT_DATE)
+					OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5000' AND suppliers.paymentterms = 'O3' AND purchorders.shipmentdate < CURRENT_DATE)
+					OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5000' AND suppliers.paymentterms = 'O4' AND purchorders.shipmentdate < CURRENT_DATE)
+					OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5000' AND suppliers.paymentterms = 'O5' AND purchorders.shipmentdate < CURRENT_DATE)
+					OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5000' AND suppliers.paymentterms = 'O6' AND purchorders.shipmentdate < CURRENT_DATE)
+					OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5500' AND suppliers.paymentterms = 'O1' AND purchorders.customsdate < CURRENT_DATE)
+					OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5500' AND suppliers.paymentterms = 'O2' AND purchorders.customsdate < CURRENT_DATE)
+					OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5500' AND suppliers.paymentterms = 'O3' AND purchorders.customsdate < CURRENT_DATE)
+					OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5500' AND suppliers.paymentterms = 'O4' AND purchorders.customsdate < CURRENT_DATE)
+					OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5500' AND suppliers.paymentterms = 'O5' AND purchorders.customsdate < CURRENT_DATE)
+					OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5500' AND suppliers.paymentterms = 'O6' AND purchorders.customsdate < CURRENT_DATE)
+					OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '6000' AND purchorders.arrivaldate < CURRENT_DATE)
+				)
 				AND purchorders.arrivaldate != purchorders.orddate
 			GROUP BY purchorders.orderno
 			ORDER BY purchorders.orderno";
