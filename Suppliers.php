@@ -1141,7 +1141,7 @@ KL RICARD END we don't associate salesman (SPG) as suppliers */
 			<input type="text" name="BankAct" size="31" maxlength="30" value="' . $_POST['BankAct'] . '" />
 		</field>';
 
-	$Result = DB_query("SELECT terms, termsindicator FROM paymentterms");
+	$Result = DB_query("SELECT terms, termsindicator FROM paymentterms ORDER BY terms");
 
 	echo '<field>
 			<label for="PaymentTerms">' . __('Payment Terms') . ':</label>
