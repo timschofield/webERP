@@ -12,7 +12,6 @@
  * Religion
  * BPJS Tenaga Kerja
  * BPJS Kesehatan
- * PPH21 Zone
  * UMK Zone
  * 
  **************************************************************************************/
@@ -94,7 +93,6 @@ if (isset($_POST['Submit'])) {
 					bankaccountholder = '" . $_POST['BankAccountHolder'] . "',
 					bpjstenagakerja = '" . $_POST['BPJSTenagaKerja'] . "',
 					bpjskesehatan = '" . $_POST['BPJSKesehatan'] . "',
-					pph21zone = '" . $_POST['PPH21Zone'] . "',
 					umkzone = '" . $_POST['UMKZone'] . "',
 					userid = '" . $_POST['UserID'] . "',
 					modifiedby = '" . $_SESSION['UserID'] . "',
@@ -144,7 +142,6 @@ if (isset($_POST['Submit'])) {
 						bankaccountholder,
 						bpjstenagakerja,
 						bpjskesehatan,
-						pph21zone,
 						umkzone,
 						userid,
 						createdby
@@ -176,7 +173,6 @@ if (isset($_POST['Submit'])) {
 						'" . $_POST['BankAccountHolder'] . "',
 						'" . (int)$_POST['BPJSTenagaKerja'] . "',
 						'" . (int)$_POST['BPJSKesehatan'] . "',
-						'" . $_POST['PPH21Zone'] . "',
 						'" . $_POST['UMKZone'] . "',
 						'" . $_POST['UserID'] . "',
 						'" . $_SESSION['UserID'] . "'
@@ -268,7 +264,6 @@ if (isset($SelectedEmployee)) {
 				bankaccountholder,
 				bpjstenagakerja,
 				bpjskesehatan,
-				pph21zone,
 				umkzone
 		FROM hremployees
 		WHERE employeeid = '" . $SelectedEmployee . "'";
@@ -306,7 +301,6 @@ if (isset($SelectedEmployee)) {
 	$_POST['BankAccountHolder'] = $MyRow['bankaccountholder'];
 	$_POST['BPJSTenagaKerja'] = $MyRow['bpjstenagakerja'];
 	$_POST['BPJSKesehatan'] = $MyRow['bpjskesehatan'];
-	$_POST['PPH21Zone'] = $MyRow['pph21zone'];
 	$_POST['UMKZone'] = $MyRow['umkzone'];
 
 	echo '<input type="hidden" name="SelectedEmployee" value="' . $SelectedEmployee . '" />';
@@ -361,9 +355,6 @@ if (!isset($_POST['BPJSTenagaKerja'])) {
 }
 if (!isset($_POST['BPJSKesehatan'])) {
 	$_POST['BPJSKesehatan'] = '1';
-}
-if (!isset($_POST['PPH21Zone'])) {
-	$_POST['PPH21Zone'] = '';
 }
 if (!isset($_POST['UMKZone'])) {
 	$_POST['UMKZone'] = '';
@@ -601,11 +592,7 @@ echo '<fieldset>
 									'0', 'No',
 									'BPJSKesehatan', $_POST['BPJSKesehatan'], 'BPJS Kesehatan', '', '', '', true, false);
 
-	echo FieldToSelectOnePPH21Zone('PPH21Zone', $_POST['PPH21Zone'], 'PPh 21 Zone', '', '', '', true, false);
-
 	echo FieldToSelectOneUMKZone('UMKZone', $_POST['UMKZone'], 'UMK Zone', '', '', '', true, false);
-
-
 
 echo '</fieldset>';
 
