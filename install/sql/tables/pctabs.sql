@@ -6,7 +6,7 @@ CREATE TABLE `pctabs` (
   `tablimit` double NOT NULL,
   `assigner` varchar(100) DEFAULT NULL,
   `authorizer` varchar(100) DEFAULT NULL,
-  `authorizerexpenses` varchar(20) NOT NULL,
+  `authorizerexpenses` varchar(100) NOT NULL,
   `glaccountassignment` varchar(20) NOT NULL DEFAULT '0',
   `glaccountpcash` varchar(20) NOT NULL DEFAULT '0',
   `defaulttag` tinyint NOT NULL DEFAULT '0',
