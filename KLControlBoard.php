@@ -56,6 +56,7 @@ $NumberOfOpenShopsTotal = $NumberOfOpenShopsKL + $NumberOfOpenShopsBL + $NumberO
 ***************************************************************************************/
 
 if ($_SESSION['UserID'] == "Ricard"){
+	$KL_PurchasingManager = true;
 
 //	$NumberOfTestExecuted = CategoryItemsMissingInShops("TESTKA", "SHOPKL", $NumberOfTestExecuted, $RootPath);
 
@@ -1187,6 +1188,10 @@ if ($ProcessSection02){
 		TimeNeededForExecution("POStatusControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
+		POStatusControl("","PROCESS COO", 0, $PeriodNow, $RootPath);
+		TimeNeededForExecution("POStatusControl", $StartTime, $KL_SystemAdmin);
+		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		POStatusControl("","PAID NOT SHIPPED BY SUPPLIER", 0, $PeriodNow, $RootPath);
 		TimeNeededForExecution("POStatusControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
@@ -1195,17 +1200,15 @@ if ($ProcessSection02){
 		TimeNeededForExecution("POStatusControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		POStatusControl("","PAID NOT RECEIVED IN WANGFOONG CARGO", 0, $PeriodNow, $RootPath);
-		TimeNeededForExecution("POStatusControl", $StartTime, $KL_SystemAdmin);
-		$NumberOfTestExecuted++;
-		$StartTime = microtime(true);
 		POStatusControl("","IN AYE CARGO BUT NOT SHIPPED", 0, $PeriodNow, $RootPath);
 		TimeNeededForExecution("POStatusControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
-//		POStatusControl("","IN WANGFOONG CARGO BUT NOT SHIPPED", 0, $PeriodNow, $RootPath);
-//		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		POStatusControl("","SHIPPED IN TRANSIT", 0, $PeriodNow, $RootPath);
+		POStatusControl("","SHIPPED IN TRANSIT JKT", 0, $PeriodNow, $RootPath);
+		TimeNeededForExecution("POStatusControl", $StartTime, $KL_SystemAdmin);
+		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
+		POStatusControl("","SHIPPED IN TRANSIT BALI", 0, $PeriodNow, $RootPath);
 		TimeNeededForExecution("POStatusControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);

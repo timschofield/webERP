@@ -2527,7 +2527,8 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 									OR (purchorders.klstatus < '4000' AND suppliers.paymentterms = 'O2')
 									OR (purchorders.klstatus < '4000' AND suppliers.paymentterms = 'O3')
 									OR (purchorders.klstatus < '4000' AND suppliers.paymentterms = 'O4')
-									OR (purchorders.klstatus < '4000' AND suppliers.paymentterms = 'O5')) ";
+									OR (purchorders.klstatus < '4000' AND suppliers.paymentterms = 'O5')
+									OR (purchorders.klstatus < '4000' AND suppliers.paymentterms = 'O6')) ";
 	} elseif ($TypeOfCode == "BALI PAID BUT NOT RECEIVED IN KANTOR"){
 		$DateField1 = "paymentdate";
 		$FieldName1 = "Payment Date";
@@ -2544,6 +2545,16 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		$ShipmentAWB = '';
 		$TableTitleText = 'Bali POs delivered in kantor but not paid yet';
 		$SQLFilterKLStatus = " AND (purchorders.klstatus = '6000' AND suppliers.paymentterms = 'B2') ";
+	} elseif ($TypeOfCode == "PROCESS COO"){
+		$DateField1 = "paymentdate";
+		$FieldName1 = "Payment Date";
+		$DateField2 = "shipmentdate";
+		$FieldName2 = "Planned Shipment";
+		$ShipmentAWB = '';
+		$TableTitleText = 'Overseas POs in COO process';
+		$SQLFilterKLStatus = " AND (   (purchorders.klstatus = '3500' AND suppliers.paymentterms = 'O1')
+									OR (purchorders.klstatus = '4750' AND suppliers.paymentterms = 'O2')
+									OR (purchorders.klstatus = '3500' AND suppliers.paymentterms = 'O6')) ";
 	} elseif ($TypeOfCode == "PAID NOT SHIPPED BY SUPPLIER"){
 		$DateField1 = "paymentdate";
 		$FieldName1 = "Payment Date";
@@ -2552,7 +2563,8 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		$ShipmentAWB = '';
 		$TableTitleText = 'Overseas POs paid but not shipped directly by supplier';
 		$SQLFilterKLStatus = " AND (   (purchorders.klstatus = '4000' AND suppliers.paymentterms = 'O1')
-									OR (purchorders.klstatus = '4000' AND suppliers.paymentterms = 'O3')) ";
+									OR (purchorders.klstatus = '4000' AND suppliers.paymentterms = 'O3')
+									OR (purchorders.klstatus = '4000' AND suppliers.paymentterms = 'O6')) ";
 	} elseif ($TypeOfCode == "PAID NOT RECEIVED IN AYE CARGO"){
 		$DateField1 = "paymentdate";
 		$FieldName1 = "Payment Date";
@@ -2598,7 +2610,31 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 									OR (purchorders.klstatus = '5000' AND suppliers.paymentterms = 'O2')
 									OR (purchorders.klstatus = '5000' AND suppliers.paymentterms = 'O3')
 									OR (purchorders.klstatus = '5000' AND suppliers.paymentterms = 'O4')
-									OR (purchorders.klstatus = '5000' AND suppliers.paymentterms = 'O5')) ";
+									OR (purchorders.klstatus = '5000' AND suppliers.paymentterms = 'O5')
+									OR (purchorders.klstatus = '5000' AND suppliers.paymentterms = 'O6')) ";
+	} elseif ($TypeOfCode == "SHIPPED IN TRANSIT JKT"){
+		$DateField1 = "shipmentdate";
+		$FieldName1 = "Shipment Date";
+		$DateField2 = "customsdate";
+		$FieldName2 = "Planned Customs";
+		$ShipmentAWB = 'AWB';
+		$TableTitleText = 'Overseas POs shipped and in transit to Customs in Jakarta';
+		$SQLFilterKLStatus = " AND (   (purchorders.klstatus = '5000' AND suppliers.paymentterms = 'O1')
+									OR (purchorders.klstatus = '5000' AND suppliers.paymentterms = 'O2')
+									OR (purchorders.klstatus = '5000' AND suppliers.paymentterms = 'O6')) ";
+	} elseif ($TypeOfCode == "SHIPPED IN TRANSIT BALI"){
+		$DateField1 = "shipmentdate";
+		$FieldName1 = "Shipment Date";
+		$DateField2 = "customsdate";
+		$FieldName2 = "Planned Customs";
+		$ShipmentAWB = 'AWB';
+		$TableTitleText = 'Overseas POs shipped and in transit to Bali';
+		$SQLFilterKLStatus = " AND (   (purchorders.klstatus = '5750' AND suppliers.paymentterms = 'O1')
+									OR (purchorders.klstatus = '5750' AND suppliers.paymentterms = 'O2')
+									OR (purchorders.klstatus = '5000' AND suppliers.paymentterms = 'O3')
+									OR (purchorders.klstatus = '5000' AND suppliers.paymentterms = 'O4')
+									OR (purchorders.klstatus = '5000' AND suppliers.paymentterms = 'O5')
+									OR (purchorders.klstatus = '5750' AND suppliers.paymentterms = 'O6')) ";
 	} elseif ($TypeOfCode == "CUSTOMS CLEARANCE"){
 		$DateField1 = "customsdate";
 		$FieldName1 = "Customs Date";
@@ -2610,7 +2646,8 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 									OR (purchorders.klstatus = '5500' AND suppliers.paymentterms = 'O2')
 									OR (purchorders.klstatus = '5500' AND suppliers.paymentterms = 'O3')
 									OR (purchorders.klstatus = '5500' AND suppliers.paymentterms = 'O4')
-									OR (purchorders.klstatus = '5500' AND suppliers.paymentterms = 'O5')) ";
+									OR (purchorders.klstatus = '5500' AND suppliers.paymentterms = 'O5')
+									OR (purchorders.klstatus = '5500' AND suppliers.paymentterms = 'O6')) ";
 	} elseif ($TypeOfCode == "RECEIVED IN KANTOR"){
 		$DateField1 = "arrivaldate";
 		$FieldName1 = "Arrival Date";
@@ -2622,7 +2659,8 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 									OR (purchorders.klstatus = '6000' AND suppliers.paymentterms = 'O2')
 									OR (purchorders.klstatus = '6000' AND suppliers.paymentterms = 'O3')
 									OR (purchorders.klstatus = '6000' AND suppliers.paymentterms = 'O4')
-									OR (purchorders.klstatus = '6000' AND suppliers.paymentterms = 'O5')) ";
+									OR (purchorders.klstatus = '6000' AND suppliers.paymentterms = 'O5')
+									OR (purchorders.klstatus = '6000' AND suppliers.paymentterms = 'O6')) ";
 	} elseif ($TypeOfCode == "ARRIVING IN NEXT DAYS"){
 		$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',+$maxdays));
 		$DateField1 = "arrivaldate";
