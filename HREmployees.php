@@ -1,5 +1,22 @@
 <?php
 
+/**************************************************************************************
+ * 
+ * KL RICARD: Added custom fields:
+ * Company PT
+ * Nationality
+ * Payment method
+ * Bank name
+ * Bank account
+ * Account holder
+ * Religion
+ * BPJS Tenaga Kerja
+ * BPJS Kesehatan
+ * UMK Zone
+ * 
+ **************************************************************************************/
+
+
 /* HR Employees Directory and Maintenance */
 
 require(__DIR__ . '/includes/session.php');
@@ -9,6 +26,8 @@ $ViewTopic = 'HumanResources';
 $BookMark = 'HREmployees';
 
 include(__DIR__ . '/includes/header.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
 echo '<p class="page_title_text">
 		<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/user.png" title="' . __('Employees') . '" /> ' .
@@ -45,8 +64,15 @@ if (isset($_POST['Submit'])) {
 					middlename = '" . $_POST['MiddleName'] . "',
 					lastname = '" . $_POST['LastName'] . "',
 					hiredate = '" . FormatDateForSQL($_POST['HireDate']) . "',
-					birthdate = '" . FormatDateForSQL($_POST['BirthDate']) . "',
-					gender = '" . $_POST['Gender'] . "',
+					birthdate = '" . FormatDateForSQL($_POST['BirthDate']) . "',";
+
+		if ($_POST['EmploymentStatus'] != 'Terminated') {
+			$SQL .= " terminationdate = '1000-01-01',";
+		} elseif ($_POST['TerminationDate'] == '1000-01-01') {
+			$SQL .= " terminationdate = NOW(),";
+		}
+		
+		$SQL .=	"	gender = '" . $_POST['Gender'] . "',
 					email = '" . $_POST['Email'] . "',
 					phone = '" . $_POST['Phone'] . "',
 					departmentid = " . (int)$_POST['DepartmentID'] . ",
@@ -57,7 +83,17 @@ if (isset($_POST['Submit'])) {
 					locationid = " . (int)$_POST['LocationID'] . ",
 					stockid = " . ($_POST['StockID'] != '' ? "'" . $_POST['StockID'] . "'" : "NULL") . ",
 					normalhours = " . (float)$_POST['NormalHours'] . ",
-					currency = " . ($_POST['Currency'] != '' ? "'" . $_POST['Currency'] . "'" : "NULL") . ",
+					currency = " . ($_POST['Currency'] != '' ? "'" . $_POST['Currency'] . "'" : "'" . $_SESSION['CompanyRecord']['currencydefault'] . "'") . ",
+					company = '" . $_POST['Company'] . "',
+					nationality = '" . $_POST['Nationality'] . "',
+					religion = '" . $_POST['Religion'] . "',
+					paymentmethod = '" . $_POST['PaymentMethod'] . "',
+					bankcode = '" . $_POST['BankCode'] . "',
+					bankaccount = '" . $_POST['BankAccount'] . "',
+					bankaccountholder = '" . $_POST['BankAccountHolder'] . "',
+					bpjstenagakerja = '" . $_POST['BPJSTenagaKerja'] . "',
+					bpjskesehatan = '" . $_POST['BPJSKesehatan'] . "',
+					umkzone = '" . $_POST['UMKZone'] . "',
 					userid = '" . $_POST['UserID'] . "',
 					modifiedby = '" . $_SESSION['UserID'] . "',
 					modifieddate = NOW()
@@ -72,9 +108,9 @@ if (isset($_POST['Submit'])) {
 		// Insert new employee
 		$SQL = "SELECT COUNT(*) FROM hremployees WHERE employeenumber = '" . $_POST['EmployeeNumber'] . "'";
 		$Result = DB_query($SQL);
-		$Row = DB_fetch_row($Result);
+		$MyRow = DB_fetch_row($Result);
 
-		if ($Row[0] > 0) {
+		if ($MyRow[0] > 0) {
 			$InputError = 1;
 			prnMsg(__('An employee with this number already exists'), 'error');
 		} else {
@@ -97,6 +133,16 @@ if (isset($_POST['Submit'])) {
 						stockid,
 						normalhours,
 						currency,
+						company,
+						nationality,
+						religion,
+						paymentmethod,
+						bankcode,
+						bankaccount,
+						bankaccountholder,
+						bpjstenagakerja,
+						bpjskesehatan,
+						umkzone,
 						userid,
 						createdby
 					) VALUES (
@@ -117,7 +163,17 @@ if (isset($_POST['Submit'])) {
 						" . (int)$_POST['LocationID'] . ",
 						" . ($_POST['StockID'] != '' ? "'" . $_POST['StockID'] . "'" : "NULL") . ",
 						" . (float)$_POST['NormalHours'] . ",
-						" . ($_POST['Currency'] != '' ? "'" . $_POST['Currency'] . "'" : "NULL") . ",
+						" . ($_POST['Currency'] != '' ? "'" . $_POST['Currency'] . "'" : "'" . $_SESSION['CompanyRecord']['currencydefault'] . "'") . ",
+						'" . $_POST['Company'] . "',
+						'" . $_POST['Nationality'] . "',
+						'" . $_POST['Religion'] . "',
+						'" . $_POST['PaymentMethod'] . "',
+						'" . $_POST['BankCode'] . "',
+						'" . $_POST['BankAccount'] . "',
+						'" . $_POST['BankAccountHolder'] . "',
+						'" . (int)$_POST['BPJSTenagaKerja'] . "',
+						'" . (int)$_POST['BPJSKesehatan'] . "',
+						'" . $_POST['UMKZone'] . "',
 						'" . $_POST['UserID'] . "',
 						'" . $_SESSION['UserID'] . "'
 					)";
@@ -140,21 +196,21 @@ if (isset($_POST['Submit'])) {
 	// Check if employee has compensation records
 	$SQL = "SELECT COUNT(*) FROM hremployeecompensation WHERE employeeid = '" . $SelectedEmployee . "'";
 	$Result = DB_query($SQL);
-	$Row = DB_fetch_row($Result);
+	$MyRow = DB_fetch_row($Result);
 
-	if ($Row[0] > 0) {
+	if ($MyRow[0] > 0) {
 		$CancelDelete = 1;
-		prnMsg(__('Cannot delete this employee because there are') . ' ' . $Row[0] . ' ' . __('compensation records'), 'error');
+		prnMsg(__('Cannot delete this employee because there are') . ' ' . $MyRow[0] . ' ' . __('compensation records'), 'error');
 	}
 
 	// Check if employee has performance appraisals
 	$SQL = "SELECT COUNT(*) FROM hrperfappraisals WHERE employeeid = '" . $SelectedEmployee . "'";
 	$Result = DB_query($SQL);
-	$Row = DB_fetch_row($Result);
+	$MyRow = DB_fetch_row($Result);
 
-	if ($Row[0] > 0) {
+	if ($MyRow[0] > 0) {
 		$CancelDelete = 1;
-		prnMsg(__('Cannot delete this employee because there are') . ' ' . $Row[0] . ' ' . __('performance appraisals'), 'error');
+		prnMsg(__('Cannot delete this employee because there are') . ' ' . $MyRow[0] . ' ' . __('performance appraisals'), 'error');
 	}
 
 	if ($CancelDelete == 0) {
@@ -177,15 +233,75 @@ echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedEmployee)) {
-	$SQL = "SELECT * FROM hremployees WHERE employeeid = '" . $SelectedEmployee . "'";
+	$SQL = "SELECT employeeid,
+				employeenumber,
+				userid,
+				firstname,
+				middlename,
+				lastname,
+				hiredate,
+				terminationdate,
+				birthdate,
+				gender,
+				email,
+				phone,
+				departmentid,
+				positionid,
+				supervisorid,
+				employmentstatus,
+				employmenttype,
+				locationid,
+				stockid,
+				normalhours,
+				currentsalary,
+				currency,
+				company,
+				nationality,
+				religion,
+				paymentmethod,
+				bankcode,
+				bankaccount,
+				bankaccountholder,
+				bpjstenagakerja,
+				bpjskesehatan,
+				umkzone
+		FROM hremployees
+		WHERE employeeid = '" . $SelectedEmployee . "'";
 	$Result = DB_query($SQL);
-	$Row = DB_fetch_array($Result);
+	$MyRow = DB_fetch_array($Result);
 
-	foreach ($Row as $Key => $Value) {
-		if (!is_numeric($Key)) {
-			$_POST[$Key] = $Value;
-		}
-	}
+	$_POST['EmployeeID'] = $MyRow['employeeid'];
+	$_POST['EmployeeNumber'] = $MyRow['employeenumber'];
+	$_POST['UserID'] = $MyRow['userid'];
+	$_POST['FirstName'] = $MyRow['firstname'];
+	$_POST['MiddleName'] = $MyRow['middlename'];
+	$_POST['LastName'] = $MyRow['lastname'];
+	$_POST['HireDate'] = $MyRow['hiredate'];
+	$_POST['BirthDate'] = $MyRow['birthdate'];
+	$_POST['TerminationDate'] = $MyRow['terminationdate'];
+	$_POST['Gender'] = $MyRow['gender'];
+	$_POST['Email'] = $MyRow['email'];
+	$_POST['Phone'] = $MyRow['phone'];
+	$_POST['DepartmentID'] = $MyRow['departmentid'];
+	$_POST['PositionID'] = $MyRow['positionid'];
+	$_POST['SupervisorID'] = $MyRow['supervisorid'];
+	$_POST['EmploymentStatus'] = $MyRow['employmentstatus'];
+	$_POST['EmploymentType'] = $MyRow['employmenttype'];
+	$_POST['LocationID'] = $MyRow['locationid'];
+	$_POST['StockID'] = $MyRow['stockid'];
+	$_POST['NormalHours'] = $MyRow['normalhours'];
+	$_POST['CurrentSalary'] = $MyRow['currentsalary'];
+	$_POST['Currency'] = $MyRow['currency'];
+	$_POST['Company'] = $MyRow['company'];
+	$_POST['Nationality'] = $MyRow['nationality'];
+	$_POST['Religion'] = $MyRow['religion'];
+	$_POST['PaymentMethod'] = $MyRow['paymentmethod'];
+	$_POST['BankCode'] = $MyRow['bankcode'];
+	$_POST['BankAccount'] = $MyRow['bankaccount'];
+	$_POST['BankAccountHolder'] = $MyRow['bankaccountholder'];
+	$_POST['BPJSTenagaKerja'] = $MyRow['bpjstenagakerja'];
+	$_POST['BPJSKesehatan'] = $MyRow['bpjskesehatan'];
+	$_POST['UMKZone'] = $MyRow['umkzone'];
 
 	echo '<input type="hidden" name="SelectedEmployee" value="' . $SelectedEmployee . '" />';
 	echo '<fieldset>';
@@ -195,55 +311,98 @@ if (isset($SelectedEmployee)) {
 	echo '<legend>' . __('Add New Employee') . '</legend>';
 }
 
+if (!isset($_POST['BirthDate']) 
+	or $_POST['BirthDate'] == '1000-01-01'
+	or $_POST['BirthDate'] == NULL) {
+	$_POST['BirthDate'] = '1000-01-01';
+}
+
+if (!isset($_POST['HireDate']) 
+	or $_POST['HireDate'] == '1000-01-01'
+	or $_POST['HireDate'] == NULL) {
+	$_POST['HireDate'] = '1000-01-01';
+}
+
+if (!isset($_POST['TerminationDate']) 
+	or $_POST['TerminationDate'] == '1000-01-01'
+	or $_POST['TerminationDate'] == NULL) {
+	$_POST['TerminationDate'] = '1000-01-01';
+}
+
+if (!isset($_POST['Company'])) {
+	$_POST['Company'] = 'PTADU';
+}
+if (!isset($_POST['Nationality'])) {
+	$_POST['Nationality'] = 'WNI';
+}
+if (!isset($_POST['Religion'])) {
+	$_POST['Religion'] = 'HINDU';
+}
+if (!isset($_POST['PaymentMethod'])) {
+	$_POST['PaymentMethod'] = 'BANK';
+}
+if (!isset($_POST['BankCode'])) {
+	$_POST['BankCode'] = '';
+}
+if (!isset($_POST['BankAccount'])) {
+	$_POST['BankAccount'] = '';
+}
+if (!isset($_POST['BankAccountHolder'])) {
+	$_POST['BankAccountHolder'] = '';
+}
+if (!isset($_POST['BPJSTenagaKerja'])) {
+	$_POST['BPJSTenagaKerja'] = '1';
+}
+if (!isset($_POST['BPJSKesehatan'])) {
+	$_POST['BPJSKesehatan'] = '1';
+}
+if (!isset($_POST['UMKZone'])) {
+	$_POST['UMKZone'] = '';
+}
+
 echo '<field>
 		<label>' . __('Employee Number') . ':</label>
-		<input type="text" name="EmployeeNumber" required="required" size="20" maxlength="20" value="' . (isset($_POST['employeenumber']) ? $_POST['employeenumber'] : '') . '" />
+		<input type="text" name="EmployeeNumber" required="required" size="20" maxlength="20" value="' . (isset($_POST['EmployeeNumber']) ? $_POST['EmployeeNumber'] : '') . '" />
 	</field>';
 
 echo '<field>
 		<label>' . __('First Name') . ':</label>
-		<input type="text" name="FirstName" required="required" size="30" maxlength="50" value="' . (isset($_POST['firstname']) ? $_POST['firstname'] : '') . '" />
+		<input type="text" name="FirstName" required="required" size="30" maxlength="50" value="' . (isset($_POST['FirstName']) ? $_POST['FirstName'] : '') . '" />
 	</field>';
 
 echo '<field>
 		<label>' . __('Middle Name') . ':</label>
-		<input type="text" name="MiddleName" size="30" maxlength="50" value="' . (isset($_POST['middlename']) ? $_POST['middlename'] : '') . '" />
+		<input type="text" name="MiddleName" size="30" maxlength="50" value="' . (isset($_POST['MiddleName']) ? $_POST['MiddleName'] : '') . '" />
 	</field>';
 
 echo '<field>
 		<label>' . __('Last Name') . ':</label>
-		<input type="text" name="LastName" required="required" size="30" maxlength="50" value="' . (isset($_POST['lastname']) ? $_POST['lastname'] : '') . '" />
+		<input type="text" name="LastName" required="required" size="30" maxlength="50" value="' . (isset($_POST['LastName']) ? $_POST['LastName'] : '') . '" />
 	</field>';
 
 echo '<field>
 		<label>' . __('Email') . ':</label>
-		<input type="email" name="Email" size="40" maxlength="100" value="' . (isset($_POST['email']) ? $_POST['email'] : '') . '" />
+		<input type="email" name="Email" size="40" maxlength="100" value="' . (isset($_POST['Email']) ? $_POST['Email'] : '') . '" />
 	</field>';
 
 echo '<field>
 		<label>' . __('Phone') . ':</label>
-		<input type="tel" name="Phone" size="20" maxlength="20" value="' . (isset($_POST['phone']) ? $_POST['phone'] : '') . '" />
+		<input type="tel" name="Phone" size="20" maxlength="20" value="' . (isset($_POST['Phone']) ? $_POST['Phone'] : '') . '" />
 	</field>';
 
-echo '<field>
-		<label>' . __('Birth Date') . ':</label>
-		<input type="date" class="date" name="BirthDate" size="12" maxlength="10" value="' . (isset($_POST['birthdate']) && $_POST['birthdate'] != '0000-00-00' && $_POST['birthdate'] != '' && $_POST['birthdate'] != NULL ? ConvertSQLDate($_POST['birthdate']) : '') . '" />
-	</field>';
+echo FieldToSelectOneDate('BirthDate', $_POST['BirthDate'], __('Birth Date'), '', '', 2, true, false);
 
 echo '<field>
 		<label>' . __('Gender') . ':</label>
 		<select name="Gender" required>
 			<option value="">-</option>
-			<option value="M"' . (isset($_POST['gender']) && $_POST['gender'] == 'M' ? ' selected="selected"' : '') . '>' . __('Male') . '</option>
-			<option value="F"' . (isset($_POST['gender']) && $_POST['gender'] == 'F' ? ' selected="selected"' : '') . '>' . __('Female') . '</option>
-			<option value="Other"' . (isset($_POST['gender']) && $_POST['gender'] == 'Other' ? ' selected="selected"' : '') . '>' . __('Other') . '</option>
+			<option value="M"' . (isset($_POST['Gender']) && $_POST['Gender'] == 'M' ? ' selected="selected"' : '') . '>' . __('Male') . '</option>
+			<option value="F"' . (isset($_POST['Gender']) && $_POST['Gender'] == 'F' ? ' selected="selected"' : '') . '>' . __('Female') . '</option>
+			<option value="Other"' . (isset($_POST['Gender']) && $_POST['Gender'] == 'Other' ? ' selected="selected"' : '') . '>' . __('Other') . '</option>
 		</select>
 	</field>';
 
-echo '<field>
-		<label>' . __('Hire Date') . ':</label>
-		<input type="date" class="date" name="HireDate" required="required" size="12" maxlength="10" value="' . (isset($_POST['hiredate']) ? ConvertSQLDate($_POST['hiredate']) : date($_SESSION['DefaultDateFormat'])) . '" />
-	</field>';
+echo FieldToSelectOneDate('HireDate', $_POST['HireDate'], __('Hire Date'), '', '', 2, true, false);
 
 // Department dropdown
 echo '<field>
@@ -252,11 +411,11 @@ echo '<field>
 echo '<option value="0">' . __('None') . '</option>';
 $SQL = "SELECT departmentid, description FROM departments WHERE active = 1 ORDER BY description";
 $Result = DB_query($SQL);
-while ($Row = DB_fetch_array($Result)) {
-	if (isset($_POST['departmentid']) AND $_POST['departmentid'] == $Row['departmentid']) {
-		echo '<option selected="selected" value="' . $Row['departmentid'] . '">' . $Row['description'] . '</option>';
+while ($MyRow = DB_fetch_array($Result)) {
+	if (isset($_POST['DepartmentID']) AND $_POST['DepartmentID'] == $MyRow['departmentid']) {
+		echo '<option selected="selected" value="' . $MyRow['departmentid'] . '">' . $MyRow['description'] . '</option>';
 	} else {
-		echo '<option value="' . $Row['departmentid'] . '">' . $Row['description'] . '</option>';
+		echo '<option value="' . $MyRow['departmentid'] . '">' . $MyRow['description'] . '</option>';
 	}
 }
 echo '</select>
@@ -269,11 +428,11 @@ echo '<field>
 echo '<option value="0">' . __('None') . '</option>';
 $SQL = "SELECT positionid, positiontitle FROM hrpositions WHERE active = 1 ORDER BY positiontitle";
 $Result = DB_query($SQL);
-while ($Row = DB_fetch_array($Result)) {
-	if (isset($_POST['positionid'])AND $_POST['positionid'] == $Row['positionid']) {
-		echo '<option selected="selected" value="' . $Row['positionid'] . '">' . $Row['positiontitle'] . '</option>';
+while ($MyRow = DB_fetch_array($Result)) {
+	if (isset($_POST['PositionID'])AND $_POST['PositionID'] == $MyRow['positionid']) {
+		echo '<option selected="selected" value="' . $MyRow['positionid'] . '">' . $MyRow['positiontitle'] . '</option>';
 	} else {
-		echo '<option value="' . $Row['positionid'] . '">' . $Row['positiontitle'] . '</option>';
+		echo '<option value="' . $MyRow['positionid'] . '">' . $MyRow['positiontitle'] . '</option>';
 	}
 }
 echo '</select>
@@ -292,11 +451,11 @@ if (isset($SelectedEmployee)) {
 }
 $SQL .= " ORDER BY lastname, firstname";
 $Result = DB_query($SQL);
-while ($Row = DB_fetch_array($Result)) {
-	if (isset($_POST['supervisorid']) AND $_POST['supervisorid'] == $Row['employeeid']) {
-		echo '<option selected="selected" value="' . $Row['employeeid'] . '">' . $Row['fullname'] . '</option>';
+while ($MyRow = DB_fetch_array($Result)) {
+	if (isset($_POST['SupervisorID']) AND $_POST['SupervisorID'] == $MyRow['employeeid']) {
+		echo '<option selected="selected" value="' . $MyRow['employeeid'] . '">' . $MyRow['fullname'] . '</option>';
 	} else {
-		echo '<option value="' . $Row['employeeid'] . '">' . $Row['fullname'] . '</option>';
+		echo '<option value="' . $MyRow['employeeid'] . '">' . $MyRow['fullname'] . '</option>';
 	}
 }
 echo '</select>
@@ -305,20 +464,20 @@ echo '</select>
 echo '<field>
 		<label>' . __('Employment Status') . ':</label>
 		<select name="EmploymentStatus">
-			<option value="Active"' . (isset($_POST['employmentstatus']) && $_POST['employmentstatus'] == 'Active' ? ' selected="selected"' : '') . '>' . __('Active') . '</option>
-			<option value="Terminated"' . (isset($_POST['employmentstatus']) && $_POST['employmentstatus'] == 'Terminated' ? ' selected="selected"' : '') . '>' . __('Terminated') . '</option>
-			<option value="On Leave"' . (isset($_POST['employmentstatus']) && $_POST['employmentstatus'] == 'On Leave' ? ' selected="selected"' : '') . '>' . __('On Leave') . '</option>
-			<option value="Suspended"' . (isset($_POST['employmentstatus']) && $_POST['employmentstatus'] == 'Suspended' ? ' selected="selected"' : '') . '>' . __('Suspended') . '</option>
+			<option value="Active"' . (isset($_POST['EmploymentStatus']) && $_POST['EmploymentStatus'] == 'Active' ? ' selected="selected"' : '') . '>' . __('Active') . '</option>
+			<option value="Terminated"' . (isset($_POST['EmploymentStatus']) && $_POST['EmploymentStatus'] == 'Terminated' ? ' selected="selected"' : '') . '>' . __('Terminated') . '</option>
+			<option value="On Leave"' . (isset($_POST['EmploymentStatus']) && $_POST['EmploymentStatus'] == 'On Leave' ? ' selected="selected"' : '') . '>' . __('On Leave') . '</option>
+			<option value="Suspended"' . (isset($_POST['EmploymentStatus']) && $_POST['EmploymentStatus'] == 'Suspended' ? ' selected="selected"' : '') . '>' . __('Suspended') . '</option>
 		</select>
 	</field>';
 
 echo '<field>
 		<label>' . __('Employment Type') . ':</label>
 		<select name="EmploymentType">
-			<option value="Full-Time"' . (isset($_POST['employmenttype']) && $_POST['employmenttype'] == 'Full-Time' ? ' selected="selected"' : '') . '>' . __('Full-Time') . '</option>
-			<option value="Part-Time"' . (isset($_POST['employmenttype']) && $_POST['employmenttype'] == 'Part-Time' ? ' selected="selected"' : '') . '>' . __('Part-Time') . '</option>
-			<option value="Contract"' . (isset($_POST['employmenttype']) && $_POST['employmenttype'] == 'Contract' ? ' selected="selected"' : '') . '>' . __('Contract') . '</option>
-			<option value="Temporary"' . (isset($_POST['employmenttype']) && $_POST['employmenttype'] == 'Temporary' ? ' selected="selected"' : '') . '>' . __('Temporary') . '</option>
+			<option value="Full-Time"' . (isset($_POST['EmploymentType']) && $_POST['EmploymentType'] == 'Full-Time' ? ' selected="selected"' : '') . '>' . __('Full-Time') . '</option>
+			<option value="Part-Time"' . (isset($_POST['EmploymentType']) && $_POST['EmploymentType'] == 'Part-Time' ? ' selected="selected"' : '') . '>' . __('Part-Time') . '</option>
+			<option value="Contract"' . (isset($_POST['EmploymentType']) && $_POST['EmploymentType'] == 'Contract' ? ' selected="selected"' : '') . '>' . __('Contract') . '</option>
+			<option value="Temporary"' . (isset($_POST['EmploymentType']) && $_POST['EmploymentType'] == 'Temporary' ? ' selected="selected"' : '') . '>' . __('Temporary') . '</option>
 		</select>
 	</field>';
 
@@ -329,11 +488,11 @@ echo '<field>
 echo '<option value="0">' . __('None') . '</option>';
 $SQL = "SELECT loccode, locationname FROM locations ORDER BY locationname";
 $Result = DB_query($SQL);
-while ($Row = DB_fetch_array($Result)) {
-	if (isset($_POST['locationid']) AND $_POST['locationid'] == $Row['loccode']) {
-		echo '<option selected="selected" value="' . $Row['loccode'] . '">' . $Row['locationname'] . '</option>';
+while ($MyRow = DB_fetch_array($Result)) {
+	if (isset($_POST['LocationID']) AND $_POST['LocationID'] == $MyRow['loccode']) {
+		echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	} else {
-		echo '<option value="' . $Row['loccode'] . '">' . $Row['locationname'] . '</option>';
+		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	}
 }
 echo '</select>
@@ -346,11 +505,11 @@ echo '<field>
 echo '<option value="">' . __('None') . '</option>';
 $SQL = "SELECT stockid, description FROM stockmaster WHERE mbflag='D' ORDER BY stockid";
 $Result = DB_query($SQL);
-while ($Row = DB_fetch_array($Result)) {
-	if (isset($_POST['stockid']) AND $_POST['stockid'] == $Row['stockid']) {
-		echo '<option selected="selected" value="' . $Row['stockid'] . '">' . $Row['stockid'] . ' - ' . $Row['description'] . '</option>';
+while ($MyRow = DB_fetch_array($Result)) {
+	if (isset($_POST['StockID']) AND $_POST['StockID'] == $MyRow['stockid']) {
+		echo '<option selected="selected" value="' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . ' - ' . $MyRow['description'] . '</option>';
 	} else {
-		echo '<option value="' . $Row['stockid'] . '">' . $Row['stockid'] . ' - ' . $Row['description'] . '</option>';
+		echo '<option value="' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . ' - ' . $MyRow['description'] . '</option>';
 	}
 }
 echo '</select>
@@ -359,7 +518,7 @@ echo '</select>
 // Normal Hours
 echo '<field>
 		<label>' . __('Normal Hours/Week') . ':</label>
-		<input type="number" name="NormalHours" step="0.5" min="0" max="168" value="' . (isset($_POST['normalhours']) ? $_POST['normalhours'] : '40') . '" />
+		<input type="number" name="NormalHours" step="0.5" min="0" max="168" value="' . (isset($_POST['NormalHours']) ? $_POST['NormalHours'] : '40') . '" />
 	</field>';
 
 // Currency dropdown
@@ -369,11 +528,11 @@ echo '<field>
 echo '<option value="">' . __('None') . '</option>';
 $SQL = "SELECT currabrev, currency FROM currencies ORDER BY currency";
 $Result = DB_query($SQL);
-while ($Row = DB_fetch_array($Result)) {
-	if (isset($_POST['currency']) AND $_POST['currency'] == $Row['currabrev']) {
-		echo '<option selected="selected" value="' . $Row['currabrev'] . '">' . $Row['currency'] . ' (' . $Row['currabrev'] . ')</option>';
+while ($MyRow = DB_fetch_array($Result)) {
+	if (isset($_POST['Currency']) AND $_POST['Currency'] == $MyRow['currabrev']) {
+		echo '<option selected="selected" value="' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . ' (' . $MyRow['currabrev'] . ')</option>';
 	} else {
-		echo '<option value="' . $Row['currabrev'] . '">' . $Row['currency'] . ' (' . $Row['currabrev'] . ')</option>';
+		echo '<option value="' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . ' (' . $MyRow['currabrev'] . ')</option>';
 	}
 }
 echo '</select>
@@ -381,20 +540,61 @@ echo '</select>
 
 // User ID dropdown for linking to www_users
 echo '<field>
-		<label>' . __('System User') . ':</label>
+		<label>' . __('webERP System User') . ':</label>
 		<select name="UserID">';
 echo '<option value="">' . __('None') . '</option>';
 $SQL = "SELECT userid, realname FROM www_users ORDER BY realname";
 $Result = DB_query($SQL);
-while ($Row = DB_fetch_array($Result)) {
-	if (isset($_POST['userid']) AND $_POST['userid'] == $Row['userid']) {
-		echo '<option selected="selected" value="' . $Row['userid'] . '">' . $Row['realname'] . ' (' . $Row['userid'] . ')</option>';
+while ($MyRow = DB_fetch_array($Result)) {
+	if (isset($_POST['UserID']) AND $_POST['UserID'] == $MyRow['userid']) {
+		echo '<option selected="selected" value="' . $MyRow['userid'] . '">' . $MyRow['realname'] . ' (' . $MyRow['userid'] . ')</option>';
 	} else {
-		echo '<option value="' . $Row['userid'] . '">' . $Row['realname'] . ' (' . $Row['userid'] . ')</option>';
+		echo '<option value="' . $MyRow['userid'] . '">' . $MyRow['realname'] . ' (' . $MyRow['userid'] . ')</option>';
 	}
 }
 echo '</select>
 	</field>';
+
+echo '<fieldset>
+	<legend>' . __('KL Custom Employee Details') . '</legend>';
+	echo FieldToSelectFromThreeOptions('PTADU', 'PT Angin Dingin Utara', 
+									'PTSMH', 'PT Sungai Mutiara Hitam',
+									'PTBB', 'PT Bumi Biru',
+									'Company', $_POST['Company'], 'PT Company', '', '', '', true, false);
+
+	echo FieldToSelectFromTwoOptions('WNI', 'Warga Negara Indonesia', 
+									'WNA', 'Warga Negara Asing',
+									'Nationality', $_POST['Nationality'], 'Nationality', '', '', '', true, false);
+
+	echo FieldToSelectFromFiveOptions('HINDU', 'Hindu', 
+									'ISLAM', 'Islam',
+									'KRISTEN', 'Katolik / Kristen',
+									'BUDDHA', 'Buddha',
+									'OTHER', 'Other',
+									'Religion', $_POST['Religion'], 'Religion', '', '', '', true, false);
+
+	echo FieldToSelectFromThreeOptions('BANK', 'Bank Transfer', 
+									'CASH', 'Cash',
+									'CHECK', 'Check',
+									'PaymentMethod', $_POST['PaymentMethod'], 'Payment Method', '', '', '', true, false);
+
+	echo FieldToSelectOneBank('BankCode', $_POST['BankCode'], 'Bank Name', '', '', '', true, false);
+
+	echo FieldToSelectOneText('BankAccount', $_POST['BankAccount'], 20, 20, 'Bank Account Number', '', '', '', false, false);
+
+	echo FieldToSelectOneText('BankAccountHolder', $_POST['BankAccountHolder'], 50, 50, 'Bank Account Holder', '', '', '', false, false);
+
+	echo FieldToSelectFromTwoOptions('1', 'Yes', 
+									'0', 'No',
+									'BPJSTenagaKerja', $_POST['BPJSTenagaKerja'], 'BPJS Tenaga Kerja', '', '', '', true, false);
+
+	echo FieldToSelectFromTwoOptions('1', 'Yes', 
+									'0', 'No',
+									'BPJSKesehatan', $_POST['BPJSKesehatan'], 'BPJS Kesehatan', '', '', '', true, false);
+
+	echo FieldToSelectOneUMKZone('UMKZone', $_POST['UMKZone'], 'UMK Zone', '', '', '', true, false);
+
+echo '</fieldset>';
 
 echo '</fieldset>';
 
@@ -412,21 +612,19 @@ if (!isset($SelectedEmployee)) {
 	echo '<fieldset>
 			<legend class="search">' . __('Employee Search') . '</legend>';
 	echo '<field>
-			<th colspan="6">' . __('Search Employees') . '</th>
-		</tr>';
-	echo '<tr>
-			<td>' . __('Search') . ':</td>
+			<tr>
+			<td>' . __('Name or Number') . ':</td>
 			<td><input type="text" name="Keywords" size="20" value="' . (isset($_POST['Keywords']) ? $_POST['Keywords'] : '') . '" /></td>
 			<td>' . __('Department') . ':</td>
 			<td><select name="SearchDepartment">';
 	echo '<option value="">' . __('All') . '</option>';
 	$SQL = "SELECT departmentid, description FROM departments WHERE active = 1 ORDER BY description";
 	$Result = DB_query($SQL);
-	while ($Row = DB_fetch_array($Result)) {
-		if (isset($_POST['SearchDepartment']) AND $_POST['SearchDepartment'] == $Row['departmentid']) {
-			echo '<option selected="selected" value="' . $Row['departmentid'] . '">' . $Row['description'] . '</option>';
+	while ($MyRow = DB_fetch_array($Result)) {
+		if (isset($_POST['SearchDepartment']) AND $_POST['SearchDepartment'] == $MyRow['departmentid']) {
+			echo '<option selected="selected" value="' . $MyRow['departmentid'] . '">' . $MyRow['description'] . '</option>';
 		} else {
-			echo '<option value="' . $Row['departmentid'] . '">' . $Row['description'] . '</option>';
+			echo '<option value="' . $MyRow['departmentid'] . '">' . $MyRow['description'] . '</option>';
 		}
 	}
 	echo '</select></td>';
@@ -436,6 +634,7 @@ if (!isset($SelectedEmployee)) {
 				<option value="Active"' . (isset($_POST['SearchStatus']) && $_POST['SearchStatus'] == 'Active' ? ' selected="selected"' : '') . '>' . __('Active') . '</option>
 				<option value="Terminated"' . (isset($_POST['SearchStatus']) && $_POST['SearchStatus'] == 'Terminated' ? ' selected="selected"' : '') . '>' . __('Terminated') . '</option>
 				<option value="On Leave"' . (isset($_POST['SearchStatus']) && $_POST['SearchStatus'] == 'On Leave' ? ' selected="selected"' : '') . '>' . __('On Leave') . '</option>
+				<option value="Suspended"' . (isset($_POST['SearchStatus']) && $_POST['SearchStatus'] == 'Suspended' ? ' selected="selected"' : '') . '>' . __('Suspended') . '</option>
 			</select></td>
 		</tr>';
 	echo '<tr>
@@ -493,18 +692,18 @@ if (!isset($SelectedEmployee)) {
 			<thead>
 			<tbody>';
 
-	while ($Row = DB_fetch_array($Result)) {
+	while ($MyRow = DB_fetch_array($Result)) {
 		echo '<tr class="striped_row">
-				<td>' . str_pad($Row['employeenumber'], 6, '0', STR_PAD_LEFT) . '</td>
-				<td>' . $Row['firstname'] . ' ' . $Row['lastname'] . '</td>
-				<td>' . $Row['email'] . '</td>
-				<td>' . $Row['phone'] . '</td>
-				<td>' . $Row['description'] . '</td>
-				<td>' . $Row['positiontitle'] . '</td>
-				<td>' . $Row['employmentstatus'] . '</td>
-				<td>' . ConvertSQLDate($Row['hiredate']) . '</td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedEmployee=' . $Row['employeeid'] . '">' . __('Edit') . '</a></td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedEmployee=' . $Row['employeeid'] . '&amp;delete=yes" onclick="return confirm(\'' . __('Are you sure you wish to delete this employee?') . '\');">' . __('Delete') . '</a></td>
+				<td>' . str_pad($MyRow['employeenumber'], 6, '0', STR_PAD_LEFT) . '</td>
+				<td>' . $MyRow['firstname'] . ' ' . $MyRow['lastname'] . '</td>
+				<td>' . $MyRow['email'] . '</td>
+				<td>' . $MyRow['phone'] . '</td>
+				<td>' . $MyRow['description'] . '</td>
+				<td>' . $MyRow['positiontitle'] . '</td>
+				<td>' . $MyRow['employmentstatus'] . '</td>
+				<td>' . ConvertSQLDate($MyRow['hiredate']) . '</td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedEmployee=' . $MyRow['employeeid'] . '">' . __('Edit') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedEmployee=' . $MyRow['employeeid'] . '&amp;delete=yes" onclick="return confirm(\'' . __('Are you sure you wish to delete this employee?') . '\');">' . __('Delete') . '</a></td>
 			</tr>';
 	}
 

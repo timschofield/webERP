@@ -1,31 +1,38 @@
 form select:focus + fieldhelp, textarea:focus + fieldhelp, input:not([type=submit]):focus + fieldhelp {
-background:#B06161;
-color:#FFFFFF;
-padding:2px;
-padding-left:10px;
-border:solid 1px #000000;
-border-radius:5px;
-margin-left:2px;
-visibility:visible;
-height:auto;
-max-width:300px;
-word-wrap:normal;
-position:absolute;
+	background: #B06161;
+	color: #FFFFFF;
+	padding: 8px 12px;
+	border-radius: 8px;
+	margin-left: 10px;
+	visibility: visible;
+	height: auto;
+	max-width: 300px;
+	word-wrap: normal;
+	position: absolute;
+	display: inline-block;
+	overflow: visible;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+	z-index: 100;
+}
+
+form select:focus + fieldhelp::before, textarea:focus + fieldhelp::before, input:not([type=submit]):focus + fieldhelp::before {
+	content: '';
+	position: absolute;
+	top: 4px;
+	left: -8px;
+	border-top: 8px solid transparent;
+	border-bottom: 8px solid transparent;
+	border-right: 8px solid #B06161;
 }
 
 form select + fieldhelp, textarea + fieldhelp, input:not([type=submit]) + fieldhelp {
-padding:2px;
-border-radius:2px;
-padding-left:10px;
-margin-left:2px;
-visibility:hidden;
-height:auto;
-max-width:300px;
-word-wrap:normal;
-position:absolute;
+	padding: 0;
+	visibility: hidden;
+	height: 0;
+	overflow: hidden;
+	position: absolute;
 }
 
 @media only screen and (max-device-width:767px) {
-/* Style for new browser in a device with a rendering width less than 768px (xs - Extra small devices - Phones). */
-.field_help_text {display:none;/* Hides field help text. */}
+	.field_help_text {display:none;}
 }

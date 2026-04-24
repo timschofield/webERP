@@ -12,11 +12,16 @@ echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $The
 		__('Import Stock Items from .csv') . '" />' . ' ' .
 		__('Import Stock Items from .csv') . '</p>';
 
-// If this script is called with a file object, then the file contents are imported
-// If this script is called with the gettemplate flag, then a template file is served
-// Otherwise, a file upload form is displayed
+// If this script is called with a file object the file contents are imported.
+// If this script is called with the gettemplate flag a template file is served.
+// If neither, a file upload form is displayed.
 
-// The CSV file must be saved in a format like the template in the import module I.E. "RECVALUE","RECVALUE2". The CSV file needs ANSI encoding for the import to work properly.
+// The CSV file must be saved in a format like the template in the import module I.E. "RECVALUE","RECVALUE2".
+
+// The CSV file must be encoded in ANSI for the import to work properly (preserved "old" comment)
+// TODO should this comment be deleted? There is code below to "remove UTF-8 BOM if present"
+
+// stockitemnotes.note is type "text" (65KB = 65K 8-bit characters) but an import row is limited to 10K total bytes.
 
 $FieldHeadings = array(
 	'StockID',         	//  0 'STOCKID',
@@ -37,31 +42,31 @@ $FieldHeadings = array(
 	'TaxCat',          	// 15 'TAXCAT',
 	'DecimalPlaces',   	// 16 'DECIMALPLACES',
 	'ItemPDF',         	// 17 'ITEMPDF'
-	'note'          	// 17 'NOTE'
+	'note'          	// 18 'NOTE'
 );
 
 if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file processing
 
-	//initialize
+	// initialize
 	$FieldTarget = 19;
 	$InputError = 0;
 
-	//check file info
+	// check file info
 	$FileName = $_FILES['userfile']['name'];
 	$TempName = $_FILES['userfile']['tmp_name'];
 	$FileSize = $_FILES['userfile']['size'];
 
-	//get file handle
+	// open CSV file
 	$FileHandle = fopen($TempName, 'r');
 
-	//get the header row
-	$HeadRow = fgetcsv($FileHandle, 10000, ",",'"');  // Modified to handle " "" " enclosed csv - useful if you need to include commas in your text descriptions
-	// Remove UTF-8 BOM if present
+	// get header row from CSV file
+	$HeadRow = fgetcsv($FileHandle, 10000, ",",'"');  // support embedded commas in text strings using " "" " enclosed csv
+	// remove UTF-8 BOM if present
 	if (substr($HeadRow[0], 0, 3) === "\xef\xbb\xbf") {
 		$HeadRow[0] = substr($HeadRow[0], 3);
 	}
 
-	//check for correct number of fields
+	// check header for correct number of fields
 	if ( count($HeadRow) != count($FieldHeadings) ) {
 		prnMsg(__('File contains '. count($HeadRow). ' columns, expected '. count($FieldHeadings). '. Try downloading a new template.'),'error');
 		fclose($FileHandle);
@@ -69,7 +74,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		exit();
 	}
 
-	//test header row field name and sequence
+	// check header for correct field names and order
 	$Head = 0;
 	foreach ($HeadRow as $HeadField) {
 		if ( mb_strtoupper($HeadField) != mb_strtoupper($FieldHeadings[$Head]) ) {
@@ -81,14 +86,14 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		$Head++;
 	}
 
-	//start database transaction
+	// start database transaction
 	DB_Txn_Begin();
 
-	//loop through file rows
+	// loop to process CSV file rows
 	$Row = 1;
 	while ( ($MyRow = fgetcsv($FileHandle, 10000, ",")) !== false ) {
 
-		//check for correct number of fields
+		// check for correct number of fields
 		$FieldCount = count($MyRow);
 		if ($FieldCount != $FieldTarget){
 			prnMsg(__($FieldTarget. ' fields required, '. $FieldCount. ' fields received'),'error');
@@ -97,30 +102,42 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 			exit();
 		}
 
-		// cleanup the data (csv files often import with empty strings and such)
+		// extract StockID (exact field value without trimming)
+		// TODO should trimming be done first?
 		$StockID = mb_strtoupper($MyRow[0]);
+
+		// cleanup row fields (strip spaces, horizontal and vertical tabs, and LF, CR and NUL chars from beginning and end of field)
 		foreach ($MyRow as &$Value) {
 			$Value = trim($Value);
 		}
 
-		//first off check if the item already exists
+		// search for stockid to find if it already exists
 		$SQL = "SELECT COUNT(stockid) FROM stockmaster WHERE stockid='".$StockID."'";
 		$Result = DB_query($SQL);
 		$testrow = DB_fetch_row($Result);
-		if ($testrow[0] != 0) {
-			$InputError = 1;
-			prnMsg(__('Stock item '. $StockID. ' already exists'),'error');
+
+//      skip CSV row, update existing data or abort import if stockid exists
+		if ($testrow[0] != 0) { // stockid exists
+			if (isset($_POST['SkipExisting']) && $_POST['SkipExisting'] == 'on') { // stockid exists - SKIP
+					prnMsg(_('The stock item code') . ' ' . $StockID . ' ' . _('already exists, row is being skipped'), 'warn');
+					$Row++;    // Increment row counter for the next iteration
+					continue;  // Skip to the next iteration of the while loop
+			} elseif (isset($_POST['UpdateExisting']) && $_POST['UpdateExisting'] == 'on') { // stockid exists - UPDATE
+					prnMsg(_('The stock item code') . ' ' . $StockID . ' ' . _('already exists, existing data will be updated (TODO, skipping)'), 'warn');
+					// TODO update existing data instead of skipping import row
+					$Row++;    // Increment row counter for the next iteration
+					continue;  // Skip to the next iteration of the while loop
+			} else { // stockid exists - ABORT
+				$InputError = 1;
+				prnMsg(__('Aborting, stock item '. $StockID. ' already exists'),'error');
+				fclose($FileHandle);
+				include(__DIR__ . '/includes/footer.php');
+				exit();
+			}
 		}
 
-		//next validate inputs are sensible
-		if (!$MyRow[1] or mb_strlen($MyRow[1]) > 50 OR mb_strlen($MyRow[1])==0) {
-			$InputError = 1;
-			prnMsg(__('The stock item description must be entered and be fifty characters or less long') . '. ' . __('It cannot be a zero length string either') . ' - ' . __('a description is required'). ' ("'. implode('","',$MyRow). $stockid. '") ','error');
-		}
-		if (mb_strlen($MyRow[2])==0) {
-			$InputError = 1;
-			prnMsg(__('The stock item description cannot be a zero length string') . ' - ' . __('a long description is required'),'error');
-		}
+		// continue processing row
+		// check for sensible inputs
 		if (mb_strlen($StockID) ==0) {
 			$InputError = 1;
 			prnMsg(__('The Stock Item code cannot be empty'),'error');
@@ -129,6 +146,14 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 			$InputError = 1;
 			prnMsg(__('The stock item code cannot contain any of the following characters') . " ' & + \" \\ " . __('or a space'). " (". $StockID. ")",'error');
 			$StockID='';
+		}
+		if (!$MyRow[1] or mb_strlen($MyRow[1]) > 255 OR mb_strlen($MyRow[1])==0) {
+			$InputError = 1;
+			prnMsg(__('The stock item description must entered (max 255 characters)') . '. ' . __('It cannot be a zero length string either') . ' - ' . __('a description is required'). ' ("'. implode('","',$MyRow). $stockid. '") ','error');
+		}
+		if (mb_strlen($MyRow[2])==0) {
+			$InputError = 1;
+			prnMsg(__('The stock item long description must be entered (approx max 1000 characters') . ' - ' . __('a long description is required'),'error');
 		}
 		if (mb_strlen($MyRow[4]) >20) {
 			$InputError = 1;
@@ -170,7 +195,6 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 			$InputError = 1;
 			prnMsg(__('The item can only be serialised if there is lot control enabled already') . '. ' . __('Batch control') . ' - ' . __('with any number of items in a lot/bundle/roll is enabled when controlled is enabled') . '. ' . __('Serialised control requires that only one item is in the batch') . '. ' . __('For serialised control') . ', ' . __('both controlled and serialised must be enabled'),'error');
 		}
-
 		$mbflag = $MyRow[5];
 		if ($mbflag!='M' and $mbflag!='K' and $mbflag!='A' and $mbflag!='B' and $mbflag!='D' and $mbflag!='G') {
 			$InputError = 1;
@@ -272,12 +296,10 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 					$InputError = 1;
 					prnMsg(__($InsResult),'error');
 				}
-
 			} else { //item insert failed so set some useful error info
 				$InputError = 1;
 				prnMsg(__($InsResult),'error');
 			}
-
 		}
 
 		if ($InputError == 1) { //this row failed so exit loop
@@ -285,7 +307,6 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		}
 
 		$Row++;
-
 	}
 
 	if ($InputError == 1) { //exited loop with errors so rollback
@@ -303,23 +324,25 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	echo '<br /><br /><br />"'. implode('","',$FieldHeadings). '"<br /><br /><br />';
 
 } else { //show file upload form
+	// TODO confirm required coding for CSV file (comment at top of file claims ANSI encoding is required)
+	prnMsg(__('The CSV file must be encoded in ANSI or it may not process correctly.'), 'warn');
 
-	echo '
-		<br />
-		<a href="' . $RootPath . '/Z_ImportStocks.php?gettemplate=1">Get Import Template</a>
-		<br />
-		<br />';
+	// TODO render link for template as a button (appears as text but can hover with cursor to find actually a link)
+	echo '<a href="' . $RootPath . '/Z_ImportStocks.php?gettemplate=1">Get Import Template</a>';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" enctype="multipart/form-data">';
-    echo '<div class="centre">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />' .
-			__('Upload file') . ': <input name="userfile" type="file" />
-			<input type="submit" value="' . __('Send File') . '" />
-        </div>
+	echo '<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />' . __('Upload file') . ': <input name="userfile" type="file" />
+			<input type="submit" value="' . __('Send File') . '" />';
+
+	echo '<br/>', __('Skip Row if Stock ID Exists'), ':<input type="checkbox" name="SkipExisting" ';
+
+	echo '<br />';
+	
+	echo '<br/>', __('Update Current Data if Stock ID Exists (not yet implemented)'), ':<input type="checkbox" name="UpdateExisting" ';
+	
+	echo '</div>
 		</form>';
-
 }
-
 
 include(__DIR__ . '/includes/footer.php');

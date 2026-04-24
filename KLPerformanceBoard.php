@@ -293,46 +293,7 @@ if ($ProcessSection02){
 //		PurchaseOrdersWrongPlannedDates($RootPath);
 //		$NumberOfTestExecuted++;
 	}
-/*
-	if ($KL_SystemAdmin){
-		POStatusControl("","IN NEGOTIATION WITH SUPPLIER", 0, $PeriodNow, $RootPath);
-		$NumberOfTestExecuted++;
-		POStatusControl("PACKAGING","ON PRODUCTION", 0, $PeriodNow, $RootPath);
-		$NumberOfTestExecuted++;
-		POStatusControl("FORSALE","ON PRODUCTION", 0, $PeriodNow, $RootPath);
-		$NumberOfTestExecuted++;
-		POStatusControl("OTHERS","ON PRODUCTION", 0, $PeriodNow, $RootPath);
-		$NumberOfTestExecuted++;
-		POStatusControl("","FINISHED BUT NOT PAID", 0, $PeriodNow, $RootPath);
-		$NumberOfTestExecuted++;
-		POStatusControl("PACKAGING","STILL NOT FULLY PAID", 0, $PeriodNow, $RootPath);
-		$NumberOfTestExecuted++;
-		POStatusControl("FORSALE","STILL NOT FULLY PAID", 0, $PeriodNow, $RootPath);
-		$NumberOfTestExecuted++;
-		POStatusControl("OTHERS","STILL NOT FULLY PAID", 0, $PeriodNow, $RootPath);
-		$NumberOfTestExecuted++;
-		POStatusControl("","BALI PAID BUT NOT RECEIVED IN KANTOR", 0, $PeriodNow, $RootPath);
-		$NumberOfTestExecuted++;
-		POStatusControl("","BALI RECEIVED IN KANTOR BUT NOT PAID", 0, $PeriodNow, $RootPath);
-		$NumberOfTestExecuted++;
-		POStatusControl("","PAID NOT SHIPPED BY SUPPLIER", 0, $PeriodNow, $RootPath);
-		$NumberOfTestExecuted++;
-		POStatusControl("","PAID NOT RECEIVED IN AYE CARGO", 0, $PeriodNow, $RootPath);
-		$NumberOfTestExecuted++;
-		POStatusControl("","PAID NOT RECEIVED IN WANGFOONG CARGO", 0, $PeriodNow, $RootPath);
-		$NumberOfTestExecuted++;
-		POStatusControl("","IN AYE CARGO BUT NOT SHIPPED", 0, $PeriodNow, $RootPath);
-		$NumberOfTestExecuted++;
-		POStatusControl("","IN WANGFOONG CARGO BUT NOT SHIPPED", 0, $PeriodNow, $RootPath);
-		$NumberOfTestExecuted++;
-		POStatusControl("","SHIPPED IN TRANSIT", 0, $PeriodNow, $RootPath);
-		$NumberOfTestExecuted++;
-		POStatusControl("","CUSTOMS CLEARANCE", 0, $PeriodNow, $RootPath);
-		$NumberOfTestExecuted++;
-		POStatusControl("","RECEIVED IN KANTOR", 0, $PeriodNow, $RootPath);
-		$NumberOfTestExecuted++;
-	}
-*/	
+
 	if ($KL_SystemAdmin OR
 		$KL_GeneralAffairsManager){
 		$StartTime = microtime(true);
