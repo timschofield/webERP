@@ -4,12 +4,11 @@
  * Performance Appraisal Entry/Edit
  *
  * Allows HR managers to create new performance appraisals for employees
- * and edit existing appraisal records. Three URL modes are supported:
+ * and edit existing appraisal records. The script has two modes:
  *
- *   (no params)               -- blank form to create a new appraisal
- *   AppraisalID=N&Edit=Yes    -- edit form pre-filled from the database
- *   AppraisalID=N             -- read-only view with a link to switch to edit
- *   AppraisalID=N&Delete=1    -- delete the appraisal and redirect
+ *   (no params)         -- blank form to create a new appraisal
+ *   AppraisalID=N       -- edit form pre-filled from the database
+ *   AppraisalID=N&Delete=1 -- delete the appraisal and redirect
  */
 
 require(__DIR__ . '/includes/session.php');
@@ -37,17 +36,6 @@ echo '<a class="toplink" href="' . $RootPath . '/HRPerformanceAppraisals.php">' 
 
 /* Edit mode: an AppraisalID is present in the URL */
 $EditMode = (isset($_GET['AppraisalID']) AND (int)$_GET['AppraisalID'] > 0);
-
-/* Get appraisal frequency from system options */
-$SQL = "SELECT optionvalue
-	FROM hrsystemoptions
-	WHERE optionname = 'AppraisalFrequency'";
-$OptionsResult  = DB_query($SQL);
-$AppraisalFrequency = 365;
-if (DB_num_rows($OptionsResult) > 0) {
-	$OptionRow          = DB_fetch_array($OptionsResult);
-	$AppraisalFrequency = $OptionRow['optionvalue'];
-}
 
 /* Handle form submission (both new and edit) */
 if (isset($_POST['Submit'])) {
@@ -275,7 +263,7 @@ if ($EditMode) {
 
 /*
  * Edit appraisal section: fields pre-filled from the database.
- * Only rendered when AppraisalID and Edit=Yes are both present in the URL.
+ * Shared fields below use the $Db-prefixed variables loaded above.
  */
 
 echo '<field>

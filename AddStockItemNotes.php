@@ -2,7 +2,7 @@
 
 require(__DIR__ . '/includes/session.php');
 
-$Title = __('Customer Notes');
+$Title = __('Stock Item Notes');
 $ViewTopic = 'Inventory';
 $BookMark = 'ItemNotes';
 include(__DIR__ . '/includes/header.php');

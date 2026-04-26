@@ -10,6 +10,15 @@ $BookMark = 'HRPerformanceAppraisals';
 
 include(__DIR__ . '/includes/header.php');
 
+/* Rating labels for hrperfappraisals.overallrating (INT 1-5) */
+$RatingLabels = array(
+	5 => __('Outstanding'),
+	4 => __('Exceeds Expectations'),
+	3 => __('Meets Expectations'),
+	2 => __('Needs Improvement'),
+	1 => __('Unsatisfactory'),
+);
+
 // Get system options
 $SQL = "SELECT optionname, optionvalue FROM hrsystemoptions WHERE optionname = 'AppraisalFrequency'";
 $OptionsResult = DB_query($SQL);
@@ -18,6 +27,8 @@ if (DB_num_rows($OptionsResult) > 0) {
 	$OptionRow = DB_fetch_array($OptionsResult);
 	$AppraisalFrequency = $OptionRow['optionvalue'];
 }
+
+echo '<a class="toplink" href="' . $RootPath . '/HRAppraisalEntry.php">' . __('Create New Appraisal') . '</a>';
 
 echo '<p class="page_title_text">
 		<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/star.png" title="' . __('Performance Appraisals') . '" /> ' .
@@ -97,8 +108,6 @@ $SQL .= " ORDER BY a.duedate DESC, a.appraisalid DESC";
 
 $Result = DB_query($SQL);
 
-echo '<a class="toplink" href="' . $RootPath . '/HRAppraisalEntry.php">' . __('Create New Appraisal') . '</a>';
-
 echo '<table class="selection">
 		<thead>
 			<tr>
@@ -116,7 +125,7 @@ echo '<table class="selection">
 				<th>' . __('Status') . '</th>
 				<th>' . __('Rating') . '</th>
 				<th>' . __('Manager') . '</th>
-				<th>' . __('Actions') . '</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -136,11 +145,10 @@ if (DB_num_rows($Result) > 0) {
 				<td>' . ConvertSQLDate($MyRow['reviewperiodstart']) . ' - ' . ConvertSQLDate($MyRow['reviewperiodend']) . '</td>
 				<td>' . ConvertSQLDate($MyRow['duedate']) . '</td>
 				<td>' . htmlspecialchars($MyRow['status'], ENT_QUOTES, 'UTF-8') . '</td>
-				<td>' . ($MyRow['overallrating'] ? htmlspecialchars($MyRow['overallrating'], ENT_QUOTES, 'UTF-8') : '-') . '</td>
+				<td>' . (isset($RatingLabels[$MyRow['overallrating']]) ? htmlspecialchars($RatingLabels[$MyRow['overallrating']], ENT_QUOTES, 'UTF-8') : '-') . '</td>
 				<td>' . htmlspecialchars($MyRow['managername'], ENT_QUOTES, 'UTF-8') . '</td>
 				<td class="centre">
-					<a href="' . $RootPath . '/HRAppraisalEntry.php?AppraisalID=' . urlencode($MyRow['appraisalid']) . '">' . __('Edit') . '</a> |
-					<a href="' . $RootPath . '/HRAppraisalEntry.php?AppraisalID=' . urlencode($MyRow['appraisalid']) . '&View=1">' . __('View') . '</a>
+					<a href="' . $RootPath . '/HRAppraisalEntry.php?AppraisalID=' . urlencode($MyRow['appraisalid']) . '">' . __('Edit') . '</a>
 				</td>
 			</tr>';
 	}

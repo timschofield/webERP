@@ -22,7 +22,7 @@ echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT
 		<legend class="search">' . __('Search Employees') . '</legend>
 		<field>
 			<label for="SearchName">' . __('Employee Name') . ':</label>
-			<input type="text" name="SearchName" value="' . (isset($_POST['SearchName']) ? $_POST['SearchName'] : '') . '" />
+			<input type="text" name="SearchName" value="' . (isset($_POST['SearchName']) ? htmlspecialchars($_POST['SearchName'], ENT_QUOTES, 'UTF-8') : '') . '" />
 		</field>
 		<field>
 			<label for="SearchDepartment">' . __('Department') . ':</label>
@@ -34,7 +34,7 @@ $Result = DB_query($SQL);
 while ($Row = DB_fetch_array($Result)) {
 	echo '<option value="' . $Row['departmentid'] . '"' .
 		(isset($_POST['SearchDepartment']) && $_POST['SearchDepartment'] == $Row['departmentid'] ? ' selected="selected"' : '') .
-		'>' . $Row['description'] . '</option>';
+		'>' . htmlspecialchars($Row['description'], ENT_QUOTES, 'UTF-8') . '</option>';
 }
 
 echo '</select>
@@ -67,24 +67,26 @@ if (isset($_GET['edit'])) {
 
 		if ($InputError != 1) {
 			// Get previous salary for calculation
-			$SQL = "SELECT currentsalary FROM hremployeecompensation
+			$SQL = "SELECT basesalary
+					FROM hremployeecompensation
 					WHERE employeeid = " . $EmployeeID . "
 					ORDER BY effectivedate DESC LIMIT 1";
 			$Result = DB_query($SQL);
 			$PreviousSalary = 0;
 			if (DB_num_rows($Result) > 0) {
 				$PrevRow = DB_fetch_array($Result);
-				$PreviousSalary = $PrevRow['currentsalary'];
+				$PreviousSalary = $PrevRow['basesalary'];
 			}
 
 			$CurrentSalary = filter_var($_POST['CurrentSalary'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 			$IncreaseAmount = $CurrentSalary - $PreviousSalary;
 			$IncreasePercentage = $PreviousSalary > 0 ? (($IncreaseAmount / $PreviousSalary) * 100) : 0;
+			$ChangeReason = DB_escape_string($_POST['ChangeReason']);
 
 			$SQL = "INSERT INTO hremployeecompensation (
 						employeeid, paygradeid, paystepid,
 						basesalary,
-						effectivedate, changereason,
+						effectivedate, increaseamount, increasepercentage, notes,
 						createdby, createddate
 					) VALUES (
 						" . $EmployeeID . ",
@@ -92,7 +94,9 @@ if (isset($_GET['edit'])) {
 						" . ((int)$_POST['StepID'] > 0 ? (int)$_POST['StepID'] : 'NULL') . ",
 						" . $CurrentSalary . ",
 						'" . FormatDateForSQL($_POST['EffectiveDate']) . "',
-						'" . $_POST['ChangeReason'] . "',
+						" . $IncreaseAmount . ",
+						" . $IncreasePercentage . ",
+						'" . $ChangeReason . "',
 						'" . $_SESSION['UserID'] . "',
 						NOW()
 					)";
@@ -113,11 +117,11 @@ if (isset($_GET['edit'])) {
 	echo '<br /><form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?edit=' . $EmployeeID . '">
 			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<fieldset>
-			<legend>' . __('Add Compensation Record for') . ': ' . $EmpRow['fullname'] . '</legend>
+			<legend>' . __('Add Compensation Record for') . ': ' . htmlspecialchars($EmpRow['fullname'], ENT_QUOTES, 'UTF-8') . '</legend>
 
 			<field>
 				<label for="EffectiveDate">' . __('Effective Date') . ':</label>
-				<input type="date" name="EffectiveDate" class="date" value="' . Date($_SESSION['DefaultDateFormat']) . '" required="required" />
+				<input type="date" name="EffectiveDate" class="date" value="' . date('Y-m-d') . '" required="required" />
 			</field>
 
 			<field>
@@ -128,7 +132,7 @@ if (isset($_GET['edit'])) {
 	$SQL = "SELECT paygradeid, paygradecode, paygradename FROM hrpaygrades WHERE active = 1 ORDER BY paygradecode";
 	$Result = DB_query($SQL);
 	while ($Row = DB_fetch_array($Result)) {
-		echo '<option value="' . $Row['paygradeid'] . '">' . $Row['paygradecode'] . ' - ' . $Row['paygradename'] . '</option>';
+		echo '<option value="' . $Row['paygradeid'] . '">' . htmlspecialchars($Row['paygradecode'], ENT_QUOTES, 'UTF-8') . ' - ' . htmlspecialchars($Row['paygradename'], ENT_QUOTES, 'UTF-8') . '</option>';
 	}
 
 	echo '</select>
@@ -184,7 +188,7 @@ if (isset($_GET['view'])) {
 	$Result = DB_query($SQL);
 	$EmpRow = DB_fetch_array($Result);
 
-	echo '<br /><h3>' . __('Compensation History for') . ': ' . $EmpRow['fullname'] . ' (' . $EmpRow['employeenumber'] . ')</h3>';
+	echo '<br /><h3>' . __('Compensation History for') . ': ' . htmlspecialchars($EmpRow['fullname'], ENT_QUOTES, 'UTF-8') . ' (' . htmlspecialchars($EmpRow['employeenumber'], ENT_QUOTES, 'UTF-8') . ')</h3>';
 
 	echo '<table class="selection">
 			<tr>
@@ -211,19 +215,19 @@ if (isset($_GET['view'])) {
 		echo '<tr><td colspan="8">' . __('No compensation history found') . '</td></tr>';
 	} else {
 		while ($Row = DB_fetch_array($Result)) {
-			$SalaryDisplay = locale_number_format($Row['currentsalary'], $_SESSION['CompanyRecord']['decimalplaces']);
+			$SalaryDisplay = locale_number_format($Row['basesalary'], $_SESSION['CompanyRecord']['decimalplaces']);
 			if (!empty($Row['currencycode'])) {
-				$SalaryDisplay .= ' ' . $Row['currencycode'];
+				$SalaryDisplay .= ' ' . htmlspecialchars($Row['currencycode'], ENT_QUOTES, 'UTF-8');
 			}
 			echo '<tr class="striped_row">
 					<td>' . ConvertSQLDate($Row['effectivedate']) . '</td>
-					<td>' . $Row['gradecode'] . '</td>
-					<td>' . ($Row['stepnumber'] ? $Row['stepnumber'] : '-') . '</td>
+					<td>' . htmlspecialchars($Row['paygradecode'], ENT_QUOTES, 'UTF-8') . '</td>
+					<td>' . ($Row['stepnumber'] ? htmlspecialchars($Row['stepnumber'], ENT_QUOTES, 'UTF-8') : '-') . '</td>
 					<td class="number">' . $SalaryDisplay . '</td>
 					<td class="number">' . ($Row['increasepercentage'] ? number_format($Row['increasepercentage'], 2) . '%' : '-') . '</td>
 					<td class="number">' . ($Row['increaseamount'] ? locale_number_format($Row['increaseamount'], $_SESSION['CompanyRecord']['decimalplaces']) : '-') . '</td>
-					<td>' . $Row['changereason'] . '</td>
-					<td>' . $Row['createdby'] . '</td>
+					<td>' . htmlspecialchars($Row['notes'], ENT_QUOTES, 'UTF-8') . '</td>
+					<td>' . htmlspecialchars($Row['createdby'], ENT_QUOTES, 'UTF-8') . '</td>
 				</tr>';
 		}
 	}
@@ -237,7 +241,7 @@ $WhereClause = "e.employmentstatus = 'Active'";
 
 if (isset($_POST['Search'])) {
 	if (!empty($_POST['SearchName'])) {
-		$SearchName = $_POST['SearchName'];
+		$SearchName = DB_escape_string($_POST['SearchName']);
 		$WhereClause .= " AND (e.firstname LIKE '%" . $SearchName . "%' OR e.lastname LIKE '%" . $SearchName . "%')";
 	}
 	if (!empty($_POST['SearchDepartment'])) {
@@ -268,9 +272,11 @@ $SQL = "SELECT e.employeeid, e.employeenumber, e.firstname, e.lastname,
 		LEFT JOIN hrpositions p ON e.positionid = p.positionid
 		LEFT JOIN hremployeecompensation c ON e.employeeid = c.employeeid
 			AND c.compensationid = (
-				SELECT MAX(compensationid)
+				SELECT compensationid
 				FROM hremployeecompensation
 				WHERE employeeid = e.employeeid
+				ORDER BY effectivedate DESC, compensationid DESC
+				LIMIT 1
 			)
 		LEFT JOIN hrpaygrades g ON c.paygradeid = g.paygradeid
 		LEFT JOIN hrpaysteps s ON c.paystepid = s.paystepid
@@ -287,16 +293,16 @@ if (DB_num_rows($Result) == 0) {
 		if ($Row['basesalary']) {
 			$SalaryDisplay = locale_number_format($Row['basesalary'], $_SESSION['CompanyRecord']['decimalplaces']);
 			if (!empty($Row['currencycode'])) {
-				$SalaryDisplay .= ' ' . $Row['currencycode'];
+				$SalaryDisplay .= ' ' . htmlspecialchars($Row['currencycode'], ENT_QUOTES, 'UTF-8');
 			}
 		}
 		echo '<tr class="striped_row">
-				<td>' . $Row['employeenumber'] . '</td>
-				<td>' . $Row['firstname'] . ' ' . $Row['lastname'] . '</td>
-				<td>' . $Row['description'] . '</td>
-				<td>' . $Row['positiontitle'] . '</td>
-				<td>' . $Row['paygradecode'] . '</td>
-				<td>' . ($Row['stepnumber'] ? $Row['stepnumber'] : '-') . '</td>
+				<td>' . htmlspecialchars($Row['employeenumber'], ENT_QUOTES, 'UTF-8') . '</td>
+				<td>' . htmlspecialchars($Row['firstname'], ENT_QUOTES, 'UTF-8') . ' ' . htmlspecialchars($Row['lastname'], ENT_QUOTES, 'UTF-8') . '</td>
+				<td>' . htmlspecialchars($Row['description'], ENT_QUOTES, 'UTF-8') . '</td>
+				<td>' . htmlspecialchars($Row['positiontitle'], ENT_QUOTES, 'UTF-8') . '</td>
+				<td>' . htmlspecialchars($Row['paygradecode'], ENT_QUOTES, 'UTF-8') . '</td>
+				<td>' . ($Row['stepnumber'] ? htmlspecialchars($Row['stepnumber'], ENT_QUOTES, 'UTF-8') : '-') . '</td>
 				<td class="number">' . $SalaryDisplay . '</td>
 				<td>' . ($Row['effectivedate'] ? ConvertSQLDate($Row['effectivedate']) : '-') . '</td>
 				<td>

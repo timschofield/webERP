@@ -108,7 +108,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 		// cleanup row fields (strip spaces, horizontal and vertical tabs, and LF, CR and NUL chars from beginning and end of field)
 		foreach ($MyRow as &$Value) {
-			$Value = trim($Value);
+			$Value = DB_escape_string(trim($Value));
 		}
 
 		// search for stockid to find if it already exists
@@ -338,9 +338,9 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	echo '<br/>', __('Skip Row if Stock ID Exists'), ':<input type="checkbox" name="SkipExisting" ';
 
 	echo '<br />';
-	
+
 	echo '<br/>', __('Update Current Data if Stock ID Exists (not yet implemented)'), ':<input type="checkbox" name="UpdateExisting" ';
-	
+
 	echo '</div>
 		</form>';
 }
