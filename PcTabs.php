@@ -1,9 +1,4 @@
 <?php
-/****************************************************************
-*
-* KL RICARD : allow multiple assigners and authorizers
-*
-*****************************************************************/
 
 require(__DIR__ . '/includes/session.php');
 
@@ -69,7 +64,6 @@ if (isset($_POST['Submit'])) {
 		prnMsg(__('You must select a tax group'), 'error');
 	}
 	
-	// KL RICARD Allow multiple authorizers and assigners
 	if ($InputError == 0) {
 		$AuthorisersExpenses = '';
 		$i = 0;
@@ -95,12 +89,8 @@ if (isset($_POST['Submit'])) {
 			$i++;
 		}
 	}	
-	// KL RICARD END Allow multiple authorizers and assigners
-
-	
 
 	if (isset($SelectedTab) and $InputError != 1) {
-		// KL RICARD Allow multiple authorizers and assigners
 		$SQL = "UPDATE pctabs SET usercode = '" . $_POST['SelectUser'] . "',
 									typetabcode = '" . $_POST['SelectTabs'] . "',
 									currency = '" . $_POST['SelectCurrency'] . "',
@@ -125,7 +115,6 @@ if (isset($_POST['Submit'])) {
 			prnMsg(__('The Tab ') . ' ' . $_POST['TabCode'] . ' ' . __(' already exists'), 'error');
 		} else {
 			// Add new record on submit
-			// KL RICARD Allow multiple authorizers and assigners
 			$SQL = "INSERT INTO pctabs	(tabcode,
 							 			 usercode,
 										 typetabcode,
@@ -356,7 +345,6 @@ if (!isset($_GET['delete'])) {
 			<label for="TabLimit">', __('Limit Of Tab'), ':</label>
 			<input type="text" class="number" name="TabLimit" size="12" required="required" maxlength="11" value="', $_POST['TabLimit'], '" />
 		</field>';
-	// KL RICARD END multiple assigners and authorizers
 	echo '<field>
 			<label for="SelectAssigner">', __('Cash Assigner'), ':</label>
 			<td><select multiple="multiple" name="SelectAssigner[]">';
@@ -420,7 +408,6 @@ if (!isset($_GET['delete'])) {
 	} //end while loop get authoriser
 	echo '</select>
 		</field>';
-	// KL RICARD END multiple assigners and authorizers
 	echo '<field>
 			<label for="GLAccountCash">', __('GL Account Cash Assignment'), ':</label>
 			<select required="required" name="GLAccountCash">';

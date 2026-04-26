@@ -3,7 +3,6 @@
 /********************************************************************
 *
 * KL RICARD: Use receipt text field and PPH21 and PPH23 retention
-*			Multiple assigners, authorizers, etc.				
 *            Option to show only unauthorized expenses
 *			 Hide tax, tag and purpose fields
 *
