@@ -218,9 +218,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$SQL = "SELECT DISTINCT(pctabexpenses.codeexpense)
 			FROM pctabs, pctabexpenses
 			WHERE pctabexpenses.typetabcode = pctabs.typetabcode
-				AND (pctabs.authorizer LIKE '%" . $_SESSION['UserID'] . "%' 
+				AND (CONCAT(',', pctabs.authorizer, ',') LIKE '%," . $_SESSION['UserID'] . ",%' 
 					OR pctabs.usercode = '" . $_SESSION['UserID'] . "' 
-					OR pctabs.assigner LIKE '%" . $_SESSION['UserID'] . "%' )
+					OR CONCAT(',', pctabs.assigner, ',') LIKE '%," . $_SESSION['UserID'] . ",%' )
 			ORDER BY pctabexpenses.codeexpense";
 
 	$Result = DB_query($SQL);

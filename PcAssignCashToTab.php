@@ -155,7 +155,7 @@ if (!isset($SelectedTabs)) {
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 	$SQL = "SELECT tabcode
 			FROM pctabs
-			WHERE assigner LIKE '%" . $_SESSION['UserID'] . "%'
+			WHERE FIND_IN_SET('" . $_SESSION['UserID'] . "', REPLACE(assigner, ' ', '')) > 0
 			ORDER BY tabcode";
 	$Result = DB_query($SQL);
 	echo '<fieldset>

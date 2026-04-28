@@ -238,7 +238,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 	$SQL = "SELECT tabcode
 		FROM pctabs
-		WHERE authorizer LIKE '%" . $_SESSION['UserID'] . "%'
+		WHERE CONCAT(',', authorizer, ',') LIKE '%," . $_SESSION['UserID'] . ",%'
 		ORDER BY tabcode";
 	$Result = DB_query($SQL);
 	echo '<table class="selection">

@@ -341,9 +341,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	$SQL = "SELECT tabcode
 				FROM pctabs
-				WHERE ( authorizer LIKE '%" . $_SESSION['UserID'] . "%' 
+				WHERE ( CONCAT(',', authorizer, ',') LIKE '%," . $_SESSION['UserID'] . ",%' 
 					OR usercode = '" . $_SESSION['UserID'] . "' 
-					OR assigner LIKE '%" . $_SESSION['UserID'] . "%' )
+					OR CONCAT(',', assigner, ',') LIKE '%," . $_SESSION['UserID'] . ",%' )
 				ORDER BY tabcode";
 	$Result = DB_query($SQL);
 
