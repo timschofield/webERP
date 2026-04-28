@@ -1,11 +1,5 @@
 <?php
 
-/******************************************************************
-*
-* KL RICARD: Multiple authorizers
-*
-*******************************************************************/
-
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Authorisation of Assigned Cash');
@@ -242,12 +236,10 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	/*The option to submit was not hit so display form */
 	echo '<form method="post" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">';
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
-	// KL RICARD
 	$SQL = "SELECT tabcode
 		FROM pctabs
-		WHERE authorizer LIKE '%" . $_SESSION['UserID'] . "%'
+		WHERE CONCAT(',', authorizer, ',') LIKE '%," . $_SESSION['UserID'] . ",%'
 		ORDER BY tabcode";
-	// KL RICARD END
 	$Result = DB_query($SQL);
 	echo '<table class="selection">
 			<tr>
