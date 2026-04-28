@@ -1207,11 +1207,11 @@ if ($ProcessSection02){
 		TimeNeededForExecution("POStatusControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		POStatusControl("","SHIPPED IN TRANSIT BALI", 0, $PeriodNow, $RootPath);
+		POStatusControl("","CUSTOMS CLEARANCE", 0, $PeriodNow, $RootPath);
 		TimeNeededForExecution("POStatusControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		POStatusControl("","CUSTOMS CLEARANCE", 0, $PeriodNow, $RootPath);
+		POStatusControl("","SHIPPED IN TRANSIT BALI", 0, $PeriodNow, $RootPath);
 		TimeNeededForExecution("POStatusControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);

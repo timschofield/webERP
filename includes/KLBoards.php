@@ -2625,8 +2625,8 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 	} elseif ($TypeOfCode == "SHIPPED IN TRANSIT BALI"){
 		$DateField1 = "shipmentdate";
 		$FieldName1 = "Shipment Date";
-		$DateField2 = "customsdate";
-		$FieldName2 = "Planned Customs";
+		$DateField2 = "arrivaldate";
+		$FieldName2 = "Planned Arrival";
 		$ShipmentAWB = 'AWB';
 		$TableTitleText = 'Overseas POs shipped and in transit to Bali';
 		$SQLFilterKLStatus = " AND (   (purchorders.klstatus = '5750' AND suppliers.paymentterms = 'O1')
