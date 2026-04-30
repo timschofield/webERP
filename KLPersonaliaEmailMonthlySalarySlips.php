@@ -11,8 +11,6 @@ include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
 use Dompdf\Dompdf;
 
-include('/includes/SetDomPDFOptions.php');
-
 if (isset($_POST['submit'])) {
 	submit($_POST['Company'], $_POST['PeriodOfFile'], $_POST['SalaryType']);
 } else {
@@ -85,7 +83,7 @@ function submit($Company, $PeriodOfFile, $SalaryType) {
 				$HTML .= '</body></html>';
 				
 				// Create the PDF
-		
+				include(__DIR__ . '/includes/SetDomPDFOptions.php');
 				$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
 				$DomPDF->loadHtml($HTML);
 				$DomPDF->setPaper($_SESSION['PageSize'], 'portrait');
