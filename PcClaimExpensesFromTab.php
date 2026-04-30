@@ -363,6 +363,7 @@ if (isset($_POST['submit'])) {
 	//Delete associated taxes
 	$SQL = "DELETE FROM pcashdetailtaxes
 			WHERE pcashdetailtaxes.pccashdetail = '" . $SelectedIndex . "'";
+	$ErrMsg = __('Petty Cash taxes could not be deleted because');
 	$Result = DB_query($SQL, $ErrMsg);
 
 	//Delete expenses record
