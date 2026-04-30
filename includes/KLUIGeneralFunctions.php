@@ -140,9 +140,9 @@ function FieldToSelectOneKPI($VariableName, $SelectedValue, $Label = '', $HelpTe
 
 function FieldToSelectOneMaintenanceType($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 	$SQL = "SELECT maintenancetype,
-					description
-				FROM klmaintenancetypes 
-				ORDER BY description";
+				description
+			FROM klmaintenancetypes 
+			ORDER BY description";
 
 	$Result = DB_query($SQL);
 
