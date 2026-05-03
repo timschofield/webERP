@@ -49,6 +49,7 @@ if (isset($_POST['Submit'])) {
 						reviewercomments = '" . $_POST['ReviewerComments'] . "',
 						employeecomments = '" . $_POST['EmployeeComments'] . "',
 						nextreviewdate = " . $NextReviewDate . ",
+						scaleid = " . (isset($_POST['ScaleID']) && (int)$_POST['ScaleID'] > 0 ? (int)$_POST['ScaleID'] : 'NULL') . ",
 						modifiedby = '" . $_SESSION['UserID'] . "',
 						modifieddate = NOW()
 					WHERE reviewid = " . (int)$_POST['ReviewID'];
@@ -64,7 +65,7 @@ if (isset($_POST['Submit'])) {
 						reviewerid, overallrating, reviewtype, status,
 						strengths, areasforimprovement, goals,
 						reviewercomments, employeecomments, nextreviewdate,
-						createdby, createddate
+						scaleid, createdby, createddate
 					) VALUES (
 						" . (int)$_POST['EmployeeID'] . ",
 						'" . $ReviewDate . "',
@@ -80,6 +81,7 @@ if (isset($_POST['Submit'])) {
 						'" . $_POST['ReviewerComments'] . "',
 						'" . $_POST['EmployeeComments'] . "',
 						" . $NextReviewDate . ",
+						" . (isset($_POST['ScaleID']) && (int)$_POST['ScaleID'] > 0 ? (int)$_POST['ScaleID'] : 'NULL') . ",
 						'" . $_SESSION['UserID'] . "',
 						NOW()
 					)";
@@ -119,6 +121,7 @@ if (isset($_GET['edit']) || isset($_GET['new']) || !isset($_GET['view'])) {
 	$ReviewerComments = '';
 	$EmployeeComments = '';
 	$NextReviewDate = '';
+	$ScaleID = 0;
 
 	if ($ReviewID > 0) {
 		$SQL = "SELECT * FROM hrperformancereviews WHERE reviewid = " . $ReviewID;
@@ -139,6 +142,7 @@ if (isset($_GET['edit']) || isset($_GET['new']) || !isset($_GET['view'])) {
 			$ReviewerComments = $Row['reviewercomments'];
 			$EmployeeComments = $Row['employeecomments'];
 			$NextReviewDate = ConvertSQLDate($Row['nextreviewdate']);
+			$ScaleID = $Row['scaleid'];
 		}
 	}
 
@@ -214,6 +218,22 @@ if (isset($_GET['edit']) || isset($_GET['new']) || !isset($_GET['view'])) {
 					<option value="Mid-Year"' . ($ReviewType == 'Mid-Year' ? ' selected="selected"' : '') . '>' . __('Mid-Year') . '</option>
 					<option value="Special"' . ($ReviewType == 'Special' ? ' selected="selected"' : '') . '>' . __('Special') . '</option>
 				</select>
+			</field>
+
+			<field>
+				<label for="ScaleID">' . __('Rating Scale') . ':</label>
+				<select name="ScaleID">
+					<option value="">' . __('Select Rating Scale (Optional)') . '</option>';
+
+	$SQL = "SELECT scaleid, scalename FROM hrratingscales WHERE active = 1 ORDER BY scalename";
+	$Result = DB_query($SQL);
+	while ($Row = DB_fetch_array($Result)) {
+		echo '<option value="' . $Row['scaleid'] . '"' .
+			($ScaleID == $Row['scaleid'] ? ' selected="selected"' : '') .
+			'>' . htmlspecialchars($Row['scalename'], ENT_QUOTES, 'UTF-8') . '</option>';
+	}
+
+	echo '</select>
 			</field>
 
 			<field>
@@ -315,7 +335,7 @@ if (isset($_GET['view'])) {
 
 			<hr style="margin: 20px 0;" />
 
-			<h3>' . __('Overall Rating') . ': <span style="color: #d32f2f;">' . __($ReviewRow['overallrating']) . '</span></h3>
+			<h3>' . __('Overall Rating') . ': <span style="color: #d32f2f;">' . htmlspecialchars($ReviewRow['overallrating'], ENT_QUOTES, 'UTF-8') . '</span></h3>
 
 			<h3>' . __('Key Strengths') . '</h3>
 			<p style="white-space: pre-wrap; padding: 10px; background-color: white; border: 1px solid #ccc;">' . htmlspecialchars($ReviewRow['strengths']) . '</p>
@@ -443,7 +463,7 @@ if (!isset($_GET['view'])) {
 					<td>' . ConvertSQLDate($Row['reviewdate']) . '</td>
 					<td>' . ConvertSQLDate($Row['reviewperiodstart']) . ' to ' . ConvertSQLDate($Row['reviewperiodend']) . '</td>
 					<td>' . __($Row['reviewtype']) . '</td>
-					<td><strong>' . __($Row['overallrating']) . '</strong></td>
+					<td><strong>' . htmlspecialchars($Row['overallrating'], ENT_QUOTES, 'UTF-8') . '</strong></td>
 					<td>' . ($Row['reviewerfirstname'] ? $Row['reviewerfirstname'] . ' ' . $Row['reviewerlastname'] : '-') . '</td>
 					<td>' . __($Row['status']) . '</td>
 					<td>
