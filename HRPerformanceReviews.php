@@ -212,13 +212,15 @@ if (isset($_GET['edit']) || isset($_GET['new']) || !isset($_GET['view'])) {
 
 			<field>
 				<label for="ReviewType">' . __('Review Type') . ':</label>
-				<select name="ReviewType">
-					<option value="Annual"' . ($ReviewType == 'Annual' ? ' selected="selected"' : '') . '>' . __('Annual') . '</option>
-					<option value="Probation"' . ($ReviewType == 'Probation' ? ' selected="selected"' : '') . '>' . __('Probation') . '</option>
-					<option value="Mid-Year"' . ($ReviewType == 'Mid-Year' ? ' selected="selected"' : '') . '>' . __('Mid-Year') . '</option>
-					<option value="Special"' . ($ReviewType == 'Special' ? ' selected="selected"' : '') . '>' . __('Special') . '</option>
-				</select>
-			</field>
+								<select name="ReviewType">
+									<option value="Performance"' . ($ReviewType == 'Performance' ? ' selected="selected"' : '') . '>' . __('Performance') . '</option>
+									<option value="Probation"' . ($ReviewType == 'Probation' ? ' selected="selected"' : '') . '>' . __('Probation') . '</option>
+									<option value="Annual"' . ($ReviewType == 'Annual' ? ' selected="selected"' : '') . '>' . __('Annual') . '</option>
+									<option value="Mid-Year"' . ($ReviewType == 'Mid-Year' ? ' selected="selected"' : '') . '>' . __('Mid-Year') . '</option>
+									<option value="Project"' . ($ReviewType == 'Project' ? ' selected="selected"' : '') . '>' . __('Project') . '</option>
+								</select>
+				</field>
+
 
 			<field>
 				<label for="ScaleID">' . __('Rating Scale') . ':</label>
@@ -395,12 +397,13 @@ if (!isset($_GET['view'])) {
 					<option value="Acknowledged"' . ($FilterStatus == 'Acknowledged' ? ' selected="selected"' : '') . '>' . __('Acknowledged') . '</option>
 				</select></td>
 				<td>' . __('Review Type') . ':</td>
-				<td><select name="FilterReviewType" onchange="this.form.submit()">
-					<option value="">' . __('All Types') . '</option>
-					<option value="Annual"' . ($FilterReviewType == 'Annual' ? ' selected="selected"' : '') . '>' . __('Annual') . '</option>
-					<option value="Probation"' . ($FilterReviewType == 'Probation' ? ' selected="selected"' : '') . '>' . __('Probation') . '</option>
-					<option value="Mid-Year"' . ($FilterReviewType == 'Mid-Year' ? ' selected="selected"' : '') . '>' . __('Mid-Year') . '</option>
-					<option value="Special"' . ($FilterReviewType == 'Special' ? ' selected="selected"' : '') . '>' . __('Special') . '</option>
+				<td>				<select name="FilterReviewType" onchange="this.form.submit()">
+				<option value="">' . __('All Types') . '</option>
+				<option value="Performance"' . ($FilterReviewType == 'Performance' ? ' selected="selected"' : '') . '>' . __('Performance') . '</option>
+				<option value="Probation"' . ($FilterReviewType == 'Probation' ? ' selected="selected"' : '') . '>' . __('Probation') . '</option>
+				<option value="Annual"' . ($FilterReviewType == 'Annual' ? ' selected="selected"' : '') . '>' . __('Annual') . '</option>
+				<option value="Mid-Year"' . ($FilterReviewType == 'Mid-Year' ? ' selected="selected"' : '') . '>' . __('Mid-Year') . '</option>
+				<option value="Project"' . ($FilterReviewType == 'Project' ? ' selected="selected"' : '') . '>' . __('Project') . '</option>
 				</select></td>
 			</tr>
 			</fieldset>
