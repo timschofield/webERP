@@ -81,6 +81,7 @@ $SQL = "SELECT
 		a.duedate,
 		a.status,
 		a.overallrating,
+		a.calculatedoverallrating,
 		CONCAT(m.firstname, ' ', m.lastname) as managername
 	FROM hrperfappraisals a
 	INNER JOIN hremployees e ON a.employeeid = e.employeeid
@@ -124,6 +125,8 @@ echo '<table class="selection">
 				<th>' . __('Due Date') . '</th>
 				<th>' . __('Status') . '</th>
 				<th>' . __('Rating') . '</th>
+				<th>' . __('Calculated Rating') . '</th>
+				<th>' . __('Rating Source') . '</th>
 				<th>' . __('Manager') . '</th>
 				<th></th>
 			</tr>
@@ -133,11 +136,24 @@ echo '<table class="selection">
 if (DB_num_rows($Result) > 0) {
 	while ($MyRow = DB_fetch_array($Result)) {
 
-		// Highlight overdue appraisals
-		$RowClass = '';
-		if ($MyRow['status'] != 'Completed' && $MyRow['status'] != 'Cancelled' && $MyRow['duedate'] < date('Y-m-d')) {
-			$RowClass = ' class="warn"';
-		}
+					// Highlight overdue appraisals
+			$RowClass = '';
+
+			$CalcLabel = (isset($MyRow['calculatedoverallrating']) && isset($RatingLabels[$MyRow['calculatedoverallrating']])) ? htmlspecialchars($RatingLabels[$MyRow['calculatedoverallrating']], ENT_QUOTES, 'UTF-8') : '-';
+			$RatingSource = '-';
+			if (isset($MyRow['calculatedoverallrating']) && $MyRow['calculatedoverallrating'] !== null && $MyRow['calculatedoverallrating'] !== '') {
+				if ((int)$MyRow['calculatedoverallrating'] == (int)$MyRow['overallrating']) {
+					$RatingSource = __('Calculated');
+				} else {
+					$RatingSource = __('Manual') . ' (' . __('Calculated') . ': ' . $CalcLabel . ')';
+				}
+			}
+
+			if ($MyRow['status'] != 'Completed' && $MyRow['status'] != 'Cancelled' && $MyRow['duedate'] < date('Y-m-d')) {
+				$RowClass = ' class="warn"';
+			}
+
+
 
 		echo '<tr class="striped_row"' . $RowClass . '>
 				<td>' . $MyRow['appraisalid'] . '</td>
@@ -146,14 +162,17 @@ if (DB_num_rows($Result) > 0) {
 				<td>' . ConvertSQLDate($MyRow['duedate']) . '</td>
 				<td>' . htmlspecialchars($MyRow['status'], ENT_QUOTES, 'UTF-8') . '</td>
 				<td>' . (isset($RatingLabels[$MyRow['overallrating']]) ? htmlspecialchars($RatingLabels[$MyRow['overallrating']], ENT_QUOTES, 'UTF-8') : '-') . '</td>
+					<td>' . $CalcLabel . '</td>
+					<td>' . htmlspecialchars($RatingSource, ENT_QUOTES, 'UTF-8') . '</td>
 				<td>' . htmlspecialchars($MyRow['managername'], ENT_QUOTES, 'UTF-8') . '</td>
 				<td class="centre">
-					<a href="' . $RootPath . '/HRAppraisalEntry.php?AppraisalID=' . urlencode($MyRow['appraisalid']) . '">' . __('Edit') . '</a>
+					<a href="' . $RootPath . '/HRAppraisalEntry.php?AppraisalID=' . urlencode($MyRow['appraisalid']) . '">' . __('Edit') . '</a> |
+					<a href="' . $RootPath . '/HRAppraisalCriteriaSummary.php?AppraisalID=' . urlencode($MyRow['appraisalid']) . '">' . __('Details') . '</a>
 				</td>
 			</tr>';
 	}
 } else {
-	echo '<tr><td colspan="8" class="centre">' . __('No appraisals found') . '</td></tr>';
+	echo '<tr><td colspan="10" class="centre">' . __('No appraisals found') . '</td></tr>';
 }
 
 echo '</tbody>
