@@ -1289,20 +1289,19 @@ function AdjustPackagingItemByShop($Item, $Shop, $DaysSales, $ShowMessages, $Upd
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0) {
 		$MyRow = DB_fetch_array($Result);
-		// New RL is the daily needs x number of days to keep as RL
-		$NewRL = 0;
+		$Sales = $MyRow['Sales'] ?? 0; // Ensure we have a numeric value even if null
+		$OldRL = $MyRow['RL'];
+		$NewRL = 0; // New RL is the daily needs x number of days to keep as RL. We set it up at zero.
 		if ($DaysSales > 0) {
-			$Sales = $MyRow['Sales'] ?? 0; // Ensure we have a numeric value even if null
 			$NewRL = max(round($Sales / $DaysSales * $MyRow['rldaysforpackaging'], 0), 
 					MIN_REORDER_LEVEL_PACKAGING_ITEM_PER_SHOP);
 		} else {
 			$NewRL = MIN_REORDER_LEVEL_PACKAGING_ITEM_PER_SHOP;
 		}
-		$OldRL = $MyRow['RL'];
 		if ($NewRL != $OldRL) {
 			$Text = $Shop . ' ' . $Item . 
 				' Old RL = ' . $OldRL . 
-				' Used ' . $DaysSales . ' days = ' . ($MyRow['Sales'] ?? 0) . 
+				' Used ' . $DaysSales . ' days = ' . $Sales . 
 				' New RL = ' . $NewRL;
 			if ($ShowMessages) {
 				ShowWarningTitle($Text);
