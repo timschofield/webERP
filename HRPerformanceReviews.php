@@ -30,7 +30,7 @@ if (isset($_POST['Submit'])) {
 
 	if ($InputError != 1) {
 		$ReviewDate = FormatDateForSQL($_POST['ReviewDate']);
-		$NextReviewDate = !empty($_POST['NextReviewDate']) && is_date($_POST['NextReviewDate']) ? "'" . FormatDateForSQL($_POST['NextReviewDate']) . "'" : 'NULL';
+		$NextReviewDate = !empty($_POST['NextReviewDate']) && is_date(ConvertSQLDate($_POST['NextReviewDate'])) ? "'" . FormatDateForSQL($_POST['NextReviewDate']) . "'" : 'NULL';
 
 		if (isset($_POST['ReviewID']) && $_POST['ReviewID'] > 0) {
 			// Update existing review
@@ -146,8 +146,7 @@ if (isset($_GET['edit']) || isset($_GET['new']) || !isset($_GET['view'])) {
 		}
 	}
 
-	echo '
-			<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">
 			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<fieldset>
@@ -219,8 +218,7 @@ if (isset($_GET['edit']) || isset($_GET['new']) || !isset($_GET['view'])) {
 									<option value="Mid-Year"' . ($ReviewType == 'Mid-Year' ? ' selected="selected"' : '') . '>' . __('Mid-Year') . '</option>
 									<option value="Project"' . ($ReviewType == 'Project' ? ' selected="selected"' : '') . '>' . __('Project') . '</option>
 								</select>
-				</field>
-
+			</field>
 
 			<field>
 				<label for="ScaleID">' . __('Rating Scale') . ':</label>
