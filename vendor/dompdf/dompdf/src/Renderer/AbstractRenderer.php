@@ -514,13 +514,8 @@ abstract class AbstractRenderer
             }
 
             if ($img_w != $org_img_w || $img_h != $org_img_h) {
-                $newSrc = imagecreatetruecolor($img_w, $img_h);
-                imagealphablending($newSrc, false);
-                imagesavealpha($newSrc, true);
-                imagecopyresampled($newSrc, $src, 0, 0, 0, 0, $img_w, $img_h, imagesx($src), imagesy($src));
-                if (PHP_MAJOR_VERSION < 8) {
-                    imagedestroy($src);
-                }
+                $newSrc = imagescale($src, $img_w, $img_h);
+                imagedestroy($src);
                 $src = $newSrc;
             }
 
@@ -627,9 +622,7 @@ abstract class AbstractRenderer
                 print 'Unknown repeat!';
             }
 
-            if (PHP_MAJOR_VERSION < 8) {
-                imagedestroy($src);
-            }
+            imagedestroy($src);
 
             if ($cpdfFromGd && $this->_canvas instanceof CPDF) {
                 // Skip writing temp file as the GD object is added directly
@@ -640,9 +633,7 @@ abstract class AbstractRenderer
                 $tmpFile = "$tmpName.png";
 
                 imagepng($bg, $tmpFile);
-                if (PHP_MAJOR_VERSION < 8) {
-                    imagedestroy($bg);
-                }
+                imagedestroy($bg);
 
                 Cache::addTempImage($img, $tmpFile, $key);
             }
@@ -663,7 +654,7 @@ abstract class AbstractRenderer
             // Note: CPDF_Adapter image converts y position
             $this->_canvas->get_cpdf()->addImagePng($bg, $cpdfKey, $x, $this->_canvas->get_height() - $y - $height, $width, $height);
 
-            if (isset($bg) && PHP_MAJOR_VERSION < 8) {
+            if (isset($bg)) {
                 imagedestroy($bg);
             }
         } else {

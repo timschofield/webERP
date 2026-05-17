@@ -65,8 +65,7 @@ class Table extends AbstractFrameDecorator
         parent::__construct($frame, $dompdf);
         $this->_cellmap = new Cellmap($this);
 
-        $style = $frame->get_style();
-        if ($style->table_layout === "fixed" && $style->width !== "auto") {
+        if ($frame->get_style()->table_layout === "fixed") {
             $this->_cellmap->set_layout_fixed(true);
         }
 

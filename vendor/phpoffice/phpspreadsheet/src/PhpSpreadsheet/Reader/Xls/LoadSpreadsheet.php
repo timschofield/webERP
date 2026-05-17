@@ -2,6 +2,7 @@
 
 namespace PhpOffice\PhpSpreadsheet\Reader\Xls;
 
+use PhpOffice\PhpSpreadsheet\Cell\AddressRange;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\NamedRange;
@@ -34,10 +35,10 @@ class LoadSpreadsheet extends Xls
             $xls->spreadsheet->removeCellXfByIndex(0); // remove the default style
         }
 
-        // Read the summary information stream (containing meta data)
+        // Read the summary information stream (containing metadata)
         $xls->readSummaryInformation();
 
-        // Read the Additional document summary information stream (containing application-specific meta data)
+        // Read the Additional document summary information stream (containing application-specific metadata)
         $xls->readDocumentSummaryInformation();
 
         // total byte size of Excel data (workbook global substream + sheet substreams)
@@ -490,7 +491,7 @@ class LoadSpreadsheet extends Xls
                             // If there is no BSE Index, we will fail here and other fields are not read.
                             // Fix by checking here.
                             // TODO: Why is there no BSE Index? Is this a new Office Version? Password protected field?
-                            // More likely : a uncompatible picture
+                            // More likely: an incompatible picture
                             if (!$BSEindex) {
                                 continue 2;
                             }
@@ -654,7 +655,7 @@ class LoadSpreadsheet extends Xls
                                         if ($firstColumn == 'A' && $lastColumn == 'IV') {
                                             // then we have repeating rows
                                             $docSheet->getPageSetup()->setRowsToRepeatAtTop([$firstRow, $lastRow]);
-                                        } elseif ($firstRow == 1 && $lastRow == 65536) {
+                                        } elseif ($firstRow === 1 && $lastRow === AddressRange::MAX_ROW_XLS) {
                                             // then we have repeating columns
                                             $docSheet->getPageSetup()->setColumnsToRepeatAtLeft([$firstColumn, $lastColumn]);
                                         }

@@ -52,8 +52,10 @@ class Value
             if (!empty($worksheet) && $cell->getWorksheet()->getParentOrThrow()->getSheetByName($worksheet) === null) {
                 return false;
             }
-            [$column, $row] = Coordinate::indexesFromString($cellValue ?? '');
-            if ($column > 16384 || $row > 1048576) {
+
+            try {
+                [$column, $row] = Coordinate::indexesFromString($cellValue ?? '');
+            } catch (SpreadsheetException) {
                 return false;
             }
 
@@ -265,7 +267,7 @@ class Value
         if (is_bool($value)) {
             return (int) $value;
         }
-        if (is_string($value) && substr($value, 0, 1) === '#') {
+        if (is_string($value) && str_starts_with($value, '#')) {
             return $value;
         }
 

@@ -503,7 +503,7 @@ class AttributeTranslator
             $width = "100%";
         }
 
-        $remainder = 100 - (float)rtrim($width, "% ");
+        $remainder = 100 - (double)rtrim($width, "% ");
 
         switch ($value) {
             case "left":
