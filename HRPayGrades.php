@@ -1,4 +1,10 @@
 <?php
+/********************************************************************************
+ * 
+ * KL RICARD: 	Changed the title and labels from Annual Salary to Monthly Salary, as the amounts entered are monthly salaries, not annual.
+ * 				DB fields and SQL query continue with the webERP standard of Annual, but for us should be considered monthly.
+ * 
+ *******************************************************************************/
 
 /* HR Pay Grades & Steps Management */
 
@@ -174,17 +180,17 @@ if (!isset($_GET['steps'])) {
 			</field>
 
 			<field>
-				<label for="MinAnnualSalary">' . __('Minimum Annual Salary') . ':</label>
+				<label for="MinAnnualSalary">' . __('Minimum Monthly Salary') . ':</label>
 				<input type="number" name="MinAnnualSalary" value="' . $MinAnnualSalary . '" step="0.01" />
 			</field>
 
 			<field>
-				<label for="MidAnnualSalary">' . __('Mid Annual Salary') . ':</label>
+				<label for="MidAnnualSalary">' . __('Mid Monthly Salary') . ':</label>
 				<input type="number" name="MidAnnualSalary" value="' . $MidAnnualSalary . '" step="0.01" />
 			</field>
 
 			<field>
-				<label for="MaxAnnualSalary">' . __('Maximum Annual Salary') . ':</label>
+				<label for="MaxAnnualSalary">' . __('Maximum Monthly Salary') . ':</label>
 				<input type="number" name="MaxAnnualSalary" value="' . $MaxAnnualSalary . '" step="0.01" />
 			</field>
 
