@@ -152,7 +152,7 @@ if ($AllowCompanySelectionBox != 'Hide') {
 				echo '<li class="option" id="' . $CompanyEntry . '" ><img id="optionlogo" src="companies/' . $CompanyEntry . '/logo.jpg" /><span id="optionlabel">', $CompanyInfo['name'], '</span></li>';
 			}
 		} else {
-			echo '<li class="option" id="' . $CompanyEntry . '" ><span style="top:0px" id="optionlabel">', $CompanyInfo['name'], '</span></li>';
+			echo '<li class="option" id="' . $CompanyEntry . '" ><img id="optionlogo" style="display:none" src="companies/' . $CompanyEntry . '/logo.png" /><span style="top:0px" id="optionlabel">', $CompanyInfo['name'], '</span></li>';
 		}
 	}
 
