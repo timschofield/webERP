@@ -10,6 +10,15 @@ $BookMark = 'HRMyAppraisals';
 
 include(__DIR__ . '/includes/header.php');
 
+/* Rating labels for hrperfappraisals.overallrating (INT 1-5) */
+$RatingLabels = array(
+	5 => __('Outstanding'),
+	4 => __('Exceeds Expectations'),
+	3 => __('Meets Expectations'),
+	2 => __('Needs Improvement'),
+	1 => __('Unsatisfactory'),
+);
+
 echo '<a class="toplink" href="' . $RootPath . '/HRDashboard.php">' . __('Return to HR Dashboard') . '</a>';
 
 echo '<p class="page_title_text">
@@ -76,10 +85,10 @@ if (DB_num_rows($Result) > 0) {
 				<td>' . ConvertSQLDate($MyRow['reviewperiodstart']) . ' - ' . ConvertSQLDate($MyRow['reviewperiodend']) . '</td>
 				<td>' . ConvertSQLDate($MyRow['duedate']) . '</td>
 				<td>' . htmlspecialchars($MyRow['status'], ENT_QUOTES, 'UTF-8') . '</td>
-				<td>' . ($MyRow['overallrating'] ? htmlspecialchars($MyRow['overallrating'], ENT_QUOTES, 'UTF-8') : '-') . '</td>
+				<td>' . (isset($RatingLabels[$MyRow['overallrating']]) ? htmlspecialchars($RatingLabels[$MyRow['overallrating']], ENT_QUOTES, 'UTF-8') : '-') . '</td>
 				<td>' . htmlspecialchars($MyRow['managername'], ENT_QUOTES, 'UTF-8') . '</td>
 				<td class="centre">
-					<a href="' . $RootPath . '/HRAppraisalEntry.php?AppraisalID=' . urlencode($MyRow['appraisalid']) . '&View=1">' . __('View') . '</a>
+					<a href="' . $RootPath . '/HRAppraisalEntry.php?AppraisalID=' . urlencode($MyRow['appraisalid']) . '">' . __('Edit') . '</a>
 				</td>
 			</tr>';
 
