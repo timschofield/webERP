@@ -1,7 +1,7 @@
 <?php
 
 /*
- * sql/updates/79.php
+ * sql/updates/62.php
  * Add hrperfcriteriascores table and appraisal fields for Phase 1 of Issue #918
  */
 
@@ -22,7 +22,7 @@ CreateTable('hrperfcriteriascores', "CREATE TABLE `hrperfcriteriascores` (
 	UNIQUE KEY `unique_appraisal_criteria` (`appraisalid`, `criteriaid`),
 	KEY `idx_appraisal` (`appraisalid`),
 	KEY `idx_criteria` (`criteriaid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
 
 /* Add optional performancetemplateid to hrperfappraisals if missing */
 $Result = DB_query("SHOW COLUMNS FROM `hrperfappraisals` LIKE 'performancetemplateid'");
@@ -38,4 +38,8 @@ if (DB_num_rows($Result) == 0) {
 	$SQL = "ALTER TABLE `hrperfappraisals` ADD COLUMN `calculatedoverallrating` INT(11) DEFAULT NULL AFTER `overallrating`";
 	$ErrMsg = __('Adding calculatedoverallrating to hrperfappraisals failed');
 	$Result = DB_query($SQL, $ErrMsg);
+}
+
+if ($_SESSION['Updates']['Errors'] == 0) {
+	UpdateDBNo(basename(__FILE__, '.php'), __('Add hrperfcriteriascores table and appraisal fields for Phase 1 of Issue #918'));
 }
