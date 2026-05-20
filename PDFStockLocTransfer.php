@@ -58,6 +58,14 @@ if (isset($_GET['TransferNo'])) {
 	table { border-collapse: collapse; width: 100%; }
 	th, td { border: 1px solid #000; padding: 4px; text-align: left; }
 	th { background-color: #eee; }
+	.signature-section { margin-top: 35px; width: 100%; }
+	.signature-table { border-collapse: collapse; width: 100%; }
+	.signature-table td { border: none; vertical-align: top; padding-right: 18px; width: 33.33%; }
+	.signature-title { font-size: 9pt; font-weight: bold; margin-bottom: 10px; }
+	.signature-row { margin-bottom: 10px; white-space: nowrap; }
+	.signature-label { display: inline-block; min-width: 40px; }
+	.signature-line { display: inline-block; border-bottom: 1px solid #000; min-width: 120px; height: 10px; }
+	.signature-row.signature-signature { margin-top: 26px; }
 </style>';
 	$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
 	$HTML .= '<img class="logo" src="' . $_SESSION['LogoFile'] . '" /><br />';
@@ -85,6 +93,34 @@ $HTML .= '<h2>' . __('Inventory Location Transfer') . ' #' . htmlspecialchars($_
 ' . __('Receive Location') . ': ' . htmlspecialchars($transfers[0]['reclocname']) . '<br>
 ' . __('Transfer Reference') . ': ' . htmlspecialchars($transfers[0]['reference']) . '<br>
 ' . __('Date') . ': ' . htmlspecialchars($transfers[0]['shipdate']) . '</p>';
+
+	$HTML .= '<div class="signature-section">
+	<table class="signature-table">
+		<tr>
+			<td>
+				<div class="signature-title">' . __('Prepared By :') . '</div>
+				<div class="signature-row"><span class="signature-label">' . __('Name') . '</span><span>: </span><span class="signature-line"></span></div>
+				<div class="signature-row"><span class="signature-label">' . __('Date') . '</span><span>: </span><span class="signature-line"></span></div>
+				<div class="signature-row"><span class="signature-label">' . __('Hour') . '</span><span>: </span><span class="signature-line"></span></div>
+				<div class="signature-row signature-signature"><span class="signature-label">' . __('Signature') . '</span><span>: </span><span class="signature-line"></span></div>
+			</td>
+			<td>
+				<div class="signature-title">' . __('Shipped By :') . '</div>
+				<div class="signature-row"><span class="signature-label">' . __('Name') . '</span><span>: </span><span class="signature-line"></span></div>
+				<div class="signature-row"><span class="signature-label">' . __('Date') . '</span><span>: </span><span class="signature-line"></span></div>
+				<div class="signature-row"><span class="signature-label">' . __('Hour') . '</span><span>: </span><span class="signature-line"></span></div>
+				<div class="signature-row signature-signature"><span class="signature-label">' . __('Signature') . '</span><span>: </span><span class="signature-line"></span></div>
+			</td>
+			<td>
+				<div class="signature-title">' . __('Received By :') . '</div>
+				<div class="signature-row"><span class="signature-label">' . __('Name') . '</span><span>: </span><span class="signature-line"></span></div>
+				<div class="signature-row"><span class="signature-label">' . __('Date') . '</span><span>: </span><span class="signature-line"></span></div>
+				<div class="signature-row"><span class="signature-label">' . __('Hour') . '</span><span>: </span><span class="signature-line"></span></div>
+				<div class="signature-row signature-signature"><span class="signature-label">' . __('Signature') . '</span><span>: </span><span class="signature-line"></span></div>
+			</td>
+		</tr>
+	</table>
+</div>';
 
 	// Generate PDF using DomPDF
 	// Setup DomPDF
