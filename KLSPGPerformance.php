@@ -35,7 +35,6 @@ if ($KL_SystemAdmin
 }
 	
 if ($KL_SystemAdmin 
-	OR $KL_GeneralAffairsManager 
 	OR $KL_SalesTeamManager
 	OR $KL_ShopManager) {
 
@@ -53,10 +52,11 @@ if ($KL_SystemAdmin
 	
 if ($KL_SystemAdmin 
 	OR $KL_GeneralAffairsManager 
-	OR $KL_SalesTeamManager) {
+	OR $KL_SalesTeamManager
+	OR $KL_ShopManager) {
 		
-	HourlySales(15, $RootPath);
-	$NumberOfTestExecuted++;
+//	HourlySales(15, $RootPath);
+//	$NumberOfTestExecuted++;
 	HourlySales(30, $RootPath);
 	$NumberOfTestExecuted++;
 	
