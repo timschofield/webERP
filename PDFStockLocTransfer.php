@@ -61,7 +61,7 @@ if (isset($_GET['TransferNo'])) {
 </style>';
 	$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
 	$HTML .= '<img class="logo" src="' . $_SESSION['LogoFile'] . '" /><br />';
-$HTML .= '<h2>' . __('Inventory Location Transfer BOL') . ' #' . htmlspecialchars($_GET['TransferNo']) . '</h2>
+$HTML .= '<h2>' . __('Inventory Location Transfer') . ' #' . htmlspecialchars($_GET['TransferNo']) . '</h2>
 <table>
 	<tr>
 		<th>' . __('Stock ID') . '</th>
@@ -93,7 +93,7 @@ $HTML .= '<h2>' . __('Inventory Location Transfer BOL') . ' #' . htmlspecialchar
 	$DomPDF->loadHtml($HTML);
 
 	// (Optional) Setup the paper size and orientation
-	$DomPDF->setPaper($_SESSION['PageSize'], 'landscape');
+	$DomPDF->setPaper($_SESSION['PageSize'], 'portrait');
 
 	// Render the HTML as PDF
 	$DomPDF->render();
