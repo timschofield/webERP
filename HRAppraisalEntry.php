@@ -19,6 +19,8 @@ $BookMark  = 'AppraisalEntry';
 
 include(__DIR__ . '/includes/header.php');
 
+require_once(__DIR__ . '/includes/HRPerformanceHelper.php');
+
 /*
  * Rating labels map the integer stored in hrperfappraisals.overallrating (INT)
  * to human-readable labels. 5 = highest, 1 = lowest, keyed in descending order
@@ -103,6 +105,21 @@ if (isset($_POST['Submit'])) {
 			DB_query($SQL, __('Failed to update appraisal'));
 			prnMsg(__('Appraisal has been updated'), 'success');
 
+			/* Process per-criterion scores submitted from the form */
+			if (isset($_POST['CriteriaRating']) && is_array($_POST['CriteriaRating'])) {
+				foreach ($_POST['CriteriaRating'] as $cid => $rating) {
+					$comments = isset($_POST['CriteriaComments'][$cid]) ? $_POST['CriteriaComments'][$cid] : '';
+					SaveCriteriaScoreAdvanced($AppraisalID, (int)$cid, $rating === '' ? null : (int)$rating, $comments);
+				}
+				$calc = CalculateWeightedScoreForAppraisal($AppraisalID);
+				$SQL = "UPDATE hrperfappraisals SET calculatedoverallrating = " . (isset($calc['mappedrating']) && $calc['mappedrating'] !== null ? (int)$calc['mappedrating'] : 'NULL') . " WHERE appraisalid = " . $AppraisalID;
+				DB_query($SQL);
+				if (isset($_POST['UseCalculatedRating']) && $_POST['UseCalculatedRating']) {
+					$SQL = "UPDATE hrperfappraisals SET overallrating = " . (isset($calc['mappedrating']) && $calc['mappedrating'] !== null ? (int)$calc['mappedrating'] : 'NULL') . " WHERE appraisalid = " . $AppraisalID;
+					DB_query($SQL);
+				}
+			}
+
 		} else {
 
 			/* Insert new record */
@@ -129,6 +146,21 @@ if (isset($_POST['Submit'])) {
 				)";
 			DB_query($SQL, __('Failed to create appraisal'));
 			$AppraisalID = DB_Last_Insert_ID('hrperfappraisals', 'appraisalid');
+
+			/* Process per-criterion scores submitted from the form for the newly created appraisal */
+			if (isset($_POST['CriteriaRating']) && is_array($_POST['CriteriaRating'])) {
+				foreach ($_POST['CriteriaRating'] as $cid => $rating) {
+					$comments = isset($_POST['CriteriaComments'][$cid]) ? $_POST['CriteriaComments'][$cid] : '';
+					SaveCriteriaScoreAdvanced($AppraisalID, (int)$cid, $rating === '' ? null : (int)$rating, $comments);
+				}
+				$calc = CalculateWeightedScoreForAppraisal($AppraisalID);
+				$SQL = "UPDATE hrperfappraisals SET calculatedoverallrating = " . (isset($calc['mappedrating']) && $calc['mappedrating'] !== null ? (int)$calc['mappedrating'] : 'NULL') . " WHERE appraisalid = " . $AppraisalID;
+				DB_query($SQL);
+				if (isset($_POST['UseCalculatedRating']) && $_POST['UseCalculatedRating']) {
+					$SQL = "UPDATE hrperfappraisals SET overallrating = " . (isset($calc['mappedrating']) && $calc['mappedrating'] !== null ? (int)$calc['mappedrating'] : 'NULL') . " WHERE appraisalid = " . $AppraisalID;
+					DB_query($SQL);
+				}
+			}
 			prnMsg(__('Appraisal has been created'), 'success');
 			echo '<p class="centre">
 					<a href="' . $RootPath . '/HRAppraisalEntry.php?AppraisalID=' . $AppraisalID . '">' . __('Continue editing this appraisal') . '</a>
@@ -142,9 +174,12 @@ if (isset($_GET['Delete']) AND isset($_GET['AppraisalID'])) {
 
 	$AppraisalID = (int)$_GET['AppraisalID'];
 
-	/* Delete related goal assessments before removing the appraisal header */
+	/* Delete related goal assessments and criterion scores before removing the appraisal header */
 	$SQL = "DELETE FROM hrperfgoals WHERE appraisalid = " . $AppraisalID;
 	DB_query($SQL);
+
+	/* Delete per-appraisal criterion scores */
+	DeleteAppraisalCriteria($AppraisalID);
 
 	$SQL = "DELETE FROM hrperfappraisals WHERE appraisalid = " . $AppraisalID;
 	DB_query($SQL);
@@ -187,6 +222,10 @@ if (isset($_GET['AppraisalID'])) {
 	$DbStatus            = $MyRow['status'];
 	$DbOverallRating     = $MyRow['overallrating'];
 	$DbComments          = $MyRow['comments'];
+
+	/* Load criteria and scores for this appraisal */
+	$Criteria = GetAppraisalCriteria($AppraisalID);
+	$DbCriteriaScores = GetCriteriaScores($AppraisalID);
 } else {
 	$DbEmployeeName      = '';
 	$DbEmployeeNumber    = '';
@@ -197,6 +236,10 @@ if (isset($_GET['AppraisalID'])) {
 	$DbStatus            = '';
 	$DbOverallRating     = '';
 	$DbComments          = '';
+
+	/* Load criteria for new appraisal (no scores yet) */
+	$Criteria = GetAppraisalCriteria();
+	$DbCriteriaScores = array();
 }
 
 /* Page title varies by mode */
@@ -326,6 +369,45 @@ echo '<field>
 
 echo '</fieldset>';
 
+/* Performance criteria scoring */
+echo '<fieldset>
+		<legend>' . __('Performance Criteria Scores') . '</legend>';
+
+echo '<table class="selection">
+		<tr>
+			<th>' . __('Criteria') . '</th>
+			<th>' . __('Weight') . '</th>
+			<th>' . __('Rating') . '</th>
+			<th>' . __('Comments') . '</th>
+		</tr>';
+
+if (!empty($Criteria)) {
+	foreach ($Criteria as $cid => $c) {
+		$existingRating = isset($DbCriteriaScores[$cid]) ? $DbCriteriaScores[$cid]['rating'] : '';
+		$existingComments = isset($DbCriteriaScores[$cid]) ? $DbCriteriaScores[$cid]['comments'] : '';
+		echo '<tr data-criteriaid="' . $cid . '" data-weight="' . $c['weight'] . '">';
+		echo '<td>' . htmlspecialchars($c['criterianame'], ENT_QUOTES, 'UTF-8') . '</td>';
+		echo '<td class="number">' . number_format($c['weight'], 1) . '%<input type="hidden" name="CriteriaWeight[' . $cid . ']" value="' . $c['weight'] . '" /></td>';
+		echo '<td><select name="CriteriaRating[' . $cid . ']" class="criteria-rating"><option value="">' . __('Not Rated') . '</option>';
+		foreach ($RatingLabels as $rv => $rl) {
+			echo '<option value="' . $rv . '"' . ($existingRating == $rv ? ' selected' : '') . '>' . $rl . '</option>';
+		}
+		echo '</select></td>';
+		echo '<td><input type="text" name="CriteriaComments[' . $cid . ']" value="' . htmlspecialchars($existingComments, ENT_QUOTES, 'UTF-8') . '" size="50" /></td>';
+		echo '</tr>';
+	}
+} else {
+	echo '<tr><td colspan="4">' . __('No active performance criteria defined. Please define criteria first.') . '</td></tr>';
+}
+
+echo '</table>';
+
+echo '<p><strong>' . __('Calculated Weighted Score') . ':</strong> <span id="weightedScoreDisplay">N/A</span> ' . __('Mapped Rating') . ': <span id="mappedRatingDisplay">N/A</span></p>';
+
+echo '<p><label><input type="checkbox" name="UseCalculatedRating" value="1" /> ' . __('Use calculated rating as overall rating') . '</label></p>';
+
+echo '</fieldset>';
+
 if ($EditMode) {
 	echo '<div class="centre">
 		<input type="submit" name="Submit" value="' . __('Update Appraisal') . '" />
@@ -336,5 +418,6 @@ if ($EditMode) {
 	</div>';
 }
 echo '</form>';
+	echo '<script src="' . $RootPath . '/javascripts/HRAppraisalScoring.js"></script>';
 
 include(__DIR__ . '/includes/footer.php');

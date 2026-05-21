@@ -173,13 +173,7 @@ abstract class AbstractFrameDecorator extends Frame
             $node->removeAttribute("id");
         }
 
-        $deco = Factory::decorate_frame($frame, $this->_dompdf, $this->_root);
-
-        if ($this instanceof Text) {
-            $deco->trailingWs = $this->trailingWs;
-        }
-
-        return $deco;
+        return Factory::decorate_frame($frame, $this->_dompdf, $this->_root);
     }
 
     /**
@@ -202,10 +196,6 @@ abstract class AbstractFrameDecorator extends Frame
         }
 
         $deco = Factory::decorate_frame($frame, $this->_dompdf, $this->_root);
-
-        if ($this instanceof Text) {
-            $deco->trailingWs = $this->trailingWs;
-        }
 
         foreach ($this->get_children() as $child) {
             $deco->append_child($child->deep_copy());

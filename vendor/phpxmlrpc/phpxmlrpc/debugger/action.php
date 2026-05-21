@@ -15,7 +15,7 @@ header('Content-Type: text/html; charset=utf-8');
 <html lang="en">
 <head>
     <link rel="icon" type="image/vnd.microsoft.icon" href="favicon.ico">
-    <title><?php if (defined('DEFAULT_WSTYPE') && (DEFAULT_WSTYPE == 1 || DEFAULT_WSTYPE == 2)) echo 'JSON-RPC'; else echo 'XML-RPC'; ?> Debugger</title>
+    <title><?php if (defined('DEFAULT_WSTYPE') && DEFAULT_WSTYPE == 1) echo 'JSON-RPC'; else echo 'XML-RPC'; ?> Debugger</title>
     <meta name="robots" content="index,nofollow"/>
     <style type="text/css">
         <!--
@@ -78,10 +78,6 @@ header('Content-Type: text/html; charset=utf-8');
 <body>
 <?php
 
-global $inputcharset, $debug, $protocol, $run, $hasjsonrpcclient, $hasjsonrpc2, $wstype, $id, $host, $port, $path, $action,
-       $method, $methodsig, $payload, $alt_payload, $username, $password, $authtype, $verifyhost, $verifypeer, $cainfo, $proxy,
-       $proxyuser, $proxypwd, $timeout, $requestcompression, $responsecompression, $clientcookies;
-
 include __DIR__ . '/common.php';
 
 if ($action) {
@@ -104,19 +100,13 @@ if ($action) {
             set_time_limit($timeout + 10);
         }
 
-        if ($wstype == 1 || $wstype == 2) {
+        if ($wstype == 1) {
             $clientClass = '\PhpXmlRpc\JsonRpc\Client';
             $requestClass = '\PhpXmlRpc\JsonRpc\Request';
-            if ($hasjsonrpc2) {
-                $notificationClass = '\PhpXmlRpc\JsonRpc\Notification';
-            } else {
-                $notificationClass = '\PhpXmlRpc\JsonRpc\Request';
-            }
             $protoName = 'JSON-RPC';
         } else {
             $clientClass = '\PhpXmlRpc\Client';
             $requestClass = '\PhpXmlRpc\Request';
-            $notificationClass = '\PhpXmlRpc\Request';
             $protoName = 'XML-RPC';
         }
 
@@ -207,78 +197,38 @@ if ($action) {
             // fall thru intentionally
             case 'describe':
             case 'wrap':
-                $msg[0] = new $requestClass('system.methodHelp', array(), (int)$id);
+                $msg[0] = new $requestClass('system.methodHelp', array(), $id);
                 $msg[0]->addparam(new PhpXmlRpc\Value($method));
                 $msg[1] = new $requestClass('system.methodSignature', array(), (int)$id + 1);
                 $msg[1]->addparam(new PhpXmlRpc\Value($method));
-                if ($wstype == 2) {
-                    $msg[0]->setJsonRpcVersion('2.0');
-                    $msg[1]->setJsonRpcVersion('2.0');
-                } elseif ($wstype == 1 && $hasjsonrpc2) {
-                    $msg[0]->setJsonRpcVersion('1.0');
-                    $msg[1]->setJsonRpcVersion('1.0');
-                }
                 $actionname = 'Description of method "' . $method . '"';
                 break;
             case 'list':
-                $msg[0] = new $requestClass('system.listMethods', array(), (int)$id);
-                if ($wstype == 2) {
-                    $msg[0]->setJsonRpcVersion('2.0');
-                } elseif ($wstype == 1 && $hasjsonrpc2) {
-                    $msg[0]->setJsonRpcVersion('1.0');
-                }
+                $msg[0] = new $requestClass('system.listMethods', array(), $id);
                 $actionname = 'List of available methods';
                 break;
             case 'execute':
-            case 'notification':
                 if (!payload_is_safe($payload)) {
                     die("Tsk tsk tsk, please stop it or I will have to call in the cops!");
                 }
-                if ($action == 'notification') {
-                    $msg[0] = new $notificationClass($method, array());
-                } else {
-                    $msg[0] = new $requestClass($method, array(), $id);
-                }
+                $msg[0] = new $requestClass($method, array(), $id);
                 // hack! build payload by hand
-                if ($wstype == 2) {
-                    $payload = rtrim($payload, "\n");
+                if ($wstype == 1) {
                     $payload = "{\n" .
-                        '"jsonrpc": "2.0"' . ",\n" .
-                        '"method": "' . $method . "\",\n\"params\": [\n" .
-                        $payload .
-                        "\n]";
-                    if ($action == "notification") {
-                        $payload .= "\n";
-                    } else {
-                        if (is_numeric($id)) {
-                            $payload .= ",\n\"id\": $id\n";
-                        } else {
-                            $payload .= ",\n\"id\": \"$id\"\n";
-                        }
-                    }
-                    $payload .= '}';
-                    $msg[0]->setPayload($payload);
-                    $msg[0]->setJsonRpcVersion('2.0');
-                } elseif ($wstype == 1) {
-                    $payload = rtrim($payload, "\n");
-                    $payload = "{\n" .
-                        '"method": "' . $method . "\",\n\"params\": [\n" .
+                        '"method": "' . $method . "\",\n\"params\": [" .
                         $payload .
                         "\n],\n\"id\": ";
-                    if ($action == "notification") {
+                    // fix: if user gave an empty string, use NULL, or we'll break json syntax
+                    if ($id == "") {
                         $payload .= "null\n}";
                     } else {
-                        if (is_numeric($id) || $id == 'false' || $id == 'true') {
+                        if (is_numeric($id) || $id == 'false' || $id == 'true' || $id == 'null') {
                             $payload .= "$id\n}";
                         } else {
-                            // this includes the empty string ;-)
                             $payload .= "\"$id\"\n}";
                         }
                     }
                     $msg[0]->setPayload($payload);
-                    if ($hasjsonrpc2) {
-                        $msg[0]->setJsonRpcVersion('1.0');
-                    }
                 } else {
                     $msg[0]->setPayload(
                         $msg[0]->xml_header($inputcharset) .
@@ -287,11 +237,7 @@ if ($action) {
                         "</params>\n" . $msg[0]->xml_footer()
                     );
                 }
-                if ($action == 'notification') {
-                    $actionname = 'Execution of notification ' . $method;
-                } else {
-                    $actionname = 'Execution of method ' . $method;
-                }
+                $actionname = 'Execution of method ' . $method;
                 break;
             default: // give a warning
                 $actionname = '[ERROR: unknown action] "' . $action . '"';
@@ -313,8 +259,7 @@ if ($action) {
     foreach ($msg as $message) {
         $response = $client->send($message, $timeout, $httpprotocol);
         $resp[] = $response;
-
-        if (!$response || (is_object($response) && $response->faultCode())) {
+        if (!$response || $response->faultCode()) {
             break;
         }
     }
@@ -324,11 +269,7 @@ if ($action) {
     }
 
     if ($response) {
-        if ($response === true) {
-            // we assume that only notification calls can return true instead of a response
-            printf("<h3>%s notification call OK (%.2f secs.)</h3>\n", $protoName, $time);
-            echo(date("d/M/Y:H:i:s\n"));
-        } else if ($response->faultCode()) {
+        if ($response->faultCode()) {
             // call failed! echo out error msg!
             //echo '<h2>'.htmlspecialchars($actionname, ENT_COMPAT, $inputcharset).' on server '.htmlspecialchars($server, ENT_COMPAT, $inputcharset).'</h2>';
             echo "<h3>$protoName call FAILED!</h3>\n";
@@ -431,7 +372,7 @@ if ($action) {
                                     foreach($x as $k => $y) {
                                         if ($k == 0) continue;
                                         echo htmlspecialchars($y->scalarval(), ENT_COMPAT, \PhpXmlRpc\PhpXmlRpc::$xmlrpc_internalencoding);
-                                        if ($wstype == 1 || $wstype == 2) {
+                                        if ($wstype == 1) {
                                             switch($y->scalarval()) {
                                                 case 'string':
                                                 case 'dateTime.iso8601':
@@ -482,7 +423,7 @@ if ($action) {
                                         $alt_payload .= $y->scalarval();
                                         if ($k < $x->count() - 1) {
                                             $alt_payload .= ';';
-                                            if ($wstype == 1 || $wstype == 2) {
+                                            if ($wstype == 1) {
                                                 $payload .= ', ';
                                             }
                                             echo ", ";
@@ -578,16 +519,13 @@ if ($action) {
                         } else {
                             $opts = 0; // complete client copy in stub code
                         }
-                        if ($wstype == 1 || $wstype == 2) {
+                        if ($wstype == 1) {
                             $prefix = 'jsonrpc';
                         } else {
                             $prefix = 'xmlrpc';
                         }
-                        if ($wstype == 1 || $wstype == 2) {
+                        if ($wstype == 1) {
                             $wrapper = new PhpXmlRpc\JsonRpc\Wrapper();
-                            if ($hasjsonrpc2) {
-                                $wrapper->setJsonRpcVersion($wstype == 1 ? \PhpXmlRpc\JsonRpc\PhpJsonRpc::VERSION_1_0 : \PhpXmlRpc\JsonRpc\PhpJsonRpc::VERSION_2_0);
-                            }
                         } else {
                             $wrapper = new PhpXmlRpc\Wrapper();
                         }
@@ -614,10 +552,6 @@ if ($action) {
                     echo '<div id="response"><h2>Response:</h2>' . htmlspecialchars($response->serialize()) . '</div>';
                     break;
 
-                case 'notification':
-                    echo '<div id="response"><h2>Response:</h2>' . htmlspecialchars($response->serialize()) . '</div>';
-                    break;
-
                 default: // give a warning
             }
         } // if !$response->faultCode()
@@ -627,33 +561,22 @@ if ($action) {
     ?>
 
     <h3>Instructions on usage of the debugger</h3>
-    <b>If the server supports introspection methods `<i>system.listMethods</i>`, `<i>system.methodHelp</i>` and co.</b>
     <ol>
-        <li>Fill in values for <i>Address</i>, <i>Port</i>, <i>Path</i></li>
-        <li>Run a <i>'List available methods'</i> action against desired server</li>
-        <li>If list of methods appears, click on <i>'Describe method'</i> for desired method</li>
-        <li>To run method: click on <i>'Load method synopsis'</i> for desired method. This will load a skeleton for method call
-            parameters in the form above. Complete all xml-rpc values with appropriate data and click <i>'Execute'</i>
+        <li>Run a 'list available methods' action against desired server</li>
+        <li>If list of methods appears, click on 'describe method' for desired method</li>
+        <li>To run method: click on 'load method synopsis' for desired method. This will load a skeleton for method call
+            parameters in the form above. Complete all xml-rpc values with appropriate data and click 'Execute'
         </li>
     </ol>
-    <b>If the server does not support introspection methods</b>
-    <ol>
-        <li>Fill in values for <i>Address</i>, <i>Port</i>, <i>Path</i></li>
-        <li>Select <i>'Execute method'</i></li>
-        <li>Fill in method name and payload - fe. &quot;&lt;param&gt;&lt;value&gt;&lt;string&gt;hello&lt;/string&gt;&lt;/value&gt;&lt;/param&gt;&quot;
-            (you can use a wizard to help creating the payload by clicking on the <i>'Edit'</i> link)</li>
-        <li>Click <i>'Execute'</i></li>
-    </ol>
-    <p class="evidence">Use the <i>'Show debug info'</i> switch for troubleshooting.</p>
     <?php
     if (!extension_loaded('curl')) {
         echo "<p class=\"evidence\">You will need to enable the cURL extension to use the HTTPS, HTTP 1.1 and HTTP/2 transports</p>\n";
     }
     ?>
 
-    <h3>Demo server</h3>
+    <h3>Example</h3>
     <p>
-        Server Address: tanoconsulting.com<br/>
+        Server Address: gggeek.altervista.org<br/>
         Path: /sw/xmlrpc/demo/server/server.php
     </p>
 
@@ -663,7 +586,6 @@ if ($action) {
 
     <h3>Changelog</h3>
     <ul>
-        <li>2025-10-08: added support for json-rpc 2.0. The debugger now require phpjsonrpc 1.0.0 or later for json-rpc support</li>
         <li>2023-02-11: display in the top row the version of the libraries in use; made the generated code throw instead
             of returning a Response object on error; fixes for the json-rpc debugger</li>
         <li>2022-12-18: fix XSS vulnerability in the debugger; load jsxmlrpc from CDN; minor improvements</li>
@@ -671,7 +593,7 @@ if ($action) {
         <li>2020-12-11: fix problems with running the debugger on php 8</li>
         <li>2015-05-30: fix problems with generating method payloads for NIL and Undefined parameters</li>
         <li>2015-04-19: fix problems with LATIN-1 characters in payload</li>
-        <li>2007-02-20: add visual editor for method payload; allow strings, bools as jsonrpc req id</li>
+        <li>2007-02-20: add visual editor for method payload; allow strings, bools as jsonrpc msg id</li>
         <li>2006-06-26: support building php code stub for calling remote methods</li>
         <li>2006-05-25: better support for long running queries; check for no-curl installs</li>
         <li>2006-05-02: added support for JSON-RPC. Note that many interesting json-rpc features are not implemented

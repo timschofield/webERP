@@ -983,6 +983,7 @@ class GD implements Canvas
                 break;
         }
 
+        header("Cache-Control: private");
         header("Content-Type: $contentType");
 
         $filename = str_replace(["\n", "'"], "", basename($filename, ".$type")) . $extension;
@@ -1054,7 +1055,7 @@ class GD implements Canvas
                 break;
         }
 
-        if ($this->_aa_factor != 1 && PHP_MAJOR_VERSION < 8) {
+        if ($this->_aa_factor != 1) {
             imagedestroy($dst);
         }
     }

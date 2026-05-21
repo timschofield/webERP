@@ -34,7 +34,7 @@ class CSSFunction extends ValueList
             $aArguments = $aArguments->getListComponents();
         }
         $this->sName = $sName;
-        $this->setPosition($iLineNo); // TODO: redundant?
+        $this->iLineNo = $iLineNo;
         parent::__construct($aArguments, $sSeparator, $iLineNo);
     }
 

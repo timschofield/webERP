@@ -429,13 +429,11 @@ abstract class AbstractFrameReflower
             }
 
             // Skip children with absolute position
-            if ($iter->valid()) {
+            if ($iter->valid() && !$iter->current()->is_absolute()) {
                 /** @var AbstractFrameDecorator */
                 $child = $iter->current();
                 $child->get_reflower()->_set_content();
-                if (!$iter->current()->is_absolute()) {
-                    list($low[], $high[]) = $child->get_min_max_width();
-                }
+                list($low[], $high[]) = $child->get_min_max_width();
             }
         }
 

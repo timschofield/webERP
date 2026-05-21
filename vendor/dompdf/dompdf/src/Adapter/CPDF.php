@@ -620,9 +620,7 @@ class CPDF implements Canvas
                 $filename = "$tmp_name.png";
 
                 imagepng($im, $filename);
-                if (PHP_MAJOR_VERSION < 8) {
-                    imagedestroy($im);
-                }
+                imagedestroy($im);
             } else {
                 $filename = null;
             }
@@ -973,6 +971,7 @@ class CPDF implements Canvas
         $debug = !$options['compress'];
         $tmp = ltrim($this->_pdf->output($debug));
 
+        header("Cache-Control: private");
         header("Content-Type: application/pdf");
         header("Content-Length: " . mb_strlen($tmp, "8bit"));
 
