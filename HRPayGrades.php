@@ -27,13 +27,19 @@ if (isset($_POST['Submit'])) {
 		$InputError = 1;
 		prnMsg(__('The grade title must not be empty'), 'error');
 	}
+	if (empty($_POST['CurrencyCode'])) {
+		$InputError = 1;
+		prnMsg(__('Please select a currency code'), 'error');
+	}
 
 	if ($InputError != 1) {
+		$CurrencyCode = DB_escape_string($_POST['CurrencyCode']);
 		if (isset($_POST['GradeID']) && $_POST['GradeID'] > 0) {
 			// Update existing grade
 			$SQL = "UPDATE hrpaygrades SET
 						paygradecode = '" . $_POST['GradeCode'] . "',
 						paygradename = '" . $_POST['GradeTitle'] . "',
+						currencycode = '" . $CurrencyCode . "',
 						minsalary = " . filter_var($_POST['MinAnnualSalary'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) . ",
 						midsalary = " . filter_var($_POST['MidAnnualSalary'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) . ",
 						maxsalary = " . filter_var($_POST['MaxAnnualSalary'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) . ",
@@ -47,12 +53,13 @@ if (isset($_POST['Submit'])) {
 		} else {
 			// Insert new grade
 			$SQL = "INSERT INTO hrpaygrades (
-						paygradecode, paygradename,
+						paygradecode, paygradename, currencycode,
 						minsalary, midsalary, maxsalary,
 						active
 					) VALUES (
 						'" . $_POST['GradeCode'] . "',
 						'" . $_POST['GradeTitle'] . "',
+						'" . $CurrencyCode . "',
 						" . filter_var($_POST['MinAnnualSalary'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) . ",
 						" . filter_var($_POST['MidAnnualSalary'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) . ",
 						" . filter_var($_POST['MaxAnnualSalary'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) . ",
@@ -135,6 +142,7 @@ if (!isset($_GET['steps'])) {
 	$GradeID = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
 	$GradeCode = '';
 	$GradeTitle = '';
+	$CurrencyCode = $_SESSION['CompanyRecord']['currencydefault'];
 	$MinAnnualSalary = 0;
 	$MidAnnualSalary = 0;
 	$MaxAnnualSalary = 0;
@@ -147,6 +155,7 @@ if (!isset($_GET['steps'])) {
 			$Row = DB_fetch_array($Result);
 			$GradeCode = $Row['paygradecode'];
 			$GradeTitle = $Row['paygradename'];
+			$CurrencyCode = $Row['currencycode'];
 			$MinAnnualSalary = $Row['minsalary'];
 			$MidAnnualSalary = $Row['midsalary'];
 			$MaxAnnualSalary = $Row['maxsalary'];
@@ -171,6 +180,21 @@ if (!isset($_GET['steps'])) {
 			<field>
 				<label for="GradeTitle">' . __('Grade Title') . ':</label>
 				<input type="text" name="GradeTitle" value="' . $GradeTitle . '" size="50" maxlength="100" required="required" />
+			</field>
+
+			<field>
+				<label for="CurrencyCode">' . __('Currency') . ':</label>
+				<select name="CurrencyCode" required="required">';
+
+	$SQL = "SELECT currabrev, currency FROM currencies ORDER BY currency";
+	$Result = DB_query($SQL);
+	while ($CurrencyRow = DB_fetch_array($Result)) {
+		echo '<option value="' . htmlspecialchars($CurrencyRow['currabrev'], ENT_QUOTES, 'UTF-8') . '"' .
+			($CurrencyCode == $CurrencyRow['currabrev'] ? ' selected="selected"' : '') .
+			'>' . htmlspecialchars($CurrencyRow['currency'], ENT_QUOTES, 'UTF-8') . ' (' . htmlspecialchars($CurrencyRow['currabrev'], ENT_QUOTES, 'UTF-8') . ')</option>';
+	}
+
+	echo '</select>
 			</field>
 
 			<field>
@@ -208,6 +232,7 @@ if (DB_num_rows($Result) > 0) {
 			<tr>
 				<th>' . __('Grade Code') . '</th>
 				<th>' . __('Grade Title') . '</th>
+				<th>' . __('Currency') . '</th>
 				<th>' . __('Min Salary') . '</th>
 				<th>' . __('Mid Salary') . '</th>
 				<th>' . __('Max Salary') . '</th>
@@ -219,6 +244,7 @@ if (DB_num_rows($Result) > 0) {
 		echo '<tr class="striped_row">
 				<td>' . $Row['paygradecode'] . '</td>
 				<td>' . $Row['paygradename'] . '</td>
+				<td>' . htmlspecialchars((string)$Row['currencycode'], ENT_QUOTES, 'UTF-8') . '</td>
 				<td class="number">' . locale_number_format($Row['minsalary'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td class="number">' . locale_number_format($Row['midsalary'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td class="number">' . locale_number_format($Row['maxsalary'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
