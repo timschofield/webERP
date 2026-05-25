@@ -335,7 +335,7 @@ if (isset($_GET['view'])) {
 
 			<hr style="margin: 20px 0;" />
 
-			<h3>' . __('Overall Rating') . ': <span style="color: #d32f2f;">' . htmlspecialchars($ReviewRow['overallrating'], ENT_QUOTES, 'UTF-8') . '</span></h3>
+			<h3>' . __('Overall Rating') . ': <span style="color: #d32f2f;">' . ($ReviewRow['status'] == 'Draft' ? __('Pending') : htmlspecialchars($ReviewRow['overallrating'], ENT_QUOTES, 'UTF-8')) . '</span></h3>
 
 			<h3>' . __('Key Strengths') . '</h3>
 			<p style="white-space: pre-wrap; padding: 10px; background-color: white; border: 1px solid #ccc;">' . htmlspecialchars($ReviewRow['strengths']) . '</p>
@@ -464,7 +464,7 @@ if (!isset($_GET['view'])) {
 					<td>' . ConvertSQLDate($Row['reviewdate']) . '</td>
 					<td>' . ConvertSQLDate($Row['reviewperiodstart']) . ' to ' . ConvertSQLDate($Row['reviewperiodend']) . '</td>
 					<td>' . __($Row['reviewtype']) . '</td>
-					<td><strong>' . htmlspecialchars($Row['overallrating'], ENT_QUOTES, 'UTF-8') . '</strong></td>
+					<td><strong>' . ($Row['status'] == 'Draft' ? __('Pending') : htmlspecialchars($Row['overallrating'], ENT_QUOTES, 'UTF-8')) . '</strong></td>
 					<td>' . ($Row['reviewerfirstname'] ? $Row['reviewerfirstname'] . ' ' . $Row['reviewerlastname'] : '-') . '</td>
 					<td>' . __($Row['status']) . '</td>
 					<td>
