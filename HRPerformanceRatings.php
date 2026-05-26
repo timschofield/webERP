@@ -10,6 +10,8 @@ $BookMark = 'HRPerformanceRatings';
 
 include(__DIR__ . '/includes/header.php');
 
+require_once(__DIR__ . '/includes/HRPerformanceHelper.php');
+
 echo '<p class="page_title_text">
 		<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/award.png" title="' . __('Performance Ratings') . '" /> ' .
 		__('Performance Criteria Ratings') . '
@@ -75,15 +77,26 @@ if (isset($_POST['SubmitRatings'])) {
 		// Calculate overall score
 		$OverallScore = $TotalWeight > 0 ? $TotalWeightedScore : 0;
 
-		// Update review with overall score
+		// Map numeric score to rating label and update review record
+		$MappedRating = MapScoreToRating($OverallScore);
+		$RatingLabels = array(
+			5 => 'Outstanding',
+			4 => 'Exceeds Expectations',
+			3 => 'Meets Expectations',
+			2 => 'Needs Improvement',
+			1 => 'Unsatisfactory',
+		);
+		$OverallLabel = ($MappedRating !== null && isset($RatingLabels[$MappedRating])) ? $RatingLabels[$MappedRating] : '';
+
 		$SQL = "UPDATE hrperformancereviews
-				SET overallscore = " . $OverallScore . "
+				SET overallscore = " . $OverallScore . ",
+				    overallrating = '" . DB_escape_string($OverallLabel) . "' 
 				WHERE reviewid = " . $ReviewID;
 		DB_query($SQL);
 
 		DB_Txn_Commit();
 
-		prnMsg($RatingCount . ' ' . __('criteria ratings have been saved successfully. Overall Score') . ': ' . number_format($OverallScore, 2), 'success');
+		prnMsg($RatingCount . ' ' . __('criteria ratings have been saved successfully. Overall Score') . ': ' . number_format($OverallScore, 2) . ' - ' . ($OverallLabel ? __($OverallLabel) : __('Pending')), 'success');
 	}
 }
 
@@ -175,7 +188,7 @@ if (isset($_GET['ReviewID']) || isset($_POST['ReviewID'])) {
 					<td><strong>' . __('Review Type') . ':</strong></td>
 					<td>' . __($ReviewRow['reviewtype']) . '</td>
 					<td><strong>' . __('Overall Rating') . ':</strong></td>
-					<td>' . htmlspecialchars($ReviewRow['overallrating'], ENT_QUOTES, 'UTF-8') . '</td>
+					<td>' . ($ReviewRow['status'] == 'Draft' ? __('Pending') : htmlspecialchars($ReviewRow['overallrating'], ENT_QUOTES, 'UTF-8')) . '</td>
 				</tr>
 			</table>
 		</div>';
