@@ -78,13 +78,8 @@ if ($_SESSION['ShowFieldHelp'] == 0) {
 	echo '	<link href="', $RootPath, '/css/', $_SESSION['Theme'], '/field_help_on.css" rel="stylesheet" type="text/css" media="screen" />' , "\n";
 }
 
-/// @todo should we move this to index.php?
-if (isset($_GET['FontSize'])) {
-	$SQL = "UPDATE www_users
-				SET fontsize='" . $_GET['FontSize'] . "'
-				WHERE userid = '" . $_SESSION['UserID'] . "'";
-	$Result = DB_query($SQL);
-	switch ($_GET['FontSize']) {
+if (isset($_POST['FontSize'])) {
+	switch ($_POST['FontSize']) {
 		case 0:
 			$_SESSION['ScreenFontSize'] = '0';
 			$_SESSION['FontSize'] = '0.667rem';
@@ -257,41 +252,6 @@ if ($ScriptName == 'index.php') {
 	echo '<br /><div class="ScriptTitle"><a href="index.php?Application=' . $_SESSION['Module'] . '">', $MyRow['modulename'] . '</a> -> '. $Title, '</div>';
 }
 
-if ($ScriptName == 'index.php') {
-	echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-	if ($_SESSION['ScreenFontSize'] == 0) {
-		echo '<a style="font-size:0.667rem;" class="FontSize" href="', $RootPath, '/index.php?FontSize=0" data-title="', __('Small text size'), '"><u>A</u></a>';
-	} else {
-		echo '<a style="font-size:0.667rem;" class="FontSize" href="', $RootPath, '/index.php?FontSize=0" data-title="', __('Small text size'), '">A</a>';
-	}
-	if ($_SESSION['ScreenFontSize'] == 1) {
-		echo '<a style="font-size:0.833rem;" class="FontSize" href="', $RootPath, '/index.php?FontSize=1" data-title="', __('Medium text size'), '"><u>A</u></a>';
-	} else {
-		echo '<a style="font-size:0.833rem;" class="FontSize" href="', $RootPath, '/index.php?FontSize=1" data-title="', __('Medium text size'), '">A</a>';
-	}
-	if ($_SESSION['ScreenFontSize'] == 2) {
-		echo '<a style="font-size:1rem;" class="FontSize" href="', $RootPath, '/index.php?FontSize=2" data-title="', __('Large text size'), '"><u>A</u></a>';
-	} else {
-		echo '<a style="font-size:1rem;" class="FontSize" href="', $RootPath, '/index.php?FontSize=2" data-title="', __('Large text size'), '">A</a>';
-	}
-	echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-	echo '<div class="ScriptTitle">', __('Theme'), ':</div>';
-
-	echo '<select name="Theme" id="favourites" onchange="window.open (\'index.php?Theme=\' + this.value,\'_self\',false)">';
-
-	$Themes = glob('css/*', GLOB_ONLYDIR);
-	foreach ($Themes as $ThemeName) {
-		$ThemeName = basename($ThemeName);
-		if ($ThemeName != 'mobile' and mb_substr($ThemeName, -4) != '-rtl') {
-			if ($_SESSION['Theme'] == $ThemeName) {
-				echo '<option selected="selected" value="', $ThemeName, '">', ucfirst($ThemeName), '</option>';
-			} else {
-				echo '<option value="', $ThemeName, '">', ucfirst($ThemeName), '</option>';
-			}
-		}
-	}
-	echo '</select>';
-}
 
 echo '</header>';
 

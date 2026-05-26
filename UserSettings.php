@@ -7,6 +7,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('User Settings');
 $ViewTopic = 'GettingStarted';
 $BookMark = 'UserSettings';
+
 include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
@@ -68,6 +69,7 @@ if (isset($_POST['Modify'])) {
 			$SQL = "UPDATE www_users
 					SET displayrecordsmax='" . $_POST['DisplayRecordsMax'] . "',
 						theme='" . $_POST['Theme'] . "',
+                        fontsize='" . $_POST['FontSize'] . "',
 						language='" . $_POST['Language'] . "',
 						email='" . $_POST['email'] . "',
 						showpagehelp='" . $_POST['ShowPageHelp'] . "',
@@ -81,6 +83,7 @@ if (isset($_POST['Modify'])) {
 			$SQL = "UPDATE www_users
 					SET displayrecordsmax='" . $_POST['DisplayRecordsMax'] . "',
 						theme='" . $_POST['Theme'] . "',
+                        fontsize='" . $_POST['FontSize'] . "',
 						language='" . $_POST['Language'] . "',
 						email='" . $_POST['email'] ."',
 						showpagehelp='" . $_POST['ShowPageHelp'] . "',
@@ -183,6 +186,35 @@ if (!isset($_POST['Password'])) {
 }
 echo '</select>
 	</field>';
+
+echo '<field>
+        <label for="FontSize">', __('Display Font'), '</label>
+        <select name="FontSize">';
+switch ($_POST['FontSize']) {
+    case 0:
+        echo '<option selected value="0">', __('Small'), '</option>
+            <option value="1">', __('Medium'), '</option>
+            <option value="2">', __('Large'), '</option>';
+        break;
+    case 1:
+        echo '<option value="0">', __('Small'), '</option>
+            <option selected value="1">', __('Medium'), '</option>
+            <option value="2">', __('Large'), '</option>';
+        break;
+    case 2:
+        echo '<option value="0">', __('Small'), '</option>
+            <option value="1">', __('Medium'), '</option>
+            <option selected value="2">', __('Large'), '</option>';
+        break;                                                                                          
+    default:
+        echo '<option value="0">', __('Small'), '</option>
+            <option value="1">', __('Medium'), '</option>
+            <option value="2">', __('Large'), '</option>';
+        break;
+}
+echo '</select>
+        <fieldhelp>', __('Select the size of the screen font') , '</fieldhelp>
+    </field>';
 
 echo '<field>
 		<label for="Password">', __('New Password'), ':</label>
