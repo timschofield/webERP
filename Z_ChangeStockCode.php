@@ -221,6 +221,7 @@ if (isset($_POST['ProcessStockChange'])){
 		/* KL RICARD TABLES */
 		ChangeFieldInTable("kladjustrl", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
 		ChangeFieldInTable("klchangeprice", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("klconsignment", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
 		ChangeFieldInTable("klfreeexchanges", "itemfrom", $_POST['OldStockID'], $_POST['NewStockID']);
 		ChangeFieldInTable("klfreeexchanges", "itemto", $_POST['OldStockID'], $_POST['NewStockID']);
 		ChangeFieldInTable("klmovetodiscount20", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
@@ -229,6 +230,7 @@ if (isset($_POST['ProcessStockChange'])){
 		ChangeFieldInTable("relateditems", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
 		ChangeFieldInTable("relateditems", "related", $_POST['OldStockID'], $_POST['NewStockID']);
 		ChangeFieldInTable("klsalesperformance", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("klstockmarketplaces", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
 
 		include('includes/OCOpenCartConnectDB.php');
 		ChangeFieldInOpenCartTable( "oc_product", "model", $_POST['OldStockID'], $_POST['NewStockID']);
@@ -236,16 +238,23 @@ if (isset($_POST['ProcessStockChange'])){
 		ChangeFieldInOpenCartTable( "oc_product", "mpn", $_POST['OldStockID'], $_POST['NewStockID']);
 		
 		/* END OF KL TABLES */
-		DB_ReinstateForeignKeys();
 
-		DB_Txn_Commit();
+		DB_ReinstateForeignKeys();
 
 		echo '<br />' . __('Deleting the old stock master record');
 		$SQL = "DELETE FROM stockmaster WHERE stockid='" . $_POST['OldStockID'] . "'";
 		$ErrMsg = __('The SQL to delete the old stock master record failed');
 		$Result = DB_query($SQL, $ErrMsg, '', true);
-		echo ' ... ' . __('completed');
-		echo '<p>' . __('Stock Code') . ': ' . $_POST['OldStockID'] . ' ' . __('was successfully changed to') . ' : ' . $_POST['NewStockID'];
+		if (!$Result) {
+			DB_Txn_Rollback();
+			echo ' ... ' . __('failed');
+			echo '<p>' . __('Stock Code change to') . ': ' . $_POST['NewStockID'] . ' ' . __('failed.');
+		}else {
+			DB_Txn_Commit();
+			echo ' ... ' . __('completed');
+			echo '<p>' . __('Stock Code') . ': ' . $_POST['OldStockID'] . ' ' . __('was successfully changed to') . ' : ' . $_POST['NewStockID'];
+		}
+
 
 		// If the current SelectedStockItem is the same as the OldStockID, it updates to the NewStockID:
 		if (isset($_SESSION['SelectedStockItem']) AND $_SESSION['SelectedStockItem'] == $_POST['OldStockID']) {

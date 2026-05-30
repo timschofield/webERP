@@ -365,16 +365,21 @@ if (isset($_POST['ProcessLocationChange'])) {
 
 		DB_ReinstateForeignKeys();
 
-		DB_Txn_Commit();
-
 		echo '<br />' . __('Deleting the old location record');
 		$SQL = "DELETE FROM locations WHERE loccode='" . $_POST['OldLocationID'] . "'";
 		$ErrMsg = __('The SQL to delete the old location record failed');
 		$Result = DB_query($SQL, $ErrMsg, '', true);
-		echo ' ... ' . __('completed');
 
+		if (!$Result) {
+			DB_Txn_Rollback();
+			echo ' ... ' . __('failed');
+			echo '<p>' . __('Location Code change to') . ': ' . $_POST['NewLocationID'] . ' ' . __('failed.');
+		}else {
+			DB_Txn_Commit();
+			echo ' ... ' . __('completed');
+			echo '<p>' . __('Location Code') . ': ' . $_POST['OldLocationID'] . ' ' . __('was successfully changed to') . ' : ' . $_POST['NewLocationID'];
+		}
 
-		echo '<p>' . __('Location code') . ': ' . $_POST['OldLocationID'] . ' ' . __('was successfully changed to') . ' : ' . $_POST['NewLocationID'];
 	}//only do the stuff above if  $InputError==0
 }
 

@@ -45,10 +45,11 @@ if (isset($_POST['ProcessStockChange'])) {
 
 	if (DB_num_rows($Result) != 0) {
 		echo '<br /><br />';
-		prnMsg(__('The replacement stock category') . ': ' . $_POST['NewStockCategory'] . ' ' . __('already exists as a stock category in the system') . ' - ' . __('a unique stock category must be entered for the new stock category'), 'error');
+		prnMsg(__('The new stock category') . ': ' . $_POST['NewStockCategory'] . ' ' . __('already exists as a stock category in the system') . ' - ' . __('a unique stock category must be entered for the new stock category'), 'error');
 		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
+
     DB_Txn_Begin();
 	echo '<br />' . __('Adding the new stock Category record');
 	$SQL = "INSERT INTO stockcategory (categoryid,
@@ -77,6 +78,9 @@ if (isset($_POST['ProcessStockChange'])) {
 	$Result = DB_query($SQL, $ErrMsg, '', true);
 	echo ' ... ' . __('completed');
 	echo '<br />' . __('Changing stock properties');
+	
+	DB_IgnoreForeignKeys();
+
 	$SQL = "UPDATE stockcatproperties SET categoryid='" . $_POST['NewStockCategory'] . "' WHERE categoryid='" . $_POST['OldStockCategory'] . "'";
 	$ErrMsg = __('The SQL to update stock properties records failed');
 	$Result = DB_query($SQL, $ErrMsg, '', true);
@@ -98,15 +102,21 @@ if (isset($_POST['ProcessStockChange'])) {
 	$Result = DB_query($SQL, $ErrMsg, '', true);
 	echo ' ... ' . __('completed');
 
-	$SQL = 'SET FOREIGN_KEY_CHECKS=1';
-	$Result = DB_query($SQL, $ErrMsg, '', true);
-	DB_Txn_Commit();
+	DB_ReinstateForeignKeys();
+
 	echo '<br />' . __('Deleting the old stock category record');
 	$SQL = "DELETE FROM stockcategory WHERE categoryid='" . $_POST['OldStockCategory'] . "'";
 	$ErrMsg = __('The SQL to delete the old stock category record failed');
 	$Result = DB_query($SQL, $ErrMsg);
-	echo ' ... ' . __('completed');
-	echo '<p>' . __('Stock Category') . ': ' . $_POST['OldStockCategory'] . ' ' . __('was successfully changed to') . ' : ' . $_POST['NewStockCategory'];
+		if (!$Result) {
+			DB_Txn_Rollback();
+			echo ' ... ' . __('failed');
+			echo '<p>' . __('Stock Category change to') . ': ' . $_POST['NewStockCategory'] . ' ' . __('failed.');
+		}else {
+			DB_Txn_Commit();
+			echo ' ... ' . __('completed');
+			echo '<p>' . __('Stock Category') . ': ' . $_POST['OldStockCategory'] . ' ' . __('was successfully changed to') . ' : ' . $_POST['NewStockCategory'];
+		}
 }
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
