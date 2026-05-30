@@ -266,7 +266,15 @@ if (isset($_POST['ProcessCustomerChange'])){
 	$Result = DB_query($SQL, $ErrMsg, '', true);
 
 	DB_ReinstateForeignKeys();
-	DB_Txn_Commit();
+	if (!$Result) {
+		DB_Txn_Rollback();
+		echo ' ... ' . __('failed');
+		echo '<p>' . __('Customer Code change to') . ': ' . $_POST['NewDebtorNo'] . ' ' . __('failed.');
+	}else {
+		DB_Txn_Commit();
+		echo ' ... ' . __('completed');
+		echo '<p>' . __('Customer Code') . ': ' . $_POST['OldDebtorNo'] . ' ' . __('was successfully changed to') . ' : ' . $_POST['NewDebtorNo'];
+	}
 
 }
 

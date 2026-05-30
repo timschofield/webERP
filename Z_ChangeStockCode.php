@@ -192,17 +192,23 @@ if (isset($_POST['ProcessStockChange'])){
 
 		DB_ReinstateForeignKeys();
 
-		DB_Txn_Commit();
-
 		echo '<br />' . __('Deleting the old stock master record');
 		$SQL = "DELETE FROM stockmaster WHERE stockid='" . $_POST['OldStockID'] . "'";
 		$ErrMsg = __('The SQL to delete the old stock master record failed');
 		$Result = DB_query($SQL, $ErrMsg, '', true);
-		echo ' ... ' . __('completed');
-		echo '<p>' . __('Stock Code') . ': ' . $_POST['OldStockID'] . ' ' . __('was successfully changed to') . ' : ' . $_POST['NewStockID'];
+		if (!$Result) {
+			DB_Txn_Rollback();
+			echo ' ... ' . __('failed');
+			echo '<p>' . __('Stock Code change to') . ': ' . $_POST['NewStockID'] . ' ' . __('failed.');
+		}else {
+			DB_Txn_Commit();
+			echo ' ... ' . __('completed');
+			echo '<p>' . __('Stock Code') . ': ' . $_POST['OldStockID'] . ' ' . __('was successfully changed to') . ' : ' . $_POST['NewStockID'];
+		}
+
 
 		// If the current SelectedStockItem is the same as the OldStockID, it updates to the NewStockID:
-		if ($_SESSION['SelectedStockItem'] == $_POST['OldStockID']) {
+		if (isset($_SESSION['SelectedStockItem']) AND $_SESSION['SelectedStockItem'] == $_POST['OldStockID']) {
 			$_SESSION['SelectedStockItem'] = $_POST['NewStockID'];
 		}
 
