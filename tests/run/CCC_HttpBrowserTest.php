@@ -10,88 +10,101 @@ use Symfony\Component\HttpClient\Response\MockResponse;
 
 class TestableHttpBrowser extends HttpBrowser
 {
-public function extractErrors(string $html): array
-{
- $this->extractErrorMessages($html);
-}
+	public function extractErrors(string $html): array
+	{
+		return $this->extractErrorMessages($html);
+	}
 }
 
 class CCC_HttpBrowserTest extends TestCase
 {
-private function createBrowser(array $responses): TestableHttpBrowser
-{
- new TestableHttpBrowser(new MockHttpClient($responses));
-}
+	private function createBrowser(array $responses): TestableHttpBrowser
+	{
+		return new TestableHttpBrowser(new MockHttpClient($responses));
+	}
 
-public function testExtractErrorMessagesReturnsCleanedMessage(): void
-{
-gs('ERR_START', 'ERR_END');
+	public function testExtractErrorMessagesReturnsCleanedMessage(): void
+	{
+		$browser = $this->createBrowser([]);
+		$browser->setExpectedErrorStrings('ERR_START', 'ERR_END');
 
-<b>Fatal error</b>: line 1<br />line 2 ERR_END suffix");
+		$errors = $browser->extractErrors('prefix ERR_START <b>Fatal error</b>: line 1<br />line 2 ERR_END suffix');
 
-e 1 line 2'], $errors);
-}
+		$this->assertSame(['Fatal error: line 1 line 2'], $errors);
+	}
 
-public function testExtractErrorMessagesTruncatesLongMessages(): void
-{
-gs('ERR_START', 'ERR_END');
+	public function testExtractErrorMessagesTruncatesLongMessages(): void
+	{
+		$browser = $this->createBrowser([]);
+		$browser->setExpectedErrorStrings('ERR_START', 'ERR_END');
 
-. str_repeat('x', 80) . ' ERR_END');
+		$errors = $browser->extractErrors('ERR_START ' . str_repeat('x', 80) . ' ERR_END');
 
-t(1, $errors);
-($errors[0]));
-gEndsWith('...', $errors[0]);
-}
+		$this->assertCount(1, $errors);
+		$this->assertSame(40, strlen($errors[0]));
+		$this->assertStringEndsWith('...', $errors[0]);
+	}
 
-public function testExtractErrorMessagesUsesXdebugFallbackWhenConfigured(): void
-{
-gs('ERR_START', 'ERR_END', true);
+	public function testExtractErrorMessagesUsesXdebugFallbackWhenConfigured(): void
+	{
+		$browser = $this->createBrowser([]);
+		$browser->setExpectedErrorStrings('ERR_START', 'ERR_END', true);
 
-error: A fatal problem happened<br />in /tmp/file.php on line 2</td></tr></table>");
+		$errors = $browser->extractErrors("<table class='xdebug-error'><tr><td>Fatal error: A fatal problem happened<br />in /tmp/file.php on line 2</td></tr></table>");
 
-t(1, $errors);
-gStartsWith('Fatal error:', $errors[0]);
-}
+		$this->assertCount(1, $errors);
+		$this->assertStringStartsWith('Fatal error:', $errors[0]);
+	}
 
-public function testRequestThrowsForUnexpectedHttpErrorStatus(): void
-{
-ew MockResponse('', ['http_code' => 500])]);
+	public function testRequestThrowsForUnexpectedHttpErrorStatus(): void
+	{
+		$browser = $this->createBrowser([new MockResponse('', ['http_code' => 500])]);
 
-(ExpectationFailedException::class);
-Message('Got HTTP response code 500');
+		$this->expectException(ExpectationFailedException::class);
+		$this->expectExceptionMessage('Got HTTP response code 500');
 
-ction testRequestAllowsConfiguredStatusCodes(): void
-{
-ew MockResponse('', ['http_code' => 404])]);
-uest('GET', 'http://example.test/not-found');
+		$browser->request('GET', 'http://example.test/failure');
+	}
 
-stanceOf(Crawler::class, $crawler);
-}
+	public function testRequestAllowsConfiguredStatusCodes(): void
+	{
+		$browser = $this->createBrowser([new MockResponse('', ['http_code' => 404])]);
+		$browser->setExpectedStatusCodes([404]);
 
-public function testRequestThrowsWhenExpectedStatusCodeDoesNotMatch(): void
-{
-ew MockResponse('', ['http_code' => 200])]);
-(ExpectationFailedException::class);
-Message('while expecting 302');
+		$crawler = $browser->request('GET', 'http://example.test/not-found');
 
-expected');
-}
+		$this->assertInstanceOf(Crawler::class, $crawler);
+	}
 
-public function testRequestThrowsWhenPhpErrorMarkupIsDetected(): void
-{
-ew MockResponse('<b>Fatal error</b>: bad thing happened<br />', ['http_code' => 200])]);
-gs('<b>Fatal error</b>:', '<br />');
+	public function testRequestThrowsWhenExpectedStatusCodeDoesNotMatch(): void
+	{
+		$browser = $this->createBrowser([new MockResponse('', ['http_code' => 200])]);
+		$browser->setExpectedStatusCodes([302]);
 
-(ExpectationFailedException::class);
-Message('PHP errors/warnings in page');
+		$this->expectException(ExpectationFailedException::class);
+		$this->expectExceptionMessage('while expecting 302');
 
-ction testRequestSucceedsWhenNoPhpErrorMarkupIsPresent(): void
-{
-ew MockResponse('all good', ['http_code' => 200])]);
-gs('<b>Fatal error</b>:', '<br />');
+		$browser->request('GET', 'http://example.test/unexpected');
+	}
 
-uest('GET', 'http://example.test/ok');
+	public function testRequestThrowsWhenPhpErrorMarkupIsDetected(): void
+	{
+		$browser = $this->createBrowser([new MockResponse('<b>Fatal error</b>: bad thing happened<br />', ['http_code' => 200])]);
+		$browser->setExpectedErrorStrings('<b>Fatal error</b>:', '<br />');
 
-stanceOf(Crawler::class, $crawler);
-}
+		$this->expectException(ExpectationFailedException::class);
+		$this->expectExceptionMessage('PHP errors/warnings in page');
+
+		$browser->request('GET', 'http://example.test/php-error');
+	}
+
+	public function testRequestSucceedsWhenNoPhpErrorMarkupIsPresent(): void
+	{
+		$browser = $this->createBrowser([new MockResponse('all good', ['http_code' => 200])]);
+		$browser->setExpectedErrorStrings('<b>Fatal error</b>:', '<br />');
+
+		$crawler = $browser->request('GET', 'http://example.test/ok');
+
+		$this->assertInstanceOf(Crawler::class, $crawler);
+	}
 }
