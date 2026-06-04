@@ -31,7 +31,7 @@ function FieldToSelectOneBank($VariableName, $SelectedValue, $Label = '', $HelpT
 			ORDER BY bankname";
 	$Result = DB_query($SQL);
 
-	$HTML = '<field>
+	$HTML = '<field style="clear: both;">
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
@@ -76,7 +76,7 @@ function FieldToSelectOneDepartment($VariableName, $SelectedValue, $Label = '', 
 
 	$Result = DB_query($SQL);
 
-	$HTML = '<field>
+	$HTML = '<field style="clear: both;">
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
@@ -111,7 +111,7 @@ function FieldToSelectOneKPI($VariableName, $SelectedValue, $Label = '', $HelpTe
 			ORDER BY kpidescription";
 	$Result = DB_query($SQL);
 
-	$HTML = '<field>
+	$HTML = '<field style="clear: both;">
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
@@ -146,7 +146,7 @@ function FieldToSelectOneMaintenanceType($VariableName, $SelectedValue, $Label =
 
 	$Result = DB_query($SQL);
 
-	$HTML = '<field>
+	$HTML = '<field style="clear: both;">
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
@@ -182,7 +182,7 @@ function FieldToSelectOnePPH21Zone($VariableName, $SelectedValue, $Label = '', $
 			ORDER BY pph21zonename";
 	$Result = DB_query($SQL);
 
-	$HTML = '<field>
+	$HTML = '<field style="clear: both;">
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
@@ -218,7 +218,7 @@ $SQL = "SELECT partnercode,
 			ORDER BY partnername";
 	$Result = DB_query($SQL);
 
-	$HTML = '<field>
+	$HTML = '<field style="clear: both;">
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
@@ -246,7 +246,7 @@ function FieldToSelectOneReturnedItemReason($VariableName, $SelectedValue, $Labe
 			ORDER BY reasonname";
 	$Result = DB_query($SQL);
 
-	$HTML = '<field>
+	$HTML = '<field style="clear: both;">
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
@@ -282,7 +282,7 @@ function FieldToSelectOneServiceFee($VariableName, $SelectedValue, $Label = '', 
 	$Result = DB_query($SQL);
 
 
-	$HTML = '<field>
+	$HTML = '<field style="clear: both;">
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
@@ -314,7 +314,7 @@ function FieldToSelectOneStockAdjustmentReason($VariableName, $SelectedValue, $L
 			ORDER BY reasonname";
 	$Result = DB_query($SQL);
 
-	$HTML = '<field>
+	$HTML = '<field style="clear: both;">
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
@@ -348,7 +348,7 @@ function FieldToSelectOneTag($VariableName, $SelectedValue, $Label = '', $HelpTe
 			ORDER BY tagref";
 	$Result = DB_query($SQL);
 
-	$HTML = '<field>
+	$HTML = '<field style="clear: both;">
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
@@ -376,7 +376,7 @@ function FieldToSelectOneUMKZone($VariableName, $SelectedValue, $Label = '', $He
 			ORDER BY umkzonename";
 	$Result = DB_query($SQL);
 
-	$HTML = '<field>
+	$HTML = '<field style="clear: both;">
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
