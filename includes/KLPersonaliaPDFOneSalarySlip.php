@@ -135,7 +135,13 @@ $HTML .= '<tr>
             <td class="text-right">Penerimaan lain lain:</td>
             <td class="text-right">' . locale_number_format($MyRow['penerimaanlain']) . '</td>
             <td></td>
-            <td>' . $MyRow['penerimaanlainnotes'] . '</td>
+            <td>'
+            . ((isset($MyRow['penerimaanlainnotes'])
+                and trim((string)$MyRow['penerimaanlainnotes']) != ''
+                and strtoupper(trim((string)$MyRow['penerimaanlainnotes'])) != '#VALUE!')
+                ? $MyRow['penerimaanlainnotes']
+                : '')
+            . '</td>
         </tr>';
 
 $HTML .= '<tr>
@@ -177,7 +183,13 @@ $HTML .= '<tr>
             <td class="text-right">Potongan lain lain:</td>
             <td></td>
             <td class="text-right">' . locale_number_format($MyRow['potonganlain2']) . '</td>
-            <td>' . $MyRow['potonganlain2notes'] . '</td>
+            <td>'
+            . ((isset($MyRow['potonganlain2notes'])
+                and trim((string)$MyRow['potonganlain2notes']) != ''
+                and strtoupper(trim((string)$MyRow['potonganlain2notes'])) != '#VALUE!')
+                ? $MyRow['potonganlain2notes']
+                : '')
+            . '</td>
         </tr>';
 
 $HTML .= '<tr>

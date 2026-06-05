@@ -373,13 +373,13 @@ function submit($PeriodSelectedByUser, $SalaryType, $RootPath) {
 							$FixedLembur = validateNumericCell($worksheet, 'AD'.$Row, 'FixedLembur', $Row);
 							$Lembur = validateNumericCell($worksheet, 'AJ'.$Row, 'Lembur', $Row);
 							$PenerimaanLain2 = validateNumericCell($worksheet, 'AL'.$Row, 'PenerimaanLain2', $Row);
-							$PenerimaanLain2Notes = trim($worksheet->getCell('AM'.$Row)->getCalculatedValue() ?? '');
+							$PenerimaanLain2Notes = sanitizeExcelNoteValue($worksheet->getCell('AM'.$Row)->getCalculatedValue());
 							$PotonganJHT = EnsureNumberIsNegativeNumber(validateNumericCell($worksheet, 'AO'.$Row, 'PotonganJHT', $Row));
 							$PotonganASKES = EnsureNumberIsNegativeNumber(validateNumericCell($worksheet, 'AP'.$Row, 'PotonganASKES', $Row));
 							$PotonganPPH21 = EnsureNumberIsNegativeNumber(validateNumericCell($worksheet, 'AQ'.$Row, 'PotonganPPH21', $Row));
 							$PotonganAbsen = EnsureNumberIsNegativeNumber(validateNumericCell($worksheet, 'AR'.$Row, 'PotonganAbsen', $Row));
 							$PotonganLain2 = EnsureNumberIsNegativeNumber(validateNumericCell($worksheet, 'AS'.$Row, 'PotonganLain2', $Row));
-							$PotonganLain2Notes = trim($worksheet->getCell('AT'.$Row)->getCalculatedValue() ?? '');
+							$PotonganLain2Notes = sanitizeExcelNoteValue($worksheet->getCell('AT'.$Row)->getCalculatedValue());
 						} catch (Exception $cellError) {
 							throw new Exception("Error processing salary components: " . $cellError->getMessage());
 						}
@@ -688,6 +688,25 @@ function logImportActivity($message, $level = 'INFO') {
 	$timestamp = date('Y-m-d H:i:s');
 	$logMessage = "[$timestamp] [$level] Excel Salary Import: $message" . PHP_EOL;
 	error_log($logMessage);
+}
+
+// Helper function to sanitize note text from Excel cells
+function sanitizeExcelNoteValue($cellValue) {
+	if ($cellValue === null) {
+		return '';
+	}
+
+	$noteValue = trim((string)$cellValue);
+	if ($noteValue === '') {
+		return '';
+	}
+
+	// Convert Excel error values (for example #VALUE!) to empty text.
+	if ($noteValue[0] === '#') {
+		return '';
+	}
+
+	return $noteValue;
 }
 
 // Enhanced file type validation
