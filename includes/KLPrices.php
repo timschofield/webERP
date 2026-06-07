@@ -169,7 +169,7 @@ function round_price($n, $up="UP"){
 				$price = round_multiple_of($n - ($_SESSION['Price_Rounding_Step_02']/2), $_SESSION['Price_Rounding_Step_02']);
 			}
 		}
-		if (($price % $_SESSION['Price_Rounding_Commercial_Module_02']) == 0){
+		if (multiple_of($price, $_SESSION['Price_Rounding_Commercial_Module_02'])){
 			$price = $price - $_SESSION['Price_Rounding_Commercial_Step_02'];
 		}
 	} else {
@@ -204,7 +204,14 @@ function correction_for_low_end_prices($n){
 
 
 function multiple_of($n, $x=1){
-	return ((int)$n % $x === 0);
+	if ((float)$x == 0.0) {
+		return false;
+	}
+
+	$Remainder = fmod((float)$n, (float)$x);
+	$Tolerance = 0.00001;
+	return abs($Remainder) < $Tolerance
+		|| abs(abs($Remainder) - abs((float)$x)) < $Tolerance;
 }
 
 function UpdateTablePrice($StockID, $RetailPrice){
