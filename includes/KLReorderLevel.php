@@ -420,6 +420,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $UpdateDB, $RootPath, 
 							<td>'.$MyRow['description'].'</td>
 							<td>'.$RebalancingLocationFrom.'</td>
 							<td class="number">'."".'</td>
+							<td class="number">'."".'</td>
 							<td>'.$MyRow['locationneeded'].'</td>
 							<td>'.$Strategy.'</td>
 						</tr>';
@@ -738,6 +739,7 @@ function SetRLForTopSalesItems($ShopType, $StartTopItems, $EndTopItems, $MinStoc
 									FROM locstock
 									INNER JOIN locations ON locstock.loccode = locations.loccode
 									WHERE locstock.stockid = '" . $MyRow['stockid'] . "'
+										AND locstock.loccode != '". CODE_ONLINE_SHOP ."'
 										AND locations.stockreadytosell = 1
 										AND locstock.reorderlevel > 0";
 
@@ -900,6 +902,7 @@ function SetRLForLowSalesHighRL($ShopType, $BottomPercentTopSales, $OldRL, $maxR
 					$WhereCat . "
 				AND ls.quantity > 0
 				AND ls.reorderlevel >= " . $OldRL . "
+				AND ls.loccode != '". CODE_ONLINE_SHOP ."'
 			ORDER BY sm.stockid";
 	
 	$Result = DB_query($SQL);		
