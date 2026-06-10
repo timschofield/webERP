@@ -186,7 +186,7 @@ if (DB_num_rows($MovtsResult) > 0) {
 					<td class="number">', locale_number_format($MyRow['qty'], $MyRow['decimalplaces']), '</td>
 					<td>', $MyRow['reference'], '</td>
 					<td class="number">', locale_number_format($MyRow['price'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
-					<td class="number">', locale_number_format($MyRow['discountpercent'] * 100, 2), '%%</td>
+					<td class="number">', locale_number_format($MyRow['discountpercent'] * 100, 2), '%</td>
 					<td class="number">', locale_number_format($MyRow['newqoh'], $MyRow['decimalplaces']), '</td>
 					<td>', $MyRow['narrative'], '</td>';
 			if ($MyRow['controlled'] == 1) {
@@ -206,7 +206,7 @@ if (DB_num_rows($MovtsResult) > 0) {
 					<td class="number">', locale_number_format($MyRow['qty'], $MyRow['decimalplaces']), '</td>
 					<td>', $MyRow['reference'], '</td>
 					<td class="number">', locale_number_format($MyRow['price'], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
-					<td class="number">', locale_number_format($MyRow['discountpercent'] * 100, 2), '%%</td>
+					<td class="number">', locale_number_format($MyRow['discountpercent'] * 100, 2), '%</td>
 					<td class="number">', locale_number_format($MyRow['newqoh'], $MyRow['decimalplaces']), '</td>
 					<td>', $MyRow['narrative'], '</td>';
 			if ($MyRow['controlled'] == 1) {
