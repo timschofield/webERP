@@ -1149,7 +1149,7 @@ if (!isset($SelectedParent)) {
 				<fieldhelp>', __('Search for the parent item code for the BOM') , '</fieldhelp>
 			</field>';
 
-	echo '<field>
+/*	echo '<field>
 			<label for="ShowAllLevels">', __('Show all levels') , '</label>
 			<select name="ShowAllLevels">';
 	if (isset($_POST['ShowAllLevels']) and $_POST['ShowAllLevels'] == 'Yes') {
@@ -1164,7 +1164,7 @@ if (!isset($SelectedParent)) {
 	echo '</select>
 		<fieldhelp>', __('To show all levels of the BOM choose Yes otherwise choose No.') , '</fieldhelp>
 		</field>';
-
+*/
 	echo '</fieldset>';
 
 	echo '<div class="centre">
@@ -1180,6 +1180,24 @@ if (!isset($SelectedParent)) {
 					<th>', __('On Hand') , '</th>
 					<th>', __('Units') , '</th>
 				</tr>';
+
+    	echo '<fieldset>
+                <legend>' . __('Show BOM Listing') . '</legend>
+                <field>
+	    		<label for="ShowAllLevels">', __('Show all levels') , '</label>
+	    		<select name="ShowAllLevels">';
+	    if (isset($_POST['ShowAllLevels']) and $_POST['ShowAllLevels'] == 'Yes') {
+	    	echo '<option selected="selected" value="Yes">', __('Yes') , '</option>';
+	    	echo '<option value="No">', __('No') , '</option>';
+	    } else {
+	    	echo '<option value="Yes">', __('Yes') , '</option>';
+	    	echo '<option selected="selected" value="No">', __('No') , '</option>';
+	    }
+
+	    echo '</select>
+	    	<fieldhelp>', __('To show all levels of the BOM choose Yes otherwise choose No.') , '</fieldhelp>
+	    	</field>
+        </fieldset>';
 
 		$j = 0;
 		while ($MyRow = DB_fetch_array($Result)) {
