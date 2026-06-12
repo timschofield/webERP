@@ -1173,14 +1173,6 @@ if (!isset($SelectedParent)) {
 
 	if (isset($_POST['Search']) and isset($Result) and !isset($SelectedParent)) {
 
-		echo '<table cellpadding="2">
-				<tr>
-					<th>', __('Code') , '</th>
-					<th>', __('Description') , '</th>
-					<th>', __('On Hand') , '</th>
-					<th>', __('Units') , '</th>
-				</tr>';
-
     	echo '<fieldset>
                 <legend>' . __('Show BOM Listing') . '</legend>
                 <field>
@@ -1196,8 +1188,15 @@ if (!isset($SelectedParent)) {
 
 	    echo '</select>
 	    	<fieldhelp>', __('To show all levels of the BOM choose Yes otherwise choose No.') , '</fieldhelp>
-	    	</field>
-        </fieldset>';
+	    	</field>';
+
+		echo '<table cellpadding="2">
+				<tr>
+					<th>', __('Code') , '</th>
+					<th>', __('Description') , '</th>
+					<th>', __('On Hand') , '</th>
+					<th>', __('Units') , '</th>
+				</tr>';
 
 		$j = 0;
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -1217,7 +1216,7 @@ if (!isset($SelectedParent)) {
 
 		}
 		//end of while loop
-		echo '</table>';
+		echo '</table></fieldset>';
 
 	}
 	//end if results to show
