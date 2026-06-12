@@ -4387,9 +4387,7 @@ function InternalBankTransfers($Company,
 
 	} elseif (($SaldoDanamon >= $DanamonOverExcess)){
 		// Danamon is over the excess balance... transfer from Danamon to OCBC for "cash storage"
-		// $TransferExcessDanamon = $SaldoDanamon - $DanamonOverExcess;
 		$TransferExcessDanamon = $SaldoDanamon - (($DanamonOverExcess + $DanamonMax) / 2);
-		// $TransferExcessDanamon = $SaldoDanamon - $DanamonMax;
 
 		$TransferExcessDanamon = CalculateExcessTransferFromDanamonToBank($Company, 
 															$TransferExcessDanamon,
