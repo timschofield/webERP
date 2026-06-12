@@ -82,11 +82,11 @@ if ($_SESSION['UserID'] == "Ricard"){
 //	phpinfo();
 
 /* TEST AND PLAY WITH call_user_func to move this script mainly to a table in DB
-//		over_or_below_limit("DISC80 Items in AR", "BELOW", 20, $RootPath);
+//		over_or_below_limit("DISC80 Items in AR", "BELOW", 20);
 	$FunctionName = "over_or_below_limit";
-	$Parameters = '"DISC80 Items in AR", "BELOW", 30, $RootPath';
-	call_user_func($FunctionName, "DISC80 Items in AR", "BELOW", 30, $RootPath);
-	$FunctionName("DISC80 Items in AR", "BELOW", 30, $RootPath);
+	$Parameters = '"DISC80 Items in AR", "BELOW", 30';
+	call_user_func($FunctionName, "DISC80 Items in AR", "BELOW", 30);
+	$FunctionName("DISC80 Items in AR", "BELOW", 30);
 	
 	$Par1 = "DISC80 Items in AR";
 	$Par2 = "BELOW";
@@ -114,7 +114,7 @@ if ($ProcessSection01){
 	if ($KL_PurchasingManager
 		OR $KL_PurchasingTeam){
 		$StartTime = microtime(true);
-		SuppliersWithoutBasicData($RootPath);
+		SuppliersWithoutBasicData();
 		TimeNeededForExecution("SuppliersWithoutBasicData", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
@@ -177,23 +177,23 @@ if ($ProcessSection01){
 		OR $KL_ShopSupportTeam){
 		
 		$StartTime = microtime(true);
-		over_or_below_limit("Items changing price or moving category", "OVER", $_SESSION['MaxItemsChangingPriceOrMovingDisc'], $RootPath);
+		over_or_below_limit("Items changing price or moving category", "OVER", $_SESSION['MaxItemsChangingPriceOrMovingDisc']);
 		TimeNeededForExecution("over_or_below_limit", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		over_or_below_limit("Items changing price", "OVER", $_SESSION['MaxItemsChangingPrice'], $RootPath);
+		over_or_below_limit("Items changing price", "OVER", $_SESSION['MaxItemsChangingPrice']);
 		TimeNeededForExecution("over_or_below_limit", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		over_or_below_limit("Items moving to 20% discount", "OVER", $_SESSION['MaxItemsChangingDisc20'], $RootPath);
+		over_or_below_limit("Items moving to 20% discount", "OVER", $_SESSION['MaxItemsChangingDisc20']);
 		TimeNeededForExecution("over_or_below_limit", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		over_or_below_limit("Items moving to 50% discount", "OVER", $_SESSION['MaxItemsChangingDisc50'], $RootPath);
+		over_or_below_limit("Items moving to 50% discount", "OVER", $_SESSION['MaxItemsChangingDisc50']);
 		TimeNeededForExecution("over_or_below_limit", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		over_or_below_limit("Items moving to 80% discount", "OVER", $_SESSION['MaxItemsChangingDisc80'], $RootPath);
+		over_or_below_limit("Items moving to 80% discount", "OVER", $_SESSION['MaxItemsChangingDisc80']);
 		TimeNeededForExecution("over_or_below_limit", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
@@ -817,23 +817,23 @@ if ($ProcessSection02){
 		OR $KL_PurchasingTeam){
 
 		$StartTime = microtime(true);
-		ValueStockLocation("SERVI",    0,  150, 0, 0);
+		ValueStockLocation("SERVI",    0,  150);
 		TimeNeededForExecution("ValueStockLocation", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		ValueStockLocation("SERDE",    0,  150, 0, 0);
+		ValueStockLocation("SERDE",    0,  150);
 		TimeNeededForExecution("ValueStockLocation", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		ValueStockLocation("SERSU",    0,  150, 0, 0);
+		ValueStockLocation("SERSU",    0,  150);
 		TimeNeededForExecution("ValueStockLocation", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		ValueStockLocation("SERSV",    0,  150, 0, 0);
+		ValueStockLocation("SERSV",    0,  150);
 		TimeNeededForExecution("ValueStockLocation", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		ValueStockLocation("SERSW",    0,  150, 0, 0);
+		ValueStockLocation("SERSW",    0,  150);
 		TimeNeededForExecution("ValueStockLocation", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
@@ -1096,7 +1096,7 @@ if ($ProcessSection02){
 		TimeNeededForExecution("WrongItemsOnPurchaseOrders", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		WrongItemsOnWorkOrders($RootPath);
+		WrongItemsOnWorkOrders();
 		TimeNeededForExecution("WrongItemsOnWorkOrders", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
@@ -1233,15 +1233,6 @@ if ($ProcessSection02){
 		TimeNeededForExecution("OutstandingOrders", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
-	
-	/*
-	if ($KL_SystemAdmin 
-		OR $KL_GeneralAffairsManager
-		OR $KL_ShopSupportLeader){ 
-		OutstandingOrders("Consignment", "Order", $RootPath);
-		OutstandingOrders("Consignment", "Quotation", $RootPath);
-	}
-	*/
 
 	if ($KL_AdministrationTeam
 		OR $KL_CustomerService){ 
@@ -1276,14 +1267,14 @@ if ($ProcessSection02){
 
 	if ($KL_CustomerService){
 		$StartTime = microtime(true);
-		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_PENDING, $RootPath );
+		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_PENDING);
 		TimeNeededForExecution("OpenCartOrdersByStatus", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_CustomerService){
 		$StartTime = microtime(true);
-		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_SHIPPED, $RootPath );
+		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_SHIPPED);
 		TimeNeededForExecution("OpenCartOrdersByStatus", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
@@ -1299,14 +1290,12 @@ if ($ProcessSection02){
 		OldOnlineQuotations(1, $RootPath);
 		TimeNeededForExecution("OldOnlineQuotations", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
-//		OutstandingOrders("Online", "Quotation", $RootPath);
-//		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin
 		OR $KL_CustomerService){ 
 		$StartTime = microtime(true);
-		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_PROCESSING, $RootPath );
+		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_PROCESSING);
 		TimeNeededForExecution("OpenCartOrdersByStatus", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
