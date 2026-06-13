@@ -46,6 +46,7 @@ display:block;
 text-align:left;
 margin-bottom:3px;
 margin-top:2px;
+clear:both;
 }
 form fieldset field label {
 float:left;
