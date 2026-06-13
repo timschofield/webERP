@@ -58,7 +58,7 @@ function AddAttributesToField($TabIndex, $Required, $AutoFocus) {
 
 function FieldToSelectOneEntryFromArray($Array, $VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 
-	$HTML = '<field style="clear: both;">
+	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
@@ -90,7 +90,7 @@ function FieldToSelectOneCurrency($VariableName, $SelectedValue, $Label = '', $H
 	$Result = DB_query($SQL);
 
 
-	$HTML = '<field style="clear: both;">
+	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
@@ -125,7 +125,7 @@ function FieldToSelectOneCustomerType($VariableName, $SelectedValue, $Label = ''
 
 	$Result = DB_query($SQL);
 
-	$HTML = '<field style="clear: both;">
+	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
@@ -155,7 +155,7 @@ function FieldToSelectOneCustomerType($VariableName, $SelectedValue, $Label = ''
 
 function FieldToSelectOneDate($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 
-	$HTML = '<field style="clear: both;">
+	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<input type="date"';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
@@ -169,7 +169,7 @@ function FieldToSelectOneDate($VariableName, $SelectedValue, $Label = '', $HelpT
 
 function FieldToSelectOneFile($VariableName, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 
-	$HTML = '<field style="clear: both;">
+	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<input type="file"';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
@@ -260,7 +260,7 @@ function FieldToSelectOneGLAccount($VariableName, $SelectedValue, $Label = '', $
 
 	$Result = DB_query($SQL);
 
-	$HTML = '<field style="clear: both;">
+	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
@@ -297,7 +297,7 @@ function FieldToSelectOneGLAccountGroup($VariableName, $SelectedValue, $Label = 
 
 	$Result = DB_query($SQL);
 
-	$HTML = '<field style="clear: both;">
+	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
@@ -366,7 +366,7 @@ function FieldToSelectOneLocation($VariableName, $SelectedValue, $Label = '', $H
 
 	$Result = DB_query($SQL);
 
-	$HTML = '<field style="clear: both;">
+	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
@@ -412,7 +412,7 @@ $SQL = "SELECT periodno,
 
 	$Result = DB_query($SQL);
 
-	$HTML = '<field style="clear: both;">
+	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
@@ -450,7 +450,7 @@ function FieldToSelectOneSalesArea($VariableName, $SelectedValue, $Label = '', $
 	$Result = DB_query($SQL);
 
 
-	$HTML = '<field style="clear: both;">
+	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
@@ -481,7 +481,7 @@ function FieldToSelectOneSalesArea($VariableName, $SelectedValue, $Label = '', $
 
 function FieldToSelectOneSalesPerson($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $AllowAll = false, $TabIndex = '', $Required = true, $AutoFocus = false) {
 
-	$HTML = '<field style="clear: both;">
+	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
@@ -548,7 +548,7 @@ function FieldToSelectOneStockCategory($VariableName, $SelectedValue, $Label = '
 	$Result = DB_query($SQL);
 
 
-	$HTML = '<field style="clear: both;">
+	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
@@ -592,7 +592,7 @@ function FieldToSelectOneSysType($VariableName, $SelectedValue, $Label = '', $He
 	$Result = DB_query($SQL);
 
 
-	$HTML = '<field style="clear: both;">
+	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
@@ -621,7 +621,7 @@ function FieldToSelectOneSysType($VariableName, $SelectedValue, $Label = '', $He
 
 function FieldToSelectOnePassword($VariableName, $SelectedValue, $Size, $MaxLength, $Label = '', $HelpText = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 
-	$HTML = '<field style="clear: both;">
+	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<input type="password" pattern=".{5,}"';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
@@ -635,7 +635,7 @@ function FieldToSelectOnePassword($VariableName, $SelectedValue, $Size, $MaxLeng
 
 function FieldToSelectOneTelephoneNumber($VariableName, $SelectedValue, $Size, $MaxLength, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 
-	$HTML = '<field style="clear: both;">
+	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<input type="text" pattern="[0-9+\s]*"';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
@@ -649,7 +649,7 @@ function FieldToSelectOneTelephoneNumber($VariableName, $SelectedValue, $Size, $
 
 function FieldToSelectOneText($VariableName, $SelectedValue, $Size, $MaxLength, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 
-	$HTML = '<field style="clear: both;">
+	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<input type="text"';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
@@ -663,7 +663,7 @@ function FieldToSelectOneText($VariableName, $SelectedValue, $Size, $MaxLength, 
 
 function FieldToSelectOneEmail($VariableName, $SelectedValue, $Size, $MaxLength, $Label = '', $HelpText = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 
-	$HTML = '<field style="clear: both;">
+	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<input type="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
@@ -677,7 +677,7 @@ function FieldToSelectOneEmail($VariableName, $SelectedValue, $Size, $MaxLength,
 
 function FieldToSelectOneNumber($VariableName, $SelectedValue, $Size, $MaxLength, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 
-	$HTML = '<field style="clear: both;">
+	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<input type="text" class="number" pattern="[0-9]*\.?[0-9]*"';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
@@ -691,7 +691,7 @@ function FieldToSelectOneNumber($VariableName, $SelectedValue, $Size, $MaxLength
 
 function FieldToSelectOneTextArea($VariableName, $SelectedValue, $Cols, $Rows, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 
-	$HTML = '<field style="clear: both;">';
+	$HTML = '<field>';
 	if ($HTML != '') {
 	    $HTML .= '<label for="' . $VariableName . '">' . $Label . ':</label>';
 	}
@@ -712,7 +712,7 @@ function FieldToSelectOneUser($VariableName, $SelectedValue, $Label = '', $HelpT
 	$Result = DB_query($SQL);
 
 
-	$HTML = '<field style="clear: both;">
+	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
@@ -773,7 +773,7 @@ function FieldToSelectMultipleLocations($VariableName, $SelectedValue, $Label = 
 
 	$Result = DB_query($SQL);
 
-	$HTML = '<field style="clear: both;">
+	$HTML = '<field>
 				<label for="' . $VariableName . '[]">' . $Label . ':</label>
 				<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
@@ -811,7 +811,7 @@ function FieldToSelectMultiplePeriods($VariableName, $FirstSelectedValue, $LastS
 
 	$Result = DB_query($SQL);
 
-	$HTML = '<field style="clear: both;">
+	$HTML = '<field>
 				<label for="' . $VariableName . '[]">' . $Label . ':</label>
 				<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
@@ -840,7 +840,7 @@ function FieldToSelectMultipleStockCategories($VariableName, $SelectedValue, $La
 			ORDER BY categorydescription";
 	$Result = DB_query($SQL);
 
-	$HTML = '<field style="clear: both;">
+	$HTML = '<field>
 				<label for="' . $VariableName . '[]">' . $Label . ':</label>
 				<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
@@ -864,7 +864,7 @@ function FieldToSelectMultipleStockCategories($VariableName, $SelectedValue, $La
 
 function FixedField($VariableName, $SelectedValue, $Label = '', $HelpText = '') {
 
-	$HTML = '<field style="clear: both;">
+	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<fieldhelp>' . $HelpText . '</fieldhelp>
 				<fieldtext>' . $SelectedValue . '</fieldtext>
@@ -897,7 +897,7 @@ function FieldToSelectFromTwoOptions($ValueOption1, $LabelOption1,
 									$ValueOption2, $LabelOption2,
 									$VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 
-	$HTML = '<field style="clear: both;">
+	$HTML = '<field>
 		<label>' . $Label . ':</label>
 		<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
@@ -923,7 +923,7 @@ function FieldToSelectFromThreeOptions($ValueOption1, $LabelOption1,
 									$ValueOption3, $LabelOption3,
 									$VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 
-	$HTML = '<field style="clear: both;">
+	$HTML = '<field>
 		<label>' . $Label . ':</label>
 		<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
@@ -957,7 +957,7 @@ function FieldToSelectFromFourOptions($ValueOption1, $LabelOption1,
 									$ValueOption4, $LabelOption4,
 									$VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 
-	$HTML = '<field style="clear: both;">
+	$HTML = '<field>
 		<label>' . $Label . ':</label>
 		<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
@@ -1001,7 +1001,7 @@ function FieldToSelectFromFiveOptions($ValueOption1, $LabelOption1,
 									$ValueOption5, $LabelOption5,
 									$VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 
-	$HTML = '<field style="clear: both;">
+	$HTML = '<field>
 		<label>' . $Label . ':</label>
 		<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
@@ -1067,7 +1067,7 @@ function FieldToSelectOneBrand($VariableName, $SelectedValue, $Label = '', $Help
 			ORDER BY brands_name";
 	$Result = DB_query($SQL);
 
-	$HTML = '<field style="clear: both;">
+	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
