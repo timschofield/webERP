@@ -171,26 +171,30 @@ if (!isset($SelectedDepartment)) {
 		<tbody>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
+		$LocationRow = array('locationname' => '');
 		if ($MyRow['locationid'] != '' and $MyRow['locationid'] != 0) {
 			$LocationSQL = "SELECT locationname FROM locations WHERE loccode='" . $MyRow['locationid'] . "'";
 			$LocationResult = DB_query($LocationSQL);
-			$LocationRow = DB_fetch_array($LocationResult);
-		} else {
-			$LocationRow['locationname'] = '';
+			$LocationData = DB_fetch_array($LocationResult);
+			if (is_array($LocationData)) {
+				$LocationRow = $LocationData;
+			}
 		}
+		$AuthoriserRow = array('realname' => '');
 		if ($MyRow['authoriser'] != '' and $MyRow['authoriser'] != 0) {
 			$AuthoriserSQL = "SELECT realname FROM www_users WHERE userid='" . $MyRow['authoriser'] . "'";
 			$AuthoriserResult = DB_query($AuthoriserSQL);
-			$AuthoriserRow = DB_fetch_array($AuthoriserResult);
-		} else {
-			$AuthoriserRow['locationname'] = '';
+			$AuthoriserData = DB_fetch_array($AuthoriserResult);
+			if (is_array($AuthoriserData)) {
+				$AuthoriserRow = $AuthoriserData;
+			}
 		}
 		echo '<tr class="striped_row">
 				<td>' . $MyRow['departmentcode'] . '</td>
 				<td>' . $MyRow['description'] . '</td>
 				<td>' . $MyRow['parentname'] . '</td>
 				<td>' . $MyRow['managername'] . '</td>
-				<td>' . $AuthoriserRow['realname'] . ' - ' . $MyRow['authoriser'] . '</td>
+				<td>' . $AuthoriserRow['realname'] . '</td>
 				<td>' . $LocationRow['locationname'] . '</td>
 				<td>' . ($MyRow['active'] ? __('Yes') : __('No')) . '</td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedDepartment=' . $MyRow['departmentid'] . '">' . __('Edit') . '</a></td>
