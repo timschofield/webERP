@@ -174,6 +174,112 @@ if (isset($_POST['submit'])) {
 			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_MaxItemsChangingPriceOrMovingDisc']."' WHERE confname = 'MaxItemsChangingPriceOrMovingDisc'";
 		}
 
+		if ($_SESSION['InternalBankTransferSizeMultiple'] != $_POST['X_InternalBankTransferSizeMultiple'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_InternalBankTransferSizeMultiple']."' WHERE confname = 'InternalBankTransferSizeMultiple'";
+		}
+		if ($_SESSION['InternalOnlineTransferSizeMultiple'] != $_POST['X_InternalOnlineTransferSizeMultiple'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_InternalOnlineTransferSizeMultiple']."' WHERE confname = 'InternalOnlineTransferSizeMultiple'";
+		}
+
+		if ($_SESSION['PTADUDanamonMinSaldo'] != $_POST['X_PTADUDanamonMinSaldo'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_PTADUDanamonMinSaldo']."' WHERE confname = 'PTADUDanamonMinSaldo'";
+		}
+		if ($_SESSION['PTADUDanamonMaxSaldo'] != $_POST['X_PTADUDanamonMaxSaldo'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_PTADUDanamonMaxSaldo']."' WHERE confname = 'PTADUDanamonMaxSaldo'";
+		}
+		if ($_SESSION['PTADUDanamonOverExcessSaldo'] != $_POST['X_PTADUDanamonOverExcessSaldo'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_PTADUDanamonOverExcessSaldo']."' WHERE confname = 'PTADUDanamonOverExcessSaldo'";
+		}
+		if ($_SESSION['PTADUMandiriMinSaldo'] != $_POST['X_PTADUMandiriMinSaldo'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_PTADUMandiriMinSaldo']."' WHERE confname = 'PTADUMandiriMinSaldo'";
+		}
+		if ($_SESSION['PTADUMandiriMaxSaldo'] != $_POST['X_PTADUMandiriMaxSaldo'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_PTADUMandiriMaxSaldo']."' WHERE confname = 'PTADUMandiriMaxSaldo'";
+		}
+		if ($_SESSION['PTADUBCAMinSaldo'] != $_POST['X_PTADUBCAMinSaldo'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_PTADUBCAMinSaldo']."' WHERE confname = 'PTADUBCAMinSaldo'";
+		}
+		if ($_SESSION['PTADUBCAMaxSaldo'] != $_POST['X_PTADUBCAMaxSaldo'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_PTADUBCAMaxSaldo']."' WHERE confname = 'PTADUBCAMaxSaldo'";
+		}
+		if ($_SESSION['PTADUBNIMinSaldo'] != $_POST['X_PTADUBNIMinSaldo'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_PTADUBNIMinSaldo']."' WHERE confname = 'PTADUBNIMinSaldo'";
+		}
+		if ($_SESSION['PTADUBNIMaxSaldo'] != $_POST['X_PTADUBNIMaxSaldo'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_PTADUBNIMaxSaldo']."' WHERE confname = 'PTADUBNIMaxSaldo'";
+		}
+		if ($_SESSION['PTADUBRIMinSaldo'] != $_POST['X_PTADUBRIMinSaldo'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_PTADUBRIMinSaldo']."' WHERE confname = 'PTADUBRIMinSaldo'";
+		}
+		if ($_SESSION['PTADUBRIMaxSaldo'] != $_POST['X_PTADUBRIMaxSaldo'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_PTADUBRIMaxSaldo']."' WHERE confname = 'PTADUBRIMaxSaldo'";
+		}
+		if ($_SESSION['PTADUOCBCMinSaldo'] != $_POST['X_PTADUOCBCMinSaldo'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_PTADUOCBCMinSaldo']."' WHERE confname = 'PTADUOCBCMinSaldo'";
+		}
+		if ($_SESSION['PTADUOCBCMaxSaldo'] != $_POST['X_PTADUOCBCMaxSaldo'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_PTADUOCBCMaxSaldo']."' WHERE confname = 'PTADUOCBCMaxSaldo'";
+		}
+		if ($_SESSION['PTADUTokopediaMinSaldo'] != $_POST['X_PTADUTokopediaMinSaldo'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_PTADUTokopediaMinSaldo']."' WHERE confname = 'PTADUTokopediaMinSaldo'";
+		}
+		if ($_SESSION['PTADUTokopediaMaxSaldo'] != $_POST['X_PTADUTokopediaMaxSaldo'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_PTADUTokopediaMaxSaldo']."' WHERE confname = 'PTADUTokopediaMaxSaldo'";
+		}
+		if ($_SESSION['PTADUShopeeMinSaldo'] != $_POST['X_PTADUShopeeMinSaldo'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_PTADUShopeeMinSaldo']."' WHERE confname = 'PTADUShopeeMinSaldo'";
+		}
+		if ($_SESSION['PTADUShopeeMaxSaldo'] != $_POST['X_PTADUShopeeMaxSaldo'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_PTADUShopeeMaxSaldo']."' WHERE confname = 'PTADUShopeeMaxSaldo'";
+		}
+		if ($_SESSION['PTADUMidtransMinSaldo'] != $_POST['X_PTADUMidtransMinSaldo'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_PTADUMidtransMinSaldo']."' WHERE confname = 'PTADUMidtransMinSaldo'";
+		}
+		if ($_SESSION['PTADUMidtransMaxSaldo'] != $_POST['X_PTADUMidtransMaxSaldo'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_PTADUMidtransMaxSaldo']."' WHERE confname = 'PTADUMidtransMaxSaldo'";
+		}
+
+		if ($_SESSION['PTSMHDanamonMinSaldo'] != $_POST['X_PTSMHDanamonMinSaldo'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_PTSMHDanamonMinSaldo']."' WHERE confname = 'PTSMHDanamonMinSaldo'";
+		}
+		if ($_SESSION['PTSMHDanamonMaxSaldo'] != $_POST['X_PTSMHDanamonMaxSaldo'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_PTSMHDanamonMaxSaldo']."' WHERE confname = 'PTSMHDanamonMaxSaldo'";
+		}
+		if ($_SESSION['PTSMHDanamonOverExcessSaldo'] != $_POST['X_PTSMHDanamonOverExcessSaldo'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_PTSMHDanamonOverExcessSaldo']."' WHERE confname = 'PTSMHDanamonOverExcessSaldo'";
+		}
+		if ($_SESSION['PTSMHMandiriMinSaldo'] != $_POST['X_PTSMHMandiriMinSaldo'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_PTSMHMandiriMinSaldo']."' WHERE confname = 'PTSMHMandiriMinSaldo'";
+		}
+		if ($_SESSION['PTSMHMandiriMaxSaldo'] != $_POST['X_PTSMHMandiriMaxSaldo'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_PTSMHMandiriMaxSaldo']."' WHERE confname = 'PTSMHMandiriMaxSaldo'";
+		}
+		if ($_SESSION['PTSMHBCAMinSaldo'] != $_POST['X_PTSMHBCAMinSaldo'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_PTSMHBCAMinSaldo']."' WHERE confname = 'PTSMHBCAMinSaldo'";
+		}
+		if ($_SESSION['PTSMHBCAMaxSaldo'] != $_POST['X_PTSMHBCAMaxSaldo'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_PTSMHBCAMaxSaldo']."' WHERE confname = 'PTSMHBCAMaxSaldo'";
+		}
+		if ($_SESSION['PTSMHBNIMinSaldo'] != $_POST['X_PTSMHBNIMinSaldo'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_PTSMHBNIMinSaldo']."' WHERE confname = 'PTSMHBNIMinSaldo'";
+		}
+		if ($_SESSION['PTSMHBNIMaxSaldo'] != $_POST['X_PTSMHBNIMaxSaldo'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_PTSMHBNIMaxSaldo']."' WHERE confname = 'PTSMHBNIMaxSaldo'";
+		}
+		if ($_SESSION['PTSMHBRIMinSaldo'] != $_POST['X_PTSMHBRIMinSaldo'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_PTSMHBRIMinSaldo']."' WHERE confname = 'PTSMHBRIMinSaldo'";
+		}
+		if ($_SESSION['PTSMHBRIMaxSaldo'] != $_POST['X_PTSMHBRIMaxSaldo'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_PTSMHBRIMaxSaldo']."' WHERE confname = 'PTSMHBRIMaxSaldo'";
+		}
+		if ($_SESSION['PTSMHOCBCMinSaldo'] != $_POST['X_PTSMHOCBCMinSaldo'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_PTSMHOCBCMinSaldo']."' WHERE confname = 'PTSMHOCBCMinSaldo'";
+		}
+		if ($_SESSION['PTSMHOCBCMaxSaldo'] != $_POST['X_PTSMHOCBCMaxSaldo'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_PTSMHOCBCMaxSaldo']."' WHERE confname = 'PTSMHOCBCMaxSaldo'";
+		}
+
+
 		if ($_SESSION['DaysToPredictFutureSalesPerBrand'] != $_POST['X_DaysToPredictFutureSalesPerBrand'] ) {
 			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_DaysToPredictFutureSalesPerBrand']."' WHERE confname = 'DaysToPredictFutureSalesPerBrand'";
 		}
@@ -359,6 +465,50 @@ echo '<fieldset>
 		echo FieldToSelectOneNumber('X_MaxItemsChangingDisc50',  $_SESSION['MaxItemsChangingDisc50'], 6, 5, 'Maximum # items changing to discount 50% at the same time', 'Maximum # items changing to discount 50% at the same time', '', '150');
 		echo FieldToSelectOneNumber('X_MaxItemsChangingDisc80',  $_SESSION['MaxItemsChangingDisc80'], 6, 5, 'Maximum # items changing to discount 80% at the same time', 'Maximum # items changing to discount 80% at the same time', '', '150');
 		echo FieldToSelectOneNumber('X_MaxItemsChangingPriceOrMovingDisc',  $_SESSION['MaxItemsChangingPriceOrMovingDisc'], 6, 5, 'Maximum # items changing price or moving to discount category at the same time', 'Maximum # items changing price or moving to discount category at the same time', '', '150');
+	echo '</fieldset><br />';
+	echo '<fieldset>
+		<legend>' . __('Internal Bank Transfers Settings') . '</legend>';
+		echo FieldToSelectOneNumber('X_InternalBankTransferSizeMultiple',  $_SESSION['InternalBankTransferSizeMultiple'], 15, 14, 'Internal banks transfer multiple size (IDR)', 'Internal banks transfer multiple size (IDR)', '', '150');
+		echo FieldToSelectOneNumber('X_InternalOnlineTransferSizeMultiple',  $_SESSION['InternalOnlineTransferSizeMultiple'], 15, 14, 'Internal online transfer multiple size (IDR)', 'Internal online transfer multiple size (IDR)', '', '150');
+		echo '<fieldset>
+			<legend>' . __('Internal PTADU Bank Transfers Settings') . '</legend>';
+				echo FieldToSelectOneNumber('X_PTADUDanamonMinSaldo',  $_SESSION['PTADUDanamonMinSaldo'], 15, 14, 'Minimum Saldo to be kept in Danamon PTADU (IDR)', 'Minimum Saldo to be kept in Danamon PTADU (IDR)', '', '150');
+				echo FieldToSelectOneNumber('X_PTADUDanamonMaxSaldo',  $_SESSION['PTADUDanamonMaxSaldo'], 15, 14, 'Maximum Saldo to be kept in Danamon PTADU (IDR)', 'Maximum Saldo to be kept in Danamon PTADU (IDR)', '', '151');
+				echo FieldToSelectOneNumber('X_PTADUDanamonOverExcessSaldo',  $_SESSION['PTADUDanamonOverExcessSaldo'], 15, 14, 'Over Excess Saldo to be moved from Danamon to OCBC PTADU (IDR)', 'Over Excess Saldo to be kept in Danamon PTADU (IDR)', '', '152');
+				echo FieldToSelectOneNumber('X_PTADUMandiriMinSaldo',  $_SESSION['PTADUMandiriMinSaldo'], 15, 14, 'Minimum Saldo to be kept in Mandiri PTADU (IDR)', 'Minimum Saldo to be kept in Mandiri PTADU (IDR)', '', '153');
+				echo FieldToSelectOneNumber('X_PTADUMandiriMaxSaldo',  $_SESSION['PTADUMandiriMaxSaldo'], 15, 14, 'Maximum Saldo to be kept in Mandiri PTADU (IDR)', 'Maximum Saldo to be kept in Mandiri PTADU (IDR)', '', '154');
+				echo FieldToSelectOneNumber('X_PTADUBCAMinSaldo',  $_SESSION['PTADUBCAMinSaldo'], 15, 14, 'Minimum Saldo to be kept in BCA PTADU (IDR)', 'Minimum Saldo to be kept in BCA PTADU (IDR)', '', '155');
+				echo FieldToSelectOneNumber('X_PTADUBCAMaxSaldo',  $_SESSION['PTADUBCAMaxSaldo'], 15, 14, 'Maximum Saldo to be kept in BCA PTADU (IDR)', 'Maximum Saldo to be kept in BCA PTADU (IDR)', '', '156');
+				echo FieldToSelectOneNumber('X_PTADUBNIMinSaldo',  $_SESSION['PTADUBNIMinSaldo'], 15, 14, 'Minimum Saldo to be kept in BNI PTADU (IDR)', 'Minimum Saldo to be kept in BNI PTADU (IDR)', '', '157');
+				echo FieldToSelectOneNumber('X_PTADUBNIMaxSaldo',  $_SESSION['PTADUBNIMaxSaldo'], 15, 14, 'Maximum Saldo to be kept in BNI PTADU (IDR)', 'Maximum Saldo to be kept in BNI PTADU (IDR)', '', '158');
+				echo FieldToSelectOneNumber('X_PTADUBRIMinSaldo',  $_SESSION['PTADUBRIMinSaldo'], 15, 14, 'Minimum Saldo to be kept in BRI PTADU (IDR)', 'Minimum Saldo to be kept in BRI PTADU (IDR)', '', '159');
+				echo FieldToSelectOneNumber('X_PTADUBRIMaxSaldo',  $_SESSION['PTADUBRIMaxSaldo'], 15, 14, 'Maximum Saldo to be kept in BRI PTADU (IDR)', 'Maximum Saldo to be kept in BRI PTADU (IDR)', '', '160');
+				echo FieldToSelectOneNumber('X_PTADUOCBCMinSaldo',  $_SESSION['PTADUOCBCMinSaldo'], 15, 14, 'Minimum Saldo to be kept in OCBC PTADU (IDR)', 'Minimum Saldo to be kept in OCBC PTADU (IDR)', '', '161');
+				echo FieldToSelectOneNumber('X_PTADUOCBCMaxSaldo',  $_SESSION['PTADUOCBCMaxSaldo'], 15, 14, 'Maximum Saldo to be kept in OCBC PTADU (IDR)', 'Maximum Saldo to be kept in OCBC PTADU (IDR)', '', '162');
+				echo FieldToSelectOneNumber('X_PTADUTokopediaMinSaldo',  $_SESSION['PTADUTokopediaMinSaldo'], 15, 14, 'Minimum Saldo to be kept in Tokopedia PTADU (IDR)', 'Minimum Saldo to be kept in Tokopedia PTADU (IDR)', '', '163');
+				echo FieldToSelectOneNumber('X_PTADUTokopediaMaxSaldo',  $_SESSION['PTADUTokopediaMaxSaldo'], 15, 14, 'Maximum Saldo to be kept in Tokopedia PTADU (IDR)', 'Maximum Saldo to be kept in Tokopedia PTADU (IDR)', '', '164');
+				echo FieldToSelectOneNumber('X_PTADUShopeeMinSaldo',  $_SESSION['PTADUShopeeMinSaldo'], 15, 14, 'Minimum Saldo to be kept in Shopee PTADU (IDR)', 'Minimum Saldo to be kept in Shopee PTADU (IDR)', '', '165');
+				echo FieldToSelectOneNumber('X_PTADUShopeeMaxSaldo',  $_SESSION['PTADUShopeeMaxSaldo'], 15, 14, 'Maximum Saldo to be kept in Shopee PTADU (IDR)', 'Maximum Saldo to be kept in Shopee PTADU (IDR)', '', '166');
+				echo FieldToSelectOneNumber('X_PTADUMidtransMinSaldo',  $_SESSION['PTADUMidtransMinSaldo'], 15, 14, 'Minimum Saldo to be kept in Midtrans PTADU (IDR)', 'Minimum Saldo to be kept in Midtrans PTADU (IDR)', '', '167');
+				echo FieldToSelectOneNumber('X_PTADUMidtransMaxSaldo',  $_SESSION['PTADUMidtransMaxSaldo'], 15, 14, 'Maximum Saldo to be kept in Midtrans PTADU (IDR)', 'Maximum Saldo to be kept in Midtrans PTADU (IDR)', '', '168');
+		echo '</fieldset><br />';
+		echo '<fieldset>
+			<legend>' . __('Internal PTSMH Bank Transfers Settings') . '</legend>';
+				echo FieldToSelectOneNumber('X_PTSMHDanamonMinSaldo',  $_SESSION['PTSMHDanamonMinSaldo'], 15, 14, 'Minimum Saldo to be kept in Danamon PTSMH (IDR)', 'Minimum Saldo to be kept in Danamon PTSMH (IDR)', '', '150');
+				echo FieldToSelectOneNumber('X_PTSMHDanamonMaxSaldo',  $_SESSION['PTSMHDanamonMaxSaldo'], 15, 14, 'Maximum Saldo to be kept in Danamon PTSMH (IDR)', 'Maximum Saldo to be kept in Danamon PTSMH (IDR)', '', '151');
+				echo FieldToSelectOneNumber('X_PTSMHDanamonOverExcessSaldo',  $_SESSION['PTSMHDanamonOverExcessSaldo'], 15, 14, 'Over Excess Saldo to be moved from Danamon to OCBC PTSMH (IDR)', 'Over Excess Saldo to be kept in Danamon PTSMH (IDR)', '', '152');
+				echo FieldToSelectOneNumber('X_PTSMHMandiriMinSaldo',  $_SESSION['PTSMHMandiriMinSaldo'], 15, 14, 'Minimum Saldo to be kept in Mandiri PTSMH (IDR)', 'Minimum Saldo to be kept in Mandiri PTSMH (IDR)', '', '153');
+				echo FieldToSelectOneNumber('X_PTSMHMandiriMaxSaldo',  $_SESSION['PTSMHMandiriMaxSaldo'], 15, 14, 'Maximum Saldo to be kept in Mandiri PTSMH (IDR)', 'Maximum Saldo to be kept in Mandiri PTSMH (IDR)', '', '154');
+				echo FieldToSelectOneNumber('X_PTSMHBCAMinSaldo',  $_SESSION['PTSMHBCAMinSaldo'], 15, 14, 'Minimum Saldo to be kept in BCA PTSMH (IDR)', 'Minimum Saldo to be kept in BCA PTSMH (IDR)', '', '155');
+				echo FieldToSelectOneNumber('X_PTSMHBCAMaxSaldo',  $_SESSION['PTSMHBCAMaxSaldo'], 15, 14, 'Maximum Saldo to be kept in BCA PTSMH (IDR)', 'Maximum Saldo to be kept in BCA PTSMH (IDR)', '', '156');
+				echo FieldToSelectOneNumber('X_PTSMHBNIMinSaldo',  $_SESSION['PTSMHBNIMinSaldo'], 15, 14, 'Minimum Saldo to be kept in BNI PTSMH (IDR)', 'Minimum Saldo to be kept in BNI PTSMH (IDR)', '', '157');
+				echo FieldToSelectOneNumber('X_PTSMHBNIMaxSaldo',  $_SESSION['PTSMHBNIMaxSaldo'], 15, 14, 'Maximum Saldo to be kept in BNI PTSMH (IDR)', 'Maximum Saldo to be kept in BNI PTSMH (IDR)', '', '158');
+				echo FieldToSelectOneNumber('X_PTSMHBRIMinSaldo',  $_SESSION['PTSMHBRIMinSaldo'], 15, 14, 'Minimum Saldo to be kept in BRI PTSMH (IDR)', 'Minimum Saldo to be kept in BRI PTSMH (IDR)', '', '159');
+				echo FieldToSelectOneNumber('X_PTSMHBRIMaxSaldo',  $_SESSION['PTSMHBRIMaxSaldo'], 15, 14, 'Maximum Saldo to be kept in BRI PTSMH (IDR)', 'Maximum Saldo to be kept in BRI PTSMH (IDR)', '', '160');
+				echo FieldToSelectOneNumber('X_PTSMHOCBCMinSaldo',  $_SESSION['PTSMHOCBCMinSaldo'], 15, 14, 'Minimum Saldo to be kept in OCBC PTSMH (IDR)', 'Minimum Saldo to be kept in OCBC PTSMH (IDR)', '', '161');
+				echo FieldToSelectOneNumber('X_PTSMHOCBCMaxSaldo',  $_SESSION['PTSMHOCBCMaxSaldo'], 15, 14, 'Maximum Saldo to be kept in OCBC PTSMH (IDR)', 'Maximum Saldo to be kept in OCBC PTSMH (IDR)', '', '162');
+		echo '</fieldset><br />';
+
 	echo '</fieldset><br />';
 echo '</fieldset><br />';
 

@@ -296,12 +296,18 @@ if (DB_num_rows($Result) == 0) {
 				$SalaryDisplay .= ' ' . htmlspecialchars($Row['currencycode'], ENT_QUOTES, 'UTF-8');
 			}
 		}
-		echo '<tr class="striped_row">
+        if ($Row['description'] == Null) {
+            $Row['description'] = '';
+        }
+        if ($Row['positiontitle'] == Null) {
+            $Row['positiontitle'] = '';
+        }
+          echo '<tr class="striped_row">
 				<td>' . htmlspecialchars($Row['employeenumber'], ENT_QUOTES, 'UTF-8') . '</td>
 				<td>' . htmlspecialchars($Row['firstname'], ENT_QUOTES, 'UTF-8') . ' ' . htmlspecialchars($Row['lastname'], ENT_QUOTES, 'UTF-8') . '</td>
 				<td>' . htmlspecialchars($Row['description'], ENT_QUOTES, 'UTF-8') . '</td>
 				<td>' . htmlspecialchars($Row['positiontitle'], ENT_QUOTES, 'UTF-8') . '</td>
-				<td>' . htmlspecialchars($Row['paygradecode'], ENT_QUOTES, 'UTF-8') . '</td>
+				<td>' . htmlspecialchars((string)$Row['paygradecode'], ENT_QUOTES, 'UTF-8') . '</td>
 				<td>' . ($Row['stepnumber'] ? htmlspecialchars($Row['stepnumber'], ENT_QUOTES, 'UTF-8') : '-') . '</td>
 				<td class="number">' . $SalaryDisplay . '</td>
 				<td>' . ($Row['effectivedate'] ? ConvertSQLDate($Row['effectivedate']) : '-') . '</td>

@@ -543,7 +543,7 @@ function CheckNegativeStock($RootPath){
 }
 
 function ConsumablesGoodsNotEnoughStock($DaysUsage, $DaysMinStock, $DaysStockPurchase, $RootPath){
-/* EXPLAIN SQL 2014-05-40 added index discontinued+categoryid*/
+	/* EXPLAIN SQL 2014-05-40 added index discontinued+categoryid*/
 	/*  Check if there are consumable goods with not enough stock for the following $DaysMinStock
 		based on last $DaysUsage usage*/
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$DaysUsage));
@@ -1912,7 +1912,7 @@ function ItemsInWrongShops($ShopType, $RootPath){
 }
 
 function ItemsMovingToDiscountDelayed($TypeDiscount, $NumDays, $RootPath){
-/* EXPLAIN SQL 2014-05-21	*/
+	/* EXPLAIN SQL 2014-05-21	*/
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
@@ -2360,8 +2360,6 @@ function ItemsWithoutStandardCost($RootPath){
 				AND stockmaster.categoryid != 'ASSETS'
 				AND actualcost = 0
 				AND discontinued = 0";
-// EXPLAIN SQL 2014-05-31
-//	prnMsg($SQL);
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		$TableTitleText = __('Items without standard cost');
@@ -2446,16 +2444,16 @@ function ItemsWithoutWeightOrVolume($RootPath){
 }
 
 function ItemsWithStockKantorButReorderLevelTokoZero($TypeOfShop, $RootPath){
-/**********************************************************************
-items with stock kantor > 0 
-RL is zero at one type of shop
-No pending transfer regarding this item
+	/**********************************************************************
+	items with stock kantor > 0 
+	RL is zero at one type of shop
+	No pending transfer regarding this item
 
-2013-04-16 excluding items in change price process
-2013-04-25 excluding items in move to discount / outlet process 
-2014-12-02 excluding items in OLD categories
+	2013-04-16 excluding items in change price process
+	2013-04-25 excluding items in move to discount / outlet process 
+	2014-12-02 excluding items in OLD categories
 
-***********************************************************************/
+	***********************************************************************/
 
 	$ShopsToSetRL = NumberOfShops($TypeOfShop);
 	if ($TypeOfShop == "SHOPKL"){
@@ -2540,7 +2538,6 @@ No pending transfer regarding this item
 				AND stockcategory.stocktype = 'F' " . 
 				$ConditionCategory . "
 			ORDER BY stockid";
-// prnMsg($SQL);
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		$TableTitleText = $Message . ' Items with stock available (but NO changing price or category) at Kantor but RL zero for all ' . $Message . '  SHOPS';
@@ -2728,7 +2725,6 @@ function ObsoleteComponentsInActiveBOM($RootPath){
 function OldOnlineQuotations($NumDaysBank, $RootPath){
 
 	$StartDateBank = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysBank));
-	$Titletext = "Old Online Quotations to be deleted. No Payment received in more than " . $NumDaysBank . " days.";
 		
 	$SQL = "SELECT salesorders.orderno,	
 				salesorders.customerref,
@@ -3025,8 +3021,8 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath){
 
 	$TableTitleText = "Follow up Outstanding " . $Source. " Online Orders";
 	$ThankYouDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numDays));
-// 2015-01-14 Prices already NET for online orders
-//                (SELECT SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent))
+	// 2015-01-14 Prices already NET for online orders
+	//                (SELECT SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent))
 	if ($Source == "LAZADA"){	
 		$SQL = "SELECT salesorders.orderno,	
 					salesorders.customerref,
@@ -3437,8 +3433,8 @@ function OutstandingOrders($customertype, $Ordertype, $RootPath){
 	}
 }
 
-function over_or_below_limit($Request, $Sign, $Limit, $RootPath){
-/* EXPLAIN SQL 2014-05-21	*/
+function over_or_below_limit($Request, $Sign, $Limit){
+	/* EXPLAIN SQL 2014-05-21	*/
 	if ($Request == "Items changing price"){
 		$SQL = "SELECT COUNT(*)
 				FROM stockmaster
@@ -3576,13 +3572,13 @@ function OvestockAtSamples($maxallowedsamples, $RootPath){
 }
 
 function PackagingItemsOnWrongLocation($RootPath){
-/* EXPLAIN SQL	2014-05-20
+	/* EXPLAIN SQL	2014-05-20
 
-id	select_type	table	type	possible_keys	key	key_len	ref	rows	Extra
-1	SIMPLE	stockmaster	ref	PRIMARY,CategoryID,StockID	CategoryID	20	const	10	Using where
-1	SIMPLE	locstock	ref	PRIMARY,StockID	StockID	62	kl_erp.stockmaster.stockid	14	Using where
+	id	select_type	table	type	possible_keys	key	key_len	ref	rows	Extra
+	1	SIMPLE	stockmaster	ref	PRIMARY,CategoryID,StockID	CategoryID	20	const	10	Using where
+	1	SIMPLE	locstock	ref	PRIMARY,StockID	StockID	62	kl_erp.stockmaster.stockid	14	Using where
 
-*/	
+	*/	
 	$SQL = "SELECT stockmaster.stockid,
 					stockmaster.description,
 					locstock.loccode,
@@ -3863,7 +3859,6 @@ function SPGNotReportingSalesInDays($maxdays){
 							WHERE orddate >= '". $StartDate. "'
 								AND salesorders.salesperson = salesman.salesmancode)
 		ORDER BY salesman.salesmancode";
-//	prnMsg($SQL);			
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		$TableTitleText =  __('Senior or Support SPG with more than ') . $maxdays . __(' days not reporting ANY sales.');
@@ -3901,7 +3896,7 @@ function SPGNotReportingSalesInDays($maxdays){
 	}
 }
 
-function SuppliersWithoutBasicData($RootPath){
+function SuppliersWithoutBasicData(){
 
 	$SQL = "SELECT supplierid,
 					suppname
@@ -3974,7 +3969,7 @@ function TransferWithWrongInformation($maxdays, $RootPath){
 					</tr>
 				</thead>
 				<tbody>';
-		$ResultTx = DB_Txn_Begin();
+		DB_Txn_Begin();
 		$LastStockid = "";
 		$LastTransfer = "";
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -3983,13 +3978,13 @@ function TransferWithWrongInformation($maxdays, $RootPath){
 				$SQL = "UPDATE loctransfers SET shipqty = recqty 
 						WHERE loctransferid = '".$MyRow['loctransferid'] . "'";
 				$ErrMsg =  __('CRITICAL ERROR') . '! ' . __('Unable to fix the wrong information');
-				$ResultFix = DB_query($SQL, $ErrMsg, '', true);
+				DB_query($SQL, $ErrMsg, '', true);
 				$Action = "Fixed"; 
 			} else {
 				$SQL = "DELETE FROM loctransfers 
 						WHERE loctransferid = '".$MyRow['loctransferid'] . "'";
 				$ErrMsg =  __('CRITICAL ERROR') . '! ' . __('Unable to delete the wrong information');
-				$ResultDelete = DB_query($SQL, $ErrMsg, '', true);
+				DB_query($SQL, $ErrMsg, '', true);
 				$Action = "Deleted";
 			}
 
@@ -4008,7 +4003,7 @@ function TransferWithWrongInformation($maxdays, $RootPath){
 			$LastStockid = $MyRow['stockid'];
 			$LastTransfer = $MyRow['reference'];
 		}
-		$ResultTx = DB_Txn_Commit();
+		DB_Txn_Commit();
 		echo '</tbody>
 			</table>
 			</div>
@@ -4071,12 +4066,10 @@ function UsersNotLoggingIn($maxdays, $Type, $RootPath){
 	}
 }
 
-function ValueStockLocation($Location, $minpcs, $maxpcs, $minvalue, $maxvalue){
-/*	$minpcs = $optimalpcs * (1 - $varpcs);
-	$maxpcs = $optimalpcs * (1 + $varpcs);
-	$minvalue = $optimalvalue * (1 - $varvalue);
-	$maxvalue = $optimalvalue * (1 + $varvalue);
-*/	
+function ValueStockLocation($Location, $minpcs, $maxpcs){
+	/*	$minpcs = $optimalpcs * (1 - $varpcs);
+		$maxpcs = $optimalpcs * (1 + $varpcs);
+	*/	
 	$SQL = "SELECT 
 				locations.locationname,
 				SUM(locstock.quantity) AS qtyonhand,
@@ -4107,7 +4100,7 @@ function ValueStockLocation($Location, $minpcs, $maxpcs, $minvalue, $maxvalue){
 }
 
 function WrongItemsOnPurchaseOrders($RootPath){
-/* EXPLAIN SQL 2014-05-30 */
+	/* EXPLAIN SQL 2014-05-30 */
 	$SQL = "SELECT purchorderdetails.orderno,
 				purchorderdetails.itemcode,
 				stockmaster.description,
@@ -4165,8 +4158,8 @@ function WrongItemsOnPurchaseOrders($RootPath){
 	}
 }
 
-function WrongItemsOnWorkOrders($RootPath){
-/* EXPLAIN SQL 2014-05-30 */
+function WrongItemsOnWorkOrders(){
+	/* EXPLAIN SQL 2014-05-30 */
 	$SQL = "SELECT workorders.wo,
 				woitems.stockid,
 				stockmaster.description,
@@ -4222,7 +4215,7 @@ function WrongItemsOnWorkOrders($RootPath){
 	}
 }
 
-function OpenCartOrdersByStatus($Status, $RootPath ){
+function OpenCartOrdersByStatus($Status){
 	$SQL = "SELECT 	oc_order.order_id,
 				oc_order.store_name,
 				oc_order.firstname,
@@ -4262,11 +4255,6 @@ function OpenCartOrdersByStatus($Status, $RootPath ){
 						</thead>
 						<tbody>';
 				$ShowHeader = false;
-			}
-			if ($MyRow['currency_code'] == "IDR"){
-				$RoundingDecimals = 0;
-			} else {
-				$RoundingDecimals = 2;
 			}
 			echo '<tr class="striped_row">
 					<td class="number">' . $i . '</td>
@@ -4387,9 +4375,7 @@ function InternalBankTransfers($Company,
 
 	} elseif (($SaldoDanamon >= $DanamonOverExcess)){
 		// Danamon is over the excess balance... transfer from Danamon to OCBC for "cash storage"
-		// $TransferExcessDanamon = $SaldoDanamon - $DanamonOverExcess;
 		$TransferExcessDanamon = $SaldoDanamon - (($DanamonOverExcess + $DanamonMax) / 2);
-		// $TransferExcessDanamon = $SaldoDanamon - $DanamonMax;
 
 		$TransferExcessDanamon = CalculateExcessTransferFromDanamonToBank($Company, 
 															$TransferExcessDanamon,

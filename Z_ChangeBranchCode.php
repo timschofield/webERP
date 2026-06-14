@@ -214,7 +214,15 @@ if (isset($_POST['ProcessCustomerChange'])){
 	$Result = DB_query($SQL, $ErrMsg, '', true);
 
 	DB_ReinstateForeignKeys();
-	DB_Txn_Commit();
+	if (!$Result) {
+		DB_Txn_Rollback();
+		echo ' ... ' . __('failed');
+		echo '<p>' . __('Customer Branch Code change to') . ': ' . $_POST['NewBranchCode'] . ' ' . __('failed.');
+	}else {
+		DB_Txn_Commit();
+		echo ' ... ' . __('completed');
+		echo '<p>' . __('Customer Branch Code') . ': ' . $_POST['OldBranchCode'] . ' ' . __('was successfully changed to') . ' : ' . $_POST['NewBranchCode'];
+	}
 
 }
 

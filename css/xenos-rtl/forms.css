@@ -36,6 +36,7 @@ form fieldset field {
 display:block;
 text-align:right;
 margin-bottom:3px;
+clear:both;
 }
 form fieldset field label {
 float:right;

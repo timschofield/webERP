@@ -13,7 +13,7 @@ require_once(__DIR__ . '/HRScoringEngine.php');
  */
 function GetAppraisalCriteria($AppraisalID = 0) {
 	$Criteria = array();
-	$SQL = "SELECT criteriaid, criterianame, weight FROM hrperformancecriteria WHERE active = 1 ORDER BY criterianame";
+	$SQL = "SELECT criteriaid, criterianame, weight FROM hrperformancecriteria WHERE isactive = 1 ORDER BY criterianame";
 	$Result = DB_query($SQL);
 	while ($Row = DB_fetch_array($Result)) {
 		$Criteria[$Row['criteriaid']] = $Row;

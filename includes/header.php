@@ -236,15 +236,10 @@ echo '<div class="help-bubble" id="help-bubble">
 	<div class="help-content" id="help-content"></div>
 </div>';
 KL RICARD Comment these lines as only show an X on the left top corner */
+
 /* KL RICARD
-KL RICARD END */
-/* KL RICARD
-if (isset($_GET['FontSize'])) {
-	$SQL = "UPDATE www_users
-				SET fontsize='" . $_GET['FontSize'] . "'
-				WHERE userid = '" . $_SESSION['UserID'] . "'";
-	$Result = DB_query($SQL);
-	switch ($_GET['FontSize']) {
+if (isset($_POST['FontSize'])) {
+	switch ($_POST['FontSize']) {
 		case 0:
 			$_SESSION['ScreenFontSize'] = '0';
 			$_SESSION['FontSize'] = '0.667rem';
@@ -412,7 +407,7 @@ if (isset($_SESSION['AllowedPageSecurityTokens']) && is_array($_SESSION['Allowed
 		} else {
 			if (file_exists('locale/' . $_SESSION['Language'] . '/Manual/ManualContents.php')) {
 				echo '<div id="ActionIcon">
-						<a data-title="', __('Read the manual'), '" href="', $PathPrefix, $RootPath, '/locale/', $_SESSION['Language'], '/Manual/ManualContents.php', $ViewTopic, $BookMark, '">
+						<a data-title="', __('Read the manual'), '" href="', $RootPath, '/locale/', $_SESSION['Language'], '/Manual/ManualContents.php', $ViewTopic, $BookMark, '">
 							<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/manual.png" onclick="ShowHelp(', $ViewTopic,',', $BookMark, ')" title="', __('Help'), '" alt="', __('Help'), '" />
 						</a>
 					</div>';
@@ -422,7 +417,7 @@ if (isset($_SESSION['AllowedPageSecurityTokens']) && is_array($_SESSION['Allowed
 		}
 	} else {
 		echo '<div id="ActionIcon">
-				<a data-title="', __('Read the manual'), '" href="', $PathPrefix, $RootPath, '/ManualContents.php" target="_blank">
+				<a data-title="', __('Read the manual'), '" href="', $RootPath, '/ManualContents.php" target="_blank">
 					<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/manual.png" onclick="ShowHelp(', $ViewTopic,',', $BookMark, ')" title="', __('Help'), '" alt="', __('Help'), '" />
 				</a>
 			</div>';
@@ -496,47 +491,6 @@ if ($ScriptName != 'Dashboard.php') {
 
 }
 KL RICARD END No show the Dashboard */
-
-if ($ScriptName == 'index.php') {
-	echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-/*	KL RICARD No show the Font Size
-	if ($_SESSION['ScreenFontSize'] == 0) {
-		echo '<a style="font-size:0.667rem;" class="FontSize" href="', $PathPrefix, $RootPath, '/index.php?FontSize=0" data-title="', __('Small text size'), '"><u>A</u></a>';
-	} else {
-		echo '<a style="font-size:0.667rem;" class="FontSize" href="', $PathPrefix, $RootPath, '/index.php?FontSize=0" data-title="', __('Small text size'), '">A</a>';
-	}
-	if ($_SESSION['ScreenFontSize'] == 1) {
-		echo '<a style="font-size:0.833rem;" class="FontSize" href="', $PathPrefix, $RootPath, '/index.php?FontSize=1" data-title="', __('Medium text size'), '"><u>A</u></a>';
-	} else {
-		echo '<a style="font-size:0.833rem;" class="FontSize" href="', $PathPrefix, $RootPath, '/index.php?FontSize=1" data-title="', __('Medium text size'), '">A</a>';
-	}
-	if ($_SESSION['ScreenFontSize'] == 2) {
-		echo '<a style="font-size:1rem;" class="FontSize" href="', $PathPrefix, $RootPath, '/index.php?FontSize=2" data-title="', __('Large text size'), '"><u>A</u></a>';
-	} else {
-		echo '<a style="font-size:1rem;" class="FontSize" href="', $PathPrefix, $RootPath, '/index.php?FontSize=2" data-title="', __('Large text size'), '">A</a>';
-	}
-KL RICARD No show the Font Size */
-
-/*	KL RICARD No show the theme
-	echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-	echo '<div class="ScriptTitle">', __('Theme'), ':</div>';
-
-	echo '<select name="Theme" id="favourites" onchange="window.open (\'index.php?Theme=\' + this.value,\'_self\',false)">';
-
-	$Themes = glob('css/*', GLOB_ONLYDIR);
-	foreach ($Themes as $ThemeName) {
-		$ThemeName = basename($ThemeName);
-		if ($ThemeName != 'mobile' and mb_substr($ThemeName, -4) != '-rtl') {
-			if ($_SESSION['Theme'] == $ThemeName) {
-				echo '<option selected="selected" value="', $ThemeName, '">', ucfirst($ThemeName), '</option>';
-			} else {
-				echo '<option value="', $ThemeName, '">', ucfirst($ThemeName), '</option>';
-			}
-		}
-	}
-	echo '</select>';
-KL RICARD No show the theme */
-}
 
 echo '</header>';
 

@@ -82,11 +82,11 @@ if ($_SESSION['UserID'] == "Ricard"){
 //	phpinfo();
 
 /* TEST AND PLAY WITH call_user_func to move this script mainly to a table in DB
-//		over_or_below_limit("DISC80 Items in AR", "BELOW", 20, $RootPath);
+//		over_or_below_limit("DISC80 Items in AR", "BELOW", 20);
 	$FunctionName = "over_or_below_limit";
-	$Parameters = '"DISC80 Items in AR", "BELOW", 30, $RootPath';
-	call_user_func($FunctionName, "DISC80 Items in AR", "BELOW", 30, $RootPath);
-	$FunctionName("DISC80 Items in AR", "BELOW", 30, $RootPath);
+	$Parameters = '"DISC80 Items in AR", "BELOW", 30';
+	call_user_func($FunctionName, "DISC80 Items in AR", "BELOW", 30);
+	$FunctionName("DISC80 Items in AR", "BELOW", 30);
 	
 	$Par1 = "DISC80 Items in AR";
 	$Par2 = "BELOW";
@@ -114,7 +114,7 @@ if ($ProcessSection01){
 	if ($KL_PurchasingManager
 		OR $KL_PurchasingTeam){
 		$StartTime = microtime(true);
-		SuppliersWithoutBasicData($RootPath);
+		SuppliersWithoutBasicData();
 		TimeNeededForExecution("SuppliersWithoutBasicData", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
@@ -177,23 +177,23 @@ if ($ProcessSection01){
 		OR $KL_ShopSupportTeam){
 		
 		$StartTime = microtime(true);
-		over_or_below_limit("Items changing price or moving category", "OVER", $_SESSION['MaxItemsChangingPriceOrMovingDisc'], $RootPath);
+		over_or_below_limit("Items changing price or moving category", "OVER", $_SESSION['MaxItemsChangingPriceOrMovingDisc']);
 		TimeNeededForExecution("over_or_below_limit", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		over_or_below_limit("Items changing price", "OVER", $_SESSION['MaxItemsChangingPrice'], $RootPath);
+		over_or_below_limit("Items changing price", "OVER", $_SESSION['MaxItemsChangingPrice']);
 		TimeNeededForExecution("over_or_below_limit", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		over_or_below_limit("Items moving to 20% discount", "OVER", $_SESSION['MaxItemsChangingDisc20'], $RootPath);
+		over_or_below_limit("Items moving to 20% discount", "OVER", $_SESSION['MaxItemsChangingDisc20']);
 		TimeNeededForExecution("over_or_below_limit", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		over_or_below_limit("Items moving to 50% discount", "OVER", $_SESSION['MaxItemsChangingDisc50'], $RootPath);
+		over_or_below_limit("Items moving to 50% discount", "OVER", $_SESSION['MaxItemsChangingDisc50']);
 		TimeNeededForExecution("over_or_below_limit", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		over_or_below_limit("Items moving to 80% discount", "OVER", $_SESSION['MaxItemsChangingDisc80'], $RootPath);
+		over_or_below_limit("Items moving to 80% discount", "OVER", $_SESSION['MaxItemsChangingDisc80']);
 		TimeNeededForExecution("over_or_below_limit", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
@@ -404,46 +404,31 @@ if ($ProcessSection01){
 		OR $KL_AdministrationTeam){
 		$StartTime = microtime(true);
 		InternalBankTransfers("PTADU", 
-					"111121105AD",  750000000, 1500000000, 2000000000,
-					"111121101AD",   25000000,   75000000,
-					"111121110AD",   25000000,   75000000,
-					"111121115AD",   25000000,   75000000, 
-					"111121106AD",   25000000,   75000000, 
-					"111121117AD",    1000000,    5000000,
-					"111121121AD",     100000,    1000000,
-					"111121122AD",     100000,    1000000,
-					"111121125AD",     100000,    1000000,
-					25000000,
-					 1000000,
+					"111121105AD", $_SESSION['PTADUDanamonMinSaldo'], $_SESSION['PTADUDanamonMaxSaldo'], $_SESSION['PTADUDanamonOverExcessSaldo'],
+					"111121101AD", $_SESSION['PTADUMandiriMinSaldo'], $_SESSION['PTADUMandiriMaxSaldo'],
+					"111121110AD", $_SESSION['PTADUBCAMinSaldo'], $_SESSION['PTADUBCAMaxSaldo'],
+					"111121115AD", $_SESSION['PTADUBNIMinSaldo'], $_SESSION['PTADUBNIMaxSaldo'], 
+					"111121106AD", $_SESSION['PTADUBRIMinSaldo'], $_SESSION['PTADUBRIMaxSaldo'], 
+					"111121117AD", $_SESSION['PTADUOCBCMinSaldo'], $_SESSION['PTADUOCBCMaxSaldo'],
+					"111121121AD", $_SESSION['PTADUTokopediaMinSaldo'], $_SESSION['PTADUTokopediaMaxSaldo'],
+					"111121122AD", $_SESSION['PTADUShopeeMinSaldo'], $_SESSION['PTADUShopeeMaxSaldo'],
+					"111121125AD", $_SESSION['PTADUMidtransMinSaldo'], $_SESSION['PTADUMidtransMaxSaldo'],
+					$_SESSION['InternalBankTransferSizeMultiple'],
+					$_SESSION['InternalOnlineTransferSizeMultiple'],
 					$PeriodNow);	
 		TimeNeededForExecution("InternalBankTransfers", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 
 		$StartTime = microtime(true);
 		InternalBankTransfers("PTSMH", 
-					"111121105SM",  750000000, 1500000000, 2000000000,
-					"111121100SM",   25000000,   75000000,
-					"111121110SM",   25000000,   75000000,
-					"111121115SM",   25000000,   75000000, 
-					"111121106SM",   25000000,   75000000, 
-					"111121117SM",    1000000,    5000000,
+					"111121105SM", $_SESSION['PTSMHDanamonMinSaldo'], $_SESSION['PTSMHDanamonMaxSaldo'], $_SESSION['PTSMHDanamonOverExcessSaldo'],
+					"111121100SM", $_SESSION['PTSMHMandiriMinSaldo'], $_SESSION['PTSMHMandiriMaxSaldo'],
+					"111121110SM", $_SESSION['PTSMHBCAMinSaldo'], $_SESSION['PTSMHBCAMaxSaldo'],
+					"111121115SM", $_SESSION['PTSMHBNIMinSaldo'], $_SESSION['PTSMHBNIMaxSaldo'], 
+					"111121106SM", $_SESSION['PTSMHBRIMinSaldo'], $_SESSION['PTSMHBRIMaxSaldo'], 
+					"111121117SM", $_SESSION['PTSMHOCBCMinSaldo'], $_SESSION['PTSMHOCBCMaxSaldo'],
 					"", 0, 0, "", 0, 0,	"", 0, 0,
-					25000000,
-					0,
-					$PeriodNow);	
-		TimeNeededForExecution("InternalBankTransfers", $StartTime, $KL_SystemAdmin);
-		$NumberOfTestExecuted++;
-
-		$StartTime = microtime(true);
-		InternalBankTransfers("PTBB", 
-					"111121105BB",  750000000, 1500000000, 2000000000,
-					"111121101BB",   25000000,   50000000,
-					"111121110BB",   25000000,   50000000,
-					"111121115BB",   25000000,   50000000, 
-					"111121106BB",   25000000,   50000000,
-					"", 0, 0, 
-					"", 0, 0, "", 0, 0,	"", 0, 0,
-					25000000,
+					$_SESSION['InternalBankTransferSizeMultiple'],
 					0,
 					$PeriodNow);	
 		TimeNeededForExecution("InternalBankTransfers", $StartTime, $KL_SystemAdmin);
@@ -529,28 +514,6 @@ if ($ProcessSection01){
 		TimeNeededForExecution("BalanceListAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 
-		$StartTime = microtime(true);
-		BalanceListAccountControl("('111121100BB',
-									'111121101BB',
-									'111121105BB',
-									'111121106BB',
-									'111121110BB', 
-									'111121115BB', 
-									'111121111BB', 
-									'111121112BB', 
-									'111121120BB',
-									'111121121BB',
-									'111121122BB',
-									'111121125BB',
-									'111121130BB', 
-									'111203010BB',
-									'111203015BB',
-									'111203020BB',
-									'111259010BB', 
-									'111259020BB', 
-									'111259050BB')", "Total Banks PT BB", 1000000000, 3000000000, $PeriodNow);
-		TimeNeededForExecution("BalanceListAccountControl", $StartTime, $KL_SystemAdmin);
-		$NumberOfTestExecuted++;
 	}
 	
 	if ($KL_SystemAdmin){
@@ -854,23 +817,23 @@ if ($ProcessSection02){
 		OR $KL_PurchasingTeam){
 
 		$StartTime = microtime(true);
-		ValueStockLocation("SERVI",    0,  150, 0, 0);
+		ValueStockLocation("SERVI",    0,  150);
 		TimeNeededForExecution("ValueStockLocation", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		ValueStockLocation("SERDE",    0,  150, 0, 0);
+		ValueStockLocation("SERDE",    0,  150);
 		TimeNeededForExecution("ValueStockLocation", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		ValueStockLocation("SERSU",    0,  150, 0, 0);
+		ValueStockLocation("SERSU",    0,  150);
 		TimeNeededForExecution("ValueStockLocation", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		ValueStockLocation("SERSV",    0,  150, 0, 0);
+		ValueStockLocation("SERSV",    0,  150);
 		TimeNeededForExecution("ValueStockLocation", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		ValueStockLocation("SERSW",    0,  150, 0, 0);
+		ValueStockLocation("SERSW",    0,  150);
 		TimeNeededForExecution("ValueStockLocation", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
@@ -1133,7 +1096,7 @@ if ($ProcessSection02){
 		TimeNeededForExecution("WrongItemsOnPurchaseOrders", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		WrongItemsOnWorkOrders($RootPath);
+		WrongItemsOnWorkOrders();
 		TimeNeededForExecution("WrongItemsOnWorkOrders", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
@@ -1270,15 +1233,6 @@ if ($ProcessSection02){
 		TimeNeededForExecution("OutstandingOrders", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
-	
-	/*
-	if ($KL_SystemAdmin 
-		OR $KL_GeneralAffairsManager
-		OR $KL_ShopSupportLeader){ 
-		OutstandingOrders("Consignment", "Order", $RootPath);
-		OutstandingOrders("Consignment", "Quotation", $RootPath);
-	}
-	*/
 
 	if ($KL_AdministrationTeam
 		OR $KL_CustomerService){ 
@@ -1313,14 +1267,14 @@ if ($ProcessSection02){
 
 	if ($KL_CustomerService){
 		$StartTime = microtime(true);
-		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_PENDING, $RootPath );
+		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_PENDING);
 		TimeNeededForExecution("OpenCartOrdersByStatus", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_CustomerService){
 		$StartTime = microtime(true);
-		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_SHIPPED, $RootPath );
+		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_SHIPPED);
 		TimeNeededForExecution("OpenCartOrdersByStatus", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
@@ -1336,14 +1290,12 @@ if ($ProcessSection02){
 		OldOnlineQuotations(1, $RootPath);
 		TimeNeededForExecution("OldOnlineQuotations", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
-//		OutstandingOrders("Online", "Quotation", $RootPath);
-//		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin
 		OR $KL_CustomerService){ 
 		$StartTime = microtime(true);
-		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_PROCESSING, $RootPath );
+		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_PROCESSING);
 		TimeNeededForExecution("OpenCartOrdersByStatus", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}

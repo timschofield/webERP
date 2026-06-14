@@ -387,7 +387,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 
 		// KL RICARD: Send email when stock adjustment is made except for KL Partners
 		if (($_SESSION['InventoryManagerEmail']!='') 
-			OR (!$KL_Partner)){
+			AND (!$KL_Partner)){
 		// KL RICARD END Send email when stock adjustment is made except for KL Partners
 			$ConfirmationText = $ConfirmationText . ' ' . __('by user') . ' ' . $_SESSION['UserID'] . ' ' . __('at') . ' ' . date('Y-m-d H:i:s');
 			$EmailSubject = __('Stock adjustment for'). ' ' . $_SESSION['Adjustment' . $identifier]->StockID;

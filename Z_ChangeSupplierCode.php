@@ -61,7 +61,7 @@ function ProcessSupplier($OldCode, $NewCode) {
 	if (checkNewCode($NewCode)) {
 		// Now check that the new code doesn't already exist
 		if (checkSupplierExist($NewCode)) {
-				prnMsg(__('The replacement supplier code') .': ' .
+				prnMsg(__('The new supplier code') .': ' .
 						$NewCode . ' ' . __('already exists as a supplier code in the system') . ' - ' . __('a unique supplier code must be entered for the new code'),'error');
 				return;
 		}
@@ -89,13 +89,13 @@ function ProcessSupplier($OldCode, $NewCode) {
 		FROM suppliers WHERE supplierid='" . $OldCode . "'";
 
 	$ErrMsg = __('The SQL to insert the new suppliers master record failed') . ', ' . __('the SQL statement was');
-	$Result = DB_query($SQL, $ErrMsg, '', true);
+	DB_query($SQL, $ErrMsg, '', true);
 
 	foreach ($Table_key as $Table=>$key) {
 		prnMsg(__('Changing').' '. $Table.' ' . __('records'),'info');
 		$SQL = "UPDATE " . $Table . " SET $key='" . $NewCode . "' WHERE $key='" . $OldCode . "'";
 		$ErrMsg = __('The SQL to update') . ' ' . $Table . ' ' . __('records failed');
-		$Result = DB_query($SQL, $ErrMsg, '', true);
+		DB_query($SQL, $ErrMsg, '', true);
 	}
 
 	prnMsg(__('Deleting the supplier code from the suppliers master table'),'info');
@@ -103,8 +103,15 @@ function ProcessSupplier($OldCode, $NewCode) {
 
 	$ErrMsg = __('The SQL to delete the old supplier record failed');
 	$Result = DB_query($SQL, $ErrMsg, '', true);
-
-	DB_Txn_Commit();
+	if (!$Result) {
+		DB_Txn_Rollback();
+		echo ' ... ' . __('failed');
+		echo '<p>' . __('Supplier Code change to') . ': ' . $_POST['NewSupplierNo'] . ' ' . __('failed.');
+	}else {
+		DB_Txn_Commit();
+		echo ' ... ' . __('completed');
+		echo '<p>' . __('Supplier Code') . ': ' . $_POST['OldSupplierNo'] . ' ' . __('was successfully changed to') . ' : ' . $_POST['NewSupplierNo'];
+	}
 }
 
 function checkSupplierExist($CodeSupplier) {
