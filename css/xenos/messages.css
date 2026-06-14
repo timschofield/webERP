@@ -21,6 +21,10 @@ div.Message.warn {
 background:url('images/message-warning.png') no-repeat 10px 50%, linear-gradient(#FDEF80, #fff8c4);
     border:1px solid #f2c779;
 }
+.WeightWarning {
+	color: red !important;
+	font-weight: bold !important;
+}
 .MessageCloseButton {
     margin-left: 15px;
     color: #000000;
