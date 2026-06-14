@@ -27,6 +27,10 @@ background:#fff8c4 url('images/message-warning.png') no-repeat 10px 50%;
     border:1px solid #f2c779;
     color:#800080;
 }
+.WeightWarning {
+	color: red !important;
+	font-weight: bold !important;
+}
 .MessageCloseButton {
     margin-right: 15px;
     color: #C8C8C8;
