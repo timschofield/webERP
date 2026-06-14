@@ -116,7 +116,7 @@ echo '<div class="hr-module-card">
 		</h3>
 		<ul>
 			<li><a href="' . $RootPath . '/HREmployees.php">' . __('Employee Directory') . '</a></li>
-			<li><a href="' . $RootPath . '/HREmployeeEntry.php">' . __('Add/Edit Employee') . '</a></li>
+			<li><a href="' . $RootPath . '/HREmployees.php">' . __('Add/Edit Employee') . '</a></li>
 			<li><a href="' . $RootPath . '/HRPositions.php">' . __('Positions') . '</a></li>
 			<li><a href="' . $RootPath . '/HRDepartments.php">' . __('Departments') . '</a></li>
 		</ul>
