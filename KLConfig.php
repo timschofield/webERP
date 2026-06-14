@@ -6,10 +6,10 @@
 *
 *******************************************************************************/
 /* KL RICARD Configuration file for specific KL code */
-$KLCodeVersion = "081"; // to be updated with each change in the code, for better tracking of the code version in production and test environments
+$KLCodeVersion = "082"; // to be updated with each change in the code, for better tracking of the code version in production and test environments
 
 // KL RICARD look for the secret values of sensitive variables and credentials $PTADU...
-include('KLConfig/KLCredentials.php');
+include(__DIR__ . '/KLConfig/KLCredentials.php');
 // END KL RICARD look for the secret values of sensitive variables and credentials
 
 // The real path to the symlinked part_pics directory, to prevent DomPDF from being unable to access images
