@@ -21,7 +21,20 @@ if ($AppraisalID <= 0) {
 }
 
 // Load appraisal basic info
-$SQL = "SELECT a.appraisalid, a.employeeid, a.reviewperiodstart, a.reviewperiodend, a.duedate, a.status, a.overallrating, a.calculatedoverallrating, CONCAT(e.firstname, ' ', e.lastname) AS employeename FROM hrperfappraisals a INNER JOIN hremployees e ON a.employeeid = e.employeeid WHERE a.appraisalid = " . $AppraisalID;
+$SQL = "SELECT a.appraisalid,
+			a.employeeid,
+			a.reviewperiodstart,
+			a.reviewperiodend,
+			a.duedate,
+			a.status,
+			a.overallrating,
+			a.calculatedoverallrating,
+			CONCAT(e.firstname, ' ', e.lastname) AS employeename,
+			e.positionid
+		FROM hrperfappraisals a
+		INNER JOIN hremployees e
+			ON a.employeeid = e.employeeid
+		WHERE a.appraisalid = " . $AppraisalID;
 $Result = DB_query($SQL);
 if (DB_num_rows($Result) == 0) {
 	echo '<p class="error">' . __('Appraisal not found') . '</p>';
@@ -30,7 +43,7 @@ if (DB_num_rows($Result) == 0) {
 }
 $AppRow = DB_fetch_array($Result);
 
-$Criteria = GetAppraisalCriteria($AppraisalID);
+$Criteria = GetAppraisalCriteria($AppraisalID, $AppRow['positionid']);
 $Scores = GetCriteriaScores($AppraisalID);
 
 // Compute totals and mapped rating
