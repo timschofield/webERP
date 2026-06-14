@@ -111,7 +111,7 @@ if (isset($_POST['Submit'])) {
 					$comments = isset($_POST['CriteriaComments'][$cid]) ? $_POST['CriteriaComments'][$cid] : '';
 					SaveCriteriaScoreAdvanced($AppraisalID, (int)$cid, $rating === '' ? null : (int)$rating, $comments);
 				}
-				$calc = CalculateWeightedScoreForAppraisal($AppraisalID);
+				$calc = CalculateWeightedScoreForAppraisal($AppraisalID, 0);
 				$SQL = "UPDATE hrperfappraisals SET calculatedoverallrating = " . (isset($calc['mappedrating']) && $calc['mappedrating'] !== null ? (int)$calc['mappedrating'] : 'NULL') . " WHERE appraisalid = " . $AppraisalID;
 				DB_query($SQL);
 				if (isset($_POST['UseCalculatedRating']) && $_POST['UseCalculatedRating']) {
@@ -153,7 +153,7 @@ if (isset($_POST['Submit'])) {
 					$comments = isset($_POST['CriteriaComments'][$cid]) ? $_POST['CriteriaComments'][$cid] : '';
 					SaveCriteriaScoreAdvanced($AppraisalID, (int)$cid, $rating === '' ? null : (int)$rating, $comments);
 				}
-				$calc = CalculateWeightedScoreForAppraisal($AppraisalID);
+				$calc = CalculateWeightedScoreForAppraisal($AppraisalID, 0);
 				$SQL = "UPDATE hrperfappraisals SET calculatedoverallrating = " . (isset($calc['mappedrating']) && $calc['mappedrating'] !== null ? (int)$calc['mappedrating'] : 'NULL') . " WHERE appraisalid = " . $AppraisalID;
 				DB_query($SQL);
 				if (isset($_POST['UseCalculatedRating']) && $_POST['UseCalculatedRating']) {
@@ -199,7 +199,8 @@ if (isset($_GET['AppraisalID'])) {
 
 	$SQL = "SELECT a.*,
 			CONCAT(e.firstname, ' ', e.lastname) AS employeename,
-			e.employeenumber
+			e.employeenumber,
+			e.positionid
 		FROM hrperfappraisals a
 		INNER JOIN hremployees e ON a.employeeid = e.employeeid
 		WHERE a.appraisalid = " . $AppraisalID;
@@ -224,7 +225,7 @@ if (isset($_GET['AppraisalID'])) {
 	$DbComments          = $MyRow['comments'];
 
 	/* Load criteria and scores for this appraisal */
-	$Criteria = GetAppraisalCriteria($AppraisalID);
+	$Criteria = GetAppraisalCriteria($AppraisalID, $MyRow['positionid']);
 	$DbCriteriaScores = GetCriteriaScores($AppraisalID);
 } else {
 	$DbEmployeeName      = '';
@@ -238,7 +239,7 @@ if (isset($_GET['AppraisalID'])) {
 	$DbComments          = '';
 
 	/* Load criteria for new appraisal (no scores yet) */
-	$Criteria = GetAppraisalCriteria();
+	$Criteria = GetAppraisalCriteria(0, $MyRow['positionid']);
 	$DbCriteriaScores = array();
 }
 
