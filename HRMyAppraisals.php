@@ -10,14 +10,10 @@ $BookMark = 'HRMyAppraisals';
 
 include(__DIR__ . '/includes/header.php');
 
+require_once(__DIR__ . '/includes/HRPerformanceHelper.php');
+
 /* Rating labels for hrperfappraisals.overallrating (INT 1-5) */
-$RatingLabels = array(
-	5 => __('Outstanding'),
-	4 => __('Exceeds Expectations'),
-	3 => __('Meets Expectations'),
-	2 => __('Needs Improvement'),
-	1 => __('Unsatisfactory'),
-);
+$RatingLabels = GetRatingLabels();
 
 echo '<p class="page_title_text">
 		<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/star.png" title="' . __('View My Appraisals') . '" /> ' .

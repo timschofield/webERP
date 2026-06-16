@@ -3,6 +3,7 @@
 /* HR Performance Reviews Management */
 
 require(__DIR__ . '/includes/session.php');
+require_once(__DIR__ . '/includes/HRPerformanceHelper.php');
 
 $Title = __('Performance Reviews');
 $ViewTopic = 'HumanResources';
@@ -169,7 +170,7 @@ if (isset($_GET['edit']) || isset($_GET['new']) || !isset($_GET['view'])) {
 	while ($Row = DB_fetch_array($Result)) {
 		echo '<option value="' . $Row['employeeid'] . '"' .
 			($EmployeeID == $Row['employeeid'] ? ' selected="selected"' : '') .
-			'>' . $Row['employeenumber'] . ' - ' . $Row['firstname'] . ' ' . $Row['lastname'] . '</option>';
+			'>' . PadEmployeeNumber($Row['employeenumber']) . ' - ' . $Row['firstname'] . ' ' . $Row['lastname'] . '</option>';
 	}
 
 	echo '</select>
@@ -188,7 +189,7 @@ if (isset($_GET['edit']) || isset($_GET['new']) || !isset($_GET['view'])) {
 	while ($Row = DB_fetch_array($Result)) {
 		echo '<option value="' . $Row['employeeid'] . '"' .
 			($ReviewerID == $Row['employeeid'] ? ' selected="selected"' : '') .
-			'>' . $Row['employeenumber'] . ' - ' . $Row['firstname'] . ' ' . $Row['lastname'] . '</option>';
+			'>' . PadEmployeeNumber($Row['employeenumber']) . ' - ' . $Row['firstname'] . ' ' . $Row['lastname'] . '</option>';
 	}
 
 	echo '</select>
@@ -316,7 +317,7 @@ if (isset($_GET['view'])) {
 
 			<table width="100%" style="margin-top: 20px;">
 				<tr>
-					<td width="50%"><strong>' . __('Employee') . ':</strong> ' . $ReviewRow['firstname'] . ' ' . $ReviewRow['lastname'] . ' (' . $ReviewRow['employeenumber'] . ')</td>
+					<td width="50%"><strong>' . __('Employee') . ':</strong> ' . $ReviewRow['firstname'] . ' ' . $ReviewRow['lastname'] . ' (' . PadEmployeeNumber($ReviewRow['employeenumber']) . ')</td>
 					<td><strong>' . __('Review Date') . ':</strong> ' . ConvertSQLDate($ReviewRow['reviewdate']) . '</td>
 				</tr>
 				<tr>
@@ -383,7 +384,7 @@ if (!isset($_GET['view'])) {
 	while ($Row = DB_fetch_array($Result)) {
 		echo '<option value="' . $Row['employeeid'] . '"' .
 			($FilterEmployee == $Row['employeeid'] ? ' selected="selected"' : '') .
-			'>' . $Row['employeenumber'] . ' - ' . $Row['firstname'] . ' ' . $Row['lastname'] . '</option>';
+			'>' . PadEmployeeNumber($Row['employeenumber']) . ' - ' . $Row['firstname'] . ' ' . $Row['lastname'] . '</option>';
 	}
 
 	echo '</select></td>
@@ -460,7 +461,7 @@ if (!isset($_GET['view'])) {
 			}
 
 			echo '<tr ' . $StatusColor . '>
-					<td>' . $Row['employeenumber'] . ' - ' . $Row['firstname'] . ' ' . $Row['lastname'] . '</td>
+					<td>' . PadEmployeeNumber($Row['employeenumber']) . ' - ' . $Row['firstname'] . ' ' . $Row['lastname'] . '</td>
 					<td>' . ConvertSQLDate($Row['reviewdate']) . '</td>
 					<td>' . ConvertSQLDate($Row['reviewperiodstart']) . ' to ' . ConvertSQLDate($Row['reviewperiodend']) . '</td>
 					<td>' . __($Row['reviewtype']) . '</td>
