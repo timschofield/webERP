@@ -21,7 +21,20 @@ if ($AppraisalID <= 0) {
 }
 
 // Load appraisal basic info
-$SQL = "SELECT a.appraisalid, a.employeeid, a.reviewperiodstart, a.reviewperiodend, a.duedate, a.status, a.overallrating, a.calculatedoverallrating, CONCAT(e.firstname, ' ', e.lastname) AS employeename FROM hrperfappraisals a INNER JOIN hremployees e ON a.employeeid = e.employeeid WHERE a.appraisalid = " . $AppraisalID;
+$SQL = "SELECT a.appraisalid,
+			a.employeeid,
+			a.reviewperiodstart,
+			a.reviewperiodend,
+			a.duedate,
+			a.status,
+			a.overallrating,
+			a.calculatedoverallrating,
+			CONCAT(e.firstname, ' ', e.lastname) AS employeename,
+			e.positionid
+		FROM hrperfappraisals a
+		INNER JOIN hremployees e
+			ON a.employeeid = e.employeeid
+		WHERE a.appraisalid = " . $AppraisalID;
 $Result = DB_query($SQL);
 if (DB_num_rows($Result) == 0) {
 	echo '<p class="error">' . __('Appraisal not found') . '</p>';
@@ -30,7 +43,7 @@ if (DB_num_rows($Result) == 0) {
 }
 $AppRow = DB_fetch_array($Result);
 
-$Criteria = GetAppraisalCriteria($AppraisalID);
+$Criteria = GetAppraisalCriteria($AppraisalID, $AppRow['positionid']);
 $Scores = GetCriteriaScores($AppraisalID);
 
 // Compute totals and mapped rating
@@ -55,7 +68,6 @@ echo '<table class="selection">
 			<th>' . __('Criterion') . '</th>
 			<th>' . __('Weight') . '</th>
 			<th>' . __('Rating') . '</th>
-			<th>' . __('Score') . '</th>
 			<th>' . __('Weighted Score') . '</th>
 			<th>' . __('Comments') . '</th>
 		</tr>
@@ -63,21 +75,20 @@ echo '<table class="selection">
 	<tbody>';
 
 if (count($Criteria) == 0) {
-	echo '<tr><td colspan="6" class="centre">' . __('No criteria defined') . '</td></tr>';
+	echo '<tr><td colspan="5" class="centre">' . __('No criteria defined') . '</td></tr>';
 } else {
 	foreach ($Criteria as $cid => $c) {
 		$weight = isset($c['weight']) ? (float)$c['weight'] : 0.0;
 		$scoreRow = isset($Scores[$cid]) ? $Scores[$cid] : null;
 		$rating = $scoreRow && isset($scoreRow['rating']) ? $scoreRow['rating'] : '-';
-		$scoreVal = $scoreRow && isset($scoreRow['score']) ? $scoreRow['score'] : '-';
+		$ratingLabel = ($rating !== '-' AND isset($RatingLabels[(int)$rating])) ? $RatingLabels[(int)$rating] : '-';
 		$weighted = $scoreRow && isset($scoreRow['weightedscore']) ? $scoreRow['weightedscore'] : 0.0;
 		$comments = $scoreRow && isset($scoreRow['comments']) ? $scoreRow['comments'] : '';
 		echo '<tr>';
 		echo '<td>' . htmlspecialchars($c['criterianame'], ENT_QUOTES, 'UTF-8') . '</td>';
-		echo '<td class="right">' . number_format($weight,1) . '%</td>';
-		echo '<td class="centre">' . ($rating === '-' ? '-' : (int)$rating) . '</td>';
-		echo '<td class="right">' . ($scoreVal === '-' ? '-' : number_format((float)$scoreVal,2)) . '</td>';
-		echo '<td class="right">' . (is_null($weighted) ? '-' : number_format((float)$weighted,2)) . '</td>';
+		echo '<td class="right">' . number_format($weight, 1) . '%</td>';
+		echo '<td class="centre">' . htmlspecialchars($ratingLabel, ENT_QUOTES, 'UTF-8') . '</td>';
+		echo '<td class="right">' . (is_null($weighted) ? '-' : number_format((float)$weighted, 2)) . '</td>';
 		echo '<td>' . ($comments !== '' ? htmlspecialchars($comments, ENT_QUOTES, 'UTF-8') : '-') . '</td>';
 		echo '</tr>';
 	}
@@ -87,8 +98,7 @@ if (count($Criteria) == 0) {
 	echo '<td><strong>' . __('Total') . '</strong></td>';
 	echo '<td></td>';
 	echo '<td></td>';
-	echo '<td></td>';
-	echo '<td class="right"><strong>' . number_format((float)$TotalWeighted,2) . '</strong></td>';
+	echo '<td class="right"><strong>' . number_format((float)$TotalWeighted, 2) . '</strong></td>';
 	echo '<td>' . __('Mapped rating:') . ' ' . htmlspecialchars($MappedRatingLabel, ENT_QUOTES, 'UTF-8') . '</td>';
 	echo '</tr>';
 }

@@ -19,10 +19,8 @@ $RatingLabels = array(
 	1 => __('Unsatisfactory'),
 );
 
-echo '<a class="toplink" href="' . $RootPath . '/HRDashboard.php">' . __('Return to HR Dashboard') . '</a>';
-
 echo '<p class="page_title_text">
-		<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/star.png" title="' . __('My Appraisals') . '" /> ' .
+		<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/star.png" title="' . __('View My Appraisals') . '" /> ' .
 		__('My Performance Appraisals') . '
 	</p>';
 
@@ -31,7 +29,7 @@ $SQL = "SELECT employeenumber FROM hremployees WHERE userid = '" . DB_escape_str
 $Result = DB_query($SQL);
 
 if (DB_num_rows($Result) == 0) {
-	prnMsg(__('Your user account is not linked to an employee record'), 'warn');
+	prnMsg(__('Your webERP user account is not linked to an employee record'), 'warn');
 	include(__DIR__ . '/includes/footer.php');
 	exit;
 }

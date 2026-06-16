@@ -10,6 +10,14 @@ $BookMark = 'HRPerformanceCriteria';
 
 include(__DIR__ . '/includes/header.php');
 
+function ShowWeightWarning(float $WeightSum) {
+	echo '<div class="centre">
+			<span class="WeightWarning">' .
+			__('Warning: The sum of weights for this position is') . ' ' . number_format($WeightSum, 1) . '%, ' . __('not 100%!') . '
+			</span>
+		</div>';
+}
+
 echo '<p class="page_title_text">
 		<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/award.png" title="' . __('Performance Criteria') . '" /> ' .
 		__('Performance Evaluation Criteria') . '
@@ -24,12 +32,18 @@ if (isset($_POST['Submit'])) {
 		prnMsg(__('The criteria name must not be empty'), 'error');
 	}
 
+	if (!isset($_POST['PositionID']) or (int)$_POST['PositionID'] <= 0) {
+		$InputError = 1;
+		prnMsg(__('A position must be selected'), 'error');
+	}
+
 	if ($InputError != 1) {
-		if (isset($_POST['CriteriaID']) && $_POST['CriteriaID'] > 0) {
+		if (isset($_POST['CriteriaID']) and $_POST['CriteriaID'] > 0) {
 			// Update existing criteria
 			$SQL = "UPDATE hrperformancecriteria SET
 						criterianame = '" . $_POST['CriteriaName'] . "',
 						description = '" . $_POST['Description'] . "',
+						positionid = " . (int)$_POST['PositionID'] . ",
 						category = '" . $_POST['Category'] . "',
 						weight = " . filter_var($_POST['Weight'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) . ",
 						displayorder = " . (int)$_POST['DisplayOrder'] . ",
@@ -45,11 +59,12 @@ if (isset($_POST['Submit'])) {
 		} else {
 			// Insert new criteria
 			$SQL = "INSERT INTO hrperformancecriteria (
-						criterianame, description, category, weight, displayorder, isactive,
+						criterianame, description, positionid, category, weight, displayorder, isactive,
 						createdby, createddate
 					) VALUES (
 						'" . $_POST['CriteriaName'] . "',
 						'" . $_POST['Description'] . "',
+						" . (int)$_POST['PositionID'] . ",
 						'" . $_POST['Category'] . "',
 						" . filter_var($_POST['Weight'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) . ",
 						" . (int)$_POST['DisplayOrder'] . ",
@@ -68,7 +83,7 @@ if (isset($_POST['Submit'])) {
 }
 
 // Handle delete
-if (isset($_GET['delete']) && isset($_GET['CriteriaID'])) {
+if (isset($_GET['delete']) and isset($_GET['CriteriaID'])) {
 	$SQL = "DELETE FROM hrperformancecriteria WHERE criteriaid = " . (int)$_GET['CriteriaID'];
 	$Result = DB_query($SQL);
 	if ($Result) {
@@ -84,6 +99,7 @@ if (true) {
 	$Category = 'Core Skills';
 	$Weight = 0;
 	$DisplayOrder = 0;
+	$PositionID = 0;
 	$Active = 1;
 
 	if ($CriteriaID > 0) {
@@ -96,6 +112,7 @@ if (true) {
 			$Category = $Row['category'];
 			$Weight = $Row['weight'];
 			$DisplayOrder = $Row['displayorder'];
+			$PositionID = $Row['positionid'];
 			$Active = $Row['isactive'];
 		}
 	}
@@ -117,6 +134,18 @@ if (true) {
 			<field>
 				<label for="Description">' . __('Description') . ':</label>
 				<textarea name="Description" rows="3" cols="50">' . htmlspecialchars($Description) . '</textarea>
+			</field>';
+
+	echo '<field>
+				<label for="PositionID">' . __('Position') . ':</label>
+				<select name="PositionID" required="required">';
+	echo '<option value="0">' . __('Select Position') . '</option>';
+	$SQL = "SELECT positionid, positiontitle FROM hrpositions WHERE active = 1 ORDER BY positiontitle";
+	$Result = DB_query($SQL);
+	while ($PositionRow = DB_fetch_array($Result)) {
+		echo '<option value="' . $PositionRow['positionid'] . '"' . ($PositionID == $PositionRow['positionid'] ? ' selected="selected"' : '') . '>' . htmlspecialchars($PositionRow['positiontitle'], ENT_QUOTES, 'UTF-8') . '</option>';
+	}
+	echo '</select>
 			</field>
 
 			<field>
@@ -156,22 +185,42 @@ if (true) {
 }
 
 // Display criteria list by category
-$SQL = "SELECT * FROM hrperformancecriteria ORDER BY category, displayorder, criterianame";
+$SQL = "SELECT hrperformancecriteria.*, hrpositions.positiontitle
+		FROM hrperformancecriteria
+		LEFT JOIN hrpositions
+			ON hrperformancecriteria.positionid = hrpositions.positionid
+		ORDER BY hrpositions.positiontitle,
+			hrperformancecriteria.category,
+			hrperformancecriteria.displayorder,
+			hrperformancecriteria.criterianame";
 $Result = DB_query($SQL);
 
 if (DB_num_rows($Result) == 0) {
 	echo '<p>' . __('No performance criteria defined') . '</p>';
 } else {
-	$CurrentCategory = '';
+	$CurrentPosition = '';
+	$WeightSum = 0;
 	while ($Row = DB_fetch_array($Result)) {
-		if ($Row['category'] != $CurrentCategory) {
-			if ($CurrentCategory != '') {
-				echo '</table><br />';
+		$PositionTitle = (string)$Row['positiontitle'];
+		if ($Row['positiontitle'] == '') {
+			$PositionTitle = __('Not assigned to any position yet');
+		}else{
+			$PositionTitle = (string)$Row['positiontitle'];
+		}
+		if ($PositionTitle != $CurrentPosition) {
+			if ($CurrentPosition != '') {
+				echo '</table>';
+				if ($WeightSum != 100) {
+					ShowWeightWarning($WeightSum);
+				}
+				echo '<br />';
 			}
-			$CurrentCategory = $Row['category'];
-			echo '<h3>' . __($CurrentCategory) . '</h3>';
+			$CurrentPosition = $PositionTitle;
+			$WeightSum = 0;
+			echo '<h3 class="centre">' . htmlspecialchars($CurrentPosition, ENT_QUOTES, 'UTF-8') . '</h3>';
 			echo '<table class="selection">
 					<tr>
+						<th>' . __('Category') . '</th>
 						<th>' . __('Order') . '</th>
 						<th>' . __('Criteria Name') . '</th>
 						<th>' . __('Description') . '</th>
@@ -182,6 +231,7 @@ if (DB_num_rows($Result) == 0) {
 		}
 
 		echo '<tr' . (!$Row['isactive'] ? ' style="background-color: #f0f0f0; opacity: 0.7;"' : '') . '>
+				<td>' . __($Row['category']) . '</td>
 				<td>' . $Row['displayorder'] . '</td>
 				<td><strong>' . $Row['criterianame'] . '</strong></td>
 				<td>' . $Row['description'] . '</td>
@@ -192,8 +242,12 @@ if (DB_num_rows($Result) == 0) {
 					<a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?delete=1&CriteriaID=' . $Row['criteriaid'] . '" onclick="return confirm(\'' . __('Are you sure you want to delete this criteria?') . '\');">' . __('Delete') . '</a>
 				</td>
 			</tr>';
+		$WeightSum += (float)$Row['weight'];
 	}
 	echo '</table>';
+	if ($CurrentPosition != '' and $WeightSum != 100) {
+		ShowWeightWarning($WeightSum);
+	}
 }
 
 include(__DIR__ . '/includes/footer.php');

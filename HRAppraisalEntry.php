@@ -60,6 +60,10 @@ if (isset($_POST['Submit'])) {
 		$InputError = 1;
 		prnMsg(__('Due date is required'), 'error');
 	}
+	if (!isset($_POST['ReviewerID']) OR $_POST['ReviewerID'] == '') {
+		$InputError = 1;
+		prnMsg(__('Reviewer/Manager must be selected'), 'error');
+	}
 
 	if ($InputError == 0) {
 
@@ -84,7 +88,19 @@ if (isset($_POST['Submit'])) {
 		$DueDate           = FormatDateForSQL($_POST['DueDate']);
 		$ReviewerID        = (isset($_POST['ReviewerID']) AND $_POST['ReviewerID'] != '') ? (int)$_POST['ReviewerID'] : 'NULL';
 		$Status            = DB_escape_string($_POST['Status']);
-		$OverallRating     = (isset($_POST['OverallRating']) AND $_POST['OverallRating'] != '') ? (int)$_POST['OverallRating'] : 'NULL';
+
+		/* Change status dynamically from Not Started to In Progress if criteria has rating score */
+		if ($Status == 'Not Started' and isset($_POST['CriteriaRating']) and is_array($_POST['CriteriaRating'])) {
+			foreach ($_POST['CriteriaRating'] as $cid => $rating) {
+				if ($rating !== '') {
+					$Status = 'In Progress';
+					$_POST['Status'] = 'In Progress';
+					break;
+				}
+			}
+		}
+
+		$OverallRating     = (isset($_POST['OverallRating']) AND $_POST['OverallRating'] != '') ? (float)$_POST['OverallRating'] : '0.00';
 		$Comments          = DB_escape_string($_POST['Comments']);
 
 		if ($EditMode) {
@@ -111,11 +127,11 @@ if (isset($_POST['Submit'])) {
 					$comments = isset($_POST['CriteriaComments'][$cid]) ? $_POST['CriteriaComments'][$cid] : '';
 					SaveCriteriaScoreAdvanced($AppraisalID, (int)$cid, $rating === '' ? null : (int)$rating, $comments);
 				}
-				$calc = CalculateWeightedScoreForAppraisal($AppraisalID);
-				$SQL = "UPDATE hrperfappraisals SET calculatedoverallrating = " . (isset($calc['mappedrating']) && $calc['mappedrating'] !== null ? (int)$calc['mappedrating'] : 'NULL') . " WHERE appraisalid = " . $AppraisalID;
+				$calc = CalculateWeightedScoreForAppraisal($AppraisalID, 0);
+				$SQL = "UPDATE hrperfappraisals SET calculatedoverallrating = " . (isset($calc['weightedscore']) && $calc['weightedscore'] !== null ? (float)$calc['weightedscore'] : '0.00') . " WHERE appraisalid = " . $AppraisalID;
 				DB_query($SQL);
 				if (isset($_POST['UseCalculatedRating']) && $_POST['UseCalculatedRating']) {
-					$SQL = "UPDATE hrperfappraisals SET overallrating = " . (isset($calc['mappedrating']) && $calc['mappedrating'] !== null ? (int)$calc['mappedrating'] : 'NULL') . " WHERE appraisalid = " . $AppraisalID;
+					$SQL = "UPDATE hrperfappraisals SET overallrating = " . (isset($calc['weightedscore']) && $calc['weightedscore'] !== null ? (float)$calc['weightedscore'] : '0.00') . " WHERE appraisalid = " . $AppraisalID;
 					DB_query($SQL);
 				}
 			}
@@ -131,8 +147,7 @@ if (isset($_POST['Submit'])) {
 					reviewerid,
 					status,
 					overallrating,
-					comments,
-					appraisaltype
+					comments
 				) VALUES (
 					" . $EmployeeID . ",
 					'" . $ReviewPeriodStart . "',
@@ -141,8 +156,7 @@ if (isset($_POST['Submit'])) {
 					" . $ReviewerID . ",
 					'" . $Status . "',
 					" . $OverallRating . ",
-					'" . $Comments . "',
-					'Annual'
+					'" . $Comments . "'
 				)";
 			DB_query($SQL, __('Failed to create appraisal'));
 			$AppraisalID = DB_Last_Insert_ID('hrperfappraisals', 'appraisalid');
@@ -153,11 +167,11 @@ if (isset($_POST['Submit'])) {
 					$comments = isset($_POST['CriteriaComments'][$cid]) ? $_POST['CriteriaComments'][$cid] : '';
 					SaveCriteriaScoreAdvanced($AppraisalID, (int)$cid, $rating === '' ? null : (int)$rating, $comments);
 				}
-				$calc = CalculateWeightedScoreForAppraisal($AppraisalID);
-				$SQL = "UPDATE hrperfappraisals SET calculatedoverallrating = " . (isset($calc['mappedrating']) && $calc['mappedrating'] !== null ? (int)$calc['mappedrating'] : 'NULL') . " WHERE appraisalid = " . $AppraisalID;
+				$calc = CalculateWeightedScoreForAppraisal($AppraisalID, 0);
+				$SQL = "UPDATE hrperfappraisals SET calculatedoverallrating = " . (isset($calc['weightedscore']) && $calc['weightedscore'] !== null ? (float)$calc['weightedscore'] : '0.00') . " WHERE appraisalid = " . $AppraisalID;
 				DB_query($SQL);
 				if (isset($_POST['UseCalculatedRating']) && $_POST['UseCalculatedRating']) {
-					$SQL = "UPDATE hrperfappraisals SET overallrating = " . (isset($calc['mappedrating']) && $calc['mappedrating'] !== null ? (int)$calc['mappedrating'] : 'NULL') . " WHERE appraisalid = " . $AppraisalID;
+					$SQL = "UPDATE hrperfappraisals SET overallrating = " . (isset($calc['weightedscore']) && $calc['weightedscore'] !== null ? (float)$calc['weightedscore'] : '0.00') . " WHERE appraisalid = " . $AppraisalID;
 					DB_query($SQL);
 				}
 			}
@@ -170,7 +184,7 @@ if (isset($_POST['Submit'])) {
 }
 
 /* Handle delete before attempting any form rendering */
-if (isset($_GET['Delete']) AND isset($_GET['AppraisalID'])) {
+if ((isset($_GET['Delete']) OR isset($_POST['Delete'])) AND isset($_GET['AppraisalID'])) {
 
 	$AppraisalID = (int)$_GET['AppraisalID'];
 
@@ -199,7 +213,8 @@ if (isset($_GET['AppraisalID'])) {
 
 	$SQL = "SELECT a.*,
 			CONCAT(e.firstname, ' ', e.lastname) AS employeename,
-			e.employeenumber
+			e.employeenumber,
+			e.positionid
 		FROM hrperfappraisals a
 		INNER JOIN hremployees e ON a.employeeid = e.employeeid
 		WHERE a.appraisalid = " . $AppraisalID;
@@ -219,26 +234,36 @@ if (isset($_GET['AppraisalID'])) {
 	$DbReviewPeriodEnd   = ConvertSQLDate($MyRow['reviewperiodend']);
 	$DbDueDate           = ConvertSQLDate($MyRow['duedate']);
 	$DbReviewerID        = $MyRow['reviewerid'];
-	$DbStatus            = $MyRow['status'];
+	$DbStatus            = isset($_POST['Status']) ? $_POST['Status'] : $MyRow['status'];
 	$DbOverallRating     = $MyRow['overallrating'];
 	$DbComments          = $MyRow['comments'];
 
 	/* Load criteria and scores for this appraisal */
-	$Criteria = GetAppraisalCriteria($AppraisalID);
+	$Criteria = GetAppraisalCriteria($AppraisalID, $MyRow['positionid']);
 	$DbCriteriaScores = GetCriteriaScores($AppraisalID);
 } else {
 	$DbEmployeeName      = '';
-	$DbEmployeeNumber    = '';
-	$DbReviewPeriodStart = DateAdd(date($_SESSION['DefaultDateFormat']), 'y', -1);
-	$DbReviewPeriodEnd   = DateAdd($DbReviewPeriodStart, 'y', 1);
-	$DbDueDate           = date($_SESSION['DefaultDateFormat']);
-	$DbReviewerID        = '';
-	$DbStatus            = '';
-	$DbOverallRating     = '';
-	$DbComments          = '';
+	if (isset($_POST['EmployeeNumber'])) {
+		$DbEmployeeNumber = $_POST['EmployeeNumber'];
+	} elseif (isset($_GET['EmployeeNumber'])) {
+		$DbEmployeeNumber = $_GET['EmployeeNumber'];
+	} else {
+		$DbEmployeeNumber = '';
+	}
+	$DbReviewPeriodStart = isset($_POST['ReviewPeriodStart']) ? ConvertSQLDate($_POST['ReviewPeriodStart']) : DateAdd(date($_SESSION['DefaultDateFormat']), 'y', -1);
+	$DbReviewPeriodEnd   = isset($_POST['ReviewPeriodEnd']) ? ConvertSQLDate($_POST['ReviewPeriodEnd']) : DateAdd(date($_SESSION['DefaultDateFormat']), 'd', -1);
+	$DbDueDate           = isset($_POST['DueDate']) ? ConvertSQLDate($_POST['DueDate']) : date($_SESSION['DefaultDateFormat']);
+	$DbReviewerID        = isset($_POST['ReviewerID']) ? $_POST['ReviewerID'] : '';
+	$DbStatus            = isset($_POST['Status']) ? $_POST['Status'] : 'Not Started';
+	$DbOverallRating     = isset($_POST['OverallRating']) ? $_POST['OverallRating'] : '';
+	$DbComments          = isset($_POST['Comments']) ? $_POST['Comments'] : '';
 
 	/* Load criteria for new appraisal (no scores yet) */
-	$Criteria = GetAppraisalCriteria();
+	$PositionID = 0;
+	if ($DbEmployeeNumber != '') {
+		$PositionID = GetPositionIDFromEmployeeNumber((string)$DbEmployeeNumber);
+	}
+	$Criteria = GetAppraisalCriteria(0, $PositionID);
 	$DbCriteriaScores = array();
 }
 
@@ -248,12 +273,6 @@ if ($EditMode) {
 	echo '<p class="page_title_text">
 			<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/star.png" title="' . __('Edit Appraisal') . '" /> ' .
 			__('Edit Performance Appraisal') . ' - ' . __('ID') . ': ' . $AppraisalID . '
-		</p>';
-	echo '<p class="centre">
-			<a href="' . $RootPath . '/HRAppraisalEntry.php?AppraisalID=' . $AppraisalID . '&Delete=1"
-				onclick="return confirm(\'' . __('Are you sure you want to delete this appraisal?') . '\');">' .
-				__('Delete This Appraisal') . '
-			</a>
 		</p>';
 	$FormAction = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8')
 		. '?AppraisalID=' . $AppraisalID;
@@ -288,7 +307,7 @@ if ($EditMode) {
 
 	echo '<field>
 			<label for="EmployeeNumber">' . __('Employee') . ':</label>
-			<select name="EmployeeNumber" required>';
+			<select name="EmployeeNumber" required onchange="this.form.submit()">';
 	echo '<option value="">' . __('Select Employee') . '</option>';
 	$SQL    = "SELECT employeenumber,
 				CONCAT(firstname, ' ', lastname) AS name
@@ -297,7 +316,8 @@ if ($EditMode) {
 			ORDER BY lastname, firstname";
 	$Result = DB_query($SQL);
 	while ($EmpRow = DB_fetch_array($Result)) {
-		echo '<option value="' . htmlspecialchars($EmpRow['employeenumber'], ENT_QUOTES, 'UTF-8') . '">' .
+		echo '<option value="' . htmlspecialchars($EmpRow['employeenumber'], ENT_QUOTES, 'UTF-8') . '"' .
+			($DbEmployeeNumber == $EmpRow['employeenumber'] ? ' selected="selected"' : '') . '>' .
 			htmlspecialchars($EmpRow['name'], ENT_QUOTES, 'UTF-8') . '</option>';
 	}
 	echo '</select>
@@ -404,13 +424,16 @@ echo '</table>';
 
 echo '<p><strong>' . __('Calculated Weighted Score') . ':</strong> <span id="weightedScoreDisplay">N/A</span> ' . __('Mapped Rating') . ': <span id="mappedRatingDisplay">N/A</span></p>';
 
-echo '<p><label><input type="checkbox" name="UseCalculatedRating" value="1" /> ' . __('Use calculated rating as overall rating') . '</label></p>';
+$useCalculatedRatingChecked = (!isset($_POST['FormID']) OR (isset($_POST['UseCalculatedRating']) AND $_POST['UseCalculatedRating'])) ? ' checked="checked"' : '';
+echo '<p><label><input type="checkbox" name="UseCalculatedRating" value="1"' . $useCalculatedRatingChecked . ' /> ' . __('Use calculated rating as overall rating') . '</label></p>';
 
 echo '</fieldset>';
 
 if ($EditMode) {
 	echo '<div class="centre">
-		<input type="submit" name="Submit" value="' . __('Update Appraisal') . '" />
+		<input type="submit" name="Submit" value="' . __('Update Appraisal') . '" />&nbsp;
+		<input type="submit" name="Delete" value="' . __('Delete Appraisal') . '"
+			onclick="return confirm(\'' . __('Are you sure you want to delete this appraisal?') . '\');" />
 	</div>';
 } else {
 	echo '<div class="centre">

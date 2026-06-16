@@ -8,7 +8,7 @@ General prompt rules applying to PHP, CCS, and JS related files:
 # 1) Do not cut long lines, unless specificaly defined in the user prompt.
 2) Do not delete any comment in the code, unless it contains wrong information or it is belonging to the code you are deleting.
 3) Do not add comments similar to //Added lines, //Removed lines, //Modified lines, etc.
-4) Do not change, modify, upgrade any other part of the code not related to the propmt.
+4) Do not change, modify, upgrade any other part of the code not related to the prompt.
 5) Trailing whitespaces: Remove all trailing whitespaces
 6) Indentation: Convert indentation spaces into tab with size 1 tab = 4 spaces.
 7) PascalCase: All variables must be written in PascalCase style and fix the wrong ones. Except variables starting with $id*, $webERP*, $SQL*, $HTML* or counters like $i, $j.
