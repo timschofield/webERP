@@ -26,13 +26,7 @@ require_once(__DIR__ . '/includes/HRPerformanceHelper.php');
  * to human-readable labels. 5 = highest, 1 = lowest, keyed in descending order
  * so they appear in that order in the select element.
  */
-$RatingLabels = array(
-	5 => __('Outstanding'),
-	4 => __('Exceeds Expectations'),
-	3 => __('Meets Expectations'),
-	2 => __('Needs Improvement'),
-	1 => __('Unsatisfactory'),
-);
+$RatingLabels = GetRatingLabels();
 
 echo '<a class="toplink" href="' . $RootPath . '/HRPerformanceAppraisals.php">' . __('Return to Appraisals List') . '</a>';
 

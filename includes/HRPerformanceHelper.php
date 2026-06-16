@@ -65,6 +65,19 @@ function PadEmployeeNumber($EmployeeNumber) {
 	return str_pad($EmployeeNumber, 6, '0', STR_PAD_LEFT);
 }
 
+/* GetRatingLabels
+ * Returns an array of core 1-5 appraisal rating levels with localized labels
+ */
+function GetRatingLabels() {
+	return array(
+		5 => __('Outstanding'),
+		4 => __('Exceeds Expectations'),
+		3 => __('Meets Expectations'),
+		2 => __('Needs Improvement'),
+		1 => __('Unsatisfactory'),
+	);
+}
+
 /*
  * GetCriteriaScores
  * Returns associative array keyed by criteriaid for a given appraisal
