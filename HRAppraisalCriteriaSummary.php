@@ -51,13 +51,7 @@ $calc = CalculateWeightedScoreForAppraisal($AppraisalID);
 $TotalWeighted = $calc['weightedscore'];
 $MappedRating = $calc['mappedrating'];
 
-$RatingLabels = array(
-	5 => __('Outstanding'),
-	4 => __('Exceeds Expectations'),
-	3 => __('Meets Expectations'),
-	2 => __('Needs Improvement'),
-	1 => __('Unsatisfactory'),
-);
+$RatingLabels = GetRatingLabels();
 $MappedRatingLabel = (isset($RatingLabels[$MappedRating]) ? $RatingLabels[$MappedRating] : $MappedRating);
 
 echo '<h2>' . __('Appraisal Criteria Summary') . ' - ' . htmlspecialchars($AppRow['employeename'], ENT_QUOTES, 'UTF-8') . ' (#' . $AppRow['appraisalid'] . ')</h2>';

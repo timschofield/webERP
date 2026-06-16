@@ -20,6 +20,7 @@
 /* HR Employees Directory and Maintenance */
 
 require(__DIR__ . '/includes/session.php');
+require_once(__DIR__ . '/includes/HRPerformanceHelper.php');
 
 $Title = __('HR Employees');
 $ViewTopic = 'HumanResources';
@@ -694,7 +695,7 @@ if (!isset($SelectedEmployee)) {
 
 	while ($MyRow = DB_fetch_array($Result)) {
 		echo '<tr class="striped_row">
-				<td>' . str_pad($MyRow['employeenumber'], 6, '0', STR_PAD_LEFT) . '</td>
+				<td>' . PadEmployeeNumber($MyRow['employeenumber']) . '</td>
 				<td>' . $MyRow['firstname'] . ' ' . $MyRow['lastname'] . '</td>
 				<td>' . $MyRow['email'] . '</td>
 				<td>' . $MyRow['phone'] . '</td>

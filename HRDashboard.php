@@ -3,6 +3,7 @@
 /* Human Resources Management System Dashboard */
 
 require(__DIR__ . '/includes/session.php');
+require_once(__DIR__ . '/includes/HRPerformanceHelper.php');
 
 $Title = __('Human Resources Management');
 $ViewTopic = 'HumanResources';
@@ -227,8 +228,9 @@ if (DB_num_rows($Result) > 0) {
 	while ($Row = DB_fetch_array($Result)) {
 		$EmpLink = $RootPath . '/HREmployees.php?SelectedEmployee=' . urlencode($Row['employeenumber']);
 		$DeptLink = $RootPath . '/HRDepartments.php?SelectedDepartment=' . urlencode($Row['departmentid']);
+		$PaddedEmpNum = PadEmployeeNumber($Row['employeenumber']);
 		echo '<tr class="striped_row">
-				<td><a href="' . $EmpLink . '">' . htmlspecialchars((string)$Row['employeenumber'], ENT_QUOTES, 'UTF-8') . '</a></td>
+				<td><a href="' . $EmpLink . '">' . htmlspecialchars($PaddedEmpNum, ENT_QUOTES, 'UTF-8') . '</a></td>
 				<td><a href="' . $EmpLink . '">' . htmlspecialchars((string)$Row['firstname'] . ' ' . $Row['lastname'], ENT_QUOTES, 'UTF-8') . '</a></td>
 				<td><a href="' . $DeptLink . '">' . htmlspecialchars((string)$Row['description'], ENT_QUOTES, 'UTF-8') . '</a></td>
 				<td>' . htmlspecialchars((string)$Row['positiontitle'], ENT_QUOTES, 'UTF-8') . '</td>
