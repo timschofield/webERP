@@ -9,15 +9,10 @@ $ViewTopic = 'HumanResources';
 $BookMark = 'HRPerformanceAppraisals';
 
 include(__DIR__ . '/includes/header.php');
+require_once(__DIR__ . '/includes/HRPerformanceHelper.php');
 
 /* Rating labels for hrperfappraisals.overallrating (INT 1-5) */
-$RatingLabels = array(
-	5 => __('Outstanding'),
-	4 => __('Exceeds Expectations'),
-	3 => __('Meets Expectations'),
-	2 => __('Needs Improvement'),
-	1 => __('Unsatisfactory'),
-);
+$RatingLabels = GetRatingLabels();
 
 // Get system options
 $SQL = "SELECT optionname, optionvalue FROM hrsystemoptions WHERE optionname = 'AppraisalFrequency'";
@@ -27,8 +22,6 @@ if (DB_num_rows($OptionsResult) > 0) {
 	$OptionRow = DB_fetch_array($OptionsResult);
 	$AppraisalFrequency = $OptionRow['optionvalue'];
 }
-
-echo '<a class="toplink" href="' . $RootPath . '/HRAppraisalEntry.php">' . __('Create New Appraisal') . '</a>';
 
 echo '<p class="page_title_text">
 		<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/star.png" title="' . __('Performance Appraisals') . '" /> ' .
@@ -42,7 +35,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 echo '<fieldset>
 		<legend>' . __('Search & Filter') . '</legend>
 		<field>
-			<label for="Keywords">' . __('Search') . ':</label>
+			<label for="Keywords">' . __('Name or Employee ID') . ':</label>
 			<input type="text" name="Keywords" size="20" maxlength="50" value="' . (isset($_POST['Keywords']) ? $_POST['Keywords'] : '') . '" />
 		</field>';
 
@@ -58,15 +51,16 @@ echo '<field>
 		</field>';
 
 echo '<field>
-			<label for="PeriodYear">' . __('Period Year') . ':</label>
+			<label for="PeriodYear">' . __('Review Period Starts on Year') . ':</label>
 			<input type="number" name="PeriodYear" size="4" maxlength="4" value="' . (isset($_POST['PeriodYear']) ? $_POST['PeriodYear'] : date('Y')) . '" />
 		</field>';
 
 echo '</fieldset>';
 
 echo '<div class="centre">
-				<input type="submit" name="Search" value="' . __('Search') . '" />
-			</div>';
+			<input type="submit" name="Search" value="' . __('Search') . '" />
+			<input type="submit" name="CreateNew" value="' . __('Create New Appraisal') . '" onclick="window.location=\'' . $RootPath . '/HRAppraisalEntry.php\'; return false;" />
+		</div>';
 
 echo '</form>';
 
@@ -136,35 +130,40 @@ echo '<table class="selection">
 if (DB_num_rows($Result) > 0) {
 	while ($MyRow = DB_fetch_array($Result)) {
 
-					// Highlight overdue appraisals
+			// Highlight overdue appraisals
 			$RowClass = '';
 
-			$CalcLabel = (isset($MyRow['calculatedoverallrating']) && isset($RatingLabels[$MyRow['calculatedoverallrating']])) ? htmlspecialchars($RatingLabels[$MyRow['calculatedoverallrating']], ENT_QUOTES, 'UTF-8') : '-';
+			$OverallRatingValue = (float)$MyRow['overallrating'];
+			$OverallRatingInt   = ($OverallRatingValue > 0) ? MapScoreToRating($OverallRatingValue) : null;
+			$OverallRatingLabel = ($OverallRatingInt !== null AND isset($RatingLabels[$OverallRatingInt])) ? $RatingLabels[$OverallRatingInt] : '-';
+
+			$CalcRatingValue = (float)$MyRow['calculatedoverallrating'];
+			$CalcRatingInt   = ($CalcRatingValue > 0) ? MapScoreToRating($CalcRatingValue) : null;
+			$CalcLabel       = ($CalcRatingInt !== null AND isset($RatingLabels[$CalcRatingInt])) ? $RatingLabels[$CalcRatingInt] : '-';
+
 			$RatingSource = '-';
-			if (isset($MyRow['calculatedoverallrating']) && $MyRow['calculatedoverallrating'] !== null && $MyRow['calculatedoverallrating'] !== '') {
-				if ((int)$MyRow['calculatedoverallrating'] == (int)$MyRow['overallrating']) {
+			if ($CalcRatingValue > 0) {
+				if (abs($CalcRatingValue - $OverallRatingValue) < 0.01) {
 					$RatingSource = __('Calculated');
 				} else {
 					$RatingSource = __('Manual') . ' (' . __('Calculated') . ': ' . $CalcLabel . ')';
 				}
 			}
 
-			if ($MyRow['status'] != 'Completed' && $MyRow['status'] != 'Cancelled' && $MyRow['duedate'] < date('Y-m-d')) {
+			if ($MyRow['status'] != 'Completed' AND $MyRow['status'] != 'Cancelled' AND $MyRow['duedate'] < date('Y-m-d')) {
 				$RowClass = ' class="warn"';
 			}
 
-
-
 		echo '<tr class="striped_row"' . $RowClass . '>
 				<td>' . $MyRow['appraisalid'] . '</td>
-				<td><a href="' . $RootPath . '/HREmployees.php?EmployeeNumber=' . urlencode($MyRow['employeenumber']) . '">' . htmlspecialchars($MyRow['employeename'], ENT_QUOTES, 'UTF-8') . '</a></td>
+				<td><a href="' . $RootPath . '/HREmployees.php?EmployeeNumber=' . urlencode($MyRow['employeenumber']) . '">' . htmlspecialchars((string)$MyRow['employeename'], ENT_QUOTES, 'UTF-8') . '</a></td>
 				<td>' . ConvertSQLDate($MyRow['reviewperiodstart']) . ' - ' . ConvertSQLDate($MyRow['reviewperiodend']) . '</td>
 				<td>' . ConvertSQLDate($MyRow['duedate']) . '</td>
-				<td>' . htmlspecialchars($MyRow['status'], ENT_QUOTES, 'UTF-8') . '</td>
-				<td>' . (isset($RatingLabels[$MyRow['overallrating']]) ? htmlspecialchars($RatingLabels[$MyRow['overallrating']], ENT_QUOTES, 'UTF-8') : '-') . '</td>
-					<td>' . $CalcLabel . '</td>
-					<td>' . htmlspecialchars($RatingSource, ENT_QUOTES, 'UTF-8') . '</td>
-				<td>' . htmlspecialchars($MyRow['managername'], ENT_QUOTES, 'UTF-8') . '</td>
+				<td>' . htmlspecialchars((string)$MyRow['status'], ENT_QUOTES, 'UTF-8') . '</td>
+				<td>' . htmlspecialchars($OverallRatingLabel, ENT_QUOTES, 'UTF-8') . '</td>
+				<td>' . htmlspecialchars($CalcLabel, ENT_QUOTES, 'UTF-8') . '</td>
+				<td>' . htmlspecialchars($RatingSource, ENT_QUOTES, 'UTF-8') . '</td>
+				<td>' . htmlspecialchars((string)$MyRow['managername'], ENT_QUOTES, 'UTF-8') . '</td>
 				<td class="centre">
 					<a href="' . $RootPath . '/HRAppraisalEntry.php?AppraisalID=' . urlencode($MyRow['appraisalid']) . '">' . __('Edit') . '</a> |
 					<a href="' . $RootPath . '/HRAppraisalCriteriaSummary.php?AppraisalID=' . urlencode($MyRow['appraisalid']) . '">' . __('Details') . '</a>

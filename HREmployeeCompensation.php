@@ -3,6 +3,7 @@
 /* HR Employee Compensation Management */
 
 require(__DIR__ . '/includes/session.php');
+require_once(__DIR__ . '/includes/HRPerformanceHelper.php');
 
 $Title = __('Employee Compensation');
 $ViewTopic = 'HumanResources';
@@ -188,7 +189,7 @@ if (isset($_GET['view'])) {
 	$Result = DB_query($SQL);
 	$EmpRow = DB_fetch_array($Result);
 
-	echo '<br /><h3>' . __('Compensation History for') . ': ' . htmlspecialchars($EmpRow['fullname'], ENT_QUOTES, 'UTF-8') . ' (' . htmlspecialchars($EmpRow['employeenumber'], ENT_QUOTES, 'UTF-8') . ')</h3>';
+	echo '<br /><h3>' . __('Compensation History for') . ': ' . htmlspecialchars($EmpRow['fullname'], ENT_QUOTES, 'UTF-8') . ' (' . htmlspecialchars(PadEmployeeNumber($EmpRow['employeenumber']), ENT_QUOTES, 'UTF-8') . ')</h3>';
 
 	echo '<table class="selection">
 			<tr>
@@ -303,7 +304,7 @@ if (DB_num_rows($Result) == 0) {
             $Row['positiontitle'] = '';
         }
           echo '<tr class="striped_row">
-				<td>' . htmlspecialchars($Row['employeenumber'], ENT_QUOTES, 'UTF-8') . '</td>
+				<td>' . htmlspecialchars(PadEmployeeNumber($Row['employeenumber']), ENT_QUOTES, 'UTF-8') . '</td>
 				<td>' . htmlspecialchars($Row['firstname'], ENT_QUOTES, 'UTF-8') . ' ' . htmlspecialchars($Row['lastname'], ENT_QUOTES, 'UTF-8') . '</td>
 				<td>' . htmlspecialchars($Row['description'], ENT_QUOTES, 'UTF-8') . '</td>
 				<td>' . htmlspecialchars($Row['positiontitle'], ENT_QUOTES, 'UTF-8') . '</td>

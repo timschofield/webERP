@@ -6,10 +6,10 @@ document.addEventListener('DOMContentLoaded', function() {
 	function mapScoreToRating(score) {
 		if (score === null || isNaN(score)) return null;
 		score = parseFloat(score);
-		if (score < 1.8) return 1;
-		if (score < 2.6) return 2;
-		if (score < 3.4) return 3;
-		if (score < 4.2) return 4;
+		if (score < 2.5) return 1;
+		if (score < 3.5) return 2;
+		if (score < 4.0) return 3;
+		if (score < 4.5) return 4;
 		return 5;
 	}
 

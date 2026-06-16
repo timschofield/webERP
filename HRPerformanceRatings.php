@@ -79,13 +79,7 @@ if (isset($_POST['SubmitRatings'])) {
 
 		// Map numeric score to rating label and update review record
 		$MappedRating = MapScoreToRating($OverallScore);
-		$RatingLabels = array(
-			5 => 'Outstanding',
-			4 => 'Exceeds Expectations',
-			3 => 'Meets Expectations',
-			2 => 'Needs Improvement',
-			1 => 'Unsatisfactory',
-		);
+		$RatingLabels = GetRatingLabels();
 		$OverallLabel = ($MappedRating !== null && isset($RatingLabels[$MappedRating])) ? $RatingLabels[$MappedRating] : '';
 
 		$SQL = "UPDATE hrperformancereviews
