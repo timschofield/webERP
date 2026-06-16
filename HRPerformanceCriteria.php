@@ -10,7 +10,7 @@ $BookMark = 'HRPerformanceCriteria';
 
 include(__DIR__ . '/includes/header.php');
 
-function ShowWeightWarning($WeightSum) {
+function ShowWeightWarning(float $WeightSum) {
 	echo '<div class="centre">
 			<span class="WeightWarning">' .
 			__('Warning: The sum of weights for this position is') . ' ' . number_format($WeightSum, 1) . '%, ' . __('not 100%!') . '
@@ -202,6 +202,11 @@ if (DB_num_rows($Result) == 0) {
 	$WeightSum = 0;
 	while ($Row = DB_fetch_array($Result)) {
 		$PositionTitle = (string)$Row['positiontitle'];
+		if ($Row['positiontitle'] == '') {
+			$PositionTitle = __('Not assigned to any position yet');
+		}else{
+			$PositionTitle = (string)$Row['positiontitle'];
+		}
 		if ($PositionTitle != $CurrentPosition) {
 			if ($CurrentPosition != '') {
 				echo '</table>';
