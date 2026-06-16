@@ -58,6 +58,13 @@ function GetPositionIDFromEmployeeNumber(string $EmployeeNumber) {
 	return $PositionID;
 }
 
+/* PadEmployeeNumber
+ * Left-pads employee number with zeros up to 6 characters
+ */
+function PadEmployeeNumber($EmployeeNumber) {
+	return str_pad($EmployeeNumber, 6, '0', STR_PAD_LEFT);
+}
+
 /*
  * GetCriteriaScores
  * Returns associative array keyed by criteriaid for a given appraisal

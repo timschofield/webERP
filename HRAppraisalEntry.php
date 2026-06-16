@@ -287,7 +287,7 @@ if ($EditMode) {
 	echo '<field>
 			<label>' . __('Employee') . ':</label>
 			<div>' . htmlspecialchars($DbEmployeeName, ENT_QUOTES, 'UTF-8') .
-				' (' . htmlspecialchars($DbEmployeeNumber, ENT_QUOTES, 'UTF-8') . ')</div>
+				' (' . htmlspecialchars(PadEmployeeNumber($DbEmployeeNumber), ENT_QUOTES, 'UTF-8') . ')</div>
 			<input type="hidden" name="EmployeeNumber" value="' . htmlspecialchars($DbEmployeeNumber, ENT_QUOTES, 'UTF-8') . '" />
 		</field>';
 

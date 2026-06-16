@@ -3,6 +3,7 @@
 /* Employees Due for Appraisal Report */
 
 require(__DIR__ . '/includes/session.php');
+require_once(__DIR__ . '/includes/HRPerformanceHelper.php');
 
 $Title = __('Employees Due for Appraisal');
 $ViewTopic = 'HumanResources';
@@ -78,7 +79,7 @@ if (DB_num_rows($Result) == 0) {
 
 	while ($MyRow = DB_fetch_array($Result)) {
 		echo '<tr class="striped_row">
-				<td>' . $MyRow['employeenumber'] . '</td>
+				<td>' . PadEmployeeNumber($MyRow['employeenumber']) . '</td>
 				<td>' . $MyRow['firstname'] . ' ' . $MyRow['lastname'] . '</td>
 				<td>' . $MyRow['department'] . '</td>
 				<td>' . $MyRow['positiontitle'] . '</td>

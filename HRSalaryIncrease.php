@@ -3,6 +3,7 @@
 /* HR Salary Increase Processing */
 
 require(__DIR__ . '/includes/session.php');
+require_once(__DIR__ . '/includes/HRPerformanceHelper.php');
 
 $Title = __('Salary Increase');
 $ViewTopic = 'HumanResources';
@@ -198,7 +199,7 @@ if (DB_num_rows($Result) == 0) {
 
 		echo '<tr class="striped_row">
 				<td><input type="checkbox" name="SelectedEmployees[]" value="' . $Row['employeeid'] . '" class="employee-checkbox" /></td>
-				<td>' . $Row['employeenumber'] . '</td>
+				<td>' . PadEmployeeNumber($Row['employeenumber']) . '</td>
 				<td>' . $Row['firstname'] . ' ' . $Row['lastname'] . '</td>
 				<td>' . $Row['description'] . '</td>
 				<td>' . $Row['positiontitle'] . '</td>
