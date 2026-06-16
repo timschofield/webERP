@@ -12,6 +12,8 @@ RemoveMenuItem('hr', 'Reports', __('Audit Trail'), '/HRAuditTrail.php');
 RemoveScript('HRAuditTrail.php');
 DropTable('hraudittrail');
 
+DropColumn('appraisaltype', 'hrperfappraisals');
+
 if ($_SESSION['Updates']['Errors'] == 0) {
 	UpdateDBNo(basename(__FILE__, '.php'), __('HR Module updates'));
 }

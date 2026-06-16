@@ -147,8 +147,7 @@ if (isset($_POST['Submit'])) {
 					reviewerid,
 					status,
 					overallrating,
-					comments,
-					appraisaltype
+					comments
 				) VALUES (
 					" . $EmployeeID . ",
 					'" . $ReviewPeriodStart . "',
@@ -157,8 +156,7 @@ if (isset($_POST['Submit'])) {
 					" . $ReviewerID . ",
 					'" . $Status . "',
 					" . $OverallRating . ",
-					'" . $Comments . "',
-					'Annual'
+					'" . $Comments . "'
 				)";
 			DB_query($SQL, __('Failed to create appraisal'));
 			$AppraisalID = DB_Last_Insert_ID('hrperfappraisals', 'appraisalid');
