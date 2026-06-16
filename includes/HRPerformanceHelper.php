@@ -11,9 +11,32 @@ require_once(__DIR__ . '/HRScoringEngine.php');
  * GetAppraisalCriteria
  * Return an associative array of active criteria keyed by criteriaid
  */
-function GetAppraisalCriteria($AppraisalID = 0) {
+function GetAppraisalCriteria(int $AppraisalID = 0, int $PositionID = 0) {
 	$Criteria = array();
-	$SQL = "SELECT criteriaid, criterianame, weight FROM hrperformancecriteria WHERE isactive = 1 ORDER BY criterianame";
+
+	if ($AppraisalID == 0){
+		// it is a new appraisal, load criteria based on position
+		$SQL = "SELECT criteriaid,
+					criterianame,
+					weight
+				FROM hrperformancecriteria
+				WHERE isactive = 1
+					AND positionid = " . (int)$PositionID . "
+				ORDER BY displayorder,
+					criterianame";
+	}else{
+		// existing appraisal, load criteria based on the criteria used at the time of appraisal creation
+		$SQL = "SELECT pc.criteriaid,
+					pc.criterianame,
+					pc.weight
+				FROM hrperformancecriteria pc
+				INNER JOIN hrperfcriteriascores pcs
+					ON pc.criteriaid = pcs.criteriaid
+				WHERE pcs.appraisalid = " . (int)$AppraisalID . "
+				ORDER BY pc.displayorder,
+					pc.criterianame";
+	}
+
 	$Result = DB_query($SQL);
 	while ($Row = DB_fetch_array($Result)) {
 		$Criteria[$Row['criteriaid']] = $Row;
@@ -21,13 +44,34 @@ function GetAppraisalCriteria($AppraisalID = 0) {
 	return $Criteria;
 }
 
+/* GetPositionIDFromEmployeeNumber
+ * Helper to get positionid for a given employee number
+ */
+function GetPositionIDFromEmployeeNumber(string $EmployeeNumber) {
+	$PositionID = 0;
+	$SQL = "SELECT positionid FROM hremployees WHERE employeenumber = '" . DB_escape_string($EmployeeNumber) . "'";
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) > 0) {
+		$Row = DB_fetch_array($Result);
+		$PositionID = (int)$Row['positionid'];
+	}
+	return $PositionID;
+}
+
 /*
  * GetCriteriaScores
  * Returns associative array keyed by criteriaid for a given appraisal
  */
-function GetCriteriaScores($AppraisalID) {
+function GetCriteriaScores(int $AppraisalID) {
 	$Scores = array();
-	$SQL = "SELECT criteriascoreid, criteriaid, rating, score, weightedscore, comments FROM hrperfcriteriascores WHERE appraisalid = " . (int)$AppraisalID;
+	$SQL = "SELECT criteriascoreid,
+				criteriaid,
+				rating,
+				score,
+				weightedscore,
+				comments
+			FROM hrperfcriteriascores
+			WHERE appraisalid = " . (int)$AppraisalID;
 	$Result = DB_query($SQL);
 	while ($Row = DB_fetch_array($Result)) {
 		$Scores[$Row['criteriaid']] = $Row;
@@ -39,21 +83,36 @@ function GetCriteriaScores($AppraisalID) {
  * SaveCriteriaScore
  * Upsert a single criterion score for an appraisal
  */
-function SaveCriteriaScore($AppraisalID, $CriteriaID, $Rating = null, $Comments = '') {
+function SaveCriteriaScore(int $AppraisalID, int $CriteriaID, ?int $Rating = null, string $Comments = '') {
 	$AppraisalID = (int)$AppraisalID;
 	$CriteriaID = (int)$CriteriaID;
 	$RatingVal = is_null($Rating) ? 'NULL' : (int)$Rating;
 	$CommentsEsc = DB_escape_string($Comments);
 
-	$SQL = "SELECT criteriascoreid FROM hrperfcriteriascores WHERE appraisalid = " . $AppraisalID . " AND criteriaid = " . $CriteriaID;
+	$SQL = "SELECT criteriascoreid
+			FROM hrperfcriteriascores
+			WHERE appraisalid = " . $AppraisalID . "
+				AND criteriaid = " . $CriteriaID;
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) > 0) {
 		$Row = DB_fetch_array($Result);
-		$SQL = "UPDATE hrperfcriteriascores SET rating = " . $RatingVal . ", comments = '" . $CommentsEsc . "', modifieddate = NOW() WHERE criteriascoreid = " . $Row['criteriascoreid'];
+		$SQL = "UPDATE hrperfcriteriascores
+				SET rating = " . $RatingVal . ", comments = '" . $CommentsEsc . "', modifieddate = NOW()
+				WHERE criteriascoreid = " . $Row['criteriascoreid'];
 	} else {
-		$SQL = "INSERT INTO hrperfcriteriascores (appraisalid, criteriaid, rating, comments, createdby, createddate) VALUES (" . $AppraisalID . ", " . $CriteriaID . ", " . $RatingVal . ", '" . $CommentsEsc . "', '" . DB_escape_string(isset(
-				$_SESSION['UserID']
-			) ? $_SESSION['UserID'] : '') . "', NOW())";
+		$SQL = "INSERT INTO hrperfcriteriascores (
+								appraisalid,
+								criteriaid,
+								rating,
+								comments,
+								createdby,
+								createddate)
+				VALUES (" . $AppraisalID . ",
+						" . $CriteriaID . ",
+						" . $RatingVal . ",
+						'" . $CommentsEsc . "',
+						'" . DB_escape_string(isset($_SESSION['UserID']) ? $_SESSION['UserID'] : '') . "',
+						NOW())";
 	}
 	return DB_query($SQL);
 }
@@ -62,7 +121,7 @@ function SaveCriteriaScore($AppraisalID, $CriteriaID, $Rating = null, $Comments 
  * SaveCriteriaScoreAdvanced
  * Upsert a single criterion score for an appraisal and compute per-row weighted values
  */
-function SaveCriteriaScoreAdvanced($AppraisalID, $CriteriaID, $Rating = null, $Comments = '') {
+function SaveCriteriaScoreAdvanced(int $AppraisalID, int $CriteriaID, ?int $Rating = null, string $Comments = '') {
 	$AppraisalID = (int)$AppraisalID;
 	$CriteriaID = (int)$CriteriaID;
 	$RatingVal = is_null($Rating) ? 'NULL' : (int)$Rating;
@@ -96,8 +155,8 @@ function SaveCriteriaScoreAdvanced($AppraisalID, $CriteriaID, $Rating = null, $C
 /*
  * DeleteAppraisalCriteria
  */
-function DeleteAppraisalCriteria($AppraisalID) {
-	$SQL = "DELETE FROM hrperfcriteriascores WHERE appraisalid = " . (int)$AppraisalID;
+function DeleteAppraisalCriteria(int $AppraisalID) {
+	$SQL = "DELETE FROM hrperfcriteriascores WHERE appraisalid = " . $AppraisalID;
 	return DB_query($SQL);
 }
 
@@ -105,8 +164,8 @@ function DeleteAppraisalCriteria($AppraisalID) {
  * CalculateWeightedScoreForAppraisal
  * Loads criteria and scores and returns array(weightedscore => float, mappedrating => int)
  */
-function CalculateWeightedScoreForAppraisal($AppraisalID) {
-	$Criteria = GetAppraisalCriteria($AppraisalID);
+function CalculateWeightedScoreForAppraisal(int $AppraisalID, int $PositionID = 0) {
+	$Criteria = GetAppraisalCriteria($AppraisalID, $PositionID);
 	$ScoreRows = GetCriteriaScores($AppraisalID);
 	$ScoresMap = array();
 	foreach ($ScoreRows as $cid => $row) {

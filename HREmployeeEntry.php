@@ -127,7 +127,7 @@ if (isset($_POST['Submit'])) {
 
 			$Result = DB_query($SQL);
 			if ($Result) {
-				$EmployeeID = DB_Last_Insert_ID();
+				$EmployeeID = DB_Last_Insert_ID('hremployees', 'employeeid');
 				prnMsg(__('Employee has been created successfully'), 'success');
 			}
 		}
