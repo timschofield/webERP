@@ -63,7 +63,7 @@ function GetPositionIDFromEmployeeNumber(string $EmployeeNumber) {
 /* PadEmployeeNumber
  * Left-pads employee number with zeros up to 6 characters
  */
-function PadEmployeeNumber($EmployeeNumber) {
+function PadEmployeeNumber(string $EmployeeNumber) {
 	return str_pad($EmployeeNumber, 6, '0', STR_PAD_LEFT);
 }
 

@@ -11,7 +11,7 @@
  * $CriteriaMap : array(criteriaid => array('weight' => numeric_weight, ...))
  * Returns: weighted score as float (rounded to 2 decimals) on same rating scale (e.g. 1.0-5.0)
  */
-function CalculateWeightedScore($ScoresMap, $CriteriaMap) {
+function CalculateWeightedScore(array $ScoresMap, array	$CriteriaMap) {
 	$sumWeights = 0.0;
 	$sumWeighted = 0.0;
 
@@ -41,11 +41,10 @@ function CalculateWeightedScore($ScoresMap, $CriteriaMap) {
  * Map a weighted score (float) into an integer rating (1..5)
  * Boundaries taken from the implementation plan for Issue #918
  */
-function MapScoreToRating($score) {
+function MapScoreToRating(?float $score) {
 	if ($score === null) {
 		return null;
 	}
-	$score = (float)$score;
 	if ($score < 2.5) {
 		return 1;
 	}
