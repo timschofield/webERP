@@ -223,7 +223,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$Symbol = ($Level > 0) ? '|_ ' : '';
 
 		$HTML .= '<tr class="striped_row">
-					<td>' . $Indent . $Symbol . $MyRow['component'] . '</td>
+					<td>' . $Indent . $Symbol . '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . urlencode($MyRow['component']) . '">' . $MyRow['component'] . '</a>' . '</td>
 					<td>' . $MyRow['mbflag'] . '</td>
 					<td>' . $MyRow['description'] . '</td>
 					<td>' . $MyRow['loccode'] . '</td>

@@ -184,14 +184,14 @@ if (true) {
 		</form>';
 }
 
-// Display criteria list by category
+// Display criteria list by position
 $SQL = "SELECT hrperformancecriteria.*, hrpositions.positiontitle
 		FROM hrperformancecriteria
 		LEFT JOIN hrpositions
 			ON hrperformancecriteria.positionid = hrpositions.positionid
 		ORDER BY hrpositions.positiontitle,
-			hrperformancecriteria.category,
 			hrperformancecriteria.displayorder,
+			hrperformancecriteria.weight DESC,
 			hrperformancecriteria.criterianame";
 $Result = DB_query($SQL);
 

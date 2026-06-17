@@ -1,12 +1,12 @@
 <?php
 
-/* My Performance Appraisals - Employee Self View */
+/* My Performance Appraisals as Reviewer - Appraisals Assigned to Review */
 
 require(__DIR__ . '/includes/session.php');
 
-$Title = __('My Performance Appraisals');
+$Title = __('Appraisals to Review');
 $ViewTopic = 'HumanResources';
-$BookMark = 'HRMyAppraisals';
+$BookMark = 'HRMyAppraisalsAsReviewer';
 
 include(__DIR__ . '/includes/header.php');
 
@@ -16,12 +16,13 @@ require_once(__DIR__ . '/includes/HRPerformanceHelper.php');
 $RatingLabels = GetRatingLabels();
 
 echo '<p class="page_title_text">
-		<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/star.png" title="' . __('View My Appraisals') . '" /> ' .
-		__('My Performance Appraisals') . '
+		<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/star.png" title="' .
+		__('Appraisals to Review') . '" /> ' .
+		__('Performance Appraisals as Reviewer') . '
 	</p>';
 
-// Get current user's employee number
-$SQL = "SELECT employeenumber FROM hremployees WHERE userid = '" . DB_escape_string($_SESSION['UserID']) . "'";
+// Get current user's employee ID
+$SQL = "SELECT employeeid FROM hremployees WHERE userid = '" . DB_escape_string($_SESSION['UserID']) . "'";
 $Result = DB_query($SQL);
 
 if (DB_num_rows($Result) == 0) {
@@ -32,9 +33,9 @@ if (DB_num_rows($Result) == 0) {
 }
 
 $MyEmpRow = DB_fetch_array($Result);
-$MyEmployeeNumber = $MyEmpRow['employeenumber'];
+$MyEmployeeID = $MyEmpRow['employeeid'];
 
-// Get my appraisals
+// Get appraisals where current user is the reviewer
 $SQL = "SELECT
 		a.appraisalid,
 		a.reviewperiodstart,
@@ -43,12 +44,17 @@ $SQL = "SELECT
 		a.status,
 		a.overallrating,
 		a.comments,
-		CONCAT(m.firstname, ' ', m.lastname) as managername
+		CONCAT(e.firstname, ' ', e.lastname) as employeename
 	FROM hrperfappraisals a
 	LEFT JOIN hremployees e ON a.employeeid = e.employeeid
-	LEFT JOIN hremployees m ON a.reviewerid = m.employeeid
-	WHERE e.employeenumber = '" . DB_escape_string($MyEmployeeNumber) . "'
-	ORDER BY a.reviewperiodstart DESC";
+	WHERE a.reviewerid = " . (int)$MyEmployeeID . "
+	ORDER BY CASE a.status
+		WHEN 'Not Started' THEN 1
+		WHEN 'In Progress' THEN 2
+		WHEN 'Completed' THEN 3
+		WHEN 'Cancelled' THEN 4
+		ELSE 5
+	END, a.duedate ASC";
 
 $Result = DB_query($SQL);
 
@@ -56,11 +62,11 @@ echo '<table class="selection">
 		<thead>
 			<tr>
 				<th>' . __('Appraisal ID') . '</th>
+				<th>' . __('Employee') . '</th>
 				<th>' . __('Review Period') . '</th>
 				<th>' . __('Due Date') . '</th>
 				<th>' . __('Status') . '</th>
 				<th>' . __('Rating') . '</th>
-				<th>' . __('Manager') . '</th>
 				<th>' . __('Actions') . '</th>
 			</tr>
 		</thead>
@@ -71,20 +77,25 @@ if (DB_num_rows($Result) > 0) {
 
 		// Highlight overdue appraisals
 		$RowClass = '';
-		if ($MyRow['status'] != 'Completed' && $MyRow['status'] != 'Cancelled' && $MyRow['duedate'] < date('Y-m-d')) {
+		if ($MyRow['status'] != 'Completed'
+			AND $MyRow['status'] != 'Cancelled'
+			AND $MyRow['duedate'] < date('Y-m-d')) {
 			$RowClass = ' class="warn"';
 		}
 
 		echo '<tr' . $RowClass . '>
 				<td>' . $MyRow['appraisalid'] . '</td>
-				<td>' . ConvertSQLDate($MyRow['reviewperiodstart']) . ' - ' . ConvertSQLDate($MyRow['reviewperiodend']) . '</td>
+				<td>' . htmlspecialchars($MyRow['employeename'], ENT_QUOTES, 'UTF-8') . '</td>
+				<td>' . ConvertSQLDate($MyRow['reviewperiodstart']) . ' - ' .
+					ConvertSQLDate($MyRow['reviewperiodend']) . '</td>
 				<td>' . ConvertSQLDate($MyRow['duedate']) . '</td>
 				<td>' . htmlspecialchars($MyRow['status'], ENT_QUOTES, 'UTF-8') . '</td>
-				<td>' . (isset($RatingLabels[$MyRow['overallrating']]) ? htmlspecialchars($RatingLabels[$MyRow['overallrating']], ENT_QUOTES, 'UTF-8') : '-') . '</td>
-				<td>' . htmlspecialchars($MyRow['managername'], ENT_QUOTES, 'UTF-8') . '</td>
+				<td>' . (isset($RatingLabels[$MyRow['overallrating']]) ?
+					htmlspecialchars($RatingLabels[$MyRow['overallrating']], ENT_QUOTES, 'UTF-8') :
+					'-') . '</td>
 				<td class="centre">
-					<a href="' . $RootPath . '/HRAppraisalCriteriaSummary.php?AppraisalID=' .
-						urlencode($MyRow['appraisalid']) . '&amp;From=HRMyAppraisals">' . __('View') . '</a>
+					<a href="' . $RootPath . '/HRAppraisalEntry.php?AppraisalID=' .
+						urlencode($MyRow['appraisalid']) . '&amp;From=HRMyAppraisalsAsReviewer">' . __('Edit') . '</a>
 				</td>
 			</tr>';
 
@@ -92,13 +103,14 @@ if (DB_num_rows($Result) > 0) {
 		if ($MyRow['comments']) {
 			echo '<tr' . $RowClass . '>
 					<td colspan="7" style="padding-left: 30px;">
-						<strong>' . __('Comments') . ':</strong> ' . nl2br(htmlspecialchars($MyRow['comments'], ENT_QUOTES, 'UTF-8')) . '
+						<strong>' . __('Comments') . ':</strong> ' .
+						nl2br(htmlspecialchars($MyRow['comments'], ENT_QUOTES, 'UTF-8')) . '
 					</td>
 				</tr>';
 		}
 	}
 } else {
-	echo '<tr><td colspan="7" class="centre">' . __('You have no performance appraisals on record') . '</td></tr>';
+	echo '<tr><td colspan="7" class="centre">' . __('You are not assigned to review any performance appraisals') . '</td></tr>';
 }
 
 echo '</tbody>
