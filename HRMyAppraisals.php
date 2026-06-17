@@ -82,7 +82,8 @@ if (DB_num_rows($Result) > 0) {
 				<td>' . (isset($RatingLabels[$MyRow['overallrating']]) ? htmlspecialchars($RatingLabels[$MyRow['overallrating']], ENT_QUOTES, 'UTF-8') : '-') . '</td>
 				<td>' . htmlspecialchars($MyRow['managername'], ENT_QUOTES, 'UTF-8') . '</td>
 				<td class="centre">
-					<a href="' . $RootPath . '/HRAppraisalEntry.php?AppraisalID=' . urlencode($MyRow['appraisalid']) . '">' . __('Edit') . '</a>
+					<a href="' . $RootPath . '/HRAppraisalCriteriaSummary.php?AppraisalID=' .
+						urlencode($MyRow['appraisalid']) . '&amp;From=HRMyAppraisals">' . __('View') . '</a>
 				</td>
 			</tr>';
 

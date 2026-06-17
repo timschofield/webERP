@@ -166,7 +166,8 @@ if (DB_num_rows($Result) > 0) {
 				<td>' . htmlspecialchars((string)$MyRow['managername'], ENT_QUOTES, 'UTF-8') . '</td>
 				<td class="centre">
 					<a href="' . $RootPath . '/HRAppraisalEntry.php?AppraisalID=' . urlencode($MyRow['appraisalid']) . '">' . __('Edit') . '</a> |
-					<a href="' . $RootPath . '/HRAppraisalCriteriaSummary.php?AppraisalID=' . urlencode($MyRow['appraisalid']) . '">' . __('Details') . '</a>
+					<a href="' . $RootPath . '/HRAppraisalCriteriaSummary.php?AppraisalID=' .
+						urlencode($MyRow['appraisalid']) . '&amp;From=HRPerformanceAppraisals">' . __('Details') . '</a>
 				</td>
 			</tr>';
 	}

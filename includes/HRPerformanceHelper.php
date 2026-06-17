@@ -23,6 +23,7 @@ function GetAppraisalCriteria(int $AppraisalID = 0, int $PositionID = 0) {
 				WHERE isactive = 1
 					AND positionid = " . (int)$PositionID . "
 				ORDER BY displayorder,
+					weight DESC,
 					criterianame";
 	}else{
 		// existing appraisal, load criteria based on the criteria used at the time of appraisal creation
@@ -34,6 +35,7 @@ function GetAppraisalCriteria(int $AppraisalID = 0, int $PositionID = 0) {
 					ON pc.criteriaid = pcs.criteriaid
 				WHERE pcs.appraisalid = " . (int)$AppraisalID . "
 				ORDER BY pc.displayorder,
+					pc.weight DESC,
 					pc.criterianame";
 	}
 
