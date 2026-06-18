@@ -32,8 +32,8 @@ $EndDateSQL = EndDateSQLFromPeriodNo($_POST['MonthToShow']);
 
 echo '<fieldset>';
 echo FieldToSelectOnePeriod("MonthToShow", $_POST['MonthToShow'], __('Month to Show'), '', '', 1, true, false);
-echo FieldToSelectOneSalesPerson("Salesperson", $_POST['Salesperson'],  __('Sales Person'), '', 'CURRENT', true, 2, true, false);
-echo FieldToSelectOneCustomerType("CustomerType", $_POST['CustomerType'], __('Customer Type'), '', '', 3, true, false);
+echo FieldToSelectOneSalesPerson("Salesperson", $_POST['Salesperson'] ?? '',  __('Sales Person'), '', 'CURRENT', true, 2, true, false);
+echo FieldToSelectOneCustomerType("CustomerType", $_POST['CustomerType'] ?? '', __('Customer Type'), '', '', 3, true, false);
 echo '</fieldset>';
 echo OneButtonCenteredForm("ShowResults", __('Show Daily Sales For The Selected Month'), 4, true, false);
 	
@@ -67,11 +67,11 @@ $SQL = "SELECT 	orddate AS trandate,
 			
 if ($_SESSION['SalesmanLogin'] != '') {
 	$SQL .= " AND salesorders.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
-} elseif ($_POST['Salesperson']!='All') {
+} elseif (isset($_POST['Salesperson']) AND $_POST['Salesperson']!='All') {
 	$SQL .= " AND salesorders.salesperson='" . $_POST['Salesperson'] . "'";
 }
 
-if ($_POST['CustomerType']!='All') {
+if (isset($_POST['CustomerType']) AND $_POST['CustomerType']!='All') {
 	$SQL .= " AND debtorsmaster.typeid='" . $_POST['CustomerType'] . "'";
 }
 $SQL .= " GROUP BY salesorders.orddate ORDER BY salesorders.orddate";
