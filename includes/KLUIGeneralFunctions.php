@@ -1,29 +1,28 @@
 <?php
 
-/**********************************************************************************************************
- * 
- * KL RICARD: KL Specific UI functions
- * 
- * Alphabetical list of functions:
- * - FieldToSelectOneBank() - Creates a dropdown for selecting a bank
- * - FieldToSelectOneDepartment() - Creates a dropdown for selecting a department
- * - FieldToSelectOneKPI() - Creates a dropdown for selecting KPI concepts
- * - FieldToSelectOneMaintenanceType() - Creates a dropdown for selecting maintenance types
- * - FieldToSelectOnePPH21Zone() - Creates a dropdown for selecting PPH21 zones
- * - FieldToSelectOneRetailPartner() - Creates a dropdown for selecting retail partners
- * - FieldToSelectOneReturnedItemReason() - Creates a dropdown for selecting returned item reasons
- * - FieldToSelectOneServiceFee() - Creates a dropdown for selecting service fees
- * - FieldToSelectOneTag() - Creates a dropdown for selecting tags
- * - FieldToSelectOneUMKZone() - Creates a dropdown for selecting UMK zones
- * - ShowTableSubTitle() - Displays a table subtitle
- * - ShowTableTitle() - Displays a table title
- * - ShowWarningTitle() - Displays a warning title
- * 
- *********************************************************************************************************/
-
-
-
-function FieldToSelectOneBank($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates a dropdown for selecting a bank.
+ *
+ * @param string $VariableName
+ * @param int|string|null $SelectedValue
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectOneBank(
+	string $VariableName,
+	int|string|null $SelectedValue,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = '',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 
 	$SQL = "SELECT bankcode,
 				bankname
@@ -58,52 +57,29 @@ function FieldToSelectOneBank($VariableName, $SelectedValue, $Label = '', $HelpT
 }
 
 
-function FieldToSelectOneDepartment($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
-	
-	if ($Filter == 'NOTKANTOR') {
-		$SQL = "SELECT departmentid,
-					description
-				FROM departments
-				WHERE departmentid != 1
-				ORDER BY description";
-	}
-	else {
-		$SQL = "SELECT departmentid,
-					description
-				FROM departments
-				ORDER BY description";
-	}
-
-	$Result = DB_query($SQL);
-
-	$HTML = '<field>
-				<label for="' . $VariableName . '">' . $Label . ':</label>
-				<select';
-	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
-	$HTML .= 'name="' . $VariableName . '">
-				<fieldhelp>' . $HelpText . '</fieldhelp>';
-	
-	if ($Required){
-		$HTML .= '<option value="">' . __('Not Yet Selected') . '</option>';
-	} elseif (!isset($SelectedValue)) {
-		$HTML .= '<option selected="selected" value="">' . __('Not Yet Selected') . '</option>';
-	}
-
-	while ($MyRow = DB_fetch_array($Result)) {
-		if ($MyRow['departmentid'] == $SelectedValue) {
-			$HTML .= '<option selected="selected" value="' . $MyRow['departmentid'] . '">' . $MyRow['description'] . '</option>';
-		} 
-		else {
-			$HTML .= '<option value="' . $MyRow['departmentid'] . '">' . $MyRow['description'] . '</option>';
-		}
-	}
-	$HTML .= '</select>
-			</field>';
-	return $HTML;
-}
-
-
-function FieldToSelectOneKPI($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates a dropdown for selecting KPI concepts.
+ *
+ * @param string $VariableName
+ * @param int|string|null $SelectedValue
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectOneKPI(
+	string $VariableName,
+	int|string|null $SelectedValue,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = '',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 
 	$SQL = "SELECT kpicode,
 				kpidescription 
@@ -138,7 +114,29 @@ function FieldToSelectOneKPI($VariableName, $SelectedValue, $Label = '', $HelpTe
 }
 
 
-function FieldToSelectOneMaintenanceType($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates a dropdown for selecting maintenance types.
+ *
+ * @param string $VariableName
+ * @param int|string|null $SelectedValue
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectOneMaintenanceType(
+	string $VariableName,
+	int|string|null $SelectedValue,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = '',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 	$SQL = "SELECT maintenancetype,
 				description
 			FROM klmaintenancetypes 
@@ -174,7 +172,16 @@ function FieldToSelectOneMaintenanceType($VariableName, $SelectedValue, $Label =
 
 
 
-function FieldToSelectOnePPH21Zone($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+function FieldToSelectOnePPH21Zone(
+	string $VariableName,
+	int|string|null $SelectedValue,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = '',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 
 	$SQL = "SELECT pph21zoneid,
 				pph21zonename
@@ -209,7 +216,29 @@ function FieldToSelectOnePPH21Zone($VariableName, $SelectedValue, $Label = '', $
 }
 
 
-function FieldToSelectOneRetailPartner($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates a dropdown for selecting retail partners.
+ *
+ * @param string $VariableName
+ * @param int|string|null $SelectedValue
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectOneRetailPartner(
+	string $VariableName,
+	int|string|null $SelectedValue,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = '',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 
 $SQL = "SELECT partnercode, 
 				partnernameinvoice 
@@ -238,7 +267,30 @@ $SQL = "SELECT partnercode,
 	return $HTML;
 }
 
-function FieldToSelectOneReturnedItemReason($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+
+/**
+ * Creates a dropdown for selecting returned item reasons.
+ *
+ * @param string $VariableName
+ * @param int|string|null $SelectedValue
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectOneReturnedItemReason(
+	string $VariableName,
+	int|string|null $SelectedValue,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = '',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 
 	$SQL = "SELECT reasonname,
 				reasonid
@@ -272,7 +324,30 @@ function FieldToSelectOneReturnedItemReason($VariableName, $SelectedValue, $Labe
 	return $HTML;
 }
 
-function FieldToSelectOneServiceFee($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+
+/**
+ * Creates a dropdown for selecting service fees.
+ *
+ * @param string $VariableName
+ * @param int|string|null $SelectedValue
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectOneServiceFee(
+	string $VariableName,
+	int|string|null $SelectedValue,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = '',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 
 	$SQL = "SELECT servicecode,
 				servicedescription
@@ -306,7 +381,30 @@ function FieldToSelectOneServiceFee($VariableName, $SelectedValue, $Label = '', 
 	return $HTML;
 }
 
-function FieldToSelectOneStockAdjustmentReason($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+
+/**
+ * Creates a dropdown for selecting stock adjustment reasons.
+ *
+ * @param string $VariableName
+ * @param int|string|null $SelectedValue
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectOneStockAdjustmentReason(
+	string $VariableName,
+	int|string|null $SelectedValue,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = '',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 
 	$SQL = "SELECT reasonid,
 				reasonname
@@ -340,7 +438,30 @@ function FieldToSelectOneStockAdjustmentReason($VariableName, $SelectedValue, $L
 	return $HTML;
 }
 
-function FieldToSelectOneTag($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+
+/**
+ * Creates a dropdown for selecting tags.
+ *
+ * @param string $VariableName
+ * @param int|string|null $SelectedValue
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectOneTag(
+	string $VariableName,
+	int|string|null $SelectedValue,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = '',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 
 	$SQL = "SELECT tagref,
 				tagdescription
@@ -368,7 +489,30 @@ function FieldToSelectOneTag($VariableName, $SelectedValue, $Label = '', $HelpTe
 	return $HTML;
 }
 
-function FieldToSelectOneUMKZone($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+
+/**
+ * Creates a dropdown for selecting UMK zones.
+ *
+ * @param string $VariableName
+ * @param int|string|null $SelectedValue
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectOneUMKZone(
+	string $VariableName,
+	int|string|null $SelectedValue,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = '',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 
 	$SQL = "SELECT umkzoneid,
 				umkzonename
@@ -402,7 +546,7 @@ function FieldToSelectOneUMKZone($VariableName, $SelectedValue, $Label = '', $He
 	return $HTML;
 }
 
-function ShowTableTitle($Text){
+function ShowTableTitle(string $Text): void {
 	echo '<p class="page_title_text" align="center">
 			<strong>' . 
 				$Text . '
@@ -410,13 +554,13 @@ function ShowTableTitle($Text){
 		</p>';
 }
 
-function ShowTableSubTitle($Text){
+function ShowTableSubTitle(string $Text): void {
 	echo '<p class="page_title_text_small" align="center">' . 
 			$Text . '
 		</p>';
 }
 
-function ShowWarningTitle($Text){
+function ShowWarningTitle(string $Text): void {
 	echo '<p class="bad" align="center">
 			<strong>' . 
 				$Text . '
