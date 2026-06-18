@@ -488,7 +488,7 @@ if (isset($_GET['ReceivePO']) AND $_GET['ReceivePO'] != '') {
 /* Set the session variables to the posted data from the form if the page has called itself */
 if (isset($_POST['ExRate'])) {
 	$_SESSION['SuppTrans']->ExRate = filter_number_format($_POST['ExRate']);
-	$_SESSION['SuppTrans']->Comments = $_POST['Comments'];
+	$_SESSION['SuppTrans']->Comments = $_POST['Comments'] ?? '';
 	$_SESSION['SuppTrans']->TranDate = $_POST['TranDate'];
 
 	if (mb_substr($_SESSION['SuppTrans']->Terms, 0, 1) == '1') { /*Its a day in the following month when due */
@@ -502,7 +502,7 @@ if (isset($_POST['ExRate'])) {
 
 	$_SESSION['SuppTrans']->DueDate = CalcDueDate($_SESSION['SuppTrans']->TranDate, $DayInFollowingMonth, $DaysBeforeDue);
 
-	$_SESSION['SuppTrans']->SuppReference = $_POST['SuppReference'];
+	$_SESSION['SuppTrans']->SuppReference = $_POST['SuppReference'] ?? '';
 
 	if ($_SESSION['SuppTrans']->GLLink_Creditors == 1) {
 
