@@ -12,6 +12,7 @@
  * - FieldToSelectOneCurrency() - Creates a dropdown for selecting a currency
  * - FieldToSelectOneCustomerType() - Creates a dropdown for selecting customer types
  * - FieldToSelectOneDate() - Creates a date input field
+ * - FieldToSelectOneDepartment() - Creates a dropdown for selecting a department
  * - FieldToSelectOneEntryFromArray() - Creates a dropdown from an array of values
  * - FieldToSelectOneFile() - Creates a file upload input field
  * - FieldToSelectOneGLAccount() - Creates a dropdown for selecting one GL account
@@ -315,6 +316,42 @@ function FieldToSelectOneGLAccountGroup($VariableName, $SelectedValue, $Label = 
 		}
 		else {
 			$HTML .= '<option value="' . $MyRow['groupname'] . '">' . $MyRow['groupname'] . '</option>';
+		}
+	}
+	$HTML .= '</select>';
+	if ($HelpText != '') {
+	    $HTML .= '<fieldhelp>' . $HelpText . '</fieldhelp>';
+	}
+	$HTML .= '</field>';
+	return $HTML;
+}
+
+function FieldToSelectOneDepartment($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+	$SQL = "SELECT departmentid,
+				description
+			FROM departments
+			ORDER BY description ASC";
+
+	$Result = DB_query($SQL);
+
+	$HTML = '<field>
+				<label for="' . $VariableName . '">' . $Label . ':</label>
+				<select';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
+	$HTML .= 'name="' . $VariableName . '">';
+
+	if ($Required) {
+		$HTML .= '<option value="">' . __('Not Yet Selected') . '</option>';
+	} elseif (!isset($SelectedValue) OR ($SelectedValue == '')) {
+		$HTML .= '<option selected="selected" value="">' . __('Not Yet Selected') . '</option>';
+	}
+
+	while ($MyRow = DB_fetch_array($Result)) {
+		if (isset($SelectedValue) AND ($MyRow['departmentid'] == $SelectedValue)) {
+			$HTML .= '<option selected="selected" value="' . $MyRow['departmentid'] . '">' . $MyRow['description'] . '</option>';
+		}
+		else {
+			$HTML .= '<option value="' . $MyRow['departmentid'] . '">' . $MyRow['description'] . '</option>';
 		}
 	}
 	$HTML .= '</select>';

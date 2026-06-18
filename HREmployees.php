@@ -673,7 +673,7 @@ if (!isset($SelectedEmployee)) {
 		$SQL .= " AND e.employmentstatus = '" . $_POST['SearchStatus'] . "'";
 	}
 
-	$SQL .= " ORDER BY e.firstname, e.lastname";
+	$SQL .= " ORDER BY e.employmentstatus, e.firstname, e.lastname";
 
 	$Result = DB_query($SQL);
 
