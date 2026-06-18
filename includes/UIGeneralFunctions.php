@@ -1,47 +1,14 @@
 <?php
 
-/**********************************************************************************************************
+/**
+ * Adds HTML attributes to form fields.
  *
- * General UI functions
- *
- * Functions included in this file:
- * - AddAttributesToField() - Adds HTML attributes to form fields
- * - FieldToSelectMultipleLocations() - Creates a multiple selection dropdown for locations
- * - FieldToSelectMultiplePeriods() - Creates a multiple selection dropdown for accounting periods
- * - FieldToSelectMultipleStockCategories() - Creates a multiple selection dropdown for stock categories
- * - FieldToSelectOneCurrency() - Creates a dropdown for selecting a currency
- * - FieldToSelectOneCustomerType() - Creates a dropdown for selecting customer types
- * - FieldToSelectOneDate() - Creates a date input field
- * - FieldToSelectOneDepartment() - Creates a dropdown for selecting a department
- * - FieldToSelectOneEntryFromArray() - Creates a dropdown from an array of values
- * - FieldToSelectOneFile() - Creates a file upload input field
- * - FieldToSelectOneGLAccount() - Creates a dropdown for selecting one GL account
- * - FieldToSelectOneGLAccountGroup() - Creates a dropdown for selecting GL account groups
- * - FieldToSelectOneLocation() - Creates a dropdown for selecting a location
- * - FieldToSelectOnePassword() - Creates a password input field
- * - FieldToSelectOnePeriod() - Creates a dropdown for selecting an accounting period
- * - FieldToSelectOneSalesArea() - Creates a dropdown for selecting a sales area
- * - FieldToSelectOneSalesPerson() - Creates a dropdown for selecting a sales person
- * - FieldToSelectOneStockCategory() - Creates a dropdown for selecting a stock category
- * - FieldToSelectOneSysType() - Creates a dropdown for selecting a system type
- * - FieldToSelectOneTelephoneNumber() - Creates a telephone number input field
- * - FieldToSelectOneText() - Creates a text input field
- * - FieldToSelectOneNumber() - Creates a number input field
- * - FieldToSelectOneTextArea() - Creates a text area input field
- * - FieldToSelectOneEmail() - Creates an email input field
- * - FixedField() - Creates a read-only field displaying a value
- * - OneButtonCenteredForm() - Creates a centered form with one submit button
- * - TwoButtonsCenteredForm() - Creates a centered form with submit and reset buttons
- * - FieldToSelectFromFiveOptions() - Creates a dropdown with five options
- * - FieldToSelectFromFourOptions() - Creates a dropdown with four options
- * - FieldToSelectFromThreeOptions() - Creates a dropdown with three options
- * - FieldToSelectFromTwoOptions() - Creates a dropdown with two options
- * - FieldToSelectOneBrand() - Creates a dropdown for selecting a brand
- * - FieldToSelectSpreadSheetFormat() - Creates a dropdown for selecting spreadsheet formats
- *
- *********************************************************************************************************/
-
-function AddAttributesToField($TabIndex, $Required, $AutoFocus) {
+ * @param int|string|null $TabIndex The tab index value for the HTML element
+ * @param bool|int|null $Required Whether the field is required or not
+ * @param bool|int|null $AutoFocus Whether the field should autofocus or not
+ * @return string Generated HTML attributes
+ */
+function AddAttributesToField(int|string|null $TabIndex, bool|int|null $Required, bool|int|null $AutoFocus): string {
 	$Attributes = ' ';
 	if (isset($AutoFocus) and $AutoFocus) {
 		$Attributes .= 'autofocus="autofocus" ';
@@ -57,7 +24,21 @@ function AddAttributesToField($TabIndex, $Required, $AutoFocus) {
 	return $Attributes;
 }
 
-function FieldToSelectOneEntryFromArray($Array, $VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates a dropdown from an array of values.
+ *
+ * @param array $Array
+ * @param string $VariableName
+ * @param string|null $SelectedValue
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectOneEntryFromArray(array $Array, string $VariableName, ?string $SelectedValue, string $Label = '', string $HelpText = '', string $Filter = '', int|string|null $TabIndex = '', bool $Required = true, bool $AutoFocus = false): string {
 
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
@@ -81,7 +62,20 @@ function FieldToSelectOneEntryFromArray($Array, $VariableName, $SelectedValue, $
 	return $HTML;
 }
 
-function FieldToSelectOneCurrency($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates a dropdown for selecting a currency.
+ *
+ * @param string $VariableName
+ * @param string|null $SelectedValue
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectOneCurrency(string $VariableName, ?string $SelectedValue, string $Label = '', string $HelpText = '', string $Filter = '', int|string|null $TabIndex = '', bool $Required = true, bool $AutoFocus = false): string {
 
 	$SQL = "SELECT currabrev,
 				currency
@@ -118,7 +112,29 @@ function FieldToSelectOneCurrency($VariableName, $SelectedValue, $Label = '', $H
 }
 
 
-function FieldToSelectOneCustomerType($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates a dropdown for selecting customer types.
+ *
+ * @param string $VariableName
+ * @param int|string|null $SelectedValue
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectOneCustomerType(
+	string $VariableName,
+	int|string|null $SelectedValue,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = '',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 	$SQL = "SELECT typename,
 				typeid
 			FROM debtortype
@@ -154,7 +170,29 @@ function FieldToSelectOneCustomerType($VariableName, $SelectedValue, $Label = ''
 	return $HTML;
 }
 
-function FieldToSelectOneDate($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates a date input field.
+ *
+ * @param string $VariableName
+ * @param int|string|null $SelectedValue
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectOneDate(
+	string $VariableName,
+	int|string|null $SelectedValue,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = '',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
@@ -168,7 +206,27 @@ function FieldToSelectOneDate($VariableName, $SelectedValue, $Label = '', $HelpT
 	return $HTML;
 }
 
-function FieldToSelectOneFile($VariableName, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates a file upload input field.
+ *
+ * @param string $VariableName
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectOneFile(
+	string $VariableName,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = '',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
@@ -182,7 +240,29 @@ function FieldToSelectOneFile($VariableName, $Label = '', $HelpText = '', $Filte
 	return $HTML;
 }
 
-function FieldToSelectOneGLAccount($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates a dropdown for selecting one GL account.
+ *
+ * @param string $VariableName
+ * @param int|string|null $SelectedValue
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectOneGLAccount(
+	string $VariableName,
+	int|string|null $SelectedValue,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = '',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 	if ($Filter == 'ALL') {
 		$Where = '';
 	} elseif ($Filter == 'BS') {
@@ -239,8 +319,29 @@ function FieldToSelectOneGLAccount($VariableName, $SelectedValue, $Label = '', $
 	return $HTML;
 }
 
-
-function FieldToSelectOneGLAccountGroup($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates a dropdown for selecting GL account groups.
+ *
+ * @param string $VariableName
+ * @param string|null $SelectedValue
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectOneGLAccountGroup(
+	string $VariableName,
+	?string $SelectedValue,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = '',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 	$SQL = "SELECT groupname
 			FROM accountgroups
 			ORDER BY sequenceintb ASC";
@@ -275,7 +376,29 @@ function FieldToSelectOneGLAccountGroup($VariableName, $SelectedValue, $Label = 
 	return $HTML;
 }
 
-function FieldToSelectOneDepartment($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates a dropdown for selecting a department.
+ *
+ * @param string $VariableName
+ * @param int|string|null $SelectedValue
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectOneDepartment(
+	string $VariableName,
+	int|string|null $SelectedValue,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = '',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 	$SQL = "SELECT departmentid,
 				description
 			FROM departments
@@ -311,7 +434,29 @@ function FieldToSelectOneDepartment($VariableName, $SelectedValue, $Label = '', 
 	return $HTML;
 }
 
-function FieldToSelectOneLocation($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates a dropdown for selecting a location.
+ *
+ * @param string $VariableName
+ * @param string|null $SelectedValue
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectOneLocation(
+	string $VariableName,
+	?string $SelectedValue,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = '',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 
 	if ($Filter == 'CANVIEW') {
 		$SQL = "SELECT locations.loccode,
@@ -368,8 +513,29 @@ function FieldToSelectOneLocation($VariableName, $SelectedValue, $Label = '', $H
 	return $HTML;
 }
 
-
-function FieldToSelectOnePeriod($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates a dropdown for selecting an accounting period.
+ *
+ * @param string $VariableName
+ * @param int|string|null $SelectedValue
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectOnePeriod(
+	string $VariableName,
+	int|string|null $SelectedValue,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = '',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 	/* Select One Period, with a dropdown showing the month and Year */
 
 	if ($Filter == 'NEWER_OR_EQUAL_THAN_SELECTED') {
@@ -414,7 +580,29 @@ $SQL = "SELECT periodno,
 	return $HTML;
 }
 
-function FieldToSelectOneSalesArea($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates a dropdown for selecting a sales area.
+ *
+ * @param string $VariableName
+ * @param string|null $SelectedValue
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectOneSalesArea(
+	string $VariableName,
+	?string $SelectedValue,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = '',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 
 	$SQL = "SELECT areacode,
 				areadescription
@@ -452,8 +640,31 @@ function FieldToSelectOneSalesArea($VariableName, $SelectedValue, $Label = '', $
 	return $HTML;
 }
 
-
-function FieldToSelectOneSalesPerson($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $AllowAll = false, $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates a dropdown for selecting a sales person.
+ *
+ * @param string $VariableName
+ * @param string|null $SelectedValue
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param bool $AllowAll
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectOneSalesPerson(
+	string $VariableName,
+	?string $SelectedValue,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = '',
+	bool $AllowAll = false,
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
@@ -512,7 +723,31 @@ function FieldToSelectOneSalesPerson($VariableName, $SelectedValue, $Label = '',
 	return $HTML;
 }
 
-function FieldToSelectOneStockCategory($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $AllowAll = false, $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates a dropdown for selecting a stock category.
+ *
+ * @param string $VariableName
+ * @param string|null $SelectedValue
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param bool $AllowAll
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectOneStockCategory(
+	string $VariableName,
+	?string $SelectedValue,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = '',
+	bool $AllowAll = false,
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 
 	$SQL = "SELECT categoryid,
 				categorydescription
@@ -555,8 +790,29 @@ function FieldToSelectOneStockCategory($VariableName, $SelectedValue, $Label = '
 	return $HTML;
 }
 
-
-function FieldToSelectOneSysType($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates a dropdown for selecting a system type.
+ *
+ * @param string $VariableName
+ * @param int|string|null $SelectedValue
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectOneSysType(
+	string $VariableName,
+	int|string|null $SelectedValue,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = '',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 
 	$SQL = "SELECT typeid,
 				typename
@@ -593,7 +849,31 @@ function FieldToSelectOneSysType($VariableName, $SelectedValue, $Label = '', $He
 	return $HTML;
 }
 
-function FieldToSelectOnePassword($VariableName, $SelectedValue, $Size, $MaxLength, $Label = '', $HelpText = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates a password input field.
+ *
+ * @param string $VariableName
+ * @param string|null $SelectedValue
+ * @param int|string $Size
+ * @param int|string $MaxLength
+ * @param string $Label
+ * @param string $HelpText
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectOnePassword(
+	string $VariableName,
+	?string $SelectedValue,
+	int|string $Size,
+	int|string $MaxLength,
+	string $Label = '',
+	string $HelpText = '',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
@@ -607,7 +887,33 @@ function FieldToSelectOnePassword($VariableName, $SelectedValue, $Size, $MaxLeng
 	return $HTML;
 }
 
-function FieldToSelectOneTelephoneNumber($VariableName, $SelectedValue, $Size, $MaxLength, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates a telephone number input field.
+ *
+ * @param string $VariableName
+ * @param string|null $SelectedValue
+ * @param int|string $Size
+ * @param int|string $MaxLength
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectOneTelephoneNumber(
+	string $VariableName,
+	?string $SelectedValue,
+	int|string $Size,
+	int|string $MaxLength,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = '',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
@@ -621,7 +927,33 @@ function FieldToSelectOneTelephoneNumber($VariableName, $SelectedValue, $Size, $
 	return $HTML;
 }
 
-function FieldToSelectOneText($VariableName, $SelectedValue, $Size, $MaxLength, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates a text input field.
+ *
+ * @param string $VariableName
+ * @param string|null $SelectedValue
+ * @param int|string $Size
+ * @param int|string $MaxLength
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectOneText(
+	string $VariableName,
+	?string $SelectedValue,
+	int|string $Size,
+	int|string $MaxLength,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = '',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
@@ -635,7 +967,31 @@ function FieldToSelectOneText($VariableName, $SelectedValue, $Size, $MaxLength, 
 	return $HTML;
 }
 
-function FieldToSelectOneEmail($VariableName, $SelectedValue, $Size, $MaxLength, $Label = '', $HelpText = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates an email input field.
+ *
+ * @param string $VariableName
+ * @param string|null $SelectedValue
+ * @param int|string $Size
+ * @param int|string $MaxLength
+ * @param string $Label
+ * @param string $HelpText
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectOneEmail(
+	string $VariableName,
+	?string $SelectedValue,
+	int|string $Size,
+	int|string $MaxLength,
+	string $Label = '',
+	string $HelpText = '',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
@@ -649,7 +1005,33 @@ function FieldToSelectOneEmail($VariableName, $SelectedValue, $Size, $MaxLength,
 	return $HTML;
 }
 
-function FieldToSelectOneNumber($VariableName, $SelectedValue, $Size, $MaxLength, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates a number input field.
+ *
+ * @param string $VariableName
+ * @param int|string|float|null $SelectedValue
+ * @param int|string $Size
+ * @param int|string $MaxLength
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectOneNumber(
+	string $VariableName,
+	int|string|float|null $SelectedValue,
+	int|string $Size,
+	int|string $MaxLength,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = '',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
@@ -663,7 +1045,33 @@ function FieldToSelectOneNumber($VariableName, $SelectedValue, $Size, $MaxLength
 	return $HTML;
 }
 
-function FieldToSelectOneTextArea($VariableName, $SelectedValue, $Cols, $Rows, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates a text area input field.
+ *
+ * @param string $VariableName
+ * @param string|null $SelectedValue
+ * @param int|string $Cols
+ * @param int|string $Rows
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectOneTextArea(
+	string $VariableName,
+	?string $SelectedValue,
+	int|string $Cols,
+	int|string $Rows,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = '',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 
 	$HTML = '<field>';
 	if ($HTML != '') {
@@ -677,7 +1085,31 @@ function FieldToSelectOneTextArea($VariableName, $SelectedValue, $Cols, $Rows, $
 	return $HTML;
 }
 
-function FieldToSelectOneUser($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $AllowAll = false, $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates a dropdown for selecting a user.
+ *
+ * @param string $VariableName
+ * @param string|null $SelectedValue
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param bool $AllowAll
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectOneUser(
+	string $VariableName,
+	?string $SelectedValue,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = '',
+	bool $AllowAll = false,
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 
 	$SQL = "SELECT userid,
 				realname
@@ -719,7 +1151,29 @@ function FieldToSelectOneUser($VariableName, $SelectedValue, $Label = '', $HelpT
 	return $HTML;
 }
 
-function FieldToSelectMultipleLocations($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates a multiple selection dropdown for locations.
+ *
+ * @param string $VariableName
+ * @param array|null $SelectedValue
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectMultipleLocations(
+	string $VariableName,
+	?array $SelectedValue,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = '',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 	if ($Filter == 'CANVIEW') {
 		$SQL = "SELECT locations.loccode,
 					locations.locationname
@@ -768,8 +1222,31 @@ function FieldToSelectMultipleLocations($VariableName, $SelectedValue, $Label = 
 	return $HTML;
 }
 
-
-function FieldToSelectMultiplePeriods($VariableName, $FirstSelectedValue, $LastSelectedValue, $Label = '', $HelpText = '', $Filter = 'ASC', $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates a multiple selection dropdown for accounting periods.
+ *
+ * @param string $VariableName
+ * @param int|string|null $FirstSelectedValue
+ * @param int|string|null $LastSelectedValue
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectMultiplePeriods(
+	string $VariableName,
+	int|string|null $FirstSelectedValue,
+	int|string|null $LastSelectedValue,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = 'ASC',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 	/* Select a range of Periods, showing the month and Year */
 	if ($Filter == 'ASC') {
 		$OrderSQL = " ORDER BY periodno";
@@ -806,8 +1283,29 @@ function FieldToSelectMultiplePeriods($VariableName, $FirstSelectedValue, $LastS
 	return $HTML;
 }
 
-
-function FieldToSelectMultipleStockCategories($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates a multiple selection dropdown for stock categories.
+ *
+ * @param string $VariableName
+ * @param array|null $SelectedValue
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectMultipleStockCategories(
+	string $VariableName,
+	?array $SelectedValue,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = '',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 	$SQL = "SELECT categoryid,
 				categorydescription
 			FROM stockcategory
@@ -835,8 +1333,21 @@ function FieldToSelectMultipleStockCategories($VariableName, $SelectedValue, $La
 	return $HTML;
 }
 
-
-function FixedField($VariableName, $SelectedValue, $Label = '', $HelpText = '') {
+/**
+ * Creates a read-only field displaying a value.
+ *
+ * @param string $VariableName
+ * @param string|null $SelectedValue
+ * @param string $Label
+ * @param string $HelpText
+ * @return string Generated HTML field
+ */
+function FixedField(
+	string $VariableName,
+	?string $SelectedValue,
+	string $Label = '',
+	string $HelpText = ''
+): string {
 
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
@@ -846,8 +1357,23 @@ function FixedField($VariableName, $SelectedValue, $Label = '', $HelpText = '') 
 	return $HTML;
 }
 
-
-function OneButtonCenteredForm($ButtonName, $ButtonValue, $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates a centered form with one submit button.
+ *
+ * @param string $ButtonName
+ * @param string $ButtonValue
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML
+ */
+function OneButtonCenteredForm(
+	string $ButtonName,
+	string $ButtonValue,
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 	$HTML = '<div class="centre">
 				<input type="submit" ';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
@@ -856,7 +1382,27 @@ function OneButtonCenteredForm($ButtonName, $ButtonValue, $TabIndex = '', $Requi
 	return $HTML;
 }
 
-function TwoButtonsCenteredForm($ButtonName1, $ButtonValue1, $ButtonName2, $ButtonValue2, $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates a centered form with submit and reset buttons.
+ *
+ * @param string $ButtonName1
+ * @param string $ButtonValue1
+ * @param string $ButtonName2
+ * @param string $ButtonValue2
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML
+ */
+function TwoButtonsCenteredForm(
+	string $ButtonName1,
+	string $ButtonValue1,
+	string $ButtonName2,
+	string $ButtonValue2,
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 	$HTML = '<div class="centre">
 				<input type="submit" ';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
@@ -867,9 +1413,37 @@ function TwoButtonsCenteredForm($ButtonName1, $ButtonValue1, $ButtonName2, $Butt
 	return $HTML;
 }
 
-function FieldToSelectFromTwoOptions($ValueOption1, $LabelOption1,
-									$ValueOption2, $LabelOption2,
-									$VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates a dropdown with two options.
+ *
+ * @param string $ValueOption1
+ * @param string $LabelOption1
+ * @param string $ValueOption2
+ * @param string $LabelOption2
+ * @param string $VariableName
+ * @param string|null $SelectedValue
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectFromTwoOptions(
+	string $ValueOption1,
+	string $LabelOption1,
+	string $ValueOption2,
+	string $LabelOption2,
+	string $VariableName,
+	?string $SelectedValue,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = '',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 
 	$HTML = '<field>
 		<label>' . $Label . ':</label>
@@ -892,10 +1466,41 @@ function FieldToSelectFromTwoOptions($ValueOption1, $LabelOption1,
 	return $HTML;
 }
 
-function FieldToSelectFromThreeOptions($ValueOption1, $LabelOption1,
-									$ValueOption2, $LabelOption2,
-									$ValueOption3, $LabelOption3,
-									$VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates a dropdown with three options.
+ *
+ * @param string $ValueOption1
+ * @param string $LabelOption1
+ * @param string $ValueOption2
+ * @param string $LabelOption2
+ * @param string $ValueOption3
+ * @param string $LabelOption3
+ * @param string $VariableName
+ * @param string|null $SelectedValue
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectFromThreeOptions(
+	string $ValueOption1,
+	string $LabelOption1,
+	string $ValueOption2,
+	string $LabelOption2,
+	string $ValueOption3,
+	string $LabelOption3,
+	string $VariableName,
+	?string $SelectedValue,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = '',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 
 	$HTML = '<field>
 		<label>' . $Label . ':</label>
@@ -925,11 +1530,45 @@ function FieldToSelectFromThreeOptions($ValueOption1, $LabelOption1,
 	return $HTML;
 }
 
-function FieldToSelectFromFourOptions($ValueOption1, $LabelOption1,
-									$ValueOption2, $LabelOption2,
-									$ValueOption3, $LabelOption3,
-									$ValueOption4, $LabelOption4,
-									$VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates a dropdown with four options.
+ *
+ * @param string $ValueOption1
+ * @param string $LabelOption1
+ * @param string $ValueOption2
+ * @param string $LabelOption2
+ * @param string $ValueOption3
+ * @param string $LabelOption3
+ * @param string $ValueOption4
+ * @param string $LabelOption4
+ * @param string $VariableName
+ * @param string|null $SelectedValue
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectFromFourOptions(
+	string $ValueOption1,
+	string $LabelOption1,
+	string $ValueOption2,
+	string $LabelOption2,
+	string $ValueOption3,
+	string $LabelOption3,
+	string $ValueOption4,
+	string $LabelOption4,
+	string $VariableName,
+	?string $SelectedValue,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = '',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 
 	$HTML = '<field>
 		<label>' . $Label . ':</label>
@@ -968,12 +1607,49 @@ function FieldToSelectFromFourOptions($ValueOption1, $LabelOption1,
 	return $HTML;
 }
 
-function FieldToSelectFromFiveOptions($ValueOption1, $LabelOption1,
-									$ValueOption2, $LabelOption2,
-									$ValueOption3, $LabelOption3,
-									$ValueOption4, $LabelOption4,
-									$ValueOption5, $LabelOption5,
-									$VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates a dropdown with five options.
+ *
+ * @param string $ValueOption1
+ * @param string $LabelOption1
+ * @param string $ValueOption2
+ * @param string $LabelOption2
+ * @param string $ValueOption3
+ * @param string $LabelOption3
+ * @param string $ValueOption4
+ * @param string $LabelOption4
+ * @param string $ValueOption5
+ * @param string $LabelOption5
+ * @param string $VariableName
+ * @param string|null $SelectedValue
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectFromFiveOptions(
+	string $ValueOption1,
+	string $LabelOption1,
+	string $ValueOption2,
+	string $LabelOption2,
+	string $ValueOption3,
+	string $LabelOption3,
+	string $ValueOption4,
+	string $LabelOption4,
+	string $ValueOption5,
+	string $LabelOption5,
+	string $VariableName,
+	?string $SelectedValue,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = '',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 
 	$HTML = '<field>
 		<label>' . $Label . ':</label>
@@ -1024,7 +1700,29 @@ function FieldToSelectFromFiveOptions($ValueOption1, $LabelOption1,
 	return $HTML;
 }
 
-function FieldToSelectSpreadSheetFormat($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates a dropdown for selecting spreadsheet formats.
+ *
+ * @param string $VariableName
+ * @param string|null $SelectedValue
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectSpreadSheetFormat(
+	string $VariableName,
+	?string $SelectedValue,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = '',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 
 	$HTML = FieldToSelectFromTwoOptions('xlsx', 'Excel 2007 (xlsx)',
 										'ods', 'OpenDocument (ods)',
@@ -1033,7 +1731,29 @@ function FieldToSelectSpreadSheetFormat($VariableName, $SelectedValue, $Label = 
 	return $HTML;
 }
 
-function FieldToSelectOneBrand($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+/**
+ * Creates a dropdown for selecting a brand.
+ *
+ * @param string $VariableName
+ * @param int|string|null $SelectedValue
+ * @param string $Label
+ * @param string $HelpText
+ * @param string $Filter
+ * @param int|string|null $TabIndex
+ * @param bool $Required
+ * @param bool $AutoFocus
+ * @return string Generated HTML field
+ */
+function FieldToSelectOneBrand(
+	string $VariableName,
+	int|string|null $SelectedValue,
+	string $Label = '',
+	string $HelpText = '',
+	string $Filter = '',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false
+): string {
 
 	$SQL = "SELECT brands.brands_id,
 					brands_name
