@@ -20,6 +20,15 @@ if ($AppraisalID <= 0) {
 	exit;
 }
 
+$From = '';
+if (isset($_GET['From'])) {
+	if ($_GET['From'] === 'HRPerformanceAppraisals') {
+		$From = 'HRPerformanceAppraisals';
+	} elseif ($_GET['From'] === 'HRMyAppraisals') {
+		$From = 'HRMyAppraisals';
+	}
+}
+
 // Load appraisal basic info
 $SQL = "SELECT a.appraisalid,
 			a.employeeid,
@@ -80,9 +89,9 @@ if (count($Criteria) == 0) {
 		$comments = $scoreRow && isset($scoreRow['comments']) ? $scoreRow['comments'] : '';
 		echo '<tr>';
 		echo '<td>' . htmlspecialchars($c['criterianame'], ENT_QUOTES, 'UTF-8') . '</td>';
-		echo '<td class="right">' . number_format($weight, 1) . '%</td>';
+		echo '<td class="number">' . number_format($weight, 1) . '%</td>';
 		echo '<td class="centre">' . htmlspecialchars($ratingLabel, ENT_QUOTES, 'UTF-8') . '</td>';
-		echo '<td class="right">' . (is_null($weighted) ? '-' : number_format((float)$weighted, 2)) . '</td>';
+		echo '<td class="number">' . (is_null($weighted) ? '-' : number_format((float)$weighted, 2)) . '</td>';
 		echo '<td>' . ($comments !== '' ? htmlspecialchars($comments, ENT_QUOTES, 'UTF-8') : '-') . '</td>';
 		echo '</tr>';
 	}
@@ -92,14 +101,18 @@ if (count($Criteria) == 0) {
 	echo '<td><strong>' . __('Total') . '</strong></td>';
 	echo '<td></td>';
 	echo '<td></td>';
-	echo '<td class="right"><strong>' . number_format((float)$TotalWeighted, 2) . '</strong></td>';
+	echo '<td class="number"><strong>' . number_format((float)$TotalWeighted, 2) . '</strong></td>';
 	echo '<td>' . __('Mapped rating:') . ' ' . htmlspecialchars($MappedRatingLabel, ENT_QUOTES, 'UTF-8') . '</td>';
 	echo '</tr>';
 }
 
 echo '</tbody></table>';
 
-echo '<p><a href="' . $RootPath . '/HRPerformanceAppraisals.php">' . __('Back to appraisals') . '</a></p>';
+if ($From === 'HRMyAppraisals') {
+	echo '<p><a href="' . $RootPath . '/HRMyAppraisals.php">' . __('Back to my appraisals') . '</a></p>';
+} elseif ($From === 'HRPerformanceAppraisals') {
+	echo '<p><a href="' . $RootPath . '/HRPerformanceAppraisals.php">' . __('Back to all appraisals') . '</a></p>';
+}
 
 include(__DIR__ . '/includes/footer.php');
 

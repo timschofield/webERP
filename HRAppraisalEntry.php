@@ -28,10 +28,29 @@ require_once(__DIR__ . '/includes/HRPerformanceHelper.php');
  */
 $RatingLabels = GetRatingLabels();
 
-echo '<a class="toplink" href="' . $RootPath . '/HRPerformanceAppraisals.php">' . __('Return to Appraisals List') . '</a>';
-
 /* Edit mode: an AppraisalID is present in the URL */
 $EditMode = (isset($_GET['AppraisalID']) AND (int)$_GET['AppraisalID'] > 0);
+
+$From = '';
+if (isset($_GET['From'])) {
+	if ($_GET['From'] === 'HRPerformanceAppraisals') {
+		$From = 'HRPerformanceAppraisals';
+	} elseif ($_GET['From'] === 'HRMyAppraisalsAsReviewer') {
+		$From = 'HRMyAppraisalsAsReviewer';
+	}
+} elseif (isset($_POST['From'])) {
+	if ($_POST['From'] === 'HRPerformanceAppraisals') {
+		$From = 'HRPerformanceAppraisals';
+	} elseif ($_POST['From'] === 'HRMyAppraisalsAsReviewer') {
+		$From = 'HRMyAppraisalsAsReviewer';
+	}
+}
+
+if ($From === 'HRMyAppraisalsAsReviewer') {
+	echo '<a class="toplink" href="' . $RootPath . '/HRMyAppraisalsAsReviewer.php">' . __('Return to Appraisals to Review') . '</a>';
+} else {
+	echo '<a class="toplink" href="' . $RootPath . '/HRPerformanceAppraisals.php">' . __('Return to Appraisals List') . '</a>';
+}
 
 /* Handle form submission (both new and edit) */
 if (isset($_POST['Submit'])) {
@@ -273,6 +292,9 @@ if ($EditMode) {
 
 	echo '<form method="post" action="' . $FormAction . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	if ($From !== '') {
+		echo '<input type="hidden" name="From" value="' . htmlspecialchars($From, ENT_QUOTES, 'UTF-8') . '" />';
+	}
 
 	echo '<fieldset>
 			<legend>' . __('Edit Performance Appraisal') . '</legend>';
