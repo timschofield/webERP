@@ -9,6 +9,13 @@ include(__DIR__ . '/includes/header.php');
 
 include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
+if (isset($_POST['EffectiveAfter'])) {
+	$_POST['EffectiveAfter'] = ConvertSQLDate($_POST['EffectiveAfter']);
+}
+if (isset($_POST['EffectiveTo'])) {
+	$_POST['EffectiveTo'] = ConvertSQLDate($_POST['EffectiveTo']);
+}
+
 function display_children($Parent, $Level, &$BOMTree) {
 
 	global $i;
