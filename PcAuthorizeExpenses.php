@@ -71,6 +71,15 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	}
 	$SucessfullyAuthorized = 0;
 
+	/* Retrieve decimal places to display */
+	$SQLDecimalPlaces = "SELECT decimalplaces
+			FROM currencies,pctabs
+			WHERE currencies.currabrev = pctabs.currency
+				AND tabcode = '" . $SelectedTabs . "'";
+	$ResultDecimalPlaces = DB_query($SQLDecimalPlaces);
+	$MyRowDecimalPlaces = DB_fetch_array($ResultDecimalPlaces);
+	$CurrDecimalPlaces = $MyRowDecimalPlaces['decimalplaces'];
+
 	//Limit expenses history to X days
 	echo '<fieldset>
 			<field>
@@ -95,8 +104,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 				pctabs.glaccountpcash,
 				pctabs.usercode,
 				pctabs.currency,
-				currencies.rate,
-				currencies.decimalplaces
+				currencies.rate
 			FROM pcashdetails, pctabs, currencies
 			WHERE pcashdetails.tabcode = pctabs.tabcode
 				AND pctabs.currency = currencies.currabrev
@@ -124,7 +132,6 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			<tbody>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
-		$CurrDecimalPlaces = $MyRow['decimalplaces'];
 		//update database if update pressed
 		$PeriodNo = GetPeriod(ConvertSQLDate($MyRow['date']));
 		$TaxTotalSQL = "SELECT SUM(amount) as totaltax FROM pcashdetailtaxes WHERE pccashdetail='" . $MyRow['counterindex'] . "'";
