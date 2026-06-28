@@ -38,23 +38,23 @@ function AverageCustomerBehaviourByValueInvoice($Typereport, $Brand, $NumDaysA){
 	if ($Typereport == "Shop"){
 		$BrandText= BrandTextFromCode($Brand);
 		if ($BrandCode == "KL") {
-			$AverageInvoiceValue01 = AVERAGE_INVOICE_VALUE_KL_01;
-			$AverageInvoiceValue02 = AVERAGE_INVOICE_VALUE_KL_02;
-			$AverageInvoiceValue03 = AVERAGE_INVOICE_VALUE_KL_03;
-			$AverageInvoiceValue04 = AVERAGE_INVOICE_VALUE_KL_04;
-			$AverageInvoiceValue05 = AVERAGE_INVOICE_VALUE_KL_05;
-			$AverageInvoiceValue06 = AVERAGE_INVOICE_VALUE_KL_06;
-			$AverageInvoiceValue07 = AVERAGE_INVOICE_VALUE_KL_07;
-			$AverageInvoiceValue08 = AVERAGE_INVOICE_VALUE_KL_08;
+			$AverageInvoiceValue01 = $_SESSION['AverageInvoiceValueKL01'];
+			$AverageInvoiceValue02 = $_SESSION['AverageInvoiceValueKL02'];
+			$AverageInvoiceValue03 = $_SESSION['AverageInvoiceValueKL03'];
+			$AverageInvoiceValue04 = $_SESSION['AverageInvoiceValueKL04'];
+			$AverageInvoiceValue05 = $_SESSION['AverageInvoiceValueKL05'];
+			$AverageInvoiceValue06 = $_SESSION['AverageInvoiceValueKL06'];
+			$AverageInvoiceValue07 = $_SESSION['AverageInvoiceValueKL07'];
+			$AverageInvoiceValue08 = $_SESSION['AverageInvoiceValueKL08'];
 		} elseif ($BrandCode == "BL") {
-			$AverageInvoiceValue01 = AVERAGE_INVOICE_VALUE_BLINK_01;
-			$AverageInvoiceValue02 = AVERAGE_INVOICE_VALUE_BLINK_02;
-			$AverageInvoiceValue03 = AVERAGE_INVOICE_VALUE_BLINK_03;
-			$AverageInvoiceValue04 = AVERAGE_INVOICE_VALUE_BLINK_04;
-			$AverageInvoiceValue05 = AVERAGE_INVOICE_VALUE_BLINK_05;
-			$AverageInvoiceValue06 = AVERAGE_INVOICE_VALUE_BLINK_06;
-			$AverageInvoiceValue07 = AVERAGE_INVOICE_VALUE_BLINK_07;
-			$AverageInvoiceValue08 = AVERAGE_INVOICE_VALUE_BLINK_08;
+			$AverageInvoiceValue01 = $_SESSION['AverageInvoiceValueBlink01'];
+			$AverageInvoiceValue02 = $_SESSION['AverageInvoiceValueBlink02'];
+			$AverageInvoiceValue03 = $_SESSION['AverageInvoiceValueBlink03'];
+			$AverageInvoiceValue04 = $_SESSION['AverageInvoiceValueBlink04'];
+			$AverageInvoiceValue05 = $_SESSION['AverageInvoiceValueBlink05'];
+			$AverageInvoiceValue06 = $_SESSION['AverageInvoiceValueBlink06'];
+			$AverageInvoiceValue07 = $_SESSION['AverageInvoiceValueBlink07'];
+			$AverageInvoiceValue08 = $_SESSION['AverageInvoiceValueBlink08'];
 		} else {
 			return;
 		}
@@ -113,7 +113,7 @@ function AverageCustomerBehaviourByValueInvoice($Typereport, $Brand, $NumDaysA){
 						
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		$TableTitleText = __('Average value of invoice by ') . $BrandText . " " . $Typereport . " during the last " . $NumDaysA . " days.";
+		$TableTitleText = __('Average invoice value by ') . $BrandText . " " . $Typereport . " during the last " . $NumDaysA . " days.";
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
@@ -122,8 +122,8 @@ function AverageCustomerBehaviourByValueInvoice($Typereport, $Brand, $NumDaysA){
 						<th class="SortedColumn">' . __('#') . '</th>
 						<th class="SortedColumn">' . $Typereport . '</th>
 						<th class="SortedColumn">' . __('Name') . '</th>
-						<th class="SortedColumn">' . 'IDR/Invoice.'. '</th>
-						<th class="SortedColumn">' . '# Invoice/Day'. '</th>
+						<th class="SortedColumn">' . __('IDR/Invoice') . '</th>
+						<th class="SortedColumn">' . __('# Invoice/Day') . '</th>
 						<th class="SortedColumn">' . '<='. locale_number_format($AverageInvoiceValue01,0) . '</th>
 						<th class="SortedColumn">' . '<='. locale_number_format($AverageInvoiceValue02,0) . '</th>
 						<th class="SortedColumn">' . '<='. locale_number_format($AverageInvoiceValue03,0) . '</th>
