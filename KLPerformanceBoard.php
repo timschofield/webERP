@@ -131,14 +131,14 @@ if ($ProcessSection01){
 		OR $KL_ShopManager
 		OR $KL_SalesTeamManager){
 		$StartTime = microtime(true);
-		AverageCustomerBehaviourByValueInvoice("Shop", "SHOPKL", 30);
+		AverageCustomerBehaviourByValueInvoice("Shop", "SHOPKL", $_SESSION['AverageInvoiceValueNumberDays']);
 		TimeNeededForExecution("AverageCustomerBehaviourByValueInvoice_SHOPKL", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		AverageCustomerBehaviourByValueInvoice("Shop", "SHOPBL", 30);
+		AverageCustomerBehaviourByValueInvoice("Shop", "SHOPBL", $_SESSION['AverageInvoiceValueNumberDays']);
 		TimeNeededForExecution("AverageCustomerBehaviourByValueInvoice_SHOPBL", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
-//		AverageCustomerBehaviourByValueInvoice("Shop", "SHOPOU", 30);
+//		AverageCustomerBehaviourByValueInvoice("Shop", "SHOPOU", $_SESSION['AverageInvoiceValueNumberDays']);
 //		$NumberOfTestExecuted++;
 	}
 
@@ -161,7 +161,7 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin 
 		OR $KL_SalesTeamManager){
 		$StartTime = microtime(true);
-		DailySalesRecords(10, 365 * 2, "2024-08-04");
+		DailySalesRecords($_SESSION['TopSalesNumberOfDays'], 365 * 2, $_SESSION['TopSalesSince']);
 		TimeNeededForExecution("DailySalesRecords", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}

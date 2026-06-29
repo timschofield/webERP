@@ -15,6 +15,7 @@ $ViewTopic = 'HumanResources';
 $BookMark = 'PayGrades';
 
 include(__DIR__ . '/includes/header.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
 
 echo '<p class="page_title_text">
 		<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/money_add.png" title="' . __('Pay Grades') . '" /> ' .
@@ -40,15 +41,75 @@ if (isset($_POST['Submit'])) {
 
 	if ($InputError != 1) {
 		$CurrencyCode = DB_escape_string($_POST['CurrencyCode']);
+
+		$TunjanganOperational = filter_var(
+			$_POST['TunjanganOperational'],
+			FILTER_SANITIZE_NUMBER_FLOAT,
+			FILTER_FLAG_ALLOW_FRACTION
+		);
+		$TunjanganJabatan = filter_var(
+			$_POST['TunjanganJabatan'],
+			FILTER_SANITIZE_NUMBER_FLOAT,
+			FILTER_FLAG_ALLOW_FRACTION
+		);
+		$VariableProfitPreviousMonth = filter_var(
+			$_POST['VariableProfitPreviousMonth'],
+			FILTER_SANITIZE_NUMBER_FLOAT,
+			FILTER_FLAG_ALLOW_FRACTION
+		);
+		$VariableProfitPreviousMonthPartners = filter_var(
+			$_POST['VariableProfitPreviousMonthPartners'],
+			FILTER_SANITIZE_NUMBER_FLOAT,
+			FILTER_FLAG_ALLOW_FRACTION
+		);
+		$CommissionSpgSenior = filter_var(
+			$_POST['CommissionSpgSenior'],
+			FILTER_SANITIZE_NUMBER_FLOAT,
+			FILTER_FLAG_ALLOW_FRACTION
+		);
+		$CommissionSpgJunior = filter_var(
+			$_POST['CommissionSpgJunior'],
+			FILTER_SANITIZE_NUMBER_FLOAT,
+			FILTER_FLAG_ALLOW_FRACTION
+		);
+		$CommissionSpgMiddle = filter_var(
+			$_POST['CommissionSpgMiddle'],
+			FILTER_SANITIZE_NUMBER_FLOAT,
+			FILTER_FLAG_ALLOW_FRACTION
+		);
+		$MinAnnualSalary = filter_var(
+			$_POST['MinAnnualSalary'],
+			FILTER_SANITIZE_NUMBER_FLOAT,
+			FILTER_FLAG_ALLOW_FRACTION
+		);
+		$MidAnnualSalary = filter_var(
+			$_POST['MidAnnualSalary'],
+			FILTER_SANITIZE_NUMBER_FLOAT,
+			FILTER_FLAG_ALLOW_FRACTION
+		);
+		$MaxAnnualSalary = filter_var(
+			$_POST['MaxAnnualSalary'],
+			FILTER_SANITIZE_NUMBER_FLOAT,
+			FILTER_FLAG_ALLOW_FRACTION
+		);
+
 		if (isset($_POST['GradeID']) && $_POST['GradeID'] > 0) {
 			// Update existing grade
 			$SQL = "UPDATE hrpaygrades SET
 						paygradecode = '" . $_POST['GradeCode'] . "',
 						paygradename = '" . $_POST['GradeTitle'] . "',
 						currencycode = '" . $CurrencyCode . "',
-						minsalary = " . filter_var($_POST['MinAnnualSalary'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) . ",
-						midsalary = " . filter_var($_POST['MidAnnualSalary'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) . ",
-						maxsalary = " . filter_var($_POST['MaxAnnualSalary'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) . ",
+						umkbased = " . (int)$_POST['UmkBased'] . ",
+						tunjanganoperational = " . $TunjanganOperational . ",
+						tunjanganjabatan = " . $TunjanganJabatan . ",
+						variableprofitpreviousmonth = " . $VariableProfitPreviousMonth . ",
+						variableprofitpreviousmonthpartners = " . $VariableProfitPreviousMonthPartners . ",
+						commissionspgsenior = " . $CommissionSpgSenior . ",
+						commissionspgjunior = " . $CommissionSpgJunior . ",
+						commissionspgmiddle = " . $CommissionSpgMiddle . ",
+						minsalary = " . $MinAnnualSalary . ",
+						midsalary = " . $MidAnnualSalary . ",
+						maxsalary = " . $MaxAnnualSalary . ",
 						active = " . (isset($_POST['Active']) ? 1 : 0) . "
 					WHERE paygradeid = " . (int)$_POST['GradeID'];
 
@@ -60,15 +121,25 @@ if (isset($_POST['Submit'])) {
 			// Insert new grade
 			$SQL = "INSERT INTO hrpaygrades (
 						paygradecode, paygradename, currencycode,
-						minsalary, midsalary, maxsalary,
-						active
+						umkbased, tunjanganoperational, tunjanganjabatan,
+						variableprofitpreviousmonth, variableprofitpreviousmonthpartners,
+						commissionspgsenior, commissionspgjunior, commissionspgmiddle,
+						minsalary, midsalary, maxsalary, active
 					) VALUES (
 						'" . $_POST['GradeCode'] . "',
 						'" . $_POST['GradeTitle'] . "',
 						'" . $CurrencyCode . "',
-						" . filter_var($_POST['MinAnnualSalary'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) . ",
-						" . filter_var($_POST['MidAnnualSalary'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) . ",
-						" . filter_var($_POST['MaxAnnualSalary'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) . ",
+						" . (int)$_POST['UmkBased'] . ",
+						" . $TunjanganOperational . ",
+						" . $TunjanganJabatan . ",
+						" . $VariableProfitPreviousMonth . ",
+						" . $VariableProfitPreviousMonthPartners . ",
+						" . $CommissionSpgSenior . ",
+						" . $CommissionSpgJunior . ",
+						" . $CommissionSpgMiddle . ",
+						" . $MinAnnualSalary . ",
+						" . $MidAnnualSalary . ",
+						" . $MaxAnnualSalary . ",
 						" . (isset($_POST['Active']) ? 1 : 0) . "
 					)";
 			$Result = DB_query($SQL);
@@ -149,6 +220,14 @@ if (!isset($_GET['steps'])) {
 	$GradeCode = '';
 	$GradeTitle = '';
 	$CurrencyCode = $_SESSION['CompanyRecord']['currencydefault'];
+	$UmkBased = 0;
+	$TunjanganOperational = 0;
+	$TunjanganJabatan = 0;
+	$VariableProfitPreviousMonth = 0;
+	$VariableProfitPreviousMonthPartners = 0;
+	$CommissionSpgSenior = 0;
+	$CommissionSpgJunior = 0;
+	$CommissionSpgMiddle = 0;
 	$MinAnnualSalary = 0;
 	$MidAnnualSalary = 0;
 	$MaxAnnualSalary = 0;
@@ -162,6 +241,14 @@ if (!isset($_GET['steps'])) {
 			$GradeCode = $Row['paygradecode'];
 			$GradeTitle = $Row['paygradename'];
 			$CurrencyCode = $Row['currencycode'];
+			$UmkBased = $Row['umkbased'];
+			$TunjanganOperational = $Row['tunjanganoperational'];
+			$TunjanganJabatan = $Row['tunjanganjabatan'];
+			$VariableProfitPreviousMonth = $Row['variableprofitpreviousmonth'];
+			$VariableProfitPreviousMonthPartners = $Row['variableprofitpreviousmonthpartners'];
+			$CommissionSpgSenior = $Row['commissionspgsenior'];
+			$CommissionSpgJunior = $Row['commissionspgjunior'];
+			$CommissionSpgMiddle = $Row['commissionspgmiddle'];
 			$MinAnnualSalary = $Row['minsalary'];
 			$MidAnnualSalary = $Row['midsalary'];
 			$MaxAnnualSalary = $Row['maxsalary'];
@@ -201,8 +288,13 @@ if (!isset($_GET['steps'])) {
 	}
 
 	echo '</select>
-			</field>
+			</field>';
 
+	echo FieldToSelectFromTwoOptions('0', __('No'), '1', __('Yes'),
+		'UmkBased', $UmkBased, __('Pay based on UMK?'));
+
+	echo '<fieldset>
+			<legend>' . __('For Pay Grade NOT UMK Based:') . '</legend>
 			<field>
 				<label for="MinAnnualSalary">' . __('Minimum Monthly Salary') . ':</label>
 				<input type="number" name="MinAnnualSalary" value="' . $MinAnnualSalary . '" step="0.01" />
@@ -216,12 +308,29 @@ if (!isset($_GET['steps'])) {
 			<field>
 				<label for="MaxAnnualSalary">' . __('Maximum Monthly Salary') . ':</label>
 				<input type="number" name="MaxAnnualSalary" value="' . $MaxAnnualSalary . '" step="0.01" />
-			</field>
+			</field>';
 
-			<field>
+		echo FieldToSelectOneNumber('TunjanganOperational', $TunjanganOperational, 15, 15, __('Tunjangan Operasional'), '', '', '', false);
+		echo FieldToSelectOneNumber('TunjanganJabatan', $TunjanganJabatan, 15, 15, __('Tunjangan Jabatan'), '', '', '', false);
+		echo FieldToSelectOneNumber('VariableProfitPreviousMonth', $VariableProfitPreviousMonth, 5, 5, __('% Net Company Profit Previous Month -1'), '', '', '', false);
+		echo FieldToSelectOneNumber('VariableProfitPreviousMonthPartners', $VariableProfitPreviousMonthPartners, 5, 5, __('% Net Company Profit Previous Month -1 as Partners'), '', '', '', false);
+
+	echo '</fieldset>';
+
+	echo '<fieldset>
+			<legend>' . __('For SPG Pay Grades:') . '</legend>';
+
+		echo FieldToSelectOneNumber('CommissionSpgSenior', $CommissionSpgSenior, 5, 5, __('% Commission Sales SPG Senior'), '', '', '', false);
+		echo FieldToSelectOneNumber('CommissionSpgJunior', $CommissionSpgJunior, 5, 5, __('% Commission Sales SPG Junior'), '', '', '', false);
+		echo FieldToSelectOneNumber('CommissionSpgMiddle', $CommissionSpgMiddle, 5, 5, __('% Commission Sales SPG Middle'), '', '', '', false);
+
+	echo '</fieldset>';
+
+	echo '<field>
 				<label for="Active">' . __('Active') . ':</label>
 				<input type="checkbox" name="Active" value="1"' . ($Active ? ' checked="checked"' : '') . ' />
 			</field>
+
 		</fieldset>';
 echo '<div class="centre">
 			<input type="submit" name="Submit" value="' . __('Save') . '" />
@@ -239,9 +348,17 @@ if (DB_num_rows($Result) > 0) {
 				<th>' . __('Grade Code') . '</th>
 				<th>' . __('Grade Title') . '</th>
 				<th>' . __('Currency') . '</th>
+				<th>' . __('UMK Based?') . '</th>
 				<th>' . __('Min Salary') . '</th>
 				<th>' . __('Mid Salary') . '</th>
 				<th>' . __('Max Salary') . '</th>
+				<th>' . __('Tunjangan Operasional') . '</th>
+				<th>' . __('Tunjangan Jabatan') . '</th>
+				<th>' . __('% Net Company Profit Previous Month -1') . '</th>
+				<th>' . __('% Net Company Profit Previous Month -1 as Partners') . '</th>
+				<th>' . __('% Commission Sales SPG Senior') . '</th>
+				<th>' . __('% Commission Sales SPG Junior') . '</th>
+				<th>' . __('% Commission Sales SPG Middle') . '</th>
 				<th>' . __('Active') . '</th>
 				<th>' . __('Actions') . '</th>
 			</tr>';
@@ -251,9 +368,37 @@ if (DB_num_rows($Result) > 0) {
 				<td>' . $Row['paygradecode'] . '</td>
 				<td>' . $Row['paygradename'] . '</td>
 				<td>' . htmlspecialchars((string)$Row['currencycode'], ENT_QUOTES, 'UTF-8') . '</td>
-				<td class="number">' . locale_number_format($Row['minsalary'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td class="number">' . locale_number_format($Row['midsalary'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td class="number">' . locale_number_format($Row['maxsalary'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td>' . ($Row['umkbased'] ? __('Yes') : __('No')) . '</td>
+				<td class="number">' .
+					locale_number_format($Row['minsalary'], 0) .
+				'</td>
+				<td class="number">' .
+					locale_number_format($Row['midsalary'], 0) .
+				'</td>
+				<td class="number">' .
+					locale_number_format($Row['maxsalary'], 0) .
+				'</td>
+				<td class="number">' .
+					locale_number_format($Row['tunjanganoperational'], 0) .
+				'</td>
+				<td class="number">' .
+					locale_number_format($Row['tunjanganjabatan'], 0) .
+				'</td>
+				<td class="number">' .
+					locale_number_format($Row['variableprofitpreviousmonth'], 2) .
+				'</td>
+				<td class="number">' .
+					locale_number_format($Row['variableprofitpreviousmonthpartners'], 2) .
+				'</td>
+				<td class="number">' .
+					locale_number_format($Row['commissionspgsenior'], 2) .
+				'</td>
+				<td class="number">' .
+					locale_number_format($Row['commissionspgjunior'], 2) .
+				'</td>
+				<td class="number">' .
+					locale_number_format($Row['commissionspgmiddle'], 2) .
+				'</td>
 				<td>' . ($Row['active'] ? __('Yes') : __('No')) . '</td>
 				<td>
 					<a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?edit=' . $Row['paygradeid'] . '">' . __('Edit') . '</a> |

@@ -407,6 +407,9 @@ else {
 						suppliers.suppname,
 						purchorders.orddate,
 						purchorders.deliverydate,
+						purchorders.paymentdate,
+						purchorders.shipmentdate,
+						purchorders.arrivaldate,
 						purchorders.initiator,
 						purchorders.status,
 						klpostatus.description AS klstatusdescription,
@@ -755,14 +758,18 @@ else {
 //		$MyUserRow = DB_fetch_array($UserResult);
 		$InitiatorName = $MyUserRow['realname'] ?? '';
 
+		$FormatedPaymentDate = (isset($MyRow['paymentdate']) && !is_null($MyRow['paymentdate']) && $MyRow['paymentdate'] !== '' && $MyRow['paymentdate'] !== '0000-00-00') ? ConvertSQLDate($MyRow['paymentdate']) : '';
+		$FormatedShipmentDate = (isset($MyRow['shipmentdate']) && !is_null($MyRow['shipmentdate']) && $MyRow['shipmentdate'] !== '' && $MyRow['shipmentdate'] !== '0000-00-00') ? ConvertSQLDate($MyRow['shipmentdate']) : '';
+		$FormatedArrivalDate = (isset($MyRow['arrivaldate']) && !is_null($MyRow['arrivaldate']) && $MyRow['arrivaldate'] !== '' && $MyRow['arrivaldate'] !== '0000-00-00') ? ConvertSQLDate($MyRow['arrivaldate']) : '';
+
 		// KL RICARD show custom fields
 		echo '<tr class="striped_row">
 			<td><a href="' . $ModifyPage . '">' . $MyRow['orderno'] . '</a></td>
 			<td>' . $FormatedOrderDate . '</td>
 			<td>' . $FormatedDeliveryDate . '</td>
-			<td>' . ConvertSQLDate($MyRow['paymentdate']) . '</td>
-			<td>' . ConvertSQLDate($MyRow['shipmentdate']) . '</td>
-			<td>' . ConvertSQLDate($MyRow['arrivaldate']) . '</td>
+			<td>' . $FormatedPaymentDate . '</td>
+			<td>' . $FormatedShipmentDate . '</td>
+			<td>' . $FormatedArrivalDate . '</td>
 			<td>' . $MyRow['suppname'] . '</td>
 			' . $BalRow . '
 			<td>' . $MyRow['currcode'] . '</td>';

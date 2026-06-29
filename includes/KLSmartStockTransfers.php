@@ -129,7 +129,7 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 	if ($ToLocCode == 'KANTO'){
 		// parameters are forced for KANTO, as it does not have any specific price list
 		// and it's not a customer
-		$ToLocation = '000-Kantor KL';
+		$ToLocation = '000-Kantor Kesambi';
 		$ToCustomer = '';
 		$ToBranch = '';
 		$ToCurrency = 'IDR';

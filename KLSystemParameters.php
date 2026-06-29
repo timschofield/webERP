@@ -325,6 +325,67 @@ if (isset($_POST['submit'])) {
 			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_SaldoADUPayoneerUSDMax']."' WHERE confname = 'SaldoADUPayoneerUSDMax'";
 		}
 
+		if ($_SESSION['TopSalesNumberOfDays'] != $_POST['X_TopSalesNumberOfDays'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_TopSalesNumberOfDays']."' WHERE confname = 'TopSalesNumberOfDays'";
+		}
+		if ($_SESSION['TopSalesSince'] != $_POST['X_TopSalesSince'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_TopSalesSince']."' WHERE confname = 'TopSalesSince'";
+		}
+
+		if ($_SESSION['AverageInvoiceValueNumberDays'] != $_POST['X_AverageInvoiceValueNumberDays'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_AverageInvoiceValueNumberDays']."' WHERE confname = 'AverageInvoiceValueNumberDays'";
+		}
+
+		if ($_SESSION['AverageInvoiceValueKL01'] != $_POST['X_AverageInvoiceValueKL01'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_AverageInvoiceValueKL01']."' WHERE confname = 'AverageInvoiceValueKL01'";
+		}
+		if ($_SESSION['AverageInvoiceValueKL02'] != $_POST['X_AverageInvoiceValueKL02'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_AverageInvoiceValueKL02']."' WHERE confname = 'AverageInvoiceValueKL02'";
+		}
+		if ($_SESSION['AverageInvoiceValueKL03'] != $_POST['X_AverageInvoiceValueKL03'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_AverageInvoiceValueKL03']."' WHERE confname = 'AverageInvoiceValueKL03'";
+		}
+		if ($_SESSION['AverageInvoiceValueKL04'] != $_POST['X_AverageInvoiceValueKL04'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_AverageInvoiceValueKL04']."' WHERE confname = 'AverageInvoiceValueKL04'";
+		}
+		if ($_SESSION['AverageInvoiceValueKL05'] != $_POST['X_AverageInvoiceValueKL05'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_AverageInvoiceValueKL05']."' WHERE confname = 'AverageInvoiceValueKL05'";
+		}
+		if ($_SESSION['AverageInvoiceValueKL06'] != $_POST['X_AverageInvoiceValueKL06'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_AverageInvoiceValueKL06']."' WHERE confname = 'AverageInvoiceValueKL06'";
+		}
+		if ($_SESSION['AverageInvoiceValueKL07'] != $_POST['X_AverageInvoiceValueKL07'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_AverageInvoiceValueKL07']."' WHERE confname = 'AverageInvoiceValueKL07'";
+		}
+		if ($_SESSION['AverageInvoiceValueKL08'] != $_POST['X_AverageInvoiceValueKL08'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_AverageInvoiceValueKL08']."' WHERE confname = 'AverageInvoiceValueKL08'";
+		}
+
+		if ($_SESSION['AverageInvoiceValueBlink01'] != $_POST['X_AverageInvoiceValueBlink01'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_AverageInvoiceValueBlink01']."' WHERE confname = 'AverageInvoiceValueBlink01'";
+		}
+		if ($_SESSION['AverageInvoiceValueBlink02'] != $_POST['X_AverageInvoiceValueBlink02'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_AverageInvoiceValueBlink02']."' WHERE confname = 'AverageInvoiceValueBlink02'";
+		}
+		if ($_SESSION['AverageInvoiceValueBlink03'] != $_POST['X_AverageInvoiceValueBlink03'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_AverageInvoiceValueBlink03']."' WHERE confname = 'AverageInvoiceValueBlink03'";
+		}
+		if ($_SESSION['AverageInvoiceValueBlink04'] != $_POST['X_AverageInvoiceValueBlink04'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_AverageInvoiceValueBlink04']."' WHERE confname = 'AverageInvoiceValueBlink04'";
+		}
+		if ($_SESSION['AverageInvoiceValueBlink05'] != $_POST['X_AverageInvoiceValueBlink05'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_AverageInvoiceValueBlink05']."' WHERE confname = 'AverageInvoiceValueBlink05'";
+		}
+		if ($_SESSION['AverageInvoiceValueBlink06'] != $_POST['X_AverageInvoiceValueBlink06'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_AverageInvoiceValueBlink06']."' WHERE confname = 'AverageInvoiceValueBlink06'";
+		}
+		if ($_SESSION['AverageInvoiceValueBlink07'] != $_POST['X_AverageInvoiceValueBlink07'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_AverageInvoiceValueBlink07']."' WHERE confname = 'AverageInvoiceValueBlink07'";
+		}
+		if ($_SESSION['AverageInvoiceValueBlink08'] != $_POST['X_AverageInvoiceValueBlink08'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_AverageInvoiceValueBlink08']."' WHERE confname = 'AverageInvoiceValueBlink08'";
+		}
+
 // -------------------------------------
 // KL RICARD  Specific Settings for PTADU webERP
 // -------------------------------------
@@ -517,6 +578,39 @@ echo '<fieldset>
 
 	echo '<fieldset>
 		<legend>' . __('Performance Board Section 1 Settings') . '</legend>';
+
+		echo '<fieldset>
+			<legend>' . __('Top Sales Settings') . '</legend>';
+			echo FieldToSelectOneNumber('X_TopSalesNumberOfDays',  $_SESSION['TopSalesNumberOfDays'], 6, 5, 'Top X Retail days rating', '', '', '150');
+			echo FieldToSelectOneDate('X_TopSalesSince', $_SESSION['TopSalesSince'], 'Starting date for Top Retail Days Table', '', '', '151');
+		echo '</fieldset><br />';
+
+		echo '<fieldset>
+			<legend>' . __('Average Value of Invoice by brand') . '</legend>';			
+			echo FieldToSelectOneNumber('X_AverageInvoiceValueNumberDays',  $_SESSION['AverageInvoiceValueNumberDays'], 6, 5, 'Number of days to analyze average invoice value', 'Number of days to analyze average customer behaviour by value of invoice', '', '209');			
+			echo '<fieldset>
+				<legend>' . __('Average Invoice Value for Kapal-Laut') . '</legend>';
+				echo FieldToSelectOneNumber('X_AverageInvoiceValueKL01',  $_SESSION['AverageInvoiceValueKL01'], 12, 11, 'Average Invoice Value KL 01', 'Threshold step 1 for average invoice value (KL)', '', '210');
+				echo FieldToSelectOneNumber('X_AverageInvoiceValueKL02',  $_SESSION['AverageInvoiceValueKL02'], 12, 11, 'Average Invoice Value KL 02', 'Threshold step 2 for average invoice value (KL)', '', '211');
+				echo FieldToSelectOneNumber('X_AverageInvoiceValueKL03',  $_SESSION['AverageInvoiceValueKL03'], 12, 11, 'Average Invoice Value KL 03', 'Threshold step 3 for average invoice value (KL)', '', '212');
+				echo FieldToSelectOneNumber('X_AverageInvoiceValueKL04',  $_SESSION['AverageInvoiceValueKL04'], 12, 11, 'Average Invoice Value KL 04', 'Threshold step 4 for average invoice value (KL)', '', '213');
+				echo FieldToSelectOneNumber('X_AverageInvoiceValueKL05',  $_SESSION['AverageInvoiceValueKL05'], 12, 11, 'Average Invoice Value KL 05', 'Threshold step 5 for average invoice value (KL)', '', '214');
+				echo FieldToSelectOneNumber('X_AverageInvoiceValueKL06',  $_SESSION['AverageInvoiceValueKL06'], 12, 11, 'Average Invoice Value KL 06', 'Threshold step 6 for average invoice value (KL)', '', '215');
+				echo FieldToSelectOneNumber('X_AverageInvoiceValueKL07',  $_SESSION['AverageInvoiceValueKL07'], 12, 11, 'Average Invoice Value KL 07', 'Threshold step 7 for average invoice value (KL)', '', '216');
+				echo FieldToSelectOneNumber('X_AverageInvoiceValueKL08',  $_SESSION['AverageInvoiceValueKL08'], 12, 11, 'Average Invoice Value KL 08', 'Threshold step 8 for average invoice value (KL)', '', '217');
+			echo '</fieldset><br />';
+			echo '<fieldset>
+				<legend>' . __('Average Invoice Value for Blink') . '</legend>';
+				echo FieldToSelectOneNumber('X_AverageInvoiceValueBlink01',  $_SESSION['AverageInvoiceValueBlink01'], 12, 11, 'Average Invoice Value Blink 01', 'Threshold step 1 for average invoice value (Blink)', '', '220');
+				echo FieldToSelectOneNumber('X_AverageInvoiceValueBlink02',  $_SESSION['AverageInvoiceValueBlink02'], 12, 11, 'Average Invoice Value Blink 02', 'Threshold step 2 for average invoice value (Blink)', '', '221');
+				echo FieldToSelectOneNumber('X_AverageInvoiceValueBlink03',  $_SESSION['AverageInvoiceValueBlink03'], 12, 11, 'Average Invoice Value Blink 03', 'Threshold step 3 for average invoice value (Blink)', '', '222');
+				echo FieldToSelectOneNumber('X_AverageInvoiceValueBlink04',  $_SESSION['AverageInvoiceValueBlink04'], 12, 11, 'Average Invoice Value Blink 04', 'Threshold step 4 for average invoice value (Blink)', '', '223');
+				echo FieldToSelectOneNumber('X_AverageInvoiceValueBlink05',  $_SESSION['AverageInvoiceValueBlink05'], 12, 11, 'Average Invoice Value Blink 05', 'Threshold step 5 for average invoice value (Blink)', '', '224');
+				echo FieldToSelectOneNumber('X_AverageInvoiceValueBlink06',  $_SESSION['AverageInvoiceValueBlink06'], 12, 11, 'Average Invoice Value Blink 06', 'Threshold step 6 for average invoice value (Blink)', '', '225');
+				echo FieldToSelectOneNumber('X_AverageInvoiceValueBlink07',  $_SESSION['AverageInvoiceValueBlink07'], 12, 11, 'Average Invoice Value Blink 07', 'Threshold step 7 for average invoice value (Blink)', '', '226');
+				echo FieldToSelectOneNumber('X_AverageInvoiceValueBlink08',  $_SESSION['AverageInvoiceValueBlink08'], 12, 11, 'Average Invoice Value Blink 08', 'Threshold step 8 for average invoice value (Blink)', '', '227');
+			echo '</fieldset><br />';
+		echo '</fieldset><br />';
 
 	echo '</fieldset><br />';
 

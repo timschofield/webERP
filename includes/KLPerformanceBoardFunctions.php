@@ -37,6 +37,27 @@ function AverageCustomerBehaviourByValueInvoice($Typereport, $Brand, $NumDaysA){
 
 	if ($Typereport == "Shop"){
 		$BrandText= BrandTextFromCode($Brand);
+		if ($BrandCode == "KL") {
+			$AverageInvoiceValue01 = $_SESSION['AverageInvoiceValueKL01'];
+			$AverageInvoiceValue02 = $_SESSION['AverageInvoiceValueKL02'];
+			$AverageInvoiceValue03 = $_SESSION['AverageInvoiceValueKL03'];
+			$AverageInvoiceValue04 = $_SESSION['AverageInvoiceValueKL04'];
+			$AverageInvoiceValue05 = $_SESSION['AverageInvoiceValueKL05'];
+			$AverageInvoiceValue06 = $_SESSION['AverageInvoiceValueKL06'];
+			$AverageInvoiceValue07 = $_SESSION['AverageInvoiceValueKL07'];
+			$AverageInvoiceValue08 = $_SESSION['AverageInvoiceValueKL08'];
+		} elseif ($BrandCode == "BL") {
+			$AverageInvoiceValue01 = $_SESSION['AverageInvoiceValueBlink01'];
+			$AverageInvoiceValue02 = $_SESSION['AverageInvoiceValueBlink02'];
+			$AverageInvoiceValue03 = $_SESSION['AverageInvoiceValueBlink03'];
+			$AverageInvoiceValue04 = $_SESSION['AverageInvoiceValueBlink04'];
+			$AverageInvoiceValue05 = $_SESSION['AverageInvoiceValueBlink05'];
+			$AverageInvoiceValue06 = $_SESSION['AverageInvoiceValueBlink06'];
+			$AverageInvoiceValue07 = $_SESSION['AverageInvoiceValueBlink07'];
+			$AverageInvoiceValue08 = $_SESSION['AverageInvoiceValueBlink08'];
+		} else {
+			return;
+		}
 		$SQL = "SELECT dm.debtorno,
 					dm.name,
 					so_stats.invoicesum,
@@ -57,15 +78,15 @@ function AverageCustomerBehaviourByValueInvoice($Typereport, $Brand, $NumDaysA){
 					SELECT so.debtorno,
 						SUM(so.klpaidcash + so.klpaidcreditcard) AS invoicesum,
 						COUNT(DISTINCT(so.orderno)) AS invoicecount,
-						SUM(CASE WHEN (so.klpaidcash + so.klpaidcreditcard) <= " . AVERAGE_INVOICE_VALUE_01 . " THEN 1 ELSE 0 END) AS invoice01,
-						SUM(CASE WHEN (so.klpaidcash + so.klpaidcreditcard) > " . AVERAGE_INVOICE_VALUE_01 . " AND (so.klpaidcash + so.klpaidcreditcard) <= " . AVERAGE_INVOICE_VALUE_02 . " THEN 1 ELSE 0 END) AS invoice02,
-						SUM(CASE WHEN (so.klpaidcash + so.klpaidcreditcard) > " . AVERAGE_INVOICE_VALUE_02 . " AND (so.klpaidcash + so.klpaidcreditcard) <= " . AVERAGE_INVOICE_VALUE_03 . " THEN 1 ELSE 0 END) AS invoice03,
-						SUM(CASE WHEN (so.klpaidcash + so.klpaidcreditcard) > " . AVERAGE_INVOICE_VALUE_03 . " AND (so.klpaidcash + so.klpaidcreditcard) <= " . AVERAGE_INVOICE_VALUE_04 . " THEN 1 ELSE 0 END) AS invoice04,
-						SUM(CASE WHEN (so.klpaidcash + so.klpaidcreditcard) > " . AVERAGE_INVOICE_VALUE_04 . " AND (so.klpaidcash + so.klpaidcreditcard) <= " . AVERAGE_INVOICE_VALUE_05 . " THEN 1 ELSE 0 END) AS invoice05,
-						SUM(CASE WHEN (so.klpaidcash + so.klpaidcreditcard) > " . AVERAGE_INVOICE_VALUE_05 . " AND (so.klpaidcash + so.klpaidcreditcard) <= " . AVERAGE_INVOICE_VALUE_06 . " THEN 1 ELSE 0 END) AS invoice06,
-						SUM(CASE WHEN (so.klpaidcash + so.klpaidcreditcard) > " . AVERAGE_INVOICE_VALUE_06 . " AND (so.klpaidcash + so.klpaidcreditcard) <= " . AVERAGE_INVOICE_VALUE_07 . " THEN 1 ELSE 0 END) AS invoice07,
-						SUM(CASE WHEN (so.klpaidcash + so.klpaidcreditcard) > " . AVERAGE_INVOICE_VALUE_07 . " AND (so.klpaidcash + so.klpaidcreditcard) <= " . AVERAGE_INVOICE_VALUE_08 . " THEN 1 ELSE 0 END) AS invoice08,
-						SUM(CASE WHEN (so.klpaidcash + so.klpaidcreditcard) > " . AVERAGE_INVOICE_VALUE_08 . " THEN 1 ELSE 0 END) AS invoice09
+						SUM(CASE WHEN (so.klpaidcash + so.klpaidcreditcard) <= " . $AverageInvoiceValue01 . " THEN 1 ELSE 0 END) AS invoice01,
+						SUM(CASE WHEN (so.klpaidcash + so.klpaidcreditcard) > " . $AverageInvoiceValue01 . " AND (so.klpaidcash + so.klpaidcreditcard) <= " . $AverageInvoiceValue02 . " THEN 1 ELSE 0 END) AS invoice02,
+						SUM(CASE WHEN (so.klpaidcash + so.klpaidcreditcard) > " . $AverageInvoiceValue02 . " AND (so.klpaidcash + so.klpaidcreditcard) <= " . $AverageInvoiceValue03 . " THEN 1 ELSE 0 END) AS invoice03,
+						SUM(CASE WHEN (so.klpaidcash + so.klpaidcreditcard) > " . $AverageInvoiceValue03 . " AND (so.klpaidcash + so.klpaidcreditcard) <= " . $AverageInvoiceValue04 . " THEN 1 ELSE 0 END) AS invoice04,
+						SUM(CASE WHEN (so.klpaidcash + so.klpaidcreditcard) > " . $AverageInvoiceValue04 . " AND (so.klpaidcash + so.klpaidcreditcard) <= " . $AverageInvoiceValue05 . " THEN 1 ELSE 0 END) AS invoice05,
+						SUM(CASE WHEN (so.klpaidcash + so.klpaidcreditcard) > " . $AverageInvoiceValue05 . " AND (so.klpaidcash + so.klpaidcreditcard) <= " . $AverageInvoiceValue06 . " THEN 1 ELSE 0 END) AS invoice06,
+						SUM(CASE WHEN (so.klpaidcash + so.klpaidcreditcard) > " . $AverageInvoiceValue06 . " AND (so.klpaidcash + so.klpaidcreditcard) <= " . $AverageInvoiceValue07 . " THEN 1 ELSE 0 END) AS invoice07,
+						SUM(CASE WHEN (so.klpaidcash + so.klpaidcreditcard) > " . $AverageInvoiceValue07 . " AND (so.klpaidcash + so.klpaidcreditcard) <= " . $AverageInvoiceValue08 . " THEN 1 ELSE 0 END) AS invoice08,
+						SUM(CASE WHEN (so.klpaidcash + so.klpaidcreditcard) > " . $AverageInvoiceValue08 . " THEN 1 ELSE 0 END) AS invoice09
 					FROM salesorders so
 					WHERE so.orddate >= '" . $StartDateA . "'
 						AND so.orddate <= '" . $YesterdayA . "'
@@ -92,7 +113,7 @@ function AverageCustomerBehaviourByValueInvoice($Typereport, $Brand, $NumDaysA){
 						
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		$TableTitleText = __('Average value of invoice by ') . $BrandText . " " . $Typereport . " during the last " . $NumDaysA . " days.";
+		$TableTitleText = __('Average invoice value by ') . $BrandText . " " . $Typereport . " during the last " . $NumDaysA . " days.";
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
@@ -101,17 +122,17 @@ function AverageCustomerBehaviourByValueInvoice($Typereport, $Brand, $NumDaysA){
 						<th class="SortedColumn">' . __('#') . '</th>
 						<th class="SortedColumn">' . $Typereport . '</th>
 						<th class="SortedColumn">' . __('Name') . '</th>
-						<th class="SortedColumn">' . 'IDR/Invoice.'. '</th>
-						<th class="SortedColumn">' . '# Invoice/Day'. '</th>
-						<th class="SortedColumn">' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_01,0) . '</th>
-						<th class="SortedColumn">' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_02,0) . '</th>
-						<th class="SortedColumn">' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_03,0) . '</th>
-						<th class="SortedColumn">' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_04,0) . '</th>
-						<th class="SortedColumn">' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_05,0) . '</th>
-						<th class="SortedColumn">' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_06,0) . '</th>
-						<th class="SortedColumn">' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_07,0) . '</th>
-						<th class="SortedColumn">' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_08,0) . '</th>
-						<th class="SortedColumn">' . '>'. locale_number_format(AVERAGE_INVOICE_VALUE_08,0) . '</th>
+						<th class="SortedColumn">' . __('IDR/Invoice') . '</th>
+						<th class="SortedColumn">' . __('# Invoice/Day') . '</th>
+						<th class="SortedColumn">' . '<='. locale_number_format($AverageInvoiceValue01,0) . '</th>
+						<th class="SortedColumn">' . '<='. locale_number_format($AverageInvoiceValue02,0) . '</th>
+						<th class="SortedColumn">' . '<='. locale_number_format($AverageInvoiceValue03,0) . '</th>
+						<th class="SortedColumn">' . '<='. locale_number_format($AverageInvoiceValue04,0) . '</th>
+						<th class="SortedColumn">' . '<='. locale_number_format($AverageInvoiceValue05,0) . '</th>
+						<th class="SortedColumn">' . '<='. locale_number_format($AverageInvoiceValue06,0) . '</th>
+						<th class="SortedColumn">' . '<='. locale_number_format($AverageInvoiceValue07,0) . '</th>
+						<th class="SortedColumn">' . '<='. locale_number_format($AverageInvoiceValue08,0) . '</th>
+						<th class="SortedColumn">' . '>'. locale_number_format($AverageInvoiceValue08,0) . '</th>
 					</tr>
 				</thead>
 				<tbody>';
