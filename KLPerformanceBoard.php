@@ -26,11 +26,13 @@ $ShowSectionInfo = false;
 $ProcessSection01 = false;
 $ProcessSection02 = false;
 $ProcessSection03 = false;
+$ProcessSection04 = false;
 
 if (!isset($_GET['Section'])){
 	$ProcessSection01 = true;
 	$ProcessSection02 = true;
 	$ProcessSection03 = true;
+	$ProcessSection04 = true;
 } else {
 	$ShowSectionInfo = true;
 		$Title = 'KL General Performance Board Section ' . $_GET['Section'];
@@ -40,12 +42,13 @@ if (!isset($_GET['Section'])){
 		$ProcessSection02 = true;
 	} elseif ($_GET['Section'] == '03'){
 		$ProcessSection03 = true;
+	} elseif ($_GET['Section'] == '04'){
+		$ProcessSection04 = true;
 	}
 }
 
 $PeriodNow=GetPeriod(Date($_SESSION['DefaultDateFormat']));
-$yesterday_year = date('Y', strtotime("-1 days"));
-
+$YesterdaysYear = date('Y', strtotime("-1 days"));
 
 /***************************************************************************************
 * TEST AND PLAY AREA	  
@@ -103,7 +106,7 @@ if ($ProcessSection01){
 		TimeNeededForExecution("PeriodDifferenceSales_YEAR_180", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		PeriodDifferenceSales($yesterday_year -1, "Shop",  "YTD"); // previous year
+		PeriodDifferenceSales($YesterdaysYear -1, "Shop",  "YTD"); // previous year
 		TimeNeededForExecution("PeriodDifferenceSales_YTD", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
@@ -113,17 +116,6 @@ if ($ProcessSection01){
 		OnlineMarketPlacePaymentPending(0, $RootPath);
 		TimeNeededForExecution("OnlineMarketPlacePaymentPending", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
-	}
-
-	if ($KL_SystemAdmin
-		OR $KL_SalesTeamManager){
-
-//		AverageSales("Online", 365, 180, 90, 30, 15, 1, 30, "CurrentYear", "All");
-//		$NumberOfTestExecuted++;
-//		PeriodDifferenceSales("IMMEDIATE", "Online",   7);
-//		$NumberOfTestExecuted++;
-//		PeriodDifferenceSales("IMMEDIATE", "Online",  30);
-//		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin 
@@ -138,8 +130,6 @@ if ($ProcessSection01){
 		AverageCustomerBehaviourByValueInvoice("Shop", "SHOPBL", $_SESSION['AverageInvoiceValueNumberDays']);
 		TimeNeededForExecution("AverageCustomerBehaviourByValueInvoice_SHOPBL", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
-//		AverageCustomerBehaviourByValueInvoice("Shop", "SHOPOU", $_SESSION['AverageInvoiceValueNumberDays']);
-//		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin 
@@ -154,8 +144,6 @@ if ($ProcessSection01){
 		GeneralCustomerBehaviour("SHOPBL", 30);
 		TimeNeededForExecution("GeneralCustomerBehaviour_SHOPBL", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
-//		GeneralCustomerBehaviour("SHOPOU", 30);
-//		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin 
@@ -259,6 +247,7 @@ if ($ProcessSection02){
 		QualityIssuesByReason(30, $RootPath);
 		TimeNeededForExecution("QualityIssuesByReason", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		TransferReasons(30, $RootPath);
 		TimeNeededForExecution("TransferReasons", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
@@ -401,7 +390,7 @@ if ($ProcessSection03){
 	if ($KL_SystemAdmin
 		OR $KL_AdministrationLeader){
 		$StartTime = microtime(true);
-		CashStatus($yesterday_year, 
+		CashStatus($YesterdaysYear, 
 					$_SESSION['CashKantorEndLastYearPTADU'], 200000000, 100000000, 
 					$_SESSION['CashKantorEndLastYearPTSMH'], 200000000, 100000000, 
 					$_SESSION['CashKantorEndLastYearPTBB'], 200000000, 100000000, 
@@ -417,8 +406,6 @@ if ($ProcessSection03){
 		$NumberOfTestExecuted++;
 	}
 	if ($KL_SystemAdmin){
-//		ShowKPIHistory(90);
-//		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
 		UnbalancedGLTransTX(15, $RootPath);
 		TimeNeededForExecution("UnbalancedGLTransTX", $StartTime, $KL_SystemAdmin);
@@ -426,6 +413,23 @@ if ($ProcessSection03){
 		$StartTime = microtime(true);
 		EmptyAccountsGLTransTX(15, $RootPath);
 		TimeNeededForExecution("EmptyAccountsGLTransTX", $StartTime, $KL_SystemAdmin);
+		$NumberOfTestExecuted++;
+	} 
+}
+
+/***************************************************************************************
+* SECTION 4
+***************************************************************************************/
+
+if ($ProcessSection04){
+	if ($ShowSectionInfo){
+		$TableTitleText = "Human Resources Performance Board Section 04";
+		ShowTableTitle($TableTitleText);
+	}
+	if ($KL_SystemAdmin){
+		$StartTime = microtime(true);
+		HumanResourcesKPIScreenShot();
+		TimeNeededForExecution("HumanResourcesKPIScreenShot", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	} 
 }

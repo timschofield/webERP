@@ -1994,3 +1994,109 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock, $ShowFullDetails){
 		InsertKPI("SALES-TREND-RETAIL-". $NumDays . "D-" . $BrandCode, $TrendThisYear*100);
 	}
 }
+
+function HumanResourcesKPIScreenShot(){
+	$NumberOfEmployees = NumberOfEmployeesByPosition("%");
+	InsertKPI("HR-EMPLOYEES", $NumberOfEmployees);
+
+	$NumberOfOpenShopsKL = NumberOfShops("SHOPKL");
+	$NumberOfOpenShopsBL = NumberOfShops("SHOPBL");
+	$NumberOfOpenShopsOU = NumberOfShops("SHOPOU");
+	$NumberOfOpenShopsTotal = $NumberOfOpenShopsKL + $NumberOfOpenShopsBL + $NumberOfOpenShopsOU;
+
+	$EmployeesPerShop = 0;
+	if ($NumberOfOpenShopsTotal > 0){
+		$EmployeesPerShop = $NumberOfEmployees / $NumberOfOpenShopsTotal;
+	}
+	InsertKPI("HR-EMPLOYEES-PER-SHOP", $EmployeesPerShop);
+
+	$NumberOfSPGJunior = NumberOfEmployeesByPosition("SPG-JUNIOR");
+	InsertKPI("HR-SPG-JUNIOR", $NumberOfSPGJunior);
+	
+	$NumberOfSPGSenior = NumberOfEmployeesByPosition("SPG-SENIOR");
+	InsertKPI("HR-SPG-SENIOR", $NumberOfSPGSenior);
+	
+	$NumberOfSPGMiddle = NumberOfEmployeesByPosition("SPG-MIDDLE");
+	InsertKPI("HR-SPG-MIDDLE", $NumberOfSPGMiddle);
+
+	$NumberOfSPGTotal = $NumberOfSPGJunior + $NumberOfSPGSenior + $NumberOfSPGMiddle;
+	InsertKPI("HR-SPG-TOTAL", $NumberOfSPGTotal);
+
+	$SPGPerShop = 0;
+	if ($NumberOfOpenShopsTotal > 0){
+		$SPGPerShop = $NumberOfSPGTotal / $NumberOfOpenShopsTotal;
+	}
+	InsertKPI("HR-SPG-PER-SHOP", $SPGPerShop);
+
+	$EmployeesNonSPG = $NumberOfEmployees - $NumberOfSPGTotal;
+	InsertKPI("HR-EMPLOYEES-NON-SPG", $EmployeesNonSPG);
+
+	$NonSPGPerShop = 0;
+	if ($NumberOfOpenShopsTotal > 0){
+		$NonSPGPerShop = $EmployeesNonSPG / $NumberOfOpenShopsTotal;
+	}
+	InsertKPI("HR-EMPLOYEES-NON-SPG-PER-SHOP", $NonSPGPerShop);
+
+	$NumberOfShopSupport = NumberOfEmployeesByPosition("SHOP-SUP%")
+						+ NumberOfEmployeesByPosition("COURIER%");
+	InsertKPI("HR-SHOP-SUPPORT", $NumberOfShopSupport);
+
+	$ShopSupportPerShop = 0;
+	if ($NumberOfOpenShopsTotal > 0){
+		$ShopSupportPerShop = $NumberOfShopSupport / $NumberOfOpenShopsTotal;
+	}
+	InsertKPI("HR-SHOP-SUPPORT-PER-SHOP", $ShopSupportPerShop);
+
+	$TableTitleText = __('Human Resources Key Performance Indicators');
+	ShowTableTitle($TableTitleText);
+
+	echo '<div>';
+	echo '<table class="selection">
+			<thead>
+				<tr>
+					<th>' . __('Concept') . '</th>
+					<th>' . __('Value') . '</th>
+				</tr>
+			</thead>
+			<tbody>';
+
+	echo '<tr>
+			<td>' . __('Total Open Shops') . '</td>
+			<td class="number">' . locale_number_format($NumberOfOpenShopsTotal, 0) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>' . __('Total Employees') . '</td>
+			<td class="number">' . locale_number_format($NumberOfEmployees, 0) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>' . __('Average Employees per Shop') . '</td>
+			<td class="number">' . locale_number_format($EmployeesPerShop, 2) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>' . __('Total SPG') . '</td>
+			<td class="number">' . locale_number_format($NumberOfSPGTotal, 0) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>' . __('Average SPG per Shop') . '</td>
+			<td class="number">' . locale_number_format($SPGPerShop, 2) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>' . __('Total Non-SPG Employees') . '</td>
+			<td class="number">' . locale_number_format($EmployeesNonSPG, 0) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>' . __('Average Non-SPG Employees per Shop') . '</td>
+			<td class="number">' . locale_number_format($NonSPGPerShop, 2) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>' . __('Total Shop Support Employees (Shop Support + Couriers)') . '</td>
+			<td class="number">' . locale_number_format($NumberOfShopSupport, 0) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>' . __('Average Shop Support per Shop (Shop Support + Couriers)') . '</td>
+			<td class="number">' . locale_number_format($ShopSupportPerShop, 2) . '</td>
+			</tr>';
+
+	echo '</tbody></table>
+		</div>';
+}
