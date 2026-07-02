@@ -128,12 +128,13 @@ if (($StockID != '') AND ($ServiceCode != '')){
 					} else {
 						$FeeService = $MyRow['pricetier03'];
 					}
-					if ($MyRow['klservicebyreplacement'] == 1){
+					if (($MyRow['klservicebyreplacement'] == 1)
+						AND ($ServiceCode != "SERV_KOTOR")){
 						$FeeReplacement = $MyRow['actualcost'] * $_SESSION['FactorStandardCostServiceReplacement'];
 					} else {
 						$FeeReplacement = 0;
 					}
-					$Fee = round_multiple_of(max($FeeService, $FeeReplacement),10000);
+					$Fee = round_multiple_of(max($FeeService, $FeeReplacement),5000);
 					$Message1 = "CAN be serviced.";
 					$Message2 = "Fee of " . locale_number_format($Fee,0) . " IDR.";
 
@@ -159,12 +160,13 @@ if (($StockID != '') AND ($ServiceCode != '')){
 					} else {
 						$FeeService = $MyRow['pricetier03'];
 					}
-					if ($MyRow['klservicebyreplacement'] == 1){
+					if (($MyRow['klservicebyreplacement'] == 1)
+						AND ($ServiceCode != "SERV_KOTOR")){
 						$FeeReplacement = $MyRow['actualcost'] * $_SESSION['FactorStandardCostServiceReplacement'];
 					} else {
 						$FeeReplacement = 0;
 					}
-					$Fee = round_multiple_of(max($FeeService, $FeeReplacement),10000);
+					$Fee = round_multiple_of(max($FeeService, $FeeReplacement),5000);
 					$Message1 = "CAN be serviced.";
 					$Message2 = "Fee of " . locale_number_format($Fee,0) . " IDR.";
 
