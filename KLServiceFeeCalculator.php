@@ -19,7 +19,7 @@ include(__DIR__ . '/includes/WebClientPrint/WebClientPrint.php');
 include(__DIR__ . '/includes/KLESCPOSCommands.php');
 
 if (isset($_GET['Warranty'])){
-	$ServiceCode = trim(mb_strtoupper($_GET['Warranty']));
+	$Warranty = trim(mb_strtoupper($_GET['Warranty']));
 } elseif (isset($_POST['Warranty'])){
 	$Warranty = trim(mb_strtoupper($_POST['Warranty']));
 } else {
@@ -102,22 +102,22 @@ if (($StockID != '') AND ($ServiceCode != '')){
 		} elseif (($MyRow['discontinued'] == 1) 
 			OR (ItemInList($MyRow['categoryid'], LIST_STOCK_CATEGORIES_OUTLET))){
 			// for discounted or obsolete //
-			if (($ServiceCode == "BENTUKBENGKOK") 
-				OR ($ServiceCode == "CRYSTALLEPAS") 
-				OR ($ServiceCode == "KOMPONENLEPAS") 
-				OR ($ServiceCode == "LOCKRUSAK") 
-				OR ($ServiceCode == "KURANGSHINNY") 
-				OR ($ServiceCode == "TALILUSUH") 
-				OR ($ServiceCode == "WIREBERKARAT") 
-				OR ($ServiceCode == "_LAINLAIN")){
+			if (($ServiceCode == "SERV_BENTUKBENGKOK") 
+				OR ($ServiceCode == "SERV_CRYSTALLEPAS") 
+				OR ($ServiceCode == "SERV_KOMPONENLEPAS") 
+				OR ($ServiceCode == "SERV_LOCKRUSAK") 
+				OR ($ServiceCode == "SERV_KURANGSHINNY") 
+				OR ($ServiceCode == "SERV_TALILUSUH") 
+				OR ($ServiceCode == "SERV_WIREBERKARAT") 
+				OR ($ServiceCode == "SERV__LAINLAIN")){
 				$Message1 = "Service fee can't be calculated now. Send to office to be evaluated.";
 				$Fee = -2;
 			} else {
-				if (($ServiceCode == "BERUBAHWARNA")
-					OR ($ServiceCode == "KOMPONENPECAH") 
-					OR ($ServiceCode == "KOMPONENRUSAK") 
-					OR ($ServiceCode == "PATRI") 
-					OR ($ServiceCode == "RANTAIPUTUS")){
+				if (($ServiceCode == "SERV_BERUBAHWARNA")
+					OR ($ServiceCode == "SERV_KOMPONENPECAH") 
+					OR ($ServiceCode == "SERV_KOMPONENRUSAK") 
+					OR ($ServiceCode == "SERV_PATRI") 
+					OR ($ServiceCode == "SERV_RANTAIPUTUS")){
 					$Message1 = "CAN'T be serviced.";
 					$Fee = -1;
 				} else {
@@ -143,11 +143,11 @@ if (($StockID != '') AND ($ServiceCode != '')){
 				}
 			}
 		} else {
-			if ($ServiceCode == "_LAINLAIN"){
+			if ($ServiceCode == "SERV__LAINLAIN"){
 				$Message1 = "Service fee can't be calculated now. Send to office to be evaluated.";
 				$Fee = -2;
 			} else {
-				if (($ServiceCode == "BERUBAHWARNA") 
+				if (($ServiceCode == "SERV_BERUBAHWARNA") 
 					AND (ItemInList($MyRow['categoryid'], LIST_STOCK_CATEGORIES_BLINK))){
 					$Message1 = "CAN'T be serviced.";
 					$Fee = -1;
@@ -168,11 +168,11 @@ if (($StockID != '') AND ($ServiceCode != '')){
 					$Message1 = "CAN be serviced.";
 					$Message2 = "Fee of " . locale_number_format($Fee,0) . " IDR.";
 
-					if (($ServiceCode == "CRYSTALLEPAS") 
-						OR ($ServiceCode == "KOMPONENLEPAS")
-						OR ($ServiceCode == "KOMPONENRUSAK")
-						OR ($ServiceCode == "KOMPONENPECAH")
-						OR ($ServiceCode == "MAGNETLEPAS")){
+					if (($ServiceCode == "SERV_CRYSTALLEPAS") 
+						OR ($ServiceCode == "SERV_KOMPONENLEPAS")
+						OR ($ServiceCode == "SERV_KOMPONENRUSAK")
+						OR ($ServiceCode == "SERV_KOMPONENPECAH")
+						OR ($ServiceCode == "SERV_MAGNETLEPAS")){
 						$Message2 .= " Cost of components needed NOT included in this fee.";
 					}
 				}
