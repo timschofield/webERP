@@ -72,7 +72,6 @@ if (isset($_POST['submit'])) {
  * 
  * Processes the form submission and calls the appropriate archive functions.
  *
- * @param string $Title The page title.
  * @param int $ArchiveGltransPeriod The period to archive gltrans records up to.
  * @param int $ArchiveStockmovesPeriod The period to archive stockmoves records up to.
  * @param int $ArchiveLoctransfers The period to archive loctransfers records for obsolete items up to.
@@ -320,9 +319,9 @@ function ArchiveTableGltrans($ArchiveToPeriod) {
 	}
 
 	if (!$ErrorsFound) {
-		$Result = DB_Txn_Commit();
+		DB_Txn_Commit();
 	} else {
-		$Result = DB_Txn_Rollback();
+		DB_Txn_Rollback();
 	}
 }
 
@@ -452,9 +451,9 @@ function ArchiveTableStockmoves($ArchiveToPeriod) {
 	}
 
 	if (!$ErrorsFound) {
-		$Result = DB_Txn_Commit();
+		DB_Txn_Commit();
 	} else {
-		$Result = DB_Txn_Rollback();
+		DB_Txn_Rollback();
 	}
 }
 
@@ -526,9 +525,9 @@ function ArchiveTableStockmovestaxes() {
 	}
 
 	if (!$ErrorsFound) {
-		$Result = DB_Txn_Commit();
+		DB_Txn_Commit();
 	} else {
-		$Result = DB_Txn_Rollback();
+		DB_Txn_Rollback();
 	}
 }
 
@@ -622,9 +621,9 @@ function ArchiveTableLoctransfersObsoletes($ArchiveToPeriod) {
 	}
 
 	if (!$ErrorsFound) {
-		$Result = DB_Txn_Commit();
+		DB_Txn_Commit();
 	} else {
-		$Result = DB_Txn_Rollback();
+		DB_Txn_Rollback();
 	}
 }
 
@@ -897,9 +896,9 @@ function ArchiveTableDebtortrans($ArchiveToPeriod) {
 	}
 
 	if (!$ErrorsFound) {
-		$Result = DB_Txn_Commit();
+		DB_Txn_Commit();
 	} else {
-		$Result = DB_Txn_Rollback();
+		DB_Txn_Rollback();
 	}
 }
 
@@ -966,9 +965,9 @@ function ArchiveTableDebtortranstaxes() {
 	}
 
 	if (!$ErrorsFound) {
-		$Result = DB_Txn_Commit();
+		DB_Txn_Commit();
 	} else {
-		$Result = DB_Txn_Rollback();
+		DB_Txn_Rollback();
 	}
 }
 
@@ -1042,9 +1041,9 @@ function ArchiveTableCustallocns() {
 	}
 
 	if (!$ErrorsFound) {
-		$Result = DB_Txn_Commit();
+		DB_Txn_Commit();
 	} else {
-		$Result = DB_Txn_Rollback();
+		DB_Txn_Rollback();
 	}
 }
 
@@ -1217,9 +1216,9 @@ function ArchiveTableBanktrans($ArchiveToPeriod) {
 	}
 
 	if (!$ErrorsFound) {
-		$Result = DB_Txn_Commit();
+		DB_Txn_Commit();
 	} else {
-		$Result = DB_Txn_Rollback();
+		DB_Txn_Rollback();
 	}
 }
 
@@ -1355,8 +1354,8 @@ function ArchiveTableKlconsignment($ArchiveToPeriod) {
 	}
 
 	if (!$ErrorsFound) {
-		$Result = DB_Txn_Commit();
+		DB_Txn_Commit();
 	} else {
-		$Result = DB_Txn_Rollback();
+		DB_Txn_Rollback();
 	}
 }

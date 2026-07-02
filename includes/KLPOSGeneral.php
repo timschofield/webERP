@@ -26,11 +26,11 @@ FUNCTION LIST (in alphabetical order):
 /**************************************************************************************************************
 * Brief description: Pads a number with leading zeros
 * Parameters:
-*   $MStretch - The number or string to pad
-*   $ILength - The desired length of the resulting string (default: 2)
+*   string|int $MStretch - The number or string to pad
+*   int $ILength - The desired length of the resulting string (default: 2)
 * Returns: String padded with leading zeros
 **************************************************************************************************************/
-function zerofill($MStretch, $ILength = 2){
+function zerofill(string|int $MStretch, int $ILength = 2): string {
 	$SPrintfString = '%0' . (int)$ILength . 's';
 	return sprintf($SPrintfString, $MStretch);
 }
@@ -38,10 +38,10 @@ function zerofill($MStretch, $ILength = 2){
 /**************************************************************************************************************
 * Brief description: Determines the sales area based on payment method
 * Parameters:
-*   $PaymentMethod - The method of payment (cash or credit card)
+*   int $PaymentMethod - The method of payment (cash or credit card)
 * Returns: The appropriate sales area code
 **************************************************************************************************************/
-function KapalLautRetailAreaSelection($PaymentMethod){
+function KapalLautRetailAreaSelection(int $PaymentMethod): string {
 	if ($PaymentMethod == PAYMENT_BY_CASH){
 		if ($_SESSION['CashSalesReported'] <= 0){
 			// all cash sales go to Others
@@ -74,17 +74,26 @@ function KapalLautRetailAreaSelection($PaymentMethod){
 /**************************************************************************************************************
 * Brief description: Manages packaging inventory movements when products are sold
 * Parameters:
-*   $StockID - The stock ID of the packaging item
-*   $QtyDelivered - The quantity of packaging used
-*   $InvoiceNo - The invoice number
-*   $PeriodNo - The accounting period
-*   $OrderNo - The order number
-*   $Area - The sales area
-*   $Tag - The GL tag
-*   $Identifier - The POS transaction identifier
+*   string $StockID - The stock ID of the packaging item
+*   float|int $QtyDelivered - The quantity of packaging used
+*   string|int $InvoiceNo - The invoice number
+*   int $PeriodNo - The accounting period
+*   string|int $OrderNo - The order number
+*   string|int $Area - The sales area
+*   string|int|null $Tag - The GL tag
+*   string|int $Identifier - The POS transaction identifier
 * Returns: None
 **************************************************************************************************************/
-function AdjustPackagingMovement($StockID, $QtyDelivered, $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $Identifier){
+function AdjustPackagingMovement(
+	string $StockID,
+	float|int $QtyDelivered,
+	string|int $InvoiceNo,
+	int $PeriodNo,
+	string|int $OrderNo,
+	string|int $Area,
+	string|int|null $Tag,
+	string|int $Identifier
+): void {
 
 	if ($QtyDelivered != 0){
 		/* Need to get the current standard cost */
@@ -213,31 +222,32 @@ function AdjustPackagingMovement($StockID, $QtyDelivered, $InvoiceNo, $PeriodNo,
 /**************************************************************************************************************
 * Brief description: Records sales data in the sales analysis tables
 * Parameters:
-*   $Area - The sales area
-*   $SalesType - The type of sale
-*   $PeriodNo - The accounting period
-*   $DebtorNo - The customer account number
-*   $DebtorBranch - The customer branch
-*   $StockID - The product ID
-*   $Price - The unit price
-*   $Quantity - The quantity sold
-*   $ExRate - The exchange rate
-*   $StandardCost - The standard cost of the product
-*   $DiscountPercent - The discount percentage applied
+*   string|int $Area - The sales area
+*   string $SalesType - The type of sale
+*   int $PeriodNo - The accounting period
+*   string $DebtorNo - The customer account number
+*   string $DebtorBranch - The customer branch
+*   string $StockID - The product ID
+*   float|int $Price - The unit price
+*   float|int $Quantity - The quantity sold
+*   float|int $ExRate - The exchange rate
+*   float|int $StandardCost - The standard cost of the product
+*   float|int $DiscountPercent - The discount percentage applied
 * Returns: None
 **************************************************************************************************************/
-function InsertItemSoldIntoSalesAnalysis($Area,
-										$SalesType,
-										$PeriodNo,
-										$DebtorNo,
-										$DebtorBranch,
-										$StockID,
-										$Price,
-										$Quantity,
-										$ExRate,
-										$StandardCost,
-										$DiscountPercent
-										){
+function InsertItemSoldIntoSalesAnalysis(
+	string|int $Area,
+	string $SalesType,
+	int $PeriodNo,
+	string $DebtorNo,
+	string $DebtorBranch,
+	string $StockID,
+	float|int $Price,
+	float|int $Quantity,
+	float|int $ExRate,
+	float|int $StandardCost,
+	float|int $DiscountPercent
+): void {
 
 	/* Query optimized by Gemini 2.5 on 24/10/2025
 	 * Also proposed the creation of index. 
@@ -348,16 +358,24 @@ function InsertItemSoldIntoSalesAnalysis($Area,
 /**************************************************************************************************************
 * Brief description: Stores customer information from retail sales
 * Parameters:
-*   $OrderNo - The order number
-*   $FirstName - Customer's first name
-*   $LastName - Customer's last name
-*   $Country - Customer's country
-*   $DateOfBirth - Customer's date of birth
-*   $Email - Customer's email address
-*   $Sex - Customer's gender
+*   string|int $OrderNo - The order number
+*   string $FirstName - Customer's first name
+*   string $LastName - Customer's last name
+*   string|int $Country - Customer's country
+*   string $DateOfBirth - Customer's date of birth
+*   string $Email - Customer's email address
+*   string $Sex - Customer's gender
 * Returns: None
 **************************************************************************************************************/
-function RecordRetailCustomerInformation($OrderNo, $FirstName, $LastName, $Country, $DateOfBirth, $Email, $Sex){
+function RecordRetailCustomerInformation(
+	string|int $OrderNo,
+	string $FirstName,
+	string $LastName,
+	string|int $Country,
+	string $DateOfBirth,
+	string $Email,
+	string $Sex
+): void {
 	// If some field is filled, record it.
 	// For some reason, Country = 0 if empty
 	if (Is_date($DateOfBirth)){
@@ -424,37 +442,39 @@ function RecordRetailCustomerInformation($OrderNo, $FirstName, $LastName, $Count
 						sex = '" . $Sex . "'
 					WHERE orderno = '" . $OrderNo . "'";
 		}
-		DB_query($SQL, $ErrMsg, '', true);
+		DB_query($SQL, '', '', true);
 	}
 }
 
 /**************************************************************************************************************
 * Brief description: Records a payment for a retail transaction
 * Parameters:
-*   $PaymentMethod - The method of payment
-*   $BankAccount - The bank account to record payment to
-*   $InvoiceNo - The invoice number
-*   $CustomerReference - The customer reference
-*   $AmountPaid - The amount paid by the customer
-*   $BankCommision - The bank commission on the transaction
-*   $NetPayment - The net amount after commission
-*   $Tag - The GL tag
-*   $GLAccountBankCommission - The GL account for bank commissions
-*   $DaysDelaySettlement - Days to delay settlement
-*   $ExRate - The exchange rate
+*   int $PaymentMethod - The method of payment
+*   string|int $BankAccount - The bank account to record payment to
+*   string|int $InvoiceNo - The invoice number
+*   string $CustomerReference - The customer reference
+*   float|int $AmountPaid - The amount paid by the customer
+*   float|int $BankCommision - The bank commission on the transaction
+*   float|int $NetPayment - The net amount after commission
+*   string|int|null $Tag - The GL tag
+*   string|int $GLAccountBankCommission - The GL account for bank commissions
+*   int $DaysDelaySettlement - Days to delay settlement
+*   float|int $ExRate - The exchange rate
 * Returns: The receipt number
 **************************************************************************************************************/
-function AccountPaymentRetail($PaymentMethod,
-							$BankAccount,
-							$InvoiceNo,
-							$CustomerReference,
-							$AmountPaid,
-							$BankCommision,
-							$NetPayment,
-							$Tag,
-							$GLAccountBankCommission,
-							$DaysDelaySettlement,
-							$ExRate){
+function AccountPaymentRetail(
+	int $PaymentMethod,
+	string|int $BankAccount,
+	string|int $InvoiceNo,
+	string $CustomerReference,
+	float|int $AmountPaid,
+	float|int $BankCommision,
+	float|int $NetPayment,
+	string|int|null $Tag,
+	string|int $GLAccountBankCommission,
+	int $DaysDelaySettlement,
+	float|int $ExRate
+): string|int {
 
 	$ReceiptNumber = GetNextTransNo(12);
 	$SettlementDate = date('Y-m-d', strtotime("+" . (int)$DaysDelaySettlement . " days"));
@@ -518,26 +538,28 @@ function AccountPaymentRetail($PaymentMethod,
 /**************************************************************************************************************
 * Brief description: Records a discount on a retail order
 * Parameters:
-*   $TypeDiscount - The type of discount
-*   $ReceiptNumber - The receipt number (optional)
-*   $PeriodNo - The accounting period
-*   $BankAccount - The bank account
-*   $InvoiceNo - The invoice number
-*   $CustomerReference - The customer reference
-*   $NetPayment - The net amount
-*   $Tag - The GL tag
-*   $ExRate - The exchange rate
+*   string $TypeDiscount - The type of discount
+*   string|int|null $ReceiptNumber - The receipt number (optional)
+*   int $PeriodNo - The accounting period
+*   string|int $BankAccount - The bank account
+*   string|int $InvoiceNo - The invoice number
+*   string $CustomerReference - The customer reference
+*   float|int $NetPayment - The net amount
+*   string|int|null $Tag - The GL tag
+*   float|int $ExRate - The exchange rate
 * Returns: The receipt number
 **************************************************************************************************************/
-function AccountDiscountOnOrderRetail($TypeDiscount,
-							$ReceiptNumber,
-							$PeriodNo,
-							$BankAccount,
-							$InvoiceNo,
-							$CustomerReference,
-							$NetPayment,
-							$Tag,
-							$ExRate){
+function AccountDiscountOnOrderRetail(
+	string $TypeDiscount,
+	string|int|null $ReceiptNumber,
+	int $PeriodNo,
+	string|int $BankAccount,
+	string|int $InvoiceNo,
+	string $CustomerReference,
+	float|int $NetPayment,
+	string|int|null $Tag,
+	float|int $ExRate
+): string|int {
 
 	if (!isset($ReceiptNumber)){
 		$ReceiptNumber = GetNextTransNo(10);
@@ -568,34 +590,36 @@ function AccountDiscountOnOrderRetail($TypeDiscount,
 /**************************************************************************************************************
 * Brief description: Records a payment from a debtor in the system
 * Parameters:
-*   $ReceiptNumber - The receipt number (optional)
-*   $PaymentMethod - The payment method
-*   $PeriodNo - The accounting period
-*   $BankAccount - The bank account
-*   $InvoiceNo - The invoice number
-*   $CustomerReference - The customer reference
-*   $AmountPaid - The amount paid
-*   $NetPayment - The net payment amount
-*   $ExRate - The exchange rate
-*   $DebtorTransID - The debtor transaction ID
-*   $OrderNo - The order number
-*   $Currency - The currency
-*   $DebtorNo - The debtor number
+*   string|int|null $ReceiptNumber - The receipt number (optional)
+*   int $PaymentMethod - The payment method
+*   int $PeriodNo - The accounting period
+*   string|int $BankAccount - The bank account
+*   string|int $InvoiceNo - The invoice number
+*   string $CustomerReference - The customer reference
+*   float|int $AmountPaid - The amount paid
+*   float|int $NetPayment - The net payment amount
+*   float|int $ExRate - The exchange rate
+*   string|int $DebtorTransID - The debtor transaction ID
+*   string|int $OrderNo - The order number
+*   string $Currency - The currency
+*   string|int $DebtorNo - The debtor number
 * Returns: The receipt number
 **************************************************************************************************************/
-function AccountDebtorPayment($ReceiptNumber,
-							$PaymentMethod,
-							$PeriodNo,
-							$BankAccount,
-							$InvoiceNo,
-							$CustomerReference,
-							$AmountPaid,
-							$NetPayment,
-							$ExRate,
-							$DebtorTransID,
-							$OrderNo,
-							$Currency,
-							$DebtorNo){
+function AccountDebtorPayment(
+	string|int|null $ReceiptNumber,
+	int $PaymentMethod,
+	int $PeriodNo,
+	string|int $BankAccount,
+	string|int $InvoiceNo,
+	string $CustomerReference,
+	float|int $AmountPaid,
+	float|int $NetPayment,
+	float|int $ExRate,
+	string|int $DebtorTransID,
+	string|int $OrderNo,
+	string $Currency,
+	string|int $DebtorNo
+): string|int {
 
 	if (!isset($ReceiptNumber)){
 		$ReceiptNumber = GetNextTransNo(12);
@@ -702,26 +726,28 @@ function AccountDebtorPayment($ReceiptNumber,
 /**************************************************************************************************************
 * Brief description: Records a discount for a debtor in the system
 * Parameters:
-*   $ReceiptNumber - The receipt number (optional)
-*   $Type - The type of discount
-*   $PeriodNo - The accounting period
-*   $InvoiceNo - The invoice number
-*   $CustomerReference - The customer reference
-*   $AmountDiscount - The discount amount
-*   $ExRate - The exchange rate
-*   $OrderNo - The order number
-*   $DebtorNo - The debtor number
+*   string|int|null $ReceiptNumber - The receipt number (optional)
+*   string $Type - The type of discount
+*   int $PeriodNo - The accounting period
+*   string|int $InvoiceNo - The invoice number
+*   string $CustomerReference - The customer reference
+*   float|int $AmountDiscount - The discount amount
+*   float|int $ExRate - The exchange rate
+*   string|int $OrderNo - The order number
+*   string|int $DebtorNo - The debtor number
 * Returns: The receipt number
 **************************************************************************************************************/
-function AccountDebtorDiscount($ReceiptNumber,
-							$Type,
-							$PeriodNo,
-							$InvoiceNo,
-							$CustomerReference,
-							$AmountDiscount,
-							$ExRate,
-							$OrderNo,
-							$DebtorNo){
+function AccountDebtorDiscount(
+	string|int|null $ReceiptNumber,
+	string $Type,
+	int $PeriodNo,
+	string|int $InvoiceNo,
+	string $CustomerReference,
+	float|int $AmountDiscount,
+	float|int $ExRate,
+	string|int $OrderNo,
+	string|int $DebtorNo
+): string|int {
 
 	if (!isset($ReceiptNumber)){
 		$ReceiptNumber = GetNextTransNo(12);
@@ -781,7 +807,7 @@ function AccountDebtorDiscount($ReceiptNumber,
 * Parameters: None
 * Returns: A unique identifier string
 **************************************************************************************************************/
-function GetPOSIdentifier(){
+function GetPOSIdentifier(): string {
 	$Id = date('U') . zerofill(mt_rand(0, 999999), 6);
 	return $Id;
 }
@@ -789,10 +815,10 @@ function GetPOSIdentifier(){
 /**************************************************************************************************************
 * Brief description: Converts a POS identifier to a filename
 * Parameters:
-*   $Id - The POS identifier
+*   string|int $Id - The POS identifier
 * Returns: The filename for the POS document
 **************************************************************************************************************/
-function GetFilenameFromPOSIdentifier($Id){
+function GetFilenameFromPOSIdentifier(string|int $Id): string {
 	$F = 'includes/WebClientPrint/wcpcache/' . $Id . '.pos';
 	return $F;
 }
@@ -800,10 +826,10 @@ function GetFilenameFromPOSIdentifier($Id){
 /**************************************************************************************************************
 * Brief description: Adds a test warning on receipts when in test mode
 * Parameters:
-*   $KindOfDoc - The type of document (e.g., "INVOICE")
+*   string $KindOfDoc - The type of document (e.g., "INVOICE")
 * Returns: The text to print for the warning
 **************************************************************************************************************/
-function KLPrintReceiptTestWarning($KindOfDoc){
+function KLPrintReceiptTestWarning(string $KindOfDoc): string {
 	include('includes/KLESCPOSCommands.php');
 	$TextToPrint = $CharacterFontA;
 	if (KLwebERPScriptCalledFromTEST()){
@@ -819,15 +845,17 @@ function KLPrintReceiptTestWarning($KindOfDoc){
 **************************************************************************************************************/
 function KLPrintNameOfShop(){
 	include('includes/KLESCPOSCommands.php');
-	
+
+	$TypeLoc = isset($_SESSION['TypeLoc']) ? $_SESSION['TypeLoc'] : '';
+
 	// name of shop
-	if ($_SESSION['TypeLoc'] == "SHOPKL"){
+	if ($TypeLoc == "SHOPKL"){
 		$TextToPrint = $EmphasizedDoubleHeightDoubleWidth . "Kapal-Laut" . $NewLine . 
 						$Emphasized . "Your Essential Jewellery" . $NewLine;
-	} elseif ($_SESSION['TypeLoc'] == "SHOPBL"){
+	} elseif ($TypeLoc == "SHOPBL"){
 		$TextToPrint = $EmphasizedDoubleHeightDoubleWidth . "Blink" . $NewLine . 
 						$Emphasized . "Fashion Jewellery" . $NewLine;
-	} elseif ($_SESSION['TypeLoc'] == "SHOPOU"){
+	} elseif ($TypeLoc == "SHOPOU"){
 		$TextToPrint = $EmphasizedDoubleHeightDoubleWidth . "OUTLET by Kapal-Laut" . $NewLine;
 	} else {
 		$TextToPrint = $EmphasizedDoubleHeightDoubleWidth . "SHOP NAME NOT FOUND" . $NewLine;
@@ -861,11 +889,11 @@ function KLPrintNameOfShop(){
 /**************************************************************************************************************
 * Brief description: Generates the header for receipts
 * Parameters:
-*   $Identifier - The POS transaction identifier
-*   $OrderNo - The order number
+*   string|int $Identifier - The POS transaction identifier
+*   string|int $OrderNo - The order number
 * Returns: The formatted header text for the receipt
 **************************************************************************************************************/
-function KLPrintReceiptHeader($Identifier, $OrderNo){
+function KLPrintReceiptHeader(string|int $Identifier, string|int $OrderNo): string {
 	
 	include('includes/KLESCPOSCommands.php');
 
@@ -966,13 +994,14 @@ function KLPrintReceiptHeader($Identifier, $OrderNo){
 /**************************************************************************************************************
 * Brief description: Generates the customer copy footer for receipts
 * Parameters:
-*   $Identifier - The POS transaction identifier
-*   $OrderNo - The order number
+*   string|int $Identifier - The POS transaction identifier
 * Returns: The formatted footer text for the customer receipt copy
 **************************************************************************************************************/
-function KLPrintReceiptCustomerFooter($Identifier){
+function KLPrintReceiptCustomerFooter(string|int $Identifier): string {
 
 	include('includes/KLESCPOSCommands.php');
+
+	$TypeLoc = isset($_SESSION['TypeLoc']) ? $_SESSION['TypeLoc'] : '';
 	
 	$TextToPrint = $NewLine;
 
@@ -1005,9 +1034,9 @@ function KLPrintReceiptCustomerFooter($Identifier){
 
 	// website
 	$TextToPrint .= $NewLine . $NewLine . $EmphasizedDoubleHeightDoubleWidth . $CenteredJustified;
-	if ($_SESSION['TypeLoc'] == "SHOPKL"){
+	if ($TypeLoc == "SHOPKL"){
 		$TextToPrint .= "kapal-laut.com" . $NewLine;
-	} elseif ($_SESSION['TypeLoc'] == "SHOPBL"){
+	} elseif ($TypeLoc == "SHOPBL"){
 		$TextToPrint .= "blinkfashionjewellery.com" . $NewLine;
 	} else {
 		$TextToPrint .= "kapal-laut.com" . $NewLine;
@@ -1016,8 +1045,8 @@ function KLPrintReceiptCustomerFooter($Identifier){
 	// Follow us
 	$TextToPrint .= $CharacterFontA . $Emphasized . $CenteredJustified . $NewLine;
 	$TextToPrint .= "Follow us on" . $NewLine;
-	if (($_SESSION['TypeLoc'] == "SHOPKL") 
-		OR ($_SESSION['TypeLoc'] == "SHOPOU")){
+	if (($TypeLoc == "SHOPKL") 
+		OR ($TypeLoc == "SHOPOU")){
 		$TextToPrint .= "Instagram: @KapalLautJewellery" . $NewLine;
 		$TextToPrint .= "Facebook: KapalLautJewellery" . $NewLine;
 	} else {
@@ -1035,14 +1064,14 @@ function KLPrintReceiptCustomerFooter($Identifier){
 
 /**************************************************************************************************************
 * Brief description: Generates the shop copy footer for receipts
-* Parameters:
-*   $Identifier - The POS transaction identifier
-*   $OrderNo - The order number
+* Parameters: None
 * Returns: The formatted footer text for the shop receipt copy
 **************************************************************************************************************/
-function KLPrintReceiptShopFooter(){
+function KLPrintReceiptShopFooter(): string {
 
 	include('includes/KLESCPOSCommands.php');
+
+	$TypeLoc = isset($_SESSION['TypeLoc']) ? $_SESSION['TypeLoc'] : '';
 
 	// payment descriptions
 	$TextToPrint = $CharacterFontA . $NewLine;
@@ -1100,7 +1129,7 @@ function KLPrintReceiptShopFooter(){
 	$TextToPrint .= "Packaging included";
 	$TextToPrint .= $CharacterFontA . $NewLine;
 
-	if ($_SESSION['TypeLoc'] == "SHOPKL"){
+	if ($TypeLoc == "SHOPKL"){
 		if ($_POST['PackagingBox01L'] != 0){
 			$TextToPrint .= "KL Box-L: " . $_POST['PackagingBox01L'] . " boxes";
 			$TextToPrint .= $NewLine;
@@ -1134,7 +1163,7 @@ function KLPrintReceiptShopFooter(){
 			$TextToPrint .= $NewLine;
 		}
 	}
-	if ($_SESSION['TypeLoc'] == "SHOPBL"){
+	if ($TypeLoc == "SHOPBL"){
 		if ($_POST['PackagingBox02L'] != 0){
 			$TextToPrint .= "BL Box-L: " . $_POST['PackagingBox02L'] . " boxes";
 			$TextToPrint .= $NewLine;
@@ -1185,13 +1214,13 @@ function KLPrintReceiptShopFooter(){
 /**************************************************************************************************************
 * Brief description: Helper function for receipt printing to align text left and right
 * Parameters:
-*   $Left - The text to align on the left
-*   $Right - The text to align on the right
-*   $Lenght - The total length of the line
-*   $Fillchar - The character to fill the space between left and right text
+*   string $Left - The text to align on the left
+*   string $Right - The text to align on the right
+*   int $Lenght - The total length of the line
+*   string $Fillchar - The character to fill the space between left and right text
 * Returns: The formatted text line with proper alignment
 **************************************************************************************************************/
-function DoubleJustified($Left, $Right, $Lenght, $Fillchar){
+function DoubleJustified(string $Left, string $Right, int $Lenght, string $Fillchar): string {
 	include('includes/KLESCPOSCommands.php');
 	return str_pad($Left, $Lenght - strlen($Right), $Fillchar) . $Right . $NewLine;
 }
@@ -1199,10 +1228,10 @@ function DoubleJustified($Left, $Right, $Lenght, $Fillchar){
 /**************************************************************************************************************
 * Brief description: Retrieves packaging description for a product
 * Parameters:
-*   $StockID - The stock ID of the product
+*   string $StockID - The stock ID of the product
 * Returns: The packaging description or empty string if not found
 **************************************************************************************************************/
-function GetItemPackagingDescription($StockID){
+function GetItemPackagingDescription(string $StockID): string {
 	$ErrMsg = __('Can not retrieve the packaging description because');
 
 	$SQL = "SELECT klp.packagingdescription 
@@ -1223,10 +1252,10 @@ function GetItemPackagingDescription($StockID){
 /**************************************************************************************************************
 * Brief description: Generates the text for a receipt for a return transfer of items to the main office (Kantor)
 * Parameters:
-*   $Reference - The reference number of the transfer
+*   string|int $Reference - The reference number of the transfer
 * Returns: The formatted text string for the receipt
 **************************************************************************************************************/
-function KLPrintReturnTransferToKantor($Reference){
+function KLPrintReturnTransferToKantor(string|int $Reference): string {
 	include('includes/KLESCPOSCommands.php');
 
 	$CorrectTransfer = true;
@@ -1313,7 +1342,14 @@ function KLPrintReturnTransferToKantor($Reference){
 	return $TextToPrint;
 }
 
-function KLPrintCustomerServiceReceiptHeader($StockID, $Description, $Fee, $Message1, $Message2, $Warranty){
+function KLPrintCustomerServiceReceiptHeader(
+	string $StockID,
+	string $Description,
+	float|int $Fee,
+	string $Message1,
+	string $Message2,
+	string $Warranty
+): string {
 	include('includes/KLESCPOSCommands.php');
 	
 	$TextToPrint = $InitPrinter . $CenteredJustified;
@@ -1336,7 +1372,7 @@ function KLPrintCustomerServiceReceiptHeader($StockID, $Description, $Fee, $Mess
 	return $TextToPrint;
 }
 
-function KLPrintCustomerServiceReceiptCustomerFooter(){
+function KLPrintCustomerServiceReceiptCustomerFooter(): string {
 	include('includes/KLESCPOSCommands.php');
 	
 	$TextToPrint = 'Pick up date: ' . $NewLine . $NewLine;
@@ -1351,7 +1387,7 @@ function KLPrintCustomerServiceReceiptCustomerFooter(){
 	return $TextToPrint;
 }
 
-function KLPrintCustomerServiceReceiptShopFooter($ServiceCode){
+function KLPrintCustomerServiceReceiptShopFooter(string|int $ServiceCode): string {
 	include('includes/KLESCPOSCommands.php');
 	
 	$TextToPrint = $LeftJustified;
