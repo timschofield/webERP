@@ -1,23 +1,6 @@
 <?php
 
-/******************************************************************************************************/
-/*	  FUNCTIONS LIST (In alphabetical order)
-/******************************************************************************************************/
-/*
-AverageCustomerBehaviourByValueInvoice - Analyzes customer invoice behavior by value ranges for a specific brand
-CashStatus - Manages and displays cash status for different entities (ADU, SMH, BB) with related metrics
-DailySalesRecords - Shows top sales days for a given time period
-EmptyAccountsGLTransTX - Finds transactions with empty account codes in GL transactions
-GeneralCustomerBehaviour - Analyzes general customer behavior metrics for a brand
-PeriodDifferenceSales - Compares sales between different time periods
-PettyCashStatus - Displays petty cash status for a specific currency
-ShowKPIHistory - Shows Key Performance Indicators history for specified days
-StockByBrand - Analyzes stock levels and requirements by brand
-UnbalancedGLTransTX - Detects unbalanced GL transactions
-*/
-
-
-/**************************************************************************************************************
+	/**************************************************************************************************************
 * AverageCustomerBehaviourByValueInvoice
 *
 * Analyzes and displays customer invoice behavior by value ranges for a specific brand
@@ -28,7 +11,7 @@ UnbalancedGLTransTX - Detects unbalanced GL transactions
 * 
 * @return void - Outputs HTML table and inserts KPI values
 **************************************************************************************************************/
-function AverageCustomerBehaviourByValueInvoice($Typereport, $Brand, $NumDaysA){
+function AverageCustomerBehaviourByValueInvoice(string $Typereport, string $Brand, int $NumDaysA){
 	/* EXPLAIN SQL 2014-05-21	*/
 	$YesterdayA  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-1));
@@ -220,9 +203,7 @@ function AverageCustomerBehaviourByValueInvoice($Typereport, $Brand, $NumDaysA){
 * @param float $USDSafetyFactor - Safety factor for USD calculations
 * @param float $USDMinPurchase - Minimum USD purchase amount
 * @param float $USDMaxEasyPurchasePerMonth - Maximum easy purchase USD per month
-* @param float $SaldoADUGlobalUSDMax - Maximum global USD balance for ADU
 * @param float $SaldoADUDanamonUSDMin - Minimum Danamon USD balance for ADU
-* @param float $SaldoADUDanamonUSDMax - Maximum Danamon USD balance for ADU
 * @param float $SaldoADUPayoneerUSDMin - Minimum Payoneer USD balance for ADU
 * @param float $SaldoADUPayoneerUSDMax - Maximum Payoneer USD balance for ADU
 * @param int $Period - Period number for accounting
@@ -1129,8 +1110,7 @@ function GeneralCustomerBehaviour($Brand, $NumDaysA){
 						AND salesorders.orddate <= '" . $YesterdayA . "'
 						AND salesorders.debtorno = debtorsmaster.debtorno
 					GROUP BY salesorders.debtorno) DESC";
-	
-						
+
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		$TableTitleText = "General Customer Behaviour by " . $BrandText  . " shop during the last " . $NumDaysA . " days.";
@@ -1619,7 +1599,9 @@ function PeriodDifferenceSales($Typeperiod, $Typereport, $NumDaysA){
 				</table>
 				</div>';
 		if (($Typereport == "Shop") AND ($Typeperiod == "YEAR")){
-			InsertKPI("SALES-TREND-RETAIL-" . $NumDaysA . "D-PERCENT", $Percent);
+			if (isset($Percent)) {
+				InsertKPI("SALES-TREND-RETAIL-" . $NumDaysA . "D-PERCENT", $Percent);
+			}
 		}
 	}
 }
@@ -1811,11 +1793,12 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock, $ShowFullDetails){
 	$BrandCode = substr($Brand, -2); // Get the 2 rightmost characters of $Brand
 
 	$Shops = NumberOfShops($Brand);
-	$NextDaysLastYear = $OptimalDaysStock - $NumDays;
 	
 	$TotalModels  = TotalModels($Brand);
 	$TotalItems   = TotalItems($Brand);
 
+	$ItemsToBeSoldNextDaysBasedOnTrendLastYear = 0;
+	$DailySoldItemsLastYearNextDays = 0;
 	/* Past $NumDays This Year*/
 	$ToLastDaysThisYear = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 	$FromLastDaysThisYear = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays-1));
