@@ -18,6 +18,10 @@ include(__DIR__ . '/includes/KLPOSGeneral.php');
 include(__DIR__ . '/includes/WebClientPrint/WebClientPrint.php');
 include(__DIR__ . '/includes/KLESCPOSCommands.php');
 
+// as the script uses _SESSION variables, reload just in case another user has been changing values in the meantime 
+// because the script needs the latest values for the calculations
+ReloadSessionVariablesFromConfig();
+
 if (isset($_GET['Warranty'])){
 	$Warranty = trim(mb_strtoupper($_GET['Warranty']));
 } elseif (isset($_POST['Warranty'])){
@@ -93,7 +97,7 @@ if (($StockID != '') AND ($ServiceCode != '')){
 	$MyRow = DB_fetch_array($Result);
 
 	if (DB_num_rows($Result) == 0){
-		$Message = "Stock code can't be found";
+		prnMsg(__('Stock code or price list can\'t be found'), 'warn');
 	} else {
 		if ($Warranty == 'YES'){
 			$Fee = 0;
@@ -180,26 +184,40 @@ if (($StockID != '') AND ($ServiceCode != '')){
 				}
 			}
 		}
+
+		ShowTableTitle($StockID . " - " . $MyRow['description']);
+		ShowTableTitle($Message1);
+		if ($Message2 != ''){
+			ShowTableTitle($Message2);
+		}
+
+		$TextToPrint = KLPrintCustomerServiceReceiptHeader(
+			$StockID,
+			$MyRow['description'],
+			$Fee,
+			$Message1,
+			$Message2,
+			$Warranty
+		);
+		$TextToPrint .= KLPrintCustomerServiceReceiptCustomerFooter();
+		$TextToPrint .= KLPrintCustomerServiceReceiptHeader(
+			$StockID,
+			$MyRow['description'],
+			$Fee,
+			$Message1,
+			$Message2,
+			$Warranty
+		);
+		$TextToPrint .= KLPrintCustomerServiceReceiptShopFooter($ServiceCode);
+
+		//################## PRINTING STUFF #####################
+		$identifier = GetPOSIdentifier();
+		$FileName = GetFilenameFromPOSIdentifier($identifier);
+		file_put_contents($FileName, $TextToPrint);
+		$TextActionToPrint = 'Print the Service Receipts';
+		include(__DIR__ . '/includes/KLSilentPrinting.php');
+		//################## PRINTING STUFF #####################
 	}
-
-	ShowTableTitle($StockID . " - " . $MyRow['description']);
-	ShowTableTitle($Message1);
-	if ($Message2 != ''){
-		ShowTableTitle($Message2);
-	}
-
-	$TextToPrint = KLPrintCustomerServiceReceiptHeader($StockID, $MyRow['description'], $Fee, $Message1, $Message2, $Warranty);
-	$TextToPrint .= KLPrintCustomerServiceReceiptCustomerFooter();
-	$TextToPrint .= KLPrintCustomerServiceReceiptHeader($StockID, $MyRow['description'], $Fee, $Message1, $Message2, $Warranty);
-	$TextToPrint .= KLPrintCustomerServiceReceiptShopFooter($ServiceCode);
-
-	//################## PRINTING STUFF ##################### 
-	$identifier=GetPOSIdentifier();
-	$FileName = GetFilenameFromPOSIdentifier($identifier);  
-	file_put_contents($FileName, $TextToPrint);
-	$TextActionToPrint = 'Print the Service Receipts';
-	include(__DIR__ . '/includes/KLSilentPrinting.php');
-	//################## PRINTING STUFF ##################### 
 
 }
 
