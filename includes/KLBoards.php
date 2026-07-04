@@ -144,7 +144,7 @@ function ActiveTransfersByLocation(){
 *   - $RootPath: Root path of the application
 * Returns: None
 **************************************************************************************************************/
-function ActiveTransferStatus($RootPath){
+function ActiveTransferStatus(string $RootPath){
 	$SQL = "SELECT lt.reference,
 					lt.shipdate,
 					l1.locationname AS locfrom,
@@ -218,7 +218,7 @@ function ActiveTransferStatus($RootPath){
 *   - $NumDaysF: Number of days for period F
 * Returns: None
 **************************************************************************************************************/
-function AverageKPIHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE, $NumDaysF){
+function AverageKPIHistory(int $NumDaysA, int $NumDaysB, int $NumDaysC, int $NumDaysD, int $NumDaysE, int $NumDaysF){
 
 	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', -$NumDaysA));
 	$StartDateB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', -$NumDaysB));
@@ -347,7 +347,7 @@ function AverageKPIHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE
 *   - $Shop: Shop code or "All" for all shops
 * Returns: None
 **************************************************************************************************************/
-function AverageSales($TypeReport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE, $NumDaysF, $NumDaysSort, $Year, $Shop){
+function AverageSales(string $TypeReport, int $NumDaysA, int $NumDaysB, int $NumDaysC, int $NumDaysD, int $NumDaysE, int $NumDaysF, int $NumDaysSort, string $Year, string $Shop){
 
 	if ($Year == "LastYear"){
 		$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-365-1));
@@ -379,6 +379,7 @@ function AverageSales($TypeReport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 	$TotalDateF = 0;
 	$TotalForecast = 0;
 	$TotalDateMTD = 0;
+	$Percent = 0;
 
 	if ($Shop == "All"){
 		$SQLByShop = "";
@@ -539,7 +540,6 @@ function AverageSales($TypeReport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 			$dailyF = ($NumDaysF != 0) ? $MyRow['salesF'] / $NumDaysF : 0;
 			
 			// Fix division by zero error
-			$Percent = 0;
 			if ($NumDaysD != 0 && $NumDaysC != 0 && $MyRow['salesC'] != 0) {
 				$Percent = (($MyRow['salesD'] / $NumDaysD) - ($MyRow['salesC'] / $NumDaysC)) / ($MyRow['salesC'] / $NumDaysC) * 100;
 			}
@@ -665,7 +665,7 @@ function AverageSales($TypeReport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 *   - $QOH (float): The current quantity on hand of the item.
 * Returns: None
 **************************************************************************************************************/
-function ChangeItemStandardCost($StockID, $NewCost, $OldCost, $QOH){
+function ChangeItemStandardCost(string $StockID, float $NewCost, float $OldCost, float $QOH){
 	DB_Txn_Begin();
 	ItemCostUpdateGL($StockID, $NewCost, $OldCost, $QOH);
 	$SQL = "UPDATE stockmaster
@@ -692,7 +692,7 @@ function ChangeItemStandardCost($StockID, $NewCost, $OldCost, $QOH){
 *   - $NumDays (int): The number of past days to consider when $Status is 'CLOSED'.
 * Returns: None
 **************************************************************************************************************/
-function MaintenanceTasksList($Status, $NumDays, $UserIsShopRelated){
+function MaintenanceTasksList(string $Status, int $NumDays, bool $UserIsShopRelated){
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 	if ($Status == "OPEN"){
 		$WhereStatus = "WHERE klmaintenancetasks.closed = 0";
@@ -818,7 +818,7 @@ function MaintenanceTasksList($Status, $NumDays, $UserIsShopRelated){
 *   - $RootPath (string): The root path of the application, used for generating links.
 * Returns: None
 **************************************************************************************************************/
-function ComponentsToObsolete($ShowOnlyTotal, $ShowLimit, $RootPath){
+function ComponentsToObsolete(bool $ShowOnlyTotal, float $ShowLimit, string $RootPath){
 	$SQL = "SELECT s.stockid,
 					s.units,
 					s.description,
@@ -905,7 +905,7 @@ function ComponentsToObsolete($ShowOnlyTotal, $ShowLimit, $RootPath){
 *   - $RootPath (string): The root path of the application, used for generating links.
 * Returns: None
 **************************************************************************************************************/
-function ErrorsInTransfers($maxdays, $RootPath){
+function ErrorsInTransfers(int $maxdays, string $RootPath){
 	/* SQL optimized by Roo on 26/08/2025 - Performance improvements:
 	 * 1. Added proper error handling with $ErrMsg variable
 	 * 2. Optimized subqueries with better indexing and structure
@@ -1044,7 +1044,7 @@ function ErrorsInTransfers($maxdays, $RootPath){
 *   - $ByReport (string): The criteria for grouping the report ('LOCATION' or 'STOCKCATEGORY').
 * Returns: (bool) false if $ByReport is invalid, otherwise None (echos HTML directly).
 **************************************************************************************************************/
-function FinishedStockDistribution($Kind, $ByReport){
+function FinishedStockDistribution(string $Kind, string $ByReport){
 
 	if ($Kind == "FORSALE"){
 		$Operator1 = " AND (stockcategory.categoryid  IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_SETUP_ALL_DISCOUNT ."
@@ -1099,6 +1099,8 @@ function FinishedStockDistribution($Kind, $ByReport){
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
+		$TableTitleText = "";
+		$Titleheader = "";
 		if ($Kind == "FORSALE"){
 			$TableTitleText = "Finished Stock FOR SALE Distribution by ";
 		}
@@ -1194,6 +1196,8 @@ function FinishedStockDistribution($Kind, $ByReport){
 		}
 		echo'</tbody>
 			<tfooter>';
+		$TotalModels = "";
+		$PercentModels = "";
 		if ($ByReport == "STOCKCATEGORY"){
 			$SQL =	"SELECT COUNT(DISTINCT(locstock.stockid)) AS realmodels
 						FROM locstock,
@@ -1208,12 +1212,11 @@ function FinishedStockDistribution($Kind, $ByReport){
 			if (DB_num_rows($Result1) != 0){
 				while ($MyRow1 = DB_fetch_array($Result1)) {
 					$TotalModels = locale_number_format_zero_blank($MyRow1['realmodels'],0);
-					$PercentModels =locale_number_format_zero_blank(($Totalpcs/$MyRow1['realmodels']),1);
+					if ($MyRow1['realmodels'] != 0) {
+						$PercentModels = locale_number_format_zero_blank(($Totalpcs/$MyRow1['realmodels']),1);
+					}
 				}
 			}
-		} else {
-			$TotalModels = "";
-			$PercentModels = "";
 		}
 		echo '<tr class="striped_row">
 					<td class="number">' . "" . '</td>
@@ -1501,7 +1504,7 @@ function GetTotalQtyItemsForSale(){
 *   - $period (int): The accounting period number for which to calculate the stock value.
 * Returns: (float) The total value of items for sale for the given period.
 **************************************************************************************************************/
-function GetTotalValueItemsForSale($period){
+function GetTotalValueItemsForSale(int $period){
 	$SQL = "SELECT SUM(amount) as saldo
 			FROM gltotals
 			WHERE account IN ('111515000AD',
@@ -1525,7 +1528,7 @@ function GetTotalValueItemsForSale($period){
 *   - $TopItemsDays (int): The number of days for the top sales period (30, 60, or 90).
 * Returns: (string) The corresponding field name (e.g., "topsales30") or "topsales60" as a default if input is invalid.
 **************************************************************************************************************/
-function GetTopSalesField($TopItemsDays){
+function GetTopSalesField(int $TopItemsDays){
 	// selects the field to be used in queries of Top Sales depending on the days
 
 	if ($TopItemsDays == 30){
@@ -1550,7 +1553,7 @@ function GetTopSalesField($TopItemsDays){
 *   - $RootPath (string): The root path of the application, used for generating links.
 * Returns: None
 **************************************************************************************************************/
-function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath){
+function GoodsToBeProduced(string $CategoryComponent, string $ParentCategory, string $RootPath){
 	/* EXPLAIN SQL 2014-05-30 */
 	/* Check if there is any component at kantor ready to be transformed into sellable goods */
 	if ($ParentCategory == "ONLYDISCOUNT"){
@@ -1667,7 +1670,7 @@ function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath){
 *   - $RootPath (string): The root path of the application, used for generating links.
 * Returns: None
 **************************************************************************************************************/
-function InsuficientStockForShopPackaging($Category, $DaysUsage, $DaysMinimumStock, $ShowAll, $ExtendedVersion, $RootPath){
+function InsuficientStockForShopPackaging(string $Category, int $DaysUsage, int $DaysMinimumStock, bool $ShowAll, bool $ExtendedVersion, string $RootPath){
 /* EXPLAIN SQL	2014-05-20
 id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 1	PRIMARY				stockmaster			ref		CategoryID					CategoryID			20	const	10	Using where
@@ -1790,8 +1793,6 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			$QOH = max($MyRow['qohgudang']+$MyRow['qohshops'],0);
 			$QOHDays = ($ForecastUsageDaily > 0) ? ($QOH / $ForecastUsageDaily) : 0; // QOH expressed in days at daily forecast rate
 			$MissingQOH = max($OptimumQOH - $QOH, 0);
-			$DaysQOH = ($DailyUse > 0) ? floor($QOH / $DailyUse): 0;
-			$DaysQOO = ($DailyUse > 0) ? floor(($QOH + $MyRow['qoo']) / $DailyUse) : 0;
 			
 			// Fix division by zero error
 			$PanSize = ($MyRow['pansize'] > 0) ? $MyRow['pansize'] : 1;
@@ -2022,7 +2023,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 *   - $RootPath (string): The root path of the application, used for generating links.
 * Returns: (int) The number of items found without an active retail price.
 **************************************************************************************************************/
-function ItemsWithoutRetailPrice($StockCat, $factorRetail, $RootPath){
+function ItemsWithoutRetailPrice(string $StockCat, float $factorRetail, string $RootPath){
 	/* Check if there is any item without retail price */
 	$Issues = 0;
 	$SQL = "SELECT stockmaster.stockid,
@@ -2095,7 +2096,7 @@ function ItemsWithoutRetailPrice($StockCat, $factorRetail, $RootPath){
 *   - $RootPath (string): The root path of the application, used for generating links.
 * Returns: None
 **************************************************************************************************************/
-function LocationInformationReview($RootPath){
+function LocationInformationReview(string $RootPath){
 	$SQL="SELECT loccode,
 				locationname,
 				zone,
@@ -2189,7 +2190,7 @@ function LocationInformationReview($RootPath){
 	}
 }
 
-function GetDescriptionFromFlagItemsForSaleAllowed($CodeFlag){
+function GetDescriptionFromFlagItemsForSaleAllowed(int $CodeFlag){
 	if ($CodeFlag ==  2){
 		return "All";
 	} elseif ($CodeFlag ==  1){
@@ -2209,7 +2210,7 @@ function GetDescriptionFromFlagItemsForSaleAllowed($CodeFlag){
 *   - $RootPath (string): The root path of the application, used for generating links.
 * Returns: None
 **************************************************************************************************************/
-function CheckPackagingToBeRefilled($ShowAll, $ShowLinkEmail, $RootPath){
+function CheckPackagingToBeRefilled(bool $ShowAll, bool $ShowLinkEmail, string $RootPath){
 	$SQL = "SELECT  locations.loccode
 			FROM locations
 			WHERE locations.packagingfrom != ''
@@ -2238,7 +2239,7 @@ function CheckPackagingToBeRefilled($ShowAll, $ShowLinkEmail, $RootPath){
 *   - $RootPath (string): The root path of the application, used for generating links.
 * Returns: None
 **************************************************************************************************************/
-function PackagingToBeRefilledFromGudang($LocCode, $ShowAll, $ShowLinkEmail, $RootPath){
+function PackagingToBeRefilledFromGudang(string $LocCode, bool $ShowAll, bool $ShowLinkEmail, string $RootPath){
 
 	$TableResult = array();
 
@@ -2337,6 +2338,7 @@ function PackagingToBeRefilledFromGudang($LocCode, $ShowAll, $ShowLinkEmail, $Ro
 	if ($ShowReport){
 		$i = 1;
 		$ItemsToShip = 0;
+		$EmailLink = '';
 
 		while ($i <= $NumItems) {
 			// IF we are SHORT of that packaging material in that location...
@@ -2423,7 +2425,7 @@ function PackagingToBeRefilledFromGudang($LocCode, $ShowAll, $ShowLinkEmail, $Ro
 *   - $n (float): The quantity to be rounded.
 * Returns: (float) The rounded quantity suitable for transfer.
 **************************************************************************************************************/
-function RoundPackagingTransfer($StockID, $n){
+function RoundPackagingTransfer(string $StockID, float $n){
 	if (isPackagingPaperInsideBox($StockID)){
 		$n = ceil($n/TRANSFER_ROUNDING_PAPER_INSIDE_BOX)*TRANSFER_ROUNDING_PAPER_INSIDE_BOX;
 	} else {
@@ -2448,7 +2450,7 @@ function RoundPackagingTransfer($StockID, $n){
 *   - $TopItemsDays (int): The number of days for the top sales period (30, 60, or 90).
 * Returns: (int) The top sales position of the item (or 9999999 if not found/ranked).
 **************************************************************************************************************/
-function PositionTopSalesItem($StockID, $TopItemsDays){
+function PositionTopSalesItem(string $StockID, int $TopItemsDays){
 
 	$TopSalesField = GetTopSalesField($TopItemsDays);
 	$SQL="SELECT ". $TopSalesField." AS topsalesposition
@@ -2477,7 +2479,7 @@ function PositionTopSalesItem($StockID, $TopItemsDays){
 *   - $RootPath (string): The root path of the application, used for generating links.
 * Returns: None (echos HTML directly), or void if $TypeOfCode is invalid.
 **************************************************************************************************************/
-function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $RootPath){
+function POStatusControl(string $TypeOfProduct, string $TypeOfCode, int $maxdays, int $periodnow, string $RootPath){
 	/* SQL optimized by Roo on 26/08/2025 - Performance improvements:
 	 * 1. Added proper error handling with $ErrMsg variable
 	 * 2. Optimized supplier balance queries with caching to avoid repeated database calls
@@ -2488,6 +2490,9 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 	 * 7. Optimized query structure to use existing composite indexes effectively
 	 */
 	$ErrMsg = 'Error in function POStatusControl()';
+	$SupplierBalanceIDR = 0;
+	$SupplierBalanceUSD = 0;
+	$SupplierBalanceTHB = 0;
 
 	if ($TypeOfCode == "IN NEGOTIATION WITH SUPPLIER"){
 		$DateField1 = "orddate";
@@ -3035,9 +3040,10 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 *   - $NumDays (int): The number of past days to consider for POs that have arrived.
 * Returns: None
 **************************************************************************************************************/
-function PurchaseOrdersProcessTime($NumDays){
+function PurchaseOrdersProcessTime(int $NumDays){
 
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
+	$i = 1;
 
 	$SQL = "SELECT suppliers.address6,
 				COUNT(purchorders.orderno) AS numorders,
@@ -3080,7 +3086,6 @@ function PurchaseOrdersProcessTime($NumDays){
 						</thead>
 						<tbody>';
 		echo $TableHeader;
-		$i = 1;
 		while ($MyRow = DB_fetch_array($Result)) {
 			if ($MyRow['productiondays'] < 0) {$MyRow['productiondays'] = 0;}
 			if ($MyRow['paymentdays'] < 0) {$MyRow['paymentdays'] = 0;}
@@ -3209,7 +3214,7 @@ function PurchaseOrdersProcessTime($NumDays){
 *   - $RootPath (string): The root path of the application, used for generating links.
 * Returns: None
 **************************************************************************************************************/
-function PurchaseOrdersWrongPlannedDates($RootPath){
+function PurchaseOrdersWrongPlannedDates(string $RootPath){
 
 	$SQL = "SELECT purchorders.orderno,
 				purchorders.supplierno,
@@ -3343,7 +3348,7 @@ function PurchaseOrdersWrongPlannedDates($RootPath){
 *   - $RootPath (string): The root path of the application, used for generating links.
 * Returns: None
 **************************************************************************************************************/
-function RecentlyClosedTransferStatus($maxdays, $RootPath){
+function RecentlyClosedTransferStatus(int $maxdays, string $RootPath){
 	/* SQL optimized by Roo on 26/08/2025 - Performance improvements:
 	 * 1. Added proper error handling with $ErrMsg variable
 	 * 2. Replaced correlated subqueries with efficient JOINs for location names
@@ -3439,7 +3444,7 @@ function RecentlyClosedTransferStatus($maxdays, $RootPath){
 *   - $Type (string): Type of filter ('ALL' for all online-suitable categories, 'KL+BL' for Kapal-Laut and Blink main categories).
 * Returns: (string) The SQL WHERE clause fragment.
 **************************************************************************************************************/
-function SQLFilterStockmasterForOnlineShop($Type){
+function SQLFilterStockmasterForOnlineShop(string $Type){
 	/* Not discontinued
 		Not some items in doscount and some not (items ending with -D)
 		Not a set (items with "ST" in position 3 and 4 of code)
@@ -3479,7 +3484,7 @@ function SQLFilterStockmasterForOnlineShop($Type){
 *   - $RootPath (string): The root path of the application, used for generating links.
 * Returns: None
 **************************************************************************************************************/
-function TransfersDelayed($maxdays, $RootPath){
+function TransfersDelayed(int $maxdays, string $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 	$SQL = "SELECT DISTINCT reference,
 					shipdate,
@@ -3539,7 +3544,7 @@ function TransfersDelayed($maxdays, $RootPath){
 *   - $RootPath (string): The root path of the application, used for generating links.
 * Returns: None
 **************************************************************************************************************/
-function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $RootPath){
+function WrongStandardCost(string $Country, string $StockCat, float $StdFactor, float $Tolerance, string $Mode, string $RootPath){
 /* FunctionMode means
 	SHOWONLY: Shows data only
 	SHOWLINK: Shows link to update the standard Cost manually
@@ -3741,7 +3746,7 @@ function ShowTotalItemsMoving(){
 *   - $RootPath (string): The root path of the application, used for generating links.
 * Returns: None
 **************************************************************************************************************/
-function OnlineMarketPlacePaymentPending($Days, $RootPath){
+function OnlineMarketPlacePaymentPending(int $Days, string $RootPath){
 	// if $Days = 0 it means all the Online Marketplace Orders still pending of payment
 	// if $Days > 0 it means the same but only show the delayed for more than $Days
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$Days));
@@ -3911,7 +3916,7 @@ function OnlineMarketPlacePaymentPending($Days, $RootPath){
 *   - $UserIsSystemAdmin (bool): If true, inserts KPIs for the task counts.
 * Returns: None
 **************************************************************************************************************/
-function MaintenanceTasksDistribution($Status, $NumDays, $UserIsSystemAdmin, $UserIsShopRelated){
+function MaintenanceTasksDistribution(string $Status, int $NumDays, bool $UserIsSystemAdmin, bool $UserIsShopRelated){
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 	if ($Status == "OPEN"){
 		$WhereStatus = "WHERE klmaintenancetasks.closed = 0";
@@ -3925,6 +3930,9 @@ function MaintenanceTasksDistribution($Status, $NumDays, $UserIsSystemAdmin, $Us
 							OR (klmaintenancetasks.closed = 1
 								AND closedate >= '" . $FromDate . "')";
 		$Title = 'All Maintenance Tasks distribution during the last ' . $NumDays . ' days';
+	} else{
+		$WhereStatus = "";
+		$Title = "";
 	}
 	if ($UserIsShopRelated){
 		$WhereStatus = $WhereStatus . " AND klmaintenancetasks.loccode NOT IN " .LIST_KANTOR . " ";
@@ -4150,7 +4158,7 @@ function MaintenanceTasksDistribution($Status, $NumDays, $UserIsSystemAdmin, $Us
 *   - $RootPath (string): The root path of the application (currently unused in the function body but kept for consistency).
 * Returns: None
 **************************************************************************************************************/
-function QualityIssuesByReason($Days, $RootPath){
+function QualityIssuesByReason(int $Days, string $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$Days));
 
 	$SQL = "SELECT returnitemreasons.reasonid,
@@ -4218,7 +4226,7 @@ function QualityIssuesByReason($Days, $RootPath){
 *   - $Days (int): The number of past days to analyze for stock adjustments.
 * Returns: None
 **************************************************************************************************************/
-function StockAdjustmentsByReason($Days){
+function StockAdjustmentsByReason(int $Days){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$Days));
 
 	$SQL = "SELECT stockadjustmentreasons.reasonid,
@@ -4289,7 +4297,7 @@ function StockAdjustmentsByReason($Days){
 *   - $RootPath (string): The root path of the application, used for generating links.
 * Returns: None
 **************************************************************************************************************/
-function TransferReasons($Days){
+function TransferReasons(int $Days){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$Days));
 
 	$SQL = "SELECT reason,
@@ -4348,7 +4356,7 @@ function TransferReasons($Days){
 		</div>';
 }
 
-function TimeNeededForExecution($FunctionName, $StartTime, $AuthorizedRole) {
+function TimeNeededForExecution(string $FunctionName, float $StartTime, bool $AuthorizedRole) {
 	if ($AuthorizedRole) {
 		$EndTime = microtime(true);
 		$ExecutionTime = $EndTime - $StartTime;

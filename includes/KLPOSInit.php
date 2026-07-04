@@ -79,6 +79,7 @@ if (!isset($_POST['Comments'])){
 	$_POST['Comments'] = '';
 }
 
+/* Temporarily we use 2 models of boxes, depending on the location falg usenewboxes. To be simplified after the process */
 if (!isset($_POST['PackagingBox01L'])){
 	$_POST['PackagingBox01L'] = 0;
 }
@@ -87,6 +88,15 @@ if (!isset($_POST['PackagingBox01M'])){
 }
 if (!isset($_POST['PackagingBox01S'])){
 	$_POST['PackagingBox01S'] = 0;
+}
+if (!isset($_POST['PackagingBox05L'])){
+	$_POST['PackagingBox05L'] = 0;
+}
+if (!isset($_POST['PackagingBox05M'])){
+	$_POST['PackagingBox05M'] = 0;
+}
+if (!isset($_POST['PackagingBox05S'])){
+	$_POST['PackagingBox05S'] = 0;
 }
 if (!isset($_POST['PackagingBox02L'])){
 	$_POST['PackagingBox02L'] = 0;
@@ -97,6 +107,17 @@ if (!isset($_POST['PackagingBox02M'])){
 if (!isset($_POST['PackagingBox02S'])){
 	$_POST['PackagingBox02S'] = 0;
 }
+if (!isset($_POST['PackagingBox04L'])){
+	$_POST['PackagingBox04L'] = 0;
+}
+if (!isset($_POST['PackagingBox04M'])){
+	$_POST['PackagingBox04M'] = 0;
+}
+if (!isset($_POST['PackagingBox04S'])){
+	$_POST['PackagingBox04S'] = 0;
+}
+/* END Temporarily we use 2 models of boxes, depending on the location falg usenewboxes. To be simplified after the process */
+
 
 if (!isset($_POST['ShoppingBag02S'])){
 	$_POST['ShoppingBag02S'] = 0;

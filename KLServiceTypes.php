@@ -12,6 +12,11 @@ $Title = _('KL Service Types Maintenance');
 $ViewTopic = 'Setup';
 $BookMark = 'KLServiceTypes';
 include(__DIR__ . '/includes/header.php');
+include(__DIR__ . '/includes/KLGeneralFunctions.php');
+
+// as the script uses _SESSION variables, reload just in case another user has been changing values in the meantime 
+// because the script needs the latest values for the calculations
+ReloadSessionVariablesFromConfig();
 
 echo '<p class="page_title_text">
 		<img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . $Title . '" alt="" />' . ' ' . $Title .
@@ -166,9 +171,9 @@ if (!isset($SelectedServiceCode)) {
 		echo '<tr class="striped_row">
 				<td>', $MyRow['servicecode'], '</td>
 				<td>', $MyRow['servicedescription'], '</td>
-				<td class="number">', locale_number_format($MyRow['pricetier01'], 4), '</td>
-				<td class="number">', locale_number_format($MyRow['pricetier02'], 4), '</td>
-				<td class="number">', locale_number_format($MyRow['pricetier03'], 4), '</td>
+				<td class="number">', locale_number_format($MyRow['pricetier01'], 0), '</td>
+				<td class="number">', locale_number_format($MyRow['pricetier02'], 0), '</td>
+				<td class="number">', locale_number_format($MyRow['pricetier03'], 0), '</td>
 				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedServiceCode=', $MyRow['servicecode'], '">' . _('Edit') . '</a></td>
 				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedServiceCode=', $MyRow['servicecode'], '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this service type?') . '\');">' . _('Delete') . '</a></td>
 			</tr>';
@@ -252,20 +257,20 @@ if (!isset($_GET['delete'])) {
 		</field>';
 
 	echo '<field>
-			<label for="pricetier01">' . _('Price Tier 1') . ':</label>
-			<input type="text"' . (in_array('pricetier01', $Errors) ? 'class="inputerror"' : '') . ' name="pricetier01" class="number" required="required" value="' . locale_number_format($_POST['pricetier01'], 4) . '" title="" size="22" maxlength="20" />
+			<label for="pricetier01">' . _('Service Price Tier 1 (Items retail price < ') . locale_number_format($_SESSION['RetailPriceServiceTier01'], 0) . '):</label>
+			<input type="text"' . (in_array('pricetier01', $Errors) ? 'class="inputerror"' : '') . ' name="pricetier01" class="number" required="required" value="' . locale_number_format($_POST['pricetier01'], 0) . '" title="" size="22" maxlength="20" />
 			<fieldhelp>' . _('The price for service tier 1') . '</fieldhelp>
 		</field>';
 
 	echo '<field>
-			<label for="pricetier02">' . _('Price Tier 2') . ':</label>
-			<input type="text"' . (in_array('pricetier02', $Errors) ? 'class="inputerror"' : '') . ' name="pricetier02" class="number" required="required" value="' . locale_number_format($_POST['pricetier02'], 4) . '" title="" size="22" maxlength="20" />
+			<label for="pricetier02">' . _('Service Price Tier 2 (Items retail price < ') . locale_number_format($_SESSION['RetailPriceServiceTier02'], 0) . '):</label>
+			<input type="text"' . (in_array('pricetier02', $Errors) ? 'class="inputerror"' : '') . ' name="pricetier02" class="number" required="required" value="' . locale_number_format($_POST['pricetier02'], 0) . '" title="" size="22" maxlength="20" />
 			<fieldhelp>' . _('The price for service tier 2') . '</fieldhelp>
 		</field>';
 
 	echo '<field>
-			<label for="pricetier03">' . _('Price Tier 3') . ':</label>
-			<input type="text"' . (in_array('pricetier03', $Errors) ? 'class="inputerror"' : '') . ' name="pricetier03" class="number" required="required" value="' . locale_number_format($_POST['pricetier03'], 4) . '" title="" size="22" maxlength="20" />
+			<label for="pricetier03">' . _('Service Price Tier 3 (Items retail price >= ') . locale_number_format($_SESSION['RetailPriceServiceTier02'], 0) . '):</label>
+			<input type="text"' . (in_array('pricetier03', $Errors) ? 'class="inputerror"' : '') . ' name="pricetier03" class="number" required="required" value="' . locale_number_format($_POST['pricetier03'], 0) . '" title="" size="22" maxlength="20" />
 			<fieldhelp>' . _('The price for service tier 3') . '</fieldhelp>
 		</field>';
 

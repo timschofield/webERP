@@ -48,6 +48,8 @@ while ($MyRow = DB_fetch_array($Result)) {
 			$MenuItems[$MyRow['modulelink']][$MyRow['menusection']]['URL'][] = '/KLPerformanceBoard.php?Section=02';
 			$MenuItems[$MyRow['modulelink']][$MyRow['menusection']]['Caption'][] = 	__('KL Performance Board Section 03');
 			$MenuItems[$MyRow['modulelink']][$MyRow['menusection']]['URL'][] = '/KLPerformanceBoard.php?Section=03';
+			$MenuItems[$MyRow['modulelink']][$MyRow['menusection']]['Caption'][] = 	__('KL Performance Board Section 04');
+			$MenuItems[$MyRow['modulelink']][$MyRow['menusection']]['URL'][] = '/KLPerformanceBoard.php?Section=04';
 	} elseif (($KL_PurchasingManager
 			OR $KL_SalesTeamManager)
 			// divide the KL control board into 2 sections

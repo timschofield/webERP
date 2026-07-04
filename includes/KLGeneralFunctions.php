@@ -2067,3 +2067,18 @@ function ReloadSessionVariablesFromConfig(){
 		}
 	} //end loop through all config variables
 }
+
+function NumberOfEmployeesByPosition($Position){
+	$SQL = "SELECT COUNT(*) 
+			FROM hremployees
+			INNER JOIN hrpositions ON hremployees.positionid = hrpositions.positionid 
+			WHERE hremployees.employmentstatus = 'Active'
+				AND hrpositions.positioncode LIKE '" . $Position . "'";
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
+		$MyRow = DB_fetch_array($Result);
+		return $MyRow[0];
+	} else {
+		return 0;
+	}
+}

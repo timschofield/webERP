@@ -18,8 +18,12 @@ include(__DIR__ . '/includes/KLPOSGeneral.php');
 include(__DIR__ . '/includes/WebClientPrint/WebClientPrint.php');
 include(__DIR__ . '/includes/KLESCPOSCommands.php');
 
+// as the script uses _SESSION variables, reload just in case another user has been changing values in the meantime 
+// because the script needs the latest values for the calculations
+ReloadSessionVariablesFromConfig();
+
 if (isset($_GET['Warranty'])){
-	$ServiceCode = trim(mb_strtoupper($_GET['Warranty']));
+	$Warranty = trim(mb_strtoupper($_GET['Warranty']));
 } elseif (isset($_POST['Warranty'])){
 	$Warranty = trim(mb_strtoupper($_POST['Warranty']));
 } else {
@@ -93,7 +97,7 @@ if (($StockID != '') AND ($ServiceCode != '')){
 	$MyRow = DB_fetch_array($Result);
 
 	if (DB_num_rows($Result) == 0){
-		$Message = "Stock code can't be found";
+		prnMsg(__('Stock code or price list can\'t be found'), 'warn');
 	} else {
 		if ($Warranty == 'YES'){
 			$Fee = 0;
@@ -102,22 +106,22 @@ if (($StockID != '') AND ($ServiceCode != '')){
 		} elseif (($MyRow['discontinued'] == 1) 
 			OR (ItemInList($MyRow['categoryid'], LIST_STOCK_CATEGORIES_OUTLET))){
 			// for discounted or obsolete //
-			if (($ServiceCode == "BENTUKBENGKOK") 
-				OR ($ServiceCode == "CRYSTALLEPAS") 
-				OR ($ServiceCode == "KOMPONENLEPAS") 
-				OR ($ServiceCode == "LOCKRUSAK") 
-				OR ($ServiceCode == "KURANGSHINNY") 
-				OR ($ServiceCode == "TALILUSUH") 
-				OR ($ServiceCode == "WIREBERKARAT") 
-				OR ($ServiceCode == "_LAINLAIN")){
+			if (($ServiceCode == "SERV_BENTUKBENGKOK") 
+				OR ($ServiceCode == "SERV_CRYSTALLEPAS") 
+				OR ($ServiceCode == "SERV_KOMPONENLEPAS") 
+				OR ($ServiceCode == "SERV_LOCKRUSAK") 
+				OR ($ServiceCode == "SERV_KURANGSHINNY") 
+				OR ($ServiceCode == "SERV_TALILUSUH") 
+				OR ($ServiceCode == "SERV_WIREBERKARAT") 
+				OR ($ServiceCode == "SERV__LAINLAIN")){
 				$Message1 = "Service fee can't be calculated now. Send to office to be evaluated.";
 				$Fee = -2;
 			} else {
-				if (($ServiceCode == "BERUBAHWARNA")
-					OR ($ServiceCode == "KOMPONENPECAH") 
-					OR ($ServiceCode == "KOMPONENRUSAK") 
-					OR ($ServiceCode == "PATRI") 
-					OR ($ServiceCode == "RANTAIPUTUS")){
+				if (($ServiceCode == "SERV_BERUBAHWARNA")
+					OR ($ServiceCode == "SERV_KOMPONENPECAH") 
+					OR ($ServiceCode == "SERV_KOMPONENRUSAK") 
+					OR ($ServiceCode == "SERV_PATRI") 
+					OR ($ServiceCode == "SERV_RANTAIPUTUS")){
 					$Message1 = "CAN'T be serviced.";
 					$Fee = -1;
 				} else {
@@ -128,12 +132,13 @@ if (($StockID != '') AND ($ServiceCode != '')){
 					} else {
 						$FeeService = $MyRow['pricetier03'];
 					}
-					if ($MyRow['klservicebyreplacement'] == 1){
+					if (($MyRow['klservicebyreplacement'] == 1)
+						AND ($ServiceCode != "SERV_KOTOR")){
 						$FeeReplacement = $MyRow['actualcost'] * $_SESSION['FactorStandardCostServiceReplacement'];
 					} else {
 						$FeeReplacement = 0;
 					}
-					$Fee = round_multiple_of(max($FeeService, $FeeReplacement),10000);
+					$Fee = round_multiple_of(max($FeeService, $FeeReplacement),5000);
 					$Message1 = "CAN be serviced.";
 					$Message2 = "Fee of " . locale_number_format($Fee,0) . " IDR.";
 
@@ -143,11 +148,11 @@ if (($StockID != '') AND ($ServiceCode != '')){
 				}
 			}
 		} else {
-			if ($ServiceCode == "_LAINLAIN"){
+			if ($ServiceCode == "SERV__LAINLAIN"){
 				$Message1 = "Service fee can't be calculated now. Send to office to be evaluated.";
 				$Fee = -2;
 			} else {
-				if (($ServiceCode == "BERUBAHWARNA") 
+				if (($ServiceCode == "SERV_BERUBAHWARNA") 
 					AND (ItemInList($MyRow['categoryid'], LIST_STOCK_CATEGORIES_BLINK))){
 					$Message1 = "CAN'T be serviced.";
 					$Fee = -1;
@@ -159,45 +164,60 @@ if (($StockID != '') AND ($ServiceCode != '')){
 					} else {
 						$FeeService = $MyRow['pricetier03'];
 					}
-					if ($MyRow['klservicebyreplacement'] == 1){
+					if (($MyRow['klservicebyreplacement'] == 1)
+						AND ($ServiceCode != "SERV_KOTOR")){
 						$FeeReplacement = $MyRow['actualcost'] * $_SESSION['FactorStandardCostServiceReplacement'];
 					} else {
 						$FeeReplacement = 0;
 					}
-					$Fee = round_multiple_of(max($FeeService, $FeeReplacement),10000);
+					$Fee = round_multiple_of(max($FeeService, $FeeReplacement),5000);
 					$Message1 = "CAN be serviced.";
 					$Message2 = "Fee of " . locale_number_format($Fee,0) . " IDR.";
 
-					if (($ServiceCode == "CRYSTALLEPAS") 
-						OR ($ServiceCode == "KOMPONENLEPAS")
-						OR ($ServiceCode == "KOMPONENRUSAK")
-						OR ($ServiceCode == "KOMPONENPECAH")
-						OR ($ServiceCode == "MAGNETLEPAS")){
+					if (($ServiceCode == "SERV_CRYSTALLEPAS") 
+						OR ($ServiceCode == "SERV_KOMPONENLEPAS")
+						OR ($ServiceCode == "SERV_KOMPONENRUSAK")
+						OR ($ServiceCode == "SERV_KOMPONENPECAH")
+						OR ($ServiceCode == "SERV_MAGNETLEPAS")){
 						$Message2 .= " Cost of components needed NOT included in this fee.";
 					}
 				}
 			}
 		}
+
+		ShowTableTitle($StockID . " - " . $MyRow['description']);
+		ShowTableTitle($Message1);
+		if ($Message2 != ''){
+			ShowTableTitle($Message2);
+		}
+
+		$TextToPrint = KLPrintCustomerServiceReceiptHeader(
+			$StockID,
+			$MyRow['description'],
+			$Fee,
+			$Message1,
+			$Message2,
+			$Warranty
+		);
+		$TextToPrint .= KLPrintCustomerServiceReceiptCustomerFooter();
+		$TextToPrint .= KLPrintCustomerServiceReceiptHeader(
+			$StockID,
+			$MyRow['description'],
+			$Fee,
+			$Message1,
+			$Message2,
+			$Warranty
+		);
+		$TextToPrint .= KLPrintCustomerServiceReceiptShopFooter($ServiceCode);
+
+		//################## PRINTING STUFF #####################
+		$identifier = GetPOSIdentifier();
+		$FileName = GetFilenameFromPOSIdentifier($identifier);
+		file_put_contents($FileName, $TextToPrint);
+		$TextActionToPrint = 'Print the Service Receipts';
+		include(__DIR__ . '/includes/KLSilentPrinting.php');
+		//################## PRINTING STUFF #####################
 	}
-
-	ShowTableTitle($StockID . " - " . $MyRow['description']);
-	ShowTableTitle($Message1);
-	if ($Message2 != ''){
-		ShowTableTitle($Message2);
-	}
-
-	$TextToPrint = KLPrintCustomerServiceReceiptHeader($StockID, $MyRow['description'], $Fee, $Message1, $Message2, $Warranty);
-	$TextToPrint .= KLPrintCustomerServiceReceiptCustomerFooter();
-	$TextToPrint .= KLPrintCustomerServiceReceiptHeader($StockID, $MyRow['description'], $Fee, $Message1, $Message2, $Warranty);
-	$TextToPrint .= KLPrintCustomerServiceReceiptShopFooter($ServiceCode);
-
-	//################## PRINTING STUFF ##################### 
-	$identifier=GetPOSIdentifier();
-	$FileName = GetFilenameFromPOSIdentifier($identifier);  
-	file_put_contents($FileName, $TextToPrint);
-	$TextActionToPrint = 'Print the Service Receipts';
-	include(__DIR__ . '/includes/KLSilentPrinting.php');
-	//################## PRINTING STUFF ##################### 
 
 }
 
