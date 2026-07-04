@@ -221,6 +221,7 @@ if (isset($_POST['OrderItems'])
 				if ($MyRow['categoryid'] == "SHPACK") {
 					// It's a packaging item
 					switch ($NewItem) {
+			/* Temporarily we use 2 models of boxes, depending on the location falg usenewboxes. To be simplified after the process */
 						case 'PKBX01-L':
 							$_POST['PackagingBox01L']++;
 							break;
@@ -239,7 +240,26 @@ if (isset($_POST['OrderItems'])
 						case 'PKBX02-S':
 							$_POST['PackagingBox02S']++;
 							break;
-						case 'PKPB01-L':
+						case 'PKBX04-L':
+							$_POST['PackagingBox04L']++;
+							break;
+						case 'PKBX04-M':
+							$_POST['PackagingBox04M']++;
+							break;
+						case 'PKBX04-S':
+							$_POST['PackagingBox04S']++;
+							break;
+						case 'PKBX05-L':
+							$_POST['PackagingBox05L']++;
+							break;
+						case 'PKBX05-M':
+							$_POST['PackagingBox05M']++;
+							break;
+						case 'PKBX05-S':
+							$_POST['PackagingBox05S']++;
+							break;
+				/* END Temporarily we use 2 models of boxes, depending on the location falg usenewboxes. To be simplified after the process */
+					case 'PKPB01-L':
 							$_POST['PackagingPouchBag01L']++;
 							break;
 						case 'PKPB01-M':
@@ -485,8 +505,13 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 		$TotalNumberOfItems = $TotalNumberOfItems + $OrderLine->Quantity;
 	}
 
+	/* Temporarily we use 2 models of boxes, depending on the location falg usenewboxes. To be simplified after the process */
 	$TotalNumberOfBoxes = $_POST['PackagingBox01L'] + $_POST['PackagingBox01M'] + $_POST['PackagingBox01S']
-						+ $_POST['PackagingBox02L'] + $_POST['PackagingBox02M'] + $_POST['PackagingBox02S'];
+						+ $_POST['PackagingBox05L'] + $_POST['PackagingBox05M'] + $_POST['PackagingBox05S']
+						+ $_POST['PackagingBox02L'] + $_POST['PackagingBox02M'] + $_POST['PackagingBox02S'] 
+						+ $_POST['PackagingBox04L'] + $_POST['PackagingBox04M'] + $_POST['PackagingBox04S'];
+	/* END Temporarily we use 2 models of boxes, depending on the location falg usenewboxes. To be simplified after the process */
+	
 	$TotalNumberOfShoppingBags = $_POST['ShoppingBag02S'] + $_POST['ShoppingBag02M'] +
 								$_POST['BlinkShoppingBag04L'] + $_POST['BlinkShoppingBag04M'] + $_POST['BlinkShoppingBag04S'];
 	$TotalNumberOfPouchBags = $_POST['PackagingPouchBag01L'] + $_POST['PackagingPouchBag01M'] + $_POST['PackagingPouchBag01S'] +
@@ -1700,15 +1725,21 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 
 		/* Account for the Packaging */
 		if ($_SESSION['TypeLoc'] == "SHOPKL") {
+			/* Temporarily we use 2 models of boxes, depending on the location falg usenewboxes. To be simplified after the process */
 			AdjustPackagingMovement("PKBX01-L", $_POST['PackagingBox01L'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
 			AdjustPackagingMovement("PKBX01-M", $_POST['PackagingBox01M'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
 			AdjustPackagingMovement("PKBX01-S", $_POST['PackagingBox01S'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
 
-			/* Account for the usage of inside papers for the boxes, according to the number of boxes used*/
+			AdjustPackagingMovement("PKBX05-L", $_POST['PackagingBox05L'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
+			AdjustPackagingMovement("PKBX05-M", $_POST['PackagingBox05M'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
+			AdjustPackagingMovement("PKBX05-S", $_POST['PackagingBox05S'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
+	
+			/* Account for the usage of inside papers for the boxes, according to the number of OLD boxes used*/
 			AdjustPackagingMovement("PKKS01-L1", $_POST['PackagingBox01L'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
 			AdjustPackagingMovement("PKKS01-L2", $_POST['PackagingBox01L'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
 			AdjustPackagingMovement("PKKS01-M", $_POST['PackagingBox01M'] * 2, $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
 			AdjustPackagingMovement("PKKS01-S", $_POST['PackagingBox01S'] * 2, $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
+			/* END Temporarily we use 2 models of boxes, depending on the location falg usenewboxes. To be simplified after the process */
 
 			AdjustPackagingMovement("PKPB01-L", $_POST['PackagingPouchBag01L'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
 			AdjustPackagingMovement("PKPB01-M", $_POST['PackagingPouchBag01M'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
@@ -1719,15 +1750,21 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 		}
 
 		if ($_SESSION['TypeLoc'] == "SHOPBL") {
+			/* Temporarily we use 2 models of boxes, depending on the location falg usenewboxes. To be simplified after the process */
 			AdjustPackagingMovement("PKBX02-L", $_POST['PackagingBox02L'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
 			AdjustPackagingMovement("PKBX02-M", $_POST['PackagingBox02M'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
 			AdjustPackagingMovement("PKBX02-S", $_POST['PackagingBox02S'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
 
-			/* Account for the usage of inside papers for the boxes, according to the number of boxes used*/
+			AdjustPackagingMovement("PKBX04-L", $_POST['PackagingBox04L'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
+			AdjustPackagingMovement("PKBX04-M", $_POST['PackagingBox04M'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
+			AdjustPackagingMovement("PKBX04-S", $_POST['PackagingBox04S'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
+
+			/* Account for the usage of inside papers for the boxes, according to the number of OLD boxes used*/
 			AdjustPackagingMovement("PKKS02-L1", $_POST['PackagingBox02L'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
 			AdjustPackagingMovement("PKKS02-L2", $_POST['PackagingBox02L'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
 			AdjustPackagingMovement("PKKS02-M", $_POST['PackagingBox02M'] * 2, $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
 			AdjustPackagingMovement("PKKS02-S", $_POST['PackagingBox02S'] * 2, $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
+			/* END Temporarily we use 2 models of boxes, depending on the location falg usenewboxes. To be simplified after the process */
 
 			AdjustPackagingMovement("PKPB03-L", $_POST['BlinkPouchBag03L'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
 			AdjustPackagingMovement("PKPB03-M", $_POST['BlinkPouchBag03M'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);

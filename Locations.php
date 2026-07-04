@@ -135,6 +135,8 @@ if (isset($_POST['submit'])) {
 		UpdateOnlinePartnerPaypalSettingsInOpenCart($_POST['TypeLoc'], $_POST['OnlinePartnerCode']);
 		// KL RICARD End
 
+		UpdateUseNewBoxes($_POST['UseNewBoxes'], $SelectedLocation);
+
 		prnMsg(__('The location record has been updated'),'success');
 
 		// KL RICARD Unset custom fields
@@ -297,6 +299,8 @@ if (isset($_POST['submit'])) {
 		// KL RICARD
 		UpdateOnlinePartnerPaypalSettingsInOpenCart($_POST['TypeLoc'], $_POST['OnlinePartnerCode']);
 		// KL RICARD END
+
+		UpdateUseNewBoxes($_POST['UseNewBoxes'], $SelectedLocation);
 
 		prnMsg(__('The new location record has been added'),'success');
 
@@ -1261,10 +1265,10 @@ if (!isset($_GET['delete'])) {
 include(__DIR__ . '/includes/footer.php');
 
 // KL RICARD
-function UpdateOnlinePartnerPaypalSettingsInOpenCart($NewLocationType, $NewOnlinePartnerCode){
-	if ($NewLocationType == 'ONLINE'){
+function UpdateOnlinePartnerPaypalSettingsInOpenCart(string $NewLocationType, string $NewOnlinePartnerCode): void {
+	if ($NewLocationType == 'ONLINE') {
 		// we are modifying an ONLINE Location
-		if ($NewOnlinePartnerCode != 'NOONLINE'){
+		if ($NewOnlinePartnerCode != 'NOONLINE') {
 			// In the online location, the online partner can not be NOONLINE
 			include(__DIR__ . '/includes/OCOpenCartConnectDB.php');
 			$SQL = "SELECT klonlinepartners.paypalusername,
@@ -1283,3 +1287,68 @@ function UpdateOnlinePartnerPaypalSettingsInOpenCart($NewLocationType, $NewOnlin
 	}
 }
 // KL RICARD END
+
+function UpdateUseNewBoxes(int|string $NewUseNewBoxes, string $SelectedLocation): void {
+
+	if ($NewUseNewBoxes == 1) {
+		UpdateBoxesCode("PKBX01-L", "PKBX05-L", $SelectedLocation);
+		UpdateBoxesCode("PKBX01-M", "PKBX05-M", $SelectedLocation);
+		UpdateBoxesCode("PKBX01-S", "PKBX05-S", $SelectedLocation);
+
+		UpdateBoxesCode("PKBX02-L", "PKBX04-L", $SelectedLocation);
+		UpdateBoxesCode("PKBX02-M", "PKBX04-M", $SelectedLocation);
+		UpdateBoxesCode("PKBX02-S", "PKBX04-S", $SelectedLocation);
+
+		RemoveInsidePapers("PKKS01-L1", $SelectedLocation);
+		RemoveInsidePapers("PKKS01-L2", $SelectedLocation);
+		RemoveInsidePapers("PKKS01-M", $SelectedLocation);
+		RemoveInsidePapers("PKKS01-S", $SelectedLocation);
+
+		RemoveInsidePapers("PKKS02-L1", $SelectedLocation);
+		RemoveInsidePapers("PKKS02-L2", $SelectedLocation);
+		RemoveInsidePapers("PKKS02-M", $SelectedLocation);
+		RemoveInsidePapers("PKKS02-S", $SelectedLocation);
+	} else {
+		UpdateBoxesCode("PKBX05-L", "PKBX01-L", $SelectedLocation);
+		UpdateBoxesCode("PKBX05-M", "PKBX01-M", $SelectedLocation);
+		UpdateBoxesCode("PKBX05-S", "PKBX01-S", $SelectedLocation);
+
+		UpdateBoxesCode("PKBX04-L", "PKBX02-L", $SelectedLocation);
+		UpdateBoxesCode("PKBX04-M", "PKBX02-M", $SelectedLocation);
+		UpdateBoxesCode("PKBX04-S", "PKBX02-S", $SelectedLocation);
+	}
+}
+
+function UpdateBoxesCode(string $OldBoxCode, string $NewBoxCode, string $SelectedLocation): void {
+	$SQL = "UPDATE packagingused
+			SET packagingused.stockid='" . $NewBoxCode . "'
+			WHERE packagingused.stockid='" . $OldBoxCode . "' AND packagingused.fromlocation='" . $SelectedLocation . "'";
+	$Result = DB_query($SQL);
+	$AffectedRows = DB_affected_rows($Result);
+	prnMsg(
+		sprintf(
+			__('Updated %s packaging records from code %s to %s for location %s'),
+			$AffectedRows,
+			$OldBoxCode,
+			$NewBoxCode,
+			$SelectedLocation
+		),
+		'info'
+	);
+}
+
+function RemoveInsidePapers(string $PaperCode, string $SelectedLocation): void {
+	$SQL = "DELETE FROM packagingused
+			WHERE packagingused.stockid='" . $PaperCode . "' AND packagingused.fromlocation='" . $SelectedLocation . "'";
+	$Result = DB_query($SQL);
+	$AffectedRows = DB_affected_rows($Result);
+	prnMsg(
+		sprintf(
+			__('Deleted %s inside paper records for code %s and location %s'),
+			$AffectedRows,
+			$PaperCode,
+			$SelectedLocation
+		),
+		'info'
+	);
+}
