@@ -1297,9 +1297,9 @@ function AdjustPackagingItemByShop($Item, $Shop, $DaysSales, $ShowMessages, $Upd
 		$NewRL = 0; // New RL is the daily needs x number of days to keep as RL. We set it up at zero.
 		if ($DaysSales > 0) {
 			$NewRL = max(round($Sales / $DaysSales * $MyRow['rldaysforpackaging'], 0), 
-					MIN_REORDER_LEVEL_PACKAGING_ITEM_PER_SHOP);
+					$_SESSION['MinimumRLPackagingItemPerShop']);
 		} else {
-			$NewRL = MIN_REORDER_LEVEL_PACKAGING_ITEM_PER_SHOP;
+			$NewRL = $_SESSION['MinimumRLPackagingItemPerShop'];
 		}
 		if ($NewRL != $OldRL) {
 			$Text = $Shop . ' ' . $Item . 

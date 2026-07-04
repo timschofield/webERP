@@ -92,8 +92,6 @@ define("LIST_ITEMS_KAPAL_LAUT_PACKAGING", "('PKBX01-L','PKBX01-M','PKBX01-S','PK
 define("LIST_ITEMS_BLINK_PACKAGING",      "('PKBX02-L','PKBX02-M','PKBX02-S','PKBX04-L','PKBX04-M','PKBX04-S','PKPB03-L','PKPB03-M','PKPB03-S','PKSB04-L','PKSB04-M','PKSB04-S','PKKS02-L1','PKKS02-L2','PKKS02-M','PKKS02-S')");
 /* Temporarily we use 2 models of boxes, depending on the location falg usenewboxes. To be simplified after the process */
 
-define("MIN_REORDER_LEVEL_PACKAGING_ITEM_PER_SHOP", 3); 
-
 define("LIST_KANTOR_LOCATIONS",      "('KANTO','SAMPR','SASPG','SERSU','SERSV','SERVI','SERDE')");
 define("LIST_SERVICE_LOCATIONS",     "('SERSU','SERSV','SERSW','SERVI','SERDE')");
 define("LIST_SPECIAL_LOCATIONS",     "('KASPE')");
