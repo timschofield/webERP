@@ -123,7 +123,8 @@ if (isset($_POST['submit'])) {
 									alldisc50items = '" . $_POST['AllDisc50Items'] . "',
 									alldisc80items = '" . $_POST['AllDisc80Items'] . "',
 									allowinvoicing = '" . $_POST['AllowInvoicing'] . "',
-									departmentid = '" . $_POST['DepartmentID'] . "'
+									departmentid = '" . $_POST['DepartmentID'] . "',
+									usenewboxes = '" . $_POST['UseNewBoxes'] . "'
 						WHERE loccode = '" . $SelectedLocation . "'";
 
 		$ErrMsg = __('An error occurred updating the') . ' ' . $SelectedLocation . ' ' . __('location record because');
@@ -133,6 +134,8 @@ if (isset($_POST['submit'])) {
 		// KL RICARD 
 		UpdateOnlinePartnerPaypalSettingsInOpenCart($_POST['TypeLoc'], $_POST['OnlinePartnerCode']);
 		// KL RICARD End
+
+		UpdateUseNewBoxes($_POST['UseNewBoxes'], $SelectedLocation);
 
 		prnMsg(__('The location record has been updated'),'success');
 
@@ -181,6 +184,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['AllDisc80Items']);
 		unset($_POST['AllowInvoicing']);
 		unset($_POST['DepartmentID']);
+		unset($_POST['UseNewBoxes']);
 
 
 	} elseif ($InputError !=1) {
@@ -242,7 +246,8 @@ if (isset($_POST['submit'])) {
 										alldisc50items,
 										alldisc80items,
 										allowinvoicing,
-										departmentid)
+										departmentid,
+										usenewboxes)
 						VALUES ('" . $_POST['LocCode'] . "',
 								'" . $_POST['LocationName'] . "',
 								'" . $_POST['DelAdd1'] ."',
@@ -285,7 +290,8 @@ if (isset($_POST['submit'])) {
 								'" . $_POST['AllDisc50Items'] . "',
 								'" . $_POST['AllDisc80Items'] . "',
 								'" . $_POST['AllowInvoicing'] . "',
-								'" . $_POST['DepartmentID'] . "')";
+								'" . $_POST['DepartmentID'] . "',
+								'" . $_POST['UseNewBoxes'] . "')";
 
 		$ErrMsg = __('An error occurred inserting the new location record because');
 		$Result = DB_query($SQL, $ErrMsg);
@@ -293,6 +299,8 @@ if (isset($_POST['submit'])) {
 		// KL RICARD
 		UpdateOnlinePartnerPaypalSettingsInOpenCart($_POST['TypeLoc'], $_POST['OnlinePartnerCode']);
 		// KL RICARD END
+
+		UpdateUseNewBoxes($_POST['UseNewBoxes'], $SelectedLocation);
 
 		prnMsg(__('The new location record has been added'),'success');
 
@@ -375,6 +383,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['AllDisc80Items']);
 		unset($_POST['AllowInvoicing']);
 		unset($_POST['DepartmentID']);
+		unset($_POST['UseNewBoxes']);
 	}
 
 	/* Go through the tax authorities for all Locations deleting or adding TaxAuthRates records as necessary */
@@ -560,7 +569,8 @@ or deletion of the records*/
 				packagingfrom,
 				rlfactorforpackaging,
 				rldaysforpackaging,
-				managed
+				managed,
+				usenewboxes
 			FROM locations
 			ORDER BY locationname";
 	$Result = DB_query($SQL);
@@ -586,6 +596,7 @@ or deletion of the records*/
 					<th class="SortedColumn">', __('Pack From'), '</th>
 					<th class="SortedColumn">', __('Pack Factor'), '</th>
 					<th class="SortedColumn">', __('Pack Days'), '</th>
+					<th class="SortedColumn">', __('New Boxes?'), '</th>
 					<th class="noPrint" colspan="2">&nbsp;</th>
 				</tr>
 			</thead>
@@ -620,6 +631,11 @@ or deletion of the records*/
 	} else {
 		$AvailableForOnline = __('No');
 	}
+	if ($MyRow['usenewboxes'] == 1) {
+		$UseNewBoxesText = __('Yes');
+	} else {
+		$UseNewBoxesText = __('No');
+	}
 
 	printf('<tr class="striped_row">
 			<td>%s</td>
@@ -637,6 +653,7 @@ or deletion of the records*/
 			<td>%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td>
+			<td>%s</td>
 			<td class="noPrint"><a href="%sSelectedLocation=%s">' . __('Edit') . '</a></td>
 			<td class="noPrint"><a href="%sSelectedLocation=%s&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this inventory location?') . '\');">' . __('Delete') . '</a></td>
 			</tr>',
@@ -655,6 +672,7 @@ or deletion of the records*/
 			$MyRow['packagingfrom'],
 			$MyRow['rlfactorforpackaging'],
 			$MyRow['rldaysforpackaging'],
+			$UseNewBoxesText,
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $MyRow['loccode'],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $MyRow['loccode']);
 		}
@@ -719,7 +737,8 @@ if (!isset($_GET['delete'])) {
 					alldisc50items,
 					alldisc80items,
 					allowinvoicing,
-					departmentid
+					departmentid,
+					usenewboxes
 				FROM locations
 				WHERE loccode='" . $SelectedLocation . "'";
 
@@ -769,6 +788,7 @@ if (!isset($_GET['delete'])) {
 		$_POST['AllDisc80Items'] = $MyRow['alldisc80items'];
 		$_POST['AllowInvoicing'] = $MyRow['allowinvoicing'];
 		$_POST['DepartmentID'] = $MyRow['departmentid'];
+		$_POST['UseNewBoxes'] = $MyRow['usenewboxes'];
 
 		echo '<input type="hidden" name="SelectedLocation" value="' . $SelectedLocation . '" />';
 		echo '<input type="hidden" name="LocCode" value="' . $_POST['LocCode'] . '" />';
@@ -895,6 +915,9 @@ if (!isset($_GET['delete'])) {
 	}
 	if (!isset($_POST['DepartmentID'])) {
 		$_POST['DepartmentID'] = '';
+	}
+	if (!isset($_POST['UseNewBoxes'])) {
+		$_POST['UseNewBoxes'] = 0;
 	}
 	// KL RICARD END
 	echo '<field>
@@ -1176,6 +1199,21 @@ if (!isset($_GET['delete'])) {
 			<input type="text" name="RLFactorForPackaging" class="number" title="' . __('Factor to Multiply Reorder Level for Packaging Transfers') . '" value="' . $_POST['RLFactorForPackaging'] . '" size="4" maxlength="4" />
 		</field>';
 
+	echo FieldToSelectFromTwoOptions(
+		'0',
+		__('No using new boxes'),
+		'1',
+		__('Yes using new boxes'),
+		'UseNewBoxes',
+		$_POST['UseNewBoxes'],
+		__('Using new boxes?'),
+		'',
+		'',
+		'',
+		true,
+		false
+	);
+
 	echo '</fieldset>';
 
 	echo '<fieldset>
@@ -1227,10 +1265,10 @@ if (!isset($_GET['delete'])) {
 include(__DIR__ . '/includes/footer.php');
 
 // KL RICARD
-function UpdateOnlinePartnerPaypalSettingsInOpenCart($NewLocationType, $NewOnlinePartnerCode){
-	if ($NewLocationType == 'ONLINE'){
+function UpdateOnlinePartnerPaypalSettingsInOpenCart(string $NewLocationType, string $NewOnlinePartnerCode): void {
+	if ($NewLocationType == 'ONLINE') {
 		// we are modifying an ONLINE Location
-		if ($NewOnlinePartnerCode != 'NOONLINE'){
+		if ($NewOnlinePartnerCode != 'NOONLINE') {
 			// In the online location, the online partner can not be NOONLINE
 			include(__DIR__ . '/includes/OCOpenCartConnectDB.php');
 			$SQL = "SELECT klonlinepartners.paypalusername,
@@ -1249,3 +1287,68 @@ function UpdateOnlinePartnerPaypalSettingsInOpenCart($NewLocationType, $NewOnlin
 	}
 }
 // KL RICARD END
+
+function UpdateUseNewBoxes(int|string $NewUseNewBoxes, string $SelectedLocation): void {
+
+	if ($NewUseNewBoxes == 1) {
+		UpdateBoxesCode("PKBX01-L", "PKBX05-L", $SelectedLocation);
+		UpdateBoxesCode("PKBX01-M", "PKBX05-M", $SelectedLocation);
+		UpdateBoxesCode("PKBX01-S", "PKBX05-S", $SelectedLocation);
+
+		UpdateBoxesCode("PKBX02-L", "PKBX04-L", $SelectedLocation);
+		UpdateBoxesCode("PKBX02-M", "PKBX04-M", $SelectedLocation);
+		UpdateBoxesCode("PKBX02-S", "PKBX04-S", $SelectedLocation);
+
+		RemoveInsidePapers("PKKS01-L1", $SelectedLocation);
+		RemoveInsidePapers("PKKS01-L2", $SelectedLocation);
+		RemoveInsidePapers("PKKS01-M", $SelectedLocation);
+		RemoveInsidePapers("PKKS01-S", $SelectedLocation);
+
+		RemoveInsidePapers("PKKS02-L1", $SelectedLocation);
+		RemoveInsidePapers("PKKS02-L2", $SelectedLocation);
+		RemoveInsidePapers("PKKS02-M", $SelectedLocation);
+		RemoveInsidePapers("PKKS02-S", $SelectedLocation);
+	} else {
+		UpdateBoxesCode("PKBX05-L", "PKBX01-L", $SelectedLocation);
+		UpdateBoxesCode("PKBX05-M", "PKBX01-M", $SelectedLocation);
+		UpdateBoxesCode("PKBX05-S", "PKBX01-S", $SelectedLocation);
+
+		UpdateBoxesCode("PKBX04-L", "PKBX02-L", $SelectedLocation);
+		UpdateBoxesCode("PKBX04-M", "PKBX02-M", $SelectedLocation);
+		UpdateBoxesCode("PKBX04-S", "PKBX02-S", $SelectedLocation);
+	}
+}
+
+function UpdateBoxesCode(string $OldBoxCode, string $NewBoxCode, string $SelectedLocation): void {
+	$SQL = "UPDATE packagingused
+			SET packagingused.stockid='" . $NewBoxCode . "'
+			WHERE packagingused.stockid='" . $OldBoxCode . "' AND packagingused.fromlocation='" . $SelectedLocation . "'";
+	$Result = DB_query($SQL);
+	$AffectedRows = DB_affected_rows($Result);
+	prnMsg(
+		sprintf(
+			__('Updated %s packaging records from code %s to %s for location %s'),
+			$AffectedRows,
+			$OldBoxCode,
+			$NewBoxCode,
+			$SelectedLocation
+		),
+		'info'
+	);
+}
+
+function RemoveInsidePapers(string $PaperCode, string $SelectedLocation): void {
+	$SQL = "DELETE FROM packagingused
+			WHERE packagingused.stockid='" . $PaperCode . "' AND packagingused.fromlocation='" . $SelectedLocation . "'";
+	$Result = DB_query($SQL);
+	$AffectedRows = DB_affected_rows($Result);
+	prnMsg(
+		sprintf(
+			__('Deleted %s inside paper records for code %s and location %s'),
+			$AffectedRows,
+			$PaperCode,
+			$SelectedLocation
+		),
+		'info'
+	);
+}

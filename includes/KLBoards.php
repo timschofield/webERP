@@ -1790,8 +1790,6 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			$QOH = max($MyRow['qohgudang']+$MyRow['qohshops'],0);
 			$QOHDays = ($ForecastUsageDaily > 0) ? ($QOH / $ForecastUsageDaily) : 0; // QOH expressed in days at daily forecast rate
 			$MissingQOH = max($OptimumQOH - $QOH, 0);
-			$DaysQOH = ($DailyUse > 0) ? floor($QOH / $DailyUse): 0;
-			$DaysQOO = ($DailyUse > 0) ? floor(($QOH + $MyRow['qoo']) / $DailyUse) : 0;
 			
 			// Fix division by zero error
 			$PanSize = ($MyRow['pansize'] > 0) ? $MyRow['pansize'] : 1;

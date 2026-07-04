@@ -61,6 +61,7 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 	global $db;
 
 	$Result = mysqli_query($db, $SQL);
+	$GLOBALS['DB_LastAffectedRows'] = mysqli_affected_rows($db);
 	$ErrNo = DB_error_no();
 
 	$SQLArray = explode(' ', preg_replace('/\s+/', ' ',strtoupper(ltrim($SQL))));
@@ -146,6 +147,9 @@ function DB_num_rows($ResultIndex) {
 
 function DB_affected_rows($ResultIndex) {
 	global $db;
+	if (isset($GLOBALS['DB_LastAffectedRows'])) {
+		return $GLOBALS['DB_LastAffectedRows'];
+	}
 	return mysqli_affected_rows($db);
 }
 

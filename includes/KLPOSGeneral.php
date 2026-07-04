@@ -1130,6 +1130,7 @@ function KLPrintReceiptShopFooter(): string {
 	$TextToPrint .= $CharacterFontA . $NewLine;
 
 	if ($TypeLoc == "SHOPKL"){
+		/* Temporarily we use 2 models of boxes, depending on the location falg usenewboxes. To be simplified after the process */
 		if ($_POST['PackagingBox01L'] != 0){
 			$TextToPrint .= "KL Box-L: " . $_POST['PackagingBox01L'] . " boxes";
 			$TextToPrint .= $NewLine;
@@ -1142,6 +1143,19 @@ function KLPrintReceiptShopFooter(): string {
 			$TextToPrint .= "KL Box-S: " . $_POST['PackagingBox01S'] . " boxes";
 			$TextToPrint .= $NewLine;
 		}
+		if ($_POST['PackagingBox05L'] != 0){
+			$TextToPrint .= "KL Box-L: " . $_POST['PackagingBox05L'] . " boxes";
+			$TextToPrint .= $NewLine;
+		}
+		if ($_POST['PackagingBox05M'] != 0){
+			$TextToPrint .= "KL Box-M: " . $_POST['PackagingBox05M'] . " boxes";
+			$TextToPrint .= $NewLine;
+		}
+		if ($_POST['PackagingBox05S'] != 0){
+			$TextToPrint .= "KL Box-S: " . $_POST['PackagingBox05S'] . " boxes";
+			$TextToPrint .= $NewLine;
+		}
+		/* END Temporarily we use 2 models of boxes, depending on the location falg usenewboxes. To be simplified after the process */
 		if ($_POST['PackagingPouchBag01L'] != 0){
 			$TextToPrint .= "KL Pouchbag-L: " . $_POST['PackagingPouchBag01L'] . " pouches";
 			$TextToPrint .= $NewLine;
@@ -1164,6 +1178,7 @@ function KLPrintReceiptShopFooter(): string {
 		}
 	}
 	if ($TypeLoc == "SHOPBL"){
+		/* Temporarily we use 2 models of boxes, depending on the location falg usenewboxes. To be simplified after the process */
 		if ($_POST['PackagingBox02L'] != 0){
 			$TextToPrint .= "BL Box-L: " . $_POST['PackagingBox02L'] . " boxes";
 			$TextToPrint .= $NewLine;
@@ -1176,6 +1191,20 @@ function KLPrintReceiptShopFooter(): string {
 			$TextToPrint .= "BL Box-S: " . $_POST['PackagingBox02S'] . " boxes";
 			$TextToPrint .= $NewLine;
 		}
+		if ($_POST['PackagingBox04L'] != 0){
+			$TextToPrint .= "BL Box-L: " . $_POST['PackagingBox04L'] . " boxes";
+			$TextToPrint .= $NewLine;
+		}
+		if ($_POST['PackagingBox04M'] != 0){
+			$TextToPrint .= "BL Box-M: " . $_POST['PackagingBox04M'] . " boxes";
+			$TextToPrint .= $NewLine;
+		}
+		if ($_POST['PackagingBox04S'] != 0){
+			$TextToPrint .= "BL Box-S: " . $_POST['PackagingBox04S'] . " boxes";
+			$TextToPrint .= $NewLine;
+		}
+		/* END Temporarily we use 2 models of boxes, depending on the location falg usenewboxes. To be simplified after the process */
+
 		if ($_POST['BlinkPouchBag03L'] != 0){
 			$TextToPrint .= "Blink Pouchbag-L: " . $_POST['BlinkPouchBag03L'] . " pouches";
 			$TextToPrint .= $NewLine;
