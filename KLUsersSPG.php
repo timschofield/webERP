@@ -21,7 +21,7 @@ echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/g
 	<br />';
 	
 // HARDCODED FOR KL SPG
-$ModulesAllowed = "1,0,0,0,1,0,0,0,0,1,0,0,0,";
+$ModulesAllowed = "1,0,0,0,1,0,0,0,1,1,0,0,0,";
 $PDFLanguage = 0;
 $Language = "en_GB.utf8";
 $ThemeSPG = "aguapop";
@@ -126,8 +126,6 @@ if (isset($_POST['submit'])) {
 		if ($_POST['Password'] != ''){
 			$UpdatePassword = "password='" . CryptPass($_POST['Password']) . "',";
 		}
-
-
 
 		$SQL = "UPDATE www_users SET realname='" . $SPGFullName . "',
 						customerid='" . $CustomerID ."',
@@ -379,7 +377,15 @@ echo '</div>
 
 include(__DIR__ . '/includes/footer.php');
 
-function AssignLocationsToSPG($UserID, $LocationCode) {
+/**************************************************************************************************************
+* Brief description: Deletes previous locations associated with an SPG user, and assigns view/update
+* rights to the specified new default location as well as view-only rights to the central location (Kantor).
+* Parameters:
+*   - $UserID (string): The user ID of the SPG.
+*   - $LocationCode (string): The location code of the shop to assign.
+* Returns: None
+**************************************************************************************************************/
+function AssignLocationsToSPG(string $UserID, string $LocationCode) {
 
 	// Delete all previous locations for this user
 	$LocationSql = "DELETE FROM locationusers 
