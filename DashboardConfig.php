@@ -23,7 +23,7 @@ if (isset($_GET['Delete'])) {
 	if (DB_error_no() == 0) {
 		prnMsg(__('The script was successfully removed'), 'success');
 	} else {
-		prnMsg(__('There was a peoblem removing the script'), 'error');
+		prnMsg(__('There was a problem removing the script'), 'error');
 	}
 }
 
@@ -43,7 +43,7 @@ if (isset($_POST['Update'])) {
 	if (DB_error_no() == 0) {
 		prnMsg(__('The script was successfully updated'), 'success');
 	} else {
-		prnMsg(__('There was a peoblem updating the script'), 'error');
+		prnMsg(__('There was a problem updating the script'), 'error');
 	}
 }
 
@@ -157,6 +157,7 @@ if (isset($_GET['Edit'])) {
 	$Scripts = glob('dashboard/*.php');
 	foreach ($Scripts as $ScriptName) {
 		$ScriptName = basename($ScriptName);
+		$ScriptArray = array(); // per PHP 8.4, must be defined before use 
 		if ($ScriptName != 'template.php' and !in_array($ScriptName, $ScriptArray)) {
 			if ($_POST['Script'] == $ScriptName) {
 				echo '<option selected="selected" value="', $ScriptName, '">', $ScriptName, '</option>';
