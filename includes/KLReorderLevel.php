@@ -1108,20 +1108,19 @@ function OnlineReorderLevelAdjustments($ShowMessages, $UpdateDB, $RootPath, $Ema
 **************************************************************************************************************/
 function AdjustPackagingGudang($GudangCode, $FactorGudangPackaging, $ShowMessages, $UpdateDB, $EmailText){
 
-	$Message = "Adjusting RL for Packaging Gudang " . $GudangCode ;
+	$Message = "Adjusting RL for Packaging Gudang " . $GudangCode . " with factor " . $FactorGudangPackaging;
 	if ($ShowMessages){
 		prnMsg($Message,'info');
 	}
 	if ($EmailText != ''){
 		$EmailText = $EmailText . "\n" . $Message . "\n";
 	}
-
 	// updating the RL settings for packaging, just in case any of the dependant shops has change its settings and affects the gudang
 	$SQL = "SELECT MAX(loc.rlfactorforpackaging) AS rlfactor,
 					MAX(loc.rldaysforpackaging) AS rldays
 			FROM locations loc
 			WHERE loc.packagingfrom = '" . $GudangCode . "'
-				AND loc.loccode != '" . $GudangCode . "'";
+				AND loc.typeloc  NOT IN " . LIST_GUDANG_PACKAGING_BY_TYPE . "";
 	$Result = DB_query($SQL);
 
 	if (DB_num_rows($Result) != 0){
@@ -1157,7 +1156,7 @@ function AdjustPackagingGudang($GudangCode, $FactorGudangPackaging, $ShowMessage
 			INNER JOIN locstock ls ON loc.loccode = ls.loccode
 			INNER JOIN stockmaster sm ON ls.stockid = sm.stockid
 			WHERE loc.packagingfrom = '" . $GudangCode . "'
-				AND loc.loccode != '" . $GudangCode . "'
+				AND loc.typeloc NOT IN " . LIST_GUDANG_PACKAGING_BY_TYPE . "
 				AND sm.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_PACKAGING . "
 				AND sm.discontinued = 0
 			GROUP BY sm.stockid
