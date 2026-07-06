@@ -4267,7 +4267,6 @@ function StockAdjustmentsByReason(int $Days){
 * the daily average, and uses GetItemTransferReason function to get transfer reason descriptions.
 * Parameters:
 *   - $Days (int): The number of past days to analyze for location transfers.
-*   - $RootPath (string): The root path of the application, used for generating links.
 * Returns: None
 **************************************************************************************************************/
 function TransferReasons(int $Days){

@@ -248,7 +248,7 @@ if ($ProcessSection02){
 		TimeNeededForExecution("QualityIssuesByReason", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		TransferReasons(30, $RootPath);
+		TransferReasons(30);
 		TimeNeededForExecution("TransferReasons", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 

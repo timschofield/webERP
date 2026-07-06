@@ -203,7 +203,6 @@ function KL_DailyRLZeroNotAvailable($ShowMessages, $UpdateDB, $RootPath, $EmailT
 *
 * @param bool $ShowMessages - Whether to display messages in the UI
 * @param bool $UpdateDB - Whether to update the database
-* @param string $RootPath - Root path of the application
 * @param string $EmailText - Current email text to be appended to
 * 
 * @return string - Updated email text containing results of operations
