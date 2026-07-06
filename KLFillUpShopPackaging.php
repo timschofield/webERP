@@ -11,6 +11,10 @@ include(__DIR__ . '/includes/KLGeneralFunctions.php');
 include(__DIR__ . '/includes/KLEmails.php');
 include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
 
+// as the script uses _SESSION variables, reload just in case another user has been changing values in the meantime 
+// because the script needs the latest values for the calculations
+ReloadSessionVariablesFromConfig();
+
 CheckPackagingToBeRefilled(true, true, $RootPath);
 
 include(__DIR__ . '/includes/footer.php');
