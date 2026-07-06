@@ -71,7 +71,7 @@ if (isset($_POST['Insert'])) {
 	if (DB_error_no() == 0) {
 		prnMsg(__('The script was successfully inserted'), 'success');
 	} else {
-		prnMsg(__('There was a peoblem inserting the script'), 'error');
+		prnMsg(__('There was a problem inserting the script'), 'error');
 	}
 }
 
