@@ -213,6 +213,7 @@ function KL_DailyRLAdjustmentsForPackaging($ShowMessages, $UpdateDB, $EmailText)
 	$EmailText = AdjustPackaging(60, 'SHOPKL', $ShowMessages, $UpdateDB, $EmailText);
 	$EmailText = AdjustPackaging(60, 'SHOPBL', $ShowMessages, $UpdateDB, $EmailText);
 	$EmailText = AdjustPackagingGudang('PACKU', $_SESSION['Factor_Gudang_Packaging'], $ShowMessages, $UpdateDB, $EmailText);
+	$EmailText = AdjustPackagingGudang('PACKA', $_SESSION['Factor_Gudang_Packaging'], $ShowMessages, $UpdateDB, $EmailText);
 	
 	return $EmailText;
 }
