@@ -36,9 +36,17 @@ if (isset($_POST['Update'])) {
 										description='" . $_POST['Description'] . "'
 									WHERE id='" . $_POST['ID'] . "'";
 	$Result = DB_query($SQL);
-	$SQL = "UPDATE scripts SET pagesecurity='" . $_POST['PageSecurity'] . "',
-								description='" . $_POST['Description'] . "'
-							WHERE script='" . $MyRow['scripts'] . "'";
+	$SQL = "INSERT INTO scripts (script,
+							pagesecurity,
+						description
+						) VALUES (
+							'" . $MyRow['scripts'] . "',
+							'" . $_POST['PageSecurity'] . "',
+							'" . $_POST['Description'] . "'
+						)
+						ON DUPLICATE KEY UPDATE
+							pagesecurity = VALUES(pagesecurity),
+							description = VALUES(description)";
 	$Result = DB_query($SQL);
 	if (DB_error_no() == 0) {
 		prnMsg(__('The script was successfully updated'), 'success');
@@ -62,11 +70,14 @@ if (isset($_POST['Insert'])) {
 	$SQL = "INSERT INTO scripts (script,
 								pagesecurity,
 								description
-							) VALUES (
-								'" . $_POST['Script'] . "',
-								'" . $_POST['PageSecurity'] . "',
-								'" . $_POST['Description'] . "'
-							)";
+								) VALUES (
+									'" . $_POST['Script'] . "',
+									'" . $_POST['PageSecurity'] . "',
+									'" . $_POST['Description'] . "'
+								)
+								ON DUPLICATE KEY UPDATE
+									pagesecurity = VALUES(pagesecurity),
+									description = VALUES(description)";
 	$Result = DB_query($SQL);
 	if (DB_error_no() == 0) {
 		prnMsg(__('The script was successfully inserted'), 'success');
@@ -155,9 +166,11 @@ if (isset($_GET['Edit'])) {
 				<label for="Script">', __('Script Name'), '</label>
 				<select name="Script">';
 	$Scripts = glob('dashboard/*.php');
+	if (!isset($ScriptArray)) {
+		$ScriptArray = array();
+	}
 	foreach ($Scripts as $ScriptName) {
 		$ScriptName = basename($ScriptName);
-		$ScriptArray = array(); // per PHP 8.4, must be defined before use 
 		if ($ScriptName != 'template.php' and !in_array($ScriptName, $ScriptArray)) {
 			if ($_POST['Script'] == $ScriptName) {
 				echo '<option selected="selected" value="', $ScriptName, '">', $ScriptName, '</option>';
