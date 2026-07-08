@@ -14,7 +14,10 @@ Thumbs.db
 .DS_Store
 *:Zone.Identifier
 
-## (per-developer) phpunit config and phpunit cache
+## fonts created JIT by DOMPDF
+/vendor/dompdf/dompdf/lib/fonts/*.json
+
+## phpunit config and phpunit cache (per-developer) 
 /.phpunit.result.cache
 /phpunit.xml
 
@@ -24,8 +27,8 @@ Thumbs.db
 ## other
 KLConfig/
 
-# do not ever distribute local config.php (only config.distrib.php is distributed)
-# to avoid accidential disclosure of database or other credentials
+# DO NOT EVER distribute the local config.php to avoid accidential disclosure
+#   of database or other credentials (only config.distrib.php is distributed)
 /config.php
 
 # ignore everything in companies/ except weberpdemo/
