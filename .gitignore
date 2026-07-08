@@ -1,24 +1,33 @@
-# Ignore NetBeans project metadata
+# ignore IDE scaffolding
+## NetBeans
 /nbproject/
-# As well as Jetbrains stuff
+
+## Jetbrains
 /.idea/
-# And VSCode
+
+## VSCode
 /.vscode/launch.json
-# And random assorted tooling files
+
+# ignore tooling
+## Windows / WSL
 Thumbs.db
+.DS_Store
+*:Zone.Identifier
 
-# Only config.distrib.php is to be distributed
-/config.php
-
-# Ignore everything in the companies directory...
-/companies/*
-# ...except for weberpdemo
-!/companies/weberpdemo
-
-# the per-developer phpunit config and phpunit cache
+## (per-developer) phpunit config and phpunit cache
 /.phpunit.result.cache
 /phpunit.xml
 
-# And the eventual .git dir from composer-installed projects which are downloaded as git clones instead of zipballs
+## .git/ in composer-installed projects (created by git clone not zipball)
 /vendor/phplot/phplot/.git/
+
+## other
 KLConfig/
+
+# do not ever distribute local config.php (only config.distrib.php is distributed)
+# to avoid accidential disclosure of database or other credentials
+/config.php
+
+# ignore everything in companies/ except weberpdemo/
+/companies/*
+!/companies/weberpdemo
