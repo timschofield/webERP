@@ -111,6 +111,7 @@ $SQL = "SELECT
 			email,
 			showpagehelp,
 			showfieldhelp,
+            fontsize,
 			language
 		from www_users WHERE userid = '" . $_SESSION['UserID'] . "'";
 $Result = DB_query($SQL);
@@ -122,6 +123,7 @@ if (!isset($_POST['email'])) {
 $_POST['ShowPageHelp'] = $MyRow['showpagehelp'];
 $_POST['ShowFieldHelp'] = $MyRow['showfieldhelp'];
 $_POST['Language'] = $MyRow['language'];
+$_POST['FontSize'] = $MyRow['fontsize'];
 
 echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
 	'<input name="FormID" value="', $_SESSION['FormID'], '" type="hidden" />';
