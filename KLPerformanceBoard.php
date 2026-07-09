@@ -12,6 +12,7 @@ include(__DIR__ . '/includes/KLPerformanceBoardFunctions.php');
 include(__DIR__ . '/includes/KLGeneralFunctions.php');
 include(__DIR__ . '/includes/KLPrices.php');
 include(__DIR__ . '/includes/KLUIGeneralFunctions.php');
+include(__DIR__ . '/includes/OCOpenCartGeneralFunctions.php');
 include_once(__DIR__ . '/includes/KLGLFunctions.php');
 
 $begintime = time_start();
@@ -248,7 +249,7 @@ if ($ProcessSection02){
 		TimeNeededForExecution("QualityIssuesByReason", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
-		TransferReasons(30, $RootPath);
+		TransferReasons(30);
 		TimeNeededForExecution("TransferReasons", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 
@@ -401,6 +402,8 @@ if ($ProcessSection03){
 					 $_SESSION['SaldoADUDanamonUSDMin'],
 					 $_SESSION['SaldoADUPayoneerUSDMin'],
 					 $_SESSION['SaldoADUPayoneerUSDMax'],
+					 $_SESSION['SaldoADUAirwallexUSDMin'],
+					 $_SESSION['SaldoADUAirwallexUSDMax'],
 					$PeriodNow, $KL_SystemAdmin);
 		TimeNeededForExecution("CashStatus", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;

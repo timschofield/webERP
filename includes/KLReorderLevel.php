@@ -1,33 +1,6 @@
 <?php
 
 /**************************************************************************************************************
-* KLReorderLevel.php - Functions for managing reorder levels in a retail environment
-*
-* Functions included in this file (alphabetical order):
-* - ActiveLocationsForItem: Counts active locations with reorder level > 0 for a given stock item
-* - AdjustPackaging: Adjusts packaging requirements for shops based on sales history
-* - AdjustPackagingGudang: Adjusts reorder levels for packaging in warehouse (gudang)
-* - AdjustPackagingItemByShop: Calculates and sets packaging reorder levels for specific item/shop combinations
-* - KL_DailyRLAdjustmentsForBlink: Manages reorder level adjustments for Blink brand shops
-* - KL_DailyRLAdjustmentsForKL: Manages reorder level adjustments for Kapal-Laut brand shops
-* - KL_DailyRLAdjustmentsForOnline: Manages reorder level adjustments for online shop
-* - KL_DailyRLAdjustmentsForOutlet: Manages reorder level adjustments for outlet stores
-* - KL_DailyRLAdjustmentsForPackaging: Manages reorder level adjustments for packaging materials
-* - KL_DailyRLRebalancing: Rebalances stock between shops when kantor (office) has zero stock
-* - KL_DailyRLZeroNotAvailable: Sets reorder level to zero for items with no stock available
-* - MaxRLCorrectionSomeModels: Applies model-specific corrections to reorder levels
-* - MaxTopSalesForTypeOfShop: Gets maximum top sales value for shop type
-* - OnlineReorderLevelAdjustments: Adjusts reorder levels for online shop based on pending orders
-* - QtyAvailable: Gets available quantity for a stock item in specified location(s)
-* - RebalancingBetweenShops: Redistributes stock between shops when kantor has no stock
-* - SetReorderLevel: Updates reorder level for a stock item at specified location
-* - SetRLForLowSalesHighRL: Reduces reorder levels for slow-selling items with high reorder levels
-* - SetRLForTopSalesItems: Increases reorder levels for top-selling items with sufficient stock
-* - SetRLZeroForNotAvailableItems: Sets reorder level to zero for items with no stock
-* - WorstLocationForItem: Finds worst location for an item based on sales history
-**************************************************************************************************************/
-
-/**************************************************************************************************************
 * Manages reorder level adjustments for online shop
 *
 * @param bool $ShowMessages - Whether to display messages in the UI
@@ -203,7 +176,6 @@ function KL_DailyRLZeroNotAvailable($ShowMessages, $UpdateDB, $RootPath, $EmailT
 *
 * @param bool $ShowMessages - Whether to display messages in the UI
 * @param bool $UpdateDB - Whether to update the database
-* @param string $RootPath - Root path of the application
 * @param string $EmailText - Current email text to be appended to
 * 
 * @return string - Updated email text containing results of operations
@@ -213,6 +185,7 @@ function KL_DailyRLAdjustmentsForPackaging($ShowMessages, $UpdateDB, $EmailText)
 	$EmailText = AdjustPackaging(60, 'SHOPKL', $ShowMessages, $UpdateDB, $EmailText);
 	$EmailText = AdjustPackaging(60, 'SHOPBL', $ShowMessages, $UpdateDB, $EmailText);
 	$EmailText = AdjustPackagingGudang('PACKU', $_SESSION['Factor_Gudang_Packaging'], $ShowMessages, $UpdateDB, $EmailText);
+	$EmailText = AdjustPackagingGudang('PACKA', $_SESSION['Factor_Gudang_Packaging'], $ShowMessages, $UpdateDB, $EmailText);
 	
 	return $EmailText;
 }
@@ -287,9 +260,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $UpdateDB, $RootPath, 
 		}
 		$i = 1;
 		while ($MyRow = DB_fetch_array($Result)) {
-			if ($ShowMessages){
-				$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
-			}
+			$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 			$RebalancingLocationFrom = "";
 			$Strategy = "";
 			$PrintLine = true;
@@ -1131,27 +1102,25 @@ function OnlineReorderLevelAdjustments($ShowMessages, $UpdateDB, $RootPath, $Ema
 * @param float $FactorGudangPackaging - A factor to apply to the RL factor and days for the gudang.
 * @param bool $ShowMessages - Whether to display messages in the UI.
 * @param bool $UpdateDB - Whether to update the database with new reorder levels.
-* @param string $RootPath - Root path of the application.
 * @param string $EmailText - Current email text to be appended with operation results.
 * 
 * @return string - Updated email text containing results of operations.
 **************************************************************************************************************/
 function AdjustPackagingGudang($GudangCode, $FactorGudangPackaging, $ShowMessages, $UpdateDB, $EmailText){
 
-	$Message = "Adjusting RL for Packaging Gudang " . $GudangCode ;
+	$Message = "Adjusting RL for Packaging Gudang " . $GudangCode . " with factor " . $FactorGudangPackaging;
 	if ($ShowMessages){
 		prnMsg($Message,'info');
 	}
 	if ($EmailText != ''){
 		$EmailText = $EmailText . "\n" . $Message . "\n";
 	}
-
 	// updating the RL settings for packaging, just in case any of the dependant shops has change its settings and affects the gudang
 	$SQL = "SELECT MAX(loc.rlfactorforpackaging) AS rlfactor,
 					MAX(loc.rldaysforpackaging) AS rldays
 			FROM locations loc
 			WHERE loc.packagingfrom = '" . $GudangCode . "'
-				AND loc.loccode != '" . $GudangCode . "'";
+				AND loc.typeloc  NOT IN " . LIST_GUDANG_PACKAGING_BY_TYPE . "";
 	$Result = DB_query($SQL);
 
 	if (DB_num_rows($Result) != 0){
@@ -1187,7 +1156,7 @@ function AdjustPackagingGudang($GudangCode, $FactorGudangPackaging, $ShowMessage
 			INNER JOIN locstock ls ON loc.loccode = ls.loccode
 			INNER JOIN stockmaster sm ON ls.stockid = sm.stockid
 			WHERE loc.packagingfrom = '" . $GudangCode . "'
-				AND loc.loccode != '" . $GudangCode . "'
+				AND loc.typeloc NOT IN " . LIST_GUDANG_PACKAGING_BY_TYPE . "
 				AND sm.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_PACKAGING . "
 				AND sm.discontinued = 0
 			GROUP BY sm.stockid
@@ -1218,7 +1187,6 @@ function AdjustPackagingGudang($GudangCode, $FactorGudangPackaging, $ShowMessage
 * @param string $ShopType - The type of shop (e.g., "SHOPKL", "SHOPBL").
 * @param bool $ShowMessages - Whether to display messages in the UI.
 * @param bool $UpdateDB - Whether to update the database with new reorder levels.
-* @param string $RootPath - Root path of the application.
 * @param string $EmailText - Current email text to be appended with operation results.
 * 
 * @return string|void - Updated email text, or void if ShopType is invalid.
@@ -1269,7 +1237,6 @@ function AdjustPackaging($DaysSales, $ShopType, $ShowMessages, $UpdateDB, $Email
 * @param int $DaysSales - The number of past days of usage data to consider.
 * @param bool $ShowMessages - Whether to display messages in the UI.
 * @param bool $UpdateDB - Whether to update the database with the new reorder level.
-* @param string $RootPath - Root path of the application.
 * @param string $EmailText - Current email text to be appended with operation results.
 * 
 * @return string - Updated email text containing results of operations.

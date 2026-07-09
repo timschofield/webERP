@@ -4,45 +4,6 @@
 			FUNCTIONS RELATED CONTROL, PERFORMANCE OR OTHER KL BOARDS
 **************************************************************************************************/
 
-/**************************************************************************************************
-ALPHABETICAL LIST OF FUNCTIONS:
-
-ActiveTransfersByLocation - Shows pending transfers by location
-ActiveTransferStatus - Shows status of active transfers
-AverageKPIHistory - Shows average business KPI history
-AverageSales - Shows average sales for different time periods
-ChangeItemStandardCost - Updates the standard cost of an item
-CheckPackagingToBeRefilled - Checks packaging that needs to be refilled
-ComponentsToObsolete - Shows components that are not used in any BOM
-ErrorsInTransfers - Shows errors in closed transfers during a specified period
-FinishedStockDistribution - Shows distribution of finished stock by various criteria
-FinishedStockDistributionByShopAndCategory - Shows finished stock distribution by shop and category
-GetTopSalesField - Gets the field to be used in top sales queries based on days
-GetTotalQtyItemsForSale - Gets total quantity of items for sale
-GetTotalValueItemsForSale - Gets total value of items for sale
-GoodsToBeProduced - Shows components ready to be transformed into sellable goods
-InsuficientStockForShopPackaging - Shows shop packaging items with insufficient stock
-ItemsWithoutRetailPrice - Shows items without retail price
-LocationInformationReview - Shows shop information
-MaintenanceTasksList - Shows maintenance tasks list
-MaintenanceTasksDistribution - Shows distribution of maintenance tasks
-OnlineMarketPlacePaymentPending - Shows online marketplace orders with pending payments
-PackagingToBeRefilledFromGudang - Shows packaging that needs to be refilled from a specific location
-POStatusControl - Shows purchase orders status control by type
-PositionTopSalesItem - Returns the position of an item in top sales
-PurchaseOrdersProcessTime - Shows process time for purchase orders
-PurchaseOrdersWrongPlannedDates - Shows purchase orders with wrong planned dates
-QualityIssuesByReason - Shows quality issues by reason during the last X days
-RecentlyClosedTransferStatus - Shows recently closed transfers status
-RoundPackagingTransfer - Rounds packaging transfer quantity
-SQLFilterStockmasterForOnlineShop - Provides SQL filtering for online shop
-ShowTotalItemsMoving - Shows total items moving to discount
-StockAdjustmentsByReason - Shows stock adjustments by reason during the last X days
-TransferReasons - Shows location transfers by reason during the last X days
-TransfersDelayed - Shows transfers delayed more than specified days
-WrongStandardCost - Shows items with wrong standard cost
-**************************************************************************************************/
-
 /**************************************************************************************************************
 * Brief description: Displays a table of pending goods transfers, aggregated by shop location.
 * It shows the count of transfers and total pieces for items being shipped out and items to be received.
@@ -1792,6 +1753,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			$OptimumQOH = max($ForecastUsageNextDays, $MinQOHGudang);
 			$QOH = max($MyRow['qohgudang']+$MyRow['qohshops'],0);
 			$QOHDays = ($ForecastUsageDaily > 0) ? ($QOH / $ForecastUsageDaily) : 0; // QOH expressed in days at daily forecast rate
+			$QOODays = ($ForecastUsageDaily > 0) ? (($QOH + $MyRow['qoo']) / $ForecastUsageDaily) : 0; // QOH+QOO expressed in days at daily forecast rate
 			$MissingQOH = max($OptimumQOH - $QOH, 0);
 			
 			// Fix division by zero error
@@ -1812,6 +1774,11 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			
 			$QtyToOrder = OptimumOrderQuantity($QtyNeeded, $MyRow['eoq'], $PanSize);
 
+			// we don't order paper inside box, as we are pahsing out the old boxes and the new boxes already have the paper inside, so we only order the box
+			if (isPackagingPaperInsideBox($MyRow['stockid'])){
+				$QtyToOrder = 0; 
+			}
+			
 			if (($QtyNeeded > 0) OR ($ShowAll)){
 				if ($ShowHeader){
 					if ($Category == 'SHPACK'){
@@ -1858,6 +1825,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 										<th class="SortedColumn">' . __('QTY Shortage') . '</th>
 										<th class="SortedColumn">' . __('% Shortage') . '</th>
 										<th class="SortedColumn">' . __('QOO Running') . '</th>
+										<th class="SortedColumn">' . __('QOH+QOO Days') . '</th>
 										<th class="SortedColumn">' . __('Next Order') . '</th>
 									</tr>
 									</thead>
@@ -1876,6 +1844,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 										<th class="SortedColumn">' . __('Shortage QTY') . '</th>
 										<th class="SortedColumn">' . __('% Shortage') . '</th>
 										<th class="SortedColumn">' . __('Running QOO') . '</th>
+										<th class="SortedColumn">' . __('QOH+QOO Days') . '</th>
 										<th class="SortedColumn">' . __('Next Order') . '</th>
 									</tr>
 									</thead>
@@ -1920,6 +1889,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 						<td class="number">' . locale_number_format($MissingQOH,0) . '</td>
 						<td class="number">' . locale_number_format($PercentShortage,0) . '%' . '</td>
 						<td class="number">' . locale_number_format_zero_blank($MyRow['qoo'],0) . '</td>
+						<td class="number">' . locale_number_format($QOODays,0) . '</td>
 						<td class="number">' . locale_number_format_zero_blank($QtyToOrder,0) . '</td>
 						</tr>';
 				} else {
@@ -1935,6 +1905,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 						<td class="number">' . locale_number_format($MissingQOH,0) . '</td>
 						<td class="number">' . locale_number_format($PercentShortage,0) . '%' . '</td>
 						<td class="number">' . locale_number_format_zero_blank($MyRow['qoo'],0) . '</td>
+						<td class="number">' . locale_number_format($QOODays,0) . '</td>
 						<td class="number">' . locale_number_format_zero_blank($QtyToOrder,0) . '</td>
 						</tr>';
 				}
@@ -1976,6 +1947,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					<td class="number">' . locale_number_format($MissingTotal,0) . '</td>
 					<td class="number">' . locale_number_format($PercentTotalShortage,0) . '%' . '</td>
 					<td class="number">' . locale_number_format_zero_blank($PendingQOO,0) . '</td>
+					<td class="number">' . '' . '</td>
 					<td class="number">' . locale_number_format_zero_blank($OptimumOrder,0) . '</td>
 					</tr>';
 			} else {
@@ -1991,6 +1963,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					<td class="number">' . locale_number_format($MissingTotal,0) . '</td>
 					<td class="number">' . locale_number_format($PercentTotalShortage,0) . '%' . '</td>
 					<td class="number">' . locale_number_format_zero_blank($PendingQOO,0) . '</td>
+					<td class="number">' . '' . '</td>
 					<td class="number">' . locale_number_format_zero_blank($OptimumOrder,0) . '</td>
 					</tr>';
 			}
@@ -2272,6 +2245,10 @@ function PackagingToBeRefilledFromGudang(string $LocCode, bool $ShowAll, bool $S
 						FROM locstock AS l2
 						WHERE l2.stockid = stockmaster.stockid
 							AND l2.loccode = '". $ParentGudang ."') AS qohparent,
+					(SELECT l2.reorderlevel
+						FROM locstock AS l2
+						WHERE l2.stockid = stockmaster.stockid
+							AND l2.loccode = '". $ParentGudang ."') AS rlparent,
 					locstock.reorderlevel AS rl,
 					(SELECT SUM(loctransfers.pendingqty)
 						FROM loctransfers
@@ -2295,24 +2272,32 @@ function PackagingToBeRefilledFromGudang(string $LocCode, bool $ShowAll, bool $S
 			$NumItems++;
 			$TableResult[$NumItems]['stockid'] = $MyRow['stockid'];
 			$TableResult[$NumItems]['description'] = $MyRow['description'];
+			// info about the parent gudang stock (the FROM location for the transfer)
 			$TableResult[$NumItems]['qohparent'] = $MyRow['qohparent'];
+			$TableResult[$NumItems]['rlparent'] = $MyRow['rlparent'];
+			$TableResult[$NumItems]['optimumparent'] = round(($MyRow['rlparent'] * $RLFactor),0);
+			// info about the destination location stock (the TO location for the transfer)
 			$TableResult[$NumItems]['qoh'] = $MyRow['qoh'];
 			$TableResult[$NumItems]['rl'] = $MyRow['rl'];
 			$TableResult[$NumItems]['intransit'] = $MyRow['intransit'];
 			$TableResult[$NumItems]['optimum'] = round(($MyRow['rl'] * $RLFactor),0);
-			$TableResult[$NumItems]['needed']= max(0,$TableResult[$NumItems]['optimum'] - $MyRow['qoh']);
-			$QtyToShip = min(max(0,$TableResult[$NumItems]['needed'] - $MyRow['intransit']),($MyRow['qohparent'] - $MyRow['intransit']));
+
+			$TableResult[$NumItems]['needed']= max(0,$TableResult[$NumItems]['optimum'] - $TableResult[$NumItems]['qoh']);
+			
 			if (ItemInList($LocCode, LIST_PACKAGING_LOCATIONS)){
-				// if it is a transfer from a gudang packaging to another and we don't have much stock,
-				// we divide the available gudang QOH between all the packaging gudang
-				$QOHAllGudang = $MyRow['qohparent'] + $MyRow['qoh'];
-				$FairQOHGudang = $QOHAllGudang / NumberOfItemsInList(LIST_PACKAGING_LOCATIONS);
-				if ($QtyToShip > $FairQOHGudang){
-					// if we should ship more than the "fair share", we cap it so all gudang end up with a QOH close to the fair share
-					$QtyToShip = $FairQOHGudang - $MyRow['qoh'];
-				}
+				// the destination location is another gudang, we split the available stock in the parent gudang proportionally to the reorder level of each gudang
+				$QOHBothGudang = $TableResult[$NumItems]['qohparent'] + $TableResult[$NumItems]['qoh'];
+				$ProportionalOptimum = $QOHBothGudang / ($TableResult[$NumItems]['rlparent'] + $TableResult[$NumItems]['rl']) * $TableResult[$NumItems]['rl'];
+				$ProportionalQtyToShip = $ProportionalOptimum - $TableResult[$NumItems]['qoh'];
+				// and then assign the transfer quantity to ship, but not more than the parent gudang has in stock
+				$QtyToShip = min(max(0,$TableResult[$NumItems]['needed'] - $TableResult[$NumItems]['intransit']),
+								($TableResult[$NumItems]['qohparent'] - $TableResult[$NumItems]['intransit']),
+								$ProportionalQtyToShip - $TableResult[$NumItems]['intransit']);
+			}else{
+				// the destination location is a shop, so we can ship as much as needed, but not more than the parent gudang has in stock
+				$QtyToShip = min(max(0,$TableResult[$NumItems]['needed'] - $TableResult[$NumItems]['intransit']),($TableResult[$NumItems]['qohparent'] - $TableResult[$NumItems]['intransit']));
 			}
-			$TableResult[$NumItems]['toship'] = min($MyRow['qohparent'],RoundPackagingTransfer($MyRow['stockid'], $QtyToShip));
+			$TableResult[$NumItems]['toship'] = min($TableResult[$NumItems]['qohparent'],RoundPackagingTransfer($TableResult[$NumItems]['stockid'], $QtyToShip));
 
 			// cap the maximum number of boxes to be sent to a shop,
 			// to prevent shipments too bulky for courier to safely bring in one motorbike trip
@@ -2352,11 +2337,11 @@ function PackagingToBeRefilledFromGudang(string $LocCode, bool $ShowAll, bool $S
 								<tr>
 									<th class="SortedColumn">' . __('Code') . '</th>
 									<th class="SortedColumn">' . __('Description') . '</th>
+									<th class="SortedColumn">' . __('RL @ ') . $ParentGudang . '</th>
 									<th class="SortedColumn">' . __('QOH @ ') . $ParentGudang . '</th>
-									<th class="SortedColumn">' . __('QOH @ ') . $LocCode . '</th>
 									<th class="SortedColumn">' . __('RL @ ') . $LocCode . '</th>
-									<th class="SortedColumn">' . __('Optimum') . '</th>
-									<th class="SortedColumn">' . __('Needing') . '</th>
+									<th class="SortedColumn">' . __('QOH @ ') . $LocCode . '</th>
+									<th class="SortedColumn">' . __('Needing @ ') . $LocCode . '</th>
 									<th class="SortedColumn">' . __('%') . '</th>
 									<th class="SortedColumn">' . __('Transit') . '</th>
 									<th class="SortedColumn">' . __('To Ship') . '</th>
@@ -2381,10 +2366,10 @@ function PackagingToBeRefilledFromGudang(string $LocCode, bool $ShowAll, bool $S
 				echo '<tr class="striped_row">
 						<td>' . $TableResult[$i]['stockid'] . '</td>
 						<td>' . $TableResult[$i]['description'] . '</td>
+						<td class="number">' . locale_number_format_zero_blank($TableResult[$i]['rlparent'],0) . '</td>
 						<td class="number">' . locale_number_format_zero_blank($TableResult[$i]['qohparent'],0) . '</td>
-						<td class="number">' . locale_number_format_zero_blank($TableResult[$i]['qoh'],0) . '</td>
 						<td class="number">' . locale_number_format_zero_blank($TableResult[$i]['rl'],0) . '</td>
-						<td class="number">' . locale_number_format_zero_blank($TableResult[$i]['optimum'],0) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($TableResult[$i]['qoh'],0) . '</td>
 						<td class="number">' . locale_number_format_zero_blank($TableResult[$i]['needed'],0) . '</td>
 						<td class="number">' . locale_number_format_zero_blank($TableResult[$i]['needed']/$TableResult[$i]['optimum']*100,0) . "%" . '</td>
 						<td class="number">' . locale_number_format_zero_blank($TableResult[$i]['intransit'],0) . '</td>
@@ -4294,7 +4279,6 @@ function StockAdjustmentsByReason(int $Days){
 * the daily average, and uses GetItemTransferReason function to get transfer reason descriptions.
 * Parameters:
 *   - $Days (int): The number of past days to analyze for location transfers.
-*   - $RootPath (string): The root path of the application, used for generating links.
 * Returns: None
 **************************************************************************************************************/
 function TransferReasons(int $Days){
