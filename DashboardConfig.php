@@ -23,7 +23,7 @@ if (isset($_GET['Delete'])) {
 	if (DB_error_no() == 0) {
 		prnMsg(__('The script was successfully removed'), 'success');
 	} else {
-		prnMsg(__('There was a peoblem removing the script'), 'error');
+		prnMsg(__('There was a problem removing the script'), 'error');
 	}
 }
 
@@ -36,14 +36,22 @@ if (isset($_POST['Update'])) {
 										description='" . $_POST['Description'] . "'
 									WHERE id='" . $_POST['ID'] . "'";
 	$Result = DB_query($SQL);
-	$SQL = "UPDATE scripts SET pagesecurity='" . $_POST['PageSecurity'] . "',
-								description='" . $_POST['Description'] . "'
-							WHERE script='" . $MyRow['scripts'] . "'";
+	$SQL = "INSERT INTO scripts (script,
+							pagesecurity,
+						description
+						) VALUES (
+							'" . $MyRow['scripts'] . "',
+							'" . $_POST['PageSecurity'] . "',
+							'" . $_POST['Description'] . "'
+						)
+						ON DUPLICATE KEY UPDATE
+							pagesecurity = VALUES(pagesecurity),
+							description = VALUES(description)";
 	$Result = DB_query($SQL);
 	if (DB_error_no() == 0) {
 		prnMsg(__('The script was successfully updated'), 'success');
 	} else {
-		prnMsg(__('There was a peoblem updating the script'), 'error');
+		prnMsg(__('There was a problem updating the script'), 'error');
 	}
 }
 
@@ -62,16 +70,19 @@ if (isset($_POST['Insert'])) {
 	$SQL = "INSERT INTO scripts (script,
 								pagesecurity,
 								description
-							) VALUES (
-								'" . $_POST['Script'] . "',
-								'" . $_POST['PageSecurity'] . "',
-								'" . $_POST['Description'] . "'
-							)";
+								) VALUES (
+									'" . $_POST['Script'] . "',
+									'" . $_POST['PageSecurity'] . "',
+									'" . $_POST['Description'] . "'
+								)
+								ON DUPLICATE KEY UPDATE
+									pagesecurity = VALUES(pagesecurity),
+									description = VALUES(description)";
 	$Result = DB_query($SQL);
 	if (DB_error_no() == 0) {
 		prnMsg(__('The script was successfully inserted'), 'success');
 	} else {
-		prnMsg(__('There was a peoblem inserting the script'), 'error');
+		prnMsg(__('There was a problem inserting the script'), 'error');
 	}
 }
 
@@ -155,6 +166,9 @@ if (isset($_GET['Edit'])) {
 				<label for="Script">', __('Script Name'), '</label>
 				<select name="Script">';
 	$Scripts = glob('dashboard/*.php');
+	if (!isset($ScriptArray)) {
+		$ScriptArray = array();
+	}
 	foreach ($Scripts as $ScriptName) {
 		$ScriptName = basename($ScriptName);
 		if ($ScriptName != 'template.php' and !in_array($ScriptName, $ScriptArray)) {

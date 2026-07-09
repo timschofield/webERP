@@ -11,33 +11,46 @@ companies/test_erp/logs/weberp.log
 
 # KL settings END
 
-# Ignore NetBeans project metadata
+# ignore IDE scaffolding
+## NetBeans
 nbproject/
-# As well as Jetbrains stuff
+
+## Jetbrains
 /.idea/
-# And VSCode
+
+## VSCode
 /.vscode/launch.json
-# And random assorted tooling files
+
+# ignore tooling
+## Windows / WSL
 Thumbs.db
-
-# Only config.distrib.php is to be distributed
+.DS_Store
+*:Zone.Identifier
 # In PTADU scenario, the credentials are stored in another file (KLConfig/KLCredentials.php) under repository PTADU-webERP-Secrets)
-# /config.php 
+/config.php
 
-# Ignore everything in the companies directory...
-/companies/*
+## fonts created JIT by DOMPDF
+/vendor/dompdf/dompdf/lib/fonts/*.json
 # ...except for weberpdemo, but KL do not want weberpdemo anyway, we just want the kl_erp...
-#!/companies/weberpdemo
-!/companies/kl_erp
+# ...except for weberpdemo
+!/companies/weberpdemo
 
-# the per-developer phpunit config and phpunit cache
+## phpunit config and phpunit cache (per-developer) 
 /.phpunit.result.cache
 /phpunit.xml
 
-# And the eventual .git dir from composer-installed projects which are downloaded as git clones instead of zipballs
+## .git/ in composer-installed projects (created by git clone not zipball)
 /vendor/phplot/phplot/.git/
 
 # KL settings
-
+## other
 # KL settings END
 KLConfig/
+
+# DO NOT EVER distribute the local config.php to avoid accidential disclosure
+#   of database or other credentials (only config.distrib.php is distributed)
+/config.php
+
+# ignore everything in companies/ except weberpdemo/
+/companies/*
+!/companies/weberpdemo
