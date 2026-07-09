@@ -328,6 +328,12 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['SaldoADUPayoneerUSDMax'] != $_POST['X_SaldoADUPayoneerUSDMax'] ) {
 			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_SaldoADUPayoneerUSDMax']."' WHERE confname = 'SaldoADUPayoneerUSDMax'";
 		}
+		if ($_SESSION['SaldoADUAirwallexUSDMin'] != $_POST['X_SaldoADUAirwallexUSDMin'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_SaldoADUAirwallexUSDMin']."' WHERE confname = 'SaldoADUAirwallexUSDMin'";
+		}
+		if ($_SESSION['SaldoADUAirwallexUSDMax'] != $_POST['X_SaldoADUAirwallexUSDMax'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_SaldoADUAirwallexUSDMax']."' WHERE confname = 'SaldoADUAirwallexUSDMax'";
+		}
 
 		if ($_SESSION['TopSalesNumberOfDays'] != $_POST['X_TopSalesNumberOfDays'] ) {
 			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_TopSalesNumberOfDays']."' WHERE confname = 'TopSalesNumberOfDays'";
@@ -651,6 +657,8 @@ echo '<fieldset>
 			echo FieldToSelectOneNumber('X_SaldoADUDanamonUSDMin',  $_SESSION['SaldoADUDanamonUSDMin'], 15, 14, 'Minimum Saldo Danamon USD PTADU (USD)', 'Minimum Saldo Danamon USD ADU (USD)', '', '150');
 			echo FieldToSelectOneNumber('X_SaldoADUPayoneerUSDMin',  $_SESSION['SaldoADUPayoneerUSDMin'], 15, 14, 'Minimum Saldo Payoneer USD PTADU (USD)', 'Minimum Saldo Payoneer USD ADU (USD)', '', '150');
 			echo FieldToSelectOneNumber('X_SaldoADUPayoneerUSDMax',  $_SESSION['SaldoADUPayoneerUSDMax'], 15, 14, 'Maximum Saldo Payoneer USD PTADU (USD)', 'Maximum Saldo Payoneer USD ADU (USD)', '', '150');
+			echo FieldToSelectOneNumber('X_SaldoADUAirwallexUSDMin',  $_SESSION['SaldoADUAirwallexUSDMin'], 15, 14, 'Minimum Saldo Airwallex USD PTADU (USD)', 'Minimum Saldo Airwallex USD ADU (USD)', '', '150');
+			echo FieldToSelectOneNumber('X_SaldoADUAirwallexUSDMax',  $_SESSION['SaldoADUAirwallexUSDMax'], 15, 14, 'Maximum Saldo Airwallex USD PTADU (USD)', 'Maximum Saldo Airwallex USD ADU (USD)', '', '150');
 		echo '</fieldset><br />';
 
 	echo '</fieldset><br />';

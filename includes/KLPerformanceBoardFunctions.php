@@ -206,6 +206,8 @@ function AverageCustomerBehaviourByValueInvoice(string $Typereport, string $Bran
 * @param float $SaldoADUDanamonUSDMin - Minimum Danamon USD balance for ADU
 * @param float $SaldoADUPayoneerUSDMin - Minimum Payoneer USD balance for ADU
 * @param float $SaldoADUPayoneerUSDMax - Maximum Payoneer USD balance for ADU
+* @param float $SaldoADUAirwallexUSDMin - Minimum Airwallex USD balance for ADU
+* @param float $SaldoADUAirwallexUSDMax - Maximum Airwallex USD balance for ADU
 * @param int $Period - Period number for accounting
 * @param bool $AdminRole - Whether user has admin role
 *
@@ -229,6 +231,8 @@ function CashStatus($Year,
 					$SaldoADUDanamonUSDMin,
 					$SaldoADUPayoneerUSDMin,
 					$SaldoADUPayoneerUSDMax,
+					$SaldoADUAirwallexUSDMin,
+					$SaldoADUAirwallexUSDMax,
 					$Period, 
 					$AdminRole){
 
@@ -417,12 +421,8 @@ function CashStatus($Year,
 	// CASH STATUS ADU USD CALCULATIONS
 	////////////////////////////////////////////////////////
 
-	$SQL = "SELECT rate
-			FROM currencies
-			WHERE currabrev = 'USD'";
-	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-	$CurrentUSDRate = $MyRow['rate'];
+	$CurrentUSDRate = GetwebERPCurrencyRate('USD');
+	$CurrentTHBRate = GetwebERPCurrencyRate('THB');
 	
 	$Account = "111203010AD"; // Danamon PTADU USD in IDR
 	$SaldoADUDanamonUSD = round(GetGLAccountBalance($Account, $Period) * $CurrentUSDRate, 0);
@@ -432,6 +432,15 @@ function CashStatus($Year,
 
 	$Account = "111204030AD"; // Cash in Agent Aye Cargo in BKK in IDR
 	$SaldoAyeCargoUSD = round(GetGLAccountBalance($Account, $Period) * $CurrentUSDRate, 0);
+
+	$Account = "111203030AD"; // Airwallex PTADU USD in IDR
+	$SaldoADUAirwallexUSD = round(GetGLAccountBalance($Account, $Period) * $CurrentUSDRate, 0);
+
+	$Account = "111203040AD"; // Airwallex PTADU THB in IDR
+	// use USD rate to convert to USD even if account holds THB, because we want to know the USD equivalent of the THB balance
+	$SaldoADUAirwallexTHB = round(GetGLAccountBalance($Account, $Period) * $CurrentUSDRate, 0);
+
+	$SaldoAUDAirwallexTotal = $SaldoADUAirwallexUSD + $SaldoADUAirwallexTHB;
 
 	$Account = "111203010AD"; // USD already exchanged current month
 	$SQL = "SELECT SUM(banktrans.amount) AS saldo
@@ -445,7 +454,7 @@ function CashStatus($Year,
 
 	$PORunningTotalUSD = round(GetLastKPIValue("PO-ITEMS-NEXT-%-IDR")*$CurrentUSDRate,0);
 	$POPaymentsPendingUSDuntilEndOfMonth = $PORunningTotalUSD / $USDPODaysSchedule * $DaysUntilEndOfMonth * $USDSafetyFactor;
-	$SaldoUSD = $SaldoADUDanamonUSD + $SaldoADUPayoneerUSD + $SaldoAyeCargoUSD;
+	$SaldoUSD = $SaldoADUDanamonUSD + $SaldoADUPayoneerUSD + $SaldoAUDAirwallexTotal + $SaldoAyeCargoUSD;
 	$ShortageUSD = max(0, $PORunningTotalUSD - $SaldoUSD);
 	$ShortageUSDuntilEndOfMonth = $POPaymentsPendingUSDuntilEndOfMonth - $SaldoUSD;
 	$USDEasyAvailableThisMonth = max(0, $USDMaxEasyPurchasePerMonth - $USDAlreadyExhangedThisMonth);
@@ -465,6 +474,13 @@ function CashStatus($Year,
 															$SaldoADUDanamonUSD - $SaldoADUDanamonUSDMin), $USDMinPurchase);	
 	} else {
 		$ToBeTransferredToPayoneer = 0;
+	}
+
+	if ($SaldoAUDAirwallexTotal < $SaldoADUAirwallexUSDMin){
+		$ToBeTransferredToAirwallex = round_multiple_of(min($SaldoADUAirwallexUSDMax - $SaldoAUDAirwallexTotal, 
+															$SaldoADUDanamonUSD - $SaldoADUDanamonUSDMin), $USDMinPurchase);	
+	} else {
+		$ToBeTransferredToAirwallex = 0;
 	}
 
 	////////////////////////////////////////////////////////
@@ -505,6 +521,16 @@ function CashStatus($Year,
 			</tr>';
 
 	echo '<tr>
+			<td>Current balance Airwallex USD ADU (USD approx)</td>
+			<td class="number">' . locale_number_format($SaldoADUAirwallexUSD,0) . '</td>
+			</tr>';
+
+	echo '<tr>
+			<td>Current balance Airwallex THB ADU (accounted as USD approx)</td>
+			<td class="number">' . locale_number_format($SaldoADUAirwallexTHB,0) . '</td>
+			</tr>';
+
+	echo '<tr>
 			<td>Current balance Aye Cargo ADU (USD approx)</td>
 			<td class="number">' . locale_number_format($SaldoAyeCargoUSD,0) . '</td>
 			</tr>';
@@ -535,6 +561,13 @@ function CashStatus($Year,
 		echo '<tr class="striped_row">
 				<td>ACTION NEEDED --> Transfer from ADU Danamon USD to ADU Payoneer USD</td>
 				<td class="number">' . locale_number_format($ToBeTransferredToPayoneer) . '</td>
+				</tr>';
+	}
+
+	if ($ToBeTransferredToAirwallex > 0){
+		echo '<tr class="striped_row">
+				<td>ACTION NEEDED --> Transfer from ADU Danamon USD to ADU Airwallex USD</td>
+				<td class="number">' . locale_number_format($ToBeTransferredToAirwallex) . '</td>
 				</tr>';
 	}
 

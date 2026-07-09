@@ -14,11 +14,11 @@ RelativeChange() - Calculates the relative change between selected and previous 
 /**
 Inserts tags into the GL tags table for a journal line
 Parameters:
-    $TagArray - Array of tag references to be inserted
+    array|null $TagArray - Array of tag references to be inserted
 Returns:
     boolean - Always returns true
 */
-function InsertGLTags($TagArray) {
+function InsertGLTags(?array $TagArray): bool {
 	if (!empty($TagArray)) {
 		$ErrMsg = __('Cannot insert a GL tag for the journal line because');
 		foreach ($TagArray as $Tag) {
@@ -34,11 +34,11 @@ function InsertGLTags($TagArray) {
 /**
 Retrieves descriptions for an array of tag references
 Parameters:
-    $TagArray - Array of tag references to look up
+    array|null $TagArray - Array of tag references to look up
 Returns:
     string - HTML formatted string containing tag references and descriptions
 */
-function GetDescriptionsFromTagArray($TagArray) {
+function GetDescriptionsFromTagArray(?array $TagArray): string {
 	$TagDescriptions = '';
 	if (isset($TagArray)){
 		foreach ($TagArray as $Tag) {
@@ -59,12 +59,12 @@ function GetDescriptionsFromTagArray($TagArray) {
 /**
 Retrieves the balance for a GL account up to a specific period
 Parameters:
-    $AccountCode - The GL account code
-    $PeriodNo - The period number up to which the balance is calculated
+    string|int $AccountCode - The GL account code
+    int $PeriodNo - The period number up to which the balance is calculated
 Returns:
     float - The calculated balance for the account up to the specified period, or 0 if no records found
 */
-function GetGLAccountBalance($AccountCode, $PeriodNo){
+function GetGLAccountBalance(string|int $AccountCode, int $PeriodNo): float|int {
 	$SQL = "SELECT SUM(amount) AS total
 			FROM gltotals
 			WHERE account = '" . $AccountCode . "'
@@ -77,11 +77,11 @@ function GetGLAccountBalance($AccountCode, $PeriodNo){
 /**
 Retrieves the name of a GL account
 Parameters:
-    $AccountCode - The GL account code
+    string|int $AccountCode - The GL account code
 Returns:
     string - The name of the GL account or '' if no records found
 */
-function GetGLAccountName($AccountCode){
+function GetGLAccountName(string|int $AccountCode): string {
 	$SQL = "SELECT accountname
 			FROM chartmaster
 			WHERE accountcode = '" . $AccountCode . "'";
@@ -93,12 +93,12 @@ function GetGLAccountName($AccountCode){
 /**
 Calculates the relative change between selected and previous periods. Uses percent with locale number format.
 Parameters:
-	$SelectedPeriod - The value for the selected period
-	$PreviousPeriod - The value for the previous period
+	float|int $SelectedPeriod - The value for the selected period
+	float|int $PreviousPeriod - The value for the previous period
 Returns:
 	string - The relative change formatted as a percentage, or 'N/A' if the previous period is zero
 */
-function RelativeChange($SelectedPeriod, $PreviousPeriod) {
+function RelativeChange(float|int $SelectedPeriod, float|int $PreviousPeriod): string {
 	include(__DIR__ . '/SQL_CommonFunctions.php');
 	// Calculates the relative change between selected and previous periods. Uses percent with locale number format.
 	if (ABS($PreviousPeriod) >= CurrencyTolerance($_SESSION['CompanyRecord']['currencydefault'])) {
@@ -113,13 +113,13 @@ function RelativeChange($SelectedPeriod, $PreviousPeriod) {
 /**
 Returns the cash flow activity name for a given activity code.
 Parameters:
-	$Activity - The cash flow activity code
+	string|int $Activity - The cash flow activity code
 Returns:
 	string - The corresponding activity name
 */
-function CashFlowsActivityName($Activity) {
+function CashFlowsActivityName(string|int $Activity): string {
 	// Converts the cash flow activity number to an activity text.
-	return match ($Activity) {
+	return match ((string)$Activity) {
 		'-1'      => '<b>' . __('Not set up') . '</b>',
 		'0'       => __('No effect on cash flow'),
 		'1'       => __('Operating activity'),
@@ -128,4 +128,20 @@ function CashFlowsActivityName($Activity) {
 		'4'       => __('Cash or cash equivalent'),
 		default => '<b>' . __('Unknown') . '</b>',
 	};
+}
+
+/**
+Retrieves the currency rate for a given currency code
+Parameters:
+    string $CurrencyCode - The currency code
+Returns:
+    float - The currency rate for the given currency code or 0 if no records found
+*/
+function GetwebERPCurrencyRate(string $CurrencyCode): float|int {
+	$SQL = "SELECT rate
+			FROM currencies
+			WHERE currabrev = '" . $CurrencyCode . "'";
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	return ($MyRow['rate'] ?? 0);
 }

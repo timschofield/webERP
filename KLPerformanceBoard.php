@@ -401,6 +401,8 @@ if ($ProcessSection03){
 					 $_SESSION['SaldoADUDanamonUSDMin'],
 					 $_SESSION['SaldoADUPayoneerUSDMin'],
 					 $_SESSION['SaldoADUPayoneerUSDMax'],
+					 $_SESSION['SaldoADUAirwallexUSDMin'],
+					 $_SESSION['SaldoADUAirwallexUSDMax'],
 					$PeriodNow, $KL_SystemAdmin);
 		TimeNeededForExecution("CashStatus", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
