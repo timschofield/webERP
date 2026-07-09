@@ -1753,6 +1753,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			$OptimumQOH = max($ForecastUsageNextDays, $MinQOHGudang);
 			$QOH = max($MyRow['qohgudang']+$MyRow['qohshops'],0);
 			$QOHDays = ($ForecastUsageDaily > 0) ? ($QOH / $ForecastUsageDaily) : 0; // QOH expressed in days at daily forecast rate
+			$QOODays = ($ForecastUsageDaily > 0) ? (($QOH + $MyRow['qoo']) / $ForecastUsageDaily) : 0; // QOH+QOO expressed in days at daily forecast rate
 			$MissingQOH = max($OptimumQOH - $QOH, 0);
 			
 			// Fix division by zero error
@@ -1773,6 +1774,11 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			
 			$QtyToOrder = OptimumOrderQuantity($QtyNeeded, $MyRow['eoq'], $PanSize);
 
+			// we don't order paper inside box, as we are pahsing out the old boxes and the new boxes already have the paper inside, so we only order the box
+			if (isPackagingPaperInsideBox($MyRow['stockid'])){
+				$QtyToOrder = 0; 
+			}
+			
 			if (($QtyNeeded > 0) OR ($ShowAll)){
 				if ($ShowHeader){
 					if ($Category == 'SHPACK'){
@@ -1819,6 +1825,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 										<th class="SortedColumn">' . __('QTY Shortage') . '</th>
 										<th class="SortedColumn">' . __('% Shortage') . '</th>
 										<th class="SortedColumn">' . __('QOO Running') . '</th>
+										<th class="SortedColumn">' . __('QOH+QOO Days') . '</th>
 										<th class="SortedColumn">' . __('Next Order') . '</th>
 									</tr>
 									</thead>
@@ -1837,6 +1844,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 										<th class="SortedColumn">' . __('Shortage QTY') . '</th>
 										<th class="SortedColumn">' . __('% Shortage') . '</th>
 										<th class="SortedColumn">' . __('Running QOO') . '</th>
+										<th class="SortedColumn">' . __('QOH+QOO Days') . '</th>
 										<th class="SortedColumn">' . __('Next Order') . '</th>
 									</tr>
 									</thead>
@@ -1881,6 +1889,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 						<td class="number">' . locale_number_format($MissingQOH,0) . '</td>
 						<td class="number">' . locale_number_format($PercentShortage,0) . '%' . '</td>
 						<td class="number">' . locale_number_format_zero_blank($MyRow['qoo'],0) . '</td>
+						<td class="number">' . locale_number_format($QOODays,0) . '</td>
 						<td class="number">' . locale_number_format_zero_blank($QtyToOrder,0) . '</td>
 						</tr>';
 				} else {
@@ -1896,6 +1905,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 						<td class="number">' . locale_number_format($MissingQOH,0) . '</td>
 						<td class="number">' . locale_number_format($PercentShortage,0) . '%' . '</td>
 						<td class="number">' . locale_number_format_zero_blank($MyRow['qoo'],0) . '</td>
+						<td class="number">' . locale_number_format($QOODays,0) . '</td>
 						<td class="number">' . locale_number_format_zero_blank($QtyToOrder,0) . '</td>
 						</tr>';
 				}
@@ -1937,6 +1947,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					<td class="number">' . locale_number_format($MissingTotal,0) . '</td>
 					<td class="number">' . locale_number_format($PercentTotalShortage,0) . '%' . '</td>
 					<td class="number">' . locale_number_format_zero_blank($PendingQOO,0) . '</td>
+					<td class="number">' . '' . '</td>
 					<td class="number">' . locale_number_format_zero_blank($OptimumOrder,0) . '</td>
 					</tr>';
 			} else {
@@ -1952,6 +1963,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					<td class="number">' . locale_number_format($MissingTotal,0) . '</td>
 					<td class="number">' . locale_number_format($PercentTotalShortage,0) . '%' . '</td>
 					<td class="number">' . locale_number_format_zero_blank($PendingQOO,0) . '</td>
+					<td class="number">' . '' . '</td>
 					<td class="number">' . locale_number_format_zero_blank($OptimumOrder,0) . '</td>
 					</tr>';
 			}
