@@ -129,19 +129,3 @@ function CashFlowsActivityName(string|int $Activity): string {
 		default => '<b>' . __('Unknown') . '</b>',
 	};
 }
-
-/**
-Retrieves the currency rate for a given currency code
-Parameters:
-    string $CurrencyCode - The currency code
-Returns:
-    float - The currency rate for the given currency code or 0 if no records found
-*/
-function GetwebERPCurrencyRate(string $CurrencyCode): float|int {
-	$SQL = "SELECT rate
-			FROM currencies
-			WHERE currabrev = '" . $CurrencyCode . "'";
-	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-	return ($MyRow['rate'] ?? 0);
-}

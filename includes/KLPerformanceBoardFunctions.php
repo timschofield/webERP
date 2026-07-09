@@ -421,8 +421,8 @@ function CashStatus($Year,
 	// CASH STATUS ADU USD CALCULATIONS
 	////////////////////////////////////////////////////////
 
-	$CurrentUSDRate = GetwebERPCurrencyRate('USD');
-	$CurrentTHBRate = GetwebERPCurrencyRate('THB');
+	$CurrentUSDRate = GetWeberpCurrencyRate('USD');
+	$CurrentTHBRate = GetWeberpCurrencyRate('THB');
 	
 	$Account = "111203010AD"; // Danamon PTADU USD in IDR
 	$SaldoADUDanamonUSD = round(GetGLAccountBalance($Account, $Period) * $CurrentUSDRate, 0);
