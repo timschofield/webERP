@@ -296,6 +296,10 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['Forecast_Days_For_Packaging_Stock'] != $_POST['X_Forecast_Days_For_Packaging_Stock'] ) {
 			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_Forecast_Days_For_Packaging_Stock']."' WHERE confname = 'Forecast_Days_For_Packaging_Stock'";
 		}
+		if ($_SESSION['Forecast_Days_For_Packaging_Stock_Boxes'] != $_POST['X_Forecast_Days_For_Packaging_Stock_Boxes']) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '" . $_POST['X_Forecast_Days_For_Packaging_Stock_Boxes']
+				. "' WHERE confname = 'Forecast_Days_For_Packaging_Stock_Boxes'";
+		}
 		if ($_SESSION['Factor_Gudang_Packaging'] != $_POST['X_Factor_Gudang_Packaging'] ) {
 			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_Factor_Gudang_Packaging']."' WHERE confname = 'Factor_Gudang_Packaging'";
 		}
@@ -642,7 +646,8 @@ echo '<fieldset>
 		echo '<fieldset>
 			<legend>' . __('Packaging Forecast Settings') . '</legend>';
 			echo FieldToSelectOneNumber('X_Usage_Days_For_Packaging_Stock',  $_SESSION['Usage_Days_For_Packaging_Stock'], 6, 5, '# Days of Packaging Usage for Forecast', 'Number of days  of Packaging Usage for Forecast', '', '150');
-			echo FieldToSelectOneNumber('X_Forecast_Days_For_Packaging_Stock',  $_SESSION['Forecast_Days_For_Packaging_Stock'], 6, 5, 'Optimum # Days of Packaging Stock Forecast', 'Number of days to forecast packaging stock', '', '151');
+			echo FieldToSelectOneNumber('X_Forecast_Days_For_Packaging_Stock_Boxes', $_SESSION['Forecast_Days_For_Packaging_Stock_Boxes'], 6, 5, 'Optimum # Days of Packaging Stock Forecast (Boxes only)', 'Number of days to forecast packaging stock (Boxes only)', '',	'151');
+			echo FieldToSelectOneNumber('X_Forecast_Days_For_Packaging_Stock',  $_SESSION['Forecast_Days_For_Packaging_Stock'], 6, 5, 'Optimum # Days of Packaging Stock Forecast (Except Boxes)', 'Number of days to forecast packaging stock', '', '151');
 			echo FieldToSelectOneNumber('X_Factor_Gudang_Packaging',  $_SESSION['Factor_Gudang_Packaging'], 6, 5, 'Factor Gudang Packaging (except paper inside box)', 'Factor for packaging stock in gudang', '', '152');
 			echo FieldToSelectOneNumber('X_Factor_Gudang_Packaging_Paper_Inside_Box',  $_SESSION['Factor_Gudang_Packaging_Paper_Inside_Box'], 6, 5, 'Factor Gudang Packaging Paper Inside Box', 'Factor for packaging stock in gudang for paper inside box', '', '153');
 			echo FieldToSelectOneNumber('X_MinimumRLPackagingItemPerShop',  $_SESSION['MinimumRLPackagingItemPerShop'], 6, 5, 'Minimum Reorder Level for Packaging Items in Shops', 'Minimum reorder level for packaging items per shop', '', '154');
