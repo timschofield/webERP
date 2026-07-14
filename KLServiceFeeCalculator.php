@@ -52,13 +52,6 @@ $FeeReplacement = -1;
 $Message1 = '';
 $Message2 = '';
 
-$Result = DB_query("SELECT stockid
-					FROM stockmaster
-					WHERE stockid = '".$StockID."'",
-					__('Could not retrieve the requested item'),
-					__('The SQL used to retrieve the items was'));
-$MyRow = DB_fetch_array($Result);
-
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div class="centre"><input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -76,7 +69,6 @@ if (($StockID != '') AND ($ServiceCode != '')){
 	$Today  = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
 	$SQL = "SELECT stockmaster.description,
 				stockmaster.categoryid,
-				stockmaster.mbflag,
 				stockmaster.discontinued,
 				stockmaster.actualcost,
 				stockmaster.klservicebyreplacement,
@@ -96,16 +88,53 @@ if (($StockID != '') AND ($ServiceCode != '')){
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
 
-	if (DB_num_rows($Result) == 0){
+	if ((DB_num_rows($Result) == 0) AND strtoupper($StockID) != 'OBSOLETE') {
 		prnMsg(__('Stock code or price list can\'t be found'), 'warn');
 	} else {
+		if (strtoupper($StockID) != 'OBSOLETE'){
+			$PriceTier01 = $MyRow['pricetier01'];
+			$PriceTier02 = $MyRow['pricetier02'];
+			$PriceTier03 = $MyRow['pricetier03'];
+			$ItemPrice = $MyRow['price'];
+			$ItemDescription = $MyRow['description'];
+			$ItemCategory = $MyRow['categoryid'];
+			$ItemDiscontinued = $MyRow['discontinued'];
+			$ItemServiceByReplacement = $MyRow['klservicebyreplacement'];
+			$ItemActualCost = $MyRow['actualcost'];
+		}else{
+			$PriceTier01 = 9999999999;
+			$PriceTier02 = 9999999999;
+			$PriceTier03 = 9999999999;
+			$ItemPrice = 9999999999;
+			$ItemDescription = 'OBSOLETE';
+			$ItemCategory = 'OBSOLETE';
+			$ItemDiscontinued = 1;
+			$ItemServiceByReplacement = 1;
+			$ItemActualCost = 9999999999;
+
+		}
 		if ($Warranty == 'YES'){
 			$Fee = 0;
 			$Message1 = "Service under warranty. No fee charged.";
 			$Message2 = "";
-		} elseif (($MyRow['discontinued'] == 1) 
-			OR (ItemInList($MyRow['categoryid'], LIST_STOCK_CATEGORIES_OUTLET))){
-			// for discounted or obsolete //
+		} elseif (($ItemDiscontinued == 1) OR (strtoupper($StockID) == 'OBSOLETE')){
+			// obsolete //
+			if (($ServiceCode == "SERV_BENTUKBENGKOK") 
+				OR ($ServiceCode == "SERV_CRYSTALLEPAS") 
+				OR ($ServiceCode == "SERV_KOMPONENLEPAS") 
+				OR ($ServiceCode == "SERV_LOCKRUSAK") 
+				OR ($ServiceCode == "SERV_KURANGSHINNY") 
+				OR ($ServiceCode == "SERV_TALILUSUH") 
+				OR ($ServiceCode == "SERV_WIREBERKARAT") 
+				OR ($ServiceCode == "SERV__LAINLAIN")){
+				$Message1 = "Service fee can't be calculated now. Send to office to be evaluated.";
+				$Fee = -2;
+			} else {
+				$Message1 = "CAN'T be serviced.";
+				$Fee = -1;
+			}
+		} elseif (ItemInList($ItemCategory, LIST_STOCK_CATEGORIES_OUTLET)){
+			// for discounted //
 			if (($ServiceCode == "SERV_BENTUKBENGKOK") 
 				OR ($ServiceCode == "SERV_CRYSTALLEPAS") 
 				OR ($ServiceCode == "SERV_KOMPONENLEPAS") 
@@ -125,16 +154,16 @@ if (($StockID != '') AND ($ServiceCode != '')){
 					$Message1 = "CAN'T be serviced.";
 					$Fee = -1;
 				} else {
-					if ($MyRow['price'] <= $_SESSION['RetailPriceServiceTier01']){
-						$FeeService = $MyRow['pricetier01'];
-					} elseif ($MyRow['price'] <= $_SESSION['RetailPriceServiceTier02']){
-						$FeeService = $MyRow['pricetier02'];
+					if ($ItemPrice <= $_SESSION['RetailPriceServiceTier01']){
+						$FeeService = $PriceTier01;
+					} elseif ($ItemPrice <= $_SESSION['RetailPriceServiceTier02']){
+						$FeeService = $PriceTier02;
 					} else {
-						$FeeService = $MyRow['pricetier03'];
+						$FeeService = $PriceTier03;
 					}
-					if (($MyRow['klservicebyreplacement'] == 1)
+					if (($ItemServiceByReplacement == 1)
 						AND ($ServiceCode != "SERV_KOTOR")){
-						$FeeReplacement = $MyRow['actualcost'] * $_SESSION['FactorStandardCostServiceReplacement'];
+						$FeeReplacement = $ItemActualCost * $_SESSION['FactorStandardCostServiceReplacement'];
 					} else {
 						$FeeReplacement = 0;
 					}
@@ -148,25 +177,26 @@ if (($StockID != '') AND ($ServiceCode != '')){
 				}
 			}
 		} else {
+			/* for current codes (not discounted, not obsolete) */
 			if ($ServiceCode == "SERV__LAINLAIN"){
 				$Message1 = "Service fee can't be calculated now. Send to office to be evaluated.";
 				$Fee = -2;
 			} else {
 				if (($ServiceCode == "SERV_BERUBAHWARNA") 
-					AND (ItemInList($MyRow['categoryid'], LIST_STOCK_CATEGORIES_BLINK))){
+					AND (ItemInList($ItemCategory, LIST_STOCK_CATEGORIES_BLINK))){
 					$Message1 = "CAN'T be serviced.";
 					$Fee = -1;
 				} else {
-					if ($MyRow['price'] <= $_SESSION['RetailPriceServiceTier01']){
-						$FeeService = $MyRow['pricetier01'];
-					} elseif ($MyRow['price'] <= $_SESSION['RetailPriceServiceTier02']){
-						$FeeService = $MyRow['pricetier02'];
+					if ($ItemPrice <= $_SESSION['RetailPriceServiceTier01']){
+						$FeeService = $PriceTier01;
+					} elseif ($ItemPrice <= $_SESSION['RetailPriceServiceTier02']){
+						$FeeService = $PriceTier02;
 					} else {
-						$FeeService = $MyRow['pricetier03'];
+						$FeeService = $PriceTier03;
 					}
-					if (($MyRow['klservicebyreplacement'] == 1)
+					if (($ItemServiceByReplacement == 1)
 						AND ($ServiceCode != "SERV_KOTOR")){
-						$FeeReplacement = $MyRow['actualcost'] * $_SESSION['FactorStandardCostServiceReplacement'];
+						$FeeReplacement = $ItemActualCost * $_SESSION['FactorStandardCostServiceReplacement'];
 					} else {
 						$FeeReplacement = 0;
 					}
@@ -185,7 +215,7 @@ if (($StockID != '') AND ($ServiceCode != '')){
 			}
 		}
 
-		ShowTableTitle($StockID . " - " . $MyRow['description']);
+		ShowTableTitle($StockID . " - " . $ItemDescription);
 		ShowTableTitle($Message1);
 		if ($Message2 != ''){
 			ShowTableTitle($Message2);
@@ -193,7 +223,7 @@ if (($StockID != '') AND ($ServiceCode != '')){
 
 		$TextToPrint = KLPrintCustomerServiceReceiptHeader(
 			$StockID,
-			$MyRow['description'],
+			$ItemDescription,
 			$Fee,
 			$Message1,
 			$Message2,
@@ -202,7 +232,7 @@ if (($StockID != '') AND ($ServiceCode != '')){
 		$TextToPrint .= KLPrintCustomerServiceReceiptCustomerFooter();
 		$TextToPrint .= KLPrintCustomerServiceReceiptHeader(
 			$StockID,
-			$MyRow['description'],
+			$ItemDescription,
 			$Fee,
 			$Message1,
 			$Message2,
