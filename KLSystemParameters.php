@@ -338,6 +338,18 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['SaldoADUAirwallexUSDMax'] != $_POST['X_SaldoADUAirwallexUSDMax'] ) {
 			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_SaldoADUAirwallexUSDMax']."' WHERE confname = 'SaldoADUAirwallexUSDMax'";
 		}
+		if ($_SESSION['SaldoADUAirwallexTHBMin'] != $_POST['X_SaldoADUAirwallexTHBMin']) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_SaldoADUAirwallexTHBMin']."' WHERE confname = 'SaldoADUAirwallexTHBMin'";
+		}
+		if ($_SESSION['SaldoADUAirwallexTHBMax'] != $_POST['X_SaldoADUAirwallexTHBMax']) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_SaldoADUAirwallexTHBMax']."' WHERE confname = 'SaldoADUAirwallexTHBMax'";
+		}
+		if ($_SESSION['SaldoADUMandiriTHBMin'] != $_POST['X_SaldoADUMandiriTHBMin']) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_SaldoADUMandiriTHBMin']."' WHERE confname = 'SaldoADUMandiriTHBMin'";
+		}
+		if ($_SESSION['SaldoADUMandiriTHBMax'] != $_POST['X_SaldoADUMandiriTHBMax']) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_SaldoADUMandiriTHBMax']."' WHERE confname = 'SaldoADUMandiriTHBMax'";
+		}
 
 		if ($_SESSION['TopSalesNumberOfDays'] != $_POST['X_TopSalesNumberOfDays'] ) {
 			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_TopSalesNumberOfDays']."' WHERE confname = 'TopSalesNumberOfDays'";
@@ -664,6 +676,10 @@ echo '<fieldset>
 			echo FieldToSelectOneNumber('X_SaldoADUPayoneerUSDMax',  $_SESSION['SaldoADUPayoneerUSDMax'], 15, 14, 'Maximum Saldo Payoneer USD PTADU (USD)', 'Maximum Saldo Payoneer USD ADU (USD)', '', '150');
 			echo FieldToSelectOneNumber('X_SaldoADUAirwallexUSDMin',  $_SESSION['SaldoADUAirwallexUSDMin'], 15, 14, 'Minimum Saldo Airwallex USD PTADU (USD)', 'Minimum Saldo Airwallex USD ADU (USD)', '', '150');
 			echo FieldToSelectOneNumber('X_SaldoADUAirwallexUSDMax',  $_SESSION['SaldoADUAirwallexUSDMax'], 15, 14, 'Maximum Saldo Airwallex USD PTADU (USD)', 'Maximum Saldo Airwallex USD ADU (USD)', '', '150');
+			echo FieldToSelectOneNumber('X_SaldoADUAirwallexTHBMin',  $_SESSION['SaldoADUAirwallexTHBMin'], 15, 14, 'Minimum Saldo Airwallex THB PTADU (THB)', 'Minimum Saldo Airwallex THB ADU (THB)', '', '150');
+			echo FieldToSelectOneNumber('X_SaldoADUAirwallexTHBMax',  $_SESSION['SaldoADUAirwallexTHBMax'], 15, 14, 'Maximum Saldo Airwallex THB PTADU (THB)', 'Maximum Saldo Airwallex THB ADU (THB)', '', '150');
+			echo FieldToSelectOneNumber('X_SaldoADUMandiriTHBMin',  $_SESSION['SaldoADUMandiriTHBMin'], 15, 14, 'Minimum Saldo Mandiri THB PTADU (THB)', 'Minimum Saldo Mandiri THB ADU (THB)', '', '150');
+			echo FieldToSelectOneNumber('X_SaldoADUMandiriTHBMax',  $_SESSION['SaldoADUMandiriTHBMax'], 15, 14, 'Maximum Saldo Mandiri THB PTADU (THB)', 'Maximum Saldo Mandiri THB ADU (THB)', '', '150');
 		echo '</fieldset><br />';
 
 	echo '</fieldset><br />';

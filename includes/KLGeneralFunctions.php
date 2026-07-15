@@ -2082,3 +2082,30 @@ function NumberOfEmployeesByPosition($Position){
 		return 0;
 	}
 }
+
+function GetValueRunningPO(string $Currency, int $Days = 9999): float {
+	$ArrivalDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', +$Days));
+	$SQL = "SELECT currencies.currabrev,
+				currencies.decimalplaces AS currdecimalplaces,
+				SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
+			FROM purchorders
+			INNER JOIN purchorderdetails
+				ON purchorders.orderno = purchorderdetails.orderno
+			INNER JOIN suppliers
+				ON  purchorders.supplierno = suppliers.supplierid
+			INNER JOIN currencies
+				ON suppliers.currcode = currencies.currabrev
+			WHERE purchorderdetails.completed = 0 
+				AND purchorders.arrivaldate <= '" . $ArrivalDate . "'
+				AND purchorders.status IN ('Authorised', 'Printed', 'Pending')
+				AND suppliers.currcode = '" . $Currency . "'
+			GROUP BY suppliers.currcode,
+				currencies.decimalplaces";
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
+		$MyRow = DB_fetch_array($Result);
+		return $MyRow[2];
+	} else {
+		return 0;
+	}
+}
