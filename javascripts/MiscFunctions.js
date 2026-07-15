@@ -382,6 +382,30 @@ function ping() {
 	return false
 }
 
+function TogglePassword () {
+	if (document.getElementById("password").type == "password") {
+		document.getElementById("password").type = "text";
+		document.getElementById("eye").src = 'css/eyeshut.png';
+		document.getElementById("eye").title = "Hide Password";
+	} else {
+		document.getElementById("password").type = "password";
+		document.getElementById("eye").src = 'css/eye.png';
+		document.getElementById("eye").title = "Show Password";
+	}
+}
+
+function ToggleConfirmPassword () {
+	if (document.getElementById("confirmpassword").type == "password") {
+		document.getElementById("confirmpassword").type = "text";
+		document.getElementById("confirmeye").src = 'css/eyeshut.png';
+		document.getElementById("confirmeye").title = "Hide Password";
+	} else {
+		document.getElementById("confirmpassword").type = "password";
+		document.getElementById("confirmeye").src = 'css/eye.png';
+		document.getElementById("confirmeye").title = "Show Password";
+	}
+}
+
 function unload() {
 	console.log('hello');
 /*	Target = "Logout.php";
@@ -394,5 +418,8 @@ function unload() {
 	xmlhttp.send();
 	return false*/
 }
+
+document.getElementById("eye").addEventListener("click", TogglePassword);
+document.getElementById("confirmeye").addEventListener("click", ToggleConfirmPassword);
 
 window.onload = initial;

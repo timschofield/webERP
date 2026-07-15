@@ -43,6 +43,11 @@ float:right;
 width:24.5em;
 text-align:right;
 }
+form fieldset field img.eye {
+width:16px;
+vertical-align:center;
+cursor:pointer;
+}
 form fieldset field .fieldtext {
 margin-bottom:8px;
 display:inline;

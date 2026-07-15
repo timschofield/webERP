@@ -550,8 +550,9 @@ if (!isset($_POST['Timeout'])) {
 }
 echo '<field>
 		<label for="Password">' . __('Password') . ':</label>
-		<input type="password" pattern=".{5,}" name="Password" ' . (!isset($SelectedUser) ? 'required="required"' : '') . ' size="22" maxlength="20" value="" placeholder="'.__('At least 5 characters').'" title="" />
+		<input id="password" type="password" pattern=".{5,}" name="Password" ' . (!isset($SelectedUser) ? 'required="required"' : '') . ' size="22" maxlength="20" value="" placeholder="'.__('At least 5 characters').'" title="" />
 		<fieldhelp>'.__('Passwords must be 5 characters or more and cannot same as the users id. A mix of upper and lower case and some non-alphanumeric characters are recommended.').'</fieldhelp>
+        <img class="eye" id="eye" alt="" src="', $RootPath, '/css/eye.png" title="' . __('Show Password') . '" />
 	</field>';
 echo '<field>
 		<label for="RealName">' . __('Full Name') . ':</label>
