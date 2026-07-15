@@ -462,7 +462,7 @@ if ($ProcessSection01){
 									'111121117AD',
 									'111121121AD',
 									'111121122AD',
-									'111121125AD')", "Total Banks PT ADU (IDR Only)", 2000000000, 4000000000, $PeriodNow);
+									'111121125AD')", "Total Banks PT ADU (IDR Only)", $_SESSION['TotalBanksADUIDROnlyMin'], $_SESSION['TotalBanksADUIDROnlyMax'], $PeriodNow);
 		TimeNeededForExecution("BalanceListAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 
@@ -479,9 +479,12 @@ if ($ProcessSection01){
 									'111121130AD',
 									'111203010AD',
 									'111203020AD',
+									'111203030AD',
+									'111203040AD',
+									'111203050AD',
 									'111259010AD', 
 									'111259020AD', 
-									'111259050AD')", "Total Banks PT ADU", 3000000000, 6000000000, $PeriodNow);
+									'111259050AD')", "Total Banks PT ADU", $_SESSION['TotalBanksADUMin'], $_SESSION['TotalBanksADUMax'], $PeriodNow);
 		TimeNeededForExecution("BalanceListAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
@@ -491,14 +494,14 @@ if ($ProcessSection01){
 		$StartTime = microtime(true);
 		BalanceListAccountControl("('111121121AD', 
 									'111121122AD', 
-									'111121125AD')", "Total Marketplaces PT ADU", -1, 75000000, $PeriodNow);
+									'111121125AD')", "Total Marketplaces PT ADU", $_SESSION['TotalMarketplacesADUMin'], $_SESSION['TotalMarketplacesADUMax'], $PeriodNow);
 		TimeNeededForExecution("BalanceListAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 
 		$StartTime = microtime(true);
 		BalanceListAccountControl("('111259010AD', 
 									'111259020AD', 
-									'111259050AD')", "Total PayPal PT ADU", -1, 75000000, $PeriodNow);
+									'111259050AD')", "Total PayPal PT ADU", $_SESSION['TotalPayPalADUMin'], $_SESSION['TotalPayPalADUMax'], $PeriodNow);
 		TimeNeededForExecution("BalanceListAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
@@ -510,7 +513,7 @@ if ($ProcessSection01){
 									'111121106SM',
 									'111121110SM',
 									'111121115SM',
-									'111121117SM')", "Total Banks PT SMH", 1500000000, 4000000000, $PeriodNow);
+									'111121117SM')", "Total Banks PT SMH", $_SESSION['TotalBanksSMHMin'], $_SESSION['TotalBanksSMHMax'], $PeriodNow);
 		TimeNeededForExecution("BalanceListAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 
@@ -522,7 +525,7 @@ if ($ProcessSection01){
 									'111208010', 
 									'111208020', 
 									'111208030', 
-									'111208040')", "Total Brankas Shareholders",      0,2000000000, $PeriodNow);
+									'111208040')", "Total Brankas Shareholders", $_SESSION['TotalBrankastShareholdersMin'], $_SESSION['TotalBrankastShareholdersMax'], $PeriodNow);
 		TimeNeededForExecution("BalanceListAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 
@@ -533,7 +536,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 
 		$StartTime = microtime(true);
-		BalanceAccountControl("111111200",   50000000,  400000000, $PeriodNow);
+		BalanceAccountControl("111111200", $_SESSION['TotalBrankastKantorMin'], $_SESSION['TotalBrankastKantorMax'], $PeriodNow);
 		TimeNeededForExecution("BalanceAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);
@@ -946,7 +949,11 @@ if ($ProcessSection02){
 		OR $KL_PurchasingTeam){
 
 		$StartTime = microtime(true);
-		InsuficientStockForShopPackaging('SHPACK', $_SESSION['Usage_Days_For_Packaging_Stock'], $_SESSION['Forecast_Days_For_Packaging_Stock'], true, false, $RootPath); // Works for both regular and outlet shop packaging
+		InsuficientStockForShopPackaging('SHPACK-ONLYBOXES', $_SESSION['Usage_Days_For_Packaging_Stock'], $_SESSION['Forecast_Days_For_Packaging_Stock_Boxes'], true, false, $RootPath); // Works for both regular and outlet shop packaging
+		TimeNeededForExecution("InsuficientStockForShopPackaging", $StartTime, $KL_SystemAdmin);
+		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
+		InsuficientStockForShopPackaging('SHPACK-NOBOXES', $_SESSION['Usage_Days_For_Packaging_Stock'], $_SESSION['Forecast_Days_For_Packaging_Stock'], true, false, $RootPath); // Works for both regular and outlet shop packaging
 		TimeNeededForExecution("InsuficientStockForShopPackaging", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		$StartTime = microtime(true);

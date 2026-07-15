@@ -104,7 +104,7 @@ TypeOfItem                        - Returns the type description of an item
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
 
-function ListToArray($List, $Separator){
+function ListToArray(string $List, string $Separator){
 	$CleanUp = array("(", ")", "'");
 	return explode($Separator, str_replace($CleanUp, "", $List));
 }
@@ -117,7 +117,7 @@ function time_start(){
 	return $begintime;
 }
 
-function time_finish($begintime){
+function time_finish(float $begintime){
 	$time = microtime();
 	$time = explode(" ", $time);
 	$time = $time[1] + $time[0];
@@ -126,7 +126,7 @@ function time_finish($begintime){
 	prnMsg('Script execution time: ' . locale_number_format($Totaltime,2) . ' seconds.','success');
 }
 
-function function_finish($begintime){
+function function_finish(float $begintime){
 	$time = microtime();
 	$time = explode(" ", $time);
 	$time = $time[1] + $time[0];
@@ -135,108 +135,108 @@ function function_finish($begintime){
 	prnMsg('Function execution time: ' . locale_number_format($Totaltime,3) . ' seconds.','info');
 }
 
-function CodeModel($StockID){
+function CodeModel(string $StockID){
 	return (substr($StockID, 0,6));
 }
 
-function isBead($StockID){
+function isBead(string $StockID){
 	return (substr($StockID, 2,2) == "BE");
 }
 
-function isBrooche($StockID){
+function isBrooche(string $StockID){
 	return (substr($StockID, 2,2) == "PI");
 }
 
-function isRing($StockID){
+function isRing(string $StockID){
 	return (substr($StockID, 2,2) == "AN");
 }
 
-function isSlimRing($StockID){
+function isSlimRing(string $StockID){
 	return (substr($StockID, 0,4) == "JSAN");
 }
 
-function isToeRing($StockID){
+function isToeRing(string $StockID){
 	return (substr($StockID, 2,2) == "TR");
 }
 
-function isBracelet($StockID){
+function isBracelet(string $StockID){
 	return ((substr($StockID, 2,2) == "PU") OR (substr($StockID, 2,2) == "BR"));
 }
 
-function isAnklet($StockID){
+function isAnklet(string $StockID){
 	return (substr($StockID, 2,2) == "AK");
 }
 
-function isFaceMask($StockID){
+function isFaceMask(string $StockID){
 	return (substr($StockID, 2,2) == "FM");
 }
 
-function isJewelleryBox($StockID){
+function isJewelleryBox(string $StockID){
 	return (substr($StockID, 2,2) == "BX");
 }
 
-function isJewelleryRoll($StockID){
+function isJewelleryRoll(string $StockID){
 	return (substr($StockID, 2,2) == "JR");
 }
 
-function isPendant($StockID){
+function isPendant(string $StockID){
 	return (substr($StockID, 2,2) == "PE");
 }
 
-function isNecklace($StockID){
+function isNecklace(string $StockID){
 	return ((substr($StockID, 2,2) == "NE") OR (substr($StockID, 0,4) == "ALCL"));
 }
 
-function isEarring($StockID){
+function isEarring(string $StockID){
 	return (substr($StockID, 2,2) == "AR");
 }
 
-function isPiercing($StockID){
+function isPiercing(string $StockID){
 	return ((substr($StockID, 2,2) == "PC") AND (substr($StockID, 0,4) != "WKPC"));
 }
 
-function isPolishingCloth($StockID){
+function isPolishingCloth(string $StockID){
 	return (substr($StockID, 0,4) == "WKPC");
 }
 
-function isEarcuff($StockID){
+function isEarcuff(string $StockID){
 	return (substr($StockID, 2,2) == "CF");
 }
 
-function isPackagingBox($StockID){
+function isPackagingBox(string $StockID){
 	return (substr($StockID, 0,4) == "PKBX");
 }
 
-function isPackagingPaperInsideBox($StockID){
+function isPackagingPaperInsideBox(string $StockID){
 	return (substr($StockID, 0,4) == "PKKS");
 }
 
-function isPlasticBag($StockID){
+function isPlasticBag(string $StockID){
 	return ((substr($StockID, 0,4) == "BAPL") OR (substr($StockID, 0,4) == "BAGC"));
 }
 
-function isBag($StockID){
+function isBag(string $StockID){
 	return (substr($StockID, 2,2) == "BA");
 }
 
-function isFoulard($StockID){
+function isFoulard(string $StockID){
 	return (substr($StockID, 2,2) == "SC");
 }
 
-function isTali($StockID){
+function isTali(string $StockID){
 	return ((substr($StockID, 0,3) == "TM-") 
 		OR (substr($StockID, 0,4) == "TA15"));
 }
 
-function isKeyRing($StockID){
+function isKeyRing(string $StockID){
 	return (substr($StockID, 2,2) == "KI");
 }
 
-function isFamily($StockID, $Family){
+function isFamily(string $StockID, string $Family){
 	return (substr($StockID, 0,2) == $Family);
 }
 
-function TypeOfItem($StockID){
+function TypeOfItem(string $StockID){
 	if (isRing($StockID)){
 		$Type = "Ring";
 	} elseif (isToeRing($StockID)){
@@ -275,7 +275,7 @@ function TypeOfItem($StockID){
 	return $Type;
 }
 
-function CodeModelRing($StockID){
+function CodeModelRing(string $StockID){
 	if (strlen($StockID) == 6){
 		$CodeModel = $StockID;
 	} else {
@@ -291,7 +291,7 @@ function CodeModelRing($StockID){
 	return $CodeModel;
 }
 
-function RingSize($StockID){
+function RingSize(string $StockID){
 	if (strlen($StockID) == 6){
 		$Size = "FR";
 	} else {
@@ -307,7 +307,7 @@ function RingSize($StockID){
 	return $Size;
 }
 
-function NumberSize($StockID){
+function NumberSize(string $StockID){
 	if (strlen($StockID) == 6){
 		$Size = "NO SIZE";
 	} elseif ((substr($StockID, -2,1) == "0") 
@@ -328,7 +328,7 @@ function NumberSize($StockID){
 	return $Size;
 }
 
-function ClassicalSize($StockID){
+function ClassicalSize(string $StockID){
 	if (strlen($StockID) == 6){
 		$Size = "NO SIZE";
 	} elseif (substr($StockID, -3,3) == "-XS"){
@@ -347,7 +347,7 @@ function ClassicalSize($StockID){
 	return $Size;
 }
 
-function ItemCodeQOH($StockID, $CodeDetail, $Where){
+function ItemCodeQOH(string $StockID, string $CodeDetail, string $Where){
 	$ErrMsg = 'Error in function ItemCodeQOH()';
 
 	$SQL = "SELECT SUM(locstock.quantity) AS total
@@ -386,7 +386,7 @@ function ItemCodeQOH($StockID, $CodeDetail, $Where){
 	return $Qty;
 }
 
-function ItemCodeQuantityInvoiced($StockID,$FromDate,$ToDate,$Debtorno,$CodeDetail){
+function ItemCodeQuantityInvoiced(string $StockID, string $FromDate, string $ToDate, string $Debtorno, string $CodeDetail){
 	$ErrMsg = 'Error in function ItemCodeQuantityInvoiced()';
 
 	if ($CodeDetail == 'CODE_FULL'){
@@ -420,7 +420,7 @@ function ItemCodeQuantityInvoiced($StockID,$FromDate,$ToDate,$Debtorno,$CodeDeta
 	return 0;
 }
 
-function ItemCodeAvgPriceInvoiced($StockID,$FromDate,$ToDate,$Debtorno,$CodeDetail){
+function ItemCodeAvgPriceInvoiced(string $StockID, string $FromDate, string $ToDate, string $Debtorno, string $CodeDetail){
 	$ErrMsg = 'Error in function ItemCodeAvgPriceInvoiced()';
 	
 	if ($CodeDetail == 'CODE_FULL'){
@@ -457,7 +457,7 @@ function ItemCodeAvgPriceInvoiced($StockID,$FromDate,$ToDate,$Debtorno,$CodeDeta
 	return 0;
 }
 
-function ItemCodeQOO_PurchaseOrders($StockID, $CodeDetail){
+function ItemCodeQOO_PurchaseOrders(string $StockID, string $CodeDetail){
 	$ErrMsg = 'Error in function ItemCodeQOO_PurchaseOorders()';
 
 	if ($CodeDetail == 'CODE_FULL'){
@@ -487,7 +487,8 @@ function ItemCodeQOO_PurchaseOrders($StockID, $CodeDetail){
 	return $Row['0'];
 }
 
-function ItemCodeQOO_WorkOrders($StockID,$CodeDetail){
+/* SQL optimized by GEMINI */
+function ItemCodeQOO_WorkOrders(string $StockID, string $CodeDetail){
 	$ErrMsg = 'Error in function ItemCodeQOO_WorkOorders()';
 
 	if ($CodeDetail == 'CODE_FULL'){
@@ -513,16 +514,18 @@ function ItemCodeQOO_WorkOrders($StockID,$CodeDetail){
 	return $Row['0'];
 }
 
-function locale_number_format_zero_blank($num,$dec){
-	if ($num == 0){
+function locale_number_format_zero_blank(float|int|null $num, int $dec){
+	if ($num === null || $num == 0){
 		return '';
 	} else {
 		return locale_number_format($num,$dec);
 	}
 }
 
-function locale_number_format_kpi($num){
-	if (abs($num) >= 100){
+function locale_number_format_kpi(float|int|null $num){
+	if ($num === null){
+		return '';
+	} elseif (abs($num) >= 100){
 		return locale_number_format($num,0);
 	} elseif (abs($num) >= 10){
 		return locale_number_format($num,1);
@@ -532,7 +535,7 @@ function locale_number_format_kpi($num){
 }
 
 
-function StartEvenOrOddRow($k){
+function StartEvenOrOddRow(int $k){
 	if ($k == 1) {
 		echo '<tr class="EvenTableRows">';
 		$k = 0;
@@ -543,7 +546,7 @@ function StartEvenOrOddRow($k){
 	return $k;
 }
 
-function StartSameColourRow($k){
+function StartSameColourRow(int $k){
 	if ($k == 1) {
 		echo '<tr class="OddTableRows">';
 	} else {
@@ -552,7 +555,7 @@ function StartSameColourRow($k){
 	return $k;
 }
 
-function getDirectoryTree($outerDir){ 
+function getDirectoryTree(string $outerDir){ 
 	$dirs = false; 
 	if (is_dir($outerDir)){
 		$Directory = scandir( $outerDir );
@@ -563,7 +566,7 @@ function getDirectoryTree($outerDir){
    return $dirs; 
 } 
 
-function ItemInList($Item, $List){
+function ItemInList(string $Item, string $List){
 	// http://www.php.net/manual/en/function.strpos.php for details on ===	
 	if (strpos(strtolower($List), strtolower($Item)) === false){
 		return false;
@@ -572,12 +575,12 @@ function ItemInList($Item, $List){
 	}
 }
 
-function NumberOfItemsInList($List){
+function NumberOfItemsInList(string $List){
 	// https://www.php.net/manual/en/function.substr-count.php 	
 	return substr_count($List, ',') + 1;  
 }
 
-function CapitalizeName($string){
+function CapitalizeName(string $string){
 // copied from http://www.media-division.com/correct-name-capitalization-in-php/
 	$word_splitters = array(' ', '-', "O'", "L'", "D'", 'St.', 'Mc');
 	$lowercase_exceptions = array('the', 'van', 'den', 'von', 'und', 'der', 'de', 'da', 'of', 'and', "l'", "d'");
@@ -607,7 +610,7 @@ function CapitalizeName($string){
 	return $string; 
 }
 
-function ReviseEmailAddress($email){
+function ReviseEmailAddress(string $email){
 	$email = strtolower(trim($email));
 	$atposition = strpos($email,'@');
 	$domain = substr($email,$atposition+1);
@@ -625,12 +628,12 @@ function ReviseEmailAddress($email){
 	return $revisedemail; 
 }
 
-function CleanStringForWebERP($s){
+function CleanStringForWebERP(string $s){
 	$s = str_replace("'", " ", $s);
 	return $s;
 }
 
-function GetAreaFromCustomer($CustomerCode){
+function GetAreaFromCustomer(string $CustomerCode){
 	$ErrMsg = 'Error in function GetAreaFromCustomer()';
 	$SQL = "SELECT area
 			FROM custbranch
@@ -644,7 +647,7 @@ function GetAreaFromCustomer($CustomerCode){
 	return '';
 }
 
-function GetCurrencyFromCustomer($CustomerCode){
+function GetCurrencyFromCustomer(string $CustomerCode){
 	$ErrMsg = 'Error in function GetCurrencyFromCustomer()';
 	$SQL = "SELECT currcode
 			FROM debtorsmaster
@@ -657,11 +660,11 @@ function GetCurrencyFromCustomer($CustomerCode){
 	return '';
 }
 
-function GetOnlinePartnerFromArea($Area){
+function GetOnlinePartnerFromArea(string $Area){
 	return "ONLINEPTAD";
 }
 
-function GetCategoryNameFromCode($CategoryId){
+function GetCategoryNameFromCode(string $CategoryId){
 	$ErrMsg = 'Error in function GetCategoryNameFromCode()';
 	$SQL="SELECT categorydescription FROM stockcategory WHERE categoryid = '" . $CategoryId . "'";
 	$Result = DB_query($SQL,$ErrMsg);
@@ -672,7 +675,7 @@ function GetCategoryNameFromCode($CategoryId){
 	return '';
 }
 
-function GetDefaultLocationFromUser($UserId){
+function GetDefaultLocationFromUser(string $UserId){
 	$ErrMsg = 'Error in function GetDefaultLocationFromUser()';
 	$SQL = "SELECT defaultlocation FROM www_users WHERE userid = '".$UserId."'";
 	$Result = DB_query($SQL,$ErrMsg);
@@ -683,7 +686,7 @@ function GetDefaultLocationFromUser($UserId){
 	return '';
 }
 
-function GetLocationNameFromCode($LocCode){
+function GetLocationNameFromCode(string $LocCode){
 	$ErrMsg = 'Error in function GetLocationNameFromCode()';
 	$SQL="SELECT locationname FROM locations WHERE loccode='" . $LocCode . "'";
 	$Result = DB_query($SQL,$ErrMsg);
@@ -694,7 +697,7 @@ function GetLocationNameFromCode($LocCode){
 	return '';
 }
 
-function GetItemCategoryIdFromCode($StockID){
+function GetItemCategoryIdFromCode(string $StockID){
 	$ErrMsg = 'Error in function GetItemCategoryIdFromCode()';
 	$SQL="SELECT categoryid FROM stockmaster WHERE stockid = '" . $StockID . "'";
 	$Result = DB_query($SQL,$ErrMsg);
@@ -705,7 +708,7 @@ function GetItemCategoryIdFromCode($StockID){
 	return '';
 }
 
-function GetItemDescriptionFromCode($StockID){
+function GetItemDescriptionFromCode(string $StockID){
 	$ErrMsg = 'Error in function GetItemDescriptionFromCode()';
 	$SQL="SELECT description FROM stockmaster WHERE stockid = '" . $StockID . "'";
 	$Result = DB_query($SQL,$ErrMsg);
@@ -716,7 +719,7 @@ function GetItemDescriptionFromCode($StockID){
 	return '';
 }
 
-function GetItemStandardCostFromCode($StockID){
+function GetItemStandardCostFromCode(string $StockID){
 	$ErrMsg = 'Error in function GetItemStandardCostFromCode()';
 	$SQL = "SELECT actualcost FROM stockmaster WHERE stockid = '" . $StockID . "'";
 	$Result = DB_query($SQL,$ErrMsg);
@@ -743,7 +746,7 @@ function GetTotalItemsChangingPrice(){
 	return 0;
 }
 
-function GetTotalItemsMovingToDiscount($DiscountLevel){
+function GetTotalItemsMovingToDiscount(string $DiscountLevel){
 	$ErrMsg = 'Error in function GetTotalItemsMovingToDiscount()';
 	$SQL="SELECT COUNT(*) FROM stockmaster WHERE klmovingdiscount".$DiscountLevel."='1'";
 	$Result = DB_query($SQL,$ErrMsg);
@@ -754,7 +757,7 @@ function GetTotalItemsMovingToDiscount($DiscountLevel){
 	return 0;
 }
 
-function EnsureNumberIsNegativeNumber($Value){
+function EnsureNumberIsNegativeNumber(mixed $Value){
     // Return 0 if the parameter is not a number
     if (!is_numeric($Value)) {
         return 0;
@@ -765,7 +768,7 @@ function EnsureNumberIsNegativeNumber($Value){
     }
     return $Value;
 }
-function EnsureNumberIsPositiveNumber($Value){
+function EnsureNumberIsPositiveNumber(mixed $Value){
     // Return 0 if the parameter is not a number
     if (!is_numeric($Value)) {
         return 0;
@@ -776,7 +779,7 @@ function EnsureNumberIsPositiveNumber($Value){
 	return $Value;
 }
 
-function FindReasonOfReturn($ReasonCode){
+function FindReasonOfReturn(string $ReasonCode){
 	$ErrMsg = 'Error in function FindReasonOfReturn()';
 	$SQL="SELECT reasonname FROM returnitemreasons WHERE reasonid = '" . $ReasonCode . "'";
 	$Result = DB_query($SQL,$ErrMsg);
@@ -787,7 +790,7 @@ function FindReasonOfReturn($ReasonCode){
 	return '';
 }
 
-function ConvertExcelDate($value, $format = 'Y-m-d') {
+function ConvertExcelDate(mixed $value, string $format = 'Y-m-d') {
     // First check if the value is already a Cell object
     if ($value instanceof Cell) {
         $cellValue = $value->getValue();
@@ -803,11 +806,11 @@ function ConvertExcelDate($value, $format = 'Y-m-d') {
     return '1000-01-01';
 }
 
-function AdjustBulatan($Amount, $RoundTo){
+function AdjustBulatan(float|int $Amount, float|int $RoundTo){
 	return (ceil($Amount/$RoundTo)*$RoundTo)-$Amount;
 }
 
-function InsertIntoGLTrans($Type, $Typeno, $Trandate, $Period, $Account, $Narrative, $Amount, $Tag, $ErrCode){
+function InsertIntoGLTrans(int|string $Type, int|string $Typeno, string $Trandate, int|string $Period, string $Account, string $Narrative, float|int $Amount, mixed $Tag, string $ErrCode){
 	$SQL = "INSERT INTO gltrans 
 				(type,
 				typeno,
@@ -828,7 +831,7 @@ function InsertIntoGLTrans($Type, $Typeno, $Trandate, $Period, $Account, $Narrat
 	DB_query($SQL, $ErrMsg, '', true);
 }
 
-function GLAccountBelongsTo($Account){
+function GLAccountBelongsTo(string $Account){
 	if (ItemInList("AD", $Account)){
 		$Company = "PTADU";
 	} elseif (ItemInList("SM", $Account)){
@@ -845,7 +848,7 @@ function GLAccountBelongsTo($Account){
 	return $Company;
 }
 
-function isBankAccount($GLAccount){
+function isBankAccount(string $GLAccount){
 	$ErrMsg = 'Error in function isBankAccount()';
 	$SQL = "SELECT *
 			FROM bankaccounts
@@ -859,11 +862,11 @@ function isBankAccount($GLAccount){
 	}
 }
 
-function CreateConsignmentInvoiceNumber($CompanyFrom, $CompanyTo, $EndDate){
+function CreateConsignmentInvoiceNumber(string $CompanyFrom, string $CompanyTo, string $EndDate){
 	return $CompanyFrom . '-' . $CompanyTo . '-' . $EndDate;
 }
 
-function FindWebsiteBrand($StockID, $Category, $Description){
+function FindWebsiteBrand(string $StockID, string $Category, string $Description){
 	if (ItemInList($Category, LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_ALL_DISCOUNT)){
 		// if belongs to one of the KL categories, so Brand is KL
 		$Brand = 1;	
@@ -897,7 +900,7 @@ function FindWebsiteBrand($StockID, $Category, $Description){
 	return $Brand;
 }
 
-function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $TotalAmount){
+function ProcessPaymentOnlineOrder(int|string $OrderNo, string $PaymentCode, string $CustomerCode, float|int $TotalAmount){
 
 	// so far... only in IDR
 	if (GetCurrencyFromCustomer($CustomerCode) == "IDR"){
@@ -910,6 +913,13 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 
 	$Area = GetAreaFromCustomer($CustomerCode);
 	$OnlinePartner = GetOnlinePartnerFromArea($Area);
+	$Commission = 0;
+	$CommissionPPN = 0;
+	$NetAmount = 0;
+	$PPh22Percent = 0;
+	$GLAccountPPh22 = "";
+	$PPh22 = 0;
+
 
 	if ($PaymentCode != "MANUAL_MARKETPLACE") {
 		// apply the proper payment
@@ -937,8 +947,12 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 					accountcomissionppn,
 					comissiontokopediapercent,
 					comissiontokopediaflatfee,
+					accountpph22tokopedia,
+					pph22tokopediapercent,
 					comissionshopeepercent,
 					comissionshopeeflatfee,
+					accountpph22shopee,
+					pph22shopeepercent,
 					comissionlazadapercent
 				FROM klonlinepartners
 				WHERE klonlinepartners.onlinepartnercode = '" . $OnlinePartner . "'";
@@ -993,6 +1007,9 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 															$TotalAmount,
 															$CommissionTokopediaPercent,
 															$ComissionTokopediaFlatFee);
+				$PPh22Percent = $MyRowAccounts['pph22tokopediapercent'];
+				$GLAccountPPh22 = $MyRowAccounts['accountpph22tokopedia'];
+
 			} elseif  ($PaymentCode == "shopee"){
 				// Shopee payments  has commissions
 				$GLAccountTransfer = $MyRowAccounts['accountshopeeidr'];
@@ -1004,6 +1021,9 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 														$TotalAmount,
 														$CommissionShopeePercent,
 														$ComissionShopeeFlatFee);
+				$PPh22Percent = $MyRowAccounts['pph22shopeepercent'];
+				$GLAccountPPh22 = $MyRowAccounts['accountpph22shopee'];
+
 			} elseif  ($PaymentCode == "lazada"){
 				// Lazada payments  has commissions
 				$GLAccountTransfer = $MyRowAccounts['accountlazadaidr'];
@@ -1016,10 +1036,11 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 														$CommissionLazadaPercent);
 			}
 			$CommissionPPN = round($Commission * $_SESSION['PPN_Percent'] / 100, 0);
-			$NetAmount = $TotalAmount - $Commission - $CommissionPPN;
+			$PPh22 = round($TotalAmount * $PPh22Percent / 100, 0);
+			$NetAmount = $TotalAmount - $Commission - $CommissionPPN - $PPh22;
 		}
 
-		$Result = DB_Txn_Begin();
+		DB_Txn_Begin();
 
 		$BatchNo = GetNextTransNo(12);
 		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
@@ -1131,7 +1152,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 										'" . mb_substr($Narrative, 0, 200) . "',
 										'" . (float)$Commission . "'
 									)";
-			$ErrMsg = __('Cannot insert a GL transaction for the bank account debit');
+			$ErrMsg = __('Cannot insert a GL transaction for the online commission account');
 			$Result = DB_query($SQL, $ErrMsg, '', true);
 		}
 
@@ -1152,7 +1173,28 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 										'" . mb_substr($Narrative, 0, 200) . "',
 										'" . (float)$CommissionPPN . "'
 									)";
-			$ErrMsg = __('Cannot insert a GL transaction for the bank account debit');
+			$ErrMsg = __('Cannot insert a GL transaction for the online commission PPN account');
+			$Result = DB_query($SQL, $ErrMsg, '', true);
+		}
+
+		if ($PPh22 > 0){
+			$SQL="INSERT INTO gltrans (type,
+										typeno,
+										trandate,
+										periodno,
+										account,
+										narrative,
+										amount)
+									VALUES (
+										12,
+										'" . $BatchNo . "',
+										CURRENT_DATE,
+										'" . $PeriodNo . "',
+										'" . $GLAccountPPh22 . "',
+										'" . mb_substr($Narrative, 0, 200) . "',
+										'" . (float)$PPh22 . "'
+									)";
+			$ErrMsg = __('Cannot insert a GL transaction for the online PPh22 account');
 			$Result = DB_query($SQL, $ErrMsg, '', true);
 		}
 
@@ -1202,12 +1244,12 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 			UpdateOpenCartOrderPayment($OnlineOrderNo);
 		}
 
-		$Result = DB_Txn_Commit();
+		DB_Txn_Commit();
 
 	} else {
 		// marketplace customers MANUAL_MARKETPLACE, just mark the order as paid
 		// accounting has been done manually
-		$Result = DB_Txn_Begin();
+		DB_Txn_Begin();
 
 		$SQL = "UPDATE salesorders
 					SET klpaidcash = '" . $TotalAmount . "'
@@ -1215,12 +1257,12 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 		$ErrMsg = __('Cannot update the payment flag of the sales order because');
 		$Result = DB_query($SQL, $ErrMsg, '', true);
 
-		$Result = DB_Txn_Commit();
+		DB_Txn_Commit();
 	}
 	return $Result;
 }
 
-function ItemImagesURL($StockID, $NumberOfImage, $PackagingAlreadyFound, $TypeOfPackaging){
+function ItemImagesURL(string $StockID, int $NumberOfImage, bool $PackagingAlreadyFound, string $TypeOfPackaging){
 	$PackagingImage =  false;
 	if ($NumberOfImage == 1){
 		// main image
@@ -1250,7 +1292,7 @@ function ItemImagesURL($StockID, $NumberOfImage, $PackagingAlreadyFound, $TypeOf
 	return array($URL,$PackagingImage);
 }
 
-function DataExistsInWebERP($Table, $f1, $v1, $f2 = '', $v2 = ''){
+function DataExistsInWebERP(string $Table, string $f1, mixed $v1, string $f2 = '', mixed $v2 = ''){
 	if ($f2 == ''){
 		/* Primary key is 1 field only */
 		$SQL = "SELECT COUNT(*)
@@ -1275,7 +1317,7 @@ function DataExistsInWebERP($Table, $f1, $v1, $f2 = '', $v2 = ''){
 	return $Exists;
 }
 
-function DataExistsInArchive($Table, $f1, $v1, $f2 = '', $v2 = ''){
+function DataExistsInArchive(string $Table, string $f1, mixed $v1, string $f2 = '', mixed $v2 = ''){
 	if ($f2 == ''){
 		/* Primary key is 1 field only */
 		$SQL = "SELECT COUNT(*)
@@ -1301,7 +1343,7 @@ function DataExistsInArchive($Table, $f1, $v1, $f2 = '', $v2 = ''){
 }
 
 
-function InsertKPI($KPICode, $Value){
+function InsertKPI(string $KPICode, float|int $Value){
 	$Date = date('Y-m-d');
 	if (!DataExistsInWebERP('klkpi', 'date', $Date, 'kpicode', $KPICode)){
 		$SQL = "INSERT INTO klkpi 
@@ -1317,7 +1359,7 @@ function InsertKPI($KPICode, $Value){
 	}
 }
 
-function NumberOfShops($ShopType){
+function NumberOfShops(string $ShopType){
 	/* SQL optimized by Roo on 26/08/2025 - Performance improvements:
 	 * 1. Added proper error handling with $ErrMsg variable
 	 * 2. Leverages uk_locations_typeloc_loccode composite index for optimal performance
@@ -1387,7 +1429,7 @@ function NumberOfShops($ShopType){
 	return 0;
 }
 
-function NumberOfRegularShopsSellingDiscount($ShopType){
+function NumberOfRegularShopsSellingDiscount(string $ShopType){
 	if ($ShopType == "SHOPKL"){
 		$Categories = "AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_ONLY_DISCOUNT . "";
 	} elseif ($ShopType == "SHOPBL"){
@@ -1413,7 +1455,7 @@ function NumberOfRegularShopsSellingDiscount($ShopType){
 	}
 }
 
-function DeleteWeberpUser($SelectedUser, $AdminRole){
+function DeleteWeberpUser(string $SelectedUser, bool $AdminRole){
 	// a regular user can't delete some users, so we check if the user is a super user or not
 	if ($SelectedUser == "Ricard"){
 		prnMsg('User '. $SelectedUser . ' cannot be deleted as is a super user','error');
@@ -1467,7 +1509,7 @@ function DeleteWeberpUser($SelectedUser, $AdminRole){
 	}
 }
 
-function GetDayNameFromWeekDay($WeekDay){
+function GetDayNameFromWeekDay(int $WeekDay){
 	if ($WeekDay == 1){
 		return "Sunday";
 	} elseif ($WeekDay == 2){
@@ -1485,7 +1527,7 @@ function GetDayNameFromWeekDay($WeekDay){
 	}
 }
 
-function GetLastKPIValue($KPICode){
+function GetLastKPIValue(string $KPICode){
 	$SQL = "SELECT value
 			FROM klkpi
 			WHERE kpicode LIKE '".$KPICode."'
@@ -1500,14 +1542,14 @@ function GetLastKPIValue($KPICode){
 	
 }
 
-function DaysBetween($date1, $date2) {
+function DaysBetween(string $date1, string $date2) {
   $start = strtotime($date1);
   $end = strtotime($date2);
   $days_between = ceil(abs($end - $start) / 86400);
   return $days_between;
 }
 
-function TotalItemsToBeReceivedByPO($Brand){
+function TotalItemsToBeReceivedByPO(string $Brand){
 	/* SQL optimized by Roo on 26/08/2025 - Performance improvements:
 	 * 1. Reordered JOIN to filter stockmaster first by category (smaller result set)
 	 * 2. Leverages idx_purchorderdetails_completed_orderno_itemcode index optimally
@@ -1557,7 +1599,7 @@ function TotalItemsToBeReceivedByPO($Brand){
 	return 0;
 }
 
-function TotalItemsToBeReceivedByWO($Brand){
+function TotalItemsToBeReceivedByWO(string $Brand){
 	/* SQL optimized by Roo on 26/08/2025 - Performance improvements:
 	 * 1. Reordered JOIN to filter stockmaster first by category (smaller result set)
 	 * 2. Leverages uk_stockmaster_categoryid_stockid and idx_woitems_stockid indexes optimally
@@ -1598,7 +1640,7 @@ function TotalItemsToBeReceivedByWO($Brand){
 	return 0;
 }
 
-function TotalModels($Brand){
+function TotalModels(string $Brand){
 	/* SQL optimized by Roo on 26/08/2025 - Performance improvements:
 	 * 1. Changed COUNT(stockmaster.stockid) to COUNT(*) for better performance
 	 * 2. Reordered WHERE conditions to leverage existing composite index
@@ -1639,7 +1681,7 @@ function TotalModels($Brand){
 	return 0;
 }
  
-function TotalItems($Brand){
+function TotalItems(string $Brand){
 	/* SQL optimized by Roo on 26/08/2025 - Performance improvements:
 	 * 1. Added proper error handling with $ErrMsg variable
 	 * 2. Optimized JOIN order to filter stockmaster first by category (smaller result set)
@@ -1682,7 +1724,7 @@ function TotalItems($Brand){
 	return 0;
 }
 
-function TotalDisplayItems($Brand){
+function TotalDisplayItems(string $Brand){
 	/* SQL optimized by Gemini on 20/08/2025 */
 	$ErrMsg = 'Error in TotalDisplayItems()';
 
@@ -1708,7 +1750,7 @@ function TotalDisplayItems($Brand){
 	return 0;
 }
 
-function NumItemsSoldPerBrand($Brand, $FromDate, $ToDate){
+function NumItemsSoldPerBrand(string $Brand, string $FromDate, string $ToDate){
 	/* SQL optimized by Roo on 26/08/2025 - Performance improvements:
 	 * 1. Reordered JOIN to filter stockmaster first by category (smaller result set)
 	 * 2. Added explicit index hints for optimal query execution
@@ -1752,7 +1794,7 @@ function NumItemsSoldPerBrand($Brand, $FromDate, $ToDate){
 	return 0;
 }
 
-function BrandTextFromCode($Brand){
+function BrandTextFromCode(string $Brand){
 	if ($Brand == "SHOPKL"){
 		$BrandText = "Kapal-Laut";
 	} elseif ($Brand == "SHOPBL"){
@@ -1771,7 +1813,7 @@ function BrandTextFromCode($Brand){
 	return $BrandText;
 }
 
-function OptimumOrderQuantity($QtyNeeded, $Eoq, $PanSize){
+function OptimumOrderQuantity(float|int $QtyNeeded, float|int $Eoq, float|int $PanSize){
 	if ($QtyNeeded > 0){
 		if ($PanSize == 0){
 			$OptimumOrderQuantity = max($Eoq, $QtyNeeded);
@@ -1787,7 +1829,7 @@ function OptimumOrderQuantity($QtyNeeded, $Eoq, $PanSize){
 }
 
 
-function ChangeGLAccountCode($NewGL, $OldGL) {
+function ChangeGLAccountCode(string $NewGL, string $OldGL) {
 	/*First check the code exists */
 	$Result = DB_query("SELECT accountcode FROM chartmaster WHERE accountcode='" . $OldGL . "'");
 	$InputError = 0;
@@ -1975,7 +2017,7 @@ function ChangeGLAccountCode($NewGL, $OldGL) {
  * @param string $KPICode The KPI code to look up
  * @return string The KPI description if found, empty string otherwise
  */
-function GetKPIDescription($KPICode) {
+function GetKPIDescription(string $KPICode) {
 	$DescSQL = "SELECT kpidescription 
 				FROM klkpidescriptions 
 				WHERE kpicode = '" . $KPICode . "'";
@@ -1988,13 +2030,16 @@ function GetKPIDescription($KPICode) {
 	return $KPIDescription;
 }
 
-function GetNumberOfRecordsInTable($TableName, $Database) {
+function GetNumberOfRecordsInTable(string $TableName, string $Database) {
 	$SQL = "SELECT COUNT(*) AS total FROM " . $TableName;
 	if ($Database == 'Production') {
 		$Result = DB_query($SQL);
 	} elseif ($Database == 'Archive') {
 		$Result = DB_query_archive($SQL);
+	} else {
+		return 0; // Invalid database specified
 	}
+
 	if (DB_num_rows($Result) > 0) {
 		$Row = DB_fetch_array($Result);
 		return $Row['total'];
@@ -2008,7 +2053,7 @@ function GetNumberOfRecordsInTable($TableName, $Database) {
 *   $Reason - The reason code to look up
 * Returns: The service description or empty string if not found
 **************************************************************************************************************/
-function GetItemTransferReason($Reason){
+function GetItemTransferReason(string $Reason){
 	$ErrMsg = __('Can not retrieve the transfer reason description because');
 
 	if ($Reason == 'DISPATCH_OVERSTOCK'){
@@ -2056,6 +2101,7 @@ function GetItemTransferReason($Reason){
 
 function ReloadSessionVariablesFromConfig(){
 	$SQL = "SELECT confname, confvalue FROM klconfig";
+	$ErrMsg = __('Couldget Config');
 	$ErrMsg = __('Could not get the KL configuration parameters from the database because');
 	$ConfigResult = DB_query($SQL, $ErrMsg);
 	while( $MyRow = DB_fetch_array($ConfigResult) ) {
@@ -2068,7 +2114,7 @@ function ReloadSessionVariablesFromConfig(){
 	} //end loop through all config variables
 }
 
-function NumberOfEmployeesByPosition($Position){
+function NumberOfEmployeesByPosition(string $Position){
 	$SQL = "SELECT COUNT(*) 
 			FROM hremployees
 			INNER JOIN hrpositions ON hremployees.positionid = hrpositions.positionid 
@@ -2078,6 +2124,33 @@ function NumberOfEmployeesByPosition($Position){
 	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
 		return $MyRow[0];
+	} else {
+		return 0;
+	}
+}
+
+function GetValueRunningPO(string $Currency, int $Days = 9999): float {
+	$ArrivalDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', +$Days));
+	$SQL = "SELECT currencies.currabrev,
+				currencies.decimalplaces AS currdecimalplaces,
+				SUM(purchorderdetails.unitprice*purchorderdetails.quantityord) AS ordervalue
+			FROM purchorders
+			INNER JOIN purchorderdetails
+				ON purchorders.orderno = purchorderdetails.orderno
+			INNER JOIN suppliers
+				ON  purchorders.supplierno = suppliers.supplierid
+			INNER JOIN currencies
+				ON suppliers.currcode = currencies.currabrev
+			WHERE purchorderdetails.completed = 0 
+				AND purchorders.arrivaldate <= '" . $ArrivalDate . "'
+				AND purchorders.status IN ('Authorised', 'Printed', 'Pending')
+				AND suppliers.currcode = '" . $Currency . "'
+			GROUP BY suppliers.currcode,
+				currencies.decimalplaces";
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
+		$MyRow = DB_fetch_array($Result);
+		return $MyRow[2];
 	} else {
 		return 0;
 	}

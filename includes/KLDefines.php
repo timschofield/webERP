@@ -90,6 +90,8 @@ define("LIST_ONLINE_SHOPS",       "('TOKWS')");
 /* Temporarily we use 2 models of boxes, depending on the location falg usenewboxes. To be simplified after the process */
 define("LIST_ITEMS_KAPAL_LAUT_PACKAGING", "('PKBX01-L','PKBX01-M','PKBX01-S','PKBX05-L','PKBX05-M','PKBX05-S','PKPB01-L','PKPB01-M','PKPB01-S','PKSB02-M','PKSB02-S','PKKS01-L1','PKKS01-L2','PKKS01-M','PKKS01-S')");
 define("LIST_ITEMS_BLINK_PACKAGING",      "('PKBX02-L','PKBX02-M','PKBX02-S','PKBX04-L','PKBX04-M','PKBX04-S','PKPB03-L','PKPB03-M','PKPB03-S','PKSB04-L','PKSB04-M','PKSB04-S','PKKS02-L1','PKKS02-L2','PKKS02-M','PKKS02-S')");
+define("LIST_ITEMS_PACKAGING_BOXES", "('PKBX01-L','PKBX01-M','PKBX01-S','PKBX05-L','PKBX05-M','PKBX05-S','PKBX02-L','PKBX02-M','PKBX02-S','PKBX04-L','PKBX04-M','PKBX04-S')");
+
 /* Temporarily we use 2 models of boxes, depending on the location falg usenewboxes. To be simplified after the process */
 
 define("LIST_KANTOR_LOCATIONS",      "('KANTO','SAMPR','SASPG','SERSU','SERSV','SERVI','SERDE')");

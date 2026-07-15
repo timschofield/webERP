@@ -199,9 +199,9 @@ function AverageCustomerBehaviourByValueInvoice(string $Typereport, string $Bran
 * @param float $YearlyGoalBB - Cash goal for BB by end of year
 * @param float $MinTransferBB - Minimum transfer amount for BB
 * @param float $MinMoveFree - Minimum amount for free cash movements
-* @param int $USDPODaysSchedule - Days schedule for USD purchase orders
-* @param float $USDSafetyFactor - Safety factor for USD calculations
-* @param float $USDMinPurchase - Minimum USD purchase amount
+* @param int $PODaysSchedule - Days schedule for USD purchase orders
+* @param float $SafetyFactor - Safety factor for USD calculations
+* @param float $MinPurchase - Minimum USD purchase amount
 * @param float $USDMaxEasyPurchasePerMonth - Maximum easy purchase USD per month
 * @param float $SaldoADUDanamonUSDMin - Minimum Danamon USD balance for ADU
 * @param float $SaldoADUPayoneerUSDMin - Minimum Payoneer USD balance for ADU
@@ -224,15 +224,19 @@ function CashStatus($Year,
 					$YearlyGoalBB, 
 					$MinTransferBB, 
 					$MinMoveFree, 
-					$USDPODaysSchedule,
-					$USDSafetyFactor,
-					$USDMinPurchase,
+					$PODaysSchedule,
+					$SafetyFactor,
+					$MinPurchase,
 					$USDMaxEasyPurchasePerMonth,
 					$SaldoADUDanamonUSDMin,
 					$SaldoADUPayoneerUSDMin,
 					$SaldoADUPayoneerUSDMax,
 					$SaldoADUAirwallexUSDMin,
 					$SaldoADUAirwallexUSDMax,
+					$SaldoADUAirwallexTHBMin,
+					$SaldoADUAirwallexTHBMax,
+					$SaldoADMandiriTHBMin,
+					$SaldoADUMandiriTHBMax,
 					$Period, 
 					$AdminRole){
 
@@ -422,25 +426,16 @@ function CashStatus($Year,
 	////////////////////////////////////////////////////////
 
 	$CurrentUSDRate = GetWeberpCurrencyRate('USD');
-	$CurrentTHBRate = GetWeberpCurrencyRate('THB');
-	
+	$PORunningUSD = round(GetValueRunningPO('USD',75), 0);
+
 	$Account = "111203010AD"; // Danamon PTADU USD in IDR
 	$SaldoADUDanamonUSD = round(GetGLAccountBalance($Account, $Period) * $CurrentUSDRate, 0);
 
 	$Account = "111203020AD"; // Payoneer PTADU USD in IDR
 	$SaldoADUPayoneerUSD = round(GetGLAccountBalance($Account, $Period) * $CurrentUSDRate, 0);
 
-	$Account = "111204030AD"; // Cash in Agent Aye Cargo in BKK in IDR
-	$SaldoAyeCargoUSD = round(GetGLAccountBalance($Account, $Period) * $CurrentUSDRate, 0);
-
 	$Account = "111203030AD"; // Airwallex PTADU USD in IDR
 	$SaldoADUAirwallexUSD = round(GetGLAccountBalance($Account, $Period) * $CurrentUSDRate, 0);
-
-	$Account = "111203040AD"; // Airwallex PTADU THB in IDR
-	// use USD rate to convert to USD even if account holds THB, because we want to know the USD equivalent of the THB balance
-	$SaldoADUAirwallexTHB = round(GetGLAccountBalance($Account, $Period) * $CurrentUSDRate, 0);
-
-	$SaldoAUDAirwallexTotal = $SaldoADUAirwallexUSD + $SaldoADUAirwallexTHB;
 
 	$Account = "111203010AD"; // USD already exchanged current month
 	$SQL = "SELECT SUM(banktrans.amount) AS saldo
@@ -452,35 +447,29 @@ function CashStatus($Year,
 	$MyRow = DB_fetch_array($Result);
 	$USDAlreadyExhangedThisMonth = round(($MyRow['saldo'] ?? 0), 0);
 
-	$PORunningTotalUSD = round(GetLastKPIValue("PO-ITEMS-NEXT-%-IDR")*$CurrentUSDRate,0);
-	$POPaymentsPendingUSDuntilEndOfMonth = $PORunningTotalUSD / $USDPODaysSchedule * $DaysUntilEndOfMonth * $USDSafetyFactor;
-	$SaldoUSD = $SaldoADUDanamonUSD + $SaldoADUPayoneerUSD + $SaldoAUDAirwallexTotal + $SaldoAyeCargoUSD;
-	$ShortageUSD = max(0, $PORunningTotalUSD - $SaldoUSD);
+	$POPaymentsPendingUSDuntilEndOfMonth = $PORunningUSD / $PODaysSchedule * $DaysUntilEndOfMonth * $SafetyFactor;
+
+	$SaldoUSD = $SaldoADUDanamonUSD + $SaldoADUPayoneerUSD + $SaldoADUAirwallexUSD;
+
+	$ShortageUSD = max(0, $PORunningUSD - $SaldoUSD);
 	$ShortageUSDuntilEndOfMonth = $POPaymentsPendingUSDuntilEndOfMonth - $SaldoUSD;
 	$USDEasyAvailableThisMonth = max(0, $USDMaxEasyPurchasePerMonth - $USDAlreadyExhangedThisMonth);
 
 	if ($ShortageUSD == 0){ // No USD shortage, no need to exchange
 		$ToBeExchanged = 0;
 	} elseif ($ShortageUSD <= $USDEasyAvailableThisMonth){ // Shortage can be fulfilled with easy purchase available
-		$ToBeExchanged = round_multiple_of($ShortageUSD, $USDMinPurchase);			
+		$ToBeExchanged = round_multiple_of($ShortageUSD, $MinPurchase);			
 	} elseif ($ShortageUSDuntilEndOfMonth <= $USDEasyAvailableThisMonth){ // Shortage until end of month can be fulfilled with easy purchase available
-		$ToBeExchanged = round_multiple_of($USDEasyAvailableThisMonth, $USDMinPurchase);			
+		$ToBeExchanged = round_multiple_of($USDEasyAvailableThisMonth, $MinPurchase);			
 	} else { // Shortage until end of month cannot be fulfilled with easy purchase available, need to exchange at least the shortage until end of month
-		$ToBeExchanged = round_multiple_of($ShortageUSDuntilEndOfMonth, $USDMinPurchase);			
+		$ToBeExchanged = round_multiple_of($ShortageUSDuntilEndOfMonth, $MinPurchase);			
 	}
 	
 	if ($SaldoADUPayoneerUSD < $SaldoADUPayoneerUSDMin){
 		$ToBeTransferredToPayoneer = round_multiple_of(min($SaldoADUPayoneerUSDMax - $SaldoADUPayoneerUSD, 
-															$SaldoADUDanamonUSD - $SaldoADUDanamonUSDMin), $USDMinPurchase);	
+															$SaldoADUDanamonUSD - $SaldoADUDanamonUSDMin), $MinPurchase);	
 	} else {
 		$ToBeTransferredToPayoneer = 0;
-	}
-
-	if ($SaldoAUDAirwallexTotal < $SaldoADUAirwallexUSDMin){
-		$ToBeTransferredToAirwallex = round_multiple_of(min($SaldoADUAirwallexUSDMax - $SaldoAUDAirwallexTotal, 
-															$SaldoADUDanamonUSD - $SaldoADUDanamonUSDMin), $USDMinPurchase);	
-	} else {
-		$ToBeTransferredToAirwallex = 0;
 	}
 
 	////////////////////////////////////////////////////////
@@ -499,10 +488,10 @@ function CashStatus($Year,
 				</tr>
 			</thead>
 			<tbody>';
-	$i = 1;
-	echo '<tr>
-			<td>Running PO for items for sale (USD approx)</td>
-			<td class="number">' . locale_number_format($PORunningTotalUSD,0) . '</td>
+
+			echo '<tr>
+			<td>Running PO in suppliers in USD (USD approx)</td>
+			<td class="number">' . locale_number_format($PORunningUSD,0) . '</td>
 			</tr>';
 
 	echo '<tr>
@@ -526,16 +515,6 @@ function CashStatus($Year,
 			</tr>';
 
 	echo '<tr>
-			<td>Current balance Airwallex THB ADU (accounted as USD approx)</td>
-			<td class="number">' . locale_number_format($SaldoADUAirwallexTHB,0) . '</td>
-			</tr>';
-
-	echo '<tr>
-			<td>Current balance Aye Cargo ADU (USD approx)</td>
-			<td class="number">' . locale_number_format($SaldoAyeCargoUSD,0) . '</td>
-			</tr>';
-
-	echo '<tr>
 			<td>Current balance available USD ADU (USD approx)</td>
 			<td class="number">' . locale_number_format($SaldoUSD,0) . '</td>
 			</tr>';
@@ -546,9 +525,9 @@ function CashStatus($Year,
 			</tr>';
 
 	echo '<tr>
-				<td>USD needed until end of month ('.$DaysUntilEndOfMonth.' days) (USD approx)</td>
-				<td class="number">' . locale_number_format(max($ShortageUSDuntilEndOfMonth,0),0) . '</td>
-				</tr>';
+			<td>USD needed until end of month ('.$DaysUntilEndOfMonth.' days) (USD approx)</td>
+			<td class="number">' . locale_number_format(max($ShortageUSDuntilEndOfMonth,0),0) . '</td>
+			</tr>';
 
 	if ($ToBeExchanged > 0){
 		echo '<tr class="striped_row">
@@ -564,15 +543,101 @@ function CashStatus($Year,
 				</tr>';
 	}
 
-	if ($ToBeTransferredToAirwallex > 0){
-		echo '<tr class="striped_row">
-				<td>ACTION NEEDED --> Transfer from ADU Danamon USD to ADU Airwallex USD</td>
-				<td class="number">' . locale_number_format($ToBeTransferredToAirwallex) . '</td>
-				</tr>';
-	}
-
 	echo '</tbody></table>
 		</div>';
+
+
+	////////////////////////////////////////////////////////
+	// CASH STATUS ADU THB CALCULATIONS
+	////////////////////////////////////////////////////////
+
+	$CurrentTHBRate = GetWeberpCurrencyRate('THB');
+	$PORunningTHB = round(GetValueRunningPO('THB',75), 0);
+
+	$Account = "111204030AD"; // Cash in Agent Aye Cargo in BKK in IDR
+	$SaldoAyeCargoTHB = round(GetGLAccountBalance($Account, $Period) * $CurrentTHBRate, 0);
+
+	$Account = "111203040AD"; // Airwallex PTADU THB in IDR
+	$SaldoADUAirwallexTHB = round(GetGLAccountBalance($Account, $Period) * $CurrentTHBRate, 0);
+
+	$Account = "111203050AD"; // Mandiri PTADU THB in IDR
+	$SaldoADUMandiriTHB = round(GetGLAccountBalance($Account, $Period) * $CurrentTHBRate, 0);
+
+	$POPaymentsPendingTHBuntilEndOfMonth = $PORunningTHB / $PODaysSchedule * $DaysUntilEndOfMonth * $SafetyFactor;
+
+	$SaldoTHB = $SaldoAyeCargoTHB + $SaldoADUAirwallexTHB + $SaldoADUMandiriTHB;
+
+	$ShortageTHB = max(0, $PORunningTHB - $SaldoTHB);
+	$ShortageTHBuntilEndOfMonth = $POPaymentsPendingTHBuntilEndOfMonth - $SaldoTHB;
+
+	if ($ShortageTHB == 0){ // No THB shortage, no need to exchange
+		$ToBeExchangedTHB = 0;
+	} else { // Shortage until end of month cannot be fulfilled with easy purchase available, need to exchange at least the shortage until end of month
+		$ToBeExchangedTHB = round_multiple_of($ShortageTHBuntilEndOfMonth, $MinPurchase);
+	}
+
+	////////////////////////////////////////////////////////
+	// CASH STATUS ADU THB SHOW TABLE
+	////////////////////////////////////////////////////////
+
+	$TableTitleText = __('Status THB PT. Angin Dingin Utara ');
+	ShowTableTitle($TableTitleText);
+
+	echo '<div>';
+	echo '<table class="selection">
+			<thead>
+				<tr>
+					<th class="SortedColumn">' . 'Concept' . '</th>
+					<th class="SortedColumn">' . 'Value' . '</th>
+				</tr>
+			</thead>
+			<tbody>';
+
+	echo '<tr>
+			<td>Running PO in suppliers in THB (THB approx)</td>
+			<td class="number">' . locale_number_format($PORunningTHB,0) . '</td>
+			</tr>';
+
+	echo '<tr>
+			<td>Pending payments until end of month ('.$DaysUntilEndOfMonth.' days) (THB approx)</td>
+			<td class="number">' . locale_number_format($POPaymentsPendingTHBuntilEndOfMonth,0) . '</td>
+			</tr>';
+
+	echo '<tr>
+			<td>Current balance Aye Cargo THB ADU (THB approx)</td>
+			<td class="number">' . locale_number_format($SaldoAyeCargoTHB,0) . '</td>
+			</tr>';
+
+	echo '<tr>
+			<td>Current balance Airwallex THB ADU (THB approx)</td>
+			<td class="number">' . locale_number_format($SaldoADUAirwallexTHB,0) . '</td>
+			</tr>';
+
+	echo '<tr>
+			<td>Current balance Mandiri THB ADU (THB approx)</td>
+			<td class="number">' . locale_number_format($SaldoADUMandiriTHB,0) . '</td>
+			</tr>';
+
+	echo '<tr>
+			<td>Current balance available THB ADU (THB approx)</td>
+			<td class="number">' . locale_number_format($SaldoTHB,0) . '</td>
+			</tr>';
+
+	echo '<tr>
+			<td>THB needed until end of month ('.$DaysUntilEndOfMonth.' days) (THB approx)</td>
+			<td class="number">' . locale_number_format(max($ShortageTHBuntilEndOfMonth,0),0) . '</td>
+			</tr>';
+
+	if ($ToBeExchangedTHB > 0){
+		echo '<tr class="striped_row">
+				<td>ACTION NEEDED --> Purchase THB </td>
+				<td class="number">' . locale_number_format($ToBeExchangedTHB) . '</td>
+				</tr>';
+	}
+	
+	echo '</tbody></table>
+		</div>';
+
 
 	////////////////////////////////////////////////////////
 	// CASH STATUS SMH IDR CALCULATIONS

@@ -313,7 +313,11 @@ if ($ProcessSection03){
 
 	if ($KL_SystemAdmin ){
 		$StartTime = microtime(true);
-		InsuficientStockForShopPackaging('SHPACK', $_SESSION['Usage_Days_For_Packaging_Stock'], $_SESSION['Forecast_Days_For_Packaging_Stock'], true, false, $RootPath);
+		InsuficientStockForShopPackaging('SHPACK-ONLYBOXES', $_SESSION['Usage_Days_For_Packaging_Stock'], $_SESSION['Forecast_Days_For_Packaging_Stock_Boxes'], true, false, $RootPath);
+		TimeNeededForExecution("InsuficientStockForShopPackaging", $StartTime, $KL_SystemAdmin);
+		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
+		InsuficientStockForShopPackaging('SHPACK-NOBOXES', $_SESSION['Usage_Days_For_Packaging_Stock'], $_SESSION['Forecast_Days_For_Packaging_Stock'], true, false, $RootPath);
 		TimeNeededForExecution("InsuficientStockForShopPackaging", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
@@ -404,6 +408,10 @@ if ($ProcessSection03){
 					 $_SESSION['SaldoADUPayoneerUSDMax'],
 					 $_SESSION['SaldoADUAirwallexUSDMin'],
 					 $_SESSION['SaldoADUAirwallexUSDMax'],
+					 $_SESSION['SaldoADUAirwallexTHBMin'],
+					 $_SESSION['SaldoADUAirwallexTHBMax'],
+					 $_SESSION['SaldoADUMandiriTHBMin'],
+					 $_SESSION['SaldoADUMandiriTHBMax'],
 					$PeriodNow, $KL_SystemAdmin);
 		TimeNeededForExecution("CashStatus", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;

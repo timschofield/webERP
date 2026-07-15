@@ -95,7 +95,7 @@ if (isset($_POST['Generate'])) {
 
 		$Result = DB_query($SQL);
 
-		$RecordsInserted = DB_Affected_Rows($Result);
+		$RecordsInserted = DB_affected_rows($Result);
 
 		echo __('Generation complete') . ': ' . date('H:i:s') . '<br />';
 		echo '</div>';

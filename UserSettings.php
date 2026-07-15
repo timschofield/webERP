@@ -131,6 +131,7 @@ $SQL = "SELECT
 			email,
 			showpagehelp,
 			showfieldhelp,
+            fontsize,
 			language
 		from www_users WHERE userid = '" . $_SESSION['UserID'] . "'";
 $Result = DB_query($SQL);
@@ -142,6 +143,7 @@ if (!isset($_POST['email'])) {
 $_POST['ShowPageHelp'] = $MyRow['showpagehelp'];
 $_POST['ShowFieldHelp'] = $MyRow['showfieldhelp'];
 $_POST['Language'] = $MyRow['language'];
+$_POST['FontSize'] = $MyRow['fontsize'];
 
 echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
 	'<input name="FormID" value="', $_SESSION['FormID'], '" type="hidden" />';
@@ -252,14 +254,14 @@ if ($KL_SystemAdmin){
 
 echo '<field>
 		<label for="Password">', __('New Password'), ':</label>
-		<input name="Password" pattern="(?!^', $_SESSION['UserID'], '$).{5,}" placeholder="', __('More than 5 characters'), '" size="20" title="', __('Must be more than 5 characters and cannot be as same as userid'), '" type="password" value="', $_POST['Password'], '" />
-		<fieldhelp>', __('If you leave the password boxes empty your password will not change'), '</fieldhelp>
+		<input id="password" name="Password" pattern="(?!^', $_SESSION['UserID'], '$).{5,}" placeholder="', __('More than 5 characters'), '" size="20" title="', __('Must be more than 5 characters and cannot be as same as userid'), '" type="password" value="', $_POST['Password'], '" />
+        <img class="eye" id="eye" alt="" src="', $RootPath, '/css/eye.png" title="' . __('Show Password') . '" />
 	</field>';
 
 echo '<field>
 		<label for="PasswordCheck">', __('Confirm Password'), ':</label>
-		<input name="PasswordCheck" pattern="(?!^', $_SESSION['UserID'], '$).{5,}" placeholder="', __('More than 5 characters'), '" size="20" title="', __('Must be more than 5 characters and cannot be as same as userid'), '" type="password" value="', $_POST['PasswordCheck'], '" />
-		<fieldhelp>', __('Confirm the password you entered above'), '</fieldhelp>
+		<input id="confirmpassword" name="PasswordCheck" pattern="(?!^', $_SESSION['UserID'], '$).{5,}" placeholder="', __('More than 5 characters'), '" size="20" title="', __('Must be more than 5 characters and cannot be as same as userid'), '" type="password" value="', $_POST['PasswordCheck'], '" />
+        <img class="eye" id="confirmeye" alt="" src="', $RootPath, '/css/eye.png" title="' . __('Show Password') . '" />
 	</field>';
 
 echo '<field>

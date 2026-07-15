@@ -181,6 +181,49 @@ if (isset($_POST['submit'])) {
 			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_InternalOnlineTransferSizeMultiple']."' WHERE confname = 'InternalOnlineTransferSizeMultiple'";
 		}
 
+		if ($_SESSION['TotalBanksADUIDROnlyMin'] != $_POST['X_TotalBanksADUIDROnlyMin']) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_TotalBanksADUIDROnlyMin']."' WHERE confname = 'TotalBanksADUIDROnlyMin'";
+		}
+		if ($_SESSION['TotalBanksADUIDROnlyMax'] != $_POST['X_TotalBanksADUIDROnlyMax']) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_TotalBanksADUIDROnlyMax']."' WHERE confname = 'TotalBanksADUIDROnlyMax'";
+		}
+		if ($_SESSION['TotalBanksADUMin'] != $_POST['X_TotalBanksADUMin']) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_TotalBanksADUMin']."' WHERE confname = 'TotalBanksADUMin'";
+		}
+		if ($_SESSION['TotalBanksADUMax'] != $_POST['X_TotalBanksADUMax']) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_TotalBanksADUMax']."' WHERE confname = 'TotalBanksADUMax'";
+		}
+		if ($_SESSION['TotalMarketplacesADUMin'] != $_POST['X_TotalMarketplacesADUMin']) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_TotalMarketplacesADUMin']."' WHERE confname = 'TotalMarketplacesADUMin'";
+		}
+		if ($_SESSION['TotalMarketplacesADUMax'] != $_POST['X_TotalMarketplacesADUMax']) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_TotalMarketplacesADUMax']."' WHERE confname = 'TotalMarketplacesADUMax'";
+		}
+		if ($_SESSION['TotalPayPalADUMin'] != $_POST['X_TotalPayPalADUMin']) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_TotalPayPalADUMin']."' WHERE confname = 'TotalPayPalADUMin'";
+		}
+		if ($_SESSION['TotalPayPalADUMax'] != $_POST['X_TotalPayPalADUMax']) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_TotalPayPalADUMax']."' WHERE confname = 'TotalPayPalADUMax'";
+		}
+		if ($_SESSION['TotalBanksSMHMin'] != $_POST['X_TotalBanksSMHMin']) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_TotalBanksSMHMin']."' WHERE confname = 'TotalBanksSMHMin'";
+		}
+		if ($_SESSION['TotalBanksSMHMax'] != $_POST['X_TotalBanksSMHMax']) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_TotalBanksSMHMax']."' WHERE confname = 'TotalBanksSMHMax'";
+		}
+		if ($_SESSION['TotalBrankastShareholdersMin'] != $_POST['X_TotalBrankastShareholdersMin']) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_TotalBrankastShareholdersMin']."' WHERE confname = 'TotalBrankastShareholdersMin'";
+		}
+		if ($_SESSION['TotalBrankastShareholdersMax'] != $_POST['X_TotalBrankastShareholdersMax']) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_TotalBrankastShareholdersMax']."' WHERE confname = 'TotalBrankastShareholdersMax'";
+		}
+		if ($_SESSION['TotalBrankastKantorMin'] != $_POST['X_TotalBrankastKantorMin']) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_TotalBrankastKantorMin']."' WHERE confname = 'TotalBrankastKantorMin'";
+		}
+		if ($_SESSION['TotalBrankastKantorMax'] != $_POST['X_TotalBrankastKantorMax']) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_TotalBrankastKantorMax']."' WHERE confname = 'TotalBrankastKantorMax'";
+		}
+
 		if ($_SESSION['PTADUDanamonMinSaldo'] != $_POST['X_PTADUDanamonMinSaldo'] ) {
 			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_PTADUDanamonMinSaldo']."' WHERE confname = 'PTADUDanamonMinSaldo'";
 		}
@@ -296,6 +339,10 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['Forecast_Days_For_Packaging_Stock'] != $_POST['X_Forecast_Days_For_Packaging_Stock'] ) {
 			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_Forecast_Days_For_Packaging_Stock']."' WHERE confname = 'Forecast_Days_For_Packaging_Stock'";
 		}
+		if ($_SESSION['Forecast_Days_For_Packaging_Stock_Boxes'] != $_POST['X_Forecast_Days_For_Packaging_Stock_Boxes']) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '" . $_POST['X_Forecast_Days_For_Packaging_Stock_Boxes']
+				. "' WHERE confname = 'Forecast_Days_For_Packaging_Stock_Boxes'";
+		}
 		if ($_SESSION['Factor_Gudang_Packaging'] != $_POST['X_Factor_Gudang_Packaging'] ) {
 			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_Factor_Gudang_Packaging']."' WHERE confname = 'Factor_Gudang_Packaging'";
 		}
@@ -333,6 +380,18 @@ if (isset($_POST['submit'])) {
 		}
 		if ($_SESSION['SaldoADUAirwallexUSDMax'] != $_POST['X_SaldoADUAirwallexUSDMax'] ) {
 			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_SaldoADUAirwallexUSDMax']."' WHERE confname = 'SaldoADUAirwallexUSDMax'";
+		}
+		if ($_SESSION['SaldoADUAirwallexTHBMin'] != $_POST['X_SaldoADUAirwallexTHBMin']) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_SaldoADUAirwallexTHBMin']."' WHERE confname = 'SaldoADUAirwallexTHBMin'";
+		}
+		if ($_SESSION['SaldoADUAirwallexTHBMax'] != $_POST['X_SaldoADUAirwallexTHBMax']) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_SaldoADUAirwallexTHBMax']."' WHERE confname = 'SaldoADUAirwallexTHBMax'";
+		}
+		if ($_SESSION['SaldoADUMandiriTHBMin'] != $_POST['X_SaldoADUMandiriTHBMin']) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_SaldoADUMandiriTHBMin']."' WHERE confname = 'SaldoADUMandiriTHBMin'";
+		}
+		if ($_SESSION['SaldoADUMandiriTHBMax'] != $_POST['X_SaldoADUMandiriTHBMax']) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_SaldoADUMandiriTHBMax']."' WHERE confname = 'SaldoADUMandiriTHBMax'";
 		}
 
 		if ($_SESSION['TopSalesNumberOfDays'] != $_POST['X_TopSalesNumberOfDays'] ) {
@@ -538,6 +597,35 @@ echo '<fieldset>
 		echo FieldToSelectOneNumber('X_MaxItemsChangingPriceOrMovingDisc',  $_SESSION['MaxItemsChangingPriceOrMovingDisc'], 6, 5, 'Maximum # items changing price or moving to discount category at the same time', 'Maximum # items changing price or moving to discount category at the same time', '', '150');
 	echo '</fieldset><br />';
 	echo '<fieldset>
+		<legend>' . __('Bank Balances Warnings Settings') . '</legend>';
+		echo '<fieldset>
+			<legend>' . __('PTADU Balances Warnings Settings') . '</legend>';
+			echo FieldToSelectOneNumber('X_TotalBanksADUIDROnlyMin', $_SESSION['TotalBanksADUIDROnlyMin'], 15, 14, 'Total bank balance for PTADU (IDR Only) Minimum', 'Total bank balance for PTADU (IDR Only) Minimum', '', '150');
+			echo FieldToSelectOneNumber('X_TotalBanksADUIDROnlyMax', $_SESSION['TotalBanksADUIDROnlyMax'], 15, 14, 'Total bank balance for PTADU (IDR Only) Maximum', 'Total bank balance for PTADU (IDR Only) Maximum', '', '150');
+			echo FieldToSelectOneNumber('X_TotalBanksADUMin', $_SESSION['TotalBanksADUMin'], 15, 14, 'Total bank balance for PTADU (All currencies) Minimum', 'Total bank balance for PTADU (All currencies) Minimum', '', '150');
+			echo FieldToSelectOneNumber('X_TotalBanksADUMax', $_SESSION['TotalBanksADUMax'], 15, 14, 'Total bank balance for PTADU (All currencies) Maximum', 'Total bank balance for PTADU (All currencies) Maximum', '', '150');
+			echo FieldToSelectOneNumber('X_TotalMarketplacesADUMin', $_SESSION['TotalMarketplacesADUMin'], 15, 14, 'Total marketplace balance for PTADU Minimum', 'Total marketplace balance for PTADU Minimum', '', '150');
+			echo FieldToSelectOneNumber('X_TotalMarketplacesADUMax', $_SESSION['TotalMarketplacesADUMax'], 15, 14, 'Total marketplace balance for PTADU Maximum', 'Total marketplace balance for PTADU Maximum', '', '150');
+			echo FieldToSelectOneNumber('X_TotalPayPalADUMin', $_SESSION['TotalPayPalADUMin'], 15, 14, 'Total PayPal balance for PTADU (All currencies) Minimum', 'Total PayPal balance for PTADU (All currencies) Minimum', '', '150');
+			echo FieldToSelectOneNumber('X_TotalPayPalADUMax', $_SESSION['TotalPayPalADUMax'], 15, 14, 'Total PayPal balance for PTADU (All currencies) Maximum', 'Total PayPal balance for PTADU (All currencies) Maximum', '', '150');
+		echo '</fieldset><br />';
+		echo '<fieldset>
+			<legend>' . __('PTSMH Balances Warnings Settings') . '</legend>';
+			echo FieldToSelectOneNumber('X_TotalBanksSMHMin', $_SESSION['TotalBanksSMHMin'], 15, 14, 'Total bank balance for PTSMH (All currencies) Minimum', 'Total bank balance for PTADU (All currencies) Minimum', '', '150');
+			echo FieldToSelectOneNumber('X_TotalBanksSMHMax', $_SESSION['TotalBanksSMHMax'], 15, 14, 'Total bank balance for PTSMH (All currencies) Maximum', 'Total bank balance for PTADU (All currencies) Maximum', '', '150');
+		echo '</fieldset><br />';
+		echo '<fieldset>
+			<legend>' . __('Brankast Shareholders Balances Warnings Settings') . '</legend>';
+			echo FieldToSelectOneNumber('X_TotalBrankastShareholdersMin', $_SESSION['TotalBrankastShareholdersMin'], 15, 14, 'Total balance for Brankast Shareholders (All currencies) Minimum', 'Total balance for Brankast Shareholders (All currencies) Minimum', '', '150');
+			echo FieldToSelectOneNumber('X_TotalBrankastShareholdersMax', $_SESSION['TotalBrankastShareholdersMax'], 15, 14, 'Total balance for Brankast Shareholders (All currencies) Maximum', 'Total balance for Brankast Shareholders (All currencies) Maximum', '', '150');
+		echo '</fieldset><br />';
+		echo '<fieldset>
+			<legend>' . __('Brankast Kantor Balances Warnings Settings') . '</legend>';
+			echo FieldToSelectOneNumber('X_TotalBrankastKantorMin', $_SESSION['TotalBrankastKantorMin'], 15, 14, 'Total balance for Brankast Kantor (IDR Only) Minimum', 'Total balance for Brankast Kantor (IDR Only) Minimum', '', '150');
+			echo FieldToSelectOneNumber('X_TotalBrankastKantorMax', $_SESSION['TotalBrankastKantorMax'], 15, 14, 'Total balance for Brankast Kantor (IDR Only) Maximum', 'Total balance for Brankast Kantor (IDR Only) Maximum', '', '150');
+		echo '</fieldset><br />';
+	echo '</fieldset><br />';
+	echo '<fieldset>
 		<legend>' . __('Internal Bank Transfers Settings') . '</legend>';
 		echo FieldToSelectOneNumber('X_InternalBankTransferSizeMultiple',  $_SESSION['InternalBankTransferSizeMultiple'], 15, 14, 'Internal banks transfer multiple size (IDR)', 'Internal banks transfer multiple size (IDR)', '', '150');
 		echo FieldToSelectOneNumber('X_InternalOnlineTransferSizeMultiple',  $_SESSION['InternalOnlineTransferSizeMultiple'], 15, 14, 'Internal online transfer multiple size (IDR)', 'Internal online transfer multiple size (IDR)', '', '150');
@@ -642,7 +730,8 @@ echo '<fieldset>
 		echo '<fieldset>
 			<legend>' . __('Packaging Forecast Settings') . '</legend>';
 			echo FieldToSelectOneNumber('X_Usage_Days_For_Packaging_Stock',  $_SESSION['Usage_Days_For_Packaging_Stock'], 6, 5, '# Days of Packaging Usage for Forecast', 'Number of days  of Packaging Usage for Forecast', '', '150');
-			echo FieldToSelectOneNumber('X_Forecast_Days_For_Packaging_Stock',  $_SESSION['Forecast_Days_For_Packaging_Stock'], 6, 5, 'Optimum # Days of Packaging Stock Forecast', 'Number of days to forecast packaging stock', '', '151');
+			echo FieldToSelectOneNumber('X_Forecast_Days_For_Packaging_Stock_Boxes', $_SESSION['Forecast_Days_For_Packaging_Stock_Boxes'], 6, 5, 'Optimum # Days of Packaging Stock Forecast (Boxes only)', 'Number of days to forecast packaging stock (Boxes only)', '',	'151');
+			echo FieldToSelectOneNumber('X_Forecast_Days_For_Packaging_Stock',  $_SESSION['Forecast_Days_For_Packaging_Stock'], 6, 5, 'Optimum # Days of Packaging Stock Forecast (Except Boxes)', 'Number of days to forecast packaging stock', '', '151');
 			echo FieldToSelectOneNumber('X_Factor_Gudang_Packaging',  $_SESSION['Factor_Gudang_Packaging'], 6, 5, 'Factor Gudang Packaging (except paper inside box)', 'Factor for packaging stock in gudang', '', '152');
 			echo FieldToSelectOneNumber('X_Factor_Gudang_Packaging_Paper_Inside_Box',  $_SESSION['Factor_Gudang_Packaging_Paper_Inside_Box'], 6, 5, 'Factor Gudang Packaging Paper Inside Box', 'Factor for packaging stock in gudang for paper inside box', '', '153');
 			echo FieldToSelectOneNumber('X_MinimumRLPackagingItemPerShop',  $_SESSION['MinimumRLPackagingItemPerShop'], 6, 5, 'Minimum Reorder Level for Packaging Items in Shops', 'Minimum reorder level for packaging items per shop', '', '154');
@@ -659,6 +748,10 @@ echo '<fieldset>
 			echo FieldToSelectOneNumber('X_SaldoADUPayoneerUSDMax',  $_SESSION['SaldoADUPayoneerUSDMax'], 15, 14, 'Maximum Saldo Payoneer USD PTADU (USD)', 'Maximum Saldo Payoneer USD ADU (USD)', '', '150');
 			echo FieldToSelectOneNumber('X_SaldoADUAirwallexUSDMin',  $_SESSION['SaldoADUAirwallexUSDMin'], 15, 14, 'Minimum Saldo Airwallex USD PTADU (USD)', 'Minimum Saldo Airwallex USD ADU (USD)', '', '150');
 			echo FieldToSelectOneNumber('X_SaldoADUAirwallexUSDMax',  $_SESSION['SaldoADUAirwallexUSDMax'], 15, 14, 'Maximum Saldo Airwallex USD PTADU (USD)', 'Maximum Saldo Airwallex USD ADU (USD)', '', '150');
+			echo FieldToSelectOneNumber('X_SaldoADUAirwallexTHBMin',  $_SESSION['SaldoADUAirwallexTHBMin'], 15, 14, 'Minimum Saldo Airwallex THB PTADU (THB)', 'Minimum Saldo Airwallex THB ADU (THB)', '', '150');
+			echo FieldToSelectOneNumber('X_SaldoADUAirwallexTHBMax',  $_SESSION['SaldoADUAirwallexTHBMax'], 15, 14, 'Maximum Saldo Airwallex THB PTADU (THB)', 'Maximum Saldo Airwallex THB ADU (THB)', '', '150');
+			echo FieldToSelectOneNumber('X_SaldoADUMandiriTHBMin',  $_SESSION['SaldoADUMandiriTHBMin'], 15, 14, 'Minimum Saldo Mandiri THB PTADU (THB)', 'Minimum Saldo Mandiri THB ADU (THB)', '', '150');
+			echo FieldToSelectOneNumber('X_SaldoADUMandiriTHBMax',  $_SESSION['SaldoADUMandiriTHBMax'], 15, 14, 'Maximum Saldo Mandiri THB PTADU (THB)', 'Maximum Saldo Mandiri THB ADU (THB)', '', '150');
 		echo '</fieldset><br />';
 
 	echo '</fieldset><br />';

@@ -1653,6 +1653,14 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 	$TrendThisYearBL = round(GetLastKPIValue("SALES-TREND-RETAIL-%D-BL") / 100,3);
 	$TrendThisYearOU = round(GetLastKPIValue("SALES-TREND-RETAIL-%D-PERCENT") / 100,3);
 
+	if ($Category == 'SHPACK-NOBOXES'){
+		$CategorySQL = "'SHPACK' AND stockmaster.stockid NOT IN " . LIST_ITEMS_PACKAGING_BOXES . " ";
+	} elseif ($Category == 'SHPACK-ONLYBOXES'){
+		$CategorySQL = "'SHPACK' AND stockmaster.stockid IN " . LIST_ITEMS_PACKAGING_BOXES . " ";
+	} else {
+		$CategorySQL = "'" . $Category . "'";
+	}
+
 	$SQL = "SELECT stockmaster.stockid,
 					stockmaster.description,
 					stockmaster.eoq,
@@ -1670,7 +1678,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 						FROM locstock
 						WHERE locstock.stockid = stockmaster.stockid
 							AND reorderlevel > 0) AS sumrl,";
-	if ($Category == 'SHPACK'){
+	if (($Category == 'SHPACK') OR ($Category == 'SHPACK-NOBOXES') OR ($Category == 'SHPACK-ONLYBOXES')){
 			$SQL = $SQL . "	(SELECT SUM(qty)
 								FROM packagingused
 								WHERE packagingused.stockid = stockmaster.stockid
@@ -1697,7 +1705,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 							AND purchorderdetails.completed = 0
 							AND purchorders.status NOT IN ('Cancelled', 'Pending', 'Rejected')) AS qoo
 			FROM stockmaster
-			WHERE categoryid = '". $Category ."'
+			WHERE categoryid = ". $CategorySQL ."
 				AND discontinued = 0
 			ORDER BY stockid";
 	$Result = DB_query($SQL);
@@ -1781,9 +1789,15 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			
 			if (($QtyNeeded > 0) OR ($ShowAll)){
 				if ($ShowHeader){
-					if ($Category == 'SHPACK'){
+					if (($Category == 'SHPACK') OR ($Category == 'SHPACK-NOBOXES') OR ($Category == 'SHPACK-ONLYBOXES')){
 						if ($ShowAll){
-							$TableTitleText = 'Shop packaging order status';
+							if ($Category == 'SHPACK-NOBOXES'){
+								$TableTitleText = 'Shop packaging (EXCEPT BOXES) order status';
+							} elseif ($Category == 'SHPACK-ONLYBOXES'){
+								$TableTitleText = 'Shop packaging (ONLY BOXES) order status';
+							} else{
+								$TableTitleText = 'Shop packaging (ALL) order status';
+							}
 							ShowTableTitle($TableTitleText);
 							$TableSubTitleText = 'Forecast '.$DaysMinimumStock.' 	days ' . $Year . ' based on usage from '. ConvertSQLDate($FromDate) . ' to ' . ConvertSQLDate($ToDate) . 
 												'<br>' . 
