@@ -914,6 +914,10 @@ function ProcessPaymentOnlineOrder(int|string $OrderNo, string $PaymentCode, str
 	$Commission = 0;
 	$CommissionPPN = 0;
 	$NetAmount = 0;
+	$PPh22Percent = 0;
+	$GLAccountPPh22 = "";
+	$PPh22 = 0;
+
 
 	if ($PaymentCode != "MANUAL_MARKETPLACE") {
 		// apply the proper payment
@@ -941,8 +945,12 @@ function ProcessPaymentOnlineOrder(int|string $OrderNo, string $PaymentCode, str
 					accountcomissionppn,
 					comissiontokopediapercent,
 					comissiontokopediaflatfee,
+					accountpph22tokopedia,
+					pph22tokopediapercent,
 					comissionshopeepercent,
 					comissionshopeeflatfee,
+					accountpph22shopee,
+					pph22shopeepercent,
 					comissionlazadapercent
 				FROM klonlinepartners
 				WHERE klonlinepartners.onlinepartnercode = '" . $OnlinePartner . "'";
@@ -997,6 +1005,9 @@ function ProcessPaymentOnlineOrder(int|string $OrderNo, string $PaymentCode, str
 															$TotalAmount,
 															$CommissionTokopediaPercent,
 															$ComissionTokopediaFlatFee);
+				$PPh22Percent = $MyRowAccounts['pph22tokopediapercent'];
+				$GLAccountPPh22 = $MyRowAccounts['accountpph22tokopedia'];
+
 			} elseif  ($PaymentCode == "shopee"){
 				// Shopee payments  has commissions
 				$GLAccountTransfer = $MyRowAccounts['accountshopeeidr'];
@@ -1008,6 +1019,9 @@ function ProcessPaymentOnlineOrder(int|string $OrderNo, string $PaymentCode, str
 														$TotalAmount,
 														$CommissionShopeePercent,
 														$ComissionShopeeFlatFee);
+				$PPh22Percent = $MyRowAccounts['pph22shopeepercent'];
+				$GLAccountPPh22 = $MyRowAccounts['accountpph22shopee'];
+
 			} elseif  ($PaymentCode == "lazada"){
 				// Lazada payments  has commissions
 				$GLAccountTransfer = $MyRowAccounts['accountlazadaidr'];
@@ -1020,7 +1034,8 @@ function ProcessPaymentOnlineOrder(int|string $OrderNo, string $PaymentCode, str
 														$CommissionLazadaPercent);
 			}
 			$CommissionPPN = round($Commission * $_SESSION['PPN_Percent'] / 100, 0);
-			$NetAmount = $TotalAmount - $Commission - $CommissionPPN;
+			$PPh22 = round($TotalAmount * $PPh22Percent / 100, 0);
+			$NetAmount = $TotalAmount - $Commission - $CommissionPPN - $PPh22;
 		}
 
 		DB_Txn_Begin();
@@ -1135,7 +1150,7 @@ function ProcessPaymentOnlineOrder(int|string $OrderNo, string $PaymentCode, str
 										'" . mb_substr($Narrative, 0, 200) . "',
 										'" . (float)$Commission . "'
 									)";
-			$ErrMsg = __('Cannot insert a GL transaction for the bank account debit');
+			$ErrMsg = __('Cannot insert a GL transaction for the online commission account');
 			$Result = DB_query($SQL, $ErrMsg, '', true);
 		}
 
@@ -1156,7 +1171,28 @@ function ProcessPaymentOnlineOrder(int|string $OrderNo, string $PaymentCode, str
 										'" . mb_substr($Narrative, 0, 200) . "',
 										'" . (float)$CommissionPPN . "'
 									)";
-			$ErrMsg = __('Cannot insert a GL transaction for the bank account debit');
+			$ErrMsg = __('Cannot insert a GL transaction for the online commission PPN account');
+			$Result = DB_query($SQL, $ErrMsg, '', true);
+		}
+
+		if ($PPh22 > 0){
+			$SQL="INSERT INTO gltrans (type,
+										typeno,
+										trandate,
+										periodno,
+										account,
+										narrative,
+										amount)
+									VALUES (
+										12,
+										'" . $BatchNo . "',
+										CURRENT_DATE,
+										'" . $PeriodNo . "',
+										'" . $GLAccountPPh22 . "',
+										'" . mb_substr($Narrative, 0, 200) . "',
+										'" . (float)$PPh22 . "'
+									)";
+			$ErrMsg = __('Cannot insert a GL transaction for the online PPh22 account');
 			$Result = DB_query($SQL, $ErrMsg, '', true);
 		}
 
@@ -2001,7 +2037,7 @@ function GetNumberOfRecordsInTable(string $TableName, string $Database) {
 	} else {
 		return 0; // Invalid database specified
 	}
-	
+
 	if (DB_num_rows($Result) > 0) {
 		$Row = DB_fetch_array($Result);
 		return $Row['total'];

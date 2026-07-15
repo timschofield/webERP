@@ -61,10 +61,14 @@ if (isset($_POST['submit'])) {
 					accounttokopediacomissionidr = '" . $_POST['AccountTokopediaComissionIDR'] . "',
 					comissiontokopediapercent = '" . $_POST['ComissionTokopediaPercent'] . "',
 					comissiontokopediaflatfee = '" . $_POST['ComissionTokopediaFlatFee'] . "',
+					accountpph22tokopedia = '" . $_POST['AccountPph22Tokopedia'] . "',
+					pph22tokopediapercent = '" . $_POST['Pph22TokopediaPercent'] . "',
 					accountshopeeidr ='" . $_POST['AccountShopeeIDR'] . "',
 					accountshopeecomissionidr = '" . $_POST['AccountShopeeComissionIDR'] . "',
 					comissionshopeepercent = '" . $_POST['ComissionShopeePercent'] . "',
 					comissionshopeeflatfee = '" . $_POST['ComissionShopeeFlatFee'] . "',
+					accountpph22shopee = '" . $_POST['AccountPph22Shopee'] . "',
+					pph22shopeepercent = '" . $_POST['Pph22ShopeePercent'] . "',
 					accountlazadaidr ='" . $_POST['AccountLazadaIDR'] . "',
 					accountlazadacomissionidr = '" . $_POST['AccountLazadaComissionIDR'] . "',
 					comissionlazadapercent = '" . $_POST['ComissionLazadaPercent'] . "',
@@ -120,8 +124,12 @@ if (isset($_POST['submit'])) {
 		unset($_POST['AccountComissionPPN']);
 		unset($_POST['ComissionTokopediaPercent']);
 		unset($_POST['ComissionTokopediaFlatFee']);
+		unset($_POST['AccountPph22Tokopedia']);
+		unset($_POST['Pph22TokopediaPercent']);
 		unset($_POST['ComissionShopeePercent']);
 		unset($_POST['ComissionShopeeFlatFee']);
+		unset($_POST['AccountPph22Shopee']);
+		unset($_POST['Pph22ShopeePercent']);
 		unset($_POST['ComissionLazadaPercent']);
 
 	} elseif ($InputError !=1) {
@@ -164,8 +172,12 @@ if (isset($_POST['submit'])) {
 								accountpaypalcomissioneur,
 								comissiontokopediapercent,
 								comissiontokopediaflatfee,
+								accountpph22tokopedia,
+								pph22tokopediapercent,
 								comissionshopeepercent,
 								comissionshopeeflatfee,
+								accountpph22shopee,
+								pph22shopeepercent,
 								comissionlazadapercent,
 								foreigncurrencysurchargefactor)
 						VALUES ('" . $_POST['OnlinePartnerCode'] . "',
@@ -203,8 +215,12 @@ if (isset($_POST['submit'])) {
 								'" . $_POST['AccountPayPalComissionEUR'] . "',
 								'" . $_POST['ComissionTokopediaPercent'] . "',
 								'" . $_POST['ComissionTokopediaFlatFee'] . "',
+								'" . $_POST['AccountPph22Tokopedia'] . "',
+								'" . $_POST['Pph22TokopediaPercent'] . "',
 								'" . $_POST['ComissionShopeePercent'] . "',
 								'" . $_POST['ComissionShopeeFlatFee'] . "',
+								'" . $_POST['AccountPph22Shopee'] . "',
+								'" . $_POST['Pph22ShopeePercent'] . "',
 								'" . $_POST['ComissionLazadaPercent'] . "',
 								'" . $_POST['ForeignCurrencySurchargeFactor'] . "')";
 
@@ -250,8 +266,12 @@ if (isset($_POST['submit'])) {
 		unset($_POST['AccountComissionPPN']);
 		unset($_POST['ComissionTokopediaPercent']);
 		unset($_POST['ComissionTokopediaFlatFee']);
+		unset($_POST['AccountPph22Tokopedia']);
+		unset($_POST['Pph22TokopediaPercent']);
 		unset($_POST['ComissionShopeePercent']);
 		unset($_POST['ComissionShopeeFlatFee']);
+		unset($_POST['AccountPph22Shopee']);
+		unset($_POST['Pph22ShopeePercent']);
 		unset($_POST['ComissionLazadaPercent']);
 	}
 
@@ -376,8 +396,12 @@ if (!isset($_GET['delete'])) {
 					accountpaypalcomissioneur,
 					comissiontokopediapercent,
 					comissiontokopediaflatfee,
+					accountpph22tokopedia,
+					pph22tokopediapercent,
 					comissionshopeepercent,
 					comissionshopeeflatfee,
+					accountpph22shopee,
+					pph22shopeepercent,
 					comissionlazadapercent,
 					foreigncurrencysurchargefactor
 				FROM klonlinepartners
@@ -422,8 +446,12 @@ if (!isset($_GET['delete'])) {
 		$_POST['AccountComissionPPN'] = $MyRow['accountcomissionppn'];
 		$_POST['ComissionTokopediaPercent'] = $MyRow['comissiontokopediapercent'];
 		$_POST['ComissionTokopediaFlatFee'] = $MyRow['comissiontokopediaflatfee'];
+		$_POST['AccountPph22Tokopedia'] = $MyRow['accountpph22tokopedia'];
+		$_POST['Pph22TokopediaPercent'] = $MyRow['pph22tokopediapercent'];
 		$_POST['ComissionShopeePercent'] = $MyRow['comissionshopeepercent'];
 		$_POST['ComissionShopeeFlatFee'] = $MyRow['comissionshopeeflatfee'];
+		$_POST['AccountPph22Shopee'] = $MyRow['accountpph22shopee'];
+		$_POST['Pph22ShopeePercent'] = $MyRow['pph22shopeepercent'];
 		$_POST['ComissionLazadaPercent'] = $MyRow['comissionlazadapercent'];
 
 		echo '<input type="hidden" name="SelectedPartner" value="' . $SelectedPartner . '" />';
@@ -554,11 +582,23 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['ComissionTokopediaFlatFee'])) {
 		$_POST['ComissionTokopediaFlatFee'] = 0;
 	}
+	if (!isset($_POST['AccountPph22Tokopedia'])) {
+		$_POST['AccountPph22Tokopedia'] = '';
+	}
+	if (!isset($_POST['Pph22TokopediaPercent'])) {
+		$_POST['Pph22TokopediaPercent'] = 0;
+	}
 	if (!isset($_POST['ComissionShopeePercent'])) {
 		$_POST['ComissionShopeePercent'] = 0;
 	}
 	if (!isset($_POST['ComissionShopeeFlatFee'])) {
 		$_POST['ComissionShopeeFlatFee'] = 0;
+	}
+	if (!isset($_POST['AccountPph22Shopee'])) {
+		$_POST['AccountPph22Shopee'] = '';
+	}
+	if (!isset($_POST['Pph22ShopeePercent'])) {
+		$_POST['Pph22ShopeePercent'] = 0;
 	}
 	if (!isset($_POST['ComissionLazadaPercent'])) {
 		$_POST['ComissionLazadaPercent'] = 0;
@@ -764,7 +804,7 @@ if (!isset($_GET['delete'])) {
 
 
 	echo '<tr>
-			<th colspan="2">' . 'TOKOPEDIA Details' . '</th>
+			<th colspan="2">' . 'TOKOPEDIA (TIKTOK) Details' . '</th>
 		</tr>';
 
 	echo '<tr>
@@ -800,6 +840,24 @@ if (!isset($_GET['delete'])) {
 	echo '<tr>
 			<td>' . __('Flat Order Processing Fee') . ':</td>
 			<td><input type="text" name="ComissionTokopediaFlatFee" class="number"  value="' . $_POST['ComissionTokopediaFlatFee'] . '" size="10" maxlength="10" /></td>
+		</tr>';
+
+	echo '<tr>
+		<td>' . __('Tokopedia PPh 22 GL Account') . ':' . '</td>
+		<td><select name="AccountPph22Tokopedia">';
+	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
+	while ($MyRow=DB_fetch_array($GLAccount)) {
+		if ($_POST['AccountPph22Tokopedia']==$MyRow['accountcode']) {
+			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		} else {
+			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		}
+	}
+	echo '</select></td></tr>';
+
+	echo '<tr>
+			<td>' . __('% PPh 22 Tokopedia') . ':</td>
+			<td><input type="text" name="Pph22TokopediaPercent" class="number"  value="' . $_POST['Pph22TokopediaPercent'] . '" size="5" maxlength="5" /></td>
 		</tr>';
 
 	echo '<tr>
@@ -839,6 +897,24 @@ if (!isset($_GET['delete'])) {
 	echo '<tr>
 			<td>' . __('Flat Order Processing Fee') . ':</td>
 			<td><input type="text" name="ComissionShopeeFlatFee" class="number"  value="' . $_POST['ComissionShopeeFlatFee'] . '" size="10" maxlength="10" /></td>
+		</tr>';
+
+	echo '<tr>
+		<td>' . __('Shopee PPh 22 GL Account') . ':' . '</td>
+		<td><select name="AccountPph22Shopee">';
+	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
+	while ($MyRow=DB_fetch_array($GLAccount)) {
+		if ($_POST['AccountPph22Shopee']==$MyRow['accountcode']) {
+			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		} else {
+			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+		}
+	}
+	echo '</select></td></tr>';
+
+	echo '<tr>
+			<td>' . __('% PPh 22 Shopee') . ':</td>
+			<td><input type="text" name="Pph22ShopeePercent" class="number"  value="' . $_POST['Pph22ShopeePercent'] . '" size="5" maxlength="5" /></td>
 		</tr>';
 
 	echo '<tr>
