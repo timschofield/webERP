@@ -514,16 +514,18 @@ function ItemCodeQOO_WorkOrders(string $StockID, string $CodeDetail){
 	return $Row['0'];
 }
 
-function locale_number_format_zero_blank(float|int $num, int $dec){
-	if ($num == 0){
+function locale_number_format_zero_blank(float|int|null $num, int $dec){
+	if ($num === null || $num == 0){
 		return '';
 	} else {
 		return locale_number_format($num,$dec);
 	}
 }
 
-function locale_number_format_kpi(float|int $num){
-	if (abs($num) >= 100){
+function locale_number_format_kpi(float|int|null $num){
+	if ($num === null){
+		return '';
+	} elseif (abs($num) >= 100){
 		return locale_number_format($num,0);
 	} elseif (abs($num) >= 10){
 		return locale_number_format($num,1);
