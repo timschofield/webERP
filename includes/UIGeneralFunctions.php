@@ -1035,7 +1035,7 @@ function FieldToSelectOneNumber(
 
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
-				<input type="text" class="number" pattern="[0-9]*\.?[0-9]*"';
+				<input type="text" class="number" pattern="-?[0-9]*\.?[0-9]*"';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
 	$HTML .= '" name="' . $VariableName . '" size="' . $Size . '" maxlength="' . $MaxLength . '" value="' . $SelectedValue . '" />';
 	if ($HelpText != '') {
