@@ -111,7 +111,7 @@ if (!isset($Id)) {
 		while ($MyRow = DB_fetch_array($Result)) {
 			echo '<tr class="striped_row">
 					<td>', ConvertSQLDate($MyRow['date']), '</td>
-					<td>', nl2br(str_replace('\r\n', "\n", $MyRow['note'])), '</td>
+					<td>', nl2br($MyRow['note']), '</td>
 					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Id=', $MyRow['noteid'], '&StockID=', $MyRow['stockid'], '">' .  __('Edit').' </td>
 					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Id=', $MyRow['noteid'], '&StockID=', $MyRow['stockid'], '&delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this item note?') . '\');">' .  __('Delete'). '</td>
 				</tr>';
