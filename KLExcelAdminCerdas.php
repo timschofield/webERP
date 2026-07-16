@@ -151,6 +151,9 @@ function submit($TypeOfShop, $TypeOfFile) {
 				$SpreadSheet->getActiveSheet()->setCellValue('C1', 'Harga');
 				$SpreadSheet->getActiveSheet()->setCellValue('D1', 'Harga Diskon');
 				$StartingRow = 2;
+			}else {
+				prnMsg("Type of file should be FullUpdate, QOHOnly, or PricesOnly only", 'error');
+				return;
 			}
 
 			// Add data
@@ -243,6 +246,9 @@ function submit($TypeOfShop, $TypeOfFile) {
 				$File = 'AC-QOH-' .  $NameOfShop . '-' . date('Y-m-d-H-i-s');
 			} elseif ($TypeOfFile == "PricesOnly"){
 				$File = 'AC-PRICE-' .  $NameOfShop . '-' . date('Y-m-d-H-i-s');
+			} else {
+				prnMsg("Type of file should be FullUpdate, QOHOnly, or PricesOnly only", 'error');
+				return;
 			}
 
 			// Redirect output to a client's web browser
@@ -252,6 +258,9 @@ function submit($TypeOfShop, $TypeOfFile) {
 			} elseif ($_POST['Format'] == 'ods') {
 				header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
 				$File .= '.ods';
+			} else {
+				prnMsg("Format should be xlsx or ods only", 'error');
+				return;
 			}
 
 			header('Content-Disposition: attachment;filename="' . $File . '"');
@@ -269,6 +278,9 @@ function submit($TypeOfShop, $TypeOfFile) {
 				$ObjWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($SpreadSheet);
 			} elseif ($_POST['Format'] == 'ods') {
 				$ObjWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($SpreadSheet);
+			} else {
+				prnMsg("Format should be xlsx or ods only", 'error');
+				return;
 			}
 			$ObjWriter->save('php://output');
 
