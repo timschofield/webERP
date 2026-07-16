@@ -639,8 +639,8 @@
         },
         {
             "name": "phplot/phplot",
-            "version": "8.0.1-rc2",
-            "version_normalized": "8.0.1.0-RC2",
+            "version": "dev-release-candidate-for-8.0.1",
+            "version_normalized": "dev-release-candidate-for-8.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/gggeek/phplot.git",
@@ -658,7 +658,7 @@
             },
             "time": "2025-09-13T11:39:43+00:00",
             "type": "library",
-            "installation-source": "source",
+            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "Phplot\\Phplot\\": "src/"
@@ -675,7 +675,7 @@
             ],
             "description": "PHP graph library for dynamic scientific, business, and stock-market charts and graphs.",
             "support": {
-                "source": "https://github.com/gggeek/phplot/tree/8.0.1-rc2"
+                "source": "https://github.com/gggeek/phplot/tree/release-candidate-for-8.0.1"
             },
             "funding": [
                 {
