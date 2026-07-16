@@ -916,6 +916,7 @@ function ProcessPaymentOnlineOrder(int|string $OrderNo, string $PaymentCode, str
 	$Commission = 0;
 	$CommissionPPN = 0;
 	$NetAmount = 0;
+	$SalePPN = 0;
 	$PPh22Percent = 0;
 	$GLAccountPPh22 = "";
 	$PPh22 = 0;
@@ -1036,8 +1037,12 @@ function ProcessPaymentOnlineOrder(int|string $OrderNo, string $PaymentCode, str
 														$CommissionLazadaPercent);
 			}
 			$CommissionPPN = round($Commission * $_SESSION['PPN_Percent'] / 100, 0);
-			$PPh22 = round($TotalAmount * $PPh22Percent / 100, 0);
-			$NetAmount = $TotalAmount - $Commission - $CommissionPPN - $PPh22;
+// For the time being, we don't calculate PPn for maketplace sales, so we assume it's 0
+//			$SalePPN = round(($TotalAmount - $Commission) * $_SESSION['PPN_Percent'] / 100, 0);
+			// PPh22 is calculated on the total amount minus commission, net (before PPN), then apply the PPh22 percent
+			$PPh22 = round(($TotalAmount - $Commission) / (1 + $_SESSION['PPN_Percent'] / 100) * $PPh22Percent / 100, 0);
+			$NetAmount = $TotalAmount - $Commission - $SalePPN - $CommissionPPN - $PPh22;
+
 		}
 
 		DB_Txn_Begin();
