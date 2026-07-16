@@ -104,12 +104,15 @@
             'dev_requirement' => false,
         ),
         'phplot/phplot' => array(
-            'pretty_version' => '8.0.1-rc2',
-            'version' => '8.0.1.0-RC2',
+            'pretty_version' => 'dev-release-candidate-for-8.0.1',
+            'version' => 'dev-release-candidate-for-8.0.1',
             'reference' => 'ea097b8cee126b443620b20b9382c92a406666f0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../phplot/phplot',
-            'aliases' => array(),
+            'aliases' => array(
+                0 => '9999999-dev',
+                1 => '8.0.1-rc2',
+            ),
             'dev_requirement' => false,
         ),
         'phpmailer/phpmailer' => array(
