@@ -182,10 +182,20 @@ function KL_DailyRLZeroNotAvailable($ShowMessages, $UpdateDB, $RootPath, $EmailT
 **************************************************************************************************************/
 function KL_DailyRLAdjustmentsForPackaging($ShowMessages, $UpdateDB, $EmailText){
 
+	// Adjust the RL at the shops
 	$EmailText = AdjustPackaging(60, 'SHOPKL', $ShowMessages, $UpdateDB, $EmailText);
 	$EmailText = AdjustPackaging(60, 'SHOPBL', $ShowMessages, $UpdateDB, $EmailText);
-	$EmailText = AdjustPackagingGudang('PACKU', $_SESSION['Factor_Gudang_Packaging'], $ShowMessages, $UpdateDB, $EmailText);
-	$EmailText = AdjustPackagingGudang('PACKA', $_SESSION['Factor_Gudang_Packaging'], $ShowMessages, $UpdateDB, $EmailText);
+
+	// now adjust all the packaging gudang
+	$SQL = "SELECT loccode AS gudangcode
+		FROM locations loc
+		WHERE loc.typeloc IN " . LIST_GUDANG_PACKAGING_BY_TYPE . "";
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
+		while ($MyRow = DB_fetch_array($Result)) {
+			$EmailText = AdjustPackagingGudang($MyRow['gudangcode'], $_SESSION['Factor_Gudang_Packaging'], $ShowMessages, $UpdateDB, $EmailText);
+		}
+	}
 	
 	return $EmailText;
 }
@@ -1116,6 +1126,7 @@ function AdjustPackagingGudang($GudangCode, $FactorGudangPackaging, $ShowMessage
 		$EmailText = $EmailText . "\n" . $Message . "\n";
 	}
 	// updating the RL settings for packaging, just in case any of the dependant shops has change its settings and affects the gudang
+	// so the gudang has the correct RL factor and days for packaging as MAX of the shops it supplies
 	$SQL = "SELECT MAX(loc.rlfactorforpackaging) AS rlfactor,
 					MAX(loc.rldaysforpackaging) AS rldays
 			FROM locations loc
@@ -1149,7 +1160,7 @@ function AdjustPackagingGudang($GudangCode, $FactorGudangPackaging, $ShowMessage
 		$Result = DB_query($SQL,$ErrMsg);
 	}	
 
-	// Now, update the RL for the items to be stocked at the gudang
+	// Now, update the RL for the items to be stocked at the gudang, as the sum of the RLs of the shops it supplies
 	$SQL = "SELECT sm.stockid,
 					SUM(ls.reorderlevel) AS rl
 			FROM locations loc
