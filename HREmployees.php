@@ -450,7 +450,7 @@ $SQL = "SELECT employeeid, CONCAT(firstname, ' ', lastname) as fullname
 if (isset($SelectedEmployee)) {
 	$SQL .= " AND employeeid != '" . $SelectedEmployee . "'";
 }
-$SQL .= " ORDER BY lastname, firstname";
+$SQL .= " ORDER BY firstname, lastname";
 $Result = DB_query($SQL);
 while ($MyRow = DB_fetch_array($Result)) {
 	if (isset($_POST['SupervisorID']) AND $_POST['SupervisorID'] == $MyRow['employeeid']) {

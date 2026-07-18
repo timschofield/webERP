@@ -366,7 +366,7 @@ $SQL    = "SELECT employeeid,
 			CONCAT(firstname, ' ', lastname) AS name
 		FROM hremployees
 		WHERE employmentstatus = 'Active'
-		ORDER BY lastname, firstname";
+		ORDER BY firstname, lastname";
 $Result = DB_query($SQL);
 while ($MgrRow = DB_fetch_array($Result)) {
 	echo '<option value="' . $MgrRow['employeeid'] . '"' .
