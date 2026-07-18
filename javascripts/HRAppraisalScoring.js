@@ -67,9 +67,9 @@ document.addEventListener('DOMContentLoaded', function() {
 		sel.addEventListener('change', recalc);
 	});
 
-document.querySelectorAll('input[name="UseCalculatedRating"]').forEach(function(chk) {
-	chk.addEventListener('change', recalc);
-});
+	document.querySelectorAll('input[name="UseCalculatedRating"]').forEach(function(chk) {
+		chk.addEventListener('change', recalc);
+	});
 
 	// initial calculation
 	recalc();
