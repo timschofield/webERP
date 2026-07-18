@@ -1,0 +1,14 @@
+title: webERP
+description: Open Source Web-based ERP System
+theme: minima
+
+exclude:
+  - vendor/
+  - "*.php"
+  - "*.sql"
+  - "*.xml"
+  - "*.ini"
+  - "*.sh"
+  - "*.bat"
+  - composer.json
+  - composer.lock
