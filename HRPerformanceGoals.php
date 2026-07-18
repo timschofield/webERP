@@ -142,7 +142,7 @@ if (isset($_GET['edit']) || !isset($_GET['edit']) && !isset($_GET['delete'])) {
 	$SQL = "SELECT employeeid, employeenumber, firstname, lastname
 			FROM hremployees
 			WHERE employmentstatus = 'Active'
-			ORDER BY lastname, firstname";
+			ORDER BY firstname, lastname";
 	$EmployeeResult = DB_query($SQL);
 	while ($Row = DB_fetch_array($EmployeeResult)) {
 		echo '<option value="' . $Row['employeeid'] . '"' .
@@ -224,7 +224,7 @@ echo '<br /><form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'
 $SQL = "SELECT employeeid, employeenumber, firstname, lastname
 		FROM hremployees
 		WHERE employmentstatus = 'Active'
-		ORDER BY lastname, firstname";
+		ORDER BY firstname, lastname";
 $Result = DB_query($SQL);
 while ($Row = DB_fetch_array($Result)) {
 	echo '<option value="' . $Row['employeeid'] . '"' .
