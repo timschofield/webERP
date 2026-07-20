@@ -1671,9 +1671,10 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 							AND locstock.loccode = locations.loccode
 							AND locations.typeloc IN " . LIST_ALL_SHOPS_BY_TYPE . ") AS qohshops,
 					(SELECT SUM(quantity)
-						FROM locstock
+						FROM locstock, locations
 						WHERE locstock.stockid = stockmaster.stockid
-							AND locstock.loccode IN " . LIST_PACKAGING_LOCATIONS . ") AS qohgudang,
+							AND locstock.loccode = locations.loccode
+							AND locations.typeloc IN " . LIST_GUDANG_PACKAGING_BY_TYPE . ") AS qohgudang,
 					(SELECT SUM(GREATEST(reorderlevel," . TRANSFER_ROUNDING_STEP01 . "))
 						FROM locstock
 						WHERE locstock.stockid = stockmaster.stockid
@@ -2266,9 +2267,14 @@ function PackagingToBeRefilledFromGudang(string $LocCode, bool $ShowAll, bool $S
 					locstock.reorderlevel AS rl,
 					(SELECT SUM(loctransfers.pendingqty)
 						FROM loctransfers
+						WHERE loctransfers.shiploc = '". $ParentGudang ."'
+							AND loctransfers.pendingqty != 0
+							AND loctransfers.stockid = stockmaster.stockid) AS intransitfromparent,	
+					(SELECT SUM(loctransfers.pendingqty)
+						FROM loctransfers
 						WHERE loctransfers.recloc = locstock.loccode
 							AND loctransfers.pendingqty != 0
-							AND loctransfers.stockid = stockmaster.stockid) AS intransit
+							AND loctransfers.stockid = stockmaster.stockid) AS intransittodestination
 			FROM locstock, stockmaster
 			WHERE stockmaster.stockid = locstock.stockid
 				AND locstock.reorderlevel != 0
@@ -2289,27 +2295,35 @@ function PackagingToBeRefilledFromGudang(string $LocCode, bool $ShowAll, bool $S
 			// info about the parent gudang stock (the FROM location for the transfer)
 			$TableResult[$NumItems]['qohparent'] = $MyRow['qohparent'];
 			$TableResult[$NumItems]['rlparent'] = $MyRow['rlparent'];
+			$TableResult[$NumItems]['intransitfromparent'] = $MyRow['intransitfromparent'];
 			$TableResult[$NumItems]['optimumparent'] = round(($MyRow['rlparent'] * $RLFactor),0);
 			// info about the destination location stock (the TO location for the transfer)
 			$TableResult[$NumItems]['qoh'] = $MyRow['qoh'];
 			$TableResult[$NumItems]['rl'] = $MyRow['rl'];
-			$TableResult[$NumItems]['intransit'] = $MyRow['intransit'];
+			$TableResult[$NumItems]['intransittodestination'] = $MyRow['intransittodestination'];
 			$TableResult[$NumItems]['optimum'] = round(($MyRow['rl'] * $RLFactor),0);
 
 			$TableResult[$NumItems]['needed']= max(0,$TableResult[$NumItems]['optimum'] - $TableResult[$NumItems]['qoh']);
 			
-			if (ItemInList($LocCode, LIST_PACKAGING_LOCATIONS)){
+			if ($LocationType == "GUDPAC"){
 				// the destination location is another gudang, we split the available stock in the parent gudang proportionally to the reorder level of each gudang
 				$QOHBothGudang = $TableResult[$NumItems]['qohparent'] + $TableResult[$NumItems]['qoh'];
-				$ProportionalOptimum = $QOHBothGudang / ($TableResult[$NumItems]['rlparent'] + $TableResult[$NumItems]['rl']) * $TableResult[$NumItems]['rl'];
+				$RLBothGudang = $TableResult[$NumItems]['rlparent'] + $TableResult[$NumItems]['rl'];
+				$ProportionalOptimum = $QOHBothGudang / $RLBothGudang * $TableResult[$NumItems]['rl'];
 				$ProportionalQtyToShip = $ProportionalOptimum - $TableResult[$NumItems]['qoh'];
-				// and then assign the transfer quantity to ship, but not more than the parent gudang has in stock
-				$QtyToShip = min(max(0,$TableResult[$NumItems]['needed'] - $TableResult[$NumItems]['intransit']),
-								($TableResult[$NumItems]['qohparent'] - $TableResult[$NumItems]['intransit']),
-								$ProportionalQtyToShip - $TableResult[$NumItems]['intransit']);
+				// Qty to Shop should whatever is needed to reach the optimum level, 
+				$QtyToShip = max(0,$TableResult[$NumItems]['needed'] - $TableResult[$NumItems]['intransittodestination']);
+				// but not more than what the parent gudang has in stock, 
+				$QtyToShip = min($QtyToShip,
+								($TableResult[$NumItems]['qohparent'] - $TableResult[$NumItems]['intransitfromparent']));
+				// and not more than what is proportionally allocated to this gudang				
+				$QtyToShip = min($QtyToShip,
+								$ProportionalQtyToShip - $TableResult[$NumItems]['intransittodestination']);
 			}else{
-				// the destination location is a shop, so we can ship as much as needed, but not more than the parent gudang has in stock
-				$QtyToShip = min(max(0,$TableResult[$NumItems]['needed'] - $TableResult[$NumItems]['intransit']),($TableResult[$NumItems]['qohparent'] - $TableResult[$NumItems]['intransit']));
+				// the destination location is a shop, so we can ship as much as needed, 
+				$QtyToShip = max(0,$TableResult[$NumItems]['needed'] - $TableResult[$NumItems]['intransittodestination']);
+				// but not more than the parent gudang has in stock
+				$QtyToShip = min($QtyToShip, ($TableResult[$NumItems]['qohparent'] - $TableResult[$NumItems]['intransitfromparent']));
 			}
 			$TableResult[$NumItems]['toship'] = min($TableResult[$NumItems]['qohparent'],RoundPackagingTransfer($TableResult[$NumItems]['stockid'], $QtyToShip));
 
@@ -2386,7 +2400,7 @@ function PackagingToBeRefilledFromGudang(string $LocCode, bool $ShowAll, bool $S
 						<td class="number">' . locale_number_format_zero_blank($TableResult[$i]['qoh'],0) . '</td>
 						<td class="number">' . locale_number_format_zero_blank($TableResult[$i]['needed'],0) . '</td>
 						<td class="number">' . locale_number_format_zero_blank($TableResult[$i]['needed']/$TableResult[$i]['optimum']*100,0) . "%" . '</td>
-						<td class="number">' . locale_number_format_zero_blank($TableResult[$i]['intransit'],0) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($TableResult[$i]['intransittodestination'],0) . '</td>
 						<td class="number">' . locale_number_format_zero_blank($TableResult[$i]['toship'],0) . '</td>
 						<td>' . $Reason . '</td>
 						</tr>';
