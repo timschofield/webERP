@@ -129,10 +129,6 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	echo '<tr><th class="number">' . __('Item Type') . ':</th>
 			<td colspan="2" class="select">';
 	switch ($MyRow['mbflag']) {
-		case 'A':
-			echo __('Assembly Item');
-			$Its_A_Kitset_Assembly_Or_Dummy = true;
-		break;
         case 'G':
             echo __('Phantom Assembly Item');
             $Its_A_Kitset_Assembly_Or_Dummy = true;
