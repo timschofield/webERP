@@ -60,6 +60,37 @@ function GetPositionIDFromEmployeeNumber(string $EmployeeNumber) {
 	return $PositionID;
 }
 
+/* GetAncestorPositionIDs
+ * Returns all positions above the supplied position by walking reportstopositionid up the tree
+ */
+function GetAncestorPositionIDs(int $PositionID) {
+	$Ancestors = array();
+	$Visited = array();
+	$CurrentPositionID = (int)$PositionID;
+
+	while ($CurrentPositionID > 0 && !isset($Visited[$CurrentPositionID])) {
+		$Visited[$CurrentPositionID] = true;
+		$SQL = "SELECT reportstopositionid
+				FROM hrpositions
+				WHERE positionid = " . $CurrentPositionID;
+		$Result = DB_query($SQL);
+		if (DB_num_rows($Result) == 0) {
+			break;
+		}
+
+		$Row = DB_fetch_array($Result);
+		$ParentPositionID = isset($Row['reportstopositionid']) ? (int)$Row['reportstopositionid'] : 0;
+		if ($ParentPositionID <= 0) {
+			break;
+		}
+
+		$Ancestors[] = $ParentPositionID;
+		$CurrentPositionID = $ParentPositionID;
+	}
+
+	return $Ancestors;
+}
+
 /* PadEmployeeNumber
  * Left-pads employee number with zeros up to 6 characters
  */
