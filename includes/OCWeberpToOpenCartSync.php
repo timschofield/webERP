@@ -187,7 +187,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 			$CustomerCode = WEBERP_ONLINE_RETAIL_CUSTOMER_CODE_PREFIX . OPENCART_DEFAULT_CURRENCY;
 			$Price = GetPrice($MyRow['stockid'], $CustomerCode, $CustomerCode); // Get the price without any discount from webERP
 			$DiscountCategory = $MyRow['discountcategory'];
-			$ItemCategory = $MyRow['category_id'];
+			$ItemCategory = $MyRow['categoryid'];
 			$Points = 0; // No points concept in webERP
 			$TaxClassId = 0; // Not sure how to link stockid and tax in webERP
 			$DateAvailable = $ServerNow;
@@ -670,7 +670,7 @@ function SyncProductPrices($ShowMessages, $LastTimeRun , $EmailText = ''){
 			/* Field Matching */
 			$Model = $MyRow['stockid'];
 			$CustomerCode = WEBERP_ONLINE_RETAIL_CUSTOMER_CODE_PREFIX . OPENCART_DEFAULT_CURRENCY;
-			$Price = GetPrice ($MyRow['stockid'], $CustomerCode, $CustomerCode); // Get the price without any discount from webERP
+			$Price = round(GetPrice($MyRow['stockid'], $CustomerCode, $CustomerCode),0); // Get the price without any discount from webERP
 			$DiscountCategory = $MyRow['discountcategory'];
 
 			// Let's get the OpenCart primary key for product
@@ -1084,15 +1084,17 @@ function SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun , $Email
 
 	/* Look for the late modifications of description translations table in webERP */
 	$SQL = "SELECT stockmaster.categoryid,
-				salescatprod.brands_id,
+					salescatprod.brands_id,
+					salescat.salescatname,
 					stockdescriptiontranslations.stockid,
 					stockdescriptiontranslations.language_id,
 					stockdescriptiontranslations.descriptiontranslation,
 					stockdescriptiontranslations.longdescriptiontranslation,
 					stockdescriptiontranslations.needsrevision
-			FROM stockdescriptiontranslations, stockmaster, salescatprod
+			FROM stockdescriptiontranslations, stockmaster, salescatprod, salescat
 			WHERE stockmaster.stockid = salescatprod.stockid
 				AND stockdescriptiontranslations.stockid = stockmaster.stockid
+				AND salescatprod.salescatid = salescat.salescatid
 				AND stockmaster.klsynctoopencart = '1'
 				AND (stockdescriptiontranslations.date_created >= '" . $LastTimeRun . "'
 					OR stockdescriptiontranslations.date_updated >= '" . $LastTimeRun . "'

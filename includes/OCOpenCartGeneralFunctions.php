@@ -596,17 +596,17 @@ function CreateMetaDescriptionSalesCategory($Group, $Item){
 
 function CreateMetaDescriptionItem($StockID, $Text){
 	$MetaDescription = $StockID . " " . CleanText($Text);
-	return $MetaDescription;
+	return mb_substr($MetaDescription, 0, 255);
 }
 
 function CreateMetaTitleItem($StockID, $Name, $Separator){
 	$MetaTitle = $StockID . $Separator . $Name;
-	return $MetaTitle;
+	return mb_substr($MetaTitle, 0, 255);
 }
 
 function CreateMetaKeywordItem($StockID, $StoreName, $Tag, $TagSeparator){
 	$MetaKeyword = $StockID . $TagSeparator . $StoreName . $TagSeparator . $Tag;
-	return $MetaKeyword;
+	return mb_substr($MetaKeyword, 0, 255);
 }
 
 function CreateSEOKeyword($KeyWord){
