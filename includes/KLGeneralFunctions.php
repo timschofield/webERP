@@ -566,7 +566,10 @@ function getDirectoryTree(string $outerDir){
    return $dirs; 
 } 
 
-function ItemInList(string $Item, string $List){
+function ItemInList(?string $Item, ?string $List){
+	if ($Item === null || $List === null){
+		return false;
+	}
 	// http://www.php.net/manual/en/function.strpos.php for details on ===	
 	if (strpos(strtolower($List), strtolower($Item)) === false){
 		return false;
@@ -575,7 +578,10 @@ function ItemInList(string $Item, string $List){
 	}
 }
 
-function NumberOfItemsInList(string $List){
+function NumberOfItemsInList(?string $List){
+	if ($List === null || $List === '') {
+		return 0;
+	}
 	// https://www.php.net/manual/en/function.substr-count.php 	
 	return substr_count($List, ',') + 1;  
 }

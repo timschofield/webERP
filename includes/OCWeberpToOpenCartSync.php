@@ -1,6 +1,6 @@
 <?php
 
-function WeberpToOpenCartDailySync($ShowMessages , $EmailText=''){
+function WeberpToOpenCartDailySync(bool $ShowMessages, string $EmailText = ''){
 	$begintime = time_start();
 
 	DB_Txn_Begin();
@@ -56,7 +56,7 @@ function WeberpToOpenCartDailySync($ShowMessages , $EmailText=''){
 	return $EmailText;
 }
 
-function WeberpToOpenCartHourlySync($ShowMessages , $ControlTx = true, $EmailText=''){
+function WeberpToOpenCartHourlySync(bool $ShowMessages, bool $ControlTx = true, string $EmailText = ''){
 	$begintime = time_start();
 	if ($ControlTx){
 		DB_Txn_Begin();
@@ -108,7 +108,7 @@ function WeberpToOpenCartHourlySync($ShowMessages , $ControlTx = true, $EmailTex
 	return $EmailText;
 }
 
-function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= ''){
+function SyncProductBasicInformation(bool $ShowMessages, string $LastTimeRun, string $EmailText = ''){
 	$i = 0;
 	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference());
 	$TagSeparator = ", ";
@@ -226,7 +226,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 
 			if (($DiscountCategory == 80) OR ($ItemCategory == "DISC8A")){
 				/* It's a Outlet 80% discount item, we have to disable it! */
-					$Status = 0;
+				$Status = 0;
 			}
 
 			$Viewed = 0;
@@ -248,7 +248,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 				$StoreText = "Blink";
 				$StoreName = META_STORE_NAME_BL;
 				$GoogleBrand = GOOGLE_BRAND_BLINK;
-			} elseif ($ItemBrand == "GE"){
+			} else{
 				// it's a general item, so we assign first to KL.
 				$StoreId = OPENCART_STORE_KAPAL_LAUT;
 				$StoreText = "KL";
@@ -290,7 +290,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 								height = '" . $Height . "',
 								length_class_id = '" . $LenghtClassId . "'
 							WHERE product_id = '" . $ProductId . "'";
-				$ResultUpdate = DB_query_oc($SQLUpdate,$UpdateErrMsg,'',true);
+				DB_query_oc($SQLUpdate,$UpdateErrMsg,'',true);
 
 				$SQLUpdate = "UPDATE oc_product_description SET
 								name = '" . $Name . "',
@@ -301,7 +301,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 								tag = '" . $Tag . "'
 							WHERE product_id = '" . $ProductId . "'
 								AND language_id = '" . $LanguageId . "'";
-				$ResultUpdate = DB_query_oc($SQLUpdate,$UpdateErrMsg,'',true);
+				DB_query_oc($SQLUpdate,$UpdateErrMsg,'',true);
 				
 				if (!DataExistsInOpenCart('oc_product_to_store', 'store_id', $StoreId, 'product_id', $ProductId)){
 					$SQLInsert = "INSERT INTO oc_product_to_store
@@ -311,7 +311,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 								('" . $ProductId . "',
 								'" . $StoreId . "'
 								)";
-					$ResultUpdate = DB_query_oc($SQLInsert,$UpdateErrMsg,'',true);
+					DB_query_oc($SQLInsert,$UpdateErrMsg,'',true);
 				}
 			} else {
 				$Action = "Insert";
@@ -379,7 +379,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 								'" . $ServerNow . "',
 								'" . $ServerNow . "'
 								)";
-				$ResultInsert = DB_query_oc($SQLInsert,$InsertErrMsg,'',true);
+				DB_query_oc($SQLInsert,$InsertErrMsg,'',true);
 
 				// Let's get the OpenCart primary key for product
 				$ProductId = GetOpenCartProductId($Model);
@@ -403,7 +403,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 								'" . $MetaKeyword . "',
 								'" . $Tag . "'
 								)";
-				$ResultInsert = DB_query_oc($SQLInsert,$InsertErrMsg,'',true);
+				DB_query_oc($SQLInsert,$InsertErrMsg,'',true);
 
 				$SQLInsert = "INSERT INTO oc_product_to_store
 								(product_id,
@@ -412,7 +412,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 								('" . $ProductId . "',
 								'" . $StoreId . "'
 								)";
-				$ResultInsert = DB_query_oc($SQLInsert,$InsertErrMsg,'',true);
+				DB_query_oc($SQLInsert,$InsertErrMsg,'',true);
 
 				$SortOrder++;
 			}
@@ -427,7 +427,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 					$SalesCatId = 129; // Category Outlet-Discount Kapal-Laut
 				} elseif ($ItemBrand == "BL"){
 					$SalesCatId = 128; // Category Outlet-Discount Blink
-				} elseif ($ItemBrand == "GE"){
+				} else{
 					// it's a general item, so we assign to KL.
 					$SalesCatId = 129; // Category Outlet-Discount Kapal-Laut
 				}
@@ -478,7 +478,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 								('" . $ProductId . "',
 								'" . OPENCART_STORE_BLINK . "'
 								)";
-				$ResultInsert = DB_query_oc($SQLInsert,$InsertErrMsg,'',true);
+				DB_query_oc($SQLInsert,$InsertErrMsg,'',true);
 				$StoreText = $StoreText . " + BL";
 				MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, OPENCART_STORE_BLINK, $LanguageId);
 			}
@@ -492,7 +492,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 								('" . $ProductId . "',
 								'" . OPENCART_STORE_WHOLESALE . "'
 								)";
-				$ResultInsert = DB_query_oc($SQLInsert,$InsertErrMsg,'',true);
+				DB_query_oc($SQLInsert,$InsertErrMsg,'',true);
 				$StoreText = $StoreText . " + WH";
 				MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, OPENCART_STORE_WHOLESALE, $LanguageId);
 			}
@@ -536,7 +536,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 	return $EmailText;
 }
 
-function SyncProductSalesCategories($ShowMessages, $LastTimeRun , $EmailText= ''){
+function SyncProductSalesCategories(bool $ShowMessages, string $LastTimeRun, string $EmailText = ''){
 	$i = 0;
 
 	if ($EmailText !=''){
@@ -623,7 +623,7 @@ function SyncProductSalesCategories($ShowMessages, $LastTimeRun , $EmailText= ''
 	return $EmailText;
 }
 
-function SyncProductPrices($ShowMessages, $LastTimeRun , $EmailText = ''){
+function SyncProductPrices(bool $ShowMessages, string $LastTimeRun, string $EmailText = ''){
 	$i = 0;
 
 	if ($EmailText !=''){
@@ -680,7 +680,7 @@ function SyncProductPrices($ShowMessages, $LastTimeRun , $EmailText = ''){
 			$SQLUpdate = "UPDATE oc_product SET
 							price = '" . $Price . "'
 						WHERE product_id = '" . $ProductId . "'";
-			$ResultUpdate = DB_query_oc($SQLUpdate,$UpdateErrMsg,'',true);
+			DB_query_oc($SQLUpdate,$UpdateErrMsg,'',true);
 
 			// update discounts if needed
 			MaintainOpenCartDiscountForItem($ProductId, $Price, $DiscountCategory, $PriceList );
@@ -716,7 +716,7 @@ function SyncProductPrices($ShowMessages, $LastTimeRun , $EmailText = ''){
 	return $EmailText;
 }
 
-function SyncProductQOH($ShowMessages, $LastTimeRun , $EmailText=''){
+function SyncProductQOH(bool $ShowMessages, string $LastTimeRun, string $EmailText = ''){
 	$i = 0;
 
 	if ($EmailText !=''){
@@ -770,7 +770,7 @@ function SyncProductQOH($ShowMessages, $LastTimeRun , $EmailText=''){
 							quantity = '" . $Quantity . "',
 							status = '" . $Status . "'
 						WHERE product_id = '" . $ProductId . "'";
-			$ResultUpdate = DB_query_oc($SQLUpdate,$UpdateErrMsg,'',true);
+			DB_query_oc($SQLUpdate,$UpdateErrMsg,'',true);
 			
 			if ($ShowMessages){
 				$k = StartEvenOrOddRow($k);
@@ -799,7 +799,7 @@ function SyncProductQOH($ShowMessages, $LastTimeRun , $EmailText=''){
 	$SQLUpdate = "UPDATE oc_product SET
 					status = 0
 				WHERE quantity = 0";
-	$ResultUpdate = DB_query_oc($SQLUpdate,"","",true);
+	DB_query_oc($SQLUpdate,"","",true);
 	if ($EmailText !=''){
 		$EmailText = $EmailText . " Set Status = 0 for all items with QOH = 0" . "\n";
 	}
@@ -814,7 +814,7 @@ function SyncProductQOH($ShowMessages, $LastTimeRun , $EmailText=''){
 	return $EmailText;
 }
 
-function SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun , $EmailText=''){
+function SyncProductMarketplacesLinks(bool $ShowMessages, string $LastTimeRun, string $EmailText = ''){
 	$i = 0;
 	if ($EmailText !=''){
 		$EmailText = $EmailText . "Enable/Disable Product in Marketplaces based on QOH" . "\n" . PrintTimeInformation();
@@ -855,6 +855,7 @@ function SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun , $EmailText='
 				// discounted items are not enabled in marketplaces
 				$Action = "Disable Outlet";
 				$EnabledMarketplaces = "0";
+				$QOH = 0;
 			} else {
 				// is not discount item, so we can decide depending on QOH
 				$QOH = ItemMarketplaceQOH($MyRow['stockid']);
@@ -997,7 +998,7 @@ function SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun , $EmailText='
 				$SQLUpdate = "UPDATE oc_product_link SET
 								product_link = '" . $Link . "'
 							WHERE product_id = '" . $ProductId . "'";
-				$ResultUpdate = DB_query_oc($SQLUpdate,$UpdateErrMsg,'',true);
+				DB_query_oc($SQLUpdate,$UpdateErrMsg,'',true);
 			} else {
 				$Action = "Insert";
 
@@ -1008,7 +1009,7 @@ function SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun , $EmailText='
 								('" . $ProductId . "',
 								'" . $Link . "'
 								)";
-				$ResultInsert = DB_query_oc($SQLInsert,$InsertErrMsg,'',true);
+				DB_query_oc($SQLInsert,$InsertErrMsg,'',true);
 			}
 			
 			if ($ShowMessages){
@@ -1049,7 +1050,7 @@ function SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun , $EmailText='
 	return $EmailText;
 }
 
-function PurgeDiscountOver50($ShowMessages, $LastTimeRun , $EmailText=''){
+function PurgeDiscountOver50(bool $ShowMessages, string $LastTimeRun, string $EmailText = ''){
 
 	if ($EmailText !=''){
 		$EmailText = $EmailText . "Purge Products with Discount Over 50%" . "\n" . PrintTimeInformation();
@@ -1062,7 +1063,7 @@ function PurgeDiscountOver50($ShowMessages, $LastTimeRun , $EmailText=''){
 			AND oc_product.price / oc_product_special.price > 2
 			AND oc_product.status = 1;";
 
-	$ResultUpdate = DB_query_oc($SQLUpdate,"","",true);
+	DB_query_oc($SQLUpdate,"","",true);
 	
 	if ($ShowMessages){
 		prnMsg('Purged Products with Discount Over 50%','success');
@@ -1074,7 +1075,7 @@ function PurgeDiscountOver50($ShowMessages, $LastTimeRun , $EmailText=''){
 	return $EmailText;
 }
 
-function SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun , $EmailText=''){
+function SyncProductDescriptionTranslations(bool $ShowMessages, string $LastTimeRun, string $EmailText = ''){
 // UPDATE `kl_erp`.`stockdescriptiontranslations` SET `date_updated` = NOW();
 	$TagSeparator = ", ";
 
@@ -1137,7 +1138,7 @@ function SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun , $Email
 			} elseif ($ItemBrand == "BL"){
 				$StoreId = OPENCART_STORE_BLINK;
 				$StoreName = META_STORE_NAME_BL;
-			} elseif ($ItemBrand == "GE"){
+			} else {
 				$StoreId = OPENCART_STORE_KAPAL_LAUT;
 				$StoreName = META_STORE_NAME_KL;
 			}
@@ -1250,7 +1251,7 @@ function SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun , $Email
 	return $EmailText;
 }
 
-function SyncMultipleImages($ShowMessages, $LastTimeRun , $EmailText = ''){
+function SyncMultipleImages(bool $ShowMessages, string $LastTimeRun, string $EmailText = ''){
 
 	if ($EmailText !=''){
 		$EmailText = $EmailText . "Sync Multiple Images" . "\n" . PrintTimeInformation();
@@ -1266,15 +1267,13 @@ function SyncMultipleImages($ShowMessages, $LastTimeRun , $EmailText = ''){
 						</tr>';
 		echo $TableHeader;
 	}
-//	$SQLTruncate = "TRUNCATE oc_product_image";
-//	$ResultSQLTruncate = DB_query_oc($SQLTruncate);
+
 	$k = 0; //row colour counter
-	$i= 0;
+	$i = 0;
 	// get all images in part_pics folder (ideally should be OpenCart images folder...)
 	$ImageFiles = getDirectoryTree($_SESSION['part_pics_dir']);
 	foreach ($ImageFiles as $file) {
 		$multipleimage = 1;
-		$exist_multiple = true;
 		while ($multipleimage <= 9){
 			$suffix = ".". $multipleimage;
 			if (strpos($file, $suffix) !== false){
@@ -1294,7 +1293,7 @@ function SyncMultipleImages($ShowMessages, $LastTimeRun , $EmailText = ''){
 										('" . $ProductId . "',
 										'" . $Image . "',
 										'" . $multipleimage . "')";
-						$ResultInsert = DB_query_oc($SQLInsert,"","",true);
+						DB_query_oc($SQLInsert,"","",true);
 						if ($ShowMessages){
 							$k = StartEvenOrOddRow($k);
 							printf('<td>%s</td>
@@ -1323,7 +1322,7 @@ function SyncMultipleImages($ShowMessages, $LastTimeRun , $EmailText = ''){
 	return $EmailText;
 }
 
-function SyncCurrencies($ShowMessages, $LastTimeRun , $EmailText= ''){
+function SyncCurrencies(bool $ShowMessages, string $LastTimeRun, string $EmailText = ''){
 	$i = 0;
 	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference());
 	if ($EmailText !=''){
@@ -1377,7 +1376,7 @@ function SyncCurrencies($ShowMessages, $LastTimeRun , $EmailText= ''){
 								SET value 		= '" . $Rate . "',
 									date_modified 	= '" . $ServerNow . "'
 								WHERE code 	= '" . $Currency . "'";
-				$ResultUpdate = DB_query_oc($SQLUpdate,$UpdateErrMsg,'',true);
+				DB_query_oc($SQLUpdate,$UpdateErrMsg,'',true);
 			} else {
 				$Action = "Insert";
 				$SQLInsert = "INSERT INTO oc_currency
@@ -1395,7 +1394,7 @@ function SyncCurrencies($ShowMessages, $LastTimeRun , $EmailText= ''){
 								'1',
 								'" . $ServerNow . "'
 								)";
-				$ResultInsert = DB_query_oc($SQLInsert,$InsertErrMsg,'',true);
+				DB_query_oc($SQLInsert,$InsertErrMsg,'',true);
 			}
 			if ($ShowMessages){
 				$k = StartEvenOrOddRow($k);
@@ -1428,7 +1427,7 @@ function SyncCurrencies($ShowMessages, $LastTimeRun , $EmailText= ''){
 	return $EmailText;
 }
 
-function KL_DailyCleanOpenCartDB($ShowMessages , $EmailText=''){
+function KL_DailyCleanOpenCartDB(bool $ShowMessages, string $EmailText = ''){
 	$begintime = time_start();
 
 	DB_Txn_Begin();
@@ -1448,7 +1447,7 @@ function KL_DailyCleanOpenCartDB($ShowMessages , $EmailText=''){
 	return $EmailText;
 }
 
-function CleanOldOpenCartCoupons($ShowMessages, $MaxDays , $EmailText= ''){
+function CleanOldOpenCartCoupons(bool $ShowMessages, int $MaxDays, string $EmailText = ''){
 	$Title = 'Clean old OpenCart Coupons expired ' . $MaxDays . ' ago';
 	$i = 0;
 	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference());
@@ -1477,8 +1476,6 @@ function CleanOldOpenCartCoupons($ShowMessages, $MaxDays , $EmailText= ''){
 							</tr>';
 			echo $TableHeader;
 		}
-		$UpdateErrMsg = 'The SQL to update ' . $Title . ' failed';
-		$InsertErrMsg = 'The SQL to insert ' . $Title . ' failed';
 
 		$k = 0; //row colour counter
 		$i = 0;
@@ -1491,7 +1488,7 @@ function CleanOldOpenCartCoupons($ShowMessages, $MaxDays , $EmailText= ''){
 			
 			$SQLDelete = "DELETE FROM oc_coupon WHERE coupon_id = '" . $CouponId . "'";
 
-			$ResultDelete = DB_query_oc($SQLDelete);
+			DB_query_oc($SQLDelete);
 
 			if ($ShowMessages){
 				$k = StartEvenOrOddRow($k);
@@ -1524,10 +1521,10 @@ function CleanOldOpenCartCoupons($ShowMessages, $MaxDays , $EmailText= ''){
 	return $EmailText;
 }
 
-function ChangeOldPendingOpenCartOrders($ShowMessages, $MaxDays , $EmailText= ''){
+function ChangeOldPendingOpenCartOrders(bool $ShowMessages, int $MaxDays, string $EmailText = ''){
 	$Title = 'Change old PENDING OC Orders to EXPIRED';
 	$i = 0;
-	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference());
+
 	if ($EmailText !=''){
 		$EmailText = $EmailText . $Title . "\n" . PrintTimeInformation();
 	}
@@ -1554,8 +1551,6 @@ function ChangeOldPendingOpenCartOrders($ShowMessages, $MaxDays , $EmailText= ''
 							</tr>';
 			echo $TableHeader;
 		}
-		$UpdateErrMsg = 'The SQL to update ' . $Title . ' failed';
-		$InsertErrMsg = 'The SQL to insert ' . $Title . ' failed';
 
 		$k = 0; //row colour counter
 		$i = 0;
@@ -1598,10 +1593,10 @@ function ChangeOldPendingOpenCartOrders($ShowMessages, $MaxDays , $EmailText= ''
 	return $EmailText;
 }
 
-function ChangeOldShippedOpenCartOrders($ShowMessages, $MaxDays , $EmailText= ''){
+function ChangeOldShippedOpenCartOrders(bool $ShowMessages, int $MaxDays, string $EmailText = ''){
 	$Title = 'Change old SHIPPED OC Orders to COMPLETE';
 	$i = 0;
-	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference());
+
 	if ($EmailText !=''){
 		$EmailText = $EmailText . $Title . "\n" . PrintTimeInformation();
 	}
@@ -1628,8 +1623,6 @@ function ChangeOldShippedOpenCartOrders($ShowMessages, $MaxDays , $EmailText= ''
 							</tr>';
 			echo $TableHeader;
 		}
-		$UpdateErrMsg = 'The SQL to update ' . $Title . ' failed';
-		$InsertErrMsg = 'The SQL to insert ' . $Title . ' failed';
 
 		$k = 0; //row colour counter
 		$i = 0;
@@ -1672,7 +1665,7 @@ function ChangeOldShippedOpenCartOrders($ShowMessages, $MaxDays , $EmailText= ''
 	return $EmailText;
 }
 
-function AssignAcessRightsProductsToCustomerGroupInOpenCart($ProductId, $CustomerGroupId){
+function AssignAcessRightsProductsToCustomerGroupInOpenCart(mixed $ProductId, mixed $CustomerGroupId){
 	/* Now, insert it, if it is not there yet*/
 	if (!DataExistsInOpenCart('oc_product_to_customer_group', 'product_id', $ProductId, 'customer_group_id', $CustomerGroupId)){
 		$InsertErrMsg = __('The SQL on fucntion AssignAcessRightsProductsToCustomerGroupInOpenCart failed');
@@ -1683,11 +1676,11 @@ function AssignAcessRightsProductsToCustomerGroupInOpenCart($ProductId, $Custome
 						('" . $ProductId . "',
 						'" . $CustomerGroupId . "'
 						)";
-		$ResultInsert = DB_query_oc($SQLInsert,$InsertErrMsg,'',true);
+		DB_query_oc($SQLInsert,$InsertErrMsg,'',true);
 	}
 }
 
-function RevokeAcessRightsProductsToCustomerGroupInOpenCart($ProductId, $CustomerGroupId){
+function RevokeAcessRightsProductsToCustomerGroupInOpenCart(mixed $ProductId, mixed $CustomerGroupId){
 	$DeleteErrMsg = __('The SQL on fucntion RevokeAcessRightsProductsToCustomerGroupInOpenCart failed');
 
 	/* Now, revoke (delete) the access rights*/
@@ -1695,10 +1688,10 @@ function RevokeAcessRightsProductsToCustomerGroupInOpenCart($ProductId, $Custome
 			WHERE product_id = '" . $ProductId . "'
 				AND customer_group_id = '" . $CustomerGroupId . "'";
 				
-	$ResultDelete = DB_query_oc($SQL,$DeleteErrMsg,'',true);
+	DB_query_oc($SQL,$DeleteErrMsg,'',true);
 }
 
-function FlagWebERPObsoleteItemsInOpenCart($RootPath){
+function FlagWebERPObsoleteItemsInOpenCart(string $RootPath){
 
 	$SQL = "SELECT stockmaster.stockid,
 				stockmaster.description
