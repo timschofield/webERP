@@ -274,10 +274,14 @@ if (isset($_SESSION['UserID'])
 
 	if ($Result and DB_num_rows($Result) == 1) {
 		$MyRow = DB_fetch_array($Result);
-		if (!empty($MyRow['passworddate']) and $MyRow['passworddate'] != '0000-00-00') {
-			$PasswordAgeDays = DateDiff(Date($_SESSION['DefaultDateFormat']), ConvertSQLDate($MyRow['passworddate']), 'd');
-			if ($PasswordAgeDays > $MaxPasswordAge) {
-				prnMsg(__('Your password is older than the maximum allowed age of') . ' ' . $MaxPasswordAge . ' ' . __('days') . '. ' . __('Please change it in User Settings'), 'warn');
+		if (!empty($MyRow['passworddate'])) {
+			if ($MyRow['passworddate'] == '1000-01-01') {
+				prnMsg(__('Set your own password in User Settings'), 'warn');
+			} else {
+				$PasswordAgeDays = DateDiff(Date($_SESSION['DefaultDateFormat']), ConvertSQLDate($MyRow['passworddate']), 'd');
+				if ($PasswordAgeDays > $MaxPasswordAge) {
+					prnMsg(__('You have not changed your password in more than') . ' ' . $MaxPasswordAge . ' ' . __('days') . '. ' . __('Change it now in User Settings'), 'warn');
+				}
 			}
 		}
 	}
