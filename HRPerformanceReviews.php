@@ -165,7 +165,7 @@ if (isset($_GET['edit']) || isset($_GET['new']) || !isset($_GET['view'])) {
 	$SQL = "SELECT employeeid, employeenumber, firstname, lastname
 			FROM hremployees
 			WHERE employmentstatus = 'Active'
-			ORDER BY lastname, firstname";
+			ORDER BY firstname, lastname";
 	$Result = DB_query($SQL);
 	while ($Row = DB_fetch_array($Result)) {
 		echo '<option value="' . $Row['employeeid'] . '"' .
@@ -184,7 +184,7 @@ if (isset($_GET['edit']) || isset($_GET['new']) || !isset($_GET['view'])) {
 	$SQL = "SELECT employeeid, employeenumber, firstname, lastname
 			FROM hremployees
 			WHERE employmentstatus = 'Active'
-			ORDER BY lastname, firstname";
+			ORDER BY firstname, lastname";
 	$Result = DB_query($SQL);
 	while ($Row = DB_fetch_array($Result)) {
 		echo '<option value="' . $Row['employeeid'] . '"' .
@@ -379,7 +379,7 @@ if (!isset($_GET['view'])) {
 	$SQL = "SELECT employeeid, employeenumber, firstname, lastname
 			FROM hremployees
 			WHERE employmentstatus = 'Active'
-			ORDER BY lastname, firstname";
+			ORDER BY firstname, lastname";
 	$Result = DB_query($SQL);
 	while ($Row = DB_fetch_array($Result)) {
 		echo '<option value="' . $Row['employeeid'] . '"' .

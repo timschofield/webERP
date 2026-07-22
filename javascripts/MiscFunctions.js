@@ -419,7 +419,11 @@ function unload() {
 	return false*/
 }
 
-document.getElementById("eye").addEventListener("click", TogglePassword);
-document.getElementById("confirmeye").addEventListener("click", ToggleConfirmPassword);
+if (elementExists = document.getElementById("eye")) {
+    document.getElementById("eye").addEventListener("click", TogglePassword);
+}
+if (elementExists = document.getElementById("confirmeye")) {
+    document.getElementById("confirmeye").addEventListener("click", ToggleConfirmPassword);
+}
 
 window.onload = initial;

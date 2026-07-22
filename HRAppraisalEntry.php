@@ -329,7 +329,7 @@ if ($EditMode) {
 				CONCAT(firstname, ' ', lastname) AS name
 			FROM hremployees
 			WHERE employmentstatus = 'Active'
-			ORDER BY lastname, firstname";
+			ORDER BY firstname, lastname";
 	$Result = DB_query($SQL);
 	while ($EmpRow = DB_fetch_array($Result)) {
 		echo '<option value="' . htmlspecialchars($EmpRow['employeenumber'], ENT_QUOTES, 'UTF-8') . '"' .
@@ -362,11 +362,26 @@ echo '<field>
 		<label for="ReviewerID">' . __('Reviewer/Manager') . ':</label>
 		<select name="ReviewerID">';
 echo '<option value="">' . __('Select Reviewer') . '</option>';
+$ReviewerPositionIDs = array();
+if ($DbEmployeeNumber != '') {
+	$SelectedPositionID = GetPositionIDFromEmployeeNumber((string)$DbEmployeeNumber);
+	if ($SelectedPositionID > 0) {
+		$ReviewerPositionIDs = GetAncestorPositionIDs($SelectedPositionID);
+	}
+}
+
 $SQL    = "SELECT employeeid,
 			CONCAT(firstname, ' ', lastname) AS name
 		FROM hremployees
-		WHERE employmentstatus = 'Active'
-		ORDER BY lastname, firstname";
+		WHERE employmentstatus = 'Active'";
+
+if (!empty($ReviewerPositionIDs)) {
+	$SQL .= " AND positionid IN (" . implode(',', array_map('intval', $ReviewerPositionIDs)) . ")";
+} else {
+	$SQL .= " AND 1=0";
+}
+
+$SQL .= " ORDER BY firstname, lastname";
 $Result = DB_query($SQL);
 while ($MgrRow = DB_fetch_array($Result)) {
 	echo '<option value="' . $MgrRow['employeeid'] . '"' .

@@ -22,13 +22,32 @@ $Row = DB_fetch_array($Result);
 if ($Row['optcount'] == 0) {
 	$DefaultOptions = array(
 		array('ProbationPeriod', '90', 'Default probation period in days'),
-		array('AppraisalFrequency', '365', 'Days between performance appraisals'),
-		array('MaxSickDays', '10', 'Maximum sick days per year'),
-		array('MaxVacationDays', '20', 'Maximum vacation days per year'),
+		array('AppraisalFrequency', '365', 'Maximum Days between performance appraisals'),
+		array('ColleagueFeedbackFrequency', '365', 'Maximum days between colleague feedbacks'),
 		array('MinSalaryIncreasePercent', '0', 'Minimum salary increase percentage'),
 		array('MaxSalaryIncreasePercent', '15', 'Maximum salary increase percentage')
 	);
 	foreach ($DefaultOptions as $Option) {
+		$SQL = "INSERT INTO hrsystemoptions (optionname, optionvalue, optiondescription)
+				VALUES ('" . DB_escape_string($Option[0]) . "',
+						'" . DB_escape_string($Option[1]) . "',
+						'" . DB_escape_string($Option[2]) . "')";
+		DB_query($SQL);
+	}
+}
+
+/* Ensure newer options exist for upgraded installations */
+$RequiredOptions = array(
+	array('ColleagueFeedbackFrequency', '365', 'Frequency of colleague feedback in days')
+);
+
+foreach ($RequiredOptions as $Option) {
+	$SQL = "SELECT COUNT(*) as cnt
+			FROM hrsystemoptions
+			WHERE optionname = '" . DB_escape_string($Option[0]) . "'";
+	$Result = DB_query($SQL);
+	$OptRow = DB_fetch_array($Result);
+	if (!isset($OptRow['cnt']) || (int)$OptRow['cnt'] == 0) {
 		$SQL = "INSERT INTO hrsystemoptions (optionname, optionvalue, optiondescription)
 				VALUES ('" . DB_escape_string($Option[0]) . "',
 						'" . DB_escape_string($Option[1]) . "',

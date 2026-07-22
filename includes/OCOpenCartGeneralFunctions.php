@@ -42,7 +42,7 @@ function Get_SQL_OC_to_PHP_time_difference() {
 //	return -1; // Bali to JKT (OC DB lives in JKT time)
 }
 
-function GetServerTimeNow($TimeDifference){
+function GetServerTimeNow(mixed $TimeDifference){
 	// webERP DB and OpenCart DB triggers happens on DB time, not local time,
 	// so when checking if a row has been updated or created in webERP or OC, we need to check the timestamp against ServerTime :-)
 	// 4 hours of my life were invested finding it out...
@@ -59,13 +59,15 @@ function PrintTimeInformation() {
 	return $Text;
 }
 
-function CheckLastTimeRun($Script){
+function CheckLastTimeRun(string $Script){
 	if ($Script == 'OpenCartToWeberp'){
 		$ConfigName = 'OpenCartToWeberp_LastRun';
 	} elseif ($Script == 'WeberpToOpenCartHourly'){
 		$ConfigName = 'WeberpToOpenCartHourly_LastRun';
 	} elseif ($Script == 'WeberpToOpenCartDaily'){
 		$ConfigName = 'WeberpToOpenCartDaily_LastRun';
+	} else {
+		return  "2999-12-31"; // Error, so we will not change anything
 	}
 	$SQL = "SELECT confvalue
 			FROM config
@@ -79,7 +81,7 @@ function CheckLastTimeRun($Script){
 	}
 }
 
-function SetLastTimeRun($Script){
+function SetLastTimeRun(string $Script){
 	if ($Script == 'OpenCartToWeberp'){
 		// Updating from OC to webERP: Check the time zone used in OC DB 
 		$ServerNow = GetServerTimeNow(Get_SQL_OC_to_PHP_time_difference());
@@ -101,12 +103,14 @@ function SetLastTimeRun($Script){
 		$SQL = "UPDATE config
 				SET confvalue = '" . $_SESSION['WeberpToOpenCartDaily_LastRun'] ."'
 				WHERE confname = 'WeberpToOpenCartDaily_LastRun'";
+	} else {
+		return;
 	}
 	$ErrMsg =__('Could not update Last Run Time of this script because');
 	DB_query($SQL,$ErrMsg);
 }
 
-function DataExistsInOpenCart($Table, $f1, $v1, $f2 = '', $v2 = ''){
+function DataExistsInOpenCart(string $Table, string $f1, mixed $v1, string $f2 = '', mixed $v2 = ''){
 	if ($f2 == ''){
 		/* Primary key is 1 field only */
 		$SQL = "SELECT COUNT(*)
@@ -131,7 +135,7 @@ function DataExistsInOpenCart($Table, $f1, $v1, $f2 = '', $v2 = ''){
 	return $Exists;
 }
 
-function GetOpenCartProductId($model){
+function GetOpenCartProductId(string $model){
 	$SQL = "SELECT product_id
 			FROM oc_product
 			WHERE model = '" . $model . "'";
@@ -145,7 +149,7 @@ function GetOpenCartProductId($model){
 	}
 }
 
-function GetManufacturerFromProductId($ProductId){
+function GetManufacturerFromProductId(mixed $ProductId){
 	$SQL = "SELECT manufacturer_id
 			FROM oc_product
 			WHERE product_id = '" . $ProductId . "'";
@@ -160,7 +164,7 @@ function GetManufacturerFromProductId($ProductId){
 }
 
 
-function GetOpenCartLanguageId($language){
+function GetOpenCartLanguageId(string $language){
 	$SQL = "SELECT language_id
 			FROM oc_language
 			WHERE locale LIKE '%" . $language . "%'";
@@ -174,7 +178,7 @@ function GetOpenCartLanguageId($language){
 	}
 }
 
-function GetWeberpCustomerIdFromEmail($email){
+function GetWeberpCustomerIdFromEmail(string $email){
 	$SQL = "SELECT debtorno
 			FROM custbranch
 			WHERE email = '" . $email . "'";
@@ -220,11 +224,11 @@ function GetWeberpComissionCCDOKU(){
 	return $Com;
 }
 
-function GetWeberpCustomerIdFromCurrency($Currency){
+function GetWeberpCustomerIdFromCurrency(string $Currency){
 	return WEBERP_ONLINE_RETAIL_CUSTOMER_CODE_PREFIX . $Currency;
 }
 
-function GetWeberpCustomerIdFromCustomerGroupAndCurrency($CustomerGroup, $Currency){
+function GetWeberpCustomerIdFromCustomerGroupAndCurrency(mixed $CustomerGroup, string $Currency){
 	if (($CustomerGroup == "4") 
 		OR ($CustomerGroup == "6")
 		OR ($CustomerGroup == "7")){
@@ -237,7 +241,7 @@ function GetWeberpCustomerIdFromCustomerGroupAndCurrency($CustomerGroup, $Curren
 	return $CustomerId;
 }
 
-function GetWeberpForeignCurrencySurchargeFactor($Location){
+function GetWeberpForeignCurrencySurchargeFactor(string $Location){
 	$SQL = "SELECT foreigncurrencysurchargefactor
 			FROM locations, klonlinepartners
 			WHERE locations.onlinepartnercode = klonlinepartners.onlinepartnercode
@@ -253,7 +257,7 @@ function GetWeberpForeignCurrencySurchargeFactor($Location){
 	return $Factor;
 }
 
-function GetWeberpGLAccountPayPalFromCustomer($CustomerCode){
+function GetWeberpGLAccountPayPalFromCustomer(string $CustomerCode){
 
 	$Area = GetAreaFromCustomer($CustomerCode);
 	$Currency = GetCurrencyFromCustomer($CustomerCode);
@@ -285,7 +289,7 @@ function GetWeberpGLAccountPayPalFromCustomer($CustomerCode){
 	return $GLAccount;
 }
 
-function GetWeberpGLCommissionAccountPayPalFromCustomer($CustomerCode){
+function GetWeberpGLCommissionAccountPayPalFromCustomer(string $CustomerCode){
 	$Area = GetAreaFromCustomer($CustomerCode);
 	$Currency = GetCurrencyFromCustomer($CustomerCode);
 	$OnlinePartner = GetOnlinePartnerFromArea($Area);
@@ -316,7 +320,7 @@ function GetWeberpGLCommissionAccountPayPalFromCustomer($CustomerCode){
 	return $GLAccount;
 }
 
-function GetWeberpOrderNo($CustomerId, $OrderId){
+function GetWeberpOrderNo(string $CustomerId, mixed $OrderId){
 	$SQL = "SELECT orderno
 			FROM salesorders
 			WHERE debtorno = '" . $CustomerId . "'
@@ -332,7 +336,7 @@ function GetWeberpOrderNo($CustomerId, $OrderId){
 	}
 }
 
-function GetOnlineOrderNoFromWeberp($OrderId){
+function GetOnlineOrderNoFromWeberp(mixed $OrderId){
 	$SQL = "SELECT customerref
 			FROM salesorders
 			WHERE orderno = '" . $OrderId . "'";
@@ -346,7 +350,7 @@ function GetOnlineOrderNoFromWeberp($OrderId){
 	}
 }
 
-function GetWeberpCustomerCurrency($CustomerId){
+function GetWeberpCustomerCurrency(string $CustomerId){
 	$SQL = "SELECT currcode
 			FROM debtorsmaster
 			WHERE debtorno = '" . $CustomerId . "'";
@@ -360,7 +364,7 @@ function GetWeberpCustomerCurrency($CustomerId){
 	}
 }
 
-function GetWeberpCurrencyRate($CurrencyCode){
+function GetWeberpCurrencyRate(string $CurrencyCode){
 	$SQL = "SELECT rate
 			FROM currencies
 			WHERE currabrev = '" . $CurrencyCode . "'";
@@ -374,7 +378,7 @@ function GetWeberpCurrencyRate($CurrencyCode){
 	}
 }
 
-function GetTotalTitleFromOrder($Concept, $OrderId){
+function GetTotalTitleFromOrder(string $Concept, mixed $OrderId){
 	$SQL = "SELECT title
 			FROM oc_order_total
 			WHERE order_id = '" . $OrderId . "'
@@ -389,7 +393,7 @@ function GetTotalTitleFromOrder($Concept, $OrderId){
 	}
 }
 
-function GetTotalFromOrder($Concept, $OrderId){
+function GetTotalFromOrder(string $Concept, mixed $OrderId){
 	$SQL = "SELECT SUM(value)
 			FROM oc_order_total
 			WHERE order_id = '" . $OrderId . "'
@@ -404,7 +408,7 @@ function GetTotalFromOrder($Concept, $OrderId){
 	}
 }
 
-function ItemOnlineQOH($StockID){
+function ItemOnlineQOH(string $StockID){
 	$SQL = "SELECT SUM(locstock.quantity)
 			FROM locstock, locations
 			WHERE locstock.loccode = locations.loccode
@@ -433,7 +437,7 @@ function GetOnlinePriceList(){
 	}
 }
 
-function GetDiscount($DiscountCategory, $Quantity, $PriceList){
+function GetDiscount(string $DiscountCategory, mixed $Quantity, string $PriceList){
 	/* Select the disount rate from the discount Matrix */
 	$Result = DB_query("SELECT MAX(discountrate) AS discount
 						FROM discountmatrix
@@ -449,7 +453,7 @@ function GetDiscount($DiscountCategory, $Quantity, $PriceList){
 	return $DiscountMatrixRate;
 }
 
-function MaintainOpenCartDiscountForItem($ProductId, $Price, $DiscountCategory, $PriceList ){
+function MaintainOpenCartDiscountForItem(mixed $ProductId, float|int $Price, string $DiscountCategory, string $PriceList ){
 	$CustomerGroupId = 1; // Retail Customers
 	$Priority = 1;
 	$ManufacturerId = GetManufacturerFromProductId($ProductId);
@@ -487,7 +491,7 @@ function MaintainOpenCartDiscountForItem($ProductId, $Price, $DiscountCategory, 
 	}
 }
 
-function UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $Quantity, $Priority, $DiscountedPrice){
+function UpdateDiscountInOpenCart(mixed $ProductId, mixed $CustomerGroupId, mixed $Quantity, mixed $Priority, float|int $DiscountedPrice){
 	if (WEBERP_DISCOUNTS_IN_OPENCART_TABLE == 'product_discount'){
 		/* use the table product_discount */
 		$SQL = "SELECT product_discount_id
@@ -564,7 +568,7 @@ function UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $Quantity, $Prio
 	}
 }
 
-function GetOpenCartSettingId($Store, $Code, $Key){
+function GetOpenCartSettingId(mixed $Store, string $Code, string $Key){
 	$SQL = "SELECT setting_id
 			FROM oc_setting
 			WHERE store_id = '" . $Store . "'
@@ -581,7 +585,7 @@ function GetOpenCartSettingId($Store, $Code, $Key){
 }
 
 
-function UpdateSettingValueOpenCart($SettingId, $Value){
+function UpdateSettingValueOpenCart(mixed $SettingId, mixed $Value){
 	$UpdateErrMsg = __('The SQL to update setting value in Opencart failed');
 	$SQLUpdate = "UPDATE oc_setting
 					SET	value = '" . $Value . "'
@@ -589,27 +593,27 @@ function UpdateSettingValueOpenCart($SettingId, $Value){
 	DB_query_oc($SQLUpdate,$UpdateErrMsg,'',true);
 }
 
-function CreateMetaDescriptionSalesCategory($Group, $Item){
+function CreateMetaDescriptionSalesCategory(string $Group, string $Item){
 	$MetaDescription = $Group . ' ' . $Item;
 	return $MetaDescription;
 }
 
-function CreateMetaDescriptionItem($StockID, $Text){
+function CreateMetaDescriptionItem(string $StockID, string $Text){
 	$MetaDescription = $StockID . " " . CleanText($Text);
-	return $MetaDescription;
+	return mb_substr($MetaDescription, 0, 255);
 }
 
-function CreateMetaTitleItem($StockID, $Name, $Separator){
+function CreateMetaTitleItem(string $StockID, string $Name, string $Separator){
 	$MetaTitle = $StockID . $Separator . $Name;
-	return $MetaTitle;
+	return mb_substr($MetaTitle, 0, 255);
 }
 
-function CreateMetaKeywordItem($StockID, $StoreName, $Tag, $TagSeparator){
+function CreateMetaKeywordItem(string $StockID, string $StoreName, string $Tag, string $TagSeparator){
 	$MetaKeyword = $StockID . $TagSeparator . $StoreName . $TagSeparator . $Tag;
-	return $MetaKeyword;
+	return mb_substr($MetaKeyword, 0, 255);
 }
 
-function CreateSEOKeyword($KeyWord){
+function CreateSEOKeyword(string $KeyWord){
 	$SEOKeyword =trim($KeyWord);
 	$SEOKeyword = str_ireplace(' ', '-', $SEOKeyword);
 	$SEOKeyword = str_ireplace(',', '-', $SEOKeyword);
@@ -619,7 +623,7 @@ function CreateSEOKeyword($KeyWord){
 	return $SEOKeyword;
 }
 
-function FormatDescriptionOpencart($MessedText){
+function FormatDescriptionOpencart(string $MessedText){
 	//preserve the line breaks as in https://stackoverflow.com/questions/9345514/is-there-any-way-to-convert-plain-text-into-html-with-line-breaks
 	$MessedText = CleanText($MessedText);
 	$MessedText = nl2br($MessedText);
@@ -629,7 +633,7 @@ function FormatDescriptionOpencart($MessedText){
 	return $MessedText;
 }
 
-function CleanText($MessedText){
+function CleanText(string $MessedText){
 	$MessedText = strip_tags($MessedText);
     $MessedText = str_ireplace('/', '', $MessedText);
 	$MessedText = str_ireplace('"', '', $MessedText);
@@ -638,7 +642,7 @@ function CleanText($MessedText){
 	return $MessedText;
 }
 
-function CleanKeywordText($Text){
+function CleanKeywordText(string $Text){
 	$Text =trim($Text);
 	$Text = str_ireplace(' ', ',', $Text);
 	$Text = str_ireplace(',', ',', $Text);
@@ -648,7 +652,7 @@ function CleanKeywordText($Text){
 	return $Text;
 }
 
-function GetWeberpItemBrand($webERPCategoryId, $ManufacturerId){
+function GetWeberpItemBrand(string $webERPCategoryId, mixed $ManufacturerId){
 	if (ItemInList($webERPCategoryId, LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_ALL_DISCOUNT)
 		OR ($ManufacturerId == 1)){
 		$ItemBrand = "KL";
@@ -664,7 +668,7 @@ function GetWeberpItemBrand($webERPCategoryId, $ManufacturerId){
 	return $ItemBrand;
 }
 
-Function GetNextSequenceNo ($TransType){
+function GetNextSequenceNo(mixed $TransType){
 
 	/* SQL to get the next transaction number these are maintained in the table SysTypes - Transaction Types
 	Also updates the transaction number
@@ -685,7 +689,7 @@ Function GetNextSequenceNo ($TransType){
 	return $MyRow[0];	
 }
 
-function InsertCustomerReceipt ($CustomerCode, $AmountPaid, $FreightCost, $CustomerCurrency, $Rate, $BankAccount, $PaymentSystem, $TransactionID, $OrderNo, $PeriodNo) {
+function InsertCustomerReceipt(string $CustomerCode, float|int $AmountPaid, float|int $FreightCost, string $CustomerCurrency, float|int $Rate, string $BankAccount, string $PaymentSystem, mixed $TransactionID, mixed $OrderNo, mixed $PeriodNo){
 
 	$CustomerReceiptNo = GetNextSequenceNo(12);
 
@@ -799,7 +803,7 @@ function InsertCustomerReceipt ($CustomerCode, $AmountPaid, $FreightCost, $Custo
 	EnsureGLEntriesBalanceOpenCart(12,$CustomerReceiptNo);
 }
 
-function EnsureGLEntriesBalanceOpenCart($TransType, $TransTypeNo) {
+function EnsureGLEntriesBalanceOpenCart(mixed $TransType, mixed $TransTypeNo) {
 	/*Ensures general ledger entries balance for a given transaction */
 	$Result = DB_query("SELECT SUM(amount)
 						FROM gltrans
@@ -828,7 +832,7 @@ function EnsureGLEntriesBalanceOpenCart($TransType, $TransTypeNo) {
 	}
 }
 
-function TransactionCommissionGL ($CustomerCode, $BankAccount, $CommissionAccount, $Commission, $Currency, $Rate, $PaymentSystem, $TransactionID, $PeriodNo) {
+function TransactionCommissionGL(string $CustomerCode, string $BankAccount, string $CommissionAccount, float|int $Commission, string $Currency, float|int $Rate, string $PaymentSystem, mixed $TransactionID, mixed $PeriodNo) {
 
 	$PaymentNo = GetNextSequenceNo(1);
 
@@ -902,7 +906,7 @@ function TransactionCommissionGL ($CustomerCode, $BankAccount, $CommissionAccoun
 	EnsureGLEntriesBalanceOpenCart(1,$PaymentNo);
 }
 
-function ChangeOrderQuotationFlag($OrderNo, $Flag){
+function ChangeOrderQuotationFlag(mixed $OrderNo, mixed $Flag){
 	$ErrMsg = __('The Change of quotation flag in salesorders table');
 	$SQLUpdate = "UPDATE salesorders
 					SET quotation = " . $Flag . "
@@ -910,7 +914,7 @@ function ChangeOrderQuotationFlag($OrderNo, $Flag){
 	DB_query($SQLUpdate,$ErrMsg,'',true);
 }
 
-function GetPaypalReturnDataInArray($RawData){
+function GetPaypalReturnDataInArray(string $RawData){
 	$ResponseArray = Array();
 	$MainArray = explode(',', str_replace(array('{', '}', '"'), "", $RawData));
 	foreach ($MainArray as $i => $Value) {
@@ -922,7 +926,7 @@ function GetPaypalReturnDataInArray($RawData){
 	return $ResponseArray;
 }
 
-function MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, $StoreId, $LanguageId){
+function MaintainSeoUrl(string $Action, string $SEOQuery, string $SEOKeyword, mixed $StoreId, mixed $LanguageId){
 	// only work on SEO URL if we are on "Insert" action, as "Update" will lead to 404 errors from Google Bots and
 	// links created before the update moficiation (as the new link will be different and old ones will not be found.
 	if ($Action == "Insert"){
@@ -963,7 +967,7 @@ function MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, $StoreId, $LanguageId){
 	}
 }
 
-function UpdateOpenCartOrderStatus($OrderId, $StatusId, $Notify, $Carrier, $AWB, $Comment){
+function UpdateOpenCartOrderStatus(mixed $OrderId, mixed $StatusId, mixed $Notify, mixed $Carrier, mixed $AWB, string $Comment){
 
 	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference());
 
@@ -1026,7 +1030,7 @@ function UpdateOpenCartOrderStatus($OrderId, $StatusId, $Notify, $Carrier, $AWB,
 	}
 }
 
-function UpdateOpenCartOrderPayment($OrderId){
+function UpdateOpenCartOrderPayment(mixed $OrderId){
 
 	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference());
 
@@ -1037,7 +1041,7 @@ function UpdateOpenCartOrderPayment($OrderId){
 	DB_query_oc($SQLUpdate,$UpdateErrMsg,'',true);
 }
 
-function RoundPriceFromCart($Value, $Currency){
+function RoundPriceFromCart(float|int $Value, string $Currency){
 	switch ($Currency){
 	case 'AUD':
 		$round = 0.01;
@@ -1072,7 +1076,7 @@ function RoundPriceFromCart($Value, $Currency){
 	return $Value;
 }
 
-function GetWeberpShippingMethod($OpenCartShippingMethod){
+function GetWeberpShippingMethod(string $OpenCartShippingMethod){
 
 	$SQL = "SELECT shipper_id
 			FROM shippers
@@ -1088,7 +1092,7 @@ function GetWeberpShippingMethod($OpenCartShippingMethod){
 	return $WeberpShipping;
 }
 
-function GetGoogleProductFeedStatus($StockID, $SalesCategory, $Quantity){
+function GetGoogleProductFeedStatus(string $StockID, string $SalesCategory, float|int $Quantity){
 	$Status = 0;
 	if ((strpos(SALES_CATEGORIES_FOR_GOOGLE_PRODUCT_FEED, $SalesCategory) !== false)
 		AND ($Quantity > 0)){
@@ -1097,7 +1101,7 @@ function GetGoogleProductFeedStatus($StockID, $SalesCategory, $Quantity){
 	return $Status;
 }
 
-function GetGoogleProductFeedCategory($StockID, $SalesCategory){
+function GetGoogleProductFeedCategory(string $StockID, string $SalesCategory){
 	if (isRing($StockID)){
 		$Category = "Clothing & Accessories > Jewellery & Watches > Rings";
 	} elseif (isToeRing($StockID)){
@@ -1127,7 +1131,7 @@ function GetGoogleProductFeedCategory($StockID, $SalesCategory){
 }
 
 
-function CreateTagsForItem($LanguageId, $Description, $LongDescription, $SalesCategoryName){
+function CreateTagsForItem(mixed $LanguageId, string $Description, string $LongDescription, string $SalesCategoryName){
 	$ListOfTags = "";
 	$Separator = ", ";
 	//create a long string and look for keywords
@@ -1161,17 +1165,17 @@ function CreateTagsForItem($LanguageId, $Description, $LongDescription, $SalesCa
 	return $ListOfTags;
 }
 
-function StringContainsTag($HayStack, $Needle){
+function StringContainsTag(string $HayStack, string $Needle){
 	$Pos = stripos($HayStack, $Needle);
 	$Result = !($Pos === false);
 	return $Result;
 }
 
-function InconsistentTag($ListOfTags, $ExistingTag, $ProposedTag, $WrongTag){
+function InconsistentTag(string $ListOfTags, string $ExistingTag, string $ProposedTag, string $WrongTag){
 	return ((StringContainsTag($ListOfTags, $ExistingTag)) AND ($ProposedTag == $WrongTag));
 }
 
-function UpdateOpenCartOrderStatusInWeberp($OrderNo, $OpencartOrderStatus){
+function UpdateOpenCartOrderStatusInWeberp(mixed $OrderNo, mixed $OpencartOrderStatus){
 	$SQL = "UPDATE salesorders
 			SET klocorderstatus = '" . $OpencartOrderStatus ."'
 			WHERE orderno = '" . $OrderNo . "'";
@@ -1179,7 +1183,7 @@ function UpdateOpenCartOrderStatusInWeberp($OrderNo, $OpencartOrderStatus){
 	DB_query($SQL,$ErrMsg);
 }
 
-function GetOpenCartStatusTextFromCode($StatusId){
+function GetOpenCartStatusTextFromCode(mixed $StatusId){
 	$SQL = "SELECT name
 			FROM oc_order_status
 			WHERE language_id = '1'
@@ -1194,7 +1198,7 @@ function GetOpenCartStatusTextFromCode($StatusId){
 	}	
 }
 
-function GetPaymentMethodTextFromCode($PaymentCode){
+function GetPaymentMethodTextFromCode(string $PaymentCode){
 	if ($PaymentCode == "bank_mandiri"){
 		$PaymentMethodText = "TT Mandiri";
 	} elseif ($PaymentCode == "bank_bca"){
@@ -1214,7 +1218,7 @@ function GetPaymentMethodTextFromCode($PaymentCode){
 }
 
 
-function MaintainPackagingImage($ProductId, $KLPackaging){
+function MaintainPackagingImage(mixed $ProductId, string $KLPackaging){
 
 	if (($KLPackaging != "") AND ($KLPackaging != "NO-PACKAGING")){
 		// if the item has assigned a real packaging set...
@@ -1255,7 +1259,7 @@ function MaintainPackagingImage($ProductId, $KLPackaging){
 	}
 }
 
-function InsertWebsiteSalesCategory($StockID, $WebsiteCategory, $Brands_id, $MultipleCategories, $Featured, $UpdateDB){
+function InsertWebsiteSalesCategory(string $StockID, mixed $WebsiteCategory, mixed $Brands_id, bool $MultipleCategories, mixed $Featured, bool $UpdateDB){
 	if ($UpdateDB){
 		
 		if (!$MultipleCategories){
@@ -1294,7 +1298,7 @@ function InsertWebsiteSalesCategory($StockID, $WebsiteCategory, $Brands_id, $Mul
 	}
 }
 
-function AssignSalesCategoryToProductInOpenCart($ProductId, $SalesCatId, $OnlyOneSalesCategory){
+function AssignSalesCategoryToProductInOpenCart(mixed $ProductId, mixed $SalesCatId, bool $OnlyOneSalesCategory){
 
 	if ($OnlyOneSalesCategory){
 		// Delete the current product_to_category, as we only accept 1 product_to_category in website

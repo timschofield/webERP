@@ -276,7 +276,7 @@ echo '<option value="0">' . __('None') . '</option>';
 $SQL = "SELECT employeeid, CONCAT(firstname, ' ', lastname) as fullname
 		FROM hremployees
 		WHERE employmentstatus = 'Active'
-		ORDER BY lastname, firstname";
+		ORDER BY firstname, lastname";
 $Result = DB_query($SQL);
 while ($MyRow = DB_fetch_array($Result)) {
 	if (isset($_POST['ManagerID']) AND $_POST['ManagerID'] == $MyRow['employeeid']) {

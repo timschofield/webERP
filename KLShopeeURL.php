@@ -32,7 +32,7 @@ if (!isset($_POST['SelectedFile'])) {
 }
 
 if (isset($_POST['submit'])) {
-    submit($_POST['SelectedFile'], $RootPath, $Theme, $Title);
+    submit($RootPath, $Theme, $Title);
 } else {
     display($RootPath, $Theme, $Title);
 }
@@ -42,14 +42,21 @@ include(__DIR__ . '/includes/footer.php');
 
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit($SelectedFile, $RootPath, $Theme, $Title) {
+/**
+ * Processes the form submission, reads the Excel file, and updates Shopee information.
+ *
+ * @param string $RootPath The root path of the application.
+ * @param string $Theme The theme directory name.
+ * @param string $Title The page title.
+ * @return void
+ */
+function submit(string $RootPath, string $Theme, string $Title): void {
 
 	// upload to server and load it...
 	// http://stackoverflow.com/questions/38581632/how-to-upload-excel-file-to-php-server-from-input-type-file
 
 	$Target_dir =  $_SESSION['reports_dir'] . '/';
 	$Target_file = $Target_dir . basename($_FILES["SelectedFile"]["name"]);
-	$ImageFileType = pathinfo($Target_file,PATHINFO_EXTENSION);
 	move_uploaded_file($_FILES["SelectedFile"]["tmp_name"], $Target_file);
 	$inputFileType = IOFactory::identify($Target_file);
 	$objReader = IOFactory::createReader($inputFileType);
@@ -68,8 +75,7 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 		$worksheet = $SpreadSheet->getActiveSheet();
 		
 		$highestRow         = $worksheet->getHighestRow(); // e.g. 10
-		$highestColumn      = $worksheet->getHighestColumn(); // e.g 'F'
-		
+			
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -92,7 +98,6 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 			$Error = "";
 			$ShopeeProductId = $worksheet->getCell('A'.$Row)->getCalculatedValue();
 			$StockID = $worksheet->getCell('B'.$Row)->getCalculatedValue();
-			$ShopeeProductName = $worksheet->getCell('C'.$Row)->getCalculatedValue();
 			
 			$SQL = "SELECT stockmaster.stockid,
 						salescatprod.brands_id
@@ -109,6 +114,7 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 					$ShopeeStoreId = SHOPEE_STOREID_BLINK;
 				} else {
 					$Error = "STORE";
+					$ShopeeStoreId = "";
 				}
 				
 				$URLShopee = SHOPEE_PREFIX_URL . $ShopeeStoreId . "." . $ShopeeProductId;
@@ -152,7 +158,15 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 } // End of function submit()
 
 
-function display($RootPath, $Theme, $Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
+/**
+ * Displays the form to upload the file with Shopee Information.
+ *
+ * @param string $RootPath The root path of the application.
+ * @param string $Theme The theme directory name.
+ * @param string $Title The page title.
+ * @return void
+ */
+function display(string $RootPath, string $Theme, string $Title): void  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 {
 	echo '<p class="page_title_text">
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '

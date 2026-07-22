@@ -33,14 +33,22 @@ if (!isset($_POST['SelectedFile'])) {
 }
 
 if (isset($_POST['submit'])) {
-    submit($_POST['SelectedFile'],$RootPath, $Theme, $Title);
+    submit($RootPath, $Theme, $Title);
 } else {
     display($RootPath, $Theme, $Title);
 }
 
 include(__DIR__ . '/includes/footer.php');
 
-function submit($SelectedFile, $RootPath, $Theme, $Title) {
+/**
+ * Processes the form submission, reads the Excel file, and updates Tokopedia information.
+ *
+ * @param string $RootPath The root path of the application.
+ * @param string $Theme The theme directory name.
+ * @param string $Title The page title.
+ * @return void
+ */
+function submit(string $RootPath, string $Theme, string $Title): void {
 
 	// upload to server and load it...
 	// http://stackoverflow.com/questions/38581632/how-to-upload-excel-file-to-php-server-from-input-type-file
@@ -125,7 +133,15 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 } // End of function submit()
 
 
-function display($RootPath, $Theme, $Title)
+/**
+ * Displays the form to upload the file with Tokopedia Information.
+ *
+ * @param string $RootPath The root path of the application.
+ * @param string $Theme The theme directory name.
+ * @param string $Title The page title.
+ * @return void
+ */
+function display(string $RootPath, string $Theme, string $Title): void
 {
 	echo '<p class="page_title_text">
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
