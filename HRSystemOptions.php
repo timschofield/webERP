@@ -23,8 +23,6 @@ if ($Row['optcount'] == 0) {
 	$DefaultOptions = array(
 		array('ProbationPeriod', '90', 'Default probation period in days'),
 		array('AppraisalFrequency', '365', 'Days between performance appraisals'),
-		array('MaxSickDays', '10', 'Maximum sick days per year'),
-		array('MaxVacationDays', '20', 'Maximum vacation days per year'),
 		array('MinSalaryIncreasePercent', '0', 'Minimum salary increase percentage'),
 		array('MaxSalaryIncreasePercent', '15', 'Maximum salary increase percentage')
 	);

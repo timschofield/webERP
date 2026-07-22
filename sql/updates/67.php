@@ -73,6 +73,9 @@ NewScript('HRColleagueFeedbackEntry.php', 0, __('Colleague Feedback Entry'));
 NewScript('HRMyColleagueFeedbacks.php', 15, __('My Colleague Feedbacks'));
 NewMenuItem('hr', 'Reports', __('My Colleague Feedbacks'), '/HRMyColleagueFeedbacks.php', 11);
 
+DeleteRecords('hrsystemoptions', 'optionname="MaxVacationDays"');
+DeleteRecords('hrsystemoptions', 'optionname="MaxSickDays"');
+
 if ($_SESSION['Updates']['Errors'] == 0) {
 	UpdateDBNo(basename(__FILE__, '.php'), __('Human Resources Colleague Feedback'));
 }
