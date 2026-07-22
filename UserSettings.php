@@ -89,7 +89,8 @@ if (isset($_POST['Modify'])) {
 						showpagehelp='" . $_POST['ShowPageHelp'] . "',
 						showfieldhelp='" . $_POST['ShowFieldHelp'] . "',
 						pdflanguage='" . $_POST['PDFLanguage'] . "',
-						password='" . CryptPass($_POST['Password']) . "'
+						password='" . CryptPass($_POST['Password']) . "',
+						passworddate=CURRENT_DATE
 					WHERE userid = '" . $_SESSION['UserID'] . "'";
 			$ErrMsg = __('The user alterations could not be processed because');
 			$Result = DB_query($SQL, $ErrMsg);

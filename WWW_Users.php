@@ -182,7 +182,8 @@ if (isset($_POST['submit'])) {
 
 		$UpdatePassword = '';
 		if ($_POST['Password'] != '') {
-			$UpdatePassword = "password='" . CryptPass($_POST['Password']) . "',";
+			$UpdatePassword = "password='" . CryptPass($_POST['Password']) . "',
+						passworddate='1000-01-01',";
 		}
 
 		$SQL = "UPDATE www_users SET realname='" . $_POST['RealName'] . "',
@@ -220,12 +221,13 @@ if (isset($_POST['submit'])) {
 
 		$SQL = "INSERT INTO www_users (
 					userid,
+					password,
+					passworddate,
 					realname,
 					customerid,
 					branchcode,
 					supplierid,
 					salesman,
-					password,
 					phone,
 					email,
 					timeout,
@@ -243,12 +245,13 @@ if (isset($_POST['submit'])) {
 					pdflanguage,
 					department)
 				VALUES ('" . $_POST['UserID'] . "',
+					'" . CryptPass($_POST['Password']) ."',
+					'1000-01-01',
 					'" . $_POST['RealName'] ."',
 					'" . $_POST['Cust'] ."',
 					'" . $_POST['BranchCode'] ."',
 					'" . $_POST['SupplierID'] ."',
 					'" . $_POST['Salesman'] . "',
-					'" . CryptPass($_POST['Password']) ."',
 					'" . $_POST['Phone'] . "',
 					'" . $_POST['Email'] ."',
 					'" . $_POST['Timeout'] ."',

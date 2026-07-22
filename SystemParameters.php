@@ -51,6 +51,10 @@ if (isset($_POST['submit'])) {
 	} elseif (!is_numeric($_POST['X_MaxSerialItemsIssued']) or $_POST['X_MaxSerialItemsIssued'] < 1) {
 		$InputError = 1;
 		prnMsg(__('The maximum number of serial numbers issued must be numeric and greater than zero'), 'error');
+	} elseif (mb_strlen($_POST['X_MaxPasswordAge']) > 5 OR !is_numeric($_POST['X_MaxPasswordAge']) OR
+		$_POST['X_MaxPasswordAge'] < 0 ) {
+		$InputError = 1;
+		prnMsg(__('The maximum password age must be zero or a positive number of days'), 'error');
 	} elseif (mb_strlen($_POST['X_FreightChargeAppliesIfLessThan']) > 12 OR !is_numeric($_POST['X_FreightChargeAppliesIfLessThan']) ) {
 		$InputError = 1;
 		prnMsg(__('Freight Charge Applies If Less Than must be a number'),'error');
@@ -159,6 +163,9 @@ if (isset($_POST['submit'])) {
 		}
 		if ($_SESSION['MaxSerialItemsIssued'] != $_POST['X_MaxSerialItemsIssued']) {
 			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_MaxSerialItemsIssued'] . "' WHERE confname = 'MaxSerialItemsIssued'";
+		}
+		if (($_SESSION['MaxPasswordAge'] ?? '365') != $_POST['X_MaxPasswordAge']) {
+			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_MaxPasswordAge'] . "' WHERE confname = 'MaxPasswordAge'";
 		}
 		if ($_SESSION['WorkingDaysWeek'] != $_POST['X_WorkingDaysWeek'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_WorkingDaysWeek']."' WHERE confname = 'WorkingDaysWeek'";
@@ -1355,6 +1362,13 @@ echo '<field>
 echo '</select>
 	<fieldhelp>' .  __('The flag determines if the system allows users to create the javascript short cut menu - this can cause confusion to some users with some themes.').'</fieldhelp>
 </field>';
+
+// MaxPasswordAge
+echo '<field>
+		<label for="X_MaxPasswordAge">' . __('Maximum Password Age (days)') . ':</label>
+		<input type="text" class="integer" pattern="(?!^0\d*$)[\d]{1,5}|0" required="required" title="'.__('The input must be zero or a positive integer').'" name="X_MaxPasswordAge" value="' . ($_SESSION['MaxPasswordAge'] ?? '365') . '" size="5" maxlength="5" />
+		<fieldhelp>' . __('Set to 0 to disable password age warnings. Any value above 0 warns users when their password age exceeds this number of days.') . '</fieldhelp>
+	</field>';
 
 echo '</fieldset><br />';
 

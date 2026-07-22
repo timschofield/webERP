@@ -1,6 +1,7 @@
 CREATE TABLE `www_users` (
   `userid` varchar(20) NOT NULL DEFAULT '',
   `password` text NOT NULL,
+  `passworddate` date NOT NULL DEFAULT '1000-01-01',
   `realname` varchar(35) NOT NULL DEFAULT '',
   `customerid` varchar(10) NOT NULL DEFAULT '',
   `supplierid` varchar(10) NOT NULL DEFAULT '',

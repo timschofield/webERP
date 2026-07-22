@@ -260,3 +260,25 @@ if ($ScriptName != 'index.php') {
 }
 
 echo '<div id="MessageContainerHead"></div>';
+
+if (isset($_SESSION['UserID'])
+	and isset($_SESSION['MaxPasswordAge'])
+	and is_numeric($_SESSION['MaxPasswordAge'])
+	and $_SESSION['MaxPasswordAge'] > 0) {
+
+	$MaxPasswordAge = (int) $_SESSION['MaxPasswordAge'];
+	$SQL = "SELECT passworddate
+			FROM www_users
+			WHERE userid='" . $_SESSION['UserID'] . "'";
+	$Result = DB_query($SQL, '', '', false, false);
+
+	if ($Result and DB_num_rows($Result) == 1) {
+		$MyRow = DB_fetch_array($Result);
+		if (!empty($MyRow['passworddate']) and $MyRow['passworddate'] != '0000-00-00') {
+			$PasswordAgeDays = DateDiff(Date($_SESSION['DefaultDateFormat']), ConvertSQLDate($MyRow['passworddate']), 'd');
+			if ($PasswordAgeDays > $MaxPasswordAge) {
+				prnMsg(__('Your password is older than the maximum allowed age of') . ' ' . $MaxPasswordAge . ' ' . __('days') . '. ' . __('Please change it in User Settings'), 'warn');
+			}
+		}
+	}
+}
