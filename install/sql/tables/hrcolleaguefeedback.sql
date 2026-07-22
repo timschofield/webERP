@@ -1,0 +1,21 @@
+CREATE TABLE `hrcolleaguefeedback` (
+	`feedbackid` INT(11) NOT NULL AUTO_INCREMENT,
+	`fromemployeeid` INT(11) NOT NULL,
+	`aboutemployeeid` INT(11) NOT NULL,
+	`createdbyid` INT(11) NOT NULL,
+	`feedbackperiodstart` DATE NOT NULL,
+	`feedbackperiodend` DATE NOT NULL,
+	`feedbacktype` ENUM('Annual','Mid-Year','Probation','90-Day','Project') NOT NULL,
+	`overallrating` INT(11) DEFAULT NULL,
+	`status` ENUM('Not Started','In Progress','Completed','Cancelled') DEFAULT 'Not Started',
+	`duedate` DATE DEFAULT NULL,
+	`completiondate` DATE DEFAULT NULL,
+	`comments` TEXT,
+	`createddate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`modifieddate` DATETIME DEFAULT NULL,
+	PRIMARY KEY (`feedbackid`),
+	KEY `idx_fromemployee` (`fromemployeeid`),
+	KEY `idx_aboutemployee` (`aboutemployeeid`),
+	KEY `idx_createdby` (`createdbyid`),
+	KEY `idx_status` (`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
