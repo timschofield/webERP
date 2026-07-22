@@ -62,6 +62,17 @@ CreateTable('hrfeedbackcriteriascores', "CREATE TABLE `hrfeedbackcriteriascores`
 	KEY `idx_criteria` (`criteriaid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
 
+NewScript('HRColleagueFeedbackCriteria.php', 15, __('Colleague Feedback Criteria'));
+NewMenuItem('hr', 'Maintenance', __('Colleague Feedback Criteria'), '/HRColleagueFeedbackCriteria.php', 13);
+
+NewScript('HRColleagueFeedback.php', 15, __('Colleague Feedback'));
+NewMenuItem('hr', 'Transactions', __('Colleague Feedback'), '/HRColleagueFeedback.php', 4);
+
+NewScript('HRColleagueFeedbackEntry.php', 0, __('Colleague Feedback Entry'));
+
+NewScript('HRMyColleagueFeedbacks.php', 15, __('My Colleague Feedbacks'));
+NewMenuItem('hr', 'Reports', __('My Colleague Feedbacks'), '/HRMyColleagueFeedbacks.php', 11);
+
 if ($_SESSION['Updates']['Errors'] == 0) {
 	UpdateDBNo(basename(__FILE__, '.php'), __('Human Resources Colleague Feedback'));
 }
