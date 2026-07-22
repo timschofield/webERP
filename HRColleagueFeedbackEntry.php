@@ -26,15 +26,24 @@ if (isset($_GET['From']) && $_GET['From'] === 'HRColleagueFeedback') {
 	
 } elseif (isset($_GET['From']) && $_GET['From'] === 'HRMyColleagueFeedbacks') {
 	$From = 'HRMyColleagueFeedbacks';
+
+} elseif (isset($_GET['From']) && $_GET['From'] === 'HRColleagueFeedbackDue') {
+	$From = 'HRColleagueFeedbackDue';
 } elseif (isset($_POST['From']) && $_POST['From'] === 'HRColleagueFeedback') {
 	$From = 'HRColleagueFeedback';
 
 } elseif (isset($_POST['From']) && $_POST['From'] === 'HRMyColleagueFeedbacks') {
 	$From = 'HRMyColleagueFeedbacks';
+
+} elseif (isset($_POST['From']) && $_POST['From'] === 'HRColleagueFeedbackDue') {
+	$From = 'HRColleagueFeedbackDue';
 }
 
 if ($From === 'HRMyColleagueFeedbacks') {
 	echo '<a class="toplink" href="' . $RootPath . '/HRMyColleagueFeedbacks.php">' . __('Return to My Colleague Feedbacks') . '</a>';
+
+} elseif ($From === 'HRColleagueFeedbackDue') {
+	echo '<a class="toplink" href="' . $RootPath . '/HRColleagueFeedbackDue.php">' . __('Return to Colleague Feedback Due') . '</a>';
 } else {
 	echo '<a class="toplink" href="' . $RootPath . '/HRColleagueFeedback.php">' . __('Return to Colleague Feedback List') . '</a>';
 }
@@ -260,8 +269,21 @@ if (isset($_GET['FeedbackID'])) {
 	$Criteria = GetFeedbackCriteria();
 	$DbCriteriaScores = GetFeedbackCriteriaScores($FeedbackID);
 } else {
-	$DbFromEmployeeID = isset($_POST['FromEmployeeID']) ? (int)$_POST['FromEmployeeID'] : 0;
-	$DbAboutEmployeeID = isset($_POST['AboutEmployeeID']) ? (int)$_POST['AboutEmployeeID'] : 0;
+	if (isset($_POST['FromEmployeeID'])) {
+		$DbFromEmployeeID = (int)$_POST['FromEmployeeID'];
+	} elseif (isset($_GET['FromEmployeeID'])) {
+		$DbFromEmployeeID = (int)$_GET['FromEmployeeID'];
+	} else {
+		$DbFromEmployeeID = 0;
+	}
+
+	if (isset($_POST['AboutEmployeeID'])) {
+		$DbAboutEmployeeID = (int)$_POST['AboutEmployeeID'];
+	} elseif (isset($_GET['AboutEmployeeID'])) {
+		$DbAboutEmployeeID = (int)$_GET['AboutEmployeeID'];
+	} else {
+		$DbAboutEmployeeID = 0;
+	}
 	$DbFromEmployeeName = '';
 	$DbFromEmployeeNumber = '';
 	$DbAboutEmployeeName = '';

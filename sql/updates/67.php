@@ -76,6 +76,11 @@ NewMenuItem('hr', 'Reports', __('My Colleague Feedbacks'), '/HRMyColleagueFeedba
 DeleteRecords('hrsystemoptions', 'optionname="MaxVacationDays"');
 DeleteRecords('hrsystemoptions', 'optionname="MaxSickDays"');
 
+InsertRecord('hrsystemoptions', array('optioncategory', 'optionname'), array('General', 'ColleagueFeedbackFrequency'), array('optioncategory', 'optionname', 'optionvalue', 'optiondescription'), array('General', 'ColleagueFeedbackFrequency', '365', 'Default Colleague Feedback frequency'));
+
+NewScript('HRColleagueFeedbackDue.php', 15, __('Colleague Feedback Due'));
+NewMenuItem('hr', 'Reports', __('Colleague Feedback Due'), '/HRColleagueFeedbackDue.php', 12);
+
 if ($_SESSION['Updates']['Errors'] == 0) {
 	UpdateDBNo(basename(__FILE__, '.php'), __('Human Resources Colleague Feedback'));
 }
