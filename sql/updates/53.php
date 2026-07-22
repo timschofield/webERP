@@ -380,7 +380,7 @@ CreateTable('hrperformancegoals', "CREATE TABLE `hrperformancegoals` (
 	`notes` TEXT DEFAULT NULL,
 	`weight` DECIMAL(5,2) DEFAULT 1.00,
 	`createdby` VARCHAR(20) NOT NULL,
-	`createddate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`createddate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`modifiedby` VARCHAR(20) DEFAULT NULL,
 	`modifieddate` DATETIME DEFAULT NULL,
 	PRIMARY KEY (`goalid`),

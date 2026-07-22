@@ -7,7 +7,7 @@ CREATE TABLE `hrfeedbackcriteriascores` (
 	`weightedscore` DECIMAL(5,2) DEFAULT NULL,
 	`comments` TEXT,
 	`createdby` VARCHAR(50) DEFAULT NULL,
-	`createddate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`createddate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`modifiedby` VARCHAR(50) DEFAULT NULL,
 	`modifieddate` DATETIME DEFAULT NULL,
 	PRIMARY KEY (`criteriascoreid`),
