@@ -51,8 +51,7 @@ if (isset($_POST['submit'])) {
 	} elseif (!is_numeric($_POST['X_MaxSerialItemsIssued']) or $_POST['X_MaxSerialItemsIssued'] < 1) {
 		$InputError = 1;
 		prnMsg(__('The maximum number of serial numbers issued must be numeric and greater than zero'), 'error');
-	} elseif (mb_strlen($_POST['X_MaxPasswordAge']) > 5 OR !is_numeric($_POST['X_MaxPasswordAge']) OR
-		$_POST['X_MaxPasswordAge'] < 0 ) {
+	} elseif (!preg_match('/^(0|[1-9]\d{0,4})$/', $_POST['X_MaxPasswordAge'])) {
 		$InputError = 1;
 		prnMsg(__('The maximum password age must be zero or a positive number of days'), 'error');
 	} elseif (mb_strlen($_POST['X_FreightChargeAppliesIfLessThan']) > 12 OR !is_numeric($_POST['X_FreightChargeAppliesIfLessThan']) ) {
