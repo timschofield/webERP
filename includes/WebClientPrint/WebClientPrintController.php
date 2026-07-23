@@ -33,7 +33,8 @@ if (file_exists(WebClientPrint::$wcpCacheFolder) == false) {
 
 // Clean built-in Cache
 // NOTE: Remove it if you implement your own cache system
-WebClientPrint::cacheClean(30); //in minutes
+// WebClientPrint::cacheClean(30); //in minutes
+WebClientPrint::cacheClean(3 * 24 * 60); //3 days in minutes
 
 
 // Process WebClientPrint Request
