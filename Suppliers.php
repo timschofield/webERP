@@ -1298,7 +1298,7 @@ if (!isset($SupplierID)) {
 		//		echo '<p><font color=red><b>' . __('WARNING') . ': ' . __('There is no second warning if you hit the delete button below') . '. ' . __('However checks will be made to ensure there are no outstanding purchase orders or existing accounts payable transactions before the deletion is processed') . '<br /></font></b>';
 		prnMsg(__('WARNING') . ': ' . __('There is no second warning if you hit the delete button below') . '. ' . __('However checks will be made to ensure there are no outstanding purchase orders or existing accounts payable transactions before the deletion is processed'), 'info');
 		echo '<div class="centre">
-				<input type="reset" name="delete" value="' . __('Delete Supplier') . '" onclick="return confirm(\'' . __('Are you sure you wish to delete this supplier?') . '\');" />
+				<input type="submit" name="delete" value="' . __('Delete Supplier') . '" onclick="return confirm(\'' . __('Are you sure you wish to delete this supplier?') . '\');" />
 			</div>';
 	}
 	echo '</div>
