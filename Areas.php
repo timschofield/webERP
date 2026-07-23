@@ -4,7 +4,7 @@ require (__DIR__ . '/includes/session.php');
 $Title = __('Sales Area Maintenance');
 $ViewTopic = 'CreatingNewSystem';
 $BookMark = 'Areas';
-include ('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 $SelectedArea = null;
 
@@ -224,5 +224,5 @@ if (!isset($_GET['delete'])) {
 	</form>';
 
 } //end if record deleted no point displaying form to add record
-include ('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 

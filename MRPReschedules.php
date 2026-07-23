@@ -8,10 +8,10 @@ include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 if (!DB_table_exists('mrprequirements')) {
 	$Title = 'MRP error';
-	include ('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<br />';
 	prnMsg(__('The MRP calculation must be run before you can run this report') . '<br />' . __('To run the MRP calculation click') . ' ' . '<a href="' . $RootPath . '/MRP.php">' . __('here') . '</a>', 'error');
-	include ('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -35,10 +35,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	if (DB_num_rows($Result) == 0) {
 		$Title = __('MRP Reschedules') . ' - ' . __('Problem Report');
-		include ('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		prnMsg(__('No MRP reschedule retrieved'), 'warn');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
-		include ('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -146,16 +146,16 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 	else {
 		$Title = __('MRP Reschedules');
-		include ('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('MRP Reschedules') . '" alt="" />' . ' ' . __('MRP Reschedules') . '</p>';
 		echo $HTML;
-		include ('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 } else { // The option to print PDF was not hit so display form
 	$Title = __('MRP Reschedule Reporting');
 	$ViewTopic = 'MRP';
 	$BookMark = '';
-	include ('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	echo '<p class="page_title_text">
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Stock') . '" alt="" />' . ' ' . $Title . '
@@ -187,6 +187,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		</div>
 		</form>';
 
-	include ('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 }
 

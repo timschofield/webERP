@@ -148,10 +148,10 @@ if (isset($_POST['PrintPDF'])
 	}
 	else {
 		$Title = __('Supplier Balances At A Period End');
-		include ('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . __('Suppliers') . '" alt="" />' . ' ' . __('Supplier Balances At A Period End') . '</p>';
 		echo $HTML;
-		include ('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 
 } else { // Not printing PDF, show input form

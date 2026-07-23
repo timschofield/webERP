@@ -5,12 +5,12 @@ use Dompdf\Dompdf;
 
 include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
-include ('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 //Get Out if we have no order number to work with
 if (!isset($_GET['TransNo']) or $_GET['TransNo'] == '') {
 	$Title = __('Select Order To Print');
-	include ('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<div class="centre">';
 	prnMsg(__('Select an Order Number to Print before calling this page'), 'error');
 	echo '<table class="table_index">
@@ -24,7 +24,7 @@ if (!isset($_GET['TransNo']) or $_GET['TransNo'] == '') {
 				 </tr>
 			</table>
 			</div>';
-	include ('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 }
 
@@ -76,7 +76,7 @@ if (DB_num_rows($Result) == 0) {
 	$ListCount = 0;
 
 	$Title = __('Print Packing Slip Error');
-	include ('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<div class="centre"><br /><br /><br />';
 	prnMsg(__('Unable to Locate Order Number') . ' : ' . $_GET['TransNo'] . ' ', 'error');
 	echo '<table class="table_index">
@@ -88,7 +88,7 @@ if (DB_num_rows($Result) == 0) {
 		</tr>
 		</table>
 		</div>';
-	include ('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 } elseif (DB_num_rows($Result) == 1) {
 
@@ -97,7 +97,7 @@ if (DB_num_rows($Result) == 0) {
 	$MyRow = DB_fetch_array($Result);
 	if ($MyRow['printedpackingslip'] == 1 and ($_GET['Reprint'] != 'OK' or !isset($_GET['Reprint']))) {
 		$Title = __('Print Packing Slip Error');
-		include ('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p>';
 		prnMsg(__('The packing slip for order number') . ' ' . $_GET['TransNo'] . ' ' . __('has previously been printed') . '. ' . __('It was printed on') . ' ' . ConvertSQLDate($MyRow['datepackingslipprinted']) . '<br />' . __('This check is there to ensure that duplicate packing slips are not produced and dispatched more than once to the customer'), 'warn');
 		echo '<p><a href="' . $RootPath . '/PrintCustOrder.php?TransNo=' . $_GET['TransNo'] . '&Reprint=OK">' . __('Do a Re-Print') . ' (' . __('On Pre-Printed Stationery') . ') ' . __('Even Though Previously Printed') . '</a><p>' . '<a href="' . $RootPath . '/PrintCustOrder_generic.php?TransNo=' . $_GET['TransNo'] . '&Reprint=OK">' . __('Do a Re-Print') . ' (' . __('Plain paper') . ' - ' . __('A4') . ' ' . __('landscape') . ')</a>';
@@ -113,7 +113,7 @@ if (DB_num_rows($Result) == 0) {
 			</table>
 			</div>';
 
-		include ('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 }
@@ -238,9 +238,9 @@ if (DB_num_rows($Result) > 0) {
 
 } else {
 	$Title = __('Print Packing Slip Error');
-	include ('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<p>' . __('There were no outstanding items on the order to deliver. A dispatch note cannot be printed') . '<br /><a href="' . $RootPath . '/SelectSalesOrder.php">' . __('Print Another Packing Slip/Order') . '</a>' . '<br />' . '<a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
-	include ('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit();
 } /*end if there are order details to show on the order*/
 
