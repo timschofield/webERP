@@ -24,7 +24,7 @@ CreateTable('hrcolleaguefeedback', "CREATE TABLE `hrcolleaguefeedback` (
 	KEY `idx_aboutemployee` (`aboutemployeeid`),
 	KEY `idx_createdby` (`createdbyid`),
 	KEY `idx_status` (`status`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
 
 AddConstraint('hrcolleaguefeedback', 'fk_hrcolleaguefeedback_fromemployee', 'fromemployeeid', 'hremployees', 'employeeid', 'RESTRICT');
 AddConstraint('hrcolleaguefeedback', 'fk_hrcolleaguefeedback_aboutemployee', 'aboutemployeeid', 'hremployees', 'employeeid', 'RESTRICT');
@@ -42,7 +42,7 @@ CreateTable('hrfeedbackcriteria', "CREATE TABLE `hrfeedbackcriteria` (
 	`modifiedby` VARCHAR(50) DEFAULT NULL,
 	`modifieddate` DATETIME DEFAULT NULL,
 	PRIMARY KEY (`criteriaid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
 
 CreateTable('hrfeedbackcriteriascores', "CREATE TABLE `hrfeedbackcriteriascores` (
 	`criteriascoreid` INT(11) NOT NULL AUTO_INCREMENT,
@@ -60,7 +60,7 @@ CreateTable('hrfeedbackcriteriascores', "CREATE TABLE `hrfeedbackcriteriascores`
 	UNIQUE KEY `unique_feedback_criteria` (`feedbackid`, `criteriaid`),
 	KEY `idx_feedback` (`feedbackid`),
 	KEY `idx_criteria` (`criteriaid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
 
 NewScript('HRColleagueFeedbackCriteria.php', 15, __('Colleague Feedback Criteria'));
 NewMenuItem('hr', 'Maintenance', __('Colleague Feedback Criteria'), '/HRColleagueFeedbackCriteria.php', 13);
