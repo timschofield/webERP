@@ -10,7 +10,7 @@ include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
 if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 
-	include ('includes/SQL_CommonFunctions.php');
+	include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 	$HTML = '';
 	$HTML .= '<html>
@@ -304,7 +304,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 	$Title = __('Inventory Comparison Report');
 	$ViewTopic = 'Inventory';
 	$BookMark = '';
-	include ('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
 
@@ -348,7 +348,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 		<div class="centre"><input type="submit" name="PrintPDF" value="' . __('Print PDF') . '" /></div>';
 	echo '</form>';
 
-	include ('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 
 } /*end of else not PrintPDF */
 

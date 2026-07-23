@@ -4,7 +4,7 @@ require (__DIR__ . '/includes/session.php');
 $Title = __('Geocode Maintenance');
 $ViewTopic = 'Setup';
 $BookMark = '';
-include ('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_GET['SelectedParam'])) {
 	$SelectedParam = $_GET['SelectedParam'];
@@ -244,4 +244,4 @@ if (!isset($_GET['delete'])) {
 	echo '<a href="' . $RootPath . '/geo_displaymap_customers.php">' . __('Display Map of Customer Branches') . '</a><br />';
 	echo '<a href="' . $RootPath . '/geo_displaymap_suppliers.php">' . __('Display Map of Suppliers') . '</a></div>';
 } //end if record deleted no point displaying form to add record
-include ('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
