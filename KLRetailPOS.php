@@ -476,6 +476,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 	$InputError = false; //always assume the best
 	//but check for the worst
 	if ($_SESSION['Items' . $identifier]->LineCounter == 0) {
+		prnMsg(__('Sale information not available. Probably you clicked reload the page. Check in End Of Shift if the sale was already recorded in webERP'), 'error');
 		prnMsg(__('There are no lines on this sale. Please enter lines to invoice first'), 'error');
 		$InputError = true;
 	}
@@ -624,7 +625,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 		$InputError = true;
 	}
 
-	if (!$InputError) { //all good so let's get on with the processing
+	if (!$InputError and $_SESSION['PrintedPackingSlip'] == 0) { //all good so let's get on with the processing
 
 		/* Now Get the where the sale is to from the branches table */
 
@@ -650,7 +651,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 		//   S T A R T   O F   I N V O I C E   S Q L   P R O C E S S I N G
 		// *************************************************************************
 
-		$Result = DB_Txn_Begin();
+		DB_Txn_Begin();
 		/*First add the order to the database - it only exists in the session currently! */
 		$OrderNo = GetNextTransNo(30);
 		$InvoiceNo = GetNextTransNo(10);
@@ -672,7 +673,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 		} else {
 			/*The area is wrong for any reason */
 			prnMsg('ERROR POS0050: The area ' . $Area . ' is not defined. Please call the office inmediately', 'error');
-			$Result = DB_Txn_Rollback();
+			DB_Txn_Rollback();
 			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
@@ -836,11 +837,14 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 			exit();
 		}
 
+		$SalesGLAccounts = array();
+
 
 		//Loop around each item on the sale and process each in turn
 		foreach ($_SESSION['Items' . $identifier]->LineItems as $OrderLine) {
 			 /* Update location stock records if not a dummy stock item
 			 need the MBFlag later too so save it to $MBFlag */
+			$QtyOnHandPrior = 0;
 			$Result = DB_query("SELECT mbflag FROM stockmaster WHERE stockid = '" . $OrderLine->StockID . "'");
 			$MyRow = DB_fetch_row($Result);
 			$MBFlag = $MyRow[0];
@@ -919,23 +923,26 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 			$StkMoveNo = DB_Last_Insert_ID('stockmoves', 'stkmoveno');
 
 			/*Insert the taxes that applied to this line */
-			foreach ($OrderLine->Taxes as $Tax) {
+			if (!empty($OrderLine->Taxes)
+				and (is_array($OrderLine->Taxes) or $OrderLine->Taxes instanceof Traversable)) {
+				foreach ($OrderLine->Taxes as $Tax) {
 
-				$SQL = "INSERT INTO stockmovestaxes (
-							stkmoveno,
-							taxauthid,
-							taxrate,
-							taxcalculationorder,
-							taxontax)
-						VALUES ('" . $StkMoveNo . "',
-							'" . $Tax->TaxAuthID . "',
-							'" . $Tax->TaxRate . "',
-							'" . $Tax->TaxCalculationOrder . "',
-							'" . $Tax->TaxOnTax . "')";
-				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' .
-					__('Taxes and rates applicable to this invoice line item could not be inserted because');
-				$Result = DB_query($SQL, $ErrMsg, '', true);
-			} //end for each tax for the line
+					$SQL = "INSERT INTO stockmovestaxes (
+								stkmoveno,
+								taxauthid,
+								taxrate,
+								taxcalculationorder,
+								taxontax)
+							VALUES ('" . $StkMoveNo . "',
+								'" . $Tax->TaxAuthID . "',
+								'" . $Tax->TaxRate . "',
+								'" . $Tax->TaxCalculationOrder . "',
+								'" . $Tax->TaxOnTax . "')";
+					$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' .
+						__('Taxes and rates applicable to this invoice line item could not be inserted because');
+					$Result = DB_query($SQL, $ErrMsg, '', true);
+				} //end for each tax for the line
+			}
 
 			/*Insert Sales Analysis records */
 			InsertItemSoldIntoSalesAnalysis($Area,
@@ -951,6 +958,9 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 											$OrderLine->DiscountPercent
 											);
 
+			$StandardCost = 0;
+			$Compensation = 0;
+
 			if ($OrderLine->StandardCost != 0) {
 				/*first the cost of sales entry*/
 				// $AccountCOGS = GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType);
@@ -958,7 +968,6 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 				$AccountCOGS = ACCOUNT_COGS_ADU;
 
 				$StandardCost = round($OrderLine->StandardCost, 0);
-				$Compensation = 0;
 
 				/*
 				// Obsolete since 2019. Since then, compensation is always 100.
@@ -1974,15 +1983,14 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 		include(__DIR__ . '/includes/KLSilentPrinting.php');
 	   //################## PRINTING STUFF #####################
 
-		unset($_SESSION['Items' . $identifier]->LineItems);
-		unset($_SESSION['Items' . $identifier]);
+		// unset the variable, otehrwise SPG can reload the page multiple times creating multiple invoices for the same sale
+		// unset($_SESSION['Items' . $identifier]);
+		$_SESSION['PrintedPackingSlip'] = 1;
 
-//		Removed these lines to prevent SPG "salah" when they try to print the receipt		
-//		echo '<br /><br /><a href="' . $_SERVER['PHP_SELF'] . '">' .
-//			__('Start a new Retail Sale in ') . $_SESSION['Items' . $identifier]->LocationName . '</a></div>';
-
-	} else {
-		// There were input errors so don't process anything
+	} elseif ($_SESSION['PrintedPackingSlip'] == 1) {
+		prnMsg(__('The sale has been processed and the slip has been printed. Check the End Of Shift for invoice: ') . $_SESSION['Items' . $identifier]->CustRef, 'error');
+	} else{
+		// some weird error, the invoice was not processed and the packing slip was not printed, so we need to reset the sale
 	}
 } else {
 	//pretend the user never tried to commit the sale
