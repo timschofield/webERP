@@ -1981,10 +1981,9 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 		file_put_contents($FileName, $Receipt);
 		$TextActionToPrint = 'Print the customer receipt';
 		include(__DIR__ . '/includes/KLSilentPrinting.php');
-	   //################## PRINTING STUFF #####################
+	   	//################## PRINTING STUFF #####################
 
-		// unset the variable, otehrwise SPG can reload the page multiple times creating multiple invoices for the same sale
-		// unset($_SESSION['Items' . $identifier]);
+		// Set the session variable to indicate that the packing slip has been printed
 		$_SESSION['PrintedPackingSlip'] = 1;
 
 	} elseif ($_SESSION['PrintedPackingSlip'] == 1) {
