@@ -6,6 +6,8 @@ $ViewTopic = 'CreatingNewSystem';
 $BookMark = 'Areas';
 include ('includes/header.php');
 
+$SelectedArea = null;
+
 if (isset($_GET['SelectedArea'])) {
 	$SelectedArea = mb_strtoupper($_GET['SelectedArea']);
 } elseif (isset($_POST['SelectedArea'])) {

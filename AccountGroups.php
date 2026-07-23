@@ -130,6 +130,7 @@ if (isset($_POST['submit'])) {
 	}
 
 	// Update existing account group
+	$Msg = '';
 	if ($_POST['SelectedAccountGroup']!='' AND $InputError !=1) {
 
 		// If the group name has changed, update references in related tables
@@ -297,6 +298,8 @@ if (!isset($_GET['SelectedAccountGroup']) AND !isset($_POST['SelectedAccountGrou
 			case 0:
 			$PandLText=__('No');
 			break;
+			default:
+			$PandLText=__('No');
 		}
 
 		echo '<tr class="striped_row">
