@@ -183,7 +183,7 @@ if (isset($_POST['submit'])) {
 		$UpdatePassword = '';
 		if ($_POST['Password'] != '') {
 			$UpdatePassword = "password='" . CryptPass($_POST['Password']) . "',
-						forcepasswordchange=1,";
+						forcepasswordchange='1',";
 		}
 
 		$SQL = "UPDATE www_users SET realname='" . $_POST['RealName'] . "',
@@ -246,7 +246,7 @@ if (isset($_POST['submit'])) {
 					department)
 				VALUES ('" . $_POST['UserID'] . "',
 					'" . CryptPass($_POST['Password']) ."',
-					'1,
+					'1',
 					'" . $_POST['RealName'] ."',
 					'" . $_POST['Cust'] ."',
 					'" . $_POST['BranchCode'] ."',
