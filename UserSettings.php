@@ -90,11 +90,13 @@ if (isset($_POST['Modify'])) {
 						showfieldhelp='" . $_POST['ShowFieldHelp'] . "',
 						pdflanguage='" . $_POST['PDFLanguage'] . "',
 						password='" . CryptPass($_POST['Password']) . "',
-						passworddate=CURRENT_DATE
+						forcepasswordchange=0
 					WHERE userid = '" . $_SESSION['UserID'] . "'";
 			$ErrMsg = __('The user alterations could not be processed because');
 			$Result = DB_query($SQL, $ErrMsg);
 			prnMsg(__('The user settings have been updated'),'success');
+			// update the flag in this session, so user does not get bothered to change password again
+			$_SESSION['ForcePasswordChange'] = 0;
 		}
 		// Update the session variables to reflect user changes on-the-fly:
 		$_SESSION['DisplayRecordsMax'] = $_POST['DisplayRecordsMax'];

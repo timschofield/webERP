@@ -262,27 +262,7 @@ if ($ScriptName != 'index.php') {
 echo '<div id="MessageContainerHead"></div>';
 
 if (isset($_SESSION['UserID'])
-	and isset($_SESSION['MaxPasswordAge'])
-	and is_numeric($_SESSION['MaxPasswordAge'])
-	and $_SESSION['MaxPasswordAge'] > 0) {
-
-	$MaxPasswordAge = (int) $_SESSION['MaxPasswordAge'];
-	$SQL = "SELECT passworddate
-			FROM www_users
-			WHERE userid='" . $_SESSION['UserID'] . "'";
-	$Result = DB_query($SQL, '', '', false, false);
-
-	if ($Result and DB_num_rows($Result) == 1) {
-		$MyRow = DB_fetch_array($Result);
-		if (!empty($MyRow['passworddate'])) {
-			if ($MyRow['passworddate'] == '1000-01-01') {
-				prnMsg(__('Set your own password in User Settings'), 'warn');
-			} else {
-				$PasswordAgeDays = DateDiff(Date($_SESSION['DefaultDateFormat']), ConvertSQLDate($MyRow['passworddate']), 'd');
-				if ($PasswordAgeDays > $MaxPasswordAge) {
-					prnMsg(__('You have not changed your password in more than') . ' ' . $MaxPasswordAge . ' ' . __('days') . '. ' . __('Change it now in User Settings'), 'warn');
-				}
-			}
-		}
-	}
+	and isset($_SESSION['ForcePasswordChange'])
+	and $_SESSION['ForcePasswordChange'] == 1) {
+		prnMsg(__('You are required to change your password in User Settings'), 'warn');
 }

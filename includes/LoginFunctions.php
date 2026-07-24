@@ -120,6 +120,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 			$_SESSION['ShowPageHelp'] = $MyRow['showpagehelp'];
 			$_SESSION['ShowFieldHelp'] = $MyRow['showfieldhelp'];
 			$_SESSION['ScreenFontSize'] = $MyRow['fontsize'];
+			$_SESSION['ForcePasswordChange'] = $MyRow['forcepasswordchange'];
 
 			$_SESSION['FontSize'] = match ($_SESSION['ScreenFontSize']) {
 				'0'       => '0.667rem',
