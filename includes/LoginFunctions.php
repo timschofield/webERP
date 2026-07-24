@@ -48,6 +48,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 
 		$ErrMsg = __('Could not retrieve user details on login because');
         $PasswordVerified = false;
+        $MyRow = array();
 		$Auth_Result = DB_query($SQL, $ErrMsg);
 
 		if (DB_num_rows($Auth_Result) > 0) {
