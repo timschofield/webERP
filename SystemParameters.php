@@ -1226,28 +1226,6 @@ echo '<field>
 		<fieldhelp>' . __('Force connections to be only over secure sockets - ie encrypted data only') . '</fieldhelp>
 	</field>';
 
-// DefaultTheme:
-if (is_writable('config.php')) {
-	echo '<field>
-			<label for="X_DefaultTheme">' . __('Default Theme') . ':</label>
-			<select name="X_DefaultTheme">';
-	$ThemeDirectories = scandir($PathPrefix . 'css');// List directories inside ~/css. Each diretory is a theme.
-	foreach($ThemeDirectories as $ThemeName) {
-		if (is_dir('css/'.$ThemeName) AND $ThemeName!='.' AND $ThemeName!='..' AND $ThemeName!='.svn') {
-			echo '<option';
-			if ($DefaultTheme == $ThemeName) {
-				echo ' selected="selected"';
-			}
-			echo ' value="'. $ThemeName.'">' . $ThemeName . '</option>';
-		}
-	}
-	echo '</select>
-		<fieldhelp>' . __('The default theme to use for the login screen and the setup of new users. The users\' theme selection will override it.') . '</fieldhelp>
-	</field>';
-} else {
-	echo '<input type="hidden" name="X_DefaultTheme" value="' . $DefaultTheme . '" />';
-}
-
 //Months of Audit Trail to Keep
 echo '<field>
 		<label for="X_MonthsAuditTrail">' . __('Months of Audit Trail to Retain') . ':</label>
