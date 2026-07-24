@@ -3,6 +3,7 @@
 // Allows the user to change system-wide defaults for the theme - appearance, the number of records to show in searches and the language to display messages in.
 
 require(__DIR__ . '/includes/session.php');
+require_once(__DIR__ . '/includes/PasswordValidations.php');
 
 $Title = __('User Settings');
 $ViewTopic = 'GettingStarted';
@@ -44,17 +45,14 @@ if (isset($_POST['Modify'])) {
  	$UpdatePassword = 'N';
 
 	if ($_POST['PasswordCheck'] != '') {
-		if (mb_strlen($_POST['Password']) < 5) {
+		if (($PasswordValidationError = ValidatePasswordQuality($_POST['Password'], $_SESSION['UserID'])) != '') {
 			$InputError = 1;
-			prnMsg(__('The password entered must be at least 5 characters long'),'error');
-		} elseif (mb_strstr($_POST['Password'],$_SESSION['UserID'])!= false) {
-			$InputError = 1;
-			prnMsg(__('The password cannot contain the user id'), 'error');
+			prnMsg($PasswordValidationError, 'error');
 		}
 		if ($_POST['Password'] != $_POST['PasswordCheck']) {
 			$InputError = 1;
 			prnMsg(__('The password and password confirmation fields entered do not match'), 'error');
-		} else {
+		} elseif ($PasswordValidationError == '') {
 			$UpdatePassword = 'Y';
 		}
 	}
@@ -219,13 +217,13 @@ echo '</select>
 
 echo '<field>
 		<label for="Password">', __('New Password'), ':</label>
-		<input id="password" name="Password" pattern="(?!^', $_SESSION['UserID'], '$).{5,}" placeholder="', __('More than 5 characters'), '" size="20" title="', __('Must be more than 5 characters and cannot be as same as userid'), '" type="password" value="', $_POST['Password'], '" />
+		<input id="password" name="Password" placeholder="', __('At least'), ' ', (isset($_SESSION['PasswordMinLenght']) ? $_SESSION['PasswordMinLenght'] : 5), ' ', __('characters'), '" size="20" type="password" value="', $_POST['Password'], '" />
         <img class="eye" id="eye" alt="" src="', $RootPath, '/css/eye.png" title="' . __('Show Password') . '" />
 	</field>';
 
 echo '<field>
 		<label for="PasswordCheck">', __('Confirm Password'), ':</label>
-		<input id="confirmpassword" name="PasswordCheck" pattern="(?!^', $_SESSION['UserID'], '$).{5,}" placeholder="', __('More than 5 characters'), '" size="20" title="', __('Must be more than 5 characters and cannot be as same as userid'), '" type="password" value="', $_POST['PasswordCheck'], '" />
+		<input id="confirmpassword" name="PasswordCheck" placeholder="', __('At least'), ' ', (isset($_SESSION['PasswordMinLenght']) ? $_SESSION['PasswordMinLenght'] : 5), ' ', __('characters'), '" size="20" type="password" value="', $_POST['PasswordCheck'], '" />
         <img class="eye" id="confirmeye" alt="" src="', $RootPath, '/css/eye.png" title="' . __('Show Password') . '" />
 	</field>';
 

@@ -92,6 +92,10 @@ if (isset($_POST['submit'])) {
 		$_POST['X_DefaultDisplayRecordsMax'] < 1 ) {
 		$InputError = 1;
 		prnMsg(__('Default maximum number of records to display must be between 1 and 500'),'error');
+	} elseif (mb_strlen($_POST['X_PasswordMinLenght']) > 2 OR !is_numeric($_POST['X_PasswordMinLenght']) OR
+		$_POST['X_PasswordMinLenght'] < 1 ) {
+		$InputError = 1;
+		prnMsg(__('Password minimum length must be a number greater than zero'),'error');
 	} elseif (mb_strlen($_POST['X_MaxImageSize']) > 4 OR !is_numeric($_POST['X_MaxImageSize']) OR
 		$_POST['X_MaxImageSize'] < 1 ) {
 		$InputError = 1;
@@ -381,6 +385,9 @@ if (isset($_POST['submit'])) {
 		}
 		if ($_SESSION['ShortcutMenu'] != $_POST['X_ShortcutMenu']){
 			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShortcutMenu'] . "' WHERE confname='ShortcutMenu'";
+		}
+		if ($_SESSION['PasswordMinLenght'] != $_POST['X_PasswordMinLenght']){
+			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_PasswordMinLenght'] . "' WHERE confname='PasswordMinLenght'";
 		}
 		if ($_SESSION['LastDayOfWeek'] != $_POST['X_LastDayOfWeek']){
 			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_LastDayOfWeek'] . "' WHERE confname='LastDayOfWeek'";
@@ -1355,6 +1362,12 @@ echo '<field>
 echo '</select>
 	<fieldhelp>' .  __('The flag determines if the system allows users to create the javascript short cut menu - this can cause confusion to some users with some themes.').'</fieldhelp>
 </field>';
+
+echo '<field>
+		<label for="X_PasswordMinLenght">' . __('Password Minimum Length') . ':</label>
+		<input type="text" class="integer" pattern="(?!^0\d+$)[\d]{1,2}" required="required" name="X_PasswordMinLenght" size="3" maxlength="2" value="' . (isset($_SESSION['PasswordMinLenght']) ? $_SESSION['PasswordMinLenght'] : 5) . '" />
+		<fieldhelp>' . __('Defines the minimum number of characters required for user passwords.') . '</fieldhelp>
+	</field>';
 
 echo '</fieldset><br />';
 

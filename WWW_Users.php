@@ -68,6 +68,7 @@ $PDFLanguages = array(
 );
 
 include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+require_once(__DIR__ . '/includes/PasswordValidations.php');
 
 // Make an array of the security roles
 $SQL = "SELECT secroleid,
@@ -104,14 +105,9 @@ if (isset($_POST['submit'])) {
 	} elseif (ContainsIlLegalCharacters($_POST['UserID'])) {
 		$InputError = 1;
 		prnMsg(__('User names cannot contain any of the following characters') . " - ' &amp; + \" \\ " . __('or a space'), 'error');
-	} elseif (mb_strlen($_POST['Password'])<5) {
-		if (!$SelectedUser) {
-			$InputError = 1;
-			prnMsg(__('The password entered must be at least 5 characters long'), 'error');
-		}
-	} elseif (mb_strstr($_POST['Password'],$_POST['UserID'])!= false) {
+	} elseif (($PasswordValidationError = ValidatePasswordQuality($_POST['Password'], $_POST['UserID'])) != '') {
 		$InputError = 1;
-		prnMsg(__('The password cannot contain the user id'), 'error');
+		prnMsg($PasswordValidationError, 'error');
 	} elseif ((mb_strlen($_POST['Cust'] ?? '')>0)
 				AND (mb_strlen($_POST['BranchCode'] ?? '')==0)) {
 		$InputError = 1;
@@ -564,8 +560,8 @@ if (!isset($_POST['Timeout'])) {
 }
 echo '<field>
 		<label for="Password">' . __('Password') . ':</label>
-		<input id="password" type="password" pattern=".{5,}" name="Password" ' . (!isset($SelectedUser) ? 'required="required"' : '') . ' size="22" maxlength="20" value="" placeholder="'.__('At least 5 characters').'" title="" />
-		<fieldhelp>'.__('Passwords must be 5 characters or more and cannot same as the users id. A mix of upper and lower case and some non-alphanumeric characters are recommended.').'</fieldhelp>
+		<input id="password" type="password" name="Password" ' . (!isset($SelectedUser) ? 'required="required"' : '') . ' size="22" maxlength="20" value="" placeholder="' . __('At least') . ' ' . (isset($_SESSION['PasswordMinLenght']) ? $_SESSION['PasswordMinLenght'] : 5) . ' ' . __('characters') . '" title="" />
+		<fieldhelp>' . __('Passwords must be at least') . ' ' . (isset($_SESSION['PasswordMinLenght']) ? $_SESSION['PasswordMinLenght'] : 5) . ' ' . __('characters long and cannot contain the user id. A mix of upper and lower case and some non-alphanumeric characters are recommended.') . '</fieldhelp>
         <img class="eye" id="eye" alt="" src="', $RootPath, '/css/eye.png" title="' . __('Show Password') . '" />
 	</field>';
 echo '<field>
@@ -804,8 +800,9 @@ if ($_POST['ShowDashboard']==0) {
 	echo '<option value="0">', __('No'), '</option>',
  		 '<option selected="selected" value="1">', __('Yes'), '</option>';
 }
-echo '</select>', fShowFieldHelp(__('Show dashboard page after login')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-		'
+echo '</select>';
+fShowFieldHelp(__('Show dashboard page after login')); // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
+echo '
 	</field>';
 // Turn off/on page help:
 echo '<field>
@@ -818,8 +815,9 @@ if ($_POST['ShowPageHelp']==0) {
 	echo '<option value="0">', __('No'), '</option>',
  		 '<option selected="selected" value="1">', __('Yes'), '</option>';
 }
-echo '</select>', fShowFieldHelp(__('Show page help when available')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-		'
+echo '</select>';
+fShowFieldHelp(__('Show page help when available')); // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
+echo '
 	</field>';
 // Turn off/on field help:
 echo '<field>
@@ -832,8 +830,9 @@ if ($_POST['ShowFieldHelp']==0) {
 	echo '<option value="0">', __('No'), '</option>',
  		 '<option selected="selected" value="1">', __('Yes'), '</option>';
 }
-echo '</select>', fShowFieldHelp(__('Show field help when available')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-		'
+echo '</select>';
+fShowFieldHelp(__('Show field help when available')); // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
+echo '
 	</field>';
 
 if (!isset($_POST['PDFLanguage'])) {
