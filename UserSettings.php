@@ -65,35 +65,30 @@ if (isset($_POST['Modify'])) {
 			$_POST['Language'] = $DefaultLanguage;
 		}
 
+		$SQL = "UPDATE www_users
+				SET displayrecordsmax='" . $_POST['DisplayRecordsMax'] . "',
+					theme='" . $_POST['Theme'] . "',
+                    fontsize='" . $_POST['FontSize'] . "',
+					language='" . $_POST['Language'] . "',
+					email='" . $_POST['email'] . "',
+					showpagehelp='" . $_POST['ShowPageHelp'] . "',
+					showfieldhelp='" . $_POST['ShowFieldHelp'] . "',
+					pdflanguage='" . $_POST['PDFLanguage'] . "'";
+
+		if ($UpdatePassword == 'Y') {
+			$SQL .= ",
+					password='" . CryptPass($_POST['Password']) . "',
+					forcepasswordchange=0";
+		}
+
+		$SQL .= " WHERE userid = '" . $_SESSION['UserID'] . "'";
+
+		$ErrMsg = __('The user alterations could not be processed because');
+		$Result = DB_query($SQL, $ErrMsg);
+
 		if ($UpdatePassword != 'Y') {
-			$SQL = "UPDATE www_users
-					SET displayrecordsmax='" . $_POST['DisplayRecordsMax'] . "',
-						theme='" . $_POST['Theme'] . "',
-                        fontsize='" . $_POST['FontSize'] . "',
-						language='" . $_POST['Language'] . "',
-						email='" . $_POST['email'] . "',
-						showpagehelp='" . $_POST['ShowPageHelp'] . "',
-						showfieldhelp='" . $_POST['ShowFieldHelp'] . "',
-						pdflanguage='" . $_POST['PDFLanguage'] . "'
-					WHERE userid = '" . $_SESSION['UserID'] . "'";
-			$ErrMsg = __('The user alterations could not be processed because');
-			$Result = DB_query($SQL, $ErrMsg);
 			prnMsg( __('The user settings have been updated') . '. ' . __('Be sure to remember your password for the next time you login'),'success');
 		} else {
-			$SQL = "UPDATE www_users
-					SET displayrecordsmax='" . $_POST['DisplayRecordsMax'] . "',
-						theme='" . $_POST['Theme'] . "',
-                        fontsize='" . $_POST['FontSize'] . "',
-						language='" . $_POST['Language'] . "',
-						email='" . $_POST['email'] ."',
-						showpagehelp='" . $_POST['ShowPageHelp'] . "',
-						showfieldhelp='" . $_POST['ShowFieldHelp'] . "',
-						pdflanguage='" . $_POST['PDFLanguage'] . "',
-						password='" . CryptPass($_POST['Password']) . "',
-						forcepasswordchange=0
-					WHERE userid = '" . $_SESSION['UserID'] . "'";
-			$ErrMsg = __('The user alterations could not be processed because');
-			$Result = DB_query($SQL, $ErrMsg);
 			prnMsg(__('The user settings have been updated'),'success');
 			// update the flag in this session, so user does not get bothered to change password again
 			$_SESSION['ForcePasswordChange'] = 0;
@@ -116,7 +111,8 @@ $SQL = "SELECT
 			showfieldhelp,
             fontsize,
 			language
-		from www_users WHERE userid = '" . $_SESSION['UserID'] . "'";
+		FROM www_users
+		WHERE userid = '" . $_SESSION['UserID'] . "'";
 $Result = DB_query($SQL);
 $MyRow = DB_fetch_array($Result);
 
