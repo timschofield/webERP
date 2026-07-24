@@ -260,3 +260,9 @@ if ($ScriptName != 'index.php') {
 }
 
 echo '<div id="MessageContainerHead"></div>';
+
+if (isset($_SESSION['UserID'])
+	and isset($_SESSION['ForcePasswordChange'])
+	and $_SESSION['ForcePasswordChange'] == 1) {
+		prnMsg(__('You are required to change your password in User Settings'), 'warn');
+}
