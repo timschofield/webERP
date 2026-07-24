@@ -17,9 +17,9 @@ use Dompdf\Dompdf;
 
 include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
-include ('includes/SQL_CommonFunctions.php');
-include ('includes/GetPrice.php');
-include ('includes/ImageFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/GetPrice.php');
+include(__DIR__ . '/includes/ImageFunctions.php');
 include(__DIR__ . '/includes/StockFunctions.php');
 
 include(__DIR__ . '/includes/KLEmails.php');
@@ -140,12 +140,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	if (DB_num_rows($Result) == 0) {
 		$Title = __('Stock Dispatch - Problem Report');
-		include ('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<br />';
 		prnMsg(__('The stock dispatch did not have any items to list'), 'warn');
 		echo '<br />
 			<a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
-		include ('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -372,10 +372,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 	else {
 		$Title = __('Inventory Planning Report');
-		include ('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Stock Dispatch Report') . '" alt="" />' . ' ' . __('Stock Dispatch Report') . '</p>';
 		echo $HTML;
-		include ('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 	}
 
 } else { /*The option to print PDF was not hit so display form */
@@ -383,7 +383,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$Title = __('Stock Dispatch Report');
 	$ViewTopic = 'Inventory';
 	$BookMark = '';
-	include ('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Inventory') . '" alt="" />' . ' ' . __('Inventory Stock Dispatch Report') . '</p>';
 	echo '<div class="page_help_text">' . __('Create a transfer batch of overstock from one location to another location that is below reorder level.') . '<br/>' . __('Quantity to ship is based on reorder level minus the quantity on hand at the To Location; if there is a') . '<br/>' . __('dispatch percentage entered, that needed quantity is inflated by the percentage entered.') . '<br/>' . __('Use Bulk Inventory Transfer - Receive to process the batch') . '</div>';
 
@@ -443,7 +443,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . __('Define Stock Categories') . '</a>';
 		echo '</div>
 			  </form>';
-		include ('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -503,6 +503,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		 </div>';
 	echo '</form>';
 
-	include ('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 
 } /*end of else not PrintPDF */

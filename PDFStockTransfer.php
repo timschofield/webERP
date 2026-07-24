@@ -57,10 +57,10 @@ if (isset($_POST['Process'])) {
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) == 0) {
 		$Title = __('Print Stock Transfer - Error');
-		include ('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		prnMsg(__('There was no transfer found with number') . ': ' . $_POST['TransferNo'], 'error');
 		echo '<a href="' . $RootPath . '/PDFStockTransfer.php">' . __('Try Again') . '</a>';
-		include ('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -143,7 +143,7 @@ if (isset($_POST['Process'])) {
 		$Title = __('Print Stock Transfer');
 		$ViewTopic = 'Inventory';
 		$BookMark = '';
-		include ('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" title="' . __('Print Transfer Note') . '" alt="" />' . ' ' . $Title . '</p>';
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" id="form" target="_blank">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -174,7 +174,7 @@ if (isset($_POST['Process'])) {
 		echo '</fieldset>
 			</form>';
 
-		include ('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 }

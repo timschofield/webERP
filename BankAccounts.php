@@ -28,6 +28,7 @@ if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
+	$Msg = '';
 
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
@@ -212,6 +213,8 @@ if (!isset($SelectedBankAccount)) {
 			$DefaultBankAccount=__('Fall Back Default');
 		} elseif ($MyRow['invoice']==2) {
 			$DefaultBankAccount=__('Currency Default');
+		} else {
+			$DefaultBankAccount=__('No');
 		}
 
 		$ImportFormat = match ($MyRow['importformat']) {

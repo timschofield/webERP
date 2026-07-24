@@ -1,8 +1,8 @@
 <?php
 require (__DIR__ . '/includes/session.php');
 
-include ('includes/SQL_CommonFunctions.php');
-include ('includes/GetPaymentMethods.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/GetPaymentMethods.php');
 
 // Add DomPDF namespace and autoload
 use Dompdf\Dompdf;
@@ -196,7 +196,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 	$Title = __('Payment Run');
 	$ViewTopic = 'AccountsPayable';
 	$BookMark = '';
-	include ('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	echo '<p class="page_title_text">
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . __('Supplier Types') . '" alt="" />' . $Title . '
@@ -299,7 +299,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 			</table>
 			<p>' . __('Bank Accounts have not yet been defined. You must first') . ' <a href="' . $RootPath . '/BankAccounts.php">' . __('define the bank accounts') . '</a> ' . __('and general ledger accounts to be affected') . '.
 			</p>';
-		include ('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 	else {
@@ -342,6 +342,6 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 				<input type="submit" name="PrintPDFAndProcess" value="' . __('Print and Process Payments') . '" />
 			</div>';
 	echo '</form>';
-	include ('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 }
 

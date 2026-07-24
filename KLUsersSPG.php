@@ -11,6 +11,7 @@ $BookMark = 'UserMaintenance';
 include(__DIR__ . '/includes/header.php');
 
 include(__DIR__ . '/includes/SQL_CommonFunctions.php');
+require_once(__DIR__ . '/includes/PasswordValidations.php');
 include(__DIR__ . '/includes/KLDefines.php');
 include(__DIR__ . '/includes/KLGeneralFunctions.php');
 include(__DIR__ . '/includes/KLEmails.php');
@@ -98,14 +99,10 @@ if (isset($_POST['submit'])) {
 	} elseif (ContainsIlLegalCharacters($_POST['UserID'])) {
 		$InputError = 1;
 		prnMsg(__('User names cannot contain any of the following characters') . " - ' &amp; + \" \\ " . __('or a space'),'error');
-	} elseif (mb_strlen($_POST['Password'])<5){
-		if (!$SelectedUser){
-			$InputError = 1;
-			prnMsg(__('The password entered must be at least 5 characters long'),'error');
-		}
-	} elseif (mb_strstr($_POST['Password'],$_POST['UserID'])!= False){
+	} elseif ((!isset($SelectedUser) || ($_POST['Password'] ?? '') != '')
+			&& ($PasswordValidationError = ValidatePasswordQuality($_POST['Password'], $_POST['UserID'])) != '') {
 		$InputError = 1;
-		prnMsg(__('The password cannot contain the user id'),'error');
+		prnMsg($PasswordValidationError, 'error');
 	}
 
 	if (!isset($SelectedUser)){
@@ -124,7 +121,8 @@ if (isset($_POST['submit'])) {
 
 		$UpdatePassword = '';
 		if ($_POST['Password'] != ''){
-			$UpdatePassword = "password='" . CryptPass($_POST['Password']) . "',";
+			$UpdatePassword = "password='" . CryptPass($_POST['Password']) . "',
+						forcepasswordchange='1',";
 		}
 
 		$SQL = "UPDATE www_users SET realname='" . $SPGFullName . "',
@@ -155,6 +153,7 @@ if (isset($_POST['submit'])) {
 						supplierid,
 						salesman,
 						password,
+						forcepasswordchange,
 						phone,
 						email,
 						pagesize,
@@ -175,6 +174,7 @@ if (isset($_POST['submit'])) {
 						'" . $SupplierID ."',
 						'" . $_POST['Salesman'] . "',
 						'" . CryptPass($_POST['Password']) ."',
+						'1',
 						'" . $Phone . "',
 						'" . $Email ."',
 						'" . $PageSize ."',
