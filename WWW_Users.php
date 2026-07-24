@@ -105,7 +105,8 @@ if (isset($_POST['submit'])) {
 	} elseif (ContainsIlLegalCharacters($_POST['UserID'])) {
 		$InputError = 1;
 		prnMsg(__('User names cannot contain any of the following characters') . " - ' &amp; + \" \\ " . __('or a space'), 'error');
-	} elseif (($PasswordValidationError = ValidatePasswordQuality($_POST['Password'], $_POST['UserID'])) != '') {
+	} elseif ((!isset($SelectedUser) || ($_POST['Password'] ?? '') != '')
+			&& ($PasswordValidationError = ValidatePasswordQuality($_POST['Password'], $_POST['UserID'])) != '') {
 		$InputError = 1;
 		prnMsg($PasswordValidationError, 'error');
 	} elseif ((mb_strlen($_POST['Cust'] ?? '')>0)
