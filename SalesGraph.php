@@ -226,7 +226,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	include(__DIR__ . '/includes/footer.php');
 } else {
 
-	$graph = new Phplot\Phplot\phplot(950,450);
+	$graph = new Phplot\Phplot\phplot(1200,600);
 	$SelectClause ='';
 	$WhereClause ='';
 	$GraphTitle ='';
