@@ -874,15 +874,23 @@ function FieldToSelectOnePassword(
 	bool $Required = true,
 	bool $AutoFocus = false
 ): string {
+	
+global $RootPath;
+
+	$PasswordMinLenght = isset($_SESSION['PasswordMinLenght']) ? (int)$_SESSION['PasswordMinLenght'] : 5;
+	if ($PasswordMinLenght < 5) {
+		$PasswordMinLenght = 5;
+	}
 
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
-				<input type="password" pattern=".{5,}"';
+				<input type="password" pattern=".{' . $PasswordMinLenght . ',}"';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);
-	$HTML .= '" name="' . $VariableName . '"  placeholder="'.__('At least 5 characters').'" size="' . $Size . '" maxlength="' . $MaxLength . '" value="' . $SelectedValue . '" />';
+	$HTML .= '" name="' . $VariableName . '" placeholder="' . __('At least') . ' ' . $PasswordMinLenght . ' ' . __('characters') . '" size="' . $Size . '" maxlength="' . $MaxLength . '" value="' . $SelectedValue . '" />';
 	if ($HelpText != '') {
 	    $HTML .= '<fieldhelp>' . $HelpText . '</fieldhelp>';
 	}
+	$HTML .= '<img class="eye" id="eye" alt="" src="' . $RootPath . '/css/eye.png" title="' . __('Show Password') . '" />';
 	$HTML .= '</field>';
 	return $HTML;
 }
