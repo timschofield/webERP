@@ -124,25 +124,6 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['DefaultDateFormat'] != $_POST['X_DefaultDateFormat'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_DefaultDateFormat']."' WHERE confname = 'DefaultDateFormat'";
 		}
-		if ($DefaultTheme != $_POST['X_DefaultTheme']) {// If not equal, update the default theme.
-			// BEGIN: Update the config.php file:
-			$FileHandle = fopen($PathPrefix . 'config.php', 'r');
-			if ($FileHandle) {
-				$Content = fread($FileHandle, filesize('config.php'));
-				$Content = str_replace(' ;\n', ';\n', $Content);// Clean space before the end-of-php-line.
-				$Content = str_replace('\''.$DefaultTheme .'\';', '\''.$_POST['X_DefaultTheme'].'\';', $Content);
-				$FileHandle = fopen($PathPrefix . 'config.php','w');
-				if (!fwrite($FileHandle,$Content)) {
-					prnMsg(__('Cannot write to the configuration file.'), 'error');
-				} else {
-					prnMsg(__('The configuration file was updated.'), 'info');
-				}
-				fclose($FileHandle);
-			} else {
-				prnMsg(__('Cannot open the configuration file.'), 'error');
-			}
-			// END: Update the config.php file.
-		}
 		if ($_SESSION['PastDueDays1'] != $_POST['X_PastDueDays1'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_PastDueDays1']."' WHERE confname = 'PastDueDays1'";
 		}
