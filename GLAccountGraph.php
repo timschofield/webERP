@@ -296,7 +296,7 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 	$Graph->SetShading(5);
 	$Graph->SetDrawYGrid(true);
 	$Graph->SetDataType('text-data');
-	$Graph->TuneYAutoRange(0, 0, 0);
+	$Graph->TuneYAutoRange('0', '0', '0');
 	$Graph->SetNumberFormat($DecimalPoint, $ThousandsSeparator);
 	$Graph->SetPrecisionY($_SESSION['CompanyRecord']['decimalplaces']);
 
