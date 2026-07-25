@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Result = DB_query("SELECT description FROM stockmaster WHERE stockid='" . trim(mb_strtoupper($_GET['StockID'])) . "'");
 $MyRow = DB_fetch_row($Result);
 
-$graph = new Phplot\Phplot\phplot(1000, 500);
+$graph = new Phplot\Phplot\phplot(1200, 600);
 $graph->SetTitle($MyRow[0] . ' ' . __('Usage'));
 $graph->SetXTitle(__('Month'));
 $graph->SetYTitle(__('Quantity'));
