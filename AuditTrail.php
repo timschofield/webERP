@@ -128,11 +128,17 @@ if (isset($_POST['View'])) {
 	$ToDate = str_replace('/','-',FormatDateForSQL($_POST['ToDate']).' 23:59:59');
 
 	// Find the query type (insert/update/delete)
+	/**
+	 * @param string $SQLString
+	 */
 	function Query_Type($SQLString) {
 		$SQLArray = explode(" ", $SQLString);
 		return $SQLArray[0];
 	}
 
+	/**
+	 * @param string $SQLString
+	 */
 	function InsertQueryInfo($SQLString) {
 		$SQLArray = explode('(', $SQLString);
 		$_SESSION['SQLString']['table'] = $SQLArray[0];
@@ -148,6 +154,9 @@ if (isset($_POST['View'])) {
 		}
 	}
 
+	/**
+	 * @param string $SQLString
+	 */
 	function UpdateQueryInfo($SQLString) {
 		$SQLArray = explode('SET', $SQLString);
 		$_SESSION['SQLString']['table'] = $SQLArray[0];
@@ -165,6 +174,9 @@ if (isset($_POST['View'])) {
 		}
 	}
 
+	/**
+	 * @param string $SQLString
+	 */
 	function DeleteQueryInfo($SQLString) {
 		$SQLArray = explode("WHERE", $SQLString);
 		$_SESSION['SQLString']['table'] = $SQLArray[0];
@@ -217,6 +229,7 @@ if (isset($_POST['View'])) {
 			<th>' . __('Field Name') . '</th>
 			<th>' . __('Value') . '</th></tr>';
 	while ($MyRow = DB_fetch_row($Result)) {
+		$RowColour = '';
 		if (trim(Query_Type($MyRow[2])) == 'INSERT') {
 			InsertQueryInfo(str_replace("INSERT INTO",'',$MyRow[2]));
 			$RowColour = '#a8ff90';

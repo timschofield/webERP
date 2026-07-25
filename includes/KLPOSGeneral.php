@@ -291,15 +291,15 @@ function InsertItemSoldIntoSalesAnalysis(
 
 	$ErrMsg = __('The count of existing Sales analysis records could not run because');
 	$Result = DB_query($SQL, $ErrMsg, '', true);
-
-	$MyRow = DB_fetch_row($Result);
+	$HasExistingSalesAnalysis = (DB_num_rows($Result) > 0);
+	$MyRow = $HasExistingSalesAnalysis ? DB_fetch_row($Result) : false;
 
 	// Added division-by-zero protection for $ExRate
 	if ($ExRate == 0) {
 		$ExRate = 1;
 	}
 
-	if ($MyRow[0] > 0){  /*Update the existing record that already exists */
+	if ($HasExistingSalesAnalysis and is_array($MyRow)){  /*Update the existing record that already exists */
 		
 		$SQL = "UPDATE salesanalysis
 				SET amt = amt + " . ($Price * $Quantity / $ExRate) . ",

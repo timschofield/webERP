@@ -4,7 +4,7 @@ require (__DIR__ . '/includes/session.php');
 $Title = __('Run MRP Calculation');
 $ViewTopic = 'MRP';
 $BookMark = 'MRP_Overview';
-include ('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['submit'])) {
 
@@ -920,5 +920,5 @@ function CreateLowerLevelRequirement($TopPart, $TopDate, $TopQuantity, $TopMRPDe
 	} //end of while loop
 
 } // End of CreateLowerLevelRequirement
-include ('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 

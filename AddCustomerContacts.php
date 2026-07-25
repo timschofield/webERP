@@ -51,7 +51,9 @@ if ( isset($_POST['submit']) ) {
 		$InputError = 1;
 		prnMsg( __('The contact email address is not a valid email address'), 'error');
 	}
-
+	
+	$Msg = '';
+	
 	if (isset($Id) AND ($Id AND $InputError != 1)) {
 		$SQL = "UPDATE custcontacts SET contactname='" . $_POST['ContactName'] . "',
 										role='" . $_POST['ContactRole'] . "',

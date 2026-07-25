@@ -106,9 +106,9 @@ if ($NoOfGRNs > 0) {
 
 } else {
 	$Title = __('GRN Error');
-	include ('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	prnMsg(__('There were no GRNs to print'), 'warn');
 	echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
-	include ('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 }
 

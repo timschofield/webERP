@@ -64,10 +64,10 @@ if (isset($_POST['PrintPDF'])) {
 		$Result = DB_query($SQL, $ErrMsg);
 
 		$Title = __('Stock Check Freeze Update');
-		include ('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<p><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . __('Print Check Sheets') . '</a>';
 		prnMsg(__('Added to the stock check file successfully'), 'success');
-		include ('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -95,10 +95,10 @@ if (isset($_POST['PrintPDF'])) {
 
 	if (DB_num_rows($InventoryResult) == 0) {
 		$Title = __('Stock Count Sheets - Problem Report');
-		include ('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		prnMsg(__('Before stock count sheets can be printed, a copy of the stock quantities needs to be taken - the stock check freeze. Make a stock check data file first'), 'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
-		include ('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -163,7 +163,7 @@ if (isset($_POST['PrintPDF'])) {
 	$Title = __('Stock Check Sheets');
 	$ViewTopic = 'Inventory';
 	$BookMark = '';
-	include ('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" title="' . __('print') . '" alt="" />' . ' ' . $Title . '</p>';
 
@@ -260,6 +260,6 @@ if (isset($_POST['PrintPDF'])) {
 		</div>
 	</form>';
 
-	include ('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 
 } /*end of else not PrintPDF */
