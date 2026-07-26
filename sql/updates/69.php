@@ -30,7 +30,7 @@ AddColumn('department', 'custcontacts', 'varchar(40)',  ' NOT NULL ', "''", 'mob
 AddColumn('linkedin',   'custcontacts', 'varchar(120)', ' NOT NULL ', "''", 'department');
 AddColumn('active',     'custcontacts', 'tinyint(1)',   ' NOT NULL ', '1', 'linkedin');
 AddColumn('createdby',  'custcontacts', 'varchar(20)',  ' NOT NULL ', '', 'active');
-AddColumn('createdat',  'custcontacts', 'datetime',     ' NOT NULL ', 'CURRENT_TIMESTAMP', 'createdby');
+AddColumn('createdat',  'custcontacts', 'timestamp',     ' NOT NULL ', 'CURRENT_TIMESTAMP', 'createdby');
 
 /* custnotes — extend into a full activity log */
 AddColumn('activitytype', 'custnotes', 'varchar(20)',  ' NOT NULL ', 'note',      'priority');
@@ -40,7 +40,7 @@ AddColumn('outcome',      'custnotes', 'varchar(20)',   ' NOT NULL ', '',       
 AddColumn('followupdate', 'custnotes', 'date',       ' NULL ', '',       'outcome');
 AddColumn('status',       'custnotes', 'varchar(20)',   ' NOT NULL ', 'completed', 'followupdate');
 AddColumn('createdby',    'custnotes', 'varchar(20)',   ' NOT NULL ', '',          'status');
-AddColumn('createdat',    'custnotes', 'datetime',      ' NOT NULL ', 'CURRENT_TIMESTAMP', 'createdby');
+AddColumn('createdat',    'custnotes', 'timestamp',      ' NOT NULL ', 'CURRENT_TIMESTAMP', 'createdby');
 
 /* crmactivitytypes — reference table for activity type codes */
 CreateTable('crmactivitytypes',
@@ -100,7 +100,7 @@ CreateTable('crmleads', "CREATE TABLE crmleads (
 	notes           TEXT,
 	convertedto     VARCHAR(10)   DEFAULT '',
 	convertedat     DATETIME      DEFAULT NULL,
-	createdat       DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	createdat       TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	createdby       VARCHAR(20)   DEFAULT '',
 	updatedat       DATETIME      DEFAULT NULL,
 	updatedby       VARCHAR(20)   DEFAULT '',
@@ -194,7 +194,7 @@ CreateTable('crmopportunities', "CREATE TABLE crmopportunities (
 	outcome         VARCHAR(10)   NOT NULL DEFAULT 'open',
 	lostnotes       TEXT,
 	closedat        DATETIME      DEFAULT NULL,
-	createdat       DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	createdat       TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	createdby       VARCHAR(20)   NOT NULL DEFAULT '',
 	updatedat       DATETIME      DEFAULT NULL,
 	updatedby       VARCHAR(20)   NOT NULL DEFAULT '',
@@ -237,7 +237,7 @@ CreateTable('crmactivities',
 		outcome         VARCHAR(20)  DEFAULT '',
 		outcomedesc     TEXT,
 		followupdate    DATE         DEFAULT NULL,
-		createdat       DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+		createdat       TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP,
 		createdby       VARCHAR(20)  DEFAULT '',
 		completedat     DATETIME     DEFAULT NULL,
 		PRIMARY KEY (activityid),
@@ -263,7 +263,7 @@ CreateTable('crmemailtemplates',
 		subject       VARCHAR(120)  NOT NULL DEFAULT '',
 		body          TEXT          NOT NULL,
 		active        TINYINT(1)    NOT NULL DEFAULT 1,
-		createdat     DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+		createdat     TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP,
 		createdby     VARCHAR(20)   NOT NULL DEFAULT '',
 		PRIMARY KEY (templateid),
 		KEY idx_active (active)

@@ -1,6 +1,6 @@
 <?php
 
-CreateTable('auditscript',
+CreateTable('auditscripts',
 "CREATE TABLE `auditscripts` (
   `executiondate` datetime NOT NULL DEFAULT '1000-01-01 00:00:00',
   `secondsrunning` decimal(10,5) NOT NULL DEFAULT 0.00000,
