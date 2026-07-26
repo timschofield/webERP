@@ -58,15 +58,15 @@ class Helpers
      */
     public static function build_url($protocol, $host, $base_path, $url, $chrootDirs = [])
     {
-        $protocol = mb_strtolower($protocol);
-        if (empty($protocol)) {
+        $protocol = mb_strtolower($protocol, "UTF-8");
+        if (empty($protocol) || $protocol === "data://") {
             $protocol = "file://";
         }
         if ($url === "") {
             return null;
         }
 
-        $url_lc = mb_strtolower($url);
+        $url_lc = mb_strtolower($url, "UTF-8");
 
         // Is the url already fully qualified, a Data URI, or a reference to a named anchor?
         // File-protocol URLs may require additional processing (e.g. for URLs with a relative path)
@@ -246,6 +246,36 @@ class Helpers
                 break;
         }
 
+        return $ret;
+    }
+
+    /**
+     * Converts decimal numbers to base26 (hexavigesimal)
+     * represented in lower case letters.
+     *
+     * @param int|string $num
+     *
+     * @throws Exception
+     * @return string
+     */
+    public static function dec2base26($num): string
+    {
+        if (!is_numeric($num)) {
+            throw new Exception("dec2base26() requires a numeric argument.");
+        }
+
+        $num = intval($num);
+
+        if ($num <= 0) {
+            return (string) $num;
+        }
+
+        $ret = '';
+        while ($num > 0) {
+            $remainder = ($num - 1) % 26;
+            $ret = chr(97 + $remainder) . $ret;
+            $num = intval(($num - 1) / 26);
+        }
         return $ret;
     }
 
@@ -485,7 +515,7 @@ class Helpers
 
         $arr = parse_url($url);
         if ( isset($arr["scheme"]) ) {
-            $arr["scheme"] = mb_strtolower($arr["scheme"]);
+            $arr["scheme"] = mb_strtolower($arr["scheme"], "UTF-8");
         }
 
         if (isset($arr["scheme"]) && $arr["scheme"] !== "file" && $arr["scheme"] !== "phar" && strlen($arr["scheme"]) > 1) {
@@ -511,7 +541,7 @@ class Helpers
 
             if (isset($arr["path"]) && $arr["path"] !== "") {
                 // Do we have a trailing slash?
-                if ($arr["path"][mb_strlen($arr["path"]) - 1] === "/") {
+                if ($arr["path"][mb_strlen($arr["path"], "8bit") - 1] === "/") {
                     $path = $arr["path"];
                     $file = "";
                 } else {
@@ -533,10 +563,10 @@ class Helpers
             $protocol = "";
             $host = ""; // localhost, really
 
-            $i = mb_stripos($url, "://");
+            $i = mb_stripos($url, "://", 0, "UTF-8");
             if ($i !== false) {
-                $protocol = mb_strtolower(mb_substr($url, 0, $i + 3));
-                $url = mb_substr($url, $i + 3);
+                $protocol = mb_strtolower(mb_substr($url, 0, $i + 3, "UTF-8"), "UTF-8");
+                $url = mb_substr($url, $i + 3, null, "UTF-8");
             } else {
                 $protocol = "file://";
             }
@@ -631,7 +661,7 @@ class Helpers
             $c = mb_convert_encoding($c, "UTF-8", $encoding);
         }
 
-        $length = mb_strlen(mb_substr($c, 0, 1), '8bit');
+        $length = mb_strlen(mb_substr($c, 0, 1, "UTF-8"), "8bit");
         $ord = false;
         $bytes = [];
         $numbytes = 1;
@@ -762,22 +792,24 @@ class Helpers
     }
 
     /**
-     * getimagesize doesn't give a good size for 32bit BMP image v5
+     * Shim for PHP's getimagesize to handle formats that the function
+     * does not handle natively.
      *
      * @param string $filename
      * @param resource $context
-     * @return array An array of three elements: width and height as
-     *         `float|int`, and image type as `string|null`.
+     * @return array An array of 8 elements, by index:
+     *               - `float|int` width
+     *               - `float|int` height
+     *               - `string|null` image type
+     *               - `int|null` type constant
+     *               - `string|null` mime type
+     *               - `int|null` channels
+     *               - `int|null` bits
+     *               - `int|null` estimated memory size in bytes
      */
     public static function dompdf_getimagesize($filename, $context = null)
     {
         static $cache = [];
-
-        if (isset($cache[$filename])) {
-            return $cache[$filename];
-        }
-
-        [$width, $height, $type] = getimagesize($filename);
 
         // Custom types
         $types = [
@@ -785,33 +817,82 @@ class Helpers
             IMAGETYPE_GIF  => "gif",
             IMAGETYPE_BMP  => "bmp",
             IMAGETYPE_PNG  => "png",
-            IMAGETYPE_WEBP => "webp",
+            IMAGETYPE_WEBP => "webp"
         ];
+        if (defined('IMAGETYPE_SVG')) {
+            $types[IMAGETYPE_SVG] = "svg";
+        }
 
-        $type = $types[$type] ?? null;
+        if (isset($cache[$filename])) {
+            return $cache[$filename];
+        }
+
+        $parse_result = @getimagesize($filename);
+        $width = $height = $type = $typeconst = $mime = $channels = $bits = $bytes = null;
+        if ($parse_result !== false) {
+            [$width, $height, $typeconst] = $parse_result;
+            $type = $types[$typeconst] ?? null;
+            $mime = $parse_result['mime'] ?? null;
+            $channels = $parse_result['channels'] ?? null;
+            $bits = $parse_result['bits'] ?? null;
+        }
 
         if ($width == null || $height == null) {
             [$data] = Helpers::getFileContent($filename, $context);
 
             if ($data !== null) {
                 if (substr($data, 0, 2) === "BM") {
-                    $meta = unpack("vtype/Vfilesize/Vreserved/Voffset/Vheadersize/Vwidth/Vheight", $data);
+                    $meta = unpack("vtype/Vfilesize/Vreserved/Voffset/Vheadersize/Vwidth/Vheight/vplanes/vbits/Vcompression/Vimagesize/Vxres/Vyres/Vcolors", $data);
                     $width = (int) $meta["width"];
                     $height = (int) $meta["height"];
                     $type = "bmp";
+                    $typeconst = IMAGETYPE_BMP;
+                    $mime = "image/bmp";
+                    $bits = (int) $meta["bits"];
+                    $channels = $bits > 24 ? 4 : 3;
                 } elseif (strpos($data, "<svg") !== false) {
                     $doc = new \Svg\Document();
+                    if (property_exists($doc, 'allowExternalReferences')) {
+                        $doc->allowExternalReferences = true;
+                    }
                     $doc->loadFile($filename);
 
                     [$width, $height] = $doc->getDimensions();
                     $width = (float) $width;
                     $height = (float) $height;
                     $type = "svg";
+                    if (defined('IMAGETYPE_SVG')) {
+                        $typeconst = IMAGETYPE_SVG;
+                    }
+                    $mime = "image/svg+xml";
+                    $bits = 32;
+                    $channels = 4;
+                    $bytes = strlen($data);
                 }
             }
         }
 
-        return $cache[$filename] = [$width ?? 0, $height ?? 0, $type];
+        if ($width !== null && $height !== null) {
+            switch ($type) {
+                case IMAGETYPE_BMP:
+                    $channels = $channels > 0 ? $channels : 4;
+                    $bits = $bits > 0 ? $bits : 24;
+                case IMAGETYPE_PNG:
+                case IMAGETYPE_WEBP:
+                    $channels = $channels > 0 ? $channels : 4;
+                    $bits = $bits > 0 ? $bits : 8;
+                    break;
+                default:
+                    $channels = $channels > 0 ? $channels : 3;
+                    $bits = $bits > 0 ? $bits : 8;
+                    break;
+            }
+
+            // Memory in bytes
+            $bytes = $width * $height * $channels * ($bits / 8);
+        }
+
+        return $cache[$filename] = [$width ?? 0, $height ?? 0, $type, $typeconst, $mime, $channels ?? 4, $bits ?? 8, $bytes];
     }
 
     /**
@@ -826,7 +907,7 @@ class Helpers
             return false;
         }
 
-        if (function_exists("imagecreatefrombmp") && ($im = imagecreatefrombmp($filename)) !== false) {
+        if (function_exists("imagecreatefrombmp") && ($im = @imagecreatefrombmp($filename)) !== false) {
             return $im;
         }
 
@@ -1014,12 +1095,16 @@ class Helpers
         $headers = null;
         [$protocol] = Helpers::explode_url($uri);
         $is_local_path = in_array(strtolower($protocol), ["", "file://", "phar://"], true);
-        $can_use_curl = in_array(strtolower($protocol), ["http://", "https://"], true);
+        $can_use_curl = in_array(strtolower($protocol), ["http://", "https://"], true) && function_exists('curl_exec');
 
         set_error_handler([self::class, 'record_warnings']);
 
         try {
-            if ($is_local_path || ini_get('allow_url_fopen') || !$can_use_curl) {
+            if ($is_local_path || ini_get('allow_url_fopen') && !$can_use_curl) {
+                $http_response_header = null;
+                if (version_compare(PHP_VERSION, "8.4.0", ">=")) {
+                    \http_clear_last_response_headers();
+                }
                 if ($is_local_path === false) {
                     $uri = Helpers::encodeURI($uri);
                 }
@@ -1031,11 +1116,14 @@ class Helpers
                 if ($result !== false) {
                     $content = $result;
                 }
-                if (isset($http_response_header)) {
+                if (version_compare(PHP_VERSION, "8.4.0", ">=")) {
+                    $headers = \http_get_last_response_headers();
+                    \http_clear_last_response_headers();
+                } elseif (isset($http_response_header)) {
                     $headers = $http_response_header;
                 }
 
-            } elseif ($can_use_curl && function_exists('curl_exec')) {
+            } elseif ($can_use_curl) {
                 $curl = curl_init($uri);
 
                 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -1101,7 +1189,10 @@ class Helpers
                             break;
                     }
                 }
-                curl_close($curl);
+
+                if (PHP_MAJOR_VERSION < 8) {
+                    curl_close($curl);
+                }
             }
         } finally {
             restore_error_handler();
@@ -1116,24 +1207,24 @@ class Helpers
      */
     public static function mb_ucwords(string $str): string
     {
-        $max_len = mb_strlen($str);
+        $max_len = mb_strlen($str, "UTF-8");
         if ($max_len === 1) {
-            return mb_strtoupper($str);
+            return mb_strtoupper($str, "UTF-8");
         }
 
-        $str = mb_strtoupper(mb_substr($str, 0, 1)) . mb_substr($str, 1);
+        $str = mb_strtoupper(mb_substr($str, 0, 1, "UTF-8"), "UTF-8") . mb_substr($str, 1, null, "UTF-8");
 
         foreach ([' ', '.', ',', '!', '?', '-', '+'] as $s) {
             $pos = 0;
-            while (($pos = mb_strpos($str, $s, $pos)) !== false) {
+            while (($pos = mb_strpos($str, $s, $pos, "UTF-8")) !== false) {
                 $pos++;
                 // Nothing to do if the separator is the last char of the string
                 if ($pos !== false && $pos < $max_len) {
                     // If the char we want to upper is the last char there is nothing to append behind
                     if ($pos + 1 < $max_len) {
-                        $str = mb_substr($str, 0, $pos) . mb_strtoupper(mb_substr($str, $pos, 1)) . mb_substr($str, $pos + 1);
+                        $str = mb_substr($str, 0, $pos, "UTF-8") . mb_strtoupper(mb_substr($str, $pos, 1, "UTF-8"), "UTF-8") . mb_substr($str, $pos + 1, null, "UTF-8");
                     } else {
-                        $str = mb_substr($str, 0, $pos) . mb_strtoupper(mb_substr($str, $pos, 1));
+                        $str = mb_substr($str, 0, $pos, "UTF-8") . mb_strtoupper(mb_substr($str, $pos, 1, "UTF-8"), "UTF-8");
                     }
                 }
             }

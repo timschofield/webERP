@@ -598,17 +598,15 @@ class CPDF implements Canvas
             return $filename;
         }
  
-        $func_name = "imagecreatefrom$type";
-
         set_error_handler([Helpers::class, "record_warnings"]);
-
-        if (method_exists(Helpers::class, $func_name)) {
-            $func_name = [Helpers::class, $func_name];
-        } elseif (!function_exists($func_name)) {
-            throw new Exception("Function $func_name() not found.  Cannot convert $type image: $image_url.  Please install the image PHP extension.");
-        }
-
         try {
+            $func_name = "imagecreatefrom$type";
+            if (method_exists(Helpers::class, $func_name)) {
+                $func_name = [Helpers::class, $func_name];
+            } elseif (!function_exists($func_name)) {
+                throw new Exception("Function $func_name() not found.  Cannot convert $type image: $image_url.  Please install the image PHP extension.");
+            }
+
             $im = call_user_func($func_name, $image_url);
 
             if ($im) {
@@ -620,7 +618,9 @@ class CPDF implements Canvas
                 $filename = "$tmp_name.png";
 
                 imagepng($im, $filename);
-                imagedestroy($im);
+                if (PHP_MAJOR_VERSION < 8) {
+                    imagedestroy($im);
+                }
             } else {
                 $filename = null;
             }
@@ -971,7 +971,6 @@ class CPDF implements Canvas
         $debug = !$options['compress'];
         $tmp = ltrim($this->_pdf->output($debug));
 
-        header("Cache-Control: private");
         header("Content-Type: application/pdf");
         header("Content-Length: " . mb_strlen($tmp, "8bit"));
 
