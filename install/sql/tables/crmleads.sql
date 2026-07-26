@@ -23,7 +23,7 @@ CREATE TABLE `crmleads` (
   `notes` text,
   `convertedto` varchar(10) DEFAULT '',
   `convertedat` datetime DEFAULT NULL,
-  `createdat` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdat` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `createdby` varchar(20) DEFAULT '',
   `updatedat` datetime DEFAULT NULL,
   `updatedby` varchar(20) DEFAULT '',
