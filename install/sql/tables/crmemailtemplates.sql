@@ -4,7 +4,7 @@ CREATE TABLE `crmemailtemplates` (
   `subject` varchar(120) NOT NULL DEFAULT '',
   `body` text NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1',
-  `createdat` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdat` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `createdby` varchar(20) NOT NULL DEFAULT '',
   PRIMARY KEY (`templateid`),
   KEY `idx_active` (`active`)

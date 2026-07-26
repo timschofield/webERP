@@ -15,7 +15,7 @@ CREATE TABLE `crmactivities` (
   `outcome` varchar(20) DEFAULT '',
   `outcomedesc` text,
   `followupdate` date DEFAULT NULL,
-  `createdat` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdat` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `createdby` varchar(20) DEFAULT '',
   `completedat` datetime DEFAULT NULL,
   PRIMARY KEY (`activityid`),

@@ -13,7 +13,7 @@ CREATE TABLE `crmopportunities` (
   `outcome` varchar(10) NOT NULL DEFAULT 'open',
   `lostnotes` text,
   `closedat` datetime DEFAULT NULL,
-  `createdat` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdat` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `createdby` varchar(20) NOT NULL DEFAULT '',
   `updatedat` datetime DEFAULT NULL,
   `updatedby` varchar(20) NOT NULL DEFAULT '',
