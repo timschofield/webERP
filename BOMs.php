@@ -79,6 +79,7 @@ function CheckForRecursiveBOM($UltimateParent, $ComponentToCheck) {
 function DisplayBOMItems($UltimateParent, $Parent, $Component, $Level) {
 
 	global $ParentMBflag;
+	global $RootPath;
 	$SQL = "SELECT bom.component,
 					stockcategory.categorydescription,
 					stockmaster.description as itemdescription,
@@ -153,11 +154,13 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component, $Level) {
 			$MyRow['remark'] = ' **' . ' ' . $MyRow['remark'];
 		}
 
+		$ComponentLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . urlencode($MyRow['component']) . '">' . htmlspecialchars($MyRow['component'], ENT_QUOTES, 'UTF-8') . '</a>';
+
 		echo '<tr class="striped_row">
 				<td class="number" style="text-align:left;text-indent:', $TextIndent, ';" >', $Level1, '</td>
 				<td class="number">', $MyRow['sequence'], '</td>
 				<td>', $MyRow['categorydescription'], '</td>
-				<td>', $MyRow['component'], '</td>
+				<td>', $ComponentLink, '</td>
 				<td>', $MyRow['itemdescription'], '</td>
 				<td>', $MyRow['locationname'], '</td>
 				<td>', $MyRow['workcentrename'], '</td>
