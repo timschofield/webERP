@@ -22,6 +22,18 @@ include(__DIR__ . '/includes/header.php');
 include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 include(__DIR__ . '/includes/CountriesArray.php');
 
+$IndustryOptions = array();
+$SQL = "SELECT industryname
+		FROM crmindustries
+		WHERE active='1'
+		ORDER BY industryname";
+$Result = DB_query($SQL, '', '', false, false);
+if ($Result) {
+	while ($MyRow = DB_fetch_array($Result)) {
+		$IndustryOptions[] = $MyRow['industryname'];
+	}
+}
+
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . __('Customer') .
 	'" alt="" />' . ' ' . __('Customer Maintenance') . '
@@ -160,7 +172,13 @@ if (isset($_POST['submit'])) {
 												taxref='" . $_POST['TaxRef'] . "',
 												customerpoline='" . $_POST['CustomerPOLine'] . "',
 												typeid='" . $_POST['typeid'] . "',
-												language_id='" . $_POST['LanguageID'] . "'
+												language_id='" . $_POST['LanguageID'] . "',
+												industry='" . $_POST['Industry'] . "',
+												website='" . $_POST['Website'] . "',
+												leadsource='" . $_POST['LeadSource'] . "',
+												lifecycle='" . $_POST['Lifecycle'] . "',
+												employeecount='" . $_POST['EmployeeCount'] . "',
+												annualrevenue='" . filter_number_format($_POST['AnnualRevenue']) . "'
 					  WHERE debtorno = '" . $_POST['DebtorNo'] . "'";
 			} else {
 
@@ -190,7 +208,13 @@ if (isset($_POST['submit'])) {
 												taxref='" . $_POST['TaxRef'] . "',
 												customerpoline='" . $_POST['CustomerPOLine'] . "',
 												typeid='" . $_POST['typeid'] . "',
-												language_id='" . $_POST['LanguageID'] . "'
+												language_id='" . $_POST['LanguageID'] . "',
+												industry='" . $_POST['Industry'] . "',
+												website='" . $_POST['Website'] . "',
+												leadsource='" . $_POST['LeadSource'] . "',
+												lifecycle='" . $_POST['Lifecycle'] . "',
+												employeecount='" . $_POST['EmployeeCount'] . "',
+												annualrevenue='" . filter_number_format($_POST['AnnualRevenue']) . "'
 						WHERE debtorno = '" . $_POST['DebtorNo'] . "'";
 
 				if ($OldCurrency !=  $_POST['CurrCode']) {
@@ -235,7 +259,13 @@ if (isset($_POST['submit'])) {
 							taxref,
 							customerpoline,
 							typeid,
-							language_id)
+							language_id,
+							industry,
+							website,
+							leadsource,
+							lifecycle,
+							employeecount,
+							annualrevenue)
 				VALUES ('" . $_POST['DebtorNo'] ."',
 						'" . $_POST['CustName'] ."',
 						'" . $_POST['Address1'] ."',
@@ -257,7 +287,13 @@ if (isset($_POST['submit'])) {
 						'" . $_POST['TaxRef'] . "',
 						'" . $_POST['CustomerPOLine'] . "',
 						'" . $_POST['typeid'] . "',
-						'" . $_POST['LanguageID'] . "')";
+						'" . $_POST['LanguageID'] . "',
+						'" . $_POST['Industry'] . "',
+						'" . $_POST['Website'] . "',
+						'" . $_POST['LeadSource'] . "',
+						'" . $_POST['Lifecycle'] . "',
+						'" . $_POST['EmployeeCount'] . "',
+						'" . filter_number_format($_POST['AnnualRevenue']) . "')";
 
 			$ErrMsg = __('This customer could not be added because');
 			$Result = DB_query($SQL, $ErrMsg);
@@ -445,8 +481,7 @@ if (!isset($DebtorNo)) {
 	$DataError =0;
 
 	echo '<fieldset>
-			<legend>', __('Create Customer Details'), '</legend>
-			<fieldset class="Column1">';
+			<legend>', __('Create Customer Details'), '</legend>';
 
 	/* if $AutoDebtorNo in config.php has not been set or if it has been set to a number less than one,
 	then provide an input box for the DebtorNo to manually assigned */
@@ -544,11 +579,9 @@ if (!isset($DebtorNo)) {
 	echo '<field>
 			<label for="ClientSince">' . __('Customer Since') . ' (' . $_SESSION['DefaultDateFormat'] . '):</label>
 			<input tabindex="10" type="date" name="ClientSince" value="' . $DateString . '" size="11" maxlength="10" />
-		</field>
-	</fieldset>';
+		</field>';
 
-	echo '<fieldset class="Column2">
-				<field>
+	echo '<field>
 					<label for="Discount">' . __('Discount Percent') . ':</label>
 					<input tabindex="11" type="text" class="number" name="Discount" value="0" size="5" maxlength="4" />
 				</field>
@@ -667,6 +700,51 @@ if (!isset($DebtorNo)) {
 			</select>
 		</field>
 		</fieldset>
+		<fieldset>
+			<legend>' . __('CRM Details') . '</legend>
+		<field>
+			<label for="Industry">' . __('Industry') . ':</label>
+			<select name="Industry">
+				<option value=""></option>';
+			$IndustryFound = false;
+			foreach ($IndustryOptions as $IndustryName) {
+				$Selected = '';
+				if (isset($_POST['Industry']) and $_POST['Industry'] == $IndustryName) {
+					$Selected = ' selected="selected"';
+					$IndustryFound = true;
+				}
+				echo '<option value="' . htmlspecialchars($IndustryName, ENT_QUOTES, 'UTF-8') . '"' . $Selected . '>' . htmlspecialchars($IndustryName, ENT_QUOTES, 'UTF-8') . '</option>';
+			}
+			if (isset($_POST['Industry']) and $_POST['Industry'] != '' and !$IndustryFound) {
+				echo '<option selected="selected" value="' . htmlspecialchars($_POST['Industry'], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($_POST['Industry'], ENT_QUOTES, 'UTF-8') . '</option>';
+			}
+			echo '</select>
+		</field>
+		<field>
+			<label for="Website">' . __('Website') . ':</label>
+			<input maxlength="120" name="Website" size="40" type="url" value="' . (isset($_POST['Website']) ? htmlspecialchars($_POST['Website']) : '') . '" />
+		</field>
+		<field>
+			<label for="LeadSource">' . __('Lead Source') . ':</label>
+			<input maxlength="40" name="LeadSource" size="30" type="text" value="' . (isset($_POST['LeadSource']) ? htmlspecialchars($_POST['LeadSource']) : '') . '" />
+		</field>
+		<field>
+			<label for="Lifecycle">' . __('Lifecycle Stage') . ':</label>
+			<select name="Lifecycle">';
+			$LifecycleVal = isset($_POST['Lifecycle']) ? $_POST['Lifecycle'] : 'lead';
+			foreach (['lead' => __('Lead'), 'prospect' => __('Prospect'), 'customer' => __('Customer'), 'churned' => __('Churned')] as $LcKey => $LcLabel) {
+				echo '<option value="' . $LcKey . '"' . ($LifecycleVal == $LcKey ? ' selected="selected"' : '') . '>' . $LcLabel . '</option>';
+			}
+			echo '</select>
+		</field>
+		<field>
+			<label for="EmployeeCount">' . __('Employee Count') . ':</label>
+			<input maxlength="11" name="EmployeeCount" size="10" type="number" min="0" value="' . (isset($_POST['EmployeeCount']) ? (int)$_POST['EmployeeCount'] : '') . '" />
+		</field>
+		<field>
+			<label for="AnnualRevenue">' . __('Annual Revenue') . ':</label>
+			<input maxlength="14" name="AnnualRevenue" size="15" type="text" value="' . (isset($_POST['AnnualRevenue']) ? number_format($_POST['AnnualRevenue'], 2) : '') . '" />
+		</field>
 		</fieldset>';
 	if ($DataError ==0){
 		echo '<div class="centre">
@@ -707,7 +785,13 @@ if (!isset($DebtorNo)) {
 						taxref,
 						customerpoline,
 						typeid,
-						language_id
+						language_id,
+						industry,
+						website,
+						leadsource,
+						lifecycle,
+						employeecount,
+						annualrevenue
 				FROM debtorsmaster
 				WHERE debtorno = '" . $DebtorNo . "'";
 
@@ -744,6 +828,12 @@ if (!isset($DebtorNo)) {
 		$_POST['CustomerPOLine'] = $MyRow['customerpoline'];
 		$_POST['typeid'] = $MyRow['typeid'];
 		$_POST['LanguageID'] = $MyRow['language_id'];
+		$_POST['Industry'] = $MyRow['industry'];
+		$_POST['Website'] = $MyRow['website'];
+		$_POST['LeadSource'] = $MyRow['leadsource'];
+		$_POST['Lifecycle'] = $MyRow['lifecycle'];
+		$_POST['EmployeeCount'] = $MyRow['employeecount'];
+		$_POST['AnnualRevenue'] = $MyRow['annualrevenue'];
 
 		echo '<input type="hidden" name="DebtorNo" value="' . $DebtorNo . '" />';
 
@@ -1083,6 +1173,51 @@ if (!isset($DebtorNo)) {
 	}
 
 	echo '</select>
+		</field>
+		</fieldset>
+		<fieldset class="Column2">
+			<legend>' . __('CRM Details') . '</legend>
+		<field>
+			<label for="Industry">' . __('Industry') . ':</label>
+			<select name="Industry">
+				<option value=""></option>';
+			$IndustryFound = false;
+			foreach ($IndustryOptions as $IndustryName) {
+				$Selected = '';
+				if (isset($_POST['Industry']) and $_POST['Industry'] == $IndustryName) {
+					$Selected = ' selected="selected"';
+					$IndustryFound = true;
+				}
+				echo '<option value="' . htmlspecialchars($IndustryName, ENT_QUOTES, 'UTF-8') . '"' . $Selected . '>' . htmlspecialchars($IndustryName, ENT_QUOTES, 'UTF-8') . '</option>';
+			}
+			if (isset($_POST['Industry']) and $_POST['Industry'] != '' and !$IndustryFound) {
+				echo '<option selected="selected" value="' . htmlspecialchars($_POST['Industry'], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($_POST['Industry'], ENT_QUOTES, 'UTF-8') . '</option>';
+			}
+			echo '</select>
+		</field>
+		<field>
+			<label for="Website">' . __('Website') . ':</label>
+			<input maxlength="120" name="Website" size="40" type="url" value="' . htmlspecialchars($_POST['Website'] ?? '') . '" />
+		</field>
+		<field>
+			<label for="LeadSource">' . __('Lead Source') . ':</label>
+			<input maxlength="40" name="LeadSource" size="30" type="text" value="' . htmlspecialchars($_POST['LeadSource'] ?? '') . '" />
+		</field>
+		<field>
+			<label for="Lifecycle">' . __('Lifecycle Stage') . ':</label>
+			<select name="Lifecycle">';
+			foreach (['lead' => __('Lead'), 'prospect' => __('Prospect'), 'customer' => __('Customer'), 'churned' => __('Churned')] as $LcKey => $LcLabel) {
+				echo '<option value="' . $LcKey . '"' . (($_POST['Lifecycle'] ?? 'customer') == $LcKey ? ' selected="selected"' : '') . '>' . $LcLabel . '</option>';
+			}
+			echo '</select>
+		</field>
+		<field>
+			<label for="EmployeeCount">' . __('Employee Count') . ':</label>
+			<input maxlength="11" name="EmployeeCount" size="10" type="number" min="0" value="' . (int)($_POST['EmployeeCount'] ?? 0) . '" />
+		</field>
+		<field>
+			<label for="AnnualRevenue">' . __('Annual Revenue') . ':</label>
+			<input maxlength="14" name="AnnualRevenue" size="15" type="text" value="' . number_format($_POST['AnnualRevenue'] ?? 0, 2) . '" />
 		</field>
 		</fieldset>
 		</fieldset>';

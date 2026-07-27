@@ -121,8 +121,8 @@ if ($Rows == 0) { /* Then the database does not exist */
 		$TableNames = array();
 		foreach (glob($Path_To_Root . '/install/sql/tables/*.sql') as $FileName) {
 			$SQLScriptFile = file_get_contents($FileName);
-			if (preg_match('/^CREATE +TABLE +`?([^ (`]+)`?/', $SQLScriptFile, $matches)) {
-				$TableNames[] = str_replace('`', '', $matches[1]);
+			if (preg_match('/^CREATE +TABLE +(IF +NOT +EXISTS +)?`?([^ (`]+)`?/i', $SQLScriptFile, $matches)) {
+				$TableNames[] = str_replace('`', '', $matches[2]);
 			}
 		}
 		foreach ($Rows as $i => $Row) {

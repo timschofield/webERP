@@ -28,6 +28,7 @@ CREATE TABLE `salesorders` (
   `quotedate` date NOT NULL DEFAULT '1000-01-01',
   `poplaced` tinyint NOT NULL DEFAULT '0',
   `salesperson` varchar(4) NOT NULL,
+  `oppid` int NOT NULL DEFAULT '0',
   `internalcomment` blob DEFAULT NULL,
   PRIMARY KEY (`orderno`),
   KEY `DebtorNo` (`debtorno`),

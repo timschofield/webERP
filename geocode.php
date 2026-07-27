@@ -2,7 +2,7 @@
 require (__DIR__ . '/includes/session.php');
 
 $Title = __('Geocode Generate');
-include ('includes/header.php');
+include(__DIR__ . '/includes/header.php');
 
 //include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 $SQL = "SELECT * FROM geocode_param";
@@ -159,5 +159,5 @@ while ($MyRow2 = DB_fetch_array($Result2)) {
 }
 echo '</table>';
 echo '<br /><div class="centre"><a href="' . $RootPath . '/GeocodeSetup.php">' . __('Go back to Geocode Setup') . '</a></div>';
-include ('includes/footer.php');
+include(__DIR__ . '/includes/footer.php');
 

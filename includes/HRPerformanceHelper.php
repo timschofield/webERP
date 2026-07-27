@@ -60,6 +60,51 @@ function GetPositionIDFromEmployeeNumber(string $EmployeeNumber) {
 	return $PositionID;
 }
 
+/* GetEmployeeIDFromUserID
+ * Helper to get employeeid for a given webERP user id
+ */
+function GetEmployeeIDFromUserID(string $UserID) {
+	$EmployeeID = 0;
+	$SQL = "SELECT employeeid FROM hremployees WHERE userid = '" . DB_escape_string($UserID) . "'";
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) > 0) {
+		$Row = DB_fetch_array($Result);
+		$EmployeeID = (int)$Row['employeeid'];
+	}
+	return $EmployeeID;
+}
+
+/* GetAncestorPositionIDs
+ * Returns all positions above the supplied position by walking reportstopositionid up the tree
+ */
+function GetAncestorPositionIDs(int $PositionID) {
+	$Ancestors = array();
+	$Visited = array();
+	$CurrentPositionID = (int)$PositionID;
+
+	while ($CurrentPositionID > 0 && !isset($Visited[$CurrentPositionID])) {
+		$Visited[$CurrentPositionID] = true;
+		$SQL = "SELECT reportstopositionid
+				FROM hrpositions
+				WHERE positionid = " . $CurrentPositionID;
+		$Result = DB_query($SQL);
+		if (DB_num_rows($Result) == 0) {
+			break;
+		}
+
+		$Row = DB_fetch_array($Result);
+		$ParentPositionID = isset($Row['reportstopositionid']) ? (int)$Row['reportstopositionid'] : 0;
+		if ($ParentPositionID <= 0) {
+			break;
+		}
+
+		$Ancestors[] = $ParentPositionID;
+		$CurrentPositionID = $ParentPositionID;
+	}
+
+	return $Ancestors;
+}
+
 /* PadEmployeeNumber
  * Left-pads employee number with zeros up to 6 characters
  */
@@ -189,6 +234,132 @@ function DeleteAppraisalCriteria(int $AppraisalID) {
 function CalculateWeightedScoreForAppraisal(int $AppraisalID, int $PositionID = 0) {
 	$Criteria = GetAppraisalCriteria($AppraisalID, $PositionID);
 	$ScoreRows = GetCriteriaScores($AppraisalID);
+	$ScoresMap = array();
+	foreach ($ScoreRows as $cid => $row) {
+		$ScoresMap[$cid] = isset($row['rating']) ? $row['rating'] : null;
+	}
+	$weighted = CalculateWeightedScore($ScoresMap, $Criteria);
+	$rating = MapScoreToRating($weighted);
+	return array('weightedscore' => $weighted, 'mappedrating' => $rating);
+}
+
+/*
+ * GetFeedbackCriteria
+ * Return an associative array of active colleague feedback criteria keyed by criteriaid
+ */
+function GetFeedbackCriteria() {
+	$Criteria = array();
+	$SQL = "SELECT criteriaid,
+					criterianame,
+					weight
+				FROM hrfeedbackcriteria
+				WHERE isactive = 1
+				ORDER BY displayorder,
+					weight DESC,
+					criterianame";
+	$Result = DB_query($SQL);
+	while ($Row = DB_fetch_array($Result)) {
+		$Criteria[$Row['criteriaid']] = $Row;
+	}
+	return $Criteria;
+}
+
+/*
+ * GetFeedbackCriteriaScores
+ * Returns associative array keyed by criteriaid for a given colleague feedback record
+ */
+function GetFeedbackCriteriaScores(int $FeedbackID) {
+	$Scores = array();
+	$SQL = "SELECT criteriascoreid,
+					criteriaid,
+					rating,
+					score,
+					weightedscore,
+					comments
+				FROM hrfeedbackcriteriascores
+				WHERE feedbackid = " . (int)$FeedbackID;
+	$Result = DB_query($SQL);
+	while ($Row = DB_fetch_array($Result)) {
+		$Scores[$Row['criteriaid']] = $Row;
+	}
+	return $Scores;
+}
+
+/*
+ * SaveFeedbackCriteriaScoreAdvanced
+ * Upsert a single criterion score for a colleague feedback record and compute per-row weighted values
+ */
+function SaveFeedbackCriteriaScoreAdvanced(int $FeedbackID, int $CriteriaID, ?int $Rating = null, string $Comments = '') {
+	$FeedbackID = (int)$FeedbackID;
+	$CriteriaID = (int)$CriteriaID;
+	$RatingVal = is_null($Rating) ? 'NULL' : (int)$Rating;
+	$CommentsEsc = DB_escape_string($Comments);
+
+	$Weight = 0.0;
+	$WSQL = "SELECT weight FROM hrfeedbackcriteria WHERE criteriaid = " . $CriteriaID;
+	$WRes = DB_query($WSQL);
+	if (DB_num_rows($WRes) > 0) {
+		$WRow = DB_fetch_array($WRes);
+		$Weight = (float)$WRow['weight'];
+	}
+
+	$ScoreVal = is_null($Rating) ? 'NULL' : (float)$Rating;
+	$WeightedVal = is_null($Rating) ? 'NULL' : round($ScoreVal * ($Weight / 100.0), 2);
+
+	$SQL = "SELECT criteriascoreid
+			FROM hrfeedbackcriteriascores
+			WHERE feedbackid = " . $FeedbackID . "
+				AND criteriaid = " . $CriteriaID;
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) > 0) {
+		$Row = DB_fetch_array($Result);
+		$SQL = "UPDATE hrfeedbackcriteriascores
+				SET rating = " . $RatingVal . ",
+					score = " . (is_null($Rating) ? 'NULL' : $ScoreVal) . ",
+					weightedscore = " . (is_null($Rating) ? 'NULL' : $WeightedVal) . ",
+					comments = '" . $CommentsEsc . "',
+					modifiedby = '" . DB_escape_string(isset($_SESSION['UserID']) ? $_SESSION['UserID'] : '') . "',
+					modifieddate = NOW()
+				WHERE criteriascoreid = " . $Row['criteriascoreid'];
+	} else {
+		$SQL = "INSERT INTO hrfeedbackcriteriascores (
+						feedbackid,
+						criteriaid,
+						rating,
+						score,
+						weightedscore,
+						comments,
+						createdby,
+						createddate
+					) VALUES (
+						" . $FeedbackID . ",
+						" . $CriteriaID . ",
+						" . $RatingVal . ",
+						" . (is_null($Rating) ? 'NULL' : $ScoreVal) . ",
+						" . (is_null($Rating) ? 'NULL' : $WeightedVal) . ",
+						'" . $CommentsEsc . "',
+						'" . DB_escape_string(isset($_SESSION['UserID']) ? $_SESSION['UserID'] : '') . "',
+						NOW()
+					)";
+	}
+	return DB_query($SQL);
+}
+
+/*
+ * DeleteFeedbackCriteria
+ */
+function DeleteFeedbackCriteria(int $FeedbackID) {
+	$SQL = "DELETE FROM hrfeedbackcriteriascores WHERE feedbackid = " . (int)$FeedbackID;
+	return DB_query($SQL);
+}
+
+/*
+ * CalculateWeightedScoreForFeedback
+ * Loads feedback criteria and scores and returns array(weightedscore => float, mappedrating => int)
+ */
+function CalculateWeightedScoreForFeedback(int $FeedbackID) {
+	$Criteria = GetFeedbackCriteria();
+	$ScoreRows = GetFeedbackCriteriaScores($FeedbackID);
 	$ScoresMap = array();
 	foreach ($ScoreRows as $cid => $row) {
 		$ScoresMap[$cid] = isset($row['rating']) ? $row['rating'] : null;

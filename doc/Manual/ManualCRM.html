@@ -1,0 +1,542 @@
+<h1><a id="CRM">Customer Relationship Management (CRM)</a></h1>
+
+<h2>Overview</h2>
+
+<p>The webERP CRM module provides a complete sales pipeline from first contact through to a
+closed customer. It shares the same login, permissions and data as the rest of webERP, so a
+converted lead automatically becomes an accounts-receivable customer with no re-keying of
+information.</p>
+
+<p>The module is built around four core concepts:</p>
+
+<ul>
+    <li><strong>Leads</strong> &mdash; people or companies that have expressed interest but are not yet customers.</li>
+    <li><strong>Opportunities</strong> &mdash; specific potential deals linked to a lead or existing customer, progressed through a defined pipeline.</li>
+    <li><strong>Activities</strong> &mdash; every interaction in the sales process: calls, meetings, emails, tasks and notes, each logged against a lead, customer or opportunity.</li>
+    <li><strong>Pipeline</strong> &mdash; a visual board showing all open opportunities grouped by stage, with weighted forecast values.</li>
+</ul>
+
+<p>The CRM section of the menu is organised as follows:</p>
+
+<ul>
+    <li><strong>Transactions</strong> &mdash; My Activities, Log Activity, Compose Email.</li>
+    <li><strong>Leads &amp; Opportunities</strong> &mdash; Leads, Pipeline, Opportunities, Forecast.</li>
+    <li><strong>Reports</strong> &mdash; Lead Report, Opportunity Report, Activity Report, Customer Health.</li>
+    <li><strong>Maintenance</strong> &mdash; Activity Types, Lead Sources, Industries, Pipeline Stages, Email Templates.</li>
+</ul>
+
+<div class="floatright">
+    <a class="minitext" href="#top">&#8679; Top</a>
+</div>
+
+<!-- Help Begin: CRMActivityTypes -->
+<!-- Help Begin: CRMLeadSources -->
+<!-- Help Begin: CRMIndustries -->
+<!-- Help Begin: CRMPipelineStages -->
+<!-- Help Begin: CRMEmailTemplates -->
+
+<h2><a id="CRMSetup">Getting Started &mdash; Initial Setup</a></h2>
+
+<p>Before salespeople begin using the CRM, an administrator should complete the five setup
+steps below. All maintenance pages are under <em>CRM &rarr; Maintenance</em>.</p>
+
+<h3><a id="CRMLeadSourcesSetup">Step 1 &mdash; Define Lead Sources</a></h3>
+
+<p>Lead sources record how a prospect first heard about the business. They appear on the lead
+entry form and in lead analysis reports. Navigate to <em>CRM &rarr; Maintenance &rarr; Lead
+Sources</em> and add each channel used (for example: Web Enquiry, Referral, Trade Show).
+Default sources are pre-loaded &mdash; delete or rename any that do not apply. A source
+cannot be deleted once any lead references it; deactivate it instead to remove it from future
+entry forms while preserving history.</p>
+
+<h3><a id="CRMIndustriesSetup">Step 2 &mdash; Define Industries</a></h3>
+
+<p>Industries provide a controlled reference list for the customer <strong>Industry</strong>
+field in Customer Maintenance. Navigate to <em>CRM &rarr; Maintenance &rarr; Industries</em>
+and add each industry your business reports against (for example: Manufacturing, Retail,
+Healthcare, Professional Services). Industries can be deactivated to remove them from future
+customer entry while preserving historical data.</p>
+
+<h3><a id="CRMPipelineStagesSetup">Step 3 &mdash; Configure the Sales Pipeline</a></h3>
+
+<p>Pipeline stages define the journey from first contact to close. Navigate to <em>CRM &rarr;
+Maintenance &rarr; Pipeline Stages</em>. Each stage has the following fields:</p>
+
+<ul>
+    <li><strong>Stage Name</strong> &mdash; displayed on entry forms and the pipeline board.</li>
+    <li><strong>Probability</strong> &mdash; default probability percentage loaded when this stage is selected on an opportunity.</li>
+    <li><strong>Sequence</strong> &mdash; display order; a lower number appears further left on the pipeline board.</li>
+    <li><strong>Active</strong> &mdash; inactive stages are hidden from entry forms without losing history.</li>
+    <li><strong>Closed</strong> &mdash; marks this as a terminal stage; the probability and outcome are set automatically when a closed stage is chosen.</li>
+    <li><strong>Closed Outcome</strong> &mdash; must be set to <em>won</em> or <em>lost</em> for any stage marked as Closed.</li>
+</ul>
+
+<p>The default stages are: Prospecting (10%), Qualification (20%), Needs Analysis (40%),
+Value Proposition (60%), Proposal/Quote (75%), Negotiation (90%), Closed Won (100%),
+Closed Lost (0%). Edit these to match the actual sales process.</p>
+
+<h3><a id="CRMActivityTypesSetup">Step 4 &mdash; Define Activity Types</a></h3>
+
+<p>Activity types categorise every interaction in the log. Navigate to <em>CRM &rarr;
+Maintenance &rarr; Activity Types</em>. Each type has a short code, a display name, an
+optional icon class (CSS class for theme icon support), and an active flag. Default types
+are: Note, Phone Call, Email, Meeting, Task, Demo.</p>
+
+<p>An activity type cannot be deleted if any log entries reference it &mdash; deactivate it
+to remove it from future entry without losing history.</p>
+
+<h3><a id="CRMEmailTemplatesSetup">Step 5 &mdash; Create Email Templates</a></h3>
+
+<p>Templates allow salespeople to send consistent emails without rewriting them each time.
+Navigate to <em>CRM &rarr; Maintenance &rarr; Email Templates</em> and click <strong>New
+Template</strong>. Enter an internal name, subject and body text. The subject and body
+support the following merge fields that are resolved at send time:</p>
+
+<ul>
+    <li><code>{CustomerName}</code> &mdash; name of the customer or lead.</li>
+    <li><code>{SalesmanName}</code> &mdash; name of the assigned salesperson.</li>
+    <li><code>{CompanyName}</code> &mdash; the business name from system settings.</li>
+    <li><code>{Date}</code> &mdash; today&rsquo;s date.</li>
+</ul>
+
+<p>Templates with duplicate names are rejected. Deactivate a template rather than deleting
+it once it has been used, so activity log references remain intact.</p>
+
+<!-- Help End: CRMActivityTypes -->
+<!-- Help End: CRMLeadSources -->
+<!-- Help End: CRMIndustries -->
+<!-- Help End: CRMPipelineStages -->
+<!-- Help End: CRMEmailTemplates -->
+
+<div class="floatright">
+    <a class="minitext" href="#top">&#8679; Top</a>
+</div>
+
+<!-- Help Begin: CRMLeads -->
+<!-- Help Begin: CRMLeadEntry -->
+<!-- Help Begin: CRMLeadInquiry -->
+<!-- Help Begin: CRMSelectLead -->
+
+<h2><a id="CRMLeads">Lead Management</a></h2>
+
+<p>Leads are prospective customers who have not yet been converted to accounts-receivable
+records. The lead lifecycle runs through the following statuses: <em>New</em>,
+<em>Contacted</em>, <em>Qualified</em>, <em>Unqualified</em>, <em>Converted</em>.</p>
+
+<h3>Creating a New Lead</h3>
+
+<p>Navigate to <em>CRM &rarr; Leads &amp; Opportunities &rarr; Leads</em> and click
+<strong>New Lead</strong>. The form has the following fields:</p>
+
+<ul>
+    <li><strong>First Name / Last Name</strong> &mdash; the contact person at the prospect organisation.</li>
+    <li><strong>Company</strong> &mdash; the organisation name; leave blank for an individual.</li>
+    <li><strong>Job Title</strong> &mdash; optional, useful for segmentation and correspondence.</li>
+    <li><strong>Email / Phone / Mobile</strong> &mdash; contact details for the lead.</li>
+    <li><strong>Website</strong> &mdash; the prospect&rsquo;s website address.</li>
+    <li><strong>Industry</strong> &mdash; free-text sector description.</li>
+    <li><strong>Lead Source</strong> &mdash; how the prospect was acquired; select from the maintenance reference list.</li>
+    <li><strong>Status</strong> &mdash; start with <em>New</em> and update as the lead progresses.</li>
+    <li><strong>Assigned To</strong> &mdash; the salesperson responsible for follow-up.</li>
+    <li><strong>Estimated Value</strong> &mdash; expected deal size in the selected currency.</li>
+    <li><strong>Notes</strong> &mdash; free-text background information about the lead.</li>
+</ul>
+
+<h3>Searching and Filtering Leads</h3>
+
+<p>The Leads list shows all leads matching the current filter. Available filter options are:</p>
+
+<ul>
+    <li><strong>Keywords</strong> &mdash; partial match against first name, last name and company name.</li>
+    <li><strong>Status</strong> &mdash; restrict to a particular lifecycle stage.</li>
+    <li><strong>Assigned To</strong> &mdash; show only a specific salesperson&rsquo;s leads.</li>
+    <li><strong>Lead Source</strong> &mdash; show leads from one acquisition channel.</li>
+</ul>
+
+<p>Filter selections are saved in the session and persist when returning to the page.
+Clear them by selecting the blank option in each filter and clicking <strong>Search</strong>.</p>
+
+<h3>Editing and Viewing a Lead</h3>
+
+<p>Click <strong>Edit</strong> on any lead row to open the entry form and update any field.
+Advance the <strong>Status</strong> field as the lead moves through qualification. Click
+<strong>View</strong> on any row to open the Lead Inquiry page, which shows all fields plus
+the full history of activities logged against the lead and any linked opportunities.</p>
+
+<h3>Deleting a Lead</h3>
+
+<p>Click <strong>Delete</strong> from the edit screen. Only leads that have <em>not</em>
+been converted to a customer can be deleted. Converted leads are retained for historical
+reporting accuracy.</p>
+
+<!-- Help End: CRMLeads -->
+<!-- Help End: CRMLeadEntry -->
+<!-- Help End: CRMLeadInquiry -->
+<!-- Help End: CRMSelectLead -->
+
+<div class="floatright">
+    <a class="minitext" href="#top">&#8679; Top</a>
+</div>
+
+<!-- Help Begin: CRMLeadConvert -->
+
+<h2><a id="CRMLeadConvert">Converting a Lead to a Customer</a></h2>
+
+<p>Once a lead is qualified and ready to become an accounts-receivable customer, navigate to
+the Leads list and click <strong>Convert</strong> on the lead row. The Convert Lead to
+Customer page pre-fills from the lead record. Complete the required customer account fields:</p>
+
+<ul>
+    <li><strong>Customer Number</strong> &mdash; auto-assigned if the system is configured for automatic numbering; otherwise enter a unique code of up to ten characters.</li>
+    <li><strong>Currency</strong> &mdash; the currency in which the customer will be invoiced.</li>
+    <li><strong>Payment Terms</strong> &mdash; select from the terms defined in Receivables setup.</li>
+    <li><strong>Sales Type</strong> &mdash; the price list applicable to this customer.</li>
+    <li><strong>Customer Type</strong> &mdash; customer classification used in reporting.</li>
+</ul>
+
+<p>Click <strong>Convert</strong>. On a successful conversion:</p>
+
+<ul>
+    <li>A new customer record is created in the accounts-receivable ledger.</li>
+    <li>The lead status is set to <em>Converted</em> and the new customer number is recorded against the lead.</li>
+    <li>Any open opportunities linked to this lead are automatically re-linked to the new customer account.</li>
+    <li>The page redirects to the new customer&rsquo;s branches page to complete delivery address and salesperson setup.</li>
+</ul>
+
+<p>The lead record is retained and shows which customer it was converted to. If a second
+user attempts to convert the same lead simultaneously, the system detects the conflict
+and prevents a duplicate customer being created.</p>
+
+<!-- Help End: CRMLeadConvert -->
+
+<div class="floatright">
+    <a class="minitext" href="#top">&#8679; Top</a>
+</div>
+
+<!-- Help Begin: CRMOpportunities -->
+<!-- Help Begin: CRMOpportunityEntry -->
+<!-- Help Begin: CRMOpportunityInquiry -->
+<!-- Help Begin: CRMPipeline -->
+
+<h2><a id="CRMOpportunities">Opportunity Pipeline</a></h2>
+
+<p>An opportunity is a specific potential deal linked to either a lead or an existing
+customer. It moves through pipeline stages until it is won or lost.</p>
+
+<h3>Creating a New Opportunity</h3>
+
+<p>Navigate to <em>CRM &rarr; Leads &amp; Opportunities &rarr; Opportunities</em> and click
+<strong>New Opportunity</strong>. The form requires:</p>
+
+<ul>
+    <li><strong>Opportunity Name</strong> &mdash; a short descriptive title for the deal.</li>
+    <li><strong>Customer</strong> &mdash; link to an existing debtor account, or leave blank if the prospect is still a lead.</li>
+    <li><strong>Lead</strong> &mdash; link to a lead if the prospect is not yet a customer.</li>
+    <li><strong>Stage</strong> &mdash; the current pipeline stage; selecting a stage loads its default probability automatically.</li>
+    <li><strong>Probability</strong> &mdash; override the stage default if additional information warrants a different estimate.</li>
+    <li><strong>Amount</strong> &mdash; estimated deal value.</li>
+    <li><strong>Currency</strong> &mdash; currency of the deal.</li>
+    <li><strong>Expected Close</strong> &mdash; target close date, used in the pipeline board and forecast views.</li>
+    <li><strong>Assigned To</strong> &mdash; responsible salesperson.</li>
+    <li><strong>Description</strong> &mdash; background detail, key requirements and context for the deal.</li>
+</ul>
+
+<h3>Progressing and Editing an Opportunity</h3>
+
+<p>Click <strong>Edit</strong> on any opportunity row to update it. Move it to a later
+pipeline stage as the deal progresses; the probability is updated automatically from the
+stage default but can be overridden. Click <strong>View</strong> for the full opportunity
+inquiry page, which shows activity history and any linked quotes or sales orders.</p>
+
+<h3>Closing an Opportunity</h3>
+
+<p>To mark as <strong>Won</strong>, select the Closed Won stage (or the equivalent stage
+configured with outcome <em>won</em>) and save. The outcome is set to <em>won</em>,
+probability to 100%, and the close timestamp is recorded. To mark as <strong>Lost</strong>,
+select the Closed Lost stage, enter the reason in the <strong>Lost Notes</strong> field,
+and save. If an already-closed opportunity is later edited (for example to correct notes
+or reassign it), the original close timestamp is preserved.</p>
+
+<h3>Filtering the Opportunities List</h3>
+
+<p>The Opportunities list supports filters for outcome (open, won or lost), pipeline stage,
+assigned salesperson, and expected close date range. Each row shows the weighted value
+(amount &times; probability) and a currency total runs across the foot of the page.</p>
+
+<h3>Pipeline Board</h3>
+
+<p>Navigate to <em>CRM &rarr; Leads &amp; Opportunities &rarr; Pipeline</em> to see all open
+opportunities in a kanban-style board, one column per active pipeline stage. Each card shows
+the opportunity name, linked customer or lead, deal amount and assigned salesperson. Each
+column totals the value at that stage. An optional salesperson filter at the top restricts
+the board to a single person&rsquo;s pipeline. To move an opportunity to a different stage,
+open it with <strong>Edit</strong> and change the <strong>Stage</strong> field.</p>
+
+<!-- Help End: CRMOpportunities -->
+<!-- Help End: CRMOpportunityEntry -->
+<!-- Help End: CRMOpportunityInquiry -->
+<!-- Help End: CRMPipeline -->
+
+<div class="floatright">
+    <a class="minitext" href="#top">&#8679; Top</a>
+</div>
+
+<!-- Help Begin: CRMForecast -->
+
+<h2><a id="CRMForecast">Sales Forecast</a></h2>
+
+<p>Navigate to <em>CRM &rarr; Leads &amp; Opportunities &rarr; Forecast</em> to compare
+weighted pipeline value against actual invoiced sales from the sales analysis ledger. Filter
+by salesperson, currency and accounting period. Weighted open pipeline value and actual
+bookings for the same period are shown side by side, giving management a view of likely
+revenue against what has already been confirmed.</p>
+
+<!-- Help End: CRMForecast -->
+
+<div class="floatright">
+    <a class="minitext" href="#top">&#8679; Top</a>
+</div>
+
+<!-- Help Begin: CRMActivities -->
+<!-- Help Begin: CRMActivityEntry -->
+<!-- Help Begin: CRMCalendar -->
+
+<h2><a id="CRMActivities">Activity Management</a></h2>
+
+<p>Activities are the record of everything that happens in the sales process: calls made,
+meetings attended, emails sent, tasks assigned and notes written. Every activity can be
+linked simultaneously to a customer, a lead, an opportunity and a specific contact.</p>
+
+<h3>Logging a Completed Activity</h3>
+
+<p>Navigate to <em>CRM &rarr; Transactions &rarr; Log Activity</em> to record something that
+has already happened. The form requires:</p>
+
+<ul>
+    <li><strong>Activity Type</strong> &mdash; select from the reference list (Call, Meeting, Email, Task, Note, Demo, or custom types configured in maintenance).</li>
+    <li><strong>Subject</strong> &mdash; a brief one-line description of the activity.</li>
+    <li><strong>Description</strong> &mdash; full notes on what was discussed, outcomes reached and next steps agreed.</li>
+    <li><strong>Customer / Lead / Opportunity / Contact</strong> &mdash; link to the relevant entity; at least one link should be selected.</li>
+    <li><strong>Assigned To</strong> &mdash; the salesperson this activity belongs to.</li>
+    <li><strong>Scheduled Start / End</strong> &mdash; when the activity took place.</li>
+    <li><strong>Status</strong> &mdash; set to <em>Completed</em> for a past activity.</li>
+    <li><strong>Outcome</strong> &mdash; brief result description (for example: meeting held, left voicemail, demo delivered).</li>
+    <li><strong>Follow-up Date</strong> &mdash; if further action is needed, set a date and the activity will appear in the assignee&rsquo;s My Activities view when that date arrives.</li>
+</ul>
+
+<h3>Scheduling a Future Activity</h3>
+
+<p>To schedule a call, meeting or task in advance, use the same Log Activity form, set
+<strong>Status</strong> to <em>Planned</em> and enter a future date and time in
+<strong>Scheduled Start</strong>. Assign it to the appropriate salesperson. The activity
+will appear in their My Activities view when the scheduled date arrives.</p>
+
+<h3>Filtering the Activities List</h3>
+
+<p>Navigate to CRM Activities from the menu to see all activities across the team. Filter
+options include activity type, assigned salesperson, status (planned, completed or
+cancelled) and a scheduled date range. Filters persist in the session.</p>
+
+<h3>Activity Calendar</h3>
+
+<p>Navigate to <em>CRM &rarr; Transactions &rarr; Calendar</em> for a monthly calendar view
+of all activities that have a scheduled start date. Use this to review meeting density and
+plan ahead without scheduling conflicts.</p>
+
+<h3>Cancelling an Activity</h3>
+
+<p>Open the activity with <strong>Edit</strong>, change <strong>Status</strong> to
+<em>Cancelled</em> and save. Cancelled activities remain in the log for reporting purposes.</p>
+
+<!-- Help End: CRMActivities -->
+<!-- Help End: CRMActivityEntry -->
+<!-- Help End: CRMCalendar -->
+
+<div class="floatright">
+    <a class="minitext" href="#top">&#8679; Top</a>
+</div>
+
+<!-- Help Begin: CRMMyActivities -->
+
+<h2><a id="CRMMyActivities">My Activities &mdash; Daily Work View</a></h2>
+
+<p>Navigate to <em>CRM &rarr; Transactions &rarr; My Activities</em> to open the
+salesperson&rsquo;s daily dashboard. Planned activities are presented in three time buckets:</p>
+
+<ul>
+    <li><strong>Overdue</strong> &mdash; planned activities with a scheduled start before today that have not yet been completed.</li>
+    <li><strong>Today</strong> &mdash; planned activities scheduled for today.</li>
+    <li><strong>Upcoming</strong> &mdash; planned activities scheduled within the next seven days.</li>
+</ul>
+
+<p>Each activity row has a <strong>Complete</strong> button. Clicking it marks the activity as
+completed and records the completion time. Only the salesperson to whom the activity is
+assigned (or an administrative user) can complete it.</p>
+
+<p>Who sees what on this page:</p>
+
+<ul>
+    <li>Salespeople (users with a salesperson login) see only activities assigned to themselves.</li>
+    <li>Administrative users (no salesperson login) see unassigned activities, allowing them to review and re-assign outstanding work.</li>
+</ul>
+
+<p>It is recommended that salespeople open My Activities at the start of each working day
+and work through the overdue and today sections before taking on new tasks.</p>
+
+<!-- Help End: CRMMyActivities -->
+
+<div class="floatright">
+    <a class="minitext" href="#top">&#8679; Top</a>
+</div>
+
+<!-- Help Begin: CRMSendEmail -->
+
+<h2><a id="CRMSendEmail">Email Communication</a></h2>
+
+<p>The CRM email tool allows salespeople to compose and send emails from within webERP using
+pre-built templates and automatically logs every sent email as a completed activity against
+the linked lead, customer or opportunity.</p>
+
+<h3>Sending a CRM Email</h3>
+
+<p>Navigate to <em>CRM &rarr; Transactions &rarr; Compose Email</em>, or click a
+<strong>Send Email</strong> link from a lead or customer page. The recipient address is
+pre-filled when arriving via such a link. To send an email:</p>
+
+<ul>
+    <li>Select a <strong>Template</strong> from the dropdown; the subject and body are loaded with merge fields already resolved for the linked entity.</li>
+    <li>Review and edit the subject and body as needed.</li>
+    <li>Click <strong>Send</strong>.</li>
+</ul>
+
+<p>On a successful send the email is transmitted via the configured SMTP settings and a
+completed activity of type <em>Email</em> is automatically logged against the linked lead,
+customer, opportunity and contact. The compose form then clears ready for the next message.</p>
+
+<p>If the send fails, an error message is displayed and the compose form is preserved so the
+content can be corrected and the send retried without retyping.</p>
+
+<!-- Help End: CRMSendEmail -->
+
+<div class="floatright">
+    <a class="minitext" href="#top">&#8679; Top</a>
+</div>
+
+<!-- Help Begin: CRMLeadReport -->
+<!-- Help Begin: CRMOpportunityReport -->
+<!-- Help Begin: CRMActivityReport -->
+<!-- Help Begin: CRMCustomerHealthReport -->
+
+<h2><a id="CRMReports">Reports</a></h2>
+
+<p>All CRM reports are under <em>CRM &rarr; Reports</em>. Each report page has a filter
+section at the top; click <strong>Run Report</strong> to refresh results after adjusting
+filter values.</p>
+
+<h3><a id="CRMLeadReport">Lead Report</a></h3>
+
+<p>Analyses leads across four sections. Filters: date range (lead creation date),
+salesperson.</p>
+
+<ul>
+    <li><strong>Leads by Status</strong> &mdash; count of leads at each status, showing the shape of the lead funnel.</li>
+    <li><strong>Leads by Source</strong> &mdash; breakdown by acquisition channel; use this to evaluate which sources are most productive.</li>
+    <li><strong>Leads by Salesperson</strong> &mdash; lead count and total estimated value per salesperson.</li>
+    <li><strong>Conversion Metrics</strong> &mdash; total leads, number converted, overall conversion rate, and average number of days from creation to conversion.</li>
+</ul>
+
+<h3><a id="CRMOpportunityReport">Opportunity Report</a></h3>
+
+<p>Covers pipeline performance across four sections. Filters: date range, salesperson,
+stage.</p>
+
+<ul>
+    <li><strong>Open Pipeline by Stage</strong> &mdash; opportunity count, total value and weighted value at each active stage.</li>
+    <li><strong>Won vs Lost Analysis</strong> &mdash; win rate, average deal size, and won and lost totals for the selected period.</li>
+    <li><strong>Average Deal Size by Salesperson</strong> &mdash; won deals only, showing individual performance against peers.</li>
+    <li><strong>Sales Velocity</strong> &mdash; average number of days from opportunity creation to close for won deals.</li>
+</ul>
+
+<h3><a id="CRMActivityReport">Activity Report</a></h3>
+
+<p>Measures sales team engagement across four sections. Filters: date range, salesperson,
+activity type. Use this report to ensure salespeople are maintaining the expected level
+of customer contact.</p>
+
+<ul>
+    <li><strong>Activities by Type</strong> &mdash; count per activity type (calls, meetings, emails, etc.) for the period.</li>
+    <li><strong>Activities by Salesperson</strong> &mdash; total activity volume per person.</li>
+    <li><strong>Status Breakdown</strong> &mdash; planned versus completed versus cancelled counts.</li>
+    <li><strong>Top Overdue Activities</strong> &mdash; planned activities past their scheduled start date, for follow-up action.</li>
+</ul>
+
+<h3><a id="CRMCustomerHealthReport">Customer Health Report</a></h3>
+
+<p>Ranks existing customers using Recency, Frequency and Monetary (RFM) analysis drawn from
+the sales analysis ledger. It identifies at-risk customers (low recent purchasing activity)
+and high-value customers to prioritise for retention and upsell. No CRM-specific filters are
+required; the report covers all active customers.</p>
+
+<!-- Help End: CRMLeadReport -->
+<!-- Help End: CRMOpportunityReport -->
+<!-- Help End: CRMActivityReport -->
+<!-- Help End: CRMCustomerHealthReport -->
+
+<div class="floatright">
+    <a class="minitext" href="#top">&#8679; Top</a>
+</div>
+
+<!-- Help Begin: CRMDashboard -->
+
+<h2><a id="CRMDashboard">CRM Dashboard</a></h2>
+
+<p>Navigate to <em>CRM &rarr; CRM Dashboard</em> for an at-a-glance management view of
+pipeline health and recent activity. The dashboard displays four panels:</p>
+
+<ul>
+    <li><strong>Open Pipeline</strong> &mdash; total open opportunity value and weighted forecast, grouped by currency.</li>
+    <li><strong>Leads by Status</strong> &mdash; lead counts at each status stage, showing the shape of the current funnel.</li>
+    <li><strong>Activity Counts</strong> &mdash; activities completed and planned in the current period.</li>
+    <li><strong>Recent Wins</strong> &mdash; opportunities closed as Won in the last 30 days with their deal values.</li>
+</ul>
+
+<p>The dashboard is read-only. Use the links within each panel to drill through to the
+underlying list or report for further detail.</p>
+
+<!-- Help End: CRMDashboard -->
+
+<div class="floatright">
+    <a class="minitext" href="#top">&#8679; Top</a>
+</div>
+
+<h2><a id="CRMReference">Field and Status Reference</a></h2>
+
+<h3>Lead Status Values</h3>
+
+<ul>
+    <li><strong>new</strong> &mdash; lead has been entered but not yet contacted.</li>
+    <li><strong>contacted</strong> &mdash; initial contact has been made and a relationship started.</li>
+    <li><strong>qualified</strong> &mdash; lead has been assessed as a genuine prospect worth pursuing.</li>
+    <li><strong>unqualified</strong> &mdash; lead is not worth pursuing; retained for reporting.</li>
+    <li><strong>converted</strong> &mdash; lead has been converted to a customer account.</li>
+</ul>
+
+<h3>Opportunity Outcome Values</h3>
+
+<ul>
+    <li><strong>open</strong> &mdash; deal is still in progress.</li>
+    <li><strong>won</strong> &mdash; deal was closed successfully.</li>
+    <li><strong>lost</strong> &mdash; deal was not won.</li>
+</ul>
+
+<h3>Activity Status Values</h3>
+
+<ul>
+    <li><strong>planned</strong> &mdash; activity is scheduled but not yet carried out.</li>
+    <li><strong>completed</strong> &mdash; activity has been carried out and the outcome recorded.</li>
+    <li><strong>cancelled</strong> &mdash; activity was cancelled; it remains in the log for reporting.</li>
+</ul>
+
+<div class="floatright">
+    <a class="minitext" href="#top">&#8679; Top</a>
+</div>

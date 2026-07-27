@@ -19,6 +19,7 @@ while ($OptionRow = DB_fetch_array($OptionsResult)) {
 	$SystemOptions[$OptionRow['optionname']] = $OptionRow['optionvalue'];
 }
 $AppraisalFrequency = isset($SystemOptions['AppraisalFrequency']) ? $SystemOptions['AppraisalFrequency'] : 365;
+$ColleagueFeedbackFrequency = isset($SystemOptions['ColleagueFeedbackFrequency']) ? $SystemOptions['ColleagueFeedbackFrequency'] : 365;
 
 echo '<p class="page_title_text">
 		<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/group_add.png" title="' . __('Human Resources') . '" /> ' .
@@ -59,6 +60,39 @@ $SQL = "SELECT COUNT(*) as total FROM hrrequisitions
 $Result = DB_query($SQL, '', '', false, false);
 $Row = DB_fetch_array($Result);
 $ActiveRequisitions = isset($Row['total']) ? $Row['total'] : 0;
+
+$ColleagueFeedbackTableExists = false;
+$Result = DB_query("SHOW TABLES LIKE 'hrcolleaguefeedback'", '', '', false, false);
+if (DB_num_rows($Result) > 0) {
+	$ColleagueFeedbackTableExists = true;
+}
+
+$PendingColleagueFeedback = 0;
+$EmployeesDueForFeedback = 0;
+if ($ColleagueFeedbackTableExists) {
+	$SQL = "SELECT COUNT(*) as total
+			FROM hrcolleaguefeedback
+			WHERE status IN ('Not Started', 'In Progress')
+				AND (duedate IS NULL OR duedate <= DATE_ADD(CURDATE(), INTERVAL 30 DAY))";
+	$Result = DB_query($SQL, '', '', false, false);
+	$Row = DB_fetch_array($Result);
+	$PendingColleagueFeedback = isset($Row['total']) ? $Row['total'] : 0;
+
+	$SQL = "SELECT COUNT(DISTINCT e.employeeid) as total
+			FROM hremployees e
+			LEFT JOIN (
+				SELECT aboutemployeeid, MAX(feedbackperiodend) as lastfeedback
+				FROM hrcolleaguefeedback
+				WHERE status = 'Completed'
+				GROUP BY aboutemployeeid
+			) f ON e.employeeid = f.aboutemployeeid
+			WHERE e.employmentstatus = 'Active'
+			AND (f.lastfeedback IS NULL
+				OR DATEDIFF(CURDATE(), f.lastfeedback) >= " . (int)$ColleagueFeedbackFrequency . ")";
+	$Result = DB_query($SQL, '', '', false, false);
+	$Row = DB_fetch_array($Result);
+	$EmployeesDueForFeedback = isset($Row['total']) ? $Row['total'] : 0;
+}
 
 // Find employees due for appraisal based on system frequency
 $SQL = "SELECT COUNT(DISTINCT e.employeeid) as total
@@ -111,6 +145,18 @@ echo '<div class="hr-stats-grid">
 				<a href="' . $RootPath . '/HRRequisitions.php" style="color: #9C27B0; text-decoration: none;">' . number_format($ActiveRequisitions) . '</a>
 			</div>
 		</div>
+		<div class="hr-stat-card" style="background-color: #e0f7fa;">
+			<h3 style="color: #006064;">' . __('Pending Colleague Feedback') . '</h3>
+			<div class="hr-stat-value">
+				<a href="' . $RootPath . '/HRColleagueFeedback.php" style="color: #006064; text-decoration: none;">' . number_format($PendingColleagueFeedback) . '</a>
+			</div>
+		</div>
+		<div class="hr-stat-card" style="background-color: #e8f5e9;">
+			<h3 style="color: #1b5e20;">' . __('Due for Feedback') . '</h3>
+			<div class="hr-stat-value">
+				<a href="' . $RootPath . '/HRColleagueFeedbackDue.php" style="color: #1b5e20; text-decoration: none;">' . number_format($EmployeesDueForFeedback) . '</a>
+			</div>
+		</div>
 	</div>';
 
 // Main Menu
@@ -156,6 +202,19 @@ echo '<div class="hr-module-card">
 			<li><a href="' . $RootPath . '/HRPerformanceAppraisals.php">' . __('Performance Appraisals') . '</a></li>
 			<li><a href="' . $RootPath . '/HRAppraisalEntry.php">' . __('Create Appraisal') . '</a></li>
 			<li><a href="' . $RootPath . '/HRAppraisalsDue.php">' . __('Employees Due for Appraisal') . '</a></li>
+		</ul>
+	</div>';
+
+// Colleague Feedback
+echo '<div class="hr-module-card">
+		<h3 style="color: #006064;">
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/award.png" alt="" />
+			' . __('Colleague Feedback') . '
+		</h3>
+		<ul>
+			<li><a href="' . $RootPath . '/HRColleagueFeedback.php">' . __('All Colleague Feedback') . '</a></li>
+			<li><a href="' . $RootPath . '/HRColleagueFeedbackEntry.php">' . __('Create Feedback') . '</a></li>
+			<li><a href="' . $RootPath . '/HRColleagueFeedbackDue.php">' . __('Colleague Feedback Due') . '</a></li>
 		</ul>
 	</div>';
 

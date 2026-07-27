@@ -2,6 +2,7 @@ CREATE TABLE `hrperformancecriteria` (
   `criteriaid` int(11) NOT NULL AUTO_INCREMENT,
   `criterianame` varchar(100) NOT NULL,
   `description` text,
+  `positionid` int NOT NULL,
   `category` varchar(50) DEFAULT NULL,
   `weight` decimal(5,2) DEFAULT 0.00,
   `displayorder` int(11) DEFAULT 0,

@@ -48,7 +48,7 @@ if ($SelectedProdSpec != '') {
 	//If there are no rows, there's a problem.
 	if (DB_num_rows($Result) == 0) {
 		$Title = __('Print Product Specification Error');
-		include ('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<div class="centre">';
 		prnMsg(__('Unable to Locate Specification') . ' : ' . $_SelectedProdSpec . ' ', 'error');
 		echo '<table class="table_index">
@@ -59,7 +59,7 @@ if ($SelectedProdSpec != '') {
 			</tr>
 			</table>
 			</div>';
-		include ('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -205,7 +205,7 @@ if ($SelectedProdSpec != '') {
 	$Title = __('Select Product Specification To Print');
 	$ViewTopic = 'QualityAssurance';
 	$BookMark = '';
-	include ('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" title="' . __('Print') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
@@ -249,6 +249,6 @@ if ($SelectedProdSpec != '') {
 			<input type="submit" name="PickSpec" value="' . __('Submit') . '" />
 		</div>
 		</form>';
-	include ('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 }
 

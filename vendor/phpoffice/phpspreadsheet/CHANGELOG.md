@@ -5,31 +5,53 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com)
 and this project adheres to [Semantic Versioning](https://semver.org). Thia is always true of the master branch. Some earlier branches remain supported and security fixes are applied to them; if the security fix represents a breaking change, it may have to be applied as a minor or patch version.
 
-## TBD - 5.8.0
+## 2026-07-12 - 5.8.1
+
+Last version with support for Php 8.1.
 
 ### Added
 
-- Nothing yet.
-
-### Removed
-
-- Nothing yet.
+- Navigate Cell as Cursor. [Issue #863](https://github.com/PHPOffice/PhpSpreadsheet/issues/863) [PR #4909](https://github.com/PHPOffice/PhpSpreadsheet/pull/4909)
+- Chart DataTables. [Issue #413](https://github.com/PHPOffice/PhpSpreadsheet/issues/413) [PR #4911](https://github.com/PHPOffice/PhpSpreadsheet/pull/4911)
+- Permit Ignoring "Misleading Format" Tag. [PR #4914](https://github.com/PHPOffice/PhpSpreadsheet/pull/4914)
 
 ### Changed
 
-- Nothing yet.
-
-### Moved
-
-- Nothing yet.
-
-### Deprecated
-
-- Nothing yet.
+- Restructure parsing logic in Reader/Xlsx. [PR #4830](https://github.com/PHPOffice/PhpSpreadsheet/pull/4830)
 
 ### Fixed
 
-- Nothing yet.
+- Small improvement for Radar Charts. [Issue #661](https://github.com/PHPOffice/PhpSpreadsheet/issues/661) [PR #4908](https://github.com/PHPOffice/PhpSpreadsheet/pull/4908)
+- Allow Use of Multiple Ranges When Setting Styles. [Issue #411](https://github.com/PHPOffice/PhpSpreadsheet/issues/411) [PR #4910](https://github.com/PHPOffice/PhpSpreadsheet/pull/4910)
+- Small change to Writer Html. [Issue #434](https://github.com/PHPOffice/PhpSpreadsheet/issues/434) [PR #4912](https://github.com/PHPOffice/PhpSpreadsheet/pull/4912)
+- Avoid hard-coding some chart Xml attributes. [PR #4915](https://github.com/PHPOffice/PhpSpreadsheet/pull/4915)
+- Readers should directly access readFilter. [PR #4919](https://github.com/PHPOffice/PhpSpreadsheet/pull/4919)
+- Very minor changes to Worksheet, Reader/Xlsx, and Worksheet/AutoFilter. [Issue #4917](https://github.com/PHPOffice/PhpSpreadsheet/issues/4917) [PR #4926](https://github.com/PHPOffice/PhpSpreadsheet/pull/4926)
+- Consistent HighestRow/Column after row/columnDelete. [Issue #943](https://github.com/PHPOffice/PhpSpreadsheet/issues/943) [PR #4925](https://github.com/PHPOffice/PhpSpreadsheet/pull/4925)
+
+## 2026-06-06 - 5.8.0
+
+### Security Note
+
+- File::prohibitWrappers and Drawing::setPath now reject phar paths with extra leading slashes (e.g. phar:///…) that escaped the prior parse_url-based filter. No security exploit was possible even with the extra slashes. [PR #4876](https://github.com/PHPOffice/PhpSpreadsheet/pull/4876)
+
+### Added
+
+- Optional method to increase Calculation Engine's parsing speed. [PR #4829](https://github.com/PHPOffice/PhpSpreadsheet/pull/4829)
+- Html Writer/Reader new data attributes.  [PR #4858](https://github.com/PHPOffice/PhpSpreadsheet/pull/4858)
+- IReader2 interface extending IReader with listWorksheetInfo/Names. [Issue #4883](https://github.com/PHPOffice/PhpSpreadsheet/issues/4883) [PR #4886](https://github.com/PHPOffice/PhpSpreadsheet/pull/4886)
+
+### Changed
+
+- Helper/Handler is now internal and final. [PR #4896](https://github.com/PHPOffice/PhpSpreadsheet/pull/4896)
+
+### Fixed
+
+- Html Writer handle text colors a bit better. [PR #4855](https://github.com/PHPOffice/PhpSpreadsheet/pull/4855)
+- Html Writer apply rotation to images. [Issue #4875](https://github.com/PHPOffice/PhpSpreadsheet/issues/4875) [PR #4877](https://github.com/PHPOffice/PhpSpreadsheet/pull/4877)
+- Work around Php8.6 deprecation in mpdf/mpdf. [PR #4878](https://github.com/PHPOffice/PhpSpreadsheet/pull/4878)
+- Ability to reuse disconnected spreadsheet. [PR #4880](https://github.com/PHPOffice/PhpSpreadsheet/pull/4880)
+- Allow int parameter for getChartIndex. [PR #4896](https://github.com/PHPOffice/PhpSpreadsheet/pull/4896)
 
 ## 2026-04-19 - 5.7.0
 

@@ -47,13 +47,94 @@ include(__DIR__ . '/includes/header.php');
 
 include(__DIR__ . '/includes/GLFunctions.php');
 
-$NewReport = '';
-$SelectedAccount = '';
+/**
+ * Split the submitted graph selection into type and code.
+ *
+ * @param string $GraphSelection
+ * @return array{0:string,1:string}
+ */
+function ParseGraphSelection(string $GraphSelection): array {
+	if (mb_substr($GraphSelection, 0, 6) == 'group:') {
+		return array('group', rawurldecode(mb_substr($GraphSelection, 6)));
+	}
 
-if (isset($_POST['Account'])) {
-	$SelectedAccount = $_POST['Account'];
+	if (mb_substr($GraphSelection, 0, 8) == 'account:') {
+		return array('account', rawurldecode(mb_substr($GraphSelection, 8)));
+	}
+
+	return array('account', $GraphSelection);
+}
+
+/**
+ * Output graph selection options for accessible account groups and accounts.
+ *
+ * @param string $SelectedGraphSelection
+ * @return void
+ */
+function EchoGraphSelectionOptions(string $SelectedGraphSelection): void {
+	$SQL = "SELECT DISTINCT accountgroups.groupname,
+				accountgroups.sequenceintb
+		FROM chartmaster
+		INNER JOIN glaccountusers
+			ON glaccountusers.accountcode = chartmaster.accountcode
+			AND glaccountusers.userid = '" . $_SESSION['UserID'] . "'
+			AND glaccountusers.canview = 1
+		INNER JOIN accountgroups
+			ON chartmaster.group_ = accountgroups.groupname
+		ORDER BY accountgroups.sequenceintb,
+			accountgroups.groupname";
+	$GroupResult = DB_query($SQL);
+
+	echo '<option value="">' . __('Select a group or account') . '</option>';
+
+	while ($GroupRow = DB_fetch_array($GroupResult)) {
+		$GroupName = $GroupRow['groupname'];
+		$EncodedGroupValue = 'group:' . rawurlencode($GroupName);
+
+		echo '<optgroup label="' . htmlspecialchars($GroupName, ENT_QUOTES, 'UTF-8', false) . '">';
+		echo '<option value="' . htmlspecialchars($EncodedGroupValue, ENT_QUOTES, 'UTF-8', false) . '"'
+			. (($SelectedGraphSelection == $EncodedGroupValue) ? ' selected="selected"' : '') . '>'
+			. htmlspecialchars($GroupName, ENT_QUOTES, 'UTF-8', false) . ' (' . __('Group total') . ')</option>';
+
+		$AccountSQL = "SELECT chartmaster.accountcode,
+						chartmaster.accountname
+					FROM chartmaster
+					INNER JOIN glaccountusers
+						ON glaccountusers.accountcode = chartmaster.accountcode
+						AND glaccountusers.userid = '" . $_SESSION['UserID'] . "'
+						AND glaccountusers.canview = 1
+					WHERE chartmaster.group_ = '" . DB_escape_string($GroupName) . "'
+					ORDER BY chartmaster.accountcode";
+		$AccountResult = DB_query($AccountSQL);
+		while ($AccountRow = DB_fetch_array($AccountResult)) {
+			$EncodedAccountValue = 'account:' . rawurlencode($AccountRow['accountcode']);
+			echo '<option value="' . htmlspecialchars($EncodedAccountValue, ENT_QUOTES, 'UTF-8', false) . '"'
+				. (($SelectedGraphSelection == $EncodedAccountValue) ? ' selected="selected"' : '') . '>'
+				. htmlspecialchars($AccountRow['accountcode'], ENT_QUOTES, 'UTF-8', false) . ' - '
+				. htmlspecialchars($AccountRow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
+		}
+
+		echo '</optgroup>';
+	}
+}
+
+$NewReport = '';
+$SelectedGraphSelection = '';
+$SelectedSelectionType = '';
+$SelectedSelectionCode = '';
+
+if (isset($_POST['GraphSelection'])) {
+	$SelectedGraphSelection = $_POST['GraphSelection'];
+} elseif (isset($_GET['GraphSelection'])) {
+	$SelectedGraphSelection = $_GET['GraphSelection'];
+} elseif (isset($_POST['Account'])) {
+	$SelectedGraphSelection = $_POST['Account'];
 } elseif (isset($_GET['Account'])) {
-	$SelectedAccount = $_GET['Account'];
+	$SelectedGraphSelection = $_GET['Account'];
+}
+
+if ($SelectedGraphSelection != '') {
+	list($SelectedSelectionType, $SelectedSelectionCode) = ParseGraphSelection($SelectedGraphSelection);
 }
 
 if (isset($_POST['Period']) and $_POST['Period'] != '') {
@@ -70,6 +151,13 @@ if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo'])) {
 
 }
 
+$ShowYValuesChecked = isset($_POST['ShowYValues']);
+
+if (isset($_POST['ShowGraph']) and $SelectedGraphSelection == '') {
+	prnMsg(__('Please select either a GL account or an account group'), 'error');
+	$NewReport = 'on';
+}
+
 if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport == 'on') {
 
 	echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
@@ -82,39 +170,12 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 	echo '<fieldset>
 			<legend>', __('Report Criteria'), '</legend>
 			<field>
-				<label for="Account">' . __('Select GL Account') . ':</label>
-				<select name="Account">';
+				<label for="GraphSelection">' . __('Select GL Account or Group') . ':</label>
+				<select name="GraphSelection">';
 
-	$SQL = "SELECT chartmaster.accountcode,
-				bankaccounts.accountcode AS bankact,
-				bankaccounts.currcode,
-				chartmaster.accountname
-			FROM chartmaster
-			LEFT JOIN bankaccounts
-				ON chartmaster.accountcode = bankaccounts.accountcode
-			INNER JOIN glaccountusers
-				ON glaccountusers.accountcode = chartmaster.accountcode
-					AND glaccountusers.userid = '" . $_SESSION['UserID'] . "'
-					AND glaccountusers.canview = 1
-			ORDER BY chartmaster.accountcode";
-	$AccountResult = DB_query($SQL);
-	$BankAccount = false;
-	while ($MyRow = DB_fetch_array($AccountResult)) {
-		if ($MyRow['accountcode'] == $SelectedAccount) {
-			if (!is_null($MyRow['bankact'])) {
-				$BankAccount = true;
-			}
-			echo '<option selected="selected" value="' . $MyRow['accountcode'] . '">'
-				. $MyRow['accountcode'] . ' ' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false)
-				. '</option>';
-		} else {
-			echo '<option value="' . $MyRow['accountcode'] . '">'
-				. $MyRow['accountcode'] . ' ' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false)
-				. '</option>';
-		}
-	}
+	EchoGraphSelectionOptions($SelectedGraphSelection);
+
 	echo '</select>
-			</td>
 		</field>';
 
 	echo '<field>
@@ -144,6 +205,11 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 	echo '<field>
 			<label for="InvertGraph">', __('Invert Graph'), '</label>
 			<input type="checkbox" name="InvertGraph" />
+		</field>';
+
+	echo '<field>
+			<label for="ShowYValues">', __('Show value labels on graph'), '</label>
+			<input type="checkbox" name="ShowYValues" value="1" ' . ($ShowYValuesChecked ? 'checked="checked"' : '') . ' />
 		</field>';
 
 	echo '<field>
@@ -182,7 +248,7 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 	echo '</select>
 		</field>';
 	if (!isset($_POST['PeriodTo']) or $_POST['PeriodTo'] == '') {
-		$DefaultPeriodTo = GetPeriod(DateAdd(ConvertSQLDate($DefaultFromDate), 'm', 11));
+		$DefaultPeriodTo = GetPeriod(date($_SESSION['DefaultDateFormat']));
 	} else {
 		$DefaultPeriodTo = $_POST['PeriodTo'];
 	}
@@ -224,12 +290,28 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 } else {
 
 	$GraphTitle = '';
-	$AccountName = GetGLAccountName($SelectedAccount);
+	$DataColumn = '';
+	$LegendText = '';
+	$SelectedGraphTitle = '';
 
-	if ($_POST['DisplayType'] == 'value') {
-		$GraphTitle = $AccountName . ' ' . __('GL Account Graph - Account Value') . "\n\r";
+	if ($SelectedSelectionType == 'group') {
+		$SelectedGraphTitle = $SelectedSelectionCode;
+		if ($_POST['DisplayType'] == 'value') {
+			$GraphTitle = $SelectedGraphTitle . ' ' . __('GL Group Graph - Account Value') . "\n\r";
+			$LegendText = __('Value');
+		} else {
+			$GraphTitle = $SelectedGraphTitle . ' ' . __('GL Group Graph - Actual Transactions') . "\n\r";
+			$LegendText = __('Group Total');
+		}
 	} else {
-		$GraphTitle = $AccountName . ' ' . __('GL Account Graph - Actual Transactions') . "\n\r";
+		$SelectedGraphTitle = GetGLAccountName($SelectedSelectionCode);
+		if ($_POST['DisplayType'] == 'value') {
+			$GraphTitle = $SelectedGraphTitle . ' ' . __('GL Account Graph - Account Value') . "\n\r";
+			$LegendText = __('Value');
+		} else {
+			$GraphTitle = $SelectedGraphTitle . ' ' . __('GL Account Graph - Actual Transactions') . "\n\r";
+			$LegendText = __('Actual');
+		}
 	}
 	$SQL = "SELECT YEAR(`lastdate_in_period`) AS year,
 					MONTHNAME(`lastdate_in_period`) AS month
@@ -249,35 +331,63 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 
 	if ($_POST['DisplayType'] == 'value') {
 		// Calculate cumulative value
-		$SQL = "SELECT p_to.periodno,
+		if ($SelectedSelectionType == 'group') {
+			$SQL = "SELECT p_to.periodno,
 					   p_to.lastdate_in_period,
-					   (SELECT SUM(gltotals.amount)
-						FROM gltotals
-						WHERE gltotals.account = '" . $SelectedAccount . "'
-							AND gltotals.period <= p_to.periodno) AS cumulative_actual
+					   COALESCE((SELECT SUM(gltotals.amount)
+								FROM gltotals
+								INNER JOIN chartmaster
+									ON chartmaster.accountcode = gltotals.account
+								WHERE chartmaster.group_ = '" . DB_escape_string($SelectedSelectionCode) . "'
+									AND gltotals.period <= p_to.periodno), 0) AS cumulative_actual
 				FROM periods p_to
 				WHERE p_to.periodno >= '" . $_POST['PeriodFrom'] . "'
 					AND p_to.periodno <= '" . $_POST['PeriodTo'] . "'
 				ORDER BY p_to.periodno";
+		} else {
+			$SQL = "SELECT p_to.periodno,
+					   p_to.lastdate_in_period,
+					   COALESCE((SELECT SUM(gltotals.amount)
+								FROM gltotals
+								WHERE gltotals.account = '" . DB_escape_string($SelectedSelectionCode) . "'
+									AND gltotals.period <= p_to.periodno), 0) AS cumulative_actual
+				FROM periods p_to
+				WHERE p_to.periodno >= '" . $_POST['PeriodFrom'] . "'
+					AND p_to.periodno <= '" . $_POST['PeriodTo'] . "'
+				ORDER BY p_to.periodno";
+		}
 		$DataColumn = 'cumulative_actual';
-		$LegendText = __('Value');
 	} else {
 		// Show variation per period (original query)
-		$SQL = "SELECT periods.periodno,
-					periods.lastdate_in_period,
-					COALESCE(gltotals.amount, 0) AS actual
-				FROM periods
-				LEFT JOIN gltotals
-					ON periods.periodno = gltotals.period
-						AND gltotals.account = '" . $SelectedAccount . "'
-				WHERE periods.periodno >= '" . $_POST['PeriodFrom'] . "'
-					AND periods.periodno <= '" . $_POST['PeriodTo'] . "'
-				GROUP BY periods.periodno,
+		if ($SelectedSelectionType == 'group') {
+			$SQL = "SELECT periods.periodno,
+						periods.lastdate_in_period,
+						COALESCE((SELECT SUM(gltotals.amount)
+								FROM gltotals
+								INNER JOIN chartmaster
+									ON chartmaster.accountcode = gltotals.account
+								WHERE chartmaster.group_ = '" . DB_escape_string($SelectedSelectionCode) . "'
+									AND gltotals.period = periods.periodno), 0) AS actual
+					FROM periods
+					WHERE periods.periodno >= '" . $_POST['PeriodFrom'] . "'
+						AND periods.periodno <= '" . $_POST['PeriodTo'] . "'
+					ORDER BY periods.periodno";
+		} else {
+			$SQL = "SELECT periods.periodno,
+						periods.lastdate_in_period,
+						COALESCE(gltotals.amount, 0) AS actual
+					FROM periods
+					LEFT JOIN gltotals
+						ON periods.periodno = gltotals.period
+							AND gltotals.account = '" . DB_escape_string($SelectedSelectionCode) . "'
+					WHERE periods.periodno >= '" . $_POST['PeriodFrom'] . "'
+						AND periods.periodno <= '" . $_POST['PeriodTo'] . "'
+					GROUP BY periods.periodno,
 						 periods.lastdate_in_period,
 						 gltotals.amount
-				ORDER BY periods.periodno";
+					ORDER BY periods.periodno";
+		}
 		$DataColumn = 'actual';
-		$LegendText = __('Actual');
 	}
 
 	$Graph = new Phplot\Phplot\phplot(1200,600);
@@ -296,7 +406,9 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 	$Graph->SetShading(5);
 	$Graph->SetDrawYGrid(true);
 	$Graph->SetDataType('text-data');
-	$Graph->TuneYAutoRange(0, 0, 0);
+	$Graph->TuneYAutoRange('0', '0', '0');
+	$DecimalPoint = $GLOBALS['DecimalPoint'] ?? '.';
+	$ThousandsSeparator = $GLOBALS['ThousandsSeparator'] ?? ',';
 	$Graph->SetNumberFormat($DecimalPoint, $ThousandsSeparator);
 	$Graph->SetPrecisionY($_SESSION['CompanyRecord']['decimalplaces']);
 
@@ -326,8 +438,11 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 		array('grey'), //Data Colors
 		array('black') //Border Colors
 	);
-	$Graph->SetLegend(array($LegendText));
-	$Graph->SetYDataLabelPos('plotin');
+	if (isset($_POST['ShowYValues'])) {
+		$Graph->SetYDataLabelPos('plotin');
+	} else {
+		$Graph->SetYDataLabelPos('none');
+	}
 
 	//Draw it
 	$Graph->DrawGraph();

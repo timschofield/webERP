@@ -23,9 +23,9 @@ $Result = DB_query("SELECT hundredsname,
 					WHERE currabrev='" . $_SESSION['PaymentDetail' . $identifier]->Currency . "'");
 
 if (DB_num_rows($Result) == 0){
-	include ('includes/header.php');
+	include(__DIR__ . '/includes/header.php');
 	prnMsg(__('Can not get hundreds name'), 'warn');
-	include ('includes/footer.php');
+	include(__DIR__ . '/includes/footer.php');
 	exit;
 }
 

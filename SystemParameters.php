@@ -92,6 +92,10 @@ if (isset($_POST['submit'])) {
 		$_POST['X_DefaultDisplayRecordsMax'] < 1 ) {
 		$InputError = 1;
 		prnMsg(__('Default maximum number of records to display must be between 1 and 500'),'error');
+	} elseif (mb_strlen($_POST['X_PasswordMinLenght']) > 2 OR !is_numeric($_POST['X_PasswordMinLenght']) OR
+		$_POST['X_PasswordMinLenght'] < 1 ) {
+		$InputError = 1;
+		prnMsg(__('Password minimum length must be a number greater than zero'),'error');
 	} elseif (mb_strlen($_POST['X_MaxImageSize']) > 4 OR !is_numeric($_POST['X_MaxImageSize']) OR
 		$_POST['X_MaxImageSize'] < 1 ) {
 		$InputError = 1;
@@ -119,25 +123,6 @@ if (isset($_POST['submit'])) {
 
 		if ($_SESSION['DefaultDateFormat'] != $_POST['X_DefaultDateFormat'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_DefaultDateFormat']."' WHERE confname = 'DefaultDateFormat'";
-		}
-		if ($DefaultTheme != $_POST['X_DefaultTheme']) {// If not equal, update the default theme.
-			// BEGIN: Update the config.php file:
-			$FileHandle = fopen($PathPrefix . 'config.php', 'r');
-			if ($FileHandle) {
-				$Content = fread($FileHandle, filesize('config.php'));
-				$Content = str_replace(' ;\n', ';\n', $Content);// Clean space before the end-of-php-line.
-				$Content = str_replace('\''.$DefaultTheme .'\';', '\''.$_POST['X_DefaultTheme'].'\';', $Content);
-				$FileHandle = fopen($PathPrefix . 'config.php','w');
-				if (!fwrite($FileHandle,$Content)) {
-					prnMsg(__('Cannot write to the configuration file.'), 'error');
-				} else {
-					prnMsg(__('The configuration file was updated.'), 'info');
-				}
-				fclose($FileHandle);
-			} else {
-				prnMsg(__('Cannot open the configuration file.'), 'error');
-			}
-			// END: Update the config.php file.
 		}
 		if ($_SESSION['PastDueDays1'] != $_POST['X_PastDueDays1'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_PastDueDays1']."' WHERE confname = 'PastDueDays1'";
@@ -381,6 +366,9 @@ if (isset($_POST['submit'])) {
 		}
 		if ($_SESSION['ShortcutMenu'] != $_POST['X_ShortcutMenu']){
 			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShortcutMenu'] . "' WHERE confname='ShortcutMenu'";
+		}
+		if ($_SESSION['PasswordMinLenght'] != $_POST['X_PasswordMinLenght']){
+			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_PasswordMinLenght'] . "' WHERE confname='PasswordMinLenght'";
 		}
 		if ($_SESSION['LastDayOfWeek'] != $_POST['X_LastDayOfWeek']){
 			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_LastDayOfWeek'] . "' WHERE confname='LastDayOfWeek'";
@@ -1226,28 +1214,6 @@ echo '<field>
 		<fieldhelp>' . __('Force connections to be only over secure sockets - ie encrypted data only') . '</fieldhelp>
 	</field>';
 
-// DefaultTheme:
-if (is_writable('config.php')) {
-	echo '<field>
-			<label for="X_DefaultTheme">' . __('Default Theme') . ':</label>
-			<select name="X_DefaultTheme">';
-	$ThemeDirectories = scandir($PathPrefix . 'css');// List directories inside ~/css. Each diretory is a theme.
-	foreach($ThemeDirectories as $ThemeName) {
-		if (is_dir('css/'.$ThemeName) AND $ThemeName!='.' AND $ThemeName!='..' AND $ThemeName!='.svn') {
-			echo '<option';
-			if ($DefaultTheme == $ThemeName) {
-				echo ' selected="selected"';
-			}
-			echo ' value="'. $ThemeName.'">' . $ThemeName . '</option>';
-		}
-	}
-	echo '</select>
-		<fieldhelp>' . __('The default theme to use for the login screen and the setup of new users. The users\' theme selection will override it.') . '</fieldhelp>
-	</field>';
-} else {
-	echo '<input type="hidden" name="X_DefaultTheme" value="' . $DefaultTheme . '" />';
-}
-
 //Months of Audit Trail to Keep
 echo '<field>
 		<label for="X_MonthsAuditTrail">' . __('Months of Audit Trail to Retain') . ':</label>
@@ -1355,6 +1321,12 @@ echo '<field>
 echo '</select>
 	<fieldhelp>' .  __('The flag determines if the system allows users to create the javascript short cut menu - this can cause confusion to some users with some themes.').'</fieldhelp>
 </field>';
+
+echo '<field>
+		<label for="X_PasswordMinLenght">' . __('Password Minimum Length') . ':</label>
+		<input type="text" class="integer" pattern="(?!^0\d+$)[\d]{1,2}" required="required" name="X_PasswordMinLenght" size="3" maxlength="2" value="' . (isset($_SESSION['PasswordMinLenght']) ? $_SESSION['PasswordMinLenght'] : 5) . '" />
+		<fieldhelp>' . __('Defines the minimum number of characters required for user passwords.') . '</fieldhelp>
+	</field>';
 
 echo '</fieldset><br />';
 

@@ -5,7 +5,7 @@ use Dompdf\Dompdf;
 
 include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
-include ('includes/SQL_CommonFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['Process'])) {
 	if (isset($_POST['FromDate'])) {
@@ -15,10 +15,10 @@ if (isset($_POST['Process'])) {
 	/* Check that the config variable is set for picking notes and get out if not. */
 	if ($_SESSION['RequirePickingNote'] == 0) {
 		$Title = __('Picking Lists Not Enabled');
-		include ('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		echo '<br />';
 		prnMsg(__('The system is not configured for picking lists. A configuration parameter is required where picking slips are required. Please consult your system administrator.'), 'info');
-		include ('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 
@@ -109,7 +109,7 @@ if (isset($_POST['Process'])) {
 		/* If there are no rows, there's a problem. */
 		if (DB_num_rows($Result) == 0) {
 			$Title = __('Print Picking List Error');
-			include ('includes/header.php');
+			include(__DIR__ . '/includes/header.php');
 			echo '<br />';
 			prnMsg(__('Unable to Locate any orders for this criteria '), 'info');
 			echo '<br />
@@ -119,7 +119,7 @@ if (isset($_POST['Process'])) {
 				</tr>
 				</table>
 				<br />';
-			include ('includes/footer.php');
+			include(__DIR__ . '/includes/footer.php');
 			exit();
 		}
 
@@ -249,8 +249,8 @@ if (isset($_POST['Process'])) {
 
 	if ($ListCount == 0) {
 		$Title = __('Print Picking List Error');
-		include ('includes/header.php');
-		include ('includes/footer.php');
+		include(__DIR__ . '/includes/header.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 	else {
@@ -275,7 +275,7 @@ if (isset($_POST['Process'])) {
 		$Title = __('Select Picking Lists');
 		$ViewTopic = 'Sales';
 		$BookMark = '';
-		include ('includes/header.php');
+		include(__DIR__ . '/includes/header.php');
 		$SQL = "SELECT locations.loccode,
 				locationname
 			FROM locations
@@ -303,7 +303,7 @@ if (isset($_POST['Process'])) {
 			<input type="submit" name="Process" value="' . __('Print Picking Lists') . '" />
 		</div>
 		</form>';
-		include ('includes/footer.php');
+		include(__DIR__ . '/includes/footer.php');
 		exit();
 	}
 }

@@ -12,4 +12,4 @@ CREATE TABLE `hrapplicantactivities` (
   PRIMARY KEY (`activityid`),
   KEY `applicantid` (`applicantid`),
   KEY `activitydate` (`activitydate`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
