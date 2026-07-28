@@ -5,6 +5,7 @@ require(__DIR__ . '/includes/session.php');
 use Dompdf\Dompdf;
 
 include(__DIR__ . '/includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['PrintPDF'])
 	or isset($_POST['View'])
