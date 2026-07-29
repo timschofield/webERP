@@ -5,6 +5,8 @@ require(__DIR__ . '/includes/session.php');
 use Dompdf\Dompdf;
 
 include(__DIR__ . '/includes/SetDomPDFOptions.php');
+include(__DIR__ . '/includes/UIGeneralFunctions.php');
+include(__DIR__ . '/includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['PrintPDF'])
 	or isset($_POST['View'])
@@ -15,6 +17,7 @@ if (isset($_POST['PrintPDF'])
 
 	$Title = __('Supplier Balance Listing');
 	$Subject = __('Supplier Balances');
+	$PeriodEndDate = EndDateSQLFromPeriodNo($_POST['PeriodEnd']);
 
 	// Start building HTML
 	$HTML = '';
@@ -28,21 +31,16 @@ if (isset($_POST['PrintPDF'])
 					suppliers.suppname,
 					currencies.currency,
 					currencies.decimalplaces AS currdecimalplaces,
-					SUM((supptrans.balance)/supptrans.rate) AS balance,
 					SUM(supptrans.balance) AS fxbalance,
-					SUM(CASE WHEN supptrans.trandate > '" . $_POST['PeriodEnd'] . "' THEN
-						(supptrans.ovamount + supptrans.ovgst)/supptrans.rate ELSE 0 END) AS afterdatetrans,
-					SUM(CASE WHEN supptrans.trandate > '" . $_POST['PeriodEnd'] . "'
-						AND (supptrans.type=22 OR supptrans.type=21) THEN
-						supptrans.diffonexch ELSE 0 END) AS afterdatediffonexch,
-					SUM(CASE WHEN supptrans.trandate > '" . $_POST['PeriodEnd'] . "' THEN
+					SUM(CASE WHEN supptrans.trandate > '" . $PeriodEndDate . "' THEN
 						supptrans.ovamount + supptrans.ovgst ELSE 0 END) AS fxafterdatetrans
-			FROM suppliers INNER JOIN currencies
-			ON suppliers.currcode = currencies.currabrev
+			FROM suppliers
+			INNER JOIN currencies
+				ON suppliers.currcode = currencies.currabrev
 			INNER JOIN supptrans
-			ON suppliers.supplierid = supptrans.supplierno
+				ON suppliers.supplierid = supptrans.supplierno
 			WHERE suppliers.supplierid >= '" . $_POST['FromCriteria'] . "'
-			AND suppliers.supplierid <= '" . $_POST['ToCriteria'] . "'
+				AND suppliers.supplierid <= '" . $_POST['ToCriteria'] . "'
 			GROUP BY suppliers.supplierid,
 				suppliers.suppname,
 				currencies.currency,
@@ -67,13 +65,12 @@ if (isset($_POST['PrintPDF'])
 				<body>
 				<div class="centre" id="ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
-					' . __('Supplier Balance Listing') . '<br />
-					' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
+					' . __('Supplier Balance Listing at end of') . ' ' . ConvertSQLDate($PeriodEndDate) . '<br />
+					' . __('Printed on') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
 				</div><table>
 		<thead>
 			<tr>
 				<th>' . __('Supplier Code & Name') . '</th>
-				<th>' . __('Balance') . '</th>
 				<th>' . __('FX Balance') . '</th>
 				<th>' . __('Currency') . '</th>
 			</tr>
@@ -84,32 +81,23 @@ if (isset($_POST['PrintPDF'])
 
 	while ($SupplierBalances = DB_fetch_array($SupplierResult)) {
 
-		$Balance = $SupplierBalances['balance'] - $SupplierBalances['afterdatetrans'] + $SupplierBalances['afterdatediffonexch'];
 		$FXBalance = $SupplierBalances['fxbalance'] - $SupplierBalances['fxafterdatetrans'];
 
-		if (ABS($Balance) > CurrencyTolerance($_SESSION['CompanyRecord']['currencydefault'])
-			or ABS($FXBalance) > CurrencyTolerance($SupplierBalances['currency'])) {
+		if (ABS($FXBalance) > CurrencyTolerance($SupplierBalances['currency'])) {
 
-			$DisplayBalance = locale_number_format($Balance, $_SESSION['CompanyRecord']['decimalplaces']);
 			$DisplayFXBalance = locale_number_format($FXBalance, $SupplierBalances['currdecimalplaces']);
-
-			$TotBal += $Balance;
 
 			$HTML .= '<tr class="striped_row">
 				<td class="left">' . $SupplierBalances['supplierid'] . ' - ' . $SupplierBalances['suppname'] . '</td>
-				<td class="number">' . $DisplayBalance . '</td>
 				<td class="number">' . $DisplayFXBalance . '</td>
 				<td class="left">' . $SupplierBalances['currency'] . '</td>
 			</tr>';
 		}
 	} // end while
 
-	$DisplayTotBalance = locale_number_format($TotBal, $_SESSION['CompanyRecord']['decimalplaces']);
-
 	// Total row
 	$HTML .= '<tr class="total_row">
-		<td class="left"><strong>' . __('Total') . '</strong></td>
-		<td class="number"><strong>' . $DisplayTotBalance . '</strong></td>
+		<td class="left"><strong></strong></td>
 		<td></td>
 		<td></td>
 	</tr>';
@@ -142,12 +130,12 @@ if (isset($_POST['PrintPDF'])
 		$DomPDF->render();
 
 		// Output the generated PDF to Browser
-		$DomPDF->stream($_SESSION['DatabaseName'] . '_Supplier_Balances_At_Prior_Month_' . date('Y-m-d') . '.pdf', array(
+		$DomPDF->stream($_SESSION['DatabaseName'] . '_Supplier_Balances_At_End_Of_' . $PeriodEndDate . '.pdf', array(
 			"Attachment" => false
 		));
 	}
 	else {
-		$Title = __('Supplier Balances At A Period End');
+		$Title = __('Supplier Balances at end of a given month');
 		include(__DIR__ . '/includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . __('Suppliers') . '" alt="" />' . ' ' . __('Supplier Balances At A Period End') . '</p>';
 		echo $HTML;
@@ -156,7 +144,7 @@ if (isset($_POST['PrintPDF'])
 
 } else { // Not printing PDF, show input form
 
-	$Title = __('Supplier Balances At A Period End');
+	$Title = __('Supplier Balances at end of a given month');
 	$ViewTopic = 'AccountsPayable';
 	$BookMark = '';
 	include(__DIR__ . '/includes/header.php');
@@ -168,6 +156,9 @@ if (isset($_POST['PrintPDF'])
 	}
 	if (!isset($_POST['ToCriteria'])) {
 		$_POST['ToCriteria'] = 'zzzzzz';
+	}
+	if (!isset($_POST['PeriodEnd'])) {
+		$_POST['PeriodEnd'] = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 	}
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" target="_blank">';
@@ -182,24 +173,8 @@ if (isset($_POST['PrintPDF'])
 		<field>
 			<label for="ToCriteria">' . __('To Supplier Code') . ':</label>
 			<input type="text" maxlength="6" size="7" name="ToCriteria" value="' . $_POST['ToCriteria'] . '" />
-		</field>
-		<field>
-			<label for="PeriodEnd">' . __('Balances As At') . ':</label>
-			<select name="PeriodEnd">';
-
-	$SQL = "SELECT periodno,
-					lastdate_in_period
-			FROM periods
-			ORDER BY periodno DESC";
-
-	$ErrMsg = __('Could not retrieve period data because');
-	$Periods = DB_query($SQL, $ErrMsg);
-
-	while ($MyRow = DB_fetch_array($Periods)) {
-		echo '<option value="' . $MyRow['lastdate_in_period'] . '" selected="selected" >' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period'], 'M', -1) . '</option>';
-	}
-	echo '</select>
-		</field>';
+			</field>';
+	echo FieldToSelectOnePeriod('PeriodEnd', $_POST['PeriodEnd'], __('Balances as at end of'), '', '', '', true, false);
 
 	echo '</fieldset>
 			<div class="centre">

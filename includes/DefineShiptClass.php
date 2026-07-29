@@ -71,6 +71,7 @@ class Shipment {
 	}
 }
 
+#[\AllowDynamicProperties]
 class LineDetails {
 
 	var $PODetailItem;

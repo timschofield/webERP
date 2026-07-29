@@ -64,6 +64,7 @@ class SpecialOrder {
 
 } /* end of class defintion */
 
+#[\AllowDynamicProperties]
 class LineDetails {
 
 	var $LineNo;

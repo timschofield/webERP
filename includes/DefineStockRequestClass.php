@@ -39,6 +39,7 @@ class StockRequest {
 	}
 }
 
+#[\AllowDynamicProperties]
 class LineDetails {
 	var $StockID;
 	var $ItemDescription;
