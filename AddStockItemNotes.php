@@ -105,7 +105,7 @@ if (!isset($Id)) {
 			<tr>
 				<th>' . __('Date') . '</th>
 				<th>' . __('Note') . '</th>
-				<th colspan="2"></th>
+				<th colspan="2">' . __('Action') . '</th>
 			</tr>';
 
 		while ($MyRow = DB_fetch_array($Result)) {

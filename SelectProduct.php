@@ -465,8 +465,8 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 				<thead>
 					<tr>
 						<th class="SortedColumn" style="width:10%">', __('Date'), '</th>
-						<th style="width:80%">', __('Note'), '</th>
-						<th style="width:10%">', __('Action'), '</th>
+						<th style="width:70%">', __('Note'), '</th>
+						<th colspan="2" style="width:20%">', __('Action'), '</th>
 					</tr>
 				</thead>';
 		echo '<tbody>';
@@ -474,7 +474,8 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 			echo '<tr class="striped_row">
 					<td class="date">', ConvertSQLDate($ItemNoteRow['date']), '</td>
 					<td>', nl2br(htmlspecialchars($ItemNoteRow['note'], ENT_QUOTES, 'UTF-8', false)), '</td>
-					<td><a href="', $RootPath, '/AddStockItemNotes.php?Id=', urlencode($ItemNoteRow['noteid']), '&amp;StockID=', urlencode($ItemNoteRow['stockid']), '">', __('Edit'), '</a> / <a href="', $RootPath, '/AddStockItemNotes.php?Id=', urlencode($ItemNoteRow['noteid']), '&amp;StockID=', urlencode($ItemNoteRow['stockid']), '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this item note?') . '\');">', __('Delete'), '</a></td>
+					<td style="text-align:center"><a href="', $RootPath, '/AddStockItemNotes.php?Id=', urlencode($ItemNoteRow['noteid']), '&amp;StockID=', urlencode($ItemNoteRow['stockid']), '">', __('Edit'), '</a></td>
+					<td style="text-align:center"><a href="', $RootPath, '/AddStockItemNotes.php?Id=', urlencode($ItemNoteRow['noteid']), '&amp;StockID=', urlencode($ItemNoteRow['stockid']), '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this item note?') . '\');">', __('Delete'), '</a></td>
 				</tr>';
 		}
 		echo '</tbody>
@@ -638,6 +639,7 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 							<th class="SortedColumn">' . __('Description') . '</th>
 							<th>' . __('Total Qty On Hand') . '</th>
 							<th>' . __('Units') . '</th>
+							<th>' . __('Action') . '</th>
 				</tr>
 			</thead>
 			<tbody>';
