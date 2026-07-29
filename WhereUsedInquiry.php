@@ -77,7 +77,7 @@ if (isset($StockID)) {
 		echo '<table width="97%" class="selection">
 			<thead>
 				<tr>
-					<th class="SortedColumn">' . __('Used By') . '</th>
+					<th class="SortedColumn">' . __('Used By ( > Costed BOM)') . '</th>
 					<th class="SortedColumn">' . __('Status') . '</th>
 					<th class="SortedColumn">' . __('Work Centre') . '</th>
 					<th class="SortedColumn">' . __('Location') . '</th>
