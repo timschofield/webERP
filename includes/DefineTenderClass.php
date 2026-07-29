@@ -217,6 +217,7 @@ class Tender {
 	}
 } /* end of class defintion */
 
+#[\AllowDynamicProperties]
 class LineDetails {
 /* PurchOrderDetails */
 	var $LineNo;
