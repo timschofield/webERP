@@ -676,7 +676,7 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 			<td title="'. $MyRow['longdescription'] . '">' . $MyRow['description'] . '</td>
 			<td class="number">' . $QOH . '</td>
 			<td>' . $MyRow['units'] . '</td>
-			<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=' . urlencode($MyRow['stockid']).'">' . __('View') . '</a></td>
+			<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=' . urlencode($MyRow['stockid']).'">' . __('Stock Status') . '</a></td>
 			</tr>';
 
 			$RowIndex = $RowIndex + 1;

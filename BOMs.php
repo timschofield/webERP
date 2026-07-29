@@ -982,7 +982,7 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 			<th class="noPrint">', __('Effective To') , '</th>
 			<th class="noPrint">', __('Auto Issue') , '</th>
 			<th class="noPrint">', __('Qty On Hand') , '</th>
-			<th colspan="3"></th>
+			<th colspan="3">', __('Action') , '</th>
 		</tr>';
 	if (count($BOMTree) == 0) {
 		echo '<tr>
