@@ -381,11 +381,11 @@ function wikiLink($WikiType, $WikiPageID) {
 	}
 
 	if ($_SESSION['WikiApp'] == __('WackoWiki')) {
-		echo '<a target="_blank" href="' . $WikiPath . $WikiType . $WikiPageID . '">' . __('Wiki ' . $WikiType . ' Documents') . ' </a>  <br />';
+		echo '<a target="_blank" href="' . $WikiPath . $WikiType . $WikiPageID . '">' . __($WikiType . ' Documents, Drawings and Files') . ' </a>  <br />';
 	} elseif ($_SESSION['WikiApp'] == __('MediaWiki')) {
-		echo '<a target="_blank" href="' . $WikiPath . 'index.php?title=' . $WikiType . '/' . $WikiPageID . '">' . __('Wiki ' . $WikiType . ' Documents') . '</a><br />';
+		echo '<a target="_blank" href="' . $WikiPath . 'index.php?title=' . $WikiType . '/' . $WikiPageID . '">' . __('Wiki ' . $WikiType . ' Documents, Drawings and Files') . '</a><br />';
 	} elseif ($_SESSION['WikiApp'] == __('DokuWiki')) {
-		echo '<a target="_blank" href="' . $WikiPath . '/doku.php?id=' . $WikiType . ':' . $WikiPageID . '">' . __('Wiki ' . $WikiType . ' Documents') . '</a><br />';
+		echo '<a target="_blank" href="' . $WikiPath . '/doku.php?id=' . $WikiType . ':' . $WikiPageID . '">' . __('Wiki ' . $WikiType . ' Documents, Drawings and Files') . '</a><br />';
 	}
 }
 
