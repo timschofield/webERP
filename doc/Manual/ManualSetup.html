@@ -202,3 +202,39 @@
 
 <h3><a id="Labels.php">Label Templates Maintenance</a></h3>
 <p>.</p>
+
+<!-- Help Begin: MenuEditor -->
+<h3><a id="MenuEditor">Menu Editor</a></h3>
+<p>The Menu Editor allows an administrator to customise the navigation menus that appear for each security role and module. Changes take effect immediately for all users assigned to the affected role.</p>
+
+<h4>Navigating to the Menu Editor</h4>
+<p>Go to <b>Setup &rarr; General &rarr; Menu Editor</b>. Select a <b>Security Role</b> from the first drop-down and then a <b>Module</b> from the second drop-down, then click <b>Select</b> to load the menu items for that role/module combination.</p>
+
+<h4>Adding a New Menu Item</h4>
+<p>Use the <b>Add New Menu Item</b> form at the bottom of the page:</p>
+<ul>
+	<li><b>Section</b> &mdash; Choose an existing section from the drop-down, or type a new section name into the text box to create a new section.</li>
+	<li><b>Caption</b> &mdash; The label that will appear in the menu.</li>
+	<li><b>URL</b> &mdash; The script name or path the menu item links to (e.g. <code>Customers.php</code>).</li>
+	<li><b>Position</b> &mdash; The sequence number within the section where the item will be inserted. Leave blank to append at the end.</li>
+</ul>
+<p>Click <b>Add Item</b> to save.</p>
+
+<h4>Editing a Menu Item</h4>
+<p>Click the <b>Edit</b> link on any row to load that item into the edit form. Adjust the Section, Caption, or URL as required and click <b>Update Item</b> to save the changes.</p>
+
+<h4>Reordering Menu Items</h4>
+<p>Use the up (<img src="../images/ascending.png" alt="Move Up" style="width:14px; vertical-align:middle">) and down (<img src="../images/descending.png" alt="Move Down" style="width:14px; vertical-align:middle">) arrow icons on each row to move an item one position within its section. The page reloads after each move so the new order is immediately visible.</p>
+
+<h4>Deleting a Menu Item</h4>
+<p>Click the <b>Delete</b> link on the item row. You will be asked to confirm before the item is permanently removed.</p>
+
+<h4>Renaming a Section</h4>
+<p>Each section heading has a <b>Rename Section</b> form. Enter the new section name and click <b>Rename</b>. All items in the section are moved to the new name in a single operation.</p>
+
+<h4>Deleting an Entire Section</h4>
+<p>Click <b>Delete Section</b> next to a section heading to remove all menu items in that section at once. This action cannot be undone.</p>
+
+<h4>Copying Menu Items from Another Role/Module</h4>
+<p>The <b>Copy Menu Items</b> panel at the top of the page lets you bulk-copy all menu items from a source role and module into the currently selected role and module. This is useful when setting up a new role that is similar to an existing one. Existing items in the target role/module are not removed; the copied items are appended.</p>
+<!-- Help End: MenuEditor -->

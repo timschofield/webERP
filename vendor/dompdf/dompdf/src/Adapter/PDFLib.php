@@ -1078,17 +1078,16 @@ class PDFLib implements Canvas
             return $filename;
         }
  
-        $func_name = "imagecreatefrom$type";
 
         set_error_handler([Helpers::class, "record_warnings"]);
-
-        if (method_exists(Helpers::class, $func_name)) {
-            $func_name = [Helpers::class, $func_name];
-        } elseif (!function_exists($func_name)) {
-            throw new Exception("Function $func_name() not found.  Cannot convert $type image: $image_url.  Please install the image PHP extension.");
-        }
-
         try {
+            $func_name = "imagecreatefrom$type";
+            if (method_exists(Helpers::class, $func_name)) {
+                $func_name = [Helpers::class, $func_name];
+            } elseif (!function_exists($func_name)) {
+                throw new Exception("Function $func_name() not found.  Cannot convert $type image: $image_url.  Please install the image PHP extension.");
+            }
+
             $im = call_user_func($func_name, $image_url);
 
             if ($im) {
@@ -1100,7 +1099,9 @@ class PDFLib implements Canvas
                 $filename = "$tmp_name.png";
 
                 imagepng($im, $filename);
-                imagedestroy($im);
+                if (PHP_MAJOR_VERSION < 8) {
+                    imagedestroy($im);
+                }
             } else {
                 $filename = null;
             }
@@ -1267,7 +1268,7 @@ class PDFLib implements Canvas
         $delta = $word_spacing * $num_spaces;
 
         if ($letter_spacing) {
-            $num_chars = mb_strlen($text);
+            $num_chars = mb_strlen($text, "UTF-8");
             $delta += $num_chars * $letter_spacing;
         }
 
@@ -1409,7 +1410,6 @@ class PDFLib implements Canvas
             $size = filesize($this->_file);
         }
 
-        header("Cache-Control: private");
         header("Content-Type: application/pdf");
         header("Content-Length: " . $size);
 

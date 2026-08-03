@@ -264,5 +264,5 @@ echo '<div id="MessageContainerHead"></div>';
 if (isset($_SESSION['UserID'])
 	and isset($_SESSION['ForcePasswordChange'])
 	and $_SESSION['ForcePasswordChange'] == 1) {
-		prnMsg(__('You are required to change your password in User Settings'), 'warn');
+		prnMsg('<a target="_blank" href="' . $RootPath . '/UserSettings.php">' . __('You are required to change your password in User Settings') . '</a> ', 'warn');
 }
