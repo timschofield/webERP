@@ -13,6 +13,8 @@
 Thumbs.db
 .DS_Store
 *:Zone.Identifier
+## Copilot for GitHub
+/.github/copilot-instructions*
 
 ## fonts created JIT by DOMPDF
 /vendor/dompdf/dompdf/lib/fonts/*.json
