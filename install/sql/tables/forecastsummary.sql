@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `forecastsummary` (
   `salesperson` varchar(10) DEFAULT NULL,
   `active` tinyint(1) NOT NULL DEFAULT 1,
   `createdby` varchar(20) NOT NULL,
-  `createdon` timestamp DEFAULT CURRENT_TIMESTAMP,
+  `createdon` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`summaryid`),
   UNIQUE KEY `summarycode` (`summarycode`),
   KEY `categorycode` (`categorycode`),

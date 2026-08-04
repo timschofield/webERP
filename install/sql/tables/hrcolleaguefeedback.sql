@@ -11,7 +11,7 @@ CREATE TABLE `hrcolleaguefeedback` (
 	`duedate` DATE DEFAULT NULL,
 	`completiondate` DATE DEFAULT NULL,
 	`comments` TEXT,
-	`createddate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`createddate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`modifieddate` DATETIME DEFAULT NULL,
 	PRIMARY KEY (`feedbackid`),
 	KEY `idx_fromemployee` (`fromemployeeid`),

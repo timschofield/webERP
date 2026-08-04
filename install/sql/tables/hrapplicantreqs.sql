@@ -13,7 +13,7 @@ CREATE TABLE `hrapplicantreqs` (
 	`startdate` DATE DEFAULT NULL,
 	`rejectionreason` VARCHAR(200) DEFAULT NULL,
 	`notes` TEXT,
-	`createddate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`createddate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (`applicationid`),
 	KEY `idx_applicant` (`applicantid`),
 	KEY `idx_requisition` (`requisitionid`)

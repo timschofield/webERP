@@ -10,7 +10,7 @@ CREATE TABLE `hrperformancegoals` (
   `notes` text DEFAULT NULL,
   `weight` decimal(5,2) DEFAULT 1.00,
   `createdby` varchar(20) NOT NULL,
-  `createddate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `createddate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modifiedby` varchar(20) DEFAULT NULL,
   `modifieddate` datetime DEFAULT NULL,
   PRIMARY KEY (`goalid`),

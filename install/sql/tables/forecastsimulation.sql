@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `forecastsimulation` (
   `startdate` date NOT NULL,
   `enddate` date NOT NULL,
   `notes` text,
-  `createdon` timestamp DEFAULT CURRENT_TIMESTAMP,
+  `createdon` datetime DEFAULT CURRENT_TIMESTAMP,
   `createdby` varchar(20) NOT NULL,
   PRIMARY KEY (`simulationid`),
   KEY `forecastid` (`forecastid`),

@@ -355,6 +355,9 @@ function ChangeColumnType($Column, $Table, $Type, $Null, $Default) {
 		if ($Default == '') {
 			$SQL = "ALTER TABLE " . $Table . " CHANGE COLUMN " . $Column . " " . $Column . " " . $Type . " " . $Null;
 			$Response = executeSQL($SQL, false);
+		} elseif (strtoupper($Default) == 'CURRENT_TIMESTAMP') {
+			$SQL = "ALTER TABLE " . $Table . " CHANGE COLUMN " . $Column . " " . $Column . " " . $Type . " " . $Null . " DEFAULT CURRENT_TIMESTAMP";
+			$Response = executeSQL($SQL, false);
 		} else {
 			$SQL = "ALTER TABLE " . $Table . " CHANGE COLUMN " . $Column . " " . $Column . " " . $Type . " " . $Null . " DEFAULT '" . $Default . "'";
 			$Response = executeSQL($SQL, false);

@@ -12,6 +12,6 @@ CREATE TABLE `custnotes` (
   `followupdate` date DEFAULT NULL,
   `status` varchar(20) NOT NULL DEFAULT 'completed',
   `createdby` varchar(20) NOT NULL DEFAULT '',
-  `createdat` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdat` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`noteid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  COLLATE=utf8mb4_general_ci;
