@@ -296,7 +296,6 @@ foreach (glob($Path_To_Root . '/install/sql/tables/*.sql') as $FileName) {
 	$SQLScriptFile = file_get_contents($FileName);
 
 	if ($DBType == 'mariadb') {
-		// mariadb 5.5 chokes on STORED
 		$SQLScriptFile = preg_replace('/([) ])STORED([, \n])/', ' $1PERSISTENT$2', $SQLScriptFile);
 	}
 
