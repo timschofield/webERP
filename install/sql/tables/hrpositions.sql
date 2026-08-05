@@ -10,7 +10,7 @@ CREATE TABLE `hrpositions` (
 	`jobdescription` TEXT,
 	`requirements` TEXT,
 	`active` TINYINT(1) DEFAULT 1,
-	`createddate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`createddate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (`positionid`),
 	UNIQUE KEY `positioncode` (`positioncode`),
 	KEY `idx_department` (`departmentid`),

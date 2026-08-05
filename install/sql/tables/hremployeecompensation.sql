@@ -14,7 +14,7 @@ CREATE TABLE `hremployeecompensation` (
 	`notes` TEXT,
 	`approvedby` INT(11) DEFAULT NULL,
 	`approvaldate` DATE DEFAULT NULL,
-	`createddate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`createddate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`createdby` VARCHAR(50) DEFAULT NULL,
 	PRIMARY KEY (`compensationid`),
 	KEY `idx_employee` (`employeeid`),

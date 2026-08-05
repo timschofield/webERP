@@ -16,7 +16,7 @@ CREATE TABLE `hrsafetyincidents` (
 	`investigationdate` DATE DEFAULT NULL,
 	`status` ENUM('Reported','Under Investigation','Resolved','Closed') DEFAULT 'Reported',
 	`dayslost` INT(11) DEFAULT 0,
-	`createddate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`createddate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (`incidentid`),
 	UNIQUE KEY `incidentnumber` (`incidentnumber`),
 	KEY `idx_incidentdate` (`incidentdate`),

@@ -14,7 +14,7 @@ are upgrading an existing installation.
     write privileges to the ./companies/ directory, and at least temporarily to the root
     directory for the web installer to save the created configuration file ./config.php.
 
-* MySQL ver. 5.7.5+ or MariaDb 5.5+ (innodb tables MUST be enabled, which should be the default, but
+* MySQL ver. 5.7.5+ or MariaDb 5.8+ (innodb tables MUST be enabled, which should be the default, but
   you can check `my.cnf` file to confirm, e.g. `/etc/my.cnf` or `/usr/local/etc/mysql/my.cnf`).
 
   The utf8mb4 character set is recommended. utf8mb3 will be used as fallback

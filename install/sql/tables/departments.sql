@@ -7,7 +7,7 @@ CREATE TABLE `departments` (
   `managerid` int(11) DEFAULT NULL,
   `locationid` varchar(5) DEFAULT NULL,
   `active` tinyint(1) NOT NULL DEFAULT 1,
-  `createddate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `createddate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`departmentid`),
   KEY `idx_parent` (`parentdepartmentid`),
   KEY `idx_departmentcode` (`departmentcode`)

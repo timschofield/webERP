@@ -37,11 +37,11 @@ jobs:
                       dbversion: '5.7'
                       operating-system: ubuntu-22.04
                       dbport: 3307
-                    - php: '8.1'
-                      dbtype: mariadb
-                      dbversion: '5.5'
-                      operating-system: ubuntu-22.04
-                      dbport: 3307
+#                    - php: '8.1'
+#                      dbtype: mariadb
+#                      dbversion: '5.5'
+#                      operating-system: ubuntu-22.04
+#                      dbport: 3307
 
         # NB: we do not run docker containers using the native `services` tag because we have to mount one or more files
         # from the local filesystem to the containers (eg. the db config), and doing so breaks actions/checkout@v5

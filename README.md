@@ -19,14 +19,14 @@ with all the features of webERP.
 ## Download Now
 
 Downloading the latest release [from GitHub](https://github.com/timschofield/webERP/releases) is recommended for new installations. If you prefer,
-clone the project and follow the stable branch. 
+clone the project and follow the stable branch.
 
 You can download a snapshot of the active development branch [from GitHub](https://github.com/timschofield/webERP/archive/refs/heads/master.zip) (or fork or clone the repo).
 
 ## Requirements
 - Web server (webERP has been tested on Apache, Nginx, Lighthttpd, and Hiawatha).
 - PHP version 8.1 and above (the latest supported release is recommended).
-- Either MySQL version 5.7.5+ or MariaDB version 5.5+ (if MariaDb, v10 is recommended but v10-specific features are not used).
+- Either MySQL version 5.7.5+ or MariaDB version 5.8+ (if MariaDb, v10 is recommended but v10-specific features are not used).
 - Web browser with HTML5 compatibility.
 
 Further information about hardware and software requirements can be found in [webERP documentation](https://www.weberp.org/Documentation.html)

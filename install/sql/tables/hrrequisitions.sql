@@ -15,7 +15,7 @@ CREATE TABLE `hrrequisitions` (
 	`filleddate` DATE DEFAULT NULL,
 	`justification` TEXT,
 	`createdby` VARCHAR(20) DEFAULT NULL,
-	`createddate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`createddate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (`requisitionid`),
 	UNIQUE KEY `requisitionnumber` (`requisitionnumber`),
 	KEY `idx_status` (`status`),

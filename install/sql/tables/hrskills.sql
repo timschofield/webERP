@@ -5,7 +5,7 @@ CREATE TABLE `hrskills` (
 	`skillcategory` ENUM('Technical','Behavioral','Leadership','Core') NOT NULL,
 	`description` TEXT,
 	`active` TINYINT(1) DEFAULT 1,
-	`createddate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`createddate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (`skillid`),
 	UNIQUE KEY `skillcode` (`skillcode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

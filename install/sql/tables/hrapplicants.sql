@@ -11,7 +11,7 @@ CREATE TABLE `hrapplicants` (
 	`source` VARCHAR(50) DEFAULT NULL,
 	`applicationdate` DATE NOT NULL,
 	`overallstatus` ENUM('New','Under Review','Interview','Offer','Hired','Rejected','Withdrawn') DEFAULT 'New',
-	`createddate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`createddate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (`applicantid`),
 	KEY `idx_status` (`overallstatus`),
 	KEY `idx_email` (`email`)
