@@ -375,7 +375,8 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	}
 	if ($Its_A_Dummy == false) {
 		echo '<a href="' . $RootPath . '/BOMs.php?SelectedParent=' . urlencode($StockID) . '">' . __('Manage Bill Of Materials') . '</a><br />';
-		echo '<a href="' . $RootPath . '/BOMInquiry.php?StockID=' . urlencode($StockID) . '">' . __('View Costed Bill Of Material') . '</a><br />';
+		echo '<a href="' . $RootPath . '/BOMIndented.php?StockID=' . urlencode($StockID) . '">' . __('View Indented Bill Of Materials') . '</a><br />';
+		echo '<a href="' . $RootPath . '/BOMInquiry.php?StockID=' . urlencode($StockID) . '">' . __('View Costed Bill Of Materials') . '</a><br />';
 		echo '<a href="' . $RootPath . '/WhereUsedInquiry.php?StockID=' . urlencode($StockID) . '">' . __('Show Where This Item Is Used') . '</a><br />';
 	}
 	if ($Its_A_Labour_Item == true) {
