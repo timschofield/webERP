@@ -17,7 +17,7 @@ CREATE TABLE `hrperformancereviews` (
 	`nextreviewdate` DATE DEFAULT NULL,
 	`status` ENUM('Draft','Submitted','Completed') DEFAULT 'Draft',
 	`createdby` VARCHAR(50) DEFAULT NULL,
-	`createddate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`createddate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`modifiedby` VARCHAR(50) DEFAULT NULL,
 	`modifieddate` DATETIME DEFAULT NULL,
 	PRIMARY KEY (`reviewid`),

@@ -7,7 +7,7 @@ CREATE TABLE `hrpaygrades` (
 	`midsalary` DECIMAL(15,2) DEFAULT NULL,
 	`maxsalary` DECIMAL(15,2) DEFAULT NULL,
 	`active` TINYINT(1) DEFAULT 1,
-	`createddate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`createddate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (`paygradeid`),
 	UNIQUE KEY `paygradecode` (`paygradecode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

@@ -11,7 +11,7 @@ CREATE TABLE `hrperfappraisals` (
 	`completiondate` DATE DEFAULT NULL,
 	`comments` TEXT,
 	`goalsnextperiod` TEXT,
-	`createddate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`createddate` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`modifieddate` DATETIME DEFAULT NULL,
 	PRIMARY KEY (`appraisalid`),
 	KEY `idx_employee` (`employeeid`),

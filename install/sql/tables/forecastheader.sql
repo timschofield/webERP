@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `forecastheader` (
   `active` tinyint(1) NOT NULL DEFAULT 1,
   `lastgenerated` datetime DEFAULT NULL,
   `createdby` varchar(20) NOT NULL,
-  `createdon` timestamp DEFAULT CURRENT_TIMESTAMP,
+  `createdon` datetime DEFAULT CURRENT_TIMESTAMP,
   `modifiedby` varchar(20) DEFAULT NULL,
   `modifiedon` datetime DEFAULT NULL,
   PRIMARY KEY (`forecastid`),

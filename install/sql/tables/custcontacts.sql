@@ -9,7 +9,7 @@ CREATE TABLE `custcontacts` (
   `linkedin` varchar(120) NOT NULL DEFAULT '',
   `active` tinyint(1) NOT NULL DEFAULT '1',
   `createdby` varchar(20) NOT NULL DEFAULT '',
-  `createdat` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdat` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `notes` varchar(255) NOT NULL,
   `email` varchar(55) NOT NULL,
   `statement` tinyint NOT NULL DEFAULT '0',
