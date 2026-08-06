@@ -347,8 +347,8 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	}
 	echo '</td>
 		</tr>
-		</table>',// End first item details table
-		'<div class="page_help_text">', __('Select a menu option to operate using this inventory item.'), '</div>',// Page help text.
+		</table>';// End first item details table
+		echo '<div class="page_help_text" style="margin-top: 16px;">', __('Choose a menu item for the selected stock item.'), '</div>',// Page help text.
 		'<br />',
 		$TableHead,
 			'<tr>
@@ -374,8 +374,10 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		echo '<a href="' . $RootPath . '/' . $ImageFile . '" target="_blank">' . __('Show Part Picture (if available)') . '</a><br />';
 	}
 	if ($Its_A_Dummy == false) {
-		echo '<a href="' . $RootPath . '/BOMInquiry.php?StockID=' . urlencode($StockID) . '">' . __('View Costed Bill Of Material') . '</a><br />';
-		echo '<a href="' . $RootPath . '/WhereUsedInquiry.php?StockID=' . urlencode($StockID) . '">' . __('Where This Item Is Used') . '</a><br />';
+		echo '<a href="' . $RootPath . '/BOMs.php?SelectedParent=' . urlencode($StockID) . '">' . __('Manage Bill Of Materials') . '</a><br />';
+		echo '<a href="' . $RootPath . '/BOMIndented.php?StockID=' . urlencode($StockID) . '">' . __('View Indented Bill Of Materials') . '</a><br />';
+		echo '<a href="' . $RootPath . '/BOMInquiry.php?StockID=' . urlencode($StockID) . '">' . __('View Costed Bill Of Materials') . '</a><br />';
+		echo '<a href="' . $RootPath . '/WhereUsedInquiry.php?StockID=' . urlencode($StockID) . '">' . __('Show Where This Item Is Used') . '</a><br />';
 	}
 	if ($Its_A_Labour_Item == true) {
 		echo '<a href="' . $RootPath . '/WhereUsedInquiry.php?StockID=' . urlencode($StockID) . '">' . __('Where This Labour Item Is Used') . '</a><br />';
@@ -448,6 +450,44 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		echo '<a href="' . $RootPath . '/AddStockItemNotes.php?StockID=' . urlencode($StockID) . '">' . __('Add Item Notes') . '</a><br />';
 	}
 	echo '</td></tr><tbody></table>';
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $Theme, '/images/note_add.png" title="', __('Item Notes'), '" alt="" />', ' ', __('Item Notes'), '
+		</p>';
+	$ItemNotesSQL = "SELECT noteid,
+						stockid,
+					note,
+					date
+				FROM stockitemnotes
+				WHERE stockid='" . $StockID . "'
+				ORDER BY date DESC";
+	$ItemNotesResult = DB_query($ItemNotesSQL);
+	if (DB_num_rows($ItemNotesResult) <> 0) {
+		echo '<table style="width: 45%;">
+				<thead>
+					<tr>
+						<th class="SortedColumn" style="width:10%">', __('Date'), '</th>
+						<th style="width:70%">', __('Note'), '</th>
+						<th colspan="2" style="width:20%">', __('Action'), '</th>
+					</tr>
+				</thead>';
+		echo '<tbody>';
+		while ($ItemNoteRow = DB_fetch_array($ItemNotesResult)) {
+			echo '<tr class="striped_row">
+					<td class="date">', ConvertSQLDate($ItemNoteRow['date']), '</td>
+					<td>', nl2br(htmlspecialchars($ItemNoteRow['note'], ENT_QUOTES, 'UTF-8', false)), '</td>
+					<td style="text-align:center"><a href="', $RootPath, '/AddStockItemNotes.php?Id=', urlencode($ItemNoteRow['noteid']), '&amp;StockID=', urlencode($ItemNoteRow['stockid']), '">', __('Edit'), '</a></td>
+					<td style="text-align:center"><a href="', $RootPath, '/AddStockItemNotes.php?Id=', urlencode($ItemNoteRow['noteid']), '&amp;StockID=', urlencode($ItemNoteRow['stockid']), '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this item note?') . '\');">', __('Delete'), '</a></td>
+				</tr>';
+		}
+		echo '</tbody>
+			</table>';
+		echo '<div class="centre" style="margin-top: 12px;"><a href="' . $RootPath . '/AddStockItemNotes.php?StockID=' . urlencode($StockID) . '">' . __('Add New Note') . '</a></div>';
+	} else {
+		echo '<p class="page_title_text">
+				<img src="', $RootPath, '/css/', $Theme, '/images/note_add.png" title="', __('Item Notes'), '" alt="" />
+				<a href="', $RootPath, '/AddStockItemNotes.php?StockID=', urlencode($StockID), '">', __('Add New Note for this Item'), '</a>
+			</p>';
+	}
 } else {
 	// options (links) to pages. This requires stock id also to be passed.
 
@@ -600,6 +640,7 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 							<th class="SortedColumn">' . __('Description') . '</th>
 							<th>' . __('Total Qty On Hand') . '</th>
 							<th>' . __('Units') . '</th>
+							<th>' . __('Action') . '</th>
 				</tr>
 			</thead>
 			<tbody>';
@@ -636,7 +677,7 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 			<td title="'. $MyRow['longdescription'] . '">' . $MyRow['description'] . '</td>
 			<td class="number">' . $QOH . '</td>
 			<td>' . $MyRow['units'] . '</td>
-			<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=' . urlencode($MyRow['stockid']).'">' . __('View') . '</a></td>
+			<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=' . urlencode($MyRow['stockid']).'">' . __('Stock Status') . '</a></td>
 			</tr>';
 
 			$RowIndex = $RowIndex + 1;

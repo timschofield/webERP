@@ -77,13 +77,14 @@ if (isset($StockID)) {
 		echo '<table width="97%" class="selection">
 			<thead>
 				<tr>
-					<th class="SortedColumn">' . __('Used By') . '</th>
+					<th class="SortedColumn">' . __('Used By ( > Costed BOM)') . '</th>
 					<th class="SortedColumn">' . __('Status') . '</th>
 					<th class="SortedColumn">' . __('Work Centre') . '</th>
 					<th class="SortedColumn">' . __('Location') . '</th>
 					<th class="SortedColumn">' . __('Quantity Required') . '</th>
 					<th class="SortedColumn">' . __('Effective After') . '</th>
 					<th class="SortedColumn">' . __('Effective To') . '</th>
+					<th class="noPrint" colspan="2">' . __('Action') . '</th>
 				</tr>
 			</thead>
 			<tbody>';
@@ -103,6 +104,8 @@ if (isset($StockID)) {
 					<td class="number">' . locale_number_format($MyRow['quantity'],'Variable') . '</td>
 					<td class="date">' . ConvertSQLDate($MyRow['effectiveafter']) . '</td>
 					<td class="date">' . ConvertSQLDate($MyRow['effectiveto']) . '</td>
+					<td><a target="_blank" href="' . $RootPath . '/BOMs.php?SelectedParent=' . urlencode($MyRow['parent']) . '">' . __('Goto BOM') . '</a></td>
+					<td><a target="_blank" href="' . $RootPath . '/SelectProduct.php?StockID=' . urlencode($MyRow['parent']) . '">' . __('Goto Item') . '</a></td>
                 </tr>';
 
 			//end of page full new headings if

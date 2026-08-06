@@ -8,6 +8,13 @@ use Dompdf\Dompdf;
 
 include(__DIR__ . '/includes/SetDomPDFOptions.php');
 
+if (isset($_GET['StockID'])) {
+	$StockID = trim(mb_strtoupper($_GET['StockID']));
+	if (!isset($_POST['Part'])) {
+		$_POST['Part'] = $StockID;
+	}
+}
+
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	$SQL = "DROP TABLE IF EXISTS tempbom";
@@ -292,7 +299,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			<legend>', __('Select Report Criteria'), '</legend>';
 	echo '<field>
 			<label for="Part">' . __('Part') . ':</label>
-			<input type="text" name="Part" autofocus="autofocus" required="required" data-type="no-illegal-chars" title="" size="20" />
+			<input type="text" name="Part" value="' . (isset($_POST['Part']) ? htmlspecialchars($_POST['Part'], ENT_QUOTES, 'UTF-8') : '') . '" autofocus="autofocus" required="required" data-type="no-illegal-chars" title="" size="20" />
 			<fieldhelp>' . __('Enter the item code of parent item to list the bill of material for') . '</fieldhelp>
 		</field>
 		<field>
