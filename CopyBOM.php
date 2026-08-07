@@ -43,7 +43,6 @@ if (isset($_POST['Submit'])) {
 									longdescription,
 									units,
 									mbflag,
-									actualcost,
 									lastcost,
 									materialcost,
 									labourcost,
@@ -69,7 +68,6 @@ if (isset($_POST['Submit'])) {
 									longdescription,
 									units,
 									mbflag,
-									actualcost,
 									lastcost,
 									materialcost,
 									labourcost,
@@ -94,26 +92,22 @@ if (isset($_POST['Submit'])) {
 			$Result = DB_query($SQL);
 		} else {
 			$SQL = "SELECT lastcostupdate,
-							actualcost,
 							lastcost,
 							materialcost,
 							labourcost,
-							overheadcost,
-							lowestlevel
+							overheadcost
 						FROM stockmaster
-						WHERE stockid='".$StockID."';";
+						WHERE stockid='".$StockID."'";
 			$Result = DB_query($SQL);
 
 			$MyRow = DB_fetch_row($Result);
 
 			$SQL = "UPDATE stockmaster set
 					lastcostupdate  = '" . $MyRow[0] . "',
-					actualcost      = " . $MyRow[1] . ",
-					lastcost        = " . $MyRow[2] . ",
-					materialcost    = " . $MyRow[3] . ",
-					labourcost      = " . $MyRow[4] . ",
-					overheadcost    = " . $MyRow[5] . ",
-					lowestlevel     = " . $MyRow[6] . "
+					lastcost        = " . $MyRow[1] . ",
+					materialcost    = " . $MyRow[2] . ",
+					labourcost      = " . $MyRow[3] . ",
+					overheadcost    = " . $MyRow[4] . "
 					WHERE stockid='".$NewStockID."';";
 			$Result = DB_query($SQL);
 		}
@@ -195,7 +189,7 @@ if (isset($_POST['Submit'])) {
 
 	echo '<field>
 			<label for="ToStockID"><input type="radio" name="NewOrExisting" value="N" />', __(' To New Stock ID'), '</label>
-			<input type="text" required="required" maxlength="20" name="ToStockID" />
+			<input type="text" maxlength="20" name="ToStockID" />
 		</field>';
 
 	$SQL = "SELECT stockid,
