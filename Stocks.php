@@ -847,7 +847,13 @@ if (isset($_POST['submit'])) {
 		$Result = DB_query($SQL, __('Could not delete the item record'), '', true);
 
 		DB_Txn_Commit();
-
+        
+        if (file_exists($_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg') OR file_exists($_SESSION['part_pics_dir'] . '/' . $StockID . '.png')) {
+//            unlink($_SESSION['part_pics_dir'] . '/' . $StockID . '.*');
+            array_map('unlink', glob($_SESSION['part_pics_dir'] . '/' . $StockID . '.*'));
+        }
+         
+ 
 		prnMsg(__('Deleted the stock master record for') . ' ' . $StockID . '....' . '<br />. . ' . __('and all the location stock records set up for the part') . '<br />. . .' . __('and any bill of material that may have been set up for the part') . '<br /> . . . .' . __('and any purchasing data that may have been set up for the part') . '<br /> . . . . .' . __('and any prices that may have been set up for the part'), 'success');
 		echo '<br />';
 		unset($_POST['LongDescription']);
