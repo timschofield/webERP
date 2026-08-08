@@ -453,9 +453,6 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		echo '<a href="' . $RootPath . '/AddStockItemNotes.php?StockID=' . urlencode($StockID) . '">' . __('Add Item Notes') . '</a><br />';
 	}
 	echo '</td></tr><tbody></table>';
-	echo '<p class="page_title_text">
-			<img src="', $RootPath, '/css/', $Theme, '/images/note_add.png" title="', __('Item Notes'), '" alt="" />', ' ', __('Item Notes'), '
-		</p>';
 	$ItemNotesSQL = "SELECT noteid,
 						stockid,
 					note,
@@ -465,6 +462,9 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 				ORDER BY date DESC";
 	$ItemNotesResult = DB_query($ItemNotesSQL);
 	if (DB_num_rows($ItemNotesResult) <> 0) {
+    	echo '<p class="page_title_text">
+	    		<img src="', $RootPath, '/css/', $Theme, '/images/note_add.png" title="', __('Item Notes'), '" alt="" />', ' ', __('Item Notes'), '
+	    	</p>';
 		echo '<table style="width: 45%;">
 				<thead>
 					<tr>
@@ -484,12 +484,6 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		}
 		echo '</tbody>
 			</table>';
-		echo '<div class="centre" style="margin-top: 12px;"><a href="' . $RootPath . '/AddStockItemNotes.php?StockID=' . urlencode($StockID) . '">' . __('Add New Note') . '</a></div>';
-	} else {
-		echo '<p class="page_title_text">
-				<img src="', $RootPath, '/css/', $Theme, '/images/note_add.png" title="', __('Item Notes'), '" alt="" />
-				<a href="', $RootPath, '/AddStockItemNotes.php?StockID=', urlencode($StockID), '">', __('Add New Note for this Item'), '</a>
-			</p>';
 	}
 } else {
 	// options (links) to pages. This requires stock id also to be passed.
