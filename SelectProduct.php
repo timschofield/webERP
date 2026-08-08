@@ -95,6 +95,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 						ON stockmaster.categoryid=stockcategory.categoryid
 						WHERE stockid='" . $StockID . "'");
 	$MyRow = DB_fetch_array($Result);
+    $MBFlag = $MyRow['mbflag'];
 	$Its_A_Kitset_Assembly_Or_Dummy = false;
 	$Its_A_Dummy = false;
 	$Its_A_Kitset = false;
@@ -374,9 +375,11 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		echo '<a href="' . $RootPath . '/' . $ImageFile . '" target="_blank">' . __('Show Part Picture (if available)') . '</a><br />';
 	}
 	if ($Its_A_Dummy == false) {
-		echo '<a href="' . $RootPath . '/BOMs.php?SelectedParent=' . urlencode($StockID) . '">' . __('Manage Bill Of Materials') . '</a><br />';
-		echo '<a href="' . $RootPath . '/BOMIndented.php?StockID=' . urlencode($StockID) . '">' . __('View Indented Bill Of Materials') . '</a><br />';
-		echo '<a href="' . $RootPath . '/BOMInquiry.php?StockID=' . urlencode($StockID) . '">' . __('View Costed Bill Of Materials') . '</a><br />';
+        if ($MBFlag == 'M' or $MBFlag == 'A' or $MBFlag == 'K' or $MBFlag == 'G') {
+		    echo '<a href="' . $RootPath . '/BOMs.php?SelectedParent=' . urlencode($StockID) . '">' . __('Manage Bill Of Materials') . '</a><br />';
+	    	echo '<a href="' . $RootPath . '/BOMIndented.php?StockID=' . urlencode($StockID) . '">' . __('View Indented Bill Of Materials') . '</a><br />';
+		    echo '<a href="' . $RootPath . '/BOMInquiry.php?StockID=' . urlencode($StockID) . '">' . __('View Costed Bill Of Materials') . '</a><br />';
+        }
 		echo '<a href="' . $RootPath . '/WhereUsedInquiry.php?StockID=' . urlencode($StockID) . '">' . __('Show Where This Item Is Used') . '</a><br />';
 	}
 	if ($Its_A_Labour_Item == true) {
