@@ -959,7 +959,7 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 	echo '<input type="hidden" name="SelectedParent" value="', $SelectedParent, '" />';
 	echo '<table>';
 	echo '<tr>
-			<th colspan="16"><b>', $SelectedParent, ' - ', $MyRow[0], ' (', $MBdesc, ') </b></th>
+			<th colspan="16"><b><a href="', $RootPath, '/SelectProduct.php?StockID=', urlencode($SelectedParent), '">', $SelectedParent, ' - ', $MyRow[0], ' (', $MBdesc, ') </a></b></th>
 		</tr>';
 
 	$BOMTree = array();
