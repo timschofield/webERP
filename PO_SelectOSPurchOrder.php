@@ -449,7 +449,7 @@ else {
 		if (isset($SelectedSupplier)) {
 			if (!isset($_POST['StockLocation'])) {
 				if (isset($UserLocations) AND isset($LocQty) AND $UserLocations == $LocQty) {
-					$WhereStockLocation = " AND purchorders.intostocklocation ='" . $_POST['StockLocation'] . "' ";
+					$WhereStockLocation = " ";
 				} else {
 					$_POST['StockLocation'] = $_SESSION['UserStockLocation'];
 					$WhereStockLocation = " AND purchorders.intostocklocation ='" . $_POST['StockLocation'] . "' ";
