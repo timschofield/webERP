@@ -88,7 +88,7 @@ if ((isset($_POST['UpdateStatus']) and $_POST['UpdateStatus'] != '')) {
 
 		$AuthResult = DB_query($AuthSQL);
 		$MyRow = DB_fetch_array($AuthResult);
-		$AuthorityLevel = $MyRow['authlevel'];
+		$AuthorityLevel = ($MyRow === null ? 0 : $MyRow['authlevel']);
 		$OrderTotal = $_SESSION['PO' . $identifier]->Order_Value();
 
 		if ($_POST['StatusComments'] != '') {
