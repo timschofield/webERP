@@ -6,7 +6,7 @@ CREATE TABLE `factorcompanies` (
   `address3` varchar(40) NOT NULL DEFAULT '',
   `address4` varchar(40) NOT NULL DEFAULT '',
   `address5` varchar(20) NOT NULL DEFAULT '',
-  `address6` varchar(15) NOT NULL DEFAULT '',
+  `address6` varchar(40) NOT NULL DEFAULT '',
   `contact` varchar(25) NOT NULL DEFAULT '',
   `telephone` varchar(25) NOT NULL DEFAULT '',
   `fax` varchar(25) NOT NULL DEFAULT '',

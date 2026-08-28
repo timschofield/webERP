@@ -13,7 +13,7 @@ CREATE TABLE `salesorders` (
   `deladd3` varchar(40) NOT NULL DEFAULT '',
   `deladd4` varchar(40) DEFAULT NULL,
   `deladd5` varchar(20) NOT NULL DEFAULT '',
-  `deladd6` varchar(15) NOT NULL DEFAULT '',
+  `deladd6` varchar(40) NOT NULL DEFAULT '',
   `contactphone` varchar(25) DEFAULT NULL,
   `contactemail` varchar(40) DEFAULT NULL,
   `deliverto` varchar(40) NOT NULL DEFAULT '',
