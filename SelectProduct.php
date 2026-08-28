@@ -430,7 +430,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	}
 	if ($Its_A_Dummy == false) {
         if ($MBFlag == 'M' or $MBFlag == 'A' or $MBFlag == 'K' or $MBFlag == 'G') {
-		    echo '<a href="' . $RootPath . '/BOMs.php?SelectedParent=' . urlencode($StockID) . '">' . __('Manage Bill Of Materials') . '</a><br />';
+		    echo '<a href="' . $RootPath . '/BOMs.php?StockID=' . urlencode($StockID) . '">' . __('Manage Bill Of Materials') . '</a><br />';
 	    	echo '<a href="' . $RootPath . '/BOMIndented.php?StockID=' . urlencode($StockID) . '">' . __('View Indented Bill Of Materials') . '</a><br />';
 		    echo '<a href="' . $RootPath . '/BOMInquiry.php?StockID=' . urlencode($StockID) . '">' . __('View Costed Bill Of Materials') . '</a><br />';
         }
