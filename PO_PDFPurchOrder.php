@@ -185,8 +185,8 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			$CompanyAddress .= $_SESSION['CompanyRecord']['regoffice' . $i] . '<br />';
 		}
 	}
-	$CompanyAddress .= $_SESSION['CompanyRecord']['telephone'] . '<br />';
-	$CompanyAddress .= $_SESSION['CompanyRecord']['email'] . '<br />';
+	$CompanyAddress .= PHONE_FOR_PO . '<br />';
+	$CompanyAddress .= EMAIL_FOR_PO . '<br />';
 	// KL RICARD MODIFICATION END
 
 	$SupplierAddress = '';
