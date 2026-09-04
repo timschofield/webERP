@@ -288,6 +288,7 @@ color: var(--form-control-disabled);
 cursor: not-allowed;
 }
 form fieldset field input[type="radio"] {
+overflow:hidden;
 }
 .label {
 width:auto;

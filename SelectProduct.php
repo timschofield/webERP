@@ -734,8 +734,30 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 			$RowIndex = $RowIndex + 1;
 		}
 		//end of while loop
-		echo '</tbody></table>
-              </div>
+		echo '</tbody></table>';
+		if ($ListPageMax > 1) {
+			echo '<div class="centre"><br />&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . __('of') . ' ' . $ListPageMax . ' ' . __('pages') . '. ' . __('Go to Page') . ': ';
+			echo '<select name="PageOffset">';
+			$ListPage = 1;
+			while ($ListPage <= $ListPageMax) {
+				if ($ListPage == $_POST['PageOffset']) {
+					echo '<option value="' . $ListPage . '" selected="selected">' . $ListPage . '</option>';
+				} else {
+					echo '<option value="' . $ListPage . '">' . $ListPage . '</option>';
+				}
+				$ListPage++;
+			}
+			echo '</select>
+				<input type="submit" name="Go" value="' . __('Go') . '" />
+				<input type="submit" name="Previous" value="' . __('Previous') . '" />
+				<input type="submit" name="Next" value="' . __('Next') . '" />
+				<input type="hidden" name="Keywords" value="' . $_POST['Keywords'] . '" />
+				<input type="hidden" name="StockCat" value="' . $_POST['StockCat'] . '" />
+				<input type="hidden" name="StockCode" value="' . $_POST['StockCode'] . '" />
+				<br />
+				</div>';
+		}
+		echo '</div>
               </form>
               <br />';
 	}
