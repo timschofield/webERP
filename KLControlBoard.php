@@ -621,6 +621,7 @@ if ($ProcessSection01){
 	***************************************************************************************/
 
 	if ($KL_PurchasingManager
+		OR $KL_SalesTeamManager
 		OR $KL_PurchasingTeam){
 		$StartTime = microtime(true);
 		ItemsInSetup("ReadyToTest", "SETKLA", $RootPath);
@@ -634,6 +635,10 @@ if ($ProcessSection01){
 		ItemsInSetup("ReadyToTest", "SETGEA", $RootPath);
 		TimeNeededForExecution("ItemsInSetup", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+	}
+
+	if ($KL_PurchasingManager
+		OR $KL_PurchasingTeam){
 		$StartTime = microtime(true);
 		ItemsInSetup("NeedDescription", "SETKLA", $RootPath);
 		TimeNeededForExecution("ItemsInSetup", $StartTime, $KL_SystemAdmin);
