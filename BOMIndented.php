@@ -16,6 +16,22 @@ if (isset($_GET['StockID'])) {
 }
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
+    
+    $CheckSQL = "SELECT stockid FROM stockmaster WHERE stockid='" . $_POST['Part'] . "'";
+    $CheckResult = DB_query($CheckSQL);
+    if (DB_num_rows($CheckResult) == 0) {
+        $Title=__('Indented BOM Listing');
+        include(__DIR__ . '/includes/header.php');
+		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+        prnMsg(__('The stock code you entered does not exist'),  'error');
+
+        echo '<div class="centre">
+				<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
+			</div>';
+        include(__DIR__ . '/includes/footer.php');
+        exit;
+    }
+
 	$SortOrder = isset($_POST['SortOrder']) && $_POST['SortOrder'] === 'ItemCode' ? 'ItemCode' : 'BOMSequence';
 	$SortPartExpression = $SortOrder === 'BOMSequence' ? "LPAD(bom.sequence, 10, '0')" : 'CONCAT(bom.parent,bom.component)';
 
