@@ -118,16 +118,15 @@ if (isset($_POST['PrintPDF']) or isset($_POST['Spreadsheet']) or isset($_POST['V
 		$DomPDF->render();
 
 		// Output the generated PDF to Browser
-		$DomPDF->stream($_SESSION['DatabaseName'] . '_UserRolesBySecurityToken_' . date('Y-m-d') . '.pdf', array(
-			"Attachment" => false
-		));
+		$PDFContent = $DomPDF->output();
+		SendPDFToBrowser($PDFContent, $_SESSION['DatabaseName'] . '_UserRolesBySecurityToken_' . date('Y-m-d') . '.pdf');
 		exit();
 	} elseif (isset($_POST['Spreadsheet'])) {
 		// Clear output buffer to prevent file corruption
 		if (ob_get_length()) {
 			ob_end_clean();
 		}
-		
+
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 
 		$File = 'UserRolesBySecurityToken-' . date('Y-m-d'). '.' . 'ods';
@@ -166,12 +165,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['Spreadsheet']) or isset($_POST['V
 				<field>
 					<label for="Tokens">' . __('Select Security Tokens') . ':</label>
 					<select autofocus="autofocus" required="required" minlength="1" name="Tokens[]" multiple="multiple" size="12">';
-	
+
 	echo '<option value="All">' . __('All Security Tokens') . '</option>';
 
 	$SQL = "SELECT tokenid, tokenname FROM securitytokens ORDER BY tokenid";
 	$TokenResult = DB_query($SQL);
-	
+
 	while ($MyRow = DB_fetch_array($TokenResult)) {
 		if (isset($_POST['Tokens']) AND in_array($MyRow['tokenid'], $_POST['Tokens'])) {
 			echo '<option selected="selected" value="' . $MyRow['tokenid'] . '">' . $MyRow['tokenid'] . ' - ' . $MyRow['tokenname'] .'</option>';

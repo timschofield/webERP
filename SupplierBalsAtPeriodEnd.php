@@ -130,9 +130,8 @@ if (isset($_POST['PrintPDF'])
 		$DomPDF->render();
 
 		// Output the generated PDF to Browser
-		$DomPDF->stream($_SESSION['DatabaseName'] . '_Supplier_Balances_At_End_Of_' . $PeriodEndDate . '.pdf', array(
-			"Attachment" => false
-		));
+		$PDFContent = $DomPDF->output();
+		SendPDFToBrowser($PDFContent, $_SESSION['DatabaseName'] . '_Supplier_Balances_At_End_Of_' . date('Y-m-d') . '.pdf');
 	}
 	else {
 		$Title = __('Supplier Balances at end of a given month');

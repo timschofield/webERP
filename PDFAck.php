@@ -266,16 +266,15 @@ $HTML = '
 ';
 
 // Output PDF using DomPDF
-		$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
-		$DomPDF->loadHtml($HTML);
+$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
+$DomPDF->loadHtml($HTML);
 
-		// (Optional) Setup the paper size and orientation
-		$DomPDF->setPaper($_SESSION['PageSize'], 'landscape');
+// (Optional) Setup the paper size and orientation
+$DomPDF->setPaper($_SESSION['PageSize'], 'landscape');
 
-		// Render the HTML as PDF
-		$DomPDF->render();
+// Render the HTML as PDF
+$DomPDF->render();
 
-		// Output the generated PDF to Browser
-		$DomPDF->stream($_SESSION['DatabaseName'] . '_OrderAcknowledgement_' . date('Y-m-d') . '.pdf', array(
-			"Attachment" => false
-		));
+// Output the generated PDF to Browser
+$PDFContent = $DomPDF->output();
+SendPDFToBrowser($PDFContent, $_SESSION['DatabaseName'] . '_OrderAcknowledgement_' . date('Y-m-d') . '.pdf');

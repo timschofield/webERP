@@ -602,7 +602,8 @@ if (isset($_GET['View']) and $_GET['View'] == 'Yes') {
 	$DomPDF->render();
 
 	// Output the generated PDF to Browser
-	$DomPDF->stream($PdfFileName, array("Attachment" => false));
+	$PDFContent = $DomPDF->output();
+	SendPDFToBrowser($PDFContent, $PdfFileName);
 }
 
 } else {

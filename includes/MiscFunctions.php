@@ -924,14 +924,14 @@ function SendEmailByStandardMailFunction($From, $To, $Subject, $Body, $Attachmen
 
 function SendPDFToBrowser($PDFContent, $FileName) {
 
-header('Content-Type: application/pdf');
-header('Content-Disposition: inline; filename=' . $FileName . '');
-header('Content-Length: ' . strlen($PDFContent));
-header('Cache-Control: private, max-age=0, must-revalidate');
-header('Pragma: public');
+	header('Content-Type: application/pdf');
+	header('Content-Disposition: inline; filename=' . $FileName . '');
+	header('Content-Length: ' . strlen($PDFContent));
+	header('Cache-Control: private, max-age=0, must-revalidate');
+	header('Pragma: public');
 
-echo $PDFContent;
-exit(0);
+	echo $PDFContent;
+	exit(0);
 }
 
 function ShowDebugBackTrace($DebugMessage, $SQL){

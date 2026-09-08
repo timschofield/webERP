@@ -126,7 +126,8 @@ if (isset($_POST['Process'])) {
 	$DomPDF->render();
 
 	// Output the generated PDF to Browser
-	$DomPDF->stream($FileName, array("Attachment" => false));
+	$PDFContent = $DomPDF->output();
+	SendPDFToBrowser($PDFContent, $FileName);
 
 } else {
 	if (isset($_POST['TransferNo'])) {

@@ -120,16 +120,15 @@ if (isset($_POST['PrintPDF']) or isset($_POST['Spreadsheet']) or isset($_POST['V
 		$DomPDF->render();
 
 		// Output the generated PDF to Browser
-		$DomPDF->stream($_SESSION['DatabaseName'] . '_ScriptsBySecurityToken_' . date('Y-m-d') . '.pdf', array(
-			"Attachment" => false
-		));
+		$PDFContent = $DomPDF->output();
+		SendPDFToBrowser($PDFContent, $_SESSION['DatabaseName'] . '_ScriptsBySecurityToken_' . date('Y-m-d') . '.pdf');
 		exit();
 	} elseif (isset($_POST['Spreadsheet'])) {
 		// Clear output buffer to prevent file corruption
 		if (ob_get_length()) {
 			ob_end_clean();
 		}
-		
+
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 
 		$File = 'ScriptsBySecurityToken-' . date('Y-m-d') . '.' . 'ods';

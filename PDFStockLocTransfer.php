@@ -99,7 +99,8 @@ $HTML .= '<h2>' . __('Inventory Location Transfer BOL') . ' #' . htmlspecialchar
 	$DomPDF->render();
 
 	// Output the generated PDF to Browser
-	$DomPDF->stream($FileName, array("Attachment" => false));
+	$PDFContent = $DomPDF->output();
+	SendPDFToBrowser($PDFContent, $FileName);
 
 } else {
 

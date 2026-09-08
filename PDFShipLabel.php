@@ -311,8 +311,8 @@ if (isset($NoOfLabels) && $NoOfLabels > 0) {
 
 	if ($MakePDFThenDisplayIt) {
 		// Stream to browser
-		$DomPDF->stream($PDFFileName, ['Attachment' => false]);
-		exit;
+		$PDFContent = $DomPDF->output();
+		SendPDFToBrowser($PDFContent, $PDFFileName);
 	} else {
 		// Save to file and email
 		$output = $DomPDF->output();

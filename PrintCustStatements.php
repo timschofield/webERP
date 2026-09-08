@@ -51,8 +51,8 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCust']) and $_POST['FromCust
 
 	// Settle old transactions
 	$ErrMsg = __('There was a problem settling the old transactions.');
-	$SQL = "UPDATE debtortrans 
-			SET settled=1 
+	$SQL = "UPDATE debtortrans
+			SET settled=1
 			WHERE ABS(debtortrans.balance) < " . CurrencyTolerance($_SESSION['CompanyRecord']['currencydefault']) . "
 			AND debtortrans.settled = 0";
 	$SettleAsNec = DB_query($SQL, $ErrMsg);
@@ -370,7 +370,8 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCust']) and $_POST['FromCust
 	$DomPDF->render();
 
 	// Output the generated PDF to Browser
-	$DomPDF->stream($PdfFileName, array("Attachment" => false));
+	$PDFContent = $DomPDF->output();
+	SendPDFToBrowser($PDFContent, $PdfFileName);
 
 } else { // The option to print PDF was not hit
 	$Result = DB_query("SELECT debtorno FROM debtorsmaster ORDER BY debtorno");

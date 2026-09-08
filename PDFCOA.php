@@ -294,6 +294,7 @@ $DomPDF->render();
 
 // Output to browser
 $filename = $_SESSION['DatabaseName'] . 'COA' . date('Y-m-d') . '.pdf';
-$DomPDF->stream($filename, array("Attachment" => false));
+$PDFContent = $DomPDF->output();
+SendPDFToBrowser($PDFContent, $filename);
 
 exit;

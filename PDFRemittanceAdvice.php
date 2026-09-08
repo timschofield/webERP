@@ -154,7 +154,8 @@ if (
 	$FileName = $_SESSION['DatabaseName'] . '_Remittance_Advices_' . date('Y-m-d') .'.pdf';
 
 	// Output PDF inline in browser
-	$DomPDF->stream($FileName, array('Attachment' => false));
+	$PDFContent = $DomPDF->output();
+	SendPDFToBrowser($PDFContent, $_SESSION['DatabaseName'] . '_Remittance_Advices_' . date('Y-m-d') . '.pdf');
 
 } else {
 	// Show form

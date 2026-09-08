@@ -311,9 +311,8 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		$DomPDF->render();
 
 		// Output the generated PDF to Browser
-		$DomPDF->stream($PdfFileName, array(
-			"Attachment" => false
-		));
+		$PDFContent = $DomPDF->output();
+		SendPDFToBrowser($PDFContent, $PdfFileName);
 	} else {
 		// Save PDF to file and send via email
 		$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options

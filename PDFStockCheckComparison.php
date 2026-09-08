@@ -199,13 +199,13 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 		$HTML .= '<p><b>' . __('There is no inventory check data to report on') . '</b></p>';
 		$HTML .= '<p>' . __('To start an inventory check first run the') . ' <a href="' . $RootPath . '/StockCheck.php">' . __('inventory check sheets') . '</a> - ' . __('and select the option to create new Inventory Check') . '</p>';
 		$HTML .= '</body></html>';
-		
+
 		$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
 		$DomPDF->loadHtml($HTML);
 		$DomPDF->setPaper($_SESSION['PageSize'], 'portrait');
 		$DomPDF->render();
-		$DomPDF->stream($_SESSION['DatabaseName'] . '_StockComparison_' . date('Y-m-d') . '.pdf', ["Attachment" => false]);
-		exit();
+		$PDFContent = $DomPDF->output();
+		SendPDFToBrowser($PDFContent, $_SESSION['DatabaseName'] . '_StockComparison_' . date('Y-m-d') . '.pdf');
 	}
 
 	DB_data_seek($CheckedItems, 0);
@@ -288,7 +288,8 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 	$DomPDF->loadHtml($HTML);
 	$DomPDF->setPaper($_SESSION['PageSize'], 'landscape');
 	$DomPDF->render();
-	$DomPDF->stream($_SESSION['DatabaseName'] . '_StockComparison_' . date('Y-m-d') . '.pdf', ["Attachment" => false]);
+	$PDFContent = $DomPDF->output();
+	SendPDFToBrowser($PDFContent, $_SESSION['DatabaseName'] . '_StockComparison_' . date('Y-m-d') . '.pdf');
 
 	if ($_POST['ReportOrClose'] == 'ReportAndClose') {
 		// need to print the report first before this but don't risk re-adjusting all the stock!!

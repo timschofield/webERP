@@ -168,9 +168,8 @@ if ($NoOfLabels > 0) {
 		$DomPDF->render();
 
 		// Output the generated PDF to Browser
-		$DomPDF->stream($FileName, array(
-			"Attachment" => false
-		));
+		$PDFContent = $DomPDF->output();
+		SendPDFToBrowser($PDFContent, $FileName);
 	} else {
 		$pdfFilename = $_SESSION['DatabaseName'] . '_FGLABEL_WO-' . $SelectedWO . '_' . date('Y-m-d') . '.pdf';
 		$DomPDF->loadHtml($HTML);

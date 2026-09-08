@@ -156,7 +156,8 @@ if (isset($_POST['PrintPDF'])) {
 	$FileName = $_SESSION['DatabaseName'] . '_Stock_Count_Sheets_' . date('Y-m-d') . '.pdf';
 
 	// Output PDF inline in browser
-	$DomPDF->stream($FileName, array('Attachment' => false));
+	$PDFContent = $DomPDF->output();
+	SendPDFToBrowser($PDFContent, $FileName);
 
 } else { /*The option to print PDF was not hit */
 

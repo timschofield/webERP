@@ -191,7 +191,8 @@ $HTML .= '</table>';
 		$DomPDF->render();
 
 		// Output the generated PDF to Browser
-		$DomPDF->stream($_SESSION['DatabaseName'] . '_OrderStatus_' . date('Y-m-d') . '.pdf', array("Attachment" => false));
+		$PDFContent = $DomPDF->output();
+		SendPDFToBrowser($PDFContent, $_SESSION['DatabaseName'] . '_DailySalesInquiry_' . date('Y-m-d') . '.pdf');
 	} else {
 		include(__DIR__ . '/includes/header.php');
 

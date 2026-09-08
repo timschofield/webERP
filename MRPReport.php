@@ -351,7 +351,8 @@ if (isset($_POST['PrintPDF']) && $_POST['Part'] != '') {
 	$DomPDF->loadHtml($HTML);
 	$DomPDF->setPaper($_SESSION['PageSize'], 'landscape');
 	$DomPDF->render();
-	$DomPDF->stream($_SESSION['DatabaseName'] . '_MRPReport_' . date('Y-m-d') . '.pdf', array("Attachment" => false));
+	$PDFContent = $DomPDF->output();
+	SendPDFToBrowser($PDFContent, $_SESSION['DatabaseName'] . '_MRPReport_' . date('Y-m-d') . '.pdf');
 
 } else { /*The option to print PDF was not hit so display form */
 

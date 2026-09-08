@@ -190,7 +190,8 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 	$FileName = $_SESSION['DatabaseName'] . '_Payment_Run_' . date('Y-m-d_His') . '.pdf';
 
 	// Output PDF inline in browser
-	$DomPDF->stream($FileName, array('Attachment' => false));
+	$PDFContent = $DomPDF->output();
+	SendPDFToBrowser($PDFContent, $_SESSION['DatabaseName'] . '_Payment_Run_' . date('Y-m-d') . '.pdf');
 
 } else {
 	$Title = __('Payment Run');
