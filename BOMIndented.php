@@ -16,7 +16,7 @@ if (isset($_GET['StockID'])) {
 }
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
-    
+
     $CheckSQL = "SELECT stockid FROM stockmaster WHERE stockid='" . $_POST['Part'] . "'";
     $CheckResult = DB_query($CheckSQL);
     if (DB_num_rows($CheckResult) == 0) {
@@ -290,9 +290,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$DomPDF->render();
 
 		// Output the generated PDF to Browser
-		$DomPDF->stream($_SESSION['DatabaseName'] . '_BOMIndented_' . date('Y-m-d') . '.pdf', array(
-			"Attachment" => false
-		));
+		$PDFContent = $DomPDF->output();
+		SendPDFToBrowser($PDFContent, $_SESSION['DatabaseName'] . '_BOMIndented_' . date('Y-m-d') . '.pdf');
+
 	} else {
 		$Title = __('Indented BOM Listing');
 		include(__DIR__ . '/includes/header.php');
