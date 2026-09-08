@@ -828,9 +828,10 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 	$ErrMsg = __('Could not retrieve the description of the parent part because');
 	$Result = DB_query($SQL, $ErrMsg);
 
-	$MyRow = DB_fetch_row($Result);
+	$ParentRow = DB_fetch_array($Result);
 
-	$ParentMBflag = $MyRow[1];
+	$ParentDescription = $ParentRow['description'];
+	$ParentMBflag = $ParentRow['mbflag'];
 
 	switch ($ParentMBflag) {
 		case 'A':
@@ -866,8 +867,8 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 		echo '<table class="selection noPrint">
 				<tr>
 					<th>', __('Manufactured parent items') , ' : ';
-		while ($MyRow = DB_fetch_array($Result)) {
-			echo (($i) ? ', ' : '') , '<a href="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '?SelectedParent=', urlencode($MyRow['parent']) , '">', $MyRow['description'], '&nbsp;(', $MyRow['parent'], ')</a>';
+		while ($ParentItemRow = DB_fetch_array($Result)) {
+			echo (($i) ? ', ' : '') , '<a href="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '?SelectedParent=', urlencode($ParentItemRow['parent']) , '">', $ParentItemRow['description'], '&nbsp;(', $ParentItemRow['parent'], ')</a>';
 			++$i;
 		} //end while loop
 		echo '</th>
@@ -890,8 +891,8 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 				<tr>
 					<th>', __('Assembly parent items') , ' : ';
 		$i = 0;
-		while ($MyRow = DB_fetch_array($Result)) {
-			echo (($i) ? ', ' : '') , '<a href="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '?SelectedParent=', urlencode($MyRow['parent']) , '">', $MyRow['description'], '&nbsp;(', $MyRow['parent'], ')</a>';
+		while ($ParentItemRow = DB_fetch_array($Result)) {
+			echo (($i) ? ', ' : '') , '<a href="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '?SelectedParent=', urlencode($ParentItemRow['parent']) , '">', $ParentItemRow['description'], '&nbsp;(', $ParentItemRow['parent'], ')</a>';
 			++$i;
 		} //end while loop
 		echo '</th>
@@ -919,8 +920,8 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 				<tr>
 					<th>', __('Kit sets') , ' : ';
 		$i = 0;
-		while ($MyRow = DB_fetch_array($Result)) {
-			echo (($i) ? ', ' : '') , '<a href="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '?SelectedParent=', urlencode($MyRow['parent']) , '">', $MyRow['description'], '&nbsp;(', $MyRow['parent'], ')</a>';
+		while ($ParentItemRow = DB_fetch_array($Result)) {
+			echo (($i) ? ', ' : '') , '<a href="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '?SelectedParent=', urlencode($ParentItemRow['parent']) , '">', $ParentItemRow['description'], '&nbsp;(', $ParentItemRow['parent'], ')</a>';
 			++$i;
 		} //end while loop
 		echo '</th>
@@ -948,8 +949,8 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 				<tr>
 					<th>', __('Phantom') , ' : ';
 		$i = 0;
-		while ($MyRow = DB_fetch_array($Result)) {
-			echo (($i) ? ', ' : '') , '<a href="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '?SelectedParent=', urlencode($MyRow['parent']) , '">', $MyRow['description'], '&nbsp;(', $MyRow['parent'], ')</a>';
+		while ($ParentItemRow = DB_fetch_array($Result)) {
+			echo (($i) ? ', ' : '') , '<a href="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '?SelectedParent=', urlencode($ParentItemRow['parent']) , '">', $ParentItemRow['description'], '&nbsp;(', $ParentItemRow['parent'], ')</a>';
 			++$i;
 		} //end while loop
 		echo '</th>
@@ -964,7 +965,7 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 	echo '<input type="hidden" name="ShowAllLevels" value="', $_POST['ShowAllLevels'], '" />';
 	echo '<table>';
 	echo '<tr>
-			<th colspan="16"><b><a href="', $RootPath, '/SelectProduct.php?StockID=', urlencode($SelectedParent), '">', $SelectedParent, ' - ', $MyRow[0], ' (', $MBdesc, ') </a></b></th>
+			<th colspan="16"><b><a href="', $RootPath, '/SelectProduct.php?StockID=', urlencode($SelectedParent), '">', $SelectedParent, ' - ', $ParentDescription, ' (', $MBdesc, ') </a></b></th>
 		</tr>';
 
 	$BOMTree = array();
