@@ -102,7 +102,8 @@ if ($NoOfGRNs > 0) {
 	$FileName = $_SESSION['DatabaseName'] . '_QALabel_' . $GRNNo . '_' . date('Y-m-d') . '.pdf';
 
 	// Output the generated PDF to Browser
-	$DomPDF->stream($FileName, array("Attachment" => false));
+	$PDFContent = $DomPDF->output();
+	SendPDFToBrowser($PDFContent, $FileName);
 
 } else {
 	$Title = __('GRN Error');

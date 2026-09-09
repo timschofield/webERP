@@ -328,14 +328,15 @@ if ($ListCount == 0) {
 	// Render the HTML as PDF
 	$DomPDF->render();
 
-	// Output the generated PDF to Browser
-
-	$FileName = $_SESSION['DatabaseName'] . '_PackingSlip_' . $_GET['TransNo'] . '_' . date('Y-m-d') . '.pdf';
-	$DomPDF->stream($FileName, array("Attachment" => false));
-
 	$SQL = "UPDATE salesorders
 			SET printedpackingslip = 1,
 				datepackingslipprinted = CURRENT_DATE
 			WHERE salesorders.orderno = '" . $_GET['TransNo'] . "'";
 	$Result = DB_query($SQL);
+
+	// Output the generated PDF to Browser
+	$FileName = $_SESSION['DatabaseName'] . '_PackingSlip_' . $_GET['TransNo'] . '_' . date('Y-m-d') . '.pdf';
+	$PDFContent = $DomPDF->output();
+	SendPDFToBrowser($PDFContent, $_SESSION['DatabaseName'] . '_PackingSlip_' . $_GET['TransNo'] . '_' . date('Y-m-d') . '.pdf');
+
 }

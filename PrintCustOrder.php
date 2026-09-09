@@ -226,15 +226,16 @@ if (DB_num_rows($Result) > 0) {
 	// Render the HTML as PDF
 	$DomPDF->render();
 
-	// Output the generated PDF to Browser
-	$DomPDF->stream($_SESSION['DatabaseName'] . '_Customer_Order_' . $_GET['TransNo'] . date('Y-m-d') . '.pdf', array("Attachment" => false));
-
 	// Mark as printed
 	$SQL = "UPDATE salesorders
 			SET printedpackingslip = 1,
 				datepackingslipprinted = CURRENT_DATE
 			WHERE salesorders.orderno = '" . $_GET['TransNo'] . "'";
 	$Result = DB_query($SQL);
+
+	// Output the generated PDF to Browser
+	$PDFContent = $DomPDF->output();
+	SendPDFToBrowser($PDFContent, $_SESSION['DatabaseName'] . '_Customer_Order_' . $_GET['TransNo'] . date('Y-m-d') . '.pdf');
 
 } else {
 	$Title = __('Print Packing Slip Error');

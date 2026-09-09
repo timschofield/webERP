@@ -118,7 +118,8 @@ $DomPDF->setPaper($_SESSION['PageSize'], 'portrait');
 $DomPDF->render();
 
 $FileName = $_SESSION['DatabaseName'] . '_Cheque_' . date('Y-m-d') . '_ChequeNum_' . $_GET['ChequeNum'] . '.pdf';
-$DomPDF->stream($FileName, ['Attachment' => false]);
+$PDFContent = $DomPDF->output();
+SendPDFToBrowser($PDFContent, $FileName);
 
 exit;
 /* ****************************************************************************************** */

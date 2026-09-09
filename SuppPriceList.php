@@ -211,9 +211,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 		$DomPDF->render();
 
 		// Output the generated PDF to Browser
-		$DomPDF->stream($_SESSION['DatabaseName'] . '_SupplierPriceList_' . date('Y-m-d') . '.pdf', array(
-			"Attachment" => false
-		));
+		$PDFContent = $DomPDF->output();
+		SendPDFToBrowser($PDFContent, $_SESSION['DatabaseName'] . '_SupplierPriceList_' . date('Y-m-d') . '.pdf');
 	} elseif (isset($_POST['Email'])) {
 
 		/// @todo we could skip generating the pdf if $_SESSION['InventoryManagerEmail'] == ''
