@@ -28,7 +28,7 @@ $BookMark = 'PurchaseOrdering';
 include(__DIR__ . '/includes/header.php');
 
 if (!isset($_POST['Commit'])) {
-	echo '<a href="'.$RootPath.'/PO_Header.php?identifier=' . $identifier. '">' .__('Back To Purchase Order Header') . '</a><br />';
+	echo '<a class="toplink" href="'.$RootPath.'/PO_Header.php?identifier=' . $identifier. '">' .__('Back To Purchase Order Header') . '</a><br />';
 }
 
 if (isset($_POST['UpdateLines']) OR isset($_POST['Commit'])) {
