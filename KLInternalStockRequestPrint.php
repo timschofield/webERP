@@ -181,7 +181,8 @@ function GenerateReport($LocationForm) {
 			// Output the generated PDF to Browser
 			$PDFFileName = $_SESSION['DatabaseName'] . '_InternalStockRequest_' . date('Y-m-d') . '.pdf';
 			// Setting Attachment to false streams inline, true forces download
-			$DomPDF->stream($PDFFileName, array("Attachment" => false));
+			$PDFContent = $DomPDF->output();
+			SendPDFToBrowser($PDFContent, $PDFFileName);
 			exit(); // Stop script after PDF output
 
 		} elseif (isset($_POST['Spreadsheet'])) {

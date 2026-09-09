@@ -407,7 +407,8 @@ function submit($CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $DomPDFOpti
 				
 				// Output the PDF for download
 				$FileName = $PageTitle . '.pdf';
-				$DomPDF->stream($FileName, array('Attachment' => true));
+				$PDFContent = $DomPDF->output();
+				SendPDFToBrowser($PDFContent, $FileName);
 				exit(); // Important to prevent any further output after PDF is streamed
 			} catch (Exception $e) {
 				// In case of errors, show a user-friendly message

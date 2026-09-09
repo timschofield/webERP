@@ -180,7 +180,8 @@ function submit($Company, $PeriodOfFile, $SalaryType) {
 			
 			// download the pdf file
 			$FileName = $CoreFileName . '.pdf';
-			$DomPDF->stream($FileName, array('Attachment' => true));
+			$PDFContent = $DomPDF->output();
+			SendPDFToBrowser($PDFContent, $FileName);
 		
 		} else {
 			include(__DIR__ . '/includes/header.php');
