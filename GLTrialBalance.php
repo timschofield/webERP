@@ -44,7 +44,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 	if (isset($_POST['PrintPDF'])) {
 		$HTML .= '<html>
 					<head>';
-		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
+		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />
+				<div class="footer fixed-section">
+					<div class="right">
+						<span class="page-number">Page </span>
+					</div>
+				</div>';
 	}
 
 	$HTML .= '<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
@@ -345,11 +350,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 	$HTML .= '</form>';
 	if (isset($_POST['PrintPDF'])) {
 		$HTML .= '</tbody>
-				<div class="footer fixed-section">
-					<div class="right">
-						<span class="page-number">Page </span>
-					</div>
-				</div>
 			</table>';
 	} else {
 		$HTML .= '</tbody>

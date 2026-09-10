@@ -112,7 +112,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 
 	// Build report as HTML
-	$HTML = '<html><head><meta charset="UTF-8"><style>
+	$HTML = '<html><head><meta charset="UTF-8">
+				<div class="footer fixed-section">
+					<div class="right">
+						<span class="page-number">Page </span>
+					</div>
+				</div><style>
 		body { font-family: DejaVu Sans, Arial, sans-serif; font-size: 10px; }
 		h1 { text-align: center; font-size: 18px; }
 		table { border-collapse: collapse; width: 100%; margin-top: 10px; }
@@ -196,11 +201,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	if (isset($_POST['PrintPDF']) or isset($_POST['Email'])) {
 		$HTML .= '</tbody>
-				<div class="footer fixed-section">
-					<div class="right">
-						<span class="page-number">Page </span>
-					</div>
-				</div>
 			</table>';
 	} else {
 		$HTML .= '</tbody>
