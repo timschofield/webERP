@@ -505,6 +505,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 	echo '<field>
 			<label for="SelectedBudget">', __('Budget To Show Comparisons With'), '</label>
 			<select name="SelectedBudget">';
+    echo '<option value="">' . __('----Select a budget----') . '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (!isset($_POST['SelectedBudget']) and $MyRow['current'] == 1) {
 			$_POST['SelectedBudget'] = $MyRow['id'];
@@ -515,8 +516,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 			echo '<option value="', $MyRow['id'], '">', $MyRow['name'], '</option>';
 		}
 	}
-	echo '<fieldhelp>', __('Select the budget to make comparisons with.'), '</fieldhelp>
-		</select>
+	echo '</select>
+        <fieldhelp>', __('Select the budget to make comparisons with.'), '</fieldhelp>
 	</field>';
 
 	echo '</fieldset>';
