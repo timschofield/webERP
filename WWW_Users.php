@@ -1,6 +1,7 @@
 <?php
 
-// Entry of users and security settings of users.
+// user parameters
+// some "safe" parameters are duplicated for convenience in UserSettings.php
 
 require(__DIR__ . '/includes/session.php');
 

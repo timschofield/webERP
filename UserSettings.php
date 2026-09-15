@@ -1,6 +1,7 @@
 <?php
 
-// Allows the user to change system-wide defaults for the theme - appearance, the number of records to show in searches and the language to display messages in.
+// user parameters that the user is allowed to change themselves
+// SUBSET of parameters in WWW_Users.php
 
 require(__DIR__ . '/includes/session.php');
 require_once(__DIR__ . '/includes/PasswordValidations.php');
