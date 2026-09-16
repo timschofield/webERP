@@ -2734,3 +2734,8 @@ INSERT INTO menuitems VALUES (9,'Utilities','Transactions','Reverse all supplier
 INSERT INTO menuitems VALUES (9,'Utilities','Transactions','Translate Item Descriptions','/AutomaticTranslationDescriptions.php',9);
 INSERT INTO menuitems VALUES (9,'Utilities','Transactions','Update costs for all BOM items, from the bottom up','/Z_BottomUpCosts.php',10);
 INSERT INTO menuitems VALUES (9,'Utilities','Transactions','Update sales analysis with latest customer data','/Z_UpdateSalesAnalysisWithLatestCustomerData.php',14);
+
+INSERT INTO menuitems (secroleid, modulelink, menusection, caption, url, sequence ) 
+	(SELECT secroleid, 'system', 'Reports', 'User Roles by Security Token', '/UserRolesBySecurityToken.php', '16' FROM securityroles);
+INSERT INTO menuitems (secroleid, modulelink, menusection, caption, url, sequence ) 
+	(SELECT secroleid, 'system', 'Reports', 'Scripts by Security Token', '/ScriptsBySecurityToken.php', '17' FROM securityroles);
