@@ -706,45 +706,17 @@ echo '<field>
 		<label for="PageSize">' . __('Reports Page Size') .':</label>
 		<select name="PageSize">';
 
-if (isset($_POST['PageSize']) AND $_POST['PageSize']=='A4') {
-	echo '<option selected="selected" value="A4">' . __('A4') . '</option>';
-} else {
-	echo '<option value="A4">' . __('A4') . '</option>';
-}
+$PageSizes = array('A4' => __('A4'),
+	'A3' => __('A3'),
+	'A3_Landscape' => __('A3') . ' ' . __('landscape'),
+	'Letter' => __('Letter'),
+	'Letter_Landscape' => __('Letter') . ' ' . __('landscape'),
+	'Legal' => __('Legal'),
+	'Legal_Landscape' => __('Legal') . ' ' . __('landscape'));
 
-if (isset($_POST['PageSize']) AND $_POST['PageSize']=='A3') {
-	echo '<option selected="selected" value="A3">' . __('A3') . '</option>';
-} else {
-	echo '<option value="A3">' . __('A3') . '</option>';
-}
-
-if (isset($_POST['PageSize']) AND $_POST['PageSize']=='A3_Landscape') {
-	echo '<option selected="selected" value="A3_Landscape">' . __('A3') . ' ' . __('landscape') . '</option>';
-} else {
-	echo '<option value="A3_Landscape">' . __('A3') . ' ' . __('landscape') . '</option>';
-}
-
-if (isset($_POST['PageSize']) AND $_POST['PageSize']=='Letter') {
-	echo '<option selected="selected" value="Letter">' . __('Letter') . '</option>';
-} else {
-	echo '<option value="Letter">' . __('Letter') . '</option>';
-}
-
-if (isset($_POST['PageSize']) AND $_POST['PageSize']=='Letter_Landscape') {
-	echo '<option selected="selected" value="Letter_Landscape">' . __('Letter') . ' ' . __('landscape') . '</option>';
-} else {
-	echo '<option value="Letter_Landscape">' . __('Letter') . ' ' . __('landscape') . '</option>';
-}
-
-if (isset($_POST['PageSize']) AND $_POST['PageSize']=='Legal') {
-	echo '<option selected="selected" value="Legal">' . __('Legal') . '</option>';
-} else {
-	echo '<option value="Legal">' . __('Legal') . '</option>';
-}
-if (isset($_POST['PageSize']) AND $_POST['PageSize']=='Legal_Landscape') {
-	echo '<option selected="selected" value="Legal_Landscape">' . __('Legal') . ' ' . __('landscape') . '</option>';
-} else {
-	echo '<option value="Legal_Landscape">' . __('Legal') . ' ' . __('landscape') . '</option>';
+foreach ($PageSizes as $PageSizeValue => $PageSizeLabel) {
+	$Selected = (isset($_POST['PageSize']) AND $_POST['PageSize']==$PageSizeValue) ? ' selected="selected"' : '';
+	echo '<option', $Selected, ' value="', $PageSizeValue, '">', $PageSizeLabel, '</option>';
 }
 
 echo '</select>
