@@ -1,6 +1,7 @@
 <?php
 
-// Allows the user to change system-wide defaults for the theme - appearance, the number of records to show in searches and the language to display messages in.
+// user parameters that the user is allowed to change themselves
+// SUBSET of parameters in WWW_Users.php
 
 require(__DIR__ . '/includes/session.php');
 require_once(__DIR__ . '/includes/PasswordValidations.php');
@@ -69,6 +70,7 @@ if (isset($_POST['Modify'])) {
                     fontsize='" . $_POST['FontSize'] . "',
 					language='" . $_POST['Language'] . "',
 					email='" . $_POST['email'] . "',
+					pagesize='" . $_POST['PageSize'] . "',
 					showpagehelp='" . $_POST['ShowPageHelp'] . "',
 					showfieldhelp='" . $_POST['ShowFieldHelp'] . "',
 					pdflanguage='" . $_POST['PDFLanguage'] . "'";
@@ -96,6 +98,7 @@ if (isset($_POST['Modify'])) {
 		$_SESSION['Theme'] = trim($_POST['Theme']); /*already set by session.php but for completeness */
 		$Theme = $_SESSION['Theme'];
 		$_SESSION['Language'] = trim($_POST['Language']);
+		$_SESSION['PageSize'] = $_POST['PageSize'];
 		$_SESSION['ShowPageHelp'] = $_POST['ShowPageHelp'];
 		$_SESSION['ShowFieldHelp'] = $_POST['ShowFieldHelp'];
 		$_SESSION['PDFLanguage'] = $_POST['PDFLanguage'];
@@ -105,6 +108,7 @@ if (isset($_POST['Modify'])) {
 
 $SQL = "SELECT
 			email,
+			pagesize,
 			showpagehelp,
 			showfieldhelp,
             fontsize,
@@ -117,6 +121,7 @@ $MyRow = DB_fetch_array($Result);
 if (!isset($_POST['email'])) {
 	$_POST['email'] = $MyRow['email'];
 }
+$_POST['PageSize'] = $MyRow['pagesize'];
 $_POST['ShowPageHelp'] = $MyRow['showpagehelp'];
 $_POST['ShowFieldHelp'] = $MyRow['showfieldhelp'];
 $_POST['Language'] = $MyRow['language'];
@@ -214,6 +219,26 @@ switch ($_POST['FontSize']) {
 echo '</select>
         <fieldhelp>', __('Select the size of the screen font') , '</fieldhelp>
     </field>';
+
+echo '<field>
+		<label for="PageSize">', __('Report Page Size'), ':</label>
+		<select name="PageSize">';
+
+$PageSizes = array('A4' => __('A4'),
+	'A3' => __('A3'),
+	'A3_Landscape' => __('A3') . ' ' . __('landscape'),
+	'Letter' => __('Letter'),
+	'Letter_Landscape' => __('Letter') . ' ' . __('landscape'),
+	'Legal' => __('Legal'),
+	'Legal_Landscape' => __('Legal') . ' ' . __('landscape'));
+
+foreach ($PageSizes as $PageSizeValue => $PageSizeLabel) {
+	$Selected = (isset($_POST['PageSize']) AND $_POST['PageSize']==$PageSizeValue) ? ' selected="selected"' : '';
+	echo '<option', $Selected, ' value="', $PageSizeValue, '">', $PageSizeLabel, '</option>';
+}
+
+echo '</select>
+	</field>';
 
 echo '<field>
 		<label for="Password">', __('New Password'), ':</label>
