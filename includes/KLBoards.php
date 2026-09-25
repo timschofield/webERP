@@ -1784,7 +1784,11 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			$QtyToOrder = OptimumOrderQuantity($QtyNeeded, $MyRow['eoq'], $PanSize);
 
 			// we don't order paper inside box, as we are pahsing out the old boxes and the new boxes already have the paper inside, so we only order the box
-			if (isPackagingPaperInsideBox($MyRow['stockid'])){
+			// or pouchbags for KL as Garbi email on 25/09/2026
+			if (isPackagingPaperInsideBox($MyRow['stockid'])
+				OR ($MyRow['stockid'] == 'PKPB01-L')
+				OR ($MyRow['stockid'] == 'PKPB01-M')
+				OR ($MyRow['stockid'] == 'PKPB01-S')){
 				$QtyToOrder = 0; 
 			}
 			
