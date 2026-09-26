@@ -741,9 +741,9 @@ and converts to a yyyy-mm-dd format */
 		if ($_SESSION['DefaultDateFormat'] == 'Y/m/d' OR $_SESSION['DefaultDateFormat'] == 'Y-m-d') {
 			if (mb_strlen($Date_Array[0]) == 2) {
 				if ((int)$Date_Array[0] <= 60) {
-					$Date_Array[0] = '20' . $Date_Array[2];
-				} elseif ((int)$Date_Array[0] > 60 AND (int)$Date_Array[2] < 100) {
-					$Date_Array[0] = '19' . $Date_Array[2];
+					$Date_Array[0] = '20' . $Date_Array[0];
+				} elseif ((int)$Date_Array[0] > 60 AND (int)$Date_Array[0] < 100) {
+					$Date_Array[0] = '19' . $Date_Array[0];
 				}
 			}
 			return $Date_Array[0] . '-' . $Date_Array[1] . '-' . $Date_Array[2];
@@ -820,9 +820,9 @@ function LastDayOfMonth($DateEntry) {
 	if ($_SESSION['DefaultDateFormat'] == 'Y/m/d' OR $_SESSION['DefaultDateFormat'] == 'Y-m-d') {
 		if (mb_strlen($DateArray[0]) == 2) {
 			if ((int)$DateArray[0] <= 60) {
-				$DateArray[0] = '20' . $DateArray[2];
-			} elseif ((int)$DateArray[0] > 60 AND (int)$DateArray[2] < 100) {
-				$DateArray[0] = '19' . $DateArray[2];
+				$DateArray[0] = '20' . $DateArray[0];
+			} elseif ((int)$DateArray[0] > 60 AND (int)$DateArray[0] < 100) {
+				$DateArray[0] = '19' . $DateArray[0];
 			}
 		}
 
