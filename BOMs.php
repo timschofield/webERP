@@ -225,7 +225,7 @@ if (isset($_POST['ComponentSearch']) or isset($_POST['Next']) or isset($_POST['P
 		$_POST['Offset'] = $_POST['Offset'] + 1;
 	}
 
-	echo '<a class="toplink" href="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '?SelectedParent=', urlencode($SelectedParent) , '">', __('Return to main BOM screen') , '</a>';
+	echo '<a class="toplink" href="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '?SelectedParent=', urlencode($SelectedParent) , '&ShowAllLevels=', urlencode($_POST['ShowAllLevels']) , '">', __('Return to main BOM screen') , '</a>';
 
 	echo '<p class="page_title_text noPrint">
 			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', __('Search') , '" alt="" /> ', __('Select component to add to BOM') , '
@@ -289,6 +289,7 @@ if (isset($_POST['ComponentSearch']) or isset($_POST['Next']) or isset($_POST['P
 
 	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '?SelectedParent=', urlencode($SelectedParent) , '">';
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+	echo '<input type="hidden" name="ShowAllLevels" value="', htmlspecialchars($_POST['ShowAllLevels'], ENT_QUOTES, 'UTF-8'), '" />';
 	echo '<table class="noPrint">
 			<tr>
 				<th colspan="3">
@@ -305,7 +306,7 @@ if (isset($_POST['ComponentSearch']) or isset($_POST['Next']) or isset($_POST['P
 		echo '<tr>
 				<td>', $MyRow['stockid'], '</td>
 				<td>', $MyRow['description'], '</td>
-				<td><a href="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '?SelectedParent=', urlencode($SelectedParent) , '&SelectedComponent=', urlencode($MyRow['stockid']) , '&Add=Yes">', __('Add to the BOM') , '</a></td>
+				<td><a href="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '?SelectedParent=', urlencode($SelectedParent) , '&SelectedComponent=', urlencode($MyRow['stockid']) , '&ShowAllLevels=', urlencode($_POST['ShowAllLevels']) , '&Add=Yes">', __('Add to the BOM') , '</a></td>
 			</tr>';
 	}
 	echo '</table>';
@@ -634,7 +635,8 @@ if (isset($_GET['Add']) or isset($_GET['Edit'])) {
 	echo '</fieldset>
 			<div class="centre">
 				<input type="submit" name="Submit" value="', __('Enter Information') , '" />
-				<input type="reset" name="Cancel" value="', __('Cancel') , '" />
+				<input type="reset" name="Cancel" value="', __('Reset') , '" />
+				<input type="submit" name="Cancel" value="', __('Cancel') , '" />
 			</div>
 		</form>';
 	include(__DIR__ . '/includes/footer.php');
@@ -672,7 +674,7 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 		prnMsg(__('The quantity entered cannot be zero'), 'error');
 		}
 		+		 */
-		if (!Date1GreaterThanDate2($_POST['EffectiveTo'], $_POST['EffectiveAfter'])) {
+		if ($InputError == 0 and !Date1GreaterThanDate2($_POST['EffectiveTo'], $_POST['EffectiveAfter'])) {
 			$InputError = 1;
 			prnMsg(__('The effective to date must be a date after the effective after date') . '<br />' . __('The effective to date is') . ' ' . DateDiff($_POST['EffectiveTo'], $_POST['EffectiveAfter'], 'd') . ' ' . __('days before the effective after date') . '! ' . __('No updates have been performed') . '.<br />' . __('Effective after was') . ': ' . $_POST['EffectiveAfter'] . ' ' . __('and effective to was') . ': ' . $_POST['EffectiveTo'], 'error');
 		}
@@ -1014,6 +1016,7 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 	if (!isset($SelectedComponent)) {
 		echo '<form action="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '" method="post">';
 		echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+		echo '<input type="hidden" name="ShowAllLevels" value="', htmlspecialchars($_POST['ShowAllLevels'], ENT_QUOTES, 'UTF-8'), '" />';
 
 		echo '<fieldset>
 				<legend class="search">', __('Select new component for BOM') , '</legend>';
