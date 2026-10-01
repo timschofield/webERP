@@ -1342,12 +1342,14 @@ function KLPrintReturnTransferToKantor(string|int $Reference): string {
 					' x ' . $MyRow['stockid'] . 
 					' - (QOH = ' . GetQuantityOnHand($MyRow['stockid'], $_SESSION['UserStockLocation']) . ')';
 				
-				if (isset($MyRow['reason']) and substr($MyRow['reason'], 0, 5) == 'SERV_'){
+//				if (isset($MyRow['reason']) and substr($MyRow['reason'], 0, 5) == 'SERV_'){
+// As per Garbí email 01/10/2026 the check for 'SERV_' prefix in the reason code is no longer required 
+// and the reason code should always be considered
 					$ReasonDescription = GetItemTransferReason($MyRow['reason']);
 					if ($ReasonDescription != ''){
 						$TextToPrint .= ' - ' . $ReasonDescription;
 					}
-				}
+//				}
 				
 				$TextToPrint .= $NewLine;
 			}
