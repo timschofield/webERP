@@ -23,6 +23,17 @@ if (isset($_GET['StockID'])) {
 	$_POST['Select'] = trim(mb_strtoupper($_GET['StockID']));
 }
 
+if (isset($_POST['GoTop']) or isset($_POST['NextTop']) or isset($_POST['PreviousTop'])) {
+	$_POST['PageOffset'] = $_POST['PageOffsetTop'];
+	if (isset($_POST['GoTop'])) {
+		$_POST['Go'] = $_POST['GoTop'];
+	} elseif (isset($_POST['NextTop'])) {
+		$_POST['Next'] = $_POST['NextTop'];
+	} else {
+		$_POST['Previous'] = $_POST['PreviousTop'];
+	}
+}
+
 if (isset($_GET['NewSearch']) or isset($_POST['Next']) or isset($_POST['Previous']) or isset($_POST['Go'])) {
 	unset($StockID);
 	unset($_SESSION['SelectedStockItem']);
@@ -608,7 +619,7 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 		}
 		if ($ListPageMax > 1) {
 			echo '<div class="centre"><br />&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . __('of') . ' ' . $ListPageMax . ' ' . __('pages') . '. ' . __('Go to Page') . ': ';
-			echo '<select name="PageOffset">';
+			echo '<select name="PageOffsetTop">';
 			$ListPage = 1;
 			while ($ListPage <= $ListPageMax) {
 				if ($ListPage == $_POST['PageOffset']) {
@@ -619,9 +630,9 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 				$ListPage++;
 			}
 			echo '</select>
-				<input type="submit" name="Go" value="' . __('Go') . '" />
-				<input type="submit" name="Previous" value="' . __('Previous') . '" />
-				<input type="submit" name="Next" value="' . __('Next') . '" />
+				<input type="submit" name="GoTop" value="' . __('Go') . '" />
+				<input type="submit" name="PreviousTop" value="' . __('Previous') . '" />
+				<input type="submit" name="NextTop" value="' . __('Next') . '" />
 				<input type="hidden" name="Keywords" value="'.$_POST['Keywords'].'" />
 				<input type="hidden" name="StockCat" value="'.$_POST['StockCat'].'" />
 				<input type="hidden" name="StockCode" value="'.$_POST['StockCode'].'" />
