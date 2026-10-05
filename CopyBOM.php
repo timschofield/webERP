@@ -18,19 +18,31 @@ ob_start();
 include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['Submit'])) {
-	$StockID = $_POST['StockID'];
-	$NewOrExisting = $_POST['NewOrExisting'];
+	$StockID = $_POST['StockID'] ?? '';
+	$NewOrExisting = $_POST['NewOrExisting'] ?? '';
 	$NewStockID = '';
 	$InputError = 0; //assume the best
 
 	if ($NewOrExisting == 'N') {
-		$NewStockID = $_POST['ToStockID'];
-		if (mb_strlen($NewStockID)==0 OR $NewStockID==''){
+		$NewStockID = trim($_POST['ToStockID'] ?? '');
+		if ($NewStockID == '') {
 			$InputError = 1;
 			prnMsg(__('The new item code cannot be blank. Enter a new code for the item to copy the BOM to'),'error');
 		}
+	} elseif ($NewOrExisting == 'E') {
+		$NewStockID = $_POST['ExStockID'] ?? '';
+		if ($NewStockID == '') {
+			$InputError = 1;
+			prnMsg(__('Select an existing item to copy the BOM to'),'error');
+		}
 	} else {
-		$NewStockID = $_POST['ExStockID'];
+		$InputError = 1;
+		prnMsg(__('Choose whether to copy to a new or an existing item'),'error');
+	}
+
+	if ($InputError == 0 and $NewStockID == $StockID) {
+		$InputError = 1;
+		prnMsg(__('The item to copy to must differ from the item to copy from'),'error');
 	}
 	if ($InputError==0) {
 		DB_Txn_Begin();
@@ -155,8 +167,9 @@ if (isset($_POST['Submit'])) {
 		exit();
 	} //end  if there is no input error
 
-	/// @todo what to display if there is an input error?
-} else {
+}
+
+if (!isset($_POST['Submit']) or $InputError == 1) {
 	ob_end_flush();
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Contract') . '" alt="" />' . ' ' . $Title . '</p>';
@@ -188,7 +201,7 @@ if (isset($_POST['Submit'])) {
 		</field>';
 
 	echo '<field>
-			<label for="ToStockID"><input type="radio" name="NewOrExisting" value="N" />', __(' To New Stock ID'), '</label>
+			<label for="ToStockID"><input type="radio" name="NewOrExisting" value="N" checked="checked" />', __(' To New Stock ID'), '</label>
 			<input type="text" maxlength="20" name="ToStockID" />
 		</field>';
 
