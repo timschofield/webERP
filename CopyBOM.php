@@ -18,19 +18,19 @@ ob_start();
 include(__DIR__ . '/includes/header.php');
 
 if (isset($_POST['Submit'])) {
-	$StockID = DB_escape_string($_POST['StockID'] ?? '');
+	$StockID = $_POST['StockID'] ?? '';
 	$NewOrExisting = $_POST['NewOrExisting'] ?? '';
 	$NewStockID = '';
 	$InputError = 0; //assume the best
 
 	if ($NewOrExisting == 'N') {
-		$NewStockID = DB_escape_string(trim($_POST['ToStockID'] ?? ''));
+		$NewStockID = trim($_POST['ToStockID'] ?? '');
 		if ($NewStockID == '') {
 			$InputError = 1;
 			prnMsg(__('The new item code cannot be blank. Enter a new code for the item to copy the BOM to'),'error');
 		}
 	} elseif ($NewOrExisting == 'E') {
-		$NewStockID = DB_escape_string($_POST['ExStockID'] ?? '');
+		$NewStockID = $_POST['ExStockID'] ?? '';
 		if ($NewStockID == '') {
 			$InputError = 1;
 			prnMsg(__('Select an existing item to copy the BOM to'),'error');
