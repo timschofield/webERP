@@ -2965,56 +2965,8 @@ function POStatusControl(string $TypeOfProduct, string $TypeOfCode, int $maxdays
 			$CurrentTotalQtyItemsForSale = GetTotalQtyItemsForSale();
 			$CurrentTotalValueItemsForSale = GetTotalValueItemsForSale($periodnow);
 			InsertKPI("STOCK-ITEMS-SALE-PCS", $CurrentTotalQtyItemsForSale);
-			echo '<tr class="striped_row">
-					<td class="number">' . "" . '</td>
-					<td class="number">' . "" . '</td>
-					<td>' . "CURRENT STOCK" . '</td>
-					<td>' . "IDR" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td class="number">' . locale_number_format_zero_blank($CurrentTotalValueItemsForSale,0) . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					</tr>';
 		}
 
-		if (($TypeOfCode == "IN NEGOTIAION WITH SUPPLIER") OR
-			($TypeOfCode == "ON PRODUCTION") OR
-			($TypeOfCode == "FINISHED BUT NOT PAID") OR
-			($TypeOfCode == "STILL NOT FULLY PAID") OR
-			($TypeOfCode == "ARRIVING IN NEXT DAYS")){
-			echo '<tr class="striped_row">
-					<td class="number">' . "" . '</td>
-					<td class="number">' . "" . '</td>
-					<td>' . "TOTAL ORDERS" . '</td>
-					<td>' . "IDR" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td class="number">' . locale_number_format_zero_blank($TotalValueAllOrders,0) . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					</tr>';
-		}
 		if (($TypeOfCode == "ARRIVING IN NEXT DAYS")
 			AND ($TypeOfProduct == "FORSALE")){
 			// Fix division by zero error
