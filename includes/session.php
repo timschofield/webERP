@@ -33,6 +33,10 @@ $DefaultDatabase = 'weberpdemo';
 
 include($PathPrefix . 'config.php');
 
+if (!isset($AllowAnyone)) {
+    $AllowAnyone = false;
+}
+
 if (isset($dbuser)) { //this gets past an upgrade issue where old versions used lower case variable names
 	/// @todo we should attempt to update the config.php file...
 	$DBUser = $dbuser;
@@ -98,7 +102,7 @@ if (!isset($_SESSION['AttemptsCounter']) or $AllowDemoMode == true) {
 /* Log the script we run so we can optimize CPU time*/	
 $_SESSION['ScriptStartTime'] = microtime();
 
-if (isset($_SESSION['DatabaseName'])) {
+if (isset($_SESSION['DatabaseName']) or $AllowAnyone == true) {
 
 	/* iterate through all elements of the $_GET and $_POST arrays and DB_escape_string plus htmlspecialchars them
 	to avoid both SQL injection attacks and cross scripting attacks
