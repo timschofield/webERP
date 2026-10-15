@@ -48,8 +48,8 @@ function executeSQL($SQL, $TrapErrors = false) {
 }
 
 function updateDBNo($NewNumber, $Description = '') {
-	global $SQLFile;
-	if (!isset($SQLFile)) {
+	global $SQLFile, $ManualUpdateMode;
+	if (!isset($SQLFile) and !$ManualUpdateMode) {
 		$SQL = "UPDATE config SET confvalue='" . $NewNumber . "' WHERE confname='DBUpdateNumber'";
 		executeSQL($SQL);
 		$_SESSION['DBUpdateNumber'] = $NewNumber;
@@ -58,11 +58,47 @@ function updateDBNo($NewNumber, $Description = '') {
 
 include(__DIR__ . '/includes/UpgradeDB_' . $DBType . '.php');
 
+$ManualUpdateMode = isset($_GET['update']) || isset($_POST['update']);
+$ManualUpdateFile = '';
+$ManualUpdatePath = '';
+$ManualUpdateError = '';
+if ($ManualUpdateMode) {
+	$ManualUpdateFile = isset($_POST['update']) ? $_POST['update'] : $_GET['update'];
+	$UpdateDirectory = realpath(__DIR__ . '/sql/updates-custom');
+	if (!is_string($ManualUpdateFile) or !preg_match('/\\A[A-Za-z0-9_-]+\\.php\\z/', $ManualUpdateFile)) {
+		$ManualUpdateError = __('The requested update file is invalid or was not found.');
+	} else {
+		$ManualUpdatePath = realpath($UpdateDirectory . DIRECTORY_SEPARATOR . $ManualUpdateFile);
+		if ($ManualUpdatePath === false or dirname($ManualUpdatePath) !== $UpdateDirectory or !is_file($ManualUpdatePath)) {
+			$ManualUpdateError = __('The requested update file is invalid or was not found.');
+		}
+	}
+}
+
 echo '<div class="page_title_text">
 	<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title, '
 </div>';
 
-if (!isset($_POST['continue'])) {
+if ($ManualUpdateError !== '') {
+	echo '<p>', htmlspecialchars($ManualUpdateError, ENT_QUOTES, 'UTF-8'), '</p>';
+	include(__DIR__ . '/includes/footer.php');
+	exit();
+} elseif ($ManualUpdateMode and !isset($_POST['continue'])) {
+	$Lines = file($ManualUpdatePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+	$_SESSION['FunctionCalls'][$ManualUpdateFile] = array();
+	echo '<div class="page_help_text">', __('Review the selected update before continuing. Manual runs do not change the database update number.'), '</div>';
+	echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<input type="hidden" name="update" value="' . htmlspecialchars($ManualUpdateFile, ENT_QUOTES, 'UTF-8') . '" />';
+	echo '<h3>', htmlspecialchars($ManualUpdateFile, ENT_QUOTES, 'UTF-8'), '</h3><pre>';
+	foreach ($Lines as $Line) {
+		if ($Line != '?>' and substr($Line, 0, 8) != 'UpdateDB' and $Line != '<?php' and substr($Line, 0, 2) != '//') {
+			$_SESSION['FunctionCalls'][$ManualUpdateFile][] = $Line;
+		}
+		echo htmlspecialchars($Line, ENT_QUOTES, 'UTF-8'), "\n";
+	}
+	echo '</pre><div class="centre"><button type="submit" name="continue">', __('Run Selected Update'), '</button></div></form>';
+} elseif (!isset($_POST['continue'])) {
 	echo '<form method="post" action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -132,17 +168,27 @@ if (!isset($_POST['continue'])) {
 
 	$LogFileName = $_SESSION['LogPath'] . '/' . $_SESSION['DatabaseName'] . ' - DBUpdateLog-' . date('Y-m-d') . '.log';
 
-	for ($UpdateNumber = $StartingUpdate; $UpdateNumber <= $EndingUpdate; $UpdateNumber++) {
-		if (file_exists('sql/updates/' . $UpdateNumber . '.php')) {
-			LogEntryHeader($LogFileName, $UpdateNumber);
-			$SQL = "SET FOREIGN_KEY_CHECKS=0";
-			$Result = DB_query($SQL);
-			include('sql/updates/' . $UpdateNumber . '.php');
-			$SQL = "SET FOREIGN_KEY_CHECKS=1";
-			$Result = DB_query($SQL);
+	if ($ManualUpdateMode) {
+		$UpdateNumber = $ManualUpdateFile;
+		LogEntryHeader($LogFileName, $ManualUpdateFile);
+		$SQL = "SET FOREIGN_KEY_CHECKS=0";
+		$Result = DB_query($SQL);
+		include($ManualUpdatePath);
+		$SQL = "SET FOREIGN_KEY_CHECKS=1";
+		$Result = DB_query($SQL);
+	} else {
+		for ($UpdateNumber = $StartingUpdate; $UpdateNumber <= $EndingUpdate; $UpdateNumber++) {
+			if (file_exists('sql/updates/' . $UpdateNumber . '.php')) {
+				LogEntryHeader($LogFileName, $UpdateNumber);
+				$SQL = "SET FOREIGN_KEY_CHECKS=0";
+				$Result = DB_query($SQL);
+				include('sql/updates/' . $UpdateNumber . '.php');
+				$SQL = "SET FOREIGN_KEY_CHECKS=1";
+				$Result = DB_query($SQL);
 
-			/** @todo can we move here the line `UpdateDBNo(basename(__FILE__, '.php')`, and avoid having it in
-			 *        every update file? */
+				/** @todo can we move here the line `UpdateDBNo(basename(__FILE__, '.php')`, and avoid having it in
+				 *        every update file? */
+			}
 		}
 	}
 	echo '<table>
