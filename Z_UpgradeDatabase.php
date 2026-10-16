@@ -1,5 +1,14 @@
 <?php
 
+// Z_UpgradeDatabase.php automatically installs any available uninstalled project updates in sql/updates/
+// and can also be used manually to install specified custom updates in sql/updates-custom/.
+//
+// To run a custom update, access the Z_UpgradeDatabase.php script using a URL with the update filename
+// passed as a parameter when logged in as a user with the administrator security role.
+// e.g. Z_UpgradeDatabase.php?update=my-update.php
+//
+// Custom updates do not change the database update number but tare logged in an update log file.
+
 $PageSecurity = 15;
 
 require(__DIR__ . '/includes/session.php');
