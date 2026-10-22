@@ -49,10 +49,6 @@ include($PathPrefix . 'config.php');
 include($PathPrefix . 'KLConfig.php');
 // KL RICARD END: Include the specific KL config file
 
-if (!isset($AllowCronJobToBeRun)) {
-    $AllowCronJobToBeRun = false;
-}
-
 if (isset($dbuser)) { //this gets past an upgrade issue where old versions used lower case variable names
 	/// @todo we should attempt to update the config.php file...
 	$DBUser = $dbuser;
@@ -118,7 +114,7 @@ if (!isset($_SESSION['AttemptsCounter']) or $AllowDemoMode == true) {
 /* Log the script we run so we can optimize CPU time*/	
 $_SESSION['ScriptStartTime'] = microtime();
 
-if (isset($_SESSION['DatabaseName']) or $AllowCronJobToBeRun == true) {
+if (isset($_SESSION['DatabaseName'])) {
 
 	/* iterate through all elements of the $_GET and $_POST arrays and DB_escape_string plus htmlspecialchars them
 	to avoid both SQL injection attacks and cross scripting attacks
