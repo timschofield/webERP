@@ -14,6 +14,7 @@ class StockAdjustment {
 	var $Tag;
 	var $Narrative;
 	var $SerialItems; /*array to hold controlled items*/
+	var $AdjustmentType;
 	var $AdjustmentReason;
 
 	/// @todo move this in the definitions above
@@ -29,6 +30,7 @@ class StockAdjustment {
 		$this->SerialItems = array();
 		$this->Quantity = 0;
 		$this->Tag=0;
+		$this->AdjustmentType=0;
 		$this->AdjustmentReason=0;
 		$this->Narrative='';
 	}
