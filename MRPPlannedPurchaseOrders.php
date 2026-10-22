@@ -111,6 +111,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$HTML = '
 		<html>
 		<head>
+				<div class="footer fixed-section">
+					<div class="right">
+						<span class="page-number">Page </span>
+					</div>
+				</div>
 			<style>
 				body { font-family: DejaVu Sans, Arial, Helvetica, sans-serif; font-size: 12px; }
 				h2 { text-align: center; }
@@ -197,11 +202,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$HTML .= '</table>';
 	if (isset($_POST['PrintPDF']) or isset($_POST['Email'])) {
 		$HTML .= '</tbody>
-				<div class="footer fixed-section">
-					<div class="right">
-						<span class="page-number">Page </span>
-					</div>
-				</div>
 			</table>';
 	}
 	else {
