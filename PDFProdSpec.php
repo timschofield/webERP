@@ -199,7 +199,8 @@ if ($SelectedProdSpec != '') {
 
 	$FileName = $_SESSION['DatabaseName'] . '_ProductSpecification_' . date('Y-m-d') . '.pdf';
 
-	$DomPDF->stream($FileName, array("Attachment" => false));
+	$PDFContent = $DomPDF->output();
+	SendPDFToBrowser($PDFContent, $FileName);
 } else {
 
 	$Title = __('Select Product Specification To Print');

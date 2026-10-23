@@ -10,6 +10,8 @@ define("RETAIL_PRICE_LIST", "RT");
 /* Defines about Purchase Orders */
 define("COMPANY_NAME_FOR_PO", "PT. ANGIN DINGIN UTARA");
 define("NPWP_FOR_PO", "81.304.529.1-906.000");
+define("EMAIL_FOR_PO", "purchasing@kapal-laut.com");
+define("PHONE_FOR_PO", "+62 81 138 319 950");
 
 /* Defines about packaging transfers */
 define("TRANSFER_ROUNDING_STEP01",               5);

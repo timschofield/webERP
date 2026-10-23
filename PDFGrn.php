@@ -201,9 +201,8 @@ if ($NoOfGRNs > 0) {
 
 	// Output the generated PDF to Browser
 	$FileName = $_SESSION['DatabaseName'] . '_GRN_' . $GRNNo . '_' . date('Y-m-d') . '.pdf';
-	$DomPDF->stream($FileName, array("Attachment" => false));
-
-	exit;
+	$PDFContent = $DomPDF->output();
+	SendPDFToBrowser($PDFContent, $_SESSION['DatabaseName'] . '_GRN_' . date('Y-m-d') . '.pdf');
 } else {
 	$Title = __('GRN Error');
 	include(__DIR__ . '/includes/header.php');

@@ -133,9 +133,9 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun , $Em
 		while ($MyRow = DB_fetch_array($Result)) {
 			/* FIELD MATCHING */
 			$CustomerCode = GetWeberpCustomerIdFromCustomerGroupAndCurrency($MyRow['customer_group_id'], $MyRow['currency_code']);
-			$CustomerName = CleanStringForWebERP(CapitalizeName($MyRow['customerfirstname'] . ' ' . $MyRow['customerlastname']));
-			$PaymentName = CleanStringForWebERP(CapitalizeName($MyRow['paymentfirstname'] . ' ' . $MyRow['paymentlastname']));
-			$ShippingName = CleanStringForWebERP(CapitalizeName($MyRow['shippingfirstname'] . ' ' . $MyRow['shippinglastname']));
+//			$CustomerName = CleanStringForWebERP(CapitalizeName($MyRow['customerfirstname'] . ' ' . $MyRow['customerlastname']));
+//			$PaymentName = CleanStringForWebERP(CapitalizeName($MyRow['paymentfirstname'] . ' ' . $MyRow['paymentlastname']));
+			$ShippingName = mb_substr(CleanStringForWebERP(CapitalizeName($MyRow['shippingfirstname'] . ' ' . $MyRow['shippinglastname'])),	0, 40);
 			$SalesType = OPENCART_DEFAULT_CUSTOMER_SALES_TYPE;
 			$DefaultShipVia = GetWeberpShippingMethod($MyRow['shipping_code']);
 			if ($CustomerCode == "WEB-WH-IDR"){
@@ -151,9 +151,11 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun , $Em
 			$Salesman = OPENCART_DEFAULT_SALESMAN;
 			$Location = OPENCART_DEFAULT_LOCATION;
 			$Comments =  CleanStringForWebERP($MyRow['comment']);
-			$WebERPDateOrder = date('Y-m-d H:i:s', strtotime( $MyRow['date_modified'] . -$TimeDifference . ' hours'));
 			$Area = GetAreaFromCustomer($CustomerCode);
-			$PaymentCode = $MyRow['payment_code'];
+			$PaymentCode = mb_substr($MyRow['payment_code'], 0, 128);
+			$Telephone = mb_substr($MyRow['telephone'], 0, 25);
+			$Email = mb_substr($MyRow['email'], 0, 40);
+			$OrderDate = date('Y-m-d', strtotime($MyRow['date_modified'] . -$TimeDifference . ' hours'));
 			
 			if ($DefaultShipVia == 10){
 				// if shipping is "Pickup From Store"
@@ -162,15 +164,15 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun , $Em
 				$ShippingCity     = "";
 				$ShippingZone	  = "";
 				$ShippingPostCode = "";
-				$ShippingCountry  = DB_escape_string($MyRow['shipping_country']);
+				$ShippingCountry  = mb_substr($MyRow['shipping_country'], 0, 40);
 			} else {
 				// any other shipping method, we need the details
-				$ShippingAddress1 = DB_escape_string($MyRow['shipping_address_1']);
-				$ShippingAddress2 = DB_escape_string($MyRow['shipping_address_2']);
-				$ShippingCity     = DB_escape_string($MyRow['shipping_city']);
-				$ShippingZone     = DB_escape_string($MyRow['shipping_zone']);
-				$ShippingPostCode = DB_escape_string($MyRow['shipping_postcode']);
-				$ShippingCountry  = DB_escape_string($MyRow['shipping_country']);
+				$ShippingAddress1 = mb_substr($MyRow['shipping_address_1'], 0, 128);
+				$ShippingAddress2 = mb_substr($MyRow['shipping_address_2'], 0, 128);
+				$ShippingCity     = mb_substr($MyRow['shipping_city'], 0, 128);
+				$ShippingZone     = mb_substr($MyRow['shipping_zone'], 0, 40);
+				$ShippingPostCode = mb_substr($MyRow['shipping_postcode'], 0, 20);
+				$ShippingCountry  = mb_substr($MyRow['shipping_country'], 0, 40);
 			}
 
 			if ($CustomerCode != 'Error'){
@@ -214,31 +216,31 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun , $Em
 									confirmeddate)
 								VALUES (
 									'". $OrderNo . "',
-									'" . $CustomerCode . "',
-									'" . $CustomerCode . "',
+									'" . DB_escape_string($CustomerCode) . "',
+									'" . DB_escape_string($CustomerCode) . "',
 									'" . $OpenCartOrderNumber ."',
 									'" . $Comments ."',
-									'" . $WebERPDateOrder . "',
+									'" . $OrderDate . "',
 									'" . $SalesType . "',
 									'" . $DefaultShipVia ."',
-									'" . $ShippingName . "',
-									'" . $ShippingAddress1 . "',
-									'" . $ShippingAddress2 . "',
-									'" . $ShippingCity . "',
-									'" . $ShippingZone . "',
-									'" . $ShippingPostCode . "',
-									'" . $ShippingCountry . "',
-									'" . DB_escape_string($MyRow['telephone']) . "',
-									'" . DB_escape_string($MyRow['email']). "',
-									'" . $Salesman . "',
-									'" . $Location ."',
+									'" . DB_escape_string($ShippingName) . "',
+									'" . DB_escape_string($ShippingAddress1) . "',
+									'" . DB_escape_string($ShippingAddress2) . "',
+									'" . DB_escape_string($ShippingCity) . "',
+									'" . DB_escape_string($ShippingZone) . "',
+									'" . DB_escape_string($ShippingPostCode) . "',
+									'" . DB_escape_string($ShippingCountry) . "',
+									'" . DB_escape_string($Telephone) . "',
+									'" . DB_escape_string($Email) . "',
+									'" . DB_escape_string($Salesman) . "',
+									'" . DB_escape_string($Location) ."',
 									'" . $FreightCost ."',
 									'" . $Quotation ."',
-									'" . $Area ."',
-									'" . $PaymentCode ."',
-									'" . $MyRow['date_modified'] . "',
-									'" . $MyRow['date_modified'] . "',
-									'" . $MyRow['date_modified'] . "')";
+									'" . DB_escape_string($Area) ."',
+									'" . DB_escape_string($PaymentCode) ."',
+									'" . $OrderDate . "',
+									'" . $OrderDate . "',
+									'" . $OrderDate . "')";
 					DB_query($SQLInsert,$InsertErrMsg,'',true);
 				}
 				if ($ShowMessages){
@@ -286,6 +288,7 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun , $Em
 				}
 				while ($myitems = DB_fetch_array($ResultItemsOrder)) {
 					$ItemsOrder++;
+					$StockCode = mb_substr($myitems['model'], 0, 64);
 					if ($Action == "Update"){
 						$Action = "Update";
 					} else {
@@ -300,17 +303,17 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun , $Em
 											discountpercent)
 									VALUES ('" . $ItemsOrder . "',
 											'" . $OrderNo . "',
-											'" . $myitems['model'] . "',
+											'" . DB_escape_string($StockCode) . "',
 											'" . $Price . "',
 											'" . $myitems['quantity'] . "',
-											'" . $MyRow['date_modified'] . "',
+											'" . $OrderDate . "',
 											'0')"; // prices come already net from OpenCart
 						DB_query($SQLInsert,$InsertErrMsg,'',true);
 
 						// prepare the RL for the items just ordered online
 						$SQLUpdate = "UPDATE locstock
 										SET reorderlevel = reorderlevel + " . $myitems['quantity'] . "
-										WHERE stockid = '" . $myitems['model'] . "'
+										WHERE stockid = '" . DB_escape_string($StockCode) . "'
 										AND loccode = '" . $Location . "'";
 						DB_query($SQLUpdate,$UpdateErrMsg,'',true);
 						if ($ShowMessages){
@@ -381,8 +384,8 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun , $Em
 											'" . $CouponStockId . "',
 											'" . $CouponDiscount . "',
 											'" . $CouponQty . "',
-											'" . $MyRow['date_modified'] . "',
-											'" . $CouponCode . "',
+											'" . $OrderDate . "',
+											'" . DB_escape_string($CouponCode) . "',
 											'0')"; // prices come already net from OpenCart
 						DB_query($SQLInsert,$InsertErrMsg,'',true);
 						if ($ShowMessages){
@@ -442,8 +445,8 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun , $Em
 											'" . $DiscountStockId . "',
 											'" . $OrderDiscount . "',
 											'" . $DiscountQty . "',
-											'" . $MyRow['date_modified'] . "',
-											'" . $DiscountCode . "',
+											'" . $OrderDate . "',
+											'" . DB_escape_string($DiscountCode) . "',
 											'0')"; // prices come already net from OpenCart
 						DB_query($SQLInsert,$InsertErrMsg,'',true);
 						if ($ShowMessages){

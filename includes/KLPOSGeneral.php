@@ -1342,7 +1342,11 @@ function KLPrintReturnTransferToKantor(string|int $Reference): string {
 					' x ' . $MyRow['stockid'] . 
 					' - (QOH = ' . GetQuantityOnHand($MyRow['stockid'], $_SESSION['UserStockLocation']) . ')';
 				
-				if (isset($MyRow['reason']) and substr($MyRow['reason'], 0, 5) == 'SERV_'){
+				if (isset($MyRow['reason']) 
+					and ((substr($MyRow['reason'], 0, 5) == 'SERV_')
+						or ($MyRow['reason'] == 'DAMAGED_PACKAGING')
+						or ($MyRow['reason'] == 'DAMAGED_DISPLAY')
+						or ($MyRow['reason'] == 'REQUESTED_SS'))){
 					$ReasonDescription = GetItemTransferReason($MyRow['reason']);
 					if ($ReasonDescription != ''){
 						$TextToPrint .= ' - ' . $ReasonDescription;

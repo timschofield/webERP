@@ -249,9 +249,8 @@ try {
 		echo "PDF generated successfully: " . $OutputPath . "\n";
 	} else {
 		// Stream to browser
-		$DomPDF->stream($FileName, array(
-			"Attachment" => false
-		));
+		$PDFContent = $DomPDF->output();
+		SendPDFToBrowser($PDFContent, $FileName);
 	}
 
 } catch (Exception $e) {

@@ -17,6 +17,24 @@ if (isset($_GET['StockID'])) {
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
+    $CheckSQL = "SELECT stockid FROM stockmaster WHERE stockid='" . $_POST['Part'] . "'";
+    $CheckResult = DB_query($CheckSQL);
+    if (DB_num_rows($CheckResult) == 0) {
+        $Title=__('Indented BOM Listing');
+        include(__DIR__ . '/includes/header.php');
+		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+        prnMsg(__('The stock code you entered does not exist'),  'error');
+
+        echo '<div class="centre">
+				<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
+			</div>';
+        include(__DIR__ . '/includes/footer.php');
+        exit;
+    }
+
+	$SortOrder = isset($_POST['SortOrder']) && $_POST['SortOrder'] === 'ItemCode' ? 'ItemCode' : 'BOMSequence';
+	$SortPartExpression = $SortOrder === 'BOMSequence' ? "LPAD(bom.sequence, 10, '0')" : 'CONCAT(bom.parent,bom.component)';
+
 	$SQL = "DROP TABLE IF EXISTS tempbom";
 	$Result = DB_query($SQL);
 	$SQL = "DROP TABLE IF EXISTS passbom";
@@ -24,14 +42,14 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$SQL = "DROP TABLE IF EXISTS passbom2";
 	$Result = DB_query($SQL);
 	$SQL = "CREATE TEMPORARY TABLE passbom (
-				part char(20),
+				part varchar(64),
 				sortpart text) DEFAULT CHARSET=utf8";
 	$ErrMsg = __('The SQL to create passbom failed with the message');
 	$Result = DB_query($SQL, $ErrMsg);
 
 	$SQL = "CREATE TEMPORARY TABLE tempbom (
-				parent char(20),
-				component char(20),
+				parent varchar(64),
+				component varchar(64),
 				sortpart text,
 				level int,
 				workcentreadded char(5),
@@ -48,7 +66,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	// This finds the top level
 	$SQL = "INSERT INTO passbom (part, sortpart)
 			   SELECT bom.component AS part,
-					  CONCAT(bom.parent,bom.component) AS sortpart
+					  $SortPartExpression AS sortpart
 			  FROM bom
 			  WHERE bom.parent ='" . $_POST['Part'] . "'
 			  AND bom.effectiveafter <= CURRENT_DATE
@@ -69,7 +87,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				quantity)
 			  SELECT bom.parent,
 					 bom.component,
-					 CONCAT(bom.parent,bom.component) AS sortpart,
+						 $SortPartExpression AS sortpart,
 					 " . $LevelCounter . " AS level,
 					 bom.workcentreadded,
 					 bom.loccode,
@@ -103,7 +121,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					quantity)
 				  SELECT bom.parent,
 						 bom.component,
-						 CONCAT(passbom.sortpart,bom.component) AS sortpart,
+							 CONCAT(passbom.sortpart, " . ($SortOrder === 'BOMSequence' ? "LPAD(bom.sequence, 10, '0')" : 'bom.component') . ") AS sortpart,
 						 $LevelCounter as level,
 						 bom.workcentreadded,
 						 bom.loccode,
@@ -127,14 +145,14 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			$Result = DB_query($SQL);
 
 			$SQL = "CREATE TEMPORARY TABLE passbom (
-								part char(20),
+								part varchar(64),
 								sortpart text) DEFAULT CHARSET=utf8";
 			$Result = DB_query($SQL);
 
 
 			$SQL = "INSERT INTO passbom (part, sortpart)
 					   SELECT bom.component AS part,
-							  CONCAT(passbom2.sortpart,bom.component) AS sortpart
+							  CONCAT(passbom2.sortpart, " . ($SortOrder === 'BOMSequence' ? "LPAD(bom.sequence, 10, '0')" : 'bom.component') . ") AS sortpart
 					   FROM bom,passbom2
 					   WHERE bom.parent = passbom2.part
 					   AND bom.effectiveafter <= CURRENT_DATE
@@ -169,7 +187,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	if (isset($_POST['PrintPDF'])) {
 		$HTML .= '<html>
 					<head>';
-		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
+		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />
+				<div class="footer fixed-section">
+					<div class="right">
+						<span class="page-number">Page </span>
+					</div>
+				</div>';
 	}
 
 	$HTML .= '<meta name="author" content="WebERP">
@@ -245,11 +268,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	if (isset($_POST['PrintPDF'])) {
 		$HTML .= '</tbody>
-				<div class="footer fixed-section">
-					<div class="right">
-						<span class="page-number">Page </span>
-					</div>
-				</div>
 			</table>';
 	} else {
 		$HTML .= '</tbody>
@@ -272,9 +290,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$DomPDF->render();
 
 		// Output the generated PDF to Browser
-		$DomPDF->stream($_SESSION['DatabaseName'] . '_BOMIndented_' . date('Y-m-d') . '.pdf', array(
-			"Attachment" => false
-		));
+		$PDFContent = $DomPDF->output();
+		SendPDFToBrowser($PDFContent, $_SESSION['DatabaseName'] . '_BOMIndented_' . date('Y-m-d') . '.pdf');
+
 	} else {
 		$Title = __('Indented BOM Listing');
 		include(__DIR__ . '/includes/header.php');
@@ -307,6 +325,13 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			<select name="Levels">
 				<option selected="selected" value="All">' . __('All Levels') . '</option>
 				<option value="One">' . __('One Level') . '</option>
+			</select>
+		</field>
+		<field>
+			<label for="SortOrder">' . __('Sort Order') . ':</label>
+			<select name="SortOrder">
+				<option value="ItemCode">' . __('Item code') . '</option>
+				<option selected="selected" value="BOMSequence">' . __('BOM Sequence') . '</option>
 			</select>
 		</field>
 		</fieldset>

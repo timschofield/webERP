@@ -6,7 +6,7 @@ CREATE TABLE `locations` (
   `deladd3` varchar(40) NOT NULL DEFAULT '',
   `deladd4` varchar(40) NOT NULL DEFAULT '',
   `deladd5` varchar(20) NOT NULL DEFAULT '',
-  `deladd6` varchar(15) NOT NULL DEFAULT '',
+  `deladd6` varchar(40) NOT NULL DEFAULT '',
   `tel` varchar(30) NOT NULL DEFAULT '',
   `fax` varchar(30) NOT NULL DEFAULT '',
   `email` varchar(55) NOT NULL DEFAULT '',

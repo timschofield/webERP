@@ -163,9 +163,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['Spreadsheet']) or isset($_POST['V
 		$DomPDF->loadHtml($HTML);
 		$DomPDF->setPaper($_SESSION['PageSize'], 'landscape');
 		$DomPDF->render();
-		$DomPDF->stream($_SESSION['DatabaseName'] . '_HREmployeesByDepartment_' . date('Y-m-d') . '.pdf', array(
-			"Attachment" => false
-		));
+		$PDFContent = $DomPDF->output();
+		SendPDFToBrowser($PDFContent, $_SESSION['DatabaseName'] . '_HREmployeesByDepartment_' . date('Y-m-d') . '.pdf');
 	} elseif (isset($_POST['Spreadsheet'])) {
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 		$File = 'HREmployeesByDepartment-' . date('Y-m-d') . '.ods';

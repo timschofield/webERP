@@ -303,6 +303,7 @@ color: var(--form-control-disabled);
 cursor: not-allowed;
 }
 form fieldset field input[type="radio"] {
+overflow:hidden;
 }
 form fieldset field input[type="radio"]:focus {
 outline: max(2px, 0.15em) solid currentColor;

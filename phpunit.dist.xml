@@ -5,6 +5,9 @@
 		<testsuite name="webERP Installer Test Suite">
 			<directory suffix=".php">./tests/install</directory>
 		</testsuite>
+		<testsuite name="webERP Unit Test Suite">
+			<directory suffix=".php">./tests/unit</directory>
+		</testsuite>
 		<testsuite name="webERP Website Test Suite">
 			<directory suffix=".php">./tests/run</directory>
 		</testsuite>

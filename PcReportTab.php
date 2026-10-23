@@ -60,7 +60,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	if (isset($_POST['PrintPDF'])) {
 		$HTML .= '<html>
 					<head>';
-		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
+		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />
+				<div class="footer fixed-section">
+					<div class="right">
+						<span class="page-number">Page </span>
+					</div>
+				</div>';
 	}
 
 	$CurrencySQL = "SELECT currency FROM currencies WHERE currabrev='" . $Tabs['currency'] . "'";
@@ -274,11 +279,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	if (isset($_POST['PrintPDF'])) {
 		$HTML .= '</tbody>
-				<div class="footer fixed-section">
-					<div class="right">
-						<span class="page-number">Page </span>
-					</div>
-				</div>
 			</table>';
 	} else {
 		$HTML .= '</tbody>
@@ -301,9 +301,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$DomPDF->render();
 
 		// Output the generated PDF to Browser
-		$DomPDF->stream($_SESSION['DatabaseName'] . '_PettyCashTabReport_' . date('Y-m-d') . '.pdf', array(
-			"Attachment" => false
-		));
+		$PDFContent = $DomPDF->output();
+		SendPDFToBrowser($PDFContent, $_SESSION['DatabaseName'] . '_PettyCashTabReport_' . date('Y-m-d') . '.pdf');
 	} else {
 		$Title = __('Petty Cash Management Report');
 		include(__DIR__ . '/includes/header.php');
@@ -341,8 +340,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	$SQL = "SELECT tabcode
 				FROM pctabs
-				WHERE ( CONCAT(',', authorizer, ',') LIKE '%," . $_SESSION['UserID'] . ",%' 
-					OR usercode = '" . $_SESSION['UserID'] . "' 
+				WHERE ( CONCAT(',', authorizer, ',') LIKE '%," . $_SESSION['UserID'] . ",%'
+					OR usercode = '" . $_SESSION['UserID'] . "'
 					OR CONCAT(',', assigner, ',') LIKE '%," . $_SESSION['UserID'] . ",%' )
 				ORDER BY tabcode";
 	$Result = DB_query($SQL);

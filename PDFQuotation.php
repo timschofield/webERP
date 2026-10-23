@@ -269,4 +269,5 @@ $DomPDF->setPaper($_SESSION['PageSize'], $Orientation);
 $DomPDF->render();
 
 // Output the generated PDF to Browser
-$DomPDF->stream($PdfFileName, array("Attachment" => false));
+$PDFContent = $DomPDF->output();
+SendPDFToBrowser($PDFContent, $PdfFileName);

@@ -123,8 +123,8 @@ if (isset($WO) && isset($StockId) && $WO != '') {
 		$DomPDF->setPaper($_SESSION['PageSize'], 'portrait');
 		$DomPDF->render();
 		$filename = 'WO-' . $WO . '-' . $StockId . '-' . date('Y-m-d') . '.pdf';
-		$DomPDF->stream($filename, ['Attachment' => false]);
-		exit();
+		$PDFContent = $DomPDF->output();
+		SendPDFToBrowser($PDFContent, $filename);
 	} else {
 		$Title = __('WO Item production Slip');
 		include(__DIR__ . '/includes/header.php');

@@ -326,5 +326,5 @@ $DomPDF->setPaper($_SESSION['PageSize'], 'landscape');
 $DomPDF->render();
 
 // Output the generated PDF to Browser
-$DomPDF->stream($_SESSION['DatabaseName'] . '_PickingLists_' . date('Y-m-d') . '.pdf', array("Attachment" => false));
-exit();
+$PDFContent = $DomPDF->output();
+SendPDFToBrowser($PDFContent, $_SESSION['DatabaseName'] . '_PickingLists_' . date('Y-m-d') . '.pdf');

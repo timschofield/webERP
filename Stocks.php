@@ -85,6 +85,8 @@ if (isset($StockID) and $StockID != '' and !isset($_POST['UpdateCategories'])) {
 	$New = 1;
 }
 
+$SupportedImgExt = array('png', 'jpg', 'jpeg');
+
 if (isset($_POST['New'])) {
 	$New = $_POST['New'];
 }
@@ -93,47 +95,6 @@ echo '<a href="' . $RootPath . '/SelectProduct.php" class="toplink">' . __('Back
 	<br />', '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/inventory.png" title="', // Icon image.
 $Title, '" /> ', // Icon title.
 $Title, '</p>'; // Page title.
-$SupportedImgExt = array('png', 'jpg', 'jpeg');
-
-if (isset($_FILES['ItemPicture']) and $_FILES['ItemPicture']['name'] != '') {
-	$ImgExt = pathinfo($_FILES['ItemPicture']['name'], PATHINFO_EXTENSION);
-
-	$Result = $_FILES['ItemPicture']['error'];
-	$UploadTheFile = 'Yes'; //Assume all is well to start off with
-	$FileName = $_SESSION['part_pics_dir'] . '/' . $StockID . '.' . $ImgExt;
-	//But check for the worst
-	if (!in_array($ImgExt, $SupportedImgExt)) {
-		prnMsg(__('Only ' . implode(", ", $SupportedImgExt) . ' files are supported - a file extension of ' . implode(", ", $SupportedImgExt) . ' is expected'), 'warn');
-		$UploadTheFile = 'No';
-	} elseif ($_FILES['ItemPicture']['size'] > ($_SESSION['MaxImageSize'] * 1024)) { //File Size Check
-		prnMsg(__('The file size is over the maximum allowed. The maximum size allowed in KB is') . ' ' . $_SESSION['MaxImageSize'], 'warn');
-		$UploadTheFile = 'No';
-	} elseif ($_FILES['ItemPicture']['type'] == 'text/plain') { //File Type Check
-		prnMsg(__('Only graphics files can be uploaded'), 'warn');
-		$UploadTheFile = 'No';
-	} elseif ($_FILES['ItemPicture']['error'] == 6) { //upload temp directory check
-		prnMsg(__('No tmp directory set. You must have a tmp directory set in your PHP for upload of files. '), 'warn');
-		$UploadTheFile = 'No';
-	} elseif (!is_writable($_SESSION['part_pics_dir'])) {
-		prnMsg(__('The web server user does not have permission to upload files. Please speak to your system administrator'), 'warn');
-		$UploadTheFile = 'No';
-	}
-	foreach ($SupportedImgExt as $Ext) {
-		$File = $_SESSION['part_pics_dir'] . '/' . $StockID . '.' . $Ext;
-		if (file_exists($File)) {
-			$Result = unlink($File);
-			if (!$Result) {
-				prnMsg(__('The existing image could not be removed'), 'error');
-				$UploadTheFile = 'No';
-			}
-		}
-	}
-
-	if ($UploadTheFile == 'Yes') {
-		$Result = move_uploaded_file($_FILES['ItemPicture']['tmp_name'], $FileName);
-		$Message = ($Result) ? __('File url') . '<a href="' . $FileName . '">' . $FileName . '</a>' : __('Something is wrong with uploading a file');
-	}
-}
 
 $Errors = array();
 $InputError = 0;
@@ -147,9 +108,9 @@ if (isset($_POST['submit'])) {
 	//first off validate inputs sensible
 	$i = 1;
 
-	if (!isset($_POST['Description']) or mb_strlen($_POST['Description']) > 50 or mb_strlen($_POST['Description']) == 0) {
+	if (!isset($_POST['Description']) or mb_strlen($_POST['Description']) > 255 or mb_strlen($_POST['Description']) == 0) {
 		$InputError = 1;
-		prnMsg(__('The stock item description must be entered and be fifty characters or less long') . '. ' . __('It cannot be a zero length string either') . ' - ' . __('a description is required'), 'error');
+		prnMsg(__('The stock item description must be entered and be 255 characters or less long') . '. ' . __('It cannot be a zero length string either') . ' - ' . __('a description is required'), 'error');
 		$Errors[$i] = 'Description';
 		$i++;
 	}
@@ -162,6 +123,12 @@ if (isset($_POST['submit'])) {
 	if (mb_strlen($StockID) == 0) {
 		$InputError = 1;
 		prnMsg(__('The Stock Item code cannot be empty'), 'error');
+		$Errors[$i] = 'StockID';
+		$i++;
+	}
+	if (mb_strlen($StockID) > 64) {
+		$InputError = 1;
+		prnMsg(__('The stock item code must be 64 characters or less long'), 'error');
 		$Errors[$i] = 'StockID';
 		$i++;
 	}
@@ -178,9 +145,9 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'Units';
 		$i++;
 	}
-	if (mb_strlen($_POST['BarCode']) > 20) {
+	if (mb_strlen($_POST['BarCode']) > 50) {
 		$InputError = 1;
-		prnMsg(__('The barcode must be 20 characters or less long'), 'error');
+		prnMsg(__('The barcode must be 50 characters or less long'), 'error');
 		$Errors[$i] = 'BarCode';
 		$i++;
 	}
@@ -304,6 +271,47 @@ if (isset($_POST['submit'])) {
 		if ($_POST['Serialised'] == 1) { /*Not appropriate to have several dp on serial items */
 			$_POST['DecimalPlaces'] = 0;
 		}
+
+		if (isset($_FILES['ItemPicture']) and $_FILES['ItemPicture']['name'] != '') {
+			$ImgExt = pathinfo($_FILES['ItemPicture']['name'], PATHINFO_EXTENSION);
+
+			$Result = $_FILES['ItemPicture']['error'];
+			$UploadTheFile = 'Yes'; //Assume all is well to start off with
+			$FileName = $_SESSION['part_pics_dir'] . '/' . $StockID . '.' . $ImgExt;
+			//But check for the worst
+			if (!in_array($ImgExt, $SupportedImgExt)) {
+				prnMsg(__('Only ' . implode(", ", $SupportedImgExt) . ' files are supported - a file extension of ' . implode(", ", $SupportedImgExt) . ' is expected'), 'warn');
+				$UploadTheFile = 'No';
+			} elseif ($_FILES['ItemPicture']['size'] > ($_SESSION['MaxImageSize'] * 1024)) { //File Size Check
+				prnMsg(__('The file size is over the maximum allowed. The maximum size allowed in KB is') . ' ' . $_SESSION['MaxImageSize'], 'warn');
+				$UploadTheFile = 'No';
+			} elseif ($_FILES['ItemPicture']['type'] == 'text/plain') { //File Type Check
+				prnMsg(__('Only graphics files can be uploaded'), 'warn');
+				$UploadTheFile = 'No';
+			} elseif ($_FILES['ItemPicture']['error'] == 6) { //upload temp directory check
+				prnMsg(__('No tmp directory set. You must have a tmp directory set in your PHP for upload of files. '), 'warn');
+				$UploadTheFile = 'No';
+			} elseif (!is_writable($_SESSION['part_pics_dir'])) {
+				prnMsg(__('The web server user does not have permission to upload files. Please speak to your system administrator'), 'warn');
+				$UploadTheFile = 'No';
+			}
+			foreach ($SupportedImgExt as $Ext) {
+				$File = $_SESSION['part_pics_dir'] . '/' . $StockID . '.' . $Ext;
+				if (file_exists($File)) {
+					$Result = unlink($File);
+					if (!$Result) {
+						prnMsg(__('The existing image could not be removed'), 'error');
+						$UploadTheFile = 'No';
+					}
+				}
+			}
+
+			if ($UploadTheFile == 'Yes') {
+				$Result = move_uploaded_file($_FILES['ItemPicture']['tmp_name'], $FileName);
+				$Message = ($Result) ? __('File url') . '<a href="' . $FileName . '">' . $FileName . '</a>' : __('Something is wrong with uploading a file');
+			}
+		}
+
 		if ($New == 0) { /*so its an existing one */
 
 			/*first check on the changes being made we must disallow:
@@ -677,6 +685,10 @@ if (isset($_POST['submit'])) {
 												lastcategoryupdate,
 												units,
 												mbflag,
+												lastcost,
+                                                materialcost,
+                                                labourcost,
+                                                overheadcost,
 												eoq,
 												discontinued,
 												klsynctoopencart,
@@ -705,6 +717,10 @@ if (isset($_POST['submit'])) {
 								CURRENT_DATE,
 								'" . $_POST['Units'] . "',
 								'" . $_POST['MBFlag'] . "',
+	    						0.00000000,
+	    						0.00000000,
+	    						0.00000000,
+	    						0.00000000,
 								'" . filter_number_format($_POST['EOQ']) . "',
 								'" . $_POST['Discontinued'] . "',
 								'" . $_POST['KLSyncToOpenCart'] . "',
@@ -930,13 +946,13 @@ if (isset($_POST['submit'])) {
 		$Result = DB_query($SQL, __('Could not delete the item record'), '', true);
 
 		DB_Txn_Commit();
-        
+
         if (file_exists($_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg') OR file_exists($_SESSION['part_pics_dir'] . '/' . $StockID . '.png')) {
 //            unlink($_SESSION['part_pics_dir'] . '/' . $StockID . '.*');
             array_map('unlink', glob($_SESSION['part_pics_dir'] . '/' . $StockID . '.*'));
         }
-         
- 
+
+
 		prnMsg(__('Deleted the stock master record for') . ' ' . $StockID . '....' . '<br />. . ' . __('and all the location stock records set up for the part') . '<br />. . .' . __('and any bill of material that may have been set up for the part') . '<br /> . . . .' . __('and any purchasing data that may have been set up for the part') . '<br /> . . . . .' . __('and any prices that may have been set up for the part'), 'success');
 		echo '<br />';
 		unset($_POST['LongDescription']);
@@ -1009,7 +1025,7 @@ if (!isset($StockID) or $StockID == '' or isset($_POST['UpdateCategories'])) {
 		echo '<legend>', __('Create Stock Item Details'), '</legend>
 			<field>
 				<label for="StockID">' . __('Item Code') . ':</label>
-				<input type="text" ' . (in_array('StockID', $Errors) ? 'class="inputerror"' : '') . ' data-type="no-illegal-chars" autofocus="autofocus" required="required"  value="' . $StockID . '" name="StockID" size="20" maxlength="20"  title ="' . __('Input the stock code, the following characters are prohibited:') . ' \' &quot; + . &amp; \\ &gt; &lt;" placeholder="' . __('alpha-numeric only') . '" />
+				<input type="text" ' . (in_array('StockID', $Errors) ? 'class="inputerror"' : '') . ' data-type="no-illegal-chars" autofocus="autofocus" required="required"  value="' . $StockID . '" name="StockID" size="20" maxlength="64"  title ="' . __('Input the stock code, the following characters are prohibited:') . ' \' &quot; + . &amp; \\ &gt; &lt;" placeholder="' . __('alpha-numeric only') . '" />
 			</field>';
 	} else {
 		echo '<legend>', __('Edit Stock Item Details'), '</legend>
@@ -1113,7 +1129,7 @@ if (!isset($StockID) or $StockID == '' or isset($_POST['UpdateCategories'])) {
 $Description = $_POST['Description'] ?? '';
 echo '<field>
 		<label for="Description">' . __('Part Description') . ' (' . __('short') . '):</label>
-		<input ' . (in_array('Description', $Errors) ? 'class="inputerror"' : '') . ' type="text" ' . ($New == 0 ? 'autofocus="autofocus"' : '') . ' name="Description" required="required" size="52" maxlength="50" value="' . stripslashes($Description) . '" />
+		<input ' . (in_array('Description', $Errors) ? 'class="inputerror"' : '') . ' type="text" ' . ($New == 0 ? 'autofocus="autofocus"' : '') . ' name="Description" required="required" size="52" maxlength="255" value="' . stripslashes($Description) . '" />
 	</field>';
 
 foreach ($ItemDescriptionLanguagesArray as $LanguageId) {
@@ -1548,7 +1564,7 @@ echo '<field>
 $BarCode = $_POST['BarCode'] ?? '';
 echo '<field>
 		<label for="BarCode">' . __('Bar Code') . ':</label>
-		<input ' . (in_array('BarCode', $Errors) ? 'class="inputerror"' : '') . '  type="text" name="BarCode" size="22" maxlength="20" value="' . $BarCode . '" />
+		<input ' . (in_array('BarCode', $Errors) ? 'class="inputerror"' : '') . '  type="text" name="BarCode" size="22" maxlength="50" value="' . $BarCode . '" />
 	</field>';
 
 $DiscountCategory = $_POST['DiscountCategory'] ?? '';
@@ -1622,8 +1638,12 @@ if (DB_num_rows($PropertiesResult) > 0) {
 									stockitemproperties
 									WHERE stockid='" . $StockID . "'
 									AND stkcatpropid ='" . $PropertyRow['stkcatpropid'] . "'");
-			$PropValRow = DB_fetch_row($PropValResult);
-			$PropertyValue = $PropValRow[0];
+            if (DB_num_rows($PropValResult)) {
+			    $PropValRow = DB_fetch_row($PropValResult);
+			    $PropertyValue = $PropValRow[0];
+            } else {
+                $PropertyValue = '';
+            }
 		} else {
 			$PropertyValue = '';
 		}

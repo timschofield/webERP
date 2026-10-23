@@ -113,9 +113,8 @@ if (isset($_POST['PrintPDF'])) {
 	$DomPDF->render();
 
 	// Output the generated PDF to Browser
-	$DomPDF->stream($_SESSION['DatabaseName'] . '_Journal_' . date('Y-m-d') . '.pdf', array(
-		"Attachment" => false
-	));
+	$PDFContent = $DomPDF->output();
+	SendPDFToBrowser($PDFContent, $_SESSION['DatabaseName'] . '_Journal_' . date('Y-m-d') . '.pdf');
 } elseif (isset($_POST['View'])) {
 	// Handle on-screen view
 	$Title = __('General Ledger Journal');

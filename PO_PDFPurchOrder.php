@@ -185,8 +185,8 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			$CompanyAddress .= $_SESSION['CompanyRecord']['regoffice' . $i] . '<br />';
 		}
 	}
-	$CompanyAddress .= $_SESSION['CompanyRecord']['telephone'] . '<br />';
-	$CompanyAddress .= $_SESSION['CompanyRecord']['email'] . '<br />';
+	$CompanyAddress .= PHONE_FOR_PO . '<br />';
+	$CompanyAddress .= EMAIL_FOR_PO . '<br />';
 	// KL RICARD MODIFICATION END
 
 	$SupplierAddress = '';
@@ -340,11 +340,19 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 
 		// Render the HTML as PDF
 		$DomPDF->render();
+    	if ($ViewingOnly == 0 OR $EmailResult == 1) {
+	    	$StatusComment = date($_SESSION['DefaultDateFormat']) . ' - ' . __('Printed by') . ' <a href="mailto:' . $_SESSION['UserEmail'] . '">' . $_SESSION['UsersRealName'] . '</a><br />' . html_entity_decode($POHeader['stat_comment']);
+	    	$SQL = "UPDATE purchorders SET allowprint = 0,
+										dateprinted  = CURRENT_DATE,
+										status = 'Printed',
+										stat_comment = '" . htmlspecialchars($StatusComment, ENT_QUOTES, 'UTF-8') . "'
+				WHERE purchorders.orderno = '" . $OrderNo . "'";
+	    	$Result = DB_query($SQL);
+	    }
 
 		// Output the generated PDF to Browser
-		$DomPDF->stream($PdfFileName, array(
-			"Attachment" => false
-		));
+		$PDFContent = $DomPDF->output();
+		SendPDFToBrowser($PDFContent, $PdfFileName);
 	} else {
 		// Save PDF to file and send via email
 		$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options

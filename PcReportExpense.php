@@ -32,7 +32,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	if (isset($_POST['PrintPDF'])) {
 		$HTML .= '<html>
 					<head>';
-		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
+		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />
+				<div class="footer fixed-section">
+					<div class="right">
+						<span class="page-number">Page </span>
+					</div>
+				</div>';
 	}
 	$HTML .= '<meta name="author" content="WebERP " . $Version">
 					<meta name="Creator" content="webERP https://www.weberp.org">
@@ -62,8 +67,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				AND pcashdetails.codeexpense='".$SelectedExpense."'
 				AND pcashdetails.date >='" . $SQL_FromDate . "'
 				AND pcashdetails.date <= '" . $SQL_ToDate . "'
-				AND (pctabs.authorizer LIKE '%" . $_SESSION['UserID'] . "%' 
-					OR pctabs.usercode = '" . $_SESSION['UserID'] . "' 
+				AND (pctabs.authorizer LIKE '%" . $_SESSION['UserID'] . "%'
+					OR pctabs.usercode = '" . $_SESSION['UserID'] . "'
 					OR pctabs.assigner LIKE '%" . $_SESSION['UserID'] . "%' )
 			ORDER BY pcashdetails.date, pcashdetails.counterindex ASC";
 
@@ -151,11 +156,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	if (isset($_POST['PrintPDF'])) {
 		$HTML .= '</tbody>
-				<div class="footer fixed-section">
-					<div class="right">
-						<span class="page-number">Page </span>
-					</div>
-				</div>
 			</table>';
 	} else {
 		$HTML .= '</tbody>
@@ -178,9 +178,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$DomPDF->render();
 
 		// Output the generated PDF to Browser
-		$DomPDF->stream($_SESSION['DatabaseName'] . '_PettyCashExpenseClaim_' . date('Y-m-d') . '.pdf', array(
-			"Attachment" => false
-		));
+		$PDFContent = $DomPDF->output();
+		SendPDFToBrowser($PDFContent, $_SESSION['DatabaseName'] . '_PettyCashExpenseClaim_' . date('Y-m-d') . '.pdf');
 	} else {
 		$Title = __('Petty Cash Expense Management Report');
 		include(__DIR__ . '/includes/header.php');
@@ -218,8 +217,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$SQL = "SELECT DISTINCT(pctabexpenses.codeexpense)
 			FROM pctabs, pctabexpenses
 			WHERE pctabexpenses.typetabcode = pctabs.typetabcode
-				AND (CONCAT(',', pctabs.authorizer, ',') LIKE '%," . $_SESSION['UserID'] . ",%' 
-					OR pctabs.usercode = '" . $_SESSION['UserID'] . "' 
+				AND (CONCAT(',', pctabs.authorizer, ',') LIKE '%," . $_SESSION['UserID'] . ",%'
+					OR pctabs.usercode = '" . $_SESSION['UserID'] . "'
 					OR CONCAT(',', pctabs.assigner, ',') LIKE '%," . $_SESSION['UserID'] . ",%' )
 			ORDER BY pctabexpenses.codeexpense";
 

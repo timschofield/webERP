@@ -152,6 +152,7 @@ $TableHead =
 if (isset($_SESSION['SupplierID'])) {
 	// A supplier is selected
 	$SupplierName = '';
+	$SupplierDataTable = '';
 	$SQL = "SELECT suppliers.suppname
 			FROM suppliers
 			WHERE suppliers.supplierid ='" . $_SESSION['SupplierID'] . "'";
@@ -161,11 +162,58 @@ if (isset($_SESSION['SupplierID'])) {
 		$SupplierName = $MyRow[0];
 	}
 
+	if ($_SESSION['Extended_SupplierInfo'] == 1) {
+		$SQL = "SELECT suppliers.suppname,
+						suppliers.lastpaid,
+						suppliers.lastpaiddate,
+						suppliersince,
+						currencies.decimalplaces AS currdecimalplaces
+				FROM suppliers INNER JOIN currencies
+				ON suppliers.currcode=currencies.currabrev
+				WHERE suppliers.supplierid ='" . $_SESSION['SupplierID'] . "'";
+		$DataResult = DB_query($SQL);
+		$MyRow = DB_fetch_array($DataResult);
+
+		$SQL = "SELECT SUM(ovamount) AS total FROM supptrans WHERE supplierno = '" . $_SESSION['SupplierID'] . "' AND (type = '20' OR type='21')";
+		$Total1Result = DB_query($SQL);
+		$Row = DB_fetch_array($Total1Result);
+
+		$SupplierDataTable = '<br />';
+		$SupplierDataTable .= '<table width="45%" cellpadding="4">';
+		$SupplierDataTable .= '<tr><th style="width:33%" colspan="2">' . __('Supplier Data') . '</th></tr>';
+		$SupplierDataTable .= '<tr><td valign="top" class="select">';
+		if ($MyRow['lastpaiddate'] == 0) {
+			$SupplierDataTable .= __('No payments yet to this supplier.') . '</td>';
+			$SupplierDataTable .= '<td valign="top" class="select"></td>';
+			$SupplierDataTable .= '</tr>';
+		} else {
+			$SupplierDataTable .= __('Last Paid:') . '</td>';
+			$SupplierDataTable .= '<td valign="top" class="select"> <b>' . ConvertSQLDate($MyRow['lastpaiddate']) . '</b></td>';
+			$SupplierDataTable .= '</tr>';
+		}
+		$SupplierDataTable .= '<tr>';
+		$SupplierDataTable .= '<td valign="top" class="select">' . __('Last Paid Amount:') . '</td>';
+		$SupplierDataTable .= '<td valign="top" class="select">  <b>' . locale_number_format($MyRow['lastpaid'], $MyRow['currdecimalplaces']) . '</b></td>';
+		$SupplierDataTable .= '</tr>';
+		$SupplierDataTable .= '<tr>';
+		$SupplierDataTable .= '<td valign="top" class="select">' . __('Supplier since:') . '</td>';
+		$SupplierDataTable .= '<td valign="top" class="select"> <b>' . ConvertSQLDate($MyRow['suppliersince']) . '</b></td>';
+		$SupplierDataTable .= '</tr>';
+		$SupplierDataTable .= '<tr>';
+		$SupplierDataTable .= '<td valign="top" class="select">' . __('Total Spend with this Supplier:') . '</td>';
+		$SupplierDataTable .= '<td valign="top" class="select"> <b>' . locale_number_format($Row['total'], $MyRow['currdecimalplaces']) . '</b></td>';
+		$SupplierDataTable .= '</tr>';
+		$SupplierDataTable .= '</table>';
+	}
+
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/supplier.png" title="', // Icon image.
 		__('Supplier'), '" /> ', // Icon title.
-		__('Supplier'), ': ', $_SESSION['SupplierID'], ' - ', $SupplierName, '</p>',// Page title.
-		'<div class="page_help_text">', __('Select a menu option to operate using this supplier.'), '</div>',// Page help text.
+		__('Supplier'), ': ', $_SESSION['SupplierID'], ' - ', $SupplierName, '</p>';// Page title.
+
+	echo $SupplierDataTable;
+
+	echo '<div class="page_help_text">', __('Chose a menu item for the selected supplier.'), '</div>',// Page help text.
 		'<br />',
 		$TableHead,
 			'<tr>
@@ -175,7 +223,7 @@ if (isset($_SESSION['SupplierID'])) {
 		<br />
 		<a href="' . $RootPath . '/SupplierGRNAndInvoiceInquiry.php?SelectedSupplier=' . $_SESSION['SupplierID'] . '&amp;SupplierName='.urlencode($SupplierName).'">' . __('Supplier Delivery Note AND GRN inquiry') . '</a>
 		<br />
-		<br />';
+		';
 
 	echo '<br /><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?SelectedSupplier=' . $_SESSION['SupplierID'] . '">' . __('Add / Receive / View Outstanding Purchase Orders') . '</a>';
 	echo '<br /><a href="' . $RootPath . '/PO_SelectPurchOrder.php?SelectedSupplier=' . $_SESSION['SupplierID'] . '">' . __('View All Purchase Orders') . '</a><br />';
@@ -194,6 +242,7 @@ if (isset($_SESSION['SupplierID'])) {
 	echo '<a href="' . $RootPath . '/Suppliers.php">' . __('Add a New Supplier') . '</a>
 		<br /><a href="' . $RootPath . '/Suppliers.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . __('Modify Or Delete Supplier Details') . '</a>
 		<br /><a href="' . $RootPath . '/SupplierContacts.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . __('Add/Edit/Delete Supplier Contacts') . '</a>
+		<br /><a href="' . $RootPath . '/AddSupplierNotes.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . __('Add a Supplier Note') . '</a>
 		<br />
 		<br /><a href="' . $RootPath . '/SellThroughSupport.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . __('Set Up Sell Through Support Deals') . '</a>
 		<br /><a href="' . $RootPath . '/Shipments.php?NewShipment=Yes">' . __('Set Up A New Shipment') . '</a>
@@ -201,6 +250,38 @@ if (isset($_SESSION['SupplierID'])) {
 		</td>
 		</tr>
 		<tbody></table>';
+	$SupplierNotesSQL = "SELECT noteid,
+						supplierid,
+						note,
+						date
+				FROM suppliernotes
+				WHERE supplierid='" . $_SESSION['SupplierID'] . "'
+				ORDER BY date DESC";
+	$SupplierNotesResult = DB_query($SupplierNotesSQL);
+	if (DB_num_rows($SupplierNotesResult) <> 0) {
+		echo '<p class="page_title_text">
+				<img src="', $RootPath, '/css/', $Theme, '/images/note_add.png" title="', __('Supplier Notes'), '" alt="" />', ' ', __('Supplier Notes'), '
+			</p>';
+		echo '<table style="width: 45%;">
+				<thead>
+					<tr>
+						<th class="SortedColumn" style="width:10%">', __('Date'), '</th>
+						<th style="width:70%">', __('Note'), '</th>
+						<th colspan="2" style="width:20%">', __('Action'), '</th>
+					</tr>
+				</thead>';
+		echo '<tbody>';
+		while ($SupplierNoteRow = DB_fetch_array($SupplierNotesResult)) {
+			echo '<tr class="striped_row">
+					<td class="date">', ConvertSQLDate($SupplierNoteRow['date']), '</td>
+					<td>', nl2br(htmlspecialchars($SupplierNoteRow['note'], ENT_QUOTES, 'UTF-8', false)), '</td>
+					<td style="text-align:center"><a href="', $RootPath, '/AddSupplierNotes.php?Id=', urlencode($SupplierNoteRow['noteid']), '&amp;SupplierID=', urlencode($SupplierNoteRow['supplierid']), '">', __('Edit'), '</a></td>
+					<td style="text-align:center"><a href="', $RootPath, '/AddSupplierNotes.php?Id=', urlencode($SupplierNoteRow['noteid']), '&amp;SupplierID=', urlencode($SupplierNoteRow['supplierid']), '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this supplier note?') . '\');">', __('Delete'), '</a></td>
+				</tr>';
+		}
+		echo '</tbody>
+			</table>';
+	}
 } else {
 	// Supplier is not selected yet
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
@@ -376,51 +457,6 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 				htmlspecialchars($address3, ENT_QUOTES, 'UTF-8') . '<br>' . 
 				htmlspecialchars($address4, ENT_QUOTES, 'UTF-8') . '\').openPopup();
 			</script>';
-		}
-	}
-	// Extended Info only if selected in Configuration
-	if ($_SESSION['Extended_SupplierInfo'] == 1) {
-		if ($_SESSION['SupplierID'] != '') {
-			$SQL = "SELECT suppliers.suppname,
-							suppliers.lastpaid,
-							suppliers.lastpaiddate,
-							suppliersince,
-							currencies.decimalplaces AS currdecimalplaces
-					FROM suppliers INNER JOIN currencies
-					ON suppliers.currcode=currencies.currabrev
-					WHERE suppliers.supplierid ='" . $_SESSION['SupplierID'] . "'";
-			$DataResult = DB_query($SQL);
-			$MyRow = DB_fetch_array($DataResult);
-			// Select some more data about the supplier
-			$SQL = "SELECT SUM(ovamount) AS total FROM supptrans WHERE supplierno = '" . $_SESSION['SupplierID'] . "' AND (type = '20' OR type='21')";
-			$Total1Result = DB_query($SQL);
-			$Row = DB_fetch_array($Total1Result);
-			echo '<br />';
-			echo '<table width="45%" cellpadding="4">';
-			echo '<tr><th style="width:33%" colspan="2">' . __('Supplier Data') . '</th></tr>';
-			echo '<tr><td valign="top" class="select">'; /* Supplier Data */
-			//echo "Distance to this Supplier: <b>TBA</b><br />";
-			if ($MyRow['lastpaiddate'] == 0) {
-				echo __('No payments yet to this supplier.') . '</td>
-					<td valign="top" class="select"></td>
-					</tr>';
-			} else {
-				echo __('Last Paid:') . '</td>
-					<td valign="top" class="select"> <b>' . ConvertSQLDate($MyRow['lastpaiddate']) . '</b></td>
-					</tr>';
-			}
-			echo '<tr>
-					<td valign="top" class="select">' . __('Last Paid Amount:') . '</td>
-					<td valign="top" class="select">  <b>' . locale_number_format($MyRow['lastpaid'], $MyRow['currdecimalplaces']) . '</b></td></tr>';
-			echo '<tr>
-					<td valign="top" class="select">' . __('Supplier since:') . '</td>
-					<td valign="top" class="select"> <b>' . ConvertSQLDate($MyRow['suppliersince']) . '</b></td>
-					</tr>';
-			echo '<tr>
-					<td valign="top" class="select">' . __('Total Spend with this Supplier:') . '</td>
-					<td valign="top" class="select"> <b>' . locale_number_format($Row['total'], $MyRow['currdecimalplaces']) . '</b></td>
-					</tr>';
-			echo '</table>';
 		}
 	}
 }
