@@ -222,7 +222,7 @@ if (isset($_POST['ComponentSearch']) or isset($_POST['Next']) or isset($_POST['P
 	}
 
 	if (isset($_POST['Next'])) {
-		$_POST['Offset'] = $_POST['Offset'] + 1;
+		$_POST['Offset'] = (int)$_POST['Offset'] + 1;
 	}
 
 	echo '<a class="toplink" href="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '?SelectedParent=', urlencode($SelectedParent) , '&ShowAllLevels=', urlencode($_POST['ShowAllLevels']) , '">', __('Return to main BOM screen') , '</a>';
@@ -262,7 +262,7 @@ if (isset($_POST['ComponentSearch']) or isset($_POST['Next']) or isset($_POST['P
 							AND stockmaster.categoryid LIKE '%" . $_POST['StockCat'] . "%'
 						ORDER BY stockmaster.stockid
 						LIMIT " . $_SESSION['DisplayRecordsMax'] . "
-						OFFSET " . ($_POST['Offset'] * $_SESSION['DisplayRecordsMax']);
+						OFFSET " . ((int)$_POST['Offset'] * $_SESSION['DisplayRecordsMax']);
 
 	}
 	else {
@@ -281,7 +281,7 @@ if (isset($_POST['ComponentSearch']) or isset($_POST['Next']) or isset($_POST['P
 							AND stockmaster.categoryid LIKE '%" . $_POST['StockCat'] . "%'
 						ORDER BY stockmaster.stockid
 						LIMIT " . $_SESSION['DisplayRecordsMax'] . "
-						OFFSET " . ($_POST['Offset'] * $_SESSION['DisplayRecordsMax']);
+						OFFSET " . ((int)$_POST['Offset'] * $_SESSION['DisplayRecordsMax']);
 	}
 
 	$ErrMsg = __('Could not retrieve the list of potential components because');
@@ -753,11 +753,11 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 								'" . $_POST['SelectedComponent'] . "',
 								'" . $_POST['WorkCentreAdded'] . "',
 								'" . $_POST['LocCode'] . "',
-								" . filter_number_format($_POST['Quantity']) . ",
-								" . $_POST['Sequence'] . ",
+								'" . filter_number_format($_POST['Quantity']) . "',
+								'" . $_POST['Sequence'] . "',
 								'" . $EffectiveAfterSQL . "',
 								'" . $EffectiveToSQL . "',
-								" . $_POST['AutoIssue'] . ",
+								'" . $_POST['AutoIssue'] . "',
 								'" . $_POST['Comment'] . "'
 								)";
 

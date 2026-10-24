@@ -64,7 +64,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					ON stockmoves.debtorno=debtorsmaster.debtorno
 				WHERE stockmoves.trandate >= '" . FormatDateForSQL($_POST['FromDate']) . "'
 				AND stockmoves.trandate <= '" . FormatDateForSQL($_POST['ToDate']) . "'
-				AND ((stockmoves.price*(1-stockmoves.discountpercent)) - (stockmaster.actualcost))/(stockmoves.price*(1-stockmoves.discountpercent)) <=" . $_POST['GPMin']/100 . "
+				AND ((stockmoves.price*(1-stockmoves.discountpercent)) - (stockmaster.actualcost))/(stockmoves.price*(1-stockmoves.discountpercent)) <=" . (int)$_POST['GPMin']/100 . "
 				ORDER BY stockmaster.stockid";
 
 	$ErrMsg = __('The low GP items could not be retrieved');

@@ -285,9 +285,9 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 
 						if ($AlreadyExistsRow[0] > 0 and $_POST['Qty' . $i] != 0) {
 							$SQL = "UPDATE stockserialitems SET quantity = CASE
-												WHEN abs(quantity -" . $_POST['Qty' . $i] . ")<" . $VarianceAllowed . "
+												WHEN abs(quantity -" . (int)$_POST['Qty' . $i] . ")<" . $VarianceAllowed . "
 												THEN 0
-												ELSE  quantity - " . $_POST['Qty' . $i] . "
+												ELSE  quantity - " . (int)$_POST['Qty' . $i] . "
 												END
 										WHERE stockid='" . $_POST['IssueItem'] . "'
 										AND loccode = '" . $_POST['FromLocation'] . "'

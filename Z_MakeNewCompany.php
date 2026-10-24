@@ -66,7 +66,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 			if ($_POST['CreateDB']==true) {
 				/* Need to read in the sql script and process the queries to initiate a new DB */
 
-				$Result = DB_query('CREATE DATABASE ' . $_POST['NewDatabase']);
+				$Result = DB_query("CREATE DATABASE '" . $_POST['NewDatabase'] . "'");
 
 				if ($DBType=='postgres') {
 
