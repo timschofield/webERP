@@ -45,8 +45,7 @@ if (!isset($_POST['ToTransNo'])
 
 $FirstTrans = $FromTransNo;
 
-if (isset($PrintPDF)
-	&& $PrintPDF!=''
+if ((isset($PrintPDF) && $PrintPDF!='' OR isset($_POST['Print']))
 	&& isset($FromTransNo)
 	&& isset($InvOrCredit)
 	&& $FromTransNo!=''
@@ -54,6 +53,19 @@ if (isset($PrintPDF)
 	OR isset($_GET['Email'])) {
 
 	$UserLanguage = $_SESSION['Language'];
+
+	$Styles = '<style>
+				body { font-family: DejaVu Sans, sans-serif; font-size: 10px; }
+				.header { background: #eee; padding: 10px; }
+				.table1 { width: 100%; border-collapse: collapse; }
+				.table1 th, .table1 td { border: 1px solid #ccc; padding: 5px; }
+				.number { text-align: right; }
+				.striped_row:nth-child(even) { background: #f9f9f9; }
+				.centre { text-align: center; }
+				.footer { margin-top: 20px; }
+				</style>';
+	$HTML = '';
+	$TransPrinted = 0;
 
 	while ($FromTransNo <= filter_number_format($_POST['ToTransNo'])) {
 
@@ -311,20 +323,10 @@ if (isset($PrintPDF)
 			}
 
 			// --- Begin HTML ---
-			$HTML = '<html>
-			<head>
-				<style>
-				body { font-family: DejaVu Sans, sans-serif; font-size: 10px; }
-				.header { background: #eee; padding: 10px; }
-				.table1 { width: 100%; border-collapse: collapse; }
-				.table1 th, .table1 td { border: 1px solid #ccc; padding: 5px; }
-				.number { text-align: right; }
-				.striped_row:nth-child(even) { background: #f9f9f9; }
-				.centre { text-align: center; }
-				.footer { margin-top: 20px; }
-				</style>
-			</head>
-			<body>';
+			if ($TransPrinted > 0) {
+				$HTML .= '<div style="page-break-before: always;"></div>';
+			}
+			$TransPrinted++;
 
 			$HTML .= '<table class="table1">
 					<tr>
@@ -544,21 +546,28 @@ if (isset($PrintPDF)
 				if ($InvOrCredit=='Invoice' && $_SESSION['RomalpaClause']) {
 					$HTML .= '<div class="footer">' . $_SESSION['RomalpaClause'] . '</div>';
 				}
-			$HTML .= '</body>
-			</html>';
 		}
 		$FromTransNo++;
 	}
 
-if (isset($_GET['View']) and $_GET['View'] == 'Yes') {
+if ($TransPrinted == 0) {
+	$Title = __('Select Invoices/Credit Notes To Print');
 	include(__DIR__ . '/includes/header.php');
-	echo $HTML;
+	prnMsg(__('There were no transactions to print in the range selected'), 'warn');
+	include(__DIR__ . '/includes/footer.php');
+	exit();
+}
+
+if ((isset($_GET['View']) and $_GET['View'] == 'Yes') OR isset($_POST['Print'])) {
+	$Title = __('Print Preview');
+	include(__DIR__ . '/includes/header.php');
+	echo $Styles . $HTML;
 	include(__DIR__ . '/includes/footer.php');
 } elseif (isset($_GET['Email'])) {
 
 	$PdfFileName = $_SESSION['DatabaseName'] . '_' . $InvOrCredit . '_' . ($FromTransNo-1) .'_'. date('Y-m-d') . '.pdf';
 	$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
-	$DomPDF->loadHtml($HTML);
+	$DomPDF->loadHtml('<html><head>' . $Styles . '</head><body>' . $HTML . '</body></html>');
 	// (Optional) set up the paper size and orientation
 	$DomPDF->setPaper($_SESSION['PageSize'], 'landscape');
 	// Render the HTML as PDF
@@ -594,7 +603,7 @@ if (isset($_GET['View']) and $_GET['View'] == 'Yes') {
 	$PdfFileName = $_SESSION['DatabaseName'] . '_' . $InvOrCredit . '_' . ($FromTransNo-1) .'_'. date('Y-m-d') . '.pdf';
 	// Display PDF in browser
 	$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
-	$DomPDF->loadHtml($HTML);
+	$DomPDF->loadHtml('<html><head>' . $Styles . '</head><body>' . $HTML . '</body></html>');
 
 	$DomPDF->setPaper($_SESSION['PageSize'], $Orientation);
 
@@ -611,90 +620,77 @@ if (isset($_GET['View']) and $_GET['View'] == 'Yes') {
 	$Title=__('Select Invoices/Credit Notes To Print');
 	include(__DIR__ . '/includes/header.php');
 
-	if (!isset($FromTransNo) OR $FromTransNo=='') {
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post" target="_blank">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post" target="_blank">';
-		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . __('Print') . '" alt="" />' . ' ' . __('Print Invoices or Credit Notes (Landscape Mode)') . '</p>';
 
-		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . __('Print') . '" alt="" />' . ' ' . __('Print Invoices or Credit Notes (Landscape Mode)') . '</p>';
+	echo '<fieldset>
+			<legend>', __('Print Criteria'), '</legend>
+			<field>
+				<label for="InvOrCredit">' . __('Print Invoices or Credit Notes') . '</label>
+				<select name="InvOrCredit">';
 
-		echo '<fieldset>
-				<legend>', __('Print Criteria'), '</legend>
-				<field>
-					<label for="InvOrCredit">' . __('Print Invoices or Credit Notes') . '</label>
-					<select name="InvOrCredit">';
+	if ($InvOrCredit=='Invoice' OR !isset($InvOrCredit)) {
 
-		if ($InvOrCredit=='Invoice' OR !isset($InvOrCredit)) {
+		echo '<option selected="selected" value="Invoice">' . __('Invoices') . '</option>';
+		echo '<option value="Credit">' . __('Credit Notes') . '</option>';
+	} else {
+		echo '<option selected="selected" value="Credit">' . __('Credit Notes') . '</option>';
+		echo '<option value="Invoice">' . __('Invoices') . '</option>';
+	}
 
-			echo '<option selected="selected" value="Invoice">' . __('Invoices') . '</option>';
-			echo '<option value="Credit">' . __('Credit Notes') . '</option>';
-		} else {
-			echo '<option selected="selected" value="Credit">' . __('Credit Notes') . '</option>';
-			echo '<option value="Invoice">' . __('Invoices') . '</option>';
-		}
+	echo '</select>
+		</field>';
 
-		echo '</select>
-			</field>';
+	echo '<field>
+			<label for="PrintEDI">', __('Print EDI Transactions'), '</label>
+			<select name="PrintEDI">';
 
-		echo '<field>
-				<label for="PrintEDI">', __('Print EDI Transactions'), '</label>
-				<select name="PrintEDI">';
+	if ($InvOrCredit=='Invoice' OR !isset($InvOrCredit)) {
 
-		if ($InvOrCredit=='Invoice' OR !isset($InvOrCredit)) {
-
-			echo '<option selected="selected" value="No">' . __('Do not Print PDF EDI Transactions') . '</option>';
-			echo '<option value="Yes">' . __('Print PDF EDI Transactions Too') . '</option>';
-
-		} else {
-
-			echo '<option value="No">' . __('Do not Print PDF EDI Transactions') . '</option>';
-			echo '<option selected="selected" value="Yes">' . __('Print PDF EDI Transactions Too') . '</option>';
-		}
-
-		echo '</select>
-			</field>';
-
-		echo '<field>
-				<label for="FromTransNo">' . __('Start invoice/credit note number to print') . '</label>
-				<input class="number" type="text" maxlength="6" size="7" name="FromTransNo" required="required" />
-			</field>';
-
-		echo '<field>
-				<label for="ToTransNo">' . __('End invoice/credit note number to print') . '</label>
-				<input class="number" type="text" maxlength="6" size="7" name="ToTransNo" />
-			</field>
-		</fieldset>';
-		echo '<div class="centre">
-				<input type="submit" name="Print" value="' . __('Print Preview') . '" />
-				<input type="submit" name="PrintPDF" value="' . __('Print PDF') . '" />
-			</div>';
-
-		$SQL = "SELECT typeno FROM systypes WHERE typeid=10";
-
-		$Result = DB_query($SQL);
-		$MyRow = DB_fetch_row($Result);
-
-		echo '<div class="page_help_text"><b>' . __('The last invoice created was number') . ' ' . $MyRow[0] . '</b><br />' . __('If only a single invoice is required') . ', ' . __('enter the invoice number') . ' ' . __('as both the start and end numbers') . '.</div>';
-
-		$SQL = "SELECT typeno FROM systypes WHERE typeid=11";
-
-		$Result = DB_query($SQL);
-		$MyRow = DB_fetch_row($Result);
-
-		echo '<div class="page_help_text"><b>' . __('The last credit note created was number') . ' ' . $MyRow[0] . '</b><br />' . __('A sequential range can be printed using the same method as for invoices above') . '. ' . __('A range is printed from the start to the end number inclusive') . '.</div>';
-
-		echo '</form>';
+		echo '<option selected="selected" value="No">' . __('Do not Print PDF EDI Transactions') . '</option>';
+		echo '<option value="Yes">' . __('Print PDF EDI Transactions Too') . '</option>';
 
 	} else {
 
-		// --- Output HTML preview for selected invoice(s) (similar to above, but just echo) ---
-		while($FromTransNo <= filter_number_format($_POST['ToTransNo'])) {
-			// ... (reuse earlier logic to fetch and echo details, but as HTML, not PDF)
-			// For brevity, you can reuse the same PHP/HTML as in the PDF block, but echo instead of buffering.
-			// You can copy the above HTML for invoice preview, replacing $HTML .= ob_get_clean(); with echo.
-			// (Omitted for brevity here, but you can copy-paste the HTML/PHP above)
-			$FromTransNo++;
-		}
+		echo '<option value="No">' . __('Do not Print PDF EDI Transactions') . '</option>';
+		echo '<option selected="selected" value="Yes">' . __('Print PDF EDI Transactions Too') . '</option>';
 	}
+
+	echo '</select>
+		</field>';
+
+	echo '<field>
+			<label for="FromTransNo">' . __('Start invoice/credit note number to print') . '</label>
+			<input class="number" type="text" maxlength="6" size="7" name="FromTransNo" required="required" />
+		</field>';
+
+	echo '<field>
+			<label for="ToTransNo">' . __('End invoice/credit note number to print') . '</label>
+			<input class="number" type="text" maxlength="6" size="7" name="ToTransNo" />
+		</field>
+	</fieldset>';
+	echo '<div class="centre">
+			<input type="submit" name="Print" value="' . __('Print Preview') . '" />
+			<input type="submit" name="PrintPDF" value="' . __('Print PDF') . '" />
+		</div>';
+
+	$SQL = "SELECT typeno FROM systypes WHERE typeid=10";
+
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_row($Result);
+
+	echo '<div class="page_help_text"><b>' . __('The last invoice created was number') . ' ' . $MyRow[0] . '</b><br />' . __('If only a single invoice is required') . ', ' . __('enter the invoice number') . ' ' . __('as both the start and end numbers') . '.</div>';
+
+	$SQL = "SELECT typeno FROM systypes WHERE typeid=11";
+
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_row($Result);
+
+	echo '<div class="page_help_text"><b>' . __('The last credit note created was number') . ' ' . $MyRow[0] . '</b><br />' . __('A sequential range can be printed using the same method as for invoices above') . '. ' . __('A range is printed from the start to the end number inclusive') . '.</div>';
+
+	echo '</form>';
+
 	include(__DIR__ . '/includes/footer.php');
 }
