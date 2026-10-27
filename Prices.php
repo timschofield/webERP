@@ -10,7 +10,7 @@ include(__DIR__ . '/includes/header.php');
 if (isset($_POST['StartDate'])) {
 	$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);
 }
-if (isset($_POST['EndDate'])) {
+if (isset($_POST['EndDate']) AND $_POST['EndDate'] != '') {
 	$_POST['EndDate'] = ConvertSQLDate($_POST['EndDate']);
 }
 
@@ -363,7 +363,7 @@ if (!isset($_POST['StartDate'])) {
 	$_POST['StartDate'] = date($_SESSION['DefaultDateFormat']);
 }
 if (!isset($_POST['EndDate'])) {
-	$_POST['EndDate'] = date('9999-12-31');
+	$_POST['EndDate'] = '';
 }
 echo '<field>
 		<label for="StartDate">' . __('Price Effective From Date') . ':</label>
@@ -373,7 +373,7 @@ echo '<field>
 
 echo '<field>
 		<label for="EndDate">' . __('Price Effective To Date') . ':</label>
-		<input type="date" name="EndDate" size="10" maxlength="10" title="" value="' . FormatDateForSQL($_POST['EndDate']) . '" />
+		<input type="date" name="EndDate" size="10" maxlength="10" title="" value="' . ($_POST['EndDate'] == '' ? '' : FormatDateForSQL($_POST['EndDate'])) . '" />
 		<fieldhelp>' . __('Enter the date to which this price should be in effect to, or leave empty if the price should continue indefinitely') . '</fieldhelp>
 		<input type="hidden" name="Item" value="' . $Item . '" />
 	</field>';
