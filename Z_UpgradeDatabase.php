@@ -1,4 +1,7 @@
 <?php
+error_reporting(-1);
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
 
 $PageSecurity = 15;
 
@@ -128,6 +131,7 @@ if (!isset($_POST['continue'])) {
 		'Errors' => 0,
 		'Successes' => 0,
 		'Warnings' => 0,
+		'Messages' => array(),
 	);
 
 	$LogFileName = $_SESSION['LogPath'] . '/' . $_SESSION['DatabaseName'] . ' - DBUpdateLog-' . date('Y-m-d') . '.log';
@@ -137,7 +141,17 @@ if (!isset($_POST['continue'])) {
 			LogEntryHeader($LogFileName, $UpdateNumber);
 			$SQL = "SET FOREIGN_KEY_CHECKS=0";
 			$Result = DB_query($SQL);
+			/* Queue a message naming this update, shown only if the update aborts the script part way through */
+			prnMsg(__('The database upgrade stopped while running update') . ' ' . $UpdateNumber . ' (sql/updates/' . $UpdateNumber . '.php)', 'error');
+			$AbortMessageKey = array_key_last($Messages);
+			$FirstNewMessage = count($_SESSION['Updates']['Messages']);
 			include('sql/updates/' . $UpdateNumber . '.php');
+			unset($Messages[$AbortMessageKey]);
+			/* Label the error messages from this update with its number */
+			$MessageCount = count($_SESSION['Updates']['Messages']);
+			for ($i = $FirstNewMessage; $i < $MessageCount; $i++) {
+				$_SESSION['Updates']['Messages'][$i] = __('Update') . ' ' . $UpdateNumber . ': ' . $_SESSION['Updates']['Messages'][$i];
+			}
 			$SQL = "SET FOREIGN_KEY_CHECKS=1";
 			$Result = DB_query($SQL);
 
@@ -158,7 +172,7 @@ if (!isset($_POST['continue'])) {
 		<tr>
 			<td class="success_line">', $_SESSION['Updates']['Successes'], ' ', __('updates have succeeded'), '</td>
 		</tr>';
-	if ($_SESSION['Updates']['Errors'] > 0) {
+	if (count($_SESSION['Updates']['Messages']) > 0) {
 		$SizeOfErrorMessages = sizeOf($_SESSION['Updates']['Messages']);
 		for ($i = 0;$i < $SizeOfErrorMessages;$i++) {
 			echo '<tr><td>' . $_SESSION['Updates']['Messages'][$i] . '</td></tr>';
