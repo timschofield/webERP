@@ -50,14 +50,18 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 	$SQLArray = explode(' ', preg_replace('/\s+/', ' ',strtoupper(ltrim($SQL))));
 
 	if (!$Result AND $TrapErrors) {
+		/* header.php runs in this scope when it has not been included yet: it reuses $SQL and runs a query that clears the database error */
+		$FailedSQL = $SQL;
+		$FailedErrorMsg = DB_error_msg();
 		require_once($PathPrefix . 'includes/header.php');
+		$SQL = $FailedSQL;
 		if ($ErrorMessage == '') {
 			/// @todo add default error messages for insert/update/delete queries
 			if ($SQLArray[0] == 'SELECT') {
 				$ErrorMessage = __('An error occurred in retrieving the information');
 			}
 		}
-		prnMsg(($ErrorMessage != '' ? $ErrorMessage . '<br />' : '') . DB_error_msg(), 'error', __('DB ERROR:'));
+		prnMsg(($ErrorMessage != '' ? $ErrorMessage . '<br />' : ''). $FailedErrorMsg, 'error', __('Database Error'));
 		if ($Debug >= 1) {
 			if ($DebugMessage == '') {
 				$DebugMessage = __('The SQL that failed was');
