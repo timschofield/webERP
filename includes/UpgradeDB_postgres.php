@@ -69,12 +69,12 @@ function NewSysType($TypeID, $TypeDescription) {
 	}
 }
 
-function NewScript($ScriptName, $PageSecurity) {
+function NewScript($ScriptName, $PageSecurity, $Description = '') {
 	/*Is page already in table */
 	$SQL = "SELECT script FROM scripts WHERE script='" . $ScriptName . "'";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) == 0) {
-		$SQL = "INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('" . $ScriptName . "', '" . $PageSecurity . "', '')";
+		$SQL = "INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('" . $ScriptName . "', '" . $PageSecurity . "', '" . $Description . "')";
 		$Response = executeSQL($SQL, false);
 		if ($Response == 0) {
 			OutputResult(__('The script') . ' ' . $ScriptName . ' ' . __('has been inserted'), 'success');

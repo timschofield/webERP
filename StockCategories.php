@@ -141,23 +141,23 @@ if (isset($_POST['submit'])) {
 														reqatsalesorder)
 											VALUES ('" . $SelectedCategory . "',
 													'" . $_POST['PropLabel' . $i] . "',
-													" . $_POST['PropControlType' . $i] . ",
+													'" . $_POST['PropControlType' . $i] . "',
 													'" . $_POST['PropDefault' .$i] . "',
 													'" . filter_number_format($_POST['PropMinimum' .$i]) . "',
 													'" . filter_number_format($_POST['PropMaximum' .$i]) . "',
 													'" . $_POST['PropNumeric' .$i] . "',
-													" . $_POST['PropReqSO' .$i] . ')';
+													'" . $_POST['PropReqSO' .$i] . "')";
 				$ErrMsg = __('Could not insert a new category property for') . $_POST['PropLabel' . $i];
 				$Result = DB_query($SQL, $ErrMsg);
 			} elseif ($_POST['PropID' .$i] !='NewProperty') { //we could be amending existing properties
 				$SQL = "UPDATE stockcatproperties SET label ='" . $_POST['PropLabel' . $i] . "',
-													  controltype = " . $_POST['PropControlType' . $i] . ",
+													  controltype = '" . $_POST['PropControlType' . $i] . "',
 													  defaultvalue = '"	. $_POST['PropDefault' .$i] . "',
 													  minimumvalue = '" . filter_number_format($_POST['PropMinimum' .$i]) . "',
 													  maximumvalue = '" . filter_number_format($_POST['PropMaximum' .$i]) . "',
 													  numericvalue = '" . $_POST['PropNumeric' .$i] . "',
-													  reqatsalesorder = " . $_POST['PropReqSO' .$i] . "
-												WHERE stkcatpropid =" . $_POST['PropID' .$i];
+													  reqatsalesorder = '" . $_POST['PropReqSO' .$i] . "'
+												WHERE stkcatpropid =" . (int)$_POST['PropID' .$i];
 				$ErrMsg = __('Updated the stock category property for') . ' ' . $_POST['PropLabel' . $i];
 				$Result = DB_query($SQL, $ErrMsg);
 			}

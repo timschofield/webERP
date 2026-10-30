@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('Database table details');
 include(__DIR__ . '/includes/header.php');
 
-$SQL='DESCRIBE '.$_GET['table'];
+$SQL="DESCRIBE '".$_GET['table'] . "'";
 $Result = DB_query($SQL);
 
 echo '<table><tr>';

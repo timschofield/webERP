@@ -1009,7 +1009,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			$NewItemDue = date($_SESSION['DefaultDateFormat']);
 			$NewPOLine = $_POST['POLine'] ?? 0;
 			$NewItem = $AssetStockID;
+			$NewItemQty = 1;
 			include(__DIR__ . '/includes/SelectOrderItems_IntoCart.php');
+			unset($NewItem);
 		} //end if adding a fixed asset to the order
 	} //end if the fixed asset selection box was set
 

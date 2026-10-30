@@ -1349,7 +1349,7 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 
 			$MyRow = DB_fetch_row($Result);
 
-			if ($MyRow[0] > 0) { /*Update the existing record that already exists */
+			if ($MyRow && $MyRow[0] > 0) { /*Update the existing record that already exists */
 
 				$SQL = "UPDATE salesanalysis SET amt=amt+" . round(($SalesValue), $_SESSION['CompanyRecord']['decimalplaces']) . ",
 												cost=cost+" . round(($OrderLine->StandardCost * $OrderLine->QtyDispatched), $_SESSION['CompanyRecord']['decimalplaces']) . ",
