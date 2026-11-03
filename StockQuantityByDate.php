@@ -54,16 +54,16 @@ echo '<field>
 		<label for="StockLocation">' . __('For Stock Location') . ':</label>
 		<select required="required" name="StockLocation"> ';
 
+if (!isset($_POST['StockLocation']) or $_POST['StockLocation'] == 'All') {
+	$_POST['StockLocation'] = 'All';
+	echo '<option selected="selected" value="All">' . __('All Locations') . '</option>';
+} else {
+	echo '<option value="All">' . __('All Locations') . '</option>';
+}
+
 while ($MyRow = DB_fetch_array($ResultStkLocs)) {
-	if (isset($_POST['StockLocation']) and $_POST['StockLocation'] != 'All') {
-		if ($MyRow['loccode'] == $_POST['StockLocation']) {
-			echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
-		} else {
-			echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
-		}
-	} elseif ($MyRow['loccode'] == $_SESSION['UserStockLocation']) {
+	if ($MyRow['loccode'] == $_POST['StockLocation']) {
 		echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
-		$_POST['StockLocation'] = $MyRow['loccode'];
 	} else {
 		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	}
@@ -133,7 +133,27 @@ if (isset($_POST['ShowStatus']) and is_date($_POST['OnHandDate'])) {
 
 	while ($MyRow = DB_fetch_array($StockResult)) {
 
-		if (isset($_POST['ShowZeroStocks'])) {
+		if ($_POST['StockLocation'] == 'All') {
+			/* Latest QOH per location on the date, summed over all locations the user can view */
+			$SQL = "SELECT stockmoves.stockid,
+							SUM(stockmoves.newqoh) AS newqoh
+						FROM stockmoves
+						INNER JOIN (SELECT loccode,
+										MAX(stkmoveno) AS maxmoveno
+									FROM stockmoves
+									WHERE trandate <= '" . $SQLOnHandDate . "'
+										AND stockid = '" . $MyRow['stockid'] . "'
+									GROUP BY loccode) AS LatestMoves
+							ON stockmoves.stkmoveno = LatestMoves.maxmoveno
+						INNER JOIN locationusers
+							ON locationusers.loccode = stockmoves.loccode
+							AND locationusers.userid = '" . $_SESSION['UserID'] . "'
+							AND locationusers.canview = 1
+						GROUP BY stockmoves.stockid";
+			if (!isset($_POST['ShowZeroStocks'])) {
+				$SQL .= " HAVING SUM(stockmoves.newqoh) > 0";
+			}
+		} elseif (isset($_POST['ShowZeroStocks'])) {
 			$SQL = "SELECT stockid,
 							newqoh
 						FROM stockmoves
