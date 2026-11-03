@@ -52,8 +52,8 @@ if (isset($_POST['Submit'])) {
 
 	if ($InputError != 1) {
 		$SQL_HireDate = FormatDateForSQL($_POST['HireDate']);
-		$SQL_BirthDate = !empty($_POST['BirthDate']) && is_date($_POST['BirthDate']) ? "'" . FormatDateForSQL($_POST['BirthDate']) . "'" : 'NULL';
-		$SQL_TermDate = !empty($_POST['TerminationDate']) && is_date($_POST['TerminationDate']) ? "'" . FormatDateForSQL($_POST['TerminationDate']) . "'" : 'NULL';
+		$SQL_BirthDate = !empty($_POST['BirthDate']) and is_date($_POST['BirthDate']) ? "'" . FormatDateForSQL($_POST['BirthDate']) . "'" : 'NULL';
+		$SQL_TermDate = !empty($_POST['TerminationDate']) and is_date($_POST['TerminationDate']) ? "'" . FormatDateForSQL($_POST['TerminationDate']) . "'" : 'NULL';
 
 		if ($EmployeeID > 0) {
 			// Update existing employee

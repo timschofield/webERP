@@ -29,7 +29,7 @@ if (isset($_POST['Submit'])) {
 	}
 
 	if ($InputError != 1) {
-		if (isset($_POST['GuidelineID']) && $_POST['GuidelineID'] > 0) {
+		if (isset($_POST['GuidelineID']) and $_POST['GuidelineID'] > 0) {
 			// Update existing guideline
 			$SQL = "UPDATE hrincreaseguidelines SET
 						increasetype = '" . $_POST['IncreaseType'] . "',
@@ -80,7 +80,7 @@ if (isset($_POST['Submit'])) {
 }
 
 // Handle delete
-if (isset($_GET['delete']) && isset($_GET['GuidelineID'])) {
+if (isset($_GET['delete']) and isset($_GET['GuidelineID'])) {
 	$SQL = "DELETE FROM hrincreaseguidelines WHERE guidelineid = " . (int)$_GET['GuidelineID'];
 	$Result = DB_query($SQL);
 	if ($Result) {

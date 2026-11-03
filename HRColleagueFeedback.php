@@ -33,10 +33,10 @@ echo '<field>
 			<label for="Status">' . __('Status') . ':</label>
 			<select name="Status">
 				<option value="">' . __('All Statuses') . '</option>
-				<option value="Not Started"' . (isset($_POST['Status']) && $_POST['Status'] == 'Not Started' ? ' selected="selected"' : '') . '>' . __('Not Started') . '</option>
-				<option value="In Progress"' . (isset($_POST['Status']) && $_POST['Status'] == 'In Progress' ? ' selected="selected"' : '') . '>' . __('In Progress') . '</option>
-				<option value="Completed"' . (isset($_POST['Status']) && $_POST['Status'] == 'Completed' ? ' selected="selected"' : '') . '>' . __('Completed') . '</option>
-				<option value="Cancelled"' . (isset($_POST['Status']) && $_POST['Status'] == 'Cancelled' ? ' selected="selected"' : '') . '>' . __('Cancelled') . '</option>
+				<option value="Not Started"' . (isset($_POST['Status']) and $_POST['Status'] == 'Not Started' ? ' selected="selected"' : '') . '>' . __('Not Started') . '</option>
+				<option value="In Progress"' . (isset($_POST['Status']) and $_POST['Status'] == 'In Progress' ? ' selected="selected"' : '') . '>' . __('In Progress') . '</option>
+				<option value="Completed"' . (isset($_POST['Status']) and $_POST['Status'] == 'Completed' ? ' selected="selected"' : '') . '>' . __('Completed') . '</option>
+				<option value="Cancelled"' . (isset($_POST['Status']) and $_POST['Status'] == 'Cancelled' ? ' selected="selected"' : '') . '>' . __('Cancelled') . '</option>
 			</select>
 		</field>';
 
@@ -44,11 +44,11 @@ echo '<field>
 			<label for="FeedbackType">' . __('Feedback Type') . ':</label>
 			<select name="FeedbackType">
 				<option value="">' . __('All Types') . '</option>
-				<option value="Annual"' . (isset($_POST['FeedbackType']) && $_POST['FeedbackType'] == 'Annual' ? ' selected="selected"' : '') . '>' . __('Annual') . '</option>
-				<option value="Mid-Year"' . (isset($_POST['FeedbackType']) && $_POST['FeedbackType'] == 'Mid-Year' ? ' selected="selected"' : '') . '>' . __('Mid-Year') . '</option>
-				<option value="Probation"' . (isset($_POST['FeedbackType']) && $_POST['FeedbackType'] == 'Probation' ? ' selected="selected"' : '') . '>' . __('Probation') . '</option>
-				<option value="90-Day"' . (isset($_POST['FeedbackType']) && $_POST['FeedbackType'] == '90-Day' ? ' selected="selected"' : '') . '>' . __('90-Day') . '</option>
-				<option value="Project"' . (isset($_POST['FeedbackType']) && $_POST['FeedbackType'] == 'Project' ? ' selected="selected"' : '') . '>' . __('Project') . '</option>
+				<option value="Annual"' . (isset($_POST['FeedbackType']) and $_POST['FeedbackType'] == 'Annual' ? ' selected="selected"' : '') . '>' . __('Annual') . '</option>
+				<option value="Mid-Year"' . (isset($_POST['FeedbackType']) and $_POST['FeedbackType'] == 'Mid-Year' ? ' selected="selected"' : '') . '>' . __('Mid-Year') . '</option>
+				<option value="Probation"' . (isset($_POST['FeedbackType']) and $_POST['FeedbackType'] == 'Probation' ? ' selected="selected"' : '') . '>' . __('Probation') . '</option>
+				<option value="90-Day"' . (isset($_POST['FeedbackType']) and $_POST['FeedbackType'] == '90-Day' ? ' selected="selected"' : '') . '>' . __('90-Day') . '</option>
+				<option value="Project"' . (isset($_POST['FeedbackType']) and $_POST['FeedbackType'] == 'Project' ? ' selected="selected"' : '') . '>' . __('Project') . '</option>
 			</select>
 		</field>';
 
@@ -87,7 +87,7 @@ $SQL = "SELECT
 	LEFT JOIN hremployees ce ON f.createdbyid = ce.employeeid
 	WHERE 1=1";
 
-if (isset($_POST['Keywords']) && trim($_POST['Keywords']) != '') {
+if (isset($_POST['Keywords']) and trim($_POST['Keywords']) != '') {
 	$Keywords = DB_escape_string(trim($_POST['Keywords']));
 	$SQL .= " AND (
 			fe.firstname LIKE '%" . $Keywords . "%'
@@ -99,15 +99,15 @@ if (isset($_POST['Keywords']) && trim($_POST['Keywords']) != '') {
 		)";
 }
 
-if (isset($_POST['Status']) && $_POST['Status'] != '') {
+if (isset($_POST['Status']) and $_POST['Status'] != '') {
 	$SQL .= " AND f.status = '" . DB_escape_string($_POST['Status']) . "'";
 }
 
-if (isset($_POST['FeedbackType']) && $_POST['FeedbackType'] != '') {
+if (isset($_POST['FeedbackType']) and $_POST['FeedbackType'] != '') {
 	$SQL .= " AND f.feedbacktype = '" . DB_escape_string($_POST['FeedbackType']) . "'";
 }
 
-if (isset($_POST['PeriodYear']) && $_POST['PeriodYear'] != '') {
+if (isset($_POST['PeriodYear']) and $_POST['PeriodYear'] != '') {
 	$SQL .= " AND YEAR(f.feedbackperiodstart) = " . (int)$_POST['PeriodYear'];
 }
 
@@ -135,12 +135,12 @@ echo '<table class="selection">
 if (DB_num_rows($Result) > 0) {
 	while ($MyRow = DB_fetch_array($Result)) {
 		$RowClass = '';
-		if ($MyRow['status'] != 'Completed' && $MyRow['status'] != 'Cancelled' && $MyRow['duedate'] != null && $MyRow['duedate'] < date('Y-m-d')) {
+		if ($MyRow['status'] != 'Completed' and $MyRow['status'] != 'Cancelled' and $MyRow['duedate'] != null and $MyRow['duedate'] < date('Y-m-d')) {
 			$RowClass = ' class="warn"';
 		}
 
 		$RatingLabel = '-';
-		if (isset($MyRow['overallrating']) && $MyRow['overallrating'] !== null && $MyRow['overallrating'] !== '') {
+		if (isset($MyRow['overallrating']) and $MyRow['overallrating'] !== null and $MyRow['overallrating'] !== '') {
 			$RatingInt = (int)$MyRow['overallrating'];
 			$RatingLabel = isset($RatingLabels[$RatingInt]) ? $RatingLabels[$RatingInt] : (string)$RatingInt;
 		}

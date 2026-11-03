@@ -71,7 +71,7 @@ if (DB_num_rows($Result) > 0) {
 
 		// Highlight overdue appraisals
 		$RowClass = '';
-		if ($MyRow['status'] != 'Completed' && $MyRow['status'] != 'Cancelled' && $MyRow['duedate'] < date('Y-m-d')) {
+		if ($MyRow['status'] != 'Completed' and $MyRow['status'] != 'Cancelled' and $MyRow['duedate'] < date('Y-m-d')) {
 			$RowClass = ' class="warn"';
 		}
 

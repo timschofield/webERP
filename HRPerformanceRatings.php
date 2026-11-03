@@ -21,7 +21,7 @@ echo '<p class="page_title_text">
 if (isset($_POST['SubmitRatings'])) {
 	if (!hash_equals($_SESSION['FormID'], $_POST['FormID'])) {
 		prnMsg(__('Form token validation failed'), 'error');
-	} elseif (isset($_POST['ReviewID']) && (int)$_POST['ReviewID'] > 0) {
+	} elseif (isset($_POST['ReviewID']) and (int)$_POST['ReviewID'] > 0) {
 		$ReviewID = (int)$_POST['ReviewID'];
 		DB_Txn_Begin();
 
@@ -80,7 +80,7 @@ if (isset($_POST['SubmitRatings'])) {
 		// Map numeric score to rating label and update review record
 		$MappedRating = MapScoreToRating($OverallScore);
 		$RatingLabels = GetRatingLabels();
-		$OverallLabel = ($MappedRating !== null && isset($RatingLabels[$MappedRating])) ? $RatingLabels[$MappedRating] : '';
+		$OverallLabel = ($MappedRating !== null and isset($RatingLabels[$MappedRating])) ? $RatingLabels[$MappedRating] : '';
 
 		$SQL = "UPDATE hrperformancereviews
 				SET overallscore = " . $OverallScore . ",
@@ -95,7 +95,7 @@ if (isset($_POST['SubmitRatings'])) {
 }
 
 // Handle delete
-if (isset($_GET['delete']) && isset($_GET['RatingID'])) {
+if (isset($_GET['delete']) and isset($_GET['RatingID'])) {
 	$SQL = "DELETE FROM hrperformanceratings WHERE ratingid = " . (int)$_GET['RatingID'];
 	$Result = DB_query($SQL);
 	if ($Result) {
@@ -104,7 +104,7 @@ if (isset($_GET['delete']) && isset($_GET['RatingID'])) {
 }
 
 // Select review to rate
-if (!isset($_GET['ReviewID']) && !isset($_POST['ReviewID'])) {
+if (!isset($_GET['ReviewID']) and !isset($_POST['ReviewID'])) {
 	echo '<form method="get" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">
 			<table class="selection">
 			<tr>
@@ -145,7 +145,7 @@ if (!isset($_GET['ReviewID']) && !isset($_POST['ReviewID'])) {
 }
 
 	// Display rating form
-if (isset($_GET['ReviewID']) || isset($_POST['ReviewID'])) {
+if (isset($_GET['ReviewID']) or isset($_POST['ReviewID'])) {
 	$ReviewID = isset($_GET['ReviewID']) ? (int)$_GET['ReviewID'] : (int)$_POST['ReviewID'];
 
 	// Get review details with scale information
@@ -241,8 +241,8 @@ if (isset($_GET['ReviewID']) || isset($_POST['ReviewID'])) {
 							<option value="">' . __('Select') . '</option>';
 
 			/* Use rating scale from review if available, otherwise default to 1-5 */
-			$MinRating = isset($ReviewRow['minvalue']) && $ReviewRow['minvalue'] !== NULL ? (int)$ReviewRow['minvalue'] : 1;
-			$MaxRating = isset($ReviewRow['maxvalue']) && $ReviewRow['maxvalue'] !== NULL ? (int)$ReviewRow['maxvalue'] : 5;
+			$MinRating = isset($ReviewRow['minvalue']) and $ReviewRow['minvalue'] !== NULL ? (int)$ReviewRow['minvalue'] : 1;
+			$MaxRating = isset($ReviewRow['maxvalue']) and $ReviewRow['maxvalue'] !== NULL ? (int)$ReviewRow['maxvalue'] : 5;
 
 			for ($i = $MaxRating; $i >= $MinRating; $i--) {
 				echo '<option value="' . $i . '"' . ($ExistingRating == $i ? ' selected="selected"' : '') . '>' . $i . '</option>';
@@ -266,8 +266,8 @@ if (isset($_GET['ReviewID']) || isset($_POST['ReviewID'])) {
 
 		/* Display existing overall score if available */
 		if ($ReviewRow['overallscore'] > 0) {
-			$MinRating = isset($ReviewRow['minvalue']) && $ReviewRow['minvalue'] !== NULL ? (int)$ReviewRow['minvalue'] : 1;
-			$MaxRating = isset($ReviewRow['maxvalue']) && $ReviewRow['maxvalue'] !== NULL ? (int)$ReviewRow['maxvalue'] : 5;
+			$MinRating = isset($ReviewRow['minvalue']) and $ReviewRow['minvalue'] !== NULL ? (int)$ReviewRow['minvalue'] : 1;
+			$MaxRating = isset($ReviewRow['maxvalue']) and $ReviewRow['maxvalue'] !== NULL ? (int)$ReviewRow['maxvalue'] : 5;
 			$MaxPossibleScore = $MaxRating;
 
 			echo '<div style="margin-top: 20px; padding: 15px; background-color: #c8e6c9; border: 1px solid #4caf50;">

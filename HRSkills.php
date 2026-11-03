@@ -23,11 +23,11 @@ if (isset($_POST['Submit'])) {
 	$InputError = 0;
 
 	// Validation
-	if (!isset($_POST['SkillCode']) || $_POST['SkillCode'] == '') {
+	if (!isset($_POST['SkillCode']) or $_POST['SkillCode'] == '') {
 		$InputError = 1;
 		prnMsg(__('Skill code is required'), 'error');
 	}
-	if (!isset($_POST['SkillName']) || $_POST['SkillName'] == '') {
+	if (!isset($_POST['SkillName']) or $_POST['SkillName'] == '') {
 		$InputError = 1;
 		prnMsg(__('Skill name is required'), 'error');
 	}
@@ -40,7 +40,7 @@ if (isset($_POST['Submit'])) {
 		$Category = $_POST['Category'];
 		$IsActive = isset($_POST['IsActive']) ? 1 : 0;
 
-		if (isset($_GET['SkillID']) && $_GET['SkillID'] != '') {
+		if (isset($_GET['SkillID']) and $_GET['SkillID'] != '') {
 			// Update existing skill
 			$SkillID = (int)$_GET['SkillID'];
 
@@ -95,7 +95,7 @@ if (isset($_POST['Submit'])) {
 }
 
 // Handle delete
-if (isset($_GET['Delete']) && isset($_GET['SkillID'])) {
+if (isset($_GET['Delete']) and isset($_GET['SkillID'])) {
 	$SkillID = (int)$_GET['SkillID'];
 
 	$SQL = "DELETE FROM hrskills WHERE skillid = " . $SkillID;
@@ -198,13 +198,13 @@ echo '<fieldset>
 			<label for="CategoryFilter">' . __('Category') . ':</label>
 			<select name="CategoryFilter">
 				<option value="">' . __('All Categories') . '</option>
-				<option value="Technical"' . (isset($_POST['CategoryFilter']) && $_POST['CategoryFilter'] == 'Technical' ? ' selected' : '') . '>' . __('Technical') . '</option>
-				<option value="Leadership"' . (isset($_POST['CategoryFilter']) && $_POST['CategoryFilter'] == 'Leadership' ? ' selected' : '') . '>' . __('Leadership') . '</option>
-				<option value="Communication"' . (isset($_POST['CategoryFilter']) && $_POST['CategoryFilter'] == 'Communication' ? ' selected' : '') . '>' . __('Communication') . '</option>
-				<option value="Problem Solving"' . (isset($_POST['CategoryFilter']) && $_POST['CategoryFilter'] == 'Problem Solving' ? ' selected' : '') . '>' . __('Problem Solving') . '</option>
-				<option value="Teamwork"' . (isset($_POST['CategoryFilter']) && $_POST['CategoryFilter'] == 'Teamwork' ? ' selected' : '') . '>' . __('Teamwork') . '</option>
-				<option value="Customer Service"' . (isset($_POST['CategoryFilter']) && $_POST['CategoryFilter'] == 'Customer Service' ? ' selected' : '') . '>' . __('Customer Service') . '</option>
-				<option value="Other"' . (isset($_POST['CategoryFilter']) && $_POST['CategoryFilter'] == 'Other' ? ' selected' : '') . '>' . __('Other') . '</option>
+				<option value="Technical"' . (isset($_POST['CategoryFilter']) and $_POST['CategoryFilter'] == 'Technical' ? ' selected' : '') . '>' . __('Technical') . '</option>
+				<option value="Leadership"' . (isset($_POST['CategoryFilter']) and $_POST['CategoryFilter'] == 'Leadership' ? ' selected' : '') . '>' . __('Leadership') . '</option>
+				<option value="Communication"' . (isset($_POST['CategoryFilter']) and $_POST['CategoryFilter'] == 'Communication' ? ' selected' : '') . '>' . __('Communication') . '</option>
+				<option value="Problem Solving"' . (isset($_POST['CategoryFilter']) and $_POST['CategoryFilter'] == 'Problem Solving' ? ' selected' : '') . '>' . __('Problem Solving') . '</option>
+				<option value="Teamwork"' . (isset($_POST['CategoryFilter']) and $_POST['CategoryFilter'] == 'Teamwork' ? ' selected' : '') . '>' . __('Teamwork') . '</option>
+				<option value="Customer Service"' . (isset($_POST['CategoryFilter']) and $_POST['CategoryFilter'] == 'Customer Service' ? ' selected' : '') . '>' . __('Customer Service') . '</option>
+				<option value="Other"' . (isset($_POST['CategoryFilter']) and $_POST['CategoryFilter'] == 'Other' ? ' selected' : '') . '>' . __('Other') . '</option>
 			</select>
 		</field>
 	</fieldset>';
@@ -218,14 +218,14 @@ echo '</form>';
 // Build query
 $SQL = "SELECT * FROM hrskills WHERE 1=1";
 
-if (isset($_POST['Keywords']) && $_POST['Keywords'] != '') {
+if (isset($_POST['Keywords']) and $_POST['Keywords'] != '') {
 	$Keywords = $_POST['Keywords'];
 	$SQL .= " AND (skillcode LIKE '%" . $Keywords . "%'
 			OR skillname LIKE '%" . $Keywords . "%'
 			OR description LIKE '%" . $Keywords . "%')";
 }
 
-if (isset($_POST['CategoryFilter']) && $_POST['CategoryFilter'] != '') {
+if (isset($_POST['CategoryFilter']) and $_POST['CategoryFilter'] != '') {
 	$Category = $_POST['CategoryFilter'];
 	$SQL .= " AND skillcategory = '" . $Category . "'";
 }

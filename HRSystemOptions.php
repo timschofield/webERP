@@ -47,7 +47,7 @@ foreach ($RequiredOptions as $Option) {
 			WHERE optionname = '" . DB_escape_string($Option[0]) . "'";
 	$Result = DB_query($SQL);
 	$OptRow = DB_fetch_array($Result);
-	if (!isset($OptRow['cnt']) || (int)$OptRow['cnt'] == 0) {
+	if (!isset($OptRow['cnt']) or (int)$OptRow['cnt'] == 0) {
 		$SQL = "INSERT INTO hrsystemoptions (optionname, optionvalue, optiondescription)
 				VALUES ('" . DB_escape_string($Option[0]) . "',
 						'" . DB_escape_string($Option[1]) . "',
@@ -58,7 +58,7 @@ foreach ($RequiredOptions as $Option) {
 
 // Handle form submission
 if (isset($_POST['UpdateOptions'])) {
-	if (isset($_POST['OptionValue']) && is_array($_POST['OptionValue'])) {
+	if (isset($_POST['OptionValue']) and is_array($_POST['OptionValue'])) {
 		foreach ($_POST['OptionValue'] as $OptionName => $OptionValue) {
 			$OptionName = DB_escape_string($OptionName);
 			$OptionValue = DB_escape_string($OptionValue);

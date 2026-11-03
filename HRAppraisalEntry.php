@@ -135,16 +135,16 @@ if (isset($_POST['Submit'])) {
 			prnMsg(__('Appraisal has been updated'), 'success');
 
 			/* Process per-criterion scores submitted from the form */
-			if (isset($_POST['CriteriaRating']) && is_array($_POST['CriteriaRating'])) {
+			if (isset($_POST['CriteriaRating']) and is_array($_POST['CriteriaRating'])) {
 				foreach ($_POST['CriteriaRating'] as $cid => $rating) {
 					$comments = isset($_POST['CriteriaComments'][$cid]) ? $_POST['CriteriaComments'][$cid] : '';
 					SaveCriteriaScoreAdvanced($AppraisalID, (int)$cid, $rating === '' ? null : (int)$rating, $comments);
 				}
 				$calc = CalculateWeightedScoreForAppraisal($AppraisalID, 0);
-				$SQL = "UPDATE hrperfappraisals SET calculatedoverallrating = " . (isset($calc['weightedscore']) && $calc['weightedscore'] !== null ? (float)$calc['weightedscore'] : '0.00') . " WHERE appraisalid = " . $AppraisalID;
+				$SQL = "UPDATE hrperfappraisals SET calculatedoverallrating = " . (isset($calc['weightedscore']) and $calc['weightedscore'] !== null ? (float)$calc['weightedscore'] : '0.00') . " WHERE appraisalid = " . $AppraisalID;
 				DB_query($SQL);
-				if (isset($_POST['UseCalculatedRating']) && $_POST['UseCalculatedRating']) {
-					$SQL = "UPDATE hrperfappraisals SET overallrating = " . (isset($calc['weightedscore']) && $calc['weightedscore'] !== null ? (float)$calc['weightedscore'] : '0.00') . " WHERE appraisalid = " . $AppraisalID;
+				if (isset($_POST['UseCalculatedRating']) and $_POST['UseCalculatedRating']) {
+					$SQL = "UPDATE hrperfappraisals SET overallrating = " . (isset($calc['weightedscore']) and $calc['weightedscore'] !== null ? (float)$calc['weightedscore'] : '0.00') . " WHERE appraisalid = " . $AppraisalID;
 					DB_query($SQL);
 				}
 			}
@@ -175,16 +175,16 @@ if (isset($_POST['Submit'])) {
 			$AppraisalID = DB_Last_Insert_ID('hrperfappraisals', 'appraisalid');
 
 			/* Process per-criterion scores submitted from the form for the newly created appraisal */
-			if (isset($_POST['CriteriaRating']) && is_array($_POST['CriteriaRating'])) {
+			if (isset($_POST['CriteriaRating']) and is_array($_POST['CriteriaRating'])) {
 				foreach ($_POST['CriteriaRating'] as $cid => $rating) {
 					$comments = isset($_POST['CriteriaComments'][$cid]) ? $_POST['CriteriaComments'][$cid] : '';
 					SaveCriteriaScoreAdvanced($AppraisalID, (int)$cid, $rating === '' ? null : (int)$rating, $comments);
 				}
 				$calc = CalculateWeightedScoreForAppraisal($AppraisalID, 0);
-				$SQL = "UPDATE hrperfappraisals SET calculatedoverallrating = " . (isset($calc['weightedscore']) && $calc['weightedscore'] !== null ? (float)$calc['weightedscore'] : '0.00') . " WHERE appraisalid = " . $AppraisalID;
+				$SQL = "UPDATE hrperfappraisals SET calculatedoverallrating = " . (isset($calc['weightedscore']) and $calc['weightedscore'] !== null ? (float)$calc['weightedscore'] : '0.00') . " WHERE appraisalid = " . $AppraisalID;
 				DB_query($SQL);
-				if (isset($_POST['UseCalculatedRating']) && $_POST['UseCalculatedRating']) {
-					$SQL = "UPDATE hrperfappraisals SET overallrating = " . (isset($calc['weightedscore']) && $calc['weightedscore'] !== null ? (float)$calc['weightedscore'] : '0.00') . " WHERE appraisalid = " . $AppraisalID;
+				if (isset($_POST['UseCalculatedRating']) and $_POST['UseCalculatedRating']) {
+					$SQL = "UPDATE hrperfappraisals SET overallrating = " . (isset($calc['weightedscore']) and $calc['weightedscore'] !== null ? (float)$calc['weightedscore'] : '0.00') . " WHERE appraisalid = " . $AppraisalID;
 					DB_query($SQL);
 				}
 			}

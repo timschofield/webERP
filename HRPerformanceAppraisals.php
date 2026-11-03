@@ -43,10 +43,10 @@ echo '<field>
 			<label for="Status">' . __('Status') . ':</label>
 			<select name="Status">
 				<option value="">' . __('All Statuses') . '</option>
-				<option value="Not Started"' . (isset($_POST['Status']) && $_POST['Status'] == 'Not Started' ? ' selected' : '') . '>' . __('Not Started') . '</option>
-				<option value="In Progress"' . (isset($_POST['Status']) && $_POST['Status'] == 'In Progress' ? ' selected' : '') . '>' . __('In Progress') . '</option>
-				<option value="Completed"' . (isset($_POST['Status']) && $_POST['Status'] == 'Completed' ? ' selected' : '') . '>' . __('Completed') . '</option>
-				<option value="Cancelled"' . (isset($_POST['Status']) && $_POST['Status'] == 'Cancelled' ? ' selected' : '') . '>' . __('Cancelled') . '</option>
+				<option value="Not Started"' . (isset($_POST['Status']) and $_POST['Status'] == 'Not Started' ? ' selected' : '') . '>' . __('Not Started') . '</option>
+				<option value="In Progress"' . (isset($_POST['Status']) and $_POST['Status'] == 'In Progress' ? ' selected' : '') . '>' . __('In Progress') . '</option>
+				<option value="Completed"' . (isset($_POST['Status']) and $_POST['Status'] == 'Completed' ? ' selected' : '') . '>' . __('Completed') . '</option>
+				<option value="Cancelled"' . (isset($_POST['Status']) and $_POST['Status'] == 'Cancelled' ? ' selected' : '') . '>' . __('Cancelled') . '</option>
 			</select>
 		</field>';
 
@@ -82,19 +82,19 @@ $SQL = "SELECT
 	LEFT JOIN hremployees m ON a.reviewerid = m.employeeid
 	WHERE 1=1";
 
-if (isset($_POST['Keywords']) && $_POST['Keywords'] != '') {
+if (isset($_POST['Keywords']) and $_POST['Keywords'] != '') {
 	$Keywords = $_POST['Keywords'];
 	$SQL .= " AND (e.firstname LIKE '%" . $Keywords . "%'
 			OR e.lastname LIKE '%" . $Keywords . "%'
 			OR e.employeeid LIKE '%" . $Keywords . "%')";
 }
 
-if (isset($_POST['Status']) && $_POST['Status'] != '') {
+if (isset($_POST['Status']) and $_POST['Status'] != '') {
 	$Status = $_POST['Status'];
 	$SQL .= " AND a.status = '" . $Status . "'";
 }
 
-if (isset($_POST['PeriodYear']) && $_POST['PeriodYear'] != '') {
+if (isset($_POST['PeriodYear']) and $_POST['PeriodYear'] != '') {
 	$Year = $_POST['PeriodYear'];
 	$SQL .= " AND YEAR(a.reviewperiodstart) = '" . $Year . "'";
 }

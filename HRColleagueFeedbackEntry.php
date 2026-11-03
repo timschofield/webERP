@@ -18,24 +18,24 @@ include(__DIR__ . '/includes/header.php');
 require_once(__DIR__ . '/includes/HRPerformanceHelper.php');
 
 $RatingLabels = GetRatingLabels();
-$EditMode = (isset($_GET['FeedbackID']) && (int)$_GET['FeedbackID'] > 0);
+$EditMode = (isset($_GET['FeedbackID']) and (int)$_GET['FeedbackID'] > 0);
 
 $From = '';
-if (isset($_GET['From']) && $_GET['From'] === 'HRColleagueFeedback') {
+if (isset($_GET['From']) and $_GET['From'] === 'HRColleagueFeedback') {
 	$From = 'HRColleagueFeedback';
 	
-} elseif (isset($_GET['From']) && $_GET['From'] === 'HRMyColleagueFeedbacks') {
+} elseif (isset($_GET['From']) and $_GET['From'] === 'HRMyColleagueFeedbacks') {
 	$From = 'HRMyColleagueFeedbacks';
 
-} elseif (isset($_GET['From']) && $_GET['From'] === 'HRColleagueFeedbackDue') {
+} elseif (isset($_GET['From']) and $_GET['From'] === 'HRColleagueFeedbackDue') {
 	$From = 'HRColleagueFeedbackDue';
-} elseif (isset($_POST['From']) && $_POST['From'] === 'HRColleagueFeedback') {
+} elseif (isset($_POST['From']) and $_POST['From'] === 'HRColleagueFeedback') {
 	$From = 'HRColleagueFeedback';
 
-} elseif (isset($_POST['From']) && $_POST['From'] === 'HRMyColleagueFeedbacks') {
+} elseif (isset($_POST['From']) and $_POST['From'] === 'HRMyColleagueFeedbacks') {
 	$From = 'HRMyColleagueFeedbacks';
 
-} elseif (isset($_POST['From']) && $_POST['From'] === 'HRColleagueFeedbackDue') {
+} elseif (isset($_POST['From']) and $_POST['From'] === 'HRColleagueFeedbackDue') {
 	$From = 'HRColleagueFeedbackDue';
 }
 
@@ -52,31 +52,31 @@ if (isset($_POST['Submit'])) {
 	$InputError = 0;
 	$CreatedByID = 0;
 
-	if (!isset($_POST['FromEmployeeID']) || (int)$_POST['FromEmployeeID'] <= 0) {
+	if (!isset($_POST['FromEmployeeID']) or (int)$_POST['FromEmployeeID'] <= 0) {
 		$InputError = 1;
 		prnMsg(__('From employee must be selected'), 'error');
 	}
-	if (!isset($_POST['AboutEmployeeID']) || (int)$_POST['AboutEmployeeID'] <= 0) {
+	if (!isset($_POST['AboutEmployeeID']) or (int)$_POST['AboutEmployeeID'] <= 0) {
 		$InputError = 1;
 		prnMsg(__('About employee must be selected'), 'error');
 	}
-	if (isset($_POST['FromEmployeeID'], $_POST['AboutEmployeeID']) && (int)$_POST['FromEmployeeID'] === (int)$_POST['AboutEmployeeID']) {
+	if (isset($_POST['FromEmployeeID'], $_POST['AboutEmployeeID']) and (int)$_POST['FromEmployeeID'] === (int)$_POST['AboutEmployeeID']) {
 		$InputError = 1;
 		prnMsg(__('From employee and about employee must be different'), 'error');
 	}
-	if (!isset($_POST['FeedbackPeriodStart']) || $_POST['FeedbackPeriodStart'] == '') {
+	if (!isset($_POST['FeedbackPeriodStart']) or $_POST['FeedbackPeriodStart'] == '') {
 		$InputError = 1;
 		prnMsg(__('Feedback period start date is required'), 'error');
 	}
-	if (!isset($_POST['FeedbackPeriodEnd']) || $_POST['FeedbackPeriodEnd'] == '') {
+	if (!isset($_POST['FeedbackPeriodEnd']) or $_POST['FeedbackPeriodEnd'] == '') {
 		$InputError = 1;
 		prnMsg(__('Feedback period end date is required'), 'error');
 	}
-	if (!isset($_POST['FeedbackType']) || $_POST['FeedbackType'] == '') {
+	if (!isset($_POST['FeedbackType']) or $_POST['FeedbackType'] == '') {
 		$InputError = 1;
 		prnMsg(__('Feedback type is required'), 'error');
 	}
-	if (!isset($_POST['Status']) || $_POST['Status'] == '') {
+	if (!isset($_POST['Status']) or $_POST['Status'] == '') {
 		$InputError = 1;
 		prnMsg(__('Status is required'), 'error');
 	}
@@ -109,10 +109,10 @@ if (isset($_POST['Submit'])) {
 		$AboutEmployeeID = (int)$_POST['AboutEmployeeID'];
 		$FeedbackPeriodStart = FormatDateForSQL($_POST['FeedbackPeriodStart']);
 		$FeedbackPeriodEnd = FormatDateForSQL($_POST['FeedbackPeriodEnd']);
-		$DueDate = (isset($_POST['DueDate']) && $_POST['DueDate'] != '') ? "'" . FormatDateForSQL($_POST['DueDate']) . "'" : 'NULL';
+		$DueDate = (isset($_POST['DueDate']) and $_POST['DueDate'] != '') ? "'" . FormatDateForSQL($_POST['DueDate']) . "'" : 'NULL';
 
 		/* Change status dynamically from Not Started to In Progress if criteria has rating score */
-		if ($Status == 'Not Started' && isset($_POST['CriteriaRating']) && is_array($_POST['CriteriaRating'])) {
+		if ($Status == 'Not Started' and isset($_POST['CriteriaRating']) and is_array($_POST['CriteriaRating'])) {
 			foreach ($_POST['CriteriaRating'] as $rating) {
 				if ($rating !== '') {
 					$Status = 'In Progress';
@@ -123,14 +123,14 @@ if (isset($_POST['Submit'])) {
 		}
 
 		if ($Status == 'Completed') {
-			$CompletionDate = (isset($_POST['CompletionDate']) && $_POST['CompletionDate'] != '')
+			$CompletionDate = (isset($_POST['CompletionDate']) and $_POST['CompletionDate'] != '')
 				? "'" . FormatDateForSQL($_POST['CompletionDate']) . "'"
 				: "'" . date('Y-m-d') . "'";
 		} else {
 			$CompletionDate = 'NULL';
 		}
 
-		$OverallRating = (isset($_POST['OverallRating']) && $_POST['OverallRating'] !== '') ? (int)$_POST['OverallRating'] : 'NULL';
+		$OverallRating = (isset($_POST['OverallRating']) and $_POST['OverallRating'] !== '') ? (int)$_POST['OverallRating'] : 'NULL';
 		$Comments = isset($_POST['Comments']) ? DB_escape_string($_POST['Comments']) : '';
 
 		if ($EditMode) {
@@ -150,16 +150,16 @@ if (isset($_POST['Submit'])) {
 				WHERE feedbackid = " . $FeedbackID;
 			DB_query($SQL, __('Failed to update colleague feedback'));
 
-			if (isset($_POST['CriteriaRating']) && is_array($_POST['CriteriaRating'])) {
+			if (isset($_POST['CriteriaRating']) and is_array($_POST['CriteriaRating'])) {
 				foreach ($_POST['CriteriaRating'] as $cid => $rating) {
 					$criteriaComments = isset($_POST['CriteriaComments'][$cid]) ? $_POST['CriteriaComments'][$cid] : '';
 					SaveFeedbackCriteriaScoreAdvanced($FeedbackID, (int)$cid, $rating === '' ? null : (int)$rating, $criteriaComments);
 				}
 
 				$calc = CalculateWeightedScoreForFeedback($FeedbackID);
-				if (isset($_POST['UseCalculatedRating']) && $_POST['UseCalculatedRating']) {
+				if (isset($_POST['UseCalculatedRating']) and $_POST['UseCalculatedRating']) {
 					$SQL = "UPDATE hrcolleaguefeedback
-							SET overallrating = " . (isset($calc['mappedrating']) && $calc['mappedrating'] !== null ? (int)$calc['mappedrating'] : 'NULL') . "
+							SET overallrating = " . (isset($calc['mappedrating']) and $calc['mappedrating'] !== null ? (int)$calc['mappedrating'] : 'NULL') . "
 							WHERE feedbackid = " . $FeedbackID;
 					DB_query($SQL);
 				}
@@ -195,16 +195,16 @@ if (isset($_POST['Submit'])) {
 			DB_query($SQL, __('Failed to create colleague feedback'));
 			$FeedbackID = DB_Last_Insert_ID('hrcolleaguefeedback', 'feedbackid');
 
-			if (isset($_POST['CriteriaRating']) && is_array($_POST['CriteriaRating'])) {
+			if (isset($_POST['CriteriaRating']) and is_array($_POST['CriteriaRating'])) {
 				foreach ($_POST['CriteriaRating'] as $cid => $rating) {
 					$criteriaComments = isset($_POST['CriteriaComments'][$cid]) ? $_POST['CriteriaComments'][$cid] : '';
 					SaveFeedbackCriteriaScoreAdvanced($FeedbackID, (int)$cid, $rating === '' ? null : (int)$rating, $criteriaComments);
 				}
 
 				$calc = CalculateWeightedScoreForFeedback($FeedbackID);
-				if (isset($_POST['UseCalculatedRating']) && $_POST['UseCalculatedRating']) {
+				if (isset($_POST['UseCalculatedRating']) and $_POST['UseCalculatedRating']) {
 					$SQL = "UPDATE hrcolleaguefeedback
-							SET overallrating = " . (isset($calc['mappedrating']) && $calc['mappedrating'] !== null ? (int)$calc['mappedrating'] : 'NULL') . "
+							SET overallrating = " . (isset($calc['mappedrating']) and $calc['mappedrating'] !== null ? (int)$calc['mappedrating'] : 'NULL') . "
 							WHERE feedbackid = " . $FeedbackID;
 					DB_query($SQL);
 				}
@@ -218,7 +218,7 @@ if (isset($_POST['Submit'])) {
 	}
 }
 
-if ((isset($_GET['Delete']) || isset($_POST['Delete'])) && isset($_GET['FeedbackID'])) {
+if ((isset($_GET['Delete']) or isset($_POST['Delete'])) and isset($_GET['FeedbackID'])) {
 	$FeedbackID = (int)$_GET['FeedbackID'];
 
 	DeleteFeedbackCriteria($FeedbackID);
@@ -475,7 +475,7 @@ echo '</table>';
 
 echo '<p><strong>' . __('Calculated Weighted Score') . ':</strong> <span id="weightedScoreDisplay">N/A</span> ' . __('Mapped Rating') . ': <span id="mappedRatingDisplay">N/A</span></p>';
 
-$useCalculatedRatingChecked = (!isset($_POST['FormID']) || (isset($_POST['UseCalculatedRating']) && $_POST['UseCalculatedRating'])) ? ' checked="checked"' : '';
+$useCalculatedRatingChecked = (!isset($_POST['FormID']) or (isset($_POST['UseCalculatedRating']) and $_POST['UseCalculatedRating'])) ? ' checked="checked"' : '';
 echo '<p><label><input type="checkbox" name="UseCalculatedRating" value="1"' . $useCalculatedRatingChecked . ' /> ' . __('Use calculated rating as overall rating') . '</label></p>';
 
 echo '</fieldset>';
@@ -503,7 +503,7 @@ echo '<script>
 			var IsCompleted = StatusSelect.value === \'Completed\';
 			CompletionDateField.style.display = IsCompleted ? \'\' : \'none\';
 
-			if (IsCompleted && CompletionDateInput.value === \'\') {
+			if (IsCompleted and CompletionDateInput.value === \'\') {
 				var Today = new Date();
 				var Month = String(Today.getMonth() + 1).padStart(2, \'0\');
 				var Day = String(Today.getDate()).padStart(2, \'0\');

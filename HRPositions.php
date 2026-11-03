@@ -207,10 +207,10 @@ echo '</select>
 echo '<field>
 		<label for="PositionStatus">' . __('Position Status') . ':</label>
 		<select name="PositionStatus">
-			<option value="Open"' . (isset($_POST['positionstatus']) && $_POST['positionstatus'] == 'Open' ? ' selected="selected"' : '') . '>' . __('Open') . '</option>
-			<option value="Filled"' . (isset($_POST['positionstatus']) && $_POST['positionstatus'] == 'Filled' ? ' selected="selected"' : '') . '>' . __('Filled') . '</option>
-			<option value="Frozen"' . (isset($_POST['positionstatus']) && $_POST['positionstatus'] == 'Frozen' ? ' selected="selected"' : '') . '>' . __('Frozen') . '</option>
-			<option value="Eliminated"' . (isset($_POST['positionstatus']) && $_POST['positionstatus'] == 'Eliminated' ? ' selected="selected"' : '') . '>' . __('Eliminated') . '</option>
+			<option value="Open"' . (isset($_POST['positionstatus']) and $_POST['positionstatus'] == 'Open' ? ' selected="selected"' : '') . '>' . __('Open') . '</option>
+			<option value="Filled"' . (isset($_POST['positionstatus']) and $_POST['positionstatus'] == 'Filled' ? ' selected="selected"' : '') . '>' . __('Filled') . '</option>
+			<option value="Frozen"' . (isset($_POST['positionstatus']) and $_POST['positionstatus'] == 'Frozen' ? ' selected="selected"' : '') . '>' . __('Frozen') . '</option>
+			<option value="Eliminated"' . (isset($_POST['positionstatus']) and $_POST['positionstatus'] == 'Eliminated' ? ' selected="selected"' : '') . '>' . __('Eliminated') . '</option>
 		</select>
 	</field>';
 
@@ -232,7 +232,7 @@ echo '<field>
 if (isset($SelectedPosition)) {
 	echo '<field>
 			<label for="Active">' . __('Active') . ':</label>
-			<input type="checkbox" name="Active" value="1"' . (isset($_POST['active']) && $_POST['active'] == 1 ? ' checked="checked"' : '') . ' />
+			<input type="checkbox" name="Active" value="1"' . (isset($_POST['active']) and $_POST['active'] == 1 ? ' checked="checked"' : '') . ' />
 		</field>';
 }
 

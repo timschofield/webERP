@@ -22,11 +22,11 @@ if (isset($_POST['Submit'])) {
 
 	$InputError = 0;
 
-	if (!isset($_POST['PositionID']) || $_POST['PositionID'] == '') {
+	if (!isset($_POST['PositionID']) or $_POST['PositionID'] == '') {
 		$InputError = 1;
 		prnMsg(__('Position must be selected'), 'error');
 	}
-	if (!isset($_POST['FiscalYear']) || $_POST['FiscalYear'] == '') {
+	if (!isset($_POST['FiscalYear']) or $_POST['FiscalYear'] == '') {
 		$InputError = 1;
 		prnMsg(__('Fiscal year is required'), 'error');
 	}
@@ -34,7 +34,7 @@ if (isset($_POST['Submit'])) {
 	if ($InputError == 0) {
 
 		$PositionID = (int)$_POST['PositionID'];
-		$DepartmentID = isset($_POST['DepartmentID']) && $_POST['DepartmentID'] != '' ? (int)$_POST['DepartmentID'] : 'NULL';
+		$DepartmentID = isset($_POST['DepartmentID']) and $_POST['DepartmentID'] != '' ? (int)$_POST['DepartmentID'] : 'NULL';
 		$FiscalYear = (int)$_POST['FiscalYear'];
 		$BudgetedPositions = isset($_POST['BudgetedPositions']) ? (float)$_POST['BudgetedPositions'] : 'NULL';
 		$BudgetedSalary = isset($_POST['BudgetedSalary']) ? (float)$_POST['BudgetedSalary'] : 'NULL';
@@ -43,7 +43,7 @@ if (isset($_POST['Submit'])) {
 		$ActualSalary = isset($_POST['ActualSalary']) ? (float)$_POST['ActualSalary'] : 'NULL';
 		$Notes = $_POST['Notes'];
 
-		if (isset($_GET['BudgetID']) && $_GET['BudgetID'] != '') {
+		if (isset($_GET['BudgetID']) and $_GET['BudgetID'] != '') {
 			// Update
 			$BudgetID = (int)$_GET['BudgetID'];
 
@@ -93,7 +93,7 @@ if (isset($_POST['Submit'])) {
 }
 
 // Handle delete
-if (isset($_GET['Delete']) && isset($_GET['BudgetID'])) {
+if (isset($_GET['Delete']) and isset($_GET['BudgetID'])) {
 	$BudgetID = (int)$_GET['BudgetID'];
 
 	$SQL = "DELETE FROM hrpositionbudgets WHERE budgetid = " . $BudgetID;

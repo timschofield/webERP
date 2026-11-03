@@ -76,7 +76,7 @@ if (isset($_POST['AddActivity'])) {
 	$ActivityType = $_POST['ActivityType'];
 	$Description = $_POST['Description'];
 	$Interviewer = $_POST['Interviewer'];
-	$Rating = isset($_POST['Rating']) && $_POST['Rating'] != '' ? (int)$_POST['Rating'] : 'NULL';
+	$Rating = isset($_POST['Rating']) and $_POST['Rating'] != '' ? (int)$_POST['Rating'] : 'NULL';
 	$NextSteps = $_POST['NextSteps'];
 
 	$SQL = "INSERT INTO hrapplicantactivities (

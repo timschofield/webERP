@@ -34,7 +34,7 @@ $SQL = "SELECT e.employeenumber, CONCAT(e.firstname, ' ', e.lastname) as name,
 		ORDER BY e.lastname, e.firstname";
 $Result = DB_query($SQL);
 while ($EmpRow = DB_fetch_array($Result)) {
-	$Selected = (isset($_POST['EmployeeNumber']) && $_POST['EmployeeNumber'] == $EmpRow['employeenumber']) ? ' selected' : '';
+	$Selected = (isset($_POST['EmployeeNumber']) and $_POST['EmployeeNumber'] == $EmpRow['employeenumber']) ? ' selected' : '';
 	$DisplayText = $EmpRow['name'];
 	if ($EmpRow['positiontitle']) {
 		$DisplayText .= ' - ' . $EmpRow['positiontitle'];
@@ -49,7 +49,7 @@ echo '</select>
 echo '</form>';
 
 // If employee is selected, show gap analysis
-if (isset($_POST['EmployeeNumber']) && $_POST['EmployeeNumber'] != '') {
+if (isset($_POST['EmployeeNumber']) and $_POST['EmployeeNumber'] != '') {
 
 	$EmployeeNumber = $_POST['EmployeeNumber'];
 
@@ -120,7 +120,7 @@ if (isset($_POST['EmployeeNumber']) && $_POST['EmployeeNumber'] != '') {
 				$TotalGap += abs($Gap);
 				$CompCount++;
 
-				if ($Gap > 0 && $MyRow['importance'] == 'Essential') {
+				if ($Gap > 0 and $MyRow['importance'] == 'Essential') {
 					$MandatoryGaps++;
 				}
 

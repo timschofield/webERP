@@ -23,15 +23,15 @@ if (isset($_POST['Submit'])) {
 	$InputError = 0;
 
 	// Validation
-	if (!isset($_POST['ScaleName']) || $_POST['ScaleName'] == '') {
+	if (!isset($_POST['ScaleName']) or $_POST['ScaleName'] == '') {
 		$InputError = 1;
 		prnMsg(__('Scale name is required'), 'error');
 	}
-	if (!isset($_POST['MinValue']) || $_POST['MinValue'] === '') {
+	if (!isset($_POST['MinValue']) or $_POST['MinValue'] === '') {
 		$InputError = 1;
 		prnMsg(__('Minimum value is required'), 'error');
 	}
-	if (!isset($_POST['MaxValue']) || $_POST['MaxValue'] === '') {
+	if (!isset($_POST['MaxValue']) or $_POST['MaxValue'] === '') {
 		$InputError = 1;
 		prnMsg(__('Maximum value is required'), 'error');
 	}
@@ -44,7 +44,7 @@ if (isset($_POST['Submit'])) {
 		$MaxValue = (int)$_POST['MaxValue'];
 		$IsActive = isset($_POST['IsActive']) ? 1 : 0;
 
-		if (isset($_GET['ScaleID']) && $_GET['ScaleID'] != '') {
+		if (isset($_GET['ScaleID']) and $_GET['ScaleID'] != '') {
 			// Update existing scale
 			$ScaleID = (int)$_GET['ScaleID'];
 
@@ -88,7 +88,7 @@ if (isset($_POST['Submit'])) {
 }
 
 // Handle delete
-if (isset($_GET['Delete']) && isset($_GET['ScaleID'])) {
+if (isset($_GET['Delete']) and isset($_GET['ScaleID'])) {
 	$ScaleID = (int)$_GET['ScaleID'];
 
 	$SQL = "DELETE FROM hrratingscales WHERE scaleid = " . $ScaleID;

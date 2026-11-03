@@ -22,11 +22,11 @@ if (isset($_POST['Submit'])) {
 
 	$InputError = 0;
 
-	if (!isset($_POST['EmployeeNumber']) || $_POST['EmployeeNumber'] == '') {
+	if (!isset($_POST['EmployeeNumber']) or $_POST['EmployeeNumber'] == '') {
 		$InputError = 1;
 		prnMsg(__('Employee must be selected'), 'error');
 	}
-	if (!isset($_POST['SkillID']) || $_POST['SkillID'] == '') {
+	if (!isset($_POST['SkillID']) or $_POST['SkillID'] == '') {
 		$InputError = 1;
 		prnMsg(__('Skill must be selected'), 'error');
 	}
@@ -93,7 +93,7 @@ if (isset($_POST['Submit'])) {
 }
 
 // Handle delete
-if (isset($_GET['Delete']) && isset($_GET['EmpSkillID'])) {
+if (isset($_GET['Delete']) and isset($_GET['EmpSkillID'])) {
 	$EmpSkillID = (int)$_GET['EmpSkillID'];
 
 	$SQL = "DELETE FROM hrempskills WHERE empskillid = " . $EmpSkillID;
@@ -119,7 +119,7 @@ $SQL = "SELECT employeenumber, CONCAT(firstname, ' ', lastname) as name
 		ORDER BY lastname, firstname";
 $Result = DB_query($SQL);
 while ($EmpRow = DB_fetch_array($Result)) {
-	$Selected = (isset($_POST['ViewEmployeeNumber']) && $_POST['ViewEmployeeNumber'] == $EmpRow['employeenumber']) ? ' selected' : '';
+	$Selected = (isset($_POST['ViewEmployeeNumber']) and $_POST['ViewEmployeeNumber'] == $EmpRow['employeenumber']) ? ' selected' : '';
 	echo '<option value="' . $EmpRow['employeenumber'] . '"' . $Selected . '>' .
 		htmlspecialchars($EmpRow['name'] . ' (' . $EmpRow['employeenumber'] . ')', ENT_QUOTES, 'UTF-8') . '</option>';
 }
@@ -130,7 +130,7 @@ echo '</select>
 echo '</form>';
 
 // If employee is selected, show skills and add form
-if (isset($_POST['ViewEmployeeNumber']) && $_POST['ViewEmployeeNumber'] != '') {
+if (isset($_POST['ViewEmployeeNumber']) and $_POST['ViewEmployeeNumber'] != '') {
 
 	$ViewEmployeeNumber = $_POST['ViewEmployeeNumber'];
 
