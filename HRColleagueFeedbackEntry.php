@@ -110,7 +110,6 @@ if (isset($_POST['Submit'])) {
 		$FeedbackPeriodStart = FormatDateForSQL($_POST['FeedbackPeriodStart']);
 		$FeedbackPeriodEnd = FormatDateForSQL($_POST['FeedbackPeriodEnd']);
 		$DueDate = (isset($_POST['DueDate']) && $_POST['DueDate'] != '') ? "'" . FormatDateForSQL($_POST['DueDate']) . "'" : 'NULL';
-		$CompletionDate = (isset($_POST['CompletionDate']) && $_POST['CompletionDate'] != '') ? "'" . FormatDateForSQL($_POST['CompletionDate']) . "'" : 'NULL';
 
 		/* Change status dynamically from Not Started to In Progress if criteria has rating score */
 		if ($Status == 'Not Started' && isset($_POST['CriteriaRating']) && is_array($_POST['CriteriaRating'])) {
@@ -121,6 +120,14 @@ if (isset($_POST['Submit'])) {
 					break;
 				}
 			}
+		}
+
+		if ($Status == 'Completed') {
+			$CompletionDate = (isset($_POST['CompletionDate']) && $_POST['CompletionDate'] != '')
+				? "'" . FormatDateForSQL($_POST['CompletionDate']) . "'"
+				: "'" . date('Y-m-d') . "'";
+		} else {
+			$CompletionDate = 'NULL';
 		}
 
 		$OverallRating = (isset($_POST['OverallRating']) && $_POST['OverallRating'] !== '') ? (int)$_POST['OverallRating'] : 'NULL';
@@ -289,13 +296,21 @@ if (isset($_GET['FeedbackID'])) {
 	$DbAboutEmployeeName = '';
 	$DbAboutEmployeeNumber = '';
 	$DbCreatedByName = '';
-	$DbFeedbackPeriodStart = isset($_POST['FeedbackPeriodStart']) ? ConvertSQLDate($_POST['FeedbackPeriodStart']) : DateAdd(date($_SESSION['DefaultDateFormat']), 'y', -1);
-	$DbFeedbackPeriodEnd = isset($_POST['FeedbackPeriodEnd']) ? ConvertSQLDate($_POST['FeedbackPeriodEnd']) : DateAdd(date($_SESSION['DefaultDateFormat']), 'd', -1);
+	$DbFeedbackPeriodStart = (isset($_POST['FeedbackPeriodStart']) AND $_POST['FeedbackPeriodStart'] != '')
+		? ConvertSQLDate($_POST['FeedbackPeriodStart'])
+		: DateAdd(date($_SESSION['DefaultDateFormat']), 'y', -1);
+	$DbFeedbackPeriodEnd = (isset($_POST['FeedbackPeriodEnd']) AND $_POST['FeedbackPeriodEnd'] != '')
+		? ConvertSQLDate($_POST['FeedbackPeriodEnd'])
+		: DateAdd(date($_SESSION['DefaultDateFormat']), 'd', -1);
 	$DbFeedbackType = isset($_POST['FeedbackType']) ? $_POST['FeedbackType'] : 'Annual';
 	$DbOverallRating = isset($_POST['OverallRating']) ? $_POST['OverallRating'] : '';
 	$DbStatus = isset($_POST['Status']) ? $_POST['Status'] : 'Not Started';
-	$DbDueDate = isset($_POST['DueDate']) ? ConvertSQLDate($_POST['DueDate']) : date($_SESSION['DefaultDateFormat']);
-	$DbCompletionDate = isset($_POST['CompletionDate']) ? ConvertSQLDate($_POST['CompletionDate']) : '';
+	$DbDueDate = isset($_POST['DueDate'])
+		? ($_POST['DueDate'] != '' ? ConvertSQLDate($_POST['DueDate']) : '')
+		: DateAdd(date($_SESSION['DefaultDateFormat']), 'd', 7);
+	$DbCompletionDate = (isset($_POST['CompletionDate']) AND $_POST['CompletionDate'] != '')
+		? ConvertSQLDate($_POST['CompletionDate'])
+		: '';
 	$DbComments = isset($_POST['Comments']) ? $_POST['Comments'] : '';
 
 	$Criteria = GetFeedbackCriteria();
@@ -394,9 +409,9 @@ echo '<field>
 		<label for="DueDate">' . __('Due Date') . ':</label>
 		<input type="date" name="DueDate" value="' . ($DbDueDate !== '' ? FormatDateForSQL($DbDueDate) : '') . '" />
 	</field>
-	<field>
+	<field id="CompletionDateField"' . ($DbStatus == 'Completed' ? '' : ' style="display: none;"') . '>
 		<label for="CompletionDate">' . __('Completion Date') . ':</label>
-		<input type="date" name="CompletionDate" value="' . ($DbCompletionDate !== '' ? FormatDateForSQL($DbCompletionDate) : '') . '" />
+		<input type="date" name="CompletionDate" value="' . ($DbCompletionDate !== '' ? FormatDateForSQL($DbCompletionDate) : '') . '" readonly="readonly" />
 	</field>';
 
 echo '<field>
@@ -412,9 +427,9 @@ echo '<field>
 echo '<field>
 		<label for="OverallRating">' . __('Overall Rating') . ':</label>
 		<select name="OverallRating">
-			<option value="">' . __('Not Rated') . '</option>';
+			<option value=""' . ((string)$DbOverallRating === '' ? ' selected="selected"' : '') . '>' . __('Not Rated') . '</option>';
 foreach ($RatingLabels as $RatingValue => $RatingLabel) {
-	echo '<option value="' . $RatingValue . '"' . ($DbOverallRating == $RatingValue ? ' selected="selected"' : '') . '>' . $RatingLabel . '</option>';
+	echo '<option value="' . $RatingValue . '"' . ((string)$DbOverallRating !== '' AND $DbOverallRating == $RatingValue ? ' selected="selected"' : '') . '>' . $RatingLabel . '</option>';
 }
 echo '</select>
 	</field>';
@@ -478,6 +493,28 @@ if ($EditMode) {
 }
 
 echo '</form>';
+echo '<script>
+	(function() {
+		var StatusSelect = document.querySelector(\'select[name="Status"]\');
+		var CompletionDateField = document.getElementById(\'CompletionDateField\');
+		var CompletionDateInput = document.querySelector(\'input[name="CompletionDate"]\');
+
+		function UpdateCompletionDate() {
+			var IsCompleted = StatusSelect.value === \'Completed\';
+			CompletionDateField.style.display = IsCompleted ? \'\' : \'none\';
+
+			if (IsCompleted && CompletionDateInput.value === \'\') {
+				var Today = new Date();
+				var Month = String(Today.getMonth() + 1).padStart(2, \'0\');
+				var Day = String(Today.getDate()).padStart(2, \'0\');
+				CompletionDateInput.value = Today.getFullYear() + \'-\' + Month + \'-\' + Day;
+			}
+		}
+
+		StatusSelect.addEventListener(\'change\', UpdateCompletionDate);
+		UpdateCompletionDate();
+	})();
+</script>';
 echo '<script src="' . $RootPath . '/javascripts/HRAppraisalScoring.js"></script>';
 
 include(__DIR__ . '/includes/footer.php');
