@@ -14,13 +14,10 @@ require_once(__DIR__ . '/includes/HRPerformanceHelper.php');
 /* Rating labels for hrperfappraisals.overallrating (INT 1-5) */
 $RatingLabels = GetRatingLabels();
 
-// Get system options
-$SQL = "SELECT optionname, optionvalue FROM hrsystemoptions WHERE optionname = 'AppraisalFrequency'";
-$OptionsResult = DB_query($SQL);
-$AppraisalFrequency = 365; // Default to annual
-if (DB_num_rows($OptionsResult) > 0) {
-	$OptionRow = DB_fetch_array($OptionsResult);
-	$AppraisalFrequency = $OptionRow['optionvalue'];
+$AllowedAppraisalTypes = array('Annual', 'Mid-Year', 'Probation', '90-Day', 'Project');
+$AppraisalTypeTitle = __('All Types');
+if (isset($_POST['AppraisalType']) and in_array($_POST['AppraisalType'], $AllowedAppraisalTypes)) {
+	$AppraisalTypeTitle = __($_POST['AppraisalType']);
 }
 
 echo '<p class="page_title_text">
@@ -128,9 +125,9 @@ echo '<table class="selection">
 		<thead>
 			<tr>
 				<th colspan="15">
-					<h3>
-						<em>' . __('System appraisal frequency') . ': ' . ($AppraisalFrequency == 365 ? __('Annual') : $AppraisalFrequency . ' ' . __('days')) . '</em>
-					</h3>
+					<h3>' 
+					. __('Performance Appraisal Type') . ': ' . htmlspecialchars($AppraisalTypeTitle, ENT_QUOTES, 'UTF-8') .
+					'</h3>
 				</th>
 			</tr>
 			<tr>
