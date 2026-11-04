@@ -47,11 +47,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 		// If the user has chosen to use calculated rating, update OverallRating select
 		var useCalc = document.querySelector('input[name="UseCalculatedRating"]');
-		if (useCalc && useCalc.checked) {
-			var overall = document.querySelector('select[name="OverallRating"]');
-			if (overall && mapped !== null) {
-				overall.value = mapped;
-			}
+		var overall = document.querySelector('select[name="OverallRating"]');
+		var statusSel = document.querySelector('select[name="Status"]');
+		if (overall && statusSel && statusSel.value === 'Not Started') {
+			overall.value = '';
+		} else if (useCalc && useCalc.checked && overall && mapped !== null) {
+			overall.value = mapped;
 		}
 	}
 
@@ -69,6 +70,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	document.querySelectorAll('input[name="UseCalculatedRating"]').forEach(function(chk) {
 		chk.addEventListener('change', recalc);
+	});
+
+	document.querySelectorAll('select[name="Status"]').forEach(function(sel) {
+		sel.addEventListener('change', recalc);
 	});
 
 	// initial calculation

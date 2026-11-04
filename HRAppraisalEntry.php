@@ -125,8 +125,7 @@ if (isset($_POST['Submit'])) {
 		}
 
 		$OverallRating     = ($Status != 'Not Started' AND isset($_POST['OverallRating']) AND $_POST['OverallRating'] != '')
-			? (float)$_POST['OverallRating']
-			: '0.00';
+			? (float)$_POST['OverallRating'] : '0.00';
 		$Strengths           = isset($_POST['Strengths']) ? DB_escape_string($_POST['Strengths']) : '';
 		$AreasForImprovement = isset($_POST['AreasForImprovement']) ? DB_escape_string($_POST['AreasForImprovement']) : '';
 		$ReviewerComments    = isset($_POST['ReviewerComments']) ? DB_escape_string($_POST['ReviewerComments']) : '';
@@ -161,10 +160,13 @@ if (isset($_POST['Submit'])) {
 					SaveCriteriaScoreAdvanced($AppraisalID, (int)$cid, $rating === '' ? null : (int)$rating, $comments);
 				}
 				$calc = CalculateWeightedScoreForAppraisal($AppraisalID, 0);
-				$SQL = "UPDATE hrperfappraisals SET calculatedoverallrating = " . (isset($calc['weightedscore']) and $calc['weightedscore'] !== null ? (float)$calc['weightedscore'] : '0.00') . " WHERE appraisalid = " . $AppraisalID;
+				$CalculatedScore = (isset($calc['weightedscore']) and $calc['weightedscore'] !== null)
+					? (float)$calc['weightedscore']
+					: '0.00';
+				$SQL = "UPDATE hrperfappraisals SET calculatedoverallrating = " . $CalculatedScore . " WHERE appraisalid = " . $AppraisalID;
 				DB_query($SQL);
-				if (isset($_POST['UseCalculatedRating']) and $_POST['UseCalculatedRating']) {
-					$SQL = "UPDATE hrperfappraisals SET overallrating = " . (isset($calc['weightedscore']) and $calc['weightedscore'] !== null ? (float)$calc['weightedscore'] : '0.00') . " WHERE appraisalid = " . $AppraisalID;
+				if ($Status != 'Not Started' and isset($_POST['UseCalculatedRating']) and $_POST['UseCalculatedRating']) {
+					$SQL = "UPDATE hrperfappraisals SET overallrating = " . $CalculatedScore . " WHERE appraisalid = " . $AppraisalID;
 					DB_query($SQL);
 				}
 			}
@@ -209,10 +211,13 @@ if (isset($_POST['Submit'])) {
 					SaveCriteriaScoreAdvanced($AppraisalID, (int)$cid, $rating === '' ? null : (int)$rating, $comments);
 				}
 				$calc = CalculateWeightedScoreForAppraisal($AppraisalID, 0);
-				$SQL = "UPDATE hrperfappraisals SET calculatedoverallrating = " . (isset($calc['weightedscore']) and $calc['weightedscore'] !== null ? (float)$calc['weightedscore'] : '0.00') . " WHERE appraisalid = " . $AppraisalID;
+				$CalculatedScore = (isset($calc['weightedscore']) and $calc['weightedscore'] !== null)
+					? (float)$calc['weightedscore']
+					: '0.00';
+				$SQL = "UPDATE hrperfappraisals SET calculatedoverallrating = " . $CalculatedScore . " WHERE appraisalid = " . $AppraisalID;
 				DB_query($SQL);
-				if (isset($_POST['UseCalculatedRating']) and $_POST['UseCalculatedRating']) {
-					$SQL = "UPDATE hrperfappraisals SET overallrating = " . (isset($calc['weightedscore']) and $calc['weightedscore'] !== null ? (float)$calc['weightedscore'] : '0.00') . " WHERE appraisalid = " . $AppraisalID;
+				if ($Status != 'Not Started' and isset($_POST['UseCalculatedRating']) and $_POST['UseCalculatedRating']) {
+					$SQL = "UPDATE hrperfappraisals SET overallrating = " . $CalculatedScore . " WHERE appraisalid = " . $AppraisalID;
 					DB_query($SQL);
 				}
 			}
@@ -440,6 +445,28 @@ echo '</select>
 	</field>';
 
 echo '<field>
+		<label for="AppraisalType">' . __('Appraisal Type') . ':</label>
+		<select name="AppraisalType" required="required">
+			<option value="Annual"' . ($DbAppraisalType == 'Annual' ? ' selected="selected"' : '') . '>' . __('Annual') . '</option>
+			<option value="Mid-Year"' . ($DbAppraisalType == 'Mid-Year' ? ' selected="selected"' : '') . '>' . __('Mid-Year') . '</option>
+			<option value="Probation"' . ($DbAppraisalType == 'Probation' ? ' selected="selected"' : '') . '>' . __('Probation') . '</option>
+		</select>
+	</field>';
+
+echo '<field>
+		<label for="ReviewPeriodStart">' . __('Review Period Start') . ':</label>
+		<input type="date" name="ReviewPeriodStart" required value="' . FormatDateForSQL($DbReviewPeriodStart) . '" />
+	</field>
+	<field>
+		<label for="ReviewPeriodEnd">' . __('Review Period End') . ':</label>
+		<input type="date" name="ReviewPeriodEnd" required value="' . FormatDateForSQL($DbReviewPeriodEnd) . '" />
+	</field>
+	<field>
+		<label for="DueDate">' . __('Due Date') . ':</label>
+		<input type="date" name="DueDate" required value="' . FormatDateForSQL($DbDueDate) . '" />
+	</field>';
+
+echo '<field>
 		<label for="Status">' . __('Status') . ':</label>
 		<select name="Status" required>
 			<option value="Not Started"' . ($DbStatus == 'Not Started' ? ' selected' : '') . '>' . __('Not Started') . '</option>
@@ -539,6 +566,7 @@ if ($EditMode) {
 	</div>';
 }
 echo '</form>';
-	echo '<script src="' . $RootPath . '/javascripts/HRAppraisalScoring.js"></script>';
+	echo '<script src="' . $RootPath . '/javascripts/HRAppraisalScoring.js?v=' .
+		filemtime(__DIR__ . '/javascripts/HRAppraisalScoring.js') . '"></script>';
 
 include(__DIR__ . '/includes/footer.php');
