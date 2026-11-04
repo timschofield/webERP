@@ -42,7 +42,10 @@ $SQL = "SELECT
 		a.duedate,
 		a.status,
 		a.overallrating,
-		a.comments,
+		a.strengths,
+		a.areasforimprovement,
+		a.goalsnextperiod,
+		a.reviewercomments,
 		CONCAT(m.firstname, ' ', m.lastname) as managername
 	FROM hrperfappraisals a
 	LEFT JOIN hremployees e ON a.employeeid = e.employeeid
@@ -61,6 +64,10 @@ echo '<table class="selection">
 				<th>' . __('Status') . '</th>
 				<th>' . __('Rating') . '</th>
 				<th>' . __('Manager') . '</th>
+				<th>' . __('Key Strengths') . '</th>
+				<th>' . __('Areas for Improvement') . '</th>
+				<th>' . __('Goals for Next Period') . '</th>
+				<th>' . __('Reviewer Comments') . '</th>
 				<th>' . __('Actions') . '</th>
 			</tr>
 		</thead>
@@ -82,23 +89,18 @@ if (DB_num_rows($Result) > 0) {
 				<td>' . htmlspecialchars($MyRow['status'], ENT_QUOTES, 'UTF-8') . '</td>
 				<td>' . (isset($RatingLabels[$MyRow['overallrating']]) ? htmlspecialchars($RatingLabels[$MyRow['overallrating']], ENT_QUOTES, 'UTF-8') : '-') . '</td>
 				<td>' . htmlspecialchars($MyRow['managername'], ENT_QUOTES, 'UTF-8') . '</td>
+				<td>' . nl2br(htmlspecialchars((string)$MyRow['strengths'], ENT_QUOTES, 'UTF-8')) . '</td>
+				<td>' . nl2br(htmlspecialchars((string)$MyRow['areasforimprovement'], ENT_QUOTES, 'UTF-8')) . '</td>
+				<td>' . nl2br(htmlspecialchars((string)$MyRow['goalsnextperiod'], ENT_QUOTES, 'UTF-8')) . '</td>
+				<td>' . nl2br(htmlspecialchars((string)$MyRow['reviewercomments'], ENT_QUOTES, 'UTF-8')) . '</td>
 				<td class="centre">
 					<a href="' . $RootPath . '/HRAppraisalCriteriaSummary.php?AppraisalID=' .
 						urlencode($MyRow['appraisalid']) . '&amp;From=HRMyAppraisals">' . __('View') . '</a>
 				</td>
 			</tr>';
-
-		// Show comments if any
-		if ($MyRow['comments']) {
-			echo '<tr' . $RowClass . '>
-					<td colspan="7" style="padding-left: 30px;">
-						<strong>' . __('Comments') . ':</strong> ' . nl2br(htmlspecialchars($MyRow['comments'], ENT_QUOTES, 'UTF-8')) . '
-					</td>
-				</tr>';
-		}
 	}
 } else {
-	echo '<tr><td colspan="7" class="centre">' . __('You have no performance appraisals on record') . '</td></tr>';
+	echo '<tr><td colspan="11" class="centre">' . __('You have no performance appraisals on record') . '</td></tr>';
 }
 
 echo '</tbody>

@@ -51,6 +51,18 @@ echo '<field>
 		</field>';
 
 echo '<field>
+			<label for="AppraisalType">' . __('Appraisal Type') . ':</label>
+			<select name="AppraisalType">
+				<option value="">' . __('All Types') . '</option>
+				<option value="Annual"' . (isset($_POST['AppraisalType']) and $_POST['AppraisalType'] == 'Annual' ? ' selected' : '') . '>' . __('Annual') . '</option>
+				<option value="Mid-Year"' . (isset($_POST['AppraisalType']) and $_POST['AppraisalType'] == 'Mid-Year' ? ' selected' : '') . '>' . __('Mid-Year') . '</option>
+				<option value="Probation"' . (isset($_POST['AppraisalType']) and $_POST['AppraisalType'] == 'Probation' ? ' selected' : '') . '>' . __('Probation') . '</option>
+				<option value="90-Day"' . (isset($_POST['AppraisalType']) and $_POST['AppraisalType'] == '90-Day' ? ' selected' : '') . '>' . __('90-Day') . '</option>
+				<option value="Project"' . (isset($_POST['AppraisalType']) and $_POST['AppraisalType'] == 'Project' ? ' selected' : '') . '>' . __('Project') . '</option>
+			</select>
+		</field>';
+
+echo '<field>
 			<label for="PeriodYear">' . __('Review Period Starts on Year') . ':</label>
 			<input type="number" name="PeriodYear" size="4" maxlength="4" value="' . (isset($_POST['PeriodYear']) ? $_POST['PeriodYear'] : date('Y')) . '" />
 		</field>';
@@ -72,10 +84,15 @@ $SQL = "SELECT
 		CONCAT(e.firstname, ' ', e.lastname) as employeename,
 		a.reviewperiodstart,
 		a.reviewperiodend,
+		a.appraisaltype,
 		a.duedate,
 		a.status,
 		a.overallrating,
 		a.calculatedoverallrating,
+		a.strengths,
+		a.areasforimprovement,
+		a.goalsnextperiod,
+		a.reviewercomments,
 		CONCAT(m.firstname, ' ', m.lastname) as managername
 	FROM hrperfappraisals a
 	INNER JOIN hremployees e ON a.employeeid = e.employeeid
@@ -94,6 +111,10 @@ if (isset($_POST['Status']) and $_POST['Status'] != '') {
 	$SQL .= " AND a.status = '" . $Status . "'";
 }
 
+if (isset($_POST['AppraisalType']) and $_POST['AppraisalType'] != '') {
+	$SQL .= " AND a.appraisaltype = '" . DB_escape_string($_POST['AppraisalType']) . "'";
+}
+
 if (isset($_POST['PeriodYear']) and $_POST['PeriodYear'] != '') {
 	$Year = $_POST['PeriodYear'];
 	$SQL .= " AND YEAR(a.reviewperiodstart) = '" . $Year . "'";
@@ -106,7 +127,7 @@ $Result = DB_query($SQL);
 echo '<table class="selection">
 		<thead>
 			<tr>
-				<th colspan="8">
+				<th colspan="15">
 					<h3>
 						<em>' . __('System appraisal frequency') . ': ' . ($AppraisalFrequency == 365 ? __('Annual') : $AppraisalFrequency . ' ' . __('days')) . '</em>
 					</h3>
@@ -116,12 +137,17 @@ echo '<table class="selection">
 				<th>' . __('Appraisal ID') . '</th>
 				<th>' . __('Employee') . '</th>
 				<th>' . __('Review Period') . '</th>
+				<th>' . __('Type') . '</th>
 				<th>' . __('Due Date') . '</th>
 				<th>' . __('Status') . '</th>
 				<th>' . __('Rating') . '</th>
 				<th>' . __('Calculated Rating') . '</th>
 				<th>' . __('Rating Source') . '</th>
 				<th>' . __('Manager') . '</th>
+				<th>' . __('Key Strengths') . '</th>
+				<th>' . __('Areas for Improvement') . '</th>
+				<th>' . __('Goals for Next Period') . '</th>
+				<th>' . __('Reviewer Comments') . '</th>
 				<th></th>
 			</tr>
 		</thead>
@@ -158,12 +184,17 @@ if (DB_num_rows($Result) > 0) {
 				<td>' . $MyRow['appraisalid'] . '</td>
 				<td><a href="' . $RootPath . '/HREmployees.php?EmployeeNumber=' . urlencode($MyRow['employeenumber']) . '">' . htmlspecialchars((string)$MyRow['employeename'], ENT_QUOTES, 'UTF-8') . '</a></td>
 				<td>' . ConvertSQLDate($MyRow['reviewperiodstart']) . ' - ' . ConvertSQLDate($MyRow['reviewperiodend']) . '</td>
+				<td>' . htmlspecialchars((string)$MyRow['appraisaltype'], ENT_QUOTES, 'UTF-8') . '</td>
 				<td>' . ConvertSQLDate($MyRow['duedate']) . '</td>
 				<td>' . htmlspecialchars((string)$MyRow['status'], ENT_QUOTES, 'UTF-8') . '</td>
 				<td>' . htmlspecialchars($OverallRatingLabel, ENT_QUOTES, 'UTF-8') . '</td>
 				<td>' . htmlspecialchars($CalcLabel, ENT_QUOTES, 'UTF-8') . '</td>
 				<td>' . htmlspecialchars($RatingSource, ENT_QUOTES, 'UTF-8') . '</td>
 				<td>' . htmlspecialchars((string)$MyRow['managername'], ENT_QUOTES, 'UTF-8') . '</td>
+				<td>' . nl2br(htmlspecialchars((string)$MyRow['strengths'], ENT_QUOTES, 'UTF-8')) . '</td>
+				<td>' . nl2br(htmlspecialchars((string)$MyRow['areasforimprovement'], ENT_QUOTES, 'UTF-8')) . '</td>
+				<td>' . nl2br(htmlspecialchars((string)$MyRow['goalsnextperiod'], ENT_QUOTES, 'UTF-8')) . '</td>
+				<td>' . nl2br(htmlspecialchars((string)$MyRow['reviewercomments'], ENT_QUOTES, 'UTF-8')) . '</td>
 				<td class="centre">
 					<a href="' . $RootPath . '/HRAppraisalEntry.php?AppraisalID=' . 
 						urlencode($MyRow['appraisalid']) . '&amp;From=HRPerformanceAppraisals">' . __('Edit') . '</a> |
@@ -173,7 +204,7 @@ if (DB_num_rows($Result) > 0) {
 			</tr>';
 	}
 } else {
-	echo '<tr><td colspan="10" class="centre">' . __('No appraisals found') . '</td></tr>';
+	echo '<tr><td colspan="15" class="centre">' . __('No appraisals found') . '</td></tr>';
 }
 
 echo '</tbody>
