@@ -51,6 +51,7 @@ $SQL = "SELECT
 	LEFT JOIN hremployees e ON a.employeeid = e.employeeid
 	LEFT JOIN hremployees m ON a.reviewerid = m.employeeid
 	WHERE e.employeenumber = '" . DB_escape_string($MyEmployeeNumber) . "'
+		AND a.status = 'Completed'
 	ORDER BY a.reviewperiodstart DESC";
 
 $Result = DB_query($SQL);
