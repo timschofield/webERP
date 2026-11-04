@@ -1,4 +1,7 @@
 <?php
+error_reporting(-1);
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
 
 // Z_UpgradeDatabase.php automatically installs any available uninstalled project updates in sql/updates/
 // and can also be used manually to install specified custom updates in sql/updates-custom/.
@@ -173,6 +176,7 @@ if ($ManualUpdateError !== '') {
 		'Errors' => 0,
 		'Successes' => 0,
 		'Warnings' => 0,
+		'Messages' => array(),
 	);
 
 	$LogFileName = $_SESSION['LogPath'] . '/' . $_SESSION['DatabaseName'] . ' - DBUpdateLog-' . date('Y-m-d') . '.log';
@@ -213,7 +217,7 @@ if ($ManualUpdateError !== '') {
 		<tr>
 			<td class="success_line">', $_SESSION['Updates']['Successes'], ' ', __('updates have succeeded'), '</td>
 		</tr>';
-	if ($_SESSION['Updates']['Errors'] > 0) {
+	if (count($_SESSION['Updates']['Messages']) > 0) {
 		$SizeOfErrorMessages = sizeOf($_SESSION['Updates']['Messages']);
 		for ($i = 0;$i < $SizeOfErrorMessages;$i++) {
 			echo '<tr><td>' . $_SESSION['Updates']['Messages'][$i] . '</td></tr>';
