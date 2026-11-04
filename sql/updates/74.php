@@ -13,11 +13,6 @@ AddColumn('strengths', 'hrperfappraisals', 'text', 'NULL', '', 'comments');
 AddColumn('areasforimprovement', 'hrperfappraisals', 'text', 'NULL', '', 'strengths');
 AddColumn('reviewercomments', 'hrperfappraisals', 'text', 'NULL', '', 'areasforimprovement');
 
-$SQL = "ALTER TABLE `hrperfappraisals`
-	MODIFY COLUMN `modifieddate` DATETIME NOT NULL
-	DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP";
-DB_query($SQL, __('Updating modifieddate on hrperfappraisals failed'));
-
 RemoveScript('HRAuditTrail.php');
 
 if ($_SESSION['Updates']['Errors'] == 0) {
