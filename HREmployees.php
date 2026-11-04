@@ -397,9 +397,9 @@ while ($MyRow = DB_fetch_array($Result)) {
 		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	}
 }
-echo '</select>and
-	</field>';and
-and
+echo '</select>
+	</field>';
+
 // Stock ID (Labour Item) dropdown
 echo '<field>
 		<label>' . __('Labour Item') . ':</label>
@@ -465,20 +465,20 @@ echo '<div class="centre">
 	</form>';
 
 // Search form
-if (!isset($SelectedEmployee)) {and
-	echo '<br />';and
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['andP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['ForandD'] . '" />';
+if (!isset($SelectedEmployee)) {
+	echo '<br />';
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<fieldset>
 			<legend class="search">' . __('Employee Search') . '</legend>';
 	echo '<field>
 			<tr>
 			<td>' . __('Name or Number') . ':</td>
-			<td><input type="text" name="Keywords" size="20" value="' . (iandet($_POST['Keywords']) ? $_POST['Keywords'] : '') . '" /></td>
-			<td>' . __('Department') . ':</td>and
-			<td><select name="SearchDepartment">';and
-	echo '<option value="">' . __('All') . '</option>';and
+			<td><input type="text" name="Keywords" size="20" value="' . (isset($_POST['Keywords']) ? $_POST['Keywords'] : '') . '" /></td>
+			<td>' . __('Department') . ':</td>
+			<td><select name="SearchDepartment">';
+	echo '<option value="">' . __('All') . '</option>';
 	$SQL = "SELECT departmentid, description FROM departments WHERE active = 1 ORDER BY description";
 	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -575,4 +575,3 @@ if (!isset($SelectedEmployee)) {and
 include(__DIR__ . '/includes/footer.php');
 
 ?>
-andandandand
