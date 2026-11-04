@@ -444,9 +444,19 @@ while ($MgrRow = DB_fetch_array($Result)) {
 echo '</select>
 	</field>';
 
+$AppraisalTypeOnChange = '';
+if (!$EditMode) {
+	/* New appraisal: Mid-Year starts 6 months back, other types 1 year back */
+	$AppraisalTypeOnChange = ' onchange="var d = new Date(); ' .
+		'if (this.value == \'Mid-Year\') { d.setMonth(d.getMonth() - 6); } ' .
+		'else { d.setFullYear(d.getFullYear() - 1); } ' .
+		'this.form.ReviewPeriodStart.value = d.getFullYear() + \'-\' + ' .
+		'(\'0\' + (d.getMonth() + 1)).slice(-2) + \'-\' + (\'0\' + d.getDate()).slice(-2);"';
+}
+
 echo '<field>
 		<label for="AppraisalType">' . __('Appraisal Type') . ':</label>
-		<select name="AppraisalType" required="required">
+		<select name="AppraisalType" required="required"' . $AppraisalTypeOnChange . '>
 			<option value="Annual"' . ($DbAppraisalType == 'Annual' ? ' selected="selected"' : '') . '>' . __('Annual') . '</option>
 			<option value="Mid-Year"' . ($DbAppraisalType == 'Mid-Year' ? ' selected="selected"' : '') . '>' . __('Mid-Year') . '</option>
 			<option value="Probation"' . ($DbAppraisalType == 'Probation' ? ' selected="selected"' : '') . '>' . __('Probation') . '</option>

@@ -387,6 +387,25 @@ if ($EditMode) {
 		</field>';
 }
 
+$FeedbackTypeOnChange = '';
+if (!$EditMode) {
+	/* New feedback: Mid-Year starts 6 months back, other types 1 year back */
+	$FeedbackTypeOnChange = ' onchange="var d = new Date(); ' .
+		'if (this.value == \'Mid-Year\') { d.setMonth(d.getMonth() - 6); } ' .
+		'else { d.setFullYear(d.getFullYear() - 1); } ' .
+		'this.form.FeedbackPeriodStart.value = d.getFullYear() + \'-\' + ' .
+		'(\'0\' + (d.getMonth() + 1)).slice(-2) + \'-\' + (\'0\' + d.getDate()).slice(-2);"';
+}
+
+echo '<field>
+		<label for="FeedbackType">' . __('Feedback Type') . ':</label>
+		<select name="FeedbackType" required="required"' . $FeedbackTypeOnChange . '>
+			<option value="Annual"' . ($DbFeedbackType == 'Annual' ? ' selected="selected"' : '') . '>' . __('Annual') . '</option>
+			<option value="Mid-Year"' . ($DbFeedbackType == 'Mid-Year' ? ' selected="selected"' : '') . '>' . __('Mid-Year') . '</option>
+			<option value="Probation"' . ($DbFeedbackType == 'Probation' ? ' selected="selected"' : '') . '>' . __('Probation') . '</option>
+		</select>
+	</field>';
+
 echo '<field>
 		<label for="FeedbackPeriodStart">' . __('Feedback Period Start') . ':</label>
 		<input type="date" name="FeedbackPeriodStart" required="required" value="' . FormatDateForSQL($DbFeedbackPeriodStart) . '" />
