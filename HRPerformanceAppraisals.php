@@ -10,6 +10,7 @@ $BookMark = 'HRPerformanceAppraisals';
 
 include(__DIR__ . '/includes/header.php');
 require_once(__DIR__ . '/includes/HRPerformanceHelper.php');
+require_once(__DIR__ . '/includes/HRGeneralFunctions.php');
 
 /* Rating labels for hrperfappraisals.overallrating (INT 1-5) */
 $RatingLabels = GetRatingLabels();
@@ -57,6 +58,19 @@ echo '<field>
 				<option value="90-Day"' . (isset($_POST['AppraisalType']) and $_POST['AppraisalType'] == '90-Day' ? ' selected' : '') . '>' . __('90-Day') . '</option>
 				<option value="Project"' . (isset($_POST['AppraisalType']) and $_POST['AppraisalType'] == 'Project' ? ' selected' : '') . '>' . __('Project') . '</option>
 			</select>
+		</field>';
+
+echo '<field>
+			<label for="DepartmentID">' . __('Department') . ':</label>
+			<select name="DepartmentID">
+				<option value="">' . __('All Departments') . '</option>';
+$DepartmentResult = DB_query("SELECT departmentid, description FROM departments ORDER BY description");
+while ($DepartmentRow = DB_fetch_array($DepartmentResult)) {
+	echo '<option value="' . $DepartmentRow['departmentid'] . '"' .
+		(isset($_POST['DepartmentID']) and $_POST['DepartmentID'] == $DepartmentRow['departmentid'] ? ' selected' : '') . '>' .
+		htmlspecialchars($DepartmentRow['description'], ENT_QUOTES, 'UTF-8') . '</option>';
+}
+echo '</select>
 		</field>';
 
 echo '<field>
@@ -110,6 +124,12 @@ if (isset($_POST['Status']) and $_POST['Status'] != '') {
 
 if (isset($_POST['AppraisalType']) and $_POST['AppraisalType'] != '') {
 	$SQL .= " AND a.appraisaltype = '" . DB_escape_string($_POST['AppraisalType']) . "'";
+}
+
+if (isset($_POST['DepartmentID']) and $_POST['DepartmentID'] != '') {
+	/* Selected department plus all its sub-departments */
+	$DepartmentIdList = explode(',', GetDepartmentListBelow($_POST['DepartmentID']));
+	$SQL .= " AND e.departmentid IN ('" . implode("','", array_map('DB_escape_string', $DepartmentIdList)) . "')";
 }
 
 if (isset($_POST['PeriodYear']) and $_POST['PeriodYear'] != '') {
