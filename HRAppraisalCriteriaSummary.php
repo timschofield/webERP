@@ -83,10 +83,10 @@ if (count($Criteria) == 0) {
 	foreach ($Criteria as $cid => $c) {
 		$weight = isset($c['weight']) ? (float)$c['weight'] : 0.0;
 		$scoreRow = isset($Scores[$cid]) ? $Scores[$cid] : null;
-		$rating = $scoreRow and isset($scoreRow['rating']) ? $scoreRow['rating'] : '-';
-		$ratingLabel = ($rating !== '-' AND isset($RatingLabels[(int)$rating])) ? $RatingLabels[(int)$rating] : '-';
-		$weighted = $scoreRow and isset($scoreRow['weightedscore']) ? $scoreRow['weightedscore'] : 0.0;
-		$comments = $scoreRow and isset($scoreRow['comments']) ? $scoreRow['comments'] : '';
+		$rating = (isset($scoreRow['rating'])) ? $scoreRow['rating'] : '-';
+		$ratingLabel = ($rating !== '-' and isset($RatingLabels[(int)$rating])) ? $RatingLabels[(int)$rating] : '-';
+		$weighted = (isset($scoreRow['weightedscore'])) ? $scoreRow['weightedscore'] : 0.0;
+		$comments = (isset($scoreRow['comments'])) ? $scoreRow['comments'] : '';
 		echo '<tr>';
 		echo '<td>' . htmlspecialchars($c['criterianame'], ENT_QUOTES, 'UTF-8') . '</td>';
 		echo '<td class="number">' . number_format($weight, 1) . '%</td>';
