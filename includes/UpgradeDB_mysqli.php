@@ -331,12 +331,12 @@ function ChangeColumnSize($Column, $Table, $Type, $Null, $Default, $Size) {
 	if ($MyRow[0] <> $Size) {
 		$Response = executeSQL("ALTER TABLE " . $Table . " CHANGE COLUMN " . $Column . " " . $Column . " " . $Type . " " . $Null . " DEFAULT '" . $Default . "'", false);
 		if ($Response == 0) {
-			OutputResult(__('The column') . ' ' . $Column . ' ' . __('has been changed'), 'success');
+			OutputResult(__('The column') . ' ' . $Table . '.' . $Column . ' ' . __('has been changed'), 'success');
 		} else {
-			OutputResult(__('The column') . ' ' . $Column . ' ' . __('could not be changed'), 'error');
+			OutputResult(__('The column') . ' ' . $Table . '.' . $Column . ' ' . __('could not be changed'), 'error');
 		}
 	} else {
-		OutputResult(__('The column') . ' ' . $Column . ' ' . __('is already changed'), 'info');
+		OutputResult(__('The column') . ' ' . $Table . '.' . $Column . ' ' . __('is already changed'), 'info');
 	}
 }
 

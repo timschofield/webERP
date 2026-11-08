@@ -1,5 +1,14 @@
 <?php
 
+$SQL = "UPDATE stockmaster SET lastcostupdate='1000-01-01' WHERE lastcostupdate<'1000-01-01'";
+$ErrMsg = __('There is a problem setting the default stockmaster lastcostupdate to 1000-01-01');
+$Result = DB_query($SQL, $ErrMsg);
+
+$SQL = "UPDATE salesorderdetails SET actualdispatchdate='1000-01-01' WHERE actualdispatchdate<'1000-01-01'";
+$ErrMsg = __('There is a problem setting the default salesorderdetails actualdispatchdate to 1000-01-01');
+$Result = DB_query($SQL, $ErrMsg);
+
+
 DropColumn('actualcost', 'stockmaster');
 AddCalculatedColumn('actualcost', 'stockmaster', 'decimal(20,4)', ' NOT NULL ', '(materialcost+labourcost+overheadcost)', 'overheadcost');
 AddCalculatedColumn('balance', 'debtortrans', 'double', ' NOT NULL ', '(ovamount + ovgst + ovfreight + ovdiscount - alloc)', 'salesperson');
