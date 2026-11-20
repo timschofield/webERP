@@ -776,73 +776,87 @@ function StockAdjustment($StockID, $Location, $Quantity, $TranDate, $user, $pass
 		return $Errors;
 	}
 	$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors);
-	$balances=GetStockBalance($StockID, $user, $password);
-	$balance=0;
-	for ($i=0; $i<sizeof($balances); $i++) {
-		$balance=$balance+$balances[$i]['quantity'];
+	$Errors = VerifyStockLocation($Location, sizeof($Errors), $Errors);
+	if (sizeof($Errors)!=0) {
+		return $Errors;
 	}
-	$Newqoh = $Quantity + $balance;
-	$Itemdetails = GetStockItem($StockID, $user, $password);
-	$adjglact=GetCategoryGLCode($Itemdetails[1]['categoryid'], 'adjglact');
-	$stockact=GetCategoryGLCode($Itemdetails[1]['categoryid'], 'stockact');
+	$PeriodNo = GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors);
 
-	$stockmovesql="INSERT INTO stockmoves (stockid,
-										   type,
-										   transno,
-										   loccode,
-										   trandate,
-										   prd,
-										   reference,
-										   qty,
-										   newqoh)
-						   VALUES ('" . $StockID . "',
-								   '17',
-								   '" .GetNextTransNo(17)."',
-								   '".$Location."',
-								   '".$TranDate."',
-								   '".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors)."',
-								   'api adjustment',
-								   '" .$Quantity."',
-								   '" .$Newqoh."')";
-	$locstocksql='UPDATE locstock SET quantity = quantity + '.$Quantity."
-						 WHERE loccode='".$Location."'
-						 AND stockid='".$StockID."'";
-	$glupdatesql1="INSERT INTO gltrans (type,
-										typeno,
-										trandate,
-										periodno,
-										account,
-										amount,
-										narrative)
-								VALUES ('17',
-									   '" . GetNextTransNo(17)."',
-									   '" . $TranDate. "',
-									   '".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors). "',
-									   '" .$adjglact."',
-									   '".$Itemdetails['materialcost']*-$Quantity. "',
-									   '" .mb_substr($StockID.' x '.$Quantity.' @ '.$Itemdetails['materialcost'], 0, 200)."')";
-	$glupdatesql2="INSERT INTO gltrans (type,
-										typeno,
-										trandate,
-										periodno,
-										account,
-										amount,
-										narrative)
-					VALUES ('17',
-					'" .GetNextTransNo(17)."',
-					'" .$TranDate."',
-					'" .GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors). "',
-					'" .$stockact."',
-					'" .$Itemdetails['materialcost']*$Quantity. "',
-					'" .mb_substr($StockID.' x '.$Quantity.' @ '.$Itemdetails['materialcost'], 0, 200)."')";
-	$systypessql = "UPDATE systypes set typeno='".GetNextTransNo(17)."' where typeid='17'";
+	$SQL = "SELECT categoryid, actualcost FROM stockmaster WHERE stockid='" . $StockID . "'";
+	$ItemRow = DB_fetch_array(DB_query($SQL));
+	$StockAct = GetCategoryGLCode($ItemRow['categoryid'], 'stockact');
+	$AdjGLAct = GetCategoryGLCode($ItemRow['categoryid'], 'adjglact');
+
+	/* the new quantity on hand is per location, like in StockAdjustments.php */
+	$SQL = "SELECT quantity FROM locstock WHERE stockid='" . $StockID . "' AND loccode='" . $Location . "'";
+	$LocRow = DB_fetch_array(DB_query($SQL));
+	$NewQOH = $LocRow['quantity'] + $Quantity;
 
 	DB_Txn_Begin();
-	DB_query($stockmovesql);
-	DB_query($locstocksql);
-	DB_query($glupdatesql1);
-	DB_query($glupdatesql2);
-	DB_query($systypessql);
+	/* one transaction number for the stock movement and both GL entries */
+	$AdjustmentNo = GetNextTransNo(17);
+
+	$SQL = "INSERT INTO stockmoves (stockid,
+									type,
+									transno,
+									loccode,
+									trandate,
+									prd,
+									reference,
+									qty,
+									newqoh,
+									standardcost)
+						VALUES ('" . $StockID . "',
+								17,
+								'" . $AdjustmentNo . "',
+								'" . $Location . "',
+								'" . $TranDate . "',
+								'" . $PeriodNo . "',
+								'api adjustment',
+								'" . $Quantity . "',
+								'" . $NewQOH . "',
+								'" . $ItemRow['actualcost'] . "')";
+	DB_query($SQL);
+
+	$SQL = "UPDATE locstock SET quantity = quantity + " . $Quantity . "
+				WHERE loccode='" . $Location . "'
+				AND stockid='" . $StockID . "'";
+	DB_query($SQL);
+
+	/* GL entries only when stock is linked to the GL and the item has a cost, like StockAdjustments.php */
+	if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND $ItemRow['actualcost'] > 0) {
+		$Narrative = mb_substr($StockID . ' x ' . $Quantity . ' @ ' . $ItemRow['actualcost'], 0, 200);
+		$SQL = "INSERT INTO gltrans (type,
+									typeno,
+									trandate,
+									periodno,
+									account,
+									amount,
+									narrative)
+							VALUES (17,
+									'" . $AdjustmentNo . "',
+									'" . $TranDate . "',
+									'" . $PeriodNo . "',
+									'" . $AdjGLAct . "',
+									'" . ($ItemRow['actualcost'] * -$Quantity) . "',
+									'" . $Narrative . "')";
+		DB_query($SQL);
+		$SQL = "INSERT INTO gltrans (type,
+									typeno,
+									trandate,
+									periodno,
+									account,
+									amount,
+									narrative)
+							VALUES (17,
+									'" . $AdjustmentNo . "',
+									'" . $TranDate . "',
+									'" . $PeriodNo . "',
+									'" . $StockAct . "',
+									'" . ($ItemRow['actualcost'] * $Quantity) . "',
+									'" . $Narrative . "')";
+		DB_query($SQL);
+	}
 	DB_Txn_Commit();
 	if (DB_error_no() != 0) {
 		$Errors[0] = DatabaseUpdateFailed;

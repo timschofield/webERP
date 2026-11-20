@@ -181,7 +181,7 @@ if (isset($_POST['ShowSales'])){
 	}
 	if (is_numeric($_POST['NoToDisplay'])){
 		if ($_POST['NoToDisplay'] > 0){
-			$SQL .= " LIMIT " . $_POST['NoToDisplay'];
+			$SQL .= " LIMIT " . (int)$_POST['NoToDisplay'];
 		}
 	}
 

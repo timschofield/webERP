@@ -164,7 +164,6 @@ function GetECBCurrencyRates() {
 		xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
 		xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
 		xml_parse_into_struct($parser, $xml, $Tags);
-		xml_parser_free($parser);
 
 		$elements = array(); // the currently filling [child] XmlElement array
 		$stack = array();

@@ -23,11 +23,11 @@ if (isset($_POST['Submit'])) {
 	$InputError = 0;
 
 	// Validation
-	if (!isset($_POST['PositionID']) || $_POST['PositionID'] == '') {
+	if (!isset($_POST['PositionID']) or $_POST['PositionID'] == '') {
 		$InputError = 1;
 		prnMsg(__('Position must be selected'), 'error');
 	}
-	if (!isset($_POST['SkillID']) || $_POST['SkillID'] == '') {
+	if (!isset($_POST['SkillID']) or $_POST['SkillID'] == '') {
 		$InputError = 1;
 		prnMsg(__('Skill must be selected'), 'error');
 	}
@@ -70,7 +70,7 @@ if (isset($_POST['Submit'])) {
 }
 
 // Handle delete
-if (isset($_GET['Delete']) && isset($_GET['MapID'])) {
+if (isset($_GET['Delete']) and isset($_GET['MapID'])) {
 	$MapID = (int)$_GET['MapID'];
 
 	$SQL = "DELETE FROM hrjobskills WHERE jobskillid = " . $MapID;
@@ -93,7 +93,7 @@ echo '<fieldset>
 $SQL = "SELECT positionid, positioncode, positiontitle FROM hrpositions ORDER BY positioncode";
 $Result = DB_query($SQL);
 while ($PosRow = DB_fetch_array($Result)) {
-	$Selected = (isset($_POST['ViewPositionID']) && $_POST['ViewPositionID'] == $PosRow['positionid']) ? ' selected' : '';
+	$Selected = (isset($_POST['ViewPositionID']) and $_POST['ViewPositionID'] == $PosRow['positionid']) ? ' selected' : '';
 	echo '<option value="' . $PosRow['positionid'] . '"' . $Selected . '>' .
 		htmlspecialchars($PosRow['positioncode'] . ' - ' . $PosRow['positiontitle'], ENT_QUOTES, 'UTF-8') . '</option>';
 }
@@ -104,7 +104,7 @@ echo '</select>
 echo '</form>';
 
 // If position is selected, show skills and add form
-if (isset($_POST['ViewPositionID']) && $_POST['ViewPositionID'] != '') {
+if (isset($_POST['ViewPositionID']) and $_POST['ViewPositionID'] != '') {
 
 	$ViewPositionID = (int)$_POST['ViewPositionID'];
 

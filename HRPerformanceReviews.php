@@ -20,7 +20,7 @@ echo '<p class="page_title_text">
 if (isset($_POST['Submit'])) {
 	$InputError = 0;
 
-	if (!isset($_POST['EmployeeID']) || $_POST['EmployeeID'] <= 0) {
+	if (!isset($_POST['EmployeeID']) or $_POST['EmployeeID'] <= 0) {
 		$InputError = 1;
 		prnMsg(__('Please select an employee'), 'error');
 	}
@@ -31,9 +31,9 @@ if (isset($_POST['Submit'])) {
 
 	if ($InputError != 1) {
 		$ReviewDate = FormatDateForSQL($_POST['ReviewDate']);
-		$NextReviewDate = !empty($_POST['NextReviewDate']) && is_date(ConvertSQLDate($_POST['NextReviewDate'])) ? "'" . FormatDateForSQL($_POST['NextReviewDate']) . "'" : 'NULL';
+		$NextReviewDate = !empty($_POST['NextReviewDate']) and is_date(ConvertSQLDate($_POST['NextReviewDate'])) ? "'" . FormatDateForSQL($_POST['NextReviewDate']) . "'" : 'NULL';
 
-		if (isset($_POST['ReviewID']) && $_POST['ReviewID'] > 0) {
+		if (isset($_POST['ReviewID']) and $_POST['ReviewID'] > 0) {
 			// Update existing review
 			$SQL = "UPDATE hrperformancereviews SET
 						employeeid = " . (int)$_POST['EmployeeID'] . ",
@@ -50,7 +50,7 @@ if (isset($_POST['Submit'])) {
 						reviewercomments = '" . $_POST['ReviewerComments'] . "',
 						employeecomments = '" . $_POST['EmployeeComments'] . "',
 						nextreviewdate = " . $NextReviewDate . ",
-						scaleid = " . (isset($_POST['ScaleID']) && (int)$_POST['ScaleID'] > 0 ? (int)$_POST['ScaleID'] : 'NULL') . ",
+						scaleid = " . (isset($_POST['ScaleID']) and (int)$_POST['ScaleID'] > 0 ? (int)$_POST['ScaleID'] : 'NULL') . ",
 						modifiedby = '" . $_SESSION['UserID'] . "',
 						modifieddate = NOW()
 					WHERE reviewid = " . (int)$_POST['ReviewID'];
@@ -82,7 +82,7 @@ if (isset($_POST['Submit'])) {
 						'" . $_POST['ReviewerComments'] . "',
 						'" . $_POST['EmployeeComments'] . "',
 						" . $NextReviewDate . ",
-						" . (isset($_POST['ScaleID']) && (int)$_POST['ScaleID'] > 0 ? (int)$_POST['ScaleID'] : 'NULL') . ",
+						" . (isset($_POST['ScaleID']) and (int)$_POST['ScaleID'] > 0 ? (int)$_POST['ScaleID'] : 'NULL') . ",
 						'" . $_SESSION['UserID'] . "',
 						NOW()
 					)";
@@ -97,7 +97,7 @@ if (isset($_POST['Submit'])) {
 }
 
 // Handle delete
-if (isset($_GET['delete']) && isset($_GET['ReviewID'])) {
+if (isset($_GET['delete']) and isset($_GET['ReviewID'])) {
 	$SQL = "DELETE FROM hrperformancereviews WHERE reviewid = " . (int)$_GET['ReviewID'];
 	$Result = DB_query($SQL);
 	if ($Result) {
@@ -106,7 +106,7 @@ if (isset($_GET['delete']) && isset($_GET['ReviewID'])) {
 }
 
 // Add/Edit form - Show first if not viewing
-if (isset($_GET['edit']) || isset($_GET['new']) || !isset($_GET['view'])) {
+if (isset($_GET['edit']) or isset($_GET['new']) or !isset($_GET['view'])) {
 	$ReviewID = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
 	$EmployeeID = 0;
 	$ReviewDate = Date($_SESSION['DefaultDateFormat']);

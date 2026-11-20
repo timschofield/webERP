@@ -28,17 +28,17 @@ if (isset($_POST['Submit'])) {
 
 	$InputError = 0;
 
-	if (!isset($_POST['IncidentDate']) || $_POST['IncidentDate'] == '') {
+	if (!isset($_POST['IncidentDate']) or $_POST['IncidentDate'] == '') {
 		$InputError = 1;
 		prnMsg(__('Incident date is required'), 'error');
 	}
 
 	if ($InputError == 0) {
 
-		$EmployeeID = isset($_POST['EmployeeID']) && $_POST['EmployeeID'] != '' ? (int)$_POST['EmployeeID'] : 'NULL';
+		$EmployeeID = isset($_POST['EmployeeID']) and $_POST['EmployeeID'] != '' ? (int)$_POST['EmployeeID'] : 'NULL';
 		$IncidentDate = FormatDateForSQL($_POST['IncidentDate']) . ' ' . $_POST['IncidentTime'] . ':00';
 		$IncidentTime = $_POST['IncidentTime'] . ' ' . $_POST['IncidentTime'] . ':00';
-		$LocationID = isset($_POST['LocationID']) && $_POST['LocationID'] != '' ? (int)$_POST['LocationID'] : 'NULL';
+		$LocationID = isset($_POST['LocationID']) and $_POST['LocationID'] != '' ? (int)$_POST['LocationID'] : 'NULL';
 		$IncidentType = $_POST['IncidentType'];
 		$Severity = $_POST['Severity'];
 		$Description = $_POST['Description'];
@@ -48,7 +48,7 @@ if (isset($_POST['Submit'])) {
 		$Status = $_POST['Status'];
 		$DaysLost = isset($_POST['DaysLost']) ? (int)$_POST['DaysLost'] : 0;
 
-		if (isset($_POST['IncidentID']) && $_POST['IncidentID'] != '') {
+		if (isset($_POST['IncidentID']) and $_POST['IncidentID'] != '') {
 			// Update
 			$IncidentID = (int)$_POST['IncidentID'];
 
@@ -137,7 +137,7 @@ if (isset($_POST['Submit'])) {
 }
 
 // Handle delete
-if (isset($_GET['Delete']) && isset($_GET['IncidentID'])) {
+if (isset($_GET['Delete']) and isset($_GET['IncidentID'])) {
 	$IncidentID = (int)$_GET['IncidentID'];
 
 	$SQL = "DELETE FROM hrsafetyincidents WHERE incidentid = " . $IncidentID;
@@ -360,7 +360,7 @@ if (DB_num_rows($Result) > 0) {
 
 	while ($MyRow = DB_fetch_array($Result)) {
 		$RowClass = ' class="striped_row"';
-		if ($MyRow['severity'] == 'Critical' || $MyRow['severity'] == 'Fatal') {
+		if ($MyRow['severity'] == 'Critical' or $MyRow['severity'] == 'Fatal') {
 			$RowClass = ' style="color:red;background:white"';
 		}
 

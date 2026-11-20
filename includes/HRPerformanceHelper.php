@@ -82,7 +82,7 @@ function GetAncestorPositionIDs(int $PositionID) {
 	$Visited = array();
 	$CurrentPositionID = (int)$PositionID;
 
-	while ($CurrentPositionID > 0 && !isset($Visited[$CurrentPositionID])) {
+	while ($CurrentPositionID > 0 and !isset($Visited[$CurrentPositionID])) {
 		$Visited[$CurrentPositionID] = true;
 		$SQL = "SELECT reportstopositionid
 				FROM hrpositions

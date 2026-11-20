@@ -34,7 +34,7 @@ $SQL = "SELECT departmentid, description FROM departments WHERE active = 1 ORDER
 $Result = DB_query($SQL);
 while ($Row = DB_fetch_array($Result)) {
 	echo '<option value="' . $Row['departmentid'] . '"' .
-		(isset($_POST['SearchDepartment']) && $_POST['SearchDepartment'] == $Row['departmentid'] ? ' selected="selected"' : '') .
+		(isset($_POST['SearchDepartment']) and $_POST['SearchDepartment'] == $Row['departmentid'] ? ' selected="selected"' : '') .
 		'>' . htmlspecialchars($Row['description'], ENT_QUOTES, 'UTF-8') . '</option>';
 }
 
@@ -61,7 +61,7 @@ if (isset($_GET['edit'])) {
 			$InputError = 1;
 			prnMsg(__('Please select a pay grade'), 'error');
 		}
-		if (filter_var($_POST['CurrentSalary'], FILTER_VALIDATE_FLOAT) === false || $_POST['CurrentSalary'] <= 0) {
+		if (filter_var($_POST['CurrentSalary'], FILTER_VALIDATE_FLOAT) === false or $_POST['CurrentSalary'] <= 0) {
 			$InputError = 1;
 			prnMsg(__('Please enter a valid salary amount'), 'error');
 		}

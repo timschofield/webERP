@@ -139,12 +139,13 @@ if (isset($_POST['CheckCode'])) {
 			<tr>
 				<th>' . __('Stock Code') . '</th>
 				<th>' . __('Stock Description') . '</th>
+				<th>' . __('Action') . '</th>
 			</tr>';
 	while ($MyRow = DB_fetch_row($Result)) {
 		echo '<tr>
 				<td>' . $MyRow[0] . '</td>
 				<td>' . $MyRow[1] . '</td>
-				<td><a href="' . $RootPath . '/StockAdjustments.php?StockID='.$MyRow[0].'&amp;Description='.$MyRow[1].'&amp;OldIdentifier='.$identifier.'">' . __('Adjust') . '</a>
+				<td><a href="' . $RootPath . '/StockAdjustments.php?StockID='.$MyRow[0].'&amp;Description='.$MyRow[1].'&amp;OldIdentifier='.$identifier.'">' . __('Adjust') . '</a></td>
 			</tr>';
 	}
 	echo '</table>';

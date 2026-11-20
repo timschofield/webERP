@@ -27,7 +27,7 @@ echo '<p class="page_title_text">
 if (isset($_POST['Submit'])) {
 	$InputError = 0;
 
-	if (!isset($_POST['CriteriaName']) || trim($_POST['CriteriaName']) == '') {
+	if (!isset($_POST['CriteriaName']) or trim($_POST['CriteriaName']) == '') {
 		$InputError = 1;
 		prnMsg(__('The criteria name must not be empty'), 'error');
 	}
@@ -39,7 +39,7 @@ if (isset($_POST['Submit'])) {
 	$IsActive = isset($_POST['Active']) ? 1 : 0;
 
 	if ($InputError != 1) {
-		if (isset($_POST['CriteriaID']) && (int)$_POST['CriteriaID'] > 0) {
+		if (isset($_POST['CriteriaID']) and (int)$_POST['CriteriaID'] > 0) {
 			$SQL = "UPDATE hrfeedbackcriteria SET
 						criterianame = '" . $CriteriaName . "',
 						description = '" . $Description . "',
@@ -83,7 +83,7 @@ if (isset($_POST['Submit'])) {
 }
 
 /* Handle delete */
-if (isset($_GET['delete']) && isset($_GET['CriteriaID'])) {
+if (isset($_GET['delete']) and isset($_GET['CriteriaID'])) {
 	$SQL = "DELETE FROM hrfeedbackcriteria WHERE criteriaid = " . (int)$_GET['CriteriaID'];
 	$Result = DB_query($SQL);
 	if ($Result) {

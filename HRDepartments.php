@@ -325,7 +325,7 @@ echo '</select>
 if (isset($SelectedDepartment)) {
 	echo '<field>
 			<label for="Active">' . __('Active') . ':</label>
-			<input type="checkbox" name="Active" value="1"' . (isset($_POST['Active']) && $_POST['Active'] == 1 ? ' checked="checked"' : '') . ' />
+			<input type="checkbox" name="Active" value="1"' . (isset($_POST['Active']) and $_POST['Active'] == 1 ? ' checked="checked"' : '') . ' />
 		</field>';
 }
 

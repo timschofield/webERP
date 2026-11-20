@@ -233,7 +233,7 @@ if ($_GET['POLine'] == 1){
 			salesorderdetails.itemdue
 		FROM salesorderdetails INNER JOIN stockmaster
 			ON salesorderdetails.stkcode=stockmaster.stockid
-		WHERE salesorderdetails.orderno=" . $_GET['TransNo'] . "
+		WHERE salesorderdetails.orderno='" . $_GET['TransNo'] . "'
 		ORDER BY poline";
 	$Result = DB_query($SQL, $ErrMsg);
 	$i=0;

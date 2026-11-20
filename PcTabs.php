@@ -11,6 +11,10 @@ echo '<p class="page_title_text">
 		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', $Title, '" alt="" />', ' ', $Title, '
 	</p>';
 
+$SelectedTab = null;
+$AuthorisersExpenses = '';
+$AuthorisersCash = '';
+$Msg = '';
 if (isset($_POST['SelectedTab'])) {
 	$SelectedTab = mb_strtoupper($_POST['SelectedTab']);
 } elseif (isset($_GET['SelectedTab'])) {
@@ -47,10 +51,10 @@ if (isset($_POST['Submit'])) {
 	} elseif (($_POST['SelectTabs']) == '') {
 		$InputError = 1;
 		prnMsg(__('You must select a type of tab from the list'), 'error');
-	} elseif (($_POST['SelectAssigner']) == '') {
+	} elseif (empty($_POST['SelectAssigner'])) {
 		$InputError = 1;
 		prnMsg(__('You must select a User to assign cash to this tab'), 'error');
-	} elseif (($_POST['SelectAuthoriserCash']) == '') {
+	} elseif (empty($_POST['SelectAuthoriserCash'])) {
 		$InputError = 1;
 		prnMsg(__('You must select a User to authorise this tab'), 'error');
 	} elseif (($_POST['GLAccountCash']) == '') {
@@ -64,10 +68,11 @@ if (isset($_POST['Submit'])) {
 		prnMsg(__('You must select a tax group'), 'error');
 	}
 	
+	$Assigners = '';
 	if ($InputError == 0) {
 		$AuthorisersExpenses = '';
 		$i = 0;
-		foreach ($_POST['SelectAuthoriserExpenses'] as $Value) {
+		foreach ($_POST['SelectAuthoriserExpenses'] ?? [] as $Value) {
 			if ($i) $AuthorisersExpenses .= ',';
 			$AuthorisersExpenses .= $Value;
 			$i++;
@@ -81,7 +86,6 @@ if (isset($_POST['Submit'])) {
 			$i++;
 		}
 
-		$Assigners = '';
 		$i = 0;
 		foreach ($_POST['SelectAssigner'] as $Value) {
 			if ($i) $Assigners .= ',';
@@ -158,7 +162,7 @@ if (isset($_POST['Submit'])) {
 		unset($_POST['GLAccountPcashTab']);
 		unset($_POST['TaxGroup']);
 	}
-} elseif (isset($_GET['delete'])) {
+} elseif (isset($_GET['delete']) and isset($SelectedTab)) {
 	$SQL = "DELETE FROM pctabs WHERE tabcode='" . $SelectedTab . "'";
 	$ErrMsg = __('The Tab record could not be deleted because');
 	$Result = DB_query($SQL, $ErrMsg);
@@ -354,8 +358,11 @@ if (!isset($_GET['delete'])) {
 			ORDER BY userid";
 	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)) {
-		$Assigners = explode(',',$_POST['SelectAssigner']);
-		if (isset($_POST['SelectAssigner']) and in_array($MyRow['userid'],$Assigners)) {
+		$Assigners = $_POST['SelectAssigner'] ?? [];
+		if (!is_array($Assigners)) {
+			$Assigners = explode(',', $Assigners);
+		}
+		if (in_array($MyRow['userid'], $Assigners)) {
 			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';
@@ -375,8 +382,11 @@ if (!isset($_GET['delete'])) {
 			ORDER BY userid";
 	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)) {
-		$Authorizer = explode(',',$_POST['SelectAuthoriserCash']);
-		if (isset($_POST['SelectAuthoriserCash']) and in_array($MyRow['userid'],$Authorizer)) {
+		$Authorizer = $_POST['SelectAuthoriserCash'] ?? [];
+		if (!is_array($Authorizer)) {
+			$Authorizer = explode(',', $Authorizer);
+		}
+		if (in_array($MyRow['userid'], $Authorizer)) {
 			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';
@@ -397,8 +407,11 @@ if (!isset($_GET['delete'])) {
 			ORDER BY userid";
 	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)) {
-		$Authorizer = explode(',',$_POST['SelectAuthoriserExpenses']);
-		if (isset($_POST['SelectAuthoriserExpenses']) and in_array($MyRow['userid'],$Authorizer)) {
+		$Authorizer = $_POST['SelectAuthoriserExpenses'] ?? [];
+		if (!is_array($Authorizer)) {
+			$Authorizer = explode(',', $Authorizer);
+		}
+		if (in_array($MyRow['userid'], $Authorizer)) {
 			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';

@@ -340,10 +340,10 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 								'" . $_POST['Component'] . "',
 								'" . $_POST['WorkCentreAdded'] . "',
 								'" . $_POST['LocCode'] . "',
-								" . filter_number_format($_POST['Quantity']) . ",
+								'" . filter_number_format($_POST['Quantity']) . "',
 								'" . $EffectiveAfterSQL . "',
 								'" . $EffectiveToSQL . "',
-								" . $_POST['AutoIssue'] . ")";
+								'" . $_POST['AutoIssue'] . "')";
 
 					$ErrMsg = __('Could not insert the BOM component because');
 

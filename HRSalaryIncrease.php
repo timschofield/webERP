@@ -35,7 +35,7 @@ if (isset($_POST['ProcessIncreases'])) {
 		prnMsg(__('The effective date must be a valid date'), 'error');
 	}
 
-	if ($InputError != 1 && isset($_POST['SelectedEmployees']) && is_array($_POST['SelectedEmployees'])) {
+	if ($InputError != 1 and isset($_POST['SelectedEmployees']) and is_array($_POST['SelectedEmployees'])) {
 		$EffectiveDate = FormatDateForSQL($_POST['EffectiveDate']);
 		$ChangeReason = $_POST['ChangeReason'];
 		$ProcessedCount = 0;
@@ -45,7 +45,7 @@ if (isset($_POST['ProcessIncreases'])) {
 		foreach ($_POST['SelectedEmployees'] as $EmployeeID) {
 			$EmployeeID = (int)$EmployeeID;
 
-			if (isset($_POST['NewSalary_' . $EmployeeID]) && $_POST['NewSalary_' . $EmployeeID] > 0) {
+			if (isset($_POST['NewSalary_' . $EmployeeID]) and $_POST['NewSalary_' . $EmployeeID] > 0) {
 				// Get current salary
 				$SQL = "SELECT currentsalary FROM hremployeecompensation
 						WHERE employeeid = " . $EmployeeID . "
@@ -138,7 +138,7 @@ $SQL = "SELECT departmentid, description FROM departments WHERE active = 1 ORDER
 $Result = DB_query($SQL);
 while ($Row = DB_fetch_array($Result)) {
 	echo '<option value="' . $Row['departmentid'] . '"' .
-		(isset($_POST['FilterDepartment']) && $_POST['FilterDepartment'] == $Row['departmentid'] ? ' selected="selected"' : '') .
+		(isset($_POST['FilterDepartment']) and $_POST['FilterDepartment'] == $Row['departmentid'] ? ' selected="selected"' : '') .
 		'>' . $Row['description'] . '</option>';
 }
 
@@ -155,7 +155,7 @@ echo '</select>
 
 // Build employee list query
 $WhereClause = "e.employmentstatus = 'Active'";
-if (isset($_POST['FilterDepartment']) && $_POST['FilterDepartment'] != '') {
+if (isset($_POST['FilterDepartment']) and $_POST['FilterDepartment'] != '') {
 	$WhereClause .= " AND e.departmentid = " . (int)$_POST['FilterDepartment'];
 }
 

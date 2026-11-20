@@ -61,12 +61,12 @@ echo '<table class="selection">
 if (DB_num_rows($Result) > 0) {
 	while ($MyRow = DB_fetch_array($Result)) {
 		$RowClass = '';
-		if ($MyRow['status'] != 'Completed' && $MyRow['status'] != 'Cancelled' && $MyRow['duedate'] != null && $MyRow['duedate'] < date('Y-m-d')) {
+		if ($MyRow['status'] != 'Completed' and $MyRow['status'] != 'Cancelled' and $MyRow['duedate'] != null and $MyRow['duedate'] < date('Y-m-d')) {
 			$RowClass = ' class="warn"';
 		}
 
 		$RatingLabel = '-';
-		if (isset($MyRow['overallrating']) && $MyRow['overallrating'] !== null && $MyRow['overallrating'] !== '') {
+		if (isset($MyRow['overallrating']) and $MyRow['overallrating'] !== null and $MyRow['overallrating'] !== '') {
 			$RatingInt = (int)$MyRow['overallrating'];
 			$RatingLabel = isset($RatingLabels[$RatingInt]) ? $RatingLabels[$RatingInt] : (string)$RatingInt;
 		}

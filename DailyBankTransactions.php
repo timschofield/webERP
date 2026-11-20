@@ -147,7 +147,7 @@ if (!isset($_POST['Show'])) {
 		$BankDetailRow = DB_fetch_array($BankResult);
 		echo '<p class="page_title_text">
 				<img alt="" src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/bank.png" title="', __('Bank Transactions Inquiry'), '" />', __('Account Transactions For'), ' ', $BankDetailRow['bankaccountname'], ' ', __('Between'), ' ', $_POST['FromTransDate'], ' ', __('and'), ' ', $_POST['ToTransDate'], '
-			</p>'; // Page title.*/
+			</p>'; // Page title.
 		echo '<table>
 				<thead>
 					<tr>

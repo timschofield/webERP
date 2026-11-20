@@ -22,11 +22,11 @@ if (isset($_POST['Submit'])) {
 
 	$InputError = 0;
 
-	if (!isset($_POST['PositionID']) || $_POST['PositionID'] == '') {
+	if (!isset($_POST['PositionID']) or $_POST['PositionID'] == '') {
 		$InputError = 1;
 		prnMsg(__('Position must be selected'), 'error');
 	}
-	if (!isset($_POST['RequestedBy']) || $_POST['RequestedBy'] == '') {
+	if (!isset($_POST['RequestedBy']) or $_POST['RequestedBy'] == '') {
 		$InputError = 1;
 		prnMsg(__('Requested by is required'), 'error');
 	}
@@ -34,16 +34,16 @@ if (isset($_POST['Submit'])) {
 	if ($InputError == 0) {
 
 		$PositionID = (int)$_POST['PositionID'];
-		$DepartmentID = isset($_POST['DepartmentID']) && $_POST['DepartmentID'] != '' ? (int)$_POST['DepartmentID'] : 'NULL';
+		$DepartmentID = isset($_POST['DepartmentID']) and $_POST['DepartmentID'] != '' ? (int)$_POST['DepartmentID'] : 'NULL';
 		$NumberOfPositions = (int)$_POST['NumberOfPositions'];
 		$RequestedBy = (int)$_POST['RequestedBy'];
 		$RequestDate = FormatDateForSQL($_POST['RequestDate']);
-		$TargetStartDate = isset($_POST['TargetStartDate']) && $_POST['TargetStartDate'] != '' ? "'" . FormatDateForSQL($_POST['TargetStartDate']) . "'" : 'NULL';
+		$TargetStartDate = isset($_POST['TargetStartDate']) and $_POST['TargetStartDate'] != '' ? "'" . FormatDateForSQL($_POST['TargetStartDate']) . "'" : 'NULL';
 		$Status = $_POST['Status'];
 		$Priority = $_POST['Priority'];
 		$Justification = $_POST['Justification'];
 
-		if (isset($_GET['RequisitionID']) && $_GET['RequisitionID'] != '') {
+		if (isset($_GET['RequisitionID']) and $_GET['RequisitionID'] != '') {
 			// Update
 			$RequisitionID = (int)$_GET['RequisitionID'];
 
@@ -101,7 +101,7 @@ if (isset($_POST['Submit'])) {
 }
 
 // Handle delete
-if (isset($_GET['Delete']) && isset($_GET['RequisitionID'])) {
+if (isset($_GET['Delete']) and isset($_GET['RequisitionID'])) {
 	$RequisitionID = (int)$_GET['RequisitionID'];
 
 	$SQL = "DELETE FROM hrrequisitions WHERE requisitionid = " . $RequisitionID;

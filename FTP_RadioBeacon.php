@@ -178,7 +178,7 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 					FROM salesorderdetails,
 						stockmaster
 					WHERE salesorderdetails.stkcode=stockmaster.stockid
-					AND salesorderdetails.orderno=" . $_GET['OrderNo'];
+					AND salesorderdetails.orderno='" . $_GET['OrderNo'] . "'";
 
 		$ErrMsg = __('There was a problem retrieving the line details for order number') . ' ' . $_GET['OrderNo'] . ' ' . __('from the database because');
 		$Result = DB_query($SQL, $ErrMsg);
@@ -265,7 +265,7 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 			$SQL = "UPDATE salesorders
 					SET printedpackingslip=1,
 						datepackingslipprinted = CURRENT_DATE
-					WHERE salesorders.orderno=" . $_GET['OrderNo'];
+					WHERE salesorders.orderno='" . $_GET['OrderNo'] . "'";
 			$Result = DB_query($SQL);
 
 			echo '<p>' . __('Order Number') . ' ' . $_GET['OrderNo'] . ' ' . __('has been sent via FTP to Radio Beacon a copy of the file that was sent is held on the server at') . '<br />' . $FileName;

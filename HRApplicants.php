@@ -22,15 +22,15 @@ if (isset($_POST['Submit'])) {
 
 	$InputError = 0;
 
-	if (!isset($_POST['FirstName']) || $_POST['FirstName'] == '') {
+	if (!isset($_POST['FirstName']) or $_POST['FirstName'] == '') {
 		$InputError = 1;
 		prnMsg(__('First name is required'), 'error');
 	}
-	if (!isset($_POST['LastName']) || $_POST['LastName'] == '') {
+	if (!isset($_POST['LastName']) or $_POST['LastName'] == '') {
 		$InputError = 1;
 		prnMsg(__('Last name is required'), 'error');
 	}
-	if (!isset($_POST['Email']) || $_POST['Email'] == '') {
+	if (!isset($_POST['Email']) or $_POST['Email'] == '') {
 		$InputError = 1;
 		prnMsg(__('Email is required'), 'error');
 	}
@@ -48,7 +48,7 @@ if (isset($_POST['Submit'])) {
 		$CoverLetter = $_POST['CoverLetter'];
 		$Status = $_POST['Status'];
 
-		if (isset($_GET['ApplicantID']) && $_GET['ApplicantID'] != '') {
+		if (isset($_GET['ApplicantID']) and $_GET['ApplicantID'] != '') {
 			// Update
 			$ApplicantID = (int)$_GET['ApplicantID'];
 
@@ -98,7 +98,7 @@ if (isset($_POST['Submit'])) {
 }
 
 // Handle delete
-if (isset($_GET['Delete']) && isset($_GET['ApplicantID'])) {
+if (isset($_GET['Delete']) and isset($_GET['ApplicantID'])) {
 	$ApplicantID = (int)$_GET['ApplicantID'];
 
 	$SQL = "DELETE FROM hrapplicants WHERE applicantid = " . $ApplicantID;

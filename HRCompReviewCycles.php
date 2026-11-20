@@ -26,7 +26,7 @@ if (isset($_POST['Submit'])) {
 	}
 	if ($InputError != 1) {
 
-		if (isset($_POST['CycleID']) && $_POST['CycleID'] > 0) {
+		if (isset($_POST['CycleID']) and $_POST['CycleID'] > 0) {
 			// Update existing cycle
 			$SQL = "UPDATE hrcompreviewcycles SET
 						cyclename = '" . $_POST['CycleName'] . "',
@@ -65,7 +65,7 @@ if (isset($_POST['Submit'])) {
 }
 
 // Handle delete
-if (isset($_GET['delete']) && isset($_GET['CycleID'])) {
+if (isset($_GET['delete']) and isset($_GET['CycleID'])) {
 	$SQL = "DELETE FROM hrcompreviewcycles WHERE reviewcycleid = " . (int)$_GET['CycleID'];
 	$Result = DB_query($SQL);
 	if ($Result) {
@@ -205,7 +205,7 @@ if (isset($_GET['view'])) {
 				<td>' . ($StatsRow['avgincrease'] ? number_format($StatsRow['avgincrease'], 2) . '%' : '0.00%') . '</td>
 			</tr>';
 
-	if ($CycleRow['budgetamount'] > 0 && $StatsRow['totalincreases'] > 0) {
+	if ($CycleRow['budgetamount'] > 0 and $StatsRow['totalincreases'] > 0) {
 		$BudgetUsed = ($StatsRow['totalincreases'] / $CycleRow['budgetamount']) * 100;
 		echo '<tr>
 				<td><strong>' . __('Budget Used') . ':</strong></td>
@@ -219,7 +219,7 @@ if (isset($_GET['view'])) {
 }
 
 // Add/Edit form
-if (isset($_GET['edit']) || isset($_GET['new'])) {
+if (isset($_GET['edit']) or isset($_GET['new'])) {
 	$CycleID = isset($_GET['edit']) ? (int)$_GET['edit'] : 0;
 	$CycleName = '';
 	$FiscalYear = date('Y');
@@ -294,7 +294,7 @@ if (isset($_GET['edit']) || isset($_GET['new'])) {
 	echo '</form>';
 }
 
-if (!isset($_GET['edit']) && !isset($_GET['new']) && !isset($_GET['view'])) {
+if (!isset($_GET['edit']) and !isset($_GET['new']) and !isset($_GET['view'])) {
 	echo '<div class="centre">
 			<br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?new=1">' . __('Add New Review Cycle') . '</a>
 		</div>';
