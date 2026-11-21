@@ -227,6 +227,11 @@ function BomMaterialCost($Parent) {
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_row($Result);
 	$MaterialCost = $MyRow[0];
+	if ($MaterialCost === null) {
+		/* No currently effective component lines (e.g. all lines expired): there is nothing to roll up,
+		 * so keep the existing cost instead of writing an empty value */
+		return null;
+	}
 	if (abs($QOH*($MaterialCost-$OldCost))>0) {
 		ItemCostUpdateGL($Parent, $MaterialCost, $OldCost, $QOH);
 	}
@@ -240,6 +245,9 @@ function UpdateCost($Item) {
 	while ($MyRow = DB_fetch_array($Result)) {
 		$NewParent = $MyRow['parent'];
 		$MaterialCost = BomMaterialCost($NewParent);
+		if ($MaterialCost === null) {
+			continue;
+		}
 		$SQL = "UPDATE stockmaster SET materialcost=" . $MaterialCost . " WHERE stockid='" . $NewParent . "'";
 		$Result1 = DB_query($SQL);
 		if (DB_error_no() != 0) {
