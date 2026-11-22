@@ -1,8 +1,11 @@
 <?php
 
+/**
+ * @param string $StockID
+ * @param string $DebtorNo
+ * @param string $BranchCode
+ */
 function GetPrice($StockID, $DebtorNo, $BranchCode, $OrderLineQty = 1, $ReportZeroPrice = 1) {
-
-	$Price = 0;
 
 	/*Search specific price by custome branch and customer code for a period of dates specified. If no end date is specified 9999-12-31 is the default, so it's way in the future */
 	$SQL = "SELECT prices.price,
@@ -97,7 +100,7 @@ function GetPrice($StockID, $DebtorNo, $BranchCode, $OrderLineQty = 1, $ReportZe
 								WHERE debtorsmaster.salestype = pricematrix.salestype
 									AND debtorsmaster.debtorno = '" . $DebtorNo . "'
 									AND pricematrix.stockid = '" . $StockID . "'";
-						$ErrorMsg = __('Failed to retrieve price from price matrix');
+						$ErrMsg = __('Failed to retrieve price from price matrix');
 						$Result = DB_query($SQL, $ErrMsg);
 					}
 				} // End If no regular price found, checking the price matrix

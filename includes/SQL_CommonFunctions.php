@@ -2,7 +2,7 @@
 
 /* Common SQL Functions */
 
-function GetNextTransNo($TransType) {
+function GetNextTransNo(int $TransType): int {
 
 	/* SQL to get the next transaction number these are maintained in the table SysTypes - Transaction Types
 	Also updates the transaction number
@@ -26,7 +26,7 @@ function GetNextTransNo($TransType) {
 	return $MyRow[0];
 }
 
-function GetStockGLCode($StockID) {
+function GetStockGLCode(string $StockID): array {
 
 	/*Gets the GL Codes relevant to the stock item account from the stock category record */
 	$QuerySQL = "SELECT stockact,
@@ -47,7 +47,7 @@ function GetStockGLCode($StockID) {
 	return $MyRow;
 }
 
-function GetTaxRate($TaxAuthority, $DispatchTaxProvince, $TaxCategory) {
+function GetTaxRate(int $TaxAuthority, int $DispatchTaxProvince, int $TaxCategory): float {
 
 	/*Gets the Tax rate applicable to an item from the TaxAuthority of the branch and TaxLevel of the item */
 
@@ -69,7 +69,7 @@ function GetTaxRate($TaxAuthority, $DispatchTaxProvince, $TaxCategory) {
 	}
 }
 
-function GetTaxes($TaxGroup, $DispatchTaxProvince, $TaxCategory) {
+function GetTaxes(int $TaxGroup, int $DispatchTaxProvince, int $TaxCategory) {
 
 	$SQL = "SELECT taxgrouptaxes.calculationorder,
 					taxauthorities.description,
@@ -106,7 +106,7 @@ function GetSalesGLCode($salesarea, $partnumber) {
     return $MyRow[0];
 }
 
-function GetCreditAvailable($DebtorNo) {
+function GetCreditAvailable(string $DebtorNo): float {
 
 	$SQL = "SELECT debtorsmaster.debtorno,
 				debtorsmaster.creditlimit,
@@ -153,7 +153,7 @@ function GetCreditAvailable($DebtorNo) {
 	return $CreditAvailable;
 }
 
-function ItemCostUpdateGL($StockID, $NewCost, $OldCost, $QOH) {
+function ItemCostUpdateGL(string $StockID, float $NewCost, float $OldCost, float $QOH): void {
 
 	if ($_SESSION['CompanyRecord']['gllink_stock'] == 1
 		AND $QOH != 0
@@ -208,7 +208,7 @@ function ItemCostUpdateGL($StockID, $NewCost, $OldCost, $QOH) {
 }
 
 /* Calculates the material cost of a bill of materials, given parent code */
-function BomMaterialCost($Parent) {
+function BomMaterialCost(string $Parent): ?float {
 	$SQL = "SELECT materialcost FROM stockmaster WHERE stockid='" . $Parent . "'";
 	$Result1 = DB_query($SQL);
 	$MyRow1 = DB_fetch_row($Result1);
@@ -239,7 +239,7 @@ function BomMaterialCost($Parent) {
 }
 
 /* Iterates through the levels of the bom, recalculating each bom it meets */
-function UpdateCost($Item) {
+function UpdateCost(string $Item): int {
 	$SQL = "SELECT parent FROM bom where component = '" . $Item . "'";
 	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -249,7 +249,7 @@ function UpdateCost($Item) {
 			continue;
 		}
 		$SQL = "UPDATE stockmaster SET materialcost=" . $MaterialCost . " WHERE stockid='" . $NewParent . "'";
-		$Result1 = DB_query($SQL);
+		DB_query($SQL);
 		if (DB_error_no() != 0) {
 			return 1;
 		}
@@ -259,7 +259,7 @@ function UpdateCost($Item) {
 }
 
 /* Accepts work order information and iterates through the bom, inserting real components (dissolving phantom assemblies) */
-function WoRealRequirements($WO, $LocCode, $StockID, $Qty = 1, $ParentID = '') {
+function WoRealRequirements(int $WO, string $LocCode, string $StockID, float $Qty = 1, string $ParentID = ''): void {
 
 	// remember, 'G' is for ghost (phantom part type)
 
@@ -350,7 +350,7 @@ function WoRealRequirements($WO, $LocCode, $StockID, $Qty = 1, $ParentID = '') {
 }
 
 /*Ensures general ledger entries balance for a given transaction */
-function EnsureGLEntriesBalance($TransType, $TransTypeNo) {
+function EnsureGLEntriesBalance(int $TransType, int $TransTypeNo): void {
 
 	$Result = DB_query("SELECT COALESCE(SUM(amount), 0)
 						FROM gltrans
@@ -380,7 +380,7 @@ function EnsureGLEntriesBalance($TransType, $TransTypeNo) {
 }
 
 /*Creates sample and testresults */
-function CreateQASample($ProdSpecKey, $LotKey, $Identifier, $Comments, $Cert, $DuplicateOK) {
+function CreateQASample(string $ProdSpecKey, string $LotKey, string $Identifier, string $Comments, string $Cert, int $DuplicateOK): void {
 	$Result = DB_query("SELECT COUNT(testid)
 						FROM prodspecs
 						WHERE keyval='" . $ProdSpecKey . "'
@@ -441,7 +441,7 @@ function CreateQASample($ProdSpecKey, $LotKey, $Identifier, $Comments, $Cert, $D
 	} //$MyRow[0]>0
 }
 
-function PettyCashTabCurrentBalance($Tab) {
+function PettyCashTabCurrentBalance(string $Tab): float {
 	$SQL = "SELECT SUM(amount) AS balance
 			FROM pcashdetails
 			WHERE tabcode='" . $Tab . "'";
@@ -455,7 +455,7 @@ function PettyCashTabCurrentBalance($Tab) {
 	return $Balance;
 }
 
-function CurrencyTolerance($Currency = '') {
+function CurrencyTolerance(string $Currency = ''): float {
 	if (($Currency == $_SESSION['CompanyRecord']['currencydefault'])
 		or ($Currency == '')) {
 		// it is the home currency
@@ -473,7 +473,7 @@ function CurrencyTolerance($Currency = '') {
 	}
 }
 
-function AdjustBankAccountsDueToCurrencyExchangeRate($SelectedCurrency, $OldRate, $NewRate){
+function AdjustBankAccountsDueToCurrencyExchangeRate(string $SelectedCurrency, float $OldRate, float $NewRate): void {
 	/* We should update the functional currency value of the bank accounts of the $SelectedCurrency
 	Example: if functional currency = IDR and we have a bank account in USD.
 	Before rate was 1 USD = 9.000 IDR so OldRate = 1 /9.000 = 0.000111

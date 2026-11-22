@@ -1,7 +1,9 @@
 <?php
 
+/** @var string $RootPath */
+
 /** This function determines the SQL to use to get the value for the columns defined */
-function GetDataSQL($SQLData) {
+function GetDataSQL(string $SQLData): ?string {
 
 	switch ($SQLData) {
 		case 'Quantity':
@@ -17,11 +19,11 @@ function GetDataSQL($SQLData) {
 		case 'Discount':
 			return 'salesanalysis.disc';
 	}
+	return null;
 }
 
-/** This function determines the two columns to get for the group by levels defined in the report heading
-and allocates a Colxx to each  */
-function GetFieldSQL($Data, $ColNo) {
+/* This function determines the two columns to get for the group by levels defined in the report heading and allocates a Colxx to each  */
+function GetFieldSQL(string $Data, int $ColNo): ?string {
 
 	switch ($Data) {
 		case 'Sales Area':
@@ -46,10 +48,11 @@ function GetFieldSQL($Data, $ColNo) {
 			$SQL = 'salesanalysis.salesperson AS col' . $ColNo . ', salesman.salesmanname AS col' . ($ColNo+1);
 			return $SQL;
 	}
+	return null;
 }
 
 /** This function determines the field names to search on in the having clause */
-function GetHavingSQL($Data) {
+function GetHavingSQL(string $Data): ?string {
 
 	switch ($Data) {
 		case 'Sales Area':
@@ -67,10 +70,11 @@ function GetHavingSQL($Data) {
 		case 'Sales Person':
 			return 'salesanalysis.salesperson';
 	}
+	return null;
 }
 
 /** This function returns the SQL for the group by clause for the group by levels defined in the report header */
-function GetGroupBySQL($GByData) {
+function GetGroupBySQL(string $GByData): ?string {
 
 	switch ($GByData) {
 		case 'Sales Area':
@@ -88,6 +92,7 @@ function GetGroupBySQL($GByData) {
 		case 'Sales Person':
 			return 'salesanalysis.salesperson, salesman.salesmanname';
 	}
+	return null;
 }
 
 /* First construct the necessary SQL statement to send to the server using the case construct to emulate cross tabs */

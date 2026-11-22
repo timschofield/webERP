@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @param string $ImageFile
+ * @param string|null $Item
+ * @param int|string $Width
+ * @param int|string $Height
+ * @param string $AltText
+ */
 function GetImageLink($ImageFile, $Item, $Width, $Height, $AltText, $Class = "") {
     if (extension_loaded('gd')
 		and function_exists('gd_info')
@@ -34,6 +41,7 @@ function GetImageLink($ImageFile, $Item, $Width, $Height, $AltText, $Class = "")
    return $ImageLink;
 }
 
+/** @param string $stockid */
 function getImageTag($stockid) {
 	$SupportedImgExt = array('png', 'jpg', 'jpeg');
 	$partPicsDir = $_SESSION['part_pics_dir'];

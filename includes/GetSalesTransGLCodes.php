@@ -5,6 +5,11 @@ $Area, $StockID to determine the stock category and the SalesType (Price List)
 
 Function returns the relevant GL Code to post COGS entries to*/
 
+/**
+ * @param string $Area
+ * @param string $StockID
+ * @param string $SalesType
+ */
 function GetCOGSGLAccount ($Area, $StockID, $SalesType) {
 
 	$ErrMsg = __('Can not retrieve the cost of sales GL code because');
@@ -144,6 +149,11 @@ function GetCOGSGLAccount ($Area, $StockID, $SalesType) {
 	Return $MyRow[0];
 }
 
+/**
+ * @param string $Area
+ * @param string $StockID
+ * @param string $SalesType
+ */
 function GetSalesGLAccount ($Area, $StockID, $SalesType) {
 
 /*Gets the  Sales GL Code for a specific area, sales type and stock category */

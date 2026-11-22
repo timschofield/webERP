@@ -17,6 +17,7 @@ Parameters:
     $TagArray - Array of tag references to be inserted
 Returns:
     boolean - Always returns true
+@param array<int|string, int|string>|null $TagArray
 */
 function InsertGLTags($TagArray) {
 	if (!empty($TagArray)) {
@@ -25,7 +26,7 @@ function InsertGLTags($TagArray) {
 			$SQL = "INSERT INTO gltags
 					VALUES ( LAST_INSERT_ID(),
 							'" . $Tag . "')";
-			$Result = DB_query($SQL, $ErrMsg, '', true);
+			DB_query($SQL, $ErrMsg, '', true);
         }
 	}
     return true;
@@ -37,6 +38,7 @@ Parameters:
     $TagArray - Array of tag references to look up
 Returns:
     string - HTML formatted string containing tag references and descriptions
+@param array<int|string, int|string>|null $TagArray
 */
 function GetDescriptionsFromTagArray($TagArray) {
 	$TagDescriptions = '';
@@ -63,6 +65,8 @@ Parameters:
     $PeriodNo - The period number up to which the balance is calculated
 Returns:
     float - The calculated balance for the account up to the specified period, or 0 if no records found
+@param int|string $AccountCode
+@param int|string $PeriodNo
 */
 function GetGLAccountBalance($AccountCode, $PeriodNo){
 	$SQL = "SELECT SUM(amount) AS total
@@ -80,6 +84,7 @@ Parameters:
     $AccountCode - The GL account code
 Returns:
     string - The name of the GL account or '' if no records found
+@param int|string $AccountCode
 */
 function GetGLAccountName($AccountCode){
 	$SQL = "SELECT accountname
@@ -97,6 +102,8 @@ Parameters:
 	$PreviousPeriod - The value for the previous period
 Returns:
 	string - The relative change formatted as a percentage, or 'N/A' if the previous period is zero
+@param int|float|string $SelectedPeriod
+@param int|float|string $PreviousPeriod
 */
 function RelativeChange($SelectedPeriod, $PreviousPeriod) {
 	include(__DIR__ . '/SQL_CommonFunctions.php');
@@ -116,6 +123,7 @@ Parameters:
 	$Activity - The cash flow activity code
 Returns:
 	string - The corresponding activity name
+@param int|string $Activity
 */
 function CashFlowsActivityName($Activity) {
 	// Converts the cash flow activity number to an activity text.

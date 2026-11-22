@@ -1,8 +1,11 @@
 <?php
+/** @param string|int|float|bool $str */
 function stripcomma($str) { //because we're using comma as a delimiter
 	return str_replace(",","",$str);
 }
 
+/** @var mysqli_result|\PgSql\Result|resource $Result */
+/** @var mysqli_result|\PgSql\Result|resource $ColsResult */
 $fp = fopen( $_SESSION['reports_dir'] . "/SalesAnalysis.csv", "w");
 
 

@@ -5,7 +5,7 @@
 *
 ***********************************************************************/
 
-function RecordRunningTime($Title, $UserName) {
+function RecordRunningTime(?string $Title, ?string $UserName): void {
 
 	if (isset($Title) and ($Title != "Undefined title")) {
 		$TitleScriptRunning = $Title;

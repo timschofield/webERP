@@ -49,6 +49,7 @@ Functions in this file (alphabetical order):
 * Parameters: $DateEntry - The date string to validate
 * Returns: 1 if date is valid, 0 if invalid
 **************************************************************************************************************/
+/** @param string $DateEntry */
 function Is_date($DateEntry) {
 
 	$DateEntry = Trim($DateEntry);
@@ -118,6 +119,7 @@ function Is_date($DateEntry) {
 *   $UseShortMonthAndYear - Boolean flag for short format (default false)
 * Returns: String containing formatted month and year
 **************************************************************************************************************/
+/** @param string $DateEntry */
 function MonthAndYearFromSQLDate($DateEntry, $UseShortMonthAndYear = false) {
 
 	if (mb_strpos($DateEntry, '/')) {
@@ -126,6 +128,10 @@ function MonthAndYearFromSQLDate($DateEntry, $UseShortMonthAndYear = false) {
 		$DateArray = explode('-', $DateEntry);
 	} elseif (mb_strpos($DateEntry, '.')) {
 		$DateArray = explode('.', $DateEntry);
+	}
+
+	if (!isset($DateArray[0], $DateArray[1], $DateArray[2])) {
+		throw new InvalidArgumentException('Invalid SQL date: ' . $DateEntry);
 	}
 
 	if (mb_strlen($DateArray[2]) > 4) {
@@ -155,6 +161,7 @@ function MonthAndYearFromSQLDate($DateEntry, $UseShortMonthAndYear = false) {
 *   $UseShortYearAndMonth - Boolean flag for short format (default false)
 * Returns: String containing formatted year and month
 **************************************************************************************************************/
+/** @param string $DateEntry */
 function YearAndMonthFromSQLDate($DateEntry, $UseShortYearAndMonth = false) {
 
 	if (mb_strpos($DateEntry, '/')) {
@@ -163,6 +170,10 @@ function YearAndMonthFromSQLDate($DateEntry, $UseShortYearAndMonth = false) {
 		$DateArray = explode('-', $DateEntry);
 	} elseif (mb_strpos($DateEntry, '.')) {
 		$DateArray = explode('.', $DateEntry);
+	}
+
+	if (!isset($DateArray[0], $DateArray[1], $DateArray[2])) {
+		throw new InvalidArgumentException('Invalid SQL date: ' . $DateEntry);
 	}
 
 	if (mb_strlen($DateArray[2]) > 4) {
@@ -189,6 +200,7 @@ function YearAndMonthFromSQLDate($DateEntry, $UseShortYearAndMonth = false) {
 * Parameters: $PeriodNo - The period number to get month and year for
 * Returns: String containing the month and year for the period
 **************************************************************************************************************/
+/** @param int|string $PeriodNo */
 function MonthAndYearFromPeriodNo($PeriodNo) {
 	return MonthAndYearFromSQLDate(EndDateSQLFromPeriodNo($PeriodNo));
 }
@@ -199,6 +211,7 @@ function MonthAndYearFromPeriodNo($PeriodNo) {
 * Parameters: $PeriodNo - The period number to get end date for
 * Returns: String containing the end date in SQL format (YYYY-MM-DD)
 **************************************************************************************************************/
+/** @param int|string $PeriodNo */
 function EndDateSQLFromPeriodNo($PeriodNo) {
 	$SQL = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $PeriodNo . "'";
 	$Result = DB_query($SQL);
@@ -212,6 +225,7 @@ function EndDateSQLFromPeriodNo($PeriodNo) {
 * Parameters: $MonthNumber - The month number (1-12)
 * Returns: String containing the month name
 **************************************************************************************************************/
+/** @param int|string $MonthNumber */
 function GetMonthText($MonthNumber) {
 	$Month = match (strval($MonthNumber)) {
 		'1'       => __('January'),
@@ -237,6 +251,7 @@ function GetMonthText($MonthNumber) {
 * Parameters: $WeekDayNumber - The week day number (0-6, where 0=Sunday)
 * Returns: String containing the day name
 **************************************************************************************************************/
+/** @param int|string $WeekDayNumber */
 function GetWeekDayText($WeekDayNumber) {
 	$Day = '';
 	switch ($WeekDayNumber) {
@@ -294,6 +309,7 @@ function DisplayDateTime() {
 * Parameters: $DateEntry - The SQL format date (YYYY-MM-DD)
 * Returns: Integer representing day of week (0-6, where 0=Sunday)
 **************************************************************************************************************/
+/** @param string $DateEntry */
 function DayOfWeekFromSQLDate($DateEntry) {
 
 	if (mb_strpos($DateEntry, '/')) {
@@ -302,6 +318,10 @@ function DayOfWeekFromSQLDate($DateEntry) {
 		$DateArray = explode('-', $DateEntry);
 	} elseif (mb_strpos($DateEntry, '.')) {
 		$DateArray = explode('.', $DateEntry);
+	}
+
+	if (!isset($DateArray[0], $DateArray[1], $DateArray[2])) {
+		throw new InvalidArgumentException('Invalid SQL date: ' . $DateEntry);
 	}
 
 	if (mb_strlen($DateArray[2]) > 4) {
@@ -317,6 +337,7 @@ function DayOfWeekFromSQLDate($DateEntry) {
 * Parameters: $DateEntry - The SQL format date (YYYY-MM-DD)
 * Returns: Integer representing day of month (1-31)
 **************************************************************************************************************/
+/** @param string $DateEntry */
 function DayOfMonthFromSQLDate($DateEntry) {
 
 	if (mb_strpos($DateEntry, '/')) {
@@ -325,6 +346,10 @@ function DayOfMonthFromSQLDate($DateEntry) {
 		$DateArray = explode('-', $DateEntry);
 	} elseif (mb_strpos($DateEntry, '.')) {
 		$DateArray = explode('.', $DateEntry);
+	}
+
+	if (!isset($DateArray[0], $DateArray[1], $DateArray[2])) {
+		throw new InvalidArgumentException('Invalid SQL date: ' . $DateEntry);
 	}
 
 	if (mb_strlen($DateArray[2]) > 4) {
@@ -342,6 +367,10 @@ function DayOfMonthFromSQLDate($DateEntry) {
 *   $YearIncrement - Number of years to add/subtract from current year
 * Returns: Unix timestamp for the financial year end date
 **************************************************************************************************************/
+/**
+ * @param int|string $MonthNo
+ * @param int|string $YearIncrement
+ */
 function YearEndDate($MonthNo, $YearIncrement) {
 	if (Date('m') > $MonthNo) {
 		$Year = Date('Y') + 1 + $YearIncrement;
@@ -357,6 +386,7 @@ function YearEndDate($MonthNo, $YearIncrement) {
 * Parameters: $DateEntry - The SQL format date (YYYY-MM-DD)
 * Returns: String containing formatted date according to DefaultDateFormat
 **************************************************************************************************************/
+/** @param string $DateEntry */
 function ConvertSQLDate($DateEntry) {
 
 	/* takes a date in a the format yyyy-mm-dd and converts to a format specified in $_SESSION['DefaultDateFormat']*/
@@ -396,6 +426,9 @@ function ConvertSQLDate($DateEntry) {
 				break;
 		}
 	} else {
+		if (!isset($DateArray[0], $DateArray[1], $DateArray[2])) {
+			throw new InvalidArgumentException('Invalid SQL date: ' . $DateEntry);
+		}
 		if (mb_strlen($DateArray[2]) > 4) {  /*chop off the time stuff */
 			$DateArray[2] = mb_substr($DateArray[2], 0, 2);
 		}
@@ -417,6 +450,7 @@ function ConvertSQLDate($DateEntry) {
 * Parameters: $DateEntry - The SQL format datetime (YYYY-MM-DD HH:MM:SS)
 * Returns: String containing formatted datetime according to DefaultDateFormat
 **************************************************************************************************************/
+/** @param string $DateEntry */
 function ConvertSQLDateTime($DateEntry) {
 
 	//for MySQL dates are in the format YYYY-mm-dd H:i:s
@@ -446,6 +480,11 @@ function ConvertSQLDateTime($DateEntry) {
 				return '1000-01-01 00:00:00';
 				break;
 		}
+		throw new InvalidArgumentException('Unsupported date format: ' . $_SESSION['DefaultDateFormat']);
+	}
+
+	if (!isset($DateArray[0], $DateArray[1], $DateArray[2])) {
+		throw new InvalidArgumentException('Invalid SQL date: ' . $DateEntry);
 	}
 
 	if (mb_strlen($DateArray[2]) > 4) {
@@ -472,6 +511,7 @@ function ConvertSQLDateTime($DateEntry) {
 * Parameters: $DateEntry - The SQL format date (YYYY-MM-DD)
 * Returns: String containing the date in EDI format (YYYYMMDD)
 **************************************************************************************************************/
+/** @param string $DateEntry */
 function SQLDateToEDI($DateEntry) {
 
 	//for MySQL dates are in the format YYYY-mm-dd
@@ -483,6 +523,10 @@ function SQLDateToEDI($DateEntry) {
 		$DateArray = explode('-', $DateEntry);
 	} elseif (mb_strpos($DateEntry, '.')) {
 		$DateArray = explode('.', $DateEntry);
+	}
+
+	if (!isset($DateArray[0], $DateArray[1], $DateArray[2])) {
+		throw new InvalidArgumentException('Invalid SQL date: ' . $DateEntry);
 	}
 
 	if (mb_strlen($DateArray[2]) > 4) {  /*chop off the time stuff */
@@ -499,6 +543,7 @@ function SQLDateToEDI($DateEntry) {
 * Parameters: $DateEntry - The date in DefaultDateFormat
 * Returns: String containing the date in EDI format (YYYYMMDD)
 **************************************************************************************************************/
+/** @param string $DateEntry */
 function ConvertToEDIDate($DateEntry) {
 
 /* takes a date in a the format specified in $_SESSION['DefaultDateFormat']
@@ -521,6 +566,10 @@ and converts to a yyyymmdd - EANCOM format 102*/
 		$DateArray[0] = mb_substr($DateEntry, 0, 2);
 		$DateArray[1] = mb_substr($DateEntry, 2, 2);
 		$DateArray[2] = mb_substr($DateEntry, 4, 4);
+	}
+
+	if (!isset($DateArray[0], $DateArray[1], $DateArray[2])) {
+		throw new InvalidArgumentException('Invalid date: ' . $DateEntry);
 	}
 
 //to modify assumption in 2030
@@ -561,6 +610,10 @@ and converts to a yyyymmdd - EANCOM format 102*/
 *   $EDIFormatCode - Format code (102, 203, 616, 718)
 * Returns: String containing formatted date according to DefaultDateFormat
 **************************************************************************************************************/
+/**
+ * @param string $DateEntry
+ * @param int|string $EDIFormatCode
+ */
 function ConvertEDIDate($DateEntry, $EDIFormatCode) {
 
 	/*EDI Format codes:
@@ -626,6 +679,7 @@ function ConvertEDIDate($DateEntry, $EDIFormatCode) {
 * Parameters: $DateEntry - The date to format
 * Returns: String containing formatted date or 0 if invalid
 **************************************************************************************************************/
+/** @param string $DateEntry */
 function Format_Date($DateEntry) {
 
 	$DateEntry = trim($DateEntry);
@@ -641,18 +695,29 @@ function Format_Date($DateEntry) {
 		$DateArray[1] = mb_substr($DateEntry, 2, 2);
 		$DateArray[2] = mb_substr($DateEntry, 4, 2);
 	} elseif (mb_strlen($DateEntry) == 8) {
-		$DateArray[0] = mb_substr($DateEntry, 0, 2);
-		$DateArray[1] = mb_substr($DateEntry, 2, 2);
-		$DateArray[2] = mb_substr($DateEntry, 4, 4);
+		if ($_SESSION['DefaultDateFormat'] == 'Y/m/d' OR $_SESSION['DefaultDateFormat'] == 'Y-m-d') {
+			$DateArray[0] = mb_substr($DateEntry, 0, 4);
+			$DateArray[1] = mb_substr($DateEntry, 4, 2);
+			$DateArray[2] = mb_substr($DateEntry, 6, 2);
+		} else {
+			$DateArray[0] = mb_substr($DateEntry, 0, 2);
+			$DateArray[1] = mb_substr($DateEntry, 2, 2);
+			$DateArray[2] = mb_substr($DateEntry, 4, 4);
+		}
+	}
+
+	if (!isset($DateArray[0], $DateArray[1], $DateArray[2])) {
+		return 0;
 	}
 
 //to modify assumption in 2030
 
-	if ((int)$DateArray[2] < 60) {
-		$DateArray[2] = '20' . $DateArray[2];
-	} elseif ((int)$DateArray[2] > 59 AND (int)$DateArray[2] < 100) {
-		$DateArray[2] = '19' . $DateArray[2];
-	} elseif ((int)$DateArray[2] > 9999) {
+	$YearIndex = ($_SESSION['DefaultDateFormat'] == 'Y/m/d' OR $_SESSION['DefaultDateFormat'] == 'Y-m-d') ? 0 : 2;
+	if ((int)$DateArray[$YearIndex] < 60) {
+		$DateArray[$YearIndex] = '20' . $DateArray[$YearIndex];
+	} elseif ((int)$DateArray[$YearIndex] > 59 AND (int)$DateArray[$YearIndex] < 100) {
+		$DateArray[$YearIndex] = '19' . $DateArray[$YearIndex];
+	} elseif ((int)$DateArray[$YearIndex] > 9999) {
 		return 0;
 	}
 
@@ -665,16 +730,16 @@ function Format_Date($DateEntry) {
 			if (checkdate((int)$DateArray[1], (int)$DateArray[0], (int)$DateArray[2])){
 				return $DateArray[0] . '.' . $DateArray[1] . '.' . $DateArray[2];
 			}
-		} elseif ($_SESSION['DefaultDateFormat'] = 'm/d/Y'){
+		} elseif ($_SESSION['DefaultDateFormat'] == 'm/d/Y'){
 			if (checkdate((int)$DateArray[0], (int)$DateArray[1], (int)$DateArray[2])){
 				return $DateArray[0] . '/' . $DateArray[1] . '/' . $DateArray[2];
 			}
-		} elseif ($_SESSION['DefaultDateFormat'] = 'Y/m/d'){
-			if (checkdate((int)$DateArray[2], (int)$DateArray[0], (int)$DateArray[1])){
+		} elseif ($_SESSION['DefaultDateFormat'] == 'Y/m/d'){
+			if (checkdate((int)$DateArray[1], (int)$DateArray[2], (int)$DateArray[0])){
 				return $DateArray[0] . '/' . $DateArray[1] . '/' . $DateArray[2];
 			}
-		} elseif ($_SESSION['DefaultDateFormat'] = 'Y-m-d'){
-			if (checkdate((int)$DateArray[2], (int)$DateArray[0], (int)$DateArray[1])){
+		} elseif ($_SESSION['DefaultDateFormat'] == 'Y-m-d'){
+			if (checkdate((int)$DateArray[1], (int)$DateArray[2], (int)$DateArray[0])){
 				return $DateArray[0] . '-' . $DateArray[1] . '-' . $DateArray[2];
 			}
 		} // end if check date
@@ -689,6 +754,7 @@ function Format_Date($DateEntry) {
 * Parameters: $Date - The date string to validate
 * Returns: Boolean - true if date is in SQL format, false otherwise
 **************************************************************************************************************/
+/** @param string $Date */
 function EnsureSQLDateFormat($Date) {
 	// All credit to GitHub Copilot
 	$Date = mb_substr($Date, 0, 10); // chop off the time stuff
@@ -710,6 +776,7 @@ function EnsureSQLDateFormat($Date) {
 * Parameters: $DateEntry - The date in DefaultDateFormat
 * Returns: String containing the date in SQL format (YYYY-MM-DD)
 **************************************************************************************************************/
+/** @param string $DateEntry */
 function FormatDateForSQL($DateEntry) {
 
 /* takes a date in a the format specified in $_SESSION['DefaultDateFormat']
@@ -779,6 +846,7 @@ and converts to a yyyy-mm-dd format */
 * Parameters: $DateTime - The datetime string in DefaultDateFormat with time
 * Returns: String containing the datetime in SQL format (YYYY-MM-DD HH:MM:SS)
 **************************************************************************************************************/
+/** @param string $DateTime */
 function FormatDateWithTimeForSQL($DateTime) {
     //  Split the time off, fix date and add the time to returned value.
     $dt = explode(' ', $DateTime);
@@ -791,6 +859,7 @@ function FormatDateWithTimeForSQL($DateTime) {
 * Parameters: $DateEntry - The date in DefaultDateFormat
 * Returns: String containing the last day of month in DefaultDateFormat
 **************************************************************************************************************/
+/** @param string $DateEntry */
 function LastDayOfMonth($DateEntry) {
 	/*Expects a date in DefaultDateFormat and
 	 * Returns the last day of the month in the entered date
@@ -815,6 +884,10 @@ function LastDayOfMonth($DateEntry) {
 		$DateArray[0] = mb_substr($DateEntry, 0, 4);
 		$DateArray[1] = mb_substr($DateEntry, 4, 2);
 		$DateArray[2] = mb_substr($DateEntry, 6, 2);
+	}
+
+	if (!isset($DateArray[0], $DateArray[1], $DateArray[2])) {
+		throw new InvalidArgumentException('Invalid date: ' . $DateEntry);
 	}
 
 	if ($_SESSION['DefaultDateFormat'] == 'Y/m/d' OR $_SESSION['DefaultDateFormat'] == 'Y-m-d') {
@@ -849,6 +922,8 @@ function LastDayOfMonth($DateEntry) {
 		}
 		return $DateArray[2] . '-' . $DateArray[0] . '-' . $DateArray[1];
 		$DateStamp =  mktime(0, 0, 0, $DateArray[0] + 1, 0, $DateArray[2]);
+	} else {
+		throw new InvalidArgumentException('Unsupported date format: ' . $_SESSION['DefaultDateFormat']);
 	}
 	return Date($_SESSION['DefaultDateFormat'], $DateStamp);
 }// end of Last Day in the month function
@@ -861,6 +936,10 @@ function LastDayOfMonth($DateEntry) {
 *   $Date2 - Second date in DefaultDateFormat
 * Returns: Integer - 1 if Date1 > Date2, 0 otherwise
 **************************************************************************************************************/
+/**
+ * @param string $Date1
+ * @param string $Date2
+ */
 function Date1GreaterThanDate2($Date1, $Date2) {
 
 	/* returns true (1) if Date1 is greater than Date2 */
@@ -884,6 +963,8 @@ function Date1GreaterThanDate2($Date1, $Date2) {
 	} elseif ($_SESSION['DefaultDateFormat'] =='Y-m-d' ){
 		list($Year1, $Month1, $Day1) = explode('-', $Date1);
 		list($Year2, $Month2, $Day2) = explode('-', $Date2);
+	} else {
+		throw new InvalidArgumentException('Unsupported date format: ' . $_SESSION['DefaultDateFormat']);
 	}
 
 	/*Try to make the year of each date comparable - if one date is specified as just
@@ -939,6 +1020,11 @@ function Date1GreaterThanDate2($Date1, $Date2) {
 *   $DaysBeforeDue - Number of days before payment is due (for days-based terms)
 * Returns: String containing the due date in DefaultDateFormat
 **************************************************************************************************************/
+/**
+ * @param string $TranDate
+ * @param int|string $DayInFollowingMonth
+ * @param int|string $DaysBeforeDue
+ */
 function CalcDueDate($TranDate, $DayInFollowingMonth, $DaysBeforeDue){
 
 	$TranDate = trim($TranDate);
@@ -950,6 +1036,10 @@ function CalcDueDate($TranDate, $DayInFollowingMonth, $DaysBeforeDue){
 	} elseif (mb_strpos($TranDate, '.')) {
 		$DateArray = explode('.', $TranDate);
   }
+
+	if (!isset($DateArray[0], $DateArray[1], $DateArray[2])) {
+		throw new InvalidArgumentException('Invalid date: ' . $TranDate);
+	}
 
 	if (($_SESSION['DefaultDateFormat'] == 'd/m/Y') OR ($_SESSION['DefaultDateFormat'] == 'd.m.Y')) {
 		if ($DayInFollowingMonth == 0){ /*then it must be set up for DaysBeforeDue type */
@@ -1011,6 +1101,8 @@ function CalcDueDate($TranDate, $DayInFollowingMonth, $DaysBeforeDue){
 			$MonthDue = $DateArray[1] + 1;
 			$YearDue = $DateArray[0];
 		}
+	} else {
+		throw new InvalidArgumentException('Unsupported date format: ' . $_SESSION['DefaultDateFormat']);
 	}
 	return Date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $MonthDue, $DayDue, $YearDue));
 
@@ -1025,6 +1117,11 @@ function CalcDueDate($TranDate, $DayInFollowingMonth, $DaysBeforeDue){
 *   $NumberPeriods - Number of periods to add (positive or negative)
 * Returns: String containing the resulting date in DefaultDateFormat
 **************************************************************************************************************/
+/**
+ * @param string $DateToAddTo
+ * @param string $PeriodString
+ * @param int|string $NumberPeriods
+ */
 function DateAdd($DateToAddTo, $PeriodString, $NumberPeriods){
 	/*Takes
 	 * DateToAddTo in $_SESSION['DefaultDateFormat'] format
@@ -1043,6 +1140,10 @@ function DateAdd($DateToAddTo, $PeriodString, $NumberPeriods){
 	} elseif (mb_strpos($DateToAddTo, '.')) {
 		$Date_Array = explode('.', $DateToAddTo);
   }
+
+	if (!isset($Date_Array[0], $Date_Array[1], $Date_Array[2])) {
+		throw new InvalidArgumentException('Invalid date: ' . $DateToAddTo);
+	}
 
 	if (($_SESSION['DefaultDateFormat'] == 'd/m/Y') OR ($_SESSION['DefaultDateFormat'] == 'd.m.Y')){
 		return match ($PeriodString) {
@@ -1116,6 +1217,11 @@ function DateAdd($DateToAddTo, $PeriodString, $NumberPeriods){
 *   $Period - Unit for difference calculation (d=days, w=weeks, m=months, y=years, s=seconds)
 * Returns: Integer representing the difference in specified units
 **************************************************************************************************************/
+/**
+ * @param string $Date1
+ * @param string $Date2
+ * @param string $Period
+ */
 function DateDiff($Date1, $Date2, $Period) {
 
 	/* expects dates in the format specified in $_SESSION['DefaultDateFormat'] - period can be one of 'd','w','y','m'
@@ -1140,6 +1246,11 @@ function DateDiff($Date1, $Date2, $Period) {
 		$Date2_array = explode('.', $Date2);
   }
 
+	if (!isset($Date1_array[0], $Date1_array[1], $Date1_array[2])
+		OR !isset($Date2_array[0], $Date2_array[1], $Date2_array[2])) {
+		throw new InvalidArgumentException('Invalid dates: ' . $Date1 . ', ' . $Date2);
+	}
+
 	if (($_SESSION['DefaultDateFormat'] == 'd/m/Y') or ($_SESSION['DefaultDateFormat'] == 'd.m.Y')) {
 		$Date1_Stamp = mktime(0, 0, 0, (int)$Date1_array[1], (int)$Date1_array[0], (int)$Date1_array[2]);
 		$Date2_Stamp = mktime(0, 0, 0, (int)$Date2_array[1], (int)$Date2_array[0], (int)$Date2_array[2]);
@@ -1149,6 +1260,8 @@ function DateDiff($Date1, $Date2, $Period) {
 	} elseif ($_SESSION['DefaultDateFormat'] == 'Y/m/d' OR $_SESSION['DefaultDateFormat'] == 'Y-m-d') {
 		$Date1_Stamp = mktime(0, 0, 0, (int)$Date1_array[1], (int)$Date1_array[2], (int)$Date1_array[0]);//Changeorder of entries to match Y/M/D format
 		$Date2_Stamp = mktime(0, 0, 0, (int)$Date2_array[1], (int)$Date2_array[2], (int)$Date2_array[0]); //Changeorder of entries to match Y/M/D format
+	} else {
+		throw new InvalidArgumentException('Unsupported date format: ' . $_SESSION['DefaultDateFormat']);
 	}
 
 	$Difference = $Date1_Stamp - $Date2_Stamp;
@@ -1203,6 +1316,10 @@ function CalcEarliestDispatchDate() {
 *   $PeriodEnd - Unix timestamp of the period end date
 * Returns: None
 **************************************************************************************************************/
+/**
+ * @param int|string $PeriodNo
+ * @param int $PeriodEnd
+ */
 function CreatePeriod($PeriodNo, $PeriodEnd) {
 	$GetPrdSQL = "INSERT INTO periods (periodno,
 										lastdate_in_period
@@ -1225,6 +1342,7 @@ function CreatePeriod($PeriodNo, $PeriodEnd) {
 * Parameters: $TransDate - Unix timestamp of the date to check
 * Returns: Boolean - true if period exists, false otherwise
 **************************************************************************************************************/
+/** @param int $TransDate */
 function PeriodExists($TransDate) {
 
 	/* Find the date a month on */
@@ -1251,6 +1369,7 @@ function PeriodExists($TransDate) {
 *   $UseProhibit - Boolean to check against prohibited posting dates (default true)
 * Returns: Integer representing the period number
 **************************************************************************************************************/
+/** @param string $TransDate */
 function GetPeriod($TransDate, $UseProhibit = true) {
 
 	/* Convert the transaction date into a unix time stamp.*/
@@ -1261,6 +1380,10 @@ function GetPeriod($TransDate, $UseProhibit = true) {
 		$DateArray = explode('-', $TransDate);
 	} elseif (mb_strpos($TransDate, '.')) {
 		$DateArray = explode('.', $TransDate);
+	}
+
+	if (!isset($DateArray[0], $DateArray[1], $DateArray[2])) {
+		throw new InvalidArgumentException('Invalid date: ' . $TransDate);
 	}
 
 	if (($_SESSION['DefaultDateFormat'] == 'd/m/Y') or ($_SESSION['DefaultDateFormat'] == 'd.m.Y')) {
