@@ -3,6 +3,7 @@
 /* HR Employee Entry - Add/Edit Employee Details */
 
 require(__DIR__ . '/includes/session.php');
+require_once(__DIR__ . '/includes/UIGeneralFunctions.php');
 
 $Title = __('Employee Entry');
 $ViewTopic = 'HumanResources';
@@ -320,20 +321,15 @@ echo '</select>
 	</field>';
 
 // Supervisor dropdown
-echo '<field>
-		<label for="SupervisorID">' . __('Supervisor') . ':</label>
-		<select name="SupervisorID">';
-echo '<option value="0">' . __('None') . '</option>';
-$SQL = "SELECT employeeid, CONCAT(firstname, ' ', lastname) as fullname
-		FROM hremployees
-		WHERE employmentstatus = 'Active' AND employeeid != " . $EmployeeID . "
-		ORDER BY firstname, lastname";
-$Result = DB_query($SQL);
-while ($Row = DB_fetch_array($Result)) {
-	echo '<option value="' . $Row['employeeid'] . '"' . ($SupervisorID == $Row['employeeid'] ? ' selected="selected"' : '') . '>' . $Row['fullname'] . '</option>';
-}
-echo '</select>
-	</field>';
+echo FieldToSelectOneEmployee(
+	'SupervisorID', $SupervisorID, __('Supervisor'), Required: false,
+	Options: array(
+		'Display' => 'user-name-number',
+		'ExcludeEmployeeID' => $EmployeeID,
+		'Placeholder' => __('None'),
+		'PlaceholderValue' => '0',
+	)
+);
 
 echo '<field>
 		<label for="EmploymentStatus">' . __('Employment Status') . ':</label>

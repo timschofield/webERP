@@ -3,6 +3,7 @@
 /* Employee Skills Assessment */
 
 require(__DIR__ . '/includes/session.php');
+require_once(__DIR__ . '/includes/UIGeneralFunctions.php');
 
 $Title = __('Employee Skills');
 $ViewTopic = 'HumanResources';
@@ -107,26 +108,17 @@ echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<fieldset>
-		<legend>' . __('Select Employee') . '</legend>
-		<field>
-			<label for="ViewEmployeeNumber">' . __('Employee') . ':</label>
-			<select name="ViewEmployeeNumber" onchange="this.form.submit()">
-				<option value="">' . __('Select Employee') . '</option>';
-
-$SQL = "SELECT employeenumber, CONCAT(firstname, ' ', lastname) as name
-		FROM hremployees
-		WHERE employmentstatus = 'Active'
-		ORDER BY lastname, firstname";
-$Result = DB_query($SQL);
-while ($EmpRow = DB_fetch_array($Result)) {
-	$Selected = (isset($_POST['ViewEmployeeNumber']) and $_POST['ViewEmployeeNumber'] == $EmpRow['employeenumber']) ? ' selected' : '';
-	echo '<option value="' . $EmpRow['employeenumber'] . '"' . $Selected . '>' .
-		htmlspecialchars($EmpRow['name'] . ' (' . $EmpRow['employeenumber'] . ')', ENT_QUOTES, 'UTF-8') . '</option>';
-}
-
-echo '</select>
-		</field>
-	</fieldset>';
+		<legend>' . __('Select Employee') . '</legend>';
+echo FieldToSelectOneEmployee(
+	'ViewEmployeeNumber', $_POST['ViewEmployeeNumber'] ?? null, __('Employee'), Required: false,
+	Options: array(
+		'Value' => 'number',
+		'Display' => 'user-name-number',
+		'Order' => 'lastname',
+		'SubmitOnChange' => true,
+	)
+);
+echo '</fieldset>';
 echo '</form>';
 
 // If employee is selected, show skills and add form

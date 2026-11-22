@@ -4,6 +4,7 @@
 
 require(__DIR__ . '/includes/session.php');
 require_once(__DIR__ . '/includes/HRPerformanceHelper.php');
+require_once(__DIR__ . '/includes/UIGeneralFunctions.php');
 
 $Title = __('Performance Reviews');
 $ViewTopic = 'HumanResources';
@@ -157,45 +158,14 @@ if (isset($_GET['edit']) or isset($_GET['new']) or !isset($_GET['view'])) {
 		echo '<input type="hidden" name="ReviewID" value="' . $ReviewID . '" />';
 	}
 
+	echo FieldToSelectOneEmployee(
+		'EmployeeID', $EmployeeID, __('Employee'), Options: array('Display' => 'user-name-number')
+	);
+	echo FieldToSelectOneEmployee(
+		'ReviewerID', $ReviewerID, __('Reviewer'),
+		Options: array('Display' => 'user-name-number', 'Placeholder' => __('Select Reviewer'))
+	);
 	echo '<field>
-				<label for="EmployeeID">' . __('Employee') . ':</label>
-				<select name="EmployeeID" required="required">
-					<option value="">' . __('Select Employee') . '</option>';
-
-	$SQL = "SELECT employeeid, employeenumber, firstname, lastname
-			FROM hremployees
-			WHERE employmentstatus = 'Active'
-			ORDER BY firstname, lastname";
-	$Result = DB_query($SQL);
-	while ($Row = DB_fetch_array($Result)) {
-		echo '<option value="' . $Row['employeeid'] . '"' .
-			($EmployeeID == $Row['employeeid'] ? ' selected="selected"' : '') .
-			'>' . PadEmployeeNumber($Row['employeenumber']) . ' - ' . $Row['firstname'] . ' ' . $Row['lastname'] . '</option>';
-	}
-
-	echo '</select>
-			</field>
-
-			<field>
-				<label for="ReviewerID">' . __('Reviewer') . ':</label>
-				<select name="ReviewerID" required="required">
-					<option value="">' . __('Select Reviewer') . '</option>';
-
-	$SQL = "SELECT employeeid, employeenumber, firstname, lastname
-			FROM hremployees
-			WHERE employmentstatus = 'Active'
-			ORDER BY firstname, lastname";
-	$Result = DB_query($SQL);
-	while ($Row = DB_fetch_array($Result)) {
-		echo '<option value="' . $Row['employeeid'] . '"' .
-			($ReviewerID == $Row['employeeid'] ? ' selected="selected"' : '') .
-			'>' . PadEmployeeNumber($Row['employeenumber']) . ' - ' . $Row['firstname'] . ' ' . $Row['lastname'] . '</option>';
-	}
-
-	echo '</select>
-			</field>
-
-			<field>
 				<label for="ReviewDate">' . __('Review Date') . ':</label>
 				<input type="date" name="ReviewDate" class="date" value="' . $ReviewDate . '" required="required" />
 			</field>
@@ -373,21 +343,18 @@ if (!isset($_GET['view'])) {
 			<fieldset>
 			<tr>
 				<td>' . __('Filter by Employee') . ':</td>
-				<td><select name="FilterEmployee" onchange="this.form.submit()">
-					<option value="0">' . __('All Employees') . '</option>';
-
-	$SQL = "SELECT employeeid, employeenumber, firstname, lastname
-			FROM hremployees
-			WHERE employmentstatus = 'Active'
-			ORDER BY firstname, lastname";
-	$Result = DB_query($SQL);
-	while ($Row = DB_fetch_array($Result)) {
-		echo '<option value="' . $Row['employeeid'] . '"' .
-			($FilterEmployee == $Row['employeeid'] ? ' selected="selected"' : '') .
-			'>' . PadEmployeeNumber($Row['employeenumber']) . ' - ' . $Row['firstname'] . ' ' . $Row['lastname'] . '</option>';
-	}
-
-	echo '</select></td>
+				<td>';
+	echo FieldToSelectOneEmployee(
+		'FilterEmployee', $FilterEmployee, Required: false,
+		Options: array(
+			'Display' => 'user-name-number',
+			'Placeholder' => __('All Employees'),
+			'PlaceholderValue' => '0',
+			'SubmitOnChange' => true,
+			'Field' => false,
+		)
+	);
+	echo '</td>
 				<td>' . __('Status') . ':</td>
 				<td><select name="FilterStatus" onchange="this.form.submit()">
 					<option value="">' . __('All Statuses') . '</option>

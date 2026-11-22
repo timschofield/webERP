@@ -3,6 +3,7 @@
 /* Safety Incidents Management */
 
 require(__DIR__ . '/includes/session.php');
+require_once(__DIR__ . '/includes/UIGeneralFunctions.php');
 
 $Title = __('Safety Incidents');
 $ViewTopic = 'HumanResources';
@@ -219,23 +220,10 @@ echo '<field>
 		<field-help>' . __('Leave blank to auto-generate') . '</field-help>
 	</field>';
 
-echo '<field>
-		<label for="EmployeeID">' . __('Employee (if applicable)') . ':</label>
-		<select name="EmployeeID">
-			<option value="">' . __('Not employee-related') . '</option>';
-
-$SQL = "SELECT employeeid, CONCAT(firstname, ' ', lastname) as name
-		FROM hremployees
-		WHERE employmentstatus = 'Active'
-		ORDER BY firstname, lastname";
-$Result = DB_query($SQL);
-while ($EmpRow = DB_fetch_array($Result)) {
-	echo '<option value="' . $EmpRow['employeeid'] . '"' . ($EmployeeID == $EmpRow['employeeid'] ? ' selected' : '') . '>' .
-		htmlspecialchars($EmpRow['name'], ENT_QUOTES, 'UTF-8') . '</option>';
-}
-
-echo '</select>
-	</field>';
+echo FieldToSelectOneEmployee(
+	'EmployeeID', $EmployeeID, __('Employee (if applicable)'), Required: false,
+	Options: array('Display' => 'user-name-number', 'Placeholder' => __('Not employee-related'))
+);
 
 echo '<field>
 		<label for="IncidentDate">' . __('Incident Date') . ':</label>

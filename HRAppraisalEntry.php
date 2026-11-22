@@ -12,6 +12,7 @@
  */
 
 require(__DIR__ . '/includes/session.php');
+require_once(__DIR__ . '/includes/UIGeneralFunctions.php');
 
 $Title     = __('Performance Appraisal Entry');
 $ViewTopic = 'HumanResources';
@@ -82,7 +83,7 @@ if (isset($_POST['Submit'])) {
 		prnMsg(__('Reviewer/Manager must be selected'), 'error');
 	}
 
-	$AllowedTypes = array('Annual', 'Mid-Year', 'Probation', '90-Day', 'Project');
+	$AllowedTypes = array('Annual', 'Mid-Year', 'Probation');
 	$AppraisalType = isset($_POST['AppraisalType']) ? $_POST['AppraisalType'] : '';
 	if (!in_array($AppraisalType, $AllowedTypes)) {
 		$InputError = 1;
@@ -364,23 +365,15 @@ if ($EditMode) {
 	echo '<fieldset>
 			<legend>' . __('New Performance Appraisal') . '</legend>';
 
-	echo '<field>
-			<label for="EmployeeNumber">' . __('Employee') . ':</label>
-			<select name="EmployeeNumber" required onchange="this.form.submit()">';
-	echo '<option value="">' . __('Select Employee') . '</option>';
-	$SQL    = "SELECT employeenumber,
-				CONCAT(firstname, ' ', lastname) AS name
-			FROM hremployees
-			WHERE employmentstatus = 'Active'
-			ORDER BY firstname, lastname";
-	$Result = DB_query($SQL);
-	while ($EmpRow = DB_fetch_array($Result)) {
-		echo '<option value="' . htmlspecialchars($EmpRow['employeenumber'], ENT_QUOTES, 'UTF-8') . '"' .
-			($DbEmployeeNumber == $EmpRow['employeenumber'] ? ' selected="selected"' : '') . '>' .
-			htmlspecialchars($EmpRow['name'], ENT_QUOTES, 'UTF-8') . '</option>';
-	}
-	echo '</select>
-		</field>';
+	echo FieldToSelectOneEmployee(
+		'EmployeeNumber', $DbEmployeeNumber, __('Employee'),
+		Options: array(
+			'Value' => 'number',
+			'Display' => 'user-name-number',
+			'Order' => 'userid',
+			'SubmitOnChange' => true,
+		)
+	);
 }
 
 /*
@@ -388,33 +381,6 @@ if ($EditMode) {
  * Shared fields below use the $Db-prefixed variables loaded above.
  */
 
-echo '<field>
-		<label for="ReviewPeriodStart">' . __('Review Period Start') . ':</label>
-		<input type="date" name="ReviewPeriodStart" required value="' . FormatDateForSQL($DbReviewPeriodStart) . '" />
-	</field>
-	<field>
-		<label for="ReviewPeriodEnd">' . __('Review Period End') . ':</label>
-		<input type="date" name="ReviewPeriodEnd" required value="' . FormatDateForSQL($DbReviewPeriodEnd) . '" />
-	</field>
-	<field>
-		<label for="AppraisalType">' . __('Appraisal Type') . ':</label>
-		<select name="AppraisalType" required="required">
-			<option value="Annual"' . ($DbAppraisalType == 'Annual' ? ' selected="selected"' : '') . '>' . __('Annual') . '</option>
-			<option value="Mid-Year"' . ($DbAppraisalType == 'Mid-Year' ? ' selected="selected"' : '') . '>' . __('Mid-Year') . '</option>
-			<option value="Probation"' . ($DbAppraisalType == 'Probation' ? ' selected="selected"' : '') . '>' . __('Probation') . '</option>
-			<option value="90-Day"' . ($DbAppraisalType == '90-Day' ? ' selected="selected"' : '') . '>' . __('90-Day') . '</option>
-			<option value="Project"' . ($DbAppraisalType == 'Project' ? ' selected="selected"' : '') . '>' . __('Project') . '</option>
-		</select>
-	</field>
-	<field>
-		<label for="DueDate">' . __('Due Date') . ':</label>
-		<input type="date" name="DueDate" required value="' . FormatDateForSQL($DbDueDate) . '" />
-	</field>';
-
-echo '<field>
-		<label for="ReviewerID">' . __('Reviewer/Manager') . ':</label>
-		<select name="ReviewerID">';
-echo '<option value="">' . __('Select Reviewer') . '</option>';
 $ReviewerPositionIDs = array();
 if ($DbEmployeeNumber != '') {
 	$SelectedPositionID = GetPositionIDFromEmployeeNumber((string)$DbEmployeeNumber);
@@ -423,26 +389,15 @@ if ($DbEmployeeNumber != '') {
 	}
 }
 
-$SQL    = "SELECT employeeid,
-			CONCAT(firstname, ' ', lastname) AS name
-		FROM hremployees
-		WHERE employmentstatus = 'Active'";
-
-if (!empty($ReviewerPositionIDs)) {
-	$SQL .= " AND positionid IN (" . implode(',', array_map('intval', $ReviewerPositionIDs)) . ")";
-} else {
-	$SQL .= " AND 1=0";
-}
-
-$SQL .= " ORDER BY firstname, lastname";
-$Result = DB_query($SQL);
-while ($MgrRow = DB_fetch_array($Result)) {
-	echo '<option value="' . $MgrRow['employeeid'] . '"' .
-		($DbReviewerID == $MgrRow['employeeid'] ? ' selected' : '') . '>' .
-	htmlspecialchars($MgrRow['name'], ENT_QUOTES, 'UTF-8') . '</option>';
-}
-echo '</select>
-	</field>';
+echo FieldToSelectOneEmployee(
+	'ReviewerID', $DbReviewerID, __('Reviewer/Manager'), Required: false,
+	Options: array(
+		'Display' => 'user-name-number',
+		'Order' => 'userid',
+		'PositionIDs' => $ReviewerPositionIDs,
+		'Placeholder' => __('Select Reviewer'),
+	)
+);
 
 $AppraisalTypeOnChange = '';
 if (!$EditMode) {

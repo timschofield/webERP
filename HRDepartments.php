@@ -3,6 +3,7 @@
 /* HR Departments Maintenance */
 
 require(__DIR__ . '/includes/session.php');
+require_once(__DIR__ . '/includes/UIGeneralFunctions.php');
 
 $Title = __('HR Departments');
 $ViewTopic = 'HumanResources';
@@ -269,24 +270,10 @@ echo '</select>
 	</field>';
 
 // Manager dropdown
-echo '<field>
-		<Label for="ManagerID">' . __('Department Manager') . ':</label>
-		<select name="ManagerID">';
-echo '<option value="0">' . __('None') . '</option>';
-$SQL = "SELECT employeeid, CONCAT(firstname, ' ', lastname) as fullname
-		FROM hremployees
-		WHERE employmentstatus = 'Active'
-		ORDER BY firstname, lastname";
-$Result = DB_query($SQL);
-while ($MyRow = DB_fetch_array($Result)) {
-	if (isset($_POST['ManagerID']) AND $_POST['ManagerID'] == $MyRow['employeeid']) {
-		echo '<option selected="selected" value="' . $MyRow['employeeid'] . '">' . $MyRow['fullname'] . '</option>';
-	} else {
-		echo '<option value="' . $MyRow['employeeid'] . '">' . $MyRow['fullname'] . '</option>';
-	}
-}
-echo '</select>
-	</field>';
+echo FieldToSelectOneEmployee(
+	'ManagerID', $_POST['ManagerID'] ?? null, __('Department Manager'), Required: false,
+	Options: array('Display' => 'user-name-number', 'Placeholder' => __('None'), 'PlaceholderValue' => '0')
+);
 
 // Location dropdown
 echo '<field>

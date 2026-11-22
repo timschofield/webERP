@@ -435,6 +435,116 @@ function FieldToSelectOneDepartment(
 }
 
 /**
+ * Creates an employee dropdown excluding terminated employees by default.
+ *
+ * @param array $Options Value: id or number; Display: name, number-name, padded-number-name, name-number,
+ *                       user-name, user-name-number or name-position; Order: firstname, lastname or userid.
+ *                       AllEmployees includes terminated employees; ExcludeEmployeeID omits one employee;
+ *                       PositionIDs limits eligible positions, including an empty array for no employees.
+ *                       Placeholder and PlaceholderValue set the first option; SubmitOnChange submits the form;
+ *                       Field=false returns only the select element.
+ */
+function FieldToSelectOneEmployee(
+	string $VariableName,
+	int|string|null $SelectedValue,
+	string $Label = '',
+	string $HelpText = '',
+	int|string|null $TabIndex = '',
+	bool $Required = true,
+	bool $AutoFocus = false,
+	array $Options = array()
+): string {
+	$Display = $Options['Display'] ?? 'name';
+	$Order = $Options['Order'] ?? 'firstname';
+	$SQL = "SELECT e.employeeid,
+				e.employeenumber,
+				e.userid,
+				CONCAT(e.firstname, ' ', e.lastname) AS name";
+	if ($Display == 'name-position') {
+		$SQL .= ", p.positiontitle";
+	}
+	$SQL .= " FROM hremployees e";
+	if ($Display == 'name-position') {
+		$SQL .= " LEFT JOIN hrpositions p ON e.positionid = p.positionid";
+	}
+	$SQL .= " WHERE 1=1";
+	if (empty($Options['AllEmployees'])) {
+		$SQL .= " AND (e.employmentstatus <> 'Terminated' OR e.employmentstatus IS NULL)";
+	}
+	if (!empty($Options['ExcludeEmployeeID'])) {
+		$SQL .= " AND e.employeeid != '" . (int)$Options['ExcludeEmployeeID'] . "'";
+	}
+	if (isset($Options['PositionIDs'])) {
+		$PositionIDs = array_map('intval', $Options['PositionIDs']);
+		$SQL .= count($PositionIDs) > 0 ? " AND e.positionid IN (" . implode(',', $PositionIDs) . ")" : " AND 1=0";
+	}
+	if ($Order == 'userid') {
+		$SQL .= " ORDER BY e.userid, e.firstname, e.lastname";
+	} elseif ($Order == 'lastname') {
+		$SQL .= " ORDER BY e.lastname, e.firstname";
+	} else {
+		$SQL .= " ORDER BY e.firstname, e.lastname";
+	}
+
+	static $EmployeeLists = array();
+	if (!isset($EmployeeLists[$SQL])) {
+		$EmployeeLists[$SQL] = array();
+		$Result = DB_query($SQL);
+		while ($EmployeeRow = DB_fetch_array($Result)) {
+			$EmployeeLists[$SQL][] = $EmployeeRow;
+		}
+	}
+
+	$VariableName = htmlspecialchars($VariableName, ENT_QUOTES, 'UTF-8');
+	$HTML = '';
+	if ($Options['Field'] ?? true) {
+		$HTML .= '<field><label for="' . $VariableName . '">' . $Label . ':</label>';
+	}
+	$HTML .= '<select ' . AddAttributesToField($TabIndex, $Required, $AutoFocus) .
+		'name="' . $VariableName . '" id="' . $VariableName . '"';
+	if (!empty($Options['SubmitOnChange'])) {
+		$HTML .= ' onchange="this.form.submit()"';
+	}
+	$HTML .= '><option value="' . htmlspecialchars((string)($Options['PlaceholderValue'] ?? ''), ENT_QUOTES, 'UTF-8') .
+		'">' . ($Options['Placeholder'] ?? __('Select Employee')) . '</option>';
+
+	foreach ($EmployeeLists[$SQL] as $EmployeeRow) {
+		$EmployeeNumber = (string)$EmployeeRow['employeenumber'];
+		$EmployeeName = $EmployeeRow['name'];
+		if ($Display == 'number-name' || $Display == 'padded-number-name') {
+			if ($Display == 'padded-number-name') {
+				require_once(__DIR__ . '/HRPerformanceHelper.php');
+				$EmployeeNumber = PadEmployeeNumber($EmployeeNumber);
+			}
+			$EmployeeName = $EmployeeNumber . ' - ' . $EmployeeName;
+		} elseif ($Display == 'name-number') {
+			$EmployeeName .= ' (' . $EmployeeNumber . ')';
+		} elseif ($Display == 'user-name' || $Display == 'user-name-number') {
+			$EmployeeName = ($EmployeeRow['userid'] != '' ? $EmployeeRow['userid'] . ' - ' : '') . $EmployeeName;
+			if ($Display == 'user-name-number') {
+				require_once(__DIR__ . '/HRPerformanceHelper.php');
+				$EmployeeName .= ' (' . PadEmployeeNumber($EmployeeNumber) . ')';
+			}
+		} elseif ($Display == 'name-position' && !empty($EmployeeRow['positiontitle'])) {
+			$EmployeeName .= ' - ' . $EmployeeRow['positiontitle'];
+		}
+		$EmployeeValue = ($Options['Value'] ?? 'id') == 'number'
+			? (string)$EmployeeRow['employeenumber'] : (string)$EmployeeRow['employeeid'];
+		$HTML .= '<option value="' . htmlspecialchars($EmployeeValue, ENT_QUOTES, 'UTF-8') . '"' .
+			($SelectedValue !== null && (string)$SelectedValue === $EmployeeValue ? ' selected="selected"' : '') .
+			'>' . htmlspecialchars($EmployeeName, ENT_QUOTES, 'UTF-8') . '</option>';
+	}
+	$HTML .= '</select>';
+	if (($Options['Field'] ?? true) && $HelpText != '') {
+		$HTML .= '<fieldhelp>' . $HelpText . '</fieldhelp>';
+	}
+	if ($Options['Field'] ?? true) {
+		$HTML .= '</field>';
+	}
+	return $HTML;
+}
+
+/**
  * Creates a dropdown for selecting a location.
  *
  * @param string $VariableName

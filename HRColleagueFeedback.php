@@ -14,6 +14,7 @@ $BookMark = 'HRColleagueFeedback';
 
 require_once(__DIR__ . '/includes/HRPerformanceHelper.php');
 require_once(__DIR__ . '/includes/HRGeneralFunctions.php');
+require_once(__DIR__ . '/includes/UIGeneralFunctions.php');
 
 $RatingLabels = GetRatingLabels();
 $PrintPDF = isset($_POST['PrintPDF']);
@@ -39,16 +40,12 @@ $SQL = "SELECT
 	LEFT JOIN hremployees ce ON f.createdbyid = ce.employeeid
 	WHERE 1=1";
 
-if (isset($_POST['Keywords']) and trim($_POST['Keywords']) != '') {
-	$Keywords = DB_escape_string(trim($_POST['Keywords']));
-	$SQL .= " AND (
-			fe.firstname LIKE '%" . $Keywords . "%'
-			OR fe.lastname LIKE '%" . $Keywords . "%'
-			OR fe.employeenumber LIKE '%" . $Keywords . "%'
-			OR ae.firstname LIKE '%" . $Keywords . "%'
-			OR ae.lastname LIKE '%" . $Keywords . "%'
-			OR ae.employeenumber LIKE '%" . $Keywords . "%'
-		)";
+if (isset($_POST['FromEmployeeID']) and $_POST['FromEmployeeID'] != '') {
+	$SQL .= " AND f.fromemployeeid = '" . (int)$_POST['FromEmployeeID'] . "'";
+}
+
+if (isset($_POST['AboutEmployeeID']) and $_POST['AboutEmployeeID'] != '') {
+	$SQL .= " AND f.aboutemployeeid = '" . (int)$_POST['AboutEmployeeID'] . "'";
 }
 
 if (isset($_POST['Status']) and $_POST['Status'] != '') {
@@ -178,11 +175,20 @@ echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<fieldset>
-		<legend>' . __('Search & Filter') . '</legend>
-		<field>
-			<label for="Keywords">' . __('Employee Name or Number') . ':</label>
-			<input type="text" name="Keywords" size="20" maxlength="50" value="' . (isset($_POST['Keywords']) ? htmlspecialchars($_POST['Keywords'], ENT_QUOTES, 'UTF-8') : '') . '" />
-		</field>';
+		<legend>' . __('Search & Filter') . '</legend>';
+
+$EmployeeOptions = array(
+	'AllEmployees' => true,
+	'Display' => 'user-name-number',
+	'Order' => 'userid',
+	'Placeholder' => __('All Employees'),
+);
+echo FieldToSelectOneEmployee(
+	'FromEmployeeID', $_POST['FromEmployeeID'] ?? null, __('From Employee'), Required: false, Options: $EmployeeOptions
+);
+echo FieldToSelectOneEmployee(
+	'AboutEmployeeID', $_POST['AboutEmployeeID'] ?? null, __('About Employee'), Required: false, Options: $EmployeeOptions
+);
 
 echo '<field>
 			<label for="Status">' . __('Status') . ':</label>

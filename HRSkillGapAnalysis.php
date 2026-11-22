@@ -3,6 +3,7 @@
 /* Skill Gap Analysis */
 
 require(__DIR__ . '/includes/session.php');
+require_once(__DIR__ . '/includes/UIGeneralFunctions.php');
 
 $Title = __('Skill Gap Analysis');
 $ViewTopic = 'HumanResources';
@@ -20,32 +21,17 @@ echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<fieldset>
-		<legend>' . __('Select Employee') . '</legend>
-		<field>
-			<label for="EmployeeNumber">' . __('Employee') . ':</label>
-			<select name="EmployeeNumber" onchange="this.form.submit()">
-				<option value="">' . __('Select Employee') . '</option>';
-
-$SQL = "SELECT e.employeenumber, CONCAT(e.firstname, ' ', e.lastname) as name,
-		p.positiontitle
-		FROM hremployees e
-		LEFT JOIN hrpositions p ON e.positionid = p.positionid
-		WHERE e.employmentstatus = 'Active'
-		ORDER BY e.lastname, e.firstname";
-$Result = DB_query($SQL);
-while ($EmpRow = DB_fetch_array($Result)) {
-	$Selected = (isset($_POST['EmployeeNumber']) and $_POST['EmployeeNumber'] == $EmpRow['employeenumber']) ? ' selected' : '';
-	$DisplayText = $EmpRow['name'];
-	if ($EmpRow['positiontitle']) {
-		$DisplayText .= ' - ' . $EmpRow['positiontitle'];
-	}
-	echo '<option value="' . $EmpRow['employeenumber'] . '"' . $Selected . '>' .
-		htmlspecialchars($DisplayText, ENT_QUOTES, 'UTF-8') . '</option>';
-}
-
-echo '</select>
-		</field>
-	</fieldset>';
+		<legend>' . __('Select Employee') . '</legend>';
+echo FieldToSelectOneEmployee(
+	'EmployeeNumber', $_POST['EmployeeNumber'] ?? null, __('Employee'), Required: false,
+	Options: array(
+		'Value' => 'number',
+		'Display' => 'user-name-number',
+		'Order' => 'lastname',
+		'SubmitOnChange' => true,
+	)
+);
+echo '</fieldset>';
 echo '</form>';
 
 // If employee is selected, show gap analysis

@@ -3,6 +3,7 @@
 /* HR Performance Goals Management */
 
 require(__DIR__ . '/includes/session.php');
+require_once(__DIR__ . '/includes/UIGeneralFunctions.php');
 
 $Title = __('Performance Goals');
 $ViewTopic = 'HumanResources';
@@ -134,26 +135,10 @@ if (isset($_GET['edit']) or !isset($_GET['edit']) and !isset($_GET['delete'])) {
 		echo '<input type="hidden" name="GoalID" value="' . $GoalID . '" />';
 	}
 
+	echo FieldToSelectOneEmployee(
+		'EmployeeID', $EmployeeID, __('Employee'), Options: array('Display' => 'user-name-number')
+	);
 	echo '<field>
-				<label for="EmployeeID">' . __('Employee') . ':</label>
-				<select name="EmployeeID" required="required">
-					<option value="">' . __('Select Employee') . '</option>';
-
-	$SQL = "SELECT employeeid, employeenumber, firstname, lastname
-			FROM hremployees
-			WHERE employmentstatus = 'Active'
-			ORDER BY firstname, lastname";
-	$EmployeeResult = DB_query($SQL);
-	while ($Row = DB_fetch_array($EmployeeResult)) {
-		echo '<option value="' . $Row['employeeid'] . '"' .
-			($EmployeeID == $Row['employeeid'] ? ' selected="selected"' : '') .
-			'>' . $Row['employeenumber'] . ' - ' . $Row['firstname'] . ' ' . $Row['lastname'] . '</option>';
-	}
-
-	echo '</select>
-			</field>
-
-			<field>
 				<label for="GoalDescription">' . __('Goal Description') . ':</label>
 				<textarea name="GoalDescription" rows="3" cols="60" required="required">' . htmlspecialchars($GoalDescription) . '</textarea>
 			</field>
@@ -218,21 +203,18 @@ echo '<br /><form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'
 		<table class="selection">
 		<tr>
 			<td>' . __('Filter by Employee') . ':</td>
-			<td><select name="FilterEmployee" onchange="this.form.submit()">
-				<option value="0">' . __('All Employees') . '</option>';
-
-$SQL = "SELECT employeeid, employeenumber, firstname, lastname
-		FROM hremployees
-		WHERE employmentstatus = 'Active'
-		ORDER BY firstname, lastname";
-$Result = DB_query($SQL);
-while ($Row = DB_fetch_array($Result)) {
-	echo '<option value="' . $Row['employeeid'] . '"' .
-		($FilterEmployee == $Row['employeeid'] ? ' selected="selected"' : '') .
-		'>' . $Row['employeenumber'] . ' - ' . $Row['firstname'] . ' ' . $Row['lastname'] . '</option>';
-}
-
-echo '</select></td>
+			<td>';
+echo FieldToSelectOneEmployee(
+	'FilterEmployee', $FilterEmployee, Required: false,
+	Options: array(
+		'Display' => 'user-name-number',
+		'Placeholder' => __('All Employees'),
+		'PlaceholderValue' => '0',
+		'SubmitOnChange' => true,
+		'Field' => false,
+	)
+);
+echo '</td>
 			<td>' . __('Status') . ':</td>
 			<td><select name="FilterStatus" onchange="this.form.submit()">
 				<option value="">' . __('All Statuses') . '</option>

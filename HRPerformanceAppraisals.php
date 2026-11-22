@@ -11,6 +11,7 @@ $BookMark = 'HRPerformanceAppraisals';
 include(__DIR__ . '/includes/header.php');
 require_once(__DIR__ . '/includes/HRPerformanceHelper.php');
 require_once(__DIR__ . '/includes/HRGeneralFunctions.php');
+require_once(__DIR__ . '/includes/UIGeneralFunctions.php');
 
 /* Rating labels for hrperfappraisals.overallrating (INT 1-5) */
 $RatingLabels = GetRatingLabels();
@@ -31,11 +32,20 @@ echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<fieldset>
-		<legend>' . __('Search & Filter') . '</legend>
-		<field>
-			<label for="Keywords">' . __('Name or Employee ID') . ':</label>
-			<input type="text" name="Keywords" size="20" maxlength="50" value="' . (isset($_POST['Keywords']) ? $_POST['Keywords'] : '') . '" />
-		</field>';
+		<legend>' . __('Search & Filter') . '</legend>';
+
+$EmployeeOptions = array(
+	'AllEmployees' => true,
+	'Display' => 'user-name-number',
+	'Order' => 'userid',
+	'Placeholder' => __('All Employees'),
+);
+echo FieldToSelectOneEmployee(
+	'EmployeeID', $_POST['EmployeeID'] ?? null, __('Employee'), Required: false, Options: $EmployeeOptions
+);
+echo FieldToSelectOneEmployee(
+	'ManagerID', $_POST['ManagerID'] ?? null, __('Manager'), Required: false, Options: $EmployeeOptions
+);
 
 echo '<field>
 			<label for="Status">' . __('Status') . ':</label>
@@ -110,11 +120,12 @@ $SQL = "SELECT
 	LEFT JOIN hremployees m ON a.reviewerid = m.employeeid
 	WHERE 1=1";
 
-if (isset($_POST['Keywords']) and $_POST['Keywords'] != '') {
-	$Keywords = $_POST['Keywords'];
-	$SQL .= " AND (e.firstname LIKE '%" . $Keywords . "%'
-			OR e.lastname LIKE '%" . $Keywords . "%'
-			OR e.employeeid LIKE '%" . $Keywords . "%')";
+if (isset($_POST['EmployeeID']) and $_POST['EmployeeID'] != '') {
+	$SQL .= " AND a.employeeid = '" . (int)$_POST['EmployeeID'] . "'";
+}
+
+if (isset($_POST['ManagerID']) and $_POST['ManagerID'] != '') {
+	$SQL .= " AND a.reviewerid = '" . (int)$_POST['ManagerID'] . "'";
 }
 
 if (isset($_POST['Status']) and $_POST['Status'] != '') {

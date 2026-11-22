@@ -341,27 +341,15 @@ echo '</select>
 	</field>';
 
 // Supervisor dropdown
-echo '<field>
-		<label>' . __('Supervisor') . ':</label>
-		<select name="SupervisorID">';
-echo '<option value="0">' . __('None') . '</option>';
-$SQL = "SELECT employeeid, CONCAT(firstname, ' ', lastname) as fullname
-		FROM hremployees
-		WHERE employmentstatus = 'Active'";
-if (isset($SelectedEmployee)) {
-	$SQL .= " AND employeeid != '" . $SelectedEmployee . "'";
-}
-$SQL .= " ORDER BY firstname, lastname";
-$Result = DB_query($SQL);
-while ($MyRow = DB_fetch_array($Result)) {
-	if (isset($_POST['SupervisorID']) AND $_POST['SupervisorID'] == $MyRow['employeeid']) {
-		echo '<option selected="selected" value="' . $MyRow['employeeid'] . '">' . $MyRow['fullname'] . '</option>';
-	} else {
-		echo '<option value="' . $MyRow['employeeid'] . '">' . $MyRow['fullname'] . '</option>';
-	}
-}
-echo '</select>
-	</field>';
+echo FieldToSelectOneEmployee(
+	'SupervisorID', $_POST['SupervisorID'] ?? null, __('Supervisor'), Required: false,
+	Options: array(
+		'Display' => 'user-name-number',
+		'ExcludeEmployeeID' => (int)($SelectedEmployee ?? 0),
+		'Placeholder' => __('None'),
+		'PlaceholderValue' => '0',
+	)
+);
 
 echo '<field>
 		<label>' . __('Employment Status') . ':</label>
