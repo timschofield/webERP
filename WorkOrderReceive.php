@@ -446,7 +446,6 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 
 		$ErrMsg =  __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The location stock record could not be updated because');
 		$Result = DB_query($SQL, $ErrMsg, '', true);
-		$WOReceiptNo = GetNextTransNo(26);
 		/*Insert stock movements - with unit cost */
 
 		$SQL = "INSERT INTO stockmoves (stockid,
