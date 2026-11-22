@@ -11,9 +11,11 @@ define('UL_CONFIGERR', 3);	/* Configuration error in webERP or server */
 define('UL_SHOWLOGIN', 4);
 define('UL_MAINTENANCE', 5);
 
-/*
+/**
  *  Function to validate username and password, perform validity checks and initialise $_SESSION data.
- *  @returns int See define() statements above.
+ *  @param string|null $Name
+ *  @param string $Password
+ *  @return int See define() statements above.
  */
 function userLogin($Name, $Password, $SysAdminEmail = '') {
 

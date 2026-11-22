@@ -45,6 +45,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 /** STANDARD MESSAGE HANDLING & FORMATTING **/
 /*  ******************************************  */
 
+/** @param string $Msg */
 function prnMsg($Msg, $Type = 'info', $Prefix = '', $Return = false) {
 	global $Messages;
     if ($Return){
@@ -69,6 +70,7 @@ function prnMsg($Msg, $Type = 'info', $Prefix = '', $Return = false) {
     }
 }
 
+/** @param string|null $str */
 function reverse_escape($str) {
 	if (is_null($str)) {
 		$str = '';
@@ -79,6 +81,7 @@ function reverse_escape($str) {
 	return str_replace($Search, $Replace, $str);
 }
 
+/** @param string $Email */
 function IsEmailAddress($Email) {
 	$AtIndex = strrpos($Email, "@");
 	if ($AtIndex == false) {
@@ -125,6 +128,7 @@ function IsEmailAddress($Email) {
 	return $Ret;
 }
 
+/** @param string $CheckVariable */
 function ContainsIllegalCharacters($CheckVariable) {
 	if (mb_strstr($CheckVariable, "'") or mb_strstr($CheckVariable, '+') or mb_strstr($CheckVariable, '?') or
 		mb_strstr($CheckVariable, '.') or mb_strstr($CheckVariable, "\"") or mb_strstr($CheckVariable, '&') or
@@ -137,10 +141,10 @@ function ContainsIllegalCharacters($CheckVariable) {
 }
 
 class XmlElement {
-	var $name;
-	var $attributes;
-	var $Content;
-	var $children;
+	/** @var string|null */ var $name;
+	/** @var array<string, string>|null */ var $attributes;
+	/** @var string|null */ var $Content;
+	/** @var array<int, XmlElement>|null */ var $children;
 }
 
 function GetDXRCurrencyRates() {
@@ -198,6 +202,10 @@ function GetECBCurrencyRates() {
 	}
 }
 
+/**
+ * @param string $CurrCode
+ * @param array<string, int|float|string> $CurrenciesArray
+ */
 function GetCurrencyRate($CurrCode, $CurrenciesArray) {
 	if ((!isset($CurrenciesArray[$CurrCode]) or !isset($CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']]))
 		and $_SESSION['UpdateCurrencyRatesDaily'] != '0') {
@@ -219,6 +227,7 @@ function GetCurrencyRate($CurrCode, $CurrenciesArray) {
 	}
 }
 
+/** @param string $CurrCode */
 function quote_oanda_currency($CurrCode) {
 	if (http_file_exists('//www.oanda.com/convert/fxdaily?value=1&redirected=1&exch=' . $CurrCode . '&format=CSV&dest=Get+Table&sel_list=' . $_SESSION['CompanyRecord']['currencydefault'])) {
 		/// @todo file_get_contents and co. might be disabled for remote files. Use a better api: curl or sockets
@@ -233,6 +242,7 @@ function quote_oanda_currency($CurrCode) {
 	}
 }
 
+/** @param string $CurrCode */
 function google_currency_rate($CurrCode) {
 	$Rate = 0;
 	$PageLines = file('//www.google.com/finance/converter?a=1&from=' . $_SESSION['CompanyRecord']['currencydefault'] . '&to=' . $CurrCode);
@@ -245,11 +255,16 @@ function google_currency_rate($CurrCode) {
 	return $Rate;
 }
 
+/** @param string $str */
 function AddCarriageReturns($str) {
 	return str_replace('\r\n', chr(10), $str);
 }
 
 /// Replace all text/html line breaks with PHP_EOL(default) or given line break.
+/**
+ * @param string $string
+ * @param string $Line_break
+ */
 function Convert_line_breaks($string, $Line_break=PHP_EOL)
 {
     $patterns = array(  "/(<br>|<br \/>|<br\/>)\s*/i",
@@ -260,6 +275,10 @@ function Convert_line_breaks($string, $Line_break=PHP_EOL)
     return $string;
 }
 /// Replace all text line breaks with PHP_EOL(default) or given line break.
+/**
+ * @param string $string
+ * @param string $Line_break
+ */
 function Convert_CRLF($string, $Line_break=PHP_EOL)
 {
     $patterns = array(  "/(\r\n|\r|\n)/" );
@@ -275,6 +294,15 @@ function Convert_CRLF($string, $Line_break=PHP_EOL)
 //&$YPos - return the updated value
 //         Coming in, YPos=prior line, so update it before we print anything, and don't update it if we don't print anything
 //Defaults come from addTextWrap
+/**
+ * @param Cpdf $pdf
+ * @param string $Text
+ * @param int|float $YLim
+ * @param int|float $XPos
+ * @param int|float $YPos
+ * @param int|float $Width
+ * @param int|float $FontSize
+ */
 function PrintDetail($pdf,$Text,$YLim,$XPos,&$YPos,$Width,$FontSize,$NPFunc=null,$NPInc=null,$Align='J',$border=0,$fill=0)
 {
 	$InitialExtraSpace=2;		//shift down slightly from above text
@@ -299,6 +327,12 @@ function PrintDetail($pdf,$Text,$YLim,$XPos,&$YPos,$Width,$FontSize,$NPFunc=null
 	}
 }
 
+/**
+ * @param Cpdf $pdf
+ * @param array<string, mixed> $CompanyRecord
+ * @param int|float $XPos
+ * @param int|float $YPos
+ */
 function PrintOurCompanyInfo($pdf,$CompanyRecord,$XPos,$YPos)
 {
 	$CompanyRecord = array_map('html_entity_decode', $CompanyRecord);
@@ -321,12 +355,18 @@ function PrintOurCompanyInfo($pdf,$CompanyRecord,$XPos,$YPos)
 }
 
 // Generically move down 82 units after printing this
+/**
+ * @param Cpdf $pdf
+ * @param array<string, mixed> $CompanyRecord
+ * @param string $Title
+ * @param int|float $XPos
+ * @param int|float $YPos
+ */
 function PrintDeliverTo($pdf,$CompanyRecord,$Title,$XPos,$YPos)
 {
 	$CompanyRecord = array_map('html_entity_decode', $CompanyRecord);
 
 	$FontSize = 14;
-	$LineHeight=15;
 	$pdf->addText($XPos, $YPos,$FontSize, $Title . ':' );
 
 	//webERP default:
@@ -346,12 +386,18 @@ function PrintDeliverTo($pdf,$CompanyRecord,$Title,$XPos,$YPos)
 }
 
 // Generically move down 82 units after printing this
+/**
+ * @param Cpdf $pdf
+ * @param array<string, mixed> $CompanyRecord
+ * @param string $Title
+ * @param int|float $XPos
+ * @param int|float $YPos
+ */
 function PrintCompanyTo($pdf,$CompanyRecord,$Title,$XPos,$YPos)
 {
 	$CompanyRecord = array_map('html_entity_decode', $CompanyRecord);
 
 	$FontSize = 14;
-	$LineHeight=15;
 	$pdf->addText($XPos, $YPos,$FontSize, $Title . ':' );
 
 	//webERP default:
@@ -371,6 +417,10 @@ function PrintCompanyTo($pdf,$CompanyRecord,$Title,$XPos,$YPos)
 }
 
 /// Assemble URL for configured Wiki Application
+/**
+ * @param string $WikiType
+ * @param string $WikiPageID
+ */
 function wikiLink($WikiType, $WikiPageID) {
 	if (strstr($_SESSION['WikiPath'], 'http:')) {
 		$WikiPath = $_SESSION['WikiPath'];
@@ -446,6 +496,7 @@ function LogBackTrace($dest = 0) {
 	error_log('++++END STACK BACKTRACE++++', $dest);
 }
 
+/** @param string $url */
 function http_file_exists($url) {
 	/// @todo send a proper HEAD request
 	$f = @fopen($url, 'r');
@@ -458,6 +509,7 @@ function http_file_exists($url) {
 
 /*Functions to display numbers in locale of the user */
 
+/** @param int|float|string|null $Number */
 function locale_number_format($Number, $DecimalPlaces = 0) {
 	global $DecimalPoint;
 	global $ThousandsSeparator;
@@ -477,6 +529,7 @@ function locale_number_format($Number, $DecimalPlaces = 0) {
 
 /* and to parse the input of the user into useable number */
 
+/** @param int|float|string|null $Number */
 function filter_number_format($Number) {
 	global $DecimalPoint;
 	global $ThousandsSeparator;
@@ -485,14 +538,15 @@ function filter_number_format($Number) {
 	/*It is possible if the user entered the $DecimalPoint as a thousands separator and the $DecimalPoint is a comma that the result of this could contain several periods "." so need to ditch all but the last "." */
 	if (mb_substr_count($SQLFormatNumber, '.') > 1) {
 		return str_replace('.', '', mb_substr($SQLFormatNumber, 0, mb_strrpos($SQLFormatNumber, '.'))) . mb_substr($SQLFormatNumber, mb_strrpos($SQLFormatNumber, '.'));
-
-		echo '<br /> Number of periods: ' . $NumberOfPeriods . ' $SQLFormatNumber = ' . $SQLFormatNumber;
-
 	} else {
 		return $SQLFormatNumber;
 	}
 }
 
+/**
+ * @param int|float|string $Number
+ * @param int|string $DecimalPlaces
+ */
 function indian_number_format($Number, $DecimalPlaces) {
 	$IntegerNumber = intval($Number);
 	$DecimalValue = $Number - $IntegerNumber;
@@ -535,6 +589,7 @@ function indian_number_format($Number, $DecimalPlaces) {
 	}
 }
 
+/** @param string $MailGroup */
 function GetMailList($MailGroup) {
 	$ToList = array();
 	$SQL = "SELECT email,realname
@@ -552,19 +607,26 @@ function GetMailList($MailGroup) {
 	return $ToList;
 }
 
+/**
+ * @param string $TableName
+ * @param string $FieldName
+ * @param int|float|string|null $OldValue
+ * @param int|float|string|null $NewValue
+ */
 function ChangeFieldInTable($TableName, $FieldName, $OldValue, $NewValue) {
 	/* Used in Z_ scripts to change one field across the table.
 	*/
 	echo '<br />' . __('Changing') . ' ' . $TableName . ' ' . __('records');
 	$SQL = "UPDATE " . $TableName . " SET " . $FieldName . " ='" . $NewValue . "' WHERE " . $FieldName . "='" . $OldValue . "'";
 	$ErrMsg = __('The SQL to update' . ' ' . $TableName . ' ' . __('records failed'));
-	$Result = DB_query($SQL, $ErrMsg, '', true);
+	DB_query($SQL, $ErrMsg, '', true);
 	echo ' ... ' . __('completed');
 }
 
 /* Used in report scripts for standard periods.
  * Parameter $Choice is from the 'Period' combobox value.
 */
+/** @param string|null $Choice */
 function ReportPeriodList($Choice, $Options = array('t', 'l', 'n')) {
 	$Periods = array();
 
@@ -604,6 +666,10 @@ function ReportPeriodList($Choice, $Options = array('t', 'l', 'n')) {
 	return $HTML;
 }
 
+/**
+ * @param string $PeriodName
+ * @param string $FromOrTo
+ */
 function ReportPeriod($PeriodName, $FromOrTo) {
 	/* Used in report scripts to determine period.
 	*/
@@ -711,6 +777,7 @@ function ReportPeriod($PeriodName, $FromOrTo) {
 	return $Period;
 }
 
+/** @param int|string $PeriodNumber */
 function FYStartPeriod($PeriodNumber) {
 	// Get the end date of the period using EndDateSQLFromPeriodNo
 	$LastDateInPeriod = EndDateSQLFromPeriodNo($PeriodNumber);
@@ -728,6 +795,7 @@ function FYStartPeriod($PeriodNumber) {
 	return $StartPeriod;
 }
 
+/** @param string $HelpText */
 function fShowFieldHelp($HelpText) {
 	// Shows field help text if $_SESSION['ShowFieldHelp'] is true or is not set.
 	if ($_SESSION['ShowFieldHelp'] || !isset($_SESSION['ShowFieldHelp'])) {
@@ -735,6 +803,7 @@ function fShowFieldHelp($HelpText) {
 	}
 }
 
+/** @param string $HelpText */
 function fShowPageHelp($HelpText) {
 	// Shows page help text if $_SESSION['ShowFieldHelp'] is true or is not set.
 	if ($_SESSION['ShowPageHelp'] || !isset($_SESSION['ShowPageHelp'])) {
@@ -748,6 +817,7 @@ function fShowPageHelp($HelpText) {
  * @todo we could just check that $language is an existing key within $LanguagesArray instead, which has the added
  *       value of not allowing unsupported language codes
  */
+/** @param string $language */
 function checkLanguageChoice($language) {
 	return preg_match('/^([a-z]{2}\_[A-Z]{2})(\.utf8)$/', $language);
 }
@@ -830,6 +900,13 @@ function SendEmailFromWebERP($From, $To, $Subject, $Body, $Attachments=array(), 
 	return $EmailSent;
 }
 
+/**
+ * @param PHPMailer $MailObj
+ * @param string $From
+ * @param array<int|string, string> $To
+ * @param string $Subject
+ * @param string $Body
+ */
 function SendEmailBySmtp($MailObj, $From, $To, $Subject, $Body, $Attachments=array()) {
 	$SQL = "SELECT host,
 					port,
@@ -873,6 +950,12 @@ function SendEmailBySmtp($MailObj, $From, $To, $Subject, $Body, $Attachments=arr
 	return $EmailSent;
 }
 
+/**
+ * @param string $From
+ * @param string $To
+ * @param string $Subject
+ * @param string $Body
+ */
 function SendEmailByStandardMailFunction($From, $To, $Subject, $Body, $Attachments=array()) {
 	// If no attachments, use simple mail function
 	if (empty($Attachments)) {
@@ -921,6 +1004,10 @@ function SendEmailByStandardMailFunction($From, $To, $Subject, $Body, $Attachmen
 	}
 }
 
+/**
+ * @param string $PDFContent
+ * @param string $FileName
+ */
 function SendPDFToBrowser($PDFContent, $FileName) {
 
 	header('Content-Type: application/pdf');
@@ -933,6 +1020,10 @@ function SendPDFToBrowser($PDFContent, $FileName) {
 	exit(0);
 }
 
+/**
+ * @param string $DebugMessage
+ * @param string $SQL
+ */
 function ShowDebugBackTrace($DebugMessage, $SQL){
 	global $Debug;
 
@@ -978,6 +1069,7 @@ function ShowDebugBackTrace($DebugMessage, $SQL){
 		</div>';
 }
 
+/** @param array<int, string> $SQLArray */
 function SQLToBeAudited($SQLArray){
 	// Determine if the SQL operation should be audited
 	// $SQLArray already comes exploded by spaces and uppercased
@@ -995,6 +1087,10 @@ function SQLToBeAudited($SQLArray){
 	}
 }
 
+/**
+ * @param array<int, string> $SQLArray
+ * @param string $TableName
+ */
 function TableToBeSkippedInAudit($SQLArray, $TableName){
 	// check if the table involved in the SQL is the one to be skipped
 	// $SQLArray already comes exploded by spaces and uppercased

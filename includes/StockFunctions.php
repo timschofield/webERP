@@ -29,6 +29,9 @@ Retrieves the total quantity on hand for a specific stock item across specified 
 ### Returns
 - `float`: The sum of quantities on hand for the specified stock item in the filtered locations
 - Returns 0 if no quantities are found
+
+@param string $StockID
+@param string $Location
 */
 function GetQuantityOnHand($StockID, $Location) {
 	if (($Location == '') OR ($Location == 'ALL')){
@@ -92,6 +95,9 @@ Calculates the total demand for a stock item by aggregating all types of demand.
 ### Notes
 - Acts as a helper function to combine all demand sources
 - Inherits location filtering behavior from called functions
+
+@param string $StockID
+@param string $Location
 */
 function GetDemand($StockID, $Location) {
 	$TotalDemand = GetDemandQuantityDueToOutstandingSalesOrders($StockID, $Location);
@@ -115,6 +121,9 @@ Calculates the total quantity on order for a stock item by aggregating all types
 ### Notes
 - Acts as a helper function to combine all order sources
 - Inherits location filtering behavior from called functions
+
+@param string $StockID
+@param string $Location
 */
 function GetQuantityOnOrder($StockID, $Location) {
 	$TotalOnOrder = GetQuantityOnOrderDueToPurchaseOrders($StockID, $Location);
@@ -144,6 +153,9 @@ Calculates the total quantity of a stock item that is currently on order through
 ### Security Notes
 - Function automatically filters results based on user location viewing permissions
 - Uses prepared statements to prevent SQL injection
+
+@param string $StockID
+@param string $Location
 */
 function GetQuantityOnOrderDueToPurchaseOrders($StockID, $Location) {
 	if (($Location == '') OR ($Location == 'ALL')){
@@ -198,6 +210,9 @@ Calculates the total quantity of a stock item that is currently on order through
 ### Query Conditions
 - Only includes non-closed work orders (`closed=0`)
 - Filters by user location permissions (canview=1)
+
+@param string $StockID
+@param string $Location
 */
 function GetQuantityOnOrderDueToWorkOrders($StockID, $Location){
 	if (($Location == '') OR ($Location == 'ALL')){
@@ -251,6 +266,9 @@ Calculates the total quantity of a stock item that is demanded due to outstandin
 - Only includes non-completed order lines (`completed=0`)
 - Excludes quotations (`quotation=0`)
 - Filters by user location permissions when applicable
+
+@param string $StockID
+@param string $Location
 */
 function GetDemandQuantityDueToOutstandingSalesOrders($StockID, $Location) {
 	if (($Location == '') OR ($Location == 'ALL')){
@@ -325,6 +343,9 @@ for outstanding sales orders.
 - Only includes outstanding quantities (ordered minus invoiced > 0)
 - Excludes quotations (`quotation=0`)
 - Filters by user location permissions when applicable
+
+@param string $StockID
+@param string $Location
 */
 function GetDemandQuantityAsComponentInAssemblyItems($StockID, $Location){
 
@@ -404,6 +425,9 @@ Calculates the total quantity of a stock item that is demanded as a component in
 - Calculates demand based on remaining quantities to be received
 - Takes into account the quantity per unit (qtypu) from work requirements
 - Filters by user location permissions when applicable
+
+@param string $StockID
+@param string $Location
 */
 function GetDemandQuantityAsComponentInWorkOrders($StockID, $Location) {
 
@@ -488,6 +512,9 @@ Calculates the total quantity of a stock item that is currently in transit FROM 
 ### Notes
 - Used to track inventory that has been shipped but not yet received
 - Helps in calculating available stock by accounting for outbound transfers
+
+@param string $StockId
+@param string $LocationCode
 */
 function GetItemQtyInTransitFromLocation($StockId, $LocationCode) {
 		$InTransitSQL = "SELECT SUM(pendingqty) as intransit
@@ -523,6 +550,9 @@ Calculates the total quantity of a stock item that is currently in transit TO a 
 ### Notes
 - Used to track inventory that has been shipped but not yet received
 - Helps in calculating expected stock by accounting for inbound transfers
+
+@param string $StockId
+@param string $LocationCode
 */
 function GetItemQtyInTransitToLocation($StockId, $LocationCode) {
 		$InTransitSQL = "SELECT SUM(pendingqty) as intransit
