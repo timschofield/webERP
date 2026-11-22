@@ -4,81 +4,19 @@
 
 require(__DIR__ . '/includes/session.php');
 
+use Dompdf\Dompdf;
+
+include(__DIR__ . '/includes/SetDomPDFOptions.php');
+
 $Title = __('Colleague Feedback');
 $ViewTopic = 'HumanResources';
 $BookMark = 'HRColleagueFeedback';
 
-include(__DIR__ . '/includes/header.php');
 require_once(__DIR__ . '/includes/HRPerformanceHelper.php');
 require_once(__DIR__ . '/includes/HRGeneralFunctions.php');
 
 $RatingLabels = GetRatingLabels();
-
-echo '<p class="page_title_text">
-		<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/star.png" title="' . __('Colleague Feedback') . '" /> ' .
-		__('Colleague Feedback Management') . '
-	</p>';
-
-/* Search and filter form */
-echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-
-echo '<fieldset>
-		<legend>' . __('Search & Filter') . '</legend>
-		<field>
-			<label for="Keywords">' . __('Employee Name or Number') . ':</label>
-			<input type="text" name="Keywords" size="20" maxlength="50" value="' . (isset($_POST['Keywords']) ? htmlspecialchars($_POST['Keywords'], ENT_QUOTES, 'UTF-8') : '') . '" />
-		</field>';
-
-echo '<field>
-			<label for="Status">' . __('Status') . ':</label>
-			<select name="Status">
-				<option value="">' . __('All Statuses') . '</option>
-				<option value="Not Started"' . (isset($_POST['Status']) and $_POST['Status'] == 'Not Started' ? ' selected="selected"' : '') . '>' . __('Not Started') . '</option>
-				<option value="In Progress"' . (isset($_POST['Status']) and $_POST['Status'] == 'In Progress' ? ' selected="selected"' : '') . '>' . __('In Progress') . '</option>
-				<option value="Completed"' . (isset($_POST['Status']) and $_POST['Status'] == 'Completed' ? ' selected="selected"' : '') . '>' . __('Completed') . '</option>
-				<option value="Cancelled"' . (isset($_POST['Status']) and $_POST['Status'] == 'Cancelled' ? ' selected="selected"' : '') . '>' . __('Cancelled') . '</option>
-			</select>
-		</field>';
-
-echo '<field>
-			<label for="FeedbackType">' . __('Feedback Type') . ':</label>
-			<select name="FeedbackType">
-				<option value="">' . __('All Types') . '</option>
-				<option value="Annual"' . (isset($_POST['FeedbackType']) and $_POST['FeedbackType'] == 'Annual' ? ' selected="selected"' : '') . '>' . __('Annual') . '</option>
-				<option value="Mid-Year"' . (isset($_POST['FeedbackType']) and $_POST['FeedbackType'] == 'Mid-Year' ? ' selected="selected"' : '') . '>' . __('Mid-Year') . '</option>
-				<option value="Probation"' . (isset($_POST['FeedbackType']) and $_POST['FeedbackType'] == 'Probation' ? ' selected="selected"' : '') . '>' . __('Probation') . '</option>
-				<option value="90-Day"' . (isset($_POST['FeedbackType']) and $_POST['FeedbackType'] == '90-Day' ? ' selected="selected"' : '') . '>' . __('90-Day') . '</option>
-				<option value="Project"' . (isset($_POST['FeedbackType']) and $_POST['FeedbackType'] == 'Project' ? ' selected="selected"' : '') . '>' . __('Project') . '</option>
-			</select>
-		</field>';
-
-echo '<field>
-			<label for="DepartmentID">' . __('Department') . ':</label>
-			<select name="DepartmentID">
-				<option value="">' . __('All Departments') . '</option>';
-$DepartmentResult = DB_query("SELECT departmentid, description FROM departments ORDER BY description");
-while ($DepartmentRow = DB_fetch_array($DepartmentResult)) {
-	echo '<option value="' . $DepartmentRow['departmentid'] . '"' .
-		(isset($_POST['DepartmentID']) and $_POST['DepartmentID'] == $DepartmentRow['departmentid'] ? ' selected="selected"' : '') . '>' .
-		htmlspecialchars($DepartmentRow['description'], ENT_QUOTES, 'UTF-8') . '</option>';
-}
-echo '</select>
-		</field>';
-
-echo '<field>
-			<label for="PeriodYear">' . __('Feedback Period Starts on Year') . ':</label>
-			<input type="number" name="PeriodYear" size="4" maxlength="4" value="' . (isset($_POST['PeriodYear']) ? (int)$_POST['PeriodYear'] : (int)date('Y')) . '" />
-		</field>';
-
-echo '</fieldset>';
-
-echo '<div class="centre">
-			<input type="submit" name="Search" value="' . __('Search') . '" />
-			<input type="submit" name="CreateNew" value="' . __('Create New Feedback') . '" onclick="window.location=\'' . $RootPath . '/HRColleagueFeedbackEntry.php\'; return false;" />
-		</div>';
-
-echo '</form>';
+$PrintPDF = isset($_POST['PrintPDF']);
 
 $SQL = "SELECT
 		f.feedbackid,
@@ -135,9 +73,28 @@ $SQL .= " ORDER BY f.duedate DESC, f.feedbackid DESC";
 
 $Result = DB_query($SQL);
 
-echo '<table class="selection">
-		<thead>
-			<tr>
+$HTML = '';
+
+if ($PrintPDF) {
+	$HTML .= '<html>
+				<head>';
+	$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
+	$HTML .= '</head>
+				<body>';
+}
+
+$HTML .= '<table class="selection">
+		<thead>';
+
+if ($PrintPDF) {
+	$HTML .= '<tr>
+				<th colspan="10">
+					<h2>' . __('Colleague Feedback') . ' - ' . ConvertSQLDate(date('Y-m-d')) . '</h2>
+				</th>
+			</tr>';
+}
+
+$HTML .= '<tr>
 				<th>' . __('Feedback ID') . '</th>
 				<th>' . __('From Employee') . '</th>
 				<th>' . __('About Employee') . '</th>
@@ -147,8 +104,8 @@ echo '<table class="selection">
 				<th>' . __('Status') . '</th>
 				<th>' . __('Rating') . '</th>
 				<th>' . __('Created By') . '</th>
-				<th>' . __('Comments') . '</th>
-				<th></th>
+				<th>' . __('Comments') . '</th>' .
+				($PrintPDF ? '' : '<th></th>') . '
 			</tr>
 		</thead>
 		<tbody>';
@@ -166,7 +123,9 @@ if (DB_num_rows($Result) > 0) {
 			$RatingLabel = isset($RatingLabels[$RatingInt]) ? $RatingLabels[$RatingInt] : (string)$RatingInt;
 		}
 
-		echo '<tr class="striped_row"' . $RowClass . '>
+		$Comments = CleanCommentText((string)$MyRow['comments']);
+
+		$HTML .= '<tr class="striped_row"' . $RowClass . '>
 				<td>' . (int)$MyRow['feedbackid'] . '</td>
 				<td>' . htmlspecialchars((string)$MyRow['fromname'], ENT_QUOTES, 'UTF-8') . ' (' . htmlspecialchars(PadEmployeeNumber((string)$MyRow['fromemployeenumber']), ENT_QUOTES, 'UTF-8') . ')</td>
 				<td>' . htmlspecialchars((string)$MyRow['aboutname'], ENT_QUOTES, 'UTF-8') . ' (' . htmlspecialchars(PadEmployeeNumber((string)$MyRow['aboutemployeenumber']), ENT_QUOTES, 'UTF-8') . ')</td>
@@ -176,18 +135,105 @@ if (DB_num_rows($Result) > 0) {
 				<td>' . htmlspecialchars((string)$MyRow['status'], ENT_QUOTES, 'UTF-8') . '</td>
 				<td>' . htmlspecialchars((string)$RatingLabel, ENT_QUOTES, 'UTF-8') . '</td>
 				<td>' . htmlspecialchars((string)$MyRow['createdbyname'], ENT_QUOTES, 'UTF-8') . '</td>
-				<td>' . nl2br(htmlspecialchars((string)$MyRow['comments'], ENT_QUOTES, 'UTF-8')) . '</td>
-				<td class="centre">
+				<td>' . nl2br(htmlspecialchars($Comments, ENT_QUOTES, 'UTF-8')) . '</td>';
+		if (!$PrintPDF) {
+			$HTML .= '<td class="centre">
 					<a href="' . $RootPath . '/HRColleagueFeedbackEntry.php?FeedbackID=' . urlencode($MyRow['feedbackid']) . '&amp;From=HRColleagueFeedback">' . __('Edit') . '</a>
-				</td>
-			</tr>';
+				</td>';
+		}
+		$HTML .= '</tr>';
 	}
 } else {
-	echo '<tr><td colspan="11" class="centre">' . __('No colleague feedback records found') . '</td></tr>';
+	$HTML .= '<tr><td colspan="' . ($PrintPDF ? 10 : 11) . '" class="centre">' . __('No colleague feedback records found') . '</td></tr>';
 }
 
-echo '</tbody>
+$HTML .= '</tbody>
 	</table>';
+
+if ($PrintPDF) {
+	$HTML .= '</body></html>';
+	$DomPDF = new Dompdf($DomPDFOptions); // Pass the options object defined in SetDomPDFOptions.php containing common options
+	$DomPDF->loadHtml($HTML);
+
+	$DomPDF->setPaper($_SESSION['PageSize'], 'landscape');
+
+	// Render the HTML as PDF
+	$DomPDF->render();
+
+	// Output the generated PDF to Browser
+	$PDFContent = $DomPDF->output();
+	SendPDFToBrowser($PDFContent, $Title . date('Y-m-d') . '.pdf');
+	exit();
+}
+
+include(__DIR__ . '/includes/header.php');
+
+echo '<p class="page_title_text">
+		<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/star.png" title="' . __('Colleague Feedback') . '" /> ' .
+		__('Colleague Feedback Management') . '
+	</p>';
+
+/* Search and filter form */
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+
+echo '<fieldset>
+		<legend>' . __('Search & Filter') . '</legend>
+		<field>
+			<label for="Keywords">' . __('Employee Name or Number') . ':</label>
+			<input type="text" name="Keywords" size="20" maxlength="50" value="' . (isset($_POST['Keywords']) ? htmlspecialchars($_POST['Keywords'], ENT_QUOTES, 'UTF-8') : '') . '" />
+		</field>';
+
+echo '<field>
+			<label for="Status">' . __('Status') . ':</label>
+			<select name="Status">
+				<option value="">' . __('All Statuses') . '</option>
+				<option value="Not Started"' . (isset($_POST['Status']) and $_POST['Status'] == 'Not Started' ? ' selected="selected"' : '') . '>' . __('Not Started') . '</option>
+				<option value="In Progress"' . (isset($_POST['Status']) and $_POST['Status'] == 'In Progress' ? ' selected="selected"' : '') . '>' . __('In Progress') . '</option>
+				<option value="Completed"' . (isset($_POST['Status']) and $_POST['Status'] == 'Completed' ? ' selected="selected"' : '') . '>' . __('Completed') . '</option>
+				<option value="Cancelled"' . (isset($_POST['Status']) and $_POST['Status'] == 'Cancelled' ? ' selected="selected"' : '') . '>' . __('Cancelled') . '</option>
+			</select>
+		</field>';
+
+echo '<field>
+			<label for="FeedbackType">' . __('Feedback Type') . ':</label>
+			<select name="FeedbackType">
+				<option value="">' . __('All Types') . '</option>
+				<option value="Annual"' . (isset($_POST['FeedbackType']) and $_POST['FeedbackType'] == 'Annual' ? ' selected="selected"' : '') . '>' . __('Annual') . '</option>
+				<option value="Mid-Year"' . (isset($_POST['FeedbackType']) and $_POST['FeedbackType'] == 'Mid-Year' ? ' selected="selected"' : '') . '>' . __('Mid-Year') . '</option>
+				<option value="Probation"' . (isset($_POST['FeedbackType']) and $_POST['FeedbackType'] == 'Probation' ? ' selected="selected"' : '') . '>' . __('Probation') . '</option>
+			</select>
+		</field>';
+
+echo '<field>
+			<label for="DepartmentID">' . __('Department') . ':</label>
+			<select name="DepartmentID">
+				<option value="">' . __('All Departments') . '</option>';
+$DepartmentResult = DB_query("SELECT departmentid, description FROM departments ORDER BY description");
+while ($DepartmentRow = DB_fetch_array($DepartmentResult)) {
+	echo '<option value="' . $DepartmentRow['departmentid'] . '"' .
+		(isset($_POST['DepartmentID']) and $_POST['DepartmentID'] == $DepartmentRow['departmentid'] ? ' selected="selected"' : '') . '>' .
+		htmlspecialchars($DepartmentRow['description'], ENT_QUOTES, 'UTF-8') . '</option>';
+}
+echo '</select>
+		</field>';
+
+echo '<field>
+			<label for="PeriodYear">' . __('Feedback Period Starts on Year') . ':</label>
+			<input type="number" name="PeriodYear" size="4" maxlength="4" value="' . (isset($_POST['PeriodYear']) ? (int)$_POST['PeriodYear'] : (int)date('Y')) . '" />
+		</field>';
+
+echo '</fieldset>';
+
+echo '<div class="centre">
+			<input type="submit" name="Search" value="' . __('Search') . '" />
+			<input type="submit" name="PrintPDF" value="' . __('PDF Colleague Feedbacks') . '" />
+			<input type="submit" name="CreateNew" value="' . __('Create New Feedback') . '" onclick="window.location=\'' . $RootPath . '/HRColleagueFeedbackEntry.php\'; return false;" />
+		</div>';
+
+echo '</form>';
+
+echo $HTML;
 
 include(__DIR__ . '/includes/footer.php');
 

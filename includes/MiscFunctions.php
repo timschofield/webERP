@@ -5,6 +5,7 @@
  * AddCarriageReturns - Adds carriage returns to a string
  * ChangeFieldInTable - Changes value of specific field across a table
  * checkLanguageChoice - Validates language choice format
+ * CleanCommentText - Normalizes comment line breaks and HTML entities
  * ContainsIllegalCharacters - Checks if a string contains special characters
  * Convert_CRLF - Replaces text line breaks with specified line break
  * Convert_line_breaks - Replaces HTML and text line breaks with specified line break
@@ -258,6 +259,12 @@ function google_currency_rate($CurrCode) {
 /** @param string $str */
 function AddCarriageReturns($str) {
 	return str_replace('\r\n', chr(10), $str);
+}
+
+/** @param string $CommentText */
+function CleanCommentText($CommentText) {
+	$CommentText = str_replace(array('\\r\\n', '\\n', '\\r'), "\n", (string)$CommentText);
+	return html_entity_decode($CommentText, ENT_QUOTES, 'UTF-8');
 }
 
 /// Replace all text/html line breaks with PHP_EOL(default) or given line break.
