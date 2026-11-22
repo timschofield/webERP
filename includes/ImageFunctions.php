@@ -7,7 +7,7 @@
  * @param int|string $Height
  * @param string $AltText
  */
-function GetImageLink($ImageFile, $Item, $Width, $Height, $AltText, $Class = "") {
+function GetImageLink($ImageFile, $Item, $Width, $Height, $AltText) {
     if (extension_loaded('gd')
 		and function_exists('gd_info')
 		and file_exists($ImageFile)

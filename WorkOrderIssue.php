@@ -996,7 +996,7 @@ if (!isset($_POST['IssueItem'])) { //no item selected to issue yet
 				if (!in_array($MyRow['stockid'], $ItemCodes)) {
 					$Glob = (glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
 					$ImageFile = reset($Glob);
-					$ImageSource = GetImageLink($ImageFile, $MyRow['stockid'], 64, 64, "", "");
+					$ImageSource = GetImageLink($ImageFile, $MyRow['stockid'], 64, 64, "");
 
 					$IssueLink = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?WO=' . $_POST['WO'] . '&amp;StockID=' . urlencode($_POST['StockID']) . '&amp;IssueItem=' . urlencode($MyRow['stockid']) . '&amp;FromLocation=' . $_POST['FromLocation'];
 					echo '<tr class="striped_row">

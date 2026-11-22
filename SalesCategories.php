@@ -177,7 +177,7 @@ if (isset($SearchResult)) {
 				$SupportedImgExt = array('png', 'jpg', 'jpeg');
 				$ImageFileArray = glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE);
 				$ImageFile = reset($ImageFileArray);
-				$ImageSource = GetImageLink($ImageFile, $MyRow['stockid'], 64, 64, "", "");
+				$ImageSource = GetImageLink($ImageFile, $MyRow['stockid'], 64, 64, "");
 
 				echo '<tr class="striped_row">
 						<td>', $MyRow['stockid'], '</td>
@@ -286,7 +286,7 @@ if (!isset($_GET['Select'])) {
 
 		$ImageFileArray = glob($_SESSION['part_pics_dir'] . '/SALESCAT_' . $MyRow['salescatid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE);
 		$ImageFile = reset($ImageFileArray);
-		$CatImgLink = GetImageLink($ImageFile, 'SALESCAT_' . $MyRow['salescatid'], 64, 64, "", "");
+		$CatImgLink = GetImageLink($ImageFile, 'SALESCAT_' . $MyRow['salescatid'], 64, 64, "");
 		if ($MyRow['active'] == 1) {
 			$Active = __('Yes');
 		} else {

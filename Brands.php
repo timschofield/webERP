@@ -232,7 +232,7 @@ or deletion of the records*/
 while ($MyRow = DB_fetch_array($Result)) {
     $Glob = (glob($_SESSION['part_pics_dir'] . '/BRAND-' . $MyRow['brands_id'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
 	$ImageFile = reset($Glob);
-	$BrandImgLink = GetImageLink($ImageFile, '/BRAND-' . $MyRow['brands_id'], 120, 120, "", "");
+	$BrandImgLink = GetImageLink($ImageFile, '/BRAND-' . $MyRow['brands_id'], 120, 120, "");
 
 	echo '<tr class="striped_row">
 			<td>', $MyRow['brands_id'], '</td>
@@ -334,7 +334,7 @@ if (!isset($_GET['delete'])) {
 					$BrandImgLink = __('No Image');
 				}
 			}
-			$BrandImgLink = GetImageLink($ImageFile, '/BRAND-' . $SelectedBrand, 100, 100, "", "");
+			$BrandImgLink = GetImageLink($ImageFile, '/BRAND-' . $SelectedBrand, 100, 100, "");
 			echo '<field><td colspan="2">' . $BrandImgLink . '</td></field>';
 		}
 

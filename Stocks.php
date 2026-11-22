@@ -1072,7 +1072,7 @@ if (sizeof(glob($_SESSION['part_pics_dir'] . '/' . $StockID . '.{' . implode(","
 } else {
 	$ImageFile = '';
 }
-$StockImgLink = GetImageLink($ImageFile, $StockID, 64, 64, "", "");
+$StockImgLink = GetImageLink($ImageFile, $StockID, 64, 64, "");
 
 if ($StockImgLink != __('No Image')) {
 	echo '<span>' . __('Image') . '<br />' . $StockImgLink . '</span>';

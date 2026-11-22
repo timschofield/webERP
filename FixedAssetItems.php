@@ -491,7 +491,7 @@ if (!isset($New) ) { //ie not new at all!
 			<input type="checkbox" name="ClearImage" id="ClearImage" value="1" > ';
     $Glob = (glob($_SESSION['part_pics_dir'] . '/ASSET_' . $AssetID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
 	$ImageFile = reset($Glob);
-	$AssetImgLink = GetImageLink($ImageFile, 'ASSET_' . $AssetID, 64, 64, "", "");
+	$AssetImgLink = GetImageLink($ImageFile, 'ASSET_' . $AssetID, 64, 64, "");
 	if ($AssetImgLink!=__('No Image')) {
 		echo '<td>' . __('Image') . '<br />' . $AssetImgLink . '</td></field>';
 	} else {

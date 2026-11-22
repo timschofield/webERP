@@ -696,7 +696,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 			$SupportedImgExt = array('png','jpg','jpeg');
 			$Glob = (glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
 			$ImageFile = reset($Glob);
-			$ImageSource = GetImageLink($ImageFile, $MyRow['stockid'], 64, 64, "", "");
+			$ImageSource = GetImageLink($ImageFile, $MyRow['stockid'], 64, 64, "");
 
 			$UOMsql="SELECT conversionfactor,
 						suppliersuom,

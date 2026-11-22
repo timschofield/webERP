@@ -1366,7 +1366,7 @@ if (isset($SearchResult)) {
 
 		$ImageFilearray = (glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
 		$ImageFile = reset($ImageFilearray);
-		$ImageSource = GetImageLink($ImageFile, $MyRow['stockid'], 64, 64, "", "");
+		$ImageSource = GetImageLink($ImageFile, $MyRow['stockid'], 64, 64, "");
 
 		/*Get conversion factor and supplier units if any */
 		$SQL =  "SELECT purchdata.conversionfactor,

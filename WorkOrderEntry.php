@@ -656,7 +656,7 @@ if (isset($SearchResult)) {
 				$ImageFileArray = glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE);
 				$ImageFile = reset($ImageFileArray);
 
-				$ImageSource = GetImageLink($ImageFile, $MyRow['stockid'], 100, 100, "", "");
+				$ImageSource = GetImageLink($ImageFile, $MyRow['stockid'], 100, 100, "");
 
 				echo '<tr class="striped_row">
 						<td>', $MyRow['stockid'], '</td>
