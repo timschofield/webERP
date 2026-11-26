@@ -11,6 +11,11 @@
  *   AppraisalID=N&Delete=1 -- delete the appraisal and redirect
  */
 
+/* Preserve comment text before session.php escapes request values; escape it at the SQL and HTML boundaries. */
+$PostedComments = array_intersect_key($_POST, array_flip(array(
+	'Strengths', 'AreasForImprovement', 'GoalsNextPeriod', 'ReviewerComments', 'CriteriaComments'
+)));
+
 require(__DIR__ . '/includes/session.php');
 require_once(__DIR__ . '/includes/UIGeneralFunctions.php');
 
@@ -127,10 +132,12 @@ if (isset($_POST['Submit'])) {
 
 		$OverallRating     = ($Status != 'Not Started' AND isset($_POST['OverallRating']) AND $_POST['OverallRating'] != '')
 			? (float)$_POST['OverallRating'] : '0.00';
-		$Strengths           = isset($_POST['Strengths']) ? DB_escape_string($_POST['Strengths']) : '';
-		$AreasForImprovement = isset($_POST['AreasForImprovement']) ? DB_escape_string($_POST['AreasForImprovement']) : '';
-		$ReviewerComments    = isset($_POST['ReviewerComments']) ? DB_escape_string($_POST['ReviewerComments']) : '';
-		$GoalsNextPeriod     = isset($_POST['GoalsNextPeriod']) ? DB_escape_string($_POST['GoalsNextPeriod']) : '';
+		$Strengths           = isset($PostedComments['Strengths']) ? DB_escape_string($PostedComments['Strengths']) : '';
+		$AreasForImprovement = isset($PostedComments['AreasForImprovement'])
+			? DB_escape_string($PostedComments['AreasForImprovement']) : '';
+		$ReviewerComments    = isset($PostedComments['ReviewerComments'])
+			? DB_escape_string($PostedComments['ReviewerComments']) : '';
+		$GoalsNextPeriod     = isset($PostedComments['GoalsNextPeriod']) ? DB_escape_string($PostedComments['GoalsNextPeriod']) : '';
 
 		if ($EditMode) {
 
@@ -157,7 +164,8 @@ if (isset($_POST['Submit'])) {
 			/* Process per-criterion scores submitted from the form */
 			if (isset($_POST['CriteriaRating']) and is_array($_POST['CriteriaRating'])) {
 				foreach ($_POST['CriteriaRating'] as $cid => $rating) {
-					$comments = isset($_POST['CriteriaComments'][$cid]) ? $_POST['CriteriaComments'][$cid] : '';
+					$comments = isset($PostedComments['CriteriaComments'][$cid])
+						? $PostedComments['CriteriaComments'][$cid] : '';
 					SaveCriteriaScoreAdvanced($AppraisalID, (int)$cid, $rating === '' ? null : (int)$rating, $comments);
 				}
 				$calc = CalculateWeightedScoreForAppraisal($AppraisalID, 0);
@@ -208,7 +216,8 @@ if (isset($_POST['Submit'])) {
 			/* Process per-criterion scores submitted from the form for the newly created appraisal */
 			if (isset($_POST['CriteriaRating']) and is_array($_POST['CriteriaRating'])) {
 				foreach ($_POST['CriteriaRating'] as $cid => $rating) {
-					$comments = isset($_POST['CriteriaComments'][$cid]) ? $_POST['CriteriaComments'][$cid] : '';
+					$comments = isset($PostedComments['CriteriaComments'][$cid])
+						? $PostedComments['CriteriaComments'][$cid] : '';
 					SaveCriteriaScoreAdvanced($AppraisalID, (int)$cid, $rating === '' ? null : (int)$rating, $comments);
 				}
 				$calc = CalculateWeightedScoreForAppraisal($AppraisalID, 0);
@@ -284,10 +293,14 @@ if (isset($_GET['AppraisalID'])) {
 	$DbReviewerID        = $MyRow['reviewerid'];
 	$DbStatus            = isset($_POST['Status']) ? $_POST['Status'] : $MyRow['status'];
 	$DbOverallRating     = $MyRow['overallrating'];
-	$DbStrengths           = isset($_POST['Strengths']) ? $_POST['Strengths'] : $MyRow['strengths'];
-	$DbGoalsNextPeriod     = isset($_POST['GoalsNextPeriod']) ? $_POST['GoalsNextPeriod'] : $MyRow['goalsnextperiod'];
-	$DbAreasForImprovement = isset($_POST['AreasForImprovement']) ? $_POST['AreasForImprovement'] : $MyRow['areasforimprovement'];
-	$DbReviewerComments    = isset($_POST['ReviewerComments']) ? $_POST['ReviewerComments'] : $MyRow['reviewercomments'];
+	$DbStrengths           = isset($PostedComments['Strengths'])
+		? $PostedComments['Strengths'] : CleanCommentText((string)$MyRow['strengths']);
+	$DbGoalsNextPeriod     = isset($PostedComments['GoalsNextPeriod'])
+		? $PostedComments['GoalsNextPeriod'] : CleanCommentText((string)$MyRow['goalsnextperiod']);
+	$DbAreasForImprovement = isset($PostedComments['AreasForImprovement'])
+		? $PostedComments['AreasForImprovement'] : CleanCommentText((string)$MyRow['areasforimprovement']);
+	$DbReviewerComments    = isset($PostedComments['ReviewerComments'])
+		? $PostedComments['ReviewerComments'] : CleanCommentText((string)$MyRow['reviewercomments']);
 
 	/* Load criteria and scores for this appraisal */
 	$Criteria = GetAppraisalCriteria($AppraisalID, $MyRow['positionid']);
@@ -310,10 +323,10 @@ if (isset($_GET['AppraisalID'])) {
 	$DbReviewerID        = isset($_POST['ReviewerID']) ? $_POST['ReviewerID'] : '';
 	$DbStatus            = isset($_POST['Status']) ? $_POST['Status'] : 'Not Started';
 	$DbOverallRating     = isset($_POST['OverallRating']) ? $_POST['OverallRating'] : '';
-	$DbStrengths           = isset($_POST['Strengths']) ? $_POST['Strengths'] : '';
-	$DbGoalsNextPeriod     = isset($_POST['GoalsNextPeriod']) ? $_POST['GoalsNextPeriod'] : '';
-	$DbAreasForImprovement = isset($_POST['AreasForImprovement']) ? $_POST['AreasForImprovement'] : '';
-	$DbReviewerComments    = isset($_POST['ReviewerComments']) ? $_POST['ReviewerComments'] : '';
+	$DbStrengths           = isset($PostedComments['Strengths']) ? $PostedComments['Strengths'] : '';
+	$DbGoalsNextPeriod     = isset($PostedComments['GoalsNextPeriod']) ? $PostedComments['GoalsNextPeriod'] : '';
+	$DbAreasForImprovement = isset($PostedComments['AreasForImprovement']) ? $PostedComments['AreasForImprovement'] : '';
+	$DbReviewerComments    = isset($PostedComments['ReviewerComments']) ? $PostedComments['ReviewerComments'] : '';
 
 	/* Load criteria for new appraisal (no scores yet) */
 	$PositionID = 0;
@@ -496,14 +509,15 @@ if (!empty($Criteria)) {
 		$existingRating = isset($DbCriteriaScores[$cid]) ? $DbCriteriaScores[$cid]['rating'] : '';
 		$existingComments = isset($DbCriteriaScores[$cid]) ? $DbCriteriaScores[$cid]['comments'] : '';
 		echo '<tr data-criteriaid="' . $cid . '" data-weight="' . $c['weight'] . '">';
-		echo '<td>' . htmlspecialchars($c['criterianame'], ENT_QUOTES, 'UTF-8') . '</td>';
+		echo '<td>' . nl2br(htmlspecialchars(CleanCommentText((string)$c['criterianame']), ENT_QUOTES, 'UTF-8')) . '</td>';
 		echo '<td class="number">' . number_format($c['weight'], 1) . '%<input type="hidden" name="CriteriaWeight[' . $cid . ']" value="' . $c['weight'] . '" /></td>';
 		echo '<td><select name="CriteriaRating[' . $cid . ']" class="criteria-rating"><option value="">' . __('Not Rated') . '</option>';
 		foreach ($RatingLabels as $rv => $rl) {
 			echo '<option value="' . $rv . '"' . ($existingRating == $rv ? ' selected' : '') . '>' . $rl . '</option>';
 		}
 		echo '</select></td>';
-		echo '<td><input type="text" name="CriteriaComments[' . $cid . ']" value="' . htmlspecialchars($existingComments, ENT_QUOTES, 'UTF-8') . '" size="50" /></td>';
+		echo '<td><input type="text" name="CriteriaComments[' . $cid . ']" value="' .
+			htmlspecialchars(CleanCommentText((string)$existingComments), ENT_QUOTES, 'UTF-8') . '" size="50" /></td>';
 		echo '</tr>';
 	}
 } else {

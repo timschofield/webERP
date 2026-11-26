@@ -2,6 +2,9 @@
 
 /* Position Budgets Management */
 
+/* Preserve notes before session.php escapes request values. */
+$PostedNotes = isset($_POST['Notes']) ? $_POST['Notes'] : '';
+
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Position Budgets');
@@ -41,7 +44,8 @@ if (isset($_POST['Submit'])) {
 		$FilledPositions = isset($_POST['FilledPositions']) ? (float)$_POST['FilledPositions'] : 'NULL';
 		$ActualPositions = isset($_POST['ActualPositions']) ? (float)$_POST['ActualPositions'] : 'NULL';
 		$ActualSalary = isset($_POST['ActualSalary']) ? (float)$_POST['ActualSalary'] : 'NULL';
-		$Notes = $_POST['Notes'];
+		$Notes = $PostedNotes;
+		$NotesSQL = DB_escape_string($Notes);
 
 		if (isset($_GET['BudgetID']) and $_GET['BudgetID'] != '') {
 			// Update
@@ -56,7 +60,7 @@ if (isset($_POST['Submit'])) {
 					filledpositions = " . $FilledPositions . ",
 					actualpositions = " . $ActualPositions . ",
 					actualsalary = " . $ActualSalary . ",
-					notes = '" . $Notes . "'
+					notes = '" . $NotesSQL . "'
 				WHERE budgetid = " . $BudgetID;
 
 			$Result = DB_query($SQL);
@@ -83,7 +87,7 @@ if (isset($_POST['Submit'])) {
 					" . $FilledPositions . ",
 					" . $ActualPositions . ",
 					" . $ActualSalary . ",
-					'" . $Notes . "'
+					'" . $NotesSQL . "'
 				)";
 
 			$Result = DB_query($SQL);
@@ -120,7 +124,7 @@ if (isset($_GET['BudgetID'])) {
 		$BudgetedSalary = $MyRow['budgetedsalary'];
 		$ActualPositions = $MyRow['actualpositions'];
 		$ActualSalary = $MyRow['actualsalary'];
-		$Notes = $MyRow['notes'];
+		$Notes = CleanCommentText((string)$MyRow['notes']);
 	}
 }
 

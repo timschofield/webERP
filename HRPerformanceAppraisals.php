@@ -219,10 +219,10 @@ if (DB_num_rows($Result) > 0) {
 				<td>' . htmlspecialchars($CalcLabel, ENT_QUOTES, 'UTF-8') . '</td>
 				<td>' . htmlspecialchars($RatingSource, ENT_QUOTES, 'UTF-8') . '</td>
 				<td>' . htmlspecialchars((string)$MyRow['managername'], ENT_QUOTES, 'UTF-8') . '</td>
-				<td>' . nl2br(htmlspecialchars((string)$MyRow['strengths'], ENT_QUOTES, 'UTF-8')) . '</td>
-				<td>' . nl2br(htmlspecialchars((string)$MyRow['areasforimprovement'], ENT_QUOTES, 'UTF-8')) . '</td>
-				<td>' . nl2br(htmlspecialchars((string)$MyRow['goalsnextperiod'], ENT_QUOTES, 'UTF-8')) . '</td>
-				<td>' . nl2br(htmlspecialchars((string)$MyRow['reviewercomments'], ENT_QUOTES, 'UTF-8')) . '</td>
+				<td>' . nl2br(htmlspecialchars(CleanCommentText((string)$MyRow['strengths']), ENT_QUOTES, 'UTF-8')) . '</td>
+				<td>' . nl2br(htmlspecialchars(CleanCommentText((string)$MyRow['areasforimprovement']), ENT_QUOTES, 'UTF-8')) . '</td>
+				<td>' . nl2br(htmlspecialchars(CleanCommentText((string)$MyRow['goalsnextperiod']), ENT_QUOTES, 'UTF-8')) . '</td>
+				<td>' . nl2br(htmlspecialchars(CleanCommentText((string)$MyRow['reviewercomments']), ENT_QUOTES, 'UTF-8')) . '</td>
 				<td class="centre">
 					<a href="' . $RootPath . '/HRAppraisalEntry.php?AppraisalID=' . 
 						urlencode($MyRow['appraisalid']) . '&amp;From=HRPerformanceAppraisals">' . __('Edit') . '</a> |

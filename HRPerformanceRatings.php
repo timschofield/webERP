@@ -226,7 +226,8 @@ if (isset($_GET['ReviewID']) or isset($_POST['ReviewID'])) {
 			}
 
 			$ExistingRating = isset($ExistingRatings[$Row['criteriaid']]) ? $ExistingRatings[$Row['criteriaid']]['rating'] : 0;
-			$ExistingComments = isset($ExistingRatings[$Row['criteriaid']]) ? $ExistingRatings[$Row['criteriaid']]['comments'] : '';
+			$ExistingComments = isset($ExistingRatings[$Row['criteriaid']])
+				? CleanCommentText((string)$ExistingRatings[$Row['criteriaid']]['comments']) : '';
 
 			$TotalWeight += $Row['weight'];
 

@@ -233,7 +233,7 @@ if (isset($_POST['ViewEmployeeNumber']) and $_POST['ViewEmployeeNumber'] != '') 
 			if ($MyRow['notes']) {
 				echo '<tr>
 						<td colspan="7" style="padding-left: 30px; font-style: italic;">
-							' . htmlspecialchars($MyRow['notes'], ENT_QUOTES, 'UTF-8') . '
+							' . nl2br(htmlspecialchars(CleanCommentText((string)$MyRow['notes']), ENT_QUOTES, 'UTF-8')) . '
 						</td>
 					</tr>';
 			}

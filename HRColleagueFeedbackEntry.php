@@ -8,6 +8,9 @@
  * FeedbackID=N&Delete=1 -- delete the feedback and redirect
  */
 
+/* Preserve comment text before session.php escapes request values. */
+$PostedComments = isset($_POST['Comments']) ? $_POST['Comments'] : null;
+
 require(__DIR__ . '/includes/session.php');
 require_once(__DIR__ . '/includes/UIGeneralFunctions.php');
 
@@ -121,7 +124,7 @@ if (isset($_POST['Submit'])) {
 		}
 
 		$OverallRating = (isset($_POST['OverallRating']) and $_POST['OverallRating'] !== '') ? (int)$_POST['OverallRating'] : 'NULL';
-		$Comments = isset($_POST['Comments']) ? DB_escape_string($_POST['Comments']) : '';
+		$Comments = isset($PostedComments) ? DB_escape_string($PostedComments) : '';
 
 		if ($EditMode) {
 			$FeedbackID = (int)$_GET['FeedbackID'];
@@ -231,7 +234,8 @@ if (isset($_GET['FeedbackID'])) {
 	$DbStatus = isset($_POST['Status']) ? $_POST['Status'] : $MyRow['status'];
 	$DbDueDate = $MyRow['duedate'] ? ConvertSQLDate($MyRow['duedate']) : '';
 	$DbCompletionDate = $MyRow['completiondate'] ? ConvertSQLDate($MyRow['completiondate']) : '';
-	$DbComments = isset($_POST['Comments']) ? $_POST['Comments'] : 	$MyRow['comments'];} else {
+	$DbComments = isset($PostedComments) ? $PostedComments : CleanCommentText((string)$MyRow['comments']);
+} else {
 	if (isset($_POST['FromEmployeeID'])) {
 		$DbFromEmployeeID = (int)$_POST['FromEmployeeID'];
 	} elseif (isset($_GET['FromEmployeeID'])) {
@@ -267,7 +271,7 @@ if (isset($_GET['FeedbackID'])) {
 	$DbCompletionDate = (isset($_POST['CompletionDate']) AND $_POST['CompletionDate'] != '')
 		? ConvertSQLDate($_POST['CompletionDate'])
 		: '';
-	$DbComments = isset($_POST['Comments']) ? $_POST['Comments'] : '';
+	$DbComments = isset($PostedComments) ? $PostedComments : '';
 }
 
 if ($EditMode) {

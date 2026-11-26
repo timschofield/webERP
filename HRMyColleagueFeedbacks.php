@@ -87,7 +87,8 @@ if (DB_num_rows($Result) > 0) {
 		if ($MyRow['comments']) {
 			echo '<tr' . $RowClass . '>
 					<td colspan="8" style="padding-left: 30px;">
-						<strong>' . __('Comments') . ':</strong> ' . nl2br(htmlspecialchars($MyRow['comments'], ENT_QUOTES, 'UTF-8')) . '
+						<strong>' . __('Comments') . ':</strong> ' .
+							nl2br(htmlspecialchars(CleanCommentText((string)$MyRow['comments']), ENT_QUOTES, 'UTF-8')) . '
 					</td>
 				</tr>';
 		}

@@ -120,7 +120,7 @@ if (isset($_GET['edit']) or !isset($_GET['edit']) and !isset($_GET['delete'])) {
 			$Status = $Row['status'];
 			$Progress = $Row['progress'];
 			$CompletionDate = ConvertSQLDate($Row['completiondate']);
-			$Notes = $Row['notes'];
+			$Notes = CleanCommentText((string)$Row['notes']);
 			$Weight = $Row['weight'];
 		}
 	}

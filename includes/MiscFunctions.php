@@ -263,8 +263,13 @@ function AddCarriageReturns($str) {
 
 /** @param string $CommentText */
 function CleanCommentText($CommentText) {
-	$CommentText = str_replace(array('\\r\\n', '\\n', '\\r'), "\n", (string)$CommentText);
-	return html_entity_decode($CommentText, ENT_QUOTES, 'UTF-8');
+	$CommentText = (string)$CommentText;
+	do {
+		$PreviousText = $CommentText;
+		$CommentText = html_entity_decode($CommentText, ENT_QUOTES, 'UTF-8');
+	} while ($CommentText !== $PreviousText);
+
+	return preg_replace('~\\\\+r\\\\+n|\\\\+[rn]~', "\n", $CommentText);
 }
 
 /// Replace all text/html line breaks with PHP_EOL(default) or given line break.

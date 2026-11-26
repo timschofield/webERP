@@ -138,11 +138,11 @@ if (isset($_GET['edit']) or isset($_GET['new']) or !isset($_GET['view'])) {
 			$OverallRating = $Row['overallrating'];
 			$ReviewType = $Row['reviewtype'];
 			$Status = $Row['status'];
-			$Strengths = $Row['strengths'];
-			$AreasForImprovement = $Row['areasforimprovement'];
-			$Goals = $Row['goals'];
-			$ReviewerComments = $Row['reviewercomments'];
-			$EmployeeComments = $Row['employeecomments'];
+			$Strengths = CleanCommentText((string)$Row['strengths']);
+			$AreasForImprovement = CleanCommentText((string)$Row['areasforimprovement']);
+			$Goals = CleanCommentText((string)$Row['goals']);
+			$ReviewerComments = CleanCommentText((string)$Row['reviewercomments']);
+			$EmployeeComments = CleanCommentText((string)$Row['employeecomments']);
 			$NextReviewDate = ConvertSQLDate($Row['nextreviewdate']);
 			$ScaleID = $Row['scaleid'];
 		}
@@ -309,19 +309,24 @@ if (isset($_GET['view'])) {
 			<h3>' . __('Overall Rating') . ': <span style="color: #d32f2f;">' . ($ReviewRow['status'] == 'Draft' ? __('Pending') : htmlspecialchars($ReviewRow['overallrating'], ENT_QUOTES, 'UTF-8')) . '</span></h3>
 
 			<h3>' . __('Key Strengths') . '</h3>
-			<p style="white-space: pre-wrap; padding: 10px; background-color: white; border: 1px solid #ccc;">' . htmlspecialchars($ReviewRow['strengths']) . '</p>
+			<p style="white-space: pre-wrap; padding: 10px; background-color: white; border: 1px solid #ccc;">' .
+				htmlspecialchars(CleanCommentText((string)$ReviewRow['strengths']), ENT_QUOTES, 'UTF-8') . '</p>
 
 			<h3>' . __('Areas for Improvement') . '</h3>
-			<p style="white-space: pre-wrap; padding: 10px; background-color: white; border: 1px solid #ccc;">' . htmlspecialchars($ReviewRow['areasforimprovement']) . '</p>
+			<p style="white-space: pre-wrap; padding: 10px; background-color: white; border: 1px solid #ccc;">' .
+				htmlspecialchars(CleanCommentText((string)$ReviewRow['areasforimprovement']), ENT_QUOTES, 'UTF-8') . '</p>
 
 			<h3>' . __('Goals for Next Period') . '</h3>
-			<p style="white-space: pre-wrap; padding: 10px; background-color: white; border: 1px solid #ccc;">' . htmlspecialchars($ReviewRow['goals']) . '</p>
+			<p style="white-space: pre-wrap; padding: 10px; background-color: white; border: 1px solid #ccc;">' .
+				htmlspecialchars(CleanCommentText((string)$ReviewRow['goals']), ENT_QUOTES, 'UTF-8') . '</p>
 
 			<h3>' . __('Reviewer Comments') . '</h3>
-			<p style="white-space: pre-wrap; padding: 10px; background-color: white; border: 1px solid #ccc;">' . htmlspecialchars($ReviewRow['reviewercomments']) . '</p>
+			<p style="white-space: pre-wrap; padding: 10px; background-color: white; border: 1px solid #ccc;">' .
+				htmlspecialchars(CleanCommentText((string)$ReviewRow['reviewercomments']), ENT_QUOTES, 'UTF-8') . '</p>
 
 			<h3>' . __('Employee Comments') . '</h3>
-			<p style="white-space: pre-wrap; padding: 10px; background-color: white; border: 1px solid #ccc;">' . htmlspecialchars($ReviewRow['employeecomments']) . '</p>
+			<p style="white-space: pre-wrap; padding: 10px; background-color: white; border: 1px solid #ccc;">' .
+				htmlspecialchars(CleanCommentText((string)$ReviewRow['employeecomments']), ENT_QUOTES, 'UTF-8') . '</p>
 
 			<p style="margin-top: 20px;"><strong>' . __('Next Review Date') . ':</strong> ' . ($ReviewRow['nextreviewdate'] ? ConvertSQLDate($ReviewRow['nextreviewdate']) : __('Not Set')) . '</p>
 		</div>';

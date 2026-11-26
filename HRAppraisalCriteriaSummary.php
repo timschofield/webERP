@@ -92,7 +92,8 @@ if (count($Criteria) == 0) {
 		echo '<td class="number">' . number_format($weight, 1) . '%</td>';
 		echo '<td class="centre">' . htmlspecialchars($ratingLabel, ENT_QUOTES, 'UTF-8') . '</td>';
 		echo '<td class="number">' . (is_null($weighted) ? '-' : number_format((float)$weighted, 2)) . '</td>';
-		echo '<td>' . ($comments !== '' ? htmlspecialchars($comments, ENT_QUOTES, 'UTF-8') : '-') . '</td>';
+		echo '<td>' . ($comments !== ''
+			? nl2br(htmlspecialchars(CleanCommentText((string)$comments), ENT_QUOTES, 'UTF-8')) : '-') . '</td>';
 		echo '</tr>';
 	}
 

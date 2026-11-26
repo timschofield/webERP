@@ -227,7 +227,7 @@ if (isset($_GET['view'])) {
 					<td class="number">' . $SalaryDisplay . '</td>
 					<td class="number">' . ($Row['increasepercentage'] ? number_format($Row['increasepercentage'], 2) . '%' : '-') . '</td>
 					<td class="number">' . ($Row['increaseamount'] ? locale_number_format($Row['increaseamount'], $_SESSION['CompanyRecord']['decimalplaces']) : '-') . '</td>
-					<td>' . htmlspecialchars($Row['notes'], ENT_QUOTES, 'UTF-8') . '</td>
+					<td>' . nl2br(htmlspecialchars(CleanCommentText((string)$Row['notes']), ENT_QUOTES, 'UTF-8')) . '</td>
 					<td>' . htmlspecialchars($Row['createdby'], ENT_QUOTES, 'UTF-8') . '</td>
 				</tr>';
 		}
