@@ -369,7 +369,8 @@ echo '<field>
 		<select name="OverallRating">
 			<option value=""' . ((string)$DbOverallRating === '' ? ' selected="selected"' : '') . '>' . __('Not Rated') . '</option>';
 foreach ($RatingLabels as $RatingValue => $RatingLabel) {
-	echo '<option value="' . $RatingValue . '"' . ((string)$DbOverallRating !== '' AND $DbOverallRating == $RatingValue ? ' selected="selected"' : '') . '>' . $RatingLabel . '</option>';
+	echo '<option value="' . $RatingValue . '"' .
+		((string)$DbOverallRating === (string)$RatingValue ? ' selected="selected"' : '') . '>' . $RatingLabel . '</option>';
 }
 echo '</select>
 	</field>';
