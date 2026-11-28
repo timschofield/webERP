@@ -63,7 +63,6 @@ if (isset($_POST['submit'])) {
 			SET typename = '" . $_POST['TypeName'] . "'
 			WHERE typeid = '" .$SelectedType."'";
 
-		$Msg = __('The customer type') . ' ' . $SelectedType . ' ' .  __('has been updated');
 	} elseif ( $InputError != 1 ) {
 
 		// First check the type is not being duplicated
@@ -87,7 +86,6 @@ if (isset($_POST['submit'])) {
 					VALUES ('" . $_POST['TypeName'] . "')";
 
 
-			$Msg = __('Customer type') . ' ' . $_POST["typename"] .  ' ' . __('has been created');
 			$CheckSQL = "SELECT count(typeid)
 			     FROM debtortype";
 			$Result = DB_query($CheckSQL);
@@ -120,6 +118,11 @@ if (isset($_POST['submit'])) {
 			$_SESSION['DefaultCustomerType'] = $_POST['typeid'];
 		}
 		echo '<br />';
+		if (isset($SelectedType)) {
+			$Msg = __('The customer type') . ' ' . $SelectedType . ' ' . __('has been updated');
+		} else {
+			$Msg = __('Customer type') . ' ' . $_POST['TypeName'] . ' ' . __('has been created');
+		}
 		prnMsg($Msg,'success');
 
 		unset($SelectedType);
@@ -127,7 +130,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['TypeName']);
 	}
 
-} elseif ( isset($_GET['delete']) ) {
+} elseif (isset($_GET['delete']) AND isset($SelectedType)) {
 
 	// PREVENT DELETES IF DEPENDENT RECORDS IN 'DebtorTrans'
 	// Prevent delete if saletype exist in customer transactions
@@ -169,6 +172,9 @@ if (isset($_POST['submit'])) {
 
 		}
 	} //end if sales type used in debtor transactions or in customers set up
+} elseif (isset($_GET['delete'])) {
+	prnMsg(__('No customer type has been selected for deletion'), 'error');
+	unset($_GET['delete']);
 }
 
 if (!isset($SelectedType)){

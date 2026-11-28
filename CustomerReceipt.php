@@ -1090,12 +1090,6 @@ if (isset($_SESSION['CustomerRecord' . $identifier])
 	echo '<fieldset>';
 	echo '<legend>', __('Receipt Details'), '</legend>';
 
-	if ($_SESSION['CustomerRecord' . $identifier]['pymtdiscount'] > $ReceiptTypes[$_SESSION['ReceiptBatch' . $identifier]->ReceiptType]['percentdiscount']) {
-		$DisplayDiscountPercent = locale_number_format($_SESSION['CustomerRecord' . $identifier]['pymtdiscount']*100,2) . '%';
-	} else {
-		$DisplayDiscountPercent = locale_number_format($ReceiptTypes[$_SESSION['ReceiptBatch' . $identifier]->ReceiptType]['percentdiscount']*100,2) . '%';
-	}
-
 	echo '<input type="hidden" name="CustomerID" value="' . $_POST['CustomerID'] . '" />';
 	echo '<input type="hidden" name="CustomerName" value="' . $_SESSION['CustomerRecord' . $identifier]['name'] . '" />';
 
@@ -1186,6 +1180,12 @@ if (((isset($_SESSION['CustomerRecord' . $identifier])
 		</field>';
 
 	if (!isset($_POST['GLEntry'])){
+		if ($_SESSION['CustomerRecord' . $identifier]['pymtdiscount'] > $ReceiptTypes[$_SESSION['ReceiptBatch' . $identifier]->ReceiptType]['percentdiscount']) {
+			$DisplayDiscountPercent = locale_number_format($_SESSION['CustomerRecord' . $identifier]['pymtdiscount']*100,2) . '%';
+		} else {
+			$DisplayDiscountPercent = locale_number_format($ReceiptTypes[$_SESSION['ReceiptBatch' . $identifier]->ReceiptType]['percentdiscount']*100,2) . '%';
+		}
+
 		echo '<field>
 				<label for="Discount">' . __('Amount of Discount') . ':</label>
 				<input tabindex="10" type="text" name="Discount" maxlength="12" size="13" class="number" value="' . $_POST['Discount'] . '" />
