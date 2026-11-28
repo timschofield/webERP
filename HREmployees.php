@@ -25,6 +25,7 @@ if (isset($_GET['SelectedEmployee'])) {
 
 if (isset($_POST['Submit'])) {
 	$InputError = 0;
+	$EmployeeNumber = NormalizeEmployeeNumber((string)$_POST['EmployeeNumber']);
 
 	if (trim($_POST['FirstName']) == '') {
 		$InputError = 1;
@@ -34,15 +35,15 @@ if (isset($_POST['Submit'])) {
 		$InputError = 1;
 		prnMsg(__('The employee last name must not be empty'), 'error');
 	}
-	if (trim($_POST['EmployeeNumber']) == '') {
+	if ($EmployeeNumber === null) {
 		$InputError = 1;
-		prnMsg(__('The employee number must not be empty'), 'error');
+		prnMsg(__('The employee number must be between 1 and 6 characters'), 'error');
 	}
 
 	if (isset($SelectedEmployee) AND $InputError != 1) {
 		// Update existing employee
 		$SQL = "UPDATE hremployees SET
-					employeenumber = '" . $_POST['EmployeeNumber'] . "',
+					employeenumber = '" . $EmployeeNumber . "',
 					firstname = '" . $_POST['FirstName'] . "',
 					middlename = '" . $_POST['MiddleName'] . "',
 					lastname = '" . $_POST['LastName'] . "',
@@ -79,7 +80,7 @@ if (isset($_POST['Submit'])) {
 
 	} elseif ($InputError != 1) {
 		// Insert new employee
-		$SQL = "SELECT COUNT(*) FROM hremployees WHERE employeenumber = '" . $_POST['EmployeeNumber'] . "'";
+		$SQL = "SELECT COUNT(*) FROM hremployees WHERE employeenumber = '" . $EmployeeNumber . "'";
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_row($Result);
 
@@ -109,7 +110,7 @@ if (isset($_POST['Submit'])) {
 						userid,
 						createdby
 					) VALUES (
-						'" . $_POST['EmployeeNumber'] . "',
+						'" . $EmployeeNumber . "',
 						'" . $_POST['FirstName'] . "',
 						'" . $_POST['MiddleName'] . "',
 						'" . $_POST['LastName'] . "',
@@ -264,7 +265,7 @@ if (!isset($_POST['TerminationDate'])
 
 echo '<field>
 		<label>' . __('Employee Number') . ':</label>
-		<input type="text" name="EmployeeNumber" required="required" size="20" maxlength="20" value="' . (isset($_POST['EmployeeNumber']) ? $_POST['EmployeeNumber'] : '') . '" />
+		<input type="text" name="EmployeeNumber" required="required" size="6" maxlength="6" value="' . (isset($_POST['EmployeeNumber']) ? $_POST['EmployeeNumber'] : '') . '" />
 	</field>';
 
 echo '<field>
@@ -292,7 +293,7 @@ echo '<field>
 		<input type="tel" name="Phone" size="20" maxlength="20" value="' . (isset($_POST['Phone']) ? $_POST['Phone'] : '') . '" />
 	</field>';
 
-echo FieldToSelectOneDate('BirthDate', $_POST['BirthDate'], __('Birth Date'), '', '', 2, true, false);
+echo FieldToSelectOneDate('BirthDate', $_POST['BirthDate'], __('Birth Date'), '', '', 0, true, false);
 
 echo '<field>
 		<label>' . __('Gender') . ':</label>

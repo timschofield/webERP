@@ -112,6 +112,18 @@ function PadEmployeeNumber(string $EmployeeNumber) {
 	return str_pad($EmployeeNumber, 6, '0', STR_PAD_LEFT);
 }
 
+/* NormalizeEmployeeNumber
+ * Returns a six-character employee number, or null when it cannot fit
+ */
+function NormalizeEmployeeNumber(string $EmployeeNumber): ?string {
+	$EmployeeNumber = trim($EmployeeNumber);
+	if ($EmployeeNumber === '' || strlen($EmployeeNumber) > 6) {
+		return null;
+	}
+
+	return PadEmployeeNumber($EmployeeNumber);
+}
+
 /* GetRatingLabels
  * Returns an array of core 1-5 appraisal rating levels with localized labels
  */

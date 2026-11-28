@@ -4,6 +4,7 @@
 
 require(__DIR__ . '/includes/session.php');
 require_once(__DIR__ . '/includes/UIGeneralFunctions.php');
+require_once(__DIR__ . '/includes/HRPerformanceHelper.php');
 
 $Title = __('Employee Entry');
 $ViewTopic = 'HumanResources';
@@ -32,11 +33,12 @@ $EmployeeID = isset($_GET['EmployeeID']) ? (int)$_GET['EmployeeID'] : (isset($_P
 
 if (isset($_POST['Submit'])) {
 	$InputError = 0;
+	$EmployeeNumber = NormalizeEmployeeNumber((string)$_POST['EmployeeNumber']);
 
 	// Validation
-	if (trim($_POST['EmployeeNumber']) == '') {
+	if ($EmployeeNumber === null) {
 		$InputError = 1;
-		prnMsg(__('The employee number must not be empty'), 'error');
+		prnMsg(__('The employee number must be between 1 and 6 characters'), 'error');
 	}
 	if (trim($_POST['FirstName']) == '') {
 		$InputError = 1;
@@ -59,7 +61,7 @@ if (isset($_POST['Submit'])) {
 		if ($EmployeeID > 0) {
 			// Update existing employee
 			$SQL = "UPDATE hremployees SET
-						employeenumber = '" . $_POST['EmployeeNumber'] . "',
+						employeenumber = '" . $EmployeeNumber . "',
 						firstname = '" . $_POST['FirstName'] . "',
 						middlename = '" . $_POST['MiddleName'] . "',
 						lastname = '" . $_POST['LastName'] . "',
@@ -100,7 +102,7 @@ if (isset($_POST['Submit'])) {
 						employmentstatus, employmenttype, location,
 						createdby, createddate
 					) VALUES (
-						'" . $_POST['EmployeeNumber'] . "',
+						'" . $EmployeeNumber . "',
 						'" . $_POST['FirstName'] . "',
 						'" . $_POST['MiddleName'] . "',
 						'" . $_POST['LastName'] . "',
@@ -201,7 +203,7 @@ echo '<fieldset>
 
 echo '<field>
 		<label for="EmployeeNumber">' . __('Employee Number') . ':</label>
-		<input type="text" name="EmployeeNumber" value="' . $EmployeeNumber . '" size="20" maxlength="20" required="required" />
+		<input type="text" name="EmployeeNumber" value="' . $EmployeeNumber . '" size="6" maxlength="6" required="required" />
 	</field>';
 
 echo '<field>
