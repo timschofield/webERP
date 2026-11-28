@@ -460,13 +460,14 @@ if (!isset($SelectedEmployee)) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<fieldset>
-			<legend class="search">' . __('Employee Search') . '</legend>';
+			<legend>' . __('Employee Search') . '</legend>';
 	echo '<field>
-			<tr>
-			<td>' . __('Name or Number') . ':</td>
-			<td><input type="text" name="Keywords" size="20" value="' . (isset($_POST['Keywords']) ? $_POST['Keywords'] : '') . '" /></td>
-			<td>' . __('Department') . ':</td>
-			<td><select name="SearchDepartment">';
+			<label for="Keywords">' . __('Name or Number') . ':</label>
+			<input type="text" id="Keywords" name="Keywords" size="20" value="' . (isset($_POST['Keywords']) ? $_POST['Keywords'] : '') . '" />
+		</field>';
+	echo '<field>
+			<label for="SearchDepartment">' . __('Department') . ':</label>
+			<select id="SearchDepartment" name="SearchDepartment">';
 	echo '<option value="">' . __('All') . '</option>';
 	$SQL = "SELECT departmentid, description FROM departments WHERE active = 1 ORDER BY description";
 	$Result = DB_query($SQL);
@@ -477,23 +478,98 @@ if (!isset($SelectedEmployee)) {
 			echo '<option value="' . $MyRow['departmentid'] . '">' . $MyRow['description'] . '</option>';
 		}
 	}
-	echo '</select></td>';
-	echo '<td>' . __('Status') . ':</td>
-			<td><select name="SearchStatus">
+	echo '</select>
+		</field>';
+	echo '<field>
+			<label for="SearchStatus">' . __('Status') . ':</label>
+			<select id="SearchStatus" name="SearchStatus">
 				<option value="">' . __('All') . '</option>
 				<option value="Active"' . (isset($_POST['SearchStatus']) && $_POST['SearchStatus'] == 'Active' ? ' selected="selected"' : '') . '>' . __('Active') . '</option>
 				<option value="Terminated"' . (isset($_POST['SearchStatus']) && $_POST['SearchStatus'] == 'Terminated' ? ' selected="selected"' : '') . '>' . __('Terminated') . '</option>
 				<option value="On Leave"' . (isset($_POST['SearchStatus']) && $_POST['SearchStatus'] == 'On Leave' ? ' selected="selected"' : '') . '>' . __('On Leave') . '</option>
 				<option value="Suspended"' . (isset($_POST['SearchStatus']) && $_POST['SearchStatus'] == 'Suspended' ? ' selected="selected"' : '') . '>' . __('Suspended') . '</option>
-			</select></td>
-		</tr>';
-	echo '<tr>
-			<td colspan="6" class="centre"><input type="submit" name="SearchButton" value="' . __('Search') . '" /></td>
+			</select>
 		</field>';
+	echo '<field>
+			<label for="SearchPosition">' . __('Position') . ':</label>
+			<select id="SearchPosition" name="SearchPosition">
+				<option value="">' . __('All') . '</option>';
+	$SQL = "SELECT positionid, positiontitle
+			FROM hrpositions
+			ORDER BY positiontitle";
+	$Result = DB_query($SQL);
+	while ($MyRow = DB_fetch_array($Result)) {
+		$Selected = isset($_POST['SearchPosition']) && $_POST['SearchPosition'] == $MyRow['positionid']
+			? ' selected="selected"' : '';
+		echo '<option value="' . $MyRow['positionid'] . '"' . $Selected . '>' . $MyRow['positiontitle'] . '</option>';
+	}
+	echo '</select>
+		</field>';
+	echo '<field>
+			<label for="SearchEmploymentType">' . __('Employment Type') . ':</label>
+			<select id="SearchEmploymentType" name="SearchEmploymentType">
+				<option value="">' . __('All') . '</option>';
+	$EmploymentTypes = array('Full-Time', 'Part-Time', 'Contract', 'Temporary');
+	foreach ($EmploymentTypes as $EmploymentType) {
+		$Selected = isset($_POST['SearchEmploymentType']) && $_POST['SearchEmploymentType'] == $EmploymentType
+			? ' selected="selected"' : '';
+		echo '<option value="' . $EmploymentType . '"' . $Selected . '>' . __($EmploymentType) . '</option>';
+	}
+	echo '</select>
+		</field>';
+	echo '<div class="centre">
+			<input type="submit" name="SearchButton" value="' . __('Search') . '" />
+		</div>';
 	echo '</fieldset>';
 	echo '</form>';
 
 	// Display list of employees
+	$WhereSQL = " WHERE 1=1";
+
+	if (isset($_POST['Keywords']) AND $_POST['Keywords'] != '') {
+		$Keywords = $_POST['Keywords'];
+		$WhereSQL .= " AND (e.firstname LIKE '%" . $Keywords . "%'
+				OR e.lastname LIKE '%" . $Keywords . "%'
+				OR e.employeenumber LIKE '%" . $Keywords . "%')";
+	}
+	if (isset($_POST['SearchDepartment']) AND $_POST['SearchDepartment'] != '') {
+		$WhereSQL .= " AND e.departmentid = '" . (int)$_POST['SearchDepartment'] . "'";
+	}
+	if (isset($_POST['SearchStatus']) AND $_POST['SearchStatus'] != '') {
+		$WhereSQL .= " AND e.employmentstatus = '" . $_POST['SearchStatus'] . "'";
+	}
+	if (isset($_POST['SearchPosition']) AND $_POST['SearchPosition'] != '') {
+		$WhereSQL .= " AND e.positionid = '" . (int)$_POST['SearchPosition'] . "'";
+	}
+	if (isset($_POST['SearchEmploymentType']) AND $_POST['SearchEmploymentType'] != '') {
+		$WhereSQL .= " AND e.employmenttype = '" . DB_escape_string($_POST['SearchEmploymentType']) . "'";
+	}
+	$SQL = "SELECT COUNT(*)
+			FROM hremployees e" . $WhereSQL;
+	$CountResult = DB_query($SQL);
+	$CountRow = DB_fetch_row($CountResult);
+	$ListCount = (int)$CountRow[0];
+	$DisplayRecordsMax = max(1, (int)$_SESSION['DisplayRecordsMax']);
+	$ListPageMax = max(1, (int)ceil($ListCount / $DisplayRecordsMax));
+
+	$PageOffset = 1;
+	$IsTopPageControl = isset($_POST['GoTop']) || isset($_POST['NextTop']) || isset($_POST['PreviousTop']);
+	$IsPageNavigation = $IsTopPageControl || isset($_POST['Go']) || isset($_POST['Next']) || isset($_POST['Previous']);
+	if ($IsPageNavigation) {
+		if ($IsTopPageControl) {
+			$PageOffset = max(1, (int)($_POST['PageOffsetTop'] ?? 1));
+		} else {
+			$PageOffset = max(1, (int)($_POST['PageOffset'] ?? 1));
+		}
+
+		if (isset($_POST['NextTop']) || isset($_POST['Next'])) {
+			$PageOffset++;
+		} elseif (isset($_POST['PreviousTop']) || isset($_POST['Previous'])) {
+			$PageOffset--;
+		}
+	}
+	$PageOffset = max(1, min($PageOffset, $ListPageMax));
+
 	$SQL = "SELECT e.employeeid,
 				e.employeenumber,
 				e.firstname,
@@ -506,26 +582,35 @@ if (!isset($SelectedEmployee)) {
 				e.hiredate
 			FROM hremployees e
 			LEFT JOIN departments d ON e.departmentid = d.departmentid
-			LEFT JOIN hrpositions p ON e.positionid = p.positionid
-			WHERE 1=1";
-
-	if (isset($_POST['Keywords']) AND $_POST['Keywords'] != '') {
-		$Keywords = $_POST['Keywords'];
-		$SQL .= " AND (e.firstname LIKE '%" . $Keywords . "%'
-				OR e.lastname LIKE '%" . $Keywords . "%'
-				OR e.employeenumber LIKE '%" . $Keywords . "%')";
-	}
-	if (isset($_POST['SearchDepartment']) AND $_POST['SearchDepartment'] != '') {
-		$SQL .= " AND e.departmentid = '" . (int)$_POST['SearchDepartment'] . "'";
-	}
-	if (isset($_POST['SearchStatus']) AND $_POST['SearchStatus'] != '') {
-		$SQL .= " AND e.employmentstatus = '" . $_POST['SearchStatus'] . "'";
-	}
-
-	$SQL .= " ORDER BY e.employmentstatus, e.firstname, e.lastname";
-
+			LEFT JOIN hrpositions p ON e.positionid = p.positionid" .
+			$WhereSQL . "
+			ORDER BY e.employmentstatus, e.firstname, e.lastname
+			LIMIT " . $DisplayRecordsMax . " OFFSET " . (($PageOffset - 1) * $DisplayRecordsMax);
 	$Result = DB_query($SQL);
 
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">
+			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+			<input type="hidden" name="Keywords" value="' . htmlspecialchars((string)($_POST['Keywords'] ?? ''), ENT_QUOTES, 'UTF-8') . '" />
+			<input type="hidden" name="SearchDepartment" value="' . htmlspecialchars((string)($_POST['SearchDepartment'] ?? ''), ENT_QUOTES, 'UTF-8') . '" />
+			<input type="hidden" name="SearchStatus" value="' . htmlspecialchars((string)($_POST['SearchStatus'] ?? ''), ENT_QUOTES, 'UTF-8') . '" />
+			<input type="hidden" name="SearchPosition" value="' . htmlspecialchars((string)($_POST['SearchPosition'] ?? ''), ENT_QUOTES, 'UTF-8') . '" />
+			<input type="hidden" name="SearchEmploymentType" value="' . htmlspecialchars((string)($_POST['SearchEmploymentType'] ?? ''), ENT_QUOTES, 'UTF-8') . '" />';
+
+	if ($ListPageMax > 1) {
+		echo '<div class="centre"><br />' . $PageOffset . ' ' . __('of') . ' ' . $ListPageMax . ' ' . __('pages') . '. ' . __('Go to Page') . ': ';
+		echo '<select name="PageOffsetTop">';
+		$ListPage = 1;
+		while ($ListPage <= $ListPageMax) {
+			$Selected = $ListPage == $PageOffset ? ' selected="selected"' : '';
+			echo '<option value="' . $ListPage . '"' . $Selected . '>' . $ListPage . '</option>';
+			$ListPage++;
+		}
+		echo '</select>
+			<input type="submit" name="GoTop" value="' . __('Go') . '" />
+			<input type="submit" name="PreviousTop" value="' . __('Previous') . '" />
+			<input type="submit" name="NextTop" value="' . __('Next') . '" />
+			</div>';
+	}
 	echo '<table class="selection">
 			<thead>
 				<tr>
@@ -559,6 +644,23 @@ if (!isset($SelectedEmployee)) {
 
 	echo '</tbody>
 		</table>';
+
+	if ($ListPageMax > 1) {
+		echo '<div class="centre"><br />' . $PageOffset . ' ' . __('of') . ' ' . $ListPageMax . ' ' . __('pages') . '. ' . __('Go to Page') . ': ';
+		echo '<select name="PageOffset">';
+		$ListPage = 1;
+		while ($ListPage <= $ListPageMax) {
+			$Selected = $ListPage == $PageOffset ? ' selected="selected"' : '';
+			echo '<option value="' . $ListPage . '"' . $Selected . '>' . $ListPage . '</option>';
+			$ListPage++;
+		}
+		echo '</select>
+			<input type="submit" name="Go" value="' . __('Go') . '" />
+			<input type="submit" name="Previous" value="' . __('Previous') . '" />
+			<input type="submit" name="Next" value="' . __('Next') . '" />
+			</div>';
+	}
+	echo '</form>';
 }
 
 include(__DIR__ . '/includes/footer.php');

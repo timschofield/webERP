@@ -19,6 +19,63 @@ require_once(__DIR__ . '/includes/UIGeneralFunctions.php');
 $RatingLabels = GetRatingLabels();
 $PrintPDF = isset($_POST['PrintPDF']);
 
+$WhereSQL = " WHERE 1=1";
+
+if (isset($_POST['FromEmployeeID']) and $_POST['FromEmployeeID'] != '') {
+	$WhereSQL .= " AND f.fromemployeeid = '" . (int)$_POST['FromEmployeeID'] . "'";
+}
+
+if (isset($_POST['AboutEmployeeID']) and $_POST['AboutEmployeeID'] != '') {
+	$WhereSQL .= " AND f.aboutemployeeid = '" . (int)$_POST['AboutEmployeeID'] . "'";
+}
+
+if (isset($_POST['Status']) and $_POST['Status'] != '') {
+	$WhereSQL .= " AND f.status = '" . DB_escape_string($_POST['Status']) . "'";
+}
+
+if (isset($_POST['FeedbackType']) and $_POST['FeedbackType'] != '') {
+	$WhereSQL .= " AND f.feedbacktype = '" . DB_escape_string($_POST['FeedbackType']) . "'";
+}
+
+if (isset($_POST['DepartmentID']) and $_POST['DepartmentID'] != '') {
+	/* Employee the feedback is about: selected department plus all its sub-departments */
+	$DepartmentIdList = explode(',', GetDepartmentListBelow($_POST['DepartmentID']));
+	$WhereSQL .= " AND ae.departmentid IN ('" . implode("','", array_map('DB_escape_string', $DepartmentIdList)) . "')";
+}
+
+if (isset($_POST['PeriodYear']) and $_POST['PeriodYear'] != '') {
+	$WhereSQL .= " AND YEAR(f.feedbackperiodstart) = " . (int)$_POST['PeriodYear'];
+}
+
+$CountSQL = "SELECT COUNT(*)
+	FROM hrcolleaguefeedback f
+	INNER JOIN hremployees fe ON f.fromemployeeid = fe.employeeid
+	INNER JOIN hremployees ae ON f.aboutemployeeid = ae.employeeid
+	LEFT JOIN hremployees ce ON f.createdbyid = ce.employeeid" . $WhereSQL;
+$CountResult = DB_query($CountSQL);
+$CountRow = DB_fetch_row($CountResult);
+$ListCount = (int)$CountRow[0];
+$DisplayRecordsMax = max(1, (int)$_SESSION['DisplayRecordsMax']);
+$ListPageMax = max(1, (int)ceil($ListCount / $DisplayRecordsMax));
+
+$PageOffset = 1;
+$IsTopPageControl = isset($_POST['GoTop']) || isset($_POST['NextTop']) || isset($_POST['PreviousTop']);
+$IsPageNavigation = $IsTopPageControl || isset($_POST['Go']) || isset($_POST['Next']) || isset($_POST['Previous']);
+if (!$PrintPDF && $IsPageNavigation) {
+	if ($IsTopPageControl) {
+		$PageOffset = max(1, (int)($_POST['PageOffsetTop'] ?? 1));
+	} else {
+		$PageOffset = max(1, (int)($_POST['PageOffset'] ?? 1));
+	}
+
+	if (isset($_POST['NextTop']) || isset($_POST['Next'])) {
+		$PageOffset++;
+	} elseif (isset($_POST['PreviousTop']) || isset($_POST['Previous'])) {
+		$PageOffset--;
+	}
+}
+$PageOffset = max(1, min($PageOffset, $ListPageMax));
+
 $SQL = "SELECT
 		f.feedbackid,
 		f.feedbackperiodstart,
@@ -37,36 +94,12 @@ $SQL = "SELECT
 	FROM hrcolleaguefeedback f
 	INNER JOIN hremployees fe ON f.fromemployeeid = fe.employeeid
 	INNER JOIN hremployees ae ON f.aboutemployeeid = ae.employeeid
-	LEFT JOIN hremployees ce ON f.createdbyid = ce.employeeid
-	WHERE 1=1";
-
-if (isset($_POST['FromEmployeeID']) and $_POST['FromEmployeeID'] != '') {
-	$SQL .= " AND f.fromemployeeid = '" . (int)$_POST['FromEmployeeID'] . "'";
+	LEFT JOIN hremployees ce ON f.createdbyid = ce.employeeid" .
+	$WhereSQL . "
+	ORDER BY f.duedate DESC, f.feedbackid DESC";
+if (!$PrintPDF) {
+	$SQL .= " LIMIT " . $DisplayRecordsMax . " OFFSET " . (($PageOffset - 1) * $DisplayRecordsMax);
 }
-
-if (isset($_POST['AboutEmployeeID']) and $_POST['AboutEmployeeID'] != '') {
-	$SQL .= " AND f.aboutemployeeid = '" . (int)$_POST['AboutEmployeeID'] . "'";
-}
-
-if (isset($_POST['Status']) and $_POST['Status'] != '') {
-	$SQL .= " AND f.status = '" . DB_escape_string($_POST['Status']) . "'";
-}
-
-if (isset($_POST['FeedbackType']) and $_POST['FeedbackType'] != '') {
-	$SQL .= " AND f.feedbacktype = '" . DB_escape_string($_POST['FeedbackType']) . "'";
-}
-
-if (isset($_POST['DepartmentID']) and $_POST['DepartmentID'] != '') {
-	/* Employee the feedback is about: selected department plus all its sub-departments */
-	$DepartmentIdList = explode(',', GetDepartmentListBelow($_POST['DepartmentID']));
-	$SQL .= " AND ae.departmentid IN ('" . implode("','", array_map('DB_escape_string', $DepartmentIdList)) . "')";
-}
-
-if (isset($_POST['PeriodYear']) and $_POST['PeriodYear'] != '') {
-	$SQL .= " AND YEAR(f.feedbackperiodstart) = " . (int)$_POST['PeriodYear'];
-}
-
-$SQL .= " ORDER BY f.duedate DESC, f.feedbackid DESC";
 
 $Result = DB_query($SQL);
 
@@ -239,7 +272,50 @@ echo '<div class="centre">
 
 echo '</form>';
 
+if ($ListPageMax > 1) {
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">
+			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+			<input type="hidden" name="FromEmployeeID" value="' . htmlspecialchars((string)($_POST['FromEmployeeID'] ?? ''), ENT_QUOTES, 'UTF-8') . '" />
+			<input type="hidden" name="AboutEmployeeID" value="' . htmlspecialchars((string)($_POST['AboutEmployeeID'] ?? ''), ENT_QUOTES, 'UTF-8') . '" />
+			<input type="hidden" name="Status" value="' . htmlspecialchars((string)($_POST['Status'] ?? ''), ENT_QUOTES, 'UTF-8') . '" />
+			<input type="hidden" name="FeedbackType" value="' . htmlspecialchars((string)($_POST['FeedbackType'] ?? ''), ENT_QUOTES, 'UTF-8') . '" />
+			<input type="hidden" name="DepartmentID" value="' . htmlspecialchars((string)($_POST['DepartmentID'] ?? ''), ENT_QUOTES, 'UTF-8') . '" />';
+	if (isset($_POST['PeriodYear'])) {
+		echo '<input type="hidden" name="PeriodYear" value="' . htmlspecialchars((string)$_POST['PeriodYear'], ENT_QUOTES, 'UTF-8') . '" />';
+	}
+	echo '<div class="centre"><br />' . $PageOffset . ' ' . __('of') . ' ' . $ListPageMax . ' ' . __('pages') . '. ' . __('Go to Page') . ': ';
+	echo '<select name="PageOffsetTop">';
+	$ListPage = 1;
+	while ($ListPage <= $ListPageMax) {
+		$Selected = $ListPage == $PageOffset ? ' selected="selected"' : '';
+		echo '<option value="' . $ListPage . '"' . $Selected . '>' . $ListPage . '</option>';
+		$ListPage++;
+	}
+	echo '</select>
+		<input type="submit" name="GoTop" value="' . __('Go') . '" />
+		<input type="submit" name="PreviousTop" value="' . __('Previous') . '" />
+		<input type="submit" name="NextTop" value="' . __('Next') . '" />
+		</div>';
+}
+
 echo $HTML;
+
+if ($ListPageMax > 1) {
+	echo '<div class="centre"><br />' . $PageOffset . ' ' . __('of') . ' ' . $ListPageMax . ' ' . __('pages') . '. ' . __('Go to Page') . ': ';
+	echo '<select name="PageOffset">';
+	$ListPage = 1;
+	while ($ListPage <= $ListPageMax) {
+		$Selected = $ListPage == $PageOffset ? ' selected="selected"' : '';
+		echo '<option value="' . $ListPage . '"' . $Selected . '>' . $ListPage . '</option>';
+		$ListPage++;
+	}
+	echo '</select>
+		<input type="submit" name="Go" value="' . __('Go') . '" />
+		<input type="submit" name="Previous" value="' . __('Previous') . '" />
+		<input type="submit" name="Next" value="' . __('Next') . '" />
+		</div>
+	</form>';
+}
 
 include(__DIR__ . '/includes/footer.php');
 
